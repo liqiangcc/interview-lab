@@ -1,0 +1,14 @@
+{
+  "name": "interview-lab",
+  "version": "0.1.0",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "test": "node --test",
+    "validate:issue-fixture": "node scripts/validate-interview-note-issue.js test/fixtures/interview-note-issue.valid.md",
+    "check": "npm test && npm run validate:issue-fixture"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
