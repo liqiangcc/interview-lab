@@ -77,7 +77,8 @@
         "原文直接写明‘11 月 27 日面试’，但没有直接证明年份，因此只保存 month_day=11-27。",
         "捕获页面 machine fields time 与 lastUpdateTime 均为 1701339610000，对应 2023-11-30T18:20:10+08:00。",
         "4 张历史下载原图均为非空有效 Git blobs，可以作为 Raw image 证据。",
-        "历史 note_img_txt 包含详细问题和截图文字，但仍严格作为 OCR Derived；不能用它补正文或提高面试时间精度。"
+        "历史 note_img_txt 包含详细问题和截图文字，但仍严格作为 OCR Derived；不能用它补正文或提高面试时间精度。",
+        "Issue #4 live validator 已通过。"
       ]
     },
     {
@@ -90,7 +91,14 @@
       "source_published_at": {"precision": "unknown", "value": null},
       "source_edited_at": {"precision": "unknown", "value": null},
       "interview_occurred_at": {"precision": "unknown", "value": null},
-      "pilot_state": "selected"
+      "pilot_state": "excluded_from_interview_note",
+      "pilot_findings": [
+        "Raw 标题虽写‘阿里蚂蚁金服Java中间件6轮面试题! 总结’，但标题本身不足以证明是同一次候选流程。",
+        "正文主要按技术基础、技术宽度、原理深入、项目总结等维度给出经验，并明确说‘这些都是不断面试积累来的经验’，更像跨面试经验汇总。",
+        "来源页面引用 5 张图片，但旧仓库对应 5 个下载文件全部为 0 字节，当前没有更强 Raw image 证据可消除分类歧义。",
+        "按 fail-closed 原则不创建 InterviewNote Issue。未来若恢复原图，可重新进行 classification review。",
+        "该来源不应被丢弃；未来若建立 SourceDocument/InterviewDigest 等更宽的来源类型，可再纳入对应模型。"
+      ]
     }
   ]
 }
