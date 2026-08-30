@@ -1,0 +1,101 @@
+{
+  "schema_version": "xhs-pilot-selection.v1",
+  "source_repository": "liqiangcc/xhs",
+  "selection_policy": "representative source conditions, not chronological production migration",
+  "cases": [
+    {
+      "note_id": "630e2e22000000001103c490",
+      "purpose": "text-rich real interview note with many explicit question lines; compare Raw/SourceProjection against legacy structured/tagged outputs",
+      "expected_disposition": "issue_candidate",
+      "raw_evidence_paths": [
+        "note_detail/630e2e22000000001103c490.html",
+        "note_images/630e2e22000000001103c490_urls.txt"
+      ],
+      "source_projection_paths": [
+        "note_json/630e2e22000000001103c490.json",
+        "note_desc/630e2e22000000001103c490.txt"
+      ],
+      "derived_comparison_paths": [
+        "note_structured/630e2e22000000001103c490.json",
+        "note_tagged/630e2e22000000001103c490.json"
+      ],
+      "source_time": {"precision": "unknown", "value": null}
+    },
+    {
+      "note_id": "63ecd286000000001303fd16",
+      "purpose": "sequence-rich real interview note with explicit forgotten/uncertain questions; tests faithful preservation of author uncertainty",
+      "expected_disposition": "issue_candidate",
+      "raw_evidence_paths": [
+        "note_detail/63ecd286000000001303fd16.html",
+        "note_images/63ecd286000000001303fd16_urls.txt"
+      ],
+      "source_projection_paths": [
+        "note_json/63ecd286000000001303fd16.json",
+        "note_desc/63ecd286000000001303fd16.txt"
+      ],
+      "derived_comparison_paths": [
+        "note_structured/63ecd286000000001303fd16.json",
+        "note_tagged/63ecd286000000001303fd16.json"
+      ],
+      "source_time": {"precision": "unknown", "value": null}
+    },
+    {
+      "note_id": "6508552c000000001303f499",
+      "purpose": "image-dominant interview note: body is mainly retrospective summary while detailed interview sequence exists in image material/OCR",
+      "expected_disposition": "issue_candidate",
+      "raw_evidence_paths": [
+        "note_detail/6508552c000000001303f499.html",
+        "note_images/6508552c000000001303f499_urls.txt",
+        "downloaded_images/6508552c000000001303f499/"
+      ],
+      "source_projection_paths": [
+        "note_json/6508552c000000001303f499.json",
+        "note_desc/6508552c000000001303f499.txt"
+      ],
+      "derived_comparison_paths": [
+        "note_img_txt/6508552c000000001303f499.txt",
+        "note_structured/6508552c000000001303f499.json",
+        "note_tagged/6508552c000000001303f499.json"
+      ],
+      "source_time": {"precision": "unknown", "value": null}
+    },
+    {
+      "note_id": "656861da000000000f024258",
+      "purpose": "mixed narrative plus multiple images; tests separation between original body, original image artifacts, and OCR-derived text",
+      "expected_disposition": "issue_candidate",
+      "raw_evidence_paths": [
+        "note_detail/656861da000000000f024258.html",
+        "note_images/656861da000000000f024258_urls.txt",
+        "downloaded_images/656861da000000000f024258/"
+      ],
+      "source_projection_paths": [
+        "note_json/656861da000000000f024258.json",
+        "note_desc/656861da000000000f024258.txt"
+      ],
+      "derived_comparison_paths": [
+        "note_img_txt/656861da000000000f024258.txt",
+        "note_structured/656861da000000000f024258.json",
+        "note_tagged/656861da000000000f024258.json"
+      ],
+      "source_time": {"precision": "unknown", "value": null}
+    },
+    {
+      "note_id": "625564d70000000001025e46",
+      "purpose": "boundary probe: readable source is an accumulated interview-preparation summary rather than clearly one interview event; tests fail-closed InterviewNote classification",
+      "expected_disposition": "boundary_review",
+      "raw_evidence_paths": [
+        "note_detail/625564d70000000001025e46.html",
+        "note_images/625564d70000000001025e46_urls.txt"
+      ],
+      "source_projection_paths": [
+        "note_json/625564d70000000001025e46.json",
+        "note_desc/625564d70000000001025e46.txt"
+      ],
+      "derived_comparison_paths": [
+        "note_structured/625564d70000000001025e46.json",
+        "note_tagged/625564d70000000001025e46.json"
+      ],
+      "source_time": {"precision": "unknown", "value": null}
+    }
+  ]
+}
