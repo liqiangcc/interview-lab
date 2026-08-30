@@ -1,5 +1,5 @@
 {
-  "schema_version": "xhs-pilot-selection.v1",
+  "schema_version": "xhs-pilot-selection.v2",
   "source_repository": "liqiangcc/xhs",
   "selection_policy": "优先覆盖不同 Source 条件，用于验证机制；不是正式全量迁移的时间顺序。",
   "cases": [
@@ -19,7 +19,15 @@
         "note_structured/630e2e22000000001103c490.json",
         "note_tagged/630e2e22000000001103c490.json"
       ],
-      "source_time": {"precision": "exact", "value": "2022-08-30"}
+      "source_published_at": {"precision": "exact", "value": "2022-08-30"},
+      "source_edited_at": {"precision": "unknown", "value": null},
+      "interview_occurred_at": {"precision": "unknown", "value": null},
+      "pilot_state": "blocked",
+      "pilot_findings": [
+        "来源 HTML 可以直接证明原始标题和页面显示日期。",
+        "页面引用 2 张图片，但旧仓库中对应下载文件均为 0 字节，不能视为有效原图证据。",
+        "当前需要 source recovery；在原图恢复或显式终态限制审核前不进入 source-ready。"
+      ]
     },
     {
       "note_id": "63ecd286000000001303fd16",
@@ -37,7 +45,17 @@
         "note_structured/63ecd286000000001303fd16.json",
         "note_tagged/63ecd286000000001303fd16.json"
       ],
-      "source_time": {"precision": "unknown", "value": null}
+      "source_published_at": {"precision": "exact", "value": "2023-02-15T20:39:34+08:00"},
+      "source_edited_at": {"precision": "exact", "value": "2023-02-16"},
+      "interview_occurred_at": {"precision": "exact", "value": "2022-08-02"},
+      "pilot_state": "source-review",
+      "pilot_findings": [
+        "原文直接写明‘2022.08.02提前批面试’，可作为 interview occurrence time。",
+        "捕获页面 machine field time 对应 2023-02-15T20:39:34+08:00，属于来源发布时间。",
+        "页面显示‘编辑于 2023-02-16’，属于来源编辑时间。",
+        "三种时间不能再由一个 source_time 字段表达。",
+        "页面引用 2 张图片，但旧仓库保存的两个下载文件均为 0 字节。"
+      ]
     },
     {
       "note_id": "6508552c000000001303f499",
@@ -57,7 +75,9 @@
         "note_structured/6508552c000000001303f499.json",
         "note_tagged/6508552c000000001303f499.json"
       ],
-      "source_time": {"precision": "unknown", "value": null}
+      "source_published_at": {"precision": "unknown", "value": null},
+      "source_edited_at": {"precision": "unknown", "value": null},
+      "interview_occurred_at": {"precision": "unknown", "value": null}
     },
     {
       "note_id": "656861da000000000f024258",
@@ -77,7 +97,9 @@
         "note_structured/656861da000000000f024258.json",
         "note_tagged/656861da000000000f024258.json"
       ],
-      "source_time": {"precision": "unknown", "value": null}
+      "source_published_at": {"precision": "unknown", "value": null},
+      "source_edited_at": {"precision": "unknown", "value": null},
+      "interview_occurred_at": {"precision": "unknown", "value": null}
     },
     {
       "note_id": "625564d70000000001025e46",
@@ -95,7 +117,9 @@
         "note_structured/625564d70000000001025e46.json",
         "note_tagged/625564d70000000001025e46.json"
       ],
-      "source_time": {"precision": "unknown", "value": null}
+      "source_published_at": {"precision": "unknown", "value": null},
+      "source_edited_at": {"precision": "unknown", "value": null},
+      "interview_occurred_at": {"precision": "unknown", "value": null}
     }
   ]
 }

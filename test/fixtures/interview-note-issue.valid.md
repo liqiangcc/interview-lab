@@ -1,7 +1,7 @@
-<!-- interview-note: id=xhs:630e2e22000000001103c490 schema=interview-note-issue.v1 -->
+<!-- interview-note: id=xhs:630e2e22000000001103c490 schema=interview-note-issue.v2 -->
 <!-- interview-note-record
 {
-  "schema_version": "interview-note-issue.v1",
+  "schema_version": "interview-note-issue.v2",
   "interview_note_id": "xhs:630e2e22000000001103c490",
   "source": {
     "system": "xhs",
@@ -12,9 +12,17 @@
     "id": "xhs:630e2e22000000001103c490:r1",
     "captured_at": null
   },
-  "source_time": {
+  "source_published_at": {
     "precision": "year",
     "value": "2023"
+  },
+  "source_edited_at": {
+    "precision": "unknown",
+    "value": null
+  },
+  "interview_occurred_at": {
+    "precision": "unknown",
+    "value": null
   },
   "artifacts": [
     {
@@ -31,7 +39,7 @@
     }
   ],
   "limitations": [
-    "Pilot fixture：尚未登记 hash，来源时间只能确认到年份。"
+    "Pilot fixture：来源发布时间只能确认到年份；来源编辑时间和实际面试发生时间未知。"
   ]
 }
 -->
@@ -57,7 +65,8 @@
 
 ## 来源限制
 
-- 本 fixture 只能确认到 2023 年，不能伪造更精确日期。
+- 来源发布时间只能确认到 2023 年，不能伪造更精确日期。
+- 来源编辑时间与实际面试发生时间未知。
 - Content hash 尚未登记。
 
 ## 派生链接

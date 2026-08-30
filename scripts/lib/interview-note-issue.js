@@ -21,6 +21,8 @@ const LEGACY_SECTION_ALIASES = {
   '## 派生链接': ['## 派生链接', '## Derived links'],
 };
 
+const SUPPORTED_SCHEMAS = new Set(['interview-note-issue.v1', 'interview-note-issue.v2']);
+
 function allMatches(regex, text) {
   const copy = new RegExp(regex.source, regex.flags);
   return [...String(text || '').matchAll(copy)];
@@ -57,27 +59,27 @@ function parseInterviewNoteIssue(body) {
   };
 }
 
-function validateSourceTime(sourceTime, errors) {
-  if (!sourceTime || typeof sourceTime !== 'object') {
-    errors.push('record.source_time must be an object');
+function validateTimeFact(fieldName, timeFact, errors) {
+  if (!timeFact || typeof timeFact !== 'object' || Array.isArray(timeFact)) {
+    errors.push(`record.${fieldName} must be an object`);
     return;
   }
-  const { precision, value } = sourceTime;
+  const { precision, value } = timeFact;
   const patterns = {
     exact: /^\d{4}-\d{2}-\d{2}(T.*)?$/,
     month: /^\d{4}-\d{2}$/,
     year: /^\d{4}$/,
   };
   if (precision === 'unknown') {
-    if (value !== null) errors.push('unknown source_time must use value=null');
+    if (value !== null) errors.push(`unknown ${fieldName} must use value=null`);
     return;
   }
   if (!patterns[precision]) {
-    errors.push(`unsupported source_time precision: ${precision}`);
+    errors.push(`unsupported ${fieldName} precision: ${precision}`);
     return;
   }
   if (typeof value !== 'string' || !patterns[precision].test(value)) {
-    errors.push(`source_time value does not match precision ${precision}`);
+    errors.push(`${fieldName} value does not match precision ${precision}`);
   }
 }
 
@@ -86,8 +88,8 @@ function validateRecord(record, marker, errors) {
     errors.push('interview-note-record must be one JSON object');
     return;
   }
-  if (record.schema_version !== 'interview-note-issue.v1') {
-    errors.push('record.schema_version must be interview-note-issue.v1');
+  if (!SUPPORTED_SCHEMAS.has(record.schema_version)) {
+    errors.push('record.schema_version must be a supported InterviewNote Issue schema');
   }
   if (typeof record.interview_note_id !== 'string' || !record.interview_note_id.includes(':')) {
     errors.push('record.interview_note_id must be a stable namespaced id');
@@ -116,7 +118,17 @@ function validateRecord(record, marker, errors) {
     errors.push('record.source_revision.id is required');
   }
 
-  validateSourceTime(record.source_time, errors);
+  if (record.schema_version === 'interview-note-issue.v1') {
+    validateTimeFact('source_time', record.source_time, errors);
+  }
+  if (record.schema_version === 'interview-note-issue.v2') {
+    validateTimeFact('source_published_at', record.source_published_at, errors);
+    validateTimeFact('source_edited_at', record.source_edited_at, errors);
+    validateTimeFact('interview_occurred_at', record.interview_occurred_at, errors);
+    if (Object.prototype.hasOwnProperty.call(record, 'source_time')) {
+      errors.push('v2 record must not use ambiguous source_time');
+    }
+  }
 
   if (!Array.isArray(record.artifacts)) {
     errors.push('record.artifacts must be an array');
@@ -158,8 +170,8 @@ function validateInterviewNoteIssue({ body, labels = [], state = 'open' }) {
     if (!hasSection(body, section)) errors.push(`missing required section: ${section}`);
   }
 
-  if (parsed.marker && parsed.marker.schema_version !== 'interview-note-issue.v1') {
-    errors.push('machine marker schema must be interview-note-issue.v1');
+  if (parsed.marker && !SUPPORTED_SCHEMAS.has(parsed.marker.schema_version)) {
+    errors.push('machine marker schema must be a supported InterviewNote Issue schema');
   }
   validateRecord(parsed.record, parsed.marker, errors);
 
@@ -191,6 +203,7 @@ function validateInterviewNoteIssue({ body, labels = [], state = 'open' }) {
 
 module.exports = {
   REQUIRED_SECTIONS,
+  SUPPORTED_SCHEMAS,
   parseInterviewNoteIssue,
   validateInterviewNoteIssue,
 };

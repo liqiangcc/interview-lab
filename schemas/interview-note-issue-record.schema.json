@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/liqiangcc/interview-lab/schemas/interview-note-issue-record.schema.json",
-  "title": "InterviewNote Issue Record",
+  "title": "InterviewNote Issue Record v2",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -9,32 +9,13 @@
     "interview_note_id",
     "source",
     "source_revision",
-    "source_time",
+    "source_published_at",
+    "source_edited_at",
+    "interview_occurred_at",
     "artifacts"
   ],
-  "properties": {
-    "schema_version": {"const": "interview-note-issue.v1"},
-    "interview_note_id": {"type": "string", "pattern": "^[a-z0-9_-]+:.+$"},
-    "source": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["system", "external_id"],
-      "properties": {
-        "system": {"type": "string", "minLength": 1},
-        "external_id": {"type": "string", "minLength": 1},
-        "url": {"type": ["string", "null"]}
-      }
-    },
-    "source_revision": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["id"],
-      "properties": {
-        "id": {"type": "string", "minLength": 1},
-        "captured_at": {"type": ["string", "null"]}
-      }
-    },
-    "source_time": {
+  "$defs": {
+    "time_fact": {
       "oneOf": [
         {
           "type": "object",
@@ -73,7 +54,33 @@
           }
         }
       ]
+    }
+  },
+  "properties": {
+    "schema_version": {"const": "interview-note-issue.v2"},
+    "interview_note_id": {"type": "string", "pattern": "^[a-z0-9_-]+:.+$"},
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["system", "external_id"],
+      "properties": {
+        "system": {"type": "string", "minLength": 1},
+        "external_id": {"type": "string", "minLength": 1},
+        "url": {"type": ["string", "null"]}
+      }
     },
+    "source_revision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "captured_at": {"type": ["string", "null"]}
+      }
+    },
+    "source_published_at": {"$ref": "#/$defs/time_fact"},
+    "source_edited_at": {"$ref": "#/$defs/time_fact"},
+    "interview_occurred_at": {"$ref": "#/$defs/time_fact"},
     "artifacts": {
       "type": "array",
       "items": {

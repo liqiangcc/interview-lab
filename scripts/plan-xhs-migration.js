@@ -23,13 +23,15 @@ const SOURCE_PROJECTION_PREFIXES = [
   'note_desc/',
 ];
 
+const TIME_FIELDS = ['source_published_at', 'source_edited_at', 'interview_occurred_at'];
+
 function pathHasPrefix(value, prefixes) {
   return prefixes.some((prefix) => value.startsWith(prefix));
 }
 
-function validateSourceTime(sourceTime, errors, noteId) {
-  if (!sourceTime || typeof sourceTime !== 'object') {
-    errors.push(`${noteId}: source_time is required`);
+function validateTimeFact(fieldName, timeFact, errors, noteId) {
+  if (!timeFact || typeof timeFact !== 'object') {
+    errors.push(`${noteId}: ${fieldName} is required`);
     return;
   }
   const patterns = {
@@ -37,25 +39,25 @@ function validateSourceTime(sourceTime, errors, noteId) {
     month: /^\d{4}-\d{2}$/,
     year: /^\d{4}$/,
   };
-  if (sourceTime.precision === 'unknown') {
-    if (sourceTime.value !== null) errors.push(`${noteId}: unknown source_time must have value=null`);
+  if (timeFact.precision === 'unknown') {
+    if (timeFact.value !== null) errors.push(`${noteId}: unknown ${fieldName} must have value=null`);
     return;
   }
-  const pattern = patterns[sourceTime.precision];
+  const pattern = patterns[timeFact.precision];
   if (!pattern) {
-    errors.push(`${noteId}: unsupported source_time precision ${sourceTime.precision}`);
+    errors.push(`${noteId}: unsupported ${fieldName} precision ${timeFact.precision}`);
     return;
   }
-  if (typeof sourceTime.value !== 'string' || !pattern.test(sourceTime.value)) {
-    errors.push(`${noteId}: source_time value does not match ${sourceTime.precision} precision`);
+  if (typeof timeFact.value !== 'string' || !pattern.test(timeFact.value)) {
+    errors.push(`${noteId}: ${fieldName} value does not match ${timeFact.precision} precision`);
   }
 }
 
 function validateManifest(manifest) {
   const errors = [];
   const warnings = [];
-  if (!manifest || manifest.schema_version !== 'xhs-pilot-selection.v1') {
-    errors.push('schema_version must be xhs-pilot-selection.v1');
+  if (!manifest || manifest.schema_version !== 'xhs-pilot-selection.v2') {
+    errors.push('schema_version must be xhs-pilot-selection.v2');
   }
   if (!Array.isArray(manifest && manifest.cases)) {
     errors.push('cases must be an array');
@@ -104,14 +106,32 @@ function validateManifest(manifest) {
       }
     }
 
-    validateSourceTime(item.source_time, errors, noteId);
+    for (const field of TIME_FIELDS) validateTimeFact(field, item[field], errors, noteId);
+    if (Object.prototype.hasOwnProperty.call(item, 'source_time')) {
+      errors.push(`${noteId}: v2 manifest must not use ambiguous source_time`);
+    }
   }
 
   return { ok: errors.length === 0, errors, warnings };
 }
 
+function isKnownTime(timeFact) {
+  return timeFact && timeFact.precision !== 'unknown' && timeFact.value != null;
+}
+
+function chronologyFor(item) {
+  if (isKnownTime(item.interview_occurred_at)) {
+    return { basis: 'interview_occurred_at', time: item.interview_occurred_at };
+  }
+  if (isKnownTime(item.source_published_at)) {
+    return { basis: 'source_published_at_fallback', time: item.source_published_at };
+  }
+  return { basis: 'unknown', time: { precision: 'unknown', value: null } };
+}
+
 function planCase(item) {
   const interviewNoteId = `xhs:${item.note_id}`;
+  const chronology = chronologyFor(item);
   if (item.expected_disposition === 'boundary_review') {
     return {
       note_id: item.note_id,
@@ -119,6 +139,7 @@ function planCase(item) {
       action: 'boundary_review',
       create_issue: false,
       reason: item.purpose,
+      chronology,
     };
   }
 
@@ -128,10 +149,13 @@ function planCase(item) {
     idempotency_key: interviewNoteId,
     action: 'create_or_reconcile_interview_note_issue',
     create_issue: true,
-    machine_marker: `<!-- interview-note: id=${interviewNoteId} schema=interview-note-issue.v1 -->`,
+    machine_marker: `<!-- interview-note: id=${interviewNoteId} schema=interview-note-issue.v2 -->`,
     suggested_title: `[XHS] ${item.note_id}`,
     labels: ['type:interview-note', 'source:xhs', 'status:discovered'],
-    source_time: item.source_time,
+    source_published_at: item.source_published_at,
+    source_edited_at: item.source_edited_at,
+    interview_occurred_at: item.interview_occurred_at,
+    chronology,
     raw_evidence_paths: item.raw_evidence_paths,
     source_projection_paths: item.source_projection_paths,
     derived_comparison_paths: item.derived_comparison_paths,
@@ -140,9 +164,9 @@ function planCase(item) {
 
 function buildPlan(manifest) {
   const validation = validateManifest(manifest);
-  if (!validation.ok) return { schema_version: 'xhs-migration-plan.v1', ok: false, ...validation, plans: [] };
+  if (!validation.ok) return { schema_version: 'xhs-migration-plan.v2', ok: false, ...validation, plans: [] };
   return {
-    schema_version: 'xhs-migration-plan.v1',
+    schema_version: 'xhs-migration-plan.v2',
     ok: true,
     errors: [],
     warnings: validation.warnings,
@@ -174,7 +198,9 @@ module.exports = {
   DERIVED_PREFIXES,
   RAW_PREFIXES,
   SOURCE_PROJECTION_PREFIXES,
+  TIME_FIELDS,
   validateManifest,
+  chronologyFor,
   planCase,
   buildPlan,
   main,
