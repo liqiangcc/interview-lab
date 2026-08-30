@@ -1,0 +1,55 @@
+{
+  "schema_version": "issue-label-taxonomy.v1",
+  "dimensions": {
+    "type": [
+      "type:interview-note",
+      "type:canonical-question"
+    ],
+    "source": [
+      "source:xhs",
+      "source:manual"
+    ],
+    "status": [
+      "status:discovered",
+      "status:captured",
+      "status:source-review",
+      "status:source-ready",
+      "status:blocked"
+    ],
+    "quality": [
+      "quality:source-incomplete",
+      "quality:image-missing",
+      "quality:text-truncated",
+      "quality:duplicate-source"
+    ],
+    "task": [
+      "task:source-recovery",
+      "task:source-review",
+      "task:question-extraction",
+      "task:question-review"
+    ],
+    "priority": [
+      "priority:P0",
+      "priority:P1",
+      "priority:P2"
+    ]
+  },
+  "constraints": {
+    "interview_note": {
+      "required": ["type:interview-note"],
+      "at_most_one_from": ["status"],
+      "forbid_prefixes_for_facts": [
+        "company:",
+        "role:",
+        "year:",
+        "note:",
+        "tech:"
+      ]
+    }
+  },
+  "notes": [
+    "Labels are workflow/query projections, not domain proof.",
+    "High-cardinality facts belong in structured Issue content, not labels.",
+    "The repository may add labels only by an explicit taxonomy revision."
+  ]
+}
