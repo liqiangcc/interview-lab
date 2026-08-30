@@ -1,0 +1,38 @@
+name: Validate InterviewNote Issue
+
+on:
+  issues:
+    types: [opened, edited, labeled, unlabeled, closed, reopened]
+
+permissions:
+  contents: read
+  issues: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Validate InterviewNote projection
+        shell: bash
+        run: |
+          set -euo pipefail
+          mapfile -t labels < <(jq -r '.issue.labels[].name' "$GITHUB_EVENT_PATH")
+          if ! printf '%s\n' "${labels[@]}" | grep -Fxq 'type:interview-note'; then
+            echo 'Not an InterviewNote Issue; skipping.'
+            exit 0
+          fi
+
+          jq -r '.issue.body // ""' "$GITHUB_EVENT_PATH" > /tmp/interview-note-issue.md
+          state="$(jq -r '.issue.state' "$GITHUB_EVENT_PATH")"
+          args=()
+          for label in "${labels[@]}"; do
+            args+=(--label "$label")
+          done
+          node scripts/validate-interview-note-issue.js \
+            /tmp/interview-note-issue.md \
+            --state "$state" \
+            "${args[@]}"
