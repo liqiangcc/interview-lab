@@ -8,18 +8,9 @@
       "issue_number": 1,
       "purpose": "正文信息丰富、包含大量明确面试问题；用于比较 Raw/SourceProjection 与历史 structured/tagged 派生结果，并验证原图缺失场景。",
       "expected_disposition": "issue_candidate",
-      "raw_evidence_paths": [
-        "note_detail/630e2e22000000001103c490.html",
-        "note_images/630e2e22000000001103c490_urls.txt"
-      ],
-      "source_projection_paths": [
-        "note_json/630e2e22000000001103c490.json",
-        "note_desc/630e2e22000000001103c490.txt"
-      ],
-      "derived_comparison_paths": [
-        "note_structured/630e2e22000000001103c490.json",
-        "note_tagged/630e2e22000000001103c490.json"
-      ],
+      "raw_evidence_paths": ["note_detail/630e2e22000000001103c490.html", "note_images/630e2e22000000001103c490_urls.txt"],
+      "source_projection_paths": ["note_json/630e2e22000000001103c490.json", "note_desc/630e2e22000000001103c490.txt"],
+      "derived_comparison_paths": ["note_structured/630e2e22000000001103c490.json", "note_tagged/630e2e22000000001103c490.json"],
       "source_published_at": {"precision": "exact", "value": "2022-08-30"},
       "source_edited_at": {"precision": "unknown", "value": null},
       "interview_occurred_at": {"precision": "unknown", "value": null},
@@ -35,18 +26,9 @@
       "issue_number": 2,
       "purpose": "顺序信息丰富，并明确记录‘有些问题想不起来’等不确定性；用于验证作者不确定性的忠实保存。",
       "expected_disposition": "issue_candidate",
-      "raw_evidence_paths": [
-        "note_detail/63ecd286000000001303fd16.html",
-        "note_images/63ecd286000000001303fd16_urls.txt"
-      ],
-      "source_projection_paths": [
-        "note_json/63ecd286000000001303fd16.json",
-        "note_desc/63ecd286000000001303fd16.txt"
-      ],
-      "derived_comparison_paths": [
-        "note_structured/63ecd286000000001303fd16.json",
-        "note_tagged/63ecd286000000001303fd16.json"
-      ],
+      "raw_evidence_paths": ["note_detail/63ecd286000000001303fd16.html", "note_images/63ecd286000000001303fd16_urls.txt"],
+      "source_projection_paths": ["note_json/63ecd286000000001303fd16.json", "note_desc/63ecd286000000001303fd16.txt"],
+      "derived_comparison_paths": ["note_structured/63ecd286000000001303fd16.json", "note_tagged/63ecd286000000001303fd16.json"],
       "source_published_at": {"precision": "exact", "value": "2023-02-15T20:39:34+08:00"},
       "source_edited_at": {"precision": "exact", "value": "2023-02-16"},
       "interview_occurred_at": {"precision": "exact", "value": "2022-08-02"},
@@ -61,22 +43,12 @@
     },
     {
       "note_id": "6508552c000000001303f499",
+      "issue_number": 3,
       "purpose": "图片主导型面经：正文主要是复盘总结，详细面试顺序存在于图片材料/OCR；用于验证图片证据与 OCR Derived 的边界。",
       "expected_disposition": "issue_candidate",
-      "raw_evidence_paths": [
-        "note_detail/6508552c000000001303f499.html",
-        "note_images/6508552c000000001303f499_urls.txt",
-        "downloaded_images/6508552c000000001303f499/"
-      ],
-      "source_projection_paths": [
-        "note_json/6508552c000000001303f499.json",
-        "note_desc/6508552c000000001303f499.txt"
-      ],
-      "derived_comparison_paths": [
-        "note_img_txt/6508552c000000001303f499.txt",
-        "note_structured/6508552c000000001303f499.json",
-        "note_tagged/6508552c000000001303f499.json"
-      ],
+      "raw_evidence_paths": ["note_detail/6508552c000000001303f499.html", "note_images/6508552c000000001303f499_urls.txt", "downloaded_images/6508552c000000001303f499/"],
+      "source_projection_paths": ["note_json/6508552c000000001303f499.json", "note_desc/6508552c000000001303f499.txt"],
+      "derived_comparison_paths": ["note_img_txt/6508552c000000001303f499.txt", "note_structured/6508552c000000001303f499.json", "note_tagged/6508552c000000001303f499.json"],
       "source_published_at": {"precision": "exact", "value": "2023-09-18T21:48:28+08:00"},
       "source_edited_at": {"precision": "unknown", "value": null},
       "interview_occurred_at": {"precision": "month_day", "value": "09-18"},
@@ -85,50 +57,40 @@
         "Raw HTML 标题直接写明‘9.18快手五战二面凉经’，只证明月日，不能自动补年份。",
         "来源 machine field time=1695044908000，对应 2023-09-18T21:48:28+08:00。",
         "旧仓库保存的 1.webp 为有效非空原图，Git blob 40af8ff629743ee3a549f69fb582b9f1af8e0e39，size=33136。",
-        "note_img_txt 中的详细问题序列属于 OCR Derived；即使看起来合理，也不能替代原图成为 Raw Source。"
+        "note_img_txt 中的详细问题序列属于 OCR Derived；即使看起来合理，也不能替代原图成为 Raw Source。",
+        "Issue #3 live validator 已通过。"
       ]
     },
     {
       "note_id": "656861da000000000f024258",
+      "issue_number": 4,
       "purpose": "叙述正文与多张图片混合；用于验证原始正文、原图 Artifact 与 OCR Derived 的严格分离。",
       "expected_disposition": "issue_candidate",
-      "raw_evidence_paths": [
-        "note_detail/656861da000000000f024258.html",
-        "note_images/656861da000000000f024258_urls.txt",
-        "downloaded_images/656861da000000000f024258/"
-      ],
-      "source_projection_paths": [
-        "note_json/656861da000000000f024258.json",
-        "note_desc/656861da000000000f024258.txt"
-      ],
-      "derived_comparison_paths": [
-        "note_img_txt/656861da000000000f024258.txt",
-        "note_structured/656861da000000000f024258.json",
-        "note_tagged/656861da000000000f024258.json"
-      ],
-      "source_published_at": {"precision": "unknown", "value": null},
-      "source_edited_at": {"precision": "unknown", "value": null},
-      "interview_occurred_at": {"precision": "unknown", "value": null}
+      "raw_evidence_paths": ["note_detail/656861da000000000f024258.html", "note_images/656861da000000000f024258_urls.txt", "downloaded_images/656861da000000000f024258/"],
+      "source_projection_paths": ["note_json/656861da000000000f024258.json", "note_desc/656861da000000000f024258.txt"],
+      "derived_comparison_paths": ["note_img_txt/656861da000000000f024258.txt", "note_structured/656861da000000000f024258.json", "note_tagged/656861da000000000f024258.json"],
+      "source_published_at": {"precision": "exact", "value": "2023-11-30T18:20:10+08:00"},
+      "source_edited_at": {"precision": "exact", "value": "2023-11-30T18:20:10+08:00"},
+      "interview_occurred_at": {"precision": "month_day", "value": "11-27"},
+      "pilot_state": "source-review",
+      "pilot_findings": [
+        "原文直接写明‘11 月 27 日面试’，但没有直接证明年份，因此只保存 month_day=11-27。",
+        "捕获页面 machine fields time 与 lastUpdateTime 均为 1701339610000，对应 2023-11-30T18:20:10+08:00。",
+        "4 张历史下载原图均为非空有效 Git blobs，可以作为 Raw image 证据。",
+        "历史 note_img_txt 包含详细问题和截图文字，但仍严格作为 OCR Derived；不能用它补正文或提高面试时间精度。"
+      ]
     },
     {
       "note_id": "625564d70000000001025e46",
       "purpose": "边界样本：可读内容更像长期面试准备总结，而不是清楚的一次真实面试事件；用于验证 InterviewNote 分类必须 fail closed。",
       "expected_disposition": "boundary_review",
-      "raw_evidence_paths": [
-        "note_detail/625564d70000000001025e46.html",
-        "note_images/625564d70000000001025e46_urls.txt"
-      ],
-      "source_projection_paths": [
-        "note_json/625564d70000000001025e46.json",
-        "note_desc/625564d70000000001025e46.txt"
-      ],
-      "derived_comparison_paths": [
-        "note_structured/625564d70000000001025e46.json",
-        "note_tagged/625564d70000000001025e46.json"
-      ],
+      "raw_evidence_paths": ["note_detail/625564d70000000001025e46.html", "note_images/625564d70000000001025e46_urls.txt"],
+      "source_projection_paths": ["note_json/625564d70000000001025e46.json", "note_desc/625564d70000000001025e46.txt"],
+      "derived_comparison_paths": ["note_structured/625564d70000000001025e46.json", "note_tagged/625564d70000000001025e46.json"],
       "source_published_at": {"precision": "unknown", "value": null},
       "source_edited_at": {"precision": "unknown", "value": null},
-      "interview_occurred_at": {"precision": "unknown", "value": null}
+      "interview_occurred_at": {"precision": "unknown", "value": null},
+      "pilot_state": "selected"
     }
   ]
 }
