@@ -33,18 +33,57 @@ Training / Review
 
 ## Repository domains
 
-- **Source** — raw interview notes and immutable evidence.
+- **Source** — raw interview notes, source revisions, and immutable evidence.
 - **Extraction** — OCR, SourceQuestion extraction, metadata inference, and structural interpretation.
 - **Knowledge** — CanonicalQuestion, relations, analysis, answers, evidence, and derived insights.
-- **Training** — guided reading, mock interviews, review progress, knowledge gaps, and repeated practice.
+- **Training** — guided reading, exploration sessions, mock interviews, review progress, knowledge gaps, and repeated practice.
 - **Issues** — AI/human operational interface and workflow control plane.
 
 ## Foundation documents
 
-- `docs/architecture/boundaries.md`
-- `docs/domain/model.md`
-- `docs/issues/interview-note-issue.md`
-- `docs/workflows/interview-note-lifecycle.md`
-- `docs/learning/source-first-reading.md`
+### Architecture and domain
 
-The first implementation milestone is to freeze these boundaries before migrating historical XHS interview notes into GitHub Issues.
+- `docs/architecture/boundaries.md` — Raw / Derived / Knowledge / Training ownership boundaries.
+- `docs/architecture/source-revisions.md` — immutable source revision and preferred-revision policy.
+- `docs/domain/model.md` — stable domain objects and identities.
+
+### GitHub Issue control plane
+
+- `docs/issues/interview-note-issue.md` — one InterviewNote ↔ one primary Issue contract.
+- `docs/issues/label-taxonomy.md` — low-cardinality workflow/query labels.
+- `docs/workflows/interview-note-lifecycle.md` — source-only lifecycle and close/reopen semantics.
+- `docs/workflows/issue-driven-workflow.md` — AI/human work loop and validator-guarded mutation rules.
+
+### Learning
+
+- `docs/learning/source-first-reading.md` — incremental no-look-ahead reading protocol.
+- `docs/learning/exploration-sessions.md` — repeated bounded passes over the same real interview case.
+
+### Migration and validation
+
+- `docs/migration/xhs-source-migration.md` — historical XHS source classification, idempotent migration, pilot, and chronological migration policy.
+- `docs/validation/invariants.md` — initial hard/review invariants and future validator groups.
+
+## Current phase — protocol first
+
+Do not begin full historical source migration yet.
+
+Current sequence:
+
+```text
+freeze boundaries and protocols
+        ↓
+implement Issue/schema/validator mechanics
+        ↓
+5-case representative pilot
+        ↓
+use the pilot with real AI source-first reading
+        ↓
+review and repair the mechanism
+        ↓
+pass pilot invariants
+        ↓
+full XHS migration by defensible source chronology
+```
+
+The pilot is successful only when the mechanism preserves first-hand evidence, keeps Raw and Derived separate, is idempotent, and supports real sequential AI-assisted learning without future-context leakage.
