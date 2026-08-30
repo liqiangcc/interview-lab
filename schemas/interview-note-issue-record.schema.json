@@ -83,6 +83,7 @@
         "properties": {
           "kind": {"enum": ["html", "json", "text_projection", "image", "image_reference", "other"]},
           "ref": {"type": "string", "minLength": 1},
+          "git_blob_sha": {"type": ["string", "null"], "pattern": "^[0-9a-f]{40}$"},
           "sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
           "provenance": {"enum": ["raw_capture", "source_projection"]}
         }
