@@ -52,13 +52,16 @@
       "source_published_at": {"precision": "exact", "value": "2023-09-18T21:48:28+08:00"},
       "source_edited_at": {"precision": "unknown", "value": null},
       "interview_occurred_at": {"precision": "month_day", "value": "09-18"},
-      "pilot_state": "source-review",
+      "pilot_state": "source-ready",
+      "issue_state": "closed",
       "pilot_findings": [
         "Raw HTML 标题直接写明‘9.18快手五战二面凉经’，只证明月日，不能自动补年份。",
         "来源 machine field time=1695044908000，对应 2023-09-18T21:48:28+08:00。",
         "旧仓库保存的 1.webp 为有效非空原图，Git blob 40af8ff629743ee3a549f69fb582b9f1af8e0e39，size=33136。",
-        "note_img_txt 中的详细问题序列属于 OCR Derived；即使看起来合理，也不能替代原图成为 Raw Source。",
-        "Issue #3 live validator 已通过。"
+        "Raw image SHA-256=0bbf60b5c4faf4f675dca181fbef15b768c4af01e51d153934b9a8709449a260。",
+        "已通过独立视觉读取逐行比对 Raw image 与 note_img_txt：没有问题缺失、顺序变化、语义替换或 OCR 新增，差异只涉及标点/空格规范化。",
+        "OCR 因此可以作为经过 fidelity review 的可读 Derived projection，但 Raw image 仍是证据根。",
+        "Issue #3 已推进到 status:source-ready 并关闭；关闭事件 live validator PASS，完成首个 Source lifecycle 闭环。"
       ]
     },
     {
