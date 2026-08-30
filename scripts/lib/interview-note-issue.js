@@ -118,6 +118,9 @@ function validateRecord(record, marker, errors) {
       if (!['raw_capture', 'source_projection'].includes(artifact.provenance)) {
         errors.push(`artifact[${index}].provenance must distinguish raw_capture/source_projection`);
       }
+      if (artifact.git_blob_sha != null && !/^[0-9a-f]{40}$/.test(artifact.git_blob_sha)) {
+        errors.push(`artifact[${index}].git_blob_sha must be a lowercase 40-char hex digest or null`);
+      }
       if (artifact.sha256 != null && !/^[0-9a-f]{64}$/.test(artifact.sha256)) {
         errors.push(`artifact[${index}].sha256 must be a lowercase 64-char hex digest or null`);
       }
