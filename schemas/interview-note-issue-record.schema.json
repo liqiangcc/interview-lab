@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/liqiangcc/interview-lab/schemas/interview-note-issue-record.schema.json",
+  "title": "InterviewNote Issue Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "interview_note_id",
+    "source",
+    "source_revision",
+    "source_time",
+    "artifacts"
+  ],
+  "properties": {
+    "schema_version": {"const": "interview-note-issue.v1"},
+    "interview_note_id": {"type": "string", "pattern": "^[a-z0-9_-]+:.+$"},
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["system", "external_id"],
+      "properties": {
+        "system": {"type": "string", "minLength": 1},
+        "external_id": {"type": "string", "minLength": 1},
+        "url": {"type": ["string", "null"]}
+      }
+    },
+    "source_revision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "captured_at": {"type": ["string", "null"]}
+      }
+    },
+    "source_time": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["precision", "value"],
+          "properties": {
+            "precision": {"const": "exact"},
+            "value": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}(T.*)?$"}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["precision", "value"],
+          "properties": {
+            "precision": {"const": "month"},
+            "value": {"type": "string", "pattern": "^\\d{4}-\\d{2}$"}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["precision", "value"],
+          "properties": {
+            "precision": {"const": "year"},
+            "value": {"type": "string", "pattern": "^\\d{4}$"}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["precision", "value"],
+          "properties": {
+            "precision": {"const": "unknown"},
+            "value": {"type": "null"}
+          }
+        }
+      ]
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["kind", "ref", "provenance"],
+        "properties": {
+          "kind": {"enum": ["html", "json", "text_projection", "image", "image_reference", "other"]},
+          "ref": {"type": "string", "minLength": 1},
+          "sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+          "provenance": {"enum": ["raw_capture", "source_projection"]}
+        }
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1}
+    }
+  }
+}
