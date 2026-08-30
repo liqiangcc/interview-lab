@@ -51,42 +51,31 @@ interview_occurred_at
     原文能够直接证明的实际面试发生时间
 ```
 
-示例：
-
-```text
-<!-- interview-note-record
-{
-  "schema_version": "interview-note-issue.v2",
-  "interview_note_id": "xhs:<note_id>",
-  "source": {...},
-  "source_revision": {...},
-  "source_published_at": {"precision": "exact", "value": "2023-02-15T20:39:34+08:00"},
-  "source_edited_at": {"precision": "exact", "value": "2023-02-16"},
-  "interview_occurred_at": {"precision": "exact", "value": "2022-08-02"},
-  "artifacts": [...],
-  "limitations": [...]
-}
--->
-```
-
 不能继续使用语义含混的单一 `source_time` 字段创建新记录。
-
-Machine block 不用于替代人类可读正文。
 
 ## 时间事实规则
 
 每个时间字段都显式记录精度：
 
 ```text
-exact   YYYY-MM-DD 或带时区 timestamp
-month   YYYY-MM
-year    YYYY
-unknown value=null
+exact      YYYY-MM-DD 或带时区 timestamp
+month      YYYY-MM
+year       YYYY
+month_day  MM-DD（原文只给月日、年份无法证明）
+unknown    value=null
 ```
 
-禁止为了排序提高时间精度。例如只知道 2023 年时不能持久化为 `2023-01-01`。
+禁止为了排序提高时间精度。例如来源只写“9.18”时，应记录：
 
-三种时间可以同时存在，且可能相差很远。典型情况：作者在 2023 年重新发布一篇 2022 年真实面经。
+```json
+{"precision": "month_day", "value": "09-18"}
+```
+
+而不是因为笔记恰好发布于 2023-09-18，就自动改成 `2023-09-18`。
+
+`month_day` 能保存第一手事实，但没有年份，不能单独用于跨年 chronology 排序。此时 planner 可以显式回退到 `source_published_at`，同时继续保留真实的 `interview_occurred_at=09-18`。
+
+三种时间可以同时存在，且可能相差很远。
 
 ## 可读正文必需章节
 
@@ -103,116 +92,47 @@ unknown value=null
 
 ### 来源身份
 
-可包含来源直接提供或 capture 层确认的信息，例如：
+可包含来源直接提供或 capture 层确认的信息，例如 source system、external source id、original URL、SourceRevision、capture timestamp、来源发布时间/编辑时间、原文明确给出的实际面试时间。
 
-- source system
-- external source id
-- original URL（如有）
-- SourceRevision
-- capture timestamp
-- 来源发布时间 / 编辑时间
-- 原文明确给出的实际面试发生时间
-
-这三类时间必须保持语义独立。
+三类时间必须保持语义独立。
 
 ### 原始标题
 
-只展示能够从第一手来源直接验证的标题。
-
-如果只有 parser 或 Derived 推断结果，必须明确其 provenance，不能升级为 Raw title。
+只展示能够从第一手来源直接验证的标题。如果只有 parser 或 Derived 推断结果，必须明确 provenance，不能升级为 Raw title。
 
 ### 原始正文
 
-忠实展示来源正文或经过 provenance 校验的 readable source projection。
-
-不得：
-
-- 润色原文
-- 纠正技术结论
-- 把陈述改成问题
-- 补写缺失内容
-- 把 OCR 与原始正文静默合并
-
-如果使用 projection，必须明确它不是 Raw bytes，并保持可追溯。
+忠实展示来源正文或经过 provenance 校验的 readable source projection。不得润色、纠正技术结论、把陈述改成问题、补写缺失内容、把 OCR 与原始正文静默合并。
 
 ### 原始附件
 
-引用 HTML、JSON、图片、hash 等不可变 artifact。大体积内容应引用，不要全部复制进 Issue。
-
-如果历史文件存在但实际为空、损坏或不可用，必须明确标记，不能仅因路径存在就视为有效证据。
+引用 HTML、JSON、图片、hash 等不可变 artifact。大体积内容应引用，不要全部复制进 Issue。历史文件存在但为空、损坏或不可用时必须明确标记。
 
 ### 来源限制
 
-显式记录已知缺失、不确定性和采集限制，例如：
-
-- 原图缺失
-- URL 未恢复
-- 某个时间字段 unknown
-- 正文可能截断
-
-Unknown 必须保持 unknown，不能为了流程顺畅而猜测补全。
+显式记录已知缺失、不确定性和采集限制。Unknown 必须保持 unknown。
 
 ### 派生链接
 
-Derived 内容必须与 Raw 清晰隔离，例如：
+Derived 内容必须与 Raw 清晰隔离，例如 SourceQuestion、CanonicalQuestion、ExplorationSession、OCR、历史 `note_structured` / `note_tagged`。
 
-- SourceQuestion
-- CanonicalQuestion
-- ExplorationSession
-- 历史 `note_structured` / `note_tagged`
-
-不得让 Derived 在视觉上成为“原始面经的一部分”。
+**OCR 永远不能因为原图中包含主要面试内容，就被提升成 Raw Source。** OCR 可以成为可读 Derived projection，但正式 Source 仍必须指向原图 artifact。
 
 ## Label
 
-Label taxonomy 的唯一 SSOT：
-
-- `config/issue-labels.json`
-- `docs/issues/label-taxonomy.md`
-
-典型 InterviewNote：
-
-```text
-type:interview-note
-source:xhs
-status:source-review
-quality:image-missing
-task:source-review
-```
-
-Label 只是查询和状态投影，不是领域有效性的 proof。
+Label taxonomy 的唯一 SSOT：`config/issue-labels.json` 与 `docs/issues/label-taxonomy.md`。Label 只是查询和状态投影，不是领域有效性的 proof。
 
 ## Comment
 
-Comment 用于记录：
+Comment 用于记录 source-review finding、recovery attempt、不确定性、decision rationale、ExplorationSession 摘要、commit/report 链接。Comment 不得成为“修订后的 Raw Source”。
 
-- source-review finding
-- recovery attempt
-- uncertainty / decision rationale
-- ExplorationSession 摘要
-- commit / report 链接
+## Close / Reopen
 
-Comment 不得成为“修订后的 Raw Source”替代品。
-
-## Close 语义
-
-正常关闭 InterviewNote Issue 只表示：
-
-> 第一手来源 case 已达到稳定的 `source-ready` 完成状态。
-
-不表示 SourceQuestion、Canonical mapping、Answer 或 learner mastery 完成。
-
-## Reopen 语义
-
-只因 Source 层原因 reopen，例如找到缺失的第一手资料、identity 错误、artifact 损坏、更好的 SourceRevision、截断或 duplicate ownership 变化。
-
-下游知识或训练变化不 reopen Source lifecycle。
+正常关闭只表示第一手 Source case 达到稳定 `source-ready`。只因 Source 层原因 reopen；下游知识或训练变化不 reopen Source lifecycle。
 
 ## 幂等要求
 
-迁移和同步在创建 Issue 前必须按稳定 InterviewNote identity / machine marker 查询。
-
-重复执行必须 reconcile 已有 Issue，而不是创建 duplicate。
+迁移和同步在创建 Issue 前必须按稳定 InterviewNote identity / machine marker 查询。重复执行必须 reconcile 已有 Issue。
 
 ## 核心不变量
 
@@ -221,6 +141,8 @@ Comment 不得成为“修订后的 Raw Source”替代品。
 Issue 是操作文档，不是唯一证据存储。
 Raw 与 Derived 必须可见分离。
 来源发布时间、来源编辑时间、面试发生时间互不替代。
+只知道月日时保存 month_day，不猜年份。
+OCR 永远保持 Derived，并追溯到原图。
 Machine identity 独立于标题和 Issue number。
 迁移和同步必须幂等。
 ```

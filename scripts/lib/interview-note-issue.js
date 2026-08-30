@@ -69,6 +69,7 @@ function validateTimeFact(fieldName, timeFact, errors) {
     exact: /^\d{4}-\d{2}-\d{2}(T.*)?$/,
     month: /^\d{4}-\d{2}$/,
     year: /^\d{4}$/,
+    month_day: /^\d{2}-\d{2}$/,
   };
   if (precision === 'unknown') {
     if (value !== null) errors.push(`unknown ${fieldName} must use value=null`);

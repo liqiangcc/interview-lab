@@ -5,6 +5,7 @@
   "cases": [
     {
       "note_id": "630e2e22000000001103c490",
+      "issue_number": 1,
       "purpose": "正文信息丰富、包含大量明确面试问题；用于比较 Raw/SourceProjection 与历史 structured/tagged 派生结果，并验证原图缺失场景。",
       "expected_disposition": "issue_candidate",
       "raw_evidence_paths": [
@@ -31,6 +32,7 @@
     },
     {
       "note_id": "63ecd286000000001303fd16",
+      "issue_number": 2,
       "purpose": "顺序信息丰富，并明确记录‘有些问题想不起来’等不确定性；用于验证作者不确定性的忠实保存。",
       "expected_disposition": "issue_candidate",
       "raw_evidence_paths": [
@@ -48,7 +50,7 @@
       "source_published_at": {"precision": "exact", "value": "2023-02-15T20:39:34+08:00"},
       "source_edited_at": {"precision": "exact", "value": "2023-02-16"},
       "interview_occurred_at": {"precision": "exact", "value": "2022-08-02"},
-      "pilot_state": "source-review",
+      "pilot_state": "blocked",
       "pilot_findings": [
         "原文直接写明‘2022.08.02提前批面试’，可作为 interview occurrence time。",
         "捕获页面 machine field time 对应 2023-02-15T20:39:34+08:00，属于来源发布时间。",
@@ -75,9 +77,16 @@
         "note_structured/6508552c000000001303f499.json",
         "note_tagged/6508552c000000001303f499.json"
       ],
-      "source_published_at": {"precision": "unknown", "value": null},
+      "source_published_at": {"precision": "exact", "value": "2023-09-18T21:48:28+08:00"},
       "source_edited_at": {"precision": "unknown", "value": null},
-      "interview_occurred_at": {"precision": "unknown", "value": null}
+      "interview_occurred_at": {"precision": "month_day", "value": "09-18"},
+      "pilot_state": "source-review",
+      "pilot_findings": [
+        "Raw HTML 标题直接写明‘9.18快手五战二面凉经’，只证明月日，不能自动补年份。",
+        "来源 machine field time=1695044908000，对应 2023-09-18T21:48:28+08:00。",
+        "旧仓库保存的 1.webp 为有效非空原图，Git blob 40af8ff629743ee3a549f69fb582b9f1af8e0e39，size=33136。",
+        "note_img_txt 中的详细问题序列属于 OCR Derived；即使看起来合理，也不能替代原图成为 Raw Source。"
+      ]
     },
     {
       "note_id": "656861da000000000f024258",

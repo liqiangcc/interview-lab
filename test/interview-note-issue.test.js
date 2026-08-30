@@ -44,6 +44,15 @@ test('unknown interview occurrence time cannot carry invented value', () => {
   assert.match(result.errors.join('\n'), /unknown interview_occurred_at must use value=null/);
 });
 
+test('month_day preserves yearless source date without inventing year', () => {
+  const body = validBody.replace(
+    '"interview_occurred_at": {\n    "precision": "unknown",\n    "value": null\n  }',
+    '"interview_occurred_at": {\n    "precision": "month_day",\n    "value": "09-18"\n  }',
+  );
+  const result = validateInterviewNoteIssue({ body, labels: ['type:interview-note', 'status:captured'] });
+  assert.equal(result.ok, true, JSON.stringify(result.errors));
+});
+
 test('v2 rejects ambiguous source_time field', () => {
   const body = validBody.replace(
     '"source_published_at": {',

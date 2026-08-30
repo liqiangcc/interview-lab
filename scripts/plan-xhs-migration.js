@@ -38,6 +38,7 @@ function validateTimeFact(fieldName, timeFact, errors, noteId) {
     exact: /^\d{4}-\d{2}-\d{2}(T.*)?$/,
     month: /^\d{4}-\d{2}$/,
     year: /^\d{4}$/,
+    month_day: /^\d{2}-\d{2}$/,
   };
   if (timeFact.precision === 'unknown') {
     if (timeFact.value !== null) errors.push(`${noteId}: unknown ${fieldName} must have value=null`);
@@ -115,15 +116,17 @@ function validateManifest(manifest) {
   return { ok: errors.length === 0, errors, warnings };
 }
 
-function isKnownTime(timeFact) {
-  return timeFact && timeFact.precision !== 'unknown' && timeFact.value != null;
+function isSortableChronologyTime(timeFact) {
+  return timeFact
+    && ['exact', 'month', 'year'].includes(timeFact.precision)
+    && timeFact.value != null;
 }
 
 function chronologyFor(item) {
-  if (isKnownTime(item.interview_occurred_at)) {
+  if (isSortableChronologyTime(item.interview_occurred_at)) {
     return { basis: 'interview_occurred_at', time: item.interview_occurred_at };
   }
-  if (isKnownTime(item.source_published_at)) {
+  if (isSortableChronologyTime(item.source_published_at)) {
     return { basis: 'source_published_at_fallback', time: item.source_published_at };
   }
   return { basis: 'unknown', time: { precision: 'unknown', value: null } };
