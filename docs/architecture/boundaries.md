@@ -1,111 +1,109 @@
-# Source and Knowledge Boundaries
+# 来源与知识边界
 
-## Purpose
+## 目的
 
-This document defines the non-negotiable separation between first-hand interview material, derived interpretation, knowledge assets, training state, and GitHub workflow metadata.
+本文定义第一手面经、派生解释、知识资产、训练状态和 GitHub 工作流元数据之间不可跨越的边界。
 
-The repository must remain reconstructable from source evidence even if downstream extraction, canonicalization, analysis, or answers later prove wrong.
+即使后续 OCR、问题提取、Canonical、Analysis 或 Answer 被证明有误，仓库仍必须能够回到第一手证据重新构建。
 
 ## Layer 0 — Raw Source
 
-Raw Source answers only one question:
+Raw Source 只回答一个问题：
 
-> What did the original source actually contain?
+> 原始来源当时实际留下了什么？
 
-Typical material:
+典型内容：
 
-- original page HTML or API response
-- original title and body text
-- original images and their order
-- original source identifier and URL
-- original publication metadata when directly present in the source
-- capture timestamp
-- content hashes and artifact metadata
+- 原始页面 HTML / API 响应
+- 原始标题和正文
+- 原始图片及顺序
+- 原始 source id / URL
+- 来源直接提供的发布时间等元数据
+- capture 时间
+- artifact hash 和存储信息
 
-### Rules
+### 规则
 
-- Raw Source is immutable after capture.
-- Never correct technical mistakes in the original material.
-- Never rewrite awkward language.
-- Never turn statements into questions at this layer.
-- Never fill missing content with AI inference.
-- A later, better capture creates a new source revision; it does not silently overwrite an old snapshot.
+- capture 后的 Raw Source 不可被下游解释覆盖。
+- 不纠正原作者的技术错误。
+- 不润色原文。
+- 不把陈述改写成问题。
+- 不用 AI 补全缺失内容。
+- 找到更完整的第一手资料时创建新的 `SourceRevision`，不能覆盖旧快照。
 
 ## Layer 1 — Derived Extraction
 
-Derived Extraction answers:
+Derived Extraction 回答：
 
-> What can reasonably be extracted or inferred from the raw material?
+> 可以从 Raw 中合理提取或推断出什么？
 
-Examples:
+例如：
 
-- OCR output
-- extracted company / role / round when not explicit source metadata
-- SourceQuestion candidates
-- question boundaries
-- whether a sentence is a question, answer fragment, narration, or noise
-- interview sequence and follow-up candidates
+- OCR
+- 非直接来源字段的公司 / 岗位 / 轮次推断
+- SourceQuestion 候选
+- 问题边界
+- 句子是问题、答案片段、叙述还是噪声的判断
+- 面试顺序和 follow-up 候选
 
-Every derived record should preserve provenance back to Raw Source.
+所有派生记录都应能追溯回 Raw Source。
 
-Derived data may be corrected or regenerated without modifying Raw Source.
+Derived 可以修正、删除或重建，但不能修改 Raw。
 
 ## Layer 2 — Knowledge
 
-Knowledge answers:
+Knowledge 回答：
 
-> What reusable interview knowledge can be built from one or more source records?
+> 可以从一份或多份真实面经中形成什么可复用的面试知识？
 
-Examples:
+例如：
 
 - CanonicalQuestion
-- alias / same / follow-up / parent-child / prerequisite relations
-- question analysis
-- standard answers
-- evidence mappings
-- real phrasing variants
-- expected interview depth
-- company / role / round patterns
+- same / alias / follow-up / parent-child / prerequisite 等关系
+- 题目 Analysis
+- Answer
+- Evidence 映射
+- 真实问法 variants
+- 预期面试深度
+- 公司 / 岗位 / 轮次模式
 
-Knowledge is explicitly revisable. It must never be treated as a reason to rewrite the first-hand source.
+Knowledge 天然允许演化，但绝不能成为回写第一手资料的理由。
 
-## Layer 3 — Training and Review
+## Layer 3 — Training / Review
 
-Training answers:
+Training 回答：
 
-> What has the learner practiced, understood, missed, or internalized?
+> 学习者练过什么、理解了什么、哪里答不上来、哪些反应已经形成？
 
-Examples:
+例如：
 
-- guided reading sessions
-- mock interview sessions
-- response-loop practice
-- knowledge gaps
-- review progress
+- Guided reading session
+- Mock interview session
+- response-loop 训练
+- knowledge gap
+- ReviewProgress
 - recall performance
-- follow-up failures
+- follow-up failure
 
-Training state is personal and temporal. It does not change source facts or knowledge identity.
+Training 是个人化、时间性的状态，不改变 Source 事实，也不改变 Knowledge identity。
 
-## GitHub Issues — Operational Surface
+## GitHub Issue — 操作界面
 
-GitHub Issues provide the primary human/AI working interface.
+GitHub Issue 是主要的人机工作界面，可以作为 InterviewNote、CanonicalQuestion 等领域对象的操作型文档存储，但不能取代不可变 Raw Artifact。
 
-They may act as an operational document store for domain objects such as InterviewNote and CanonicalQuestion, but they do not replace immutable raw artifacts.
+Issue 提供：
 
-Issues provide:
+- 可读的 case 文档
+- Label 查询索引
+- Comment 审核/决策历史
+- assignment 和生命周期管理
+- AI 直接访问入口
 
-- readable case documents
-- labels as queryable workflow indexes
-- comments as review / decision history
-- assignment and lifecycle management
-- direct AI access
+### 硬边界
 
-### Hard boundary
+Issue 编辑、Label、Comment、Close/Reopen 都不得悄悄修改 Raw Source 证据。
 
-Issue edits, labels, comments, and close/reopen actions must not silently mutate Raw Source evidence.
-
-## Allowed dependency direction
+## 允许的依赖方向
 
 ```text
 Raw Source
@@ -117,27 +115,27 @@ Knowledge
 Training / Review
 ```
 
-GitHub Issues may expose and coordinate all layers, but domain truth must retain its layer ownership.
+Issue 可以横跨这些层提供操作入口，但领域事实仍由各自所属层负责。
 
-## Forbidden flows
+## 禁止的流向
 
-The following are prohibited:
+禁止：
 
-- Derived Extraction overwriting Raw Source.
-- CanonicalQuestion rewriting SourceQuestion wording.
-- Answer content correcting the original interview note in place.
-- AI-inferred metadata being presented as directly sourced fact.
-- Labels being treated as sufficient proof of domain validity.
-- A failed validator being bypassed by manually setting an Issue to `ready`.
-- Future interview context influencing interpretation of an earlier learning step.
-- Deleting old source revisions when a better capture is discovered.
+- Derived 覆盖 Raw Source。
+- CanonicalQuestion 改写 SourceQuestion 的原始 wording。
+- Answer 在原面经中直接“纠错”。
+- AI 推断字段伪装成来源明确事实。
+- 只凭 Label 判断领域有效性。
+- Validator 失败后手工加 `ready` 类 Label 绕过门禁。
+- 未来面经内容影响更早步骤的顺序学习解释。
+- 找到更好快照后删除旧 SourceRevision。
 
-## Core invariants
+## 核心不变量
 
 ```text
-Raw source stays fixed.
-Understanding may deepen.
-Derived knowledge may change.
-Every derived claim must remain traceable to its source or evidence.
-Future context must not influence current sequential interpretation.
+Raw Source 保持稳定。
+理解可以不断加深。
+Derived Knowledge 可以变化。
+所有来源型派生结论都应保持可追溯。
+未来上下文不得影响当前顺序解释。
 ```

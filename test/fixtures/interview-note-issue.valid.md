@@ -31,35 +31,35 @@
     }
   ],
   "limitations": [
-    "Pilot fixture: hashes and exact publication timestamp are not yet registered."
+    "Pilot fixture：尚未登记 hash，来源时间只能确认到年份。"
   ]
 }
 -->
 
-## Source identity
+## 来源身份
 
-- Source: XHS
-- External id: `630e2e22000000001103c490`
-- Preferred source revision: `xhs:630e2e22000000001103c490:r1`
+- 来源：XHS
+- External id：`630e2e22000000001103c490`
+- Preferred SourceRevision：`xhs:630e2e22000000001103c490:r1`
 
-## Raw title
+## 原始标题
 
 阿里钉钉面试，15分钟算法题
 
-## Raw content
+## 原始正文
 
-This fixture intentionally contains only a short raw-content excerpt. Pilot migration must replace it with a provenance-checked readable source projection rather than historical structured interpretation.
+这个 fixture 故意只保留一小段可读 Source 内容。正式 pilot migration 必须使用经过 provenance 校验的 readable source projection，不能使用历史结构化解释替代原文。
 
-## Raw artifacts
+## 原始附件
 
-- `note_detail/630e2e22000000001103c490.html` — raw capture
+- `note_detail/630e2e22000000001103c490.html` — Raw capture
 - `note_desc/630e2e22000000001103c490.txt` — readable source projection
 
-## Source limitations
+## 来源限制
 
-- Exact publication time is not established by this fixture.
-- Content hashes are not yet registered.
+- 本 fixture 只能确认到 2023 年，不能伪造更精确日期。
+- Content hash 尚未登记。
 
-## Derived links
+## 派生链接
 
-None in the source-migration fixture.
+Source migration fixture 中不包含 Derived link。

@@ -4,17 +4,30 @@ const MARKER_RE = /<!--\s*interview-note:\s*id=([^\s]+)\s+schema=([^\s]+)\s*-->/
 const RECORD_RE = /<!--\s*interview-note-record\s*\n([\s\S]*?)\n-->/g;
 
 const REQUIRED_SECTIONS = [
-  '## Source identity',
-  '## Raw title',
-  '## Raw content',
-  '## Raw artifacts',
-  '## Source limitations',
-  '## Derived links',
+  '## 来源身份',
+  '## 原始标题',
+  '## 原始正文',
+  '## 原始附件',
+  '## 来源限制',
+  '## 派生链接',
 ];
+
+const LEGACY_SECTION_ALIASES = {
+  '## 来源身份': ['## 来源身份', '## Source identity'],
+  '## 原始标题': ['## 原始标题', '## Raw title'],
+  '## 原始正文': ['## 原始正文', '## Raw content'],
+  '## 原始附件': ['## 原始附件', '## Raw artifacts'],
+  '## 来源限制': ['## 来源限制', '## Source limitations'],
+  '## 派生链接': ['## 派生链接', '## Derived links'],
+};
 
 function allMatches(regex, text) {
   const copy = new RegExp(regex.source, regex.flags);
   return [...String(text || '').matchAll(copy)];
+}
+
+function hasSection(body, section) {
+  return LEGACY_SECTION_ALIASES[section].some((alias) => String(body || '').includes(alias));
 }
 
 function parseInterviewNoteIssue(body) {
@@ -40,7 +53,7 @@ function parseInterviewNoteIssue(body) {
     } : null,
     record,
     recordParseError,
-    sections: REQUIRED_SECTIONS.filter((section) => String(body || '').includes(section)),
+    sections: REQUIRED_SECTIONS.filter((section) => hasSection(body, section)),
   };
 }
 
@@ -119,7 +132,7 @@ function validateRecord(record, marker, errors) {
         errors.push(`artifact[${index}].provenance must distinguish raw_capture/source_projection`);
       }
       if (artifact.git_blob_sha != null && !/^[0-9a-f]{40}$/.test(artifact.git_blob_sha)) {
-        errors.push(`artifact[${index}].git_blob_sha must be a lowercase 40-char hex digest or null`);
+        errors.push(`artifact[${index}].git_blob_sha must be a lowercase 40-char Git object id or null`);
       }
       if (artifact.sha256 != null && !/^[0-9a-f]{64}$/.test(artifact.sha256)) {
         errors.push(`artifact[${index}].sha256 must be a lowercase 64-char hex digest or null`);
@@ -142,7 +155,7 @@ function validateInterviewNoteIssue({ body, labels = [], state = 'open' }) {
   if (parsed.recordParseError) errors.push(`interview-note-record JSON is invalid: ${parsed.recordParseError}`);
 
   for (const section of REQUIRED_SECTIONS) {
-    if (!String(body || '').includes(section)) errors.push(`missing required section: ${section}`);
+    if (!hasSection(body, section)) errors.push(`missing required section: ${section}`);
   }
 
   if (parsed.marker && parsed.marker.schema_version !== 'interview-note-issue.v1') {

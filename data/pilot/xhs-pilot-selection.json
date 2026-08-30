@@ -1,11 +1,11 @@
 {
   "schema_version": "xhs-pilot-selection.v1",
   "source_repository": "liqiangcc/xhs",
-  "selection_policy": "representative source conditions, not chronological production migration",
+  "selection_policy": "优先覆盖不同 Source 条件，用于验证机制；不是正式全量迁移的时间顺序。",
   "cases": [
     {
       "note_id": "630e2e22000000001103c490",
-      "purpose": "text-rich real interview note with many explicit question lines; compare Raw/SourceProjection against legacy structured/tagged outputs",
+      "purpose": "正文信息丰富、包含大量明确面试问题；用于比较 Raw/SourceProjection 与历史 structured/tagged 派生结果，并验证原图缺失场景。",
       "expected_disposition": "issue_candidate",
       "raw_evidence_paths": [
         "note_detail/630e2e22000000001103c490.html",
@@ -19,11 +19,11 @@
         "note_structured/630e2e22000000001103c490.json",
         "note_tagged/630e2e22000000001103c490.json"
       ],
-      "source_time": {"precision": "unknown", "value": null}
+      "source_time": {"precision": "exact", "value": "2022-08-30"}
     },
     {
       "note_id": "63ecd286000000001303fd16",
-      "purpose": "sequence-rich real interview note with explicit forgotten/uncertain questions; tests faithful preservation of author uncertainty",
+      "purpose": "顺序信息丰富，并明确记录‘有些问题想不起来’等不确定性；用于验证作者不确定性的忠实保存。",
       "expected_disposition": "issue_candidate",
       "raw_evidence_paths": [
         "note_detail/63ecd286000000001303fd16.html",
@@ -41,7 +41,7 @@
     },
     {
       "note_id": "6508552c000000001303f499",
-      "purpose": "image-dominant interview note: body is mainly retrospective summary while detailed interview sequence exists in image material/OCR",
+      "purpose": "图片主导型面经：正文主要是复盘总结，详细面试顺序存在于图片材料/OCR；用于验证图片证据与 OCR Derived 的边界。",
       "expected_disposition": "issue_candidate",
       "raw_evidence_paths": [
         "note_detail/6508552c000000001303f499.html",
@@ -61,7 +61,7 @@
     },
     {
       "note_id": "656861da000000000f024258",
-      "purpose": "mixed narrative plus multiple images; tests separation between original body, original image artifacts, and OCR-derived text",
+      "purpose": "叙述正文与多张图片混合；用于验证原始正文、原图 Artifact 与 OCR Derived 的严格分离。",
       "expected_disposition": "issue_candidate",
       "raw_evidence_paths": [
         "note_detail/656861da000000000f024258.html",
@@ -81,7 +81,7 @@
     },
     {
       "note_id": "625564d70000000001025e46",
-      "purpose": "boundary probe: readable source is an accumulated interview-preparation summary rather than clearly one interview event; tests fail-closed InterviewNote classification",
+      "purpose": "边界样本：可读内容更像长期面试准备总结，而不是清楚的一次真实面试事件；用于验证 InterviewNote 分类必须 fail closed。",
       "expected_disposition": "boundary_review",
       "raw_evidence_paths": [
         "note_detail/625564d70000000001025e46.html",

@@ -1,186 +1,178 @@
-# Repository Invariants and Validation Gates
+# 仓库不变量与验证门禁
 
-## Purpose
+## 目的
 
-Interview Lab relies on AI-assisted, Issue-driven workflows. Therefore important boundaries must be enforceable as invariants rather than existing only as prose conventions.
+Interview Lab 大量依赖 AI 协作和 Issue-driven workflow，因此关键边界不能只停留在文字约定，必须能够被 Validator、migration command 和 CI 检查。
 
-This document defines the initial repository-wide invariants that future validators, migration commands, and CI must enforce or report.
-
-## Validation philosophy
+验证哲学：
 
 ```text
-Source evidence
+Source Evidence
     ↓
-explicit operation
+显式 operation
     ↓
 validation
     ↓
-state/projection update
+state / projection update
 ```
 
-When an invariant cannot be proven, fail closed or report the object as unresolved. Do not repair uncertainty by guessing.
+无法证明时 fail closed 或进入 review，绝不通过猜测消除不确定性。
 
 ## Severity
 
-- **HARD** — violation blocks the formal operation or readiness transition.
-- **REVIEW** — violation/signals require explicit review before progression.
-- **INFO** — diagnostic information that does not by itself block state.
+- **HARD**：违规会阻止正式 operation / readiness transition。
+- **REVIEW**：需要显式人工或 AI 审核后才能继续。
+- **INFO**：诊断信息，本身不阻塞。
 
-## Source identity invariants
+## Source identity
 
 ### I1 — Stable InterviewNote identity — HARD
 
-Every InterviewNote has exactly one stable machine identity independent of Issue number, title, display metadata, and file path.
+每个 InterviewNote 必须有唯一稳定 machine identity，独立于 Issue number、title、display metadata 和 file path。
 
-For XHS migration the initial identity is based on source system + external note id.
+XHS 初始 identity 使用 source system + external note id。
 
 ### I2 — One primary Issue per InterviewNote — HARD
 
-A stable InterviewNote identity must resolve to at most one primary `type:interview-note` Issue.
+一个稳定 InterviewNote identity 最多只能对应一个主 `type:interview-note` Issue。
 
-Migration/sync must detect an existing machine marker before creating a new Issue.
+Migration / sync 在 create 前必须先检测 machine marker。
 
-### I3 — Issue marker matches the domain object — HARD
+### I3 — Issue marker 与领域对象一致 — HARD
 
-The InterviewNote Issue must contain a valid machine marker and its identity must agree with all formal references used by migration or synchronization.
+Issue 必须有合法 machine marker，且 identity 与正式 machine record 一致。
 
-## Raw source invariants
+## Raw Source
 
-### I4 — Raw evidence is not overwritten by derived interpretation — HARD
+### I4 — Derived 不覆盖 Raw — HARD
 
-OCR, SourceQuestion extraction, metadata inference, CanonicalQuestion, Analysis, Answer, or Review must never silently replace captured Raw Source.
+OCR、SourceQuestion、metadata inference、CanonicalQuestion、Analysis、Answer、Review 都不得静默替换 Raw Source。
 
-### I5 — Raw artifact provenance is resolvable — HARD
+### I5 — Raw Artifact provenance 可解析 — HARD
 
-Every artifact treated as first-hand evidence must have enough information to locate and identify it, including content identity/hash when the storage contract supports hashing.
+所有被当作第一手证据的 artifact 都必须能够定位和识别；存储支持 hash 时应记录 content identity/hash。
 
-### I6 — SourceRevision immutability — HARD
+### I6 — SourceRevision immutable — HARD
 
-Once a SourceRevision is registered, changing its defining captured artifacts/content creates a new revision rather than mutating the existing revision in place.
+SourceRevision 注册后，如定义它的 artifact/content 发生变化，必须创建新 revision，不能原地修改。
 
-### I7 — Preferred revision belongs to the same InterviewNote — HARD
+### I7 — Preferred revision 属于同一 InterviewNote — HARD
 
-A preferred source revision must resolve to the same InterviewNote identity and pass source-integrity validation.
+preferred revision 必须解析到同一 InterviewNote，并通过 source integrity validation。
 
-### I8 — Unknown remains unknown — HARD
+### I8 — Unknown 保持 Unknown — HARD
 
-Missing source facts must not be replaced by invented precision.
+缺失事实不能被人为补成精确值。例如：
 
-Examples:
+- unknown date 不能变成任意 exact date
+- 缺失图片文字不能编造
+- inferred company/round 不能冒充 sourced metadata
 
-- unknown date must not become an arbitrary exact date
-- absent image text must not be fabricated
-- inferred company/round must not be presented as directly sourced metadata
+## Raw / Derived separation
 
-## Raw / Derived separation invariants
+### I9 — Derived 保留 provenance — HARD
 
-### I9 — Derived records preserve provenance — HARD
+任何声称来自 Source 的 Derived record 都必须能追溯到 InterviewNote，并在可行时追溯到 SourceRevision / source span / artifact。
 
-A derived record that makes a source-grounded claim must be traceable to the InterviewNote and, where practical, the SourceRevision/source span/artifact that produced it.
+### I10 — OCR 默认属于 Derived — HARD
 
-### I10 — OCR is derived unless directly sourced — HARD
+除非来源本身直接提供该文字，否则 OCR 不能显示或存储成原始文本。
 
-OCR output must not be displayed or stored as though the original source itself contained that textual representation.
+### I11 — 历史 XHS Derived 继续属于 Derived — HARD
 
-### I11 — Historical XHS derived data stays derived — HARD
+迁移时 `note_structured`、`note_tagged`、Question、CanonicalQuestion、Answer 等不能因为“已经存在”就升级为 Raw。
 
-During migration, `note_structured`, `note_tagged`, Question, CanonicalQuestion, Answer, and other historical downstream outputs must not be promoted to Raw Source solely because they already exist.
+## InterviewNote lifecycle
 
-## InterviewNote lifecycle invariants
+### I12 — source-ready 含义严格受限 — HARD
 
-### I12 — Source-ready has a bounded meaning — HARD
+`source-ready` 只证明 source identity、已捕获证据、已知 limitation 和 provenance 稳定。
 
-`source-ready` proves source identity, captured evidence, known limitations, and provenance only.
+它不要求也不意味着 SourceQuestion、Canonical mapping、Answer 或 learner mastery 完成。
 
-It must not require or imply completed SourceQuestion extraction, Canonical mapping, Answer readiness, or learner mastery.
+### I13 — 正常关闭必须满足 source-ready — HARD
 
-### I13 — Closed InterviewNote requires source-ready completion — HARD
+InterviewNote 正常 complete close 前必须满足 source-ready contract。
 
-A normal completed InterviewNote Issue may be closed only when its source lifecycle meets the source-ready completion contract.
+未来如支持 terminal non-completion close，必须使用独立显式 reason/state contract，不能伪装成 source-ready。
 
-A terminal non-completion close, if later supported, must use an explicit reason/state contract rather than pretending to be source-ready.
+### I14 — Reopen 只因 Source 原因 — REVIEW
 
-### I14 — Reopen only for source-layer reasons — REVIEW
+Knowledge、Answer、Training 变化不 reopen 已完成的 Source lifecycle。Reopen 应说明 new evidence、truncation、corruption、identity conflict、duplicate remediation 等 Source 原因。
 
-Knowledge, Answer, or training changes do not reopen a completed InterviewNote source lifecycle. A reopen should identify a source-level reason such as new evidence, truncation, corruption, identity conflict, or duplicate-source remediation.
+## Label
 
-## Label invariants
+### I15 — Label 是 projection，不是 proof — HARD
 
-### I15 — Labels are projections, not proof — HARD
+手工存在 `status:*` 不足以证明领域前置条件成立，Validator 必须检查底层 Issue / Source state。
 
-A manually present `status:*` label is not sufficient evidence that the corresponding domain preconditions are satisfied.
+### I16 — Lifecycle Label cardinality — HARD
 
-Validators must assess the underlying Issue/source state.
+一个 open InterviewNote 不得同时存在矛盾 lifecycle labels，例如 `status:captured` 与 `status:source-ready`。
 
-### I16 — Lifecycle label cardinality — HARD
+### I17 — 高基数事实不扩张 Label namespace — REVIEW
 
-An open InterviewNote Issue must not simultaneously carry contradictory lifecycle labels such as both `status:captured` and `status:source-ready`.
+company、role、year、note id、technology、canonical id 等不应成为全局 Label，除非经过新的 taxonomy decision。
 
-### I17 — High-cardinality facts do not expand the label namespace — REVIEW
+## Issue content
 
-Company, role, year, note id, technology, CanonicalQuestion id, and similar unbounded values should not be encoded as global labels without a new explicit taxonomy decision.
+### I18 — Raw 与 Derived 可见区分 — HARD
 
-## Issue content invariants
+Issue readable body 不得把 AI/Derived interpretation 混入第一手 Source body。
 
-### I18 — Source and derived sections are distinguishable — HARD
+### I19 — 大 Artifact 以引用为主 — REVIEW
 
-The readable Issue representation must not visually merge AI/derived interpretation into the first-hand source body.
+HTML、image 等大内容应保留在 Evidence Store，并从 Issue 引用。Readable projection 可以展示，但 provenance 必须清楚。
 
-### I19 — Large artifacts are referenced, not rewritten into a new source — REVIEW
+### I20 — Issue title 非权威 — HARD
 
-HTML, images, and other large artifacts should remain in their evidence storage and be referenced from the Issue. A human-readable projection may be shown, but its provenance must remain clear.
+Issue title 不能成为唯一 identity 或 provenance carrier。
 
-### I20 — Issue title is non-authoritative — HARD
+## Sequential learning
 
-Issue title text may aid navigation but must never be the only identity or provenance carrier.
+### I21 — No look-ahead — HARD（sequential mode）
 
-## Sequential learning invariants
+revealed position `N` 只能使用之前已揭示 Source context + 当前输入。未来 Source unit 不得影响当前解释。
 
-### I21 — No look-ahead — HARD for sequential mode
+### I22 — Session 标明 revision 与 revealed position — REVIEW
 
-At revealed position `N`, a learning/training session may use only previously revealed source context plus the current input. Future source units must not influence current interpretation.
+可复现 sequential ExplorationSession 应记录 SourceRevision 和当前 revealed position/range。
 
-### I22 — Session names source revision and revealed position — REVIEW
+### I23 — Exploration finding 不等于 mutation authorization — HARD
 
-A reproducible sequential ExplorationSession should identify the source revision and current revealed position/range.
+对话发现或 AI suggestion 不能直接修改 SourceQuestion、relation、CanonicalQuestion 或 Answer，必须进入所属领域 operation/review path。
 
-### I23 — Exploration finding is not mutation authorization — HARD
+## Migration
 
-A conversational finding or AI suggestion does not directly mutate SourceQuestion, relation, CanonicalQuestion, or Answer state. It becomes a candidate for the owning domain operation/review path.
+### I24 — Migration idempotent — HARD
 
-## Migration invariants
+重复执行同一 InterviewNote 的 migration/sync 不得产生 duplicate Issue 或 duplicate identity。
 
-### I24 — Migration is idempotent — HARD
+### I25 — Preserve chronology uncertainty — HARD
 
-Running migration/synchronization repeatedly for the same InterviewNote must not create duplicate Issues or duplicate stable identities.
+迁移排序只能使用可辩护 Source time precision；内部 sort key 不得持久化成虚假日期。
 
-### I25 — Migration preserves source chronology uncertainty — HARD
+### I26 — Issue number 不是 chronology — HARD
 
-Migration ordering may use only defensible source time precision. Internal sort keys must not be persisted as invented source dates.
+Issue 创建顺序不能成为权威面经时间。
 
-### I26 — Issue number is not chronology — HARD
+### I27 — Full migration 需要 Pilot gate — HARD
 
-Issue creation number/order must never be used as the authoritative interview/source timestamp.
+文档规定的 pilot exit criteria 通过前不得开始历史 XHS 全量迁移。
 
-### I27 — Full migration requires pilot gate — HARD
+## Concurrency
 
-Full historical XHS migration must not begin until the documented pilot exit criteria pass.
+### I28 — Stale source-dependent write fail closed — HARD
 
-## Concurrency invariants
+如果 operation 基于 SourceRevision `R` 审核，但提交前 relevant source/preferred state 已改变，必须重新评估，不能盲目 apply。
 
-### I28 — Stale source-dependent writes fail closed — HARD
+### I29 — Duplicate identity conflict 阻止自动推进 — HARD
 
-If an operation was reviewed against SourceRevision `R` and the relevant preferred/source state has changed before commit, the operation must be re-evaluated rather than blindly applied.
+如果多个 Issue 或 Source record 声称同一 stable InterviewNote identity，自动状态推进必须停止，直到 ownership 显式解决。
 
-### I29 — Duplicate identity conflict blocks ownership mutation — HARD
+## 初始 Validator group
 
-If multiple Issues or source records claim the same stable InterviewNote identity, automated progression must stop until ownership is explicitly resolved.
-
-## Initial validator groups
-
-Future tooling should expose bounded checks rather than one opaque all-purpose validator.
-
-Recommended groups:
+未来工具应暴露有边界的检查：
 
 ```text
 validate identity
@@ -194,47 +186,47 @@ validate exploration
 validate all
 ```
 
-`validate all` should aggregate the bounded checks and return a machine-readable report.
+`validate all` 聚合这些检查，并返回 machine-readable report。
 
-## Minimum pilot gates
+## Pilot 最低门禁
 
-Before creating more than the pilot InterviewNotes, require at least:
+超过 pilot 数量前至少要求：
 
 ```text
-identity uniqueness            PASS
-Issue marker consistency       PASS
-source artifact traceability   PASS
-Raw/Derived separation         PASS
-label consistency              PASS
-source lifecycle consistency   PASS
-migration idempotency          PASS
-no invented source precision   PASS
-AI can navigate Issue → evidence root PASS
+identity uniqueness                    PASS
+Issue marker consistency               PASS
+source artifact traceability           PASS
+Raw/Derived separation                 PASS
+label consistency                      PASS
+source lifecycle consistency           PASS
+migration idempotency                  PASS
+no invented source precision           PASS
+AI can navigate Issue → evidence root  PASS
 ```
 
 ## Evidence over counts
 
-Aggregate counts do not prove integrity.
+聚合数量不能证明完整性。
 
-For example:
+例如：
 
 ```text
 5 Issues created
 ```
 
-is not a successful pilot if one Issue duplicates an identity or displays OCR as original source text.
+如果其中一个 identity 重复，或把 OCR 当原文展示，pilot 仍然失败。
 
-Completion requires invariant-level evidence.
+完成必须由 invariant-level evidence 证明。
 
-## Core invariant set
+## 核心不变量集合
 
 ```text
-Preserve first-hand evidence.
-Keep identity stable.
-Keep Raw and Derived separate.
-Make uncertainty explicit.
-Use Issues to drive work, not bypass validation.
-Keep sequential learning causal.
-Make migration idempotent.
-Fail closed on stale or ambiguous state.
+保护第一手证据。
+Identity 保持稳定。
+Raw 与 Derived 分离。
+不确定性显式存在。
+Issue 驱动工作，但不能绕过 Validation。
+顺序学习保持因果性。
+Migration 必须幂等。
+遇到 stale / ambiguous state 必须 fail closed。
 ```

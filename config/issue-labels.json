@@ -7,7 +7,10 @@
     ],
     "source": [
       "source:xhs",
-      "source:manual"
+      "source:nowcoder",
+      "source:maimai",
+      "source:manual",
+      "source:other"
     ],
     "status": [
       "status:discovered",
@@ -20,11 +23,16 @@
       "quality:source-incomplete",
       "quality:image-missing",
       "quality:text-truncated",
-      "quality:duplicate-source"
+      "quality:artifact-corrupt",
+      "quality:identity-conflict",
+      "quality:duplicate-source",
+      "quality:provenance-missing"
     ],
     "task": [
       "task:source-recovery",
       "task:source-review",
+      "task:artifact-check",
+      "task:identity-review",
       "task:question-extraction",
       "task:question-review"
     ],
@@ -48,8 +56,8 @@
     }
   },
   "notes": [
-    "Labels are workflow/query projections, not domain proof.",
-    "High-cardinality facts belong in structured Issue content, not labels.",
-    "The repository may add labels only by an explicit taxonomy revision."
+    "Label 只用于工作流和查询投影，不是领域事实的证明。",
+    "公司、岗位、年份、技术等高基数事实进入结构化 Issue 内容，不进入全局 Label。",
+    "新增 Label 必须通过显式 taxonomy revision。"
   ]
 }

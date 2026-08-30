@@ -1,12 +1,12 @@
-# InterviewNote Lifecycle
+# InterviewNote 生命周期
 
-## Purpose
+## 目的
 
-The InterviewNote lifecycle governs only first-hand source capture and source integrity.
+InterviewNote lifecycle 只治理第一手 Source capture 和 Source integrity。
 
-It must not absorb downstream extraction, canonicalization, answer production, or learner review.
+它不能吞并下游 Extraction、Canonicalization、Answer 或 learner review。
 
-## State machine
+## 状态机
 
 ```text
 discovered
@@ -27,15 +27,15 @@ source-review
 
 ## discovered
 
-The source case is known, but first-hand material has not yet been captured sufficiently.
+已经知道存在这篇面经，但第一手资料还没有充分 capture。
 
-Examples:
+例如：
 
-- only a source id is known
-- only a URL or search hit is available
-- title exists but source body/artifacts are missing
+- 只有 source id
+- 只有 URL / search hit
+- 只有 title，但正文或 artifact 缺失
 
-Expected label:
+Label：
 
 ```text
 status:discovered
@@ -43,34 +43,33 @@ status:discovered
 
 ## captured
 
-The available first-hand material has been captured and stored or referenced.
+当前能够获得的第一手资料已经 capture 并保存/引用。
 
-Capture completion is not review completion.
+Capture 完成不等于 review 完成。
 
-Expected label:
+Label：
 
 ```text
 status:captured
 ```
 
-From this point, captured source revisions are immutable.
+从这里开始，已注册 SourceRevision 不可变。
 
 ## source-review
 
-Review only source integrity and provenance.
+只审核 Source integrity 和 provenance，例如：
 
-Typical checks:
+- source id 与 artifact 是否属于同一 case
+- 正文是否异常截断
+- 图片集合/顺序是否完整，或 limitation 是否已记录
+- artifact hash / ref 是否有效
+- 是否存在 duplicate capture
+- 是否存在编码或提取损坏
+- “文件存在”是否真的代表 artifact 有效
 
-- source id and artifacts belong to the same case
-- body is not unexpectedly truncated
-- image set and order are complete or limitations are recorded
-- artifact hashes and references are valid
-- duplicate captures are identified
-- encoding or extraction damage is detected
+这一阶段不判断技术正确性，也不做 Canonical knowledge 审核。
 
-Do not evaluate technical correctness or canonical knowledge at this stage.
-
-Expected label:
+Label：
 
 ```text
 status:source-review
@@ -78,40 +77,39 @@ status:source-review
 
 ## blocked
 
-Use `blocked` when source integrity cannot currently be resolved.
+当 Source integrity 当前无法解决时使用，例如：
 
-Examples:
+- 原图缺失且暂时无法恢复
+- 只剩二手转述
+- source identity 冲突
+- artifact 损坏
+- provenance 缺失
 
-- missing images cannot be recovered
-- only secondary retelling remains
-- source identity conflicts
-- artifact is corrupted
-- required source provenance is unavailable
+绝不能为了 unblock 而编造 Source 内容。
 
-Never fabricate missing source content to unblock the lifecycle.
-
-Expected labels:
+常见 Label：
 
 ```text
 status:blocked
 quality:<specific-source-problem>
+task:source-recovery
 ```
 
 ## source-ready
 
-A source is source-ready when:
+只有满足以下条件才进入：
 
-- source identity is stable
-- available raw material is preserved
-- known missing material is explicitly recorded
-- provenance is sufficient for downstream use
-- no unexplained source-level integrity problem remains
+- source identity 稳定
+- 可获得 Raw Material 已保存
+- 已知缺失明确记录
+- provenance 足够支撑下游使用
+- 没有未解释的 Source-level integrity 问题
 
-`source-ready` means only that the source can be used as a stable first-hand input.
+`source-ready` 只表示 Source 可以作为稳定第一手输入。
 
-It does not imply that extracted questions, canonical mappings, answers, or training state are complete.
+它不表示 SourceQuestion、Canonical、Answer 或 Training 完成。
 
-Expected label:
+Label：
 
 ```text
 status:source-ready
@@ -119,32 +117,32 @@ status:source-ready
 
 ## closed
 
-Close the Issue after it reaches `source-ready` and the source lifecycle is complete.
+达到 `source-ready` 且 Source lifecycle 完成后关闭 Issue。
 
-A closed InterviewNote Issue remains a first-class readable case and may continue to participate in downstream exploration and knowledge construction.
+Closed InterviewNote 仍然是一等可读 case，可以继续参与 Exploration、Knowledge 和 Training。
 
 ## Reopen policy
 
-Reopen for source-layer changes only.
+只因 Source 层变化 reopen，例如：
 
-Valid reasons include:
+- 找到更完整原始快照
+- artifact 绑错 note
+- 发现隐藏 truncation
+- source identity 需要修正
+- duplicate ownership 变化
 
-- a more complete original snapshot is recovered
-- an artifact was linked to the wrong source note
-- hidden truncation is discovered
-- source identity must be corrected
-- duplicate-source resolution changes ownership
+不要因为：
 
-Do not reopen because:
+- SourceQuestion 提取错了
+- Canonical boundary 改变
+- Answer 过期
+- Mock Interview 答失败
 
-- a SourceQuestion was extracted incorrectly
-- a CanonicalQuestion boundary changes
-- an Answer becomes outdated
-- the learner fails a mock interview
+而 reopen Source lifecycle。
 
 ## Revision rule
 
-A better capture produces a new immutable source revision.
+更好的 capture 创建新 SourceRevision：
 
 ```text
 InterviewNote
@@ -152,4 +150,14 @@ InterviewNote
 └── source revision 2
 ```
 
-The newer revision may become preferred for downstream use, but the earlier captured evidence remains available for audit.
+新 revision 可以成为 preferred，但旧 evidence 保留用于审计。
+
+## 核心语义
+
+```text
+InterviewNote 生命周期结束
+≠
+这篇面经的知识价值耗尽
+```
+
+Source 可以 closed，Exploration 和 Knowledge 仍然可以长期继续。

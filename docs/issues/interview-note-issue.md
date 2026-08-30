@@ -1,8 +1,8 @@
-# InterviewNote Issue Contract
+# InterviewNote Issue 契约
 
-## Purpose
+## 目的
 
-A real interview note is managed through one primary GitHub Issue.
+一篇真实面经通过一个主 GitHub Issue 管理。
 
 ```text
 1 InterviewNote
@@ -10,189 +10,195 @@ A real interview note is managed through one primary GitHub Issue.
 1 GitHub Issue
 ```
 
-The Issue is the main AI/human operational document for that case. Immutable raw artifacts remain the evidence root.
+Issue 是该 case 面向 AI / 人的主要操作文档；不可变 Raw Artifact 仍然是证据根。
 
-## Title
+## 标题
 
-Recommended form:
+推荐格式：
 
 ```text
-[XHS] <company-or-unknown> · <role-or-unknown> · <round-or-unknown> · <year-or-unknown> · <short-source-id>
+[XHS] <来源原始标题或可读描述> · <来源时间或 unknown> · <短 source id>
 ```
 
-Title fields are conveniences for people. They are not authoritative domain identity or first-hand source facts unless independently supported by source evidence.
+标题只用于导航，不承担领域 identity。
+
+如果公司、岗位、轮次来自 Derived 推断，而不是来源直接提供，不得通过标题让它看起来像已确认的 Source fact。
 
 ## Machine marker
 
-Every InterviewNote Issue must contain a stable hidden marker near the top:
+每个 InterviewNote Issue 顶部必须包含稳定隐藏 marker：
 
 ```text
 <!-- interview-note: id=<interview-note-id> schema=interview-note-issue.v1 -->
 ```
 
-This marker is used for idempotent synchronization and duplicate detection.
+用于幂等同步、重复检测和机器 identity 解析。
 
-Issue number, title, and creation order must never replace this stable identity.
+## Machine record
 
-## Body sections
+Issue 中应包含一个隐藏的 `interview-note-record` JSON block。字段名、enum、schema version 保持英文稳定。
 
-Recommended order:
+示例：
 
 ```text
-Machine marker
-
-Source identity
-Raw / captured source representation
-Raw artifacts
-Capture and revision metadata
-Known source limitations
-Derived data links
+<!-- interview-note-record
+{
+  "schema_version": "interview-note-issue.v1",
+  "interview_note_id": "xhs:<note_id>",
+  "source": {...},
+  "source_revision": {...},
+  "source_time": {...},
+  "artifacts": [...],
+  "limitations": [...]
+}
+-->
 ```
 
-### Source identity
+机器块不用于替代人类可读正文。
 
-May include directly sourced or capture-level values such as:
+## 可读正文必需章节
+
+推荐固定顺序：
+
+```text
+## 来源身份
+## 原始标题
+## 原始正文
+## 原始附件
+## 来源限制
+## 派生链接
+```
+
+### 来源身份
+
+可包含来源直接提供或 capture 层确认的信息，例如：
 
 - source system
 - external source id
-- original URL when available
-- source revision id
+- original URL（如有）
+- SourceRevision
 - capture timestamp
+- 来源页面显示时间及其精度
 
-When a display field such as company, role, round, or year is inferred rather than directly sourced, keep that distinction explicit.
+来源时间与“实际面试发生时间”是不同概念。只有在原文明确时才能认定 interview-event time。
 
-### Raw / captured source representation
+### 原始标题
 
-Display the captured first-hand text faithfully, or a clearly identified deterministic source projection that is traceable to an immutable SourceRevision.
+只展示能够从第一手来源直接验证的标题。
 
-Do not:
+如果只有 parser 或 Derived 推断结果，必须明确其 provenance，不能升级为 Raw title。
 
-- rewrite awkward wording
-- correct technical claims
-- turn statements into questions
-- insert missing content
-- silently merge OCR and source body as though both were original text
-- promote historical AI-structured fields into Raw Source without source evidence
+### 原始正文
 
-When multiple source representations exist, label them explicitly.
+忠实展示来源正文或经过 provenance 校验的 readable source projection。
 
-### Raw artifacts
+不得：
 
-Link or reference immutable artifacts such as HTML, captured JSON/source payloads, images, and content hashes rather than copying very large payloads into the Issue body.
+- 润色原文
+- 纠正技术结论
+- 把陈述改成问题
+- 补写缺失内容
+- 把 OCR 与原始正文静默合并
 
-The Issue must provide enough information for an AI/human reviewer to navigate back to the evidence root.
+如果使用 projection，必须明确它不是 Raw bytes，并保持可追溯。
 
-### Capture and revision metadata
+### 原始附件
 
-Identify the SourceRevision represented by the Issue and, when applicable, the currently preferred revision.
+引用 HTML、JSON、图片、hash 等不可变 artifact。大体积内容应引用，不要全部复制进 Issue。
 
-Source revision semantics are defined in:
+如果历史文件存在但实际为空、损坏或不可用，必须明确标记，不能仅因路径存在就视为有效证据。
 
-```text
-docs/architecture/source-revisions.md
-```
+### 来源限制
 
-### Known source limitations
+显式记录已知缺失、不确定性和采集限制，例如：
 
-Record source-level limitations explicitly, for example:
+- 原图缺失
+- URL 未恢复
+- timestamp 只能确认到年份
+- 正文可能截断
 
-- original image missing
-- body capture truncated
-- publication time unavailable
-- source URL unavailable
+Unknown 必须保持 unknown，不能为了流程顺畅而猜测补全。
 
-Missing information must remain missing rather than being repaired by AI inference.
+### 派生链接
 
-### Derived data links
+Derived 内容必须与 Raw 清晰隔离，例如：
 
-Derived content must be clearly separated from first-hand material.
+- SourceQuestion
+- CanonicalQuestion
+- ExplorationSession
+- 历史 `note_structured` / `note_tagged`
 
-Examples:
+不得让 Derived 在视觉上成为“原始面经的一部分”。
 
-- OCR
-- SourceQuestion count / records
-- linked CanonicalQuestions
-- exploration sessions
-- analysis status
+## Label
 
-Derived content must never be visually presented as part of the original note.
+Label taxonomy 的唯一 SSOT：
 
-## Labels
+- `config/issue-labels.json`
+- `docs/issues/label-taxonomy.md`
 
-The canonical label taxonomy is defined only in:
-
-```text
-docs/issues/label-taxonomy.md
-```
-
-This Issue contract does not maintain a second independent label list.
-
-At minimum an InterviewNote Issue uses:
+典型 InterviewNote：
 
 ```text
 type:interview-note
-source:<source>
-status:<source-lifecycle-state>
+source:xhs
+status:source-review
+quality:image-missing
+task:source-review
 ```
 
-Additional quality/task/priority labels must follow the taxonomy SSOT.
+Label 只是查询和状态投影，不是领域有效性的 proof。
 
-Labels are workflow/query projections. Their presence does not by itself prove source validity or authorize a lifecycle transition.
+## Comment
 
-## Comments
+Comment 用于记录：
 
-Comments record review observations, recovery attempts, decisions, and exploration history.
+- source-review finding
+- recovery attempt
+- uncertainty / decision rationale
+- ExplorationSession 摘要
+- commit / report 链接
 
-Comments must not be used to silently replace first-hand source content.
+Comment 不得成为“修订后的 Raw Source”替代品。
 
-A correction to a derived interpretation belongs in the derived layer. A better source capture creates a new SourceRevision.
+## Close 语义
 
-Exploration comments should preserve reusable findings and checkpoints rather than dumping large repetitive AI transcripts.
+正常关闭 InterviewNote Issue 只表示：
 
-## Close semantics
+> 第一手来源 case 已达到稳定的 `source-ready` 完成状态。
 
-Closing an InterviewNote Issue normally means only:
+不表示：
 
-> The first-hand source case has reached a stable `source-ready` state under the source lifecycle and validation contracts.
+- SourceQuestion 全部正确
+- Canonical mapping 完成
+- Answer 完成
+- 学习者已经掌握
 
-It does not mean:
+## Reopen 语义
 
-- all SourceQuestions are perfect
-- CanonicalQuestion mapping is complete
-- answers are ready
-- the learner has mastered the case
-- the InterviewNote can never be explored again
+只因 Source 层原因 reopen，例如：
 
-## Reopen semantics
+- 找到之前缺失的第一手资料
+- source identity 错误
+- artifact 损坏
+- 找到更好的 SourceRevision
+- 发现截断
+- duplicate-source ownership 需要处理
 
-Reopen only for source-layer reasons such as:
+下游知识或训练变化不 reopen Source lifecycle。
 
-- newly discovered missing source material
-- wrong source identity
-- corrupted artifact
-- better SourceRevision
-- previously unnoticed truncation
-- duplicate-source resolution
+## 幂等要求
 
-Downstream knowledge or training changes do not reopen the InterviewNote source lifecycle.
+迁移和同步在创建 Issue 前必须按稳定 InterviewNote identity / machine marker 查询。
 
-## Idempotency requirement
+重复执行必须 reconcile 已有 Issue，而不是创建 duplicate。
 
-Migration and synchronization must query by stable InterviewNote identity / machine marker before creating an Issue.
-
-Repeated runs must reconcile the existing Issue projection rather than create duplicates.
-
-If multiple primary Issues claim the same stable identity, automated progression must fail closed until ownership is resolved.
-
-## Validation references
-
-The Issue must remain consistent with:
+## 核心不变量
 
 ```text
-docs/architecture/boundaries.md
-docs/architecture/source-revisions.md
-docs/issues/label-taxonomy.md
-docs/workflows/interview-note-lifecycle.md
-docs/workflows/issue-driven-workflow.md
-docs/validation/invariants.md
+一篇真实面经一个主 Issue。
+Issue 是操作文档，不是唯一证据存储。
+Raw 与 Derived 必须可见分离。
+Machine identity 独立于标题和 Issue number。
+迁移和同步必须幂等。
 ```

@@ -1,33 +1,31 @@
-# Issue Label Taxonomy
+# Issue Label 分类体系
 
-## Purpose
+## 目的
 
-Labels are the low-cardinality query and workflow index for Interview Lab.
+Label 是 Interview Lab 的低基数查询索引和工作流索引，让人和 AI 不必解析所有 Issue body 就能快速找到下一项工作。
 
-They exist so humans and AI agents can quickly find the next relevant domain object without parsing every Issue body.
+Label 属于操作元数据。它不能单独证明 Source 完整、Knowledge 正确、Answer 合格或学习者已掌握。
 
-Labels are operational metadata. They are not sufficient proof of source integrity, knowledge validity, answer quality, or learner mastery.
+## 设计规则
 
-## Design rules
+1. Label 必须低基数、可复用。
+2. 不同 Label family 表达正交维度，不把多个含义塞进一个 Label。
+3. 公司、岗位、年份、source id、technology、canonical id 等高基数事实进入结构化正文或生成索引，不进入全局 Label namespace。
+4. lifecycle Label 是验证后状态的 projection，手工加 Label 不能绕过 Validator。
+5. 对互斥 family，一个 Issue 正常最多只有一个 active Label。
 
-1. Labels must be low-cardinality and reusable across many Issues.
-2. Labels should describe orthogonal dimensions rather than encode several meanings in one string.
-3. High-cardinality facts such as company, role, year, source id, technology, or canonical id belong in structured Issue content or generated indexes, not in the global label namespace.
-4. Lifecycle labels are projections of validated state. Manually applying a lifecycle label must not bypass validators.
-5. One Issue should normally have at most one active label from each mutually exclusive family.
+## 核心 family
 
-## Core families
-
-### Object type
+### 对象类型
 
 ```text
 type:interview-note
 type:canonical-question
 ```
 
-The initial implementation should support `type:interview-note` first. Additional types are introduced only after their Issue contracts exist.
+初期优先实现 `type:interview-note`。其他类型必须先有正式 Issue contract。
 
-### Source
+### 来源
 
 ```text
 source:xhs
@@ -37,11 +35,11 @@ source:manual
 source:other
 ```
 
-Source labels identify the source system, not the company interviewed.
+Source Label 表示数据来源平台，不表示被面试公司。
 
-### InterviewNote lifecycle
+### InterviewNote 生命周期
 
-Exactly one active lifecycle label is expected while an InterviewNote Issue is open:
+InterviewNote Issue 处于 open 状态时，正常只应有一个：
 
 ```text
 status:discovered
@@ -51,11 +49,11 @@ status:source-ready
 status:blocked
 ```
 
-Closing the Issue is an additional GitHub lifecycle event; it does not create a separate domain state beyond the source lifecycle contract.
+GitHub Close 是额外的操作事件，不另造领域状态。
 
-### Source-quality signals
+### 来源质量信号
 
-Use only when the condition is currently relevant:
+只在当前问题仍存在时使用：
 
 ```text
 quality:source-incomplete
@@ -67,11 +65,9 @@ quality:duplicate-source
 quality:provenance-missing
 ```
 
-Quality labels are review signals, not replacements for a recorded limitation or decision.
+Quality Label 是审核信号，不能替代 limitation / decision record。
 
-### Work intent
-
-Use these when an Issue needs a specific next action beyond its lifecycle state:
+### 工作意图
 
 ```text
 task:source-review
@@ -80,11 +76,9 @@ task:artifact-check
 task:identity-review
 ```
 
-Do not use task labels to represent durable domain facts.
+Task Label 只表示下一步工作，不表示长期领域事实。
 
-### Priority
-
-Optional operational priority:
+### 优先级
 
 ```text
 priority:P0
@@ -92,11 +86,11 @@ priority:P1
 priority:P2
 ```
 
-Priority is only for work scheduling. It must not be confused with question importance or interview frequency unless a later contract explicitly defines such semantics.
+这里只表示工作调度优先级，不等同于题目重要性或真实面试频率。
 
-## Recommended InterviewNote combinations
+## 推荐组合
 
-Newly discovered source:
+刚发现：
 
 ```text
 type:interview-note
@@ -104,7 +98,7 @@ source:xhs
 status:discovered
 ```
 
-Captured and awaiting source integrity review:
+已 capture，等待来源审核：
 
 ```text
 type:interview-note
@@ -113,7 +107,7 @@ status:source-review
 task:source-review
 ```
 
-Blocked by a missing image:
+因原图缺失 blocked：
 
 ```text
 type:interview-note
@@ -123,7 +117,7 @@ quality:image-missing
 task:source-recovery
 ```
 
-Source-ready before close:
+来源完成、准备关闭：
 
 ```text
 type:interview-note
@@ -131,13 +125,12 @@ source:xhs
 status:source-ready
 ```
 
-## Forbidden label patterns
+## 禁止的 Label 模式
 
-Do not create unbounded taxonomies such as:
+不要创建无限增长的 taxonomy：
 
 ```text
 company:alibaba
-company:tencent
 role:java-backend
 year:2023
 note:630e2e...
@@ -145,35 +138,33 @@ tech:redis
 canonical:cq_...
 ```
 
-These values grow with the data set and should live in structured fields or generated indexes.
+也不得把 AI 推断伪装成 Source fact。例如 AI 猜测是二面，不应生成一个暗示“来源明确写了二面”的 Source-level Label。
 
-Do not encode derived judgments as though they were source facts. For example, an AI guess that a note is a second-round interview must not become a source-level label that implies the original source explicitly said so.
+## 状态转换规则
 
-## State transition rule
-
-A lifecycle transition follows:
+正确方向：
 
 ```text
-requested operation
+请求操作
     ↓
-domain/source validation
+领域 / Source 验证
     ↓
-validated state change
+正式状态变化
     ↓
-Issue label synchronization
+同步 Issue Label
 ```
 
-Not:
+禁止：
 
 ```text
-manual label change
+手工修改 Label
     ↓
-assume domain state is valid
+反过来假设领域状态有效
 ```
 
-## Query intent
+## 查询目标
 
-Labels should make queries such as these cheap and predictable:
+Label 应让这些查询简单稳定：
 
 ```text
 type:interview-note status:source-review
@@ -183,4 +174,4 @@ type:interview-note status:blocked quality:image-missing
 type:interview-note source:xhs status:source-ready
 ```
 
-The label system is successful when an AI agent can locate the next work item quickly while still needing the underlying Issue and source evidence to make substantive decisions.
+成功标准是：AI 能快速找到下一项工作，但仍必须读取 Issue 与 Source Evidence 才能做实质判断。

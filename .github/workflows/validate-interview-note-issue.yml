@@ -1,4 +1,4 @@
-name: Validate InterviewNote Issue
+name: 校验 InterviewNote Issue
 
 on:
   issues:
@@ -16,13 +16,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: Validate InterviewNote projection
+      - name: 校验 InterviewNote projection
         shell: bash
         run: |
           set -euo pipefail
           mapfile -t labels < <(jq -r '.issue.labels[].name' "$GITHUB_EVENT_PATH")
           if ! printf '%s\n' "${labels[@]}" | grep -Fxq 'type:interview-note'; then
-            echo 'Not an InterviewNote Issue; skipping.'
+            echo '不是 InterviewNote Issue，跳过。'
             exit 0
           fi
 

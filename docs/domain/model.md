@@ -1,38 +1,36 @@
-# Domain Model
+# 领域模型
 
-## Purpose
+## 目的
 
-This document defines the core domain objects without committing the repository to a specific database implementation.
+本文定义 Interview Lab 的核心领域对象，不绑定具体数据库实现。
 
-The model is source-first: reusable knowledge and training state are derived from real interview material while preserving provenance.
+模型采用 source-first：从真实面经派生可复用知识和训练状态，同时保留完整 provenance。
 
 ## InterviewNote
 
-Represents one real interview-note case from one source.
+表示一个来源中的一篇真实面经 case。
 
-Responsibilities:
+职责：
 
-- stable identity for one source case
-- reference to immutable raw artifacts
-- source provenance
-- source revisions
-- operational Issue linkage
+- 稳定 identity
+- 引用不可变 Raw Artifact
+- 保存 source provenance
+- 管理 SourceRevision
+- 关联主 GitHub Issue
 
-It must not own canonical knowledge or corrected technical interpretation.
+它不拥有 Canonical 知识，也不负责“纠正”原始技术表述。
 
 ## SourceArtifact
 
-Represents one captured piece of source evidence.
-
-Examples:
+表示一次采集得到的来源证据，例如：
 
 - HTML snapshot
 - API JSON snapshot
-- original text export
+- 原始 text export
 - image
-- video/audio when applicable
+- 未来可能支持的 video/audio
 
-Recommended identity fields:
+推荐 identity 字段：
 
 - artifact id
 - interview note id
@@ -44,23 +42,23 @@ Recommended identity fields:
 
 ## SourceQuestion
 
-Represents a question-like unit derived from one InterviewNote.
+表示从某个 InterviewNote 中派生的问题型单元。
 
-Important properties:
+重要属性：
 
-- original wording or exact source span
+- 原始 wording 或准确 source span
 - source location / provenance
 - sequence position
 - extraction status
-- interpretation confidence when applicable
+- 必要时记录 interpretation confidence
 
-A SourceQuestion is not rewritten into a polished knowledge question.
+SourceQuestion 不应该被润色成标准知识题。
 
 ## QuestionRelation
 
-Represents an explicit relation between SourceQuestions and/or CanonicalQuestions.
+表示 SourceQuestion 和/或 CanonicalQuestion 之间的显式关系。
 
-Potential relation types include:
+可能包括：
 
 - same
 - alias
@@ -70,57 +68,55 @@ Potential relation types include:
 - contrast
 - related
 
-Relations are derived decisions, not raw facts unless the source explicitly establishes them.
+除非原文直接建立该关系，否则关系属于 Derived decision。
 
 ## CanonicalQuestion
 
-Represents a reusable interview-knowledge identity that may aggregate one or more SourceQuestions.
+表示可跨面经复用的标准问题 identity，可以聚合一个或多个 SourceQuestion。
 
-Responsibilities:
+职责：
 
-- stable knowledge boundary
-- source variant membership
-- relationship ownership
-- link to analysis and answer assets
+- 稳定知识边界
+- 管理真实问法/source variant membership
+- 拥有知识关系
+- 关联 Analysis 和 Answer
 
-Canonicalization must preserve reverse traceability to every contributing SourceQuestion and InterviewNote.
+Canonicalization 必须能够反向追溯到每个贡献的 SourceQuestion 和 InterviewNote。
 
 ## Analysis
 
-Represents derived reasoning about a CanonicalQuestion.
+表示围绕 CanonicalQuestion 的派生分析，例如：
 
-Examples:
-
-- what the interviewer is testing
-- expected answer depth
+- 面试官在考什么
+- 预期回答深度
 - mechanism decomposition
-- boundaries and trade-offs
-- common confusion
-- likely follow-up dimensions
+- boundary / trade-off
+- 常见误区
+- 合理 follow-up 方向
 
-Analysis may evolve independently of the source.
+Analysis 可以独立于 Source 演化。
 
 ## Answer
 
-Represents a prepared response to a CanonicalQuestion.
+表示针对 CanonicalQuestion 准备的回答。
 
-An Answer may include:
+可以包含：
 
-- short conclusion
-- one-minute structure
-- deeper explanation
-- boundaries / version constraints
-- examples
-- follow-up answers
-- source/evidence references
+- 简短结论
+- 一分钟回答骨架
+- 深入解释
+- 边界 / 版本约束
+- 示例
+- follow-up 回答
+- evidence 引用
 
-Answer correctness must be judged against external technical evidence and source variants, not by rewriting first-hand interview material.
+Answer 的正确性依赖外部技术证据和真实 source variants，而不是通过改写面经来“证明”。
 
 ## ExplorationSession
 
-Represents one pass of AI/human exploration over an InterviewNote or CanonicalQuestion.
+表示一次针对 InterviewNote 或知识对象的有边界探索/学习过程。
 
-Useful fields:
+有用字段包括：
 
 - session id
 - target object
@@ -128,17 +124,15 @@ Useful fields:
 - focus
 - revealed source position
 - findings
-- new relation candidates
+- relation candidates
 - knowledge gaps
 - actions produced
 
-Exploration is appendable and repeatable. A case is never considered permanently exhausted merely because one pass completed.
+Exploration 可重复、可追加。一篇面经不会因为完成一轮探索就“永久处理完毕”。
 
 ## ReviewProgress
 
-Represents training state for a learner against a knowledge object or interview case.
-
-Examples:
+表示学习者针对某个知识对象或面经 case 的训练状态，例如：
 
 - recall status
 - last reviewed time
@@ -147,9 +141,9 @@ Examples:
 - weak dimensions
 - next review suggestion
 
-ReviewProgress is not source truth and must not modify source or knowledge identity.
+ReviewProgress 不是 Source truth，不得修改 Source 或 Knowledge identity。
 
-## Object graph
+## 对象关系
 
 ```text
 InterviewNote
@@ -168,8 +162,8 @@ InterviewNote / CanonicalQuestion
             └── ExplorationSession*
 ```
 
-## Identity rule
+## Identity 规则
 
-Every long-lived domain object must have a stable machine identity independent of GitHub Issue number, title, file path, or display text.
+所有长期存在的领域对象都必须拥有独立于 GitHub Issue number、Issue title、文件路径和展示文本的稳定 machine identity。
 
-GitHub Issue numbers are locators in the operational interface, not domain identities.
+GitHub Issue number 只是操作界面的 locator，不是领域 identity。

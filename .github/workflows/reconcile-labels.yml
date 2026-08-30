@@ -1,4 +1,4 @@
-name: Reconcile Labels
+name: 同步 Issue Labels
 
 on:
   push:
@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Reconcile labels
+      - name: 同步 Label taxonomy
         env:
           GH_TOKEN: ${{ github.token }}
         run: bash scripts/reconcile-labels.sh

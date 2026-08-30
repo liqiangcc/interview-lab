@@ -1,4 +1,4 @@
-name: CI
+name: 仓库校验
 
 on:
   push:
@@ -16,4 +16,5 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: npm run check
+      - name: 运行测试与契约校验
+        run: npm run check

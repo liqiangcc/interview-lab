@@ -1,115 +1,109 @@
-# Exploration Sessions
+# ExplorationSession 探索会话
 
-## Purpose
+## 目的
 
-A real interview note is not a one-time ETL input. It is a case that can be revisited repeatedly to deepen understanding, test response patterns, discover relations, and expose knowledge gaps.
+真实面经不是一次性 ETL 输入，而是可以反复回看的 case。我们可以不断从中加深理解、验证回答模式、发现关系、暴露知识缺口。
 
-`ExplorationSession` records one bounded pass over an InterviewNote or knowledge object without modifying Raw Source.
+`ExplorationSession` 表示一次有明确边界的探索/学习过程，不修改 Raw Source。
 
-## Principle
+## 原则
 
 ```text
-Source stays fixed.
-Exploration accumulates.
-Understanding may deepen or change.
+Source 保持稳定。
+Exploration 不断累积。
+理解可以继续加深或修正。
 ```
 
-Do not mark an InterviewNote as permanently "processed" merely because one exploration pass completed.
+不能因为完成一轮探索，就把 InterviewNote 标记成永久 `processed=true`。
 
 ## Session target
 
-A session should identify one primary target:
+一次 session 应有一个主目标：
 
 ```text
 InterviewNote
-or
+或
 CanonicalQuestion
 ```
 
-The initial implementation should prioritize InterviewNote sessions because real interview cases drive learning and later knowledge construction.
+初期优先支持 InterviewNote，因为真实面经负责驱动学习和后续知识建设。
 
-## Session modes
+## Session mode
 
 ### Learning
 
-AI incrementally explains the current source unit and observable reasoning structure.
+AI 一点一点解释当前 Source unit 和可观察的 reasoning structure。
 
-Goal:
+目标：
 
-- recognize cues
-- identify the current problem type
-- activate relevant knowledge structure
-- form a response skeleton
-- understand why new input changes the interpretation
+- 识别 cue
+- 判断当前问题类型
+- 激活相关知识结构
+- 形成 response skeleton
+- 理解新输入为什么改变之前判断
 
 ### Training
 
-AI behaves closer to an interviewer and withholds explanation until an appropriate checkpoint.
+AI 更接近面试官，在合适 checkpoint 前不主动解释。
 
-Goal:
+目标：
 
-- test spontaneous recognition
-- test response structure
-- test follow-up handling
-- reveal where the learner's response loop breaks
+- 测 spontaneous recognition
+- 测 response structure
+- 测 follow-up handling
+- 找出反应链路在哪里断掉
 
 ### Source analysis
 
-Focuses on derived structure rather than learner performance.
+重点分析来源结构，而不是学习者表现，例如：
 
-Examples:
-
-- SourceQuestion boundaries
+- SourceQuestion boundary
 - sequence segmentation
-- follow-up candidates
+- follow-up candidate
 - source ambiguity
-- real phrasing variants
+- real phrasing variant
 
 ### Knowledge audit
 
-Uses the source case to challenge existing knowledge assets.
-
-Examples:
+用真实面经挑战现有 Knowledge，例如：
 
 - Canonical mapping coverage
-- Answer coverage of real source variants
-- missing follow-up handling
-- knowledge-boundary problems
+- Answer 是否覆盖真实问法
+- 缺失的 follow-up handling
+- Knowledge boundary 问题
 
-## No-look-ahead constraint
+## No-look-ahead
 
-For sequential InterviewNote exploration, every session has a revealed position.
+顺序探索必须维护 revealed position。
 
-At source position `N`, the session may use only:
+当处于 Source position `N` 时，只能使用：
 
 ```text
 source units 1..N
 +
-prior knowledge allowed by the selected mode
+当前 mode 允许使用的已有知识
 ```
 
-It must not use source units `N+1..end` to explain, predict, or score the current step.
+禁止使用 `N+1..end` 来解释、预测或评分当前步骤。
 
-A later session may revisit earlier positions with more knowledge, but it should explicitly state that it is retrospective analysis rather than real-time simulation.
+后来的 session 可以带着更多知识回看早期位置，但必须明确这是 retrospective analysis，而不是实时模拟。
 
-## Small-step interaction
+## 小步交互
 
-Default granularity:
+默认粒度：
 
 ```text
-one source input
-→ one interpretation layer
-→ pause/consume
-→ next layer
+一个 Source 输入
+→ 一个解释层
+→ 消化 / 停顿
+→ 下一层
 ```
 
-Do not automatically dump literal meaning, intent, answer, follow-ups, and final analysis at once.
+不要一次性把字面意思、考察意图、完整答案、follow-up 和总结全部倒出来。
 
-The purpose is to train a reusable mental path rather than maximize summary density.
+目标是训练可复用 mental path，而不是最大化一次输出的信息密度。
 
-## Suggested session record
-
-A session may record:
+## 建议的 Session record
 
 ```text
 session_id
@@ -131,76 +125,72 @@ actions
 completed_at
 ```
 
-Not every field is required in the first implementation. The important properties are stable target identity, source revision, temporal order, and separation between observation and later action.
+第一版不要求所有字段都存在。最重要的是稳定 target identity、SourceRevision、时间顺序，以及 observation 与正式 action 的分离。
 
-## Findings vs actions
+## Finding 与 Action 分离
 
-A session may discover:
+Session 可以发现：
 
-- possible SourceQuestion
-- possible follow-up relation
-- possible Canonical boundary issue
-- missing Answer coverage
+- 可能的 SourceQuestion
+- 可能的 follow-up relation
+- 可能的 Canonical boundary 问题
+- Answer coverage 缺失
 - learner weakness
 
-Discovery does not itself authorize domain mutation.
-
-Use:
+但发现本身不授权正式 mutation。
 
 ```text
 Exploration finding
     ↓
-explicit review / domain operation
+显式 review / domain operation
     ↓
 validated state change
 ```
 
-This prevents a conversational insight from silently becoming formal knowledge.
+避免一次对话中的临时判断悄悄变成正式知识。
 
-## Session history in Issues
+## Issue 中的 Session history
 
-The InterviewNote Issue is the natural entry point for exploration.
+InterviewNote Issue 是 Exploration 的自然入口。
 
-A concise session summary may be recorded as an Issue comment or linked artifact. It should identify:
+可以把简洁 session summary 写入 Issue Comment 或链接到 artifact，至少标明：
 
-- session/mode
+- session / mode
 - source revision
 - revealed range
-- key findings
-- actions created
+- 关键 finding
+- 产生的 action
 
-Do not append large repetitive AI transcripts to the Issue merely because they were generated. Preserve reusable findings, decisions, and learning checkpoints.
+不要因为 AI 生成了长对话，就把大量重复 transcript 全塞进 Issue。只沉淀可复用发现、决策和学习 checkpoint。
 
-## Repeated passes
-
-Useful passes may include:
+## 多遍挖掘示例
 
 ```text
-Pass A: experience the interview sequentially
-Pass B: inspect question boundaries
-Pass C: inspect sequence and follow-up structure
-Pass D: map to CanonicalQuestions
-Pass E: challenge Answers with real phrasing
-Pass F: run mock interview / response-loop training
-Pass G: revisit after knowledge improves
+Pass A：按真实顺序经历整场面试
+Pass B：检查问题边界
+Pass C：检查 sequence / follow-up
+Pass D：映射 CanonicalQuestion
+Pass E：用真实问法挑战 Answer
+Pass F：Mock Interview / response-loop 训练
+Pass G：知识提升后再次回看
 ```
 
-These are examples, not a required fixed order. Sessions remain purpose-bounded rather than being numbered as permanent lifecycle states.
+这些只是示例，不是固定 lifecycle。Session 应按目的划界，而不是把 pass 编号变成永久状态。
 
-## Completion semantics
+## Completion 语义
 
-An ExplorationSession can be complete.
+一个 ExplorationSession 可以完成。
 
-An InterviewNote is not "fully explored forever".
+一篇 InterviewNote 不存在“永远彻底探索完成”。
 
-New knowledge, new source revisions, new interview targets, or new learner weaknesses may justify another session later.
+新的知识、新的 SourceRevision、新的求职目标或新的薄弱点，都可以触发下一轮探索。
 
-## Core invariant
+## 核心不变量
 
 ```text
-One session is bounded.
-The source case remains reusable.
-Future source context never leaks into current sequential interpretation.
-Findings are not mutations until explicitly reviewed and applied.
-Repeated practice should strengthen the interview response loop.
+一次 Session 有边界。
+Source case 可以长期复用。
+未来 Source context 永远不能泄漏到当前顺序解释。
+Finding 经过显式 review/apply 后才成为正式 mutation。
+反复练习应该不断强化 Interview Reasoning Loop。
 ```

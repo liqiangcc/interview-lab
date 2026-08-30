@@ -1,10 +1,10 @@
-# Issue-Driven Workflow
+# Issue-Driven 工作流
 
-## Purpose
+## 目的
 
-Interview Lab uses GitHub Issues as the primary human/AI operational interface.
+Interview Lab 使用 GitHub Issue 作为主要的人类 / AI 操作界面。
 
-The architecture is intentionally:
+总体架构：
 
 ```text
 source-first data model
@@ -14,26 +14,26 @@ Issue-driven workflow
 validator-guarded mutation
 ```
 
-Issues make domain objects easy to discover, read, discuss, assign, and revisit. They do not make workflow metadata equivalent to source truth.
+Issue 让领域对象容易被发现、读取、讨论、分配和反复使用，但工作流元数据不等于 Source truth。
 
-## Control plane and evidence plane
+## Control plane 与 Evidence plane
 
 ```text
 GitHub Issues / Labels / Comments / Assignees
                 │
-                │ control, query, coordination
+                │ control / query / coordination
                 ▼
         validated domain operations
                 │
                 ▼
-Source artifacts / derived records / knowledge assets
+Source Artifacts / Derived Records / Knowledge Assets
 ```
 
-For InterviewNote, immutable source artifacts remain the evidence root. The Issue is the operational document for that source case.
+对 InterviewNote 而言，不可变 Source Artifact 是 Evidence root；Issue 是操作文档。
 
-## One domain object, one primary Issue
+## 一个领域对象一个主 Issue
 
-The initial contract is:
+初始契约：
 
 ```text
 1 InterviewNote
@@ -41,32 +41,32 @@ The initial contract is:
 1 primary GitHub Issue
 ```
 
-A stable machine identity in the Issue body prevents Issue number, title, or human wording from becoming the domain identity.
+Issue body 内稳定 machine identity 防止 Issue number、title 或人工 wording 成为领域 identity。
 
-Do not create a new Issue for every small action performed on the same InterviewNote. Recovery attempts, source reviews, and exploration history normally stay attached to the primary case Issue.
+不要因为同一 InterviewNote 上有不同小任务，就为每个小任务创建新 Issue。Recovery attempt、source review、exploration history 正常都附着在主 case Issue 上。
 
-## Agent work loop
+## Agent 工作循环
 
-An AI agent should normally operate through this loop:
+AI 默认按以下流程工作：
 
 ```text
-1. Query Issues by type/status/task labels
-2. Read the selected Issue
-3. Resolve its stable domain identity
-4. Read only the source evidence and derived data allowed for the current task
-5. Produce an explicit observation or proposed operation
-6. Run the appropriate validation / guarded mutation path
-7. Persist the formal result
-8. Synchronize Issue body or labels
-9. Record a concise audit comment when a decision or exception matters
-10. Stop or select the next Issue
+1. 通过 type/status/task Label 查询 Issue
+2. 读取目标 Issue
+3. 解析 stable domain identity
+4. 只读取当前任务允许的 Source / Derived 数据
+5. 形成显式 observation 或 proposed operation
+6. 进入对应 validation / guarded mutation path
+7. 持久化正式结果
+8. 同步 Issue body / Label
+9. 重要 decision / exception 用简洁 Comment 留审计记录
+10. 停止或进入下一个 Issue
 ```
 
-The agent must not infer completion from labels alone.
+AI 不能只看 Label 就推断任务已经完成。
 
 ## Read path
 
-The preferred AI read path for an InterviewNote is:
+InterviewNote 推荐读取路径：
 
 ```text
 Issue
@@ -75,31 +75,29 @@ machine identity
   ↓
 source references
   ↓
-current raw revision / limitations
+current SourceRevision / limitations
   ↓
-optional derived links relevant to the requested task
+当前任务需要的 Derived links
 ```
 
-During sequential learning, the read path is further constrained by the no-look-ahead protocol. The fact that an AI can technically read the whole Issue does not authorize future source content to influence the current learning step.
+Sequential learning 还要受 no-look-ahead 约束。AI 技术上能看到整个 Issue，不代表它有权让未来 Source 内容影响当前学习步骤。
 
 ## Write path
 
-A write that changes formal state must be explicit.
+任何正式状态 mutation 必须显式，例如：
 
-Examples:
+- 注册新的 SourceRevision
+- 记录 Source limitation
+- 解决 duplicate-source identity
+- 转换 InterviewNote lifecycle state
+- 创建/修订 SourceQuestion
+- 后续修改 CanonicalQuestion / Answer state
 
-- register a new source revision
-- record a source limitation
-- resolve duplicate-source identity
-- transition InterviewNote lifecycle state
-- create or revise a SourceQuestion
-- later, change CanonicalQuestion or Answer state
-
-The Issue itself may be edited as an operational document, but formal mutation must respect the owning layer's contract and validator.
+Issue 本身可以作为操作文档被编辑，但 formal mutation 必须遵守所属层 contract 和 Validator。
 
 ## Label synchronization
 
-Labels are synchronized after a valid state transition.
+Label 在合法 state transition 后同步：
 
 ```text
 formal state
@@ -109,62 +107,62 @@ projection
 Issue labels
 ```
 
-If Issue labels drift from formal state, the repair direction is from validated state to labels, not the reverse.
+如果 Label 与正式状态 drift，修复方向应从 validated state → Label，而不是 Label → domain truth。
 
-## Comments as audit history
+## Comment 作为审计历史
 
-Comments are useful for:
+适合记录：
 
-- source review findings
-- recovery attempts
+- source-review finding
+- recovery attempt
 - explicit uncertainty
-- decisions requiring rationale
-- exploration session summaries
-- links to commits or generated reports
+- decision rationale
+- ExplorationSession summary
+- commit / generated report link
 
-Comments are append-only history in spirit, but they are not immutable source evidence.
+Comment 在精神上是 append-only history，但不是不可变 Raw Evidence。
 
-Do not put a corrected version of the original interview note in a comment and then treat that correction as the new Raw Source.
+不能把“修正后的原始面经”写进 Comment 后再当作新的 Raw Source。
 
-## Close and reopen
+## Close / Reopen
 
-Issue close/reopen semantics are defined by the owning domain contract.
+语义由 owning domain contract 决定。
 
-For `type:interview-note`:
+对 `type:interview-note`：
 
-- close means the source lifecycle has reached a stable source-ready completion state
-- reopen only for source-layer reasons
-- downstream knowledge or training changes continue without reopening the source case
+- close = Source lifecycle 达到稳定 source-ready completion
+- reopen = 只因 Source-level reason
+- 下游 Knowledge / Training 变化继续进行，不 reopen Source case
 
-## Concurrency and idempotency
+## Concurrency 与 Idempotency
 
-Automation must assume that humans and multiple agents may inspect the same repository.
+自动化必须假设人和多个 Agent 可能同时操作仓库。
 
-Minimum requirements:
+最低要求：
 
-- resolve by stable domain identity, never by title matching alone
-- check current state before mutation
-- make repeated migration/sync operations idempotent
-- avoid duplicate Issues for the same InterviewNote
-- fail closed when the expected source revision or identity changed
-- do not overwrite a newer decision with a stale agent result
+- 按 stable domain identity 解析，不能只按 title 匹配
+- mutation 前检查 current state
+- migration/sync 幂等
+- 禁止同一 InterviewNote duplicate Issue
+- expected SourceRevision / identity 改变时 fail closed
+- stale agent result 不得覆盖更新的 decision
 
-## What Issue-driven does not mean
+## Issue-driven 不代表什么
 
-It does not mean:
+它不代表：
 
-- every repository object must be stored only as an Issue
-- large raw HTML or images belong in Issue bodies
-- a label is a transaction authorization
-- an Issue edit may rewrite immutable source artifacts
-- an AI should consume all available context regardless of the current learning boundary
+- 所有仓库对象都只能存 Issue
+- 大型 HTML / image 应塞进 Issue body
+- Label 是 transaction authorization
+- Issue edit 可以改写不可变 Source Artifact
+- AI 应无视学习边界消费所有上下文
 
-## Success criterion
+## 成功标准
 
-Issue-driven workflow succeeds when a human or AI can start from a query such as:
+当人或 AI 从下面这样的查询开始：
 
 ```text
 type:interview-note status:source-review
 ```
 
-and safely perform the next bounded unit of work without losing source provenance, bypassing validation, or needing to reconstruct hidden workflow state from unrelated files.
+能够安全完成下一项有边界工作，同时不丢 provenance、不绕过 Validator、也不需要从无关文件恢复隐藏工作流状态，Issue-driven workflow 才算成功。

@@ -1,22 +1,22 @@
-# Source Revision Policy
+# SourceRevision 策略
 
-## Purpose
+## 目的
 
-A captured interview source may later be found incomplete, corrupted, or superseded by a better first-hand capture.
+一份已采集的面经后来可能被发现不完整、损坏，或者找到更好的第一手快照。
 
-This document defines how Interview Lab improves source fidelity without rewriting history.
+本文定义如何提升 Source fidelity，同时不改写历史。
 
-Core rule:
+核心规则：
 
 ```text
-old source evidence is never silently replaced
+旧的第一手证据永远不能被静默替换
 ```
 
-## InterviewNote identity vs SourceRevision identity
+## InterviewNote 与 SourceRevision
 
-An `InterviewNote` is the stable identity of one real source case.
+`InterviewNote` 是一篇真实来源 case 的稳定 identity。
 
-A `SourceRevision` is one immutable captured snapshot of that case.
+`SourceRevision` 是该 case 的一次不可变捕获快照。
 
 ```text
 InterviewNote
@@ -25,137 +25,135 @@ InterviewNote
 └── ...
 ```
 
-A new revision does not create a new InterviewNote unless investigation proves that the material belongs to a different source case.
+新增 revision 不会创建新的 InterviewNote，除非调查证明材料实际上属于另一个来源 case。
 
-## When to create a new revision
+## 什么时候创建新 revision
 
-Create a new SourceRevision when new first-hand evidence changes the captured source representation, for example:
+当新的第一手证据改变了已捕获的 Source 表示时创建，例如：
 
-- a previously missing original image is recovered
-- a full page snapshot replaces a truncated capture
-- the original API/source payload is recovered
-- a corrupted artifact is recaptured correctly
-- a later capture includes source content that was genuinely unavailable in the earlier capture
+- 找回原来缺失的原图
+- 完整页面快照替代截断快照
+- 找回原始 API/source payload
+- 损坏 artifact 被重新正确采集
+- 新 capture 包含此前确实无法获得的来源内容
 
-Do not create a SourceRevision merely because:
+以下情况不创建 SourceRevision：
 
-- OCR improved
-- question extraction changed
-- company/role inference changed
-- CanonicalQuestion mapping changed
-- an Answer was corrected
-- a learner gained a new interpretation
+- OCR 改进
+- SourceQuestion 提取变化
+- 公司/岗位推断变化
+- Canonical 映射变化
+- Answer 被修正
+- 学习者获得新的理解
 
-Those are downstream revisions.
+这些属于下游 revision。
 
-## Immutable revision contents
+## Revision 的不可变内容
 
-A SourceRevision should identify its captured artifacts and source-level metadata through stable references such as:
+一个 SourceRevision 应通过稳定引用记录：
 
 ```text
 source_revision_id
 interview_note_id
 captured_at
 source_external_id
-source_url, when available
+source_url（如有）
 artifact ids
 artifact hashes
 capture method/version
 known capture limitations
 ```
 
-After registration, the artifacts and metadata that define that revision must not be silently edited in place.
+一旦注册，定义该 revision 的 artifact 和来源级元数据不得被静默原地修改。
 
 ## Preferred revision
 
-Downstream extraction may use a designated preferred revision.
+下游提取可以指定当前 preferred revision：
 
 ```text
 InterviewNote
 ├── rev-1
-└── rev-2  ← preferred for new extraction
+└── rev-2  ← 新提取默认使用
 ```
 
-`preferred` means "best current first-hand snapshot for downstream use". It does not invalidate or delete older evidence.
+`preferred` 只表示“当前最适合作为下游输入的第一手快照”，不代表旧证据失效或可以删除。
 
-Changing the preferred revision requires explicit validation that the candidate revision belongs to the same InterviewNote and is suitable for downstream use.
+切换 preferred revision 前必须验证它属于同一个 InterviewNote，并满足来源完整性要求。
 
 ## Revision lineage
 
-When possible, record why a revision was added:
+尽量记录新增 revision 的原因，例如：
 
 ```text
 supersedes: rev-1
 reason: recovered missing original images 3-5
 ```
 
-`supersedes` expresses preferred evidence progression, not deletion.
+`supersedes` 表达证据优先级推进，不表达删除。
 
-## Raw, deterministic projection, and derived interpretation
+## Raw、确定性 Projection 与 Derived
 
-Keep these distinctions explicit:
+必须持续区分：
 
 ```text
 Raw artifact
-→ captured first-hand bytes/content
+→ 捕获到的第一手 bytes/content
 
 Deterministic source projection
-→ faithful extraction of source body/title/image order from a raw artifact
+→ 从 Raw 中忠实提取正文、标题、图片顺序等
 
 Derived interpretation
-→ OCR interpretation, question extraction, metadata inference, relations, knowledge
+→ OCR、问题提取、metadata inference、relations、knowledge
 ```
 
-A deterministic projection may be regenerated when the parser improves, provided it remains traceable to a specific immutable SourceRevision. Parser output must not be mislabeled as the original bytes.
+Parser 改进后可以重新生成确定性 projection，但它必须明确追溯到某个不可变 SourceRevision，不能冒充原始 bytes。
 
-OCR is always derived unless the source itself provides that text directly.
+除非来源本身直接提供文字，否则 OCR 永远属于 Derived。
 
-## Issue behavior
+## Issue 行为
 
-An InterviewNote Issue may display the preferred source representation for readability, but must expose enough revision identity to avoid pretending history never changed.
+InterviewNote Issue 可以展示 preferred source representation 以便阅读，但必须显示足够的 revision identity，不能制造“历史从未变化”的假象。
 
-When a new SourceRevision becomes preferred:
+当新的 SourceRevision 成为 preferred：
 
-1. reopen the Issue if it was closed
-2. register the new immutable revision
-3. record the source-level reason
-4. run source integrity review
-5. update the preferred revision reference
-6. synchronize the Issue display
-7. return to `source-ready` and close when valid
+1. 若 Issue 已关闭，则因 Source 原因 reopen。
+2. 注册新的不可变 revision。
+3. 记录来源级原因。
+4. 重新执行 source integrity review。
+5. 更新 preferred revision 引用。
+6. 同步 Issue 展示。
+7. 满足条件后回到 `source-ready` 并关闭。
 
-Do not delete the old revision from the source record.
+旧 revision 不能被删除。
 
-## Downstream invalidation
+## 对下游的影响
 
-A new preferred SourceRevision may make downstream data stale.
+新的 preferred revision 可能让下游数据变 stale，例如：
 
-Examples:
+- SourceQuestion span 变化
+- 找回的内容暴露新的问题
+- 缺失图片恢复后顺序发生变化
 
-- SourceQuestion source span changed
-- previously missing content reveals additional questions
-- sequence order changes because an image was missing
+Source revision 操作不能静默重写 Derived，而应标记或报告需要重新提取/审核的对象。
 
-The source revision operation should not silently rewrite derived data. Instead it should mark or report downstream objects that require re-extraction or review.
+## 并发规则
 
-## Concurrency rule
+任何依赖特定 SourceRevision 的操作都应记录或检查它实际使用的 revision。
 
-Any operation that depends on a specific SourceRevision should record or check the revision it used.
+如果提交时当前 preferred revision 已与预期不同，必须 fail closed，并基于最新证据重新评估。
 
-If current preferred source revision differs from the expected revision at mutation time, fail closed and re-evaluate against current evidence.
+## 删除策略
 
-## Deletion policy
+SourceRevision 属于证据，原则上不删除。
 
-Source revisions are evidence and should not normally be deleted.
+只有法律/隐私义务，或者确认 artifact 从未属于该 InterviewNote 等特殊情况才允许移除，并留下可审计 tombstone/decision record，同时不得保留被禁止保留的内容。
 
-Exceptional removal requires an explicit policy reason such as legal/privacy obligations or a proven artifact that never belonged to the InterviewNote. Such removal must leave an auditable tombstone or decision record without preserving prohibited content.
-
-## Core invariants
+## 核心不变量
 
 ```text
-InterviewNote identity is stable.
-SourceRevision is immutable.
-Better evidence appends history; it does not rewrite history.
-Derived data names the revision it depends on.
-A newer revision may invalidate downstream interpretation without altering older evidence.
+InterviewNote identity 稳定。
+SourceRevision 不可变。
+更好的证据追加历史，而不是改写历史。
+Derived 数据应标明所依赖的 revision。
+新 revision 可以使下游解释失效，但不能修改旧证据。
 ```

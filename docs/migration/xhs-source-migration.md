@@ -1,272 +1,266 @@
-# XHS Source Migration Protocol
+# XHS 来源迁移协议
 
-## Purpose
+## 目的
 
-This document defines how historical material in `liqiangcc/xhs` is migrated into Interview Lab without converting historical AI interpretation into first-hand source facts.
+本文定义如何把 `liqiangcc/xhs` 的历史材料迁入 Interview Lab，同时避免把历史 AI 解释错误升级成第一手 Source fact。
 
-Migration is source preservation first, not knowledge cleanup.
+迁移首先是证据保存，不是知识清洗。
 
-## Scope
+## 范围
 
-Initial migration target:
+初始迁移目标：
 
 ```text
-xhs InterviewNote source cases
-    ↓
-interview-lab InterviewNote identities
-    ↓
-one primary GitHub Issue per InterviewNote
-    ↓
-references to preserved source artifacts
+xhs 中的真实面经 Source case
+        ↓
+interview-lab InterviewNote identity
+        ↓
+一篇 InterviewNote 一个主 GitHub Issue
+        ↓
+引用可追溯的 Source Artifact
 ```
 
-SourceQuestion, CanonicalQuestion, Analysis, Answer, and training migration are later concerns and must not be silently bundled into source migration.
+SourceQuestion、CanonicalQuestion、Analysis、Answer 和 Training 属于后续阶段，不得悄悄混进 Source migration。
 
-## Historical XHS layers
+## 旧 XHS 数据分层
 
-The old repository contains several generations of data. They must not be treated as equivalent.
+历史仓库存在多代数据，不能视为等价。
 
-### Source-evidence candidates
+### 第一手证据候选
 
-These are closest to first-hand captured material:
+最接近 Raw Source：
 
 ```text
 note_detail/*.html
-    captured page snapshots
+    捕获的页面快照
 
 downloaded_images/<note_id>/
-    captured original images
+    捕获的原图；必须实际检查文件是否有效
 
 note_images/*_urls.txt
-    captured image references / ordering evidence when valid
+    在有效时可作为图片引用/顺序证据
 ```
 
-The exact artifact type and provenance should be recorded during migration.
+每个 artifact 都应记录实际类型和 provenance。
 
-### Source projections
+**仅仅存在文件路径不代表 artifact 有效。** 例如 0 字节图片必须视为缺失/损坏，而不能当作已保存原图。
 
-These may faithfully expose source content but are outputs of parsing/extraction and must remain traceable to source artifacts:
+### Source projection
+
+下面内容可能忠实展示 Source，但本质是 parser/extraction 输出，必须可追溯到 Raw：
 
 ```text
 note_json/*.json
 note_desc/*.txt
 ```
 
-Do not pretend a parser-generated text file is identical to the original bytes. It may be used as the readable Issue representation when its provenance is known and fidelity checks pass.
+Parser 生成的文本不能冒充原始 bytes。只有在 provenance 明确、fidelity 检查通过后，才可以作为 Issue 的 readable source projection。
 
 ### Derived interpretation
 
-These are downstream derived data and are not Raw Source:
+以下属于 Derived，不是 Raw Source：
 
 ```text
-note_img_txt/*.txt     OCR / image interpretation
-note_structured/*.json structured metadata and extracted questions
-note_tagged/*.json     classified/tagged questions
+note_img_txt/*.txt       OCR / 图片解释
+note_structured/*.json   结构化元数据、问题提取
+note_tagged/*.json       分类/标签结果
 
-data/questions/*       later Question / CanonicalQuestion data
-review/*                later answers / review state
+data/questions/*         后续 Question / CanonicalQuestion
+review/*                  Answer / Review state
 ```
 
-Derived data may be linked for later comparison, but it must not be copied into source sections as though the original author wrote it.
+这些历史派生数据仍然有价值，可以以后作为 comparison / regression input，但不能复制到 Raw 区域冒充原作者内容。
 
 ## Stable identity
 
-Initial InterviewNote identity should derive from source system plus stable external source id, for example:
+初始 InterviewNote identity 使用来源系统 + 稳定 external id：
 
 ```text
 interview_note_id = xhs:<note_id>
 ```
 
-The exact encoded storage format may evolve, but the identity must remain stable and independent of:
+identity 必须独立于：
 
 - Issue number
 - Issue title
 - company inference
 - role inference
-- file path
-- migration order
+- 文件路径
+- 迁移顺序
 
-## One Issue per InterviewNote
+## 一篇面经一个 Issue
 
-Before creating an Issue, migration must search for the machine identity marker:
+创建前必须按 machine marker 查询：
 
 ```text
 <!-- interview-note: id=xhs:<note_id> schema=interview-note-issue.v1 -->
 ```
 
-If the identity already exists, the migration must reconcile/update the existing projection rather than create another Issue.
+如果 identity 已存在，必须 reconcile/update 已有 projection，而不是再创建一个 Issue。
 
-Repeated migration must therefore be idempotent.
+迁移必须幂等。
 
-## Issue content rule
+## Issue 内容顺序
 
-The migrated InterviewNote Issue should prioritize source material in this order:
+迁入的 InterviewNote Issue 应优先展示：
 
 1. stable source identity
-2. directly captured source metadata when available
-3. readable source text projection with provenance
-4. raw artifact references and hashes
-5. known capture limitations
-6. clearly separated links to historical derived data
+2. 来源直接提供的元数据
+3. 有 provenance 的 readable source projection
+4. Raw Artifact 引用和 hash
+5. 已知 capture limitation
+6. 与 Raw 清楚隔离的 historical Derived links
 
-Do not promote values from `note_structured` or `note_tagged` into first-hand source facts merely because they are convenient.
+不要因为 `note_structured` / `note_tagged` 中已有 company、role 等字段，就把它们自动提升为第一手事实。
 
-For example, if `company=阿里钉钉` came from historical AI structuring rather than an explicit captured source field, it must remain derived unless source evidence independently supports it.
+Issue title 可以为了导航使用可验证的来源标题，也可以使用明确标注的 Derived display value，但 title 永远不承担权威 provenance。
 
-Issue titles may use derived display values for navigation when clearly treated as non-authoritative conveniences. Stable identity and source sections remain authoritative for provenance.
+## 时间顺序
 
-## Time ordering
+Pilot 通过后，全量 Source migration 按可辩护的来源时间从旧到新进行。
 
-After the pilot, full source migration should proceed from older to newer source time when source time is available.
+时间证据优先级：
 
-Preferred ordering evidence:
+1. 捕获页面直接显示的 source publication/display timestamp
+2. 来源直接提供的部分日期 / 年份
+3. 否则 `unknown-time`
 
-1. directly captured source publication timestamp
-2. directly captured partial source date/year
-3. otherwise `unknown-time`
-
-Do not infer a precise migration time from:
+不得用以下信息伪造 Source 时间：
 
 - Git commit time
 - local file modification time
 - capture time
 - Issue number
-- source id encoding unless the source contract explicitly defines that encoding as a publication timestamp
-- AI inference from surrounding content
+- source id 编码（除非 Source contract 明确定义）
+- AI 根据上下文猜测的日期
 
-### Partial and unknown dates
+### Partial / Unknown
 
-Preserve uncertainty.
-
-Examples:
+保持不确定性：
 
 ```text
-2023-08-02       exact source date
-2023-08          source month known, day unknown
-2023             source year known, month/day unknown
-unknown          no defensible source time
+2023-08-02    来源可以确认到日
+2023-08       只能确认到月
+2023          只能确认到年
+unknown       无可靠来源时间
 ```
 
-Never invent `2023-01-01` merely to sort a year-only record.
+不能为了排序把 `2023` 伪造成 `2023-01-01`。
 
-A migration planner may use an internal stable sort key while preserving the actual partial date as partial.
+内部 planner 可以生成稳定 sort key，但不能把 sort key 持久化成虚假的 Source fact。
 
-Recommended full-migration order:
+推荐顺序：
 
 ```text
-known times: oldest → newest
-partial times: ordered only to their defensible precision
-unknown-time: separate backlog after known-time cases
+known time：oldest → newest
+partial time：只按可确认精度排序
+unknown-time：进入独立 backlog
 ```
 
-Issue number records creation order only. It must never be treated as interview chronology.
+Issue number 只记录创建顺序，不代表面经时间线。
 
-## Pilot before full migration
+## Pilot 先于全量迁移
 
-Do not start full migration until the protocol and validators are exercised on a small pilot.
+在协议和 Validator 被实际验证前禁止全量迁移。
 
-Initial pilot size:
+初始 pilot：
 
 ```text
-5 InterviewNotes
+5 个代表性 source case
 ```
 
-Select representative source conditions rather than optimizing for volume:
+按来源条件选择，而不是追求数量：
 
-- text-dominant case
-- image-dominant case
-- mixed text + image case
-- incomplete source case
-- ambiguous/legacy-derived case
+- text-dominant
+- image-dominant
+- mixed text + image
+- incomplete source
+- ambiguous / legacy-derived boundary case
 
-The pilot is a mechanism-validation exception; it does not establish permanent chronology. Once the mechanism passes, the full migration follows the source-time ordering rule.
+Pilot 是机制验证例外，不用于建立正式全量时间线。
 
-## Pilot validation
+## Pilot 验收
 
-For each pilot InterviewNote verify:
+每个 candidate 至少检查：
 
-- stable identity resolves uniquely
-- exactly one primary Issue exists
-- machine marker is correct
-- readable source content is faithful to referenced source artifacts
-- source and derived sections are visibly separated
-- missing source material remains missing/explicit rather than inferred
-- labels match the lifecycle state
-- repeated migration produces no duplicate Issue
-- a second AI/human reader can locate the evidence root from the Issue alone
-- no downstream knowledge modification is required to finish source migration
+- stable identity 是否唯一
+- 是否恰好一个主 Issue
+- machine marker 是否正确
+- readable Source 是否忠实对应 Raw Artifact
+- Raw 与 Derived 是否视觉分离
+- 缺失是否保持缺失，而不是被 AI 补全
+- Label 是否符合 lifecycle
+- 重复执行是否无 duplicate Issue
+- 第二个 AI / 人是否能仅从 Issue 找到证据根
+- 完成 Source migration 是否不依赖修改下游 Knowledge
 
-## Migration lifecycle
-
-Recommended flow per InterviewNote:
+## 迁移生命周期
 
 ```text
-historical source discovery
-        ↓
-resolve stable identity
-        ↓
-register/source-check artifacts
-        ↓
+发现历史来源
+    ↓
+解析 stable identity
+    ↓
+注册 / 检查 artifact
+    ↓
 create or reconcile Issue
-        ↓
+    ↓
 status:captured
-        ↓
+    ↓
 source integrity review
-        ↓
+    ↓
 status:source-review
-        ↓
-source-ready or blocked
-        ↓
-close only when source lifecycle permits
+    ↓
+source-ready 或 blocked
+    ↓
+满足 Source lifecycle 后才能 close
 ```
 
-## Derived-data preservation
+## Derived 数据保留
 
-Historical `note_structured`, `note_tagged`, Question, CanonicalQuestion, and Answer data remain valuable as prior derived work.
+历史 `note_structured`、`note_tagged`、Question、CanonicalQuestion、Answer 不因为不是 Raw 就删除。
 
-Do not discard them merely because they are not first-hand source.
+未来可以作为：
 
-Instead, later migration stages may use them as:
+- candidate derived record
+- regression comparison
+- extraction-review input
+- knowledge migration input
 
-- candidate derived records
-- regression comparisons
-- extraction-review inputs
-- knowledge migration inputs
+但永远必须与 Raw Source 区分。
 
-They must always remain distinguishable from Raw Source.
+## Fail-closed 条件
 
-## Fail-closed conditions
+以下情况不能标记为 source-ready：
 
-Do not create or mark a source-ready InterviewNote when:
+- source identity 有歧义
+- artifact 疑似来自多个 note
+- readable text 无法追溯 Source Artifact / projection
+- 预期 artifact 损坏且 limitation 未明确记录
+- 必须靠 AI 编造才能补齐 Source
+- stable identity duplicate ownership 未解决
 
-- source identity is ambiguous
-- available artifacts appear to belong to multiple notes
-- readable text cannot be traced to a source artifact/projection
-- expected artifacts are corrupted without an explicit limitation record
-- migration would need AI invention to fill missing source content
-- a duplicate InterviewNote identity already exists and ownership is unresolved
+应使用 `status:blocked` 或继续 `source-review`，并记录原因。
 
-Use `status:blocked` and record the reason instead.
+## 全量迁移开启条件
 
-## Exit criteria for full migration readiness
+只有同时满足以下条件，才允许全量按时间迁移：
 
-Full chronological migration may begin only after:
+1. Issue contract 稳定
+2. Label taxonomy 稳定
+3. SourceRevision policy 稳定
+4. Pilot 证明 migration idempotent
+5. Repository invariants / validators PASS
+6. Pilot Issue 真正可以用于 AI source-first reading
+7. Pilot 未发现需要推翻 Raw/Derived 根边界的问题
 
-1. Issue contract is stable
-2. label taxonomy is stable
-3. source revision policy is stable
-4. migration is idempotent in the pilot
-5. repository invariants/validators pass
-6. pilot Issues are actually usable for AI source-first reading
-7. no pilot finding requires changing the fundamental Raw/Derived boundary
-
-## Core invariant
+## 核心不变量
 
 ```text
-Migration preserves evidence before interpretation.
-Historical derived data stays derived.
-Unknown stays unknown.
-Identity is stable.
-Migration is idempotent.
-After pilot validation, full migration proceeds by defensible source chronology.
+迁移首先保存证据，再做解释。
+历史 Derived 永远保持 Derived。
+Unknown 保持 Unknown。
+Identity 稳定。
+Migration 幂等。
+Pilot 通过后，全量按可辩护 Source chronology 迁移。
 ```
