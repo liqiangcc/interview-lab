@@ -6,7 +6,8 @@
   "scripts": {
     "test": "node --test",
     "validate:issue-fixture": "node scripts/validate-interview-note-issue.js test/fixtures/interview-note-issue.valid.md",
-    "check": "npm test && npm run validate:issue-fixture"
+    "plan:xhs-pilot": "node scripts/plan-xhs-migration.js data/pilot/xhs-pilot-selection.json",
+    "check": "npm test && npm run validate:issue-fixture && npm run plan:xhs-pilot"
   },
   "engines": {
     "node": ">=20"
