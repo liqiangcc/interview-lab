@@ -12,7 +12,7 @@ if [[ -z "${GH_TOKEN:-}" ]]; then
 fi
 
 node <<'NODE' | while IFS=$'\t' read -r dimension label; do
-const config = require('../config/issue-labels.json');
+const config = require('./config/issue-labels.json');
 for (const [dimension, labels] of Object.entries(config.dimensions)) {
   for (const label of labels) process.stdout.write(`${dimension}\t${label}\n`);
 }
