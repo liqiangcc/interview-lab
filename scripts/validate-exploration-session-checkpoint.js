@@ -3,6 +3,7 @@
 const fs = require('fs');
 const { validateExplorationSessionCheckpoint } = require('./lib/exploration-session-checkpoint');
 const { loadSourceSequenceManifests } = require('./lib/source-sequence-manifest');
+const { loadSourceSequenceReviews } = require('./lib/source-sequence-review');
 
 const file = process.argv[2];
 if (!file) {
@@ -17,8 +18,18 @@ if (!manifests.ok) {
   process.exit(1);
 }
 
+const reviews = loadSourceSequenceReviews(undefined, { manifestsById: manifests.byId });
+for (const warning of reviews.warnings) console.warn(`WARN: ${warning}`);
+if (!reviews.ok) {
+  for (const error of reviews.errors) console.error(`ERROR: ${error}`);
+  process.exit(1);
+}
+
 const body = fs.readFileSync(file, 'utf8');
-const result = validateExplorationSessionCheckpoint(body, { manifestsById: manifests.byId });
+const result = validateExplorationSessionCheckpoint(body, {
+  manifestsById: manifests.byId,
+  effectiveReviewsByManifestDigest: reviews.effectiveByManifestDigest,
+});
 
 for (const warning of result.warnings) console.warn(`WARN: ${warning}`);
 if (!result.ok) {

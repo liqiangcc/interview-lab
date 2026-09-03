@@ -1,0 +1,30 @@
+{
+  "schema_version": "source-sequence-review.v1",
+  "review_id": "xhs:6508552c000000001303f499:legacy-r1:image-1:sequence-v1:review-1",
+  "manifest_id": "xhs:6508552c000000001303f499:legacy-r1:image-1:sequence-v1",
+  "manifest_sha256": "829b246ad8d21610c28b22f5ccb60309806a61fe9f1eb7b14af5d870bc795aad",
+  "decision": "approved",
+  "reviewed_at": "2026-09-03T08:58:53Z",
+  "reviewer_kind": "ai-assisted",
+  "review_evidence": {
+    "repository": "liqiangcc/interview-lab",
+    "issue_number": 3,
+    "comment_id": 5523241379
+  },
+  "checks": [
+    {"check_id": "evidence_stream_binding", "result": "pass"},
+    {"check_id": "sequence_scope", "result": "pass"},
+    {"check_id": "unit_boundaries", "result": "pass"},
+    {"check_id": "unit_order", "result": "pass"},
+    {"check_id": "unit_types", "result": "pass"},
+    {"check_id": "fragment_boundaries", "result": "pass"},
+    {"check_id": "fragment_order", "result": "pass"},
+    {"check_id": "no_fabrication", "result": "pass"}
+  ],
+  "limitations": [
+    "Approval covers only the exact manifest_id + manifest_sha256 pair.",
+    "SourceUnit/SourceFragment semantics remain Derived and may be superseded by a later reviewed manifest version.",
+    "Approval does not authorize SourceQuestion, CanonicalQuestion, Analysis, or Answer mutation."
+  ],
+  "supersedes_review_id": null
+}

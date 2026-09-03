@@ -6,20 +6,40 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const { validateExplorationSessionCheckpoint } = require('../scripts/lib/exploration-session-checkpoint');
 const { loadSourceSequenceManifests } = require('../scripts/lib/source-sequence-manifest');
+const { loadSourceSequenceReviews } = require('../scripts/lib/source-sequence-review');
 
 const validBody = fs.readFileSync(
   path.join(__dirname, 'fixtures', 'exploration-session-checkpoint-v2.valid.md'),
   'utf8',
 );
 const manifests = loadSourceSequenceManifests(path.join(__dirname, '..', 'data', 'source-sequences'));
+const reviews = loadSourceSequenceReviews(path.join(__dirname, '..', 'data', 'source-sequence-reviews'), { manifestsById: manifests.byId });
 
-function validate(body) {
-  return validateExplorationSessionCheckpoint(body, { manifestsById: manifests.byId });
+function validate(body, effectiveReviewsByManifestDigest = reviews.effectiveByManifestDigest) {
+  return validateExplorationSessionCheckpoint(body, {
+    manifestsById: manifests.byId,
+    effectiveReviewsByManifestDigest,
+  });
 }
 
-test('manifest-bound checkpoint v2 passes', () => {
+test('approved manifest-bound checkpoint v2 passes', () => {
   const result = validate(validBody);
   assert.equal(result.ok, true, JSON.stringify(result.errors));
+});
+
+test('v2 rejects manifest with no effective review', () => {
+  const result = validate(validBody, new Map());
+  assert.equal(result.ok, false);
+  assert.match(result.errors.join('\n'), /no effective SourceSequenceReview/);
+});
+
+test('v2 rejects manifest whose effective review is rejected', () => {
+  const rejected = new Map(reviews.effectiveByManifestDigest);
+  const key = [...rejected.keys()][0];
+  rejected.set(key, { ...rejected.get(key), review_id: 'rejected-review', decision: 'rejected' });
+  const result = validate(validBody, rejected);
+  assert.equal(result.ok, false);
+  assert.match(result.errors.join('\n'), /is not approved/);
 });
 
 test('v2 rejects manifest digest mismatch', () => {

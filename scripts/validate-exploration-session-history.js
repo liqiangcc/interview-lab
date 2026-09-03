@@ -3,6 +3,7 @@
 const fs = require('fs');
 const { validateExplorationSessionHistory } = require('./lib/exploration-session-history');
 const { loadSourceSequenceManifests } = require('./lib/source-sequence-manifest');
+const { loadSourceSequenceReviews } = require('./lib/source-sequence-review');
 
 const inputPath = process.argv[2];
 if (!inputPath) {
@@ -25,7 +26,17 @@ if (!manifests.ok) {
   process.exit(1);
 }
 
-const result = validateExplorationSessionHistory(comments, { manifestsById: manifests.byId });
+const reviews = loadSourceSequenceReviews(undefined, { manifestsById: manifests.byId });
+for (const warning of reviews.warnings) console.warn(`WARN: ${warning}`);
+if (!reviews.ok) {
+  for (const error of reviews.errors) console.error(`ERROR: ${error}`);
+  process.exit(1);
+}
+
+const result = validateExplorationSessionHistory(comments, {
+  manifestsById: manifests.byId,
+  effectiveReviewsByManifestDigest: reviews.effectiveByManifestDigest,
+});
 for (const warning of result.warnings) console.warn(`WARN: ${warning}`);
 if (!result.ok) {
   for (const error of result.errors) console.error(`ERROR: ${error}`);
