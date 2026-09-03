@@ -143,7 +143,18 @@ SourceNote
                  └── ExplorationSession
 ```
 
-历史 Pilot #3/#4 在旧的一对一模型下已经建立正式 InterviewNote identity。它们作为兼容历史保留，不通过 bulk reconciliation 改写；新的批量 intake 不再复制这一旧假设。
+历史正式 Pilot 在旧的一对一模型下已经建立 InterviewNote identity。兼容原则是：
+
+```text
+正式 InterviewNote Issue
+→ 原样保留，绝不通过 bulk reconciliation 改写
+
+对应 XHS Source
+→ 仍必须补建独立 SourceNote
+→ boundary:pending
+```
+
+因此兼容历史不会成为 SourceNote inventory 的永久缺口。SourceNote 的建立只补齐来源根，不反向宣布旧 InterviewNote 的 boundary review 已完成。
 
 ## Reconciliation
 
@@ -157,10 +168,16 @@ migration:xhs-bulk + 旧 InterviewNote
 → 保留 Issue number，原地改为 SourceNote
 
 正式 InterviewNote（没有 migration:xhs-bulk）
-→ protected，绝不改写
+→ 正式 Issue protected，绝不改写
+→ 旁路创建对应 SourceNote
 
 尚未迁移的 XHS note
 → 创建新的 SourceNote
 ```
 
-这使迁移中断、重复执行以及旧批次继续产生少量 legacy intake 时，都可以通过 stable source identity 恢复，而不删除历史 Issue。
+这样所有固定 XHS Source 都能够进入完整 SourceNote inventory，同时：
+
+- 正式 InterviewNote 不被覆盖；
+- legacy bulk 可以原地修正；
+- 迁移中断后可按 stable source identity 幂等续跑；
+- boundary review 仍然是产生 0..N InterviewNote 的唯一新路径。
