@@ -40,6 +40,53 @@
 - capture timestamp
 - storage reference
 
+## InterviewContext
+
+表示一篇 InterviewNote 在正式学习之前经过审核的 **Derived 面试上下文**。
+
+职责：
+
+- 把 source-ready 面经变成可筛选学习样本；
+- 保存 company / role family / recruitment type / round / interview time；
+- 为 Learning Discovery Labels 提供经过 review 的 projection source；
+- 生成 non-spoiler Issue title；
+- 明确 outcome 在学习前保持 sealed。
+
+重要属性：
+
+- `context_id`
+- `interview_note_id`
+- `source_revision_id`
+- `review_status`
+- `reviewed_at`
+- `company`
+- `role`
+- `recruitment_type`
+- `round`
+- `interview_occurred_at`
+- `outcome_visibility`
+
+每个基础事实必须区分：
+
+```text
+source-explicit
+reviewed-inference
+unknown
+```
+
+`InterviewContext` 属于 Derived，不修改 Raw Source，也不允许把 result / outcome / self-assessment / external feedback 放进 pre-learning view。
+
+Learning Discovery Labels 是它的查询 projection，例如：
+
+```text
+company:kuaishou
+role:backend
+recruitment:campus
+round:2
+```
+
+Unknown 默认不生成标签。
+
 ## SourceSequenceManifest
 
 表示针对某个固定 `SourceRevision` 中一个可顺序消费 evidence stream 的 Derived 序列定义。
@@ -224,6 +271,8 @@ Answer 的正确性依赖外部技术证据和真实 source variants，而不是
 - `completed_at`
 - findings / knowledge gaps / relation candidates / actions
 
+Sequential InterviewNote 学习开始前，可以读取 reviewed `InterviewContext` 中的非剧透上下文；OutcomeContext 不得因为后台已知而提前进入 reasoning context。
+
 当 ExplorationSession 进行 sequential InterviewNote 学习时，还需要一个可审计的当前 Source frontier：
 
 - `source_revision_id`
@@ -294,6 +343,8 @@ ReviewProgress 不是 Source truth，不得修改 Source 或 Knowledge identity�
 ```text
 InterviewNote
    ├── SourceArtifact*
+   ├── InterviewContext?
+   │      └── Learning Discovery Labels / non-spoiler title
    ├── SourceSequenceManifest*
    │      ├── SourceSequenceReview*
    │      └── SourceUnit*
@@ -318,6 +369,8 @@ InterviewNote / CanonicalQuestion
 所有长期存在的领域对象都必须拥有独立于 GitHub Issue number、Issue title、文件路径和展示文本的稳定 machine identity。
 
 GitHub Issue number 只是操作界面的 locator，不是领域 identity。
+
+InterviewContext 必须绑定具体 `source_revision_id`，避免 Source 改变后继续使用旧上下文投影。
 
 被 ExplorationSession 引用的 SourceSequenceManifest 必须固定 content digest；被 v3 session 引用的 SourceSequenceReview 还必须固定 `review_id`。
 
