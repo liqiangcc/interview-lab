@@ -3,6 +3,7 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const {
+  MUTATING_ACTIONS,
   buildProjection,
   planActions,
   validateProjection,
@@ -31,6 +32,10 @@ function candidate(overrides = {}) {
     limitations: ['SourceNote intake 不判断该帖子是否等于一次真实面试事件。'],
     ...overrides,
   };
+}
+
+function existingSourceNote(number, labels) {
+  return { number, labels: labels.map((name) => ({ name })) };
 }
 
 test('XHS candidate projects to SourceNote, not InterviewNote', () => {
@@ -71,7 +76,7 @@ test('legacy bulk InterviewNote is converted in place', () => {
   assert.equal(actions[0].issue_number, 20);
 });
 
-test('formal non-bulk InterviewNote is protected while its SourceNote is still backfilled', () => {
+test('formal non-bulk InterviewNote is preserved while its SourceNote is still backfilled', () => {
   const projection = buildProjection(candidate(), sourceRef, '2026-09-03T13:00:00.000Z');
   const actions = planActions([projection], {
     sourceNotes: new Map(),
@@ -83,15 +88,89 @@ test('formal non-bulk InterviewNote is protected while its SourceNote is still b
   assert.equal(actions[0].protected_interview_issue_number, 3);
 });
 
-test('existing SourceNote wins idempotently even beside a formal InterviewNote', () => {
+test('existing SourceNote with correct source-year is current and idempotent', () => {
   const projection = buildProjection(candidate(), sourceRef, '2026-09-03T13:00:00.000Z');
+  const issue = existingSourceNote(600, [
+    'type:source-note', 'source:xhs', 'status:captured', 'boundary:pending', 'task:boundary-review', 'migration:xhs-bulk', 'source-year:2022',
+  ]);
   const actions = planActions([projection], {
-    sourceNotes: new Map([[projection.source_note_id, { number: 600 }]]),
+    sourceNotes: new Map([[projection.source_note_id, issue]]),
     bulkLegacy: new Map(),
     protectedInterview: new Map([[projection.external_id, { number: 3 }]]),
   });
-  assert.equal(actions[0].action, 'source-note-exists');
+  assert.equal(actions[0].action, 'source-note-current');
   assert.equal(actions[0].issue_number, 600);
+  assert.equal(MUTATING_ACTIONS.has(actions[0].action), false);
+});
+
+test('existing SourceNote missing source-year gets a labels-only discovery reconciliation action', () => {
+  const projection = buildProjection(candidate(), sourceRef, '2026-09-03T13:00:00.000Z');
+  const issue = existingSourceNote(20, [
+    'type:source-note', 'source:xhs', 'status:captured', 'boundary:pending', 'task:boundary-review', 'migration:xhs-bulk',
+  ]);
+  const actions = planActions([projection], {
+    sourceNotes: new Map([[projection.source_note_id, issue]]),
+    bulkLegacy: new Map(),
+    protectedInterview: new Map(),
+  });
+  assert.equal(actions[0].action, 'reconcile-source-note-discovery-labels');
+  assert.equal(actions[0].issue_number, 20);
+  assert.deepEqual(actions[0].reconciled_labels, [
+    'type:source-note', 'source:xhs', 'status:captured', 'boundary:pending', 'task:boundary-review', 'migration:xhs-bulk', 'source-year:2022',
+  ]);
+  assert.equal(MUTATING_ACTIONS.has(actions[0].action), true);
+});
+
+test('wrong source-year is replaced without changing unrelated labels or boundary state', () => {
+  const projection = buildProjection(candidate(), sourceRef, '2026-09-03T13:00:00.000Z');
+  const issue = existingSourceNote(601, [
+    'type:source-note', 'source:xhs', 'status:captured', 'boundary:single-interview', 'custom:keep-me', 'source-year:2023',
+  ]);
+  const actions = planActions([projection], {
+    sourceNotes: new Map([[projection.source_note_id, issue]]),
+    bulkLegacy: new Map(),
+    protectedInterview: new Map(),
+  });
+  assert.equal(actions[0].action, 'reconcile-source-note-discovery-labels');
+  assert.deepEqual(actions[0].reconciled_labels, [
+    'type:source-note', 'source:xhs', 'status:captured', 'boundary:single-interview', 'custom:keep-me', 'source-year:2022',
+  ]);
+  assert.equal(Object.prototype.hasOwnProperty.call(actions[0], 'body'), false);
+  assert.equal(Object.prototype.hasOwnProperty.call(actions[0], 'title'), false);
+});
+
+test('unknown publication time removes stale source-year while preserving other labels', () => {
+  const projection = buildProjection(candidate({
+    source_published_at: { precision: 'unknown', value: null },
+  }), sourceRef, '2026-09-03T13:00:00.000Z');
+  const issue = existingSourceNote(602, [
+    'type:source-note', 'source:xhs', 'status:captured', 'boundary:not-interview', 'source-year:2022', 'custom:keep-me',
+  ]);
+  const actions = planActions([projection], {
+    sourceNotes: new Map([[projection.source_note_id, issue]]),
+    bulkLegacy: new Map(),
+    protectedInterview: new Map(),
+  });
+  assert.equal(actions[0].action, 'reconcile-source-note-discovery-labels');
+  assert.deepEqual(actions[0].reconciled_labels, [
+    'type:source-note', 'source:xhs', 'status:captured', 'boundary:not-interview', 'custom:keep-me',
+  ]);
+});
+
+test('duplicate stale source-year values collapse to the single authoritative source year', () => {
+  const projection = buildProjection(candidate(), sourceRef, '2026-09-03T13:00:00.000Z');
+  const issue = existingSourceNote(603, [
+    'type:source-note', 'source:xhs', 'status:captured', 'boundary:pending', 'source-year:2022', 'source-year:2023',
+  ]);
+  const actions = planActions([projection], {
+    sourceNotes: new Map([[projection.source_note_id, issue]]),
+    bulkLegacy: new Map(),
+    protectedInterview: new Map(),
+  });
+  assert.equal(actions[0].action, 'reconcile-source-note-discovery-labels');
+  assert.deepEqual(actions[0].reconciled_labels, [
+    'type:source-note', 'source:xhs', 'status:captured', 'boundary:pending', 'source-year:2022',
+  ]);
 });
 
 test('missing source identity becomes a new SourceNote, not an InterviewNote', () => {

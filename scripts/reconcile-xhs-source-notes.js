@@ -18,6 +18,7 @@ const SOURCE_NOTE_LABELS = [
 const MAX_DESC_CHARS = 8000;
 const MAX_IMAGE_ARTIFACTS = 20;
 const MUTATING_ACTIONS = new Set([
+  'reconcile-source-note-discovery-labels',
   'convert-bulk-interview-note-in-place',
   'create-source-note',
   'create-source-note-alongside-formal-interview-note',
@@ -309,6 +310,30 @@ function extractMarker(body, kind) {
   return match ? match[1] : null;
 }
 
+function normalizeIssueLabels(issue) {
+  return (issue && issue.labels ? issue.labels : [])
+    .map((label) => typeof label === 'string' ? label : label && label.name)
+    .filter(Boolean);
+}
+
+function expectedSourceYearLabel(projection) {
+  return projection.labels.find((label) => label.startsWith('source-year:')) || null;
+}
+
+function reconcileSourceYearLabels(issue, projection) {
+  const current = normalizeIssueLabels(issue);
+  const currentYearLabels = current.filter((label) => label.startsWith('source-year:'));
+  const expected = expectedSourceYearLabel(projection);
+  const isCurrent = expected == null
+    ? currentYearLabels.length === 0
+    : currentYearLabels.length === 1 && currentYearLabels[0] === expected;
+  if (isCurrent) return null;
+
+  const reconciled = current.filter((label) => !label.startsWith('source-year:'));
+  if (expected) reconciled.push(expected);
+  return reconciled;
+}
+
 function loadInventory(targetRepo) {
   const issues = flattenPages(ghJson(['api', '--paginate', '--slurp', `repos/${targetRepo}/issues?state=all&per_page=100`]));
   const sourceNotes = new Map();
@@ -316,7 +341,7 @@ function loadInventory(targetRepo) {
   const protectedInterview = new Map();
   for (const issue of issues) {
     if (issue.pull_request) continue;
-    const labels = new Set((issue.labels || []).map((label) => typeof label === 'string' ? label : label.name));
+    const labels = new Set(normalizeIssueLabels(issue));
     const sourceNoteId = extractMarker(issue.body, 'source-note');
     if (sourceNoteId) {
       sourceNotes.set(sourceNoteId, issue);
@@ -335,7 +360,16 @@ function planActions(projections, inventory) {
   return projections.map((projection) => {
     const existingSource = inventory.sourceNotes.get(projection.source_note_id);
     if (existingSource) {
-      return { action: 'source-note-exists', issue_number: existingSource.number, projection };
+      const reconciledLabels = reconcileSourceYearLabels(existingSource, projection);
+      if (reconciledLabels) {
+        return {
+          action: 'reconcile-source-note-discovery-labels',
+          issue_number: existingSource.number,
+          reconciled_labels: reconciledLabels,
+          projection,
+        };
+      }
+      return { action: 'source-note-current', issue_number: existingSource.number, projection };
     }
     const legacy = inventory.bulkLegacy.get(projection.external_id);
     if (legacy) {
@@ -385,6 +419,12 @@ function createSourceNote(targetRepo, projection) {
 }
 
 function mutateAction(targetRepo, action) {
+  if (action.action === 'reconcile-source-note-discovery-labels') {
+    ghJson(['api', '--method', 'PATCH', `repos/${targetRepo}/issues/${action.issue_number}`, '--input', '-'], {
+      labels: action.reconciled_labels,
+    });
+    return action.issue_number;
+  }
   if (action.action === 'convert-bulk-interview-note-in-place') {
     ghJson(['api', '--method', 'PATCH', `repos/${targetRepo}/issues/${action.issue_number}`, '--input', '-'], {
       title: action.projection.title,
@@ -472,7 +512,7 @@ function main() {
     } : null,
     applied,
   };
-  if (args.report) fs.writeFileSync(args.report, `${JSON.stringify(report, null, 2)}\n`);
+  if (args.report) fs.writeFileSync(args.report, `${JSON.stringify(report, null,2)}\n`);
   process.stdout.write(`${JSON.stringify(report, null, 2)}\n`);
 }
 
@@ -484,6 +524,8 @@ module.exports = {
   extractCandidate,
   listCandidates,
   buildProjection,
+  normalizeIssueLabels,
+  reconcileSourceYearLabels,
   planActions,
   validateProjection,
   summarizeAnomalies,
