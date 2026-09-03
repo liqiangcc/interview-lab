@@ -89,6 +89,13 @@ function validateInterviewContext(context) {
   return { ok: errors.length === 0, errors, warnings, context };
 }
 
+function interviewYear(timeFact) {
+  if (!timeFact || !['exact', 'month', 'year'].includes(timeFact.precision)) return null;
+  if (typeof timeFact.value !== 'string') return null;
+  const match = timeFact.value.match(/^(\d{4})/);
+  return match ? match[1] : null;
+}
+
 function deriveLearningLabels(context) {
   const result = validateInterviewContext(context);
   if (!result.ok) return { ok: false, errors: result.errors, labels: [] };
@@ -97,6 +104,8 @@ function deriveLearningLabels(context) {
   if (context.role.family !== 'unknown') labels.push(`role:${context.role.family}`);
   if (context.recruitment_type.value !== 'unknown') labels.push(`recruitment:${context.recruitment_type.value}`);
   if (context.round.value !== 'unknown') labels.push(`round:${context.round.value}`);
+  const year = interviewYear(context.interview_occurred_at);
+  if (year) labels.push(`interview-year:${year}`);
   return { ok: true, errors: [], labels };
 }
 
