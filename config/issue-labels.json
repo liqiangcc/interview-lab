@@ -81,6 +81,7 @@
     "interview_note": {
       "required": ["type:interview-note"],
       "at_most_one_from": ["status", "company", "role", "recruitment", "round"],
+      "learning_discovery_requires_status": "status:source-ready",
       "forbid_prefixes_for_facts": [
         "year:",
         "note:",
@@ -94,6 +95,7 @@
   "notes": [
     "Workflow Label 与 Learning Discovery Label 都只是 projection，不是领域事实证明。",
     "Learning Discovery Label 必须来自 reviewed InterviewContext。",
+    "只有 status:source-ready 的 InterviewNote 才允许进入 Learning Discovery Label 学习池；source-review / blocked case 保持在 Source 工作流。",
     "Company 是一级学习入口，允许使用 normalized company id 动态创建受控标签。",
     "Role 只使用粗粒度 family；精确岗位 title 保留在 InterviewContext。",
     "Unknown 不生成 Learning Discovery Label。",
