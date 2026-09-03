@@ -4,6 +4,43 @@ Interview Lab 是一个以真实面经为第一手资料、由 AI 陪伴持续�
 
 项目不把面经当作一次性 ETL 输入。真实面经会被长期保留，并持续驱动问题提取、知识建设、答案准备、模拟面试和复盘。
 
+## 日常使用
+
+对普通学习过程，用户不需要理解仓库内部的 Manifest、Review、Checkpoint 或 Validator。
+
+默认体验应该始终保持：
+
+```text
+选择一篇真实面经
+↓
+AI 展示当前真实输入
+↓
+一点一点理解 / 回答 / 追问
+↓
+用户说“下一步”继续
+↓
+有价值的知识安全沉淀
+↓
+以后再次训练
+```
+
+常见交互只需要：
+
+```text
+开始读这篇面经
+下一步
+这里什么意思？
+这个怎么回答？
+再深入一点
+复盘一下
+```
+
+SourceRevision、SourceSequenceManifest、SourceSequenceReview、checkpoint/history validator、review transition/staleness 等都属于 runtime infrastructure，默认由 Agent 自动维护；只有出现真实阻塞、需要审计，或当前任务本身是在开发 Interview Lab 时才展开。
+
+详见：
+
+- `docs/workflows/user-facing-workflow.md`
+
 ## 核心链路
 
 ```text
@@ -32,6 +69,8 @@ Interview Lab 是一个以真实面经为第一手资料、由 AI 陪伴持续�
 8. **目标是形成面试反应链路，而不是背答案。** 训练识别问题、定位知识、组织回答、判断深度、预判追问和根据新信息更新判断。
 9. **同一篇面经可以反复挖掘。** Source 保持稳定，ExplorationSession 可以不断增加。
 10. **重要状态由 Validator 证明。** Label 只是状态投影，不能替代领域验证。
+11. **底层复杂度不能变成用户复杂度。** 新 schema、validator 或 runtime identity 默认隐藏，不自动增加用户日常操作。
+12. **真实 Pilot 决定是否增加机制。** 没有可复现 correctness / provenance / concurrency 问题时，不因理论完备性继续堆叠协议。
 
 ## 领域分层
 
@@ -40,6 +79,7 @@ Interview Lab 是一个以真实面经为第一手资料、由 AI 陪伴持续�
 - **Knowledge**：CanonicalQuestion、关系、Analysis、Answer 和证据映射。
 - **Training**：逐步学习、Mock Interview、ReviewProgress、知识缺口和反复训练。
 - **Issues**：AI / 人的操作界面和工作流控制面。
+- **Runtime Infrastructure**：Manifest、Review、Checkpoint、Validator、staleness 等正确性机制；默认不进入学习者日常操作面。
 
 ## Issue 驱动
 
@@ -109,6 +149,12 @@ Issue number、标题和显示文本都不是领域 identity。
 
 ## 基础机制文档
 
+日常使用入口：
+
+- `docs/workflows/user-facing-workflow.md`
+
+底层机制与开发文档：
+
 - `docs/architecture/boundaries.md`
 - `docs/architecture/source-revisions.md`
 - `docs/domain/model.md`
@@ -124,16 +170,16 @@ Issue number、标题和显示文本都不是领域 identity。
 
 ## 当前阶段
 
-当前处于机制验证阶段：
+首个真实 sequential-learning Pilot 已经验证了 Source frontier、review-pinned checkpoint、history gate 和 staleness 等底层边界。
+
+接下来默认优先级调整为：
 
 ```text
-文档边界
-→ 机器契约
-→ Validator
-→ 5 篇 XHS pilot
-→ 实际 AI 阅读/审核
-→ 修正机制
-→ 再按可信 Source 时间从旧到新全量迁移
+更多真实面经
+→ 用户学习体验
+→ 知识沉淀质量
+→ 训练效果
+→ 真实失败暴露新问题时再扩展底层协议
 ```
 
-在 pilot 证明身份唯一、Raw/Derived 分离、来源可追溯、迁移幂等和 AI 可用之前，不开始全量历史迁移。
+而不是继续主动寻找无限的下一层 runtime abstraction。
