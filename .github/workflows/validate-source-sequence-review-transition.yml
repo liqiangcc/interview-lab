@@ -1,0 +1,30 @@
+name: SourceSequenceReview transition 预检
+
+on:
+  issue_comment:
+    types: [created, edited]
+
+permissions:
+  contents: read
+  issues: read
+  pull-requests: read
+
+jobs:
+  preflight:
+    if: contains(github.event.comment.body, 'source-sequence-review-transition')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: 提取 transition request
+        run: jq -r '.comment.body' "$GITHUB_EVENT_PATH" > /tmp/source-sequence-review-transition.md
+      - name: 提取 Issue 全量 comment history
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api --paginate --slurp "repos/${GITHUB_REPOSITORY}/issues/${{ github.event.issue.number }}/comments?per_page=100" > /tmp/source-sequence-review-comment-pages.json
+          jq '[.[][] | {id, created_at, updated_at, body}]' /tmp/source-sequence-review-comment-pages.json > /tmp/source-sequence-review-history.json
+      - name: 预检 review transition 与 session staleness impact
+        run: node scripts/plan-source-sequence-review-transition.js /tmp/source-sequence-review-transition.md /tmp/source-sequence-review-history.json
