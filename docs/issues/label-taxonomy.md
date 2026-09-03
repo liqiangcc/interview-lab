@@ -126,7 +126,7 @@ Learning Discovery projection
 └── authoritative Source-field-derived labels
 ```
 
-只有 `status:source-ready` 的 InterviewNote 才能投影 Learning Discovery Labels。
+只有 `status:source-ready` 且已经完成 Context review 的 InterviewNote 才进入整组 Learning Discovery projection。
 
 ## 公司
 
