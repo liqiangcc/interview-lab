@@ -28,7 +28,9 @@ if (!reviews.ok) {
 const body = fs.readFileSync(file, 'utf8');
 const result = validateExplorationSessionCheckpoint(body, {
   manifestsById: manifests.byId,
+  reviewsById: reviews.byId,
   effectiveReviewsByManifestDigest: reviews.effectiveByManifestDigest,
+  requireCurrentApproval: true,
 });
 
 for (const warning of result.warnings) console.warn(`WARN: ${warning}`);
