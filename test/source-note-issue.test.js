@@ -7,7 +7,7 @@ const assert = require('node:assert/strict');
 const { parseSourceNoteIssue, validateSourceNoteIssue } = require('../scripts/lib/source-note-issue');
 
 const fixture = fs.readFileSync(path.join(__dirname, 'fixtures/source-note-issue.valid.md'), 'utf8');
-const labels = ['type:source-note', 'source:xhs', 'status:captured', 'boundary:pending', 'task:boundary-review', 'migration:xhs-bulk'];
+const labels = ['type:source-note', 'source:xhs', 'status:captured', 'boundary:pending', 'task:boundary-review', 'migration:xhs-bulk', 'source-year:2022'];
 
 test('valid pending SourceNote intake passes', () => {
   const result = validateSourceNoteIssue({ body: fixture, labels, state: 'open' });
@@ -20,10 +20,25 @@ test('SourceNote cannot also claim InterviewNote type', () => {
   assert.match(result.errors.join('\n'), /must not also carry type:interview-note/);
 });
 
-test('SourceNote cannot carry InterviewNote learning labels', () => {
+test('SourceNote cannot carry InterviewNote-only labels', () => {
   const result = validateSourceNoteIssue({ body: fixture, labels: [...labels, 'company:alibaba'] });
   assert.equal(result.ok, false);
-  assert.match(result.errors.join('\n'), /must not carry InterviewNote learning labels/);
+  assert.match(result.errors.join('\n'), /must not carry InterviewNote-only labels/);
+});
+
+test('SourceNote requires source-year when source_published_at proves the year', () => {
+  const result = validateSourceNoteIssue({ body: fixture, labels: labels.filter((label) => !label.startsWith('source-year:')) });
+  assert.equal(result.ok, false);
+  assert.match(result.errors.join('\n'), /must include source-year:2022/);
+});
+
+test('SourceNote source-year must match source_published_at', () => {
+  const result = validateSourceNoteIssue({
+    body: fixture,
+    labels: labels.map((label) => label === 'source-year:2022' ? 'source-year:2023' : label),
+  });
+  assert.equal(result.ok, false);
+  assert.match(result.errors.join('\n'), /must match record.source_published_at year \(2022\)/);
 });
 
 test('pending boundary review cannot predeclare InterviewNote identities', () => {

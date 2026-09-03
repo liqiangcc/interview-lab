@@ -70,6 +70,13 @@ function validateTimeFact(fieldName, timeFact, errors) {
   }
 }
 
+function yearFromTimeFact(timeFact) {
+  if (!timeFact || !['exact', 'month', 'year'].includes(timeFact.precision)) return null;
+  if (typeof timeFact.value !== 'string') return null;
+  const match = timeFact.value.match(/^(\d{4})/);
+  return match ? match[1] : null;
+}
+
 function validateRecord(record, marker, errors) {
   if (!record || typeof record !== 'object' || Array.isArray(record)) {
     errors.push('source-note-record must be one JSON object');
@@ -162,6 +169,26 @@ function validateRecord(record, marker, errors) {
   }
 }
 
+function validateSourceYearProjection(record, labelSet, errors) {
+  const labels = [...labelSet].filter((label) => label.startsWith('source-year:'));
+  if (labels.length > 1) {
+    errors.push(`SourceNote source-year family must have at most one value: ${labels.join(', ')}`);
+    return;
+  }
+  const expectedYear = record ? yearFromTimeFact(record.source_published_at) : null;
+  if (expectedYear == null && labels.length) {
+    errors.push('source-year label requires a year-bearing record.source_published_at');
+    return;
+  }
+  if (expectedYear != null && labels.length === 0) {
+    errors.push(`SourceNote with year-bearing source_published_at must include source-year:${expectedYear}`);
+    return;
+  }
+  if (expectedYear != null && labels[0] !== `source-year:${expectedYear}`) {
+    errors.push(`source-year label must match record.source_published_at year (${expectedYear})`);
+  }
+}
+
 function validateSourceNoteIssue({ body, labels = [], state = 'open' }) {
   const errors = [];
   const warnings = [];
@@ -192,11 +219,12 @@ function validateSourceNoteIssue({ body, labels = [], state = 'open' }) {
     warnings.push('completed boundary review should normally remove task:boundary-review');
   }
 
-  const forbiddenLearningPrefixes = ['company:', 'role:', 'recruitment:', 'round:', 'source-year:', 'interview-year:', 'result:', 'outcome:'];
-  for (const prefix of forbiddenLearningPrefixes) {
+  const forbiddenInterviewPrefixes = ['company:', 'role:', 'recruitment:', 'round:', 'interview-year:', 'result:', 'outcome:'];
+  for (const prefix of forbiddenInterviewPrefixes) {
     const found = [...labelSet].filter((label) => label.startsWith(prefix));
-    if (found.length) errors.push(`SourceNote must not carry InterviewNote learning labels: ${found.join(', ')}`);
+    if (found.length) errors.push(`SourceNote must not carry InterviewNote-only labels: ${found.join(', ')}`);
   }
+  validateSourceYearProjection(parsed.record, labelSet, errors);
 
   if (state === 'closed' && expectedBoundary === 'boundary:pending') {
     errors.push('pending SourceNote must not be closed');
@@ -215,4 +243,5 @@ module.exports = {
   REQUIRED_SECTIONS,
   parseSourceNoteIssue,
   validateSourceNoteIssue,
+  yearFromTimeFact,
 };
