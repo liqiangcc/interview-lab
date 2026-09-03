@@ -331,7 +331,12 @@ function planActions(projections, inventory) {
     }
     const formal = inventory.protectedInterview.get(projection.external_id);
     if (formal) {
-      return { action: 'protected-formal-interview-note', issue_number: formal.number, projection };
+      return {
+        action: 'create-source-note-alongside-formal',
+        issue_number: null,
+        formal_issue_number: formal.number,
+        projection,
+      };
     }
     return { action: 'create-source-note', issue_number: null, projection };
   });
@@ -350,7 +355,7 @@ function mutateAction(targetRepo, action) {
     });
     return action.issue_number;
   }
-  if (action.action === 'create-source-note') {
+  if (['create-source-note', 'create-source-note-alongside-formal'].includes(action.action)) {
     const created = ghJson(['api', '--method', 'POST', `repos/${targetRepo}/issues`, '--input', '-'], {
       title: action.projection.title,
       body: action.projection.body,
@@ -387,7 +392,11 @@ function main() {
 
   const inventory = loadInventory(args.targetRepo);
   const actions = planActions(projections, inventory);
-  const mutating = actions.filter((action) => ['convert-bulk-interview-note-in-place', 'create-source-note'].includes(action.action));
+  const mutating = actions.filter((action) => [
+    'convert-bulk-interview-note-in-place',
+    'create-source-note',
+    'create-source-note-alongside-formal',
+  ].includes(action.action));
   const selected = args.apply ? mutating.slice(0, args.maxMutations) : [];
   const applied = [];
   for (const action of selected) {
