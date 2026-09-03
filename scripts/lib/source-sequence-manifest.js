@@ -1,5 +1,6 @@
 'use strict';
 
+const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
 
@@ -7,6 +8,21 @@ const SCHEMA_VERSION = 'source-sequence-manifest.v1';
 
 function isNonEmptyString(value) {
   return typeof value === 'string' && value.trim().length > 0;
+}
+
+function stableStringify(value) {
+  if (value === null || typeof value !== 'object') return JSON.stringify(value);
+  if (Array.isArray(value)) return `[${value.map(stableStringify).join(',')}]`;
+  return `{${Object.keys(value).sort().map((key) => `${JSON.stringify(key)}:${stableStringify(value[key])}`).join(',')}}`;
+}
+
+function computeManifestDigest(manifest) {
+  const payload = {};
+  for (const [key, value] of Object.entries(manifest || {})) {
+    if (key === 'content_sha256' || key === '__file') continue;
+    payload[key] = value;
+  }
+  return crypto.createHash('sha256').update(stableStringify(payload), 'utf8').digest('hex');
 }
 
 function validateSourceSequenceManifest(manifest) {
@@ -19,6 +35,12 @@ function validateSourceSequenceManifest(manifest) {
 
   if (manifest.schema_version !== SCHEMA_VERSION) errors.push(`schema_version must be ${SCHEMA_VERSION}`);
   if (!isNonEmptyString(manifest.manifest_id)) errors.push('manifest_id must be a non-empty string');
+  if (!/^[0-9a-f]{64}$/.test(String(manifest.content_sha256 || ''))) {
+    errors.push('content_sha256 must be a 64-char lowercase hex SHA-256');
+  } else {
+    const expectedDigest = computeManifestDigest(manifest);
+    if (manifest.content_sha256 !== expectedDigest) errors.push(`content_sha256 mismatch; expected ${expectedDigest}`);
+  }
   if (!isNonEmptyString(manifest.interview_note_id)) errors.push('interview_note_id must be a non-empty string');
   if (!isNonEmptyString(manifest.source_revision_id)) errors.push('source_revision_id must be a non-empty string');
   if (!isNonEmptyString(manifest.sequence_scope)) errors.push('sequence_scope must be a non-empty string');
@@ -166,6 +188,7 @@ function findFragment(unit, sourceFragmentId) {
 
 module.exports = {
   SCHEMA_VERSION,
+  computeManifestDigest,
   validateSourceSequenceManifest,
   loadSourceSequenceManifests,
   findUnit,
