@@ -1,0 +1,75 @@
+name: 对账 XHS SourceNote
+
+on:
+  push:
+    branches:
+      - 'ops/xhs-source-note-reconcile-*'
+    paths:
+      - 'ops/xhs-source-note-reconcile.dry-run'
+      - 'ops/xhs-source-note-reconcile.apply'
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  reconcile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout interview-lab
+        uses: actions/checkout@v4
+
+      - name: Resolve pinned XHS snapshot
+        id: config
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "source_ref=$(jq -r '.source_ref' config/xhs-full-migration.json)" >> "$GITHUB_OUTPUT"
+          echo "source_repository=$(jq -r '.source_repository' config/xhs-full-migration.json)" >> "$GITHUB_OUTPUT"
+          echo "target_repository=$(jq -r '.target_repository' config/xhs-full-migration.json)" >> "$GITHUB_OUTPUT"
+          if [[ -f ops/xhs-source-note-reconcile.apply ]]; then
+            echo 'apply=true' >> "$GITHUB_OUTPUT"
+          else
+            echo 'apply=false' >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Checkout fixed XHS snapshot
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ steps.config.outputs.source_repository }}
+          ref: ${{ steps.config.outputs.source_ref }}
+          path: xhs
+          fetch-depth: 1
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Preflight / reconcile SourceNotes in publication order
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          args=(
+            --source-root xhs
+            --source-ref "${{ steps.config.outputs.source_ref }}"
+            --target-repo "${{ steps.config.outputs.target_repository }}"
+            --report xhs-source-note-reconciliation-report.json
+          )
+          if [[ "${{ steps.config.outputs.apply }}" == 'true' ]]; then
+            # Safe default: 100 issue mutations per run, 10 seconds apart.
+            # Re-run is idempotent because live markers are reloaded before every plan.
+            args+=(--apply --max-mutations 100 --pause-ms 10000)
+          fi
+          node scripts/reconcile-xhs-source-notes.js "${args[@]}"
+
+      - name: Upload reconciliation report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: xhs-source-note-reconciliation-${{ github.run_id }}
+          path: xhs-source-note-reconciliation-report.json
+          if-no-files-found: warn
+          retention-days: 14
