@@ -6,6 +6,7 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const {
   validateInterviewContext,
+  deriveSourceYearLabel,
   deriveLearningLabels,
   buildNonSpoilerTitle,
   buildLearningDiscovery,
@@ -23,7 +24,7 @@ test('Pilot 3 reviewed InterviewContext validates', () => {
   assert.equal(result.ok, true, JSON.stringify(result.errors));
 });
 
-test('reviewed InterviewContext derives learning discovery labels', () => {
+test('reviewed InterviewContext derives learning discovery labels without inventing interview year', () => {
   const result = deriveLearningLabels(fixture);
   assert.equal(result.ok, true, JSON.stringify(result.errors));
   assert.deepEqual(result.labels, [
@@ -32,6 +33,51 @@ test('reviewed InterviewContext derives learning discovery labels', () => {
     'recruitment:campus',
     'round:2',
   ]);
+});
+
+test('source publication year is derived independently from InterviewNote source_published_at', () => {
+  assert.equal(deriveSourceYearLabel({ precision: 'exact', value: '2023-09-18T21:48:28+08:00' }), 'source-year:2023');
+  assert.equal(deriveSourceYearLabel({ precision: 'month', value: '2023-09' }), 'source-year:2023');
+  assert.equal(deriveSourceYearLabel({ precision: 'year', value: '2023' }), 'source-year:2023');
+});
+
+test('yearless source publication fact does not invent source-year', () => {
+  assert.equal(deriveSourceYearLabel({ precision: 'month_day', value: '09-18' }), null);
+  assert.equal(deriveSourceYearLabel({ precision: 'unknown', value: null }), null);
+});
+
+test('reviewed interview occurrence with explicit year creates interview-year', () => {
+  const value = clone();
+  value.interview_occurred_at = {
+    precision: 'exact',
+    value: '2022-08-02',
+    basis: 'source-explicit',
+    evidence_refs: ['note-desc:line-1'],
+  };
+  const result = deriveLearningLabels(value);
+  assert.equal(result.ok, true, JSON.stringify(result.errors));
+  assert.equal(result.labels.at(-1), 'interview-year:2022');
+});
+
+test('source year and interview year may legitimately differ', () => {
+  const value = clone();
+  value.interview_occurred_at = {
+    precision: 'exact',
+    value: '2022-08-02',
+    basis: 'source-explicit',
+    evidence_refs: ['note-desc:line-1'],
+  };
+  const result = buildLearningDiscovery(value, { precision: 'exact', value: '2023-02-15T20:39:34+08:00' });
+  assert.equal(result.ok, true, JSON.stringify(result.errors));
+  assert.ok(result.learning_labels.includes('interview-year:2022'));
+  assert.ok(result.learning_labels.includes('source-year:2023'));
+});
+
+test('Pilot 3 source year does not leak into unknown interview year', () => {
+  const result = buildLearningDiscovery(fixture, { precision: 'exact', value: '2023-09-18T21:48:28+08:00' });
+  assert.equal(result.ok, true, JSON.stringify(result.errors));
+  assert.ok(result.learning_labels.includes('source-year:2023'));
+  assert.equal(result.learning_labels.some((label) => label.startsWith('interview-year:')), false);
 });
 
 test('non-spoiler title excludes raw outcome wording', () => {
