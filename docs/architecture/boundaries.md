@@ -41,6 +41,8 @@ Derived Extraction 回答：
 
 - OCR
 - 非直接来源字段的公司 / 岗位 / 轮次推断
+- SourceSequenceManifest
+- SourceUnit / SourceFragment boundary
 - SourceQuestion 候选
 - 问题边界
 - 句子是问题、答案片段、叙述还是噪声的判断
@@ -49,6 +51,20 @@ Derived Extraction 回答：
 所有派生记录都应能追溯回 Raw Source。
 
 Derived 可以修正、删除或重建，但不能修改 Raw。
+
+其中 SourceSequenceManifest 需要额外区分两种语义：
+
+```text
+Raw artifact
+→ immutable evidence
+
+SourceSequenceManifest
+→ reviewed Derived ordering contract
+```
+
+Manifest 只能描述有可辩护顺序的 evidence stream，不能为了获得 position 而把多个没有可靠全局顺序的 artifact 强行拼接。
+
+一旦某个 manifest 被 ExplorationSession v2 通过 `manifest_id + content_sha256` 引用，其历史版本应保持可追溯；如果 segmentation 需要修正，创建新的 manifest version，而不是静默改写历史训练所依赖的 Source frontier。
 
 ## Layer 2 — Knowledge
 
@@ -122,6 +138,8 @@ Issue 可以横跨这些层提供操作入口，但领域事实仍由各自所�
 禁止：
 
 - Derived 覆盖 Raw Source。
+- SourceSequenceManifest 冒充 Raw 顺序证据。
+- 为了训练方便把多个无可靠先后的 artifact 强拼成一条 Source sequence。
 - CanonicalQuestion 改写 SourceQuestion 的原始 wording。
 - Answer 在原面经中直接“纠错”。
 - AI 推断字段伪装成来源明确事实。
@@ -134,6 +152,7 @@ Issue 可以横跨这些层提供操作入口，但领域事实仍由各自所�
 
 ```text
 Raw Source 保持稳定。
+SourceSequenceManifest 始终属于 Derived。
 理解可以不断加深。
 Derived Knowledge 可以变化。
 所有来源型派生结论都应保持可追溯。
