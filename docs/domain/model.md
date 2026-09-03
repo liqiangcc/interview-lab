@@ -2,71 +2,139 @@
 
 ## 目的
 
-本文定义 Interview Lab 的核心领域对象，不绑定具体数据库实现。
+Interview Lab 采用 source-first：先保存真实来源，再确认面试事件，最后派生知识与训练状态。
 
-模型采用 source-first：从真实面经派生可复用知识和训练状态，同时保留完整 provenance。
+本模型不绑定数据库实现。GitHub Issue 只是工作流入口，不是领域 identity。
+
+## 总体关系
+
+```text
+External Source
+      ↓
+SourceNote
+      ↓ Boundary Review
+      ├── 0 InterviewNote
+      ├── 1 InterviewNote
+      └── N InterviewNote
+              ↓
+       InterviewContext
+              ↓
+       SourceSequenceManifest
+              ↓
+       SourceUnit / SourceQuestion
+              ↓
+       CanonicalQuestion
+         ├── Analysis
+         ├── Answer
+         └── ReviewProgress
+
+InterviewNote / CanonicalQuestion
+              └── ExplorationSession*
+```
+
+核心边界：
+
+```text
+一条来源帖子 ≠ 一次真实面试。
+```
+
+## SourceNote
+
+表示“一条外部来源帖子在固定 Source snapshot 中的采集身份”。
+
+XHS 当前使用：
+
+```text
+source_note_id = xhs-note:<note_id>
+```
+
+职责：
+
+- 保存 source system / external id；
+- 固定 SourceRevision 与 source repository ref；
+- 保存 `source_published_at` / `source_edited_at`；
+- 登记 Raw / Source projection artifacts；
+- 显式记录 zero-byte、时间异常等 intake anomaly；
+- 承载 boundary review。
+
+不负责：
+
+- 判断是不是一次面试；
+- 公司 / 岗位 / 招聘类型 / 轮次；
+- 实际面试时间；
+- 学习标签；
+- 预声明 InterviewNote identity。
+
+Boundary Review 结果：
+
+```text
+pending
+not-interview
+single-interview
+multi-interview
+```
+
+只有 review 完成后才允许产生 `0..N InterviewNote`。
+
+详细 contract：`docs/domain/source-note.md`。
 
 ## InterviewNote
 
-表示一个来源中的一篇真实面经 case。
+表示“经过 boundary review 确认的一次真实面试事件”。
 
 职责：
 
-- 稳定 identity
-- 引用不可变 Raw Artifact
-- 保存 source provenance
-- 管理 SourceRevision
-- 关联主 GitHub Issue
+- 稳定面试事件 identity；
+- 引用其来源 SourceNote / SourceRevision provenance；
+- 进入 Source review / source-ready 生命周期；
+- 关联 InterviewContext、顺序学习与问题抽取。
 
-它不拥有 Canonical 知识，也不负责“纠正”原始技术表述。
+InterviewNote 不拥有 Canonical 知识，也不负责改写来源中的原始技术表述。
+
+历史 Pilot #3/#4 在旧的一对一模型下已经建立正式 `xhs:<note_id>` identity。它们作为兼容历史保留；bulk reconciliation 不改写这些正式对象。新的多事件 child identity 在实际 boundary-review Pilot 中再固定，不凭空提前设计。
 
 ## SourceArtifact
 
-表示一次采集得到的来源证据，例如：
+表示来源证据，例如：
 
-- HTML snapshot
-- API JSON snapshot
-- 原始 text export
-- image
-- 未来可能支持的 video/audio
+- HTML snapshot；
+- API JSON snapshot；
+- text projection；
+- image；
+- 未来的 video / audio。
 
-推荐 identity 字段：
+Raw 与 Derived 必须分开。
 
-- artifact id
-- interview note id
-- source revision
-- content type
-- content hash
-- capture timestamp
-- storage reference
+SourceNote intake 对 artifact 至少保留：
+
+```text
+kind
+ref
+git_blob_sha
+sha256
+provenance
+byte_size
+integrity
+```
+
+`byte_size=0` 必须显式使用 `integrity=zero-byte`，不能把路径存在等同于证据可用。
 
 ## InterviewContext
 
-表示一篇 InterviewNote 在正式学习之前经过审核的 **Derived 面试上下文**。
+表示 InterviewNote 在正式学习前经过审核的 Derived 面试上下文。
 
 职责：
 
-- 把 source-ready 面经变成可筛选学习样本；
-- 保存 company / role family / recruitment type / round / interview time；
-- 为 Learning Discovery Labels 提供经过 review 的 projection source；
-- 生成 non-spoiler Issue title；
-- 明确 outcome 在学习前保持 sealed。
+- company；
+- role family；
+- recruitment type；
+- round；
+- interview occurred time；
+- non-spoiler title；
+- Learning Discovery Labels；
+- sealed outcome。
 
-重要属性：
-
-- `context_id`
-- `interview_note_id`
-- `source_revision_id`
-- `review_status`
-- `reviewed_at`
-- `company`
-- `role`
-- `recruitment_type`
-- `round`
-- `interview_occurred_at`
-- `outcome_visibility`
-
-每个基础事实必须区分：
+每个事实区分：
 
 ```text
 source-explicit
@@ -74,304 +142,194 @@ reviewed-inference
 unknown
 ```
 
-`InterviewContext` 属于 Derived，不修改 Raw Source，也不允许把 result / outcome / self-assessment / external feedback 放进 pre-learning view。
-
-Learning Discovery Labels 是它的查询 projection，例如：
-
-```text
-company:kuaishou
-role:backend
-recruitment:campus
-round:2
-```
-
-Unknown 默认不生成标签。
+Outcome / result / self-assessment 默认不进入 pre-learning view。
 
 ## SourceSequenceManifest
 
-表示针对某个固定 `SourceRevision` 中一个可顺序消费 evidence stream 的 Derived 序列定义。
+表示针对一个固定 InterviewNote SourceRevision 中某个可顺序消费 evidence stream 的 Derived 序列定义。
 
 职责：
 
-- 固定 `manifest_id + content_sha256`
-- 绑定 Raw evidence stream
-- 保存可选 readable Derived projection provenance
-- 定义 `SourceUnit 1..N`
-- 在确有 position 内时间阶段时定义 `SourceFragment`
+- 固定 `manifest_id + content_sha256`；
+- 绑定 evidence stream；
+- 定义 `SourceUnit 1..N`；
+- 需要时定义 SourceFragment。
 
-Manifest 属于 Layer 1 Derived Extraction，不是 Raw Source。
-
-一个 InterviewNote 可以有多个 evidence stream，因此不能默认存在跨所有 artifact 的单一全局顺序。
+一篇 InterviewNote 可以有多个 evidence stream；不能默认所有 artifact 存在一个全局顺序。
 
 ## SourceSequenceReview
 
-表示对一个 **exact SourceSequenceManifest digest** 的独立审核决定。
-
-它与 Manifest 分离：
+表示对 exact Manifest digest 的独立审核决定：
 
 ```text
 SourceSequenceManifest
-→ 定义序列
+→ 定义顺序
 
 SourceSequenceReview
-→ 判断这个 exact 序列定义是否可被 sequential learning 消费
+→ 判断这个 exact 顺序是否允许 sequential learning
 ```
 
-重要属性：
-
-- `review_id`
-- `manifest_id`
-- `manifest_sha256`
-- `decision`：approved / rejected
-- `reviewed_at`
-- `reviewer_kind`
-- `review_evidence`
-- `checks[]`
-- `limitations[]`
-- `supersedes_review_id`
-
-Review 通过 `supersedes_review_id` 形成 append-only decision chain；同一个 `manifest_id + manifest_sha256` 必须只有一个 effective head。
-
-`SourceSequenceReview` 属于 Derived governance / review state，不修改 Raw Source，也不修改 Manifest 内容。
+Review 使用 append-only supersedes chain。后续 review 变化不能反向改写历史 session 当时的授权事实。
 
 ## SourceUnit
 
-表示一个可以在 sequential learning 中作为独立 reveal frontier 的 Derived Source 单元。
+表示 sequential learning 的独立 reveal frontier。
 
-重要属性：
+当前已验证类型包括：
 
-- `source_unit_id`
-- `position`
-- `source_unit_type`
-- `text_projection`
-- `fragments[]`
+```text
+question-like
+stage-summary
+outcome-reflection-summary
+```
 
-`SourceUnit` 比 `SourceQuestion` 更底层，因为并非所有顺序单元都是问题。它可以是：
-
-- question-like
-- stage-summary
-- outcome-reflection-summary
-- 未来经过 review 的其他类型
+统一的是 evidence discipline，不是统一 layer 数量。
 
 ## SourceFragment
 
-表示一个 SourceUnit 内部存在的可证明时间片段。
-
-只在 unit 内确实包含多个时间阶段时建立，例如：
+只在一个 SourceUnit 内确实存在多个时间阶段时建立，例如：
 
 ```text
 interviewer cue
-→ retrospective intent summary
-→ retrospective follow-up summary
+→ retrospective intent
+→ retrospective later-followup
 ```
 
-重要属性：
-
-- `source_fragment_id`
-- `order`
-- `fragment_type`
-- `text_projection`
-
-不要为了统一结构给所有 SourceUnit 人工制造 fragment。
+不要为了结构统一给所有 unit 人工制造 fragment。
 
 ## SourceQuestion
 
-表示从某个 InterviewNote 中派生的问题型单元。
+表示从 question-like SourceUnit 或准确 source span 派生的问题单元。
 
-重要属性：
+保留：
 
-- 原始 wording 或准确 source span
-- source location / provenance
-- sequence position
-- 可选 `source_unit_id`，指向其 question-like SourceUnit
-- extraction status
-- 必要时记录 interpretation confidence
+- 原始 wording；
+- source location / provenance；
+- sequence position；
+- extraction status；
+- 必要时的 interpretation confidence。
 
-SourceQuestion 不应该被润色成标准知识题。
-
-SourceUnit 与 SourceQuestion 的关系是：
-
-```text
-question-like SourceUnit
-↓
-可进一步派生 SourceQuestion
-```
-
-Stage-summary / outcome-summary SourceUnit 不应被强行伪装成 SourceQuestion。
+SourceQuestion 不应被润色成标准知识题。
 
 ## QuestionRelation
 
-表示 SourceQuestion 和/或 CanonicalQuestion 之间的显式关系。
+表示 SourceQuestion / CanonicalQuestion 之间的显式关系，例如：
 
-可能包括：
+```text
+same
+alias
+follow-up
+parent-child
+prerequisite
+contrast
+related
+```
 
-- same
-- alias
-- follow-up
-- parent-child
-- prerequisite
-- contrast
-- related
-
-除非原文直接建立该关系，否则关系属于 Derived decision。
+除非 Source 明确建立关系，否则属于 Derived decision。
 
 ## CanonicalQuestion
 
-表示可跨面经复用的标准问题 identity，可以聚合一个或多个 SourceQuestion。
+表示可跨面经复用的标准问题 identity，可以聚合多个 SourceQuestion。
 
-职责：
-
-- 稳定知识边界
-- 管理真实问法/source variant membership
-- 拥有知识关系
-- 关联 Analysis 和 Answer
-
-Canonicalization 必须能够反向追溯到每个贡献的 SourceQuestion 和 InterviewNote。
+Canonicalization 必须能够反向追溯到每个贡献 SourceQuestion、InterviewNote 和最终 SourceNote provenance。
 
 ## Analysis
 
-表示围绕 CanonicalQuestion 的派生分析，例如：
+围绕 CanonicalQuestion 的派生分析，例如：
 
-- 面试官在考什么
-- 预期回答深度
-- mechanism decomposition
-- boundary / trade-off
-- 常见误区
-- 合理 follow-up 方向
-
-Analysis 可以独立于 Source 演化。
+- 面试官在考什么；
+- 预期回答深度；
+- mechanism decomposition；
+- boundary / trade-off；
+- 常见误区；
+- 合理 follow-up 方向。
 
 ## Answer
 
-表示针对 CanonicalQuestion 准备的回答。
+针对 CanonicalQuestion 准备的回答，可包含：
 
-可以包含：
+- 简短结论；
+- 回答骨架；
+- 深入解释；
+- 边界 / 版本约束；
+- 示例；
+- follow-up；
+- evidence 引用。
 
-- 简短结论
-- 一分钟回答骨架
-- 深入解释
-- 边界 / 版本约束
-- 示例
-- follow-up 回答
-- evidence 引用
-
-Answer 的正确性依赖外部技术证据和真实 source variants，而不是通过改写面经来“证明”。
+Answer 的正确性依赖技术证据和真实 Source variants，不通过改写面经“证明”。
 
 ## ExplorationSession
 
-表示一次针对 InterviewNote 或知识对象的有边界探索/学习过程。
+表示一次有边界探索 / 学习过程。
 
-长期领域对象需要保持：
-
-- `session_id`
-- `target_type`
-- `target_id`
-- `mode`
-- `started_at`
-- `completed_at`
-- findings / knowledge gaps / relation candidates / actions
-
-Sequential InterviewNote 学习开始前，可以读取 reviewed `InterviewContext` 中的非剧透上下文；OutcomeContext 不得因为后台已知而提前进入 reasoning context。
-
-当 ExplorationSession 进行 sequential InterviewNote 学习时，还需要一个可审计的当前 Source frontier：
-
-- `source_revision_id`
-- `revealed_position`
-- `revealed_range`
-- `source_unit_type`
-- `loop_phase`
-- `temporal_cursor`（必要时）
-- `revealed_within_unit`（必要时）
-- `position_status`
-- `session_status`
-- `closure_reason`（非 active position）
-
-Manifest-backed v2/v3 checkpoint 进一步固定：
-
-- `source_manifest_id`
-- `source_manifest_sha256`
-- `source_unit_id`
-- `source_fragment_id`（SourceUnit 有 fragments 时）
-
-Review-pinned v3 再固定：
-
-- `source_review_id`
-
-这些 runtime 字段表达：
+Sequential InterviewNote learning 的新 session 使用 review-pinned v3 checkpoint，固定：
 
 ```text
-当前使用哪个 SourceRevision
-+
-使用哪个固定 Manifest digest
-+
-看到哪个 SourceUnit / SourceFragment
-+
-当时由哪个 SourceSequenceReview 授权这个 Manifest 被消费
-+
-当前处于哪一种 learning loop / closure state
+source_revision_id
+source_manifest_id
+source_manifest_sha256
+source_review_id
+source_unit_id
+source_fragment_id? 
+revealed_position
+loop_phase
+position_status
+session_status
 ```
 
-`ExplorationSession` 本身属于 Derived/Training 层，不修改 Raw Source。
+这些 runtime 字段只服务可审计学习边界，不进入普通用户界面。
 
-版本边界：
+无前视原则：
 
-- v1：基础兼容 contract；
-- v2：manifest-backed legacy contract；
-- v3：manifest + review-pinned contract，新的已批准 manifest sequential session 首选。
+```text
+position N reasoning context
+=
+previously revealed Source
++ current revealed Source / temporal fragment
++ mode-allowed general knowledge
+```
 
-历史授权事实与当前 review 状态分离：后续 review 被 supersede/rejected 可以改变当前是否允许继续使用，但不能反向改写历史 v3 checkpoint 当时 pin 的 approved review。
-
-CanonicalQuestion 等其他 session target 仍属于领域模型，只是需要未来独立 contract 后再进入 machine enforcement。
-
-Exploration 可重复、可追加。一篇面经不会因为完成一轮探索就“永久处理完毕”。
+不能使用未来 Source 解释、预测或评分当前步骤。
 
 ## ReviewProgress
 
-表示学习者针对某个知识对象或面经 case 的训练状态，例如：
+表示训练状态，例如 recall、last review、response quality、failed follow-ups、weak dimensions。
 
-- recall status
-- last reviewed time
-- response quality
-- failed follow-ups
-- weak dimensions
-- next review suggestion
+它不是 Source truth，不得修改 Source 或 Knowledge identity。
 
-ReviewProgress 不是 Source truth，不得修改 Source 或 Knowledge identity。
-
-## 对象关系
+## 分层
 
 ```text
-InterviewNote
-   ├── SourceArtifact*
-   ├── InterviewContext?
-   │      └── Learning Discovery Labels / non-spoiler title
-   ├── SourceSequenceManifest*
-   │      ├── SourceSequenceReview*
-   │      └── SourceUnit*
-   │             ├── SourceFragment*
-   │             └── SourceQuestion?   # 仅 question-like unit
-   └── SourceQuestion*
-            │
-            ├── QuestionRelation*
-            │
-            ▼
-      CanonicalQuestion
-            ├── Analysis
-            ├── Answer
-            └── ReviewProgress
+Layer 0  Raw Source
+         SourceNote evidence / immutable artifact
 
-InterviewNote / CanonicalQuestion
-            └── ExplorationSession*
+Layer 1  Derived Extraction / Discovery
+         Boundary Review
+         InterviewNote extraction
+         InterviewContext
+         SourceSequenceManifest
+         SourceUnit / SourceFragment / SourceQuestion
+
+Governance
+         SourceSequenceReview
+
+Layer 2  Knowledge
+         CanonicalQuestion / Analysis / Answer
+
+Layer 3  Training
+         ExplorationSession / ReviewProgress
 ```
 
 ## Identity 规则
 
-所有长期存在的领域对象都必须拥有独立于 GitHub Issue number、Issue title、文件路径和展示文本的稳定 machine identity。
+所有长期对象必须拥有独立于 Issue number、Issue title、文件路径和展示文本的 stable machine identity。
 
-GitHub Issue number 只是操作界面的 locator，不是领域 identity。
+```text
+Issue number
+→ locator
+≠ domain identity
+```
 
-InterviewContext 必须绑定具体 `source_revision_id`，避免 Source 改变后继续使用旧上下文投影。
+SourceNote 与 InterviewNote identity 必须分离，因为一个 SourceNote 可以产生 0..N InterviewNote。
 
-被 ExplorationSession 引用的 SourceSequenceManifest 必须固定 content digest；被 v3 session 引用的 SourceSequenceReview 还必须固定 `review_id`。
-
-如果 segmentation 需要修正：创建新的 manifest version；如果审核决定变化：追加新的 review 并通过 `supersedes_review_id` 形成新 effective head。都不能静默改写历史 session 的 frontier 或授权 provenance。
+任何 segmentation、review 或 Context 修正都通过新的 Derived version / review decision 演进，不静默改写 Raw Source 或历史学习 frontier。
