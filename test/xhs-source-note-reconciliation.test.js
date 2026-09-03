@@ -57,25 +57,27 @@ test('legacy bulk InterviewNote is converted in place', () => {
   assert.equal(actions[0].issue_number, 20);
 });
 
-test('formal non-bulk InterviewNote is protected from conversion', () => {
+test('formal InterviewNote stays untouched while a SourceNote is created alongside it', () => {
   const projection = buildProjection(candidate(), sourceRef, '2026-09-03T13:00:00.000Z');
   const actions = planActions([projection], {
     sourceNotes: new Map(),
     bulkLegacy: new Map(),
     protectedInterview: new Map([[projection.external_id, { number: 3 }]]),
   });
-  assert.equal(actions[0].action, 'protected-formal-interview-note');
-  assert.equal(actions[0].issue_number, 3);
+  assert.equal(actions[0].action, 'create-source-note-alongside-formal');
+  assert.equal(actions[0].issue_number, null);
+  assert.equal(actions[0].formal_issue_number, 3);
 });
 
-test('existing SourceNote wins idempotently', () => {
+test('existing SourceNote wins idempotently even when a formal InterviewNote also exists', () => {
   const projection = buildProjection(candidate(), sourceRef, '2026-09-03T13:00:00.000Z');
   const actions = planActions([projection], {
-    sourceNotes: new Map([[projection.source_note_id, { number: 20 }]]),
-    bulkLegacy: new Map([[projection.external_id, { number: 20 }]]),
-    protectedInterview: new Map(),
+    sourceNotes: new Map([[projection.source_note_id, { number: 901 }]]),
+    bulkLegacy: new Map(),
+    protectedInterview: new Map([[projection.external_id, { number: 3 }]]),
   });
   assert.equal(actions[0].action, 'source-note-exists');
+  assert.equal(actions[0].issue_number, 901);
 });
 
 test('missing source identity becomes a new SourceNote, not an InterviewNote', () => {
