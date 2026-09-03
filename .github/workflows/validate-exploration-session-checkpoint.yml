@@ -1,0 +1,22 @@
+name: ExplorationSession checkpoint 校验
+
+on:
+  issue_comment:
+    types: [created, edited]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    if: contains(github.event.comment.body, 'ExplorationSession checkpoint') || contains(github.event.comment.body, 'exploration-session-checkpoint')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: 提取 Issue comment
+        run: jq -r '.comment.body' "$GITHUB_EVENT_PATH" > /tmp/exploration-session-comment.md
+      - name: 校验 ExplorationSession checkpoint
+        run: node scripts/validate-exploration-session-checkpoint.js /tmp/exploration-session-comment.md

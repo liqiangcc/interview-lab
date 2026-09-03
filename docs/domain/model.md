@@ -116,17 +116,44 @@ Answer 的正确性依赖外部技术证据和真实 source variants，而不是
 
 表示一次针对 InterviewNote 或知识对象的有边界探索/学习过程。
 
-有用字段包括：
+长期领域对象需要保持：
 
-- session id
-- target object
-- timestamp
-- focus
-- revealed source position
-- findings
-- relation candidates
-- knowledge gaps
-- actions produced
+- `session_id`
+- `target_type`
+- `target_id`
+- `mode`
+- `started_at`
+- `completed_at`
+- findings / knowledge gaps / relation candidates / actions
+
+当 ExplorationSession 进行 sequential InterviewNote 学习时，还需要一个可审计的当前 Source frontier：
+
+- `source_revision_id`
+- `revealed_position`
+- `revealed_range`
+- `source_unit_type`
+- `loop_phase`
+- `temporal_cursor`（必要时）
+- `revealed_within_unit`（必要时）
+- `position_status`
+- `session_status`
+- `closure_reason`（非 active position）
+
+这些 runtime 字段用于表达：
+
+```text
+当前看到哪一个 Source unit
++
+当前 unit 内看到哪个时间片段
++
+当前使用哪一种 learning loop
++
+为什么继续或停止
+```
+
+`ExplorationSession` 本身属于 Derived/Training 层，不修改 Raw Source。
+
+当前 `exploration-session-checkpoint.v1` 只机器化 sequential InterviewNote checkpoint；这不意味着 ExplorationSession 永久只能 target InterviewNote。CanonicalQuestion 等 target 仍属于领域模型，只是需要未来独立 contract 后再进入 machine enforcement。
 
 Exploration 可重复、可追加。一篇面经不会因为完成一轮探索就“永久处理完毕”。
 

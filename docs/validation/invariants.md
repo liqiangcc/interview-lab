@@ -132,11 +132,51 @@ Issue title 不能成为唯一 identity 或 provenance carrier。
 
 ### I21 — No look-ahead — HARD（sequential mode）
 
-revealed position `N` 只能使用之前已揭示 Source context + 当前输入。未来 Source unit 不得影响当前解释。
+revealed position `N` 只能使用之前已揭示 Source context + 当前已经揭示的输入。未来 Source unit 不得影响当前解释。
 
-### I22 — Session 标明 revision 与 revealed position — REVIEW
+如果同一个 Source unit 内仍包含未来时间片段，则 `revealed_position=N` 仍不足以授权使用整条 Source；当前 checkpoint 必须遵守 position 内的 `temporal_cursor` 边界。
 
-可复现 sequential ExplorationSession 应记录 SourceRevision 和当前 revealed position/range。
+```text
+revealed_position
++
+temporal_cursor（必要时）
+=
+当前可用 Source frontier
+```
+
+### I22 — Sequential checkpoint machine boundary 完整 — HARD（新 checkpoint contract）
+
+新的可机器校验 sequential InterviewNote checkpoint 必须包含且只包含一个：
+
+```text
+<!-- exploration-session-checkpoint
+{ ... exploration-session-checkpoint.v1 ... }
+-->
+```
+
+至少机器记录：
+
+```text
+session_id
+target_id
+mode
+source_revision_id
+revealed_position
+revealed_range
+current_source_unit
+source_unit_type
+loop_phase
+has_withheld_within_unit
+position_status
+session_status
+```
+
+并满足：
+
+- `revealed_range` 末端必须等于 `revealed_position`；
+- `has_withheld_within_unit=true` 时必须记录 `temporal_cursor` 与 `revealed_within_unit`；
+- checkpoint 的 Source type / loop phase / closure state 必须通过 validator；
+- 历史上在本 contract 引入前已经存在的 comment 不要求原地改写，但新建或编辑后的 `ExplorationSession checkpoint` 应遵守 v1 contract。
 
 ### I23 — Exploration finding 不等于 mutation authorization — HARD
 
@@ -170,6 +210,56 @@ Issue 创建顺序不能成为权威面经时间。
 
 如果多个 Issue 或 Source record 声称同一 stable InterviewNote identity，自动状态推进必须停止，直到 ownership 显式解决。
 
+## Exploration runtime
+
+### I30 — Source type 与 loop phase 一致 — HARD（known source types）
+
+对于 validator 已认识的 Source type，checkpoint 的 normalized `loop_phase` 必须属于该 type 的允许路径。
+
+当前 v1 至少覆盖：
+
+```text
+question-like
+stage-summary
+outcome-reflection-summary
+```
+
+新 Source type 可以先以 extensible identifier 进入，但 validator 必须给出 warning，直到其 loop contract 被正式提升。
+
+### I31 — Closure state 必须显式且自洽 — HARD
+
+`ready-to-close`、`complete`、`deferred` 不得在普通解释阶段被静默设置。
+
+非 active position 必须：
+
+```text
+loop_phase = closure
++
+closure_reason != empty
+```
+
+`session_status=completed` 还必须同时满足：
+
+```text
+position_status = complete
++
+completed_at 可解析
+```
+
+### I32 — Outcome attribution 不越权 — REVIEW
+
+结果型 Source 的语义复盘必须保持：
+
+```text
+Outcome
+≠
+Failure Cause
+≠
+Verified Weakness
+```
+
+结构 validator 可以检查 Source type / loop path / closure contract，但无法仅靠机器字段证明自然语言中没有 hindsight attribution；这部分仍需显式 review。
+
 ## 初始 Validator group
 
 未来工具应暴露有边界的检查：
@@ -182,11 +272,14 @@ validate issues
 validate labels
 validate lifecycle
 validate migration
-validate exploration
+validate exploration checkpoint
+validate exploration attribution
 validate all
 ```
 
 `validate all` 聚合这些检查，并返回 machine-readable report。
+
+当前仓库已经提供 `exploration-session-checkpoint.v1` 的 comment validator；语义 attribution review 仍属于人工 / AI review gate。
 
 ## Pilot 最低门禁
 
@@ -202,6 +295,7 @@ source lifecycle consistency           PASS
 migration idempotency                  PASS
 no invented source precision           PASS
 AI can navigate Issue → evidence root  PASS
+sequential checkpoint contract         PASS
 ```
 
 ## Evidence over counts
@@ -226,7 +320,9 @@ Identity 保持稳定。
 Raw 与 Derived 分离。
 不确定性显式存在。
 Issue 驱动工作，但不能绕过 Validation。
-顺序学习保持因果性。
+顺序学习保持因果性，包括 position 内时间边界。
+Exploration checkpoint 的 Source type、frontier 和 closure 可机器审计。
+Outcome 不自动生成 Cause 或 Verified Weakness。
 Migration 必须幂等。
 遇到 stale / ambiguous state 必须 fail closed。
 ```

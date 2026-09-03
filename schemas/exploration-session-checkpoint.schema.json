@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/liqiangcc/interview-lab/schemas/exploration-session-checkpoint.schema.json",
+  "title": "ExplorationSession sequential checkpoint v1",
+  "description": "Machine contract for sequential InterviewNote ExplorationSession checkpoints embedded in GitHub Issue comments.",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "schema_version",
+    "session_id",
+    "target_type",
+    "target_id",
+    "mode",
+    "source_revision_id",
+    "revealed_position",
+    "revealed_range",
+    "current_source_unit",
+    "source_unit_type",
+    "loop_phase",
+    "position_status",
+    "session_status",
+    "has_withheld_within_unit"
+  ],
+  "properties": {
+    "schema_version": {"const": "exploration-session-checkpoint.v1"},
+    "session_id": {"type": "string", "minLength": 1},
+    "target_type": {"const": "InterviewNote"},
+    "target_id": {"type": "string", "minLength": 1},
+    "mode": {
+      "enum": ["learning", "training", "source-analysis", "knowledge-audit"]
+    },
+    "source_revision_id": {"type": "string", "minLength": 1},
+    "revealed_position": {"type": "integer", "minimum": 1},
+    "revealed_range": {
+      "type": "string",
+      "pattern": "^[1-9][0-9]*\\.\\.[1-9][0-9]*$"
+    },
+    "current_source_unit": {"type": "string", "minLength": 1},
+    "source_unit_type": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$"
+    },
+    "loop_phase": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$"
+    },
+    "explanation_layer": {"type": ["string", "null"]},
+    "temporal_cursor": {"type": ["string", "null"]},
+    "revealed_within_unit": {"type": ["string", "null"]},
+    "has_withheld_within_unit": {"type": "boolean"},
+    "position_status": {
+      "enum": ["active", "ready-to-close", "complete", "deferred"]
+    },
+    "session_status": {"enum": ["active", "completed"]},
+    "closure_reason": {"type": ["string", "null"]},
+    "completed_at": {"type": ["string", "null"], "format": "date-time"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"has_withheld_within_unit": {"const": true}}},
+      "then": {
+        "required": ["temporal_cursor", "revealed_within_unit"],
+        "properties": {
+          "temporal_cursor": {"type": "string", "minLength": 1},
+          "revealed_within_unit": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "position_status": {
+            "enum": ["ready-to-close", "complete", "deferred"]
+          }
+        }
+      },
+      "then": {
+        "required": ["closure_reason"],
+        "properties": {
+          "loop_phase": {"const": "closure"},
+          "closure_reason": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    {
+      "if": {"properties": {"session_status": {"const": "completed"}}},
+      "then": {
+        "required": ["completed_at"],
+        "properties": {
+          "position_status": {"const": "complete"},
+          "loop_phase": {"const": "closure"},
+          "completed_at": {"type": "string", "format": "date-time"}
+        }
+      }
+    }
+  ]
+}
