@@ -7,6 +7,7 @@
   "required": [
     "schema_version",
     "manifest_id",
+    "content_sha256",
     "interview_note_id",
     "source_revision_id",
     "sequence_scope",
@@ -16,6 +17,7 @@
   "properties": {
     "schema_version": {"const": "source-sequence-manifest.v1"},
     "manifest_id": {"type": "string", "minLength": 1},
+    "content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
     "interview_note_id": {"type": "string", "minLength": 1},
     "source_revision_id": {"type": "string", "minLength": 1},
     "sequence_scope": {"type": "string", "minLength": 1},
