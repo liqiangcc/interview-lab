@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/liqiangcc/interview-lab/schemas/interview-context.schema.json",
+  "title": "InterviewContext v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "context_id",
+    "interview_note_id",
+    "source_revision_id",
+    "review_status",
+    "reviewed_at",
+    "company",
+    "role",
+    "recruitment_type",
+    "round",
+    "interview_occurred_at",
+    "outcome_visibility"
+  ],
+  "$defs": {
+    "basis": {
+      "enum": ["source-explicit", "reviewed-inference", "unknown"]
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true
+    },
+    "time_fact": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["precision", "value"],
+          "properties": {
+            "precision": {"const": "exact"},
+            "value": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}(T.*)?$"}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["precision", "value"],
+          "properties": {
+            "precision": {"const": "month"},
+            "value": {"type": "string", "pattern": "^\\d{4}-\\d{2}$"}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["precision", "value"],
+          "properties": {
+            "precision": {"const": "year"},
+            "value": {"type": "string", "pattern": "^\\d{4}$"}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["precision", "value"],
+          "properties": {
+            "precision": {"const": "month_day"},
+            "value": {"type": "string", "pattern": "^\\d{2}-\\d{2}$"}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["precision", "value"],
+          "properties": {
+            "precision": {"const": "unknown"},
+            "value": {"type": "null"}
+          }
+        }
+      ]
+    }
+  },
+  "properties": {
+    "schema_version": {"const": "interview-context.v1"},
+    "context_id": {"type": "string", "minLength": 1},
+    "interview_note_id": {"type": "string", "pattern": "^[a-z0-9_-]+:.+$"},
+    "source_revision_id": {"type": "string", "minLength": 1},
+    "review_status": {"const": "reviewed"},
+    "reviewed_at": {"type": "string", "format": "date-time"},
+    "company": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "display_name", "basis", "evidence_refs"],
+      "properties": {
+        "id": {"type": ["string", "null"], "pattern": "^[a-z0-9][a-z0-9-]*$"},
+        "display_name": {"type": ["string", "null"], "minLength": 1},
+        "basis": {"$ref": "#/$defs/basis"},
+        "evidence_refs": {"$ref": "#/$defs/evidence_refs"}
+      }
+    },
+    "role": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["family", "title", "basis", "evidence_refs"],
+      "properties": {
+        "family": {"enum": ["backend", "frontend", "client", "algorithm", "data", "qa", "product", "other", "unknown"]},
+        "title": {"type": ["string", "null"]},
+        "basis": {"$ref": "#/$defs/basis"},
+        "evidence_refs": {"$ref": "#/$defs/evidence_refs"}
+      }
+    },
+    "recruitment_type": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "basis", "evidence_refs"],
+      "properties": {
+        "value": {"enum": ["campus", "social", "internship", "unknown"]},
+        "basis": {"$ref": "#/$defs/basis"},
+        "evidence_refs": {"$ref": "#/$defs/evidence_refs"}
+      }
+    },
+    "round": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "basis", "evidence_refs"],
+      "properties": {
+        "value": {"type": "string", "pattern": "^(?:[1-9]|hr|final|unknown)$"},
+        "basis": {"$ref": "#/$defs/basis"},
+        "evidence_refs": {"$ref": "#/$defs/evidence_refs"}
+      }
+    },
+    "interview_occurred_at": {"$ref": "#/$defs/time_fact"},
+    "outcome_visibility": {"const": "sealed-until-source-reveal"}
+  }
+}
