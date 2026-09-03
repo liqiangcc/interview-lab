@@ -4,7 +4,7 @@
 const fs = require('fs');
 const path = require('path');
 const { execFileSync } = require('child_process');
-const { validateSourceNoteIssue } = require('./lib/source-note-issue');
+const { validateSourceNoteIssue, yearFromTimeFact } = require('./lib/source-note-issue');
 
 const BULK_LABEL = 'migration:xhs-bulk';
 const SOURCE_NOTE_LABELS = [
@@ -231,6 +231,13 @@ function quoteMarkdown(value) {
   return String(value || '').replace(/\r\n/g, '\n').split('\n').map((line) => `> ${line}`).join('\n');
 }
 
+function labelsForSourceNote(timeFact) {
+  const labels = [...SOURCE_NOTE_LABELS];
+  const year = yearFromTimeFact(timeFact);
+  if (year) labels.push(`source-year:${year}`);
+  return labels;
+}
+
 function buildProjection(candidate, sourceRef, capturedAt) {
   const sourceNoteId = `xhs-note:${candidate.note_id}`;
   const sourceRevisionId = `${sourceNoteId}:snapshot-${sourceRef.slice(0, 12)}`;
@@ -282,7 +289,7 @@ function buildProjection(candidate, sourceRef, capturedAt) {
     external_id: candidate.note_id,
     title: `[XHS Source] ${displayDate(candidate.source_published_at)} · ${candidate.note_id.slice(0, 8)}`,
     body,
-    labels: [...SOURCE_NOTE_LABELS],
+    labels: labelsForSourceNote(candidate.source_published_at),
     source_published_at: candidate.source_published_at,
   };
 }
@@ -341,6 +348,23 @@ function validateProjection(projection) {
   return validateSourceNoteIssue({ body: projection.body, labels: projection.labels, state: 'open' });
 }
 
+function ensureProjectionLabels(targetRepo, projections) {
+  const labels = flattenPages(ghJson(['api', '--paginate', '--slurp', `repos/${targetRepo}/labels?per_page=100`]));
+  const existing = new Set(labels.map((label) => label.name));
+  const required = new Set(projections.flatMap((projection) => projection.labels));
+  for (const name of required) {
+    if (existing.has(name)) continue;
+    ghJson(['api', '--method', 'POST', `repos/${targetRepo}/labels`, '--input', '-'], {
+      name,
+      color: name.startsWith('source-year:') ? '1f883d' : 'ededed',
+      description: name.startsWith('source-year:')
+        ? '来源发布时间年份索引'
+        : 'SourceNote intake / boundary workflow label',
+    });
+    existing.add(name);
+  }
+}
+
 function mutateAction(targetRepo, action) {
   if (action.action === 'convert-bulk-interview-note-in-place') {
     ghJson(['api', '--method', 'PATCH', `repos/${targetRepo}/issues/${action.issue_number}`, '--input', '-'], {
@@ -390,6 +414,7 @@ function main() {
   const mutating = actions.filter((action) => ['convert-bulk-interview-note-in-place', 'create-source-note'].includes(action.action));
   const selected = args.apply ? mutating.slice(0, args.maxMutations) : [];
   const applied = [];
+  if (args.apply && selected.length) ensureProjectionLabels(args.targetRepo, selected.map((action) => action.projection));
   for (const action of selected) {
     const issueNumber = mutateAction(args.targetRepo, action);
     applied.push({ action: action.action, issue_number: issueNumber, source_note_id: action.projection.source_note_id });
