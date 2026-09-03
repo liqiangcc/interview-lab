@@ -1,0 +1,32 @@
+{
+  "schema_version": "source-sequence-review.v1",
+  "review_id": "xhs:656861da000000000f024258:recovered-r2:note-desc:interview-learning-v1:review-1",
+  "manifest_id": "xhs:656861da000000000f024258:recovered-r2:note-desc:interview-learning-v1",
+  "manifest_sha256": "011a324c26435b3ab02956d1933967061243bfe52d56d613d7fb5d969b0e4e63",
+  "decision": "approved",
+  "reviewed_at": "2026-09-03T11:39:19Z",
+  "reviewer_kind": "ai-assisted",
+  "review_evidence": {
+    "repository": "liqiangcc/interview-lab",
+    "issue_number": 4,
+    "comment_id": 5525144309
+  },
+  "checks": [
+    {"check_id": "evidence_stream_binding", "result": "pass"},
+    {"check_id": "sequence_scope", "result": "pass"},
+    {"check_id": "unit_boundaries", "result": "pass"},
+    {"check_id": "unit_order", "result": "pass"},
+    {"check_id": "unit_types", "result": "pass"},
+    {"check_id": "fragment_boundaries", "result": "pass"},
+    {"check_id": "fragment_order", "result": "pass"},
+    {"check_id": "no_fabrication", "result": "pass"}
+  ],
+  "limitations": [
+    "Approval covers only the exact manifest_id + manifest_sha256 pair.",
+    "Sequence scope intentionally begins at note_desc line 5; lines 1-4 remain Source/InterviewContext evidence but are outside the sequential-learning timeline.",
+    "Raw resume images are excluded from the learning sequence; Raw image 4 remains supplemental Outcome evidence and is not an early reveal input.",
+    "The Source does not provide detailed technical questions for the resume/application-stage summaries; downstream learning must not fabricate them.",
+    "Approval does not authorize SourceQuestion, CanonicalQuestion, Analysis, or Answer mutation."
+  ],
+  "supersedes_review_id": null
+}

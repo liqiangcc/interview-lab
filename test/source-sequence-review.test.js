@@ -15,6 +15,8 @@ const { loadSourceSequenceManifests } = require('../scripts/lib/source-sequence-
 const manifests = loadSourceSequenceManifests(path.join(__dirname, '..', 'data', 'source-sequences'));
 const manifestId = 'xhs:6508552c000000001303f499:legacy-r1:image-1:sequence-v1';
 const manifestSha256 = '829b246ad8d21610c28b22f5ccb60309806a61fe9f1eb7b14af5d870bc795aad';
+const pilot4ManifestId = 'xhs:656861da000000000f024258:recovered-r2:note-desc:interview-learning-v1';
+const pilot4ManifestSha256 = '011a324c26435b3ab02956d1933967061243bfe52d56d613d7fb5d969b0e4e63';
 
 function review(overrides = {}) {
   return {
@@ -68,7 +70,7 @@ test('rejected review requires an explicit failed check', () => {
   assert.match(result.errors.join('\n'), /rejected review requires at least one failed check/);
 });
 
-test('repository review registry resolves one effective approval head', () => {
+test('repository review registry resolves Pilot 3 effective approval head', () => {
   const registry = loadSourceSequenceReviews(
     path.join(__dirname, '..', 'data', 'source-sequence-reviews'),
     { manifestsById: manifests.byId },
@@ -77,6 +79,19 @@ test('repository review registry resolves one effective approval head', () => {
   const effective = registry.effectiveByManifestDigest.get(reviewKey(manifestId, manifestSha256));
   assert.equal(effective.decision, 'approved');
   assert.equal(effective.review_evidence.comment_id, 5523241379);
+});
+
+test('repository review registry resolves Pilot 4 exact manifest approval head', () => {
+  const registry = loadSourceSequenceReviews(
+    path.join(__dirname, '..', 'data', 'source-sequence-reviews'),
+    { manifestsById: manifests.byId },
+  );
+  assert.equal(registry.ok, true, JSON.stringify(registry.errors));
+  const effective = registry.effectiveByManifestDigest.get(reviewKey(pilot4ManifestId, pilot4ManifestSha256));
+  assert.equal(effective.review_id, `${pilot4ManifestId}:review-1`);
+  assert.equal(effective.decision, 'approved');
+  assert.equal(effective.review_evidence.issue_number, 4);
+  assert.equal(effective.review_evidence.comment_id, 5525144309);
 });
 
 test('later rejected review can supersede earlier approval', () => {
