@@ -21,7 +21,7 @@ jobs:
           ref: 23a56d5aa1388cfa6fc1fa68bdb6576acad825eb
           path: xhs
 
-      - name: Collect exact Pilot 4 raw images
+      - name: Collect exact Pilot 4 evidence
         shell: bash
         run: |
           set -euo pipefail
@@ -34,13 +34,15 @@ jobs:
           printf '%s\n' 'xhs_snapshot=23a56d5aa1388cfa6fc1fa68bdb6576acad825eb' > artifact/SOURCE_SNAPSHOT
           git -C xhs rev-parse HEAD | sed 's/^/checked_out_commit=/' >> artifact/SOURCE_SNAPSHOT
           git -C xhs ls-tree HEAD downloaded_images/656861da000000000f024258/ | tee artifact/GIT_TREE
+          git -C xhs ls-tree HEAD note_detail/656861da000000000f024258.html note_desc/656861da000000000f024258.txt | tee artifact/NARRATIVE_GIT_TREE
           sha256sum artifact/*.webp | tee artifact/SHA256SUMS
+          sha256sum xhs/note_detail/656861da000000000f024258.html xhs/note_desc/656861da000000000f024258.txt | tee artifact/NARRATIVE_SHA256SUMS
           file artifact/*.webp | tee artifact/FILEINFO
 
       - name: Upload review artifact
         uses: actions/upload-artifact@v4
         with:
-          name: pilot4-raw-images-fixed-snapshot
+          name: pilot4-source-evidence-fixed-snapshot
           path: artifact/
           if-no-files-found: error
           retention-days: 1
