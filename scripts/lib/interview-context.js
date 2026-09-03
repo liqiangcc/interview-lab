@@ -38,6 +38,9 @@ function validateTimeFact(timeFact, errors) {
     year: /^\d{4}$/,
     month_day: /^\d{2}-\d{2}$/,
   };
+
+  validateEvidenceFact('interview_occurred_at', timeFact, errors, { isUnknown: (fact) => fact.precision === 'unknown' });
+
   if (precision === 'unknown') {
     if (value !== null) errors.push('unknown interview_occurred_at must use value=null');
     return;
@@ -98,7 +101,8 @@ function deriveLearningLabels(context) {
 }
 
 function roundDisplay(value) {
-  if (/^[1-9]$/.test(value)) return `${value === '1' ? '一' : value === '2' ? '二' : value === '3' ? '三' : value === '4' ? '四' : value === '5' ? '五' : value === '6' ? '六' : value === '7' ? '七' : value === '8' ? '八' : '九'}面`;
+  const chinese = { '1': '一', '2': '二', '3': '三', '4': '四', '5': '五', '6': '六', '7': '七', '8': '八', '9': '九' };
+  if (chinese[value]) return `${chinese[value]}面`;
   if (value === 'hr') return 'HR面';
   if (value === 'final') return '终面';
   return null;
