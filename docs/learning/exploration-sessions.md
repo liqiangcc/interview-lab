@@ -59,8 +59,8 @@ AI 更接近面试官，在合适 checkpoint 前不主动解释。
 重点分析来源结构，而不是学习者表现，例如：
 
 - SourceQuestion boundary
-- sequence segmentation
-- follow-up candidate
+- SourceUnit / SourceFragment segmentation
+- sequence / follow-up candidate
 - source ambiguity
 - real phrasing variant
 - Source unit 内时间阶段
@@ -76,32 +76,33 @@ AI 更接近面试官，在合适 checkpoint 前不主动解释。
 
 ## No-look-ahead
 
-顺序探索必须维护 revealed position。
+顺序探索必须维护当前 Source frontier。
 
-当处于 Source position `N` 时，只能使用：
+最基础形式：
 
 ```text
-source units 1..N
+revealed_position
 +
 当前 mode 允许使用的已有知识
 ```
 
-禁止使用 `N+1..end` 来解释、预测或评分当前步骤。
-
-### Position 内 no-look-ahead
-
-一个 Source unit 内也可能同时保存即时输入和作者事后补充的信息，因此 `revealed_position` 不一定足以表达真实时间边界。
-
-必要时 Session 应增加：
+如果一个 Source unit 内部还存在未来时间片段，则还需要：
 
 ```text
 temporal_cursor
-revealed_within_unit
 ```
 
-用于明确当前 Source unit 内已经揭示到哪个时间片段。
+有 reviewed `SourceSequenceManifest` 时，应进一步把 frontier 表示为：
 
-`temporal_cursor` 之后的信息仍然属于未来 Source，不得用于当前解释、预测或评分。
+```text
+manifest_id + manifest digest
++
+source_unit_id
++
+source_fragment_id（如有）
+```
+
+禁止使用当前 frontier 之后的 Source 来解释、预测或评分当前步骤。
 
 后来的 session 可以带着更多知识回看早期位置，但必须明确这是 retrospective analysis，而不是实时模拟。
 
@@ -223,6 +224,8 @@ Verified Weakness
 
 ## 建议的 Session record
 
+基础 runtime 字段：
+
 ```text
 session_id
 target_type
@@ -231,10 +234,29 @@ mode
 started_at
 source_revision_id
 revealed_position
+revealed_range
 source_unit_type
+loop_phase
 temporal_cursor
 revealed_within_unit
 position_status
+session_status
+closure_reason
+completed_at
+```
+
+当 session 使用 reviewed `SourceSequenceManifest` 时，还应稳定记录：
+
+```text
+source_manifest_id
+source_manifest_sha256
+source_unit_id
+source_fragment_id
+```
+
+业务学习内容继续单独记录：
+
+```text
 focus
 observed_cues
 classification
@@ -244,101 +266,160 @@ new_findings
 knowledge_gaps
 relation_candidates
 actions
-completed_at
 ```
 
-第一版不要求所有字段都存在。最重要的是稳定 target identity、SourceRevision、时间顺序，以及 observation 与正式 action 的分离。
-
-其中：
-
-- `source_unit_type` 用于选择适合当前 Source 的 learning loop；
-- `temporal_cursor` / `revealed_within_unit` 只在 position 内存在时间边界时需要；
-- `position_status` 用于记录当前 Source unit 是否仍 active、ready-to-close 或 complete。
+最重要的是稳定 target identity、SourceRevision、Source frontier，以及 observation 与正式 action 的分离。
 
 ## Machine checkpoint contract
 
-为了让 Issue 中的 sequential ExplorationSession checkpoint 可以被 CI 检查，新 checkpoint 使用一个人类可读正文 + 一个 machine marker。
+Issue 中的 sequential ExplorationSession checkpoint 使用一个人类可读正文 + 一个 machine marker：
 
-当前 `exploration-session-checkpoint.v1` **只覆盖顺序型 InterviewNote checkpoint**；CanonicalQuestion 等其他 session target 仍保留在领域模型中，后续再单独定义机器 contract，避免 v1 假装覆盖尚未验证的场景。
-
-推荐格式：
-
-````markdown
-## ExplorationSession checkpoint
-
+```text
 <!-- exploration-session-checkpoint
-{
-  "schema_version": "exploration-session-checkpoint.v1",
-  "session_id": "explore-...",
-  "target_type": "InterviewNote",
-  "target_id": "source-system:stable-id",
-  "mode": "learning",
-  "source_revision_id": "source-system:stable-id:r1",
-  "revealed_position": 4,
-  "revealed_range": "1..4",
-  "current_source_unit": "当前已揭示 Source unit",
-  "source_unit_type": "question-like",
-  "loop_phase": "classification",
-  "explanation_layer": "classification",
-  "temporal_cursor": "position-4.initial-prompt",
-  "revealed_within_unit": "当前已揭示的 position 内片段",
-  "has_withheld_within_unit": true,
-  "position_status": "active",
-  "session_status": "active",
-  "closure_reason": null,
-  "completed_at": null
-}
+{ ... }
 -->
-
-人类可读的解释、finding 和 action 继续写在 marker 之外。
-````
-
-机器字段的职责：
-
-- `source_unit_type`：选择 normalized learning loop；
-- `loop_phase`：记录当前处于该 loop 的哪个稳定阶段；`explanation_layer` 可以保留更细的自由文本层名；
-- `has_withheld_within_unit=true`：表示当前 position 内仍有未来 Source，此时 `temporal_cursor` 与 `revealed_within_unit` 必填；
-- `position_status`：只表达当前 position 的训练 closure 状态；
-- `session_status`：只表达整个 ExplorationSession 是否完成；
-- `closure_reason`：任何非 active position 都必须显式说明为什么停；
-- `completed_at`：session 完成时必填。
-
-已知 Source type 的 v1 normalized phase：
-
-```text
-question-like
-  literal / classification / knowledge / response / depth / anticipation / closure
-
-stage-summary
-  literal / classification / preparation / routing / dynamic-depth / plausible-dimensions / closure
-
-outcome-reflection-summary
-  literal / evidence-classification / structured-extraction / attribution-boundary / closure
 ```
 
-新的 Source type 允许使用新的稳定 machine identifier；validator 会先做结构检查并给 warning，待其 loop contract 经过 promotion review 后再进入已知 phase matrix。
+### v1 — 兼容 contract
 
-### Live Issue-comment validation
+`exploration-session-checkpoint.v1` 保存自报的 position / temporal cursor，并由 checkpoint/history validator 检查其结构与跨 checkpoint 单调性。
 
-仓库 workflow 会监听新建/编辑的 Issue comment。
+v1 继续支持历史和尚未建立 SourceSequenceManifest 的 sequential case。
 
-当 comment 包含：
+### v2 — Manifest-backed contract
 
-```text
-ExplorationSession checkpoint
-```
-
-或 machine marker：
+当当前 `SourceRevision` 已有 reviewed SourceSequenceManifest 时，新 sequential InterviewNote session 应优先使用：
 
 ```text
-exploration-session-checkpoint
+exploration-session-checkpoint.v2
 ```
 
-就执行 checkpoint validator。
+v2 在 v1 字段基础上增加：
 
-因此新 checkpoint 不能只写人类可读 YAML 而没有 machine marker。历史上 contract 引入前已经存在的旧 comment 不要求原地改写；但一旦编辑为新的 checkpoint，就应升级到 v1 contract。
+```text
+source_manifest_id
+source_manifest_sha256
+source_unit_id
+source_fragment_id
+```
 
-结构 validator 可以证明 frontier、Source type、loop phase 和 closure state 的字段一致性，但它不能仅凭 JSON 自动证明自然语言中完全没有 semantic look-ahead 或 hindsight attribution；后者仍然需要 review。
+机器语义：
+
+```text
+manifest_id + digest
+→ 固定本 session 使用的 sequence definition
+
+source_unit_id
+→ 证明 revealed_position 对应哪个已登记 SourceUnit
+
+source_fragment_id
+→ 证明 position 内 temporal frontier 到哪个已登记 fragment
+```
+
+v2 validator 会对照 manifest 检查：
+
+```text
+Target / SourceRevision
+↓
+Manifest
+↓
+SourceUnit identity / position / type / text
+↓
+SourceFragment order（如有）
+↓
+Checkpoint frontier
+```
+
+因此 v2 不再只相信自由文本：
+
+```text
+revealed_position = 4
+```
+
+而是要求：
+
+```text
+source_unit_id
+→ manifest 中确实 position=4
+```
+
+如果 SourceUnit 有 fragments：
+
+- `source_fragment_id` 必须属于该 unit；
+- `temporal_cursor == source_fragment_id`；
+- `has_withheld_within_unit` 由 fragment 是否为最后一个推导；
+- history 中 fragment frontier 必须按 manifest order 单调向前。
+
+如果 SourceUnit 没有 fragments：
+
+```text
+source_fragment_id = null
+temporal_cursor = null
+has_withheld_within_unit = false
+```
+
+### Manifest 版本边界
+
+`SourceSequenceManifest` 是 Derived Extraction，不是 Raw Source。
+
+Checkpoint v2 同时固定：
+
+```text
+source_manifest_id
++
+source_manifest_sha256
+```
+
+如果之后 review 发现 unit/fragment segmentation 应修正，不应原地改变历史 session 所依赖的 frontier；应创建新的 manifest version，并由新的 ExplorationSession 显式引用。
+
+## Session history machine gate
+
+Workflow 不只验证当前 comment，还会读取整个 Issue comment history，按 `session_id` 分组后验证状态机。
+
+当前可机器阻止：
+
+```text
+revealed_position 倒退 / 跳步
+previous position 尚 active 就推进
+SourceRevision 静默切换
+同 position SourceUnit / phase / status 倒退
+fully revealed 又退回 withheld
+completed session resurrection
+```
+
+对于 v2，还会阻止：
+
+```text
+manifest_id / manifest digest 静默切换
+同 position source_unit_id 切换
+source_fragment_id 按 manifest order 倒退
+```
+
+## Live Issue-comment validation
+
+仓库 workflow 监听新建/编辑的 Issue comment。
+
+当 comment 包含 `ExplorationSession checkpoint` 或 `exploration-session-checkpoint` marker 时，依次执行：
+
+```text
+校验当前 checkpoint
+↓
+提取 Issue 全量 comment history
+↓
+校验整个 ExplorationSession history
+```
+
+因此新 checkpoint 不能只写人类可读 YAML 而没有 machine marker。
+
+历史上 contract 引入前已经存在的旧 comment 不要求原地改写；新 session 在已有 manifest 时优先 v2，没有 manifest 时可以继续 v1。
+
+机器 gate 可以证明 Source frontier 与登记 manifest 的引用关系，但仍不能仅凭 JSON 证明：
+
+- manifest segmentation 一定语义正确；
+- 自然语言解释完全没有 semantic look-ahead；
+- outcome 归因一定合理。
+
+这些继续属于 Source review / semantic review。
 
 ## Finding 与 Action 分离
 
@@ -374,12 +455,12 @@ InterviewNote Issue 是 Exploration 的自然入口。
 - session / mode
 - source revision
 - revealed range
-- 必要时的 temporal cursor
 - source unit type / position status
+- 必要时的 temporal frontier
 - 关键 finding
 - 产生的 action
 
-对于新的 sequential InterviewNote checkpoint，上述状态同时写入 `exploration-session-checkpoint.v1` machine marker，由 CI 验证。
+有 reviewed manifest 时，还应记录 manifest / unit / fragment identity；这些状态同时写入 v2 machine marker，由 CI 验证。
 
 不要因为 AI 生成了长对话，就把大量重复 transcript 全塞进 Issue。只沉淀可复用发现、决策和学习 checkpoint。
 
@@ -387,7 +468,7 @@ InterviewNote Issue 是 Exploration 的自然入口。
 
 ```text
 Pass A：按真实顺序经历整场面试
-Pass B：检查问题边界
+Pass B：检查问题边界 / SourceUnit segmentation
 Pass C：检查 sequence / follow-up
 Pass D：映射 CanonicalQuestion
 Pass E：用真实问法挑战 Answer
@@ -442,8 +523,10 @@ completed_at = 可解析时间
 Source case 可以长期复用。
 未来 Source context 永远不能泄漏到当前顺序解释。
 Position 内尚未 reveal 的信息同样属于未来。
+有 reviewed manifest 时，优先用稳定 SourceUnit / SourceFragment identity 表达 frontier。
 不同 Source type 可以使用不同 learning loop。
 Source 与 Derived 必须分离。
+SourceSequenceManifest 始终属于 Derived。
 Outcome 不自动生成 Cause 或 Verified Weakness。
 Finding 经过显式 review/apply 后才成为正式 mutation。
 每个 position 和 session 都应有明确 closure 语义。
