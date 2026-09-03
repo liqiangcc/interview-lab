@@ -172,7 +172,7 @@ session_status
 - checkpoint 的 Source type / loop phase / closure state 必须通过 validator；
 - 历史上 contract 引入前已经存在的 comment 不要求原地改写。
 
-当存在 reviewed SourceSequenceManifest 时，新 sequential session 应优先使用 v2 contract，见 I34。
+当存在经过有效 SourceSequenceReview 批准的 SourceSequenceManifest 时，新 sequential session 应优先使用 review-pinned v3 contract；v2 保留为已发布兼容 contract，见 I34–I37。
 
 ### I23 — Exploration finding 不等于 mutation authorization — HARD
 
@@ -282,11 +282,11 @@ fragment order 连续
 
 多个 artifact 没有可靠全局顺序时，不得为了获得 position 强行拼接成一个 manifest stream。
 
-一旦 manifest 被 checkpoint v2 引用，其 `manifest_id + content_sha256` 构成历史 frontier identity；segmentation 修正必须创建新的 manifest version，而不是静默改写旧 frontier。
+一旦 manifest 被 manifest-backed checkpoint 引用，其 `manifest_id + content_sha256` 构成历史 frontier identity；segmentation 修正必须创建新的 manifest version，而不是静默改写旧 frontier。
 
-### I34 — Checkpoint v2 必须由 Manifest 证明 SourceUnit frontier — HARD
+### I34 — Manifest-backed checkpoint 必须由 Manifest 证明 SourceUnit frontier — HARD
 
-`exploration-session-checkpoint.v2` 必须固定：
+v2/v3 manifest-backed checkpoint 必须固定：
 
 ```text
 source_manifest_id
@@ -318,7 +318,7 @@ has_withheld_within_unit 与 fragment order 一致
 
 ### I35 — Manifest-backed history frontier 单调 — HARD
 
-同一 v2 session 必须保持：
+同一 v2/v3 session 必须保持：
 
 ```text
 source_manifest_id 稳定
@@ -327,9 +327,75 @@ source_unit_id 在同 position 稳定
 source_fragment_id 按 manifest order 单调向前
 ```
 
-Manifest-backed history gate 与现有 session history gate共同工作；completed session 仍然 terminal，position / phase / closure 仍不得倒退。
+Manifest-backed history gate 与现有 session history gate 共同工作；completed session 仍然 terminal，position / phase / closure 仍不得倒退。
 
-机器只证明登记 manifest 与 checkpoint/history 的结构一致性；SourceUnit / SourceFragment segmentation 的语义正确性仍需 Source review。
+### I36 — SourceSequenceReview 是 exact-digest 的独立批准链 — HARD
+
+`SourceSequenceManifest` schema PASS 不等于允许被 sequential learning 消费。
+
+Review identity 与 Manifest identity 必须分离：
+
+```text
+Manifest
+→ 序列定义
+
+SourceSequenceReview
+→ 对 exact manifest_id + manifest_sha256 的治理决定
+```
+
+同一 exact digest 的 review 通过 `supersedes_review_id` 形成 append-only chain，并满足：
+
+- `review_id` 唯一；
+- supersedes 只能指向同一 exact digest；
+- 不允许 cycle；
+- 必须且只能有一个 effective head；
+- 多个并行 head fail closed；
+- `approved` 要求所有登记 check=`pass`；
+- `rejected` 至少有一个显式 `fail`；
+- manifest 新 digest 不继承旧 approval。
+
+Review 本身属于 Derived governance state，不把 Manifest 或 SourceUnit 升级为 Raw Source，也不授权 Knowledge mutation。
+
+### I37 — Checkpoint v3 固定当时授权它的 SourceSequenceReview — HARD
+
+`exploration-session-checkpoint.v3` 在 Manifest frontier identity 之外必须固定：
+
+```text
+source_review_id
+```
+
+Current write gate 必须证明：
+
+```text
+pinned review 存在
++
+pinned review targets exact manifest_id + digest
++
+pinned review.decision = approved
++
+pinned review == 当前 unique effective review
+```
+
+History replay gate 必须证明：
+
+```text
+pinned review 存在
++
+pinned review targets exact manifest_id + digest
++
+pinned review.decision = approved
+```
+
+后续 review 被 supersede 或变成 rejected，只能更新当前信任状态；不得反向改写历史 checkpoint 当时 pin 的授权事实。历史 replay 可以给 stale/revoked warning，但不能因此宣称旧 checkpoint “当时从未合法”。
+
+同一 v3 session 的 `source_review_id` 必须稳定；effective review 变化后若需要继续探索，应新建 session。
+
+已发布 v2 不原地增加 `source_review_id`：
+
+- 新写入 v2 仍要求 Manifest 当前 effective review=`approved`；
+- 历史 v2 因未 pin review identity，只能保留 `approval provenance unpinned` warning，不使用今天的 review 状态反向重写旧 comment。
+
+机器能证明 review identity / decision / chain 与 checkpoint 的引用关系，但不能自动证明 semantic reviewer 的判断一定正确；SourceUnit / SourceFragment segmentation 与自然语言 no-look-ahead 仍需 semantic review。
 
 ## 初始 Validator group
 
@@ -344,6 +410,7 @@ validate labels
 validate lifecycle
 validate migration
 validate source sequence manifest
+validate source sequence reviews
 validate exploration checkpoint
 validate exploration history
 validate exploration attribution
@@ -355,10 +422,11 @@ validate all
 当前仓库已经提供：
 
 - `source-sequence-manifest.v1` validator；
-- `exploration-session-checkpoint.v1/v2` validator；
+- `source-sequence-review.v1` registry / chain validator；
+- `exploration-session-checkpoint.v1/v2/v3` validator；
 - ExplorationSession history validator。
 
-语义 attribution 与 segmentation review 仍属于人工 / AI review gate。
+语义 attribution、segmentation 与 reviewer judgement 仍属于人工 / AI review gate。
 
 ## Pilot 最低门禁
 
@@ -376,6 +444,7 @@ no invented source precision           PASS
 AI can navigate Issue → evidence root  PASS
 sequential checkpoint contract         PASS
 manifest-backed frontier contract      PASS（有 manifest 的 sequential case）
+source sequence review approval        PASS（有 manifest 的新 sequential case）
 ```
 
 ## Evidence over counts
@@ -399,10 +468,13 @@ manifest-backed frontier contract      PASS（有 manifest 的 sequential case�
 Identity 保持稳定。
 Raw 与 Derived 分离。
 SourceSequenceManifest 始终属于 Derived。
+Manifest schema PASS 不等于 approved。
+Approval 通过独立 exact-digest review chain 表达。
+新的 review-pinned sequential checkpoint 使用 v3 固定 source_review_id。
+历史输入与当前信任状态分离，后续 review 不反向改写历史授权事实。
 不确定性显式存在。
 Issue 驱动工作，但不能绕过 Validation。
 顺序学习保持因果性，包括 position 内时间边界。
-有 reviewed manifest 时，Source frontier 应由稳定 SourceUnit / SourceFragment identity 证明。
 Exploration checkpoint 的 Source type、frontier 和 closure 可机器审计。
 Outcome 不自动生成 Cause 或 Verified Weakness。
 Migration 必须幂等。
