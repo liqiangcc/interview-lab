@@ -46,6 +46,44 @@ jobs:
         with:
           node-version: 20
 
+      - name: Wait for hourly content-creation window
+        if: steps.config.outputs.apply == 'true'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TARGET_REPO: ${{ steps.config.outputs.target_repository }}
+        run: |
+          set -euo pipefail
+          latest_created_at="$(
+            gh api -X GET "repos/${TARGET_REPO}/issues" \
+              -f labels='migration:xhs-bulk' \
+              -f state='all' \
+              -f sort='created' \
+              -f direction='desc' \
+              -f per_page=1 \
+              --jq '.[0].created_at // empty'
+          )"
+
+          if [[ -z "$latest_created_at" ]]; then
+            echo "No previous bulk Issue found; no hourly-window wait required."
+            exit 0
+          fi
+
+          latest_epoch="$(date -d "$latest_created_at" +%s)"
+          now_epoch="$(date -u +%s)"
+          safe_epoch="$((latest_epoch + 3700))"
+
+          echo "Latest bulk Issue created_at: $latest_created_at"
+          echo "Hourly safety boundary: $(date -u -d "@$safe_epoch" +'%Y-%m-%dT%H:%M:%SZ')"
+
+          if (( now_epoch < safe_epoch )); then
+            wait_seconds="$((safe_epoch - now_epoch))"
+            echo "Waiting ${wait_seconds}s so the previous bulk window fully expires."
+            sleep "$wait_seconds"
+          else
+            echo "Previous bulk window already expired; continuing immediately."
+          fi
+
       - name: Preflight / migrate in source publication order
         shell: bash
         env:
@@ -61,8 +99,10 @@ jobs:
           if [[ "${{ steps.config.outputs.apply }}" == "true" ]]; then
             args+=(--apply)
             # GitHub official secondary content limits are normally 80/minute and 500/hour.
-            # This ops-only patch keeps each run below both thresholds after the first 80-item probe:
-            # 8 creates / ~9 seconds, max 400 new Issues in this run.
+            # Runtime protection:
+            # - wait until the latest previous bulk Issue is > 1 hour old (+100s safety margin)
+            # - 8 creates / ~9 seconds
+            # - max 400 new Issues in this run, leaving hourly headroom
             sed -i 's/const GRAPHQL_BATCH_PAUSE_MS = 1600;/const GRAPHQL_BATCH_PAUSE_MS = 9000;/' scripts/migrate-xhs-all.js
             sed -i 's/const batches = chunk(pending, GRAPHQL_BATCH_SIZE);/const batches = chunk(pending.slice(0, 400), GRAPHQL_BATCH_SIZE);/' scripts/migrate-xhs-all.js
           fi
