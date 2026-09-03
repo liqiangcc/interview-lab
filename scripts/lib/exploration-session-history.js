@@ -68,6 +68,7 @@ function validateSessionEntries(sessionId, entries, options = {}) {
   };
   if (first.record.schema_version === 'exploration-session-checkpoint.v2') {
     identity.source_manifest_id = first.record.source_manifest_id;
+    identity.source_manifest_sha256 = first.record.source_manifest_sha256;
   }
 
   const firstRange = parseRange(first.record.revealed_range);
@@ -82,9 +83,7 @@ function validateSessionEntries(sessionId, entries, options = {}) {
       }
     }
     const range = parseRange(record.revealed_range);
-    if (range && revealedRangeStart != null && range.start !== revealedRangeStart) {
-      errors.push(`${label}: revealed_range start changed within session ${sessionId}`);
-    }
+    if (range && revealedRangeStart != null && range.start !== revealedRangeStart) errors.push(`${label}: revealed_range start changed within session ${sessionId}`);
   }
 
   for (let index = 1; index < ordered.length; index += 1) {
@@ -94,9 +93,7 @@ function validateSessionEntries(sessionId, entries, options = {}) {
     const current = currentEntry.record;
     const label = entryLabel(currentEntry);
 
-    if (previous.session_status === 'completed') {
-      errors.push(`${label}: completed session ${sessionId} must not produce later checkpoints`);
-    }
+    if (previous.session_status === 'completed') errors.push(`${label}: completed session ${sessionId} must not produce later checkpoints`);
 
     const delta = current.revealed_position - previous.revealed_position;
     if (delta < 0) {
@@ -115,12 +112,8 @@ function validateSessionEntries(sessionId, entries, options = {}) {
       continue;
     }
 
-    if (current.current_source_unit !== previous.current_source_unit) {
-      errors.push(`${label}: current_source_unit changed while revealed_position stayed at ${current.revealed_position}`);
-    }
-    if (current.source_unit_type !== previous.source_unit_type) {
-      errors.push(`${label}: source_unit_type changed while revealed_position stayed at ${current.revealed_position}`);
-    }
+    if (current.current_source_unit !== previous.current_source_unit) errors.push(`${label}: current_source_unit changed while revealed_position stayed at ${current.revealed_position}`);
+    if (current.source_unit_type !== previous.source_unit_type) errors.push(`${label}: source_unit_type changed while revealed_position stayed at ${current.revealed_position}`);
     if (current.schema_version === 'exploration-session-checkpoint.v2' && current.source_unit_id !== previous.source_unit_id) {
       errors.push(`${label}: source_unit_id changed while revealed_position stayed at ${current.revealed_position}`);
     }
@@ -166,9 +159,7 @@ function validateSessionEntries(sessionId, entries, options = {}) {
 function validateExplorationSessionHistory(comments, options = {}) {
   const errors = [];
   const warnings = [];
-  if (!Array.isArray(comments)) {
-    return { ok: false, errors: ['history input must be an array of Issue comments'], warnings, sessions: [] };
-  }
+  if (!Array.isArray(comments)) return { ok: false, errors: ['history input must be an array of Issue comments'], warnings, sessions: [] };
 
   const grouped = new Map();
   comments.forEach((comment, inputIndex) => {
