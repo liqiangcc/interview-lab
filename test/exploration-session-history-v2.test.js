@@ -54,20 +54,22 @@ function comment(id, value) {
 function validate(comments, effectiveReviewsByManifestDigest = reviews.effectiveByManifestDigest) {
   return validateExplorationSessionHistory(comments, {
     manifestsById: manifests.byId,
+    reviewsById: reviews.byId,
     effectiveReviewsByManifestDigest,
   });
 }
 
-test('v2 SourceFragment frontier advances by manifest order with approval', () => {
+test('legacy v2 SourceFragment history remains reproducible by manifest order', () => {
   const comments = [comment(1, record(1, 'literal')), comment(2, record(2, 'classification')), comment(3, record(3, 'knowledge'))];
   const result = validate(comments);
   assert.equal(result.ok, true, JSON.stringify(result.errors));
+  assert.match(result.warnings.join('\n'), /v2 checkpoint predates pinned SourceSequenceReview identity/);
 });
 
-test('v2 history fails closed when manifest approval is unavailable', () => {
+test('legacy v2 history is not retroactively invalidated by current approval changes', () => {
   const result = validate([comment(1, record(1, 'literal'))], new Map());
-  assert.equal(result.ok, false);
-  assert.match(result.errors.join('\n'), /no effective SourceSequenceReview/);
+  assert.equal(result.ok, true, JSON.stringify(result.errors));
+  assert.match(result.warnings.join('\n'), /historical authorization provenance is unpinned/);
 });
 
 test('v2 SourceFragment frontier cannot regress by manifest order', () => {
