@@ -1,0 +1,43 @@
+name: Export Pilot 4 raw images
+
+on:
+  push:
+    branches:
+      - chore/pilot4-raw-image-export
+    paths:
+      - '.github/workflows/export-pilot4-raw-images.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source repository
+        uses: actions/checkout@v4
+        with:
+          repository: liqiangcc/xhs
+          ref: master
+          path: xhs
+
+      - name: Collect exact Pilot 4 raw images
+        shell: bash
+        run: |
+          set -euo pipefail
+          src="xhs/downloaded_images/656861da000000000f024258"
+          mkdir -p artifact
+          for n in 1 2 3 4; do
+            test -s "$src/$n.webp"
+            cp "$src/$n.webp" "artifact/$n.webp"
+          done
+          sha256sum artifact/*.webp | tee artifact/SHA256SUMS
+          file artifact/*.webp | tee artifact/FILEINFO
+
+      - name: Upload review artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pilot4-raw-images
+          path: artifact/
+          if-no-files-found: error
+          retention-days: 1
