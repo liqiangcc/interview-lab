@@ -92,7 +92,7 @@ revealed_position
 temporal_cursor
 ```
 
-有 reviewed `SourceSequenceManifest` 时，应进一步把 frontier 表示为：
+当 SourceRevision 已有通过有效 `SourceSequenceReview` 批准的 `SourceSequenceManifest` 时，应进一步把 frontier 固定为：
 
 ```text
 manifest_id + manifest digest
@@ -100,6 +100,8 @@ manifest_id + manifest digest
 source_unit_id
 +
 source_fragment_id（如有）
++
+source_review_id
 ```
 
 禁止使用当前 frontier 之后的 Source 来解释、预测或评分当前步骤。
@@ -245,13 +247,19 @@ closure_reason
 completed_at
 ```
 
-当 session 使用 reviewed `SourceSequenceManifest` 时，还应稳定记录：
+Manifest-backed session 还应稳定记录：
 
 ```text
 source_manifest_id
 source_manifest_sha256
 source_unit_id
 source_fragment_id
+```
+
+新的 review-pinned v3 session 还必须记录：
+
+```text
+source_review_id
 ```
 
 业务学习内容继续单独记录：
@@ -268,7 +276,7 @@ relation_candidates
 actions
 ```
 
-最重要的是稳定 target identity、SourceRevision、Source frontier，以及 observation 与正式 action 的分离。
+最重要的是稳定 target identity、SourceRevision、Source frontier、授权 provenance，以及 observation 与正式 action 的分离。
 
 ## Machine checkpoint contract
 
@@ -280,21 +288,15 @@ Issue 中的 sequential ExplorationSession checkpoint 使用一个人类可读�
 -->
 ```
 
-### v1 — 兼容 contract
+### v1 — 基础兼容 contract
 
 `exploration-session-checkpoint.v1` 保存自报的 position / temporal cursor，并由 checkpoint/history validator 检查其结构与跨 checkpoint 单调性。
 
 v1 继续支持历史和尚未建立 SourceSequenceManifest 的 sequential case。
 
-### v2 — Manifest-backed contract
+### v2 — 已发布 Manifest-backed legacy contract
 
-当当前 `SourceRevision` 已有 reviewed SourceSequenceManifest 时，新 sequential InterviewNote session 应优先使用：
-
-```text
-exploration-session-checkpoint.v2
-```
-
-v2 在 v1 字段基础上增加：
+v2 在 v1 基础上固定：
 
 ```text
 source_manifest_id
@@ -303,51 +305,24 @@ source_unit_id
 source_fragment_id
 ```
 
-机器语义：
+它把：
 
 ```text
-manifest_id + digest
-→ 固定本 session 使用的 sequence definition
-
-source_unit_id
-→ 证明 revealed_position 对应哪个已登记 SourceUnit
-
-source_fragment_id
-→ 证明 position 内 temporal frontier 到哪个已登记 fragment
+revealed_position = N
 ```
 
-v2 validator 会对照 manifest 检查：
-
-```text
-Target / SourceRevision
-↓
-Manifest
-↓
-SourceUnit identity / position / type / text
-↓
-SourceFragment order（如有）
-↓
-Checkpoint frontier
-```
-
-因此 v2 不再只相信自由文本：
-
-```text
-revealed_position = 4
-```
-
-而是要求：
+升级成：
 
 ```text
 source_unit_id
-→ manifest 中确实 position=4
+→ manifest 中确实 position=N
 ```
 
 如果 SourceUnit 有 fragments：
 
 - `source_fragment_id` 必须属于该 unit；
 - `temporal_cursor == source_fragment_id`；
-- `has_withheld_within_unit` 由 fragment 是否为最后一个推导；
+- `has_withheld_within_unit` 由 fragment order 推导；
 - history 中 fragment frontier 必须按 manifest order 单调向前。
 
 如果 SourceUnit 没有 fragments：
@@ -358,11 +333,89 @@ temporal_cursor = null
 has_withheld_within_unit = false
 ```
 
-### Manifest 版本边界
+v2 已经产生真实历史 comment，所以 contract 不再原地增加字段。
 
-`SourceSequenceManifest` 是 Derived Extraction，不是 Raw Source。
+当前新写入 v2 仍要求 exact manifest digest 的 current effective SourceSequenceReview=`approved`；但 v2 没有 pin review identity，因此历史 replay 只能保留：
 
-Checkpoint v2 同时固定：
+```text
+manifest / unit / fragment frontier PASS
++
+approval provenance unpinned warning
+```
+
+后续 review 变化不能反向把旧 v2 comment 改写成“当时从未发生”。
+
+### v3 — Review-pinned Manifest-backed contract（新 session 首选）
+
+当 SourceRevision 已有经过有效 SourceSequenceReview 批准的 manifest 时，新的 sequential InterviewNote session 应优先使用：
+
+```text
+exploration-session-checkpoint.v3
+```
+
+v3 在 v2 基础上新增：
+
+```text
+source_review_id
+```
+
+这同时固定两类事实：
+
+```text
+Source frontier identity
+=
+manifest_id + digest + unit/fragment
+
+Authorization provenance
+=
+source_review_id
+```
+
+#### Current write gate
+
+新 v3 checkpoint 必须证明：
+
+```text
+source_review_id 存在
++
+review targets exact manifest_id + digest
++
+review.decision = approved
++
+review == 当前 unique effective review
+```
+
+因此已经被新的 review supersede 的旧 approval 不能继续签发新的 checkpoint。
+
+#### Historical replay gate
+
+历史 v3 checkpoint 只需要证明：
+
+```text
+pinned review 存在
++
+review targets exact manifest_id + digest
++
+review.decision = approved
+```
+
+如果今天的 effective review 已经变化，history validator 可以发出 stale/revoked warning，但不能反向宣称历史 checkpoint 当时“从未被授权”。
+
+这实现：
+
+```text
+历史授权事实
+≠
+当前信任状态
+```
+
+同一 v3 session 中 `source_review_id` 必须稳定。effective review 发生变化后，如果仍要继续探索，应启动新的 session，而不是静默切换授权依据。
+
+## Manifest 与 Review 版本边界
+
+`SourceSequenceManifest` 和 `SourceSequenceReview` 都是 Derived，不是 Raw Source。
+
+Manifest-backed checkpoint 固定：
 
 ```text
 source_manifest_id
@@ -370,7 +423,25 @@ source_manifest_id
 source_manifest_sha256
 ```
 
-如果之后 review 发现 unit/fragment segmentation 应修正，不应原地改变历史 session 所依赖的 frontier；应创建新的 manifest version，并由新的 ExplorationSession 显式引用。
+v3 再固定：
+
+```text
+source_review_id
+```
+
+如果 review 发现 unit/fragment segmentation 应修正：
+
+```text
+新 manifest version / digest
+↓
+新的 semantic review
+↓
+新的 SourceSequenceReview
+↓
+新的 ExplorationSession
+```
+
+不能原地改变历史 session 所依赖的 frontier 或授权 provenance。
 
 ## Session history machine gate
 
@@ -387,13 +458,21 @@ fully revealed 又退回 withheld
 completed session resurrection
 ```
 
-对于 v2，还会阻止：
+Manifest-backed v2/v3 还会阻止：
 
 ```text
 manifest_id / manifest digest 静默切换
 同 position source_unit_id 切换
 source_fragment_id 按 manifest order 倒退
 ```
+
+v3 进一步阻止：
+
+```text
+同一 session source_review_id 静默切换
+```
+
+History validator 的职责是重放历史事实，因此不会使用今天的 review 决定去抹掉已经 pin 的历史 approval。
 
 ## Live Issue-comment validation
 
@@ -409,13 +488,24 @@ source_fragment_id 按 manifest order 倒退
 校验整个 ExplorationSession history
 ```
 
-因此新 checkpoint 不能只写人类可读 YAML 而没有 machine marker。
+“当前 checkpoint”使用 current-write gate；“full history”使用 historical replay gate。
 
-历史上 contract 引入前已经存在的旧 comment 不要求原地改写；新 session 在已有 manifest 时优先 v2，没有 manifest 时可以继续 v1。
+因此：
 
-机器 gate 可以证明 Source frontier 与登记 manifest 的引用关系，但仍不能仅凭 JSON 证明：
+```text
+新的 v3 comment
+→ 必须 pin 当前 effective approval
+
+历史 v3 comment
+→ 必须能证明当时 pinned approval
+```
+
+历史上已经存在的 v1/v2 comment 不要求原地改写。
+
+机器 gate 仍不能仅凭 JSON 证明：
 
 - manifest segmentation 一定语义正确；
+- reviewer 的 semantic judgement 一定正确；
 - 自然语言解释完全没有 semantic look-ahead；
 - outcome 归因一定合理。
 
@@ -460,7 +550,7 @@ InterviewNote Issue 是 Exploration 的自然入口。
 - 关键 finding
 - 产生的 action
 
-有 reviewed manifest 时，还应记录 manifest / unit / fragment identity；这些状态同时写入 v2 machine marker，由 CI 验证。
+没有 manifest 时可以继续 v1；已有 approved manifest 的新 sequential session 优先 v3，并记录 manifest / unit / fragment / review identity。
 
 不要因为 AI 生成了长对话，就把大量重复 transcript 全塞进 Issue。只沉淀可复用发现、决策和学习 checkpoint。
 
@@ -514,7 +604,7 @@ completed_at = 可解析时间
 
 一篇 InterviewNote 不存在“永远彻底探索完成”。
 
-新的知识、新的 SourceRevision、新的求职目标或新的薄弱点，都可以触发下一轮探索。
+新的知识、新的 SourceRevision、新的 manifest/review、新的求职目标或新的薄弱点，都可以触发下一轮探索。
 
 ## 核心不变量
 
@@ -523,13 +613,14 @@ completed_at = 可解析时间
 Source case 可以长期复用。
 未来 Source context 永远不能泄漏到当前顺序解释。
 Position 内尚未 reveal 的信息同样属于未来。
-有 reviewed manifest 时，优先用稳定 SourceUnit / SourceFragment identity 表达 frontier。
 不同 Source type 可以使用不同 learning loop。
 Source 与 Derived 必须分离。
-SourceSequenceManifest 始终属于 Derived。
+SourceSequenceManifest 与 SourceSequenceReview 始终属于 Derived。
+Manifest schema PASS 不等于 approved。
+新的 approved-manifest sequential session 优先 v3，并 pin source_review_id。
+历史授权事实与当前信任状态分离，后续 review 不反向改写历史。
 Outcome 不自动生成 Cause 或 Verified Weakness。
 Finding 经过显式 review/apply 后才成为正式 mutation。
 每个 position 和 session 都应有明确 closure 语义。
-新的 sequential checkpoint 应具备可机器验证的 frontier / type / phase / closure record。
 反复练习应该不断强化 Interview Reasoning Loop。
 ```
