@@ -4,6 +4,10 @@ const { validateExplorationSessionCheckpoint } = require('./exploration-session-
 const { findUnit, findFragment } = require('./source-sequence-manifest');
 
 const MACHINE_MARKER_OPEN_RE = /<!--\s*exploration-session-checkpoint\b/;
+const MANIFEST_BACKED_SCHEMAS = new Set([
+  'exploration-session-checkpoint.v2',
+  'exploration-session-checkpoint.v3',
+]);
 
 const LOOP_PHASE_ORDER = new Map([
   ['question-like', ['literal', 'classification', 'knowledge', 'response', 'depth', 'anticipation', 'closure']],
@@ -45,7 +49,7 @@ function entryLabel(entry) {
 }
 
 function fragmentOrder(record, manifestsById) {
-  if (record.schema_version !== 'exploration-session-checkpoint.v2' || !record.source_fragment_id) return null;
+  if (!MANIFEST_BACKED_SCHEMAS.has(record.schema_version) || !record.source_fragment_id) return null;
   const manifest = manifestsById && manifestsById.get(record.source_manifest_id);
   const unit = findUnit(manifest, record.source_unit_id);
   const fragment = findFragment(unit, record.source_fragment_id);
@@ -66,9 +70,12 @@ function validateSessionEntries(sessionId, entries, options = {}) {
     mode: first.record.mode,
     source_revision_id: first.record.source_revision_id,
   };
-  if (first.record.schema_version === 'exploration-session-checkpoint.v2') {
+  if (MANIFEST_BACKED_SCHEMAS.has(first.record.schema_version)) {
     identity.source_manifest_id = first.record.source_manifest_id;
     identity.source_manifest_sha256 = first.record.source_manifest_sha256;
+  }
+  if (first.record.schema_version === 'exploration-session-checkpoint.v3') {
+    identity.source_review_id = first.record.source_review_id;
   }
 
   const firstRange = parseRange(first.record.revealed_range);
@@ -114,7 +121,7 @@ function validateSessionEntries(sessionId, entries, options = {}) {
 
     if (current.current_source_unit !== previous.current_source_unit) errors.push(`${label}: current_source_unit changed while revealed_position stayed at ${current.revealed_position}`);
     if (current.source_unit_type !== previous.source_unit_type) errors.push(`${label}: source_unit_type changed while revealed_position stayed at ${current.revealed_position}`);
-    if (current.schema_version === 'exploration-session-checkpoint.v2' && current.source_unit_id !== previous.source_unit_id) {
+    if (MANIFEST_BACKED_SCHEMAS.has(current.schema_version) && current.source_unit_id !== previous.source_unit_id) {
       errors.push(`${label}: source_unit_id changed while revealed_position stayed at ${current.revealed_position}`);
     }
 
@@ -122,7 +129,7 @@ function validateSessionEntries(sessionId, entries, options = {}) {
       errors.push(`${label}: within-unit Source frontier regressed from fully revealed back to withheld content at position ${current.revealed_position}`);
     }
 
-    if (current.schema_version === 'exploration-session-checkpoint.v2') {
+    if (MANIFEST_BACKED_SCHEMAS.has(current.schema_version)) {
       const previousFragmentOrder = fragmentOrder(previous, options.manifestsById);
       const currentFragmentOrder = fragmentOrder(current, options.manifestsById);
       if (previousFragmentOrder != null && currentFragmentOrder != null && currentFragmentOrder < previousFragmentOrder) {
@@ -168,7 +175,9 @@ function validateExplorationSessionHistory(comments, options = {}) {
 
     const result = validateExplorationSessionCheckpoint(body, {
       manifestsById: options.manifestsById,
+      reviewsById: options.reviewsById,
       effectiveReviewsByManifestDigest: options.effectiveReviewsByManifestDigest,
+      requireCurrentApproval: false,
     });
     const label = comment && comment.id != null ? `comment ${comment.id}` : `comment #${inputIndex + 1}`;
     if (!result.ok) {

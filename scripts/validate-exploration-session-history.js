@@ -35,6 +35,7 @@ if (!reviews.ok) {
 
 const result = validateExplorationSessionHistory(comments, {
   manifestsById: manifests.byId,
+  reviewsById: reviews.byId,
   effectiveReviewsByManifestDigest: reviews.effectiveByManifestDigest,
 });
 for (const warning of result.warnings) console.warn(`WARN: ${warning}`);
