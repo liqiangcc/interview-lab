@@ -10,9 +10,10 @@
     "validate:source-sequence-reviews": "node scripts/validate-source-sequence-reviews.js",
     "validate:exploration-fixture": "node scripts/validate-exploration-session-checkpoint.js test/fixtures/exploration-session-checkpoint.valid.md",
     "validate:exploration-v2-fixture": "node scripts/validate-exploration-session-checkpoint.js test/fixtures/exploration-session-checkpoint-v2.valid.md",
+    "validate:exploration-v3-fixture": "node scripts/validate-exploration-session-checkpoint.js test/fixtures/exploration-session-checkpoint-v3.valid.md",
     "validate:exploration-history-fixture": "node scripts/validate-exploration-session-history.js test/fixtures/exploration-session-history.valid.json",
     "plan:xhs-pilot": "node scripts/plan-xhs-migration.js data/pilot/xhs-pilot-selection.json",
-    "check": "npm test && npm run validate:issue-fixture && npm run validate:source-sequence-manifest && npm run validate:source-sequence-reviews && npm run validate:exploration-fixture && npm run validate:exploration-v2-fixture && npm run validate:exploration-history-fixture && npm run plan:xhs-pilot"
+    "check": "npm test && npm run validate:issue-fixture && npm run validate:source-sequence-manifest && npm run validate:source-sequence-reviews && npm run validate:exploration-fixture && npm run validate:exploration-v2-fixture && npm run validate:exploration-v3-fixture && npm run validate:exploration-history-fixture && npm run plan:xhs-pilot"
   },
   "engines": {
     "node": ">=20"
