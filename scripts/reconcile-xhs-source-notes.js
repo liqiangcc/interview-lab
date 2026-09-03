@@ -17,6 +17,11 @@ const SOURCE_NOTE_LABELS = [
 ];
 const MAX_DESC_CHARS = 8000;
 const MAX_IMAGE_ARTIFACTS = 20;
+const MUTATING_ACTIONS = new Set([
+  'convert-bulk-interview-note-in-place',
+  'create-source-note',
+  'create-source-note-alongside-formal-interview-note',
+]);
 
 function parseArgs(argv = process.argv.slice(2)) {
   const out = {
@@ -331,7 +336,12 @@ function planActions(projections, inventory) {
     }
     const formal = inventory.protectedInterview.get(projection.external_id);
     if (formal) {
-      return { action: 'protected-formal-interview-note', issue_number: formal.number, projection };
+      return {
+        action: 'create-source-note-alongside-formal-interview-note',
+        issue_number: null,
+        protected_interview_issue_number: formal.number,
+        projection,
+      };
     }
     return { action: 'create-source-note', issue_number: null, projection };
   });
@@ -339,6 +349,15 @@ function planActions(projections, inventory) {
 
 function validateProjection(projection) {
   return validateSourceNoteIssue({ body: projection.body, labels: projection.labels, state: 'open' });
+}
+
+function createSourceNote(targetRepo, projection) {
+  const created = ghJson(['api', '--method', 'POST', `repos/${targetRepo}/issues`, '--input', '-'], {
+    title: projection.title,
+    body: projection.body,
+    labels: projection.labels,
+  });
+  return created.number;
 }
 
 function mutateAction(targetRepo, action) {
@@ -350,13 +369,9 @@ function mutateAction(targetRepo, action) {
     });
     return action.issue_number;
   }
-  if (action.action === 'create-source-note') {
-    const created = ghJson(['api', '--method', 'POST', `repos/${targetRepo}/issues`, '--input', '-'], {
-      title: action.projection.title,
-      body: action.projection.body,
-      labels: action.projection.labels,
-    });
-    return created.number;
+  if (action.action === 'create-source-note'
+      || action.action === 'create-source-note-alongside-formal-interview-note') {
+    return createSourceNote(targetRepo, action.projection);
   }
   return action.issue_number;
 }
@@ -364,6 +379,16 @@ function mutateAction(targetRepo, action) {
 function summarize(actions) {
   const counts = {};
   for (const action of actions) counts[action.action] = (counts[action.action] || 0) + 1;
+  return counts;
+}
+
+function summarizeAnomalies(candidates) {
+  const counts = {};
+  for (const candidate of candidates) {
+    for (const anomaly of candidate.anomalies || []) {
+      counts[anomaly.code] = (counts[anomaly.code] || 0) + 1;
+    }
+  }
   return counts;
 }
 
@@ -387,12 +412,17 @@ function main() {
 
   const inventory = loadInventory(args.targetRepo);
   const actions = planActions(projections, inventory);
-  const mutating = actions.filter((action) => ['convert-bulk-interview-note-in-place', 'create-source-note'].includes(action.action));
+  const mutating = actions.filter((action) => MUTATING_ACTIONS.has(action.action));
   const selected = args.apply ? mutating.slice(0, args.maxMutations) : [];
   const applied = [];
   for (const action of selected) {
     const issueNumber = mutateAction(args.targetRepo, action);
-    applied.push({ action: action.action, issue_number: issueNumber, source_note_id: action.projection.source_note_id });
+    applied.push({
+      action: action.action,
+      issue_number: issueNumber,
+      protected_interview_issue_number: action.protected_interview_issue_number || null,
+      source_note_id: action.projection.source_note_id,
+    });
     sleepMs(args.pauseMs);
   }
 
@@ -401,8 +431,10 @@ function main() {
     generated_at: new Date().toISOString(),
     source_ref: sourceRef,
     source_total: projections.length,
+    source_note_target_total: projections.length,
     source_published_at_known: projections.filter((item) => item.source_published_at.precision !== 'unknown').length,
     source_published_at_unknown: projections.filter((item) => item.source_published_at.precision === 'unknown').length,
+    anomaly_counts: summarizeAnomalies(candidates),
     action_counts: summarize(actions),
     mutation_candidates: mutating.length,
     applied_count: applied.length,
@@ -411,10 +443,11 @@ function main() {
       action: mutating[0].action,
       source_note_id: mutating[0].projection.source_note_id,
       source_published_at: mutating[0].projection.source_published_at,
+      protected_interview_issue_number: mutating[0].protected_interview_issue_number || null,
     } : null,
     applied,
   };
-  if (args.report) fs.writeFileSync(args.report, `${JSON.stringify(report, null, 2)}\n`);
+  if (args.report) fs.writeFileSync(args.report, `${JSON.stringify(report, null,2)}\n`);
   process.stdout.write(`${JSON.stringify(report, null, 2)}\n`);
 }
 
@@ -422,9 +455,11 @@ if (require.main === module) main();
 
 module.exports = {
   SOURCE_NOTE_LABELS,
+  MUTATING_ACTIONS,
   extractCandidate,
   listCandidates,
   buildProjection,
   planActions,
   validateProjection,
+  summarizeAnomalies,
 };
