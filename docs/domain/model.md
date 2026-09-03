@@ -56,6 +56,37 @@ Manifest 属于 Layer 1 Derived Extraction，不是 Raw Source。
 
 一个 InterviewNote 可以有多个 evidence stream，因此不能默认存在跨所有 artifact 的单一全局顺序。
 
+## SourceSequenceReview
+
+表示对一个 **exact SourceSequenceManifest digest** 的独立审核决定。
+
+它与 Manifest 分离：
+
+```text
+SourceSequenceManifest
+→ 定义序列
+
+SourceSequenceReview
+→ 判断这个 exact 序列定义是否可被 sequential learning 消费
+```
+
+重要属性：
+
+- `review_id`
+- `manifest_id`
+- `manifest_sha256`
+- `decision`：approved / rejected
+- `reviewed_at`
+- `reviewer_kind`
+- `review_evidence`
+- `checks[]`
+- `limitations[]`
+- `supersedes_review_id`
+
+Review 通过 `supersedes_review_id` 形成 append-only decision chain；同一个 `manifest_id + manifest_sha256` 必须只有一个 effective head。
+
+`SourceSequenceReview` 属于 Derived governance / review state，不修改 Raw Source，也不修改 Manifest 内容。
+
 ## SourceUnit
 
 表示一个可以在 sequential learning 中作为独立 reveal frontier 的 Derived Source 单元。
@@ -206,28 +237,42 @@ Answer 的正确性依赖外部技术证据和真实 source variants，而不是
 - `session_status`
 - `closure_reason`（非 active position）
 
-`exploration-session-checkpoint.v2` 进一步固定：
+Manifest-backed v2/v3 checkpoint 进一步固定：
 
 - `source_manifest_id`
 - `source_manifest_sha256`
 - `source_unit_id`
 - `source_fragment_id`（SourceUnit 有 fragments 时）
 
-这些 runtime 字段用于表达：
+Review-pinned v3 再固定：
+
+- `source_review_id`
+
+这些 runtime 字段表达：
 
 ```text
-当前看到哪一个 manifest-backed SourceUnit
+当前使用哪个 SourceRevision
 +
-当前 unit 内看到哪个稳定 SourceFragment
+使用哪个固定 Manifest digest
 +
-当前使用哪一种 learning loop
+看到哪个 SourceUnit / SourceFragment
 +
-为什么继续或停止
+当时由哪个 SourceSequenceReview 授权这个 Manifest 被消费
++
+当前处于哪一种 learning loop / closure state
 ```
 
 `ExplorationSession` 本身属于 Derived/Training 层，不修改 Raw Source。
 
-v1 checkpoint 继续作为兼容 contract；v2 用于把 frontier 与正式 SourceSequenceManifest 绑定。CanonicalQuestion 等其他 session target 仍属于领域模型，只是需要未来独立 contract 后再进入 machine enforcement。
+版本边界：
+
+- v1：基础兼容 contract；
+- v2：manifest-backed legacy contract；
+- v3：manifest + review-pinned contract，新的已批准 manifest sequential session 首选。
+
+历史授权事实与当前 review 状态分离：后续 review 被 supersede/rejected 可以改变当前是否允许继续使用，但不能反向改写历史 v3 checkpoint 当时 pin 的 approved review。
+
+CanonicalQuestion 等其他 session target 仍属于领域模型，只是需要未来独立 contract 后再进入 machine enforcement。
 
 Exploration 可重复、可追加。一篇面经不会因为完成一轮探索就“永久处理完毕”。
 
@@ -250,6 +295,7 @@ ReviewProgress 不是 Source truth，不得修改 Source 或 Knowledge identity�
 InterviewNote
    ├── SourceArtifact*
    ├── SourceSequenceManifest*
+   │      ├── SourceSequenceReview*
    │      └── SourceUnit*
    │             ├── SourceFragment*
    │             └── SourceQuestion?   # 仅 question-like unit
@@ -273,4 +319,6 @@ InterviewNote / CanonicalQuestion
 
 GitHub Issue number 只是操作界面的 locator，不是领域 identity。
 
-被 ExplorationSession 引用的 SourceSequenceManifest 还必须固定 content digest；如果 segmentation 需要修正，创建新的 manifest version，而不是静默改写历史 session 所依赖的 frontier。
+被 ExplorationSession 引用的 SourceSequenceManifest 必须固定 content digest；被 v3 session 引用的 SourceSequenceReview 还必须固定 `review_id`。
+
+如果 segmentation 需要修正：创建新的 manifest version；如果审核决定变化：追加新的 review 并通过 `supersedes_review_id` 形成新 effective head。都不能静默改写历史 session 的 frontier 或授权 provenance。
