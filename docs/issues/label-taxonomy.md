@@ -25,11 +25,12 @@ Learning Discovery Labels
 1. 不同 Label family 表达正交维度，不把多个含义塞进一个 Label。
 2. lifecycle Label 是验证后状态的 projection，手工加 Label 不能绕过 Validator。
 3. 对互斥 family，一个 Issue 正常最多只有一个 active Label。
-4. Learning Discovery Label 必须来自经过 review 的 `InterviewContext`；不能直接从标题字符串猜测后就打标签。
+4. Learning Discovery Label 必须来自经过 review 的 `InterviewContext`，或来自显式指定的权威 Source field；不能直接从 Issue title 猜测后打标签。
 5. Unknown 默认不生成 learning label；不使用 `company:unknown`、`role:unknown` 等污染学习筛选。
 6. 结果 / outcome 默认不进入学习发现 Label，避免在 Issue 列表阶段剧透。
 7. company 是 Interview Lab 的一级学习入口，允许进入受控 Label namespace，但必须先归一化 stable company id。
-8. 精确岗位、年份、source id、technology、canonical id 等仍进入结构化 metadata / 索引，不扩张全局 Label namespace。
+8. 时间 Label 必须写清语义：只允许 `source-year:*` 与 `interview-year:*`，禁止含义模糊的 `year:*`。
+9. 精确岗位、source id、technology、canonical id 等继续进入结构化 metadata / 索引，不扩张全局 Label namespace。
 
 # Workflow Labels
 
@@ -120,8 +121,12 @@ Context review
 ↓
 Reviewed InterviewContext
 ↓
-Learning Discovery Label projection
+Learning Discovery projection
+├── Context-derived labels
+└── authoritative Source-field-derived labels
 ```
+
+只有 `status:source-ready` 且已经完成 Context review 的 InterviewNote 才进入整组 Learning Discovery projection。
 
 ## 公司
 
@@ -167,15 +172,7 @@ role:product
 role:other
 ```
 
-精确岗位名称继续保存在 `InterviewContext.role.title`，例如：
-
-```text
-Java 后端开发
-商业化服务端开发
-搜索算法工程师
-```
-
-不要为每个精确 title 创建 Label。
+精确岗位名称继续保存在 `InterviewContext.role.title`。
 
 ## 招聘类型
 
@@ -187,17 +184,7 @@ recruitment:internship
 
 如果来源没有足够证据，保持 `unknown`，默认不生成 Label。
 
-`reviewed-inference` 可以生成 Label，但必须在 InterviewContext 中保留推断 provenance。例如：
-
-```text
-Source: #24秋招
-↓
-reviewed inference: campus
-↓
-recruitment:campus
-```
-
-Label 本身是 Derived projection，不表示来源逐字写了“校招”。
+`reviewed-inference` 可以生成 Label，但必须在 InterviewContext 中保留推断 provenance。
 
 ## 面试轮次
 
@@ -212,15 +199,79 @@ round:final
 
 Unknown 不生成 Label。
 
-## 面试时间
+## 发布时间年份
 
-面试时间保留在结构化 metadata / InterviewContext 中，不默认创建 year/date Label。
+```text
+source-year:YYYY
+```
 
-原因：
+例如：
 
-- 时间 precision 可能只是 `month_day`；
-- 强行生成年份 Label 容易把来源发布时间误当成实际面试年份；
-- 时间筛选更适合使用结构化索引。
+```text
+source_published_at = 2023-09-18T21:48:28+08:00
+↓
+source-year:2023
+```
+
+`source-year` 直接从权威 `InterviewNote.source_published_at` 机器投影，不经过 AI 推断。
+
+但它仍属于 Learning Discovery projection：不会因为刚捕获到发布时间，就单独把尚未完成 Context review 的 Issue 提前送入学习池。它应与该 InterviewNote 的整组 Learning Discovery Labels 一起同步。
+
+如果 `source_published_at` 只有 `month_day` 或 `unknown`，不生成 `source-year`。
+
+## 实际面试年份
+
+```text
+interview-year:YYYY
+```
+
+它回答的是“这场面试实际发生在哪一年”，不是“帖子在哪一年发布”。
+
+只在 reviewed `InterviewContext.interview_occurred_at` 真正包含年份时生成，例如：
+
+```text
+interview_occurred_at = 2022-08-02
+↓
+interview-year:2022
+```
+
+而：
+
+```text
+interview_occurred_at = 09-18
+年份未知
+↓
+不生成 interview-year
+```
+
+尤其禁止：
+
+```text
+interview_occurred_at = 09-18
+source_published_at = 2023-09-18
+↓
+interview-year:2023   ❌
+```
+
+发布时间不能替代实际面试年份。
+
+## 两个年份允许不同
+
+例如：
+
+```text
+实际面试：2022-08-02
+来源发布：2023-02-15
+```
+
+Learning Discovery 可以同时拥有：
+
+```text
+interview-year:2022
+source-year:2023
+```
+
+两者没有冲突，因为回答的是不同问题。
 
 ## Outcome / 结果
 
@@ -232,27 +283,9 @@ result:passed       # 不使用
 outcome:offer       # 不使用
 ```
 
-原因不是结果不重要，而是学习入口需要 non-spoiler：
-
-```text
-公司 / 岗位 / 招聘类型 / 轮次 / 时间
-→ 学习前可见
-
-结果 / 自评 / 外部反馈
-→ Source 时间线到达结果阶段后再 reveal
-```
-
-如未来确实需要 outcome analytics，应建立与普通学习发现界面隔离的查询机制，而不是让结果直接出现在学习 Issue 列表里。
+结果 / 自评 / 外部反馈继续在 Source 时间线到达相应阶段后 reveal。
 
 # 推荐组合
-
-刚发现：
-
-```text
-type:interview-note
-source:xhs
-status:discovered
-```
 
 已完成 Source 与 InterviewContext review，进入可筛选学习池：
 
@@ -264,28 +297,31 @@ company:kuaishou
 role:backend
 recruitment:campus
 round:2
+source-year:2023
 ```
 
-这样可以自然支持：
+如果实际面试年份也被可靠证明，再增加：
 
 ```text
-company:kuaishou role:backend round:2
+interview-year:2023
+```
+
+可以自然支持：
+
+```text
+company:kuaishou role:backend round:2 source-year:2023
 ```
 
 或：
 
 ```text
-company:kuaishou recruitment:campus
+company:baidu interview-year:2022
 ```
-
-来选择下一篇真实面经。
 
 # 禁止的 Label 模式
 
-仍不要创建无限增长或容易伪造 Source 精度的 taxonomy：
-
 ```text
-year:2023
+year:2023              # 含义模糊，禁止
 note:630e2e...
 tech:redis
 canonical:cq_...
@@ -301,11 +337,11 @@ role:java-backend-commercialization
 ```text
 Source capture / Context extraction
     ↓
-领域 / Source 验证
+Source / Context 验证
     ↓
-Reviewed InterviewContext
+status:source-ready + Reviewed InterviewContext
     ↓
-同步 Learning Discovery Labels
+统一同步 Learning Discovery Labels
 ```
 
 禁止：
@@ -313,7 +349,7 @@ Reviewed InterviewContext
 ```text
 手工修改 Label
     ↓
-反过来假设 InterviewContext 有效
+反过来假设 InterviewContext / Source fact 有效
 ```
 
 ## 查询目标
@@ -329,9 +365,11 @@ type:interview-note status:blocked quality:image-missing
 Learning 查询：
 
 ```text
-type:interview-note company:kuaishou role:backend round:2
+type:interview-note company:kuaishou role:backend round:2 source-year:2023
 
 type:interview-note company:kuaishou recruitment:campus
+
+type:interview-note interview-year:2022 role:backend
 ```
 
-成功标准是：用户能先筛出“我今天想练什么”，然后再进入 source-first sequential learning；同时结果和未来 Source 不会因为 Label / title 提前泄漏。
+成功标准是：用户能先筛出“我今天想练什么”，然后再进入 source-first sequential learning；同时发布时间与真实面试时间不会被混淆，结果和未来 Source 也不会因为 Label / title 提前泄漏。

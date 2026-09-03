@@ -1,5 +1,5 @@
 {
-  "schema_version": "issue-label-taxonomy.v2",
+  "schema_version": "issue-label-taxonomy.v3",
   "dimensions": {
     "type": [
       "type:interview-note",
@@ -75,12 +75,22 @@
       "prefix": "company:",
       "value_pattern": "^[a-z0-9][a-z0-9-]*$",
       "source": "reviewed InterviewContext.company.id"
+    },
+    "source-year": {
+      "prefix": "source-year:",
+      "value_pattern": "^\\d{4}$",
+      "source": "InterviewNote.source_published_at"
+    },
+    "interview-year": {
+      "prefix": "interview-year:",
+      "value_pattern": "^\\d{4}$",
+      "source": "reviewed InterviewContext.interview_occurred_at"
     }
   },
   "constraints": {
     "interview_note": {
       "required": ["type:interview-note"],
-      "at_most_one_from": ["status", "company", "role", "recruitment", "round"],
+      "at_most_one_from": ["status", "company", "role", "recruitment", "round", "source-year", "interview-year"],
       "learning_discovery_requires_status": "status:source-ready",
       "forbid_prefixes_for_facts": [
         "year:",
@@ -94,11 +104,14 @@
   },
   "notes": [
     "Workflow Label 与 Learning Discovery Label 都只是 projection，不是领域事实证明。",
-    "Learning Discovery Label 必须来自 reviewed InterviewContext。",
+    "Learning Discovery Label 必须来自 reviewed InterviewContext 或明确指定的权威 Source field。",
     "只有 status:source-ready 的 InterviewNote 才允许进入 Learning Discovery Label 学习池；source-review / blocked case 保持在 Source 工作流。",
     "Company 是一级学习入口，允许使用 normalized company id 动态创建受控标签。",
     "Role 只使用粗粒度 family；精确岗位 title 保留在 InterviewContext。",
-    "Unknown 不生成 Learning Discovery Label。",
+    "source-year:YYYY 统一从 InterviewNote.source_published_at 投影；不经过 AI 推断。",
+    "interview-year:YYYY 只在 reviewed InterviewContext.interview_occurred_at 能证明年份时投影。",
+    "source-year 与 interview-year 语义独立，允许不同；禁止使用含义模糊的 year:YYYY。",
+    "Unknown / month_day 不生成对应年份 Label。",
     "结果与 Outcome 默认不进入普通学习 Issue 标签，避免学习前剧透。",
     "新增 Label family 必须通过显式 taxonomy revision。"
   ]
