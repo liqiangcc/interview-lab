@@ -59,9 +59,9 @@ jobs:
             --report xhs-source-note-reconciliation-report.json
           )
           if [[ "${{ steps.config.outputs.apply }}" == 'true' ]]; then
-            # Safe default: 100 issue mutations per run, 10 seconds apart.
-            # Re-run is idempotent because live markers are reloaded before every plan.
-            args+=(--apply --max-mutations 100 --pause-ms 10000)
+            # Canary only: keep this isolated ops branch to 20 mutations while
+            # the previous 400-create rolling window is still recent.
+            args+=(--apply --max-mutations 20 --pause-ms 10000)
           fi
           node scripts/reconcile-xhs-source-notes.js "${args[@]}"
 
