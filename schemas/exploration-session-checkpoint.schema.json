@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/liqiangcc/interview-lab/schemas/exploration-session-checkpoint.schema.json",
   "title": "ExplorationSession sequential checkpoint v1/v2",
-  "description": "Machine contract for sequential InterviewNote ExplorationSession checkpoints embedded in GitHub Issue comments. v2 binds the checkpoint to a pinned SourceSequenceManifest.",
+  "description": "Machine contract for sequential InterviewNote ExplorationSession checkpoints. v2 pins an approved SourceSequenceManifest and the exact SourceSequenceReview that authorized its use.",
   "type": "object",
   "additionalProperties": true,
   "required": [
@@ -30,6 +30,7 @@
     "source_revision_id": {"type": "string", "minLength": 1},
     "source_manifest_id": {"type": ["string", "null"]},
     "source_manifest_sha256": {"type": ["string", "null"]},
+    "source_review_id": {"type": ["string", "null"]},
     "source_unit_id": {"type": ["string", "null"]},
     "source_fragment_id": {"type": ["string", "null"]},
     "revealed_position": {"type": "integer", "minimum": 1},
@@ -50,10 +51,11 @@
     {
       "if": {"properties": {"schema_version": {"const": "exploration-session-checkpoint.v2"}}},
       "then": {
-        "required": ["source_manifest_id", "source_manifest_sha256", "source_unit_id", "source_fragment_id"],
+        "required": ["source_manifest_id", "source_manifest_sha256", "source_review_id", "source_unit_id", "source_fragment_id"],
         "properties": {
           "source_manifest_id": {"type": "string", "minLength": 1},
           "source_manifest_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "source_review_id": {"type": "string", "minLength": 1},
           "source_unit_id": {"type": "string", "minLength": 1}
         }
       }
