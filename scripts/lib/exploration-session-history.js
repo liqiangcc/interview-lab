@@ -166,7 +166,10 @@ function validateExplorationSessionHistory(comments, options = {}) {
     const body = String(comment && comment.body || '');
     if (!MACHINE_MARKER_OPEN_RE.test(body)) return;
 
-    const result = validateExplorationSessionCheckpoint(body, { manifestsById: options.manifestsById });
+    const result = validateExplorationSessionCheckpoint(body, {
+      manifestsById: options.manifestsById,
+      effectiveReviewsByManifestDigest: options.effectiveReviewsByManifestDigest,
+    });
     const label = comment && comment.id != null ? `comment ${comment.id}` : `comment #${inputIndex + 1}`;
     if (!result.ok) {
       for (const error of result.errors) errors.push(`${label}: ${error}`);
