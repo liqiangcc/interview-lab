@@ -4,11 +4,13 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const { validateInterviewNoteIssue } = require('../scripts/lib/interview-note-issue');
 const {
+  BULK_MIGRATION_LABEL,
   findNoteObject,
   epochToShanghaiTimeFact,
   sortByPublishedAt,
   buildIssueProjection,
   extractInterviewNoteId,
+  buildCreateIssueMutation,
   summarize,
 } = require('../scripts/migrate-xhs-all');
 
@@ -61,9 +63,14 @@ test('intake Issue title uses publication date and never raw spoiler title', () 
   assert.match(projection.body, /9\.18快手五战二面凉经/);
 });
 
-test('bulk intake keeps interview time unknown and remains captured', () => {
+test('bulk intake remains captured and carries temporary migration label', () => {
   const projection = buildIssueProjection(candidate(), '95b77bb261048059846273688e4b90a2e108b437', '2026-09-03T12:00:00Z');
-  assert.deepEqual(projection.labels, ['type:interview-note', 'source:xhs', 'status:captured']);
+  assert.deepEqual(projection.labels, [
+    'type:interview-note',
+    'source:xhs',
+    'status:captured',
+    BULK_MIGRATION_LABEL,
+  ]);
   assert.match(projection.body, /"interview_occurred_at": \{\n    "precision": "unknown",\n    "value": null/);
   const validation = validateInterviewNoteIssue({ body: projection.body, labels: projection.labels, state: 'open' });
   assert.equal(validation.ok, true, JSON.stringify(validation.errors));
@@ -85,4 +92,18 @@ test('migration summary preserves existing Issues and only creates missing ident
   assert.equal(result.existing_preserved, 1);
   assert.equal(result.to_create, 1);
   assert.equal(result.creation_order, 'source_published_at ASC, note_id ASC tie-breaker, unknown-time last');
+});
+
+test('GraphQL batch mutation preserves projection order and shared labels', () => {
+  const projections = [
+    { title: 'first', body: 'body-a', interview_note_id: 'xhs:a' },
+    { title: 'second', body: 'body-b', interview_note_id: 'xhs:b' },
+  ];
+  const result = buildCreateIssueMutation(projections, 'R_repo', ['L_type', 'L_source', 'L_status', 'L_migration']);
+  assert.match(result.query, /i0: createIssue/);
+  assert.match(result.query, /i1: createIssue/);
+  assert.ok(result.query.indexOf('i0: createIssue') < result.query.indexOf('i1: createIssue'));
+  assert.equal(result.variables.input0.title, 'first');
+  assert.equal(result.variables.input1.title, 'second');
+  assert.deepEqual(result.variables.input0.labelIds, ['L_type', 'L_source', 'L_status', 'L_migration']);
 });

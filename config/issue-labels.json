@@ -1,5 +1,5 @@
 {
-  "schema_version": "issue-label-taxonomy.v3",
+  "schema_version": "issue-label-taxonomy.v4",
   "dimensions": {
     "type": [
       "type:interview-note",
@@ -40,6 +40,9 @@
       "priority:P0",
       "priority:P1",
       "priority:P2"
+    ],
+    "migration": [
+      "migration:xhs-bulk"
     ],
     "role": [
       "role:backend",
@@ -104,6 +107,8 @@
   },
   "notes": [
     "Workflow Label 与 Learning Discovery Label 都只是 projection，不是领域事实证明。",
+    "migration:xhs-bulk 是临时 operational label，仅表示该 Issue 来自通过 batch preflight 的 XHS 全量 intake；它不是 Source/Knowledge 事实。",
+    "bulk intake Issue 进入 Source review 前必须先移除 migration:xhs-bulk；unlabeled 事件恢复普通 live validator。",
     "Learning Discovery Label 必须来自 reviewed InterviewContext 或明确指定的权威 Source field。",
     "只有 status:source-ready 的 InterviewNote 才允许进入 Learning Discovery Label 学习池；source-review / blocked case 保持在 Source 工作流。",
     "Company 是一级学习入口，允许使用 normalized company id 动态创建受控标签。",

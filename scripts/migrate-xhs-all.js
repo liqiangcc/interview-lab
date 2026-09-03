@@ -6,9 +6,12 @@ const path = require('path');
 const { execFileSync } = require('child_process');
 const { validateInterviewNoteIssue } = require('./lib/interview-note-issue');
 
-const DEFAULT_LABELS = ['type:interview-note', 'source:xhs', 'status:captured'];
+const BULK_MIGRATION_LABEL = 'migration:xhs-bulk';
+const DEFAULT_LABELS = ['type:interview-note', 'source:xhs', 'status:captured', BULK_MIGRATION_LABEL];
 const MAX_DESC_CHARS = 8000;
 const MAX_IMAGE_ARTIFACTS = 20;
+const GRAPHQL_BATCH_SIZE = 8;
+const GRAPHQL_BATCH_PAUSE_MS = 1600;
 
 function parseArgs(argv = process.argv.slice(2)) {
   const out = { apply: false, sourceRoot: null, sourceRef: null, targetRepo: process.env.GITHUB_REPOSITORY || null, report: null };
@@ -58,10 +61,9 @@ function publishedSortKey(timeFact) {
 
 function sortByPublishedAt(candidates) {
   return [...candidates].sort((a, b) => {
-    const delta = publishedSortKey(a.source_published_at) - publishedSortKey(b.source_published_at);
-    if (Number.isFinite(delta) && delta !== 0) return delta;
-    if (!Number.isFinite(publishedSortKey(a.source_published_at)) && Number.isFinite(publishedSortKey(b.source_published_at))) return 1;
-    if (Number.isFinite(publishedSortKey(a.source_published_at)) && !Number.isFinite(publishedSortKey(b.source_published_at))) return -1;
+    const aKey = publishedSortKey(a.source_published_at);
+    const bKey = publishedSortKey(b.source_published_at);
+    if (aKey !== bKey) return aKey < bKey ? -1 : 1;
     return a.note_id.localeCompare(b.note_id);
   });
 }
@@ -71,10 +73,7 @@ function gitOutput(args) {
 }
 
 function resolveSourceRef(sourceRoot, requestedRef) {
-  if (requestedRef) {
-    return gitOutput(['-C', sourceRoot, 'rev-parse', requestedRef]);
-  }
-  return gitOutput(['-C', sourceRoot, 'rev-parse', 'HEAD']);
+  return gitOutput(['-C', sourceRoot, 'rev-parse', requestedRef || 'HEAD']);
 }
 
 function gitObjectSha(sourceRoot, sourceRef, relativePath) {
@@ -239,18 +238,23 @@ function extractInterviewNoteId(body) {
   return match ? match[1] : null;
 }
 
-function flattenIssuePages(value) {
+function flattenPages(value) {
   if (!Array.isArray(value)) return [];
   if (value.length && Array.isArray(value[0])) return value.flat();
   return value;
 }
 
-function loadExistingInterviewNoteIds(targetRepo) {
-  const raw = execFileSync('gh', ['api', '--paginate', '--slurp', `repos/${targetRepo}/issues?state=all&per_page=100`], {
+function ghJson(args, input = null) {
+  const raw = execFileSync('gh', args, {
+    input: input == null ? undefined : JSON.stringify(input),
     encoding: 'utf8',
     maxBuffer: 128 * 1024 * 1024,
   });
-  const issues = flattenIssuePages(JSON.parse(raw));
+  return JSON.parse(raw);
+}
+
+function loadExistingInterviewNoteIds(targetRepo) {
+  const issues = flattenPages(ghJson(['api', '--paginate', '--slurp', `repos/${targetRepo}/issues?state=all&per_page=100`]));
   const byId = new Map();
   for (const issue of issues) {
     if (issue.pull_request) continue;
@@ -268,14 +272,62 @@ function sleepMs(ms) {
   Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms);
 }
 
-function createIssue(targetRepo, projection) {
-  const payload = { title: projection.title, body: projection.body, labels: projection.labels };
-  const raw = execFileSync('gh', ['api', '--method', 'POST', `repos/${targetRepo}/issues`, '--input', '-'], {
-    input: JSON.stringify(payload),
-    encoding: 'utf8',
-    maxBuffer: 16 * 1024 * 1024,
+function ensureBulkMigrationLabel(targetRepo) {
+  const labels = flattenPages(ghJson(['api', '--paginate', '--slurp', `repos/${targetRepo}/labels?per_page=100`]));
+  if (!labels.some((label) => label.name === BULK_MIGRATION_LABEL)) {
+    ghJson(['api', '--method', 'POST', `repos/${targetRepo}/labels`, '--input', '-'], {
+      name: BULK_MIGRATION_LABEL,
+      color: 'ededed',
+      description: 'XHS 全量 intake；已通过 batch preflight，进入 Source review 时移除',
+    });
+  }
+}
+
+function loadGraphqlTarget(targetRepo) {
+  const repo = ghJson(['api', `repos/${targetRepo}`]);
+  const labels = flattenPages(ghJson(['api', '--paginate', '--slurp', `repos/${targetRepo}/labels?per_page=100`]));
+  const byName = new Map(labels.map((label) => [label.name, label.node_id]));
+  const labelIds = DEFAULT_LABELS.map((name) => {
+    const id = byName.get(name);
+    if (!id) throw new Error(`required label does not exist: ${name}`);
+    return id;
   });
-  return JSON.parse(raw);
+  return { repositoryId: repo.node_id, labelIds };
+}
+
+function buildCreateIssueMutation(projections, repositoryId, labelIds) {
+  const variableDefs = [];
+  const fields = [];
+  const variables = {};
+  projections.forEach((projection, index) => {
+    const variableName = `input${index}`;
+    variableDefs.push(`$${variableName}: CreateIssueInput!`);
+    fields.push(`i${index}: createIssue(input: $${variableName}) { issue { number } }`);
+    variables[variableName] = {
+      repositoryId,
+      title: projection.title,
+      body: projection.body,
+      labelIds,
+    };
+  });
+  return {
+    query: `mutation(${variableDefs.join(', ')}) { ${fields.join(' ')} }`,
+    variables,
+  };
+}
+
+function createIssueBatch(projections, repositoryId, labelIds) {
+  const request = buildCreateIssueMutation(projections, repositoryId, labelIds);
+  const response = ghJson(['api', 'graphql', '--input', '-'], request);
+  if (response.errors && response.errors.length) {
+    throw new Error(`GraphQL createIssue failed: ${JSON.stringify(response.errors)}`);
+  }
+  return projections.map((projection, index) => {
+    const item = response.data && response.data[`i${index}`];
+    const number = item && item.issue && item.issue.number;
+    if (!number) throw new Error(`GraphQL createIssue returned no issue number for ${projection.interview_note_id}`);
+    return { projection, issue_number: number };
+  });
 }
 
 function summarize(projections, existingById, sourceRef) {
@@ -297,6 +349,16 @@ function summarize(projections, existingById, sourceRef) {
   };
 }
 
+function writeReport(reportPath, report) {
+  if (reportPath) fs.writeFileSync(path.resolve(reportPath), `${JSON.stringify(report, null, 2)}\n`);
+}
+
+function chunk(values, size) {
+  const out = [];
+  for (let i = 0; i < values.length; i += size) out.push(values.slice(i, i + size));
+  return out;
+}
+
 function main() {
   const args = parseArgs();
   const sourceRoot = path.resolve(args.sourceRoot);
@@ -311,44 +373,75 @@ function main() {
     if (!result.ok) invalid.push({ interview_note_id: projection.interview_note_id, errors: result.errors });
   }
   if (invalid.length) {
-    process.stderr.write(`${JSON.stringify({ preflight: 'failed', invalid }, null, 2)}\n`);
+    const report = { preflight: 'failed', invalid };
+    writeReport(args.report, report);
+    process.stderr.write(`${JSON.stringify(report, null, 2)}\n`);
     return 1;
   }
 
   const existingById = loadExistingInterviewNoteIds(args.targetRepo);
   const summary = summarize(projections, existingById, sourceRef);
   const operations = [];
-
-  if (args.apply) {
-    for (const projection of projections) {
-      const existingIssue = existingById.get(projection.interview_note_id);
-      if (existingIssue) {
-        operations.push({ interview_note_id: projection.interview_note_id, action: 'existing-preserved', issue_number: existingIssue });
-        continue;
-      }
-      const created = createIssue(args.targetRepo, projection);
-      operations.push({
-        interview_note_id: projection.interview_note_id,
-        action: 'created',
-        issue_number: created.number,
-        source_published_at: projection.source_published_at,
-      });
-      sleepMs(850);
-    }
-  } else {
-    for (const projection of projections) {
-      operations.push({
-        interview_note_id: projection.interview_note_id,
-        action: existingById.has(projection.interview_note_id) ? 'existing-preserved' : 'would-create',
-        issue_number: existingById.get(projection.interview_note_id) || null,
-        source_published_at: projection.source_published_at,
-      });
-    }
+  for (const projection of projections) {
+    const existingIssue = existingById.get(projection.interview_note_id);
+    if (existingIssue) operations.push({ interview_note_id: projection.interview_note_id, action: 'existing-preserved', issue_number: existingIssue });
   }
 
-  const report = { ...summary, apply: args.apply, operations };
-  if (args.report) fs.writeFileSync(path.resolve(args.report), `${JSON.stringify(report, null, 2)}\n`);
-  process.stdout.write(`${JSON.stringify(summary, null, 2)}\n`);
+  const pending = projections.filter((projection) => !existingById.has(projection.interview_note_id));
+  const report = {
+    ...summary,
+    apply: args.apply,
+    batch_size: GRAPHQL_BATCH_SIZE,
+    operations,
+    created_this_run: 0,
+    remaining_after_run: pending.length,
+    failure: null,
+  };
+
+  if (!args.apply) {
+    for (const projection of pending) {
+      operations.push({
+        interview_note_id: projection.interview_note_id,
+        action: 'would-create',
+        issue_number: null,
+        source_published_at: projection.source_published_at,
+      });
+    }
+    writeReport(args.report, report);
+    process.stdout.write(`${JSON.stringify(summary, null, 2)}\n`);
+    return 0;
+  }
+
+  ensureBulkMigrationLabel(args.targetRepo);
+  const target = loadGraphqlTarget(args.targetRepo);
+  const batches = chunk(pending, GRAPHQL_BATCH_SIZE);
+
+  try {
+    for (const batch of batches) {
+      const created = createIssueBatch(batch, target.repositoryId, target.labelIds);
+      for (const item of created) {
+        operations.push({
+          interview_note_id: item.projection.interview_note_id,
+          action: 'created',
+          issue_number: item.issue_number,
+          source_published_at: item.projection.source_published_at,
+        });
+        existingById.set(item.projection.interview_note_id, item.issue_number);
+        report.created_this_run += 1;
+        report.remaining_after_run -= 1;
+      }
+      writeReport(args.report, report);
+      sleepMs(GRAPHQL_BATCH_PAUSE_MS);
+    }
+  } catch (error) {
+    report.failure = String(error.message || error);
+    writeReport(args.report, report);
+    process.stderr.write(`${JSON.stringify({ ...summary, created_this_run: report.created_this_run, remaining_after_run: report.remaining_after_run, failure: report.failure }, null, 2)}\n`);
+    return 1;
+  }
+
+  writeReport(args.report, report);
+  process.stdout.write(`${JSON.stringify({ ...summary, created_this_run: report.created_this_run, remaining_after_run: report.remaining_after_run }, null, 2)}\n`);
   return 0;
 }
 
@@ -362,11 +455,13 @@ if (require.main === module) {
 }
 
 module.exports = {
+  BULK_MIGRATION_LABEL,
   DEFAULT_LABELS,
   findNoteObject,
   epochToShanghaiTimeFact,
   sortByPublishedAt,
   buildIssueProjection,
   extractInterviewNoteId,
+  buildCreateIssueMutation,
   summarize,
 };

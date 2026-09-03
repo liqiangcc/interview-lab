@@ -10,6 +10,10 @@ permissions:
 
 jobs:
   validate:
+    # 全量 XHS intake 在写入前已经逐条通过同一个 InterviewNote validator。
+    # 临时 bulk label 只用于避免 opened 时为上千条已预检记录重复占用 runner。
+    # 进入 Source review 时先移除 migration:xhs-bulk；unlabeled 事件随即恢复普通 live validation。
+    if: ${{ !contains(github.event.issue.labels.*.name, 'migration:xhs-bulk') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
