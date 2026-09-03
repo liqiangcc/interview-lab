@@ -6,10 +6,12 @@
   "scripts": {
     "test": "node --test",
     "validate:issue-fixture": "node scripts/validate-interview-note-issue.js test/fixtures/interview-note-issue.valid.md",
+    "validate:source-sequence-manifest": "node scripts/validate-source-sequence-manifest.js data/source-sequences/xhs-6508552c000000001303f499-legacy-r1-image-1.v1.json",
     "validate:exploration-fixture": "node scripts/validate-exploration-session-checkpoint.js test/fixtures/exploration-session-checkpoint.valid.md",
+    "validate:exploration-v2-fixture": "node scripts/validate-exploration-session-checkpoint.js test/fixtures/exploration-session-checkpoint-v2.valid.md",
     "validate:exploration-history-fixture": "node scripts/validate-exploration-session-history.js test/fixtures/exploration-session-history.valid.json",
     "plan:xhs-pilot": "node scripts/plan-xhs-migration.js data/pilot/xhs-pilot-selection.json",
-    "check": "npm test && npm run validate:issue-fixture && npm run validate:exploration-fixture && npm run validate:exploration-history-fixture && npm run plan:xhs-pilot"
+    "check": "npm test && npm run validate:issue-fixture && npm run validate:source-sequence-manifest && npm run validate:exploration-fixture && npm run validate:exploration-v2-fixture && npm run validate:exploration-history-fixture && npm run plan:xhs-pilot"
   },
   "engines": {
     "node": ">=20"
