@@ -22,8 +22,8 @@ const LEGACY_SECTION_ALIASES = {
 };
 
 const SUPPORTED_SCHEMAS = new Set(['interview-note-issue.v1', 'interview-note-issue.v2']);
-const SINGLE_VALUE_LABEL_FAMILIES = ['company:', 'role:', 'recruitment:', 'round:'];
-const LEARNING_DISCOVERY_PREFIXES = ['company:', 'role:', 'recruitment:', 'round:'];
+const SINGLE_VALUE_LABEL_FAMILIES = ['company:', 'role:', 'recruitment:', 'round:', 'interview-year:'];
+const LEARNING_DISCOVERY_PREFIXES = ['company:', 'role:', 'recruitment:', 'round:', 'interview-year:'];
 const FORBIDDEN_DISCOVERY_PREFIXES = ['result:', 'outcome:'];
 const DISCOURAGED_FACT_PREFIXES = ['year:', 'note:', 'tech:', 'canonical:'];
 
@@ -187,6 +187,10 @@ function validateLearningLabelFamilies(labelSet, errors, warnings) {
 
   for (const label of [...labelSet].filter((value) => value.startsWith('round:'))) {
     if (!/^round:(?:[1-9]|hr|final)$/.test(label)) errors.push(`unsupported round learning label: ${label}`);
+  }
+
+  for (const label of [...labelSet].filter((value) => value.startsWith('interview-year:'))) {
+    if (!/^interview-year:\d{4}$/.test(label)) errors.push(`interview-year label must use four-digit actual interview year: ${label}`);
   }
 
   for (const prefix of DISCOURAGED_FACT_PREFIXES) {
