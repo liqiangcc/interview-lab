@@ -172,7 +172,7 @@ session_status
 - checkpoint 的 Source type / loop phase / closure state 必须通过 validator；
 - 历史上 contract 引入前已经存在的 comment 不要求原地改写。
 
-当存在经过有效 SourceSequenceReview 批准的 SourceSequenceManifest 时，新 sequential session 应优先使用 review-pinned v3 contract；v2 保留为已发布兼容 contract，见 I34–I37。
+当存在经过有效 SourceSequenceReview 批准的 SourceSequenceManifest 时，新 sequential session 应优先使用 review-pinned v3 contract；v2 保留为已发布兼容 contract，见 I34–I40。
 
 ### I23 — Exploration finding 不等于 mutation authorization — HARD
 
@@ -397,6 +397,103 @@ pinned review.decision = approved
 
 机器能证明 review identity / decision / chain 与 checkpoint 的引用关系，但不能自动证明 semantic reviewer 的判断一定正确；SourceUnit / SourceFragment segmentation 与自然语言 no-look-ahead 仍需 semantic review。
 
+### I38 — SourceSequenceReview transition stale-head fail closed — HARD
+
+任何通过正式 transition operation 生成下一条 review 的请求，都必须显式固定观察到的当前 head：
+
+```text
+expected_effective_review_id
+```
+
+Planner 必须证明：
+
+```text
+manifest_id + manifest_sha256 精确匹配
++
+expected_effective_review_id == 当前 effective review
++
+new_review_id 尚不存在
++
+reviewed_at 晚于当前 head
++
+候选 review contract 合法
+```
+
+并自动设置：
+
+```text
+supersedes_review_id = 当前 effective review
+```
+
+如果另一个 writer 已经推进了 review chain，则旧 transition request 必须 FAIL CLOSED；调用者不能自行指定任意历史 review 作为 supersedes 目标来绕过当前 head。
+
+### I39 — Active v3 session 必须跟随 pinned review 的当前有效性 — HARD
+
+Active v3 session 只能继续使用它启动时 pin 的 `source_review_id`，且该 review 仍必须是当前 effective approved review。
+
+如果 effective review head 改变：
+
+```text
+active v3 + pinned old review
+→ active-stale
+→ 后续 write blocked
+```
+
+不得把旧 session 原地换绑到新 review。
+
+如果新 effective review 仍是 `approved` 且需要继续探索：
+
+```text
+start new v3 session
+→ pin new effective review
+```
+
+如果当前 effective review 为 `rejected` 或不存在有效 approval：
+
+```text
+pause
+→ 不得继续 manifest-backed sequential learning
+```
+
+Completed session 仍保持历史有效；它可以被标记为 `historical-superseded`，但不能被反向改写为“当时从未合法”。
+
+Legacy active v2 因没有 pin review identity：当前 approval 仍有效时属于 REVIEW；当前 approval rejected/missing 时继续写入属于 HARD block。
+
+### I40 — Review mutation 前执行 dependency impact preflight — REVIEW
+
+在正式追加新的 SourceSequenceReview 前，应先针对目标 exact manifest digest 执行 transition dry-run，并扫描对应 InterviewNote Issue 的 ExplorationSession dependencies。
+
+至少区分：
+
+```text
+active-current
+active-stale
+historical-current
+historical-superseded
+legacy-active-unpinned
+legacy-active-blocked
+legacy-historical-unpinned
+```
+
+Preflight 应明确报告 blocking sessions，以及需要：
+
+```text
+continue
+start new v3 session
+pause until approved review
+manual review
+```
+
+当前该规则仍为 REVIEW，而不是 HARD，原因是：
+
+```text
+transition preflight PASS
+↓
+创建新的 SourceSequenceReview file
+```
+
+仍是两个独立仓库操作；目前没有一个 persisted applied-transition identity / impact snapshot 让 review file 必须证明自己来自已通过的 preflight。因此工具可以发现和预演 stale impact，但尚不能阻止 writer 完全绕过 preflight 直接提交一个结构合法的新 review file。
+
 ## 初始 Validator group
 
 未来工具应暴露有边界的检查：
@@ -411,6 +508,8 @@ validate lifecycle
 validate migration
 validate source sequence manifest
 validate source sequence reviews
+validate source sequence review transition
+validate source sequence review impact
 validate exploration checkpoint
 validate exploration history
 validate exploration attribution
@@ -423,6 +522,8 @@ validate all
 
 - `source-sequence-manifest.v1` validator；
 - `source-sequence-review.v1` registry / chain validator；
+- `source-sequence-review-transition.v1` planner；
+- SourceSequenceReview staleness impact analyzer；
 - `exploration-session-checkpoint.v1/v2/v3` validator；
 - ExplorationSession history validator。
 
@@ -445,6 +546,8 @@ AI can navigate Issue → evidence root  PASS
 sequential checkpoint contract         PASS
 manifest-backed frontier contract      PASS（有 manifest 的 sequential case）
 source sequence review approval        PASS（有 manifest 的新 sequential case）
+review transition stale-head guard     PASS（发生 review transition 时）
+review dependency impact               REVIEW（发生 review mutation 时）
 ```
 
 ## Evidence over counts
@@ -472,6 +575,9 @@ Manifest schema PASS 不等于 approved。
 Approval 通过独立 exact-digest review chain 表达。
 新的 review-pinned sequential checkpoint 使用 v3 固定 source_review_id。
 历史输入与当前信任状态分离，后续 review 不反向改写历史授权事实。
+Review transition 基于 expected effective head；stale transition 必须 fail closed。
+Active v3 session 在 pinned review 被 supersede 后必须 stale，不得原地换绑。
+Review mutation 前应显式预演下游 staleness；当前 apply 尚未与 preflight 原子绑定。
 不确定性显式存在。
 Issue 驱动工作，但不能绕过 Validation。
 顺序学习保持因果性，包括 position 内时间边界。
