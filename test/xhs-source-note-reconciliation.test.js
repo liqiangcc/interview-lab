@@ -2,7 +2,12 @@
 
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { buildProjection, planActions, validateProjection } = require('../scripts/reconcile-xhs-source-notes');
+const {
+  buildProjection,
+  planActions,
+  validateProjection,
+  summarizeAnomalies,
+} = require('../scripts/reconcile-xhs-source-notes');
 
 const sourceRef = '95b77bb261048059846273688e4b90a2e108b437';
 
@@ -57,25 +62,27 @@ test('legacy bulk InterviewNote is converted in place', () => {
   assert.equal(actions[0].issue_number, 20);
 });
 
-test('formal non-bulk InterviewNote is protected from conversion', () => {
+test('formal non-bulk InterviewNote is protected while its SourceNote is still backfilled', () => {
   const projection = buildProjection(candidate(), sourceRef, '2026-09-03T13:00:00.000Z');
   const actions = planActions([projection], {
     sourceNotes: new Map(),
     bulkLegacy: new Map(),
     protectedInterview: new Map([[projection.external_id, { number: 3 }]]),
   });
-  assert.equal(actions[0].action, 'protected-formal-interview-note');
-  assert.equal(actions[0].issue_number, 3);
+  assert.equal(actions[0].action, 'create-source-note-alongside-formal-interview-note');
+  assert.equal(actions[0].issue_number, null);
+  assert.equal(actions[0].protected_interview_issue_number, 3);
 });
 
-test('existing SourceNote wins idempotently', () => {
+test('existing SourceNote wins idempotently even beside a formal InterviewNote', () => {
   const projection = buildProjection(candidate(), sourceRef, '2026-09-03T13:00:00.000Z');
   const actions = planActions([projection], {
-    sourceNotes: new Map([[projection.source_note_id, { number: 20 }]]),
-    bulkLegacy: new Map([[projection.external_id, { number: 20 }]]),
-    protectedInterview: new Map(),
+    sourceNotes: new Map([[projection.source_note_id, { number: 600 }]]),
+    bulkLegacy: new Map(),
+    protectedInterview: new Map([[projection.external_id, { number: 3 }]]),
   });
   assert.equal(actions[0].action, 'source-note-exists');
+  assert.equal(actions[0].issue_number, 600);
 });
 
 test('missing source identity becomes a new SourceNote, not an InterviewNote', () => {
@@ -86,4 +93,21 @@ test('missing source identity becomes a new SourceNote, not an InterviewNote', (
     protectedInterview: new Map(),
   });
   assert.equal(actions[0].action, 'create-source-note');
+});
+
+test('anomaly summary counts affected SourceNotes by anomaly code', () => {
+  const counts = summarizeAnomalies([
+    candidate(),
+    candidate({
+      note_id: 'another',
+      anomalies: [
+        { code: 'zero-byte-artifacts', detail: '2 zero-byte artifacts' },
+        { code: 'edited-before-published', detail: 'source order anomaly' },
+      ],
+    }),
+  ]);
+  assert.deepEqual(counts, {
+    'zero-byte-artifacts': 2,
+    'edited-before-published': 1,
+  });
 });
