@@ -7,7 +7,9 @@ Interview Lab 的底层可以复杂，但用户日常使用必须简单。
 用户的核心任务不是维护 `SourceSequenceManifest`、`SourceSequenceReview`、checkpoint schema 或 validator，而是：
 
 ```text
-选择一篇真实面经
+筛选 / 选择一篇真实面经
+↓
+查看非剧透基础信息
 ↓
 按真实顺序逐步学习
 ↓
@@ -22,12 +24,84 @@ Interview Lab 的底层可以复杂，但用户日常使用必须简单。
 
 底层机制的职责是保护这个体验，而不是成为用户必须学习的新工作流。
 
-## 默认用户心智模型
+## 面经从录入到学习
 
-用户默认只需要理解四个概念：
+一篇面经不是录入后立刻进入逐题解释，而是先变成一个可筛选学习样本：
 
 ```text
-面经
+Raw capture
+↓
+InterviewNote / Source review
+↓
+InterviewContext extraction
+↓
+Context review
+↓
+同步 Learning Discovery Labels
+↓
+生成 non-spoiler Issue title
+↓
+进入可筛选学习池
+↓
+用户选择 Issue
+↓
+ExplorationSession
+```
+
+学习前默认允许展示：
+
+```text
+公司
+岗位族
+校招 / 社招 / 实习
+面试轮次
+面试时间
+```
+
+默认不展示：
+
+```text
+结果
+offer / reject
+作者事后自评
+外部反馈
+```
+
+Outcome 必须等 Source 时间线真正走到结果阶段后再 reveal。
+
+## 用 Label 选择今天要学什么
+
+用户可以从 Learning Discovery Labels 直接筛选 Issue，例如：
+
+```text
+company:kuaishou
+role:backend
+round:2
+```
+
+或：
+
+```text
+company:kuaishou
+recruitment:campus
+```
+
+Label 是 reviewed `InterviewContext` 的查询 projection，不是 Source truth。
+
+Unknown 不生成学习标签；结果不进入普通学习发现标签。
+
+因此 Issue 列表的职责是回答：
+
+> 我今天想练哪一类真实面试？
+
+而不是提前告诉用户这篇面经最后有没有通过。
+
+## 默认用户心智模型
+
+用户默认只需要理解：
+
+```text
+筛选面经
 ↓
 当前输入
 ↓
@@ -39,6 +113,7 @@ Interview Lab 的底层可以复杂，但用户日常使用必须简单。
 对应到常见交互：
 
 ```text
+找快手后端二面
 开始读这篇面经
 下一句 / 下一步
 这里什么意思？
@@ -67,7 +142,9 @@ validator command
 
 默认向用户暴露：
 
+- 学习筛选条件；
 - 当前是哪篇 InterviewNote；
+- non-spoiler InterviewContext；
 - 当前真实 Source 输入；
 - 当前解释 / 训练内容；
 - 当前是继续、深入、复盘还是完成；
@@ -77,7 +154,9 @@ validator command
 日常流程：
 
 ```text
-InterviewNote
+Filter InterviewNotes
+↓
+Pre-learning Context
 ↓
 Current Source
 ↓
@@ -92,6 +171,7 @@ Next
 
 ```text
 InterviewNote
+InterviewContext
 SourceQuestion
 CanonicalQuestion
 Analysis
@@ -134,7 +214,11 @@ CI workflow
 推荐流程：
 
 ```text
-用户选择 / 指定 InterviewNote
+用户通过 Label 筛选 / 指定 InterviewNote
+↓
+Agent 读取 reviewed InterviewContext
+↓
+只展示 non-spoiler context
 ↓
 Agent 自动解析 Issue 与 Source
 ↓
@@ -153,6 +237,8 @@ Agent 恢复或创建 ExplorationSession
 用户看到的应该是：
 
 ```text
+快手 · 后端 · 校招 · 二面 · 09-18
+↓
 当前输入
 ↓
 识别
@@ -176,6 +262,24 @@ Agent 恢复或创建 ExplorationSession
 
 ## 默认 Agent 行为
 
+### 筛选学习样本
+
+用户说：
+
+```text
+我想练快手后端二面
+```
+
+Agent 应优先使用 Learning Discovery Labels 查询：
+
+```text
+company:kuaishou
+role:backend
+round:2
+```
+
+返回候选时不主动展示 Outcome。
+
 ### 开始阅读
 
 用户说：
@@ -187,10 +291,12 @@ Agent 恢复或创建 ExplorationSession
 Agent 应自动：
 
 1. 找到主 InterviewNote Issue；
-2. 定位可信 Source；
-3. 解析当前 sequential frontier；
-4. 必要时创建/恢复 ExplorationSession；
-5. 展示第一条可学习输入。
+2. 读取 reviewed InterviewContext；
+3. 展示 non-spoiler 基础信息；
+4. 定位可信 Source；
+5. 解析当前 sequential frontier；
+6. 必要时创建/恢复 ExplorationSession；
+7. 展示第一条可学习输入。
 
 只有在真正阻塞时才向用户报告基础设施问题。
 
@@ -254,6 +360,28 @@ Exploration finding
 
 真正 promotion 仍走相应 domain operation。
 
+## Non-spoiler Issue projection
+
+原始标题属于 Source，应原样保存。
+
+Issue display title 则是 Derived projection，应优先使用：
+
+```text
+[公司] 岗位族 · 招聘类型 · 轮次 · 面试时间 · short-id
+```
+
+例如：
+
+```text
+Raw title:
+9.18快手五战二面凉经
+
+Issue title:
+[快手] 后端 · 校招 · 二面 · 09-18 · 6508552c
+```
+
+这样用户可以从 Issue 列表选择学习样本，而不会因为标题中的“凉经 / offer / 挂了”等字样提前知道结果。
+
 ## 基础设施何时应该暴露
 
 默认不展示 machine ID 和 validator 细节。
@@ -265,6 +393,7 @@ Exploration finding
 例如：
 
 ```text
+为什么你说这是校招？
 为什么你说现在读到这里？
 这个分段怎么来的？
 检查一下 no-look-ahead 是否真的成立
@@ -273,6 +402,7 @@ Exploration finding
 此时可以展示：
 
 ```text
+InterviewContext evidence basis
 SourceRevision
 Manifest / Unit / Fragment
 Review
@@ -284,20 +414,14 @@ Checkpoint / History evidence
 例如：
 
 ```text
+InterviewContext 未审核
 Raw Source 不完整
 Manifest 未审核
 SourceRevision 冲突
 Review 已变更导致 active session stale
 ```
 
-用户只需要先看到可行动的高层状态：
-
-```text
-当前 Source 结构发生变化，旧学习会话不能安全继续。
-系统需要基于新的已审核 Source 开一个新 session。
-```
-
-需要排障时再展开具体 `review_id / manifest_id`。
+用户只需要先看到可行动的高层状态，再在需要排障时展开具体 machine reason。
 
 ### C. 用户正在开发 Interview Lab 本身
 
@@ -368,39 +492,34 @@ source_fragment_id regressed
 
 ## 系统停止继续向下复杂化的原则
 
-当前已有：
+当前已有严格 runtime 足以覆盖首个真实 Pilot 暴露的主要 Source-first 风险。
+
+默认优先：
 
 ```text
-Raw Source
-→ SourceSequenceManifest
-→ SourceSequenceReview
-→ review-pinned ExplorationSession
-→ checkpoint/history validator
-→ review transition / staleness preflight
-```
-
-这些已经能覆盖首个真实 Pilot 暴露的主要 Source-first runtime 风险。
-
-除非新的真实 case 暴露明确缺陷，默认优先：
-
-```text
-继续读更多真实面经
+录入更多真实面经
 ↓
-验证用户学习体验
+先形成 reviewed InterviewContext 与学习标签
 ↓
-验证知识沉淀质量
+用 Label 选择真实学习样本
+↓
+继续 source-first 学习
+↓
+验证知识沉淀与训练效果
 ↓
 只有真实失败再扩展底层协议
 ```
-
-而不是继续主动寻找无限的下一层 runtime abstraction。
 
 ## 成功标准
 
 对于普通学习者，Interview Lab 应最终表现为：
 
 ```text
-我选一篇面经
+我筛一组想练的面经
+↓
+我选一篇
+↓
+AI 告诉我非剧透基础信息
 ↓
 AI 陪我一点一点读
 ↓
@@ -416,6 +535,8 @@ AI 帮我形成面试反应链路
 ## 核心原则
 
 ```text
+先把面经变成可筛选学习样本。
+学习前 Context 可见，Outcome sealed。
 用户操作简单。
 领域边界清楚。
 Runtime 可以严格。
