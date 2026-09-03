@@ -1,6 +1,7 @@
 'use strict';
 
 const { validateExplorationSessionCheckpoint } = require('./exploration-session-checkpoint');
+const { findUnit, findFragment } = require('./source-sequence-manifest');
 
 const MACHINE_MARKER_OPEN_RE = /<!--\s*exploration-session-checkpoint\b/;
 
@@ -43,7 +44,15 @@ function entryLabel(entry) {
   return entry.id != null ? `comment ${entry.id}` : `checkpoint #${entry.input_index + 1}`;
 }
 
-function validateSessionEntries(sessionId, entries) {
+function fragmentOrder(record, manifestsById) {
+  if (record.schema_version !== 'exploration-session-checkpoint.v2' || !record.source_fragment_id) return null;
+  const manifest = manifestsById && manifestsById.get(record.source_manifest_id);
+  const unit = findUnit(manifest, record.source_unit_id);
+  const fragment = findFragment(unit, record.source_fragment_id);
+  return fragment ? fragment.order : null;
+}
+
+function validateSessionEntries(sessionId, entries, options = {}) {
   const errors = [];
   const warnings = [];
   const ordered = [...entries].sort(compareEntries);
@@ -51,11 +60,16 @@ function validateSessionEntries(sessionId, entries) {
   if (!first) return { session_id: sessionId, ok: true, errors, warnings, checkpoints: 0 };
 
   const identity = {
+    schema_version: first.record.schema_version,
     target_type: first.record.target_type,
     target_id: first.record.target_id,
     mode: first.record.mode,
     source_revision_id: first.record.source_revision_id,
   };
+  if (first.record.schema_version === 'exploration-session-checkpoint.v2') {
+    identity.source_manifest_id = first.record.source_manifest_id;
+  }
+
   const firstRange = parseRange(first.record.revealed_range);
   const revealedRangeStart = firstRange ? firstRange.start : null;
 
@@ -64,7 +78,7 @@ function validateSessionEntries(sessionId, entries) {
     const label = entryLabel(entry);
     for (const [field, expected] of Object.entries(identity)) {
       if (record[field] !== expected) {
-        errors.push(`${label}: ${field} changed within session ${sessionId}; v1 requires stable ${field}`);
+        errors.push(`${label}: ${field} changed within session ${sessionId}; sequential checkpoint history requires stable ${field}`);
       }
     }
     const range = parseRange(record.revealed_range);
@@ -90,7 +104,7 @@ function validateSessionEntries(sessionId, entries) {
       continue;
     }
     if (delta > 1) {
-      errors.push(`${label}: revealed_position jumped from ${previous.revealed_position} to ${current.revealed_position}; sequential v1 checkpoints may advance by at most one position`);
+      errors.push(`${label}: revealed_position jumped from ${previous.revealed_position} to ${current.revealed_position}; sequential checkpoints may advance by at most one position`);
       continue;
     }
 
@@ -107,9 +121,20 @@ function validateSessionEntries(sessionId, entries) {
     if (current.source_unit_type !== previous.source_unit_type) {
       errors.push(`${label}: source_unit_type changed while revealed_position stayed at ${current.revealed_position}`);
     }
+    if (current.schema_version === 'exploration-session-checkpoint.v2' && current.source_unit_id !== previous.source_unit_id) {
+      errors.push(`${label}: source_unit_id changed while revealed_position stayed at ${current.revealed_position}`);
+    }
 
     if (previous.has_withheld_within_unit === false && current.has_withheld_within_unit === true) {
       errors.push(`${label}: within-unit Source frontier regressed from fully revealed back to withheld content at position ${current.revealed_position}`);
+    }
+
+    if (current.schema_version === 'exploration-session-checkpoint.v2') {
+      const previousFragmentOrder = fragmentOrder(previous, options.manifestsById);
+      const currentFragmentOrder = fragmentOrder(current, options.manifestsById);
+      if (previousFragmentOrder != null && currentFragmentOrder != null && currentFragmentOrder < previousFragmentOrder) {
+        errors.push(`${label}: source_fragment_id regressed from manifest order ${previousFragmentOrder} to ${currentFragmentOrder} at position ${current.revealed_position}`);
+      }
     }
 
     const allowedStatuses = SAME_POSITION_STATUS_TRANSITIONS.get(previous.position_status);
@@ -138,7 +163,7 @@ function validateSessionEntries(sessionId, entries) {
   };
 }
 
-function validateExplorationSessionHistory(comments) {
+function validateExplorationSessionHistory(comments, options = {}) {
   const errors = [];
   const warnings = [];
   if (!Array.isArray(comments)) {
@@ -150,7 +175,7 @@ function validateExplorationSessionHistory(comments) {
     const body = String(comment && comment.body || '');
     if (!MACHINE_MARKER_OPEN_RE.test(body)) return;
 
-    const result = validateExplorationSessionCheckpoint(body);
+    const result = validateExplorationSessionCheckpoint(body, { manifestsById: options.manifestsById });
     const label = comment && comment.id != null ? `comment ${comment.id}` : `comment #${inputIndex + 1}`;
     if (!result.ok) {
       for (const error of result.errors) errors.push(`${label}: ${error}`);
@@ -173,7 +198,7 @@ function validateExplorationSessionHistory(comments) {
 
   const sessions = [];
   for (const [sessionId, entries] of grouped.entries()) {
-    const sessionResult = validateSessionEntries(sessionId, entries);
+    const sessionResult = validateSessionEntries(sessionId, entries, options);
     sessions.push(sessionResult);
     errors.push(...sessionResult.errors);
     warnings.push(...sessionResult.warnings);
