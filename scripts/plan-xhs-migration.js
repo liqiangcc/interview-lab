@@ -23,7 +23,10 @@ const SOURCE_PROJECTION_PREFIXES = [
   'note_desc/',
 ];
 
-const TIME_FIELDS = ['source_published_at', 'source_edited_at', 'interview_occurred_at'];
+// Historical pilot selection still contains reviewed interview occurrence hints.
+// They remain valid pilot evidence, but SourceNote intake MUST NOT project them
+// into SourceNote identity, labels, or creation chronology.
+const LEGACY_TIME_FIELDS = ['source_published_at', 'source_edited_at', 'interview_occurred_at'];
 
 function pathHasPrefix(value, prefixes) {
   return prefixes.some((prefix) => value.startsWith(prefix));
@@ -76,7 +79,7 @@ function validateManifest(manifest) {
     ids.add(noteId);
 
     if (!['issue_candidate', 'boundary_review'].includes(item.expected_disposition)) {
-      errors.push(`${noteId}: unsupported expected_disposition`);
+      errors.push(`${noteId}: unsupported historical expected_disposition`);
     }
 
     for (const field of ['raw_evidence_paths', 'source_projection_paths', 'derived_comparison_paths']) {
@@ -107,7 +110,7 @@ function validateManifest(manifest) {
       }
     }
 
-    for (const field of TIME_FIELDS) validateTimeFact(field, item[field], errors, noteId);
+    for (const field of LEGACY_TIME_FIELDS) validateTimeFact(field, item[field], errors, noteId);
     if (Object.prototype.hasOwnProperty.call(item, 'source_time')) {
       errors.push(`${noteId}: v2 manifest must not use ambiguous source_time`);
     }
@@ -116,60 +119,61 @@ function validateManifest(manifest) {
   return { ok: errors.length === 0, errors, warnings };
 }
 
-function isSortableChronologyTime(timeFact) {
-  return timeFact
-    && ['exact', 'month', 'year'].includes(timeFact.precision)
-    && timeFact.value != null;
-}
-
-function chronologyFor(item) {
-  if (isSortableChronologyTime(item.interview_occurred_at)) {
-    return { basis: 'interview_occurred_at', time: item.interview_occurred_at };
-  }
-  if (isSortableChronologyTime(item.source_published_at)) {
-    return { basis: 'source_published_at_fallback', time: item.source_published_at };
+function sourceCreationChronology(item) {
+  const published = item && item.source_published_at;
+  if (published
+      && ['exact', 'month', 'year'].includes(published.precision)
+      && published.value != null) {
+    return { basis: 'source_published_at', time: published };
   }
   return { basis: 'unknown', time: { precision: 'unknown', value: null } };
 }
 
 function planCase(item) {
-  const interviewNoteId = `xhs:${item.note_id}`;
-  const chronology = chronologyFor(item);
-  if (item.expected_disposition === 'boundary_review') {
-    return {
-      note_id: item.note_id,
-      interview_note_id: interviewNoteId,
-      action: 'boundary_review',
-      create_issue: false,
-      reason: item.purpose,
-      chronology,
-    };
-  }
-
-  return {
+  const sourceNoteId = `xhs-note:${item.note_id}`;
+  const plan = {
     note_id: item.note_id,
-    interview_note_id: interviewNoteId,
-    idempotency_key: interviewNoteId,
-    action: 'create_or_reconcile_interview_note_issue',
+    source_note_id: sourceNoteId,
+    idempotency_key: sourceNoteId,
+    action: 'create_or_reconcile_source_note_issue',
     create_issue: true,
-    machine_marker: `<!-- interview-note: id=${interviewNoteId} schema=interview-note-issue.v2 -->`,
-    suggested_title: `[XHS] ${item.note_id}`,
-    labels: ['type:interview-note', 'source:xhs', 'status:discovered'],
+    machine_marker: `<!-- source-note: id=${sourceNoteId} schema=source-note-issue.v1 -->`,
+    suggested_title: `[XHS Source] ${item.note_id}`,
+    labels: [
+      'type:source-note',
+      'source:xhs',
+      'status:captured',
+      'boundary:pending',
+      'task:boundary-review',
+    ],
     source_published_at: item.source_published_at,
     source_edited_at: item.source_edited_at,
-    interview_occurred_at: item.interview_occurred_at,
-    chronology,
+    creation_chronology: sourceCreationChronology(item),
     raw_evidence_paths: item.raw_evidence_paths,
     source_projection_paths: item.source_projection_paths,
     derived_comparison_paths: item.derived_comparison_paths,
+    legacy_review_hint: {
+      expected_disposition: item.expected_disposition,
+      purpose: item.purpose,
+      interview_occurred_at: item.interview_occurred_at,
+      projected_to_source_note: false,
+    },
   };
+  return plan;
 }
 
 function buildPlan(manifest) {
   const validation = validateManifest(manifest);
-  if (!validation.ok) return { schema_version: 'xhs-migration-plan.v2', ok: false, ...validation, plans: [] };
+  if (!validation.ok) {
+    return {
+      schema_version: 'xhs-source-note-pilot-plan.v1',
+      ok: false,
+      ...validation,
+      plans: [],
+    };
+  }
   return {
-    schema_version: 'xhs-migration-plan.v2',
+    schema_version: 'xhs-source-note-pilot-plan.v1',
     ok: true,
     errors: [],
     warnings: validation.warnings,
@@ -201,9 +205,9 @@ module.exports = {
   DERIVED_PREFIXES,
   RAW_PREFIXES,
   SOURCE_PROJECTION_PREFIXES,
-  TIME_FIELDS,
+  LEGACY_TIME_FIELDS,
   validateManifest,
-  chronologyFor,
+  sourceCreationChronology,
   planCase,
   buildPlan,
   main,
