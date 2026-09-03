@@ -1,0 +1,32 @@
+{
+  "schema_version": "source-sequence-review.v1",
+  "review_id": "xhs:656861da000000000f024258:recovered-r2:html-interview-stage:sequence-v1:review-1",
+  "manifest_id": "xhs:656861da000000000f024258:recovered-r2:html-interview-stage:sequence-v1",
+  "manifest_sha256": "f9c9d9844ea82d4d6165cf59599639b76f7a4e0c61bc3a38f7e1985af1afcb09",
+  "decision": "approved",
+  "reviewed_at": "2026-09-03T11:40:00Z",
+  "reviewer_kind": "ai-assisted",
+  "review_evidence": {
+    "repository": "liqiangcc/interview-lab",
+    "issue_number": 4,
+    "comment_id": 5525186960
+  },
+  "checks": [
+    {"check_id": "evidence_stream_binding", "result": "pass"},
+    {"check_id": "sequence_scope", "result": "pass"},
+    {"check_id": "unit_boundaries", "result": "pass"},
+    {"check_id": "unit_order", "result": "pass"},
+    {"check_id": "unit_types", "result": "pass"},
+    {"check_id": "fragment_boundaries", "result": "pass"},
+    {"check_id": "fragment_order", "result": "pass"},
+    {"check_id": "no_fabrication", "result": "pass"}
+  ],
+  "limitations": [
+    "Approval covers only the exact manifest_id + manifest_sha256 pair.",
+    "The manifest intentionally covers only source items 5-10; pre-interview context is handled by InterviewContext.",
+    "No cross-artifact global ordering is asserted.",
+    "Stage summaries do not authorize invention of concrete technical questions that the source did not record.",
+    "Approval does not authorize SourceQuestion, CanonicalQuestion, Analysis, or Answer mutation."
+  ],
+  "supersedes_review_id": null
+}
