@@ -22,10 +22,11 @@ const LEGACY_SECTION_ALIASES = {
 };
 
 const SUPPORTED_SCHEMAS = new Set(['interview-note-issue.v1', 'interview-note-issue.v2']);
-const SINGLE_VALUE_LABEL_FAMILIES = ['company:', 'role:', 'recruitment:', 'round:', 'interview-year:'];
-const LEARNING_DISCOVERY_PREFIXES = ['company:', 'role:', 'recruitment:', 'round:', 'interview-year:'];
+const SINGLE_VALUE_LABEL_FAMILIES = ['company:', 'role:', 'recruitment:', 'round:', 'source-year:', 'interview-year:'];
+const LEARNING_DISCOVERY_PREFIXES = ['company:', 'role:', 'recruitment:', 'round:', 'source-year:', 'interview-year:'];
 const FORBIDDEN_DISCOVERY_PREFIXES = ['result:', 'outcome:'];
-const DISCOURAGED_FACT_PREFIXES = ['year:', 'note:', 'tech:', 'canonical:'];
+const FORBIDDEN_AMBIGUOUS_PREFIXES = ['year:'];
+const DISCOURAGED_FACT_PREFIXES = ['note:', 'tech:', 'canonical:'];
 
 function allMatches(regex, text) {
   const copy = new RegExp(regex.source, regex.flags);
@@ -86,6 +87,13 @@ function validateTimeFact(fieldName, timeFact, errors) {
   if (typeof value !== 'string' || !patterns[precision].test(value)) {
     errors.push(`${fieldName} value does not match precision ${precision}`);
   }
+}
+
+function yearFromTimeFact(timeFact) {
+  if (!timeFact || !['exact', 'month', 'year'].includes(timeFact.precision)) return null;
+  if (typeof timeFact.value !== 'string') return null;
+  const match = timeFact.value.match(/^(\d{4})/);
+  return match ? match[1] : null;
 }
 
 function validateRecord(record, marker, errors) {
@@ -169,6 +177,11 @@ function validateLearningLabelFamilies(labelSet, errors, warnings) {
     if (found.length) errors.push(`outcome label forbidden on learning discovery Issue to avoid spoilers: ${found.join(', ')}`);
   }
 
+  for (const prefix of FORBIDDEN_AMBIGUOUS_PREFIXES) {
+    const found = [...labelSet].filter((label) => label.startsWith(prefix));
+    if (found.length) errors.push(`ambiguous label prefix forbidden; use source-year:/interview-year: instead: ${found.join(', ')}`);
+  }
+
   const companyLabels = [...labelSet].filter((label) => label.startsWith('company:'));
   for (const label of companyLabels) {
     const value = label.slice('company:'.length);
@@ -189,8 +202,8 @@ function validateLearningLabelFamilies(labelSet, errors, warnings) {
     if (!/^round:(?:[1-9]|hr|final)$/.test(label)) errors.push(`unsupported round learning label: ${label}`);
   }
 
-  for (const label of [...labelSet].filter((value) => value.startsWith('interview-year:'))) {
-    if (!/^interview-year:\d{4}$/.test(label)) errors.push(`interview-year label must use four-digit actual interview year: ${label}`);
+  for (const label of [...labelSet].filter((value) => value.startsWith('source-year:') || value.startsWith('interview-year:'))) {
+    if (!/^(?:source-year|interview-year):\d{4}$/.test(label)) errors.push(`year learning label must use YYYY: ${label}`);
   }
 
   for (const prefix of DISCOURAGED_FACT_PREFIXES) {
@@ -201,6 +214,36 @@ function validateLearningLabelFamilies(labelSet, errors, warnings) {
 
 function hasLearningDiscoveryLabels(labelSet) {
   return [...labelSet].some((label) => LEARNING_DISCOVERY_PREFIXES.some((prefix) => label.startsWith(prefix)));
+}
+
+function validateSourceYearProjection(record, labelSet, hasDiscovery, errors) {
+  if (!record || record.schema_version !== 'interview-note-issue.v2') return;
+  const expectedYear = yearFromTimeFact(record.source_published_at);
+  const labels = [...labelSet].filter((label) => label.startsWith('source-year:'));
+
+  if (labels.length === 1 && expectedYear == null) {
+    errors.push('source-year label requires a year-bearing record.source_published_at');
+    return;
+  }
+  if (labels.length === 1 && labels[0] !== `source-year:${expectedYear}`) {
+    errors.push(`source-year label must match record.source_published_at year (${expectedYear})`);
+  }
+  if (hasDiscovery && expectedYear != null && labels.length === 0) {
+    errors.push(`learning discovery projection must include source-year:${expectedYear} when source_published_at proves the year`);
+  }
+}
+
+function validateInterviewYearProjection(record, labelSet, hasDiscovery, errors) {
+  if (!record || record.schema_version !== 'interview-note-issue.v2') return;
+  const expectedYear = yearFromTimeFact(record.interview_occurred_at);
+  const labels = [...labelSet].filter((label) => label.startsWith('interview-year:'));
+
+  if (labels.length === 1 && expectedYear != null && labels[0] !== `interview-year:${expectedYear}`) {
+    errors.push(`interview-year label must match record.interview_occurred_at year (${expectedYear})`);
+  }
+  if (hasDiscovery && expectedYear != null && labels.length === 0) {
+    errors.push(`learning discovery projection must include interview-year:${expectedYear} when interview_occurred_at proves the year`);
+  }
 }
 
 function validateInterviewNoteIssue({ body, labels = [], state = 'open' }) {
@@ -236,9 +279,13 @@ function validateInterviewNoteIssue({ body, labels = [], state = 'open' }) {
 
   validateLearningLabelFamilies(labelSet, errors, warnings);
 
-  if (hasLearningDiscoveryLabels(labelSet) && !labelSet.has('status:source-ready')) {
+  const hasDiscovery = hasLearningDiscoveryLabels(labelSet);
+  if (hasDiscovery && !labelSet.has('status:source-ready')) {
     errors.push('Learning Discovery Labels require status:source-ready; source-review/blocked InterviewNotes must not enter the learning pool');
   }
+
+  validateSourceYearProjection(parsed.record, labelSet, hasDiscovery, errors);
+  validateInterviewYearProjection(parsed.record, labelSet, hasDiscovery, errors);
 
   return {
     ok: errors.length === 0,
