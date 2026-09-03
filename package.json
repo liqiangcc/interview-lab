@@ -7,8 +7,9 @@
     "test": "node --test",
     "validate:issue-fixture": "node scripts/validate-interview-note-issue.js test/fixtures/interview-note-issue.valid.md",
     "validate:exploration-fixture": "node scripts/validate-exploration-session-checkpoint.js test/fixtures/exploration-session-checkpoint.valid.md",
+    "validate:exploration-history-fixture": "node scripts/validate-exploration-session-history.js test/fixtures/exploration-session-history.valid.json",
     "plan:xhs-pilot": "node scripts/plan-xhs-migration.js data/pilot/xhs-pilot-selection.json",
-    "check": "npm test && npm run validate:issue-fixture && npm run validate:exploration-fixture && npm run plan:xhs-pilot"
+    "check": "npm test && npm run validate:issue-fixture && npm run validate:exploration-fixture && npm run validate:exploration-history-fixture && npm run plan:xhs-pilot"
   },
   "engines": {
     "node": ">=20"
