@@ -255,6 +255,91 @@ completed_at
 - `temporal_cursor` / `revealed_within_unit` 只在 position 内存在时间边界时需要；
 - `position_status` 用于记录当前 Source unit 是否仍 active、ready-to-close 或 complete。
 
+## Machine checkpoint contract
+
+为了让 Issue 中的 sequential ExplorationSession checkpoint 可以被 CI 检查，新 checkpoint 使用一个人类可读正文 + 一个 machine marker。
+
+当前 `exploration-session-checkpoint.v1` **只覆盖顺序型 InterviewNote checkpoint**；CanonicalQuestion 等其他 session target 仍保留在领域模型中，后续再单独定义机器 contract，避免 v1 假装覆盖尚未验证的场景。
+
+推荐格式：
+
+````markdown
+## ExplorationSession checkpoint
+
+<!-- exploration-session-checkpoint
+{
+  "schema_version": "exploration-session-checkpoint.v1",
+  "session_id": "explore-...",
+  "target_type": "InterviewNote",
+  "target_id": "source-system:stable-id",
+  "mode": "learning",
+  "source_revision_id": "source-system:stable-id:r1",
+  "revealed_position": 4,
+  "revealed_range": "1..4",
+  "current_source_unit": "当前已揭示 Source unit",
+  "source_unit_type": "question-like",
+  "loop_phase": "classification",
+  "explanation_layer": "classification",
+  "temporal_cursor": "position-4.initial-prompt",
+  "revealed_within_unit": "当前已揭示的 position 内片段",
+  "has_withheld_within_unit": true,
+  "position_status": "active",
+  "session_status": "active",
+  "closure_reason": null,
+  "completed_at": null
+}
+-->
+
+人类可读的解释、finding 和 action 继续写在 marker 之外。
+````
+
+机器字段的职责：
+
+- `source_unit_type`：选择 normalized learning loop；
+- `loop_phase`：记录当前处于该 loop 的哪个稳定阶段；`explanation_layer` 可以保留更细的自由文本层名；
+- `has_withheld_within_unit=true`：表示当前 position 内仍有未来 Source，此时 `temporal_cursor` 与 `revealed_within_unit` 必填；
+- `position_status`：只表达当前 position 的训练 closure 状态；
+- `session_status`：只表达整个 ExplorationSession 是否完成；
+- `closure_reason`：任何非 active position 都必须显式说明为什么停；
+- `completed_at`：session 完成时必填。
+
+已知 Source type 的 v1 normalized phase：
+
+```text
+question-like
+  literal / classification / knowledge / response / depth / anticipation / closure
+
+stage-summary
+  literal / classification / preparation / routing / dynamic-depth / plausible-dimensions / closure
+
+outcome-reflection-summary
+  literal / evidence-classification / structured-extraction / attribution-boundary / closure
+```
+
+新的 Source type 允许使用新的稳定 machine identifier；validator 会先做结构检查并给 warning，待其 loop contract 经过 promotion review 后再进入已知 phase matrix。
+
+### Live Issue-comment validation
+
+仓库 workflow 会监听新建/编辑的 Issue comment。
+
+当 comment 包含：
+
+```text
+ExplorationSession checkpoint
+```
+
+或 machine marker：
+
+```text
+exploration-session-checkpoint
+```
+
+就执行 checkpoint validator。
+
+因此新 checkpoint 不能只写人类可读 YAML 而没有 machine marker。历史上 contract 引入前已经存在的旧 comment 不要求原地改写；但一旦编辑为新的 checkpoint，就应升级到 v1 contract。
+
+结构 validator 可以证明 frontier、Source type、loop phase 和 closure state 的字段一致性，但它不能仅凭 JSON 自动证明自然语言中完全没有 semantic look-ahead 或 hindsight attribution；后者仍然需要 review。
+
 ## Finding 与 Action 分离
 
 Session 可以发现：
@@ -294,6 +379,8 @@ InterviewNote Issue 是 Exploration 的自然入口。
 - 关键 finding
 - 产生的 action
 
+对于新的 sequential InterviewNote checkpoint，上述状态同时写入 `exploration-session-checkpoint.v1` machine marker，由 CI 验证。
+
 不要因为 AI 生成了长对话，就把大量重复 transcript 全塞进 Issue。只沉淀可复用发现、决策和学习 checkpoint。
 
 ## 多遍挖掘示例
@@ -318,6 +405,8 @@ Pass G：知识提升后再次回看
 
 Position completion 表示当前 Source-backed cue 已达到本轮 closure gate，不表示相关知识永久完成。
 
+Machine checkpoint 中，非 active `position_status` 必须对应 `loop_phase=closure` 并给出非空 `closure_reason`。
+
 ### Session completion
 
 一个 ExplorationSession 可以完成。
@@ -332,6 +421,14 @@ Session completion 应至少满足：
 findings / actions 已区分
 +
 未把 derived content 伪装成 Source
+```
+
+Machine checkpoint 中，`session_status=completed` 必须同时有：
+
+```text
+position_status = complete
+loop_phase = closure
+completed_at = 可解析时间
 ```
 
 一篇 InterviewNote 不存在“永远彻底探索完成”。
@@ -350,5 +447,6 @@ Source 与 Derived 必须分离。
 Outcome 不自动生成 Cause 或 Verified Weakness。
 Finding 经过显式 review/apply 后才成为正式 mutation。
 每个 position 和 session 都应有明确 closure 语义。
+新的 sequential checkpoint 应具备可机器验证的 frontier / type / phase / closure record。
 反复练习应该不断强化 Interview Reasoning Loop。
 ```
