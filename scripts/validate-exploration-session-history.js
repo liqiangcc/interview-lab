@@ -2,6 +2,7 @@
 
 const fs = require('fs');
 const { validateExplorationSessionHistory } = require('./lib/exploration-session-history');
+const { loadSourceSequenceManifests } = require('./lib/source-sequence-manifest');
 
 const inputPath = process.argv[2];
 if (!inputPath) {
@@ -17,7 +18,14 @@ try {
   process.exit(2);
 }
 
-const result = validateExplorationSessionHistory(comments);
+const manifests = loadSourceSequenceManifests();
+for (const warning of manifests.warnings) console.warn(`WARN: ${warning}`);
+if (!manifests.ok) {
+  for (const error of manifests.errors) console.error(`ERROR: ${error}`);
+  process.exit(1);
+}
+
+const result = validateExplorationSessionHistory(comments, { manifestsById: manifests.byId });
 for (const warning of result.warnings) console.warn(`WARN: ${warning}`);
 if (!result.ok) {
   for (const error of result.errors) console.error(`ERROR: ${error}`);
