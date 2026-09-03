@@ -10,7 +10,6 @@
   "source_revision_id": "xhs:6508552c000000001303f499:legacy-r1",
   "source_manifest_id": "xhs:6508552c000000001303f499:legacy-r1:image-1:sequence-v1",
   "source_manifest_sha256": "829b246ad8d21610c28b22f5ccb60309806a61fe9f1eb7b14af5d870bc795aad",
-  "source_review_id": "xhs:6508552c000000001303f499:legacy-r1:image-1:sequence-v1:review-1",
   "source_unit_id": "xhs:6508552c000000001303f499:legacy-r1:image-1:u4",
   "source_fragment_id": "xhs:6508552c000000001303f499:legacy-r1:image-1:u4:f1",
   "revealed_position": 4,
@@ -29,4 +28,4 @@
 }
 -->
 
-用于验证 checkpoint v2 能够固定 SourceSequenceManifest、manifest digest 和当时授权该 manifest 的 SourceSequenceReview。
+用于验证已发布的 checkpoint v2 contract 保持兼容：绑定 SourceSequenceManifest/digest，但不回填后续引入的 review pin。
