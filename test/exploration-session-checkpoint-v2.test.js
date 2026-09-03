@@ -22,6 +22,16 @@ test('manifest-bound checkpoint v2 passes', () => {
   assert.equal(result.ok, true, JSON.stringify(result.errors));
 });
 
+test('v2 rejects manifest digest mismatch', () => {
+  const body = validBody.replace(
+    '"source_manifest_sha256": "829b246ad8d21610c28b22f5ccb60309806a61fe9f1eb7b14af5d870bc795aad"',
+    `"source_manifest_sha256": "${'0'.repeat(64)}"`,
+  );
+  const result = validate(body);
+  assert.equal(result.ok, false);
+  assert.match(result.errors.join('\n'), /source_manifest_sha256 must equal manifest content_sha256/);
+});
+
 test('v2 rejects self-reported position that disagrees with SourceUnit', () => {
   const body = validBody
     .replace('"revealed_position": 4', '"revealed_position": 5')
