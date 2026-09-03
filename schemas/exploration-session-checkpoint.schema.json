@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/liqiangcc/interview-lab/schemas/exploration-session-checkpoint.schema.json",
-  "title": "ExplorationSession sequential checkpoint v1",
-  "description": "Machine contract for sequential InterviewNote ExplorationSession checkpoints embedded in GitHub Issue comments.",
+  "title": "ExplorationSession sequential checkpoint v1/v2",
+  "description": "Machine contract for sequential InterviewNote ExplorationSession checkpoints embedded in GitHub Issue comments. v2 binds the checkpoint to a pinned SourceSequenceManifest.",
   "type": "object",
   "additionalProperties": true,
   "required": [
@@ -22,40 +22,42 @@
     "has_withheld_within_unit"
   ],
   "properties": {
-    "schema_version": {"const": "exploration-session-checkpoint.v1"},
+    "schema_version": {"enum": ["exploration-session-checkpoint.v1", "exploration-session-checkpoint.v2"]},
     "session_id": {"type": "string", "minLength": 1},
     "target_type": {"const": "InterviewNote"},
     "target_id": {"type": "string", "minLength": 1},
-    "mode": {
-      "enum": ["learning", "training", "source-analysis", "knowledge-audit"]
-    },
+    "mode": {"enum": ["learning", "training", "source-analysis", "knowledge-audit"]},
     "source_revision_id": {"type": "string", "minLength": 1},
+    "source_manifest_id": {"type": ["string", "null"]},
+    "source_manifest_sha256": {"type": ["string", "null"]},
+    "source_unit_id": {"type": ["string", "null"]},
+    "source_fragment_id": {"type": ["string", "null"]},
     "revealed_position": {"type": "integer", "minimum": 1},
-    "revealed_range": {
-      "type": "string",
-      "pattern": "^[1-9][0-9]*\\.\\.[1-9][0-9]*$"
-    },
+    "revealed_range": {"type": "string", "pattern": "^[1-9][0-9]*\\.\\.[1-9][0-9]*$"},
     "current_source_unit": {"type": "string", "minLength": 1},
-    "source_unit_type": {
-      "type": "string",
-      "pattern": "^[a-z][a-z0-9-]*$"
-    },
-    "loop_phase": {
-      "type": "string",
-      "pattern": "^[a-z][a-z0-9-]*$"
-    },
+    "source_unit_type": {"type": "string", "pattern": "^[a-z][a-z0-9-]*$"},
+    "loop_phase": {"type": "string", "pattern": "^[a-z][a-z0-9-]*$"},
     "explanation_layer": {"type": ["string", "null"]},
     "temporal_cursor": {"type": ["string", "null"]},
     "revealed_within_unit": {"type": ["string", "null"]},
     "has_withheld_within_unit": {"type": "boolean"},
-    "position_status": {
-      "enum": ["active", "ready-to-close", "complete", "deferred"]
-    },
+    "position_status": {"enum": ["active", "ready-to-close", "complete", "deferred"]},
     "session_status": {"enum": ["active", "completed"]},
     "closure_reason": {"type": ["string", "null"]},
     "completed_at": {"type": ["string", "null"], "format": "date-time"}
   },
   "allOf": [
+    {
+      "if": {"properties": {"schema_version": {"const": "exploration-session-checkpoint.v2"}}},
+      "then": {
+        "required": ["source_manifest_id", "source_manifest_sha256", "source_unit_id", "source_fragment_id"],
+        "properties": {
+          "source_manifest_id": {"type": "string", "minLength": 1},
+          "source_manifest_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "source_unit_id": {"type": "string", "minLength": 1}
+        }
+      }
+    },
     {
       "if": {"properties": {"has_withheld_within_unit": {"const": true}}},
       "then": {
@@ -67,13 +69,7 @@
       }
     },
     {
-      "if": {
-        "properties": {
-          "position_status": {
-            "enum": ["ready-to-close", "complete", "deferred"]
-          }
-        }
-      },
+      "if": {"properties": {"position_status": {"enum": ["ready-to-close", "complete", "deferred"]}}},
       "then": {
         "required": ["closure_reason"],
         "properties": {

@@ -2,6 +2,7 @@
 
 const fs = require('fs');
 const { validateExplorationSessionCheckpoint } = require('./lib/exploration-session-checkpoint');
+const { loadSourceSequenceManifests } = require('./lib/source-sequence-manifest');
 
 const file = process.argv[2];
 if (!file) {
@@ -9,17 +10,19 @@ if (!file) {
   process.exit(2);
 }
 
-const body = fs.readFileSync(file, 'utf8');
-const result = validateExplorationSessionCheckpoint(body);
-
-for (const warning of result.warnings) {
-  console.warn(`WARN: ${warning}`);
+const manifests = loadSourceSequenceManifests();
+for (const warning of manifests.warnings) console.warn(`WARN: ${warning}`);
+if (!manifests.ok) {
+  for (const error of manifests.errors) console.error(`ERROR: ${error}`);
+  process.exit(1);
 }
 
+const body = fs.readFileSync(file, 'utf8');
+const result = validateExplorationSessionCheckpoint(body, { manifestsById: manifests.byId });
+
+for (const warning of result.warnings) console.warn(`WARN: ${warning}`);
 if (!result.ok) {
-  for (const error of result.errors) {
-    console.error(`ERROR: ${error}`);
-  }
+  for (const error of result.errors) console.error(`ERROR: ${error}`);
   process.exit(1);
 }
 
