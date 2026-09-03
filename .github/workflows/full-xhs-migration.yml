@@ -60,6 +60,11 @@ jobs:
           )
           if [[ "${{ steps.config.outputs.apply }}" == "true" ]]; then
             args+=(--apply)
+            # GitHub official secondary content limits are normally 80/minute and 500/hour.
+            # This ops-only patch keeps each run below both thresholds after the first 80-item probe:
+            # 8 creates / ~9 seconds, max 400 new Issues in this run.
+            sed -i 's/const GRAPHQL_BATCH_PAUSE_MS = 1600;/const GRAPHQL_BATCH_PAUSE_MS = 9000;/' scripts/migrate-xhs-all.js
+            sed -i 's/const batches = chunk(pending, GRAPHQL_BATCH_SIZE);/const batches = chunk(pending.slice(0, 400), GRAPHQL_BATCH_SIZE);/' scripts/migrate-xhs-all.js
           fi
           node scripts/migrate-xhs-all.js "${args[@]}"
 
