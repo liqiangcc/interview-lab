@@ -5,7 +5,8 @@ const { getEffectiveSourceSequenceReview } = require('./source-sequence-review')
 
 const SCHEMA_VERSION_V1 = 'exploration-session-checkpoint.v1';
 const SCHEMA_VERSION_V2 = 'exploration-session-checkpoint.v2';
-const SUPPORTED_SCHEMA_VERSIONS = new Set([SCHEMA_VERSION_V1, SCHEMA_VERSION_V2]);
+const SCHEMA_VERSION_V3 = 'exploration-session-checkpoint.v3';
+const SUPPORTED_SCHEMA_VERSIONS = new Set([SCHEMA_VERSION_V1, SCHEMA_VERSION_V2, SCHEMA_VERSION_V3]);
 const MARKER_RE = /<!--\s*exploration-session-checkpoint\s*([\s\S]*?)-->/g;
 
 const MODES = new Set(['learning', 'training', 'source-analysis', 'knowledge-audit']);
@@ -40,12 +41,86 @@ function isNonEmptyString(value) {
   return typeof value === 'string' && value.trim().length > 0;
 }
 
-function validateManifestBinding(record, manifestsById, effectiveReviewsByManifestDigest, errors) {
-  if (!isNonEmptyString(record.source_manifest_id)) errors.push('v2 checkpoint requires source_manifest_id');
-  if (!/^[0-9a-f]{64}$/.test(String(record.source_manifest_sha256 || ''))) errors.push('v2 checkpoint requires source_manifest_sha256');
-  if (!isNonEmptyString(record.source_unit_id)) errors.push('v2 checkpoint requires source_unit_id');
+function isManifestBacked(record) {
+  return record.schema_version === SCHEMA_VERSION_V2 || record.schema_version === SCHEMA_VERSION_V3;
+}
+
+function validateReviewAuthorization(record, options, errors, warnings) {
+  const requireCurrentApproval = options.requireCurrentApproval !== false;
+  const effectiveReviews = options.effectiveReviewsByManifestDigest;
+
+  if (record.schema_version === SCHEMA_VERSION_V2) {
+    if (!requireCurrentApproval) {
+      warnings.push('v2 checkpoint predates pinned SourceSequenceReview identity; historical authorization provenance is unpinned');
+      return;
+    }
+    if (!effectiveReviews || typeof effectiveReviews.get !== 'function') {
+      errors.push('v2 checkpoint validation requires a SourceSequenceReview registry');
+      return;
+    }
+    const effective = getEffectiveSourceSequenceReview(
+      effectiveReviews,
+      record.source_manifest_id,
+      record.source_manifest_sha256,
+    );
+    if (!effective) {
+      errors.push('v2 checkpoint referenced manifest digest has no effective SourceSequenceReview');
+    } else if (effective.decision !== 'approved') {
+      errors.push(`v2 checkpoint referenced manifest digest is not approved; effective review=${effective.review_id} decision=${effective.decision}`);
+    }
+    return;
+  }
+
+  if (record.schema_version !== SCHEMA_VERSION_V3) return;
+
+  if (!isNonEmptyString(record.source_review_id)) {
+    errors.push('v3 checkpoint requires source_review_id');
+    return;
+  }
+
+  const reviewsById = options.reviewsById;
+  if (!reviewsById || typeof reviewsById.get !== 'function') {
+    errors.push('v3 checkpoint validation requires a SourceSequenceReview registry by review_id');
+    return;
+  }
+
+  const pinned = reviewsById.get(record.source_review_id);
+  if (!pinned) {
+    errors.push(`v3 checkpoint source_review_id ${record.source_review_id} does not resolve`);
+    return;
+  }
+  if (pinned.manifest_id !== record.source_manifest_id || pinned.manifest_sha256 !== record.source_manifest_sha256) {
+    errors.push('v3 checkpoint source_review_id must target the exact source_manifest_id + source_manifest_sha256');
+  }
+  if (pinned.decision !== 'approved') {
+    errors.push(`v3 checkpoint pinned SourceSequenceReview must be approved; review=${pinned.review_id} decision=${pinned.decision}`);
+  }
+
+  const effective = effectiveReviews && typeof effectiveReviews.get === 'function'
+    ? getEffectiveSourceSequenceReview(effectiveReviews, record.source_manifest_id, record.source_manifest_sha256)
+    : null;
+
+  if (requireCurrentApproval) {
+    if (!effective) {
+      errors.push('v3 checkpoint referenced manifest digest has no effective SourceSequenceReview');
+    } else if (effective.decision !== 'approved') {
+      errors.push(`v3 checkpoint referenced manifest digest is not currently approved; effective review=${effective.review_id} decision=${effective.decision}`);
+    } else if (effective.review_id !== record.source_review_id) {
+      errors.push(`v3 checkpoint must pin the current effective SourceSequenceReview ${effective.review_id}`);
+    }
+  } else if (effective && effective.review_id !== record.source_review_id) {
+    warnings.push(`historical v3 checkpoint pins superseded review ${record.source_review_id}; current effective review is ${effective.review_id} (${effective.decision})`);
+  }
+}
+
+function validateManifestBinding(record, options, errors, warnings) {
+  if (!isNonEmptyString(record.source_manifest_id)) errors.push(`${record.schema_version} checkpoint requires source_manifest_id`);
+  if (!/^[0-9a-f]{64}$/.test(String(record.source_manifest_sha256 || ''))) errors.push(`${record.schema_version} checkpoint requires source_manifest_sha256`);
+  if (!isNonEmptyString(record.source_unit_id)) errors.push(`${record.schema_version} checkpoint requires source_unit_id`);
+
+  const manifestsById = options.manifestsById;
   if (!manifestsById || typeof manifestsById.get !== 'function') {
-    errors.push('v2 checkpoint validation requires a SourceSequenceManifest registry');
+    errors.push(`${record.schema_version} checkpoint validation requires a SourceSequenceManifest registry`);
     return;
   }
 
@@ -54,45 +129,32 @@ function validateManifestBinding(record, manifestsById, effectiveReviewsByManife
     errors.push(`source_manifest_id ${record.source_manifest_id} does not resolve to a registered manifest`);
     return;
   }
-  if (manifest.content_sha256 !== record.source_manifest_sha256) errors.push('v2 checkpoint source_manifest_sha256 must equal manifest content_sha256');
+  if (manifest.content_sha256 !== record.source_manifest_sha256) errors.push(`${record.schema_version} checkpoint source_manifest_sha256 must equal manifest content_sha256`);
 
-  if (!effectiveReviewsByManifestDigest || typeof effectiveReviewsByManifestDigest.get !== 'function') {
-    errors.push('v2 checkpoint validation requires a SourceSequenceReview registry');
-  } else {
-    const review = getEffectiveSourceSequenceReview(
-      effectiveReviewsByManifestDigest,
-      record.source_manifest_id,
-      record.source_manifest_sha256,
-    );
-    if (!review) {
-      errors.push('v2 checkpoint referenced manifest digest has no effective SourceSequenceReview');
-    } else if (review.decision !== 'approved') {
-      errors.push(`v2 checkpoint referenced manifest digest is not approved; effective review=${review.review_id} decision=${review.decision}`);
-    }
-  }
+  validateReviewAuthorization(record, options, errors, warnings);
 
-  if (manifest.interview_note_id !== record.target_id) errors.push('v2 checkpoint target_id must equal manifest.interview_note_id');
-  if (manifest.source_revision_id !== record.source_revision_id) errors.push('v2 checkpoint source_revision_id must equal manifest.source_revision_id');
+  if (manifest.interview_note_id !== record.target_id) errors.push(`${record.schema_version} checkpoint target_id must equal manifest.interview_note_id`);
+  if (manifest.source_revision_id !== record.source_revision_id) errors.push(`${record.schema_version} checkpoint source_revision_id must equal manifest.source_revision_id`);
 
   const unit = findUnit(manifest, record.source_unit_id);
   if (!unit) {
     errors.push(`source_unit_id ${record.source_unit_id} does not exist in the referenced manifest`);
     return;
   }
-  if (unit.position !== record.revealed_position) errors.push('v2 checkpoint revealed_position must equal manifest SourceUnit position');
-  if (unit.source_unit_type !== record.source_unit_type) errors.push('v2 checkpoint source_unit_type must equal manifest SourceUnit type');
-  if (unit.text_projection !== record.current_source_unit) errors.push('v2 checkpoint current_source_unit must equal manifest SourceUnit text_projection');
+  if (unit.position !== record.revealed_position) errors.push(`${record.schema_version} checkpoint revealed_position must equal manifest SourceUnit position`);
+  if (unit.source_unit_type !== record.source_unit_type) errors.push(`${record.schema_version} checkpoint source_unit_type must equal manifest SourceUnit type`);
+  if (unit.text_projection !== record.current_source_unit) errors.push(`${record.schema_version} checkpoint current_source_unit must equal manifest SourceUnit text_projection`);
 
   const fragments = Array.isArray(unit.fragments) ? [...unit.fragments].sort((a, b) => a.order - b.order) : [];
   if (fragments.length === 0) {
-    if (record.source_fragment_id != null) errors.push('v2 checkpoint source_fragment_id must be null when SourceUnit has no fragments');
-    if (record.has_withheld_within_unit !== false) errors.push('v2 checkpoint has_withheld_within_unit must be false when SourceUnit has no fragments');
-    if (record.temporal_cursor != null) errors.push('v2 checkpoint temporal_cursor must be null when SourceUnit has no fragments');
+    if (record.source_fragment_id != null) errors.push(`${record.schema_version} checkpoint source_fragment_id must be null when SourceUnit has no fragments`);
+    if (record.has_withheld_within_unit !== false) errors.push(`${record.schema_version} checkpoint has_withheld_within_unit must be false when SourceUnit has no fragments`);
+    if (record.temporal_cursor != null) errors.push(`${record.schema_version} checkpoint temporal_cursor must be null when SourceUnit has no fragments`);
     return;
   }
 
   if (!isNonEmptyString(record.source_fragment_id)) {
-    errors.push('v2 checkpoint requires source_fragment_id when SourceUnit defines fragments');
+    errors.push(`${record.schema_version} checkpoint requires source_fragment_id when SourceUnit defines fragments`);
     return;
   }
   const fragment = findFragment(unit, record.source_fragment_id);
@@ -102,13 +164,13 @@ function validateManifestBinding(record, manifestsById, effectiveReviewsByManife
   }
   const expectedWithheld = fragment.order < fragments[fragments.length - 1].order;
   if (record.has_withheld_within_unit !== expectedWithheld) {
-    errors.push(`v2 checkpoint has_withheld_within_unit must be ${expectedWithheld} at SourceFragment order ${fragment.order}`);
+    errors.push(`${record.schema_version} checkpoint has_withheld_within_unit must be ${expectedWithheld} at SourceFragment order ${fragment.order}`);
   }
   if (record.temporal_cursor !== record.source_fragment_id) {
-    errors.push('v2 checkpoint temporal_cursor must equal source_fragment_id for manifest-backed temporal ordering');
+    errors.push(`${record.schema_version} checkpoint temporal_cursor must equal source_fragment_id for manifest-backed temporal ordering`);
   }
   if (!isNonEmptyString(record.revealed_within_unit)) {
-    errors.push('v2 checkpoint revealed_within_unit must describe the revealed fragment frontier');
+    errors.push(`${record.schema_version} checkpoint revealed_within_unit must describe the revealed fragment frontier`);
   }
 }
 
@@ -120,7 +182,7 @@ function validateExplorationSessionCheckpoint(body, options = {}) {
 
   if (!record) return { ok: false, errors, warnings, record: null };
 
-  if (!SUPPORTED_SCHEMA_VERSIONS.has(record.schema_version)) errors.push(`schema_version must be ${SCHEMA_VERSION_V1} or ${SCHEMA_VERSION_V2}`);
+  if (!SUPPORTED_SCHEMA_VERSIONS.has(record.schema_version)) errors.push(`schema_version must be ${SCHEMA_VERSION_V1}, ${SCHEMA_VERSION_V2}, or ${SCHEMA_VERSION_V3}`);
   if (!isNonEmptyString(record.session_id)) errors.push('session_id must be a non-empty string');
   if (record.target_type !== 'InterviewNote') errors.push('checkpoint target_type must be InterviewNote');
   if (!isNonEmptyString(record.target_id)) errors.push('target_id must be a non-empty string');
@@ -175,14 +237,7 @@ function validateExplorationSessionCheckpoint(body, options = {}) {
     errors.push('active session must not set completed_at');
   }
 
-  if (record.schema_version === SCHEMA_VERSION_V2) {
-    validateManifestBinding(
-      record,
-      options.manifestsById,
-      options.effectiveReviewsByManifestDigest,
-      errors,
-    );
-  }
+  if (isManifestBacked(record)) validateManifestBinding(record, options, errors, warnings);
 
   return { ok: errors.length === 0, errors, warnings, record };
 }
@@ -190,6 +245,7 @@ function validateExplorationSessionCheckpoint(body, options = {}) {
 module.exports = {
   SCHEMA_VERSION_V1,
   SCHEMA_VERSION_V2,
+  SCHEMA_VERSION_V3,
   SUPPORTED_SCHEMA_VERSIONS,
   parseCheckpoint,
   validateExplorationSessionCheckpoint,
