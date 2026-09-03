@@ -39,8 +39,17 @@ test('XHS candidate projects to SourceNote, not InterviewNote', () => {
   assert.match(projection.body, /<!-- source-note:/);
   assert.doesNotMatch(projection.body, /<!-- interview-note:/);
   assert.deepEqual(projection.labels, [
-    'type:source-note', 'source:xhs', 'status:captured', 'boundary:pending', 'task:boundary-review', 'migration:xhs-bulk',
+    'type:source-note', 'source:xhs', 'status:captured', 'boundary:pending', 'task:boundary-review', 'migration:xhs-bulk', 'source-year:2022',
   ]);
+  const result = validateProjection(projection);
+  assert.equal(result.ok, true, result.errors.join('\n'));
+});
+
+test('unknown publication year does not invent source-year label', () => {
+  const projection = buildProjection(candidate({
+    source_published_at: { precision: 'unknown', value: null },
+  }), sourceRef, '2026-09-03T13:00:00.000Z');
+  assert.equal(projection.labels.some((label) => label.startsWith('source-year:')), false);
   const result = validateProjection(projection);
   assert.equal(result.ok, true, result.errors.join('\n'));
 });

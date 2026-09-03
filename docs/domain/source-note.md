@@ -36,14 +36,15 @@ source_note_id = xhs-note:<note_id>
 - 固定 `source_revision` 和 source repository ref；
 - 登记 Raw / Source projection artifacts；
 - 显式记录 zero-byte 等 intake anomaly；
-- 保存 boundary review 状态。
+- 保存 boundary review 状态；
+- 从有年份证据的 `source_published_at` 统一投影 `source-year:YYYY`。
 
 它不负责：
 
 - 判断帖子是不是一次真实面试；
 - 推断公司 / 岗位 / 招聘类型 / 轮次；
 - 推断实际面试时间；
-- 创建 Learning Discovery Labels；
+- 创建 InterviewNote-only Learning Discovery Labels；
 - 预声明 InterviewNote identity。
 
 ## Issue contract
@@ -62,7 +63,18 @@ source:xhs
 status:captured
 boundary:pending
 task:boundary-review
+source-year:YYYY      # source_published_at 含已知年份时统一生成
 migration:xhs-bulk   # 仅批量 intake/reconciliation 时
+```
+
+`source-year:*` 是 **Source Discovery**，不是 InterviewNote 学习结论：
+
+```text
+source_published_at = 2024-07-19...
+→ source-year:2024
+
+source_published_at = unknown / 只有 MM-DD
+→ 不生成 source-year
 ```
 
 `boundary:pending` 时禁止携带：
@@ -72,13 +84,12 @@ company:*
 role:*
 recruitment:*
 round:*
-source-year:*
 interview-year:*
 result:*
 outcome:*
 ```
 
-这些都属于 InterviewNote 学习/发现语义。
+这些需要真实 InterviewNote 或其 reviewed InterviewContext 才能成立。
 
 ## Boundary Review
 
@@ -162,5 +173,7 @@ migration:xhs-bulk + 旧 InterviewNote
 尚未迁移的 XHS note
 → 创建新的 SourceNote
 ```
+
+转换/新建时会根据 `source_published_at` 自动附加匹配的 `source-year:YYYY`；缺失的动态年份 Label 会在 apply 前确保存在。
 
 这使迁移中断、重复执行以及旧批次继续产生少量 legacy intake 时，都可以通过 stable source identity 恢复，而不删除历史 Issue。

@@ -90,7 +90,7 @@
     "source-year": {
       "prefix": "source-year:",
       "value_pattern": "^\\d{4}$",
-      "source": "InterviewNote.source_published_at"
+      "source": "SourceNote.source_published_at (or the same source provenance on a formal InterviewNote)"
     },
     "interview-year": {
       "prefix": "interview-year:",
@@ -101,8 +101,9 @@
   "constraints": {
     "source_note": {
       "required": ["type:source-note", "source:xhs"],
-      "at_most_one_from": ["status", "boundary"],
+      "at_most_one_from": ["status", "boundary", "source-year"],
       "pending_requires": ["boundary:pending", "task:boundary-review"],
+      "source_year_from_published_at": true,
       "forbid_interview_learning_labels": true
     },
     "interview_note": {
@@ -121,16 +122,17 @@
   },
   "notes": [
     "SourceNote 是来源采集对象；一条 XHS note 先进入 SourceNote，边界审核后才允许产生 0..N InterviewNote。",
-    "SourceNote 在 boundary:pending 阶段不得携带 company/role/recruitment/round/source-year/interview-year/result/outcome 等 InterviewNote 学习标签。",
+    "SourceNote 的 source-year:YYYY 是 Source Discovery projection，直接来自 source_published_at；有年份证据时统一生成，unknown/month_day 不生成。",
+    "SourceNote 在 boundary:pending 阶段不得携带 company/role/recruitment/round/interview-year/result/outcome 等 InterviewNote-only 标签。",
     "boundary:not-interview 表示该 Source 不产生 InterviewNote；boundary:single-interview / multi-interview 表示审核后产生一个或多个 InterviewNote。",
-    "Workflow Label 与 Learning Discovery Label 都只是 projection，不是领域事实证明。",
+    "Workflow Label、Source Discovery Label 与 Learning Discovery Label 都只是 projection，不是领域事实证明。",
     "migration:xhs-bulk 是 operational label：旧批量 InterviewNote intake 和新 SourceNote reconciliation 都可暂时携带，用于幂等识别与 runner 节流。",
     "bulk SourceNote 完成 boundary review 前保持 task:boundary-review；审核完成后应移除该 task label。",
     "Learning Discovery Label 必须来自 reviewed InterviewContext 或明确指定的权威 Source field。",
-    "只有 status:source-ready 的 InterviewNote 才允许进入 Learning Discovery Label 学习池；source-review / blocked case 保持在 Source 工作流。",
+    "只有 status:source-ready 的 InterviewNote 才允许进入公司/岗位/招聘/轮次/面试年份等 Learning Discovery 学习池；source-review / blocked case 保持在 Source 工作流。",
     "Company 是一级学习入口，允许使用 normalized company id 动态创建受控标签。",
     "Role 只使用粗粒度 family；精确岗位 title 保留在 InterviewContext。",
-    "source-year:YYYY 统一从 InterviewNote.source_published_at 投影；不经过 AI 推断。",
+    "source-year:YYYY 统一从 source_published_at 投影；不经过 AI 推断，SourceNote 与其派生的正式 InterviewNote 可以共享这一来源时间索引。",
     "interview-year:YYYY 只在 reviewed InterviewContext.interview_occurred_at 能证明年份时投影。",
     "source-year 与 interview-year 语义独立，允许不同；禁止使用含义模糊的 year:YYYY。",
     "Unknown / month_day 不生成对应年份 Label。",
