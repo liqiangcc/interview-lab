@@ -23,6 +23,7 @@ const LEGACY_SECTION_ALIASES = {
 
 const SUPPORTED_SCHEMAS = new Set(['interview-note-issue.v1', 'interview-note-issue.v2']);
 const SINGLE_VALUE_LABEL_FAMILIES = ['company:', 'role:', 'recruitment:', 'round:'];
+const LEARNING_DISCOVERY_PREFIXES = ['company:', 'role:', 'recruitment:', 'round:'];
 const FORBIDDEN_DISCOVERY_PREFIXES = ['result:', 'outcome:'];
 const DISCOURAGED_FACT_PREFIXES = ['year:', 'note:', 'tech:', 'canonical:'];
 
@@ -194,6 +195,10 @@ function validateLearningLabelFamilies(labelSet, errors, warnings) {
   }
 }
 
+function hasLearningDiscoveryLabels(labelSet) {
+  return [...labelSet].some((label) => LEARNING_DISCOVERY_PREFIXES.some((prefix) => label.startsWith(prefix)));
+}
+
 function validateInterviewNoteIssue({ body, labels = [], state = 'open' }) {
   const errors = [];
   const warnings = [];
@@ -226,6 +231,10 @@ function validateInterviewNoteIssue({ body, labels = [], state = 'open' }) {
   }
 
   validateLearningLabelFamilies(labelSet, errors, warnings);
+
+  if (hasLearningDiscoveryLabels(labelSet) && !labelSet.has('status:source-ready')) {
+    errors.push('Learning Discovery Labels require status:source-ready; source-review/blocked InterviewNotes must not enter the learning pool');
+  }
 
   return {
     ok: errors.length === 0,
