@@ -41,6 +41,7 @@ function isNonEmptyString(value) {
 
 function validateManifestBinding(record, manifestsById, errors) {
   if (!isNonEmptyString(record.source_manifest_id)) errors.push('v2 checkpoint requires source_manifest_id');
+  if (!/^[0-9a-f]{64}$/.test(String(record.source_manifest_sha256 || ''))) errors.push('v2 checkpoint requires source_manifest_sha256');
   if (!isNonEmptyString(record.source_unit_id)) errors.push('v2 checkpoint requires source_unit_id');
   if (!manifestsById || typeof manifestsById.get !== 'function') {
     errors.push('v2 checkpoint validation requires a SourceSequenceManifest registry');
@@ -52,6 +53,7 @@ function validateManifestBinding(record, manifestsById, errors) {
     errors.push(`source_manifest_id ${record.source_manifest_id} does not resolve to a registered manifest`);
     return;
   }
+  if (manifest.content_sha256 !== record.source_manifest_sha256) errors.push('v2 checkpoint source_manifest_sha256 must equal manifest content_sha256');
   if (manifest.interview_note_id !== record.target_id) errors.push('v2 checkpoint target_id must equal manifest.interview_note_id');
   if (manifest.source_revision_id !== record.source_revision_id) errors.push('v2 checkpoint source_revision_id must equal manifest.source_revision_id');
 
@@ -101,18 +103,14 @@ function validateExplorationSessionCheckpoint(body, options = {}) {
 
   if (!record) return { ok: false, errors, warnings, record: null };
 
-  if (!SUPPORTED_SCHEMA_VERSIONS.has(record.schema_version)) {
-    errors.push(`schema_version must be ${SCHEMA_VERSION_V1} or ${SCHEMA_VERSION_V2}`);
-  }
+  if (!SUPPORTED_SCHEMA_VERSIONS.has(record.schema_version)) errors.push(`schema_version must be ${SCHEMA_VERSION_V1} or ${SCHEMA_VERSION_V2}`);
   if (!isNonEmptyString(record.session_id)) errors.push('session_id must be a non-empty string');
   if (record.target_type !== 'InterviewNote') errors.push('checkpoint target_type must be InterviewNote');
   if (!isNonEmptyString(record.target_id)) errors.push('target_id must be a non-empty string');
   if (!MODES.has(record.mode)) errors.push('mode must be a supported ExplorationSession mode');
   if (!isNonEmptyString(record.source_revision_id)) errors.push('source_revision_id must be a non-empty string');
 
-  if (!Number.isInteger(record.revealed_position) || record.revealed_position < 1) {
-    errors.push('revealed_position must be a positive integer');
-  }
+  if (!Number.isInteger(record.revealed_position) || record.revealed_position < 1) errors.push('revealed_position must be a positive integer');
 
   const rangeMatch = typeof record.revealed_range === 'string'
     ? record.revealed_range.match(/^([1-9][0-9]*)\.\.([1-9][0-9]*)$/)
@@ -123,18 +121,12 @@ function validateExplorationSessionCheckpoint(body, options = {}) {
     const start = Number(rangeMatch[1]);
     const end = Number(rangeMatch[2]);
     if (start > end) errors.push('revealed_range start must not exceed end');
-    if (Number.isInteger(record.revealed_position) && end !== record.revealed_position) {
-      errors.push('revealed_range end must equal revealed_position');
-    }
+    if (Number.isInteger(record.revealed_position) && end !== record.revealed_position) errors.push('revealed_range end must equal revealed_position');
   }
 
   if (!isNonEmptyString(record.current_source_unit)) errors.push('current_source_unit must be a non-empty string');
-  if (!isNonEmptyString(record.source_unit_type) || !/^[a-z][a-z0-9-]*$/.test(record.source_unit_type)) {
-    errors.push('source_unit_type must be a stable lowercase machine identifier');
-  }
-  if (!isNonEmptyString(record.loop_phase) || !/^[a-z][a-z0-9-]*$/.test(record.loop_phase)) {
-    errors.push('loop_phase must be a stable lowercase machine identifier');
-  }
+  if (!isNonEmptyString(record.source_unit_type) || !/^[a-z][a-z0-9-]*$/.test(record.source_unit_type)) errors.push('source_unit_type must be a stable lowercase machine identifier');
+  if (!isNonEmptyString(record.loop_phase) || !/^[a-z][a-z0-9-]*$/.test(record.loop_phase)) errors.push('loop_phase must be a stable lowercase machine identifier');
 
   const allowedPhases = LOOP_PHASES.get(record.source_unit_type);
   if (allowedPhases && !allowedPhases.has(record.loop_phase)) {
@@ -161,9 +153,7 @@ function validateExplorationSessionCheckpoint(body, options = {}) {
   if (record.session_status === 'completed') {
     if (record.position_status !== 'complete') errors.push('completed session requires position_status=complete');
     if (record.loop_phase !== 'closure') errors.push('completed session requires loop_phase=closure');
-    if (!isNonEmptyString(record.completed_at) || Number.isNaN(Date.parse(record.completed_at))) {
-      errors.push('completed session requires a valid completed_at timestamp');
-    }
+    if (!isNonEmptyString(record.completed_at) || Number.isNaN(Date.parse(record.completed_at))) errors.push('completed session requires a valid completed_at timestamp');
   } else if (record.completed_at != null) {
     errors.push('active session must not set completed_at');
   }
