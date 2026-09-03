@@ -28,11 +28,58 @@ test('reviewed learning discovery label families are allowed only when source-re
       'role:backend',
       'recruitment:campus',
       'round:2',
+      'source-year:2023',
     ],
     state: 'closed',
   });
   assert.equal(result.ok, true, JSON.stringify(result.errors));
   assert.equal(result.warnings.length, 0, JSON.stringify(result.warnings));
+});
+
+test('learning discovery projection requires source-year when publication year is known', () => {
+  const result = validateInterviewNoteIssue({
+    body: validBody,
+    labels: ['type:interview-note', 'status:source-ready', 'company:kuaishou'],
+  });
+  assert.equal(result.ok, false);
+  assert.match(result.errors.join('\n'), /must include source-year:2023/);
+});
+
+test('source-year must match source_published_at rather than another time field', () => {
+  const result = validateInterviewNoteIssue({
+    body: validBody,
+    labels: ['type:interview-note', 'status:source-ready', 'company:kuaishou', 'source-year:2022'],
+  });
+  assert.equal(result.ok, false);
+  assert.match(result.errors.join('\n'), /source-year label must match record\.source_published_at year \(2023\)/);
+});
+
+test('generic year label is forbidden now that time namespaces are explicit', () => {
+  const result = validateInterviewNoteIssue({
+    body: validBody,
+    labels: ['type:interview-note', 'status:source-ready', 'year:2023'],
+  });
+  assert.equal(result.ok, false);
+  assert.match(result.errors.join('\n'), /ambiguous label prefix forbidden/);
+});
+
+test('year-bearing interview occurrence requires interview-year in learning discovery projection', () => {
+  const body = validBody.replace(
+    '"interview_occurred_at": {\n    "precision": "unknown",\n    "value": null\n  }',
+    '"interview_occurred_at": {\n    "precision": "exact",\n    "value": "2022-08-02"\n  }',
+  );
+  const missing = validateInterviewNoteIssue({
+    body,
+    labels: ['type:interview-note', 'status:source-ready', 'company:baidu', 'source-year:2023'],
+  });
+  assert.equal(missing.ok, false);
+  assert.match(missing.errors.join('\n'), /must include interview-year:2022/);
+
+  const present = validateInterviewNoteIssue({
+    body,
+    labels: ['type:interview-note', 'status:source-ready', 'company:baidu', 'source-year:2023', 'interview-year:2022'],
+  });
+  assert.equal(present.ok, true, JSON.stringify(present.errors));
 });
 
 test('source-review InterviewNote cannot enter learning pool through discovery labels', () => {
