@@ -163,6 +163,90 @@ Raw title 原样保存在 Issue Source body 中。这样 Issue 列表不会因�
 只有 preflight 全 PASS 才 apply
 ```
 
+真实 dry-run `33753646023` 已确认：
+
+```text
+total_candidates      1459
+known_published_at     1412
+unknown_published_at     47
+existing_preserved        4
+to_create              1455
+
+2022-04-12T19:39:03+08:00
+→
+2025-12-19T16:54:37+08:00
+```
+
+## Scale-safe apply
+
+1455 条 Issue 不使用单条 REST 循环硬写。
+
+Apply 使用 GraphQL 顶层 mutation alias 批量创建：
+
+```text
+按 source_published_at 已排序 projections
+↓
+每批 8 条
+↓
+同一 mutation 内按 alias 顺序执行 createIssue
+↓
+批次之间节流
+↓
+每批完成后立即持久化 report
+```
+
+因此创建顺序仍然与 migration plan 一致。
+
+如果 GitHub API 中途限流或失败：
+
+```text
+已创建 Issue 保留
+↓
+report 记录 created_this_run / remaining_after_run / failure
+↓
+重新执行 apply
+↓
+再次读取全部 stable marker
+↓
+existing-preserved
+↓
+只创建剩余 identity
+```
+
+不通过重试创建 duplicate。
+
+## migration:xhs-bulk
+
+批量 intake Issue 临时携带：
+
+```text
+migration:xhs-bulk
+```
+
+它只表示：
+
+> 该 Issue 来自已经逐条通过 batch preflight 的 XHS 全量 intake。
+
+它不是 Source / Knowledge / Learning fact。
+
+批量创建前，1459 个 projection 已经调用与普通 Issue live workflow 相同的 InterviewNote validator。因此在 `opened` 事件上，如果 Issue 仍带 `migration:xhs-bulk`，live validator job 会 skip，避免为 1455 条完全相同的已预检内容重复占用 runner。
+
+进入某篇 Source review 前必须先：
+
+```text
+remove migration:xhs-bulk
+↓
+unlabeled event
+↓
+普通 InterviewNote live validator 恢复
+↓
+再推进 source-review
+```
+
+因此 bulk skip 只存在于 intake 写入瞬间，不降低后续 Source 治理强度。
+
+## Workflow
+
 执行 workflow：
 
 ```text
@@ -197,5 +281,6 @@ Existing identity 永远 preserve，不为排序重建。
 Raw / Source projection / Derived 继续分层。
 Bulk intake 不猜 interview_occurred_at。
 Outcome 不进入初始 Issue display title。
-迁移重复执行不得创建 duplicate。
+Bulk label 只优化 intake execution，不改变领域语义。
+迁移可恢复、重复执行不得创建 duplicate。
 ```
