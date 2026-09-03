@@ -137,6 +137,50 @@ manifest_sha256
 
 正式流程要求 segmentation 修订创建新的 manifest version，而不是原地改写。
 
+## Review lifecycle transition
+
+新的 review decision 不应该直接手工选择一个 `supersedes_review_id` 后写文件。
+
+推荐先构造：
+
+```text
+source-sequence-review-transition.v1
+```
+
+并固定：
+
+```text
+expected_effective_review_id
+```
+
+Transition planner 必须在当前 registry 上重新确认：
+
+```text
+expected head == current effective head
+```
+
+然后才生成候选 review，并自动设置：
+
+```text
+supersedes_review_id = current effective head
+```
+
+如果另一个 writer 已经推进 chain，则旧 transition request stale，必须 fail closed。
+
+Apply 之前还应执行 dependency impact dry-run，区分：
+
+```text
+active-current
+active-stale
+historical-current
+historical-superseded
+legacy-active-unpinned
+legacy-active-blocked
+legacy-historical-unpinned
+```
+
+当前 impact preflight 是 REVIEW gate：工具和 live workflow 已存在，但最终创建 review file 仍是独立仓库写操作，尚未被一个原子 applied-transition record 强制绑定。因此不能声称所有 review mutation 都已机器强制经过 preflight。
+
 ## 为什么 checkpoint 还需要 pin review identity
 
 仅在运行时查询“当前 effective review”仍不够。
@@ -209,6 +253,16 @@ pinned review == 当前 effective approved review
 
 同一 v3 session 中 `source_review_id` 必须稳定；approval 发生变化后继续探索应新建 session，而不是静默切换授权来源。
 
+因此 review head 改变后：
+
+```text
+旧 active v3
+→ active-stale
+→ 后续 checkpoint blocked
+```
+
+如果新 head 仍为 approved 且需要继续学习，建立新 v3 session 并 pin 新 review；如果新 head rejected / missing，则暂停 manifest-backed sequential learning。
+
 历史 replay 则只要求 pinned review 本身当时是有效 approval；如果今天已经被 supersede，可给 stale/revoked warning，但不把历史 checkpoint 判成“从未合法”。
 
 ## 机器 gate 总结
@@ -231,6 +285,14 @@ Historical v3 checkpoint PASS
 manifest binding PASS
 +
 pinned review existed and was approved
+
+Review transition preflight PASS
+=
+expected head is still current
++
+candidate review valid
++
+predicted downstream staleness visible
 ```
 
 ## 边界
@@ -245,3 +307,5 @@ Approval 不意味着：
 - 自然语言 reasoning 自动通过 no-look-ahead semantic review。
 
 它只授权 exact manifest digest 作为 sequential-learning 的 machine frontier contract。
+
+同时，transition dry-run PASS 也不等于 review 已 apply。真正的 review-file mutation 仍需显式写入并通过 registry validator；未来如需把 impact preflight 提升为 HARD，应再建立 applied-transition / atomic-apply contract。
