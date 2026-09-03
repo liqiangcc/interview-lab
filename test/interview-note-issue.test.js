@@ -17,7 +17,7 @@ test('valid InterviewNote Issue v2 projection passes', () => {
   assert.equal(result.ok, true, JSON.stringify(result.errors));
 });
 
-test('reviewed learning discovery label families are allowed', () => {
+test('reviewed learning discovery label families are allowed only when source-ready', () => {
   const result = validateInterviewNoteIssue({
     body: validBody,
     labels: [
@@ -35,10 +35,39 @@ test('reviewed learning discovery label families are allowed', () => {
   assert.equal(result.warnings.length, 0, JSON.stringify(result.warnings));
 });
 
+test('source-review InterviewNote cannot enter learning pool through discovery labels', () => {
+  const result = validateInterviewNoteIssue({
+    body: validBody,
+    labels: ['type:interview-note', 'source:xhs', 'status:source-review', 'round:1'],
+    state: 'open',
+  });
+  assert.equal(result.ok, false);
+  assert.match(result.errors.join('\n'), /Learning Discovery Labels require status:source-ready/);
+});
+
+test('blocked InterviewNote cannot enter learning pool through discovery labels', () => {
+  const result = validateInterviewNoteIssue({
+    body: validBody,
+    labels: ['type:interview-note', 'source:xhs', 'status:blocked', 'company:alibaba'],
+    state: 'open',
+  });
+  assert.equal(result.ok, false);
+  assert.match(result.errors.join('\n'), /Learning Discovery Labels require status:source-ready/);
+});
+
+test('source-review without learning discovery labels remains valid workflow state', () => {
+  const result = validateInterviewNoteIssue({
+    body: validBody,
+    labels: ['type:interview-note', 'source:xhs', 'status:source-review', 'task:source-review'],
+    state: 'open',
+  });
+  assert.equal(result.ok, true, JSON.stringify(result.errors));
+});
+
 test('duplicate learning discovery family values fail', () => {
   const result = validateInterviewNoteIssue({
     body: validBody,
-    labels: ['type:interview-note', 'status:captured', 'round:1', 'round:2'],
+    labels: ['type:interview-note', 'status:source-ready', 'round:1', 'round:2'],
   });
   assert.equal(result.ok, false);
   assert.match(result.errors.join('\n'), /round:.*at most one value/);
@@ -56,7 +85,7 @@ test('outcome labels fail closed to avoid learning-list spoilers', () => {
 test('company label requires normalized machine id', () => {
   const result = validateInterviewNoteIssue({
     body: validBody,
-    labels: ['type:interview-note', 'status:captured', 'company:快手'],
+    labels: ['type:interview-note', 'status:source-ready', 'company:快手'],
   });
   assert.equal(result.ok, false);
   assert.match(result.errors.join('\n'), /company label must use normalized machine id/);
