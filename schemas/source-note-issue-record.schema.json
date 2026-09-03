@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "source-note-issue-record.schema.json",
+  "title": "SourceNote Issue Record v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "source_note_id",
+    "source",
+    "source_revision",
+    "source_published_at",
+    "source_edited_at",
+    "artifacts",
+    "anomalies",
+    "limitations",
+    "boundary_review"
+  ],
+  "properties": {
+    "schema_version": {"const": "source-note-issue.v1"},
+    "source_note_id": {"type": "string", "pattern": "^xhs-note:.+$"},
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["system", "external_id", "url"],
+      "properties": {
+        "system": {"const": "xhs"},
+        "external_id": {"type": "string", "minLength": 1},
+        "url": {"type": ["string", "null"]}
+      }
+    },
+    "source_revision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "captured_at", "source_repository", "source_repository_ref", "reason"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "captured_at": {"type": "string", "minLength": 1},
+        "source_repository": {"type": "string", "minLength": 1},
+        "source_repository_ref": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "reason": {"type": "string", "minLength": 1}
+      }
+    },
+    "source_published_at": {"$ref": "#/$defs/timeFact"},
+    "source_edited_at": {"$ref": "#/$defs/timeFact"},
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["kind", "ref", "git_blob_sha", "sha256", "provenance", "byte_size", "integrity"],
+        "properties": {
+          "kind": {"type": "string", "minLength": 1},
+          "ref": {"type": "string", "minLength": 1},
+          "git_blob_sha": {"type": ["string", "null"], "pattern": "^[0-9a-f]{40}$"},
+          "sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+          "provenance": {"enum": ["raw_capture", "source_projection"]},
+          "byte_size": {"type": "integer", "minimum": 0},
+          "integrity": {"enum": ["present", "zero-byte"]}
+        }
+      }
+    },
+    "anomalies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["code", "detail"],
+        "properties": {
+          "code": {"type": "string", "minLength": 1},
+          "detail": {"type": "string"}
+        }
+      }
+    },
+    "limitations": {"type": "array", "items": {"type": "string"}},
+    "boundary_review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "reviewed_at", "interview_note_ids"],
+      "properties": {
+        "status": {"enum": ["pending", "not-interview", "single-interview", "multi-interview"]},
+        "reviewed_at": {"type": ["string", "null"]},
+        "interview_note_ids": {"type": "array", "items": {"type": "string", "minLength": 1}}
+      }
+    }
+  },
+  "$defs": {
+    "timeFact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["precision", "value"],
+      "properties": {
+        "precision": {"enum": ["exact", "month", "year", "month_day", "unknown"]},
+        "value": {"type": ["string", "null"]}
+      }
+    }
+  }
+}

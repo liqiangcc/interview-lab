@@ -1,7 +1,8 @@
 {
-  "schema_version": "issue-label-taxonomy.v4",
+  "schema_version": "issue-label-taxonomy.v5",
   "dimensions": {
     "type": [
+      "type:source-note",
       "type:interview-note",
       "type:canonical-question"
     ],
@@ -19,6 +20,12 @@
       "status:source-ready",
       "status:blocked"
     ],
+    "boundary": [
+      "boundary:pending",
+      "boundary:not-interview",
+      "boundary:single-interview",
+      "boundary:multi-interview"
+    ],
     "quality": [
       "quality:source-incomplete",
       "quality:image-missing",
@@ -29,6 +36,7 @@
       "quality:provenance-missing"
     ],
     "task": [
+      "task:boundary-review",
       "task:source-recovery",
       "task:source-review",
       "task:artifact-check",
@@ -91,6 +99,12 @@
     }
   },
   "constraints": {
+    "source_note": {
+      "required": ["type:source-note", "source:xhs"],
+      "at_most_one_from": ["status", "boundary"],
+      "pending_requires": ["boundary:pending", "task:boundary-review"],
+      "forbid_interview_learning_labels": true
+    },
     "interview_note": {
       "required": ["type:interview-note"],
       "at_most_one_from": ["status", "company", "role", "recruitment", "round", "source-year", "interview-year"],
@@ -106,9 +120,12 @@
     }
   },
   "notes": [
+    "SourceNote 是来源采集对象；一条 XHS note 先进入 SourceNote，边界审核后才允许产生 0..N InterviewNote。",
+    "SourceNote 在 boundary:pending 阶段不得携带 company/role/recruitment/round/source-year/interview-year/result/outcome 等 InterviewNote 学习标签。",
+    "boundary:not-interview 表示该 Source 不产生 InterviewNote；boundary:single-interview / multi-interview 表示审核后产生一个或多个 InterviewNote。",
     "Workflow Label 与 Learning Discovery Label 都只是 projection，不是领域事实证明。",
-    "migration:xhs-bulk 是临时 operational label，仅表示该 Issue 来自通过 batch preflight 的 XHS 全量 intake；它不是 Source/Knowledge 事实。",
-    "bulk intake Issue 进入 Source review 前必须先移除 migration:xhs-bulk；unlabeled 事件恢复普通 live validator。",
+    "migration:xhs-bulk 是 operational label：旧批量 InterviewNote intake 和新 SourceNote reconciliation 都可暂时携带，用于幂等识别与 runner 节流。",
+    "bulk SourceNote 完成 boundary review 前保持 task:boundary-review；审核完成后应移除该 task label。",
     "Learning Discovery Label 必须来自 reviewed InterviewContext 或明确指定的权威 Source field。",
     "只有 status:source-ready 的 InterviewNote 才允许进入 Learning Discovery Label 学习池；source-review / blocked case 保持在 Source 工作流。",
     "Company 是一级学习入口，允许使用 normalized company id 动态创建受控标签。",

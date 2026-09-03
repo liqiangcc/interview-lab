@@ -2,21 +2,82 @@
 
 ## 目的
 
-本文定义如何把 `liqiangcc/xhs` 的历史材料迁入 Interview Lab，同时避免把历史 AI 解释错误升级成第一手 Source fact。迁移首先是证据保存，不是知识清洗。
+本文定义如何把 `liqiangcc/xhs` 的历史材料迁入 Interview Lab，同时避免把“来源帖子”提前等同于“一次真实面试”。
 
-## 范围
+迁移首先是证据保存和来源建档，不是 InterviewNote 判定，更不是知识清洗。
+
+## 核心模型
 
 ```text
-xhs 中的真实面经 Source case
-        ↓
-interview-lab InterviewNote identity
-        ↓
-一篇 InterviewNote 一个主 GitHub Issue
-        ↓
-引用可追溯的 Source Artifact
+XHS note
+↓
+SourceNote
+↓ Boundary Review
+├─ 0 InterviewNote
+├─ 1 InterviewNote
+└─ N InterviewNote
 ```
 
-SourceQuestion、CanonicalQuestion、Analysis、Answer 和 Training 属于后续阶段，不得悄悄混进 Source migration。
+review 发现的真实来源包括：题库、教程、模拟面试、多次面试经验总结、一帖多家公司，以及真正的单场面经。因此全量 intake 必须先落 SourceNote。
+
+## Stable identity
+
+来源 identity：
+
+```text
+source_note_id = xhs-note:<note_id>
+```
+
+新建 SourceNote 使用：
+
+```text
+<!-- source-note: id=xhs-note:<note_id> schema=source-note-issue.v1 -->
+```
+
+历史 Pilot #3/#4 已经在旧一对一模型下建立正式 InterviewNote identity，作为兼容历史保留；bulk reconciliation 不改写这些无 `migration:xhs-bulk` 的正式 InterviewNote。
+
+## SourceNote 初始状态
+
+```text
+type:source-note
+source:xhs
+status:captured
+boundary:pending
+task:boundary-review
+```
+
+批量迁移期间额外携带：
+
+```text
+migration:xhs-bulk
+```
+
+`boundary:pending` 不得携带 InterviewNote 学习标签，也不得预声明 InterviewNote id。
+
+## Boundary Review
+
+结果：
+
+```text
+boundary:not-interview
+boundary:single-interview
+boundary:multi-interview
+```
+
+含义：
+
+```text
+not-interview
+→ 题库 / 教程 / 模拟 / 泛经验等，不产生 InterviewNote
+
+single-interview
+→ 确认一个真实面试事件
+
+multi-interview
+→ 一帖包含多个可独立识别的真实面试事件
+```
+
+只有 boundary review 完成后，才进入 InterviewNote Source lifecycle、InterviewContext、Learning Discovery、SourceSequenceManifest 和 ExplorationSession。
 
 ## 旧 XHS 数据分层
 
@@ -28,7 +89,13 @@ downloaded_images/<note_id>/
 note_images/*_urls.txt
 ```
 
-`downloaded_images` 必须实际检查文件有效性。0 字节图片不能当作原图证据；非空图片应登记 Git blob / size，并在需要时继续做内容完整性审核。
+`downloaded_images` 必须检查真实 byte size。路径存在但 `byte_size=0` 的文件必须记录：
+
+```text
+integrity: zero-byte
+```
+
+不能把它当作有效图片证据。
 
 ### Source projection
 
@@ -49,99 +116,119 @@ data/questions/*
 review/*
 ```
 
-尤其 `note_img_txt` 是 OCR Derived。即使正文主要信息只存在于图片、OCR 看起来高度可信，也不得把 OCR 直接提升为 Raw Source。它必须追溯到对应原图 artifact。
-
-## Stable identity
-
-```text
-interview_note_id = xhs:<note_id>
-```
-
-identity 独立于 Issue number、title、公司/岗位推断、文件路径和迁移顺序。
-
-## 一篇面经一个 Issue
-
-新建记录使用 `interview-note-issue.v2` machine marker。identity 已存在时必须 reconcile，不创建 duplicate。
+尤其 OCR 永远保持 Derived，必须能追溯到对应 Raw image。
 
 ## 时间模型
 
-独立记录：
+SourceNote 只登记来源时间：
 
 ```text
 source_published_at
 source_edited_at
-interview_occurred_at
 ```
 
-### 时间精度
+`interview_occurred_at` 不属于 SourceNote intake。它只有在 boundary review 确认 InterviewNote 后，才由 InterviewNote / InterviewContext 按既有证据规则维护。
+
+全量 SourceNote Issue 创建顺序按：
 
 ```text
-exact      YYYY-MM-DD 或带时区 timestamp
-month      YYYY-MM
-year       YYYY
-month_day  MM-DD
-unknown    null
+source_published_at ASC
+↓
+unknown 发布时间统一放最后
 ```
 
-`month_day` 用于“9.18”这类原文明确提供月日但没有可证明年份的事实。不能因为来源发布时间、秋招标签或其他上下文看起来一致，就自动补年份。
+Issue number 只是 intake 创建顺序的结果，不成为领域时间事实。
 
-## 正式时间线 / 迁移排序
-
-正式排序采用：
+如果出现：
 
 ```text
-1. interview_occurred_at，且 precision 包含可排序年份（exact/month/year）
-2. source_published_at 作为显式 fallback
-3. 否则 unknown-time backlog
+source_edited_at < source_published_at
 ```
 
-如果 `interview_occurred_at` 是 `month_day`，保留该 Source fact，但因为缺少年份，不能独立参与跨年排序；planner 必须显式回退并记录 `basis: source_published_at_fallback`。
-
-`source_edited_at` 永远不替代实际面试时间线。
-
-不得使用 Git commit time、local file modification time、capture time、Issue number、未定义 source-id 编码或 AI 猜测补时间。
-
-## Issue 内容顺序
-
-优先展示 stable identity、三类时间及证据语义、来源元数据、可追溯 readable projection、Raw Artifact/hash、已知 limitation、清楚隔离的 Derived links。
-
-## Pilot 先于全量迁移
-
-初始 Pilot 5 个代表性 case，覆盖 text-dominant、image-dominant、mixed、incomplete、boundary case。Pilot 用于发现机制问题，不用于追求迁移数量。
-
-## Pilot 验收
-
-每个 candidate 至少检查：stable identity 唯一、一个主 Issue、marker 正确、readable Source 可追溯、Raw/Derived 分离、三类时间不混淆且不提高精度、图片 bytes 是否真实有效、OCR 是否保持 Derived、缺失不被 AI 补全、Label 符合 lifecycle、重复执行无 duplicate、第二个读者能找到证据根。
-
-## 迁移生命周期
+保持来源值不变，并记录：
 
 ```text
-发现历史来源
-→ 解析 stable identity
-→ 注册 / 检查 artifact 与时间事实
-→ create or reconcile Issue
-→ captured
-→ source-review
-→ source-ready 或 blocked
+edited-before-published
 ```
 
-## Fail-closed 条件
+不得静默修正。
 
-identity 歧义、artifact 跨 note、readable text 无法追溯、预期 artifact 损坏但 limitation 未记录、必须靠 AI 编造 Source、duplicate ownership 未解决时，不得 source-ready。
+## Intake anomaly
 
-## 全量迁移开启条件
+SourceNote 至少支持：
 
-Issue contract、Label taxonomy、SourceRevision policy 稳定；Pilot 证明幂等；Validator PASS；Pilot Issue 可用于 source-first reading；没有需要推翻 Raw/Derived 根边界的问题后，才允许全量迁移。
+```text
+zero-byte-artifacts
+edited-before-published
+```
+
+anomaly 只表示采集/来源异常，不决定该 Source 是不是 InterviewNote。
+
+## 幂等 reconciliation
+
+正式工具：
+
+```text
+scripts/reconcile-xhs-source-notes.js
+```
+
+行为：
+
+```text
+已有 SourceNote
+→ source-note-exists / skip
+
+旧 bulk InterviewNote + migration:xhs-bulk
+→ 保留 Issue number，原地转换 SourceNote
+
+正式 InterviewNote，无 migration:xhs-bulk
+→ protected-formal-interview-note
+
+尚未迁移 XHS note
+→ create-source-note
+```
+
+因此旧批次中断、重跑或在修复 PR 合并前继续产生少量 legacy bulk Issue，都不会要求删除历史 Issue。
+
+## Apply 安全边界
+
+默认运行仅生成 reconciliation plan/report，不写 GitHub。
+
+写入必须显式使用：
+
+```text
+--apply
+--max-mutations <N>
+--pause-ms <milliseconds>
+```
+
+每次 apply 都重新扫描 live marker，不能靠“上次剩余 index”假设状态没有变化。
+
+GitHub 的 content-creation secondary limit 必须遵守；遇到平台限流时停止并幂等续跑，不通过增加并发绕过。
+
+## Fail-closed
+
+以下任何一项都不能把 SourceNote 提升成 InterviewNote：
+
+- 标题包含“面经”“一面”“二面”；
+- hashtag 包含公司/岗位/校招；
+- OCR 看起来像题目列表；
+- Derived classifier 猜测为某公司面试；
+- 来源发布时间与某招聘季一致。
+
+这些只能成为 boundary review 的候选证据。
 
 ## 核心不变量
 
 ```text
-迁移首先保存证据，再做解释。
+一条来源帖子 ≠ 一次真实面试。
+SourceNote 先于 InterviewNote。
+Boundary Review 才决定 0..N InterviewNote。
+Raw Source immutable。
 Historical Derived 永远保持 Derived。
-Unknown / partial time 保持原始精度。
-只知道月日，不猜年份。
-OCR 不能替代原图。
-真实面试时间优先 chronology；不足以排序时来源发布时间只能显式 fallback。
-Identity 稳定。
-Migration 幂等。
+0-byte artifact 必须显式标记。
+来源时间异常保留并记录，不静默修正。
+迁移按 source_published_at 创建 Issue，但 Issue number 不是领域时间。
+Migration / reconciliation 必须幂等。
+正式 InterviewNote 不允许被 bulk reconciliation 改写。
 ```
