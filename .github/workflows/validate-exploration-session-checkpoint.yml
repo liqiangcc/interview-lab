@@ -6,6 +6,8 @@ on:
 
 permissions:
   contents: read
+  issues: read
+  pull-requests: read
 
 jobs:
   validate:
@@ -16,7 +18,15 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: 提取 Issue comment
+      - name: 提取当前 Issue comment
         run: jq -r '.comment.body' "$GITHUB_EVENT_PATH" > /tmp/exploration-session-comment.md
-      - name: 校验 ExplorationSession checkpoint
+      - name: 校验当前 ExplorationSession checkpoint
         run: node scripts/validate-exploration-session-checkpoint.js /tmp/exploration-session-comment.md
+      - name: 提取 Issue 全量 comment history
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api --paginate --slurp "repos/${GITHUB_REPOSITORY}/issues/${{ github.event.issue.number }}/comments?per_page=100" > /tmp/exploration-session-comment-pages.json
+          jq '[.[][] | {id, created_at, updated_at, body}]' /tmp/exploration-session-comment-pages.json > /tmp/exploration-session-history.json
+      - name: 校验 ExplorationSession history
+        run: node scripts/validate-exploration-session-history.js /tmp/exploration-session-history.json
