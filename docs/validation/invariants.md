@@ -144,17 +144,11 @@ temporal_cursor（必要时）
 当前可用 Source frontier
 ```
 
-### I22 — Sequential checkpoint machine boundary 完整 — HARD（新 checkpoint contract）
+### I22 — Sequential checkpoint machine boundary 完整 — HARD
 
-新的可机器校验 sequential InterviewNote checkpoint 必须包含且只包含一个：
+新的可机器校验 sequential InterviewNote checkpoint 必须包含且只包含一个 `exploration-session-checkpoint` machine marker。
 
-```text
-<!-- exploration-session-checkpoint
-{ ... exploration-session-checkpoint.v1 ... }
--->
-```
-
-至少机器记录：
+v1 至少机器记录：
 
 ```text
 session_id
@@ -176,7 +170,9 @@ session_status
 - `revealed_range` 末端必须等于 `revealed_position`；
 - `has_withheld_within_unit=true` 时必须记录 `temporal_cursor` 与 `revealed_within_unit`；
 - checkpoint 的 Source type / loop phase / closure state 必须通过 validator；
-- 历史上在本 contract 引入前已经存在的 comment 不要求原地改写，但新建或编辑后的 `ExplorationSession checkpoint` 应遵守 v1 contract。
+- 历史上 contract 引入前已经存在的 comment 不要求原地改写。
+
+当存在 reviewed SourceSequenceManifest 时，新 sequential session 应优先使用 v2 contract，见 I34。
 
 ### I23 — Exploration finding 不等于 mutation authorization — HARD
 
@@ -216,7 +212,7 @@ Issue 创建顺序不能成为权威面经时间。
 
 对于 validator 已认识的 Source type，checkpoint 的 normalized `loop_phase` 必须属于该 type 的允许路径。
 
-当前 v1 至少覆盖：
+当前至少覆盖：
 
 ```text
 question-like
@@ -260,6 +256,81 @@ Verified Weakness
 
 结构 validator 可以检查 Source type / loop path / closure contract，但无法仅靠机器字段证明自然语言中没有 hindsight attribution；这部分仍需显式 review。
 
+### I33 — SourceSequenceManifest 是可追溯 Derived sequence contract — HARD
+
+`SourceSequenceManifest` 属于 Layer 1 Derived Extraction，不得伪装成 Raw Source。
+
+每个 manifest 必须：
+
+```text
+绑定一个 SourceRevision
++
+绑定一个可辩护顺序的 evidence stream
++
+manifest_id 唯一
++
+content_sha256 自校验
++
+SourceUnit position 连续 1..N
++
+unit / fragment id 唯一
++
+fragment order 连续
+```
+
+可读 OCR projection 即使经过 fidelity review，也必须继续声明为 Derived。
+
+多个 artifact 没有可靠全局顺序时，不得为了获得 position 强行拼接成一个 manifest stream。
+
+一旦 manifest 被 checkpoint v2 引用，其 `manifest_id + content_sha256` 构成历史 frontier identity；segmentation 修正必须创建新的 manifest version，而不是静默改写旧 frontier。
+
+### I34 — Checkpoint v2 必须由 Manifest 证明 SourceUnit frontier — HARD
+
+`exploration-session-checkpoint.v2` 必须固定：
+
+```text
+source_manifest_id
+source_manifest_sha256
+source_unit_id
+source_fragment_id（SourceUnit 有 fragment 时）
+```
+
+validator 必须证明：
+
+```text
+target_id == manifest.interview_note_id
+source_revision_id == manifest.source_revision_id
+source_manifest_sha256 == manifest.content_sha256
+revealed_position == SourceUnit.position
+source_unit_type == SourceUnit.source_unit_type
+current_source_unit == SourceUnit.text_projection
+```
+
+如果 SourceUnit 有 fragments，则还必须证明：
+
+```text
+source_fragment_id 属于当前 SourceUnit
++
+temporal_cursor == source_fragment_id
++
+has_withheld_within_unit 与 fragment order 一致
+```
+
+### I35 — Manifest-backed history frontier 单调 — HARD
+
+同一 v2 session 必须保持：
+
+```text
+source_manifest_id 稳定
+source_manifest_sha256 稳定
+source_unit_id 在同 position 稳定
+source_fragment_id 按 manifest order 单调向前
+```
+
+Manifest-backed history gate 与现有 session history gate共同工作；completed session 仍然 terminal，position / phase / closure 仍不得倒退。
+
+机器只证明登记 manifest 与 checkpoint/history 的结构一致性；SourceUnit / SourceFragment segmentation 的语义正确性仍需 Source review。
+
 ## 初始 Validator group
 
 未来工具应暴露有边界的检查：
@@ -272,14 +343,22 @@ validate issues
 validate labels
 validate lifecycle
 validate migration
+validate source sequence manifest
 validate exploration checkpoint
+validate exploration history
 validate exploration attribution
 validate all
 ```
 
 `validate all` 聚合这些检查，并返回 machine-readable report。
 
-当前仓库已经提供 `exploration-session-checkpoint.v1` 的 comment validator；语义 attribution review 仍属于人工 / AI review gate。
+当前仓库已经提供：
+
+- `source-sequence-manifest.v1` validator；
+- `exploration-session-checkpoint.v1/v2` validator；
+- ExplorationSession history validator。
+
+语义 attribution 与 segmentation review 仍属于人工 / AI review gate。
 
 ## Pilot 最低门禁
 
@@ -296,6 +375,7 @@ migration idempotency                  PASS
 no invented source precision           PASS
 AI can navigate Issue → evidence root  PASS
 sequential checkpoint contract         PASS
+manifest-backed frontier contract      PASS（有 manifest 的 sequential case）
 ```
 
 ## Evidence over counts
@@ -318,9 +398,11 @@ sequential checkpoint contract         PASS
 保护第一手证据。
 Identity 保持稳定。
 Raw 与 Derived 分离。
+SourceSequenceManifest 始终属于 Derived。
 不确定性显式存在。
 Issue 驱动工作，但不能绕过 Validation。
 顺序学习保持因果性，包括 position 内时间边界。
+有 reviewed manifest 时，Source frontier 应由稳定 SourceUnit / SourceFragment identity 证明。
 Exploration checkpoint 的 Source type、frontier 和 closure 可机器审计。
 Outcome 不自动生成 Cause 或 Verified Weakness。
 Migration 必须幂等。
