@@ -40,6 +40,62 @@
 - capture timestamp
 - storage reference
 
+## SourceSequenceManifest
+
+表示针对某个固定 `SourceRevision` 中一个可顺序消费 evidence stream 的 Derived 序列定义。
+
+职责：
+
+- 固定 `manifest_id + content_sha256`
+- 绑定 Raw evidence stream
+- 保存可选 readable Derived projection provenance
+- 定义 `SourceUnit 1..N`
+- 在确有 position 内时间阶段时定义 `SourceFragment`
+
+Manifest 属于 Layer 1 Derived Extraction，不是 Raw Source。
+
+一个 InterviewNote 可以有多个 evidence stream，因此不能默认存在跨所有 artifact 的单一全局顺序。
+
+## SourceUnit
+
+表示一个可以在 sequential learning 中作为独立 reveal frontier 的 Derived Source 单元。
+
+重要属性：
+
+- `source_unit_id`
+- `position`
+- `source_unit_type`
+- `text_projection`
+- `fragments[]`
+
+`SourceUnit` 比 `SourceQuestion` 更底层，因为并非所有顺序单元都是问题。它可以是：
+
+- question-like
+- stage-summary
+- outcome-reflection-summary
+- 未来经过 review 的其他类型
+
+## SourceFragment
+
+表示一个 SourceUnit 内部存在的可证明时间片段。
+
+只在 unit 内确实包含多个时间阶段时建立，例如：
+
+```text
+interviewer cue
+→ retrospective intent summary
+→ retrospective follow-up summary
+```
+
+重要属性：
+
+- `source_fragment_id`
+- `order`
+- `fragment_type`
+- `text_projection`
+
+不要为了统一结构给所有 SourceUnit 人工制造 fragment。
+
 ## SourceQuestion
 
 表示从某个 InterviewNote 中派生的问题型单元。
@@ -49,10 +105,21 @@
 - 原始 wording 或准确 source span
 - source location / provenance
 - sequence position
+- 可选 `source_unit_id`，指向其 question-like SourceUnit
 - extraction status
 - 必要时记录 interpretation confidence
 
 SourceQuestion 不应该被润色成标准知识题。
+
+SourceUnit 与 SourceQuestion 的关系是：
+
+```text
+question-like SourceUnit
+↓
+可进一步派生 SourceQuestion
+```
+
+Stage-summary / outcome-summary SourceUnit 不应被强行伪装成 SourceQuestion。
 
 ## QuestionRelation
 
@@ -139,12 +206,19 @@ Answer 的正确性依赖外部技术证据和真实 source variants，而不是
 - `session_status`
 - `closure_reason`（非 active position）
 
+`exploration-session-checkpoint.v2` 进一步固定：
+
+- `source_manifest_id`
+- `source_manifest_sha256`
+- `source_unit_id`
+- `source_fragment_id`（SourceUnit 有 fragments 时）
+
 这些 runtime 字段用于表达：
 
 ```text
-当前看到哪一个 Source unit
+当前看到哪一个 manifest-backed SourceUnit
 +
-当前 unit 内看到哪个时间片段
+当前 unit 内看到哪个稳定 SourceFragment
 +
 当前使用哪一种 learning loop
 +
@@ -153,7 +227,7 @@ Answer 的正确性依赖外部技术证据和真实 source variants，而不是
 
 `ExplorationSession` 本身属于 Derived/Training 层，不修改 Raw Source。
 
-当前 `exploration-session-checkpoint.v1` 只机器化 sequential InterviewNote checkpoint；这不意味着 ExplorationSession 永久只能 target InterviewNote。CanonicalQuestion 等 target 仍属于领域模型，只是需要未来独立 contract 后再进入 machine enforcement。
+v1 checkpoint 继续作为兼容 contract；v2 用于把 frontier 与正式 SourceSequenceManifest 绑定。CanonicalQuestion 等其他 session target 仍属于领域模型，只是需要未来独立 contract 后再进入 machine enforcement。
 
 Exploration 可重复、可追加。一篇面经不会因为完成一轮探索就“永久处理完毕”。
 
@@ -175,6 +249,10 @@ ReviewProgress 不是 Source truth，不得修改 Source 或 Knowledge identity�
 ```text
 InterviewNote
    ├── SourceArtifact*
+   ├── SourceSequenceManifest*
+   │      └── SourceUnit*
+   │             ├── SourceFragment*
+   │             └── SourceQuestion?   # 仅 question-like unit
    └── SourceQuestion*
             │
             ├── QuestionRelation*
@@ -194,3 +272,5 @@ InterviewNote / CanonicalQuestion
 所有长期存在的领域对象都必须拥有独立于 GitHub Issue number、Issue title、文件路径和展示文本的稳定 machine identity。
 
 GitHub Issue number 只是操作界面的 locator，不是领域 identity。
+
+被 ExplorationSession 引用的 SourceSequenceManifest 还必须固定 content digest；如果 segmentation 需要修正，创建新的 manifest version，而不是静默改写历史 session 所依赖的 frontier。
