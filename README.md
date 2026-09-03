@@ -8,10 +8,36 @@ Interview Lab 是一个以真实面经为第一手资料、由 AI 陪伴持续�
 
 对普通学习过程，用户不需要理解仓库内部的 Manifest、Review、Checkpoint 或 Validator。
 
-默认体验应该始终保持：
+一篇面经录入后，系统先把它变成**可筛选、非剧透的学习样本**：
 
 ```text
-选择一篇真实面经
+录入真实面经
+↓
+审核基础 InterviewContext
+↓
+同步 company / role / recruitment / round 标签
+↓
+生成 non-spoiler Issue title
+↓
+进入学习池
+```
+
+用户可以先筛选：
+
+```text
+company:kuaishou role:backend round:2
+```
+
+再选择一篇开始学习。
+
+学习前可以知道公司、岗位族、招聘类型、轮次和面试时间；结果默认 sealed，直到 Source 时间线真正走到 outcome 阶段。
+
+默认体验：
+
+```text
+筛选 / 选择一篇真实面经
+↓
+AI 展示非剧透基础信息
 ↓
 AI 展示当前真实输入
 ↓
@@ -27,6 +53,7 @@ AI 展示当前真实输入
 常见交互只需要：
 
 ```text
+找快手后端二面
 开始读这篇面经
 下一步
 这里什么意思？
@@ -40,11 +67,14 @@ SourceRevision、SourceSequenceManifest、SourceSequenceReview、checkpoint/hist
 详见：
 
 - `docs/workflows/user-facing-workflow.md`
+- `docs/domain/interview-context.md`
 
 ## 核心链路
 
 ```text
 真实面经 InterviewNote
+        ↓
+学习前上下文 InterviewContext
         ↓
 真实问题 SourceQuestion
         ↓
@@ -57,28 +87,31 @@ SourceRevision、SourceSequenceManifest、SourceSequenceReview、checkpoint/hist
 训练 / 复盘 Training / Review
 ```
 
+`InterviewContext` 负责学习发现与 non-spoiler 基础信息；它不替代 Source，也不包含提前泄漏的 Outcome。
+
 ## 核心原则
 
 1. **真实面经优先。** 先忠实保存来源实际留下的内容，再做解释。
 2. **Raw Source 不可被下游覆盖。** 后续认知可以变化，第一手证据不能被悄悄改写。
-3. **Raw 与 Derived 分层。** OCR、问题提取、归一化、分析、答案、复盘都属于派生层。
+3. **Raw 与 Derived 分层。** InterviewContext、OCR、问题提取、归一化、分析、答案、复盘都属于派生层。
 4. **一篇真实面经对应一个主 Issue。** Issue 是 AI 和人的主要工作界面。
 5. **Issue 驱动工作流，证据驱动事实。** Issue、Label、Comment 用于查询、协作和状态投影；第一手 artifact 仍是证据根。
-6. **逐步学习禁止偷看未来。** 当前步骤只能使用已经揭示的历史上下文和当前输入。
-7. **一点一点拆解。** 一篇一篇读，一次一个输入，一次一个解释层。
-8. **目标是形成面试反应链路，而不是背答案。** 训练识别问题、定位知识、组织回答、判断深度、预判追问和根据新信息更新判断。
-9. **同一篇面经可以反复挖掘。** Source 保持稳定，ExplorationSession 可以不断增加。
-10. **重要状态由 Validator 证明。** Label 只是状态投影，不能替代领域验证。
-11. **底层复杂度不能变成用户复杂度。** 新 schema、validator 或 runtime identity 默认隐藏，不自动增加用户日常操作。
-12. **真实 Pilot 决定是否增加机制。** 没有可复现 correctness / provenance / concurrency 问题时，不因理论完备性继续堆叠协议。
+6. **先把录入面经变成可筛选学习样本。** Reviewed InterviewContext 驱动 Learning Discovery Labels；Unknown 不猜，Outcome 不剧透。
+7. **逐步学习禁止偷看未来。** 当前步骤只能使用已经揭示的历史上下文和当前输入。
+8. **一点一点拆解。** 一篇一篇读，一次一个输入，一次一个解释层。
+9. **目标是形成面试反应链路，而不是背答案。** 训练识别问题、定位知识、组织回答、判断深度、预判追问和根据新信息更新判断。
+10. **同一篇面经可以反复挖掘。** Source 保持稳定，ExplorationSession 可以不断增加。
+11. **重要状态由 Validator 证明。** Label 只是状态投影，不能替代领域验证。
+12. **底层复杂度不能变成用户复杂度。** 新 schema、validator 或 runtime identity 默认隐藏，不自动增加用户日常操作。
+13. **真实 Pilot 决定是否增加机制。** 没有可复现 correctness / provenance / concurrency 问题时，不因理论完备性继续堆叠协议。
 
 ## 领域分层
 
 - **Source**：真实面经、原始页面、图片、来源身份和 SourceRevision。
-- **Extraction**：OCR、SourceQuestion、问题边界、顺序和结构解释。
+- **Extraction / Discovery**：InterviewContext、OCR、SourceQuestion、问题边界、顺序和结构解释。
 - **Knowledge**：CanonicalQuestion、关系、Analysis、Answer 和证据映射。
 - **Training**：逐步学习、Mock Interview、ReviewProgress、知识缺口和反复训练。
-- **Issues**：AI / 人的操作界面和工作流控制面。
+- **Issues**：AI / 人的操作界面和工作流控制面；Learning Discovery Labels 用于筛选真实面经。
 - **Runtime Infrastructure**：Manifest、Review、Checkpoint、Validator、staleness 等正确性机制；默认不进入学习者日常操作面。
 
 ## Issue 驱动
@@ -90,13 +123,13 @@ GitHub Issue
     ↓
 第一手来源引用
     ↓
-有边界的 AI / 人操作
+Reviewed InterviewContext
     ↓
-Validator
+non-spoiler title + Learning Discovery Labels
     ↓
-正式状态变化
+用户筛选学习样本
     ↓
-同步 Issue / Label
+有边界的 AI / 人学习操作
 ```
 
 对于 `InterviewNote`：
@@ -114,6 +147,8 @@ Issue number、标题和显示文本都不是领域 identity。
 默认使用 source-first sequential reading：
 
 ```text
+非剧透 InterviewContext
++
 过去已揭示的信息
 +
 当前新输入
@@ -137,7 +172,7 @@ Issue number、标题和显示文本都不是领域 identity。
 
 > **Future context must not influence current interpretation.**
 
-也就是：未来面经内容不得反向影响当前步骤的理解。
+也就是：未来面经内容和 Outcome 不得反向影响当前步骤的理解。
 
 ## 仓库语言
 
@@ -153,8 +188,9 @@ Issue number、标题和显示文本都不是领域 identity。
 
 - `docs/workflows/user-facing-workflow.md`
 
-底层机制与开发文档：
+领域与底层机制文档：
 
+- `docs/domain/interview-context.md`
 - `docs/architecture/boundaries.md`
 - `docs/architecture/source-revisions.md`
 - `docs/domain/model.md`
@@ -172,13 +208,15 @@ Issue number、标题和显示文本都不是领域 identity。
 
 首个真实 sequential-learning Pilot 已经验证了 Source frontier、review-pinned checkpoint、history gate 和 staleness 等底层边界。
 
-接下来默认优先级调整为：
+当前优先级：
 
 ```text
 更多真实面经
-→ 用户学习体验
-→ 知识沉淀质量
-→ 训练效果
+→ 录入后完成 InterviewContext / Learning Labels
+→ 用户从 Issue 池筛选学习样本
+→ 验证学习体验
+→ 验证知识沉淀质量
+→ 验证训练效果
 → 真实失败暴露新问题时再扩展底层协议
 ```
 

@@ -1,5 +1,5 @@
 {
-  "schema_version": "issue-label-taxonomy.v1",
+  "schema_version": "issue-label-taxonomy.v2",
   "dimensions": {
     "type": [
       "type:interview-note",
@@ -40,24 +40,64 @@
       "priority:P0",
       "priority:P1",
       "priority:P2"
+    ],
+    "role": [
+      "role:backend",
+      "role:frontend",
+      "role:client",
+      "role:algorithm",
+      "role:data",
+      "role:qa",
+      "role:product",
+      "role:other"
+    ],
+    "recruitment": [
+      "recruitment:campus",
+      "recruitment:social",
+      "recruitment:internship"
+    ],
+    "round": [
+      "round:1",
+      "round:2",
+      "round:3",
+      "round:4",
+      "round:5",
+      "round:6",
+      "round:7",
+      "round:8",
+      "round:9",
+      "round:hr",
+      "round:final"
     ]
+  },
+  "dynamic_dimensions": {
+    "company": {
+      "prefix": "company:",
+      "value_pattern": "^[a-z0-9][a-z0-9-]*$",
+      "source": "reviewed InterviewContext.company.id"
+    }
   },
   "constraints": {
     "interview_note": {
       "required": ["type:interview-note"],
-      "at_most_one_from": ["status"],
+      "at_most_one_from": ["status", "company", "role", "recruitment", "round"],
       "forbid_prefixes_for_facts": [
-        "company:",
-        "role:",
         "year:",
         "note:",
-        "tech:"
+        "tech:",
+        "canonical:",
+        "result:",
+        "outcome:"
       ]
     }
   },
   "notes": [
-    "Label 只用于工作流和查询投影，不是领域事实的证明。",
-    "公司、岗位、年份、技术等高基数事实进入结构化 Issue 内容，不进入全局 Label。",
-    "新增 Label 必须通过显式 taxonomy revision。"
+    "Workflow Label 与 Learning Discovery Label 都只是 projection，不是领域事实证明。",
+    "Learning Discovery Label 必须来自 reviewed InterviewContext。",
+    "Company 是一级学习入口，允许使用 normalized company id 动态创建受控标签。",
+    "Role 只使用粗粒度 family；精确岗位 title 保留在 InterviewContext。",
+    "Unknown 不生成 Learning Discovery Label。",
+    "结果与 Outcome 默认不进入普通学习 Issue 标签，避免学习前剧透。",
+    "新增 Label family 必须通过显式 taxonomy revision。"
   ]
 }

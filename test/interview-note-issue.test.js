@@ -17,6 +17,51 @@ test('valid InterviewNote Issue v2 projection passes', () => {
   assert.equal(result.ok, true, JSON.stringify(result.errors));
 });
 
+test('reviewed learning discovery label families are allowed', () => {
+  const result = validateInterviewNoteIssue({
+    body: validBody,
+    labels: [
+      'type:interview-note',
+      'source:xhs',
+      'status:source-ready',
+      'company:kuaishou',
+      'role:backend',
+      'recruitment:campus',
+      'round:2',
+    ],
+    state: 'closed',
+  });
+  assert.equal(result.ok, true, JSON.stringify(result.errors));
+  assert.equal(result.warnings.length, 0, JSON.stringify(result.warnings));
+});
+
+test('duplicate learning discovery family values fail', () => {
+  const result = validateInterviewNoteIssue({
+    body: validBody,
+    labels: ['type:interview-note', 'status:captured', 'round:1', 'round:2'],
+  });
+  assert.equal(result.ok, false);
+  assert.match(result.errors.join('\n'), /round:.*at most one value/);
+});
+
+test('outcome labels fail closed to avoid learning-list spoilers', () => {
+  const result = validateInterviewNoteIssue({
+    body: validBody,
+    labels: ['type:interview-note', 'status:captured', 'result:rejected'],
+  });
+  assert.equal(result.ok, false);
+  assert.match(result.errors.join('\n'), /outcome label forbidden/);
+});
+
+test('company label requires normalized machine id', () => {
+  const result = validateInterviewNoteIssue({
+    body: validBody,
+    labels: ['type:interview-note', 'status:captured', 'company:快手'],
+  });
+  assert.equal(result.ok, false);
+  assert.match(result.errors.join('\n'), /company label must use normalized machine id/);
+});
+
 test('duplicate machine markers fail closed', () => {
   const body = `${validBody}\n<!-- interview-note: id=xhs:other schema=interview-note-issue.v2 -->\n`;
   const result = validateInterviewNoteIssue({ body, labels: ['type:interview-note', 'status:captured'] });

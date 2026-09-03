@@ -22,6 +22,9 @@ const LEGACY_SECTION_ALIASES = {
 };
 
 const SUPPORTED_SCHEMAS = new Set(['interview-note-issue.v1', 'interview-note-issue.v2']);
+const SINGLE_VALUE_LABEL_FAMILIES = ['company:', 'role:', 'recruitment:', 'round:'];
+const FORBIDDEN_DISCOVERY_PREFIXES = ['result:', 'outcome:'];
+const DISCOURAGED_FACT_PREFIXES = ['year:', 'note:', 'tech:', 'canonical:'];
 
 function allMatches(regex, text) {
   const copy = new RegExp(regex.source, regex.flags);
@@ -154,6 +157,43 @@ function validateRecord(record, marker, errors) {
   }
 }
 
+function validateLearningLabelFamilies(labelSet, errors, warnings) {
+  for (const prefix of SINGLE_VALUE_LABEL_FAMILIES) {
+    const found = [...labelSet].filter((label) => label.startsWith(prefix));
+    if (found.length > 1) errors.push(`learning discovery label family ${prefix} must have at most one value: ${found.join(', ')}`);
+  }
+
+  for (const prefix of FORBIDDEN_DISCOVERY_PREFIXES) {
+    const found = [...labelSet].filter((label) => label.startsWith(prefix));
+    if (found.length) errors.push(`outcome label forbidden on learning discovery Issue to avoid spoilers: ${found.join(', ')}`);
+  }
+
+  const companyLabels = [...labelSet].filter((label) => label.startsWith('company:'));
+  for (const label of companyLabels) {
+    const value = label.slice('company:'.length);
+    if (!/^[a-z0-9][a-z0-9-]*$/.test(value)) errors.push(`company label must use normalized machine id: ${label}`);
+  }
+
+  const allowedRole = new Set(['role:backend', 'role:frontend', 'role:client', 'role:algorithm', 'role:data', 'role:qa', 'role:product', 'role:other']);
+  for (const label of [...labelSet].filter((value) => value.startsWith('role:'))) {
+    if (!allowedRole.has(label)) errors.push(`unsupported coarse role learning label: ${label}`);
+  }
+
+  const allowedRecruitment = new Set(['recruitment:campus', 'recruitment:social', 'recruitment:internship']);
+  for (const label of [...labelSet].filter((value) => value.startsWith('recruitment:'))) {
+    if (!allowedRecruitment.has(label)) errors.push(`unsupported recruitment learning label: ${label}`);
+  }
+
+  for (const label of [...labelSet].filter((value) => value.startsWith('round:'))) {
+    if (!/^round:(?:[1-9]|hr|final)$/.test(label)) errors.push(`unsupported round learning label: ${label}`);
+  }
+
+  for (const prefix of DISCOURAGED_FACT_PREFIXES) {
+    const found = [...labelSet].filter((label) => label.startsWith(prefix));
+    if (found.length) warnings.push(`high-cardinality fact labels discouraged: ${found.join(', ')}`);
+  }
+}
+
 function validateInterviewNoteIssue({ body, labels = [], state = 'open' }) {
   const errors = [];
   const warnings = [];
@@ -185,10 +225,7 @@ function validateInterviewNoteIssue({ body, labels = [], state = 'open' }) {
     errors.push('closed InterviewNote must carry status:source-ready under the normal completion contract');
   }
 
-  for (const prefix of ['company:', 'role:', 'year:', 'note:', 'tech:']) {
-    const found = [...labelSet].filter((label) => label.startsWith(prefix));
-    if (found.length) warnings.push(`high-cardinality fact labels discouraged: ${found.join(', ')}`);
-  }
+  validateLearningLabelFamilies(labelSet, errors, warnings);
 
   return {
     ok: errors.length === 0,
