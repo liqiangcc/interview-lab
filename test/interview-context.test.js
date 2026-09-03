@@ -69,6 +69,21 @@ test('reviewed inference preserves evidence instead of pretending to be explicit
   assert.deepEqual(fixture.recruitment_type.evidence_refs, ['note-desc:topic-24秋招']);
 });
 
+test('interview time also preserves explicit evidence provenance', () => {
+  assert.equal(fixture.interview_occurred_at.precision, 'month_day');
+  assert.equal(fixture.interview_occurred_at.value, '09-18');
+  assert.equal(fixture.interview_occurred_at.basis, 'source-explicit');
+  assert.ok(fixture.interview_occurred_at.evidence_refs.length > 0);
+});
+
+test('known interview time without evidence fails', () => {
+  const value = clone();
+  value.interview_occurred_at.evidence_refs = [];
+  const result = validateInterviewContext(value);
+  assert.equal(result.ok, false);
+  assert.match(result.errors.join('\n'), /interview_occurred_at\.evidence_refs must be non-empty/);
+});
+
 test('pre-learning InterviewContext rejects outcome fields', () => {
   const value = clone();
   value.result = 'rejected';
