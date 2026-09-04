@@ -150,6 +150,38 @@ materialization 不进入 Interview-derived 分析。
 相同 request 重跑不得创建第二个主 Issue。
 ```
 
+## 批量 preflight（Issue #922）
+
+批量编排只提供默认 dry-run 的 planner：
+
+```text
+SourceNote inventory
+↓
+逐条校验 SourceNote / Boundary Review
+↓
+not-interview → 0 InterviewNote
+single-interview → 生成单对象 materialization request
+multi-interview / pending / invalid / duplicate → blocked
+↓
+逐条调用现有 materialization planner
+↓
+输出 materialized candidates / already materialized / receipt repair / blocked 汇总
+```
+
+入口：
+
+```text
+node scripts/plan-xhs-interview-note-materialization-batch.js \
+  --repository liqiangcc/interview-lab \
+  --report issue-922-materialization-report.json
+```
+
+这个入口不接受 `--apply`，也不创建、修改或评论 GitHub Issue。`ready_for_apply` 只有在依赖 gate（#917、#920、#921 均已关闭、验收为 pass 且有 durable evidence）和本批无 blocked case 时才为 true；依赖未满足时即使 planner 能生成 request，也不得执行 mutation。
+
+批量 planner 不把 Boundary Review evidence 直接当作 InterviewNote Source Review evidence。物化后仍必须使用 `interview-note-source-review-transition.v1`，并由该 transition 独立证明 `source-ready` 或 `blocked`；`source_ready` 计数不会因 InterviewNote 已物化而增加。
+
+当前 `multi-interview` 仍 fail closed，直到 #921 提供并通过稳定的 child identity contract。发现已有冲突 owner 时只报告 blocked，不删除或覆盖任何 Issue；receipt 缺失只报告可恢复的 receipt repair，不重新创建 owner。
+
 ## GitHub write-after-list consistency
 
 GitHub 新建 Issue 后，按 Issue number 直接读取可能已经成功，但仓库级 Issue list / machine-marker ownership scan 仍可能短暂返回旧快照。Post-create ownership gate 因此采用有界 retry/backoff：仅 `0 owner` 允许重试；一旦观察到错误 sole owner 或多个 owner，立即 fail closed。重试耗尽仍不可见时同样失败，并依赖 `1 exact owner + no receipt` 的 crash-recovery 路径恢复，而不是再次创建 Issue。
