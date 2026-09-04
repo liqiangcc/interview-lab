@@ -1,0 +1,57 @@
+{
+  "schema_version": "issue-921-pilot-blocked-evidence.v1",
+  "issue_number": 90,
+  "source_note_id": "xhs-note:6589a98a0000000010012fae",
+  "disposition": "blocked",
+  "block_reason": "Aggregate text mentions several interviews but does not provide separately bounded event evidence; retain pending.",
+  "source_excerpt": [
+    {
+      "excerpt": "稍微总结了下这几天的面试，感觉难度还是有的，基本都是围绕高并发，阿里外包的难度低点不过拒了，其它两个估计凉了#java[话题]#",
+      "line": 1,
+      "locator": "artifact-line:1"
+    }
+  ],
+  "evidence_artifact": {
+    "ref": "liqiangcc/xhs:note_desc/6589a98a0000000010012fae.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "provenance": "source_projection",
+    "kind": "text_projection"
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "stable XHS source identity"
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "exact SourceRevision and fixed source snapshot"
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw/source projection content is traceable"
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "boundary disposition is supported by source evidence"
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "no cross-source evidence is mixed"
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "no InterviewNote content is fabricated"
+    }
+  ],
+  "limitations": [
+    "Aggregate text mentions several interviews but does not provide separately bounded event evidence; retain pending.",
+    "No SourceNote body or label mutation is authorized while event boundary remains unproven."
+  ],
+  "reviewed_at": "2026-09-04T15:07:55.104Z",
+  "evidence_comment_id": 5542565287
+}

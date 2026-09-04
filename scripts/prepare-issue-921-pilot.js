@@ -24,6 +24,7 @@ const ALL_CHECKS = [
   ['no_cross_source_mixing', 'no cross-source evidence is mixed'],
   ['no_fabrication', 'no InterviewNote content is fabricated'],
 ];
+const BLOB_CACHE = new Map();
 
 const SELECTION = [
   ...[30, 43, 49, 52, 54, 57, 62, 67, 71, 73, 80, 81, 82, 88, 89, 97, 100, 105, 106, 107].map((issue_number) => ({ issue_number, stratum: 'single-interview', decision: 'single-interview', rationale: 'Source projection records one bounded employer/candidate interview event; same-process rounds remain one child boundary.' })),
@@ -32,7 +33,11 @@ const SELECTION = [
   ...[22, 23, 26, 27, 47, 79, 85, 98].map((issue_number) => ({ issue_number, stratum: 'question-bank', decision: 'not-interview', rationale: 'Source projection is a generic question collection/preparation or written-test resource, not a report of one candidate interview event.' })),
   ...[21, 95, 1367].map((issue_number) => ({ issue_number, stratum: 'tutorial-or-simulation', decision: 'not-interview', rationale: 'Source projection is a simulation/tutorial or generic instructional prompt; it does not establish a real interview event.' })),
   ...[20, 24, 35, 36, 77, 83, 86].map((issue_number) => ({ issue_number, stratum: 'experience-summary-or-non-event', decision: 'not-interview', rationale: 'Source projection is an aggregate experience/marketing/advice/non-event record rather than one bounded interview.' })),
-  ...[25, 48, 53, 91, 109].map((issue_number) => ({ issue_number, stratum: 'image-evidence', decision: 'single-interview', rationale: 'Source projection and Raw image artifacts document one bounded interview; image artifacts remain Source evidence and are not converted to Derived InterviewNote content.' })),
+  { issue_number: 25, stratum: 'text-evidence-fallback', decision: 'single-interview', evidence_preference: 'raw_html', evidence_anchors: ['面试一：某团外包岗'], rationale: 'Downloaded image blobs are zero-byte and cannot authorize a boundary; the fixed Raw HTML visibly records the bounded entry “面试一：某团外包岗” and its question reflection, so this decision relies only on the exact Raw HTML excerpt.' },
+  { issue_number: 48, stratum: 'text-evidence-fallback', decision: 'single-interview', evidence_anchors: ['4月底就收到了字节的面试', '8号还是去面试了'], rationale: 'Downloaded image blobs are zero-byte and cannot authorize a boundary; the fixed Source projection explicitly records receiving and attending the ByteDance interview, so this decision relies only on exact Source projection excerpts.' },
+  { issue_number: 53, stratum: 'text-evidence-fallback', decision: 'single-interview', evidence_anchors: ['面试官很好', '🎈一面（一小时）：', '🎈二面（四十分钟）：'], rationale: 'Downloaded image blobs are zero-byte and cannot authorize a boundary; the fixed Source projection explicitly records the interviewer and separately bounded first/second rounds, so this decision relies only on exact Source projection excerpts.' },
+  { issue_number: 91, stratum: 'image-evidence', decision: 'single-interview', visual_boundary_basis: 'Manual visual inspection of fixed Raw image 1 shows a Tencent interview invitation with interview date, time, role, and location; image 2 shows a post-interview result notification. Together they establish one bounded interview event. No OCR/Derived projection is used as the image evidence.', rationale: 'Fixed Raw images are non-empty, readable WebP blobs and manual visual inspection establishes one bounded Tencent interview event; image artifacts remain Source evidence and are not converted to Derived InterviewNote content.' },
+  { issue_number: 109, stratum: 'image-evidence', decision: 'single-interview', visual_boundary_basis: 'Manual visual inspection of fixed Raw images 1 and 2 shows one numbered technical-question record, with image 1 visibly marked “快手实习面经”; the question sequence is the bounded interview record. No OCR/Derived projection is used as the image evidence.', rationale: 'Fixed Raw images are non-empty, readable WebP blobs and manual visual inspection establishes one bounded Kuaishou internship interview-question record; image artifacts remain Source evidence and are not converted to Derived InterviewNote content.' },
   { issue_number: 90, stratum: 'anomaly-blocked', disposition: 'blocked', rationale: 'Aggregate text mentions several interviews but does not provide separately bounded event evidence; retain pending.' },
   { issue_number: 92, stratum: 'anomaly-blocked', disposition: 'blocked', rationale: 'Generic repeated-interview encouragement has no identifiable bounded event; retain pending.' },
   { issue_number: 1115, stratum: 'anomaly-blocked', disposition: 'blocked', rationale: 'Text mentions three interviews but only one is described and the remaining boundaries are not recoverable from the current Source projection; retain pending.' },
@@ -41,8 +46,19 @@ const SELECTION = [
 ];
 
 function ghJson(args, input = null) {
-  const raw = execFileSync('gh', args, { input: input == null ? undefined : JSON.stringify(input), encoding: 'utf8', maxBuffer: 128 * 1024 * 1024 });
-  return JSON.parse(raw);
+  const readOnly = !args.includes('--method');
+  const attempts = readOnly ? 3 : 1;
+  let lastError;
+  for (let attempt = 1; attempt <= attempts; attempt += 1) {
+    try {
+      const raw = execFileSync('gh', args, { input: input == null ? undefined : JSON.stringify(input), encoding: 'utf8', maxBuffer: 128 * 1024 * 1024 });
+      return JSON.parse(raw);
+    } catch (error) {
+      lastError = error;
+      if (attempt < attempts) sleepMs(1000 * attempt);
+    }
+  }
+  throw lastError;
 }
 
 function sleepMs(ms) {
@@ -85,11 +101,34 @@ function comments(number) {
 function findLegacyComment(allComments, transitionId) {
   return allComments.find((comment) => {
     const body = String(comment.body || '');
-    return body.includes('[ISSUE #921 BOUNDARY REVIEW EVIDENCE]') && body.includes(`transition_id: ${transitionId}`);
+    return body.includes('[ISSUE #921 BOUNDARY REVIEW EVIDENCE]')
+      && body.includes(`transition_id: ${transitionId}`)
+      && !body.includes('<!-- issue-921-pilot-evidence')
+      && !body.includes('<!-- issue-921-pilot-blocked-evidence');
   }) || null;
 }
 
-function evidenceArtifact(record) {
+function findMachineComment(allComments, marker, issueNumber, transitionId = null) {
+  const matches = allComments.filter((comment) => {
+    const body = String(comment.body || '');
+    const match = body.match(new RegExp(`<!--\\s*${marker}\\s*\\n([\\s\\S]*?)\\n-->`));
+    if (!match) return false;
+    try {
+      const payload = JSON.parse(match[1]);
+      return Number(payload.issue_number) === Number(issueNumber)
+        && (transitionId == null || payload.transition_id === transitionId);
+    } catch {
+      return false;
+    }
+  });
+  if (matches.length > 1) throw new Error(`#${issueNumber} has duplicate ${marker} machine markers`);
+  return matches[0] || null;
+}
+
+function evidenceArtifact(record, selection) {
+  if (selection.evidence_preference === 'raw_html') {
+    return record.artifacts.find((item) => item.provenance === 'raw_capture' && item.kind === 'html');
+  }
   return record.artifacts.find((item) => item.provenance === 'source_projection' && item.kind === 'text_projection')
     || record.artifacts.find((item) => item.provenance === 'source_projection')
     || record.artifacts.find((item) => item.provenance === 'raw_capture');
@@ -108,8 +147,29 @@ function excerptAt(text, anchor = null) {
   if (anchor) lineIndex = lines.findIndex((line) => line.includes(anchor));
   if (lineIndex < 0) lineIndex = lines.findIndex((line) => line.trim() && !line.trim().startsWith('{') && !line.trim().startsWith('['));
   if (lineIndex < 0) lineIndex = 0;
-  const excerpt = lines[lineIndex].trim().slice(0, 360);
+  const lineText = lines[lineIndex].trim();
+  let excerpt = lineText.slice(0, 360);
+  if (anchor && lineText.length > 360) {
+    const anchorIndex = lineText.indexOf(anchor);
+    const start = Math.max(0, Math.min(anchorIndex - 120, lineText.length - 360));
+    excerpt = lineText.slice(start, start + 360);
+  }
   return { excerpt, line: lineIndex + 1, locator: `artifact-line:${lineIndex + 1}` };
+}
+
+function rawImageIntegrity(record) {
+  return record.artifacts.filter((item) => item.provenance === 'raw_capture' && item.kind === 'image').map((artifact, index) => {
+    if (!artifact.git_blob_sha) return { image_sequence: index + 1, ref: artifact.ref, blob_sha: null, byte_length: 0, readable: false };
+    const blob = BLOB_CACHE.has(artifact.git_blob_sha)
+      ? BLOB_CACHE.get(artifact.git_blob_sha)
+      : ghJson(['api', `repos/liqiangcc/xhs/git/blobs/${artifact.git_blob_sha}`]);
+    BLOB_CACHE.set(artifact.git_blob_sha, blob);
+    const content = blob.encoding === 'base64' && typeof blob.content === 'string'
+      ? Buffer.from(blob.content.replace(/\s/g, ''), 'base64')
+      : Buffer.alloc(0);
+    const webp = content.length >= 12 && content.subarray(0, 4).toString('ascii') === 'RIFF' && content.subarray(8, 12).toString('ascii') === 'WEBP';
+    return { image_sequence: index + 1, ref: artifact.ref, blob_sha: artifact.git_blob_sha, byte_length: content.length, readable: content.length > 0 && webp, format: webp ? 'webp' : null };
+  });
 }
 
 function makeEvidence(record, selection, artifact) {
@@ -118,10 +178,19 @@ function makeEvidence(record, selection, artifact) {
   const anchors = selection.case_anchors || [];
   if (anchors.length && anchors.length !== (selection.case_keys || []).length) throw new Error(`#${selection.issue_number} case anchors do not align with case keys`);
   if (anchors.length && anchors.some((anchor) => !text.includes(anchor))) throw new Error(`#${selection.issue_number} multi case anchor is absent from ${artifact.ref}`);
+  const evidenceAnchors = selection.evidence_anchors || [];
+  if (evidenceAnchors.some((anchor) => !text.includes(anchor))) throw new Error(`#${selection.issue_number} evidence anchor is absent from ${artifact.ref}`);
+  const imageIntegrity = rawImageIntegrity(record);
+  if (selection.stratum === 'image-evidence') {
+    if (!selection.visual_boundary_basis || !imageIntegrity.length || imageIntegrity.some((item) => !item.readable)) throw new Error(`#${selection.issue_number} image evidence is not fully readable or lacks a manual visual boundary basis`);
+  }
+  const excerptAnchors = evidenceAnchors.length ? evidenceAnchors : anchors;
   return {
     artifact_ref: artifact.ref,
     artifact_provenance: artifact.provenance,
-    excerpts: anchors.length ? anchors.map((anchor) => ({ anchor, ...excerptAt(text, anchor) })) : [excerptAt(text)],
+    excerpts: excerptAnchors.length ? excerptAnchors.map((anchor) => ({ anchor, ...excerptAt(text, anchor) })) : [excerptAt(text)],
+    image_integrity: imageIntegrity,
+    visual_boundary_basis: selection.visual_boundary_basis || null,
   };
 }
 
@@ -157,6 +226,8 @@ function makeRequest(live, selection, record, artifact, reviewedAt, evidence) {
     checks: ALL_CHECKS.map(([check_id, note]) => ({ check_id, result: 'pass', note: check_id === 'event_boundary' ? `${note}: ${selection.rationale}` : `${note}; evidence=${evidence.excerpts[0].locator}` })),
     limitations: [selection.rationale, 'Boundary Review records only SourceNote state; it does not create InterviewNote Issues or Derived interview content.'],
   };
+  if (selection.visual_boundary_basis) request.limitations.push(`Manual visual review: ${selection.visual_boundary_basis}`);
+  if (selection.stratum === 'text-evidence-fallback') request.limitations.push('Raw downloaded image blobs were not used because zero-byte image artifacts cannot authorize a boundary.');
   if (decision === 'multi-interview') request.interview_cases = makeCases(record, selection, artifact, evidence);
   return request;
 }
@@ -179,6 +250,13 @@ function evidenceBody(request, selection, evidence) {
       `locator: ${item.evidence[0].locator}`,
       `identity_is_immutable: true`,
     ]),
+    ...(evidence.image_integrity || []).flatMap((item) => [
+      `image_artifact_${item.image_sequence}: ${item.ref}`,
+      `image_blob_sha_${item.image_sequence}: ${item.blob_sha}`,
+      `image_byte_length_${item.image_sequence}: ${item.byte_length}`,
+      `image_readable_${item.image_sequence}: ${item.readable}`,
+    ]),
+    ...(evidence.visual_boundary_basis ? [`visual_boundary_basis: ${evidence.visual_boundary_basis}`] : []),
     ...request.checks.map((check) => `${check.check_id}: ${check.result}`),
   ].join('\n');
 }
@@ -188,6 +266,9 @@ function prepare() {
   const oldSelectionPath = path.join(OUT_DIR, 'selection.json');
   const oldItems = fs.existsSync(oldSelectionPath) ? JSON.parse(fs.readFileSync(oldSelectionPath, 'utf8')).items || [] : [];
   const oldByIssue = new Map(oldItems.map((item) => [Number(item.issue_number), item]));
+  const oldPostingPath = path.join(OUT_DIR, 'evidence-posting.json');
+  const oldPosting = fs.existsSync(oldPostingPath) ? JSON.parse(fs.readFileSync(oldPostingPath, 'utf8')).posted || [] : [];
+  const oldCommentByIssue = new Map(oldPosting.map((item) => [Number(item.issue_number), Number(item.comment_id)]));
   const searchTotal = ghJson(['api', 'search/issues?q=repo%3Aliqiangcc%2Finterview-lab%20is%3Aissue%20label%3Atype%3Asource-note']).total_count;
   const migrationSearchTotal = ghJson(['api', 'search/issues?q=repo%3Aliqiangcc%2Finterview-lab%20is%3Aissue%20label%3Amigration%3Axhs-bulk']).total_count;
   const extra = issue(910);
@@ -205,27 +286,33 @@ function prepare() {
     const parsed = parseSourceNoteIssue(live.body || '');
     if (!parsed.record || parsed.record.boundary_review.status !== 'pending') throw new Error(`#${live.number} SourceNote record is not pending`);
     if (parsed.record.source_revision.source_repository_ref !== MOTHER_SOURCE_REF) throw new Error(`#${live.number} source ref is not the #920 fixed source snapshot`);
-    const artifact = evidenceArtifact(parsed.record);
+    const artifact = evidenceArtifact(parsed.record, selection);
     if (!artifact) throw new Error(`#${live.number} has no Raw/source projection evidence artifact`);
     const bodySha = sha256Text(live.body || '');
     const previous = oldByIssue.get(live.number);
     const reviewedAt = previous && previous.body_sha256 === bodySha && Date.parse(previous.reviewed_at) <= Date.now() ? previous.reviewed_at : generatedAt;
     const evidence = makeEvidence(parsed.record, selection, artifact);
     const transitionId = `issue-921-pilot-${live.number}-boundary-review-1`;
-    const legacy = findLegacyComment(comments(live.number), transitionId);
-    const item = { ...selection, source_note_id: parsed.record.source_note_id, source_revision_id: parsed.record.source_revision.id, source_repository_ref: parsed.record.source_revision.source_repository_ref, body_sha256: bodySha, evidence_artifact: { ref: artifact.ref, provenance: artifact.provenance, kind: artifact.kind }, evidence, reviewed_at: reviewedAt, live_url: live.html_url, legacy_evidence_comment_id: legacy && Number(legacy.id) || null };
+    const liveComments = comments(live.number);
+    const machineMarker = selection.disposition === 'blocked' ? 'issue-921-pilot-blocked-evidence' : 'issue-921-pilot-evidence';
+    const machine = findMachineComment(liveComments, machineMarker, live.number, selection.disposition === 'blocked' ? null : transitionId);
+    const legacy = findLegacyComment(liveComments, transitionId);
+    const cachedCommentId = oldCommentByIssue.get(live.number) || null;
+    if (machine && cachedCommentId && Number(machine.id) !== cachedCommentId) throw new Error(`#${live.number} live machine comment ${machine.id} disagrees with cached comment ${cachedCommentId}`);
+    const authoritativeCommentId = machine && Number(machine.id) || (legacy && Number(legacy.id)) || cachedCommentId;
+    const item = { ...selection, source_note_id: parsed.record.source_note_id, source_revision_id: parsed.record.source_revision.id, source_repository_ref: parsed.record.source_revision.source_repository_ref, body_sha256: bodySha, evidence_artifact: { ref: artifact.ref, provenance: artifact.provenance, kind: artifact.kind }, evidence, reviewed_at: reviewedAt, live_url: live.html_url, legacy_evidence_comment_id: legacy && Number(legacy.id) || null, evidence_comment_id_source: machine ? 'live-machine-marker' : legacy ? 'live-legacy-marker' : (cachedCommentId ? 'local-posting-receipt' : null) };
     if (selection.disposition === 'blocked') {
       const blockedChecks = ALL_CHECKS.map(([check_id, note]) => ({ check_id, result: check_id === 'event_boundary' ? 'fail' : 'pass', note }));
-      const blockedRecord = { schema_version: 'issue-921-pilot-blocked-evidence.v1', issue_number: live.number, source_note_id: item.source_note_id, disposition: 'blocked', block_reason: selection.rationale, source_excerpt: evidence.excerpts, evidence_artifact: item.evidence_artifact, checks: blockedChecks, limitations: [selection.rationale, 'No SourceNote body or label mutation is authorized while event boundary remains unproven.'], reviewed_at: reviewedAt, evidence_comment_id: previous && previous.evidence_comment_id || null };
+      const blockedRecord = { schema_version: 'issue-921-pilot-blocked-evidence.v1', issue_number: live.number, source_note_id: item.source_note_id, disposition: 'blocked', block_reason: selection.rationale, source_excerpt: evidence.excerpts, evidence_artifact: item.evidence_artifact, checks: blockedChecks, limitations: [selection.rationale, 'No SourceNote body or label mutation is authorized while event boundary remains unproven.'], reviewed_at: reviewedAt, evidence_comment_id: authoritativeCommentId || (previous && previous.evidence_comment_id) || null };
       writeJson(path.join(OUT_DIR, 'blocked', `${String(live.number).padStart(4, '0')}.json`), blockedRecord);
-      selected.push({ ...item, disposition: 'blocked', blocked_evidence: blockedRecord });
+      selected.push({ ...item, disposition: 'blocked', evidence_comment_id: blockedRecord.evidence_comment_id, blocked_evidence: blockedRecord });
       continue;
     }
     const request = makeRequest(live, selection, parsed.record, artifact, reviewedAt, evidence);
     const requestFile = `requests/${String(live.number).padStart(4, '0')}.json.md`;
     writeRequest(path.join(OUT_DIR, requestFile), request);
     manifestItems.push({ issue_number: live.number, transition_id: request.transition_id, request_file: requestFile });
-    selected.push({ ...item, transition_id: request.transition_id, decision: request.decision, case_keys: (request.interview_cases || []).map((item) => item.case_key), review_evidence_comment_id: previous && previous.review_evidence_comment_id || null });
+    selected.push({ ...item, transition_id: request.transition_id, decision: request.decision, case_keys: (request.interview_cases || []).map((item) => item.case_key), review_evidence_comment_id: authoritativeCommentId || (previous && previous.review_evidence_comment_id) || null });
   }
   writeJson(path.join(OUT_DIR, 'selection.json'), {
     schema_version: 'issue-921-stratified-pilot-selection.v1',
@@ -278,14 +365,18 @@ function postEvidence(pauseMs) {
     const request = isBlocked ? null : readRequest(requestPath);
     const comments = ghJson(['api', `repos/${REPOSITORY}/issues/${item.issue_number}/comments?per_page=100`]);
     const markerComments = comments.filter((candidate) => String(candidate.body || '').includes(`<!-- ${marker}`));
+    if (markerComments.length > 1) throw new Error(`#${item.issue_number} has duplicate ${marker} comments`);
+    const body = isBlocked
+      ? `<!-- issue-921-pilot-blocked-evidence\n${JSON.stringify(item.blocked_evidence, null, 2)}\n-->\n\n#921 pilot blocked: ${item.blocked_evidence.block_reason}`
+      : `<!-- issue-921-pilot-evidence\n${JSON.stringify({ transition_id: request.transition_id, issue_number: item.issue_number, source_note_id: request.source_note_id, reviewed_at: request.reviewed_at, evidence: item.evidence, checks: request.checks }, null, 2)}\n-->\n\n${evidenceBody(request, item, item.evidence)}`;
     let comment = markerComments.find((candidate) => {
       try { return JSON.parse(String(candidate.body).match(new RegExp(`<!--\\s*${marker}\\s*\\n([\\s\\S]*?)\\n-->`))[1]).issue_number === item.issue_number; } catch { return false; }
     });
     let action = 'reused-machine-marker';
-    if (!comment) {
-      const body = isBlocked
-        ? `<!-- issue-921-pilot-blocked-evidence\n${JSON.stringify(item.blocked_evidence, null, 2)}\n-->\n\n#921 pilot blocked: ${item.blocked_evidence.block_reason}`
-        : `<!-- issue-921-pilot-evidence\n${JSON.stringify({ transition_id: request.transition_id, issue_number: item.issue_number, source_note_id: request.source_note_id, reviewed_at: request.reviewed_at, evidence: item.evidence, checks: request.checks }, null, 2)}\n-->\n\n${evidenceBody(request, item, item.evidence)}`;
+    if (comment && String(comment.body || '') !== body) {
+      comment = ghJson(['api', '--method', 'PATCH', `repos/${REPOSITORY}/issues/comments/${comment.id}`, '--input', '-'], { body });
+      action = 'patched-machine-marker-in-place';
+    } else if (!comment) {
       const legacy = !isBlocked && comments.find((candidate) => {
         const text = String(candidate.body || '');
         return text.includes('[ISSUE #921 BOUNDARY REVIEW EVIDENCE]') && text.includes(`transition_id: ${request.transition_id}`);

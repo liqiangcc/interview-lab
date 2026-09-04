@@ -1,0 +1,57 @@
+{
+  "schema_version": "issue-921-pilot-blocked-evidence.v1",
+  "issue_number": 1115,
+  "source_note_id": "xhs-note:689c80fb000000001d009d5e",
+  "disposition": "blocked",
+  "block_reason": "Text mentions three interviews but only one is described and the remaining boundaries are not recoverable from the current Source projection; retain pending.",
+  "source_excerpt": [
+    {
+      "excerpt": "0813 第二天JAVA面试情况：",
+      "line": 1,
+      "locator": "artifact-line:1"
+    }
+  ],
+  "evidence_artifact": {
+    "ref": "liqiangcc/xhs:note_desc/689c80fb000000001d009d5e.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "provenance": "source_projection",
+    "kind": "text_projection"
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "stable XHS source identity"
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "exact SourceRevision and fixed source snapshot"
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw/source projection content is traceable"
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "boundary disposition is supported by source evidence"
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "no cross-source evidence is mixed"
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "no InterviewNote content is fabricated"
+    }
+  ],
+  "limitations": [
+    "Text mentions three interviews but only one is described and the remaining boundaries are not recoverable from the current Source projection; retain pending.",
+    "No SourceNote body or label mutation is authorized while event boundary remains unproven."
+  ],
+  "reviewed_at": "2026-09-04T15:07:55.104Z",
+  "evidence_comment_id": 5542566694
+}

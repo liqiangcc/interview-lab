@@ -1,0 +1,57 @@
+{
+  "schema_version": "issue-921-pilot-blocked-evidence.v1",
+  "issue_number": 1452,
+  "source_note_id": "xhs-note:68e8c504000000000300e7f2",
+  "disposition": "blocked",
+  "block_reason": "Source projection is missing; title alone cannot authorize an InterviewNote boundary.",
+  "source_excerpt": [
+    {
+      "excerpt": "\"global\": {",
+      "line": 2,
+      "locator": "artifact-line:2"
+    }
+  ],
+  "evidence_artifact": {
+    "ref": "liqiangcc/xhs:note_json/68e8c504000000000300e7f2.json@95b77bb261048059846273688e4b90a2e108b437",
+    "provenance": "source_projection",
+    "kind": "json"
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "stable XHS source identity"
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "exact SourceRevision and fixed source snapshot"
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw/source projection content is traceable"
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "boundary disposition is supported by source evidence"
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "no cross-source evidence is mixed"
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "no InterviewNote content is fabricated"
+    }
+  ],
+  "limitations": [
+    "Source projection is missing; title alone cannot authorize an InterviewNote boundary.",
+    "No SourceNote body or label mutation is authorized while event boundary remains unproven."
+  ],
+  "reviewed_at": "2026-09-04T15:07:55.104Z",
+  "evidence_comment_id": 5542567410
+}

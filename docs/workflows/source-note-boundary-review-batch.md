@@ -29,6 +29,12 @@ dependency proof 必须证明父 Epic #919 的前置 #917 和 #920 已通过 acc
 
 评论分页使用显式 `page=1..N` 请求并逐页汇总；不依赖本机可能不支持的 `gh api --paginate --slurp` 组合。每页必须是数组，短页结束，超过 100 页 fail closed；因此分页兼容性和上限不会被 Search API 的 1000 条结果假设掩盖。
 
+## Evidence artifact integrity
+
+Pilot evidence must name an exact Raw or Source projection ref, blob SHA, excerpt and line locator. A non-empty image blob is not by itself event evidence: image-evidence entries must record the image sequence, fixed blob SHA/byte length, readable WebP validation, and a manual visual boundary basis. OCR/structured/tagged/other Derived projections cannot substitute for visual inspection. Zero-byte or unreadable images are recorded as limitations and force a text-evidence fallback or `blocked`; the rationale must not claim that those images document the event.
+
+When evidence comments already exist, the live comment machine marker and its transition identity are authoritative. Local receipts are only recovery cross-checks. A changed evidence body is PATCHed in place; duplicate machine markers fail closed and no second comment is posted.
+
 ## 限速与恢复
 
 apply 按 manifest 顺序串行执行，每笔 mutation 后等待 `pause-ms`，报告逐笔落盘。中断后重新 dry-run：
