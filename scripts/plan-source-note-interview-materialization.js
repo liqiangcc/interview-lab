@@ -74,6 +74,32 @@ function labelsOf(issue) {
   return (issue.labels || []).map((label) => typeof label === 'string' ? label : label.name).sort();
 }
 
+function waitForOwnership(repository, interviewNoteId, expectedIssueNumber, options = {}) {
+  const attempts = Number.isInteger(options.attempts) && options.attempts > 0 ? options.attempts : 6;
+  const scan = typeof options.scan === 'function'
+    ? options.scan
+    : () => findOwnershipMatches(loadAllIssues(repository), interviewNoteId);
+  const sleep = typeof options.sleep === 'function' ? options.sleep : sleepMs;
+
+  let last = [];
+  for (let attempt = 1; attempt <= attempts; attempt += 1) {
+    const matches = scan();
+    last = matches;
+    if (matches.length > 1) {
+      throw new Error(`post-create duplicate ownership conflict for ${interviewNoteId}: ${matches.map((issue) => issue.number).join(',')}`);
+    }
+    if (matches.length === 1) {
+      const actual = Number(matches[0].number);
+      if (actual !== Number(expectedIssueNumber)) {
+        throw new Error(`post-create ownership points to unexpected Issue #${actual}; expected #${expectedIssueNumber}`);
+      }
+      return matches;
+    }
+    if (attempt < attempts) sleep(500 * attempt);
+  }
+  throw new Error(`post-create ownership invariant did not become visible after ${attempts} scans: expected Issue #${expectedIssueNumber}, found ${last.map((issue) => issue.number).join(',')}`);
+}
+
 function loadPlan(request) {
   const sourceIssue = loadSourceIssue(request.repository, request.source_note_issue_number);
   const comments = loadSourceComments(request.repository, request.source_note_issue_number);
@@ -187,10 +213,8 @@ function main() {
   if (sha256Text(liveInterview.body) !== sha256Text(plan.projection.body)) throw new Error('post-create InterviewNote body digest mismatch');
   if (JSON.stringify(liveLabels) !== JSON.stringify([...plan.projection.labels].sort())) throw new Error('post-create InterviewNote labels mismatch');
 
-  const ownershipAfter = findOwnershipMatches(loadAllIssues(request.repository), plan.interview_note_id);
-  if (ownershipAfter.length !== 1 || Number(ownershipAfter[0].number) !== interviewIssueNumber) {
-    throw new Error(`post-create ownership invariant failed: expected exactly Issue #${interviewIssueNumber}, found ${ownershipAfter.map((issue) => issue.number).join(',')}`);
-  }
+  const ownershipAfter = waitForOwnership(request.repository, plan.interview_note_id, interviewIssueNumber);
+  if (ownershipAfter.length !== 1) throw new Error('post-create ownership invariant failed after retry');
 
   let receiptCommentId = plan.receipt ? Number(plan.receipt.comment_id) : null;
   if (!plan.receipt) {
@@ -224,9 +248,15 @@ function main() {
   return 0;
 }
 
-try {
-  process.exitCode = main();
-} catch (error) {
-  console.error(`ERROR: ${error.message}`);
-  process.exitCode = 1;
+if (require.main === module) {
+  try {
+    process.exitCode = main();
+  } catch (error) {
+    console.error(`ERROR: ${error.message}`);
+    process.exitCode = 1;
+  }
 }
+
+module.exports = {
+  waitForOwnership,
+};

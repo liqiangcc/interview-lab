@@ -18,6 +18,8 @@ const {
   planMaterialization,
 } = require('../scripts/lib/source-note-interview-materialization');
 
+const { waitForOwnership } = require('../scripts/plan-source-note-interview-materialization');
+
 const pendingBody = fs.readFileSync(path.join(__dirname, 'fixtures/source-note-issue-v2.valid.md'), 'utf8');
 const pendingLabels = ['type:source-note', 'source:xhs', 'status:captured', 'boundary:pending', 'task:boundary-review'];
 
@@ -282,4 +284,47 @@ test('receipt pointing to another owner fails closed', () => {
   const result = plan(request, sourceIssue, [existing], [receipt]);
   assert.equal(result.ok, false);
   assert.match(result.errors.join('\n'), /receipt points to a different InterviewNote Issue/);
+});
+
+
+test('post-create ownership scan tolerates bounded eventual consistency', () => {
+  let calls = 0;
+  const sleeps = [];
+  const matches = waitForOwnership('liqiangcc/interview-lab', 'xhs:fixture', 915, {
+    attempts: 4,
+    scan: () => {
+      calls += 1;
+      if (calls < 3) return [];
+      return [{ number: 915 }];
+    },
+    sleep: (ms) => sleeps.push(ms),
+  });
+  assert.deepEqual(matches.map((item) => item.number), [915]);
+  assert.equal(calls, 3);
+  assert.deepEqual(sleeps, [500, 1000]);
+});
+
+test('post-create ownership retry fails immediately on duplicate owners', () => {
+  let sleeps = 0;
+  assert.throws(() => waitForOwnership('liqiangcc/interview-lab', 'xhs:fixture', 915, {
+    attempts: 6,
+    scan: () => [{ number: 915 }, { number: 916 }],
+    sleep: () => { sleeps += 1; },
+  }), /duplicate ownership conflict/);
+  assert.equal(sleeps, 0);
+});
+
+test('post-create ownership retry fails immediately on wrong sole owner', () => {
+  assert.throws(() => waitForOwnership('liqiangcc/interview-lab', 'xhs:fixture', 915, {
+    scan: () => [{ number: 999 }],
+    sleep: () => {},
+  }), /unexpected Issue #999/);
+});
+
+test('post-create ownership retry fails closed when owner never becomes list-visible', () => {
+  assert.throws(() => waitForOwnership('liqiangcc/interview-lab', 'xhs:fixture', 915, {
+    attempts: 3,
+    scan: () => [],
+    sleep: () => {},
+  }), /did not become visible after 3 scans/);
 });
