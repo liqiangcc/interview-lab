@@ -1,0 +1,87 @@
+{
+  "schema_version": "interview-context-learning-discovery-post-apply-live-audit.v1",
+  "repository": "liqiangcc/interview-lab",
+  "request": "data/pilot/issue-923/request-3-reviewed-contexts.md",
+  "authorized_dry_run_digest": "af5118c0b87396dfe7a679d5f42e9d2eab92bb35f0d3a66fe867b510de637555",
+  "recovery_dry_run_digest": "44ec248f7232feb57a97996408466ce887dd2015d76fb710bc8b23a30f5683ad",
+  "counts": {
+    "ready": 3,
+    "already_applied": 3,
+    "mutation": 0,
+    "interview_notes": 35,
+    "source_ready": 3,
+    "eligible": 3,
+    "source_review_blocked": 32,
+    "gap_to_50": 47
+  },
+  "checks": {
+    "dependency_gate_closed_and_structured": true,
+    "receipt_unique_per_item": true,
+    "receipt_bidirectional_projection_match": true,
+    "artifact_commit_ref_digest_match": true,
+    "artifact_commit": "ad97a84b81758614e2f0752143f5d7a58349b283",
+    "interview_note_validator": true,
+    "title_labels_projection_match": true,
+    "unknown_preserved_without_unknown_labels": true,
+    "outcome_sealed": true,
+    "blocked_items_have_no_discovery_labels": true,
+    "no_blocked_item_selected": true
+  },
+  "items": [
+    {
+      "issue_number": 3,
+      "status": "source-ready",
+      "ready": true,
+      "action": "already_applied",
+      "receipt_comment_id": 5544992537,
+      "context_artifact": {
+        "path": "data/interview-contexts/xhs-6508552c000000001303f499.v1.json",
+        "ref": "refs/heads/main",
+        "commit": "ad97a84b81758614e2f0752143f5d7a58349b283",
+        "sha256": "5d5c36d4a6e77a2e7113192cd3aec6beb4ccc543151dbb240a76473b4865149c"
+      },
+      "validator": "pass",
+      "unknown_facts": [],
+      "outcome_visibility": "sealed-until-source-reveal"
+    },
+    {
+      "issue_number": 4,
+      "status": "source-ready",
+      "ready": true,
+      "action": "already_applied",
+      "receipt_comment_id": 5544994312,
+      "context_artifact": {
+        "path": "data/interview-contexts/xhs-656861da000000000f024258.v1.json",
+        "ref": "refs/heads/main",
+        "commit": "ad97a84b81758614e2f0752143f5d7a58349b283",
+        "sha256": "ffcddabbcc0e7935445e8691ea240383922be1df6224d1c6155b3641a7c06e12"
+      },
+      "validator": "pass",
+      "unknown_facts": ["recruitment_type"],
+      "outcome_visibility": "sealed-until-source-reveal"
+    },
+    {
+      "issue_number": 915,
+      "status": "source-ready",
+      "ready": true,
+      "action": "already_applied",
+      "receipt_comment_id": 5544995458,
+      "context_artifact": {
+        "path": "data/interview-contexts/xhs-6a8abe2d000000001602b26e.v1.json",
+        "ref": "refs/heads/main",
+        "commit": "ad97a84b81758614e2f0752143f5d7a58349b283",
+        "sha256": "b14c63ee7f37a51f9e2ff3084e445db30ac03e5829787ee65819bf043353cb44"
+      },
+      "validator": "pass",
+      "unknown_facts": ["recruitment_type", "interview_occurred_at"],
+      "outcome_visibility": "sealed-until-source-reveal"
+    }
+  ],
+  "blocked_inventory": {
+    "count": 32,
+    "discovery_labels": 0,
+    "source_ready_from_922": 0,
+    "materialized_from_922": 30
+  },
+  "errors": []
+}
