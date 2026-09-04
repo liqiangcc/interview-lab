@@ -135,3 +135,16 @@ test('matching projection receipt makes retry idempotent', () => {
   assert.equal(second.items[0].action, 'already_applied');
   assert.equal(second.summary.mutation_count, 0);
 });
+
+test('matching receipt still reconciles externally drifted title or labels', () => {
+  const first = plan();
+  const receipt = receiptFor(request(), first.items[0], '2026-09-04T04:01:00Z');
+  const second = plan(undefined, {
+    title: '外部漂移标题',
+    labels: first.items[0].projection.labels.filter((label) => label !== 'round:2'),
+  }, new Map([[915, [{ ...receipt, comment_id: 123 }]]]));
+  assert.equal(second.ok, true, second.errors.join('\n'));
+  assert.equal(second.items[0].action, 'update');
+  assert.equal(second.items[0].receipt.comment_id, 123);
+  assert.equal(second.summary.mutation_count, 1);
+});

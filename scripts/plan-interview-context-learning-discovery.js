@@ -209,8 +209,10 @@ function main(argv = process.argv.slice(2)) {
       verifyLive(request, item);
       sleepMs(args.rateLimitMs);
     }
-    const receiptResult = addReceipt(request, item, new Date().toISOString());
-    sleepMs(args.rateLimitMs);
+    const receiptResult = item.receipt
+      ? { receipt: item.receipt, comment: { id: item.receipt.comment_id } }
+      : addReceipt(request, item, new Date().toISOString());
+    if (!item.receipt) sleepMs(args.rateLimitMs);
     const final = loadIssue(request.repository, item.issue_number);
     const finalBodySha = sha256Text(final.body || '');
     if (finalBodySha !== item.current_body_sha256) throw new Error(`Issue #${item.issue_number} body changed after receipt; recovery required`);

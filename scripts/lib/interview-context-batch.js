@@ -219,7 +219,7 @@ function planItem(request, item, issue, receipts = []) {
   return {
     ok: true,
     issue_number: item.issue_number,
-    action: matchingReceipt ? 'already_applied' : (alreadyProjected ? 'repair_receipt' : 'update'),
+    action: matchingReceipt && alreadyProjected ? 'already_applied' : (alreadyProjected ? 'repair_receipt' : 'update'),
     errors: [],
     unknown_facts: projection.unknown_facts,
     current_body_sha256: bodySha,
