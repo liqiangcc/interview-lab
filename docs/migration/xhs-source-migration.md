@@ -206,6 +206,37 @@ scripts/reconcile-xhs-source-notes.js
 
 GitHub 的 content-creation secondary limit 必须遵守；遇到平台限流时停止并幂等续跑，不通过增加并发绕过。
 
+每次 dry-run / apply report 都必须包含并核对固定 snapshot 的 inventory summary：
+
+```text
+total_candidates = 1459
+unaccounted_source_id = 0
+duplicate_source_note = 0
+invalid_source_note = 0
+invalid_interview_note_marker = 0
+closed_pending_source_note = 0
+closed_legacy_bulk = 0
+```
+
+`protected_formal_interview_note` 只作为保留证据统计；它的 SourceNote backfill 不能覆盖 formal `InterviewNote`。这里有两个不同层次的 gate，不能混称：
+
+```text
+preflight_gate
+→ 允许 unaccounted_source_id 作为计划中的 create/backfill mutation
+→ 允许可由 label-only 修复的 invalid_source_note
+→ duplicate / unrepairable invalid / ownership conflict / closed legacy bulk / closed pending SourceNote / malformed InterviewNote marker 仍立即 fail closed
+
+final_gate
+→ 必须 unaccounted_source_id = 0
+→ 必须 invalid_source_note = 0、duplicate_source_note = 0
+→ 必须 mutation_candidates = 0 且 global_remaining_after_run = 0
+→ 才能 final_dry_run_ready = true
+```
+
+因此，`preflight_gate = pass` 只表示计划可以安全生成，绝不表示 1459 条已经完成对账；missing candidate 的 create action 必须先执行，再用一次新的全量 dry-run 获得 `final_gate = pass`。报告只使用 `preflight_gate` 与 `final_gate` 两个明确字段，不再输出含义混淆的 `inventory_gate`。
+
+SourceNote reconciliation 固定要求 `liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437` 且扫描到的 `note_json` 总数必须为 `1459`；source ref 或数量不符时在任何 GitHub mutation 前 `source_gate = blocked`。每一条 create mutation 在 POST 后都必须再次按 SourceNote machine identity 做全局唯一性核验；即使 direct-read 成功，也必须排除第二 owner，响应丢失或 Issue list 延迟时只等待并核验，不盲目重 POST。InterviewNote owner 的 marker schema、record schema/id 和完整 validator 也必须通过，v99、缺 record、多 marker 均计 invalid 并 fail closed。apply 运行会逐步持久化成功记录；report 使用明确的 `batch_remaining_after_run` / `global_remaining_after_run`，若第 N 条失败，`failure` 同时记录 `batch_remaining` / `global_remaining`，其中 global 数覆盖 `maxMutations` 批次之外的剩余 mutation。
+
 ## Fail-closed
 
 以下任何一项都不能把 SourceNote 提升成 InterviewNote：

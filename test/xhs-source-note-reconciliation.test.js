@@ -1,13 +1,27 @@
 'use strict';
 
+const fs = require('node:fs');
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const {
+  FIXED_SOURCE_REF,
+  EXPECTED_SOURCE_TOTAL,
   MUTATING_ACTIONS,
   buildProjection,
   planActions,
   validateProjection,
   summarizeAnomalies,
+  buildInventory,
+  inventoryReconciliationSummary,
+  inventoryPreflightErrors,
+  finalAcceptanceErrors,
+  inventoryGateErrors,
+  sourceSnapshotGateErrors,
+  paginatedGhApi,
+  findSourceNoteIdentity,
+  verifyCreatedSourceNote,
+  applyMutationPlan,
+  buildReconciliationReport,
 } = require('../scripts/reconcile-xhs-source-notes');
 
 const sourceRef = '95b77bb261048059846273688e4b90a2e108b437';
@@ -36,6 +50,22 @@ function candidate(overrides = {}) {
 
 function existingSourceNote(number, labels) {
   return { number, labels: labels.map((name) => ({ name })) };
+}
+
+function liveSourceNote(number, projection, overrides = {}) {
+  return {
+    number,
+    state: 'open',
+    body: projection.body,
+    labels: projection.labels.map((name) => ({ name })),
+    ...overrides,
+  };
+}
+
+function validInterviewBody(interviewNoteId, schema = 'interview-note-issue.v2') {
+  return fs.readFileSync('test/fixtures/interview-note-issue.valid.md', 'utf8')
+    .replace(/630e2e22000000001103c490/g, interviewNoteId.slice('xhs:'.length))
+    .replace(/interview-note-issue\.v2/g, schema);
 }
 
 test('XHS candidate projects to SourceNote, not InterviewNote', () => {
@@ -183,6 +213,193 @@ test('missing source identity becomes a new SourceNote, not an InterviewNote', (
   assert.equal(actions[0].action, 'create-source-note');
 });
 
+test('missing source identity is plannable in preflight but blocks final acceptance', () => {
+  const projection = buildProjection(candidate(), sourceRef, '2026-09-03T13:00:00.000Z');
+  const inventory = {
+    sourceNotes: new Map(),
+    bulkLegacy: new Map(),
+    protectedInterview: new Map(),
+    duplicateSourceNotes: new Map(),
+    invalidSourceNotes: [],
+    repairableSourceNotes: [],
+    interviewOwnershipConflicts: [],
+  };
+  const summary = inventoryReconciliationSummary([projection], inventory);
+  const actions = planActions([projection], inventory);
+
+  assert.equal(summary.unaccounted_source_id, 1);
+  assert.deepEqual(inventoryPreflightErrors(summary), []);
+  assert.deepEqual(inventoryGateErrors(summary), []);
+  assert.equal(actions.filter((action) => MUTATING_ACTIONS.has(action.action)).length, 1);
+  assert.deepEqual(finalAcceptanceErrors(summary, { mutationCandidates: 1, globalRemaining: 1 }), [
+    'unaccounted_source_id=1',
+    'mutation_candidates=1',
+    'global_remaining_after_run=1',
+  ]);
+  assert.deepEqual(finalAcceptanceErrors(summary), ['unaccounted_source_id=1']);
+  const report = buildReconciliationReport({
+    sourceRef,
+    candidates: [projection],
+    inventory,
+    inventorySummary: summary,
+    actions,
+    mutating: actions.filter((action) => MUTATING_ACTIONS.has(action.action)),
+    applied: [],
+  });
+  assert.equal(report.preflight_gate, 'pass');
+  assert.equal(report.final_gate, 'blocked');
+  assert.equal(Object.prototype.hasOwnProperty.call(report, 'inventory_gate'), false);
+});
+
+test('closed legacy bulk and closed pending SourceNote fail preflight closed', () => {
+  const projection = buildProjection(candidate(), sourceRef, '2026-09-03T13:00:00.000Z');
+  const closedLegacy = {
+    number: 30,
+    state: 'closed',
+    body: validInterviewBody('xhs:625564d70000000001025e46'),
+    labels: [{ name: 'type:interview-note' }, { name: 'status:source-ready' }, { name: 'migration:xhs-bulk' }],
+  };
+  const closedPending = liveSourceNote(31, projection, { state: 'closed' });
+  const inventory = buildInventory([closedLegacy, closedPending]);
+  const summary = inventoryReconciliationSummary([projection], inventory);
+  const errors = inventoryPreflightErrors(summary).join('\n');
+
+  assert.equal(summary.closed_legacy_bulk, 1);
+  assert.equal(summary.closed_pending_source_note, 1);
+  assert.match(errors, /closed_legacy_bulk=1/);
+  assert.match(errors, /closed_pending_source_note=1/);
+  assert.equal(finalAcceptanceErrors(summary).length >= 2, true);
+});
+
+test('multiple and malformed InterviewNote markers are invalid inventory', () => {
+  const inventory = buildInventory([
+    {
+      number: 40,
+      state: 'open',
+      body: '<!-- interview-note: id=xhs:a schema=interview-note-issue.v2 -->\n<!-- interview-note: id=xhs:b schema=interview-note-issue.v2 -->',
+      labels: [{ name: 'type:interview-note' }],
+    },
+    {
+      number: 41,
+      state: 'open',
+      body: '<!-- interview-note: id=xhs:c -->',
+      labels: [{ name: 'type:interview-note' }],
+    },
+    {
+      number: 42,
+      state: 'open',
+      body: validInterviewBody('xhs:630e2e22000000001103c490', 'interview-note-issue.v99'),
+      labels: [{ name: 'type:interview-note' }],
+    },
+  ]);
+  const summary = inventoryReconciliationSummary([], inventory);
+
+  assert.equal(summary.invalid_interview_note_marker, 3);
+  assert.match(inventoryPreflightErrors(summary).join('\n'), /invalid_interview_note_marker=3/);
+  assert.match(finalAcceptanceErrors(summary).join('\n'), /invalid_interview_note_marker=3/);
+  assert.match(inventory.invalidInterviewNotes[2].errors.join('\n'), /supported InterviewNote Issue schema/);
+});
+
+test('fixed source snapshot gate rejects wrong ref and candidate count', () => {
+  assert.deepEqual(sourceSnapshotGateErrors(FIXED_SOURCE_REF, EXPECTED_SOURCE_TOTAL), []);
+  assert.match(sourceSnapshotGateErrors('wrong-ref', EXPECTED_SOURCE_TOTAL).join('\n'), /source_ref=.*expected/);
+  assert.match(sourceSnapshotGateErrors(FIXED_SOURCE_REF, EXPECTED_SOURCE_TOTAL - 1).join('\n'), /total_candidates=1458/);
+});
+
+test('explicit pagination collects multiple pages and stops on an empty page', () => {
+  const calls = [];
+  const values = paginatedGhApi('repos/example/issues', 2, (args) => {
+    calls.push(args[1]);
+    return calls.length === 1 ? [{ id: 1 }, { id: 2 }] : [];
+  });
+
+  assert.deepEqual(values, [{ id: 1 }, { id: 2 }]);
+  assert.equal(calls.length, 2);
+  assert.match(calls[0], /per_page=2&page=1$/);
+  assert.match(calls[1], /per_page=2&page=2$/);
+});
+
+test('explicit pagination rejects a non-array page', () => {
+  assert.throws(
+    () => paginatedGhApi('repos/example/issues', 2, () => ({ items: [] })),
+    /expected paginated GitHub API response array/,
+  );
+});
+
+test('post-create verification recovers a lost response after list visibility delay', () => {
+  const projection = buildProjection(candidate(), sourceRef, '2026-09-03T13:00:00.000Z');
+  const created = { number: 77, body: projection.body, pull_request: null };
+  let scans = 0;
+  const verified = verifyCreatedSourceNote('liqiangcc/interview-lab', projection, null, {
+    scanIssues: () => {
+      scans += 1;
+      return scans < 2 ? [] : [created];
+    },
+    sleep: () => {},
+  });
+
+  assert.equal(verified, 77);
+  assert.equal(scans, 2);
+  assert.deepEqual(findSourceNoteIdentity([created], projection.source_note_id), [created]);
+});
+
+test('post-create verification always globally scans and rejects a second owner after direct-read success', () => {
+  const projection = buildProjection(candidate(), sourceRef, '2026-09-03T13:00:00.000Z');
+  const issue = { number: 78, body: projection.body, pull_request: null };
+  assert.throws(
+    () => verifyCreatedSourceNote('liqiangcc/interview-lab', projection, 78, {
+      readIssue: () => issue,
+      scanIssues: () => [issue, { ...issue, number: 79 }],
+      sleep: () => {},
+    }),
+    /duplicate SourceNote identity/,
+  );
+});
+
+test('apply mutation failure persists prior successes and failure/remaining state', () => {
+  const actions = [1, 2, 3].map((number) => ({
+    action: 'create-source-note',
+    projection: { source_note_id: `xhs-note:test-${number}` },
+  }));
+  const reports = [];
+
+  assert.throws(
+    () => applyMutationPlan(actions, {
+      mutate: (action) => {
+        if (action.projection.source_note_id.endsWith('2')) throw new Error('simulated POST failure');
+        return 100 + reports.length;
+      },
+      persist: (report) => reports.push({ ...report, applied: [...report.applied] }),
+      sleep: () => {},
+      globalTotal: 3,
+    }),
+    /simulated POST failure/,
+  );
+
+  assert.equal(reports.length, 2);
+  assert.equal(reports[0].applied.length, 1);
+  assert.equal(reports[0].failure, null);
+  assert.equal(reports[0].batch_remaining, 2);
+  assert.equal(reports[0].global_remaining, 2);
+  assert.equal(reports[1].applied.length, 1);
+  assert.equal(reports[1].applied[0].source_note_id, 'xhs-note:test-1');
+  assert.equal(reports[1].failure.index, 2);
+  assert.equal(reports[1].failure.error, 'simulated POST failure');
+  assert.equal(reports[1].batch_remaining, 2);
+  assert.equal(reports[1].global_remaining, 2);
+
+  const completedBatchReports = [];
+  const completed = applyMutationPlan(actions.slice(0, 2), {
+    mutate: (action) => Number(action.projection.source_note_id.slice(-1)),
+    persist: (report) => completedBatchReports.push(report),
+    sleep: () => {},
+    globalTotal: actions.length,
+  });
+  assert.equal(completed.length, 2);
+  assert.equal(completedBatchReports[1].batch_remaining, 0);
+  assert.equal(completedBatchReports[1].global_remaining, 1);
+});
+
 test('anomaly summary counts affected SourceNotes by anomaly code', () => {
   const counts = summarizeAnomalies([
     candidate(),
@@ -198,4 +415,59 @@ test('anomaly summary counts affected SourceNotes by anomaly code', () => {
     'zero-byte-artifacts': 2,
     'edited-before-published': 1,
   });
+});
+
+test('inventory reports duplicate SourceNote identities instead of silently choosing one', () => {
+  const projection = buildProjection(candidate(), sourceRef, '2026-09-03T13:00:00.000Z');
+  const inventory = buildInventory([
+    liveSourceNote(10, projection),
+    liveSourceNote(11, projection),
+  ]);
+  const summary = inventoryReconciliationSummary([projection], inventory);
+  assert.equal(summary.duplicate_source_note, 1);
+  assert.deepEqual(inventory.duplicateSourceNotes.get(projection.source_note_id), [10, 11]);
+  assert.match(inventoryGateErrors(summary).join('\n'), /duplicate_source_note=1/);
+});
+
+test('inventory repairs label-only SourceNote drift without rewriting its body', () => {
+  const projection = buildProjection(candidate(), sourceRef, '2026-09-03T13:00:00.000Z');
+  const drifted = liveSourceNote(12, projection, {
+    labels: [...projection.labels, { name: 'type:interview-note' }],
+  });
+  const inventory = buildInventory([drifted]);
+  const summary = inventoryReconciliationSummary([projection], inventory);
+  assert.equal(summary.invalid_source_note, 1);
+  assert.equal(summary.repairable_invalid_source_note, 1);
+  assert.equal(summary.unaccounted_source_id, 0);
+  assert.equal(inventoryGateErrors(summary).length, 0);
+  const action = planActions([projection], inventory)[0];
+  assert.equal(action.action, 'reconcile-source-note-labels');
+  assert.equal(action.issue_number, 12);
+  assert.equal(action.reconciled_labels.includes('type:interview-note'), false);
+});
+
+test('inventory blocks SourceNotes whose body cannot be repaired by a label-only mutation', () => {
+  const projection = buildProjection(candidate(), sourceRef, '2026-09-03T13:00:00.000Z');
+  const malformed = liveSourceNote(14, projection, { body: projection.body.replace('source-note-record', 'source-note-record-corrupt') });
+  const inventory = buildInventory([malformed]);
+  const summary = inventoryReconciliationSummary([projection], inventory);
+  assert.equal(summary.invalid_source_note, 1);
+  assert.equal(summary.unrepairable_invalid_source_note, 1);
+  assert.equal(summary.unaccounted_source_id, 1);
+  assert.match(inventoryGateErrors(summary).join('\n'), /invalid_source_note=1/);
+});
+
+test('inventory preserves formal InterviewNote ownership while accounting for SourceNote backfill', () => {
+  const projection = buildProjection(candidate(), sourceRef, '2026-09-03T13:00:00.000Z');
+  const inventory = buildInventory([{
+    number: 13,
+    state: 'open',
+    body: validInterviewBody('xhs:625564d70000000001025e46'),
+    labels: [{ name: 'type:interview-note' }, { name: 'status:source-ready' }],
+  }]);
+  const summary = inventoryReconciliationSummary([projection], inventory);
+  assert.equal(summary.accounted_source_id, 1);
+  assert.equal(summary.protected_formal_interview_note, 1);
+  assert.equal(inventoryGateErrors(summary).length, 0);
+  assert.equal(planActions([projection], inventory)[0].action, 'create-source-note-alongside-formal-interview-note');
 });
