@@ -1,5 +1,7 @@
 'use strict';
 
+const { analyzeSourceProvenance } = require('./source-note-provenance');
+
 const MARKER_RE = /<!--\s*source-note:\s*id=([^\s]+)\s+schema=([^\s]+)\s*-->/g;
 const RECORD_RE = /<!--\s*source-note-record\s*\n([\s\S]*?)\n-->/g;
 const SCHEMA_V1 = 'source-note-issue.v1';
@@ -231,6 +233,26 @@ function validateRevisionV2(revision, errors) {
   if (!revision.reason) errors.push('record.source_revision.reason is required');
 }
 
+function validateProvenanceStatus(status, errors) {
+  if (status == null) return;
+  if (!status || typeof status !== 'object' || Array.isArray(status)) {
+    errors.push('record.provenance_status must be an object when present');
+    return;
+  }
+  if (!['pinned-source-artifact', 'derived-from-raw', 'unproven'].includes(status.status)) {
+    errors.push('record.provenance_status.status is unsupported');
+  }
+  if (!['proven', 'not-claimed'].includes(status.raw_lineage_claim)) {
+    errors.push('record.provenance_status.raw_lineage_claim must be proven or not-claimed');
+  }
+  if (status.status === 'derived-from-raw' && status.raw_lineage_claim !== 'proven') {
+    errors.push('derived-from-raw provenance_status must claim proven Raw lineage');
+  }
+  if (status.status !== 'derived-from-raw' && status.raw_lineage_claim === 'proven') {
+    errors.push('only derived-from-raw provenance_status may claim proven Raw lineage');
+  }
+}
+
 function validateAccessBoundary(accessBoundary, errors) {
   if (accessBoundary == null) return;
   if (typeof accessBoundary !== 'object' || Array.isArray(accessBoundary)) {
@@ -264,6 +286,11 @@ function validateRecord(record, marker, errors) {
   validateCommonIdentity(record, marker, errors);
   if (schemaVersion === SCHEMA_V1) validateRevisionV1(record.source_revision, errors);
   else validateRevisionV2(record.source_revision, errors);
+  validateProvenanceStatus(record.provenance_status, errors);
+  if (record.provenance_status != null) {
+    const provenance = analyzeSourceProvenance(record);
+    errors.push(...provenance.declaration_errors);
+  }
 
   validateTimeFact('source_published_at', record.source_published_at, errors);
   validateTimeFact('source_edited_at', record.source_edited_at, errors);

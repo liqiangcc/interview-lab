@@ -285,6 +285,13 @@ function buildProjection(candidate, sourceRef, capturedAt) {
     },
     source_published_at: candidate.source_published_at,
     source_edited_at: candidate.source_edited_at,
+    // v1 pins the projection bytes to the SourceRevision, but this intake
+    // path has no producer manifest proving projection -> Raw one-to-one
+    // lineage. Keep that distinction explicit and never infer derived_from.
+    provenance_status: {
+      status: candidate.artifacts.some((item) => item.provenance === 'source_projection') ? 'pinned-source-artifact' : 'unproven',
+      raw_lineage_claim: 'not-claimed',
+    },
     artifacts: candidate.artifacts,
     anomalies: candidate.anomalies,
     limitations,
@@ -306,6 +313,8 @@ function buildProjection(candidate, sourceRef, capturedAt) {
     `- \`liqiangcc/xhs:note_img_txt/${candidate.note_id}.txt@${sourceRef}\`（如存在，Derived OCR）`,
     `- \`liqiangcc/xhs:note_structured/${candidate.note_id}.json@${sourceRef}\`（如存在，Derived）`,
     `- \`liqiangcc/xhs:note_tagged/${candidate.note_id}.json@${sourceRef}\`（如存在，Derived）`,
+    '- v1 provenance：`pinned-source-artifact`；仅证明固定 Source snapshot 中存在这些 projection bytes。',
+    '- Raw lineage：`not-claimed`；没有 `derived_from`，不得从文件名、同一 commit 或 history 推导一对一 Raw 关系。',
   ].join('\n');
 
   const body = `<!-- source-note: id=${sourceNoteId} schema=source-note-issue.v1 -->\n<!-- source-note-record\n${JSON.stringify(record, null, 2)}\n-->\n\n## 来源身份\n\n- 来源系统：XHS\n- External source id：\`${candidate.note_id}\`\n- SourceNote id：\`${sourceNoteId}\`\n- SourceRevision：\`${sourceRevisionId}\`\n- 固定 Source snapshot：\`liqiangcc/xhs@${sourceRef}\`\n- 来源发布时间：\`${candidate.source_published_at.value || 'unknown'}\`\n- 来源更新时间：\`${candidate.source_edited_at.value || 'unknown'}\`\n\n## 原始标题\n\n${candidate.original_title || '（来源标题为空）'}\n\n## 原始正文\n\n### 可读 Source projection — \`note_desc\`\n\n${desc ? quoteMarkdown(desc) : '（当前缺失）'}\n\n## 原始附件\n\n${artifactLines}\n\n## Intake 异常\n\n${anomalyLines}\n\n## 边界审核\n\n- 状态：\`pending\`\n- 当前不判断该 Source 是 0、1 还是多个真实 InterviewNote。\n- 审核完成后才允许建立 InterviewNote identity。\n\n## 来源限制\n\n${limitationLines}\n\n## 派生链接\n\n${derivedLines}\n`;

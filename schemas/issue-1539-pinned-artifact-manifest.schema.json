@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/liqiangcc/interview-lab/schemas/issue-1539-pinned-artifact-manifest.schema.json",
+  "title": "Issue #1539 pinned artifact manifest v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "repository", "source_snapshot", "purpose", "items", "verification", "digest", "verified", "errors"],
+  "properties": {
+    "schema_version": {"const": "issue-1539-pinned-artifact-manifest.v1"},
+    "repository": {"type": "string", "pattern": "^[^/]+/[^/]+$"},
+    "source_snapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "ref"],
+      "properties": {
+        "repository": {"type": "string", "pattern": "^[^/]+/[^/]+$"},
+        "ref": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
+      }
+    },
+    "purpose": {"const": "issue-1539-source-review-pinned-artifact-gate"},
+    "items": {
+      "type": "array",
+      "minItems": 30,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["interview_issue_number", "source_note_issue_number", "source_note_id", "source_revision_id", "artifacts"],
+        "properties": {
+          "interview_issue_number": {"type": "integer", "minimum": 1},
+          "source_note_issue_number": {"type": "integer", "minimum": 1},
+          "source_note_id": {"type": "string", "minLength": 1},
+          "source_revision_id": {"type": "string", "minLength": 1},
+          "artifacts": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["kind", "ref", "git_blob_sha", "byte_size", "provenance", "integrity"],
+              "properties": {
+                "kind": {"type": "string", "minLength": 1},
+                "ref": {"type": "string", "pattern": "^[^:]+:.+@[0-9a-f]{40}$"},
+                "git_blob_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+                "byte_size": {"type": "integer", "minimum": 0},
+                "provenance": {"enum": ["raw_capture", "source_projection"]},
+                "integrity": {"enum": ["present", "zero-byte"]}
+              }
+            }
+          }
+        }
+      }
+    },
+    "verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["commit_tree_verified", "tree_sha", "errors"],
+      "properties": {
+        "commit_tree_verified": {"const": true},
+        "tree_sha": {"type": ["string", "null"], "pattern": "^[0-9a-f]{40}$"},
+        "errors": {"type": "array", "maxItems": 0}
+      }
+    },
+    "digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "verified": {"const": true},
+    "errors": {"type": "array", "maxItems": 0}
+  }
+}

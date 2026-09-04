@@ -71,10 +71,24 @@ function validInterviewBody(interviewNoteId, schema = 'interview-note-issue.v2')
 }
 
 test('XHS candidate projects to SourceNote, not InterviewNote', () => {
-  const projection = buildProjection(candidate(), sourceRef, '2026-09-03T13:00:00.000Z');
+  const projection = buildProjection(candidate({ artifacts: [
+    ...candidate().artifacts,
+    {
+      kind: 'text_projection',
+      ref: `liqiangcc/xhs:note_desc/625564d70000000001025e46.txt@${sourceRef}`,
+      git_blob_sha: '0123456789abcdef0123456789abcdef01234567',
+      sha256: null,
+      provenance: 'source_projection',
+      byte_size: 10,
+      integrity: 'present',
+    },
+  ] }), sourceRef, '2026-09-03T13:00:00.000Z');
   assert.equal(projection.source_note_id, 'xhs-note:625564d70000000001025e46');
   assert.match(projection.body, /<!-- source-note:/);
   assert.doesNotMatch(projection.body, /<!-- interview-note:/);
+  assert.match(projection.body, /"status": "pinned-source-artifact"/);
+  assert.match(projection.body, /"raw_lineage_claim": "not-claimed"/);
+  assert.match(projection.body, /Raw lineage.*not-claimed/);
   assert.deepEqual(projection.labels, [
     'type:source-note', 'source:xhs', 'status:captured', 'boundary:pending', 'task:boundary-review', 'migration:xhs-bulk', 'source-year:2022',
   ]);

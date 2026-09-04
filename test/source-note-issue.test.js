@@ -61,6 +61,16 @@ test('zero-byte artifact must be explicitly marked zero-byte', () => {
   assert.match(result.errors.join('\n'), /byte_size=0 must use integrity=zero-byte/);
 });
 
+test('provenance status cannot claim Raw lineage without the derived-from-raw state', () => {
+  const parsed = parseSourceNoteIssue(fixture);
+  const mutated = JSON.parse(JSON.stringify(parsed.record));
+  mutated.provenance_status = { status: 'pinned-source-artifact', raw_lineage_claim: 'proven' };
+  const body = fixture.replace(JSON.stringify(parsed.record, null, 2), JSON.stringify(mutated, null, 2));
+  const result = validateSourceNoteIssue({ body, labels });
+  assert.equal(result.ok, false);
+  assert.match(result.errors.join('\n'), /only derived-from-raw provenance_status may claim proven Raw lineage/);
+});
+
 test('closed pending SourceNote fails closed', () => {
   const result = validateSourceNoteIssue({ body: fixture, labels, state: 'closed' });
   assert.equal(result.ok, false);

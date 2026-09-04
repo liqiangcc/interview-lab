@@ -22,6 +22,8 @@
     "validate:exploration-930-v3": "node scripts/validate-exploration-session-checkpoint.js test/fixtures/exploration-session-checkpoint-xhs-6a8abe2d.v3.valid.md",
     "validate:exploration-history-fixture": "node scripts/validate-exploration-session-history.js test/fixtures/exploration-session-history.valid.json",
     "plan:interview-note-batch": "node scripts/plan-xhs-interview-note-materialization-batch.js",
+    "plan:issue-1539-recovery": "node scripts/plan-xhs-issue-1539-recovery.js --manifest data/pilot/issue-1539/plan-manifest.json --report data/pilot/issue-1539/recovery.dry-run.json",
+    "audit:issue-1539-provenance": "node scripts/audit-xhs-issue-1539-provenance.js --report data/pilot/issue-1539/provenance-audit.json",
     "apply:interview-note-batch": "node scripts/apply-xhs-interview-note-materialization-batch.js",
     "plan:xhs-pilot": "node scripts/plan-xhs-migration.js data/pilot/xhs-pilot-selection.json",
     "check": "npm test && npm run validate:source-note-fixture && npm run validate:source-note-v2-fixture && npm run validate:issue-fixture && npm run validate:interview-context-pilot && npm run validate:interview-context-930 && npm run validate:source-sequence-manifest && npm run validate:source-sequence-manifest-930 && npm run validate:source-sequence-reviews && npm run validate:review-transition-fixture && npm run validate:exploration-fixture && npm run validate:exploration-v2-fixture && npm run validate:exploration-v3-fixture && npm run validate:exploration-930-v3 && npm run validate:exploration-history-fixture && npm run plan:xhs-pilot",

@@ -1,0 +1,33 @@
+{
+  "schema_version": "interview-note-source-review-transition.v1",
+  "transition_id": "blocked-recovery-schema-fixture-invalid",
+  "repository": "liqiangcc/interview-lab",
+  "issue_number": 1539,
+  "interview_note_id": "xhs:63f76452000000001303ca72",
+  "expected_interview_body_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+  "expected_initial_status": "captured",
+  "expected_source_revision_id": "xhs-note:63f76452000000001303ca72:snapshot-95b77bb26104",
+  "source_note_issue_number": 30,
+  "expected_source_note_body_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+  "expected_manifest_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+  "decision": "source-ready",
+  "reviewed_at": "2026-09-05T00:05:00Z",
+  "reviewer_kind": "ai-assisted",
+  "review_evidence": {
+    "repository": "liqiangcc/interview-lab",
+    "issue_number": 1539,
+    "comment_id": 12345
+  },
+  "checks": [
+    {"check_id": "source_identity", "result": "pass"},
+    {"check_id": "source_revision_binding", "result": "pass"},
+    {"check_id": "artifact_reference_integrity", "result": "pass"},
+    {"check_id": "raw_projection_traceability", "result": "fail"},
+    {"check_id": "source_artifact_provenance", "result": "pass"},
+    {"check_id": "known_limitations_recorded", "result": "pass"},
+    {"check_id": "duplicate_ownership", "result": "pass"},
+    {"check_id": "no_fabrication", "result": "pass"}
+  ],
+  "limitations": [],
+  "recovery_mode": "blocked-source-recovery"
+}
