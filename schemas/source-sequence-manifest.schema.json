@@ -28,7 +28,8 @@
       "properties": {
         "stream_id": {"type": "string", "minLength": 1},
         "raw_artifact_ref": {"type": "string", "minLength": 1},
-        "raw_git_blob_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "storage_kind": {"enum": ["git", "runtime-artifact-store"]},
+        "raw_git_blob_sha": {"type": ["string", "null"], "pattern": "^[0-9a-f]{40}$"},
         "raw_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
         "readable_projection": {
           "type": ["object", "null"],
@@ -36,8 +37,10 @@
           "required": ["ref", "git_blob_sha", "provenance", "review_status"],
           "properties": {
             "ref": {"type": "string", "minLength": 1},
-            "git_blob_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
-            "provenance": {"const": "derived"},
+            "storage_kind": {"enum": ["git", "runtime-artifact-store"]},
+            "git_blob_sha": {"type": ["string", "null"], "pattern": "^[0-9a-f]{40}$"},
+            "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+            "provenance": {"enum": ["derived", "source_projection"]},
             "review_status": {"enum": ["unreviewed", "fidelity-reviewed"]}
           }
         }
@@ -46,16 +49,28 @@
     "units": {
       "type": "array",
       "minItems": 1,
-      "items": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": ["source_unit_id", "position", "source_unit_type", "text_projection", "fragments"],
-        "properties": {
-          "source_unit_id": {"type": "string", "minLength": 1},
-          "position": {"type": "integer", "minimum": 1},
-          "source_unit_type": {"type": "string", "pattern": "^[a-z][a-z0-9-]*$"},
-          "text_projection": {"type": "string", "minLength": 1},
-          "fragments": {
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["source_unit_id", "position", "source_unit_type", "text_projection", "fragments"],
+          "properties": {
+            "source_unit_id": {"type": "string", "minLength": 1},
+            "position": {"type": "integer", "minimum": 1},
+            "source_unit_type": {"type": "string", "pattern": "^[a-z][a-z0-9-]*$"},
+            "text_projection": {"type": "string", "minLength": 1},
+            "source_provenance": {
+              "type": ["object", "null"],
+              "additionalProperties": false,
+              "required": ["source_projection_ref", "source_projection_sha256", "raw_artifact_ref", "raw_sha256", "source_projection_item_number"],
+              "properties": {
+                "source_projection_ref": {"type": "string", "minLength": 1},
+                "source_projection_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+                "raw_artifact_ref": {"type": "string", "minLength": 1},
+                "raw_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+                "source_projection_item_number": {"type": "integer", "minimum": 1}
+              }
+            },
+            "fragments": {
             "type": "array",
             "items": {
               "type": "object",

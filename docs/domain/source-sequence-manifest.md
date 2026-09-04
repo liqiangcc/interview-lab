@@ -122,11 +122,28 @@ Raw evidence identity
 可选 readable projection identity
 ```
 
+`readable_projection` 是被 Manifest 引用的 Source 派生可读层，不会因为被 Manifest 引用而变成 Raw。其 provenance 必须显式保留：
+
+```text
+Git-backed projection: derived（历史兼容）
+Runtime SourceCapture projection: source_projection
+```
+
+Runtime Artifact Store 不是 Git artifact，因此 Raw 和 readable projection 的 `git_blob_sha` 必须保持 `null`，但必须保留对应的 SHA-256；不能填入猜测的 Git SHA。
+
 如果 readable projection 来自 OCR，即使已通过 fidelity review，也必须继续声明：
 
 ```text
 provenance = derived
 ```
+
+Runtime SourceCapture 的 `source_projection` 则继续声明：
+
+```text
+provenance = source_projection
+```
+
+Runtime sequence 的每个 SourceUnit 还必须保留同一 readable projection、Raw artifact、两者 SHA-256 和 numbered projection item 的 `source_provenance`，以便逐 unit 审计而不改写原文。
 
 ## Identity 与不可静默改写
 
