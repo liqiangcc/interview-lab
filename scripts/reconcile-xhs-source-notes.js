@@ -466,7 +466,6 @@ function inventoryReconciliationSummary(projections, inventory) {
 
 function inventoryGateErrors(summary) {
   const errors = [];
-  if (summary.unaccounted_source_id) errors.push(`unaccounted_source_id=${summary.unaccounted_source_id}`);
   if (summary.duplicate_source_note) errors.push(`duplicate_source_note=${summary.duplicate_source_note}`);
   if (summary.unrepairable_invalid_source_note) errors.push(`invalid_source_note=${summary.unrepairable_invalid_source_note}`);
   if (summary.interview_ownership_conflict) errors.push(`interview_ownership_conflict=${summary.interview_ownership_conflict}`);
@@ -655,7 +654,10 @@ function main() {
     mutation_candidates: mutating.length,
     applied_count: applied.length,
     remaining_mutations_after_run: Math.max(0, mutating.length - applied.length),
-    final_dry_run_ready: mutating.length === 0,
+    final_dry_run_ready: mutating.length === 0
+      && inventorySummary.unaccounted_source_id === 0
+      && inventorySummary.duplicate_source_note === 0
+      && inventorySummary.invalid_source_note === 0,
     first_mutation: mutating[0] ? {
       action: mutating[0].action,
       source_note_id: mutating[0].projection.source_note_id,
