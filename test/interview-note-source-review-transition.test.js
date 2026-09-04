@@ -244,6 +244,13 @@ test('review evidence comment must belong to the requested repository and Issue'
   }
 });
 
+test('GitHub Issue Comment may omit repository_url when issue_url is exact', () => {
+  const s = makeScenario();
+  delete s.evidenceComment.repository_url;
+  const result = plan(s);
+  assert.equal(result.ok, true, result.errors.join('\n'));
+});
+
 test('source-review state is resumable with the same request', () => {
   const s = makeScenario({ interviewLabels: (labels) => labels.filter((x) => !x.startsWith('status:')).concat(['status:source-review','task:source-review']) });
   const result = plan(s);
