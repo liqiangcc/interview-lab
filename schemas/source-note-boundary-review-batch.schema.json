@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/liqiangcc/interview-lab/schemas/source-note-boundary-review-batch.schema.json",
+  "title": "SourceNote Boundary Review batch manifest v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "repository", "items"],
+  "properties": {
+    "schema_version": {"const": "source-note-boundary-review-batch.v1"},
+    "repository": {"type": "string", "pattern": "^[^/]+/[^/]+$"},
+    "items": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["issue_number", "request_file"],
+        "properties": {
+          "issue_number": {"type": "integer", "minimum": 1},
+          "request_file": {"type": "string", "minLength": 1},
+          "transition_id": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  }
+}

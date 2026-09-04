@@ -17,7 +17,7 @@ Boundary Review 回答一个窄问题：
 pending
 ├─ not-interview      → 0 InterviewNote
 ├─ single-interview   → 1 InterviewNote
-└─ multi-interview    → 2..N InterviewNote（当前 identity contract 暂不能落地）
+└─ multi-interview    → 2..N InterviewNote（只登记稳定 child identity；仍需后续 materialization）
 ```
 
 `multi-interview` 不是“把一家公司的一面/二面机械拆开”。同一次候选流程中的多轮可以先作为一个有边界的 InterviewNote case，round/sequence 后续在 Derived 层处理。
@@ -45,6 +45,8 @@ Derived 只能提示，不能单独授权
 { ... source-note-boundary-review-transition.v1 ... }
 -->
 ```
+
+`multi-interview` 使用 `source-note-boundary-review-transition.v2`，并携带 `interview_cases`。每个 case 只允许提交稳定的 `case_key` 和至少一个精确 Source artifact 引用及 locator；调用方不得提交 `interview_note_id`。
 
 请求必须绑定：
 
@@ -107,20 +109,19 @@ single-interview
 → [<source.system>:<source.external_id>]
 ```
 
-当前无法为一条 SourceNote 安全分配多个互不相关 InterviewNote identity。因此：
+一条 SourceNote 的多个 case 使用如下稳定 identity contract：
 
 ```text
-multi-interview
-→ capability gap
-→ fail closed
-→ 不修改 SourceNote
+child_id = <source.system>:<source.external_id>:event:<sha256(xhs-note:<external_id> + "\\n" + case_key)>
 ```
 
-禁止临时发明 `:event-1`、`:event-2` 等持久化 identity。
+`case_key` 必须是小写、稳定、来源证据可定位的 key；不能使用易变标题、Issue number 或顺序编号作为唯一依据。每个 case 的 evidence 必须精确命中 SourceNote artifact，且 provenance 只能是 Raw 或 Source projection；`derived_projection` 单独不能授权。
+
+因此 `multi-interview` 只更新 SourceNote 的 Boundary Review Derived record，不创建 InterviewNote Issue，也不会把 SourceNote 直接当作 InterviewNote。没有足够 case evidence、出现重复 key 或 identity 冲突时保持 fail closed。
 
 ## 幂等
 
-成功 apply 后写入 `source-note-boundary-review-applied.v1` receipt comment。重复执行相同 transition 时，如果 live target state 与 receipt 一致，则返回 already-applied，不重复修改。
+成功 apply 后写入 `source-note-boundary-review-applied.v1` receipt comment。重复执行相同 transition 时，如果 live target state、case mapping 与 receipt 一致，则返回 already-applied，不重复修改。
 
 ## #910 首个 acceptance
 

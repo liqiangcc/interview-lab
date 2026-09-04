@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/liqiangcc/interview-lab/schemas/source-note-boundary-review-transition.schema.json",
-  "title": "SourceNote Boundary Review transition request v1",
+  "title": "SourceNote Boundary Review transition request v1/v2",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -23,7 +23,7 @@
     "limitations"
   ],
   "properties": {
-    "schema_version": {"const": "source-note-boundary-review-transition.v1"},
+    "schema_version": {"enum": ["source-note-boundary-review-transition.v1", "source-note-boundary-review-transition.v2"]},
     "transition_id": {"type": "string", "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._:-]*$"},
     "repository": {"type": "string", "pattern": "^[^/]+/[^/]+$"},
     "issue_number": {"type": "integer", "minimum": 1},
@@ -63,6 +63,51 @@
     "limitations": {
       "type": "array",
       "items": {"type": "string", "minLength": 1}
+    },
+    "interview_cases": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["case_key", "evidence"],
+        "properties": {
+          "case_key": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._-]{0,95}$"},
+          "evidence": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["ref", "locator"],
+              "properties": {
+                "ref": {"type": "string", "minLength": 1},
+                "locator": {"type": "string", "minLength": 1}
+              }
+            }
+          }
+        }
+      }
     }
-  }
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"decision": {"const": "multi-interview"}}},
+      "then": {
+        "properties": {
+          "schema_version": {"const": "source-note-boundary-review-transition.v2"},
+          "interview_cases": {"minItems": 2}
+        },
+        "required": ["interview_cases"]
+      }
+    },
+    {
+      "if": {"properties": {"schema_version": {"const": "source-note-boundary-review-transition.v1"}}},
+      "then": {"not": {"required": ["interview_cases"]}}
+    },
+    {
+      "if": {"properties": {"schema_version": {"const": "source-note-boundary-review-transition.v2"}}},
+      "then": {"properties": {"decision": {"const": "multi-interview"}}}
+    }
+  ]
 }

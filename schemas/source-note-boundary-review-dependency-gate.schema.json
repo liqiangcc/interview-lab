@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/liqiangcc/interview-lab/schemas/source-note-boundary-review-dependency-gate.schema.json",
+  "title": "SourceNote Boundary Review dependency gate proof v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "parent_issue", "dependencies"],
+  "properties": {
+    "schema_version": {"const": "source-note-boundary-review-dependency-gate.v1"},
+    "parent_issue": {"const": 919},
+    "dependencies": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["issue_number", "acceptance", "evidence_url"],
+        "properties": {
+          "issue_number": {"enum": [917, 920]},
+          "acceptance": {"const": "pass"},
+          "evidence_url": {"type": "string", "format": "uri"}
+        }
+      }
+    }
+  }
+}
