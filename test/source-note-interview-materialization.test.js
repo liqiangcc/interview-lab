@@ -14,6 +14,7 @@ const {
   sha256Text,
   requestSha256,
   parseMaterializationRequest,
+  parseMaterializationReceipts,
   validateRequest,
   planMaterialization,
 } = require('../scripts/lib/source-note-interview-materialization');
@@ -134,6 +135,11 @@ test('request marker parser returns exact request', () => {
   const parsed = parseMaterializationRequest(body);
   assert.deepEqual(parsed.request, request);
   assert.deepEqual(parsed.errors, []);
+});
+
+test('malformed materialization receipt markers fail closed', () => {
+  assert.throws(() => parseMaterializationReceipts([{ id: 77, body: '<!-- source-note-interview-materialized\n{broken}\n-->' }]), /invalid materialization receipt/);
+  assert.throws(() => parseMaterializationReceipts([{ id: 78, body: '<!-- source-note-interview-materialized\n{"broken": true}' }]), /malformed materialization receipt marker/);
 });
 
 test('valid single-interview SourceNote plans exactly one InterviewNote create', () => {

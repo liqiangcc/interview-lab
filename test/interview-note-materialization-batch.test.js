@@ -6,6 +6,7 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const { parseSourceNoteIssue } = require('../scripts/lib/source-note-issue');
 const { buildInterviewProjection } = require('../scripts/lib/source-note-interview-materialization');
+const { childInterviewNoteId } = require('../scripts/lib/interview-note-identity');
 const {
   materializationId,
   buildMaterializationRequest,
@@ -40,9 +41,9 @@ function makeSourceIssue(status, issueNumber = 910, ids = null, externalId = 'ru
 
 function gate() {
   return {
-    '917': { state: 'closed', acceptance: 'pass', evidence: 'https://github.com/liqiangcc/interview-lab/issues/917#issuecomment-1' },
-    '920': { state: 'closed', acceptance: 'pass', evidence: 'https://github.com/liqiangcc/interview-lab/issues/920#issuecomment-2' },
-    '921': { state: 'closed', acceptance: 'pass', evidence: 'https://github.com/liqiangcc/interview-lab/issues/921#issuecomment-3' },
+    '917': { issue_number: 917, state: 'closed', acceptance: 'pass', evidence_schema: 'issue-dependency-acceptance.v1', evidence: 'https://github.com/liqiangcc/interview-lab/issues/917#issuecomment-1', acceptance_evidence: 'https://github.com/liqiangcc/interview-lab/issues/917#issuecomment-11' },
+    '920': { issue_number: 920, state: 'closed', acceptance: 'pass', evidence_schema: 'issue-dependency-acceptance.v1', evidence: 'https://github.com/liqiangcc/interview-lab/issues/920#issuecomment-2', acceptance_evidence: 'https://github.com/liqiangcc/interview-lab/issues/920#issuecomment-22' },
+    '921': { issue_number: 921, state: 'closed', acceptance: 'pass', evidence_schema: 'issue-dependency-acceptance.v1', evidence: 'https://github.com/liqiangcc/interview-lab/issues/921#issuecomment-3', acceptance_evidence: 'https://github.com/liqiangcc/interview-lab/issues/921#issuecomment-33' },
   };
 }
 
@@ -57,6 +58,29 @@ function existingInterviewIssue(sourceIssue, issueNumber = 915) {
     state: 'open',
     body: projection.body,
     labels: projection.labels,
+  };
+}
+
+function makeMultiSourceIssue(issueNumber = 912, externalId = 'runtime-multi') {
+  const base = makeSourceIssue('pending', issueNumber, null, externalId);
+  const parsed = parseSourceNoteIssue(base.body);
+  const record = JSON.parse(JSON.stringify(parsed.record));
+  const cases = ['process-a', 'process-b'].map((case_key) => ({
+    case_key,
+    evidence: [{ ref: record.artifacts[0].ref, locator: `raw-span:${case_key}` }],
+    interview_note_id: childInterviewNoteId(record.source, case_key),
+  }));
+  record.boundary_review = {
+    status: 'multi-interview',
+    reviewed_at: '2026-09-04T04:00:00Z',
+    interview_note_ids: cases.map((item) => item.interview_note_id),
+    interview_note_cases: cases,
+  };
+  return {
+    number: issueNumber,
+    state: 'open',
+    body: base.body.replace(JSON.stringify(parsed.record, null, 2), JSON.stringify(record, null, 2)),
+    labels: ['type:source-note', 'source:xhs', 'status:captured', 'boundary:multi-interview'],
   };
 }
 
@@ -85,6 +109,22 @@ test('batch planner keeps not-interview at zero and blocks pending/multi', () =>
   assert.equal(result.counts.blocked, 2);
   assert.equal(result.materialization_candidates, 0);
   assert.equal(result.source_ready, 0);
+});
+
+test('multi-interview expands approved child cases without accepting caller identity', () => {
+  const sourceIssue = makeMultiSourceIssue();
+  const result = planBatchMaterialization({
+    repository: 'liqiangcc/interview-lab',
+    sourceIssues: [sourceIssue],
+    interviewIssues: [],
+    dependencyGate: gate(),
+  });
+  assert.equal(result.ok, true, result.errors && result.errors.join('\n'));
+  assert.equal(result.counts['would-materialize'], 2);
+  assert.equal(result.results.every((item) => item.boundary_status === 'multi-interview'), true);
+  assert.deepEqual(result.results.map((item) => item.case_key), ['process-a', 'process-b']);
+  assert.ok(result.results.every((item) => item.request.schema_version === 'source-note-interview-materialization.v2'));
+  assert.ok(result.results.every((item) => !Object.hasOwn(item.request, 'interview_note_id')));
 });
 
 test('not-interview with an existing InterviewNote owner fails closed without deletion', () => {
@@ -160,10 +200,22 @@ test('existing exact owner plus receipt is idempotent in the batch plan', () => 
 
 test('dependency gate requires closed accepted issues with durable evidence', () => {
   const result = dependencyGateStatus({
-    '917': { state: 'closed', acceptance: 'pass', evidence: 'evidence' },
-    '920': { state: 'open', acceptance: 'pass', evidence: 'evidence' },
-    '921': { state: 'closed', acceptance: 'pass', evidence: '' },
+    '917': { issue_number: 917, state: 'closed', acceptance: 'pass', evidence_schema: 'issue-dependency-acceptance.v1', evidence: 'evidence', acceptance_evidence: 'evidence' },
+    '920': { issue_number: 920, state: 'open', acceptance: 'pass', evidence_schema: 'issue-dependency-acceptance.v1', evidence: 'evidence', acceptance_evidence: 'evidence' },
+    '921': { issue_number: 921, state: 'closed', acceptance: 'pass', evidence_schema: 'issue-dependency-acceptance.v1', evidence: '', acceptance_evidence: 'evidence' },
   });
   assert.equal(result.ok, false);
   assert.equal(result.errors.length, 2);
+});
+
+test('dependency gate accepts the durable dependencies-object artifact shape', () => {
+  const result = dependencyGateStatus({
+    schema_version: 'source-note-interview-materialization-dependency-gate.v1',
+    dependencies: {
+      '917': { issue_number: 917, state: 'closed', acceptance: 'pass', evidence_schema: 'issue-dependency-acceptance.v1', evidence: 'https://evidence/917', acceptance_evidence: 'https://evidence/917' },
+      '920': { issue_number: 920, state: 'closed', acceptance: 'pass', evidence_schema: 'issue-dependency-acceptance.v1', evidence: 'https://evidence/920', acceptance_evidence: 'https://evidence/920' },
+      '921': { issue_number: 921, state: 'closed', acceptance: 'pass', evidence_schema: 'issue-dependency-acceptance.v1', evidence: 'https://evidence/921', acceptance_evidence: 'https://evidence/921' },
+    },
+  });
+  assert.equal(result.ok, true, result.errors.join('\n'));
 });
