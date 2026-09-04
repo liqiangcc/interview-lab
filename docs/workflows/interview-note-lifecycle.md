@@ -217,3 +217,11 @@ Learning Discovery 已完成
 ```
 
 Source 可以 closed；InterviewContext、Exploration 和 Knowledge 仍然可以继续演化。
+
+## Source Review transition
+
+`captured → source-review → source-ready|blocked` 的机器化 CAS / evidence / receipt 协议见：
+
+- `docs/workflows/interview-note-source-review.md`
+
+不要手工把 `status:captured` 直接改成 `status:source-ready`。

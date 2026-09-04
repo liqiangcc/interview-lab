@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/liqiangcc/interview-lab/schemas/interview-note-source-review-transition.schema.json",
+  "title": "InterviewNote Source Review transition request v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "transition_id",
+    "repository",
+    "issue_number",
+    "interview_note_id",
+    "expected_interview_body_sha256",
+    "expected_initial_status",
+    "expected_source_revision_id",
+    "source_note_issue_number",
+    "expected_source_note_body_sha256",
+    "expected_manifest_sha256",
+    "decision",
+    "reviewed_at",
+    "reviewer_kind",
+    "review_evidence",
+    "checks",
+    "limitations"
+  ],
+  "properties": {
+    "schema_version": {"const": "interview-note-source-review-transition.v1"},
+    "transition_id": {"type": "string", "minLength": 1},
+    "repository": {"type": "string", "pattern": "^[^/]+/[^/]+$"},
+    "issue_number": {"type": "integer", "minimum": 1},
+    "interview_note_id": {"type": "string", "minLength": 1},
+    "expected_interview_body_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "expected_initial_status": {"const": "captured"},
+    "expected_source_revision_id": {"type": "string", "minLength": 1},
+    "source_note_issue_number": {"type": "integer", "minimum": 1},
+    "expected_source_note_body_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "expected_manifest_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "decision": {"enum": ["source-ready", "blocked"]},
+    "reviewed_at": {"type": "string", "format": "date-time"},
+    "reviewer_kind": {"enum": ["human", "ai-assisted"]},
+    "review_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "issue_number", "comment_id"],
+      "properties": {
+        "repository": {"type": "string", "pattern": "^[^/]+/[^/]+$"},
+        "issue_number": {"type": "integer", "minimum": 1},
+        "comment_id": {"type": "integer", "minimum": 1}
+      }
+    },
+    "checks": {
+      "type": "array",
+      "minItems": 7,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["check_id", "result"],
+        "properties": {
+          "check_id": {"type": "string", "pattern": "^[a-z][a-z0-9_-]*$"},
+          "result": {"enum": ["pass", "fail"]},
+          "note": {"type": "string"}
+        }
+      }
+    },
+    "limitations": {"type": "array", "items": {"type": "string", "minLength": 1}}
+  }
+}
