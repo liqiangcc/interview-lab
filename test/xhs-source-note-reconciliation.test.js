@@ -20,6 +20,7 @@ const {
   paginatedGhApi,
   findSourceNoteIdentity,
   verifyCreatedSourceNote,
+  verifyBatchInventory,
   applyMutationPlan,
   buildReconciliationReport,
 } = require('../scripts/reconcile-xhs-source-notes');
@@ -326,34 +327,155 @@ test('explicit pagination rejects a non-array page', () => {
   );
 });
 
-test('post-create verification recovers a lost response after list visibility delay', () => {
+test('missing POST response defers recovery to the batch inventory scan', () => {
   const projection = buildProjection(candidate(), sourceRef, '2026-09-03T13:00:00.000Z');
-  const created = { number: 77, body: projection.body, pull_request: null };
+  let reads = 0;
+  assert.throws(
+    () => verifyCreatedSourceNote('liqiangcc/interview-lab', projection, null, {
+      readIssue: () => {
+        reads += 1;
+        return null;
+      },
+    }),
+    /batch inventory recovery/,
+  );
+  assert.equal(reads, 0);
+});
+
+test('normal POST response is verified by one direct GET without an issues scan', () => {
+  const projection = buildProjection(candidate(), sourceRef, '2026-09-03T13:00:00.000Z');
+  const created = liveSourceNote(77, projection);
+  let reads = 0;
   let scans = 0;
-  const verified = verifyCreatedSourceNote('liqiangcc/interview-lab', projection, null, {
+  const verified = verifyCreatedSourceNote('liqiangcc/interview-lab', projection, 77, {
+    readIssue: () => {
+      reads += 1;
+      return created;
+    },
     scanIssues: () => {
       scans += 1;
-      return scans < 2 ? [] : [created];
+      return [created];
     },
-    sleep: () => {},
   });
 
   assert.equal(verified, 77);
-  assert.equal(scans, 2);
+  assert.equal(reads, 1);
+  assert.equal(scans, 0);
   assert.deepEqual(findSourceNoteIdentity([created], projection.source_note_id), [created]);
 });
 
-test('post-create verification always globally scans and rejects a second owner after direct-read success', () => {
+test('one batch inventory scan recovers an uncertain POST response and rejects duplicates', () => {
   const projection = buildProjection(candidate(), sourceRef, '2026-09-03T13:00:00.000Z');
-  const issue = { number: 78, body: projection.body, pull_request: null };
+  const issue = liveSourceNote(78, projection);
+  let scans = 0;
+  const recovered = verifyBatchInventory('liqiangcc/interview-lab', [projection], [{
+    issue_number: null,
+    projection,
+  }], {
+    scanIssues: () => {
+      scans += 1;
+      return [issue];
+    },
+  });
+  assert.equal(scans, 1);
+  assert.equal(recovered.created[0].issue_number, 78);
+
   assert.throws(
-    () => verifyCreatedSourceNote('liqiangcc/interview-lab', projection, 78, {
-      readIssue: () => issue,
+    () => verifyBatchInventory('liqiangcc/interview-lab', [projection], [{
+      issue_number: null,
+      projection,
+    }], {
       scanIssues: () => [issue, { ...issue, number: 79 }],
-      sleep: () => {},
     }),
-    /duplicate SourceNote identity/,
+    /duplicate audit failed closed: duplicate_source_note=1/,
   );
+});
+
+test('100 create actions use one batch inventory scan, not one scan per create', () => {
+  const actions = Array.from({ length: 100 }, (_, index) => ({
+    action: 'create-source-note',
+    projection: { source_note_id: `xhs-note:test-${index}` },
+  }));
+  let scans = 0;
+  const applied = applyMutationPlan(actions, {
+    mutate: (action) => Number(action.projection.source_note_id.split('-').pop()),
+    verifyBatch: () => {
+      scans += 1;
+      return { created: [] };
+    },
+    sleep: () => {},
+    globalTotal: 1459,
+  });
+
+  assert.equal(applied.length, 100);
+  assert.ok(scans <= 2);
+  assert.equal(scans, 1);
+});
+
+test('POST exception permits one batch inventory recovery and stops safely', () => {
+  const projection = buildProjection(candidate(), sourceRef, '2026-09-03T13:00:00.000Z');
+  const action = { action: 'create-source-note', projection };
+  const reports = [];
+  let scans = 0;
+  assert.throws(
+    () => applyMutationPlan([action], {
+      mutate: () => {
+        const error = new Error('response lost');
+        error.postCreateUncertain = true;
+        error.createdIssueNumber = null;
+        error.projection = projection;
+        throw error;
+      },
+      verifyBatch: (records) => {
+        scans += 1;
+        return verifyBatchInventory('liqiangcc/interview-lab', [projection], records, {
+          scanIssues: () => [liveSourceNote(88, projection)],
+        });
+      },
+      persist: (report) => reports.push({ ...report, applied: [...report.applied] }),
+      sleep: () => {},
+      globalTotal: 1,
+    }),
+    /response loss recovered/,
+  );
+  assert.equal(scans, 1);
+  assert.equal(reports.at(-1).applied[0].issue_number, 88);
+  assert.equal(reports.at(-1).failure.recovered, true);
+});
+
+test('batch-end duplicate audit blocks completion and persists failure', () => {
+  const projection = buildProjection(candidate(), sourceRef, '2026-09-03T13:00:00.000Z');
+  const actions = [{ action: 'create-source-note', projection }];
+  const reports = [];
+  assert.throws(
+    () => applyMutationPlan(actions, {
+      mutate: () => 100,
+      verifyBatch: (records) => verifyBatchInventory('liqiangcc/interview-lab', [projection], records, {
+        scanIssues: () => [liveSourceNote(100, projection), liveSourceNote(101, projection)],
+      }),
+      persist: (report) => reports.push({ ...report, applied: [...report.applied] }),
+      sleep: () => {},
+      globalTotal: 1,
+    }),
+    /duplicate audit failed closed: duplicate_source_note=1/,
+  );
+  assert.equal(reports.at(-1).failure.phase, 'global-duplicate-audit');
+  assert.equal(reports.at(-1).applied.length, 1);
+  assert.equal(reports.at(-1).batch_remaining, 0);
+});
+
+test('batch duplicate audit retains the audited inventory in the failure report callback', () => {
+  const projection = buildProjection(candidate(), sourceRef, '2026-09-03T13:00:00.000Z');
+  let error;
+  try {
+    verifyBatchInventory('liqiangcc/interview-lab', [projection], [], {
+      scanIssues: () => [liveSourceNote(100, projection), liveSourceNote(101, projection)],
+    });
+  } catch (caught) {
+    error = caught;
+  }
+  assert.match(error.message, /duplicate audit failed closed: duplicate_source_note=1/);
+  assert.equal(error.inventorySummary.duplicate_source_note, 1);
 });
 
 test('apply mutation failure persists prior successes and failure/remaining state', () => {

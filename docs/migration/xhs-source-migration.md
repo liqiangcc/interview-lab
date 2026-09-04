@@ -235,7 +235,7 @@ final_gate
 
 因此，`preflight_gate = pass` 只表示计划可以安全生成，绝不表示 1459 条已经完成对账；missing candidate 的 create action 必须先执行，再用一次新的全量 dry-run 获得 `final_gate = pass`。报告只使用 `preflight_gate` 与 `final_gate` 两个明确字段，不再输出含义混淆的 `inventory_gate`。
 
-SourceNote reconciliation 固定要求 `liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437` 且扫描到的 `note_json` 总数必须为 `1459`；source ref 或数量不符时在任何 GitHub mutation 前 `source_gate = blocked`。每一条 create mutation 在 POST 后都必须再次按 SourceNote machine identity 做全局唯一性核验；即使 direct-read 成功，也必须排除第二 owner，响应丢失或 Issue list 延迟时只等待并核验，不盲目重 POST。InterviewNote owner 的 marker schema、record schema/id 和完整 validator 也必须通过，v99、缺 record、多 marker 均计 invalid 并 fail closed。apply 运行会逐步持久化成功记录；report 使用明确的 `batch_remaining_after_run` / `global_remaining_after_run`，若第 N 条失败，`failure` 同时记录 `batch_remaining` / `global_remaining`，其中 global 数覆盖 `maxMutations` 批次之外的剩余 mutation。
+SourceNote reconciliation 固定要求 `liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437` 且扫描到的 `note_json` 总数必须为 `1459`；source ref 或数量不符时在任何 GitHub mutation 前 `source_gate = blocked`。`--max-mutations` 每批最多为 `100`。正常 POST 返回后只对返回的 Issue 做一次 direct GET，并校验完整 SourceNote identity/record；不对每一条 Issue 再做全量 issues scan。POST 异常或响应 identity 丢失时，当前批只允许用一次 inventory snapshot 恢复，恢复后停止批次以避免重复创建。批次成功完成后只做一次全局 inventory duplicate audit；任何 duplicate、invalid 或 identity 不一致都阻断批次完成。InterviewNote owner 的 marker schema、record schema/id 和完整 validator 也必须通过，v99、缺 record、多 marker 均计 invalid 并 fail closed。apply 运行会逐步持久化成功记录；report 使用明确的 `batch_remaining_after_run` / `global_remaining_after_run`，若第 N 条失败，`failure` 同时记录 `batch_remaining` / `global_remaining`，其中 global 数覆盖 `maxMutations` 批次之外的剩余 mutation。
 
 ## Fail-closed
 
