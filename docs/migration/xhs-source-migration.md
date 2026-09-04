@@ -206,6 +206,17 @@ scripts/reconcile-xhs-source-notes.js
 
 GitHub 的 content-creation secondary limit 必须遵守；遇到平台限流时停止并幂等续跑，不通过增加并发绕过。
 
+每次 dry-run / apply report 都必须包含并核对固定 snapshot 的 inventory gate：
+
+```text
+total_candidates = 1459
+unaccounted_source_id = 0
+duplicate_source_note = 0
+invalid_source_note = 0
+```
+
+`protected_formal_interview_note` 只作为保留证据统计；它的 SourceNote backfill 不能覆盖 formal `InterviewNote`。任一 inventory gate 非零时，reconciliation 在任何写入前 fail closed。只有 `final_dry_run_ready = true` 且 `remaining_mutations_after_run = 0` 才能作为最终对账完成证据。
+
 ## Fail-closed
 
 以下任何一项都不能把 SourceNote 提升成 InterviewNote：
