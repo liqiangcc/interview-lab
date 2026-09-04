@@ -24,6 +24,10 @@ const DISCOVERY_PREFIXES = [
 ];
 const SPOILER_RE = /(凉经|挂科|挂了|拒绝|未通过|通过|失败|淘汰|录用|入职|offer|rejected|passed|failed|outcome|result)/i;
 const HEX64_RE = /^[0-9a-f]{64}$/;
+const HEX40_RE = /^[0-9a-f]{40}$/;
+const DEPENDENCY_GATE_SCHEMA_VERSION = 'interview-context-learning-discovery-dependency-gate.v1';
+const DEPENDENCY_ACCEPTANCE_SCHEMA_VERSION = 'issue-dependency-acceptance.v1';
+const DEPENDENCY_MARKER_RE = /<!--\s*issue-dependency-acceptance\s*\n([\s\S]*?)\n-->/g;
 
 function sha256Text(value) {
   return crypto.createHash('sha256').update(String(value), 'utf8').digest('hex');
@@ -74,14 +78,142 @@ function parseReceipts(comments = []) {
   return { receipts, errors };
 }
 
+function parseIssueCommentUrl(repository, dependencyNumber, value) {
+  const match = String(value || '').match(/^https:\/\/github\.com\/([^/]+\/[^/]+)\/issues\/(\d+)#issuecomment-(\d+)$/);
+  if (!match || match[1] !== repository || Number(match[2]) !== Number(dependencyNumber)) return null;
+  return { url: value, issue_number: Number(match[2]), comment_id: Number(match[3]) };
+}
+
+function parseDependencyAcceptance(body, repository, dependencyNumber, expectedAcceptanceEvidence) {
+  const matches = [...String(body || '').matchAll(new RegExp(DEPENDENCY_MARKER_RE.source, DEPENDENCY_MARKER_RE.flags))];
+  if (matches.length !== 1) return { ok: false, errors: [`dependency #${dependencyNumber} acceptance marker count must be exactly one`] };
+  try {
+    const value = JSON.parse(matches[0][1]);
+    const allowed = new Set(['schema_version', 'issue_number', 'acceptance', 'accepted_by', 'acceptance_evidence']);
+    const errors = [];
+    for (const key of Object.keys(value || {})) if (!allowed.has(key)) errors.push(`dependency #${dependencyNumber} acceptance has unsupported field: ${key}`);
+    if (value.schema_version !== DEPENDENCY_ACCEPTANCE_SCHEMA_VERSION) errors.push(`dependency #${dependencyNumber} acceptance schema must be ${DEPENDENCY_ACCEPTANCE_SCHEMA_VERSION}`);
+    if (Number(value.issue_number) !== Number(dependencyNumber)) errors.push(`dependency #${dependencyNumber} acceptance issue_number mismatch`);
+    if (value.acceptance !== 'pass') errors.push(`dependency #${dependencyNumber} acceptance must be pass`);
+    if (!nonEmpty(value.accepted_by)) errors.push(`dependency #${dependencyNumber} accepted_by is required`);
+    if (!parseIssueCommentUrl(repository, dependencyNumber, value.acceptance_evidence)) errors.push(`dependency #${dependencyNumber} acceptance_evidence must be an issue comment URL for the same Issue`);
+    if (expectedAcceptanceEvidence && value.acceptance_evidence !== expectedAcceptanceEvidence) errors.push(`dependency #${dependencyNumber} acceptance_evidence does not match the gate artifact`);
+    return { ok: errors.length === 0, errors, value };
+  } catch (error) {
+    return { ok: false, errors: [`dependency #${dependencyNumber} acceptance JSON is invalid: ${error.message}`] };
+  }
+}
+
+function validateDependencyGateArtifact(gate, repository) {
+  const errors = [];
+  if (!gate || typeof gate !== 'object' || Array.isArray(gate)) return { ok: false, errors: ['dependency gate artifact must be an object'] };
+  const allowed = new Set(['schema_version', 'parent_issue', 'target_issue', 'dependencies']);
+  for (const key of Object.keys(gate)) if (!allowed.has(key)) errors.push(`dependency gate has unsupported field: ${key}`);
+  if (gate.schema_version !== DEPENDENCY_GATE_SCHEMA_VERSION) errors.push(`dependency gate schema_version must be ${DEPENDENCY_GATE_SCHEMA_VERSION}`);
+  if (gate.parent_issue !== 919) errors.push('dependency gate parent_issue must be 919');
+  if (gate.target_issue !== 923) errors.push('dependency gate target_issue must be 923');
+  const deps = gate.dependencies;
+  if (!deps || typeof deps !== 'object' || Array.isArray(deps)) errors.push('dependency gate dependencies must be an object');
+  else {
+    const keys = Object.keys(deps).sort((a, b) => Number(a) - Number(b));
+    if (keys.length !== REQUIRED_DEPENDENCIES.length || keys.some((key, index) => Number(key) !== REQUIRED_DEPENDENCIES[index])) errors.push(`dependency gate must contain exactly #${REQUIRED_DEPENDENCIES.join(', #')}`);
+    for (const dependencyNumber of REQUIRED_DEPENDENCIES) {
+      const entry = deps[String(dependencyNumber)];
+      if (!entry || typeof entry !== 'object' || Array.isArray(entry)) {
+        errors.push(`dependency gate entry #${dependencyNumber} is missing`);
+        continue;
+      }
+      const entryAllowed = new Set(['issue_number', 'state', 'acceptance', 'evidence_schema', 'evidence', 'acceptance_evidence']);
+      for (const key of Object.keys(entry)) if (!entryAllowed.has(key)) errors.push(`dependency gate #${dependencyNumber} has unsupported field: ${key}`);
+      if (Number(entry.issue_number) !== dependencyNumber) errors.push(`dependency gate #${dependencyNumber} issue_number mismatch`);
+      if (String(entry.state).toLowerCase() !== 'closed') errors.push(`dependency gate #${dependencyNumber} state must be closed`);
+      if (entry.acceptance !== 'pass') errors.push(`dependency gate #${dependencyNumber} acceptance must be pass`);
+      if (entry.evidence_schema !== DEPENDENCY_ACCEPTANCE_SCHEMA_VERSION) errors.push(`dependency gate #${dependencyNumber} evidence_schema must be ${DEPENDENCY_ACCEPTANCE_SCHEMA_VERSION}`);
+      if (!parseIssueCommentUrl(repository, dependencyNumber, entry.evidence)) errors.push(`dependency gate #${dependencyNumber} evidence must be an issue comment URL for the same Issue`);
+      if (!parseIssueCommentUrl(repository, dependencyNumber, entry.acceptance_evidence)) errors.push(`dependency gate #${dependencyNumber} acceptance_evidence must be an issue comment URL for the same Issue`);
+    }
+  }
+  return { ok: errors.length === 0, errors, gate };
+}
+
+function validateLiveDependencyGate(gate, repository, dependencies = [], readEvidence = null) {
+  const structural = validateDependencyGateArtifact(gate, repository);
+  if (!structural.ok) return structural;
+  const errors = [];
+  const liveByNumber = new Map(dependencies.map((issue) => [Number(issue.number), issue]));
+  const getEvidence = (url) => {
+    if (typeof readEvidence === 'function') return readEvidence(url);
+    if (readEvidence instanceof Map) return readEvidence.get(url);
+    if (readEvidence && typeof readEvidence === 'object') return readEvidence[url];
+    return null;
+  };
+  for (const dependencyNumber of REQUIRED_DEPENDENCIES) {
+    const entry = gate.dependencies[String(dependencyNumber)];
+    const live = liveByNumber.get(dependencyNumber);
+    if (!live) {
+      errors.push(`dependency Issue #${dependencyNumber} was not loaded`);
+      continue;
+    }
+    if (String(live.state || '').toLowerCase() !== 'closed') errors.push(`dependency Issue #${dependencyNumber} is not closed (state=${live.state})`);
+    const anchor = getEvidence(entry.evidence);
+    if (!anchor) {
+      errors.push(`dependency #${dependencyNumber} acceptance anchor could not be read`);
+      continue;
+    }
+    if (anchor.issue_url !== `https://api.github.com/repos/${repository}/issues/${dependencyNumber}`) errors.push(`dependency #${dependencyNumber} acceptance anchor issue_url mismatch`);
+    const acceptance = parseDependencyAcceptance(anchor.body, repository, dependencyNumber, entry.acceptance_evidence);
+    errors.push(...acceptance.errors);
+    const finalEvidence = getEvidence(entry.acceptance_evidence);
+    if (!finalEvidence) errors.push(`dependency #${dependencyNumber} final acceptance evidence could not be read`);
+    else if (finalEvidence.issue_url !== `https://api.github.com/repos/${repository}/issues/${dependencyNumber}`) errors.push(`dependency #${dependencyNumber} final acceptance evidence issue_url mismatch`);
+  }
+  return { ok: errors.length === 0, errors, gate };
+}
+
+function validateContextArtifact(artifact, context, repository) {
+  const errors = [];
+  if (!artifact || typeof artifact !== 'object' || Array.isArray(artifact)) return { ok: false, errors: ['context_artifact must be an object'] };
+  const allowed = new Set(['repository', 'path', 'ref', 'commit', 'sha256']);
+  for (const key of Object.keys(artifact)) if (!allowed.has(key)) errors.push(`context_artifact has unsupported field: ${key}`);
+  if (artifact.repository !== repository) errors.push('context_artifact.repository must match request.repository');
+  if (typeof artifact.path !== 'string' || !/^data\/interview-contexts\/[A-Za-z0-9_-]+\.v1\.json$/.test(artifact.path)) errors.push('context_artifact.path must be a safe data/interview-contexts/*.v1.json path');
+  if (typeof artifact.ref !== 'string' || !/^refs\/(heads|tags)\/[A-Za-z0-9._/-]+$/.test(artifact.ref)) errors.push('context_artifact.ref must be a fully-qualified heads/tags ref');
+  if (!HEX40_RE.test(artifact.commit || '')) errors.push('context_artifact.commit must be a lowercase 40-char commit SHA');
+  if (!HEX64_RE.test(artifact.sha256 || '')) errors.push('context_artifact.sha256 must be a lowercase 64-char SHA-256');
+  if (context && artifact.sha256 !== contextSha256(context)) errors.push('context_artifact.sha256 must equal the reviewed Context canonical digest');
+  return { ok: errors.length === 0, errors, artifact };
+}
+
+function verifyContextArtifact(context, artifact, repository, readers = {}) {
+  const structural = validateContextArtifact(artifact, context, repository);
+  if (!structural.ok) return structural;
+  const errors = [];
+  try {
+    const ref = typeof readers.readRef === 'function' ? readers.readRef(artifact.ref) : { sha: artifact.commit };
+    const refSha = ref && (ref.sha || (ref.object && ref.object.sha));
+    if (!ref || (refSha && refSha !== artifact.commit)) errors.push('context_artifact ref does not resolve to the declared commit');
+    const commit = typeof readers.readCommit === 'function' ? readers.readCommit(artifact.commit) : { sha: artifact.commit };
+    if (!commit || (commit.sha && commit.sha !== artifact.commit)) errors.push('context_artifact commit cannot be verified');
+    const content = typeof readers.readContent === 'function' ? readers.readContent(artifact.path, artifact.commit) : canonicalJson(context);
+    const parsed = typeof content === 'string' ? JSON.parse(content) : content;
+    if (contextSha256(parsed) !== artifact.sha256) errors.push('durable Context content digest conflicts with context_artifact.sha256');
+    if (contextSha256(parsed) !== contextSha256(context)) errors.push('durable Context content conflicts with requested reviewed Context');
+  } catch (error) {
+    errors.push(`durable Context artifact could not be verified: ${error.message}`);
+  }
+  return { ok: errors.length === 0, errors, artifact };
+}
+
 function validateRequest(request) {
   const errors = [];
   if (!request || typeof request !== 'object' || Array.isArray(request)) return { ok: false, errors: ['request must be an object'] };
-  const allowed = new Set(['schema_version', 'batch_id', 'repository', 'dependency_issues', 'pilot_size', 'items']);
+  const allowed = new Set(['schema_version', 'batch_id', 'repository', 'dependency_issues', 'dependency_gate_file', 'expected_dependency_gate_sha256', 'pilot_size', 'items']);
   for (const key of Object.keys(request)) if (!allowed.has(key)) errors.push(`unsupported request field: ${key}`);
   if (request.schema_version !== SCHEMA_VERSION) errors.push(`schema_version must be ${SCHEMA_VERSION}`);
   if (!nonEmpty(request.batch_id) || !/^[A-Za-z0-9][A-Za-z0-9._-]*$/.test(request.batch_id || '')) errors.push('batch_id must be a stable machine identifier');
   if (!nonEmpty(request.repository) || !/^[^/]+\/[^/]+$/.test(request.repository || '')) errors.push('repository must be owner/name');
+  if (request.dependency_gate_file !== 'data/pilot/issue-923/dependency-gate.json') errors.push('dependency_gate_file must be data/pilot/issue-923/dependency-gate.json');
+  if (!HEX64_RE.test(request.expected_dependency_gate_sha256 || '')) errors.push('expected_dependency_gate_sha256 must be a lowercase 64-char SHA-256');
   if (!Array.isArray(request.dependency_issues)) errors.push('dependency_issues must be an array');
   else {
     const deps = [...new Set(request.dependency_issues.map(Number))];
@@ -100,7 +232,7 @@ function validateRequest(request) {
         errors.push(`${prefix} must be an object`);
         return;
       }
-      const itemAllowed = new Set(['issue_number', 'expected_body_sha256', 'context']);
+      const itemAllowed = new Set(['issue_number', 'expected_body_sha256', 'context', 'context_artifact']);
       for (const key of Object.keys(item)) if (!itemAllowed.has(key)) errors.push(`${prefix} unsupported field: ${key}`);
       if (!Number.isInteger(item.issue_number) || item.issue_number <= 0) errors.push(`${prefix}.issue_number must be a positive integer`);
       else if (issueNumbers.has(item.issue_number)) errors.push(`${prefix}.issue_number is duplicated`);
@@ -108,6 +240,8 @@ function validateRequest(request) {
       if (!HEX64_RE.test(item.expected_body_sha256 || '')) errors.push(`${prefix}.expected_body_sha256 must be a lowercase 64-char SHA-256`);
       const validation = validateInterviewContext(item.context);
       if (!validation.ok) errors.push(...validation.errors.map((error) => `${prefix}.context: ${error}`));
+      const artifactValidation = validateContextArtifact(item.context_artifact, item.context, request.repository);
+      if (!artifactValidation.ok) errors.push(...artifactValidation.errors.map((error) => `${prefix}.context_artifact: ${error}`));
       if (item.context && contextIds.has(item.context.context_id)) errors.push(`${prefix}.context.context_id is duplicated`);
       if (item.context && item.context.context_id) contextIds.add(item.context.context_id);
     });
@@ -115,14 +249,11 @@ function validateRequest(request) {
   return { ok: errors.length === 0, errors };
 }
 
-function dependencyGate(request, dependencies = []) {
+function dependencyGate(request, dependencies = [], gateArtifact = null, readEvidence = null) {
   const errors = [];
-  const byNumber = new Map(dependencies.map((issue) => [Number(issue.number), issue]));
-  for (const number of REQUIRED_DEPENDENCIES) {
-    const issue = byNumber.get(number);
-    if (!issue) errors.push(`dependency Issue #${number} was not loaded`);
-    else if (String(issue.state || '').toLowerCase() !== 'closed') errors.push(`dependency Issue #${number} is not closed (state=${issue.state})`);
-  }
+  if (!gateArtifact) return { ok: false, errors: ['structured dependency gate artifact is required'] };
+  const result = validateLiveDependencyGate(gateArtifact, request.repository, dependencies, readEvidence);
+  errors.push(...result.errors);
   return { ok: errors.length === 0, errors };
 }
 
@@ -152,12 +283,19 @@ function receiptMatches(receipt, request, item, projection) {
     && receipt.interview_note_id === projection.interview_note_id
     && receipt.expected_body_sha256 === item.expected_body_sha256
     && receipt.context_sha256 === contextSha256(item.context)
+    && receipt.context_artifact && item.context_artifact
+    && receipt.context_artifact.repository === item.context_artifact.repository
+    && receipt.context_artifact.path === item.context_artifact.path
+    && receipt.context_artifact.ref === item.context_artifact.ref
+    && receipt.context_artifact.commit === item.context_artifact.commit
+    && receipt.context_artifact.sha256 === item.context_artifact.sha256
     && receipt.title === projection.title
     && JSON.stringify(receipt.labels || []) === JSON.stringify(projection.labels);
 }
 
-function planItem(request, item, issue, receipts = []) {
+function planItem(request, item, issue, receipts = [], contextArtifactResult = null) {
   const errors = [];
+  if (contextArtifactResult && !contextArtifactResult.ok) errors.push(...contextArtifactResult.errors.map((error) => `durable Context artifact invalid: ${error}`));
   const body = String(issue && issue.body || '');
   const labels = normalizeLabels(issue && issue.labels || []);
   const bodySha = sha256Text(body);
@@ -191,6 +329,7 @@ function planItem(request, item, issue, receipts = []) {
     interview_note_id: item.context.interview_note_id,
     context: item.context,
     context_sha256: contextSha256(item.context),
+    context_artifact: item.context_artifact,
     title: discovery.non_spoiler_title,
     labels: projectLabels(labels, discovery.learning_labels),
     unknown_facts: unknownFacts(item.context),
@@ -230,10 +369,10 @@ function planItem(request, item, issue, receipts = []) {
   };
 }
 
-function planBatch(request, { dependencies = [], issues = [], receiptsByIssue = new Map() } = {}) {
+function planBatch(request, { dependencies = [], issues = [], receiptsByIssue = new Map(), dependencyGateArtifact = null, dependencyEvidence = null, contextArtifactsByIssue = new Map() } = {}) {
   const requestValidation = validateRequest(request);
   if (!requestValidation.ok) return { ok: false, blocked: false, errors: requestValidation.errors, items: [], summary: null };
-  const gate = dependencyGate(request, dependencies);
+  const gate = dependencyGate(request, dependencies, dependencyGateArtifact, dependencyEvidence);
   if (!gate.ok) {
     return {
       ok: false,
@@ -248,7 +387,8 @@ function planBatch(request, { dependencies = [], issues = [], receiptsByIssue = 
     const issue = byNumber.get(Number(item.issue_number));
     if (!issue) return { ok: false, issue_number: item.issue_number, action: 'needs_review', errors: ['InterviewNote Issue was not loaded'], unknown_facts: unknownFacts(item.context) };
     const receipts = receiptsByIssue instanceof Map ? (receiptsByIssue.get(Number(item.issue_number)) || []) : [];
-    return planItem(request, item, issue, receipts);
+    const artifactResult = contextArtifactsByIssue instanceof Map ? contextArtifactsByIssue.get(Number(item.issue_number)) : null;
+    return planItem(request, item, issue, receipts, artifactResult);
   });
   const needsReview = plannedItems.filter((item) => !item.ok);
   const applied = plannedItems.filter((item) => item.ok && item.action === 'already_applied');
@@ -273,6 +413,27 @@ function planBatch(request, { dependencies = [], issues = [], receiptsByIssue = 
   };
 }
 
+function planDigest(plan) {
+  return sha256Text(canonicalJson({
+    blocked: plan.blocked,
+    errors: plan.errors,
+    summary: plan.summary,
+    items: plan.items.map((item) => ({
+      issue_number: item.issue_number,
+      action: item.action,
+      errors: item.errors,
+      current_body_sha256: item.current_body_sha256,
+      projection: item.projection && {
+        interview_note_id: item.projection.interview_note_id,
+        context_sha256: item.projection.context_sha256,
+        context_artifact: item.projection.context_artifact,
+        title: item.projection.title,
+        labels: item.projection.labels,
+      },
+    })),
+  }));
+}
+
 function receiptFor(request, item, appliedAt) {
   return {
     schema_version: RECEIPT_SCHEMA_VERSION,
@@ -282,6 +443,7 @@ function receiptFor(request, item, appliedAt) {
     interview_note_id: item.projection.interview_note_id,
     expected_body_sha256: item.current_body_sha256,
     context_sha256: item.projection.context_sha256,
+    context_artifact: item.projection.context_artifact,
     title: item.projection.title,
     labels: item.projection.labels,
     applied_at: appliedAt,
@@ -301,6 +463,12 @@ module.exports = {
   contextSha256,
   parseMarker,
   parseReceipts,
+  parseIssueCommentUrl,
+  parseDependencyAcceptance,
+  validateDependencyGateArtifact,
+  validateLiveDependencyGate,
+  validateContextArtifact,
+  verifyContextArtifact,
   validateRequest,
   dependencyGate,
   normalizeLabels,
@@ -308,6 +476,7 @@ module.exports = {
   unknownFacts,
   planItem,
   planBatch,
+  planDigest,
   receiptFor,
   receiptBody,
 };

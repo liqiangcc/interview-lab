@@ -4,12 +4,20 @@ const fs = require('fs');
 const path = require('path');
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { sha256Text, planBatch, receiptFor } = require('../scripts/lib/interview-context-batch');
+const { sha256Text, contextSha256, planBatch, receiptFor, verifyContextArtifact } = require('../scripts/lib/interview-context-batch');
 const { parseInterviewNoteIssue } = require('../scripts/lib/interview-note-issue');
 
 const body = fs.readFileSync(path.join(__dirname, 'fixtures/interview-note-issue.valid.md'), 'utf8');
 const parsed = parseInterviewNoteIssue(body);
 const dependencies = [917, 920, 921, 922].map((number) => ({ number, state: 'closed' }));
+const dependencyGateArtifact = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/pilot/issue-923/dependency-gate.json'), 'utf8'));
+const dependencyEvidence = new Map();
+for (const entry of Object.values(dependencyGateArtifact.dependencies)) {
+  const issueNumber = entry.issue_number;
+  const issueUrl = `https://api.github.com/repos/liqiangcc/interview-lab/issues/${issueNumber}`;
+  dependencyEvidence.set(entry.evidence, { issue_url: issueUrl, body: `<!-- issue-dependency-acceptance\n{"schema_version":"issue-dependency-acceptance.v1","issue_number":${issueNumber},"acceptance":"pass","accepted_by":"test","acceptance_evidence":"${entry.acceptance_evidence}"}\n-->` });
+  dependencyEvidence.set(entry.acceptance_evidence, { issue_url: issueUrl, body: 'final acceptance evidence' });
+}
 
 function context(overrides = {}) {
   return {
@@ -30,13 +38,16 @@ function context(overrides = {}) {
 }
 
 function request(itemContext = context()) {
+  const contextArtifact = { repository: 'liqiangcc/interview-lab', path: `data/interview-contexts/${itemContext.interview_note_id.replace(/[^A-Za-z0-9_-]/g, '-')}.v1.json`, ref: 'refs/heads/codex/issue-923', commit: '0000000000000000000000000000000000000000', sha256: contextSha256(itemContext) };
   return {
     schema_version: 'interview-context-batch-review.v1',
     batch_id: 'issue-923-fixture-1',
     repository: 'liqiangcc/interview-lab',
     dependency_issues: [917, 920, 921, 922],
+    dependency_gate_file: 'data/pilot/issue-923/dependency-gate.json',
+    expected_dependency_gate_sha256: sha256Text(fs.readFileSync(path.join(__dirname, '../data/pilot/issue-923/dependency-gate.json'), 'utf8')),
     pilot_size: 1,
-    items: [{ issue_number: 915, expected_body_sha256: sha256Text(body), context: itemContext }],
+    items: [{ issue_number: 915, expected_body_sha256: sha256Text(body), context: itemContext, context_artifact: contextArtifact }],
   };
 }
 
@@ -52,7 +63,7 @@ function issue(overrides = {}) {
 }
 
 function plan(itemContext = context(), issueOverrides = {}, receiptMap = new Map()) {
-  return planBatch(request(itemContext), { dependencies, issues: [issue(issueOverrides)], receiptsByIssue: receiptMap });
+  return planBatch(request(itemContext), { dependencies, issues: [issue(issueOverrides)], receiptsByIssue: receiptMap, dependencyGateArtifact, dependencyEvidence });
 }
 
 test('batch planner projects only reviewed source-ready InterviewNotes', () => {
@@ -85,6 +96,8 @@ test('unmet dependency gate blocks the batch before candidate planning', () => {
   const result = planBatch(request(), {
     dependencies: [{ number: 917, state: 'open' }],
     issues: [],
+    dependencyGateArtifact,
+    dependencyEvidence,
   });
   assert.equal(result.ok, false);
   assert.equal(result.blocked, true);
@@ -95,7 +108,7 @@ test('unmet dependency gate blocks the batch before candidate planning', () => {
 test('SourceNote body is never accepted as an InterviewNote candidate', () => {
   const sourceBody = fs.readFileSync(path.join(__dirname, 'fixtures/source-note-issue-v2.valid.md'), 'utf8');
   const sourceIssue = issue({ body: sourceBody, title: 'SourceNote', labels: ['type:source-note', 'source:xhs', 'status:source-ready'] });
-  const result = planBatch(request(), { dependencies, issues: [sourceIssue] });
+  const result = planBatch(request(), { dependencies, issues: [sourceIssue], dependencyGateArtifact, dependencyEvidence });
   assert.equal(result.ok, false);
   assert.match(result.errors.join('\n'), /SourceNote cannot be used as InterviewNote/);
 });
@@ -147,4 +160,50 @@ test('matching receipt still reconciles externally drifted title or labels', () 
   assert.equal(second.items[0].action, 'update');
   assert.equal(second.items[0].receipt.comment_id, 123);
   assert.equal(second.summary.mutation_count, 1);
+});
+
+test('closed dependency without structured acceptance evidence blocks fail-closed', () => {
+  const evidence = new Map(dependencyEvidence);
+  evidence.delete(dependencyGateArtifact.dependencies['922'].evidence);
+  const result = planBatch(request(), { dependencies, issues: [], dependencyGateArtifact, dependencyEvidence: evidence });
+  assert.equal(result.blocked, true);
+  assert.match(result.errors.join('\n'), /#922 acceptance anchor could not be read/);
+});
+
+test('receipt present but durable Context missing fails closed for recovery', () => {
+  const first = plan();
+  const receipt = receiptFor(request(), first.items[0], '2026-09-04T04:01:00Z');
+  const artifactResult = new Map([[915, { ok: false, errors: ['GitHub contents returned 404'] }]]);
+  const blocked = planBatch(request(), { dependencies, issues: [issue({ title: first.items[0].projection.title, labels: first.items[0].projection.labels })], dependencyGateArtifact, dependencyEvidence, receiptsByIssue: new Map([[915, [receipt]]]), contextArtifactsByIssue: artifactResult });
+  assert.equal(blocked.ok, false);
+  assert.match(blocked.errors.join('\n'), /durable Context artifact invalid/);
+});
+
+test('durable Context content conflict fails closed', () => {
+  const itemContext = context();
+  const artifact = request(itemContext).items[0].context_artifact;
+  const conflict = verifyContextArtifact(itemContext, artifact, 'liqiangcc/interview-lab', {
+    readRef: () => ({ object: { sha: artifact.commit } }),
+    readCommit: () => ({ sha: artifact.commit }),
+    readContent: () => JSON.stringify({ ...itemContext, context_id: `${itemContext.context_id}-conflict` }),
+  });
+  assert.equal(conflict.ok, false);
+  assert.match(conflict.errors.join('\n'), /durable Context content conflicts/);
+});
+
+test('receipt Context conflict fails closed instead of overwriting Derived data', () => {
+  const first = plan();
+  const receipt = receiptFor(request(), first.items[0], '2026-09-04T04:01:00Z');
+  const conflict = planBatch(request(), { dependencies, issues: [issue({ title: first.items[0].projection.title, labels: first.items[0].projection.labels })], dependencyGateArtifact, dependencyEvidence, receiptsByIssue: new Map([[915, [{ ...receipt, context_artifact: { ...receipt.context_artifact, sha256: 'f'.repeat(64) }, comment_id: 123 }]]]) });
+  assert.equal(conflict.ok, false);
+  assert.match(conflict.errors.join('\n'), /conflicting receipt/);
+});
+
+test('Issue patch interruption recovers as receipt repair, and receipt response loss converges as already_applied', () => {
+  const first = plan();
+  const repaired = plan(undefined, { title: first.items[0].projection.title, labels: first.items[0].projection.labels });
+  assert.equal(repaired.items[0].action, 'repair_receipt');
+  const receipt = receiptFor(request(), first.items[0], '2026-09-04T04:01:00Z');
+  const retried = plan(undefined, { title: first.items[0].projection.title, labels: first.items[0].projection.labels }, new Map([[915, [{ ...receipt, comment_id: 123 }]]]));
+  assert.equal(retried.items[0].action, 'already_applied');
 });
