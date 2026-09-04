@@ -11,6 +11,11 @@ const {
   planSourceReview,
   ownershipMatches,
 } = require('./lib/interview-note-source-review-transition');
+const {
+  ownershipSearchEndpoint,
+  candidateNumbersFromPages,
+  exactOwnershipCandidates,
+} = require('./lib/interview-note-ownership-search');
 
 function parseArgs(argv = process.argv.slice(2)) {
   const out = { request: null, apply: false };
@@ -47,46 +52,15 @@ function flattenPages(value) {
   return value.length && Array.isArray(value[0]) ? value.flat() : value;
 }
 function loadIssue(repository, number) { return ghReadJson(['api', `repos/${repository}/issues/${number}`]); }
-function ownershipSearchEndpoint(repository, interviewNoteId) {
-  const phrase = String(interviewNoteId).replace(/["\\]/g, '\\$&');
-  const query = `repo:${repository} is:issue in:body "${phrase}"`;
-  return `search/issues?q=${encodeURIComponent(query)}&per_page=100`;
-}
-const MAX_SEARCH_PAGES = 10;
 const MAX_COMMENT_PAGES = 100;
-function searchPages(value) {
-  return flattenPages(value).filter((page) => page && typeof page === 'object' && !Array.isArray(page));
-}
-function ownershipSearchItems(value) {
-  const pages = searchPages(value);
-  if (pages.some((page) => page.incomplete_results === true)) {
-    throw new Error('InterviewNote ownership search returned incomplete results; refusing to infer ownership');
-  }
-  const items = pages.flatMap((page) => Array.isArray(page.items) ? page.items : []);
-  const numbers = new Set(items.map((item) => Number(item.number)).filter((number) => Number.isInteger(number) && number > 0));
-  const totalCount = pages.length > 0 && Number.isInteger(pages[0].total_count) ? pages[0].total_count : null;
-  if (totalCount !== null && totalCount !== numbers.size) {
-    throw new Error(`InterviewNote ownership search pagination incomplete: expected ${totalCount} candidates, received ${numbers.size}`);
-  }
-  return [...numbers];
-}
+function ownershipSearchItems(value) { return candidateNumbersFromPages(flattenPages(value)); }
 function loadOwnershipMatches(repository, interviewNoteId) {
-  const pages = [];
-  for (let page = 1; page <= MAX_SEARCH_PAGES; page += 1) {
-    const result = ghReadJson(['api', `${ownershipSearchEndpoint(repository, interviewNoteId)}&page=${page}`]);
-    pages.push(result);
-    const items = Array.isArray(result.items) ? result.items : [];
-    const totalCount = Number.isInteger(result.total_count) ? result.total_count : null;
-    const collected = ownershipSearchItems(pages).length;
-    if (items.length === 0 || (totalCount !== null && collected >= totalCount)) break;
-    if (page === MAX_SEARCH_PAGES) {
-      throw new Error(`InterviewNote ownership search exceeded ${MAX_SEARCH_PAGES} pages; refusing to infer ownership`);
-    }
-  }
-  return ownershipSearchItems(pages)
-    .map((number) => loadIssue(repository, number))
-    .filter((issue) => !issue.pull_request)
-    .filter((issue) => ownershipMatches([issue], interviewNoteId).length === 1);
+  return exactOwnershipCandidates({
+    interviewNoteId,
+    readPage: (page) => ghReadJson(['api', `${ownershipSearchEndpoint(repository, interviewNoteId)}&page=${page}`]),
+    readIssue: (number) => loadIssue(repository, number),
+    matches: ownershipMatches,
+  });
 }
 function loadComments(repository, number) {
   const comments = [];

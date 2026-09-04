@@ -11,6 +11,9 @@ const {
   findOwnershipMatches,
 } = require('./lib/source-note-interview-materialization');
 const { validateInterviewNoteIssue } = require('./lib/interview-note-issue');
+const { parseSourceNoteIssue } = require('./lib/source-note-issue');
+const { childInterviewNoteId } = require('./lib/interview-note-identity');
+const { exactOwnershipCandidates, ownershipSearchEndpoint } = require('./lib/interview-note-ownership-search');
 
 function sleepMs(ms) {
   Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms);
@@ -66,8 +69,13 @@ function loadSourceComments(repository, number) {
   return flattenPages(ghJson(['api', '--paginate', '--slurp', `repos/${repository}/issues/${number}/comments?per_page=100`]));
 }
 
-function loadAllIssues(repository) {
-  return flattenPages(ghJson(['api', '--paginate', '--slurp', `repos/${repository}/issues?state=all&per_page=100`]));
+function loadOwnershipMatches(repository, interviewNoteId) {
+  return exactOwnershipCandidates({
+    interviewNoteId,
+    readPage: (page) => ghJson(['api', `${ownershipSearchEndpoint(repository, interviewNoteId)}&page=${page}`]),
+    readIssue: (number) => ghJson(['api', `repos/${repository}/issues/${number}`]),
+    matches: findOwnershipMatches,
+  });
 }
 
 function labelsOf(issue) {
@@ -78,7 +86,7 @@ function waitForOwnership(repository, interviewNoteId, expectedIssueNumber, opti
   const attempts = Number.isInteger(options.attempts) && options.attempts > 0 ? options.attempts : 6;
   const scan = typeof options.scan === 'function'
     ? options.scan
-    : () => findOwnershipMatches(loadAllIssues(repository), interviewNoteId);
+    : () => loadOwnershipMatches(repository, interviewNoteId);
   const sleep = typeof options.sleep === 'function' ? options.sleep : sleepMs;
 
   let last = [];
@@ -103,7 +111,15 @@ function waitForOwnership(repository, interviewNoteId, expectedIssueNumber, opti
 function loadPlan(request) {
   const sourceIssue = loadSourceIssue(request.repository, request.source_note_issue_number);
   const comments = loadSourceComments(request.repository, request.source_note_issue_number);
-  const issues = loadAllIssues(request.repository);
+  const parsed = parseSourceNoteIssue(sourceIssue.body);
+  const record = parsed.record;
+  let interviewNoteId = null;
+  if (record && record.source) {
+    interviewNoteId = request.case_key
+      ? childInterviewNoteId(record.source, request.case_key)
+      : `${record.source.system}:${record.source.external_id}`;
+  }
+  const issues = interviewNoteId ? loadOwnershipMatches(request.repository, interviewNoteId) : [];
   const receipts = parseMaterializationReceipts(comments);
   const plan = planMaterialization(request, {
     repository: request.repository,

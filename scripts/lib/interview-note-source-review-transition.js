@@ -3,6 +3,7 @@
 const crypto = require('crypto');
 const { parseInterviewNoteIssue, validateInterviewNoteIssue } = require('./interview-note-issue');
 const { parseSourceNoteIssue, validateSourceNoteIssue } = require('./source-note-issue');
+const { CHILD_CASE_KEY_RE, childInterviewNoteId } = require('./interview-note-identity');
 
 const SCHEMA_VERSION = 'interview-note-source-review-transition.v1';
 const REQUEST_RE = /<!--\s*interview-note-source-review-transition\s*\n([\s\S]*?)\n-->/g;
@@ -20,7 +21,7 @@ const ALLOWED_REQUEST_FIELDS = new Set([
   'schema_version','transition_id','repository','issue_number','interview_note_id',
   'expected_interview_body_sha256','expected_initial_status','expected_source_revision_id',
   'source_note_issue_number','expected_source_note_body_sha256','expected_manifest_sha256',
-  'decision','reviewed_at','reviewer_kind','review_evidence','checks','limitations',
+  'expected_source_repository_ref','decision','reviewed_at','reviewer_kind','review_evidence','checks','limitations','case_key',
 ]);
 
 function sha256Text(value) {
@@ -77,9 +78,11 @@ function validateRequest(request) {
   if (!/^[^/]+\/[^/]+$/.test(String(request.repository || ''))) errors.push('repository must be owner/repo');
   if (!Number.isInteger(request.issue_number) || request.issue_number < 1) errors.push('issue_number must be a positive integer');
   if (!isNonEmptyString(request.interview_note_id)) errors.push('interview_note_id is required');
-  for (const key of ['expected_interview_body_sha256','expected_source_note_body_sha256','expected_manifest_sha256']) {
-    if (!/^[0-9a-f]{64}$/.test(String(request[key] || ''))) errors.push(`${key} must be lowercase SHA-256`);
-  }
+  if (request.case_key != null && (typeof request.case_key !== 'string' || !CHILD_CASE_KEY_RE.test(request.case_key))) errors.push('case_key must use lowercase stable identity syntax');
+  for (const key of ['expected_interview_body_sha256','expected_source_note_body_sha256']) if (!/^[0-9a-f]{64}$/.test(String(request[key] || ''))) errors.push(`${key} must be lowercase SHA-256`);
+  if (request.expected_manifest_sha256 != null && !/^[0-9a-f]{64}$/.test(String(request.expected_manifest_sha256))) errors.push('expected_manifest_sha256 must be null or lowercase SHA-256');
+  if (request.expected_source_repository_ref != null && !/^[0-9a-f]{40}$/.test(String(request.expected_source_repository_ref))) errors.push('expected_source_repository_ref must be null or lowercase 40-char Git ref');
+  if (request.expected_manifest_sha256 == null && request.expected_source_repository_ref == null) errors.push('one of expected_manifest_sha256 or expected_source_repository_ref is required');
   if (request.expected_initial_status !== 'captured') errors.push('expected_initial_status must be captured');
   if (!isNonEmptyString(request.expected_source_revision_id)) errors.push('expected_source_revision_id is required');
   if (!Number.isInteger(request.source_note_issue_number) || request.source_note_issue_number < 1) errors.push('source_note_issue_number must be positive');
@@ -101,8 +104,14 @@ function computeChecks(request, interviewIssue, sourceIssue, allIssues) {
   const ir = ip.record;
   const sr = sp.record;
   const sourceId = sr && sr.source ? `${sr.source.system}:${sr.source.external_id}` : null;
-  const sourceIdentityOk = Boolean(ir && sr && ir.interview_note_id === request.interview_note_id && sourceId === request.interview_note_id && ir.source.system === sr.source.system && ir.source.external_id === sr.source.external_id && sr.boundary_review && sr.boundary_review.status === 'single-interview' && JSON.stringify(sr.boundary_review.interview_note_ids) === JSON.stringify([request.interview_note_id]));
-  const sourceRevisionOk = Boolean(ir && sr && ir.source_revision && sr.source_revision && ir.source_revision.id === request.expected_source_revision_id && sr.source_revision.id === request.expected_source_revision_id && sr.source_revision.manifest_sha256 === request.expected_manifest_sha256);
+  let expectedId = sourceId;
+  if (request.case_key && sr && sr.source) {
+    try { expectedId = childInterviewNoteId(sr.source, request.case_key); } catch (_) { expectedId = null; }
+  }
+  const expectedBoundary = request.case_key ? 'multi-interview' : 'single-interview';
+  const declaredCase = sr && sr.boundary_review && (sr.boundary_review.interview_note_cases || []).find((item) => item.case_key === request.case_key);
+  const sourceIdentityOk = Boolean(ir && sr && ir.interview_note_id === request.interview_note_id && expectedId === request.interview_note_id && ir.source.system === sr.source.system && ir.source.external_id === sr.source.external_id && sr.boundary_review && sr.boundary_review.status === expectedBoundary && (request.case_key ? declaredCase && declaredCase.interview_note_id === request.interview_note_id : JSON.stringify(sr.boundary_review.interview_note_ids) === JSON.stringify([request.interview_note_id])));
+  const sourceRevisionOk = Boolean(ir && sr && ir.source_revision && sr.source_revision && ir.source_revision.id === request.expected_source_revision_id && sr.source_revision.id === request.expected_source_revision_id && (request.expected_manifest_sha256 != null ? sr.source_revision.manifest_sha256 === request.expected_manifest_sha256 : sr.source_revision.source_repository_ref === request.expected_source_repository_ref));
   const sourceArtifacts = new Map((sr && Array.isArray(sr.artifacts) ? sr.artifacts : []).map((a) => [a.ref, a]));
   const interviewArtifacts = ir && Array.isArray(ir.artifacts) ? ir.artifacts : [];
   const artifactOk = interviewArtifacts.length > 0 && interviewArtifacts.every((a) => {
@@ -133,7 +142,7 @@ function computeChecks(request, interviewIssue, sourceIssue, allIssues) {
 function validateEvidenceComment(request, comment, errors) {
   if (!comment || Number(comment.id) !== Number(request.review_evidence.comment_id)) { errors.push('review evidence comment does not resolve'); return; }
   const body = String(comment.body || '');
-  const tokens = [request.transition_id, request.interview_note_id, request.expected_source_revision_id, String(request.source_note_issue_number), request.expected_manifest_sha256, request.decision];
+  const tokens = [request.transition_id, request.interview_note_id, request.expected_source_revision_id, String(request.source_note_issue_number), request.expected_manifest_sha256, request.expected_source_repository_ref, request.decision, request.case_key].filter((token) => token != null);
   for (const token of tokens) if (!body.includes(token)) errors.push(`review evidence comment must bind transition fact: ${token}`);
   for (const check of request.checks || []) if (!body.includes(check.check_id) || !body.includes(check.result)) errors.push(`review evidence comment must bind check/result: ${check.check_id}:${check.result}`);
 }
@@ -145,10 +154,12 @@ function buildReceipt(request, finalStatus, appliedAt) {
     repository: request.repository,
     issue_number: request.issue_number,
     interview_note_id: request.interview_note_id,
+    ...(request.case_key == null ? {} : { case_key: request.case_key }),
     source_note_issue_number: request.source_note_issue_number,
     source_note_body_sha256: request.expected_source_note_body_sha256,
     source_revision_id: request.expected_source_revision_id,
     manifest_sha256: request.expected_manifest_sha256,
+    source_repository_ref: request.expected_source_repository_ref ?? null,
     decision: request.decision,
     final_status: finalStatus,
     reviewed_at: request.reviewed_at,
@@ -173,7 +184,14 @@ function planSourceReview(request, interviewIssue, options = {}) {
   if (!ir || ir.interview_note_id !== request.interview_note_id) errors.push('InterviewNote identity mismatch');
   if (!ir || !ir.source_revision || ir.source_revision.id !== request.expected_source_revision_id) errors.push('stale InterviewNote SourceRevision');
   if (!sr || !sr.source_revision || sr.source_revision.id !== request.expected_source_revision_id) errors.push('stale SourceNote SourceRevision');
-  if (!sr || !sr.source_revision || sr.source_revision.manifest_sha256 !== request.expected_manifest_sha256) errors.push('stale SourceCapture manifest');
+  if (request.expected_manifest_sha256 != null && (!sr || !sr.source_revision || sr.source_revision.manifest_sha256 !== request.expected_manifest_sha256)) errors.push('stale SourceCapture manifest');
+  if (request.expected_source_repository_ref != null && (!sr || !sr.source_revision || sr.source_revision.source_repository_ref !== request.expected_source_repository_ref)) errors.push('stale fixed source repository ref');
+  if (request.case_key) {
+    let expectedChild;
+    try { expectedChild = sr && sr.source ? childInterviewNoteId(sr.source, request.case_key) : null; } catch (error) { errors.push(error.message); }
+    const child = sr.boundary_review && (sr.boundary_review.interview_note_cases || []).find((item) => item.case_key === request.case_key);
+    if (!child || child.interview_note_id !== expectedChild || request.interview_note_id !== expectedChild) errors.push('multi-interview SourceNote child identity binding mismatch');
+  } else if (!sr || sr.boundary_review.status !== 'single-interview') errors.push('single-interview source review requires single-interview boundary');
   const currentStatus = statusOf(interviewIssue);
   if (!['captured','source-review','source-ready','blocked'].includes(currentStatus)) errors.push(`unsupported current lifecycle status: ${currentStatus}`);
   validateEvidenceComment(request, options.evidenceComment, errors);
@@ -194,6 +212,7 @@ function planSourceReview(request, interviewIssue, options = {}) {
     if (receipt.interview_note_id !== request.interview_note_id) errors.push('source-review receipt InterviewNote mismatch');
     if (receipt.source_revision_id !== request.expected_source_revision_id) errors.push('source-review receipt SourceRevision mismatch');
     if (receipt.manifest_sha256 !== request.expected_manifest_sha256) errors.push('source-review receipt manifest mismatch');
+    if ((receipt.source_repository_ref ?? null) !== (request.expected_source_repository_ref ?? null)) errors.push('source-review receipt source repository ref mismatch');
     if (receipt.final_status !== request.decision) errors.push('source-review receipt final status mismatch');
   }
   const beginLabels = replaceLifecycle(labelsOf(interviewIssue), 'source-review', 'task:source-review');

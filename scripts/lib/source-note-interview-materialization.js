@@ -3,8 +3,10 @@
 const crypto = require('crypto');
 const { parseSourceNoteIssue, validateSourceNoteIssue } = require('./source-note-issue');
 const { parseInterviewNoteIssue, validateInterviewNoteIssue } = require('./interview-note-issue');
+const { CHILD_CASE_KEY_RE, childInterviewNoteId } = require('./interview-note-identity');
 
 const SCHEMA_VERSION = 'source-note-interview-materialization.v1';
+const MULTI_SCHEMA_VERSION = 'source-note-interview-materialization.v2';
 const MARKER_RE = /<!--\s*source-note-interview-materialization\s*([\s\S]*?)-->/g;
 const RECEIPT_RE = /<!--\s*source-note-interview-materialized\s*([\s\S]*?)-->/g;
 const INTERVIEW_ALLOWED_KINDS = new Set(['html', 'json', 'text_projection', 'image', 'image_reference', 'other']);
@@ -46,16 +48,19 @@ function parseMaterializationRequest(body) {
 
 function parseMaterializationReceipts(comments) {
   const receipts = [];
+  const errors = [];
   for (const comment of comments || []) {
+    const body = String(comment.body || '');
     const matches = [...String(comment.body || '').matchAll(RECEIPT_RE)];
+    const openings = (body.match(/<!--\s*source-note-interview-materialized\b/g) || []).length;
+    if (openings !== matches.length) errors.push(`malformed materialization receipt marker in comment ${comment.id}`);
     for (const match of matches) {
       try {
         receipts.push({ ...JSON.parse(match[1].trim()), comment_id: Number(comment.id) });
-      } catch (_) {
-        // Invalid receipts are ignored here; ownership validation is driven by live Issue state.
-      }
+      } catch (error) { errors.push(`invalid materialization receipt in comment ${comment.id}: ${error.message}`); }
     }
   }
+  if (errors.length) throw new Error(errors.join('; '));
   return receipts;
 }
 
@@ -67,16 +72,20 @@ function validateRequest(request) {
   const allowed = new Set([
     'schema_version', 'materialization_id', 'repository', 'source_note_issue_number', 'source_note_id',
     'expected_source_note_body_sha256', 'expected_boundary_status', 'expected_source_revision_id',
-    'expected_manifest_sha256', 'expected_source_repository_ref',
+    'expected_manifest_sha256', 'expected_source_repository_ref', 'case_key',
   ]);
   for (const key of Object.keys(request)) if (!allowed.has(key)) errors.push(`unsupported request field: ${key}`);
-  if (request.schema_version !== SCHEMA_VERSION) errors.push(`schema_version must be ${SCHEMA_VERSION}`);
+  if (![SCHEMA_VERSION, MULTI_SCHEMA_VERSION].includes(request.schema_version)) errors.push(`schema_version must be ${SCHEMA_VERSION} or ${MULTI_SCHEMA_VERSION}`);
   if (!isNonEmptyString(request.materialization_id)) errors.push('materialization_id must be a non-empty string');
   if (!/^[^/]+\/[^/]+$/.test(String(request.repository || ''))) errors.push('repository must be owner/repo');
   if (!Number.isInteger(request.source_note_issue_number) || request.source_note_issue_number < 1) errors.push('source_note_issue_number must be a positive integer');
   if (!isNonEmptyString(request.source_note_id)) errors.push('source_note_id must be a non-empty string');
   if (!/^[0-9a-f]{64}$/.test(String(request.expected_source_note_body_sha256 || ''))) errors.push('expected_source_note_body_sha256 must be lowercase sha256');
-  if (request.expected_boundary_status !== 'single-interview') errors.push('expected_boundary_status must be single-interview');
+  if (!['single-interview', 'multi-interview'].includes(request.expected_boundary_status)) errors.push('expected_boundary_status must be single-interview or multi-interview');
+  if (request.schema_version === SCHEMA_VERSION && request.expected_boundary_status !== 'single-interview') errors.push('v1 materialization must be single-interview');
+  if (request.schema_version === MULTI_SCHEMA_VERSION && request.expected_boundary_status !== 'multi-interview') errors.push('v2 materialization must be multi-interview');
+  if (request.schema_version === MULTI_SCHEMA_VERSION && (typeof request.case_key !== 'string' || !CHILD_CASE_KEY_RE.test(request.case_key))) errors.push('v2 materialization requires a valid case_key');
+  if (request.schema_version === SCHEMA_VERSION && Object.prototype.hasOwnProperty.call(request, 'case_key')) errors.push('v1 materialization must not contain case_key');
   if (!isNonEmptyString(request.expected_source_revision_id)) errors.push('expected_source_revision_id must be a non-empty string');
   if (request.expected_manifest_sha256 != null && !/^[0-9a-f]{64}$/.test(String(request.expected_manifest_sha256))) errors.push('expected_manifest_sha256 must be null or lowercase sha256');
   if (request.expected_source_repository_ref != null && !isNonEmptyString(request.expected_source_repository_ref)) errors.push('expected_source_repository_ref must be null or non-empty');
@@ -108,10 +117,17 @@ function displaySourceTime(timeFact) {
   return String(timeFact.value);
 }
 
-function buildInterviewProjection(sourceIssue, sourceValidation) {
+function buildInterviewProjection(sourceIssue, sourceValidation, options = {}) {
   const record = sourceValidation.parsed.record;
-  const interviewNoteId = `${record.source.system}:${record.source.external_id}`;
+  const caseKey = options.caseKey == null ? null : options.caseKey;
+  const interviewNoteId = caseKey == null
+    ? `${record.source.system}:${record.source.external_id}`
+    : childInterviewNoteId(record.source, caseKey);
   const declared = record.boundary_review.interview_note_ids || [];
+  if (caseKey != null) {
+    const approved = (record.boundary_review.interview_note_cases || []).find((item) => item.case_key === caseKey);
+    if (!approved || approved.interview_note_id !== interviewNoteId) throw new Error(`SourceNote does not declare approved multi-interview case ${caseKey} with derived identity ${interviewNoteId}`);
+  }
   const limitations = Array.isArray(record.limitations) ? [...record.limitations] : [];
   if ((record.artifacts || []).some((artifact) => !INTERVIEW_ALLOWED_KINDS.has(artifact.kind))) {
     limitations.push('InterviewNote v2 machine artifact schema uses kind=other for SourceNote artifact kinds it cannot represent directly; original kind/sequence/size/content-type remain authoritative in the SourceNote.');
@@ -119,6 +135,13 @@ function buildInterviewProjection(sourceIssue, sourceValidation) {
   const interviewRecord = {
     schema_version: 'interview-note-issue.v2',
     interview_note_id: interviewNoteId,
+    ...(caseKey == null ? {} : {
+      identity: {
+        kind: 'source-note-event',
+        source_note_id: record.source_note_id,
+        case_key: caseKey,
+      },
+    }),
     source: {
       system: record.source.system,
       external_id: record.source.external_id,
@@ -155,7 +178,8 @@ function buildInterviewProjection(sourceIssue, sourceValidation) {
       ? `- 固定 Source snapshot：\`${record.source_revision.source_repository || 'source'}@${sourceRef}\``
       : '- Source binding：以 SourceRevision id 为准。';
 
-  const body = `<!-- interview-note: id=${interviewNoteId} schema=interview-note-issue.v2 -->\n<!-- interview-note-record\n${JSON.stringify(interviewRecord, null, 2)}\n-->\n\n## 来源身份\n\n- 来源系统：${String(record.source.system).toUpperCase()}\n- External source id：\`${record.source.external_id}\`\n- InterviewNote id：\`${interviewNoteId}\`\n- SourceNote：#${sourceIssue.number} / \`${record.source_note_id}\`\n- SourceRevision：\`${record.source_revision.id}\`\n${provenanceLine}\n- 来源发布时间：\`${displaySourceTime(record.source_published_at)}\`\n- 来源更新时间：\`${displaySourceTime(record.source_edited_at)}\`\n- 实际面试发生时间：\`unknown\`（materialization 不提高 Source 时间精度）\n\n## 原始标题\n\n${titleSection}\n\n## 原始正文\n\n${bodySection}\n\n## 原始附件\n\n${artifactLines}\n\n## 来源限制\n\n${limitationLines}\n\n## 派生链接\n\n- 尚未生成 InterviewContext / SourceQuestion / CanonicalQuestion / Answer；当前 Issue 只物化已审核 Source case。\n- Source evidence 根：SourceNote #${sourceIssue.number}。\n`;
+  const caseLine = caseKey == null ? '' : `- Approved child case_key：\`${caseKey}\`\n- Case evidence 仍由 SourceNote #${sourceIssue.number} 的精确 artifact/locator 约束。\n`;
+  const body = `<!-- interview-note: id=${interviewNoteId} schema=interview-note-issue.v2 -->\n<!-- interview-note-record\n${JSON.stringify(interviewRecord, null, 2)}\n-->\n\n## 来源身份\n\n- 来源系统：${String(record.source.system).toUpperCase()}\n- External source id：\`${record.source.external_id}\`\n- InterviewNote id：\`${interviewNoteId}\`\n- SourceNote：#${sourceIssue.number} / \`${record.source_note_id}\`\n${caseLine}- SourceRevision：\`${record.source_revision.id}\`\n${provenanceLine}\n- 来源发布时间：\`${displaySourceTime(record.source_published_at)}\`\n- 来源更新时间：\`${displaySourceTime(record.source_edited_at)}\`\n- 实际面试发生时间：\`unknown\`（materialization 不提高 Source 时间精度）\n\n## 原始标题\n\n${titleSection}\n\n## 原始正文\n\n${bodySection}\n\n## 原始附件\n\n${artifactLines}\n\n## 来源限制\n\n${limitationLines}\n\n## 派生链接\n\n- 尚未生成 InterviewContext / SourceQuestion / CanonicalQuestion / Answer；当前 Issue 只物化已审核 Source case。\n- Source evidence 根：SourceNote #${sourceIssue.number}。\n`;
 
   return {
     interview_note_id: interviewNoteId,
@@ -164,6 +188,7 @@ function buildInterviewProjection(sourceIssue, sourceValidation) {
     body,
     labels: ['type:interview-note', `source:${record.source.system}`, 'status:captured'],
     record: interviewRecord,
+    case_key: caseKey,
   };
 }
 
@@ -212,10 +237,17 @@ function planMaterialization(request, options = {}) {
 
   if (record.source_note_id !== request.source_note_id) errors.push('source_note_id mismatch');
   if (!record.boundary_review || record.boundary_review.status !== request.expected_boundary_status) errors.push(`boundary must remain ${request.expected_boundary_status}`);
-  if (!sourceLabels.includes('boundary:single-interview')) errors.push('live SourceNote label must be boundary:single-interview');
-  if (!Array.isArray(record.boundary_review.interview_note_ids) || record.boundary_review.interview_note_ids.length !== 1) errors.push('single-interview SourceNote must declare exactly one InterviewNote id');
+  if (!sourceLabels.includes(`boundary:${request.expected_boundary_status}`)) errors.push(`live SourceNote label must be boundary:${request.expected_boundary_status}`);
+  if (request.expected_boundary_status === 'single-interview' && (!Array.isArray(record.boundary_review.interview_note_ids) || record.boundary_review.interview_note_ids.length !== 1)) errors.push('single-interview SourceNote must declare exactly one InterviewNote id');
   const derivedId = `${record.source.system}:${record.source.external_id}`;
-  if (record.boundary_review.interview_note_ids[0] !== derivedId) errors.push('declared InterviewNote id must equal source-derived identity');
+  const caseKey = request.schema_version === MULTI_SCHEMA_VERSION ? request.case_key : null;
+  if (caseKey == null && record.boundary_review.interview_note_ids[0] !== derivedId) errors.push('declared InterviewNote id must equal source-derived identity');
+  if (caseKey != null) {
+    let expectedChild;
+    try { expectedChild = childInterviewNoteId(record.source, caseKey); } catch (error) { errors.push(error.message); }
+    const approved = (record.boundary_review.interview_note_cases || []).find((item) => item.case_key === caseKey);
+    if (!approved || approved.interview_note_id !== expectedChild || !record.boundary_review.interview_note_ids.includes(expectedChild)) errors.push('case_key must resolve to an approved declared child identity');
+  }
   if (!record.source_revision || record.source_revision.id !== request.expected_source_revision_id) errors.push('stale SourceRevision id');
   if (request.expected_manifest_sha256 != null) {
     if (!record.source_revision || record.source_revision.manifest_sha256 !== request.expected_manifest_sha256) errors.push('stale SourceCapture manifest SHA');
@@ -224,11 +256,14 @@ function planMaterialization(request, options = {}) {
     if (!record.source_revision || record.source_revision.source_repository_ref !== request.expected_source_repository_ref) errors.push('stale fixed source repository ref');
   }
 
-  const projection = buildInterviewProjection(sourceIssue, sourceValidation);
+  let projection;
+  try { projection = buildInterviewProjection(sourceIssue, sourceValidation, { caseKey }); }
+  catch (error) { errors.push(`projection failed: ${error.message}`); return { ok: false, errors, request }; }
   const projectionValidation = validateInterviewNoteIssue({ body: projection.body, labels: projection.labels, state: 'open' });
   if (!projectionValidation.ok) errors.push(...projectionValidation.errors.map((error) => `projected InterviewNote invalid: ${error}`));
 
-  const ownership = findOwnershipMatches(options.issues || [], derivedId);
+  const targetId = projection.interview_note_id;
+  const ownership = findOwnershipMatches(options.issues || [], targetId);
   let action = null;
   let existing_issue_number = null;
   if (ownership.length === 0) {
@@ -241,7 +276,7 @@ function planMaterialization(request, options = {}) {
       existing_issue_number = Number(ownership[0].number);
     }
   } else {
-    errors.push(`duplicate ownership conflict: ${ownership.length} InterviewNote Issues claim ${derivedId}`);
+    errors.push(`duplicate ownership conflict: ${ownership.length} InterviewNote Issues claim ${targetId}`);
   }
 
   const reqSha = requestSha256(request);
@@ -249,10 +284,15 @@ function planMaterialization(request, options = {}) {
   if (relevantReceipts.length > 1) errors.push(`multiple materialization receipts found for ${request.materialization_id}`);
   let receipt = relevantReceipts.length === 1 ? relevantReceipts[0] : null;
   if (receipt) {
-    if (receipt.schema_version !== 'source-note-interview-materialized.v1') errors.push('materialization receipt schema mismatch');
+    const expectedReceiptSchema = request.schema_version === MULTI_SCHEMA_VERSION
+      ? 'source-note-interview-materialized.v2'
+      : 'source-note-interview-materialized.v1';
+    if (receipt.schema_version !== expectedReceiptSchema) errors.push(`materialization receipt schema mismatch: expected ${expectedReceiptSchema}`);
     if (receipt.request_sha256 !== reqSha) errors.push('materialization receipt request digest mismatch');
     if (receipt.source_note_id !== request.source_note_id) errors.push('materialization receipt SourceNote mismatch');
-    if (receipt.interview_note_id !== derivedId) errors.push('materialization receipt InterviewNote identity mismatch');
+    if (receipt.interview_note_id !== targetId) errors.push('materialization receipt InterviewNote identity mismatch');
+    if (request.schema_version === MULTI_SCHEMA_VERSION && (receipt.case_key !== request.case_key || !CHILD_CASE_KEY_RE.test(String(receipt.case_key || '')))) errors.push('materialization receipt case_key mismatch');
+    if (request.schema_version === SCHEMA_VERSION && Object.prototype.hasOwnProperty.call(receipt, 'case_key')) errors.push('single materialization receipt must not contain case_key');
     if (receipt.source_note_body_sha256 !== request.expected_source_note_body_sha256) errors.push('materialization receipt SourceNote body digest mismatch');
     if (receipt.source_revision_id !== request.expected_source_revision_id) errors.push('materialization receipt SourceRevision mismatch');
     if ((receipt.manifest_sha256 ?? null) !== (request.expected_manifest_sha256 ?? null)) errors.push('materialization receipt manifest mismatch');
@@ -267,7 +307,8 @@ function planMaterialization(request, options = {}) {
     request,
     request_sha256: reqSha,
     source_note_body_sha256: sha256Text(sourceIssue.body),
-    interview_note_id: derivedId,
+    interview_note_id: targetId,
+    case_key: caseKey,
     projection,
     action,
     existing_issue_number,
@@ -280,6 +321,7 @@ function planMaterialization(request, options = {}) {
 
 module.exports = {
   SCHEMA_VERSION,
+  MULTI_SCHEMA_VERSION,
   sha256Text,
   requestSha256,
   parseMaterializationRequest,
