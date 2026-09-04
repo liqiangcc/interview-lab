@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/liqiangcc/interview-lab/schemas/interview-context-batch-review.schema.json",
+  "title": "InterviewContext batch review request v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "batch_id", "repository", "dependency_issues", "dependency_gate_file", "expected_dependency_gate_sha256", "pilot_size", "items"],
+  "properties": {
+    "schema_version": {"const": "interview-context-batch-review.v1"},
+    "batch_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"},
+    "repository": {"type": "string", "pattern": "^[^/]+/[^/]+$"},
+    "dependency_issues": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "integer", "minimum": 1}
+    },
+    "dependency_gate_file": {"const": "data/pilot/issue-923/dependency-gate.json"},
+    "expected_dependency_gate_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "pilot_size": {"type": "integer", "minimum": 1, "maximum": 50},
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["issue_number", "expected_body_sha256", "context", "context_artifact"],
+        "properties": {
+          "issue_number": {"type": "integer", "minimum": 1},
+          "expected_body_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "context": {"$ref": "interview-context.schema.json"}
+          ,"context_artifact": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["repository", "path", "ref", "commit", "sha256"],
+            "properties": {
+              "repository": {"type": "string", "pattern": "^[^/]+/[^/]+$"},
+              "path": {"type": "string", "pattern": "^data/interview-contexts/[A-Za-z0-9_-]+\\.v1\\.json$"},
+              "ref": {"type": "string", "pattern": "^refs/(heads|tags)/[A-Za-z0-9._/-]+$", "description": "A durable ref that must contain the pinned commit; it may advance after the receipt is written."},
+              "commit": {"type": "string", "pattern": "^[0-9a-f]{40}$", "description": "The immutable authority used to read and verify the Context artifact."},
+              "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+            }
+          }
+        }
+      }
+    }
+  }
+}

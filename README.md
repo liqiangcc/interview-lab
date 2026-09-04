@@ -197,6 +197,7 @@ Issue number、标题和显示文本都不是领域 identity。
 - `docs/issues/interview-note-issue.md`
 - `docs/issues/label-taxonomy.md`
 - `docs/workflows/interview-note-lifecycle.md`
+- `docs/workflows/interview-context-batch-review.md`
 - `docs/workflows/issue-driven-workflow.md`
 - `docs/workflows/source-note-boundary-review.md`
 - `docs/workflows/source-note-boundary-review-batch.md`

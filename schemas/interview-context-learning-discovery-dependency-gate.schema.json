@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/liqiangcc/interview-lab/schemas/interview-context-learning-discovery-dependency-gate.schema.json",
+  "title": "InterviewContext Learning Discovery dependency gate v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "parent_issue", "target_issue", "dependencies"],
+  "properties": {
+    "schema_version": {"const": "interview-context-learning-discovery-dependency-gate.v1"},
+    "parent_issue": {"const": 919},
+    "target_issue": {"const": 923},
+    "dependencies": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["917", "920", "921", "922"],
+      "properties": {
+        "917": {"$ref": "#/$defs/dependency"},
+        "920": {"$ref": "#/$defs/dependency"},
+        "921": {"$ref": "#/$defs/dependency"},
+        "922": {"$ref": "#/$defs/dependency"}
+      }
+    }
+  },
+  "$defs": {
+    "dependency": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["issue_number", "state", "acceptance", "evidence_schema", "evidence", "acceptance_evidence"],
+      "properties": {
+        "issue_number": {"type": "integer", "minimum": 1},
+        "state": {"const": "closed"},
+        "acceptance": {"const": "pass"},
+        "evidence_schema": {"const": "issue-dependency-acceptance.v1"},
+        "evidence": {"type": "string", "pattern": "^https://github\\.com/[^/]+/[^/]+/issues/[0-9]+#issuecomment-[0-9]+$"},
+        "acceptance_evidence": {"type": "string", "pattern": "^https://github\\.com/[^/]+/[^/]+/issues/[0-9]+#issuecomment-[0-9]+$"}
+      }
+    }
+  }
+}
