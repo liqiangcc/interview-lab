@@ -24,6 +24,7 @@
     "plan:interview-note-batch": "node scripts/plan-xhs-interview-note-materialization-batch.js",
     "plan:issue-1539-recovery": "node scripts/plan-xhs-issue-1539-recovery.js --manifest data/pilot/issue-1539/plan-manifest.json --report data/pilot/issue-1539/recovery.dry-run.json",
     "generate:issue-1539-review-packets": "node scripts/generate-issue-1539-source-review-packets.js --manifest data/pilot/issue-1539/plan-manifest.json --report data/pilot/issue-1539/recovery.dry-run.json --pinned-artifact-manifest data/pilot/issue-1539/recovery.dry-run.json.pinned-artifact-manifest.json --output data/pilot/issue-1539/source-review-packets.json --summary docs/workflows/issue-1539-source-review-packets.md",
+    "plan:issue-1539-evidence-batch": "node scripts/apply-issue-1539-source-review-evidence-batch.js --packet-set data/pilot/issue-1539/source-review-packets.json --manifest data/pilot/issue-1539/plan-manifest.json --report data/pilot/issue-1539/recovery.dry-run.json --pinned-artifact-manifest data/pilot/issue-1539/recovery.dry-run.json.pinned-artifact-manifest.json --output data/pilot/issue-1539/evidence-apply.dry-run.json --progress data/pilot/issue-1539/evidence-apply.progress.json",
     "audit:issue-1539-provenance": "node scripts/audit-xhs-issue-1539-provenance.js --report data/pilot/issue-1539/provenance-audit.json",
     "apply:interview-note-batch": "node scripts/apply-xhs-interview-note-materialization-batch.js",
     "plan:xhs-pilot": "node scripts/plan-xhs-migration.js data/pilot/xhs-pilot-selection.json",
