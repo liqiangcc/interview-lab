@@ -644,10 +644,11 @@ function verifyCreatedSourceNote(targetRepo, projection, createdIssueNumber, opt
   return Number(createdIssueNumber);
 }
 
-function createSourceNote(targetRepo, projection) {
+function createSourceNote(targetRepo, projection, options = {}) {
+  const postIssue = options.postIssue || ((payload) => ghJson(['api', '--method', 'POST', `repos/${targetRepo}/issues`, '--input', '-'], payload));
   let created;
   try {
-    created = ghJson(['api', '--method', 'POST', `repos/${targetRepo}/issues`, '--input', '-'], {
+    created = postIssue({
       title: projection.title,
       body: projection.body,
       labels: projection.labels,
@@ -661,15 +662,17 @@ function createSourceNote(targetRepo, projection) {
     uncertain.projection = projection;
     throw uncertain;
   }
-  const createdIssueNumber = Number.isInteger(Number(created && created.number)) ? Number(created.number) : null;
-  if (createdIssueNumber == null) {
+  const createdIssueNumber = created && created.number;
+  if (!Number.isInteger(createdIssueNumber) || createdIssueNumber <= 0) {
     const uncertain = new Error(`post-create response did not include an Issue number for ${projection.source_note_id}; defer to batch inventory recovery`);
     uncertain.postCreateUncertain = true;
     uncertain.createdIssueNumber = null;
     uncertain.projection = projection;
     throw uncertain;
   }
-  return verifyCreatedSourceNote(targetRepo, projection, createdIssueNumber);
+  return verifyCreatedSourceNote(targetRepo, projection, createdIssueNumber, {
+    readIssue: options.readIssue,
+  });
 }
 
 function mutateAction(targetRepo, action) {
@@ -1110,6 +1113,7 @@ module.exports = {
   verifyCreatedSourceNote,
   verifyBatchInventory,
   inventoryBatchGateErrors,
+  createSourceNote,
   applyMutationPlan,
   buildReconciliationReport,
   reconcileSourceYearLabels,

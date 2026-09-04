@@ -21,6 +21,7 @@ const {
   findSourceNoteIdentity,
   verifyCreatedSourceNote,
   verifyBatchInventory,
+  createSourceNote,
   applyMutationPlan,
   buildReconciliationReport,
 } = require('../scripts/reconcile-xhs-source-notes');
@@ -340,6 +341,28 @@ test('missing POST response defers recovery to the batch inventory scan', () => 
     /batch inventory recovery/,
   );
   assert.equal(reads, 0);
+});
+
+test('null and zero POST issue numbers enter batch recovery instead of direct GET', () => {
+  const projection = buildProjection(candidate(), sourceRef, '2026-09-03T13:00:00.000Z');
+  for (const number of [null, 0]) {
+    let reads = 0;
+    let error;
+    try {
+      createSourceNote('liqiangcc/interview-lab', projection, {
+        postIssue: () => ({ number }),
+        readIssue: () => {
+          reads += 1;
+          return liveSourceNote(77, projection);
+        },
+      });
+    } catch (caught) {
+      error = caught;
+    }
+    assert.equal(error.postCreateUncertain, true);
+    assert.match(error.message, /batch inventory recovery/);
+    assert.equal(reads, 0);
+  }
 });
 
 test('normal POST response is verified by one direct GET without an issues scan', () => {
