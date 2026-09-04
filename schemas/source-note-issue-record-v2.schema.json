@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://interview-lab.local/schemas/source-note-issue-record-v2.schema.json",
+  "title": "SourceNote Issue Record v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "source_note_id",
+    "source",
+    "source_revision",
+    "source_published_at",
+    "source_edited_at",
+    "artifacts",
+    "observed_metadata",
+    "anomalies",
+    "limitations",
+    "boundary_review"
+  ],
+  "properties": {
+    "schema_version": { "const": "source-note-issue.v2" },
+    "source_note_id": { "type": "string", "pattern": "^xhs-note:.+$" },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["system", "external_id", "url"],
+      "properties": {
+        "system": { "const": "xhs" },
+        "external_id": { "type": "string", "minLength": 1 },
+        "url": { "type": ["string", "null"] }
+      }
+    },
+    "source_revision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "captured_at",
+        "producer",
+        "source_capture_schema",
+        "storage_kind",
+        "manifest_ref",
+        "manifest_sha256",
+        "manifest_byte_size",
+        "reason"
+      ],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "captured_at": { "type": "string", "minLength": 1 },
+        "producer": { "const": "liqiangcc/source-acquisition-runtime" },
+        "source_capture_schema": { "const": "source-capture.v1" },
+        "storage_kind": { "const": "runtime-artifact-store" },
+        "manifest_ref": { "type": "string", "pattern": "^source-capture:.+#manifest\\.json$" },
+        "manifest_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "manifest_byte_size": { "type": "integer", "minimum": 1 },
+        "reason": { "type": "string", "minLength": 1 }
+      }
+    },
+    "source_published_at": { "$ref": "#/$defs/time_fact" },
+    "source_edited_at": { "$ref": "#/$defs/time_fact" },
+    "artifacts": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/runtime_artifact" }
+    },
+    "observed_metadata": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "access_boundary": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": [
+        "bare_canonical_replay",
+        "live_rediscovery",
+        "stable_note_id_match",
+        "ephemeral_access_parameters_persisted"
+      ],
+      "properties": {
+        "bare_canonical_replay": { "type": "string", "minLength": 1 },
+        "live_rediscovery": { "type": "string", "minLength": 1 },
+        "stable_note_id_match": { "type": ["boolean", "null"] },
+        "ephemeral_access_parameters_persisted": { "const": false }
+      }
+    },
+    "anomalies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["code", "detail"],
+        "properties": {
+          "code": { "type": "string", "minLength": 1 },
+          "detail": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "boundary_review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "reviewed_at", "interview_note_ids"],
+      "properties": {
+        "status": { "enum": ["pending", "not-interview", "single-interview", "multi-interview"] },
+        "reviewed_at": { "type": ["string", "null"] },
+        "interview_note_ids": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  },
+  "$defs": {
+    "time_fact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["precision", "value"],
+      "properties": {
+        "precision": { "enum": ["exact", "month", "year", "month_day", "unknown"] },
+        "value": { "type": ["string", "null"] }
+      }
+    },
+    "runtime_artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "ref", "git_blob_sha", "sha256", "provenance", "byte_size", "integrity"],
+      "properties": {
+        "kind": { "type": "string", "minLength": 1 },
+        "ref": { "type": "string", "pattern": "^source-capture:.+#.+$" },
+        "git_blob_sha": { "type": "null" },
+        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "provenance": { "enum": ["raw_capture", "raw_dom_snapshot", "raw_context_capture", "source_projection", "derived_projection"] },
+        "byte_size": { "type": "integer", "minimum": 0 },
+        "integrity": { "enum": ["present", "zero-byte"] },
+        "sequence": { "type": "integer", "minimum": 1 },
+        "content_type": { "type": "string" },
+        "derived_from": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^source-capture:.+#.+$" }
+        }
+      }
+    }
+  }
+}

@@ -16,7 +16,8 @@
     "validate:exploration-v3-fixture": "node scripts/validate-exploration-session-checkpoint.js test/fixtures/exploration-session-checkpoint-v3.valid.md",
     "validate:exploration-history-fixture": "node scripts/validate-exploration-session-history.js test/fixtures/exploration-session-history.valid.json",
     "plan:xhs-pilot": "node scripts/plan-xhs-migration.js data/pilot/xhs-pilot-selection.json",
-    "check": "npm test && npm run validate:source-note-fixture && npm run validate:issue-fixture && npm run validate:interview-context-pilot && npm run validate:source-sequence-manifest && npm run validate:source-sequence-reviews && npm run validate:review-transition-fixture && npm run validate:exploration-fixture && npm run validate:exploration-v2-fixture && npm run validate:exploration-v3-fixture && npm run validate:exploration-history-fixture && npm run plan:xhs-pilot"
+    "check": "npm test && npm run validate:source-note-fixture && npm run validate:source-note-v2-fixture && npm run validate:issue-fixture && npm run validate:interview-context-pilot && npm run validate:source-sequence-manifest && npm run validate:source-sequence-reviews && npm run validate:review-transition-fixture && npm run validate:exploration-fixture && npm run validate:exploration-v2-fixture && npm run validate:exploration-v3-fixture && npm run validate:exploration-history-fixture && npm run plan:xhs-pilot",
+    "validate:source-note-v2-fixture": "node scripts/validate-source-note-issue.js test/fixtures/source-note-issue-v2.valid.md --label type:source-note --label source:xhs --label status:captured --label boundary:pending --label task:boundary-review"
   },
   "engines": {
     "node": ">=20"

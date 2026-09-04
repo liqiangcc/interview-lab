@@ -66,3 +66,43 @@ test('closed pending SourceNote fails closed', () => {
   assert.equal(result.ok, false);
   assert.match(result.errors.join('\n'), /pending SourceNote must not be closed/);
 });
+
+const runtimeFixture = fs.readFileSync(path.join(__dirname, 'fixtures/source-note-issue-v2.valid.md'), 'utf8');
+const runtimeLabels = ['type:source-note', 'source:xhs', 'status:captured', 'boundary:pending', 'task:boundary-review'];
+
+test('valid runtime SourceNote v2 intake passes without Git snapshot identity', () => {
+  const result = validateSourceNoteIssue({ body: runtimeFixture, labels: runtimeLabels, state: 'open' });
+  assert.equal(result.ok, true, result.errors.join('\n'));
+  assert.equal(result.parsed.record.source_revision.storage_kind, 'runtime-artifact-store');
+  assert.equal(result.parsed.record.artifacts[0].git_blob_sha, null);
+});
+
+test('runtime SourceNote v2 requires SHA-256 on every artifact', () => {
+  const parsed = parseSourceNoteIssue(runtimeFixture);
+  const mutated = JSON.parse(JSON.stringify(parsed.record));
+  mutated.artifacts[0].sha256 = null;
+  const body = runtimeFixture.replace(JSON.stringify(parsed.record, null, 2), JSON.stringify(mutated, null, 2));
+  const result = validateSourceNoteIssue({ body, labels: runtimeLabels });
+  assert.equal(result.ok, false);
+  assert.match(result.errors.join('\n'), /sha256 is required for runtime SourceCapture artifacts/);
+});
+
+test('runtime SourceNote v2 must not pretend runtime artifacts are Git blobs', () => {
+  const parsed = parseSourceNoteIssue(runtimeFixture);
+  const mutated = JSON.parse(JSON.stringify(parsed.record));
+  mutated.artifacts[0].git_blob_sha = '0123456789abcdef0123456789abcdef01234567';
+  const body = runtimeFixture.replace(JSON.stringify(parsed.record, null, 2), JSON.stringify(mutated, null, 2));
+  const result = validateSourceNoteIssue({ body, labels: runtimeLabels });
+  assert.equal(result.ok, false);
+  assert.match(result.errors.join('\n'), /git_blob_sha must be null for runtime SourceCapture artifacts/);
+});
+
+test('runtime SourceNote v2 rejects transient XHS access tokens in canonical URL', () => {
+  const parsed = parseSourceNoteIssue(runtimeFixture);
+  const mutated = JSON.parse(JSON.stringify(parsed.record));
+  mutated.source.url += '?xsec_token=dummy';
+  const body = runtimeFixture.replace(JSON.stringify(parsed.record, null, 2), JSON.stringify(mutated, null, 2));
+  const result = validateSourceNoteIssue({ body, labels: runtimeLabels });
+  assert.equal(result.ok, false);
+  assert.match(result.errors.join('\n'), /must not persist XHS ephemeral access parameters/);
+});
