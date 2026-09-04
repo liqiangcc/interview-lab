@@ -149,3 +149,7 @@ materialization 不等于 source-ready。
 materialization 不进入 Interview-derived 分析。
 相同 request 重跑不得创建第二个主 Issue。
 ```
+
+## GitHub write-after-list consistency
+
+GitHub 新建 Issue 后，按 Issue number 直接读取可能已经成功，但仓库级 Issue list / machine-marker ownership scan 仍可能短暂返回旧快照。Post-create ownership gate 因此采用有界 retry/backoff：仅 `0 owner` 允许重试；一旦观察到错误 sole owner 或多个 owner，立即 fail closed。重试耗尽仍不可见时同样失败，并依赖 `1 exact owner + no receipt` 的 crash-recovery 路径恢复，而不是再次创建 Issue。
