@@ -291,7 +291,9 @@ function postEvidence(pauseMs) {
         return text.includes('[ISSUE #921 BOUNDARY REVIEW EVIDENCE]') && text.includes(`transition_id: ${request.transition_id}`);
       });
       if (legacy) {
-        comment = ghJson(['api', '--method', 'PATCH', `repos/${REPOSITORY}/issues/${item.issue_number}/comments/${legacy.id}`, '--input', '-'], { body });
+        // GitHub's edit-issue-comment endpoint is keyed by the global comment
+        // id; the issue-scoped comments collection is read-only for PATCH.
+        comment = ghJson(['api', '--method', 'PATCH', `repos/${REPOSITORY}/issues/comments/${legacy.id}`, '--input', '-'], { body });
         action = 'patched-legacy-in-place';
       } else {
         comment = ghJson(['api', '--method', 'POST', `repos/${REPOSITORY}/issues/${item.issue_number}/comments`, '--input', '-'], { body });
