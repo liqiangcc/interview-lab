@@ -188,7 +188,7 @@ function planSourceReviewItem(manifest, item, interviewIssue, sourceIssue, owner
     source_revision_evidence: {
       source_repository: sourceRecord.source_revision.source_repository || null,
       source_repository_ref: request.expected_source_repository_ref,
-      manifest_sha256: request.expected_manifest_sha256,
+      ...(request.expected_manifest_sha256 == null ? {} : { manifest_sha256: request.expected_manifest_sha256 }),
       raw_artifact_count: (sourceRecord.artifacts || []).filter((artifact) => artifact.provenance === 'raw_capture').length,
       source_projection_count: (sourceRecord.artifacts || []).filter((artifact) => artifact.provenance === 'source_projection').length,
     },
