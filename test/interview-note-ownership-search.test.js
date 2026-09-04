@@ -12,8 +12,9 @@ const {
   createSearchThrottle,
   forEachWithThrottle,
 } = require('../scripts/lib/interview-note-ownership-search');
-const { parseArgs, ghReadJson, loadOwnershipCandidates, ownershipIdentityCandidates, readOfflineInterviewIssues } = require('../scripts/plan-xhs-interview-note-materialization-batch');
+const { parseArgs, ghReadJson, loadOwnershipCandidates, ownershipIdentityCandidates, readOfflineInterviewIssues, main } = require('../scripts/plan-xhs-interview-note-materialization-batch');
 const { parseSourceNoteIssue } = require('../scripts/lib/source-note-issue');
+const { sha256Text } = require('../scripts/lib/source-note-interview-materialization');
 
 test('exact identity search reads only returned candidate Issues at repository scale', () => {
   const pages = [{ total_count: 2, incomplete_results: false, items: [{ number: 17 }, { number: 42 }] }];
@@ -132,4 +133,30 @@ test('offline interview candidate input requires scope, completeness, and digest
   assert.equal(readOfflineInterviewIssues(file, value.repository).proof.completeness.complete, true);
   fs.writeFileSync(file, JSON.stringify({ ...value, completeness: { complete: false, method: 'unknown' } }));
   assert.throws(() => readOfflineInterviewIssues(file, value.repository), /completeness proof/);
+});
+
+test('offline ownership report uses safeReport readiness for its exit code', () => {
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'issue-922-offline-exit-'));
+  const sourceFile = path.join(directory, 'sources.json');
+  const interviewFile = path.join(directory, 'interviews.json');
+  const reportFile = path.join(directory, 'report.json');
+  const issues = [];
+  const offline = {
+    schema_version: 'interview-note-ownership-offline-input.v1',
+    repository: 'liqiangcc/interview-lab',
+    scope: { kind: 'explicit-interview-note-candidate-set', source_issue_numbers: [] },
+    completeness: { complete: true, method: 'fixture-only-explicit-set' },
+    issues,
+    issues_sha256: sha256Text(JSON.stringify(issues)),
+  };
+  fs.writeFileSync(sourceFile, JSON.stringify([]));
+  fs.writeFileSync(interviewFile, JSON.stringify(offline));
+  const exitCode = main([
+    '--repository', 'liqiangcc/interview-lab', '--source-issues-file', sourceFile,
+    '--interview-issues-file', interviewFile, '--dependency-gate-file', path.join(__dirname, '../data/pilot/issue-922/dependency-gate.json'),
+    '--report', reportFile,
+  ]);
+  const safeReport = JSON.parse(fs.readFileSync(reportFile, 'utf8'));
+  assert.equal(safeReport.ready_for_apply, false);
+  assert.equal(exitCode, 1);
 });

@@ -279,7 +279,7 @@ function main(argv = process.argv.slice(2)) {
     if (args.report) atomicWrite(args.report, safeReport);
     if (progressFile) atomicWrite(progressFile, { schema_version: 'source-note-interview-materialization-dry-run-progress.v1', status: 'complete', stage: 'complete', identity: null, repository: args.repository, report: args.report, search_pause_ms: args.searchPauseMs, completed_identities: JSON.parse(fs.readFileSync(progressFile, 'utf8')).completed_identities, dry_run_sha256: safeReport.dry_run_sha256, updated_at: new Date().toISOString() });
     process.stdout.write(`${JSON.stringify(safeReport, null, 2)}\n`);
-    return report.ready_for_apply ? 0 : 1;
+    return safeReport.ready_for_apply ? 0 : 1;
   } catch (error) {
     if (progressFile) {
       let current = {};
