@@ -20,6 +20,9 @@ const {
   exactOwnershipCandidates,
 } = require('./lib/interview-note-ownership-search');
 
+const ISSUE_1539_REPOSITORY = 'liqiangcc/interview-lab';
+const ISSUE_1539_BLOCKED_RANGE = Object.freeze({ first: 1509, last: 1538 });
+
 function parseArgs(argv = process.argv.slice(2)) {
   const out = { request: null, pinnedArtifactManifest: null, apply: false };
   for (let i = 0; i < argv.length; i += 1) {
@@ -31,6 +34,13 @@ function parseArgs(argv = process.argv.slice(2)) {
   if (!out.request) throw new Error('--request is required');
   return out;
 }
+function isIssue1539FixedRangeRequest(request) {
+  return Boolean(request && request.repository === ISSUE_1539_REPOSITORY
+    && Number.isInteger(request.issue_number)
+    && request.issue_number >= ISSUE_1539_BLOCKED_RANGE.first
+    && request.issue_number <= ISSUE_1539_BLOCKED_RANGE.last);
+}
+const isIssue1539BlockedRecoveryRequest = isIssue1539FixedRangeRequest;
 function ghJson(args, input = null) {
   return JSON.parse(execFileSync('gh', args, {
     input: input == null ? undefined : JSON.stringify(input), encoding: 'utf8', maxBuffer: 128 * 1024 * 1024,
@@ -141,6 +151,9 @@ function main(argv = process.argv.slice(2)) {
     const request = parsed.request;
     const requestValidation = validateRequest(request);
     if (!requestValidation.ok) throw new Error(requestValidation.errors.join('\n'));
+    if (args.apply && isIssue1539FixedRangeRequest(request)) {
+      throw new Error('Issue #1539 fixed-range requests must use the issue-1539 transition batch runner; single-item --apply is disabled');
+    }
     const pinnedArtifactManifest = request.provenance_mode === PROVENANCE_MODES.PINNED_SOURCE_ARTIFACT
       ? loadPinnedArtifactManifest(args.pinnedArtifactManifest)
       : null;
@@ -202,4 +215,6 @@ module.exports = {
   ownershipSearchEndpoint,
   ownershipSearchItems,
   loadOwnershipMatches,
+  isIssue1539BlockedRecoveryRequest,
+  isIssue1539FixedRangeRequest,
 };
