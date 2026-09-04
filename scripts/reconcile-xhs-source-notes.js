@@ -21,7 +21,7 @@ const MAX_IMAGE_ARTIFACTS = 20;
 const FIXED_SOURCE_REF = '95b77bb261048059846273688e4b90a2e108b437';
 const EXPECTED_SOURCE_TOTAL = 1459;
 const MAX_PAGINATED_PAGES = 1000;
-const CREATE_VERIFY_ATTEMPTS = 6;
+const MAX_MUTATIONS_PER_BATCH = 100;
 const MUTATING_ACTIONS = new Set([
   'reconcile-source-note-labels',
   'reconcile-source-note-discovery-labels',
@@ -54,6 +54,7 @@ function parseArgs(argv = process.argv.slice(2)) {
   if (!out.sourceRoot) throw new Error('--source-root is required');
   if (!out.targetRepo) throw new Error('--target-repo is required');
   if (!Number.isInteger(out.maxMutations) || out.maxMutations < 0) throw new Error('--max-mutations must be a non-negative integer');
+  if (out.maxMutations > MAX_MUTATIONS_PER_BATCH) throw new Error(`--max-mutations must be <= ${MAX_MUTATIONS_PER_BATCH}`);
   if (!Number.isInteger(out.pauseMs) || out.pauseMs < 0) throw new Error('--pause-ms must be a non-negative integer');
   return out;
 }
@@ -619,59 +620,59 @@ function findSourceNoteIdentity(issues, sourceNoteId) {
 
 function verifyCreatedSourceNote(targetRepo, projection, createdIssueNumber, options = {}) {
   const readIssue = options.readIssue || ((number) => ghJson(['api', `repos/${targetRepo}/issues/${number}`]));
-  const scanIssues = options.scanIssues || (() => paginatedGhApi(`repos/${targetRepo}/issues?state=all`));
-  const wait = options.sleep || sleepMs;
-  let lastProblem = 'identity not visible';
-
-  for (let attempt = 1; attempt <= CREATE_VERIFY_ATTEMPTS; attempt += 1) {
-    let directIdentity = false;
-    if (createdIssueNumber != null) {
-      try {
-        const issue = readIssue(createdIssueNumber);
-        directIdentity = findSourceNoteIdentity([issue], projection.source_note_id).length === 1;
-        if (!directIdentity) lastProblem = `Issue #${createdIssueNumber} did not contain exact SourceNote identity ${projection.source_note_id}`;
-      } catch (error) {
-        lastProblem = `direct-read failed: ${error.message}`;
-      }
-    }
-
-    const matches = findSourceNoteIdentity(scanIssues(), projection.source_note_id);
-    if (matches.length > 1) {
-      throw new Error(`post-create duplicate SourceNote identity ${projection.source_note_id}: ${matches.map((issue) => issue.number).join(',')}`);
-    }
-    if (matches.length === 1) {
-      if (directIdentity && Number(matches[0].number) !== Number(createdIssueNumber)) {
-        throw new Error(`post-create duplicate SourceNote identity ${projection.source_note_id}: direct Issue #${createdIssueNumber} and global Issue #${matches[0].number}`);
-      }
-      return Number(matches[0].number);
-    }
-    if (attempt < CREATE_VERIFY_ATTEMPTS) wait(500 * attempt);
+  if (createdIssueNumber == null) {
+    throw new Error(`post-create response did not include an Issue number for ${projection.source_note_id}; batch inventory recovery required`);
   }
-  throw new Error(`post-create identity verification failed for ${projection.source_note_id} after ${CREATE_VERIFY_ATTEMPTS} attempts: ${lastProblem}`);
+  let issue;
+  try {
+    issue = readIssue(createdIssueNumber);
+  } catch (error) {
+    throw new Error(`post-create direct-read failed for ${projection.source_note_id}: ${error.message}`);
+  }
+  const matches = findSourceNoteIdentity([issue], projection.source_note_id);
+  if (matches.length !== 1) {
+    throw new Error(`post-create direct-read did not contain exact SourceNote identity ${projection.source_note_id} at Issue #${createdIssueNumber}`);
+  }
+  const validation = validateSourceNoteIssue({
+    body: issue.body,
+    labels: normalizeIssueLabels(issue),
+    state: issue.state || 'open',
+  });
+  if (!validation.ok) {
+    throw new Error(`post-create direct-read SourceNote validation failed for ${projection.source_note_id}: ${validation.errors.join('; ')}`);
+  }
+  return Number(createdIssueNumber);
 }
 
-function createSourceNote(targetRepo, projection) {
-  let createdIssueNumber = null;
-  let createError = null;
+function createSourceNote(targetRepo, projection, options = {}) {
+  const postIssue = options.postIssue || ((payload) => ghJson(['api', '--method', 'POST', `repos/${targetRepo}/issues`, '--input', '-'], payload));
+  let created;
   try {
-    const created = ghJson(['api', '--method', 'POST', `repos/${targetRepo}/issues`, '--input', '-'], {
+    created = postIssue({
       title: projection.title,
       body: projection.body,
       labels: projection.labels,
     });
-    createdIssueNumber = Number.isInteger(Number(created.number)) ? Number(created.number) : null;
   } catch (error) {
-    // The POST may have succeeded even when its response was lost. Verify identity before retrying.
-    createError = error;
+    // The POST may have succeeded even when its response was lost. Recovery is
+    // deliberately deferred to the single batch inventory snapshot.
+    const uncertain = new Error(`${error.message}; post-create response lost; defer to batch inventory recovery`);
+    uncertain.postCreateUncertain = true;
+    uncertain.createdIssueNumber = null;
+    uncertain.projection = projection;
+    throw uncertain;
   }
-  try {
-    return verifyCreatedSourceNote(targetRepo, projection, createdIssueNumber);
-  } catch (verificationError) {
-    if (createError) {
-      throw new Error(`${createError.message}; ${verificationError.message}`);
-    }
-    throw verificationError;
+  const createdIssueNumber = created && created.number;
+  if (!Number.isInteger(createdIssueNumber) || createdIssueNumber <= 0) {
+    const uncertain = new Error(`post-create response did not include an Issue number for ${projection.source_note_id}; defer to batch inventory recovery`);
+    uncertain.postCreateUncertain = true;
+    uncertain.createdIssueNumber = null;
+    uncertain.projection = projection;
+    throw uncertain;
   }
+  return verifyCreatedSourceNote(targetRepo, projection, createdIssueNumber, {
+    readIssue: options.readIssue,
+  });
 }
 
 function mutateAction(targetRepo, action) {
@@ -697,19 +698,80 @@ function mutateAction(targetRepo, action) {
   return action.issue_number;
 }
 
-function applyMutationPlan(actions, { mutate, persist, sleep = sleepMs, globalTotal = actions.length } = {}) {
+function inventoryBatchGateErrors(summary) {
+  const errors = inventoryPreflightErrors(summary);
+  if (summary.repairable_invalid_source_note) errors.push(`repairable_invalid_source_note=${summary.repairable_invalid_source_note}`);
+  return errors;
+}
+
+function verifyBatchInventory(targetRepo, projections, createdRecords = [], options = {}) {
+  const scanIssues = options.scanIssues || (() => paginatedGhApi(`repos/${targetRepo}/issues?state=all`));
+  const issues = scanIssues();
+  const inventory = buildInventory(issues);
+  const summary = inventoryReconciliationSummary(projections, inventory);
+  const gateErrors = inventoryBatchGateErrors(summary);
+  if (gateErrors.length) {
+    const error = new Error(`batch inventory duplicate audit failed closed: ${gateErrors.join(', ')}`);
+    error.inventory = inventory;
+    error.inventorySummary = summary;
+    throw error;
+  }
+  const created = createdRecords.map((record) => {
+    const projection = record.projection || (record.action && record.action.projection);
+    const matches = findSourceNoteIdentity(issues, projection.source_note_id);
+    if (matches.length > 1) {
+      const error = new Error(`batch inventory duplicate SourceNote identity ${projection.source_note_id}: ${matches.map((issue) => issue.number).join(',')}`);
+      error.inventory = inventory;
+      error.inventorySummary = summary;
+      throw error;
+    }
+    if (matches.length !== 1) {
+      const error = new Error(`batch inventory could not recover SourceNote identity ${projection.source_note_id}`);
+      error.inventory = inventory;
+      error.inventorySummary = summary;
+      throw error;
+    }
+    const issueNumber = Number(matches[0].number);
+    if (record.issue_number != null && issueNumber !== Number(record.issue_number)) {
+      const error = new Error(`batch inventory SourceNote identity ${projection.source_note_id} moved from Issue #${record.issue_number} to Issue #${issueNumber}`);
+      error.inventory = inventory;
+      error.inventorySummary = summary;
+      throw error;
+    }
+    return { ...record, issue_number: issueNumber };
+  });
+  return { issues, inventory, summary, created };
+}
+
+function appliedEntry(action, issueNumber) {
+  return {
+    action: action.action,
+    issue_number: issueNumber,
+    protected_interview_issue_number: action.protected_interview_issue_number || null,
+    source_note_id: action.projection.source_note_id,
+  };
+}
+
+function applyMutationPlan(actions, {
+  mutate,
+  persist,
+  sleep = sleepMs,
+  globalTotal = actions.length,
+  verifyBatch,
+} = {}) {
   const runMutation = mutate || ((action) => mutateAction(null, action));
   const save = persist || (() => {});
   const applied = [];
-  for (const action of actions) {
+  const createdRecords = [];
+  let batchAuditPerformed = false;
+  for (let index = 0; index < actions.length; index += 1) {
+    const action = actions[index];
     try {
       const issueNumber = runMutation(action);
-      applied.push({
-        action: action.action,
-        issue_number: issueNumber,
-        protected_interview_issue_number: action.protected_interview_issue_number || null,
-        source_note_id: action.projection.source_note_id,
-      });
+      applied.push(appliedEntry(action, issueNumber));
+      if (action.action === 'create-source-note' || action.action === 'create-source-note-alongside-formal-interview-note') {
+        createdRecords.push({ action, issue_number: issueNumber, projection: action.projection });
+      }
       save({
         applied,
         failure: null,
@@ -717,6 +779,65 @@ function applyMutationPlan(actions, { mutate, persist, sleep = sleepMs, globalTo
         global_remaining: globalTotal - applied.length,
       });
     } catch (error) {
+      if (error.postCreateUncertain && verifyBatch) {
+        createdRecords.push({
+          action,
+          issue_number: error.createdIssueNumber,
+          projection: error.projection || action.projection,
+        });
+        batchAuditPerformed = true;
+        let recovery;
+        try {
+          recovery = verifyBatch(createdRecords);
+        } catch (recoveryError) {
+          save({
+            applied,
+            failure: {
+              phase: 'post-create-recovery',
+              index: index + 1,
+              action: action.action,
+              source_note_id: action.projection.source_note_id,
+              error: recoveryError.message,
+            },
+            batch_remaining: actions.length - applied.length,
+            global_remaining: globalTotal - applied.length,
+          });
+          throw recoveryError;
+        }
+        const recovered = recovery.created.find((record) => record.projection.source_note_id === action.projection.source_note_id);
+        if (!recovered) {
+          const recoveryError = new Error(`post-create recovery returned no identity for ${action.projection.source_note_id}`);
+          save({
+            applied,
+            failure: {
+              phase: 'post-create-recovery',
+              index: index + 1,
+              action: action.action,
+              source_note_id: action.projection.source_note_id,
+              error: recoveryError.message,
+            },
+            batch_remaining: actions.length - applied.length,
+            global_remaining: globalTotal - applied.length,
+          });
+          throw recoveryError;
+        }
+        applied.push(appliedEntry(action, recovered.issue_number));
+        const stopError = new Error(`post-create response loss recovered for ${action.projection.source_note_id}; batch stopped for review`);
+        save({
+          applied,
+          failure: {
+            phase: 'post-create-recovery',
+            index: index + 1,
+            action: action.action,
+            source_note_id: action.projection.source_note_id,
+            error: stopError.message,
+            recovered: true,
+          },
+          batch_remaining: actions.length - applied.length,
+          global_remaining: globalTotal - applied.length,
+        });
+        throw stopError;
+      }
       save({
         applied,
         failure: {
@@ -732,6 +853,25 @@ function applyMutationPlan(actions, { mutate, persist, sleep = sleepMs, globalTo
       throw error;
     }
     sleep(action);
+  }
+  if (verifyBatch && !batchAuditPerformed) {
+    try {
+      verifyBatch(createdRecords);
+    } catch (error) {
+      save({
+        applied,
+        failure: {
+          phase: 'global-duplicate-audit',
+          index: actions.length,
+          action: null,
+          source_note_id: null,
+          error: error.message,
+        },
+        batch_remaining: actions.length - applied.length,
+        global_remaining: globalTotal - applied.length,
+      });
+      throw error;
+    }
   }
   return applied;
 }
@@ -861,8 +1001,8 @@ function main() {
     throw new Error(`SourceNote projection preflight failed for ${validationErrors.length} candidate(s)`);
   }
 
-  const inventory = loadInventory(args.targetRepo);
-  const inventorySummary = inventoryReconciliationSummary(projections, inventory);
+  let inventory = loadInventory(args.targetRepo);
+  let inventorySummary = inventoryReconciliationSummary(projections, inventory);
   const preflightErrors = inventoryPreflightErrors(inventorySummary);
   if (preflightErrors.length) {
     const report = {
@@ -904,6 +1044,22 @@ function main() {
   applied = applyMutationPlan(selected, {
     mutate: (action) => mutateAction(args.targetRepo, action),
     globalTotal: mutating.length,
+    verifyBatch: args.apply && selected.length
+      ? (createdRecords) => {
+        try {
+          const verification = verifyBatchInventory(args.targetRepo, projections, createdRecords);
+          inventory = verification.inventory;
+          inventorySummary = verification.summary;
+          return verification;
+        } catch (error) {
+          if (error.inventory && error.inventorySummary) {
+            inventory = error.inventory;
+            inventorySummary = error.inventorySummary;
+          }
+          throw error;
+        }
+      }
+      : null,
     persist: ({ applied: persistedApplied, failure, batch_remaining: batchRemainingAfterRun, global_remaining: globalRemainingAfterRun }) => {
       if (args.report || failure) {
         writeReport(buildReconciliationReport({
@@ -921,7 +1077,16 @@ function main() {
     },
     sleep: () => sleepMs(args.pauseMs),
   });
-  writeReport(buildReconciliationReport({ sourceRef, candidates, inventory, inventorySummary, actions, mutating, applied }), args.report);
+  writeReport(buildReconciliationReport({
+    sourceRef,
+    candidates,
+    inventory,
+    inventorySummary,
+    actions,
+    mutating,
+    applied,
+    batchSize: args.apply ? selected.length : mutating.length,
+  }), args.report);
 }
 
 if (require.main === module) main();
@@ -946,6 +1111,9 @@ module.exports = {
   inventoryGateErrors,
   findSourceNoteIdentity,
   verifyCreatedSourceNote,
+  verifyBatchInventory,
+  inventoryBatchGateErrors,
+  createSourceNote,
   applyMutationPlan,
   buildReconciliationReport,
   reconcileSourceYearLabels,
