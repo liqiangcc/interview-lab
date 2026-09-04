@@ -10,6 +10,21 @@ function isNonEmptyString(value) {
   return typeof value === 'string' && value.trim().length > 0;
 }
 
+function validateArtifactIdentity(artifact, prefix, errors, options = {}) {
+  const shaField = options.shaField || 'raw_git_blob_sha';
+  const sha = artifact[shaField];
+  const storageKind = artifact.storage_kind;
+  if (sha === null) {
+    if (storageKind !== 'runtime-artifact-store') {
+      errors.push(`${prefix}.${shaField}=null requires storage_kind=runtime-artifact-store`);
+    }
+  } else if (!/^[0-9a-f]{40}$/.test(String(sha || ''))) {
+    errors.push(`${prefix}.${shaField} must be a 40-char lowercase hex SHA or null for runtime artifacts`);
+  } else if (storageKind === 'runtime-artifact-store') {
+    errors.push(`${prefix}.${shaField} must be null for runtime-artifact-store artifacts`);
+  }
+}
+
 function stableStringify(value) {
   if (value === null || typeof value !== 'object') return JSON.stringify(value);
   if (Array.isArray(value)) return `[${value.map(stableStringify).join(',')}]`;
@@ -51,7 +66,7 @@ function validateSourceSequenceManifest(manifest) {
   } else {
     if (!isNonEmptyString(stream.stream_id)) errors.push('evidence_stream.stream_id must be a non-empty string');
     if (!isNonEmptyString(stream.raw_artifact_ref)) errors.push('evidence_stream.raw_artifact_ref must be a non-empty string');
-    if (!/^[0-9a-f]{40}$/.test(String(stream.raw_git_blob_sha || ''))) errors.push('evidence_stream.raw_git_blob_sha must be a 40-char lowercase hex SHA');
+    validateArtifactIdentity(stream, 'evidence_stream', errors);
     if (!/^[0-9a-f]{64}$/.test(String(stream.raw_sha256 || ''))) errors.push('evidence_stream.raw_sha256 must be a 64-char lowercase hex SHA-256');
 
     if (stream.readable_projection != null) {
@@ -60,9 +75,19 @@ function validateSourceSequenceManifest(manifest) {
         errors.push('evidence_stream.readable_projection must be an object or null');
       } else {
         if (!isNonEmptyString(projection.ref)) errors.push('readable_projection.ref must be a non-empty string');
-        if (!/^[0-9a-f]{40}$/.test(String(projection.git_blob_sha || ''))) errors.push('readable_projection.git_blob_sha must be a 40-char lowercase hex SHA');
-        if (projection.provenance !== 'derived') errors.push('readable_projection.provenance must remain derived');
+        validateArtifactIdentity(projection, 'readable_projection', errors, { shaField: 'git_blob_sha' });
+        if (projection.sha256 != null && !/^[0-9a-f]{64}$/.test(String(projection.sha256))) errors.push('readable_projection.sha256 must be a 64-char lowercase hex SHA-256');
+        if (!['derived', 'source_projection'].includes(projection.provenance)) errors.push('readable_projection.provenance must remain derived or source_projection');
         if (!['unreviewed', 'fidelity-reviewed'].includes(projection.review_status)) errors.push('readable_projection.review_status must be unreviewed or fidelity-reviewed');
+      }
+    }
+    if (stream.storage_kind === 'runtime-artifact-store') {
+      if (!stream.readable_projection || typeof stream.readable_projection !== 'object' || Array.isArray(stream.readable_projection)) {
+        errors.push('runtime-artifact-store sequences require a readable_projection');
+      } else if (!/^[0-9a-f]{64}$/.test(String(stream.readable_projection.sha256 || ''))) {
+        errors.push('runtime readable_projection requires sha256');
+      } else if (stream.readable_projection.provenance !== 'source_projection') {
+        errors.push('runtime readable_projection.provenance must be source_projection');
       }
     }
   }
@@ -97,6 +122,32 @@ function validateSourceSequenceManifest(manifest) {
       errors.push(`${prefix}.source_unit_type must be a stable lowercase machine identifier`);
     }
     if (!isNonEmptyString(unit.text_projection)) errors.push(`${prefix}.text_projection must be a non-empty string`);
+    if (manifest.evidence_stream && manifest.evidence_stream.storage_kind === 'runtime-artifact-store') {
+      const provenance = unit.source_provenance;
+      if (!provenance || typeof provenance !== 'object' || Array.isArray(provenance)) {
+        errors.push(`${prefix}.source_provenance is required for runtime-artifact-store sequences`);
+      } else {
+        if (!isNonEmptyString(provenance.source_projection_ref)) errors.push(`${prefix}.source_provenance.source_projection_ref must be a non-empty string`);
+        if (!/^[0-9a-f]{64}$/.test(String(provenance.source_projection_sha256 || ''))) errors.push(`${prefix}.source_provenance.source_projection_sha256 must be a 64-char lowercase hex SHA-256`);
+        if (!isNonEmptyString(provenance.raw_artifact_ref)) errors.push(`${prefix}.source_provenance.raw_artifact_ref must be a non-empty string`);
+        if (!/^[0-9a-f]{64}$/.test(String(provenance.raw_sha256 || ''))) errors.push(`${prefix}.source_provenance.raw_sha256 must be a 64-char lowercase hex SHA-256`);
+        if (!Number.isInteger(provenance.source_projection_item_number) || provenance.source_projection_item_number !== unit.position) {
+          errors.push(`${prefix}.source_provenance.source_projection_item_number must equal SourceUnit position`);
+        }
+        if (provenance.source_projection_ref !== manifest.evidence_stream.readable_projection?.ref) {
+          errors.push(`${prefix}.source_provenance.source_projection_ref must equal evidence_stream.readable_projection.ref`);
+        }
+        if (provenance.source_projection_sha256 !== manifest.evidence_stream.readable_projection?.sha256) {
+          errors.push(`${prefix}.source_provenance.source_projection_sha256 must equal evidence_stream.readable_projection.sha256`);
+        }
+        if (provenance.raw_artifact_ref !== manifest.evidence_stream.raw_artifact_ref) {
+          errors.push(`${prefix}.source_provenance.raw_artifact_ref must equal evidence_stream.raw_artifact_ref`);
+        }
+        if (provenance.raw_sha256 !== manifest.evidence_stream.raw_sha256) {
+          errors.push(`${prefix}.source_provenance.raw_sha256 must equal evidence_stream.raw_sha256`);
+        }
+      }
+    }
     if (!Array.isArray(unit.fragments)) {
       errors.push(`${prefix}.fragments must be an array`);
       return;

@@ -1,0 +1,31 @@
+{
+  "schema_version": "source-sequence-review.v1",
+  "review_id": "xhs:6a8abe2d000000001602b26e:r1:readable-16:sequence-v1:review-1",
+  "manifest_id": "xhs:6a8abe2d000000001602b26e:r1:readable-16:sequence-v1",
+  "manifest_sha256": "a757570a865c3867ae96ebc9cf21bea152dc79414e83267bd1440e9d24b87550",
+  "decision": "approved",
+  "reviewed_at": "2026-09-04T12:05:00Z",
+  "reviewer_kind": "ai-assisted",
+  "review_evidence": {
+    "repository": "liqiangcc/interview-lab",
+    "issue_number": 930,
+    "comment_id": 5539403080
+  },
+  "checks": [
+    {"check_id": "evidence_stream_binding", "result": "pass"},
+    {"check_id": "sequence_scope", "result": "pass"},
+    {"check_id": "unit_boundaries", "result": "pass"},
+    {"check_id": "unit_order", "result": "pass"},
+    {"check_id": "unit_types", "result": "pass"},
+    {"check_id": "fragment_boundaries", "result": "pass"},
+    {"check_id": "fragment_order", "result": "pass"},
+    {"check_id": "no_fabrication", "result": "pass"}
+  ],
+  "limitations": [
+    "Approval covers only the exact manifest_id + manifest_sha256 pair.",
+    "Runtime artifact identities remain SHA-256 based; no Git SHA is inferred.",
+    "source_projection remains Source-derived readable evidence and does not become Raw by inclusion in the Manifest.",
+    "Approval does not authorize SourceQuestion, CanonicalQuestion, Analysis, Answer, outcome, or result mutation."
+  ],
+  "supersedes_review_id": null
+}
