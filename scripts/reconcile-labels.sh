@@ -13,8 +13,14 @@ fi
 
 node <<'NODE' | while IFS=$'\t' read -r dimension label; do
 const config = require('./config/issue-labels.json');
+const { managedLabels } = require('./scripts/lib/issue-label-taxonomy');
 for (const [dimension, labels] of Object.entries(config.dimensions)) {
   for (const label of labels) process.stdout.write(`${dimension}\t${label}\n`);
+}
+for (const [dimension, definition] of Object.entries(config.dynamic_dimensions || {})) {
+  for (const label of managedLabels({ dynamic_dimensions: { [dimension]: definition } })) {
+    process.stdout.write(`${dimension}\t${label}\n`);
+  }
 }
 NODE
   case "$dimension" in
