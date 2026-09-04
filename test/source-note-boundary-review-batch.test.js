@@ -17,7 +17,9 @@ const {
   planBoundaryReviewBatch,
   validateBatchManifest,
   validateDependencyGate,
+  pageWiseAggregate,
 } = require('../scripts/lib/source-note-boundary-review-batch');
+const { pageWiseAggregate: cliPageWiseAggregate } = require('../scripts/plan-source-note-boundary-review-batch');
 
 const body = fs.readFileSync(path.join(__dirname, 'fixtures/source-note-issue-v2.valid.md'), 'utf8');
 const source = parseSourceNoteIssue(body).record;
@@ -144,4 +146,13 @@ test('dependency gate stays closed until both predecessor acceptances are proven
   assert.equal(result.ok, false);
   assert.match(result.errors.join('\n'), /dependency #917 is not closed/);
   assert.match(result.errors.join('\n'), /dependency #920 is not closed/);
+});
+
+test('page-wise aggregation does not depend on gh --slurp output shape', () => {
+  const pages = [[...Array(100)].map((_, index) => ({ id: index + 1 })), [{ id: 101 }]];
+  const flattened = pageWiseAggregate((page) => pages[page - 1] || []);
+  assert.deepEqual(flattened.slice(0, 3).map((item) => item.id), [1, 2, 3]);
+  assert.equal(flattened.length, 101);
+  assert.equal(cliPageWiseAggregate((page) => pages[page - 1] || []).length, 101);
+  assert.throws(() => pageWiseAggregate(() => [...Array(100)]), /pagination exceeded/);
 });

@@ -115,7 +115,9 @@ single-interview
 child_id = <source.system>:<source.external_id>:event:<sha256(xhs-note:<external_id> + "\\n" + case_key)>
 ```
 
-`case_key` 必须是小写、稳定、来源证据可定位的 key；不能使用易变标题、Issue number 或顺序编号作为唯一依据。每个 case 的 evidence 必须精确命中 SourceNote artifact，且 provenance 只能是 Raw 或 Source projection；`derived_projection` 单独不能授权。
+`case_key` 是持久 identity 的不可变 opaque key：创建后必须在重排、重命名或展示措辞调整时原样复用。它必须是小写、稳定、来源证据可定位的 key；不能使用易变标题、Issue number、数组位置或 `case-1` 之类顺序编号作为唯一依据。展示标题/措辞不参与 identity，也不应写入 machine contract。transition 会按 `case_key` 规范化排序，所以输入重排不会改变 child ID 或已存在 decision 的幂等判断；回归测试锁定了重排和展示措辞变化。
+
+同一 SourceNote 内所有 child evidence locator 必须全局唯一，即使它们来自不同 artifact；重复 locator 直接 fail closed。child ID 使用完整 SHA-256，并在同一 transition 内检查派生 ID 集合，任何 key/identity collision 都不能写入。
 
 因此 `multi-interview` 只更新 SourceNote 的 Boundary Review Derived record，不创建 InterviewNote Issue，也不会把 SourceNote 直接当作 InterviewNote。没有足够 case evidence、出现重复 key 或 identity 冲突时保持 fail closed。
 

@@ -209,6 +209,41 @@ test('multi-interview derives stable child identities from source identity and c
   assert.equal(validation.parsed.record.boundary_review.interview_note_cases.length, 2);
 });
 
+test('multi-interview identity is stable across display reordering and wording edits', () => {
+  const request = multiRequest();
+  const reordered = multiRequest({
+    reviewed_at: request.reviewed_at,
+    interview_cases: [...request.interview_cases].reverse(),
+  });
+  const first = planV2(request);
+  const second = planV2(reordered);
+  assert.equal(first.ok, true, first.errors.join('\n'));
+  assert.equal(second.ok, true, second.errors.join('\n'));
+  assert.deepEqual(second.interview_note_ids, first.interview_note_ids);
+  assert.deepEqual(second.interview_note_cases, first.interview_note_cases);
+
+  const displayEdited = multiRequest({
+    reviewed_at: request.reviewed_at,
+    review_evidence: { ...request.review_evidence },
+  });
+  displayEdited.checks = displayEdited.checks.map((check) => ({ ...check, note: `display wording changed: ${check.check_id}` }));
+  const edited = planV2(displayEdited);
+  assert.equal(edited.ok, true, edited.errors.join('\n'));
+  assert.deepEqual(edited.interview_note_ids, first.interview_note_ids);
+});
+
+test('multi-interview rejects a locator reused by two child cases', () => {
+  const request = multiRequest({
+    interview_cases: [
+      { case_key: 'company-a-process', evidence: [{ ref: 'source-capture:xhs:runtime-fixture-1:r1#raw/page.a11y.txt', locator: 'same-locator' }] },
+      { case_key: 'company-b-process', evidence: [{ ref: 'source-capture:xhs:runtime-fixture-1:r1#raw/images/1.webp', locator: 'same-locator' }] },
+    ],
+  });
+  const result = planV2(request);
+  assert.equal(result.ok, false);
+  assert.match(result.errors.join('\n'), /duplicate interview evidence locator: same-locator/);
+});
+
 test('multi-interview rejects caller-supplied child identity and Derived-only evidence', () => {
   const request = multiRequest({
     interview_cases: [
@@ -281,6 +316,45 @@ test('v1 Git snapshot SourceNote remains supported for not-interview transition'
   assert.deepEqual(result.interview_note_ids, []);
   const validation = validateSourceNoteIssue({ body: result.next_body, labels: result.next_labels, state: 'open' });
   assert.equal(validation.ok, true, validation.errors.join('\n'));
+});
+
+test('v1 transition remains backward compatible for a single InterviewNote', () => {
+  const request = v1Request({ decision: 'single-interview' });
+  const result = planSourceNoteBoundaryReviewTransition(request, {
+    number: 77,
+    state: 'open',
+    body: v1Body,
+    labels: [...pendingLabels, 'migration:xhs-bulk', 'source-year:2022'],
+  }, { evidenceComment: evidenceComment(request), receipts: [] });
+  assert.equal(result.ok, true, result.errors.join('\n'));
+  assert.deepEqual(result.interview_note_ids, ['xhs:625564d70000000001025e46']);
+  assert.equal(validateSourceNoteIssue({ body: result.next_body, labels: result.next_labels, state: 'open' }).ok, true);
+});
+
+test('same existing decision is idempotent even when case display order changes', () => {
+  const request = multiRequest();
+  const first = planV2(request);
+  assert.equal(first.ok, true, first.errors.join('\n'));
+  const reordered = multiRequest({ interview_cases: [...request.interview_cases].reverse() });
+  const second = planSourceNoteBoundaryReviewTransition(reordered, {
+    number: 910,
+    state: 'open',
+    body: first.next_body,
+    labels: first.next_labels,
+  }, { evidenceComment: evidenceComment(reordered), receipts: [] });
+  assert.equal(second.ok, true, second.errors.join('\n'));
+  assert.equal(second.already_applied, true);
+  assert.deepEqual(second.interview_note_ids, first.interview_note_ids);
+});
+
+test('distinct stable case keys cannot collide in child identity', () => {
+  const parsed = parseSourceNoteIssue(v2Body);
+  const ids = ['company-a-process', 'company-b-process'].map((key) => childInterviewNoteId(parsed.record.source, key));
+  assert.equal(new Set(ids).size, ids.length);
+  assert.notEqual(ids[0], ids[1]);
+  const presentationA = { case_key: 'company-a-process', display_label: 'Company A process' };
+  const presentationB = { case_key: 'company-a-process', display_label: 'renamed display wording / reordered row' };
+  assert.equal(childInterviewNoteId(parsed.record.source, presentationA.case_key), childInterviewNoteId(parsed.record.source, presentationB.case_key));
 });
 
 test('same applied transition is idempotent when target state and receipt already exist', () => {

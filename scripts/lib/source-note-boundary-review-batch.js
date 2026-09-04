@@ -66,6 +66,17 @@ function validateDependencyGate(gate, liveDependencies = []) {
   return { ok: errors.length === 0, errors };
 }
 
+function pageWiseAggregate(readPage, maxPages = 100) {
+  const values = [];
+  for (let page = 1; page <= maxPages; page += 1) {
+    const result = readPage(page);
+    if (!Array.isArray(result)) throw new Error(`expected paginated response array for page=${page}`);
+    values.push(...result);
+    if (result.length < 100) return values;
+  }
+  throw new Error(`pagination exceeded ${maxPages} pages`);
+}
+
 function summarizePlans(plans, manifest) {
   const counts = { ready: 0, blocked: 0, already_applied: 0 };
   const decisions = {};
@@ -146,5 +157,6 @@ module.exports = {
   sha256Text,
   validateBatchManifest,
   validateDependencyGate,
+  pageWiseAggregate,
   planBoundaryReviewBatch,
 };

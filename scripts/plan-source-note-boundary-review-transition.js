@@ -49,7 +49,14 @@ function fetchIssue(repo, issueNumber) {
 }
 
 function fetchComments(repo, issueNumber) {
-  return flattenPages(ghJson(['api', '--paginate', '--slurp', `repos/${repo}/issues/${issueNumber}/comments?per_page=100`]));
+  const comments = [];
+  for (let page = 1; page <= 100; page += 1) {
+    const result = ghJson(['api', `repos/${repo}/issues/${issueNumber}/comments?per_page=100&page=${page}`]);
+    if (!Array.isArray(result)) throw new Error(`expected comment page array for #${issueNumber}, page=${page}`);
+    comments.push(...result);
+    if (result.length < 100) return comments;
+  }
+  throw new Error(`comment pagination exceeded 100 pages for #${issueNumber}`);
 }
 
 function planLive(request, repo, issueNumber) {

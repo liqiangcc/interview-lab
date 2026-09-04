@@ -158,6 +158,7 @@ function validateInterviewCases(record, cases) {
   const artifacts = new Map(record.artifacts.map((artifact) => [artifact.ref, artifact]));
   const keys = new Set();
   const ids = new Set();
+  const locators = new Set();
   const normalized = [];
   for (const [index, item] of cases.entries()) {
     if (!item || typeof item !== 'object' || Array.isArray(item)) {
@@ -194,6 +195,11 @@ function validateInterviewCases(record, cases) {
       if (typeof reference.locator !== 'string' || !reference.locator.trim()) {
         errors.push(`interview_cases[${index}].evidence[${evidenceIndex}].locator is required`);
       }
+      if (typeof reference.locator === 'string' && reference.locator.trim()) {
+        const locator = reference.locator.trim();
+        if (locators.has(locator)) errors.push(`duplicate interview evidence locator: ${locator}`);
+        locators.add(locator);
+      }
       const artifact = artifacts.get(reference.ref);
       if (!artifact) {
         errors.push(`interview case evidence ref is not an exact SourceNote artifact: ${reference.ref}`);
@@ -214,7 +220,21 @@ function validateInterviewCases(record, cases) {
       normalized.push({ case_key: item.case_key, evidence, interview_note_id: id });
     }
   }
+  normalized.sort((left, right) => left.case_key.localeCompare(right.case_key));
   return { ok: errors.length === 0, errors, cases: normalized, interview_note_ids: normalized.map((item) => item.interview_note_id) };
+}
+
+function canonicalInterviewCases(cases = []) {
+  return [...cases]
+    .map((item) => ({
+      ...item,
+      evidence: [...(item.evidence || [])].sort((left, right) => {
+        const leftKey = `${left.ref}\n${left.locator}`;
+        const rightKey = `${right.ref}\n${right.locator}`;
+        return leftKey.localeCompare(rightKey);
+      }),
+    }))
+    .sort((left, right) => left.case_key.localeCompare(right.case_key));
 }
 
 function computedInterviewNoteIds(record, decision, cases = null) {
@@ -257,7 +277,9 @@ function targetStateMatches(request, record, labels, cases = null) {
   if (record.boundary_review.reviewed_at !== request.reviewed_at) return false;
   const expectedIds = computedInterviewNoteIds(record, request.decision, cases || record.boundary_review.interview_note_cases);
   if (canonicalJson(record.boundary_review.interview_note_ids || []) !== canonicalJson(expectedIds)) return false;
-  if (request.decision === 'multi-interview' && canonicalJson(record.boundary_review.interview_note_cases || []) !== canonicalJson(cases || [])) return false;
+  if (request.decision === 'multi-interview'
+      && canonicalJson(canonicalInterviewCases(record.boundary_review.interview_note_cases || []))
+        !== canonicalJson(canonicalInterviewCases(cases || []))) return false;
   const labelSet = new Set(normalizeLabels(labels));
   if (!labelSet.has(`boundary:${request.decision}`)) return false;
   if (labelSet.has('task:boundary-review')) return false;
@@ -451,6 +473,7 @@ module.exports = {
   sha256Text,
   normalizeLabels,
   canonicalJson,
+  canonicalInterviewCases,
   parseSourceNoteBoundaryReviewTransition,
   parseAppliedBoundaryReviewReceipts,
   validateTransitionRequest,

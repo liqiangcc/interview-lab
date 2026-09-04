@@ -15,6 +15,7 @@ const {
 const {
   planBoundaryReviewBatch,
   validateDependencyGate,
+  pageWiseAggregate,
 } = require('./lib/source-note-boundary-review-batch');
 
 function parseArgs(argv = process.argv.slice(2)) {
@@ -61,7 +62,7 @@ function fetchIssue(repository, number) {
 }
 
 function fetchComments(repository, number) {
-  return flattenPages(ghJson(['api', '--paginate', '--slurp', `repos/${repository}/issues/${number}/comments?per_page=100`]));
+  return pageWiseAggregate((page) => ghJson(['api', `repos/${repository}/issues/${number}/comments?per_page=100&page=${page}`]));
 }
 
 function loadEntries(manifest, manifestPath) {
@@ -148,4 +149,4 @@ if (require.main === module) {
   try { process.exitCode = main(); } catch (error) { console.error(`ERROR: ${error.message}`); process.exitCode = 1; }
 }
 
-module.exports = { parseArgs, validateSourceNoteIssue, flattenPages, planBoundaryReviewBatch };
+module.exports = { parseArgs, validateSourceNoteIssue, flattenPages, pageWiseAggregate, planBoundaryReviewBatch };

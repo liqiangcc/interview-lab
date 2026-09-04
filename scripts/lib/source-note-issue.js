@@ -311,6 +311,7 @@ function validateRecord(record, marker, errors) {
           }
           const caseKeys = new Set();
           const caseIds = new Set();
+          const locators = new Set();
           for (const [index, item] of cases.entries()) {
             if (!item || typeof item !== 'object' || Array.isArray(item)) {
               errors.push(`interview_note_cases[${index}] must be an object`);
@@ -328,6 +329,16 @@ function validateRecord(record, marker, errors) {
             } else caseIds.add(item.interview_note_id);
             if (!Array.isArray(item.evidence) || item.evidence.length === 0) {
               errors.push(`interview_note_cases[${index}].evidence must contain source evidence`);
+            } else {
+              for (const [evidenceIndex, reference] of item.evidence.entries()) {
+                if (!reference || typeof reference !== 'object' || typeof reference.locator !== 'string' || !reference.locator.trim()) continue;
+                const locator = reference.locator.trim();
+                if (locators.has(locator)) errors.push(`duplicate interview_note_cases evidence locator: ${locator}`);
+                locators.add(locator);
+                if (typeof reference.ref !== 'string' || !reference.ref) {
+                  errors.push(`interview_note_cases[${index}].evidence[${evidenceIndex}].ref is required`);
+                }
+              }
             }
           }
           if (caseIds.size === record.boundary_review.interview_note_ids.length
