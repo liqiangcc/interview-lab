@@ -255,7 +255,9 @@ function validateEvidenceComment(request, comment, errors) {
   if (!comment || Number(comment.id) !== Number(request.review_evidence.comment_id)) { errors.push('review evidence comment does not resolve'); return; }
   const expectedRepositoryUrl = `https://api.github.com/repos/${request.repository}`;
   const expectedIssueUrl = `${expectedRepositoryUrl}/issues/${request.issue_number}`;
-  if (comment.repository_url !== expectedRepositoryUrl) errors.push('review evidence comment repository locator mismatch');
+  // GitHub's Issue Comment response shape may omit repository_url. When it is
+  // present, it remains an independently checked repository locator.
+  if (Object.prototype.hasOwnProperty.call(comment, 'repository_url') && comment.repository_url !== expectedRepositoryUrl) errors.push('review evidence comment repository locator mismatch');
   if (comment.issue_url !== expectedIssueUrl) errors.push('review evidence comment Issue locator mismatch');
   const body = String(comment.body || '');
   const tokens = [request.transition_id, request.interview_note_id, request.expected_source_revision_id, String(request.source_note_issue_number), request.expected_manifest_sha256, request.expected_source_repository_ref, request.decision, request.case_key, request.provenance_mode, request.provenance_statement, request.pinned_artifact_manifest_sha256, request.evidence_subject_sha256].filter((token) => token != null);

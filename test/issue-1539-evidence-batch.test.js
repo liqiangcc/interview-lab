@@ -128,9 +128,10 @@ test('live CAS requires exact body SHAs, blocked status, and recovery task', () 
   assert.equal(validateLivePacket(packet, issue(packet, 'changed'), sourceIssue(packet, 'source-body')).ok, false);
 });
 
-test('exact re-entry skips POST and still generates the formal request', () => {
+test('exact re-entry with production-shaped comment omitting repository_url skips POST and generates the formal request', () => {
   const packet = testPacket();
   const comments = [comment(packet, 42, 'p'.repeat(64))];
+  delete comments[0].repository_url;
   let postCount = 0;
   const setup = applyOptions(packet, comments, () => { postCount += 1; throw new Error('must not post'); });
   const result = applyEvidenceItem(packet, setup.progress.packet_set_sha256, setup.progress, setup.options);

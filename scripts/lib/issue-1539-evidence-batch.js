@@ -195,7 +195,7 @@ function expectedEvidence(packet, packetSetSha256 = null) {
 function commentLocatorMatches(comment, repository, issueNumber) {
   return Boolean(comment
     && Number(comment.issue_url && comment.issue_url.match(/\/issues\/(\d+)$/)?.[1]) === Number(issueNumber)
-    && comment.repository_url === `https://api.github.com/repos/${repository}`
+    && (!Object.prototype.hasOwnProperty.call(comment, 'repository_url') || comment.repository_url === `https://api.github.com/repos/${repository}`)
     && comment.issue_url === `https://api.github.com/repos/${repository}/issues/${issueNumber}`);
 }
 
