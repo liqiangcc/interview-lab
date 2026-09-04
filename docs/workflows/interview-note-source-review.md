@@ -56,6 +56,16 @@ Planner 不只相信 request 里的 `pass/fail`，而是根据 live InterviewNot
 
 `blocked` 要求至少存在一个真实 FAIL；不能在所有检查都通过时任意把 Source 标成 blocked。
 
+## Ownership lookup at repository scale
+
+`duplicate_ownership` 使用精确 InterviewNote identity 的 GitHub Issues Search 取得候选：
+
+```text
+repo:<owner>/<repo> is:issue in:body "<interview_note_id>"
+```
+
+搜索结果只用于缩小范围。每个候选 Issue 必须再 direct-read，并由 InterviewNote machine marker parser 精确确认；SourceNote、评论、标题或正文中的普通引用都不算 owner。分页收集数量与 `total_count` 不一致、搜索结果标记为 incomplete、或超过有限分页上限时，操作必须 fail closed。写入请求不因网络错误自动重试，以免产生重复 mutation；只读请求允许有界重试。
+
 ## Runtime SourceNote binding
 
 Runtime materialization case 以 SourceNote 为 provenance 根：

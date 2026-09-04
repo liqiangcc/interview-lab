@@ -9,6 +9,7 @@ const {
   parseReceipts,
   buildReceipt,
   planSourceReview,
+  ownershipMatches,
 } = require('./lib/interview-note-source-review-transition');
 
 function parseArgs(argv = process.argv.slice(2)) {
@@ -26,14 +27,78 @@ function ghJson(args, input = null) {
     input: input == null ? undefined : JSON.stringify(input), encoding: 'utf8', maxBuffer: 128 * 1024 * 1024,
   }));
 }
+function sleepMs(ms) {
+  Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms);
+}
+function ghReadJson(args, attempts = 3) {
+  let lastError = null;
+  for (let attempt = 1; attempt <= attempts; attempt += 1) {
+    try {
+      return ghJson(args);
+    } catch (error) {
+      lastError = error;
+      if (attempt < attempts) sleepMs(500 * attempt);
+    }
+  }
+  throw lastError;
+}
 function flattenPages(value) {
   if (!Array.isArray(value)) return [];
   return value.length && Array.isArray(value[0]) ? value.flat() : value;
 }
-function loadIssue(repository, number) { return ghJson(['api', `repos/${repository}/issues/${number}`]); }
-function loadAllIssues(repository) { return flattenPages(ghJson(['api','--paginate','--slurp',`repos/${repository}/issues?state=all&per_page=100`])); }
-function loadComments(repository, number) { return flattenPages(ghJson(['api','--paginate','--slurp',`repos/${repository}/issues/${number}/comments?per_page=100`])); }
-function loadEvidence(repository, commentId) { return ghJson(['api', `repos/${repository}/issues/comments/${commentId}`]); }
+function loadIssue(repository, number) { return ghReadJson(['api', `repos/${repository}/issues/${number}`]); }
+function ownershipSearchEndpoint(repository, interviewNoteId) {
+  const phrase = String(interviewNoteId).replace(/["\\]/g, '\\$&');
+  const query = `repo:${repository} is:issue in:body "${phrase}"`;
+  return `search/issues?q=${encodeURIComponent(query)}&per_page=100`;
+}
+const MAX_SEARCH_PAGES = 10;
+const MAX_COMMENT_PAGES = 100;
+function searchPages(value) {
+  return flattenPages(value).filter((page) => page && typeof page === 'object' && !Array.isArray(page));
+}
+function ownershipSearchItems(value) {
+  const pages = searchPages(value);
+  if (pages.some((page) => page.incomplete_results === true)) {
+    throw new Error('InterviewNote ownership search returned incomplete results; refusing to infer ownership');
+  }
+  const items = pages.flatMap((page) => Array.isArray(page.items) ? page.items : []);
+  const numbers = new Set(items.map((item) => Number(item.number)).filter((number) => Number.isInteger(number) && number > 0));
+  const totalCount = pages.length > 0 && Number.isInteger(pages[0].total_count) ? pages[0].total_count : null;
+  if (totalCount !== null && totalCount !== numbers.size) {
+    throw new Error(`InterviewNote ownership search pagination incomplete: expected ${totalCount} candidates, received ${numbers.size}`);
+  }
+  return [...numbers];
+}
+function loadOwnershipMatches(repository, interviewNoteId) {
+  const pages = [];
+  for (let page = 1; page <= MAX_SEARCH_PAGES; page += 1) {
+    const result = ghReadJson(['api', `${ownershipSearchEndpoint(repository, interviewNoteId)}&page=${page}`]);
+    pages.push(result);
+    const items = Array.isArray(result.items) ? result.items : [];
+    const totalCount = Number.isInteger(result.total_count) ? result.total_count : null;
+    const collected = ownershipSearchItems(pages).length;
+    if (items.length === 0 || (totalCount !== null && collected >= totalCount)) break;
+    if (page === MAX_SEARCH_PAGES) {
+      throw new Error(`InterviewNote ownership search exceeded ${MAX_SEARCH_PAGES} pages; refusing to infer ownership`);
+    }
+  }
+  return ownershipSearchItems(pages)
+    .map((number) => loadIssue(repository, number))
+    .filter((issue) => !issue.pull_request)
+    .filter((issue) => ownershipMatches([issue], interviewNoteId).length === 1);
+}
+function loadComments(repository, number) {
+  const comments = [];
+  for (let page = 1; page <= MAX_COMMENT_PAGES; page += 1) {
+    const batch = ghReadJson(['api', `repos/${repository}/issues/${number}/comments?per_page=100&page=${page}`]);
+    if (!Array.isArray(batch)) throw new Error(`Issue #${number} comments response was not an array`);
+    comments.push(...batch);
+    if (batch.length < 100) return comments;
+  }
+  throw new Error(`Issue #${number} comments exceeded ${MAX_COMMENT_PAGES} pages; refusing to continue`);
+}
+function loadEvidence(repository, commentId) { return ghReadJson(['api', `repos/${repository}/issues/comments/${commentId}`]); }
 function patchLabels(repository, number, labels) { return ghJson(['api','--method','PATCH',`repos/${repository}/issues/${number}`,'--input','-'], { labels }); }
 function addComment(repository, number, body) { return ghJson(['api','--method','POST',`repos/${repository}/issues/${number}/comments`,'--input','-'], { body }); }
 function labelNames(issue) { return (issue.labels || []).map((x) => typeof x === 'string' ? x : x.name).filter(Boolean); }
@@ -47,10 +112,10 @@ function planLive(request) {
   const parsedReceipts = parseReceipts(comments);
   if (parsedReceipts.errors.length) throw new Error(parsedReceipts.errors.join('\n'));
   const evidence = loadEvidence(request.review_evidence.repository, request.review_evidence.comment_id);
-  const allIssues = loadAllIssues(request.repository);
+  const ownership = loadOwnershipMatches(request.repository, request.interview_note_id);
   const plan = planSourceReview(request, interviewIssue, {
     sourceIssue,
-    allIssues,
+    allIssues: ownership,
     evidenceComment: evidence,
     receipts: parsedReceipts.receipts,
   });
@@ -135,4 +200,12 @@ function main(argv = process.argv.slice(2)) {
   }
 }
 if (require.main === module) process.exitCode = main();
-module.exports = { main, parseArgs, ghJson, planLive };
+module.exports = {
+  main,
+  parseArgs,
+  ghJson,
+  planLive,
+  ownershipSearchEndpoint,
+  ownershipSearchItems,
+  loadOwnershipMatches,
+};
