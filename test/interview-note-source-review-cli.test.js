@@ -3,6 +3,8 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const {
+  parseArgs,
+  loadPinnedArtifactManifest,
   ownershipSearchEndpoint,
   ownershipSearchItems,
 } = require('../scripts/plan-interview-note-source-review-transition');
@@ -47,4 +49,13 @@ test('search references are not ownership without direct machine-marker verifica
   const owner = { number: 915, body: `<!-- interview-note: id=${INTERVIEW_NOTE_ID} schema=interview-note-issue.v2 -->` };
   assert.deepEqual(ownershipMatches([reference], INTERVIEW_NOTE_ID), []);
   assert.deepEqual(ownershipMatches([owner], INTERVIEW_NOTE_ID), [owner]);
+});
+
+test('apply planner accepts and validates the pinned artifact manifest CLI input', () => {
+  const args = parseArgs(['--request', 'request.json', '--pinned-artifact-manifest', 'manifest.json', '--apply']);
+  assert.equal(args.pinnedArtifactManifest, 'manifest.json');
+  assert.equal(args.apply, true);
+  const manifest = loadPinnedArtifactManifest('data/pilot/issue-1539/recovery.dry-run.json.pinned-artifact-manifest.json');
+  assert.equal(manifest.verified, true);
+  assert.equal(manifest.items.length, 30);
 });

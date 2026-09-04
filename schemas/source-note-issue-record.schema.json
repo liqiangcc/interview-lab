@@ -43,6 +43,15 @@
     },
     "source_published_at": {"$ref": "#/$defs/timeFact"},
     "source_edited_at": {"$ref": "#/$defs/timeFact"},
+    "provenance_status": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "raw_lineage_claim"],
+      "properties": {
+        "status": {"enum": ["pinned-source-artifact", "derived-from-raw", "unproven"]},
+        "raw_lineage_claim": {"enum": ["proven", "not-claimed"]}
+      }
+    },
     "artifacts": {
       "type": "array",
       "items": {

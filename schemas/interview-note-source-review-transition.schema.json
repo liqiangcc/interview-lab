@@ -15,7 +15,6 @@
     "expected_source_revision_id",
     "source_note_issue_number",
     "expected_source_note_body_sha256",
-    "expected_manifest_sha256",
     "decision",
     "reviewed_at",
     "reviewer_kind",
@@ -30,11 +29,12 @@
     "issue_number": {"type": "integer", "minimum": 1},
     "interview_note_id": {"type": "string", "minLength": 1},
     "expected_interview_body_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
-    "expected_initial_status": {"const": "captured"},
+    "expected_initial_status": {"enum": ["captured", "blocked", "source-ready"]},
     "expected_source_revision_id": {"type": "string", "minLength": 1},
     "source_note_issue_number": {"type": "integer", "minimum": 1},
     "expected_source_note_body_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
     "expected_manifest_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "expected_source_repository_ref": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
     "decision": {"enum": ["source-ready", "blocked"]},
     "reviewed_at": {"type": "string", "format": "date-time"},
     "reviewer_kind": {"enum": ["human", "ai-assisted"]},
@@ -62,6 +62,60 @@
         }
       }
     },
-    "limitations": {"type": "array", "items": {"type": "string", "minLength": 1}}
-  }
+    "limitations": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "case_key": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._-]{0,95}$"},
+    "provenance_mode": {"enum": ["raw-lineage", "pinned-source-artifact"]},
+    "provenance_statement": {"type": "string", "minLength": 1},
+    "pinned_artifact_manifest_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "evidence_subject_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "recovery_mode": {"enum": ["blocked-source-recovery", "source-ready-receipt-repair"]}
+  },
+  "allOf": [
+    {
+      "anyOf": [
+        {"required": ["expected_manifest_sha256"]},
+        {"required": ["expected_source_repository_ref"]}
+      ]
+    },
+    {
+      "if": {"required": ["provenance_mode"], "properties": {"provenance_mode": {"const": "pinned-source-artifact"}}},
+      "then": {
+        "required": ["provenance_statement", "pinned_artifact_manifest_sha256"],
+        "properties": {"provenance_statement": {"const": "pinned-source-artifact; raw-lineage-unproven"}}
+      }
+    },
+    {
+      "if": {"required": ["provenance_statement"]},
+      "then": {
+        "required": ["provenance_mode"],
+        "properties": {"provenance_mode": {"const": "pinned-source-artifact"}}
+      }
+    },
+    {
+      "if": {"required": ["recovery_mode"], "properties": {"recovery_mode": {"const": "blocked-source-recovery"}}},
+      "then": {
+        "required": ["recovery_mode", "provenance_mode", "provenance_statement", "pinned_artifact_manifest_sha256", "evidence_subject_sha256"],
+        "properties": {
+          "expected_initial_status": {"const": "blocked"},
+          "decision": {"const": "source-ready"},
+          "provenance_mode": {"const": "pinned-source-artifact"},
+          "provenance_statement": {"const": "pinned-source-artifact; raw-lineage-unproven"}
+        }
+      }
+    },
+    {
+      "if": {"required": ["recovery_mode"], "properties": {"recovery_mode": {"const": "source-ready-receipt-repair"}}},
+      "then": {
+        "required": ["recovery_mode", "evidence_subject_sha256"],
+        "properties": {
+          "expected_initial_status": {"const": "source-ready"},
+          "decision": {"const": "source-ready"}
+        }
+      }
+    },
+    {
+      "if": {"not": {"required": ["recovery_mode"]}},
+      "then": {"properties": {"expected_initial_status": {"const": "captured"}}}
+    }
+  ]
 }

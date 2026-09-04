@@ -1,0 +1,3738 @@
+{
+  "schema_version": "issue-1539-recovery-dry-run.v1",
+  "repository": "liqiangcc/interview-lab",
+  "source_snapshot": {
+    "repository": "liqiangcc/xhs",
+    "ref": "95b77bb261048059846273688e4b90a2e108b437"
+  },
+  "manifest": {
+    "path": "data/pilot/issue-1539/plan-manifest.json",
+    "source_review_batch_id": "issue-922-blocked-source-review-001",
+    "source_review_item_count": 30,
+    "boundary_batch_id": "boundary-expansion-001",
+    "boundary_selection_policy": "pending-source-note-issue-number-ascending",
+    "boundary_item_count": 50,
+    "pinned_artifact_manifest_path": "data/pilot/issue-1539/recovery.dry-run.json.pinned-artifact-manifest.json",
+    "pinned_artifact_manifest_sha256": "4f40de87cc5b65f2ef0c93f25ca19235f7a9386db8811a12530b77374fce9b45",
+    "pinned_artifact_manifest_verified": true,
+    "pinned_artifact_manifest_item_count": 30
+  },
+  "baseline": {
+    "interview_notes": 35,
+    "source_ready": 3,
+    "source_review": 0,
+    "blocked": 32,
+    "captured": 0,
+    "source_notes": 1460,
+    "boundary_single": 26,
+    "boundary_multi": 2,
+    "boundary_not_interview": 18,
+    "boundary_pending": 1414
+  },
+  "source_review": {
+    "total": 30,
+    "candidate_source_ready": 0,
+    "independent_evidence_present": 0,
+    "ready_for_authorized_transition": 0,
+    "blocked": 30,
+    "provenance_status_counts": {
+      "pinned-source-artifact": 30
+    },
+    "raw_lineage_proven": 0,
+    "pinned_source_artifact": 30,
+    "items": [
+      {
+        "current_status": "blocked",
+        "computed_checks": [
+          {
+            "check_id": "source_identity",
+            "result": "pass",
+            "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+          },
+          {
+            "check_id": "source_revision_binding",
+            "result": "pass",
+            "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+          },
+          {
+            "check_id": "artifact_reference_integrity",
+            "result": "pass",
+            "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+          },
+          {
+            "check_id": "raw_projection_traceability",
+            "result": "fail",
+            "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+          },
+          {
+            "check_id": "source_artifact_provenance",
+            "result": "pass",
+            "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+          },
+          {
+            "check_id": "known_limitations_recorded",
+            "result": "pass",
+            "note": "All SourceNote limitations are retained by InterviewNote."
+          },
+          {
+            "check_id": "duplicate_ownership",
+            "result": "pass",
+            "note": "Exactly one InterviewNote owner exists: #1509."
+          },
+          {
+            "check_id": "no_fabrication",
+            "result": "pass",
+            "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+          }
+        ],
+        "failed_check_ids": [
+          "raw_projection_traceability"
+        ],
+        "independent_evidence": "missing",
+        "source_ready_gate": {
+          "ok": true,
+          "mode": "pinned-source-artifact",
+          "raw_lineage_claim": "not-claimed",
+          "reason": "source-ready is based on a recorded pinned reference whose commit-tree path+blob was audited; Raw derivation is explicitly not claimed"
+        },
+        "receipt_count": 0,
+        "mutation_performed": false,
+        "errors": [
+          "independent InterviewNote Source Review evidence is not present; Boundary Review evidence is not eligible"
+        ],
+        "action": "await-independent-source-review-evidence",
+        "candidate_decision": "blocked",
+        "issue_number": 1509,
+        "source_note_issue_number": 30,
+        "interview_note_id": "xhs:63f76452000000001303ca72",
+        "case_key": null,
+        "expected_interview_body_sha256": "6c155a8a3075ec2c9b39d7fb43b91390b5105f1adc2c7d726c714b2f701ae5a1",
+        "expected_source_note_body_sha256": "f2fd9874276999dd2b9bff5fe846970cf3c8902330d07dc7a4407834521441cb",
+        "expected_source_revision_id": "xhs-note:63f76452000000001303ca72:snapshot-95b77bb26104",
+        "source_revision_evidence": {
+          "source_repository": "liqiangcc/xhs",
+          "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+          "raw_artifact_count": 3,
+          "source_projection_count": 2
+        },
+        "evidence_subject_sha256": "49ae825ad1d53de7beb7bd93376f915b24d71157010c01e2d5f14ab83903f43e",
+        "pinned_artifact_manifest_sha256": "4f40de87cc5b65f2ef0c93f25ca19235f7a9386db8811a12530b77374fce9b45",
+        "pinned_artifact_manifest_item_verified": true,
+        "provenance": {
+          "status": "pinned-source-artifact",
+          "projection_count": 2,
+          "raw_capture_count": 3,
+          "raw_lineage_proven": false,
+          "pinned_source_artifact": true,
+          "known_source_artifact": true,
+          "legacy_pinned_source_artifact": true,
+          "raw_lineage_claim": "not-claimed",
+          "declared_status": null,
+          "declared_raw_lineage_claim": null,
+          "declaration_consistent": true,
+          "declaration_errors": [],
+          "details": [
+            {
+              "ref": "liqiangcc/xhs:note_json/63f76452000000001303ca72.json@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            },
+            {
+              "ref": "liqiangcc/xhs:note_desc/63f76452000000001303ca72.txt@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            }
+          ]
+        },
+        "boundary_review_evidence_reused": false
+      },
+      {
+        "current_status": "blocked",
+        "computed_checks": [
+          {
+            "check_id": "source_identity",
+            "result": "pass",
+            "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+          },
+          {
+            "check_id": "source_revision_binding",
+            "result": "pass",
+            "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+          },
+          {
+            "check_id": "artifact_reference_integrity",
+            "result": "pass",
+            "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+          },
+          {
+            "check_id": "raw_projection_traceability",
+            "result": "fail",
+            "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+          },
+          {
+            "check_id": "source_artifact_provenance",
+            "result": "pass",
+            "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+          },
+          {
+            "check_id": "known_limitations_recorded",
+            "result": "pass",
+            "note": "All SourceNote limitations are retained by InterviewNote."
+          },
+          {
+            "check_id": "duplicate_ownership",
+            "result": "pass",
+            "note": "Exactly one InterviewNote owner exists: #1510."
+          },
+          {
+            "check_id": "no_fabrication",
+            "result": "pass",
+            "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+          }
+        ],
+        "failed_check_ids": [
+          "raw_projection_traceability"
+        ],
+        "independent_evidence": "missing",
+        "source_ready_gate": {
+          "ok": true,
+          "mode": "pinned-source-artifact",
+          "raw_lineage_claim": "not-claimed",
+          "reason": "source-ready is based on a recorded pinned reference whose commit-tree path+blob was audited; Raw derivation is explicitly not claimed"
+        },
+        "receipt_count": 0,
+        "mutation_performed": false,
+        "errors": [
+          "independent InterviewNote Source Review evidence is not present; Boundary Review evidence is not eligible"
+        ],
+        "action": "await-independent-source-review-evidence",
+        "candidate_decision": "blocked",
+        "issue_number": 1510,
+        "source_note_issue_number": 43,
+        "interview_note_id": "xhs:6439588f0000000027000c7e",
+        "case_key": null,
+        "expected_interview_body_sha256": "7e9f642d90fd7a42336a189d55337e568856f58f5b4096df44bfcec94a5b4697",
+        "expected_source_note_body_sha256": "f7440e1f7c031d5cd378501da457cd2bd8ac70c51b37c3f36ab2c505a695bb26",
+        "expected_source_revision_id": "xhs-note:6439588f0000000027000c7e:snapshot-95b77bb26104",
+        "source_revision_evidence": {
+          "source_repository": "liqiangcc/xhs",
+          "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+          "raw_artifact_count": 4,
+          "source_projection_count": 2
+        },
+        "evidence_subject_sha256": "f6467817f30244d704de62a046fbe22ac5a339209cd9f76c1a24b3ff99be5f89",
+        "pinned_artifact_manifest_sha256": "4f40de87cc5b65f2ef0c93f25ca19235f7a9386db8811a12530b77374fce9b45",
+        "pinned_artifact_manifest_item_verified": true,
+        "provenance": {
+          "status": "pinned-source-artifact",
+          "projection_count": 2,
+          "raw_capture_count": 4,
+          "raw_lineage_proven": false,
+          "pinned_source_artifact": true,
+          "known_source_artifact": true,
+          "legacy_pinned_source_artifact": true,
+          "raw_lineage_claim": "not-claimed",
+          "declared_status": null,
+          "declared_raw_lineage_claim": null,
+          "declaration_consistent": true,
+          "declaration_errors": [],
+          "details": [
+            {
+              "ref": "liqiangcc/xhs:note_json/6439588f0000000027000c7e.json@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            },
+            {
+              "ref": "liqiangcc/xhs:note_desc/6439588f0000000027000c7e.txt@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            }
+          ]
+        },
+        "boundary_review_evidence_reused": false
+      },
+      {
+        "current_status": "blocked",
+        "computed_checks": [
+          {
+            "check_id": "source_identity",
+            "result": "pass",
+            "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+          },
+          {
+            "check_id": "source_revision_binding",
+            "result": "pass",
+            "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+          },
+          {
+            "check_id": "artifact_reference_integrity",
+            "result": "pass",
+            "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+          },
+          {
+            "check_id": "raw_projection_traceability",
+            "result": "fail",
+            "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+          },
+          {
+            "check_id": "source_artifact_provenance",
+            "result": "pass",
+            "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+          },
+          {
+            "check_id": "known_limitations_recorded",
+            "result": "pass",
+            "note": "All SourceNote limitations are retained by InterviewNote."
+          },
+          {
+            "check_id": "duplicate_ownership",
+            "result": "pass",
+            "note": "Exactly one InterviewNote owner exists: #1511."
+          },
+          {
+            "check_id": "no_fabrication",
+            "result": "pass",
+            "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+          }
+        ],
+        "failed_check_ids": [
+          "raw_projection_traceability"
+        ],
+        "independent_evidence": "missing",
+        "source_ready_gate": {
+          "ok": true,
+          "mode": "pinned-source-artifact",
+          "raw_lineage_claim": "not-claimed",
+          "reason": "source-ready is based on a recorded pinned reference whose commit-tree path+blob was audited; Raw derivation is explicitly not claimed"
+        },
+        "receipt_count": 0,
+        "mutation_performed": false,
+        "errors": [
+          "independent InterviewNote Source Review evidence is not present; Boundary Review evidence is not eligible"
+        ],
+        "action": "await-independent-source-review-evidence",
+        "candidate_decision": "blocked",
+        "issue_number": 1511,
+        "source_note_issue_number": 49,
+        "interview_note_id": "xhs:646768f30000000014026af6",
+        "case_key": null,
+        "expected_interview_body_sha256": "9f610e37f802ef32fe78b703f325b048186d2e17a4bd3e92c20efccd703d2b4f",
+        "expected_source_note_body_sha256": "ed7c6ec22ef472621d876857d3c431a9ff947973e6b780e25609ed88d4ad6bb1",
+        "expected_source_revision_id": "xhs-note:646768f30000000014026af6:snapshot-95b77bb26104",
+        "source_revision_evidence": {
+          "source_repository": "liqiangcc/xhs",
+          "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+          "raw_artifact_count": 5,
+          "source_projection_count": 2
+        },
+        "evidence_subject_sha256": "2dbdc23299a9f51fb8c0960ec9d493d55a58e1bd5f1dca2e4d4201e26cae5f96",
+        "pinned_artifact_manifest_sha256": "4f40de87cc5b65f2ef0c93f25ca19235f7a9386db8811a12530b77374fce9b45",
+        "pinned_artifact_manifest_item_verified": true,
+        "provenance": {
+          "status": "pinned-source-artifact",
+          "projection_count": 2,
+          "raw_capture_count": 5,
+          "raw_lineage_proven": false,
+          "pinned_source_artifact": true,
+          "known_source_artifact": true,
+          "legacy_pinned_source_artifact": true,
+          "raw_lineage_claim": "not-claimed",
+          "declared_status": null,
+          "declared_raw_lineage_claim": null,
+          "declaration_consistent": true,
+          "declaration_errors": [],
+          "details": [
+            {
+              "ref": "liqiangcc/xhs:note_json/646768f30000000014026af6.json@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            },
+            {
+              "ref": "liqiangcc/xhs:note_desc/646768f30000000014026af6.txt@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            }
+          ]
+        },
+        "boundary_review_evidence_reused": false
+      },
+      {
+        "current_status": "blocked",
+        "computed_checks": [
+          {
+            "check_id": "source_identity",
+            "result": "pass",
+            "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+          },
+          {
+            "check_id": "source_revision_binding",
+            "result": "pass",
+            "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+          },
+          {
+            "check_id": "artifact_reference_integrity",
+            "result": "pass",
+            "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+          },
+          {
+            "check_id": "raw_projection_traceability",
+            "result": "fail",
+            "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+          },
+          {
+            "check_id": "source_artifact_provenance",
+            "result": "pass",
+            "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+          },
+          {
+            "check_id": "known_limitations_recorded",
+            "result": "pass",
+            "note": "All SourceNote limitations are retained by InterviewNote."
+          },
+          {
+            "check_id": "duplicate_ownership",
+            "result": "pass",
+            "note": "Exactly one InterviewNote owner exists: #1512."
+          },
+          {
+            "check_id": "no_fabrication",
+            "result": "pass",
+            "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+          }
+        ],
+        "failed_check_ids": [
+          "raw_projection_traceability"
+        ],
+        "independent_evidence": "missing",
+        "source_ready_gate": {
+          "ok": true,
+          "mode": "pinned-source-artifact",
+          "raw_lineage_claim": "not-claimed",
+          "reason": "source-ready is based on a recorded pinned reference whose commit-tree path+blob was audited; Raw derivation is explicitly not claimed"
+        },
+        "receipt_count": 0,
+        "mutation_performed": false,
+        "errors": [
+          "independent InterviewNote Source Review evidence is not present; Boundary Review evidence is not eligible"
+        ],
+        "action": "await-independent-source-review-evidence",
+        "candidate_decision": "blocked",
+        "issue_number": 1512,
+        "source_note_issue_number": 52,
+        "interview_note_id": "xhs:646dc36d0000000013009b91",
+        "case_key": null,
+        "expected_interview_body_sha256": "a4bb138a4f6514c57f0adf7fa1293a936717d6baffe575cf08d6df532f73e9db",
+        "expected_source_note_body_sha256": "7bfab5d383c33fd82d14c0eb6cc436e17e5899f616f9b5e7fcc6a4745c5d09a2",
+        "expected_source_revision_id": "xhs-note:646dc36d0000000013009b91:snapshot-95b77bb26104",
+        "source_revision_evidence": {
+          "source_repository": "liqiangcc/xhs",
+          "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+          "raw_artifact_count": 7,
+          "source_projection_count": 2
+        },
+        "evidence_subject_sha256": "84286967d39e4127fac23deb58c10d28f5bc2d0aaaf1fe0dcfd91583232d3132",
+        "pinned_artifact_manifest_sha256": "4f40de87cc5b65f2ef0c93f25ca19235f7a9386db8811a12530b77374fce9b45",
+        "pinned_artifact_manifest_item_verified": true,
+        "provenance": {
+          "status": "pinned-source-artifact",
+          "projection_count": 2,
+          "raw_capture_count": 7,
+          "raw_lineage_proven": false,
+          "pinned_source_artifact": true,
+          "known_source_artifact": true,
+          "legacy_pinned_source_artifact": true,
+          "raw_lineage_claim": "not-claimed",
+          "declared_status": null,
+          "declared_raw_lineage_claim": null,
+          "declaration_consistent": true,
+          "declaration_errors": [],
+          "details": [
+            {
+              "ref": "liqiangcc/xhs:note_json/646dc36d0000000013009b91.json@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            },
+            {
+              "ref": "liqiangcc/xhs:note_desc/646dc36d0000000013009b91.txt@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            }
+          ]
+        },
+        "boundary_review_evidence_reused": false
+      },
+      {
+        "current_status": "blocked",
+        "computed_checks": [
+          {
+            "check_id": "source_identity",
+            "result": "pass",
+            "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+          },
+          {
+            "check_id": "source_revision_binding",
+            "result": "pass",
+            "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+          },
+          {
+            "check_id": "artifact_reference_integrity",
+            "result": "pass",
+            "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+          },
+          {
+            "check_id": "raw_projection_traceability",
+            "result": "fail",
+            "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+          },
+          {
+            "check_id": "source_artifact_provenance",
+            "result": "pass",
+            "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+          },
+          {
+            "check_id": "known_limitations_recorded",
+            "result": "pass",
+            "note": "All SourceNote limitations are retained by InterviewNote."
+          },
+          {
+            "check_id": "duplicate_ownership",
+            "result": "pass",
+            "note": "Exactly one InterviewNote owner exists: #1513."
+          },
+          {
+            "check_id": "no_fabrication",
+            "result": "pass",
+            "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+          }
+        ],
+        "failed_check_ids": [
+          "raw_projection_traceability"
+        ],
+        "independent_evidence": "missing",
+        "source_ready_gate": {
+          "ok": true,
+          "mode": "pinned-source-artifact",
+          "raw_lineage_claim": "not-claimed",
+          "reason": "source-ready is based on a recorded pinned reference whose commit-tree path+blob was audited; Raw derivation is explicitly not claimed"
+        },
+        "receipt_count": 0,
+        "mutation_performed": false,
+        "errors": [
+          "independent InterviewNote Source Review evidence is not present; Boundary Review evidence is not eligible"
+        ],
+        "action": "await-independent-source-review-evidence",
+        "candidate_decision": "blocked",
+        "issue_number": 1513,
+        "source_note_issue_number": 54,
+        "interview_note_id": "xhs:64926a1b000000001303ee74",
+        "case_key": null,
+        "expected_interview_body_sha256": "cea14d409409973aab330e2afae37fc64d6b8eb12f3a1a2fdacecde8a3c51e3b",
+        "expected_source_note_body_sha256": "cccafd4788ee097fe626d85ed4810c21488839fc32d94a9509a421d6e5e761e1",
+        "expected_source_revision_id": "xhs-note:64926a1b000000001303ee74:snapshot-95b77bb26104",
+        "source_revision_evidence": {
+          "source_repository": "liqiangcc/xhs",
+          "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+          "raw_artifact_count": 3,
+          "source_projection_count": 2
+        },
+        "evidence_subject_sha256": "b987b79e52b6a81df8786459810c248b3b3f61c8982545d4ec21c0f8419c3da6",
+        "pinned_artifact_manifest_sha256": "4f40de87cc5b65f2ef0c93f25ca19235f7a9386db8811a12530b77374fce9b45",
+        "pinned_artifact_manifest_item_verified": true,
+        "provenance": {
+          "status": "pinned-source-artifact",
+          "projection_count": 2,
+          "raw_capture_count": 3,
+          "raw_lineage_proven": false,
+          "pinned_source_artifact": true,
+          "known_source_artifact": true,
+          "legacy_pinned_source_artifact": true,
+          "raw_lineage_claim": "not-claimed",
+          "declared_status": null,
+          "declared_raw_lineage_claim": null,
+          "declaration_consistent": true,
+          "declaration_errors": [],
+          "details": [
+            {
+              "ref": "liqiangcc/xhs:note_json/64926a1b000000001303ee74.json@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            },
+            {
+              "ref": "liqiangcc/xhs:note_desc/64926a1b000000001303ee74.txt@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            }
+          ]
+        },
+        "boundary_review_evidence_reused": false
+      },
+      {
+        "current_status": "blocked",
+        "computed_checks": [
+          {
+            "check_id": "source_identity",
+            "result": "pass",
+            "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+          },
+          {
+            "check_id": "source_revision_binding",
+            "result": "pass",
+            "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+          },
+          {
+            "check_id": "artifact_reference_integrity",
+            "result": "pass",
+            "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+          },
+          {
+            "check_id": "raw_projection_traceability",
+            "result": "fail",
+            "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+          },
+          {
+            "check_id": "source_artifact_provenance",
+            "result": "pass",
+            "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+          },
+          {
+            "check_id": "known_limitations_recorded",
+            "result": "pass",
+            "note": "All SourceNote limitations are retained by InterviewNote."
+          },
+          {
+            "check_id": "duplicate_ownership",
+            "result": "pass",
+            "note": "Exactly one InterviewNote owner exists: #1514."
+          },
+          {
+            "check_id": "no_fabrication",
+            "result": "pass",
+            "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+          }
+        ],
+        "failed_check_ids": [
+          "raw_projection_traceability"
+        ],
+        "independent_evidence": "missing",
+        "source_ready_gate": {
+          "ok": true,
+          "mode": "pinned-source-artifact",
+          "raw_lineage_claim": "not-claimed",
+          "reason": "source-ready is based on a recorded pinned reference whose commit-tree path+blob was audited; Raw derivation is explicitly not claimed"
+        },
+        "receipt_count": 0,
+        "mutation_performed": false,
+        "errors": [
+          "independent InterviewNote Source Review evidence is not present; Boundary Review evidence is not eligible"
+        ],
+        "action": "await-independent-source-review-evidence",
+        "candidate_decision": "blocked",
+        "issue_number": 1514,
+        "source_note_issue_number": 57,
+        "interview_note_id": "xhs:64ca561c000000000a01b497",
+        "case_key": null,
+        "expected_interview_body_sha256": "6ad3bc43fb7254d045bd604cc7b5b2026e32f0a8e8df92efe66f9672d5500e2b",
+        "expected_source_note_body_sha256": "41c82adf13e694374182ad629b0d962325bea29b35a57f95260277c61507f5ab",
+        "expected_source_revision_id": "xhs-note:64ca561c000000000a01b497:snapshot-95b77bb26104",
+        "source_revision_evidence": {
+          "source_repository": "liqiangcc/xhs",
+          "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+          "raw_artifact_count": 3,
+          "source_projection_count": 2
+        },
+        "evidence_subject_sha256": "546887f14cdcb967b03f5ffa60c7a1a73246c970118925f3791de0dc04ed931b",
+        "pinned_artifact_manifest_sha256": "4f40de87cc5b65f2ef0c93f25ca19235f7a9386db8811a12530b77374fce9b45",
+        "pinned_artifact_manifest_item_verified": true,
+        "provenance": {
+          "status": "pinned-source-artifact",
+          "projection_count": 2,
+          "raw_capture_count": 3,
+          "raw_lineage_proven": false,
+          "pinned_source_artifact": true,
+          "known_source_artifact": true,
+          "legacy_pinned_source_artifact": true,
+          "raw_lineage_claim": "not-claimed",
+          "declared_status": null,
+          "declared_raw_lineage_claim": null,
+          "declaration_consistent": true,
+          "declaration_errors": [],
+          "details": [
+            {
+              "ref": "liqiangcc/xhs:note_json/64ca561c000000000a01b497.json@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            },
+            {
+              "ref": "liqiangcc/xhs:note_desc/64ca561c000000000a01b497.txt@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            }
+          ]
+        },
+        "boundary_review_evidence_reused": false
+      },
+      {
+        "current_status": "blocked",
+        "computed_checks": [
+          {
+            "check_id": "source_identity",
+            "result": "pass",
+            "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+          },
+          {
+            "check_id": "source_revision_binding",
+            "result": "pass",
+            "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+          },
+          {
+            "check_id": "artifact_reference_integrity",
+            "result": "pass",
+            "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+          },
+          {
+            "check_id": "raw_projection_traceability",
+            "result": "fail",
+            "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+          },
+          {
+            "check_id": "source_artifact_provenance",
+            "result": "pass",
+            "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+          },
+          {
+            "check_id": "known_limitations_recorded",
+            "result": "pass",
+            "note": "All SourceNote limitations are retained by InterviewNote."
+          },
+          {
+            "check_id": "duplicate_ownership",
+            "result": "pass",
+            "note": "Exactly one InterviewNote owner exists: #1515."
+          },
+          {
+            "check_id": "no_fabrication",
+            "result": "pass",
+            "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+          }
+        ],
+        "failed_check_ids": [
+          "raw_projection_traceability"
+        ],
+        "independent_evidence": "missing",
+        "source_ready_gate": {
+          "ok": true,
+          "mode": "pinned-source-artifact",
+          "raw_lineage_claim": "not-claimed",
+          "reason": "source-ready is based on a recorded pinned reference whose commit-tree path+blob was audited; Raw derivation is explicitly not claimed"
+        },
+        "receipt_count": 0,
+        "mutation_performed": false,
+        "errors": [
+          "independent InterviewNote Source Review evidence is not present; Boundary Review evidence is not eligible"
+        ],
+        "action": "await-independent-source-review-evidence",
+        "candidate_decision": "blocked",
+        "issue_number": 1515,
+        "source_note_issue_number": 62,
+        "interview_note_id": "xhs:64f1a318000000001e02cff7",
+        "case_key": null,
+        "expected_interview_body_sha256": "02190ca8f39a47909ac2c60634e82d1fcbfca3001d6009d82a299df9e4968f1f",
+        "expected_source_note_body_sha256": "68bdfd7ab5dbdcea15105fbc4becf6df23f09acfe94a7fa2a42789c2dc4478e1",
+        "expected_source_revision_id": "xhs-note:64f1a318000000001e02cff7:snapshot-95b77bb26104",
+        "source_revision_evidence": {
+          "source_repository": "liqiangcc/xhs",
+          "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+          "raw_artifact_count": 3,
+          "source_projection_count": 2
+        },
+        "evidence_subject_sha256": "130f3080f1ef6338f8e501ca97f97436b6a96d7d23135ce3cada5b05364856d9",
+        "pinned_artifact_manifest_sha256": "4f40de87cc5b65f2ef0c93f25ca19235f7a9386db8811a12530b77374fce9b45",
+        "pinned_artifact_manifest_item_verified": true,
+        "provenance": {
+          "status": "pinned-source-artifact",
+          "projection_count": 2,
+          "raw_capture_count": 3,
+          "raw_lineage_proven": false,
+          "pinned_source_artifact": true,
+          "known_source_artifact": true,
+          "legacy_pinned_source_artifact": true,
+          "raw_lineage_claim": "not-claimed",
+          "declared_status": null,
+          "declared_raw_lineage_claim": null,
+          "declaration_consistent": true,
+          "declaration_errors": [],
+          "details": [
+            {
+              "ref": "liqiangcc/xhs:note_json/64f1a318000000001e02cff7.json@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            },
+            {
+              "ref": "liqiangcc/xhs:note_desc/64f1a318000000001e02cff7.txt@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            }
+          ]
+        },
+        "boundary_review_evidence_reused": false
+      },
+      {
+        "current_status": "blocked",
+        "computed_checks": [
+          {
+            "check_id": "source_identity",
+            "result": "pass",
+            "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+          },
+          {
+            "check_id": "source_revision_binding",
+            "result": "pass",
+            "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+          },
+          {
+            "check_id": "artifact_reference_integrity",
+            "result": "pass",
+            "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+          },
+          {
+            "check_id": "raw_projection_traceability",
+            "result": "fail",
+            "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+          },
+          {
+            "check_id": "source_artifact_provenance",
+            "result": "pass",
+            "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+          },
+          {
+            "check_id": "known_limitations_recorded",
+            "result": "pass",
+            "note": "All SourceNote limitations are retained by InterviewNote."
+          },
+          {
+            "check_id": "duplicate_ownership",
+            "result": "pass",
+            "note": "Exactly one InterviewNote owner exists: #1516."
+          },
+          {
+            "check_id": "no_fabrication",
+            "result": "pass",
+            "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+          }
+        ],
+        "failed_check_ids": [
+          "raw_projection_traceability"
+        ],
+        "independent_evidence": "missing",
+        "source_ready_gate": {
+          "ok": true,
+          "mode": "pinned-source-artifact",
+          "raw_lineage_claim": "not-claimed",
+          "reason": "source-ready is based on a recorded pinned reference whose commit-tree path+blob was audited; Raw derivation is explicitly not claimed"
+        },
+        "receipt_count": 0,
+        "mutation_performed": false,
+        "errors": [
+          "independent InterviewNote Source Review evidence is not present; Boundary Review evidence is not eligible"
+        ],
+        "action": "await-independent-source-review-evidence",
+        "candidate_decision": "blocked",
+        "issue_number": 1516,
+        "source_note_issue_number": 67,
+        "interview_note_id": "xhs:64fd4ff0000000001e023f11",
+        "case_key": null,
+        "expected_interview_body_sha256": "b08e3b7ad41adf3889dbbcec053992fafd22cacc58f3aeddd8bfca2eb6355b6d",
+        "expected_source_note_body_sha256": "ed123940ab3fe9567520671ee87b0fbb396e61bc273f3bc42c6d72a614cda0c6",
+        "expected_source_revision_id": "xhs-note:64fd4ff0000000001e023f11:snapshot-95b77bb26104",
+        "source_revision_evidence": {
+          "source_repository": "liqiangcc/xhs",
+          "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+          "raw_artifact_count": 3,
+          "source_projection_count": 2
+        },
+        "evidence_subject_sha256": "c134515c2078123bd8b0b11482f9ed87baed1b7bbff74e4c645d795e9c698cb9",
+        "pinned_artifact_manifest_sha256": "4f40de87cc5b65f2ef0c93f25ca19235f7a9386db8811a12530b77374fce9b45",
+        "pinned_artifact_manifest_item_verified": true,
+        "provenance": {
+          "status": "pinned-source-artifact",
+          "projection_count": 2,
+          "raw_capture_count": 3,
+          "raw_lineage_proven": false,
+          "pinned_source_artifact": true,
+          "known_source_artifact": true,
+          "legacy_pinned_source_artifact": true,
+          "raw_lineage_claim": "not-claimed",
+          "declared_status": null,
+          "declared_raw_lineage_claim": null,
+          "declaration_consistent": true,
+          "declaration_errors": [],
+          "details": [
+            {
+              "ref": "liqiangcc/xhs:note_json/64fd4ff0000000001e023f11.json@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            },
+            {
+              "ref": "liqiangcc/xhs:note_desc/64fd4ff0000000001e023f11.txt@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            }
+          ]
+        },
+        "boundary_review_evidence_reused": false
+      },
+      {
+        "current_status": "blocked",
+        "computed_checks": [
+          {
+            "check_id": "source_identity",
+            "result": "pass",
+            "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+          },
+          {
+            "check_id": "source_revision_binding",
+            "result": "pass",
+            "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+          },
+          {
+            "check_id": "artifact_reference_integrity",
+            "result": "pass",
+            "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+          },
+          {
+            "check_id": "raw_projection_traceability",
+            "result": "fail",
+            "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+          },
+          {
+            "check_id": "source_artifact_provenance",
+            "result": "pass",
+            "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+          },
+          {
+            "check_id": "known_limitations_recorded",
+            "result": "pass",
+            "note": "All SourceNote limitations are retained by InterviewNote."
+          },
+          {
+            "check_id": "duplicate_ownership",
+            "result": "pass",
+            "note": "Exactly one InterviewNote owner exists: #1517."
+          },
+          {
+            "check_id": "no_fabrication",
+            "result": "pass",
+            "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+          }
+        ],
+        "failed_check_ids": [
+          "raw_projection_traceability"
+        ],
+        "independent_evidence": "missing",
+        "source_ready_gate": {
+          "ok": true,
+          "mode": "pinned-source-artifact",
+          "raw_lineage_claim": "not-claimed",
+          "reason": "source-ready is based on a recorded pinned reference whose commit-tree path+blob was audited; Raw derivation is explicitly not claimed"
+        },
+        "receipt_count": 0,
+        "mutation_performed": false,
+        "errors": [
+          "independent InterviewNote Source Review evidence is not present; Boundary Review evidence is not eligible"
+        ],
+        "action": "await-independent-source-review-evidence",
+        "candidate_decision": "blocked",
+        "issue_number": 1517,
+        "source_note_issue_number": 71,
+        "interview_note_id": "xhs:6505afd000000000200020ee",
+        "case_key": null,
+        "expected_interview_body_sha256": "3f4b5578a6fcc1226c60a0e0071544e4034ad5c684d7b72016ee2649905a7a74",
+        "expected_source_note_body_sha256": "c3a8c984cbc93be8401ca5c7cd1d7f2717c5385f99ef9e266e18f8ee0f6f1e11",
+        "expected_source_revision_id": "xhs-note:6505afd000000000200020ee:snapshot-95b77bb26104",
+        "source_revision_evidence": {
+          "source_repository": "liqiangcc/xhs",
+          "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+          "raw_artifact_count": 3,
+          "source_projection_count": 2
+        },
+        "evidence_subject_sha256": "0f1e08d320313396e9fbcc0cfbf7e04951375286995c66e3ddf0d05253b3d87b",
+        "pinned_artifact_manifest_sha256": "4f40de87cc5b65f2ef0c93f25ca19235f7a9386db8811a12530b77374fce9b45",
+        "pinned_artifact_manifest_item_verified": true,
+        "provenance": {
+          "status": "pinned-source-artifact",
+          "projection_count": 2,
+          "raw_capture_count": 3,
+          "raw_lineage_proven": false,
+          "pinned_source_artifact": true,
+          "known_source_artifact": true,
+          "legacy_pinned_source_artifact": true,
+          "raw_lineage_claim": "not-claimed",
+          "declared_status": null,
+          "declared_raw_lineage_claim": null,
+          "declaration_consistent": true,
+          "declaration_errors": [],
+          "details": [
+            {
+              "ref": "liqiangcc/xhs:note_json/6505afd000000000200020ee.json@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            },
+            {
+              "ref": "liqiangcc/xhs:note_desc/6505afd000000000200020ee.txt@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            }
+          ]
+        },
+        "boundary_review_evidence_reused": false
+      },
+      {
+        "current_status": "blocked",
+        "computed_checks": [
+          {
+            "check_id": "source_identity",
+            "result": "pass",
+            "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+          },
+          {
+            "check_id": "source_revision_binding",
+            "result": "pass",
+            "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+          },
+          {
+            "check_id": "artifact_reference_integrity",
+            "result": "pass",
+            "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+          },
+          {
+            "check_id": "raw_projection_traceability",
+            "result": "fail",
+            "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+          },
+          {
+            "check_id": "source_artifact_provenance",
+            "result": "pass",
+            "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+          },
+          {
+            "check_id": "known_limitations_recorded",
+            "result": "pass",
+            "note": "All SourceNote limitations are retained by InterviewNote."
+          },
+          {
+            "check_id": "duplicate_ownership",
+            "result": "pass",
+            "note": "Exactly one InterviewNote owner exists: #1518."
+          },
+          {
+            "check_id": "no_fabrication",
+            "result": "pass",
+            "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+          }
+        ],
+        "failed_check_ids": [
+          "raw_projection_traceability"
+        ],
+        "independent_evidence": "missing",
+        "source_ready_gate": {
+          "ok": true,
+          "mode": "pinned-source-artifact",
+          "raw_lineage_claim": "not-claimed",
+          "reason": "source-ready is based on a recorded pinned reference whose commit-tree path+blob was audited; Raw derivation is explicitly not claimed"
+        },
+        "receipt_count": 0,
+        "mutation_performed": false,
+        "errors": [
+          "independent InterviewNote Source Review evidence is not present; Boundary Review evidence is not eligible"
+        ],
+        "action": "await-independent-source-review-evidence",
+        "candidate_decision": "blocked",
+        "issue_number": 1518,
+        "source_note_issue_number": 73,
+        "interview_note_id": "xhs:6506a0780000000013034b8d",
+        "case_key": null,
+        "expected_interview_body_sha256": "ccb93bf4ee5d3b2567b85a772f08582b96e40df5b8d06181b65d236d9bdb461d",
+        "expected_source_note_body_sha256": "d009ab807e3452252ab5830bca57e8d6e0865310102a2fa019ce1c234a457255",
+        "expected_source_revision_id": "xhs-note:6506a0780000000013034b8d:snapshot-95b77bb26104",
+        "source_revision_evidence": {
+          "source_repository": "liqiangcc/xhs",
+          "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+          "raw_artifact_count": 3,
+          "source_projection_count": 2
+        },
+        "evidence_subject_sha256": "0afd6b3b7ea6969c04395894fefd7d1617e1aaf61fba4d1c9ba26c3d04d12c5b",
+        "pinned_artifact_manifest_sha256": "4f40de87cc5b65f2ef0c93f25ca19235f7a9386db8811a12530b77374fce9b45",
+        "pinned_artifact_manifest_item_verified": true,
+        "provenance": {
+          "status": "pinned-source-artifact",
+          "projection_count": 2,
+          "raw_capture_count": 3,
+          "raw_lineage_proven": false,
+          "pinned_source_artifact": true,
+          "known_source_artifact": true,
+          "legacy_pinned_source_artifact": true,
+          "raw_lineage_claim": "not-claimed",
+          "declared_status": null,
+          "declared_raw_lineage_claim": null,
+          "declaration_consistent": true,
+          "declaration_errors": [],
+          "details": [
+            {
+              "ref": "liqiangcc/xhs:note_json/6506a0780000000013034b8d.json@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            },
+            {
+              "ref": "liqiangcc/xhs:note_desc/6506a0780000000013034b8d.txt@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            }
+          ]
+        },
+        "boundary_review_evidence_reused": false
+      },
+      {
+        "current_status": "blocked",
+        "computed_checks": [
+          {
+            "check_id": "source_identity",
+            "result": "pass",
+            "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+          },
+          {
+            "check_id": "source_revision_binding",
+            "result": "pass",
+            "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+          },
+          {
+            "check_id": "artifact_reference_integrity",
+            "result": "pass",
+            "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+          },
+          {
+            "check_id": "raw_projection_traceability",
+            "result": "fail",
+            "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+          },
+          {
+            "check_id": "source_artifact_provenance",
+            "result": "pass",
+            "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+          },
+          {
+            "check_id": "known_limitations_recorded",
+            "result": "pass",
+            "note": "All SourceNote limitations are retained by InterviewNote."
+          },
+          {
+            "check_id": "duplicate_ownership",
+            "result": "pass",
+            "note": "Exactly one InterviewNote owner exists: #1519."
+          },
+          {
+            "check_id": "no_fabrication",
+            "result": "pass",
+            "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+          }
+        ],
+        "failed_check_ids": [
+          "raw_projection_traceability"
+        ],
+        "independent_evidence": "missing",
+        "source_ready_gate": {
+          "ok": true,
+          "mode": "pinned-source-artifact",
+          "raw_lineage_claim": "not-claimed",
+          "reason": "source-ready is based on a recorded pinned reference whose commit-tree path+blob was audited; Raw derivation is explicitly not claimed"
+        },
+        "receipt_count": 0,
+        "mutation_performed": false,
+        "errors": [
+          "independent InterviewNote Source Review evidence is not present; Boundary Review evidence is not eligible"
+        ],
+        "action": "await-independent-source-review-evidence",
+        "candidate_decision": "blocked",
+        "issue_number": 1519,
+        "source_note_issue_number": 80,
+        "interview_note_id": "xhs:656de8b6000000001502f038",
+        "case_key": null,
+        "expected_interview_body_sha256": "e248b426af014197b7ef68f8c42d28eee58f2ded7feb79ebf16c6f18102772ad",
+        "expected_source_note_body_sha256": "ee36a328dea6cca48dfd052c52b0f29613cbe2405b38eec2550190a7cf291210",
+        "expected_source_revision_id": "xhs-note:656de8b6000000001502f038:snapshot-95b77bb26104",
+        "source_revision_evidence": {
+          "source_repository": "liqiangcc/xhs",
+          "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+          "raw_artifact_count": 5,
+          "source_projection_count": 2
+        },
+        "evidence_subject_sha256": "28541c10a1915e2c36354a5cda36a860277d642026d807e0bdd8d0690afafc09",
+        "pinned_artifact_manifest_sha256": "4f40de87cc5b65f2ef0c93f25ca19235f7a9386db8811a12530b77374fce9b45",
+        "pinned_artifact_manifest_item_verified": true,
+        "provenance": {
+          "status": "pinned-source-artifact",
+          "projection_count": 2,
+          "raw_capture_count": 5,
+          "raw_lineage_proven": false,
+          "pinned_source_artifact": true,
+          "known_source_artifact": true,
+          "legacy_pinned_source_artifact": true,
+          "raw_lineage_claim": "not-claimed",
+          "declared_status": null,
+          "declared_raw_lineage_claim": null,
+          "declaration_consistent": true,
+          "declaration_errors": [],
+          "details": [
+            {
+              "ref": "liqiangcc/xhs:note_json/656de8b6000000001502f038.json@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            },
+            {
+              "ref": "liqiangcc/xhs:note_desc/656de8b6000000001502f038.txt@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            }
+          ]
+        },
+        "boundary_review_evidence_reused": false
+      },
+      {
+        "current_status": "blocked",
+        "computed_checks": [
+          {
+            "check_id": "source_identity",
+            "result": "pass",
+            "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+          },
+          {
+            "check_id": "source_revision_binding",
+            "result": "pass",
+            "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+          },
+          {
+            "check_id": "artifact_reference_integrity",
+            "result": "pass",
+            "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+          },
+          {
+            "check_id": "raw_projection_traceability",
+            "result": "fail",
+            "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+          },
+          {
+            "check_id": "source_artifact_provenance",
+            "result": "pass",
+            "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+          },
+          {
+            "check_id": "known_limitations_recorded",
+            "result": "pass",
+            "note": "All SourceNote limitations are retained by InterviewNote."
+          },
+          {
+            "check_id": "duplicate_ownership",
+            "result": "pass",
+            "note": "Exactly one InterviewNote owner exists: #1520."
+          },
+          {
+            "check_id": "no_fabrication",
+            "result": "pass",
+            "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+          }
+        ],
+        "failed_check_ids": [
+          "raw_projection_traceability"
+        ],
+        "independent_evidence": "missing",
+        "source_ready_gate": {
+          "ok": true,
+          "mode": "pinned-source-artifact",
+          "raw_lineage_claim": "not-claimed",
+          "reason": "source-ready is based on a recorded pinned reference whose commit-tree path+blob was audited; Raw derivation is explicitly not claimed"
+        },
+        "receipt_count": 0,
+        "mutation_performed": false,
+        "errors": [
+          "independent InterviewNote Source Review evidence is not present; Boundary Review evidence is not eligible"
+        ],
+        "action": "await-independent-source-review-evidence",
+        "candidate_decision": "blocked",
+        "issue_number": 1520,
+        "source_note_issue_number": 81,
+        "interview_note_id": "xhs:6571543d0000000034035ea4",
+        "case_key": null,
+        "expected_interview_body_sha256": "30b98ccaf4e72b5bd3c6cea3ea523c395afb25766f5aaa9aa4692988d08823d9",
+        "expected_source_note_body_sha256": "b9b362d849c11876fe1feae51aebdc6e298d28cc88b84fe505fb7c0b2c65733f",
+        "expected_source_revision_id": "xhs-note:6571543d0000000034035ea4:snapshot-95b77bb26104",
+        "source_revision_evidence": {
+          "source_repository": "liqiangcc/xhs",
+          "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+          "raw_artifact_count": 10,
+          "source_projection_count": 2
+        },
+        "evidence_subject_sha256": "be36d1bf8be4c87b6ed48c7bc5ce575a6258cf7d51d89b7df566d17559c783c0",
+        "pinned_artifact_manifest_sha256": "4f40de87cc5b65f2ef0c93f25ca19235f7a9386db8811a12530b77374fce9b45",
+        "pinned_artifact_manifest_item_verified": true,
+        "provenance": {
+          "status": "pinned-source-artifact",
+          "projection_count": 2,
+          "raw_capture_count": 10,
+          "raw_lineage_proven": false,
+          "pinned_source_artifact": true,
+          "known_source_artifact": true,
+          "legacy_pinned_source_artifact": true,
+          "raw_lineage_claim": "not-claimed",
+          "declared_status": null,
+          "declared_raw_lineage_claim": null,
+          "declaration_consistent": true,
+          "declaration_errors": [],
+          "details": [
+            {
+              "ref": "liqiangcc/xhs:note_json/6571543d0000000034035ea4.json@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            },
+            {
+              "ref": "liqiangcc/xhs:note_desc/6571543d0000000034035ea4.txt@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            }
+          ]
+        },
+        "boundary_review_evidence_reused": false
+      },
+      {
+        "current_status": "blocked",
+        "computed_checks": [
+          {
+            "check_id": "source_identity",
+            "result": "pass",
+            "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+          },
+          {
+            "check_id": "source_revision_binding",
+            "result": "pass",
+            "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+          },
+          {
+            "check_id": "artifact_reference_integrity",
+            "result": "pass",
+            "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+          },
+          {
+            "check_id": "raw_projection_traceability",
+            "result": "fail",
+            "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+          },
+          {
+            "check_id": "source_artifact_provenance",
+            "result": "pass",
+            "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+          },
+          {
+            "check_id": "known_limitations_recorded",
+            "result": "pass",
+            "note": "All SourceNote limitations are retained by InterviewNote."
+          },
+          {
+            "check_id": "duplicate_ownership",
+            "result": "pass",
+            "note": "Exactly one InterviewNote owner exists: #1521."
+          },
+          {
+            "check_id": "no_fabrication",
+            "result": "pass",
+            "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+          }
+        ],
+        "failed_check_ids": [
+          "raw_projection_traceability"
+        ],
+        "independent_evidence": "missing",
+        "source_ready_gate": {
+          "ok": true,
+          "mode": "pinned-source-artifact",
+          "raw_lineage_claim": "not-claimed",
+          "reason": "source-ready is based on a recorded pinned reference whose commit-tree path+blob was audited; Raw derivation is explicitly not claimed"
+        },
+        "receipt_count": 0,
+        "mutation_performed": false,
+        "errors": [
+          "independent InterviewNote Source Review evidence is not present; Boundary Review evidence is not eligible"
+        ],
+        "action": "await-independent-source-review-evidence",
+        "candidate_decision": "blocked",
+        "issue_number": 1521,
+        "source_note_issue_number": 82,
+        "interview_note_id": "xhs:6571ca680000000038020b1d",
+        "case_key": null,
+        "expected_interview_body_sha256": "e68fd18e1b242e045ad7230a96c3c89a5ad6420da9dcf5059c6188623a25f808",
+        "expected_source_note_body_sha256": "75842ed9f2c418a09e9bf19d99f40ef3a6169c7b3102ad994e1a15042f4ed2df",
+        "expected_source_revision_id": "xhs-note:6571ca680000000038020b1d:snapshot-95b77bb26104",
+        "source_revision_evidence": {
+          "source_repository": "liqiangcc/xhs",
+          "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+          "raw_artifact_count": 4,
+          "source_projection_count": 2
+        },
+        "evidence_subject_sha256": "3a319a6caeaa1bb6c6aa36ad2ed4a68c3f22a55756729a35bb97d12271f1d401",
+        "pinned_artifact_manifest_sha256": "4f40de87cc5b65f2ef0c93f25ca19235f7a9386db8811a12530b77374fce9b45",
+        "pinned_artifact_manifest_item_verified": true,
+        "provenance": {
+          "status": "pinned-source-artifact",
+          "projection_count": 2,
+          "raw_capture_count": 4,
+          "raw_lineage_proven": false,
+          "pinned_source_artifact": true,
+          "known_source_artifact": true,
+          "legacy_pinned_source_artifact": true,
+          "raw_lineage_claim": "not-claimed",
+          "declared_status": null,
+          "declared_raw_lineage_claim": null,
+          "declaration_consistent": true,
+          "declaration_errors": [],
+          "details": [
+            {
+              "ref": "liqiangcc/xhs:note_json/6571ca680000000038020b1d.json@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            },
+            {
+              "ref": "liqiangcc/xhs:note_desc/6571ca680000000038020b1d.txt@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            }
+          ]
+        },
+        "boundary_review_evidence_reused": false
+      },
+      {
+        "current_status": "blocked",
+        "computed_checks": [
+          {
+            "check_id": "source_identity",
+            "result": "pass",
+            "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+          },
+          {
+            "check_id": "source_revision_binding",
+            "result": "pass",
+            "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+          },
+          {
+            "check_id": "artifact_reference_integrity",
+            "result": "pass",
+            "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+          },
+          {
+            "check_id": "raw_projection_traceability",
+            "result": "fail",
+            "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+          },
+          {
+            "check_id": "source_artifact_provenance",
+            "result": "pass",
+            "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+          },
+          {
+            "check_id": "known_limitations_recorded",
+            "result": "pass",
+            "note": "All SourceNote limitations are retained by InterviewNote."
+          },
+          {
+            "check_id": "duplicate_ownership",
+            "result": "pass",
+            "note": "Exactly one InterviewNote owner exists: #1522."
+          },
+          {
+            "check_id": "no_fabrication",
+            "result": "pass",
+            "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+          }
+        ],
+        "failed_check_ids": [
+          "raw_projection_traceability"
+        ],
+        "independent_evidence": "missing",
+        "source_ready_gate": {
+          "ok": true,
+          "mode": "pinned-source-artifact",
+          "raw_lineage_claim": "not-claimed",
+          "reason": "source-ready is based on a recorded pinned reference whose commit-tree path+blob was audited; Raw derivation is explicitly not claimed"
+        },
+        "receipt_count": 0,
+        "mutation_performed": false,
+        "errors": [
+          "independent InterviewNote Source Review evidence is not present; Boundary Review evidence is not eligible"
+        ],
+        "action": "await-independent-source-review-evidence",
+        "candidate_decision": "blocked",
+        "issue_number": 1522,
+        "source_note_issue_number": 88,
+        "interview_note_id": "xhs:6584453a00000000160047a2",
+        "case_key": null,
+        "expected_interview_body_sha256": "867327a9ff3a75cfc2866a121378f80b1abb037f290c7d5ee64b130aa190a5a2",
+        "expected_source_note_body_sha256": "1540ae911cc625e1a99c2879175920e09cd937cebc4f19869ba9cb26966f3b3b",
+        "expected_source_revision_id": "xhs-note:6584453a00000000160047a2:snapshot-95b77bb26104",
+        "source_revision_evidence": {
+          "source_repository": "liqiangcc/xhs",
+          "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+          "raw_artifact_count": 3,
+          "source_projection_count": 2
+        },
+        "evidence_subject_sha256": "0936d665e736717a9f1a6a36826fa8eb8509c4c9c1f5a2421b09b7650c1d3986",
+        "pinned_artifact_manifest_sha256": "4f40de87cc5b65f2ef0c93f25ca19235f7a9386db8811a12530b77374fce9b45",
+        "pinned_artifact_manifest_item_verified": true,
+        "provenance": {
+          "status": "pinned-source-artifact",
+          "projection_count": 2,
+          "raw_capture_count": 3,
+          "raw_lineage_proven": false,
+          "pinned_source_artifact": true,
+          "known_source_artifact": true,
+          "legacy_pinned_source_artifact": true,
+          "raw_lineage_claim": "not-claimed",
+          "declared_status": null,
+          "declared_raw_lineage_claim": null,
+          "declaration_consistent": true,
+          "declaration_errors": [],
+          "details": [
+            {
+              "ref": "liqiangcc/xhs:note_json/6584453a00000000160047a2.json@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            },
+            {
+              "ref": "liqiangcc/xhs:note_desc/6584453a00000000160047a2.txt@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            }
+          ]
+        },
+        "boundary_review_evidence_reused": false
+      },
+      {
+        "current_status": "blocked",
+        "computed_checks": [
+          {
+            "check_id": "source_identity",
+            "result": "pass",
+            "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+          },
+          {
+            "check_id": "source_revision_binding",
+            "result": "pass",
+            "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+          },
+          {
+            "check_id": "artifact_reference_integrity",
+            "result": "pass",
+            "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+          },
+          {
+            "check_id": "raw_projection_traceability",
+            "result": "fail",
+            "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+          },
+          {
+            "check_id": "source_artifact_provenance",
+            "result": "pass",
+            "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+          },
+          {
+            "check_id": "known_limitations_recorded",
+            "result": "pass",
+            "note": "All SourceNote limitations are retained by InterviewNote."
+          },
+          {
+            "check_id": "duplicate_ownership",
+            "result": "pass",
+            "note": "Exactly one InterviewNote owner exists: #1523."
+          },
+          {
+            "check_id": "no_fabrication",
+            "result": "pass",
+            "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+          }
+        ],
+        "failed_check_ids": [
+          "raw_projection_traceability"
+        ],
+        "independent_evidence": "missing",
+        "source_ready_gate": {
+          "ok": true,
+          "mode": "pinned-source-artifact",
+          "raw_lineage_claim": "not-claimed",
+          "reason": "source-ready is based on a recorded pinned reference whose commit-tree path+blob was audited; Raw derivation is explicitly not claimed"
+        },
+        "receipt_count": 0,
+        "mutation_performed": false,
+        "errors": [
+          "independent InterviewNote Source Review evidence is not present; Boundary Review evidence is not eligible"
+        ],
+        "action": "await-independent-source-review-evidence",
+        "candidate_decision": "blocked",
+        "issue_number": 1523,
+        "source_note_issue_number": 89,
+        "interview_note_id": "xhs:6588ea260000000009022d93",
+        "case_key": null,
+        "expected_interview_body_sha256": "45cc344661f9d3658af5550c9ee7b3c588abe6c7d324dcc483ea233175925e67",
+        "expected_source_note_body_sha256": "1db0f6c4ca7fc48a0c68f71ee958ee7954d265b1a823ca78a48ec85c3c10572c",
+        "expected_source_revision_id": "xhs-note:6588ea260000000009022d93:snapshot-95b77bb26104",
+        "source_revision_evidence": {
+          "source_repository": "liqiangcc/xhs",
+          "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+          "raw_artifact_count": 3,
+          "source_projection_count": 2
+        },
+        "evidence_subject_sha256": "de48be9eba5e17d977902417b8a88d1462ff3913ae7f11bd26fc82000b2d9396",
+        "pinned_artifact_manifest_sha256": "4f40de87cc5b65f2ef0c93f25ca19235f7a9386db8811a12530b77374fce9b45",
+        "pinned_artifact_manifest_item_verified": true,
+        "provenance": {
+          "status": "pinned-source-artifact",
+          "projection_count": 2,
+          "raw_capture_count": 3,
+          "raw_lineage_proven": false,
+          "pinned_source_artifact": true,
+          "known_source_artifact": true,
+          "legacy_pinned_source_artifact": true,
+          "raw_lineage_claim": "not-claimed",
+          "declared_status": null,
+          "declared_raw_lineage_claim": null,
+          "declaration_consistent": true,
+          "declaration_errors": [],
+          "details": [
+            {
+              "ref": "liqiangcc/xhs:note_json/6588ea260000000009022d93.json@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            },
+            {
+              "ref": "liqiangcc/xhs:note_desc/6588ea260000000009022d93.txt@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            }
+          ]
+        },
+        "boundary_review_evidence_reused": false
+      },
+      {
+        "current_status": "blocked",
+        "computed_checks": [
+          {
+            "check_id": "source_identity",
+            "result": "pass",
+            "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+          },
+          {
+            "check_id": "source_revision_binding",
+            "result": "pass",
+            "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+          },
+          {
+            "check_id": "artifact_reference_integrity",
+            "result": "pass",
+            "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+          },
+          {
+            "check_id": "raw_projection_traceability",
+            "result": "fail",
+            "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+          },
+          {
+            "check_id": "source_artifact_provenance",
+            "result": "pass",
+            "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+          },
+          {
+            "check_id": "known_limitations_recorded",
+            "result": "pass",
+            "note": "All SourceNote limitations are retained by InterviewNote."
+          },
+          {
+            "check_id": "duplicate_ownership",
+            "result": "pass",
+            "note": "Exactly one InterviewNote owner exists: #1524."
+          },
+          {
+            "check_id": "no_fabrication",
+            "result": "pass",
+            "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+          }
+        ],
+        "failed_check_ids": [
+          "raw_projection_traceability"
+        ],
+        "independent_evidence": "missing",
+        "source_ready_gate": {
+          "ok": true,
+          "mode": "pinned-source-artifact",
+          "raw_lineage_claim": "not-claimed",
+          "reason": "source-ready is based on a recorded pinned reference whose commit-tree path+blob was audited; Raw derivation is explicitly not claimed"
+        },
+        "receipt_count": 0,
+        "mutation_performed": false,
+        "errors": [
+          "independent InterviewNote Source Review evidence is not present; Boundary Review evidence is not eligible"
+        ],
+        "action": "await-independent-source-review-evidence",
+        "candidate_decision": "blocked",
+        "issue_number": 1524,
+        "source_note_issue_number": 97,
+        "interview_note_id": "xhs:659e8b8f000000001e008617",
+        "case_key": null,
+        "expected_interview_body_sha256": "82542aa3a881a4a1eecbd9ebcc224fcb3337af6e745d35666594c791a90ce4f4",
+        "expected_source_note_body_sha256": "012e344afc4bc12ac61a8eff2593a956364347191521bbd2418556b3e1237aaa",
+        "expected_source_revision_id": "xhs-note:659e8b8f000000001e008617:snapshot-95b77bb26104",
+        "source_revision_evidence": {
+          "source_repository": "liqiangcc/xhs",
+          "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+          "raw_artifact_count": 4,
+          "source_projection_count": 2
+        },
+        "evidence_subject_sha256": "8390f992e00d42f8005082de221b3018c92a0fe43eb99cb5d9a8df626e8ff2c4",
+        "pinned_artifact_manifest_sha256": "4f40de87cc5b65f2ef0c93f25ca19235f7a9386db8811a12530b77374fce9b45",
+        "pinned_artifact_manifest_item_verified": true,
+        "provenance": {
+          "status": "pinned-source-artifact",
+          "projection_count": 2,
+          "raw_capture_count": 4,
+          "raw_lineage_proven": false,
+          "pinned_source_artifact": true,
+          "known_source_artifact": true,
+          "legacy_pinned_source_artifact": true,
+          "raw_lineage_claim": "not-claimed",
+          "declared_status": null,
+          "declared_raw_lineage_claim": null,
+          "declaration_consistent": true,
+          "declaration_errors": [],
+          "details": [
+            {
+              "ref": "liqiangcc/xhs:note_json/659e8b8f000000001e008617.json@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            },
+            {
+              "ref": "liqiangcc/xhs:note_desc/659e8b8f000000001e008617.txt@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            }
+          ]
+        },
+        "boundary_review_evidence_reused": false
+      },
+      {
+        "current_status": "blocked",
+        "computed_checks": [
+          {
+            "check_id": "source_identity",
+            "result": "pass",
+            "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+          },
+          {
+            "check_id": "source_revision_binding",
+            "result": "pass",
+            "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+          },
+          {
+            "check_id": "artifact_reference_integrity",
+            "result": "pass",
+            "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+          },
+          {
+            "check_id": "raw_projection_traceability",
+            "result": "fail",
+            "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+          },
+          {
+            "check_id": "source_artifact_provenance",
+            "result": "pass",
+            "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+          },
+          {
+            "check_id": "known_limitations_recorded",
+            "result": "pass",
+            "note": "All SourceNote limitations are retained by InterviewNote."
+          },
+          {
+            "check_id": "duplicate_ownership",
+            "result": "pass",
+            "note": "Exactly one InterviewNote owner exists: #1525."
+          },
+          {
+            "check_id": "no_fabrication",
+            "result": "pass",
+            "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+          }
+        ],
+        "failed_check_ids": [
+          "raw_projection_traceability"
+        ],
+        "independent_evidence": "missing",
+        "source_ready_gate": {
+          "ok": true,
+          "mode": "pinned-source-artifact",
+          "raw_lineage_claim": "not-claimed",
+          "reason": "source-ready is based on a recorded pinned reference whose commit-tree path+blob was audited; Raw derivation is explicitly not claimed"
+        },
+        "receipt_count": 0,
+        "mutation_performed": false,
+        "errors": [
+          "independent InterviewNote Source Review evidence is not present; Boundary Review evidence is not eligible"
+        ],
+        "action": "await-independent-source-review-evidence",
+        "candidate_decision": "blocked",
+        "issue_number": 1525,
+        "source_note_issue_number": 100,
+        "interview_note_id": "xhs:65a0edcd0000000010012337",
+        "case_key": null,
+        "expected_interview_body_sha256": "028057fdc1d1f5be637e3de0db72b44ae32efa57cde9647a547f028f4e497bab",
+        "expected_source_note_body_sha256": "f536fe52bd12dc93d27c7cf4c990f5b6e242b6341b3a7f852de4efc73cc398fb",
+        "expected_source_revision_id": "xhs-note:65a0edcd0000000010012337:snapshot-95b77bb26104",
+        "source_revision_evidence": {
+          "source_repository": "liqiangcc/xhs",
+          "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+          "raw_artifact_count": 4,
+          "source_projection_count": 2
+        },
+        "evidence_subject_sha256": "8f1643401465dd6d3f2ce3e39fc0371074cb9067380f8fe97828031f406ae90b",
+        "pinned_artifact_manifest_sha256": "4f40de87cc5b65f2ef0c93f25ca19235f7a9386db8811a12530b77374fce9b45",
+        "pinned_artifact_manifest_item_verified": true,
+        "provenance": {
+          "status": "pinned-source-artifact",
+          "projection_count": 2,
+          "raw_capture_count": 4,
+          "raw_lineage_proven": false,
+          "pinned_source_artifact": true,
+          "known_source_artifact": true,
+          "legacy_pinned_source_artifact": true,
+          "raw_lineage_claim": "not-claimed",
+          "declared_status": null,
+          "declared_raw_lineage_claim": null,
+          "declaration_consistent": true,
+          "declaration_errors": [],
+          "details": [
+            {
+              "ref": "liqiangcc/xhs:note_json/65a0edcd0000000010012337.json@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            },
+            {
+              "ref": "liqiangcc/xhs:note_desc/65a0edcd0000000010012337.txt@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            }
+          ]
+        },
+        "boundary_review_evidence_reused": false
+      },
+      {
+        "current_status": "blocked",
+        "computed_checks": [
+          {
+            "check_id": "source_identity",
+            "result": "pass",
+            "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+          },
+          {
+            "check_id": "source_revision_binding",
+            "result": "pass",
+            "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+          },
+          {
+            "check_id": "artifact_reference_integrity",
+            "result": "pass",
+            "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+          },
+          {
+            "check_id": "raw_projection_traceability",
+            "result": "fail",
+            "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+          },
+          {
+            "check_id": "source_artifact_provenance",
+            "result": "pass",
+            "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+          },
+          {
+            "check_id": "known_limitations_recorded",
+            "result": "pass",
+            "note": "All SourceNote limitations are retained by InterviewNote."
+          },
+          {
+            "check_id": "duplicate_ownership",
+            "result": "pass",
+            "note": "Exactly one InterviewNote owner exists: #1526."
+          },
+          {
+            "check_id": "no_fabrication",
+            "result": "pass",
+            "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+          }
+        ],
+        "failed_check_ids": [
+          "raw_projection_traceability"
+        ],
+        "independent_evidence": "missing",
+        "source_ready_gate": {
+          "ok": true,
+          "mode": "pinned-source-artifact",
+          "raw_lineage_claim": "not-claimed",
+          "reason": "source-ready is based on a recorded pinned reference whose commit-tree path+blob was audited; Raw derivation is explicitly not claimed"
+        },
+        "receipt_count": 0,
+        "mutation_performed": false,
+        "errors": [
+          "independent InterviewNote Source Review evidence is not present; Boundary Review evidence is not eligible"
+        ],
+        "action": "await-independent-source-review-evidence",
+        "candidate_decision": "blocked",
+        "issue_number": 1526,
+        "source_note_issue_number": 105,
+        "interview_note_id": "xhs:65ae7d06000000000f035638",
+        "case_key": null,
+        "expected_interview_body_sha256": "6a566b79dd0f912b516ab74079b6086e63299672a1e64e8f96fd01a3e04b0416",
+        "expected_source_note_body_sha256": "55d49faf19b1a1d350e460cf1d0646dcdef7c23fa6c58ab37c02d3dd4cba5173",
+        "expected_source_revision_id": "xhs-note:65ae7d06000000000f035638:snapshot-95b77bb26104",
+        "source_revision_evidence": {
+          "source_repository": "liqiangcc/xhs",
+          "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+          "raw_artifact_count": 3,
+          "source_projection_count": 2
+        },
+        "evidence_subject_sha256": "1c223710ecf44f320ab823fd30640a57f5d45a7224260ff75b9948defd5ceef0",
+        "pinned_artifact_manifest_sha256": "4f40de87cc5b65f2ef0c93f25ca19235f7a9386db8811a12530b77374fce9b45",
+        "pinned_artifact_manifest_item_verified": true,
+        "provenance": {
+          "status": "pinned-source-artifact",
+          "projection_count": 2,
+          "raw_capture_count": 3,
+          "raw_lineage_proven": false,
+          "pinned_source_artifact": true,
+          "known_source_artifact": true,
+          "legacy_pinned_source_artifact": true,
+          "raw_lineage_claim": "not-claimed",
+          "declared_status": null,
+          "declared_raw_lineage_claim": null,
+          "declaration_consistent": true,
+          "declaration_errors": [],
+          "details": [
+            {
+              "ref": "liqiangcc/xhs:note_json/65ae7d06000000000f035638.json@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            },
+            {
+              "ref": "liqiangcc/xhs:note_desc/65ae7d06000000000f035638.txt@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            }
+          ]
+        },
+        "boundary_review_evidence_reused": false
+      },
+      {
+        "current_status": "blocked",
+        "computed_checks": [
+          {
+            "check_id": "source_identity",
+            "result": "pass",
+            "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+          },
+          {
+            "check_id": "source_revision_binding",
+            "result": "pass",
+            "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+          },
+          {
+            "check_id": "artifact_reference_integrity",
+            "result": "pass",
+            "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+          },
+          {
+            "check_id": "raw_projection_traceability",
+            "result": "fail",
+            "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+          },
+          {
+            "check_id": "source_artifact_provenance",
+            "result": "pass",
+            "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+          },
+          {
+            "check_id": "known_limitations_recorded",
+            "result": "pass",
+            "note": "All SourceNote limitations are retained by InterviewNote."
+          },
+          {
+            "check_id": "duplicate_ownership",
+            "result": "pass",
+            "note": "Exactly one InterviewNote owner exists: #1527."
+          },
+          {
+            "check_id": "no_fabrication",
+            "result": "pass",
+            "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+          }
+        ],
+        "failed_check_ids": [
+          "raw_projection_traceability"
+        ],
+        "independent_evidence": "missing",
+        "source_ready_gate": {
+          "ok": true,
+          "mode": "pinned-source-artifact",
+          "raw_lineage_claim": "not-claimed",
+          "reason": "source-ready is based on a recorded pinned reference whose commit-tree path+blob was audited; Raw derivation is explicitly not claimed"
+        },
+        "receipt_count": 0,
+        "mutation_performed": false,
+        "errors": [
+          "independent InterviewNote Source Review evidence is not present; Boundary Review evidence is not eligible"
+        ],
+        "action": "await-independent-source-review-evidence",
+        "candidate_decision": "blocked",
+        "issue_number": 1527,
+        "source_note_issue_number": 106,
+        "interview_note_id": "xhs:65af99a0000000002c037638",
+        "case_key": null,
+        "expected_interview_body_sha256": "3350ba770f92d77126bf303147bdb15130a680fecbf868e63812b559ecead884",
+        "expected_source_note_body_sha256": "416c2d2a563c62c14df18dab574ddcc533b27091d614ceb6ea9123191598ca8e",
+        "expected_source_revision_id": "xhs-note:65af99a0000000002c037638:snapshot-95b77bb26104",
+        "source_revision_evidence": {
+          "source_repository": "liqiangcc/xhs",
+          "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+          "raw_artifact_count": 6,
+          "source_projection_count": 2
+        },
+        "evidence_subject_sha256": "37aa622aa0d6d11a4bd3a35bc05acf29900b9b29c05701de10637a260d8954cf",
+        "pinned_artifact_manifest_sha256": "4f40de87cc5b65f2ef0c93f25ca19235f7a9386db8811a12530b77374fce9b45",
+        "pinned_artifact_manifest_item_verified": true,
+        "provenance": {
+          "status": "pinned-source-artifact",
+          "projection_count": 2,
+          "raw_capture_count": 6,
+          "raw_lineage_proven": false,
+          "pinned_source_artifact": true,
+          "known_source_artifact": true,
+          "legacy_pinned_source_artifact": true,
+          "raw_lineage_claim": "not-claimed",
+          "declared_status": null,
+          "declared_raw_lineage_claim": null,
+          "declaration_consistent": true,
+          "declaration_errors": [],
+          "details": [
+            {
+              "ref": "liqiangcc/xhs:note_json/65af99a0000000002c037638.json@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            },
+            {
+              "ref": "liqiangcc/xhs:note_desc/65af99a0000000002c037638.txt@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            }
+          ]
+        },
+        "boundary_review_evidence_reused": false
+      },
+      {
+        "current_status": "blocked",
+        "computed_checks": [
+          {
+            "check_id": "source_identity",
+            "result": "pass",
+            "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+          },
+          {
+            "check_id": "source_revision_binding",
+            "result": "pass",
+            "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+          },
+          {
+            "check_id": "artifact_reference_integrity",
+            "result": "pass",
+            "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+          },
+          {
+            "check_id": "raw_projection_traceability",
+            "result": "fail",
+            "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+          },
+          {
+            "check_id": "source_artifact_provenance",
+            "result": "pass",
+            "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+          },
+          {
+            "check_id": "known_limitations_recorded",
+            "result": "pass",
+            "note": "All SourceNote limitations are retained by InterviewNote."
+          },
+          {
+            "check_id": "duplicate_ownership",
+            "result": "pass",
+            "note": "Exactly one InterviewNote owner exists: #1528."
+          },
+          {
+            "check_id": "no_fabrication",
+            "result": "pass",
+            "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+          }
+        ],
+        "failed_check_ids": [
+          "raw_projection_traceability"
+        ],
+        "independent_evidence": "missing",
+        "source_ready_gate": {
+          "ok": true,
+          "mode": "pinned-source-artifact",
+          "raw_lineage_claim": "not-claimed",
+          "reason": "source-ready is based on a recorded pinned reference whose commit-tree path+blob was audited; Raw derivation is explicitly not claimed"
+        },
+        "receipt_count": 0,
+        "mutation_performed": false,
+        "errors": [
+          "independent InterviewNote Source Review evidence is not present; Boundary Review evidence is not eligible"
+        ],
+        "action": "await-independent-source-review-evidence",
+        "candidate_decision": "blocked",
+        "issue_number": 1528,
+        "source_note_issue_number": 107,
+        "interview_note_id": "xhs:65afdadd000000002c03f368",
+        "case_key": null,
+        "expected_interview_body_sha256": "f2f9ee0abb9e9cf06e3e8d76d930243d0147fe15d2302e2438b51b5e36a8c214",
+        "expected_source_note_body_sha256": "13edfb2101773d2ff416d4f192ea33e99185927ba133e0a2126695ef37c19d50",
+        "expected_source_revision_id": "xhs-note:65afdadd000000002c03f368:snapshot-95b77bb26104",
+        "source_revision_evidence": {
+          "source_repository": "liqiangcc/xhs",
+          "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+          "raw_artifact_count": 3,
+          "source_projection_count": 2
+        },
+        "evidence_subject_sha256": "b29b06ea7dc8914df3a2a672db6e54b5b119d14b0f32cc0960d6190f2efe3248",
+        "pinned_artifact_manifest_sha256": "4f40de87cc5b65f2ef0c93f25ca19235f7a9386db8811a12530b77374fce9b45",
+        "pinned_artifact_manifest_item_verified": true,
+        "provenance": {
+          "status": "pinned-source-artifact",
+          "projection_count": 2,
+          "raw_capture_count": 3,
+          "raw_lineage_proven": false,
+          "pinned_source_artifact": true,
+          "known_source_artifact": true,
+          "legacy_pinned_source_artifact": true,
+          "raw_lineage_claim": "not-claimed",
+          "declared_status": null,
+          "declared_raw_lineage_claim": null,
+          "declaration_consistent": true,
+          "declaration_errors": [],
+          "details": [
+            {
+              "ref": "liqiangcc/xhs:note_json/65afdadd000000002c03f368.json@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            },
+            {
+              "ref": "liqiangcc/xhs:note_desc/65afdadd000000002c03f368.txt@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            }
+          ]
+        },
+        "boundary_review_evidence_reused": false
+      },
+      {
+        "current_status": "blocked",
+        "computed_checks": [
+          {
+            "check_id": "source_identity",
+            "result": "pass",
+            "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+          },
+          {
+            "check_id": "source_revision_binding",
+            "result": "pass",
+            "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+          },
+          {
+            "check_id": "artifact_reference_integrity",
+            "result": "pass",
+            "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+          },
+          {
+            "check_id": "raw_projection_traceability",
+            "result": "fail",
+            "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+          },
+          {
+            "check_id": "source_artifact_provenance",
+            "result": "pass",
+            "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+          },
+          {
+            "check_id": "known_limitations_recorded",
+            "result": "pass",
+            "note": "All SourceNote limitations are retained by InterviewNote."
+          },
+          {
+            "check_id": "duplicate_ownership",
+            "result": "pass",
+            "note": "Exactly one InterviewNote owner exists: #1529."
+          },
+          {
+            "check_id": "no_fabrication",
+            "result": "pass",
+            "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+          }
+        ],
+        "failed_check_ids": [
+          "raw_projection_traceability"
+        ],
+        "independent_evidence": "missing",
+        "source_ready_gate": {
+          "ok": true,
+          "mode": "pinned-source-artifact",
+          "raw_lineage_claim": "not-claimed",
+          "reason": "source-ready is based on a recorded pinned reference whose commit-tree path+blob was audited; Raw derivation is explicitly not claimed"
+        },
+        "receipt_count": 0,
+        "mutation_performed": false,
+        "errors": [
+          "independent InterviewNote Source Review evidence is not present; Boundary Review evidence is not eligible"
+        ],
+        "action": "await-independent-source-review-evidence",
+        "candidate_decision": "blocked",
+        "issue_number": 1529,
+        "source_note_issue_number": 33,
+        "interview_note_id": "xhs:640af743000000000703b35e:event:a34b7e5c92a59017aa1ae4c67ae6ed5f7ec5a4268559898b82f9600aad8066ce",
+        "case_key": "dameng-database",
+        "expected_interview_body_sha256": "a1e14eb289cfebbfe152f20845902d08cf13b2e428bb4ec7d9eb5d1ee6fd2392",
+        "expected_source_note_body_sha256": "83b4d0203f34ff59303f4061d0e51924b5729096c182ddf43e9b919caa7165ff",
+        "expected_source_revision_id": "xhs-note:640af743000000000703b35e:snapshot-95b77bb26104",
+        "source_revision_evidence": {
+          "source_repository": "liqiangcc/xhs",
+          "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+          "raw_artifact_count": 4,
+          "source_projection_count": 2
+        },
+        "evidence_subject_sha256": "1a3f8f0e6ebceeda28a3e4a1bee323c39aa21dd066b0ff0a608f3ea469a74a43",
+        "pinned_artifact_manifest_sha256": "4f40de87cc5b65f2ef0c93f25ca19235f7a9386db8811a12530b77374fce9b45",
+        "pinned_artifact_manifest_item_verified": true,
+        "provenance": {
+          "status": "pinned-source-artifact",
+          "projection_count": 2,
+          "raw_capture_count": 4,
+          "raw_lineage_proven": false,
+          "pinned_source_artifact": true,
+          "known_source_artifact": true,
+          "legacy_pinned_source_artifact": true,
+          "raw_lineage_claim": "not-claimed",
+          "declared_status": null,
+          "declared_raw_lineage_claim": null,
+          "declaration_consistent": true,
+          "declaration_errors": [],
+          "details": [
+            {
+              "ref": "liqiangcc/xhs:note_json/640af743000000000703b35e.json@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            },
+            {
+              "ref": "liqiangcc/xhs:note_desc/640af743000000000703b35e.txt@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            }
+          ]
+        },
+        "boundary_review_evidence_reused": false
+      },
+      {
+        "current_status": "blocked",
+        "computed_checks": [
+          {
+            "check_id": "source_identity",
+            "result": "pass",
+            "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+          },
+          {
+            "check_id": "source_revision_binding",
+            "result": "pass",
+            "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+          },
+          {
+            "check_id": "artifact_reference_integrity",
+            "result": "pass",
+            "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+          },
+          {
+            "check_id": "raw_projection_traceability",
+            "result": "fail",
+            "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+          },
+          {
+            "check_id": "source_artifact_provenance",
+            "result": "pass",
+            "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+          },
+          {
+            "check_id": "known_limitations_recorded",
+            "result": "pass",
+            "note": "All SourceNote limitations are retained by InterviewNote."
+          },
+          {
+            "check_id": "duplicate_ownership",
+            "result": "pass",
+            "note": "Exactly one InterviewNote owner exists: #1530."
+          },
+          {
+            "check_id": "no_fabrication",
+            "result": "pass",
+            "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+          }
+        ],
+        "failed_check_ids": [
+          "raw_projection_traceability"
+        ],
+        "independent_evidence": "missing",
+        "source_ready_gate": {
+          "ok": true,
+          "mode": "pinned-source-artifact",
+          "raw_lineage_claim": "not-claimed",
+          "reason": "source-ready is based on a recorded pinned reference whose commit-tree path+blob was audited; Raw derivation is explicitly not claimed"
+        },
+        "receipt_count": 0,
+        "mutation_performed": false,
+        "errors": [
+          "independent InterviewNote Source Review evidence is not present; Boundary Review evidence is not eligible"
+        ],
+        "action": "await-independent-source-review-evidence",
+        "candidate_decision": "blocked",
+        "issue_number": 1530,
+        "source_note_issue_number": 33,
+        "interview_note_id": "xhs:640af743000000000703b35e:event:a3e3e08d03250bcf823000335431c7107a964f8a525aaa26d040367f2bf3fa44",
+        "case_key": "shumeng-factory",
+        "expected_interview_body_sha256": "79dc3b8c0a53c20056d070d9857c6ca693f3540f556c69c3bbe961ede1fbad4c",
+        "expected_source_note_body_sha256": "83b4d0203f34ff59303f4061d0e51924b5729096c182ddf43e9b919caa7165ff",
+        "expected_source_revision_id": "xhs-note:640af743000000000703b35e:snapshot-95b77bb26104",
+        "source_revision_evidence": {
+          "source_repository": "liqiangcc/xhs",
+          "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+          "raw_artifact_count": 4,
+          "source_projection_count": 2
+        },
+        "evidence_subject_sha256": "94395290175c60a7217bda5e59cf7028376f394e2a03f16b4a12e8502944eb67",
+        "pinned_artifact_manifest_sha256": "4f40de87cc5b65f2ef0c93f25ca19235f7a9386db8811a12530b77374fce9b45",
+        "pinned_artifact_manifest_item_verified": true,
+        "provenance": {
+          "status": "pinned-source-artifact",
+          "projection_count": 2,
+          "raw_capture_count": 4,
+          "raw_lineage_proven": false,
+          "pinned_source_artifact": true,
+          "known_source_artifact": true,
+          "legacy_pinned_source_artifact": true,
+          "raw_lineage_claim": "not-claimed",
+          "declared_status": null,
+          "declared_raw_lineage_claim": null,
+          "declaration_consistent": true,
+          "declaration_errors": [],
+          "details": [
+            {
+              "ref": "liqiangcc/xhs:note_json/640af743000000000703b35e.json@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            },
+            {
+              "ref": "liqiangcc/xhs:note_desc/640af743000000000703b35e.txt@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            }
+          ]
+        },
+        "boundary_review_evidence_reused": false
+      },
+      {
+        "current_status": "blocked",
+        "computed_checks": [
+          {
+            "check_id": "source_identity",
+            "result": "pass",
+            "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+          },
+          {
+            "check_id": "source_revision_binding",
+            "result": "pass",
+            "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+          },
+          {
+            "check_id": "artifact_reference_integrity",
+            "result": "pass",
+            "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+          },
+          {
+            "check_id": "raw_projection_traceability",
+            "result": "fail",
+            "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+          },
+          {
+            "check_id": "source_artifact_provenance",
+            "result": "pass",
+            "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+          },
+          {
+            "check_id": "known_limitations_recorded",
+            "result": "pass",
+            "note": "All SourceNote limitations are retained by InterviewNote."
+          },
+          {
+            "check_id": "duplicate_ownership",
+            "result": "pass",
+            "note": "Exactly one InterviewNote owner exists: #1531."
+          },
+          {
+            "check_id": "no_fabrication",
+            "result": "pass",
+            "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+          }
+        ],
+        "failed_check_ids": [
+          "raw_projection_traceability"
+        ],
+        "independent_evidence": "missing",
+        "source_ready_gate": {
+          "ok": true,
+          "mode": "pinned-source-artifact",
+          "raw_lineage_claim": "not-claimed",
+          "reason": "source-ready is based on a recorded pinned reference whose commit-tree path+blob was audited; Raw derivation is explicitly not claimed"
+        },
+        "receipt_count": 0,
+        "mutation_performed": false,
+        "errors": [
+          "independent InterviewNote Source Review evidence is not present; Boundary Review evidence is not eligible"
+        ],
+        "action": "await-independent-source-review-evidence",
+        "candidate_decision": "blocked",
+        "issue_number": 1531,
+        "source_note_issue_number": 551,
+        "interview_note_id": "xhs:67c6d3300000000029031e93:event:50d6cbf167e61e647f9b401d260616dc3640564476e005795666dd8188f5f1fa",
+        "case_key": "tencent-fullstack-backend",
+        "expected_interview_body_sha256": "921c4100ed304349cfd877f26058cbae4857708f35225431991cb48dabd46f71",
+        "expected_source_note_body_sha256": "e3038510cc94680ac90aface6ba1e3e2182769d9c07a540077ce3271ccfe215c",
+        "expected_source_revision_id": "xhs-note:67c6d3300000000029031e93:snapshot-95b77bb26104",
+        "source_revision_evidence": {
+          "source_repository": "liqiangcc/xhs",
+          "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+          "raw_artifact_count": 5,
+          "source_projection_count": 2
+        },
+        "evidence_subject_sha256": "ab1d3a2163ecc97124dfefe6db476e47b308eb83a91b4b4159f5720c92ed9d73",
+        "pinned_artifact_manifest_sha256": "4f40de87cc5b65f2ef0c93f25ca19235f7a9386db8811a12530b77374fce9b45",
+        "pinned_artifact_manifest_item_verified": true,
+        "provenance": {
+          "status": "pinned-source-artifact",
+          "projection_count": 2,
+          "raw_capture_count": 5,
+          "raw_lineage_proven": false,
+          "pinned_source_artifact": true,
+          "known_source_artifact": true,
+          "legacy_pinned_source_artifact": true,
+          "raw_lineage_claim": "not-claimed",
+          "declared_status": null,
+          "declared_raw_lineage_claim": null,
+          "declaration_consistent": true,
+          "declaration_errors": [],
+          "details": [
+            {
+              "ref": "liqiangcc/xhs:note_json/67c6d3300000000029031e93.json@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            },
+            {
+              "ref": "liqiangcc/xhs:note_desc/67c6d3300000000029031e93.txt@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            }
+          ]
+        },
+        "boundary_review_evidence_reused": false
+      },
+      {
+        "current_status": "blocked",
+        "computed_checks": [
+          {
+            "check_id": "source_identity",
+            "result": "pass",
+            "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+          },
+          {
+            "check_id": "source_revision_binding",
+            "result": "pass",
+            "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+          },
+          {
+            "check_id": "artifact_reference_integrity",
+            "result": "pass",
+            "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+          },
+          {
+            "check_id": "raw_projection_traceability",
+            "result": "fail",
+            "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+          },
+          {
+            "check_id": "source_artifact_provenance",
+            "result": "pass",
+            "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+          },
+          {
+            "check_id": "known_limitations_recorded",
+            "result": "pass",
+            "note": "All SourceNote limitations are retained by InterviewNote."
+          },
+          {
+            "check_id": "duplicate_ownership",
+            "result": "pass",
+            "note": "Exactly one InterviewNote owner exists: #1532."
+          },
+          {
+            "check_id": "no_fabrication",
+            "result": "pass",
+            "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+          }
+        ],
+        "failed_check_ids": [
+          "raw_projection_traceability"
+        ],
+        "independent_evidence": "missing",
+        "source_ready_gate": {
+          "ok": true,
+          "mode": "pinned-source-artifact",
+          "raw_lineage_claim": "not-claimed",
+          "reason": "source-ready is based on a recorded pinned reference whose commit-tree path+blob was audited; Raw derivation is explicitly not claimed"
+        },
+        "receipt_count": 0,
+        "mutation_performed": false,
+        "errors": [
+          "independent InterviewNote Source Review evidence is not present; Boundary Review evidence is not eligible"
+        ],
+        "action": "await-independent-source-review-evidence",
+        "candidate_decision": "blocked",
+        "issue_number": 1532,
+        "source_note_issue_number": 551,
+        "interview_note_id": "xhs:67c6d3300000000029031e93:event:a6ace2e5399d6bf562b9b21e001401db0155187f42715e39d16c09b08d6b0757",
+        "case_key": "tencent-mofang-backend",
+        "expected_interview_body_sha256": "659264947f7f14d64b558e608b4bcbf337e5dac6c5a035da2a75d47645953bcd",
+        "expected_source_note_body_sha256": "e3038510cc94680ac90aface6ba1e3e2182769d9c07a540077ce3271ccfe215c",
+        "expected_source_revision_id": "xhs-note:67c6d3300000000029031e93:snapshot-95b77bb26104",
+        "source_revision_evidence": {
+          "source_repository": "liqiangcc/xhs",
+          "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+          "raw_artifact_count": 5,
+          "source_projection_count": 2
+        },
+        "evidence_subject_sha256": "1aee48ee64787224c1554cd5df9b9c69087c634b49c5ba231b37d458b59f99de",
+        "pinned_artifact_manifest_sha256": "4f40de87cc5b65f2ef0c93f25ca19235f7a9386db8811a12530b77374fce9b45",
+        "pinned_artifact_manifest_item_verified": true,
+        "provenance": {
+          "status": "pinned-source-artifact",
+          "projection_count": 2,
+          "raw_capture_count": 5,
+          "raw_lineage_proven": false,
+          "pinned_source_artifact": true,
+          "known_source_artifact": true,
+          "legacy_pinned_source_artifact": true,
+          "raw_lineage_claim": "not-claimed",
+          "declared_status": null,
+          "declared_raw_lineage_claim": null,
+          "declaration_consistent": true,
+          "declaration_errors": [],
+          "details": [
+            {
+              "ref": "liqiangcc/xhs:note_json/67c6d3300000000029031e93.json@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            },
+            {
+              "ref": "liqiangcc/xhs:note_desc/67c6d3300000000029031e93.txt@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            }
+          ]
+        },
+        "boundary_review_evidence_reused": false
+      },
+      {
+        "current_status": "blocked",
+        "computed_checks": [
+          {
+            "check_id": "source_identity",
+            "result": "pass",
+            "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+          },
+          {
+            "check_id": "source_revision_binding",
+            "result": "pass",
+            "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+          },
+          {
+            "check_id": "artifact_reference_integrity",
+            "result": "pass",
+            "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+          },
+          {
+            "check_id": "raw_projection_traceability",
+            "result": "fail",
+            "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+          },
+          {
+            "check_id": "source_artifact_provenance",
+            "result": "pass",
+            "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+          },
+          {
+            "check_id": "known_limitations_recorded",
+            "result": "pass",
+            "note": "All SourceNote limitations are retained by InterviewNote."
+          },
+          {
+            "check_id": "duplicate_ownership",
+            "result": "pass",
+            "note": "Exactly one InterviewNote owner exists: #1533."
+          },
+          {
+            "check_id": "no_fabrication",
+            "result": "pass",
+            "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+          }
+        ],
+        "failed_check_ids": [
+          "raw_projection_traceability"
+        ],
+        "independent_evidence": "missing",
+        "source_ready_gate": {
+          "ok": true,
+          "mode": "pinned-source-artifact",
+          "raw_lineage_claim": "not-claimed",
+          "reason": "source-ready is based on a recorded pinned reference whose commit-tree path+blob was audited; Raw derivation is explicitly not claimed"
+        },
+        "receipt_count": 0,
+        "mutation_performed": false,
+        "errors": [
+          "independent InterviewNote Source Review evidence is not present; Boundary Review evidence is not eligible"
+        ],
+        "action": "await-independent-source-review-evidence",
+        "candidate_decision": "blocked",
+        "issue_number": 1533,
+        "source_note_issue_number": 551,
+        "interview_note_id": "xhs:67c6d3300000000029031e93:event:2843edc4ce68da4d9debfa174dc24a61a20b1bc86fb29268d0de65423cb2f665",
+        "case_key": "tencent-pcg-backend",
+        "expected_interview_body_sha256": "5944414c24caafb546747dbfb2aedaff65a2ed303ee6a2d628a73e59b34a41b3",
+        "expected_source_note_body_sha256": "e3038510cc94680ac90aface6ba1e3e2182769d9c07a540077ce3271ccfe215c",
+        "expected_source_revision_id": "xhs-note:67c6d3300000000029031e93:snapshot-95b77bb26104",
+        "source_revision_evidence": {
+          "source_repository": "liqiangcc/xhs",
+          "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+          "raw_artifact_count": 5,
+          "source_projection_count": 2
+        },
+        "evidence_subject_sha256": "46d563292bfabf8c46806c8ed9548214fff655b41772ec4b31df5a67d222bb80",
+        "pinned_artifact_manifest_sha256": "4f40de87cc5b65f2ef0c93f25ca19235f7a9386db8811a12530b77374fce9b45",
+        "pinned_artifact_manifest_item_verified": true,
+        "provenance": {
+          "status": "pinned-source-artifact",
+          "projection_count": 2,
+          "raw_capture_count": 5,
+          "raw_lineage_proven": false,
+          "pinned_source_artifact": true,
+          "known_source_artifact": true,
+          "legacy_pinned_source_artifact": true,
+          "raw_lineage_claim": "not-claimed",
+          "declared_status": null,
+          "declared_raw_lineage_claim": null,
+          "declaration_consistent": true,
+          "declaration_errors": [],
+          "details": [
+            {
+              "ref": "liqiangcc/xhs:note_json/67c6d3300000000029031e93.json@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            },
+            {
+              "ref": "liqiangcc/xhs:note_desc/67c6d3300000000029031e93.txt@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            }
+          ]
+        },
+        "boundary_review_evidence_reused": false
+      },
+      {
+        "current_status": "blocked",
+        "computed_checks": [
+          {
+            "check_id": "source_identity",
+            "result": "pass",
+            "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+          },
+          {
+            "check_id": "source_revision_binding",
+            "result": "pass",
+            "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+          },
+          {
+            "check_id": "artifact_reference_integrity",
+            "result": "pass",
+            "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+          },
+          {
+            "check_id": "raw_projection_traceability",
+            "result": "fail",
+            "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+          },
+          {
+            "check_id": "source_artifact_provenance",
+            "result": "pass",
+            "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+          },
+          {
+            "check_id": "known_limitations_recorded",
+            "result": "pass",
+            "note": "All SourceNote limitations are retained by InterviewNote."
+          },
+          {
+            "check_id": "duplicate_ownership",
+            "result": "pass",
+            "note": "Exactly one InterviewNote owner exists: #1534."
+          },
+          {
+            "check_id": "no_fabrication",
+            "result": "pass",
+            "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+          }
+        ],
+        "failed_check_ids": [
+          "raw_projection_traceability"
+        ],
+        "independent_evidence": "missing",
+        "source_ready_gate": {
+          "ok": true,
+          "mode": "pinned-source-artifact",
+          "raw_lineage_claim": "not-claimed",
+          "reason": "source-ready is based on a recorded pinned reference whose commit-tree path+blob was audited; Raw derivation is explicitly not claimed"
+        },
+        "receipt_count": 0,
+        "mutation_performed": false,
+        "errors": [
+          "independent InterviewNote Source Review evidence is not present; Boundary Review evidence is not eligible"
+        ],
+        "action": "await-independent-source-review-evidence",
+        "candidate_decision": "blocked",
+        "issue_number": 1534,
+        "source_note_issue_number": 25,
+        "interview_note_id": "xhs:6375c91b0000000024011d03",
+        "case_key": null,
+        "expected_interview_body_sha256": "d9ee12bfef605763a1ce2fe19879c1582256933c7f92d66cee6a491601dd3070",
+        "expected_source_note_body_sha256": "71264c4202374c4f44156c83aa85c1459384a0d88f82ac979708f8d3b9dc1ef0",
+        "expected_source_revision_id": "xhs-note:6375c91b0000000024011d03:snapshot-95b77bb26104",
+        "source_revision_evidence": {
+          "source_repository": "liqiangcc/xhs",
+          "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+          "raw_artifact_count": 5,
+          "source_projection_count": 2
+        },
+        "evidence_subject_sha256": "6e489399d16b30475ede313b1a12716601ecaa868a4e1375778af4424768ea79",
+        "pinned_artifact_manifest_sha256": "4f40de87cc5b65f2ef0c93f25ca19235f7a9386db8811a12530b77374fce9b45",
+        "pinned_artifact_manifest_item_verified": true,
+        "provenance": {
+          "status": "pinned-source-artifact",
+          "projection_count": 2,
+          "raw_capture_count": 5,
+          "raw_lineage_proven": false,
+          "pinned_source_artifact": true,
+          "known_source_artifact": true,
+          "legacy_pinned_source_artifact": true,
+          "raw_lineage_claim": "not-claimed",
+          "declared_status": null,
+          "declared_raw_lineage_claim": null,
+          "declaration_consistent": true,
+          "declaration_errors": [],
+          "details": [
+            {
+              "ref": "liqiangcc/xhs:note_json/6375c91b0000000024011d03.json@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            },
+            {
+              "ref": "liqiangcc/xhs:note_desc/6375c91b0000000024011d03.txt@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            }
+          ]
+        },
+        "boundary_review_evidence_reused": false
+      },
+      {
+        "current_status": "blocked",
+        "computed_checks": [
+          {
+            "check_id": "source_identity",
+            "result": "pass",
+            "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+          },
+          {
+            "check_id": "source_revision_binding",
+            "result": "pass",
+            "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+          },
+          {
+            "check_id": "artifact_reference_integrity",
+            "result": "pass",
+            "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+          },
+          {
+            "check_id": "raw_projection_traceability",
+            "result": "fail",
+            "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+          },
+          {
+            "check_id": "source_artifact_provenance",
+            "result": "pass",
+            "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+          },
+          {
+            "check_id": "known_limitations_recorded",
+            "result": "pass",
+            "note": "All SourceNote limitations are retained by InterviewNote."
+          },
+          {
+            "check_id": "duplicate_ownership",
+            "result": "pass",
+            "note": "Exactly one InterviewNote owner exists: #1535."
+          },
+          {
+            "check_id": "no_fabrication",
+            "result": "pass",
+            "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+          }
+        ],
+        "failed_check_ids": [
+          "raw_projection_traceability"
+        ],
+        "independent_evidence": "missing",
+        "source_ready_gate": {
+          "ok": true,
+          "mode": "pinned-source-artifact",
+          "raw_lineage_claim": "not-claimed",
+          "reason": "source-ready is based on a recorded pinned reference whose commit-tree path+blob was audited; Raw derivation is explicitly not claimed"
+        },
+        "receipt_count": 0,
+        "mutation_performed": false,
+        "errors": [
+          "independent InterviewNote Source Review evidence is not present; Boundary Review evidence is not eligible"
+        ],
+        "action": "await-independent-source-review-evidence",
+        "candidate_decision": "blocked",
+        "issue_number": 1535,
+        "source_note_issue_number": 48,
+        "interview_note_id": "xhs:645b66190000000013031dba",
+        "case_key": null,
+        "expected_interview_body_sha256": "4e610b3a00aa8f26b8ce84a74ba51b9c9110e4f7b5820c44e74b1ffbc3afd25c",
+        "expected_source_note_body_sha256": "9001990beb7d7f612348b087630d1d8c9014cfb9251b86efce53542147afdd16",
+        "expected_source_revision_id": "xhs-note:645b66190000000013031dba:snapshot-95b77bb26104",
+        "source_revision_evidence": {
+          "source_repository": "liqiangcc/xhs",
+          "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+          "raw_artifact_count": 10,
+          "source_projection_count": 2
+        },
+        "evidence_subject_sha256": "8d2c636e464d3ed03d353c9bba8ff6b9d3b3ce8f7061bf641fb6db572e9f2505",
+        "pinned_artifact_manifest_sha256": "4f40de87cc5b65f2ef0c93f25ca19235f7a9386db8811a12530b77374fce9b45",
+        "pinned_artifact_manifest_item_verified": true,
+        "provenance": {
+          "status": "pinned-source-artifact",
+          "projection_count": 2,
+          "raw_capture_count": 10,
+          "raw_lineage_proven": false,
+          "pinned_source_artifact": true,
+          "known_source_artifact": true,
+          "legacy_pinned_source_artifact": true,
+          "raw_lineage_claim": "not-claimed",
+          "declared_status": null,
+          "declared_raw_lineage_claim": null,
+          "declaration_consistent": true,
+          "declaration_errors": [],
+          "details": [
+            {
+              "ref": "liqiangcc/xhs:note_json/645b66190000000013031dba.json@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            },
+            {
+              "ref": "liqiangcc/xhs:note_desc/645b66190000000013031dba.txt@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            }
+          ]
+        },
+        "boundary_review_evidence_reused": false
+      },
+      {
+        "current_status": "blocked",
+        "computed_checks": [
+          {
+            "check_id": "source_identity",
+            "result": "pass",
+            "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+          },
+          {
+            "check_id": "source_revision_binding",
+            "result": "pass",
+            "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+          },
+          {
+            "check_id": "artifact_reference_integrity",
+            "result": "pass",
+            "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+          },
+          {
+            "check_id": "raw_projection_traceability",
+            "result": "fail",
+            "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+          },
+          {
+            "check_id": "source_artifact_provenance",
+            "result": "pass",
+            "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+          },
+          {
+            "check_id": "known_limitations_recorded",
+            "result": "pass",
+            "note": "All SourceNote limitations are retained by InterviewNote."
+          },
+          {
+            "check_id": "duplicate_ownership",
+            "result": "pass",
+            "note": "Exactly one InterviewNote owner exists: #1536."
+          },
+          {
+            "check_id": "no_fabrication",
+            "result": "pass",
+            "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+          }
+        ],
+        "failed_check_ids": [
+          "raw_projection_traceability"
+        ],
+        "independent_evidence": "missing",
+        "source_ready_gate": {
+          "ok": true,
+          "mode": "pinned-source-artifact",
+          "raw_lineage_claim": "not-claimed",
+          "reason": "source-ready is based on a recorded pinned reference whose commit-tree path+blob was audited; Raw derivation is explicitly not claimed"
+        },
+        "receipt_count": 0,
+        "mutation_performed": false,
+        "errors": [
+          "independent InterviewNote Source Review evidence is not present; Boundary Review evidence is not eligible"
+        ],
+        "action": "await-independent-source-review-evidence",
+        "candidate_decision": "blocked",
+        "issue_number": 1536,
+        "source_note_issue_number": 53,
+        "interview_note_id": "xhs:64916863000000001303d42d",
+        "case_key": null,
+        "expected_interview_body_sha256": "2cfc4a839bcdc34cd62a6e430a3061839fa91d12b8499076b4620e4708d278cc",
+        "expected_source_note_body_sha256": "96a94cf7f49adbbb19aac1dc44c87ff47b985cc2f852493a28b28826236aa979",
+        "expected_source_revision_id": "xhs-note:64916863000000001303d42d:snapshot-95b77bb26104",
+        "source_revision_evidence": {
+          "source_repository": "liqiangcc/xhs",
+          "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+          "raw_artifact_count": 6,
+          "source_projection_count": 2
+        },
+        "evidence_subject_sha256": "8907e53c34d2e600b078332d73a78b0c4561fdfb45640176245dbb7b3579320f",
+        "pinned_artifact_manifest_sha256": "4f40de87cc5b65f2ef0c93f25ca19235f7a9386db8811a12530b77374fce9b45",
+        "pinned_artifact_manifest_item_verified": true,
+        "provenance": {
+          "status": "pinned-source-artifact",
+          "projection_count": 2,
+          "raw_capture_count": 6,
+          "raw_lineage_proven": false,
+          "pinned_source_artifact": true,
+          "known_source_artifact": true,
+          "legacy_pinned_source_artifact": true,
+          "raw_lineage_claim": "not-claimed",
+          "declared_status": null,
+          "declared_raw_lineage_claim": null,
+          "declaration_consistent": true,
+          "declaration_errors": [],
+          "details": [
+            {
+              "ref": "liqiangcc/xhs:note_json/64916863000000001303d42d.json@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            },
+            {
+              "ref": "liqiangcc/xhs:note_desc/64916863000000001303d42d.txt@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            }
+          ]
+        },
+        "boundary_review_evidence_reused": false
+      },
+      {
+        "current_status": "blocked",
+        "computed_checks": [
+          {
+            "check_id": "source_identity",
+            "result": "pass",
+            "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+          },
+          {
+            "check_id": "source_revision_binding",
+            "result": "pass",
+            "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+          },
+          {
+            "check_id": "artifact_reference_integrity",
+            "result": "pass",
+            "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+          },
+          {
+            "check_id": "raw_projection_traceability",
+            "result": "fail",
+            "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+          },
+          {
+            "check_id": "source_artifact_provenance",
+            "result": "pass",
+            "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+          },
+          {
+            "check_id": "known_limitations_recorded",
+            "result": "pass",
+            "note": "All SourceNote limitations are retained by InterviewNote."
+          },
+          {
+            "check_id": "duplicate_ownership",
+            "result": "pass",
+            "note": "Exactly one InterviewNote owner exists: #1537."
+          },
+          {
+            "check_id": "no_fabrication",
+            "result": "pass",
+            "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+          }
+        ],
+        "failed_check_ids": [
+          "raw_projection_traceability"
+        ],
+        "independent_evidence": "missing",
+        "source_ready_gate": {
+          "ok": true,
+          "mode": "pinned-source-artifact",
+          "raw_lineage_claim": "not-claimed",
+          "reason": "source-ready is based on a recorded pinned reference whose commit-tree path+blob was audited; Raw derivation is explicitly not claimed"
+        },
+        "receipt_count": 0,
+        "mutation_performed": false,
+        "errors": [
+          "independent InterviewNote Source Review evidence is not present; Boundary Review evidence is not eligible"
+        ],
+        "action": "await-independent-source-review-evidence",
+        "candidate_decision": "blocked",
+        "issue_number": 1537,
+        "source_note_issue_number": 91,
+        "interview_note_id": "xhs:659781a8000000001d031c71",
+        "case_key": null,
+        "expected_interview_body_sha256": "81f51f63d863b2be3bf7011e43c3afcbf9528c01666e822e5d10688edcfc1cd1",
+        "expected_source_note_body_sha256": "f1d7d73c31c5c497190f68f7494d7baaad1b6a72fc21a5d34f8354860397c90e",
+        "expected_source_revision_id": "xhs-note:659781a8000000001d031c71:snapshot-95b77bb26104",
+        "source_revision_evidence": {
+          "source_repository": "liqiangcc/xhs",
+          "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+          "raw_artifact_count": 4,
+          "source_projection_count": 2
+        },
+        "evidence_subject_sha256": "c282c1c5e6eabf401263748b47bb6c331ff2b0c63599857f2287050341b2806f",
+        "pinned_artifact_manifest_sha256": "4f40de87cc5b65f2ef0c93f25ca19235f7a9386db8811a12530b77374fce9b45",
+        "pinned_artifact_manifest_item_verified": true,
+        "provenance": {
+          "status": "pinned-source-artifact",
+          "projection_count": 2,
+          "raw_capture_count": 4,
+          "raw_lineage_proven": false,
+          "pinned_source_artifact": true,
+          "known_source_artifact": true,
+          "legacy_pinned_source_artifact": true,
+          "raw_lineage_claim": "not-claimed",
+          "declared_status": null,
+          "declared_raw_lineage_claim": null,
+          "declaration_consistent": true,
+          "declaration_errors": [],
+          "details": [
+            {
+              "ref": "liqiangcc/xhs:note_json/659781a8000000001d031c71.json@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            },
+            {
+              "ref": "liqiangcc/xhs:note_desc/659781a8000000001d031c71.txt@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            }
+          ]
+        },
+        "boundary_review_evidence_reused": false
+      },
+      {
+        "current_status": "blocked",
+        "computed_checks": [
+          {
+            "check_id": "source_identity",
+            "result": "pass",
+            "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+          },
+          {
+            "check_id": "source_revision_binding",
+            "result": "pass",
+            "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+          },
+          {
+            "check_id": "artifact_reference_integrity",
+            "result": "pass",
+            "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+          },
+          {
+            "check_id": "raw_projection_traceability",
+            "result": "fail",
+            "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+          },
+          {
+            "check_id": "source_artifact_provenance",
+            "result": "pass",
+            "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+          },
+          {
+            "check_id": "known_limitations_recorded",
+            "result": "pass",
+            "note": "All SourceNote limitations are retained by InterviewNote."
+          },
+          {
+            "check_id": "duplicate_ownership",
+            "result": "pass",
+            "note": "Exactly one InterviewNote owner exists: #1538."
+          },
+          {
+            "check_id": "no_fabrication",
+            "result": "pass",
+            "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+          }
+        ],
+        "failed_check_ids": [
+          "raw_projection_traceability"
+        ],
+        "independent_evidence": "missing",
+        "source_ready_gate": {
+          "ok": true,
+          "mode": "pinned-source-artifact",
+          "raw_lineage_claim": "not-claimed",
+          "reason": "source-ready is based on a recorded pinned reference whose commit-tree path+blob was audited; Raw derivation is explicitly not claimed"
+        },
+        "receipt_count": 0,
+        "mutation_performed": false,
+        "errors": [
+          "independent InterviewNote Source Review evidence is not present; Boundary Review evidence is not eligible"
+        ],
+        "action": "await-independent-source-review-evidence",
+        "candidate_decision": "blocked",
+        "issue_number": 1538,
+        "source_note_issue_number": 109,
+        "interview_note_id": "xhs:65b883ab000000002c01775a",
+        "case_key": null,
+        "expected_interview_body_sha256": "b47f2da7dd535c43c1a92faebcb4f75c3f728ec6718e2586ed73cf13e648af7d",
+        "expected_source_note_body_sha256": "6728718d50829491a7ad5e38ff98d78dd0ba6ae7ea588a3e8ee4208bea01c4d7",
+        "expected_source_revision_id": "xhs-note:65b883ab000000002c01775a:snapshot-95b77bb26104",
+        "source_revision_evidence": {
+          "source_repository": "liqiangcc/xhs",
+          "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+          "raw_artifact_count": 4,
+          "source_projection_count": 2
+        },
+        "evidence_subject_sha256": "94dd12b343af25b497ffd46e7754983a23a7b88edc458de8bd8faec15e3bb164",
+        "pinned_artifact_manifest_sha256": "4f40de87cc5b65f2ef0c93f25ca19235f7a9386db8811a12530b77374fce9b45",
+        "pinned_artifact_manifest_item_verified": true,
+        "provenance": {
+          "status": "pinned-source-artifact",
+          "projection_count": 2,
+          "raw_capture_count": 4,
+          "raw_lineage_proven": false,
+          "pinned_source_artifact": true,
+          "known_source_artifact": true,
+          "legacy_pinned_source_artifact": true,
+          "raw_lineage_claim": "not-claimed",
+          "declared_status": null,
+          "declared_raw_lineage_claim": null,
+          "declaration_consistent": true,
+          "declaration_errors": [],
+          "details": [
+            {
+              "ref": "liqiangcc/xhs:note_json/65b883ab000000002c01775a.json@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            },
+            {
+              "ref": "liqiangcc/xhs:note_desc/65b883ab000000002c01775a.txt@95b77bb261048059846273688e4b90a2e108b437",
+              "status": "pinned-source-artifact",
+              "pinned": true,
+              "derived_from_present": false,
+              "derived_from_raw": false
+            }
+          ]
+        },
+        "boundary_review_evidence_reused": false
+      }
+    ]
+  },
+  "boundary_expansion": {
+    "total": 50,
+    "pending_valid": 50,
+    "blocked": 0,
+    "items": [
+      {
+        "issue_number": 477,
+        "title": "[XHS Source] 2025-01-03 · 6777bcc2",
+        "action": "requires-boundary-review-evidence",
+        "boundary_status": "pending",
+        "mutation_performed": false,
+        "errors": []
+      },
+      {
+        "issue_number": 478,
+        "title": "[XHS Source] 2025-01-07 · 677cc089",
+        "action": "requires-boundary-review-evidence",
+        "boundary_status": "pending",
+        "mutation_performed": false,
+        "errors": []
+      },
+      {
+        "issue_number": 479,
+        "title": "[XHS Source] 2025-01-07 · 677d11ea",
+        "action": "requires-boundary-review-evidence",
+        "boundary_status": "pending",
+        "mutation_performed": false,
+        "errors": []
+      },
+      {
+        "issue_number": 480,
+        "title": "[XHS Source] 2025-01-08 · 677deb41",
+        "action": "requires-boundary-review-evidence",
+        "boundary_status": "pending",
+        "mutation_performed": false,
+        "errors": []
+      },
+      {
+        "issue_number": 481,
+        "title": "[XHS Source] 2025-01-08 · 677e722b",
+        "action": "requires-boundary-review-evidence",
+        "boundary_status": "pending",
+        "mutation_performed": false,
+        "errors": []
+      },
+      {
+        "issue_number": 482,
+        "title": "[XHS Source] 2025-01-12 · 6783d73d",
+        "action": "requires-boundary-review-evidence",
+        "boundary_status": "pending",
+        "mutation_performed": false,
+        "errors": []
+      },
+      {
+        "issue_number": 483,
+        "title": "[XHS Source] 2025-01-17 · 6789be10",
+        "action": "requires-boundary-review-evidence",
+        "boundary_status": "pending",
+        "mutation_performed": false,
+        "errors": []
+      },
+      {
+        "issue_number": 484,
+        "title": "[XHS Source] 2025-01-18 · 678bb5fd",
+        "action": "requires-boundary-review-evidence",
+        "boundary_status": "pending",
+        "mutation_performed": false,
+        "errors": []
+      },
+      {
+        "issue_number": 485,
+        "title": "[XHS Source] 2025-01-21 · 678f60c5",
+        "action": "requires-boundary-review-evidence",
+        "boundary_status": "pending",
+        "mutation_performed": false,
+        "errors": []
+      },
+      {
+        "issue_number": 486,
+        "title": "[XHS Source] 2025-01-21 · 678f823c",
+        "action": "requires-boundary-review-evidence",
+        "boundary_status": "pending",
+        "mutation_performed": false,
+        "errors": []
+      },
+      {
+        "issue_number": 487,
+        "title": "[XHS Source] 2025-01-21 · 678fa7d6",
+        "action": "requires-boundary-review-evidence",
+        "boundary_status": "pending",
+        "mutation_performed": false,
+        "errors": []
+      },
+      {
+        "issue_number": 488,
+        "title": "[XHS Source] 2025-01-22 · 67904c45",
+        "action": "requires-boundary-review-evidence",
+        "boundary_status": "pending",
+        "mutation_performed": false,
+        "errors": []
+      },
+      {
+        "issue_number": 489,
+        "title": "[XHS Source] 2025-01-24 · 679303a1",
+        "action": "requires-boundary-review-evidence",
+        "boundary_status": "pending",
+        "mutation_performed": false,
+        "errors": []
+      },
+      {
+        "issue_number": 490,
+        "title": "[XHS Source] 2025-02-01 · 679dbdb2",
+        "action": "requires-boundary-review-evidence",
+        "boundary_status": "pending",
+        "mutation_performed": false,
+        "errors": []
+      },
+      {
+        "issue_number": 491,
+        "title": "[XHS Source] 2025-02-05 · 67a2f3bc",
+        "action": "requires-boundary-review-evidence",
+        "boundary_status": "pending",
+        "mutation_performed": false,
+        "errors": []
+      },
+      {
+        "issue_number": 492,
+        "title": "[XHS Source] 2025-02-05 · 67a38a1a",
+        "action": "requires-boundary-review-evidence",
+        "boundary_status": "pending",
+        "mutation_performed": false,
+        "errors": []
+      },
+      {
+        "issue_number": 493,
+        "title": "[XHS Source] 2025-02-06 · 67a4c574",
+        "action": "requires-boundary-review-evidence",
+        "boundary_status": "pending",
+        "mutation_performed": false,
+        "errors": []
+      },
+      {
+        "issue_number": 494,
+        "title": "[XHS Source] 2025-02-07 · 67a5ca03",
+        "action": "requires-boundary-review-evidence",
+        "boundary_status": "pending",
+        "mutation_performed": false,
+        "errors": []
+      },
+      {
+        "issue_number": 495,
+        "title": "[XHS Source] 2025-02-07 · 67a5caaf",
+        "action": "requires-boundary-review-evidence",
+        "boundary_status": "pending",
+        "mutation_performed": false,
+        "errors": []
+      },
+      {
+        "issue_number": 496,
+        "title": "[XHS Source] 2025-02-07 · 67a5ecf4",
+        "action": "requires-boundary-review-evidence",
+        "boundary_status": "pending",
+        "mutation_performed": false,
+        "errors": []
+      },
+      {
+        "issue_number": 497,
+        "title": "[XHS Source] 2025-02-07 · 67a5ed56",
+        "action": "requires-boundary-review-evidence",
+        "boundary_status": "pending",
+        "mutation_performed": false,
+        "errors": []
+      },
+      {
+        "issue_number": 498,
+        "title": "[XHS Source] 2025-02-08 · 67a72095",
+        "action": "requires-boundary-review-evidence",
+        "boundary_status": "pending",
+        "mutation_performed": false,
+        "errors": []
+      },
+      {
+        "issue_number": 499,
+        "title": "[XHS Source] 2025-02-10 · 67a98ff5",
+        "action": "requires-boundary-review-evidence",
+        "boundary_status": "pending",
+        "mutation_performed": false,
+        "errors": []
+      },
+      {
+        "issue_number": 501,
+        "title": "[XHS Source] 2025-02-10 · 67a9cb40",
+        "action": "requires-boundary-review-evidence",
+        "boundary_status": "pending",
+        "mutation_performed": false,
+        "errors": []
+      },
+      {
+        "issue_number": 502,
+        "title": "[XHS Source] 2025-02-10 · 67a9d65a",
+        "action": "requires-boundary-review-evidence",
+        "boundary_status": "pending",
+        "mutation_performed": false,
+        "errors": []
+      },
+      {
+        "issue_number": 503,
+        "title": "[XHS Source] 2025-02-10 · 67aa057c",
+        "action": "requires-boundary-review-evidence",
+        "boundary_status": "pending",
+        "mutation_performed": false,
+        "errors": []
+      },
+      {
+        "issue_number": 504,
+        "title": "[XHS Source] 2025-02-11 · 67aae3a3",
+        "action": "requires-boundary-review-evidence",
+        "boundary_status": "pending",
+        "mutation_performed": false,
+        "errors": []
+      },
+      {
+        "issue_number": 505,
+        "title": "[XHS Source] 2025-02-12 · 67ac2006",
+        "action": "requires-boundary-review-evidence",
+        "boundary_status": "pending",
+        "mutation_performed": false,
+        "errors": []
+      },
+      {
+        "issue_number": 506,
+        "title": "[XHS Source] 2025-02-12 · 67ac2284",
+        "action": "requires-boundary-review-evidence",
+        "boundary_status": "pending",
+        "mutation_performed": false,
+        "errors": []
+      },
+      {
+        "issue_number": 507,
+        "title": "[XHS Source] 2025-02-12 · 67ac5d95",
+        "action": "requires-boundary-review-evidence",
+        "boundary_status": "pending",
+        "mutation_performed": false,
+        "errors": []
+      },
+      {
+        "issue_number": 508,
+        "title": "[XHS Source] 2025-02-12 · 67ac8694",
+        "action": "requires-boundary-review-evidence",
+        "boundary_status": "pending",
+        "mutation_performed": false,
+        "errors": []
+      },
+      {
+        "issue_number": 509,
+        "title": "[XHS Source] 2025-02-14 · 67aed426",
+        "action": "requires-boundary-review-evidence",
+        "boundary_status": "pending",
+        "mutation_performed": false,
+        "errors": []
+      },
+      {
+        "issue_number": 510,
+        "title": "[XHS Source] 2025-02-15 · 67aef7c1",
+        "action": "requires-boundary-review-evidence",
+        "boundary_status": "pending",
+        "mutation_performed": false,
+        "errors": []
+      },
+      {
+        "issue_number": 511,
+        "title": "[XHS Source] 2025-02-15 · 67b05e32",
+        "action": "requires-boundary-review-evidence",
+        "boundary_status": "pending",
+        "mutation_performed": false,
+        "errors": []
+      },
+      {
+        "issue_number": 512,
+        "title": "[XHS Source] 2025-02-16 · 67b1a8a9",
+        "action": "requires-boundary-review-evidence",
+        "boundary_status": "pending",
+        "mutation_performed": false,
+        "errors": []
+      },
+      {
+        "issue_number": 513,
+        "title": "[XHS Source] 2025-02-18 · 67b3d98b",
+        "action": "requires-boundary-review-evidence",
+        "boundary_status": "pending",
+        "mutation_performed": false,
+        "errors": []
+      },
+      {
+        "issue_number": 514,
+        "title": "[XHS Source] 2025-02-18 · 67b40040",
+        "action": "requires-boundary-review-evidence",
+        "boundary_status": "pending",
+        "mutation_performed": false,
+        "errors": []
+      },
+      {
+        "issue_number": 515,
+        "title": "[XHS Source] 2025-02-18 · 67b4403c",
+        "action": "requires-boundary-review-evidence",
+        "boundary_status": "pending",
+        "mutation_performed": false,
+        "errors": []
+      },
+      {
+        "issue_number": 516,
+        "title": "[XHS Source] 2025-02-18 · 67b45411",
+        "action": "requires-boundary-review-evidence",
+        "boundary_status": "pending",
+        "mutation_performed": false,
+        "errors": []
+      },
+      {
+        "issue_number": 517,
+        "title": "[XHS Source] 2025-02-19 · 67b5c8a1",
+        "action": "requires-boundary-review-evidence",
+        "boundary_status": "pending",
+        "mutation_performed": false,
+        "errors": []
+      },
+      {
+        "issue_number": 518,
+        "title": "[XHS Source] 2025-02-19 · 67b5d215",
+        "action": "requires-boundary-review-evidence",
+        "boundary_status": "pending",
+        "mutation_performed": false,
+        "errors": []
+      },
+      {
+        "issue_number": 519,
+        "title": "[XHS Source] 2025-02-19 · 67b5d532",
+        "action": "requires-boundary-review-evidence",
+        "boundary_status": "pending",
+        "mutation_performed": false,
+        "errors": []
+      },
+      {
+        "issue_number": 520,
+        "title": "[XHS Source] 2025-02-20 · 67b6fd36",
+        "action": "requires-boundary-review-evidence",
+        "boundary_status": "pending",
+        "mutation_performed": false,
+        "errors": []
+      },
+      {
+        "issue_number": 521,
+        "title": "[XHS Source] 2025-02-20 · 67b71e55",
+        "action": "requires-boundary-review-evidence",
+        "boundary_status": "pending",
+        "mutation_performed": false,
+        "errors": []
+      },
+      {
+        "issue_number": 522,
+        "title": "[XHS Source] 2025-02-20 · 67b73237",
+        "action": "requires-boundary-review-evidence",
+        "boundary_status": "pending",
+        "mutation_performed": false,
+        "errors": []
+      },
+      {
+        "issue_number": 523,
+        "title": "[XHS Source] 2025-02-21 · 67b807ec",
+        "action": "requires-boundary-review-evidence",
+        "boundary_status": "pending",
+        "mutation_performed": false,
+        "errors": []
+      },
+      {
+        "issue_number": 524,
+        "title": "[XHS Source] 2025-02-21 · 67b854b5",
+        "action": "requires-boundary-review-evidence",
+        "boundary_status": "pending",
+        "mutation_performed": false,
+        "errors": []
+      },
+      {
+        "issue_number": 525,
+        "title": "[XHS Source] 2025-02-21 · 67b89672",
+        "action": "requires-boundary-review-evidence",
+        "boundary_status": "pending",
+        "mutation_performed": false,
+        "errors": []
+      },
+      {
+        "issue_number": 526,
+        "title": "[XHS Source] 2025-02-22 · 67b94f0a",
+        "action": "requires-boundary-review-evidence",
+        "boundary_status": "pending",
+        "mutation_performed": false,
+        "errors": []
+      },
+      {
+        "issue_number": 527,
+        "title": "[XHS Source] 2025-02-22 · 67b97111",
+        "action": "requires-boundary-review-evidence",
+        "boundary_status": "pending",
+        "mutation_performed": false,
+        "errors": []
+      }
+    ]
+  },
+  "safety": {
+    "mutation_performed": false,
+    "apply_entrypoint": "none; this planner has no mutation path",
+    "exact_ownership_checked": true,
+    "search_pause_ms": 2200,
+    "cas": "body SHA-256 and SourceRevision recorded for every Source Review item; no write attempted",
+    "pinned_artifact_manifest": "30-item manifest verified against the pinned commit tree path+blob SHA",
+    "durable_intent_receipt": "not created because no mutation was authorized or attempted",
+    "recovery_dry_run": "required after any future authorized apply",
+    "boundary_evidence_not_used_as_source_review": true,
+    "interview_context_or_learning_labels_generated": false
+  },
+  "ready_for_authorization": false,
+  "mutation_performed": false,
+  "dry_run_sha256": "200ac74b061c2d4806169b90cecb62889f638883df4f9a79faed12fc4ffd8870"
+}
