@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/liqiangcc/interview-lab/schemas/source-note-interview-materialization.schema.json",
+  "title": "SourceNote Interview materialization request v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "materialization_id",
+    "repository",
+    "source_note_issue_number",
+    "source_note_id",
+    "expected_source_note_body_sha256",
+    "expected_boundary_status",
+    "expected_source_revision_id",
+    "expected_manifest_sha256",
+    "expected_source_repository_ref"
+  ],
+  "properties": {
+    "schema_version": {"const": "source-note-interview-materialization.v1"},
+    "materialization_id": {"type": "string", "minLength": 1},
+    "repository": {"type": "string", "pattern": "^[^/]+/[^/]+$"},
+    "source_note_issue_number": {"type": "integer", "minimum": 1},
+    "source_note_id": {"type": "string", "minLength": 1},
+    "expected_source_note_body_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "expected_boundary_status": {"const": "single-interview"},
+    "expected_source_revision_id": {"type": "string", "minLength": 1},
+    "expected_manifest_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+    "expected_source_repository_ref": {"type": ["string", "null"], "minLength": 1}
+  }
+}

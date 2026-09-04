@@ -279,3 +279,7 @@ intake 阶段仍然禁止提前创建 InterviewNote identity、公司/岗位/轮
 SourceNote intake 完成后，`boundary:pending` 不允许手工绕过 machine record 直接创建 InterviewNote。正式 transition 使用 `source-note-boundary-review-transition.v1`，详见 `docs/workflows/source-note-boundary-review.md`。
 
 核心规则：body/state/SourceRevision 必须 CAS；`single-interview` identity 由 Source identity 自动推导；当前 `multi-interview` identity capability gap 必须 fail closed。
+
+## InterviewNote materialization
+
+`boundary:single-interview` 只声明稳定 InterviewNote identity，不等于 InterviewNote Issue 已创建。正式物化必须走 `docs/workflows/source-note-interview-materialization.md` 的 CAS / ownership / validator / receipt 机制；禁止手工复制 SourceNote body 创建 InterviewNote。
