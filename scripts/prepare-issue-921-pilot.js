@@ -310,12 +310,36 @@ function postEvidence(pauseMs) {
   console.log(JSON.stringify({ evidence_comments: posted.length }, null, 2));
 }
 
+function finalizeEvidencePlan() {
+  const selection = JSON.parse(fs.readFileSync(path.join(OUT_DIR, 'selection.json'), 'utf8'));
+  const posting = JSON.parse(fs.readFileSync(path.join(OUT_DIR, 'evidence-posting.json'), 'utf8'));
+  if (posting.total !== 50 || posting.posted.length !== 50) throw new Error(`evidence posting is incomplete: ${posting.total}`);
+  const ids = posting.posted.map((item) => Number(item.comment_id));
+  if (ids.some((id) => !Number.isInteger(id) || id <= 0)) throw new Error('evidence posting contains an invalid comment id');
+  if (new Set(ids).size !== ids.length) throw new Error('evidence posting contains duplicate comment ids');
+  if (posting.posted.some((item) => item.duplicate_post !== false)) throw new Error('evidence posting contains a duplicate post');
+  const byIssue = new Map(posting.posted.map((item) => [Number(item.issue_number), item]));
+  const planPath = path.join(OUT_DIR, 'evidence-plan.json');
+  const plan = JSON.parse(fs.readFileSync(planPath, 'utf8'));
+  plan.ready_comments = plan.ready_comments.map((item) => ({ ...item, comment_id: byIssue.get(Number(item.issue_number)).comment_id }));
+  plan.blocked_comments = plan.blocked_comments.map((item) => ({ ...item, comment_id: byIssue.get(Number(item.issue_number)).comment_id }));
+  plan.evidence_posting = {
+    receipt_file: 'evidence-posting.json',
+    total: posting.total,
+    unique_comment_ids: new Set(ids).size,
+    duplicate_post: false,
+  };
+  writeJson(planPath, plan);
+  console.log(JSON.stringify({ evidence_plan_comments: ids.length, unique_comment_ids: new Set(ids).size, duplicate_post: false }, null, 2));
+}
+
 function main() {
   const mode = process.argv[2] || 'prepare';
   const pauseMs = Number(process.argv[3] || 1000);
   if (!Number.isInteger(pauseMs) || pauseMs < 0) throw new Error('pause must be a non-negative integer');
   if (mode === 'prepare') prepare();
   else if (mode === 'post-evidence') postEvidence(pauseMs);
+  else if (mode === 'finalize-evidence-plan') finalizeEvidencePlan();
   else throw new Error(`unknown mode: ${mode}`);
 }
 
