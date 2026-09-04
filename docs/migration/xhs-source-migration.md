@@ -229,13 +229,13 @@ preflight_gate
 final_gate
 → 必须 unaccounted_source_id = 0
 → 必须 invalid_source_note = 0、duplicate_source_note = 0
-→ 必须 mutation_candidates = 0 且 remaining_mutations_after_run = 0
+→ 必须 mutation_candidates = 0 且 global_remaining_after_run = 0
 → 才能 final_dry_run_ready = true
 ```
 
 因此，`preflight_gate = pass` 只表示计划可以安全生成，绝不表示 1459 条已经完成对账；missing candidate 的 create action 必须先执行，再用一次新的全量 dry-run 获得 `final_gate = pass`。报告只使用 `preflight_gate` 与 `final_gate` 两个明确字段，不再输出含义混淆的 `inventory_gate`。
 
-SourceNote reconciliation 固定要求 `liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437` 且扫描到的 `note_json` 总数必须为 `1459`；source ref 或数量不符时在任何 GitHub mutation 前 `source_gate = blocked`。每一条 create mutation 在 POST 后都必须再次按 SourceNote machine identity 验证；响应丢失或 Issue list 延迟时只等待并核验，不盲目重 POST。apply 运行会逐步持久化成功记录，若第 N 条失败，report 必须保留前 N-1 条 `applied`、`failure` 和 `remaining_mutations_after_run`。
+SourceNote reconciliation 固定要求 `liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437` 且扫描到的 `note_json` 总数必须为 `1459`；source ref 或数量不符时在任何 GitHub mutation 前 `source_gate = blocked`。每一条 create mutation 在 POST 后都必须再次按 SourceNote machine identity 做全局唯一性核验；即使 direct-read 成功，也必须排除第二 owner，响应丢失或 Issue list 延迟时只等待并核验，不盲目重 POST。InterviewNote owner 的 marker schema、record schema/id 和完整 validator 也必须通过，v99、缺 record、多 marker 均计 invalid 并 fail closed。apply 运行会逐步持久化成功记录；report 使用明确的 `batch_remaining_after_run` / `global_remaining_after_run`，若第 N 条失败，`failure` 同时记录 `batch_remaining` / `global_remaining`，其中 global 数覆盖 `maxMutations` 批次之外的剩余 mutation。
 
 ## Fail-closed
 

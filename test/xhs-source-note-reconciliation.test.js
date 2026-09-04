@@ -1,5 +1,6 @@
 'use strict';
 
+const fs = require('node:fs');
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const {
@@ -59,6 +60,12 @@ function liveSourceNote(number, projection, overrides = {}) {
     labels: projection.labels.map((name) => ({ name })),
     ...overrides,
   };
+}
+
+function validInterviewBody(interviewNoteId, schema = 'interview-note-issue.v2') {
+  return fs.readFileSync('test/fixtures/interview-note-issue.valid.md', 'utf8')
+    .replace(/630e2e22000000001103c490/g, interviewNoteId.slice('xhs:'.length))
+    .replace(/interview-note-issue\.v2/g, schema);
 }
 
 test('XHS candidate projects to SourceNote, not InterviewNote', () => {
@@ -224,10 +231,10 @@ test('missing source identity is plannable in preflight but blocks final accepta
   assert.deepEqual(inventoryPreflightErrors(summary), []);
   assert.deepEqual(inventoryGateErrors(summary), []);
   assert.equal(actions.filter((action) => MUTATING_ACTIONS.has(action.action)).length, 1);
-  assert.deepEqual(finalAcceptanceErrors(summary, { mutationCandidates: 1, remainingMutations: 1 }), [
+  assert.deepEqual(finalAcceptanceErrors(summary, { mutationCandidates: 1, globalRemaining: 1 }), [
     'unaccounted_source_id=1',
     'mutation_candidates=1',
-    'remaining_mutations_after_run=1',
+    'global_remaining_after_run=1',
   ]);
   assert.deepEqual(finalAcceptanceErrors(summary), ['unaccounted_source_id=1']);
   const report = buildReconciliationReport({
@@ -249,8 +256,8 @@ test('closed legacy bulk and closed pending SourceNote fail preflight closed', (
   const closedLegacy = {
     number: 30,
     state: 'closed',
-    body: '<!-- interview-note: id=xhs:625564d70000000001025e46 schema=interview-note-issue.v2 -->',
-    labels: [{ name: 'migration:xhs-bulk' }],
+    body: validInterviewBody('xhs:625564d70000000001025e46'),
+    labels: [{ name: 'type:interview-note' }, { name: 'status:source-ready' }, { name: 'migration:xhs-bulk' }],
   };
   const closedPending = liveSourceNote(31, projection, { state: 'closed' });
   const inventory = buildInventory([closedLegacy, closedPending]);
@@ -278,12 +285,19 @@ test('multiple and malformed InterviewNote markers are invalid inventory', () =>
       body: '<!-- interview-note: id=xhs:c -->',
       labels: [{ name: 'type:interview-note' }],
     },
+    {
+      number: 42,
+      state: 'open',
+      body: validInterviewBody('xhs:630e2e22000000001103c490', 'interview-note-issue.v99'),
+      labels: [{ name: 'type:interview-note' }],
+    },
   ]);
   const summary = inventoryReconciliationSummary([], inventory);
 
-  assert.equal(summary.invalid_interview_note_marker, 2);
-  assert.match(inventoryPreflightErrors(summary).join('\n'), /invalid_interview_note_marker=2/);
-  assert.match(finalAcceptanceErrors(summary).join('\n'), /invalid_interview_note_marker=2/);
+  assert.equal(summary.invalid_interview_note_marker, 3);
+  assert.match(inventoryPreflightErrors(summary).join('\n'), /invalid_interview_note_marker=3/);
+  assert.match(finalAcceptanceErrors(summary).join('\n'), /invalid_interview_note_marker=3/);
+  assert.match(inventory.invalidInterviewNotes[2].errors.join('\n'), /supported InterviewNote Issue schema/);
 });
 
 test('fixed source snapshot gate rejects wrong ref and candidate count', () => {
@@ -329,11 +343,12 @@ test('post-create verification recovers a lost response after list visibility de
   assert.deepEqual(findSourceNoteIdentity([created], projection.source_note_id), [created]);
 });
 
-test('post-create verification rejects duplicate identities', () => {
+test('post-create verification always globally scans and rejects a second owner after direct-read success', () => {
   const projection = buildProjection(candidate(), sourceRef, '2026-09-03T13:00:00.000Z');
   const issue = { number: 78, body: projection.body, pull_request: null };
   assert.throws(
-    () => verifyCreatedSourceNote('liqiangcc/interview-lab', projection, null, {
+    () => verifyCreatedSourceNote('liqiangcc/interview-lab', projection, 78, {
+      readIssue: () => issue,
       scanIssues: () => [issue, { ...issue, number: 79 }],
       sleep: () => {},
     }),
@@ -356,6 +371,7 @@ test('apply mutation failure persists prior successes and failure/remaining stat
       },
       persist: (report) => reports.push({ ...report, applied: [...report.applied] }),
       sleep: () => {},
+      globalTotal: 3,
     }),
     /simulated POST failure/,
   );
@@ -363,12 +379,25 @@ test('apply mutation failure persists prior successes and failure/remaining stat
   assert.equal(reports.length, 2);
   assert.equal(reports[0].applied.length, 1);
   assert.equal(reports[0].failure, null);
-  assert.equal(reports[0].remaining, 2);
+  assert.equal(reports[0].batch_remaining, 2);
+  assert.equal(reports[0].global_remaining, 2);
   assert.equal(reports[1].applied.length, 1);
   assert.equal(reports[1].applied[0].source_note_id, 'xhs-note:test-1');
   assert.equal(reports[1].failure.index, 2);
   assert.equal(reports[1].failure.error, 'simulated POST failure');
-  assert.equal(reports[1].remaining, 2);
+  assert.equal(reports[1].batch_remaining, 2);
+  assert.equal(reports[1].global_remaining, 2);
+
+  const completedBatchReports = [];
+  const completed = applyMutationPlan(actions.slice(0, 2), {
+    mutate: (action) => Number(action.projection.source_note_id.slice(-1)),
+    persist: (report) => completedBatchReports.push(report),
+    sleep: () => {},
+    globalTotal: actions.length,
+  });
+  assert.equal(completed.length, 2);
+  assert.equal(completedBatchReports[1].batch_remaining, 0);
+  assert.equal(completedBatchReports[1].global_remaining, 1);
 });
 
 test('anomaly summary counts affected SourceNotes by anomaly code', () => {
@@ -433,8 +462,8 @@ test('inventory preserves formal InterviewNote ownership while accounting for So
   const inventory = buildInventory([{
     number: 13,
     state: 'open',
-    body: '<!-- interview-note: id=xhs:625564d70000000001025e46 schema=interview-note-issue.v2 -->',
-    labels: [{ name: 'type:interview-note' }],
+    body: validInterviewBody('xhs:625564d70000000001025e46'),
+    labels: [{ name: 'type:interview-note' }, { name: 'status:source-ready' }],
   }]);
   const summary = inventoryReconciliationSummary([projection], inventory);
   assert.equal(summary.accounted_source_id, 1);

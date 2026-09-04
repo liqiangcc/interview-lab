@@ -5,6 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const { execFileSync } = require('child_process');
 const { parseSourceNoteIssue, validateSourceNoteIssue, yearFromTimeFact } = require('./lib/source-note-issue');
+const { validateInterviewNoteIssue } = require('./lib/interview-note-issue');
 
 const BULK_LABEL = 'migration:xhs-bulk';
 const SOURCE_NOTE_LABELS = [
@@ -399,12 +400,22 @@ function buildInventory(issues) {
     const sourceNoteIds = extractMarkers(issue.body, 'source-note');
     const interviewNoteIds = extractMarkers(issue.body, 'interview-note');
     const interviewMarkerPresent = /<!--\s*interview-note\b/i.test(String(issue.body || ''));
+    let interviewValidation = null;
     if (interviewMarkerPresent && interviewNoteIds.length !== 1) {
       invalidInterviewNotes.push({
         issue_number: issue.number,
         interview_note_ids: interviewNoteIds,
         error: `expected exactly one valid interview-note machine marker, found ${interviewNoteIds.length}`,
       });
+    } else if (interviewMarkerPresent) {
+      interviewValidation = validateInterviewNoteIssue({ body: issue.body, labels: [...labels], state: issue.state });
+      if (!interviewValidation.ok) {
+        invalidInterviewNotes.push({
+          issue_number: issue.number,
+          interview_note_ids: interviewNoteIds,
+          errors: interviewValidation.errors,
+        });
+      }
     }
     if (sourceNoteIds.length) {
       for (const sourceNoteId of sourceNoteIds) {
@@ -442,7 +453,10 @@ function buildInventory(issues) {
       if (!sourceNotes.has(sourceNoteId)) sourceNotes.set(sourceNoteId, issue);
       continue;
     }
-    if (interviewNoteIds.length !== 1 || !interviewNoteIds[0].startsWith('xhs:')) continue;
+    if (interviewNoteIds.length !== 1
+        || !interviewNoteIds[0].startsWith('xhs:')
+        || !interviewValidation
+        || !interviewValidation.ok) continue;
     const interviewNoteId = interviewNoteIds[0];
     const externalId = interviewNoteId.slice('xhs:'.length);
     const ownership = interviewOwnership.get(externalId) || { bulk: [], formal: [] };
@@ -519,7 +533,7 @@ function inventoryPreflightErrors(summary) {
   return errors;
 }
 
-function finalAcceptanceErrors(summary, { mutationCandidates = 0, remainingMutations = 0 } = {}) {
+function finalAcceptanceErrors(summary, { mutationCandidates = 0, globalRemaining = 0 } = {}) {
   const errors = [];
   if (summary.duplicate_source_note) errors.push(`duplicate_source_note=${summary.duplicate_source_note}`);
   if (summary.invalid_source_note) errors.push(`invalid_source_note=${summary.invalid_source_note}`);
@@ -529,7 +543,7 @@ function finalAcceptanceErrors(summary, { mutationCandidates = 0, remainingMutat
   if (summary.invalid_interview_note_marker) errors.push(`invalid_interview_note_marker=${summary.invalid_interview_note_marker}`);
   if (summary.unaccounted_source_id) errors.push(`unaccounted_source_id=${summary.unaccounted_source_id}`);
   if (mutationCandidates) errors.push(`mutation_candidates=${mutationCandidates}`);
-  if (remainingMutations) errors.push(`remaining_mutations_after_run=${remainingMutations}`);
+  if (globalRemaining) errors.push(`global_remaining_after_run=${globalRemaining}`);
   return errors;
 }
 
@@ -610,11 +624,12 @@ function verifyCreatedSourceNote(targetRepo, projection, createdIssueNumber, opt
   let lastProblem = 'identity not visible';
 
   for (let attempt = 1; attempt <= CREATE_VERIFY_ATTEMPTS; attempt += 1) {
+    let directIdentity = false;
     if (createdIssueNumber != null) {
       try {
         const issue = readIssue(createdIssueNumber);
-        if (findSourceNoteIdentity([issue], projection.source_note_id).length === 1) return Number(issue.number);
-        lastProblem = `Issue #${createdIssueNumber} did not contain exact SourceNote identity ${projection.source_note_id}`;
+        directIdentity = findSourceNoteIdentity([issue], projection.source_note_id).length === 1;
+        if (!directIdentity) lastProblem = `Issue #${createdIssueNumber} did not contain exact SourceNote identity ${projection.source_note_id}`;
       } catch (error) {
         lastProblem = `direct-read failed: ${error.message}`;
       }
@@ -624,7 +639,12 @@ function verifyCreatedSourceNote(targetRepo, projection, createdIssueNumber, opt
     if (matches.length > 1) {
       throw new Error(`post-create duplicate SourceNote identity ${projection.source_note_id}: ${matches.map((issue) => issue.number).join(',')}`);
     }
-    if (matches.length === 1) return Number(matches[0].number);
+    if (matches.length === 1) {
+      if (directIdentity && Number(matches[0].number) !== Number(createdIssueNumber)) {
+        throw new Error(`post-create duplicate SourceNote identity ${projection.source_note_id}: direct Issue #${createdIssueNumber} and global Issue #${matches[0].number}`);
+      }
+      return Number(matches[0].number);
+    }
     if (attempt < CREATE_VERIFY_ATTEMPTS) wait(500 * attempt);
   }
   throw new Error(`post-create identity verification failed for ${projection.source_note_id} after ${CREATE_VERIFY_ATTEMPTS} attempts: ${lastProblem}`);
@@ -677,7 +697,7 @@ function mutateAction(targetRepo, action) {
   return action.issue_number;
 }
 
-function applyMutationPlan(actions, { mutate, persist, sleep = sleepMs } = {}) {
+function applyMutationPlan(actions, { mutate, persist, sleep = sleepMs, globalTotal = actions.length } = {}) {
   const runMutation = mutate || ((action) => mutateAction(null, action));
   const save = persist || (() => {});
   const applied = [];
@@ -690,7 +710,12 @@ function applyMutationPlan(actions, { mutate, persist, sleep = sleepMs } = {}) {
         protected_interview_issue_number: action.protected_interview_issue_number || null,
         source_note_id: action.projection.source_note_id,
       });
-      save({ applied, failure: null, remaining: actions.length - applied.length });
+      save({
+        applied,
+        failure: null,
+        batch_remaining: actions.length - applied.length,
+        global_remaining: globalTotal - applied.length,
+      });
     } catch (error) {
       save({
         applied,
@@ -701,7 +726,8 @@ function applyMutationPlan(actions, { mutate, persist, sleep = sleepMs } = {}) {
           source_note_id: action.projection.source_note_id,
           error: error.message,
         },
-        remaining: actions.length - applied.length,
+        batch_remaining: actions.length - applied.length,
+        global_remaining: globalTotal - applied.length,
       });
       throw error;
     }
@@ -726,11 +752,12 @@ function summarizeAnomalies(candidates) {
   return counts;
 }
 
-function buildReconciliationReport({ sourceRef, candidates, inventory, inventorySummary, actions, mutating, applied, failure = null }) {
-  const remainingMutations = Math.max(0, mutating.length - applied.length);
+function buildReconciliationReport({ sourceRef, candidates, inventory, inventorySummary, actions, mutating, applied, batchSize = mutating.length, failure = null }) {
+  const batchRemaining = Math.max(0, batchSize - applied.length);
+  const globalRemaining = Math.max(0, mutating.length - applied.length);
   const finalErrors = finalAcceptanceErrors(inventorySummary, {
     mutationCandidates: mutating.length,
-    remainingMutations,
+    globalRemaining,
   });
   return {
     schema_version: 'xhs-source-note-reconciliation-report.v1',
@@ -746,8 +773,10 @@ function buildReconciliationReport({ sourceRef, candidates, inventory, inventory
     anomaly_counts: summarizeAnomalies(candidates),
     action_counts: summarize(actions),
     mutation_candidates: mutating.length,
+    batch_size: batchSize,
     applied_count: applied.length,
-    remaining_mutations_after_run: remainingMutations,
+    batch_remaining_after_run: batchRemaining,
+    global_remaining_after_run: globalRemaining,
     final_gate: finalErrors.length ? 'blocked' : 'pass',
     final_gate_errors: finalErrors,
     final_dry_run_ready: finalErrors.length === 0,
@@ -862,14 +891,20 @@ function main() {
     try {
       ensureProjectionLabels(args.targetRepo, selected.map((action) => action.projection));
     } catch (error) {
-      const failure = { phase: 'ensure-labels', error: error.message, remaining: mutating.length };
+      const failure = {
+        phase: 'ensure-labels',
+        error: error.message,
+        batch_remaining: selected.length,
+        global_remaining: mutating.length,
+      };
       writeReport(buildReconciliationReport({ sourceRef, candidates, inventory, inventorySummary, actions, mutating, applied, failure }), args.report);
       throw error;
     }
   }
   applied = applyMutationPlan(selected, {
     mutate: (action) => mutateAction(args.targetRepo, action),
-    persist: ({ applied: persistedApplied, failure, remaining }) => {
+    globalTotal: mutating.length,
+    persist: ({ applied: persistedApplied, failure, batch_remaining: batchRemainingAfterRun, global_remaining: globalRemainingAfterRun }) => {
       if (args.report || failure) {
         writeReport(buildReconciliationReport({
           sourceRef,
@@ -879,7 +914,8 @@ function main() {
           actions,
           mutating,
           applied: persistedApplied,
-          failure: failure ? { ...failure, remaining } : null,
+          batchSize: selected.length,
+          failure: failure ? { ...failure, batch_remaining: batchRemainingAfterRun, global_remaining: globalRemainingAfterRun } : null,
         }), args.report, Boolean(failure));
       }
     },
