@@ -8,6 +8,9 @@ const {
   planActions,
   validateProjection,
   summarizeAnomalies,
+  buildInventory,
+  inventoryReconciliationSummary,
+  inventoryGateErrors,
 } = require('../scripts/reconcile-xhs-source-notes');
 
 const sourceRef = '95b77bb261048059846273688e4b90a2e108b437';
@@ -36,6 +39,16 @@ function candidate(overrides = {}) {
 
 function existingSourceNote(number, labels) {
   return { number, labels: labels.map((name) => ({ name })) };
+}
+
+function liveSourceNote(number, projection, overrides = {}) {
+  return {
+    number,
+    state: 'open',
+    body: projection.body,
+    labels: projection.labels.map((name) => ({ name })),
+    ...overrides,
+  };
 }
 
 test('XHS candidate projects to SourceNote, not InterviewNote', () => {
@@ -198,4 +211,59 @@ test('anomaly summary counts affected SourceNotes by anomaly code', () => {
     'zero-byte-artifacts': 2,
     'edited-before-published': 1,
   });
+});
+
+test('inventory reports duplicate SourceNote identities instead of silently choosing one', () => {
+  const projection = buildProjection(candidate(), sourceRef, '2026-09-03T13:00:00.000Z');
+  const inventory = buildInventory([
+    liveSourceNote(10, projection),
+    liveSourceNote(11, projection),
+  ]);
+  const summary = inventoryReconciliationSummary([projection], inventory);
+  assert.equal(summary.duplicate_source_note, 1);
+  assert.deepEqual(inventory.duplicateSourceNotes.get(projection.source_note_id), [10, 11]);
+  assert.match(inventoryGateErrors(summary).join('\n'), /duplicate_source_note=1/);
+});
+
+test('inventory repairs label-only SourceNote drift without rewriting its body', () => {
+  const projection = buildProjection(candidate(), sourceRef, '2026-09-03T13:00:00.000Z');
+  const drifted = liveSourceNote(12, projection, {
+    labels: [...projection.labels, { name: 'type:interview-note' }],
+  });
+  const inventory = buildInventory([drifted]);
+  const summary = inventoryReconciliationSummary([projection], inventory);
+  assert.equal(summary.invalid_source_note, 1);
+  assert.equal(summary.repairable_invalid_source_note, 1);
+  assert.equal(summary.unaccounted_source_id, 0);
+  assert.equal(inventoryGateErrors(summary).length, 0);
+  const action = planActions([projection], inventory)[0];
+  assert.equal(action.action, 'reconcile-source-note-labels');
+  assert.equal(action.issue_number, 12);
+  assert.equal(action.reconciled_labels.includes('type:interview-note'), false);
+});
+
+test('inventory blocks SourceNotes whose body cannot be repaired by a label-only mutation', () => {
+  const projection = buildProjection(candidate(), sourceRef, '2026-09-03T13:00:00.000Z');
+  const malformed = liveSourceNote(14, projection, { body: projection.body.replace('source-note-record', 'source-note-record-corrupt') });
+  const inventory = buildInventory([malformed]);
+  const summary = inventoryReconciliationSummary([projection], inventory);
+  assert.equal(summary.invalid_source_note, 1);
+  assert.equal(summary.unrepairable_invalid_source_note, 1);
+  assert.equal(summary.unaccounted_source_id, 1);
+  assert.match(inventoryGateErrors(summary).join('\n'), /invalid_source_note=1/);
+});
+
+test('inventory preserves formal InterviewNote ownership while accounting for SourceNote backfill', () => {
+  const projection = buildProjection(candidate(), sourceRef, '2026-09-03T13:00:00.000Z');
+  const inventory = buildInventory([{
+    number: 13,
+    state: 'open',
+    body: '<!-- interview-note: id=xhs:625564d70000000001025e46 schema=interview-note-issue.v2 -->',
+    labels: [{ name: 'type:interview-note' }],
+  }]);
+  const summary = inventoryReconciliationSummary([projection], inventory);
+  assert.equal(summary.accounted_source_id, 1);
+  assert.equal(summary.protected_formal_interview_note, 1);
+  assert.equal(inventoryGateErrors(summary).length, 0);
+  assert.equal(planActions([projection], inventory)[0].action, 'create-source-note-alongside-formal-interview-note');
 });

@@ -4,7 +4,7 @@
 const fs = require('fs');
 const path = require('path');
 const { execFileSync } = require('child_process');
-const { validateSourceNoteIssue, yearFromTimeFact } = require('./lib/source-note-issue');
+const { parseSourceNoteIssue, validateSourceNoteIssue, yearFromTimeFact } = require('./lib/source-note-issue');
 
 const BULK_LABEL = 'migration:xhs-bulk';
 const SOURCE_NOTE_LABELS = [
@@ -18,6 +18,7 @@ const SOURCE_NOTE_LABELS = [
 const MAX_DESC_CHARS = 8000;
 const MAX_IMAGE_ARTIFACTS = 20;
 const MUTATING_ACTIONS = new Set([
+  'reconcile-source-note-labels',
   'reconcile-source-note-discovery-labels',
   'convert-bulk-interview-note-in-place',
   'create-source-note',
@@ -301,17 +302,20 @@ function buildProjection(candidate, sourceRef, capturedAt) {
 }
 
 function extractMarker(body, kind) {
-  const source = String(body || '');
-  if (kind === 'source-note') {
-    const match = source.match(/<!--\s*source-note:\s*id=([^\s]+)\s+schema=source-note-issue\.v\d+\s*-->/);
-    return match ? match[1] : null;
-  }
-  const match = source.match(/<!--\s*interview-note:\s*id=([^\s]+)\s+schema=interview-note-issue\.v\d+\s*-->/);
-  return match ? match[1] : null;
+  return extractMarkers(body, kind)[0] || null;
+}
+
+function extractMarkers(body, kind) {
+  const markerName = kind === 'source-note' ? 'source-note' : 'interview-note';
+  const pattern = new RegExp(`<!--\\s*${markerName}:\\s*id=([^\\s]+)\\s+schema=${markerName}-issue\\.v\\d+\\s*-->`, 'g');
+  return [...String(body || '').matchAll(pattern)].map((match) => match[1]);
 }
 
 function normalizeIssueLabels(issue) {
-  return (issue && issue.labels ? issue.labels : [])
+  const rawLabels = issue && issue.labels
+    ? (Array.isArray(issue.labels) ? issue.labels : issue.labels.nodes || [])
+    : [];
+  return rawLabels
     .map((label) => typeof label === 'string' ? label : label && label.name)
     .filter(Boolean);
 }
@@ -334,32 +338,153 @@ function reconcileSourceYearLabels(issue, projection) {
   return reconciled;
 }
 
-function loadInventory(targetRepo) {
-  const issues = flattenPages(ghJson(['api', '--paginate', '--slurp', `repos/${targetRepo}/issues?state=all&per_page=100`]));
+function sourceNoteManagedLabel(label) {
+  return label === 'type:source-note'
+    || label === 'type:interview-note'
+    || label === 'source:xhs'
+    || label === 'status:captured'
+    || label === 'task:boundary-review'
+    || label === BULK_LABEL
+    || label.startsWith('boundary:')
+    || label.startsWith('source-year:');
+}
+
+function repairableSourceNoteLabels(issue, sourceNoteId) {
+  const parsed = parseSourceNoteIssue(issue.body);
+  if (parsed.markerMatches.length !== 1 || parsed.markerMatches[0][1] !== sourceNoteId || !parsed.record) return null;
+  if (extractMarkers(issue.body, 'interview-note').length) return null;
+  const boundaryStatus = parsed.record.boundary_review && parsed.record.boundary_review.status;
+  if (!boundaryStatus) return null;
+  const labels = normalizeIssueLabels(issue).filter((label) => !sourceNoteManagedLabel(label));
+  labels.push('type:source-note', 'source:xhs', 'status:captured', `boundary:${boundaryStatus}`);
+  if (boundaryStatus === 'pending') labels.push('task:boundary-review');
+  if (normalizeIssueLabels(issue).includes(BULK_LABEL)) labels.push(BULK_LABEL);
+  const sourceYear = yearFromTimeFact(parsed.record.source_published_at);
+  if (sourceYear) labels.push(`source-year:${sourceYear}`);
+  const validation = validateSourceNoteIssue({ body: issue.body, labels, state: issue.state });
+  return validation.ok ? labels : null;
+}
+
+function buildInventory(issues) {
   const sourceNotes = new Map();
   const bulkLegacy = new Map();
   const protectedInterview = new Map();
+  const invalidSourceNotes = [];
+  const repairableSourceNotes = [];
+  const sourceNoteOccurrences = new Map();
+  const interviewOwnership = new Map();
   for (const issue of issues) {
     if (issue.pull_request) continue;
     const labels = new Set(normalizeIssueLabels(issue));
-    const sourceNoteId = extractMarker(issue.body, 'source-note');
-    if (sourceNoteId) {
-      sourceNotes.set(sourceNoteId, issue);
+    const sourceNoteIds = extractMarkers(issue.body, 'source-note');
+    if (sourceNoteIds.length) {
+      for (const sourceNoteId of sourceNoteIds) {
+        const occurrences = sourceNoteOccurrences.get(sourceNoteId) || [];
+        occurrences.push(issue.number);
+        sourceNoteOccurrences.set(sourceNoteId, occurrences);
+      }
+      const validation = sourceNoteIds.length === 1
+        ? validateSourceNoteIssue({ body: issue.body, labels: [...labels], state: issue.state })
+        : { ok: false, errors: [`expected exactly one source-note machine marker, found ${sourceNoteIds.length}`] };
+      if (extractMarkers(issue.body, 'interview-note').length) {
+        validation.ok = false;
+        validation.errors = [...(validation.errors || []), 'SourceNote must not also contain an InterviewNote machine marker'];
+      }
+      if (!validation.ok) {
+        const sourceNoteId = sourceNoteIds.length === 1 ? sourceNoteIds[0] : null;
+        const repairedLabels = sourceNoteId ? repairableSourceNoteLabels(issue, sourceNoteId) : null;
+        if (repairedLabels) {
+          const repairedIssue = { ...issue, reconciliation_labels: repairedLabels };
+          sourceNotes.set(sourceNoteId, repairedIssue);
+          repairableSourceNotes.push({ issue_number: issue.number, source_note_id: sourceNoteId, labels: repairedLabels });
+          continue;
+        }
+        invalidSourceNotes.push({ issue_number: issue.number, source_note_ids: sourceNoteIds, errors: validation.errors });
+        continue;
+      }
+      const sourceNoteId = sourceNoteIds[0];
+      if (!sourceNotes.has(sourceNoteId)) sourceNotes.set(sourceNoteId, issue);
       continue;
     }
-    const interviewNoteId = extractMarker(issue.body, 'interview-note');
-    if (!interviewNoteId || !interviewNoteId.startsWith('xhs:')) continue;
+    const interviewNoteIds = extractMarkers(issue.body, 'interview-note');
+    if (interviewNoteIds.length !== 1 || !interviewNoteIds[0].startsWith('xhs:')) continue;
+    const interviewNoteId = interviewNoteIds[0];
     const externalId = interviewNoteId.slice('xhs:'.length);
-    if (labels.has(BULK_LABEL)) bulkLegacy.set(externalId, issue);
-    else protectedInterview.set(externalId, issue);
+    const ownership = interviewOwnership.get(externalId) || { bulk: [], formal: [] };
+    if (labels.has(BULK_LABEL)) {
+      ownership.bulk.push(issue);
+      if (!bulkLegacy.has(externalId)) bulkLegacy.set(externalId, issue);
+    } else {
+      ownership.formal.push(issue);
+      if (!protectedInterview.has(externalId)) protectedInterview.set(externalId, issue);
+    }
+    interviewOwnership.set(externalId, ownership);
   }
-  return { sourceNotes, bulkLegacy, protectedInterview };
+  const duplicateSourceNotes = new Map([...sourceNoteOccurrences.entries()]
+    .filter(([, issueNumbers]) => issueNumbers.length > 1));
+  const interviewOwnershipConflicts = [...interviewOwnership.entries()]
+    .filter(([, owners]) => owners.bulk.length + owners.formal.length > 1)
+    .map(([externalId, owners]) => ({
+      external_id: externalId,
+      bulk_issue_numbers: owners.bulk.map((issue) => issue.number),
+      formal_issue_numbers: owners.formal.map((issue) => issue.number),
+    }));
+  return {
+    sourceNotes,
+    bulkLegacy,
+    protectedInterview,
+    invalidSourceNotes,
+    repairableSourceNotes,
+    duplicateSourceNotes,
+    interviewOwnershipConflicts,
+  };
+}
+
+function loadInventory(targetRepo) {
+  const issues = flattenPages(ghJson(['api', '--paginate', '--slurp', `repos/${targetRepo}/issues?state=all&per_page=100`]));
+  return buildInventory(issues);
+}
+
+function inventoryReconciliationSummary(projections, inventory) {
+  const accounted = projections.filter((projection) => (
+    inventory.sourceNotes.has(projection.source_note_id)
+    || inventory.bulkLegacy.has(projection.external_id)
+    || inventory.protectedInterview.has(projection.external_id)
+  ));
+  return {
+    total_candidates: projections.length,
+    accounted_source_id: accounted.length,
+    unaccounted_source_id: projections.length - accounted.length,
+    duplicate_source_note: inventory.duplicateSourceNotes.size,
+    invalid_source_note: inventory.invalidSourceNotes.length + inventory.repairableSourceNotes.length,
+    repairable_invalid_source_note: inventory.repairableSourceNotes.length,
+    unrepairable_invalid_source_note: inventory.invalidSourceNotes.length,
+    protected_formal_interview_note: projections.filter((projection) => inventory.protectedInterview.has(projection.external_id)).length,
+    interview_ownership_conflict: inventory.interviewOwnershipConflicts.length,
+  };
+}
+
+function inventoryGateErrors(summary) {
+  const errors = [];
+  if (summary.unaccounted_source_id) errors.push(`unaccounted_source_id=${summary.unaccounted_source_id}`);
+  if (summary.duplicate_source_note) errors.push(`duplicate_source_note=${summary.duplicate_source_note}`);
+  if (summary.unrepairable_invalid_source_note) errors.push(`invalid_source_note=${summary.unrepairable_invalid_source_note}`);
+  if (summary.interview_ownership_conflict) errors.push(`interview_ownership_conflict=${summary.interview_ownership_conflict}`);
+  return errors;
 }
 
 function planActions(projections, inventory) {
   return projections.map((projection) => {
     const existingSource = inventory.sourceNotes.get(projection.source_note_id);
     if (existingSource) {
+      if (existingSource.reconciliation_labels) {
+        return {
+          action: 'reconcile-source-note-labels',
+          issue_number: existingSource.number,
+          reconciled_labels: existingSource.reconciliation_labels,
+          projection,
+        };
+      }
       const reconciledLabels = reconcileSourceYearLabels(existingSource, projection);
       if (reconciledLabels) {
         return {
@@ -419,7 +544,8 @@ function createSourceNote(targetRepo, projection) {
 }
 
 function mutateAction(targetRepo, action) {
-  if (action.action === 'reconcile-source-note-discovery-labels') {
+  if (action.action === 'reconcile-source-note-labels'
+      || action.action === 'reconcile-source-note-discovery-labels') {
     ghJson(['api', '--method', 'PATCH', `repos/${targetRepo}/issues/${action.issue_number}`, '--input', '-'], {
       labels: action.reconciled_labels,
     });
@@ -456,6 +582,11 @@ function summarizeAnomalies(candidates) {
   return counts;
 }
 
+function writeReport(report, reportPath) {
+  if (reportPath) fs.writeFileSync(reportPath, `${JSON.stringify(report, null, 2)}\n`);
+  process.stdout.write(`${JSON.stringify(report, null, 2)}\n`);
+}
+
 function main() {
   const args = parseArgs();
   const sourceRef = gitOutput(['-C', args.sourceRoot, 'rev-parse', args.sourceRef || 'HEAD']);
@@ -470,11 +601,29 @@ function main() {
   }
   if (validationErrors.length) {
     const report = { source_ref: sourceRef, total: projections.length, validation_errors: validationErrors };
-    if (args.report) fs.writeFileSync(args.report, `${JSON.stringify(report, null, 2)}\n`);
+    writeReport(report, args.report);
     throw new Error(`SourceNote projection preflight failed for ${validationErrors.length} candidate(s)`);
   }
 
   const inventory = loadInventory(args.targetRepo);
+  const inventorySummary = inventoryReconciliationSummary(projections, inventory);
+  const gateErrors = inventoryGateErrors(inventorySummary);
+  if (gateErrors.length) {
+    const report = {
+      schema_version: 'xhs-source-note-reconciliation-report.v1',
+      generated_at: new Date().toISOString(),
+      source_ref: sourceRef,
+      ...inventorySummary,
+      inventory_gate: 'blocked',
+      gate_errors: gateErrors,
+      invalid_source_notes: inventory.invalidSourceNotes,
+      repairable_invalid_source_notes: inventory.repairableSourceNotes,
+      duplicate_source_notes: Object.fromEntries(inventory.duplicateSourceNotes),
+      interview_ownership_conflicts: inventory.interviewOwnershipConflicts,
+    };
+    writeReport(report, args.report);
+    throw new Error(`SourceNote inventory preflight failed closed: ${gateErrors.join(', ')}`);
+  }
   const actions = planActions(projections, inventory);
   const mutating = actions.filter((action) => MUTATING_ACTIONS.has(action.action));
   const selected = args.apply ? mutating.slice(0, args.maxMutations) : [];
@@ -495,6 +644,8 @@ function main() {
     schema_version: 'xhs-source-note-reconciliation-report.v1',
     generated_at: new Date().toISOString(),
     source_ref: sourceRef,
+    ...inventorySummary,
+    inventory_gate: 'pass',
     source_total: projections.length,
     source_note_target_total: projections.length,
     source_published_at_known: projections.filter((item) => item.source_published_at.precision !== 'unknown').length,
@@ -504,6 +655,7 @@ function main() {
     mutation_candidates: mutating.length,
     applied_count: applied.length,
     remaining_mutations_after_run: Math.max(0, mutating.length - applied.length),
+    final_dry_run_ready: mutating.length === 0,
     first_mutation: mutating[0] ? {
       action: mutating[0].action,
       source_note_id: mutating[0].projection.source_note_id,
@@ -512,8 +664,7 @@ function main() {
     } : null,
     applied,
   };
-  if (args.report) fs.writeFileSync(args.report, `${JSON.stringify(report, null,2)}\n`);
-  process.stdout.write(`${JSON.stringify(report, null, 2)}\n`);
+  writeReport(report, args.report);
 }
 
 if (require.main === module) main();
@@ -525,6 +676,11 @@ module.exports = {
   listCandidates,
   buildProjection,
   normalizeIssueLabels,
+  extractMarker,
+  extractMarkers,
+  buildInventory,
+  inventoryReconciliationSummary,
+  inventoryGateErrors,
   reconcileSourceYearLabels,
   planActions,
   validateProjection,
