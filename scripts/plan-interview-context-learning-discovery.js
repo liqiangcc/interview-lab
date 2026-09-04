@@ -5,8 +5,9 @@ const fs = require('fs');
 const path = require('path');
 const { execFileSync } = require('child_process');
 const {
-  parseMarker, parseReceipts, parseIssueCommentUrl, planBatch, receiptFor, receiptBody,
+  parseMarker, parseReceipts, parseIssueCommentUrl, planBatch, planItem, receiptFor, receiptBody,
   sha256Text, normalizeLabels, validateLiveDependencyGate, verifyContextArtifact, planDigest,
+  progressFromPlan, validateProgressMapping,
 } = require('./lib/interview-context-batch');
 const { parseInterviewNoteIssue, validateInterviewNoteIssue } = require('./lib/interview-note-issue');
 const { validateInterviewContext } = require('./lib/interview-context');
@@ -59,7 +60,7 @@ function paginate(readPage, label) {
 }
 
 function parseArgs(argv = process.argv.slice(2)) {
-  const out = { request: null, inventory: false, apply: false, maxItems: 50, maxMutations: null, confirmDryRunDigest: null, rateLimitMs: 1000, contextDir: DEFAULT_CONTEXT_DIR, dependencyGateFile: DEFAULT_GATE_FILE };
+  const out = { request: null, inventory: false, apply: false, maxItems: 50, maxMutations: null, confirmDryRunDigest: null, rateLimitMs: 1000, contextDir: DEFAULT_CONTEXT_DIR, dependencyGateFile: DEFAULT_GATE_FILE, progressFile: null };
   for (let index = 0; index < argv.length; index += 1) {
     const arg = argv[index];
     if (arg === '--request') out.request = argv[++index];
@@ -71,6 +72,7 @@ function parseArgs(argv = process.argv.slice(2)) {
     else if (arg === '--rate-limit-ms') out.rateLimitMs = Number(argv[++index]);
     else if (arg === '--context-dir') out.contextDir = path.resolve(argv[++index]);
     else if (arg === '--dependency-gate-file') out.dependencyGateFile = path.resolve(argv[++index]);
+    else if (arg === '--progress-file') out.progressFile = path.resolve(argv[++index]);
     else throw new Error(`unknown argument: ${arg}`);
   }
   if (!out.inventory && !out.request) throw new Error('--request or --inventory is required');
@@ -105,6 +107,49 @@ function readRequest(file) {
 function readDependencyGate(file) {
   const raw = fs.readFileSync(file, 'utf8');
   return { raw, gate: JSON.parse(raw), sha256: sha256Text(raw) };
+}
+
+function defaultProgressFile(request) {
+  return path.resolve('data/pilot/issue-923', `${request.batch_id}.apply-progress.json`);
+}
+
+function readProgress(file) {
+  if (!fs.existsSync(file)) return null;
+  try { return JSON.parse(fs.readFileSync(file, 'utf8')); } catch (error) { throw new Error(`apply progress ${file} is invalid JSON: ${error.message}`); }
+}
+
+function writeProgress(file, progress) {
+  fs.mkdirSync(path.dirname(file), { recursive: true });
+  const temporary = `${file}.tmp-${process.pid}`;
+  const payload = `${JSON.stringify({ ...progress, updated_at: new Date().toISOString() }, null, 2)}\n`;
+  const fd = fs.openSync(temporary, 'w', 0o644);
+  try { fs.writeFileSync(fd, payload, 'utf8'); fs.fsyncSync(fd); } finally { fs.closeSync(fd); }
+  fs.renameSync(temporary, file);
+  const directoryFd = fs.openSync(path.dirname(file), 'r');
+  try { fs.fsyncSync(directoryFd); } finally { fs.closeSync(directoryFd); }
+}
+
+function setProgressItem(progress, file, issueNumber, patch) {
+  const item = progress.items.find((entry) => Number(entry.issue_number) === Number(issueNumber));
+  if (!item) throw new Error(`apply progress is missing Issue #${issueNumber}`);
+  Object.assign(item, patch);
+  writeProgress(file, progress);
+}
+
+function resumeProgressItem(saved, liveItem) {
+  if (liveItem && liveItem.ok && liveItem.action === 'already_applied') return { ok: true, state: 'complete' };
+  if (saved && saved.state === 'failed') return { ok: false, state: 'failed', error: saved.error || 'previous mutation outcome was uncertain; refusing blind retry' };
+  if (saved && saved.state === 'complete') return { ok: false, state: 'failed', error: 'progress marked complete but live projection is not converged' };
+  return { ok: true, state: saved && saved.state ? saved.state : 'pending' };
+}
+
+function reloadPlannedItem(request, plannedItem, contextArtifactResults) {
+  const requestItem = request.items.find((item) => Number(item.issue_number) === Number(plannedItem.issue_number));
+  const liveIssue = loadIssue(request.repository, plannedItem.issue_number);
+  const parsed = parseReceipts(loadComments(request.repository, plannedItem.issue_number));
+  if (parsed.errors.length) throw new Error(`Issue #${plannedItem.issue_number}: ${parsed.errors.join('; ')}`);
+  const artifactResult = contextArtifactResults instanceof Map ? contextArtifactResults.get(Number(plannedItem.issue_number)) : null;
+  return planItem(request, requestItem, liveIssue, parsed.receipts, artifactResult);
 }
 
 function loadDependencyEvidence(repository, gate) {
@@ -250,16 +295,30 @@ function main(argv = process.argv.slice(2)) {
   const contextArtifactResults = remoteContextArtifactResults(request);
   let live = loadLive(request, gate.gate, dependencyEvidence, contextArtifactResults);
   let plan = planBatch(request, live);
-  const dryRunDigest = planDigest(plan);
+  let dryRunDigest = planDigest(plan);
   if (!args.apply) {
     process.stdout.write(`${JSON.stringify(report(plan, 'plan', { dependency_gate: live.liveGate, dry_run_digest: dryRunDigest }), null, 2)}\n`);
     return plan.ok ? 0 : 1;
   }
-  if (args.confirmDryRunDigest !== dryRunDigest) throw new Error(`--confirm-dry-run-digest does not match native dry-run digest ${dryRunDigest}; no mutation attempted`);
-  if ((plan.summary && plan.summary.mutation_count) > args.maxMutations) throw new Error(`native dry-run mutation_count=${plan.summary.mutation_count} exceeds --max-mutations=${args.maxMutations}; no mutation attempted`);
+  const progressFile = args.progressFile || defaultProgressFile(request);
+  const existingProgress = readProgress(progressFile);
+  if (existingProgress) {
+    dryRunDigest = existingProgress.dry_run_digest;
+    const progressValidation = validateProgressMapping(existingProgress, request, plan, dryRunDigest, args.maxMutations);
+    if (!progressValidation.ok) throw new Error(progressValidation.errors.join('; '));
+    if (args.confirmDryRunDigest !== dryRunDigest) throw new Error(`--confirm-dry-run-digest does not match durable apply progress digest ${dryRunDigest}; no mutation attempted`);
+  } else {
+    if (args.confirmDryRunDigest !== dryRunDigest) throw new Error(`--confirm-dry-run-digest does not match native dry-run digest ${dryRunDigest}; no mutation attempted`);
+    if ((plan.summary && plan.summary.mutation_count) > args.maxMutations) throw new Error(`native dry-run mutation_count=${plan.summary.mutation_count} exceeds --max-mutations=${args.maxMutations}; no mutation attempted`);
+  }
   if (!plan.ok) {
     process.stdout.write(`${JSON.stringify(report(plan, 'apply-blocked', { dependency_gate: live.liveGate, dry_run_digest: dryRunDigest }), null, 2)}\n`);
     return 1;
+  }
+  let progress = existingProgress;
+  if (!progress) {
+    progress = progressFromPlan(request, plan, dryRunDigest, args.maxMutations);
+    writeProgress(progressFile, progress);
   }
 
   const recheckedEvidence = loadDependencyEvidence(request.repository, gate.gate);
@@ -270,8 +329,14 @@ function main(argv = process.argv.slice(2)) {
   }
   live = loadLive(request, gate.gate, recheckedEvidence, remoteContextArtifactResults(request));
   plan = planBatch(request, live);
-  if (planDigest(plan) !== dryRunDigest) {
-    process.stdout.write(`${JSON.stringify(report(plan, 'apply-blocked-after-recheck', { dependency_gate: live.liveGate, dry_run_digest: planDigest(plan), confirmed_dry_run_digest: dryRunDigest }), null, 2)}\n`);
+  const recheckDigest = planDigest(plan);
+  if (!existingProgress && recheckDigest !== dryRunDigest) {
+    process.stdout.write(`${JSON.stringify(report(plan, 'apply-blocked-after-recheck', { dependency_gate: live.liveGate, dry_run_digest: recheckDigest, confirmed_dry_run_digest: dryRunDigest }), null, 2)}\n`);
+    return 1;
+  }
+  const progressValidation = validateProgressMapping(progress, request, plan, dryRunDigest, args.maxMutations);
+  if (!progressValidation.ok) {
+    process.stdout.write(`${JSON.stringify(report(plan, 'apply-blocked-after-recheck', { dependency_gate: live.liveGate, dry_run_digest: dryRunDigest, progress_errors: progressValidation.errors }), null, 2)}\n`);
     return 1;
   }
   if (!plan.ok) {
@@ -280,21 +345,68 @@ function main(argv = process.argv.slice(2)) {
   }
 
   const applied = [];
-  for (const item of plan.items) {
-    if (item.action === 'already_applied') {
-      applied.push({ issue_number: item.issue_number, action: item.action, context_artifact: item.projection.context_artifact, receipt_comment_id: item.receipt.comment_id });
+  for (const plannedItem of plan.items) {
+    let item = reloadPlannedItem(request, plannedItem, live.contextArtifactResults);
+    const saved = progress.items.find((entry) => Number(entry.issue_number) === Number(item.issue_number));
+    if (!item.ok) {
+      setProgressItem(progress, progressFile, item.issue_number, { state: 'failed', error: item.errors.join('; ') });
+      throw new Error(`Issue #${item.issue_number} recovery plan failed: ${item.errors.join('; ')}`);
+    }
+    const resume = resumeProgressItem(saved, item);
+    if (!resume.ok) {
+      setProgressItem(progress, progressFile, item.issue_number, { state: 'failed', error: resume.error });
+      throw new Error(`Issue #${item.issue_number} progress is fail-closed: ${resume.error}`);
+    }
+    if (resume.state === 'complete') {
+      setProgressItem(progress, progressFile, item.issue_number, { state: 'complete', receipt_comment_id: item.receipt && item.receipt.comment_id });
+      applied.push({ issue_number: item.issue_number, action: 'already_applied', context_artifact: item.projection.context_artifact, receipt_comment_id: item.receipt && item.receipt.comment_id });
       continue;
     }
     if (item.action === 'update') {
-      patchIssue(request, item);
-      verifyLive(request, item);
+      setProgressItem(progress, progressFile, item.issue_number, { state: 'issue_mutation_pending' });
+      try {
+        patchIssue(request, item);
+      } catch (error) {
+        const afterFailure = reloadPlannedItem(request, item, live.contextArtifactResults);
+        if (!afterFailure.ok || !['repair_receipt', 'already_applied'].includes(afterFailure.action)) {
+          setProgressItem(progress, progressFile, item.issue_number, { state: 'failed', error: `PATCH response failed and live Issue did not converge: ${error.message}` });
+          throw new Error(`Issue #${item.issue_number} PATCH response failed and live state did not converge; fail closed`);
+        }
+        item = afterFailure;
+      }
+      if (item.action !== 'already_applied') item = reloadPlannedItem(request, item, live.contextArtifactResults);
+      if (!item.ok || !['repair_receipt', 'already_applied'].includes(item.action)) {
+        setProgressItem(progress, progressFile, item.issue_number, { state: 'failed', error: 'PATCH did not converge after live re-read' });
+        throw new Error(`Issue #${item.issue_number} PATCH did not converge; fail closed`);
+      }
+      setProgressItem(progress, progressFile, item.issue_number, { state: item.action === 'already_applied' ? 'complete' : 'issue_converged' });
       sleepMs(args.rateLimitMs);
+      if (item.action === 'already_applied') {
+        applied.push({ issue_number: item.issue_number, action: 'already_applied', context_artifact: item.projection.context_artifact, receipt_comment_id: item.receipt && item.receipt.comment_id });
+        continue;
+      }
     }
-    const receiptResult = item.receipt ? { receipt: item.receipt, comment: { id: item.receipt.comment_id } } : addReceipt(request, item, new Date().toISOString());
+    setProgressItem(progress, progressFile, item.issue_number, { state: 'receipt_pending' });
+    let receiptResult;
+    try {
+      receiptResult = item.receipt ? { receipt: item.receipt, comment: { id: item.receipt.comment_id } } : addReceipt(request, item, new Date().toISOString());
+    } catch (error) {
+      const afterFailure = reloadPlannedItem(request, item, live.contextArtifactResults);
+      if (!afterFailure.ok || afterFailure.action !== 'already_applied') {
+        setProgressItem(progress, progressFile, item.issue_number, { state: 'failed', error: `receipt response failed and live receipt did not converge: ${error.message}` });
+        throw new Error(`Issue #${item.issue_number} receipt response failed and live receipt did not converge; fail closed`);
+      }
+      item = afterFailure;
+      receiptResult = { receipt: item.receipt, comment: { id: item.receipt.comment_id } };
+    }
     if (!item.receipt) sleepMs(args.rateLimitMs);
-    const final = loadIssue(request.repository, item.issue_number);
-    if (sha256Text(final.body || '') !== item.current_body_sha256) throw new Error(`Issue #${item.issue_number} body changed after receipt; recovery required`);
-    applied.push({ issue_number: item.issue_number, action: item.action, context_artifact: item.projection.context_artifact, receipt_comment_id: Number(receiptResult.comment.id) });
+    const final = reloadPlannedItem(request, item, live.contextArtifactResults);
+    if (!final.ok || final.action !== 'already_applied') {
+      setProgressItem(progress, progressFile, item.issue_number, { state: 'failed', error: 'receipt did not converge after live re-read' });
+      throw new Error(`Issue #${item.issue_number} receipt did not converge; fail closed`);
+    }
+    setProgressItem(progress, progressFile, item.issue_number, { state: 'complete', receipt_comment_id: final.receipt.comment_id });
+    applied.push({ issue_number: item.issue_number, action: item.action, context_artifact: final.projection.context_artifact, receipt_comment_id: Number(final.receipt.comment_id || receiptResult.comment.id) });
   }
   process.stdout.write(`${JSON.stringify(report(plan, 'apply', { applied, dry_run_digest: dryRunDigest, confirmed_dry_run_digest: args.confirmDryRunDigest }), null, 2)}\n`);
   return 0;
@@ -304,4 +416,4 @@ if (require.main === module) {
   try { process.exitCode = main(); } catch (error) { process.stderr.write(`ERROR: ${error.message}\n`); process.exitCode = 1; }
 }
 
-module.exports = { parseArgs, paginate, loadComments, loadAllIssues, buildInventoryReport, parseMarker, planBatch, report };
+module.exports = { parseArgs, paginate, loadComments, loadAllIssues, buildInventoryReport, resumeProgressItem, parseMarker, planBatch, report };

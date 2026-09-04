@@ -28,6 +28,7 @@ const HEX40_RE = /^[0-9a-f]{40}$/;
 const DEPENDENCY_GATE_SCHEMA_VERSION = 'interview-context-learning-discovery-dependency-gate.v1';
 const DEPENDENCY_ACCEPTANCE_SCHEMA_VERSION = 'issue-dependency-acceptance.v1';
 const DEPENDENCY_MARKER_RE = /<!--\s*issue-dependency-acceptance\s*\n([\s\S]*?)\n-->/g;
+const PROGRESS_SCHEMA_VERSION = 'interview-context-learning-discovery-apply-progress.v1';
 
 function sha256Text(value) {
   return crypto.createHash('sha256').update(String(value), 'utf8').digest('hex');
@@ -160,12 +161,16 @@ function validateLiveDependencyGate(gate, repository, dependencies = [], readEvi
       errors.push(`dependency #${dependencyNumber} acceptance anchor could not be read`);
       continue;
     }
+    if (Number(anchor.id) !== Number(entry.evidence.match(/#issuecomment-(\d+)$/)?.[1])) errors.push(`dependency #${dependencyNumber} acceptance anchor comment id mismatch`);
     if (anchor.issue_url !== `https://api.github.com/repos/${repository}/issues/${dependencyNumber}`) errors.push(`dependency #${dependencyNumber} acceptance anchor issue_url mismatch`);
     const acceptance = parseDependencyAcceptance(anchor.body, repository, dependencyNumber, entry.acceptance_evidence);
     errors.push(...acceptance.errors);
     const finalEvidence = getEvidence(entry.acceptance_evidence);
     if (!finalEvidence) errors.push(`dependency #${dependencyNumber} final acceptance evidence could not be read`);
-    else if (finalEvidence.issue_url !== `https://api.github.com/repos/${repository}/issues/${dependencyNumber}`) errors.push(`dependency #${dependencyNumber} final acceptance evidence issue_url mismatch`);
+    else {
+      if (Number(finalEvidence.id) !== Number(entry.acceptance_evidence.match(/#issuecomment-(\d+)$/)?.[1])) errors.push(`dependency #${dependencyNumber} final acceptance evidence comment id mismatch`);
+      if (finalEvidence.issue_url !== `https://api.github.com/repos/${repository}/issues/${dependencyNumber}`) errors.push(`dependency #${dependencyNumber} final acceptance evidence issue_url mismatch`);
+    }
   }
   return { ok: errors.length === 0, errors, gate };
 }
@@ -188,13 +193,16 @@ function verifyContextArtifact(context, artifact, repository, readers = {}) {
   const structural = validateContextArtifact(artifact, context, repository);
   if (!structural.ok) return structural;
   const errors = [];
+  if (typeof readers.readRef !== 'function' || typeof readers.readCommit !== 'function' || typeof readers.readContent !== 'function') {
+    return { ok: false, errors: ['durable Context readers are required; refusing to synthesize remote Git verification'], artifact };
+  }
   try {
-    const ref = typeof readers.readRef === 'function' ? readers.readRef(artifact.ref) : { sha: artifact.commit };
+    const ref = readers.readRef(artifact.ref);
     const refSha = ref && (ref.sha || (ref.object && ref.object.sha));
     if (!ref || (refSha && refSha !== artifact.commit)) errors.push('context_artifact ref does not resolve to the declared commit');
-    const commit = typeof readers.readCommit === 'function' ? readers.readCommit(artifact.commit) : { sha: artifact.commit };
+    const commit = readers.readCommit(artifact.commit);
     if (!commit || (commit.sha && commit.sha !== artifact.commit)) errors.push('context_artifact commit cannot be verified');
-    const content = typeof readers.readContent === 'function' ? readers.readContent(artifact.path, artifact.commit) : canonicalJson(context);
+    const content = readers.readContent(artifact.path, artifact.commit);
     const parsed = typeof content === 'string' ? JSON.parse(content) : content;
     if (contextSha256(parsed) !== artifact.sha256) errors.push('durable Context content digest conflicts with context_artifact.sha256');
     if (contextSha256(parsed) !== contextSha256(context)) errors.push('durable Context content conflicts with requested reviewed Context');
@@ -283,6 +291,7 @@ function receiptMatches(receipt, request, item, projection) {
     && receipt.interview_note_id === projection.interview_note_id
     && receipt.expected_body_sha256 === item.expected_body_sha256
     && receipt.context_sha256 === contextSha256(item.context)
+    && receipt.intent_id === intentId(request, item)
     && receipt.context_artifact && item.context_artifact
     && receipt.context_artifact.repository === item.context_artifact.repository
     && receipt.context_artifact.path === item.context_artifact.path
@@ -291,6 +300,62 @@ function receiptMatches(receipt, request, item, projection) {
     && receipt.context_artifact.sha256 === item.context_artifact.sha256
     && receipt.title === projection.title
     && JSON.stringify(receipt.labels || []) === JSON.stringify(projection.labels);
+}
+
+function intentId(request, item) {
+  const context = item.context || (item.projection && item.projection.context);
+  const bodySha = item.expected_body_sha256 || item.current_body_sha256;
+  return sha256Text(`${request.repository}:${request.batch_id}:${item.issue_number}:${bodySha}:${contextSha256(context)}`);
+}
+
+function progressFromPlan(request, plan, dryRunDigest, maxMutations, now = new Date().toISOString()) {
+  return {
+    schema_version: PROGRESS_SCHEMA_VERSION,
+    batch_id: request.batch_id,
+    repository: request.repository,
+    dry_run_digest: dryRunDigest,
+    max_mutations: maxMutations,
+    created_at: now,
+    updated_at: now,
+    items: plan.items.map((item) => ({
+      issue_number: item.issue_number,
+      expected_body_sha256: request.items.find((candidate) => Number(candidate.issue_number) === Number(item.issue_number)).expected_body_sha256,
+      context_sha256: item.projection && item.projection.context_sha256,
+      context_artifact: item.projection && item.projection.context_artifact,
+      title: item.projection && item.projection.title,
+      labels: item.projection && item.projection.labels,
+      intent_id: intentId(request, request.items.find((candidate) => Number(candidate.issue_number) === Number(item.issue_number))),
+      planned_action: item.action,
+      state: item.action === 'already_applied' ? 'complete' : 'pending',
+      receipt_comment_id: item.receipt ? item.receipt.comment_id : null,
+    })),
+  };
+}
+
+function validateProgressMapping(progress, request, plan, dryRunDigest, maxMutations) {
+  const errors = [];
+  if (!progress || typeof progress !== 'object' || Array.isArray(progress)) return { ok: false, errors: ['apply progress must be an object'] };
+  if (progress.schema_version !== PROGRESS_SCHEMA_VERSION) errors.push(`apply progress schema_version must be ${PROGRESS_SCHEMA_VERSION}`);
+  if (progress.batch_id !== request.batch_id || progress.repository !== request.repository) errors.push('apply progress batch/repository does not match request');
+  if (progress.dry_run_digest !== dryRunDigest) errors.push('apply progress dry-run digest does not match the confirmed digest');
+  if (progress.max_mutations !== maxMutations) errors.push('apply progress max_mutations does not match the confirmed mutation ceiling');
+  if (!Array.isArray(progress.items) || progress.items.length !== plan.items.length) errors.push('apply progress item count does not match the planned batch');
+  else {
+    const byNumber = new Map(progress.items.map((item) => [Number(item.issue_number), item]));
+    for (const planned of plan.items) {
+      const requestItem = request.items.find((item) => Number(item.issue_number) === Number(planned.issue_number));
+      const saved = byNumber.get(Number(planned.issue_number));
+      if (!saved) { errors.push(`apply progress is missing Issue #${planned.issue_number}`); continue; }
+      if (saved.expected_body_sha256 !== requestItem.expected_body_sha256) errors.push(`apply progress Issue #${planned.issue_number} body mapping differs`);
+      if (!planned.projection || saved.context_sha256 !== planned.projection.context_sha256) errors.push(`apply progress Issue #${planned.issue_number} Context mapping differs`);
+      if (!planned.projection || JSON.stringify(saved.context_artifact || null) !== JSON.stringify(planned.projection.context_artifact || null)) errors.push(`apply progress Issue #${planned.issue_number} durable artifact mapping differs`);
+      if (saved.intent_id !== intentId(request, requestItem)) errors.push(`apply progress Issue #${planned.issue_number} intent mapping differs`);
+      if (planned.projection && (saved.title !== planned.projection.title || JSON.stringify(saved.labels || []) !== JSON.stringify(planned.projection.labels || []))) errors.push(`apply progress Issue #${planned.issue_number} projection mapping differs`);
+      if (!['pending', 'issue_mutation_pending', 'issue_converged', 'receipt_pending', 'complete', 'failed'].includes(saved.state)) errors.push(`apply progress Issue #${planned.issue_number} has unsupported state ${saved.state}`);
+      if (saved.state === 'failed' && (typeof saved.error !== 'string' || saved.error.trim() === '')) errors.push(`apply progress Issue #${planned.issue_number} failed state requires a non-empty error`);
+    }
+  }
+  return { ok: errors.length === 0, errors };
 }
 
 function planItem(request, item, issue, receipts = [], contextArtifactResult = null) {
@@ -444,6 +509,7 @@ function receiptFor(request, item, appliedAt) {
     expected_body_sha256: item.current_body_sha256,
     context_sha256: item.projection.context_sha256,
     context_artifact: item.projection.context_artifact,
+    intent_id: intentId(request, item),
     title: item.projection.title,
     labels: item.projection.labels,
     applied_at: appliedAt,
@@ -469,6 +535,9 @@ module.exports = {
   validateLiveDependencyGate,
   validateContextArtifact,
   verifyContextArtifact,
+  intentId,
+  progressFromPlan,
+  validateProgressMapping,
   validateRequest,
   dependencyGate,
   normalizeLabels,

@@ -2,7 +2,7 @@
 
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { loadComments, loadAllIssues, parseArgs } = require('../scripts/plan-interview-context-learning-discovery');
+const { loadComments, loadAllIssues, parseArgs, resumeProgressItem } = require('../scripts/plan-interview-context-learning-discovery');
 
 test('CLI comments pagination is explicit, bounded, and complete without --slurp', () => {
   const urls = [];
@@ -31,4 +31,12 @@ test('inventory pagination requests only type:interview-note and retains every p
 test('apply requires native dry-run confirmation and mutation ceiling', () => {
   assert.throws(() => parseArgs(['--request', 'request.md', '--apply']), /confirm-dry-run-digest/);
   assert.throws(() => parseArgs(['--request', 'request.md', '--apply', '--confirm-dry-run-digest', 'a'.repeat(64)]), /max-mutations/);
+});
+
+test('failed progress resumes only when live re-read proves convergence', () => {
+  const failed = { state: 'failed', error: 'uncertain receipt mutation' };
+  assert.deepEqual(resumeProgressItem(failed, { ok: true, action: 'already_applied' }), { ok: true, state: 'complete' });
+  const held = resumeProgressItem(failed, { ok: true, action: 'repair_receipt' });
+  assert.equal(held.ok, false);
+  assert.match(held.error, /uncertain receipt mutation/);
 });

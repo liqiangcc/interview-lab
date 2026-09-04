@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { sha256Text, contextSha256, planBatch, receiptFor, verifyContextArtifact } = require('../scripts/lib/interview-context-batch');
+const { sha256Text, contextSha256, planBatch, receiptFor, receiptBody, parseReceipts, intentId, validateProgressMapping, verifyContextArtifact } = require('../scripts/lib/interview-context-batch');
 const { parseInterviewNoteIssue } = require('../scripts/lib/interview-note-issue');
 
 const body = fs.readFileSync(path.join(__dirname, 'fixtures/interview-note-issue.valid.md'), 'utf8');
@@ -15,8 +15,8 @@ const dependencyEvidence = new Map();
 for (const entry of Object.values(dependencyGateArtifact.dependencies)) {
   const issueNumber = entry.issue_number;
   const issueUrl = `https://api.github.com/repos/liqiangcc/interview-lab/issues/${issueNumber}`;
-  dependencyEvidence.set(entry.evidence, { issue_url: issueUrl, body: `<!-- issue-dependency-acceptance\n{"schema_version":"issue-dependency-acceptance.v1","issue_number":${issueNumber},"acceptance":"pass","accepted_by":"test","acceptance_evidence":"${entry.acceptance_evidence}"}\n-->` });
-  dependencyEvidence.set(entry.acceptance_evidence, { issue_url: issueUrl, body: 'final acceptance evidence' });
+  dependencyEvidence.set(entry.evidence, { id: Number(entry.evidence.match(/#issuecomment-(\d+)$/)[1]), issue_url: issueUrl, body: `<!-- issue-dependency-acceptance\n{"schema_version":"issue-dependency-acceptance.v1","issue_number":${issueNumber},"acceptance":"pass","accepted_by":"test","acceptance_evidence":"${entry.acceptance_evidence}"}\n-->` });
+  dependencyEvidence.set(entry.acceptance_evidence, { id: Number(entry.acceptance_evidence.match(/#issuecomment-(\d+)$/)[1]), issue_url: issueUrl, body: 'final acceptance evidence' });
 }
 
 function context(overrides = {}) {
@@ -149,6 +149,40 @@ test('matching projection receipt makes retry idempotent', () => {
   assert.equal(second.summary.mutation_count, 0);
 });
 
+test('receiptFor round-trips through its marker and binds the original request item intent', () => {
+  const first = plan();
+  const receipt = receiptFor(request(), first.items[0], '2026-09-04T04:01:00Z');
+  const parsed = parseReceipts([{ id: 123, body: receiptBody(receipt) }]);
+  assert.equal(parsed.errors.length, 0);
+  assert.equal(receipt.intent_id, intentId(request(), request().items[0]));
+  const retried = plan(undefined, { title: first.items[0].projection.title, labels: first.items[0].projection.labels }, new Map([[915, parsed.receipts]]));
+  assert.equal(retried.items[0].action, 'already_applied');
+});
+
+test('failed progress is auditable and resumable only after live convergence', () => {
+  const first = plan();
+  const progress = {
+    schema_version: 'interview-context-learning-discovery-apply-progress.v1',
+    batch_id: request().batch_id,
+    repository: request().repository,
+    dry_run_digest: 'a'.repeat(64),
+    max_mutations: 1,
+    items: [{
+      issue_number: 915,
+      expected_body_sha256: request().items[0].expected_body_sha256,
+      context_sha256: first.items[0].projection.context_sha256,
+      context_artifact: first.items[0].projection.context_artifact,
+      intent_id: intentId(request(), request().items[0]),
+      title: first.items[0].projection.title,
+      labels: first.items[0].projection.labels,
+      state: 'failed',
+      error: 'receipt response was lost and live receipt was absent',
+    }],
+  };
+  const mapping = validateProgressMapping(progress, request(), first, progress.dry_run_digest, progress.max_mutations);
+  assert.equal(mapping.ok, true, mapping.errors.join('\n'));
+});
+
 test('matching receipt still reconciles externally drifted title or labels', () => {
   const first = plan();
   const receipt = receiptFor(request(), first.items[0], '2026-09-04T04:01:00Z');
@@ -189,6 +223,13 @@ test('durable Context content conflict fails closed', () => {
   });
   assert.equal(conflict.ok, false);
   assert.match(conflict.errors.join('\n'), /durable Context content conflicts/);
+});
+
+test('verifyContextArtifact without remote readers fails closed', () => {
+  const item = request().items[0];
+  const result = verifyContextArtifact(item.context, item.context_artifact, 'liqiangcc/interview-lab');
+  assert.equal(result.ok, false);
+  assert.match(result.errors.join('\n'), /readers are required/);
 });
 
 test('receipt Context conflict fails closed instead of overwriting Derived data', () => {

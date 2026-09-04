@@ -57,7 +57,7 @@ node scripts/plan-interview-context-learning-discovery.js \
   --apply --confirm-dry-run-digest <dry_run_digest> --max-mutations <n>
 ```
 
-apply 前会重新读取依赖、四个 acceptance evidence、Issues、receipts 和全部 Git Context artifacts，并要求 re-check digest 与已确认 dry-run 完全一致；成功后按默认 1 秒间隔更新 title/labels 并写 receipt。脚本不会在 apply 中写本地 Context 文件：Context 必须在 mutation 前已经存在于可解析的 Git commit/ref，receipt 同时记录 artifact path/ref/commit/digest。PATCH 或 receipt 响应丢失时，重跑同一 request 会通过 live projection、receipt 和 artifact 重读收敛；receipt 存在但 artifact 缺失/冲突、多 receipt 或 marker 冲突均 fail closed。
+apply 前会重新读取依赖、四个 acceptance evidence、Issues、receipts 和全部 Git Context artifacts，并要求 re-check digest 与已确认 dry-run 完全一致；同时先以原子写入、fsync、rename 持久化逐项 apply intent/progress journal，启动时校验 batch、Issue、body/context/artifact/title/labels 映射。成功后按默认 1 秒间隔更新 title/labels 并写 receipt。脚本不会在 apply 中写本地 Context 文件：Context 必须在 mutation 前已经存在于可解析的 Git commit/ref，receipt 同时记录 artifact path/ref/commit/digest。PATCH 或 receipt 响应异常时立即 live re-read；已收敛则记录 progress 并继续，未收敛则记录带 error 的 failed 状态并 fail closed。重跑同一 request 会先 live recheck 已成功项并跳过；failed 项只有 live 已明确收敛才能转 complete，不能盲目重发不确定 mutation。receipt 存在但 artifact 缺失/冲突、多 receipt 或 marker 冲突均 fail closed。
 
 脚本不会修改 Raw Source、SourceNote body 或 InterviewNote machine record。Crash 后可用同一 request 重跑；body 漂移、identity/revision 漂移、依赖回退、validator 失败或 receipt 冲突都会停止，不自动猜测或覆盖。
 

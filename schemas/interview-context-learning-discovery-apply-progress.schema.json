@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/liqiangcc/interview-lab/schemas/interview-context-learning-discovery-apply-progress.schema.json",
+  "title": "InterviewContext Learning Discovery apply progress v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "batch_id", "repository", "dry_run_digest", "max_mutations", "created_at", "updated_at", "items"],
+  "properties": {
+    "schema_version": {"const": "interview-context-learning-discovery-apply-progress.v1"},
+    "batch_id": {"type": "string"},
+    "repository": {"type": "string"},
+    "dry_run_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "max_mutations": {"type": "integer", "minimum": 0, "maximum": 50},
+    "created_at": {"type": "string", "format": "date-time"},
+    "updated_at": {"type": "string", "format": "date-time"},
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["issue_number", "expected_body_sha256", "context_sha256", "context_artifact", "title", "labels", "intent_id", "planned_action", "state", "receipt_comment_id"],
+        "properties": {
+          "issue_number": {"type": "integer", "minimum": 1},
+          "expected_body_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "context_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+          "context_artifact": {"type": ["object", "null"]},
+          "title": {"type": ["string", "null"]},
+          "labels": {"type": "array", "items": {"type": "string"}},
+          "intent_id": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "planned_action": {"type": "string"},
+          "state": {"enum": ["pending", "issue_mutation_pending", "issue_converged", "receipt_pending", "complete", "failed"]},
+          "receipt_comment_id": {"type": ["integer", "null"]},
+          "error": {"type": "string"}
+        }
+      }
+    }
+  }
+}
