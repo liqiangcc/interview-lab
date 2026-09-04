@@ -299,6 +299,54 @@ function validateRecord(record, marker, errors) {
       if (record.boundary_review.status === 'multi-interview' && record.boundary_review.interview_note_ids.length < 2) {
         errors.push('multi-interview boundary review must contain at least two InterviewNote ids');
       }
+      const cases = record.boundary_review.interview_note_cases;
+      if (cases != null) {
+        if (!Array.isArray(cases)) {
+          errors.push('boundary_review.interview_note_cases must be an array when present');
+        } else if (record.boundary_review.status !== 'multi-interview') {
+          errors.push('interview_note_cases are only valid for multi-interview boundary reviews');
+        } else {
+          if (cases.length !== record.boundary_review.interview_note_ids.length) {
+            errors.push('interview_note_cases must align one-to-one with interview_note_ids');
+          }
+          const caseKeys = new Set();
+          const caseIds = new Set();
+          const locators = new Set();
+          for (const [index, item] of cases.entries()) {
+            if (!item || typeof item !== 'object' || Array.isArray(item)) {
+              errors.push(`interview_note_cases[${index}] must be an object`);
+              continue;
+            }
+            if (typeof item.case_key !== 'string' || !/^[a-z0-9][a-z0-9._-]{0,95}$/.test(item.case_key)) {
+              errors.push(`interview_note_cases[${index}].case_key must use lowercase stable identity syntax`);
+            } else if (caseKeys.has(item.case_key)) {
+              errors.push(`duplicate interview_note_cases case_key: ${item.case_key}`);
+            } else caseKeys.add(item.case_key);
+            if (typeof item.interview_note_id !== 'string' || !item.interview_note_id.includes(':')) {
+              errors.push(`interview_note_cases[${index}].interview_note_id must be a stable namespaced id`);
+            } else if (caseIds.has(item.interview_note_id)) {
+              errors.push(`duplicate interview_note_cases InterviewNote id: ${item.interview_note_id}`);
+            } else caseIds.add(item.interview_note_id);
+            if (!Array.isArray(item.evidence) || item.evidence.length === 0) {
+              errors.push(`interview_note_cases[${index}].evidence must contain source evidence`);
+            } else {
+              for (const [evidenceIndex, reference] of item.evidence.entries()) {
+                if (!reference || typeof reference !== 'object' || typeof reference.locator !== 'string' || !reference.locator.trim()) continue;
+                const locator = reference.locator.trim();
+                if (locators.has(locator)) errors.push(`duplicate interview_note_cases evidence locator: ${locator}`);
+                locators.add(locator);
+                if (typeof reference.ref !== 'string' || !reference.ref) {
+                  errors.push(`interview_note_cases[${index}].evidence[${evidenceIndex}].ref is required`);
+                }
+              }
+            }
+          }
+          if (caseIds.size === record.boundary_review.interview_note_ids.length
+              && [...caseIds].some((id) => !record.boundary_review.interview_note_ids.includes(id))) {
+            errors.push('interview_note_cases ids must equal boundary_review.interview_note_ids');
+          }
+        }
+      }
     }
   }
 }

@@ -1,5 +1,7 @@
 'use strict';
 
+const { expectedInterviewNoteId, isChildInterviewNoteId } = require('./interview-note-identity');
+
 const MARKER_RE = /<!--\s*interview-note:\s*id=([^\s]+)\s+schema=([^\s]+)\s*-->/g;
 const RECORD_RE = /<!--\s*interview-note-record\s*\n([\s\S]*?)\n-->/g;
 
@@ -113,6 +115,13 @@ function validateRecord(record, marker, errors) {
   if (marker && record.schema_version !== marker.schema_version) {
     errors.push('machine marker schema and record.schema_version differ');
   }
+  if (record.identity != null) {
+    if (!record.identity || typeof record.identity !== 'object' || Array.isArray(record.identity)) {
+      errors.push('record.identity must be an object when present');
+    } else if (record.identity.kind !== 'source-note-event') {
+      errors.push('record.identity.kind must be source-note-event when identity metadata is present');
+    }
+  }
 
   if (!record.source || typeof record.source !== 'object') {
     errors.push('record.source is required');
@@ -120,9 +129,11 @@ function validateRecord(record, marker, errors) {
     if (!record.source.system) errors.push('record.source.system is required');
     if (!record.source.external_id) errors.push('record.source.external_id is required');
     if (record.interview_note_id && record.source.system && record.source.external_id) {
-      const expected = `${record.source.system}:${record.source.external_id}`;
-      if (record.interview_note_id !== expected) {
-        errors.push(`interview_note_id must equal source system + external id (${expected})`);
+      const expected = expectedInterviewNoteId(record);
+      if (!expected) errors.push('source-note-event identity metadata is invalid');
+      else if (record.interview_note_id !== expected) errors.push(`interview_note_id must equal the derived Source identity (${expected})`);
+      if (record.identity && record.identity.kind === 'source-note-event' && !isChildInterviewNoteId(record.interview_note_id)) {
+        errors.push('source-note-event InterviewNote id must use the child event identity format');
       }
     }
   }

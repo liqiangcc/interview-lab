@@ -1,0 +1,41 @@
+{
+  "schema_version": "issue-921-stratified-pilot-selection-dry-run.v1",
+  "total": 50,
+  "ready_manifest_items": 45,
+  "mother_set": {
+    "expected_members": 1459,
+    "fixed_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+    "selected_membership_verified": true,
+    "excluded_extra_issue": 910,
+    "excluded_extra_source_note_id": "xhs-note:6a8abe2d000000001602b26e"
+  },
+  "blocked": [
+    {
+      "issue_number": 90,
+      "stratum": "anomaly-blocked",
+      "reason": "Aggregate text mentions several interviews but does not provide separately bounded event evidence; retain pending."
+    },
+    {
+      "issue_number": 92,
+      "stratum": "anomaly-blocked",
+      "reason": "Generic repeated-interview encouragement has no identifiable bounded event; retain pending."
+    },
+    {
+      "issue_number": 1115,
+      "stratum": "anomaly-blocked",
+      "reason": "Text mentions three interviews but only one is described and the remaining boundaries are not recoverable from the current Source projection; retain pending."
+    },
+    {
+      "issue_number": 1452,
+      "stratum": "anomaly-blocked",
+      "reason": "Source projection is missing; title alone cannot authorize an InterviewNote boundary."
+    },
+    {
+      "issue_number": 1460,
+      "stratum": "anomaly-blocked",
+      "reason": "Source projection is missing; title alone cannot authorize an InterviewNote boundary."
+    }
+  ],
+  "mutation": 0,
+  "fail_closed": true
+}

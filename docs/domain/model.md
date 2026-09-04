@@ -91,7 +91,7 @@ multi-interview
 
 InterviewNote 不拥有 Canonical 知识，也不负责改写来源中的原始技术表述。
 
-历史 Pilot #3/#4 在旧的一对一模型下已经建立正式 `xhs:<note_id>` identity。它们作为兼容历史保留；bulk reconciliation 不改写这些正式对象。新的多事件 child identity 在实际 boundary-review Pilot 中再固定，不凭空提前设计。
+历史 Pilot #3/#4 在旧的一对一模型下已经建立正式 `xhs:<note_id>` identity。它们作为兼容历史保留；bulk reconciliation 不改写这些正式对象。多事件 child identity 在 Boundary Review 中按稳定 `case_key` 固定：`<source.system>:<source.external_id>:event:<sha256(source_note_id + "\\n" + case_key)>`。该 identity 仍属于经过审核的 Derived mapping；SourceNote 不因此变成 InterviewNote，正式 Issue 仍需后续 materialization。
 
 ## SourceArtifact
 

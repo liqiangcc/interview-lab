@@ -5,6 +5,7 @@ const path = require('path');
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const { validateInterviewNoteIssue } = require('../scripts/lib/interview-note-issue');
+const { childInterviewNoteId } = require('../scripts/lib/interview-note-identity');
 
 const validBody = fs.readFileSync(path.join(__dirname, 'fixtures/interview-note-issue.valid.md'), 'utf8');
 
@@ -13,6 +14,19 @@ test('valid InterviewNote Issue v2 projection passes', () => {
     body: validBody,
     labels: ['type:interview-note', 'source:xhs', 'status:captured'],
     state: 'open',
+  });
+  assert.equal(result.ok, true, JSON.stringify(result.errors));
+});
+
+test('multi-interview child identity is valid only with matching SourceNote case metadata', () => {
+  const source = { system: 'xhs', external_id: '630e2e22000000001103c490' };
+  const childId = childInterviewNoteId(source, 'process-a');
+  const childBody = validBody
+    .replace('<!-- interview-note: id=xhs:630e2e22000000001103c490', `<!-- interview-note: id=${childId}`)
+    .replace('"interview_note_id": "xhs:630e2e22000000001103c490",', `"interview_note_id": "${childId}",\n  "identity": {\n    "kind": "source-note-event",\n    "source_note_id": "xhs-note:${source.external_id}",\n    "case_key": "process-a"\n  },`);
+  const result = validateInterviewNoteIssue({
+    body: childBody,
+    labels: ['type:interview-note', 'source:xhs', 'status:captured'],
   });
   assert.equal(result.ok, true, JSON.stringify(result.errors));
 });

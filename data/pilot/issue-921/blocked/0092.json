@@ -1,0 +1,57 @@
+{
+  "schema_version": "issue-921-pilot-blocked-evidence.v1",
+  "issue_number": 92,
+  "source_note_id": "xhs-note:6597e851000000001e00a586",
+  "disposition": "blocked",
+  "block_reason": "Generic repeated-interview encouragement has no identifiable bounded event; retain pending.",
+  "source_excerpt": [
+    {
+      "excerpt": "今年郑州Java面试比较难，面试机会不多，所以有面试机会，就把握住。每一次面试都是对自己的磨炼。每次面试基本都会有收获。把这些收获分享给大家一起学习一起进步。",
+      "line": 1,
+      "locator": "artifact-line:1"
+    }
+  ],
+  "evidence_artifact": {
+    "ref": "liqiangcc/xhs:note_desc/6597e851000000001e00a586.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "provenance": "source_projection",
+    "kind": "text_projection"
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "stable XHS source identity"
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "exact SourceRevision and fixed source snapshot"
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw/source projection content is traceable"
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "boundary disposition is supported by source evidence"
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "no cross-source evidence is mixed"
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "no InterviewNote content is fabricated"
+    }
+  ],
+  "limitations": [
+    "Generic repeated-interview encouragement has no identifiable bounded event; retain pending.",
+    "No SourceNote body or label mutation is authorized while event boundary remains unproven."
+  ],
+  "reviewed_at": "2026-09-04T15:07:55.104Z",
+  "evidence_comment_id": 5542565999
+}

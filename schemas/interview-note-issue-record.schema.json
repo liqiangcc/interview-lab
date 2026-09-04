@@ -68,6 +68,16 @@
   "properties": {
     "schema_version": {"const": "interview-note-issue.v2"},
     "interview_note_id": {"type": "string", "pattern": "^[a-z0-9_-]+:.+$"},
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "source_note_id", "case_key"],
+      "properties": {
+        "kind": {"const": "source-note-event"},
+        "source_note_id": {"type": "string", "pattern": "^xhs-note:.+$"},
+        "case_key": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._-]{0,95}$"}
+      }
+    },
     "source": {
       "type": "object",
       "additionalProperties": false,
