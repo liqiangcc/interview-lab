@@ -160,7 +160,7 @@ Raw title 原样保存在 Issue Source body 中。这样 Issue 列表不会因�
 ↓
 输出：total / existing / to_create / earliest / latest
 ↓
-只有 preflight 全 PASS 才 apply
+preflight 全 PASS 才允许生成 apply 计划；apply 完成后，必须重新读取 live inventory，并以 final gate dry-run 验收，不能把“missing identity 已进入计划”当成“最终已完成”。
 ```
 
 真实 dry-run `33753646023` 已确认：

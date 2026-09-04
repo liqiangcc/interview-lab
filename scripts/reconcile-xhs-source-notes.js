@@ -17,6 +17,10 @@ const SOURCE_NOTE_LABELS = [
 ];
 const MAX_DESC_CHARS = 8000;
 const MAX_IMAGE_ARTIFACTS = 20;
+const FIXED_SOURCE_REF = '95b77bb261048059846273688e4b90a2e108b437';
+const EXPECTED_SOURCE_TOTAL = 1459;
+const MAX_PAGINATED_PAGES = 1000;
+const CREATE_VERIFY_ATTEMPTS = 6;
 const MUTATING_ACTIONS = new Set([
   'reconcile-source-note-labels',
   'reconcile-source-note-discovery-labels',
@@ -66,10 +70,23 @@ function ghJson(args, input = null) {
   return JSON.parse(raw);
 }
 
-function flattenPages(value) {
-  if (!Array.isArray(value)) return [];
-  if (value.length && Array.isArray(value[0])) return value.flat();
-  return value;
+function paginatedGhApi(pathname, pageSize = 100, reader = ghJson) {
+  const separator = pathname.includes('?') ? '&' : '?';
+  const results = [];
+  for (let page = 1; page <= MAX_PAGINATED_PAGES; page += 1) {
+    const value = reader(['api', `${pathname}${separator}per_page=${pageSize}&page=${page}`]);
+    if (!Array.isArray(value)) throw new Error(`expected paginated GitHub API response array for ${pathname}`);
+    results.push(...value);
+    if (value.length < pageSize) return results;
+  }
+  throw new Error(`GitHub API pagination exceeded ${MAX_PAGINATED_PAGES} pages for ${pathname}`);
+}
+
+function sourceSnapshotGateErrors(sourceRef, total) {
+  const errors = [];
+  if (sourceRef !== FIXED_SOURCE_REF) errors.push(`source_ref=${sourceRef || 'missing'} (expected ${FIXED_SOURCE_REF})`);
+  if (total !== EXPECTED_SOURCE_TOTAL) errors.push(`total_candidates=${total} (expected ${EXPECTED_SOURCE_TOTAL})`);
+  return errors;
 }
 
 function sleepMs(ms) {
@@ -371,12 +388,24 @@ function buildInventory(issues) {
   const protectedInterview = new Map();
   const invalidSourceNotes = [];
   const repairableSourceNotes = [];
+  const invalidInterviewNotes = [];
+  const closedPendingSourceNotes = [];
+  const closedLegacyBulk = [];
   const sourceNoteOccurrences = new Map();
   const interviewOwnership = new Map();
   for (const issue of issues) {
     if (issue.pull_request) continue;
     const labels = new Set(normalizeIssueLabels(issue));
     const sourceNoteIds = extractMarkers(issue.body, 'source-note');
+    const interviewNoteIds = extractMarkers(issue.body, 'interview-note');
+    const interviewMarkerPresent = /<!--\s*interview-note\b/i.test(String(issue.body || ''));
+    if (interviewMarkerPresent && interviewNoteIds.length !== 1) {
+      invalidInterviewNotes.push({
+        issue_number: issue.number,
+        interview_note_ids: interviewNoteIds,
+        error: `expected exactly one valid interview-note machine marker, found ${interviewNoteIds.length}`,
+      });
+    }
     if (sourceNoteIds.length) {
       for (const sourceNoteId of sourceNoteIds) {
         const occurrences = sourceNoteOccurrences.get(sourceNoteId) || [];
@@ -386,7 +415,14 @@ function buildInventory(issues) {
       const validation = sourceNoteIds.length === 1
         ? validateSourceNoteIssue({ body: issue.body, labels: [...labels], state: issue.state })
         : { ok: false, errors: [`expected exactly one source-note machine marker, found ${sourceNoteIds.length}`] };
-      if (extractMarkers(issue.body, 'interview-note').length) {
+      const parsedSource = parseSourceNoteIssue(issue.body);
+      const boundaryStatus = parsedSource.record && parsedSource.record.boundary_review
+        ? parsedSource.record.boundary_review.status
+        : null;
+      if (String(issue.state || '').toLowerCase() === 'closed' && boundaryStatus === 'pending') {
+        closedPendingSourceNotes.push({ issue_number: issue.number, source_note_ids: sourceNoteIds });
+      }
+      if (interviewMarkerPresent) {
         validation.ok = false;
         validation.errors = [...(validation.errors || []), 'SourceNote must not also contain an InterviewNote machine marker'];
       }
@@ -406,13 +442,15 @@ function buildInventory(issues) {
       if (!sourceNotes.has(sourceNoteId)) sourceNotes.set(sourceNoteId, issue);
       continue;
     }
-    const interviewNoteIds = extractMarkers(issue.body, 'interview-note');
     if (interviewNoteIds.length !== 1 || !interviewNoteIds[0].startsWith('xhs:')) continue;
     const interviewNoteId = interviewNoteIds[0];
     const externalId = interviewNoteId.slice('xhs:'.length);
     const ownership = interviewOwnership.get(externalId) || { bulk: [], formal: [] };
     if (labels.has(BULK_LABEL)) {
       ownership.bulk.push(issue);
+      if (String(issue.state || '').toLowerCase() === 'closed') {
+        closedLegacyBulk.push({ issue_number: issue.number, external_id: externalId });
+      }
       if (!bulkLegacy.has(externalId)) bulkLegacy.set(externalId, issue);
     } else {
       ownership.formal.push(issue);
@@ -435,13 +473,16 @@ function buildInventory(issues) {
     protectedInterview,
     invalidSourceNotes,
     repairableSourceNotes,
+    invalidInterviewNotes,
+    closedPendingSourceNotes,
+    closedLegacyBulk,
     duplicateSourceNotes,
     interviewOwnershipConflicts,
   };
 }
 
 function loadInventory(targetRepo) {
-  const issues = flattenPages(ghJson(['api', '--paginate', '--slurp', `repos/${targetRepo}/issues?state=all&per_page=100`]));
+  const issues = paginatedGhApi(`repos/${targetRepo}/issues?state=all`);
   return buildInventory(issues);
 }
 
@@ -457,20 +498,43 @@ function inventoryReconciliationSummary(projections, inventory) {
     unaccounted_source_id: projections.length - accounted.length,
     duplicate_source_note: inventory.duplicateSourceNotes.size,
     invalid_source_note: inventory.invalidSourceNotes.length + inventory.repairableSourceNotes.length,
+    invalid_interview_note_marker: (inventory.invalidInterviewNotes || []).length,
     repairable_invalid_source_note: inventory.repairableSourceNotes.length,
     unrepairable_invalid_source_note: inventory.invalidSourceNotes.length,
     protected_formal_interview_note: projections.filter((projection) => inventory.protectedInterview.has(projection.external_id)).length,
     interview_ownership_conflict: inventory.interviewOwnershipConflicts.length,
+    closed_pending_source_note: (inventory.closedPendingSourceNotes || []).length,
+    closed_legacy_bulk: (inventory.closedLegacyBulk || []).length,
   };
 }
 
-function inventoryGateErrors(summary) {
+function inventoryPreflightErrors(summary) {
   const errors = [];
   if (summary.duplicate_source_note) errors.push(`duplicate_source_note=${summary.duplicate_source_note}`);
   if (summary.unrepairable_invalid_source_note) errors.push(`invalid_source_note=${summary.unrepairable_invalid_source_note}`);
   if (summary.interview_ownership_conflict) errors.push(`interview_ownership_conflict=${summary.interview_ownership_conflict}`);
+  if (summary.closed_pending_source_note) errors.push(`closed_pending_source_note=${summary.closed_pending_source_note}`);
+  if (summary.closed_legacy_bulk) errors.push(`closed_legacy_bulk=${summary.closed_legacy_bulk}`);
+  if (summary.invalid_interview_note_marker) errors.push(`invalid_interview_note_marker=${summary.invalid_interview_note_marker}`);
   return errors;
 }
+
+function finalAcceptanceErrors(summary, { mutationCandidates = 0, remainingMutations = 0 } = {}) {
+  const errors = [];
+  if (summary.duplicate_source_note) errors.push(`duplicate_source_note=${summary.duplicate_source_note}`);
+  if (summary.invalid_source_note) errors.push(`invalid_source_note=${summary.invalid_source_note}`);
+  if (summary.interview_ownership_conflict) errors.push(`interview_ownership_conflict=${summary.interview_ownership_conflict}`);
+  if (summary.closed_pending_source_note) errors.push(`closed_pending_source_note=${summary.closed_pending_source_note}`);
+  if (summary.closed_legacy_bulk) errors.push(`closed_legacy_bulk=${summary.closed_legacy_bulk}`);
+  if (summary.invalid_interview_note_marker) errors.push(`invalid_interview_note_marker=${summary.invalid_interview_note_marker}`);
+  if (summary.unaccounted_source_id) errors.push(`unaccounted_source_id=${summary.unaccounted_source_id}`);
+  if (mutationCandidates) errors.push(`mutation_candidates=${mutationCandidates}`);
+  if (remainingMutations) errors.push(`remaining_mutations_after_run=${remainingMutations}`);
+  return errors;
+}
+
+// Compatibility alias: the original name described the preflight-only gate.
+const inventoryGateErrors = inventoryPreflightErrors;
 
 function planActions(projections, inventory) {
   return projections.map((projection) => {
@@ -517,7 +581,7 @@ function validateProjection(projection) {
 }
 
 function ensureProjectionLabels(targetRepo, projections) {
-  const labels = flattenPages(ghJson(['api', '--paginate', '--slurp', `repos/${targetRepo}/labels?per_page=100`]));
+  const labels = paginatedGhApi(`repos/${targetRepo}/labels`);
   const existing = new Set(labels.map((label) => label.name));
   const required = new Set(projections.flatMap((projection) => projection.labels));
   for (const name of required) {
@@ -533,13 +597,61 @@ function ensureProjectionLabels(targetRepo, projections) {
   }
 }
 
+function findSourceNoteIdentity(issues, sourceNoteId) {
+  return issues.filter((issue) => !issue.pull_request
+    && extractMarkers(issue.body, 'source-note').length === 1
+    && extractMarkers(issue.body, 'source-note')[0] === sourceNoteId);
+}
+
+function verifyCreatedSourceNote(targetRepo, projection, createdIssueNumber, options = {}) {
+  const readIssue = options.readIssue || ((number) => ghJson(['api', `repos/${targetRepo}/issues/${number}`]));
+  const scanIssues = options.scanIssues || (() => paginatedGhApi(`repos/${targetRepo}/issues?state=all`));
+  const wait = options.sleep || sleepMs;
+  let lastProblem = 'identity not visible';
+
+  for (let attempt = 1; attempt <= CREATE_VERIFY_ATTEMPTS; attempt += 1) {
+    if (createdIssueNumber != null) {
+      try {
+        const issue = readIssue(createdIssueNumber);
+        if (findSourceNoteIdentity([issue], projection.source_note_id).length === 1) return Number(issue.number);
+        lastProblem = `Issue #${createdIssueNumber} did not contain exact SourceNote identity ${projection.source_note_id}`;
+      } catch (error) {
+        lastProblem = `direct-read failed: ${error.message}`;
+      }
+    }
+
+    const matches = findSourceNoteIdentity(scanIssues(), projection.source_note_id);
+    if (matches.length > 1) {
+      throw new Error(`post-create duplicate SourceNote identity ${projection.source_note_id}: ${matches.map((issue) => issue.number).join(',')}`);
+    }
+    if (matches.length === 1) return Number(matches[0].number);
+    if (attempt < CREATE_VERIFY_ATTEMPTS) wait(500 * attempt);
+  }
+  throw new Error(`post-create identity verification failed for ${projection.source_note_id} after ${CREATE_VERIFY_ATTEMPTS} attempts: ${lastProblem}`);
+}
+
 function createSourceNote(targetRepo, projection) {
-  const created = ghJson(['api', '--method', 'POST', `repos/${targetRepo}/issues`, '--input', '-'], {
-    title: projection.title,
-    body: projection.body,
-    labels: projection.labels,
-  });
-  return created.number;
+  let createdIssueNumber = null;
+  let createError = null;
+  try {
+    const created = ghJson(['api', '--method', 'POST', `repos/${targetRepo}/issues`, '--input', '-'], {
+      title: projection.title,
+      body: projection.body,
+      labels: projection.labels,
+    });
+    createdIssueNumber = Number.isInteger(Number(created.number)) ? Number(created.number) : null;
+  } catch (error) {
+    // The POST may have succeeded even when its response was lost. Verify identity before retrying.
+    createError = error;
+  }
+  try {
+    return verifyCreatedSourceNote(targetRepo, projection, createdIssueNumber);
+  } catch (verificationError) {
+    if (createError) {
+      throw new Error(`${createError.message}; ${verificationError.message}`);
+    }
+    throw verificationError;
+  }
 }
 
 function mutateAction(targetRepo, action) {
@@ -565,6 +677,39 @@ function mutateAction(targetRepo, action) {
   return action.issue_number;
 }
 
+function applyMutationPlan(actions, { mutate, persist, sleep = sleepMs } = {}) {
+  const runMutation = mutate || ((action) => mutateAction(null, action));
+  const save = persist || (() => {});
+  const applied = [];
+  for (const action of actions) {
+    try {
+      const issueNumber = runMutation(action);
+      applied.push({
+        action: action.action,
+        issue_number: issueNumber,
+        protected_interview_issue_number: action.protected_interview_issue_number || null,
+        source_note_id: action.projection.source_note_id,
+      });
+      save({ applied, failure: null, remaining: actions.length - applied.length });
+    } catch (error) {
+      save({
+        applied,
+        failure: {
+          phase: 'mutation',
+          index: applied.length + 1,
+          action: action.action,
+          source_note_id: action.projection.source_note_id,
+          error: error.message,
+        },
+        remaining: actions.length - applied.length,
+      });
+      throw error;
+    }
+    sleep(action);
+  }
+  return applied;
+}
+
 function summarize(actions) {
   const counts = {};
   for (const action of actions) counts[action.action] = (counts[action.action] || 0) + 1;
@@ -581,16 +726,99 @@ function summarizeAnomalies(candidates) {
   return counts;
 }
 
-function writeReport(report, reportPath) {
+function buildReconciliationReport({ sourceRef, candidates, inventory, inventorySummary, actions, mutating, applied, failure = null }) {
+  const remainingMutations = Math.max(0, mutating.length - applied.length);
+  const finalErrors = finalAcceptanceErrors(inventorySummary, {
+    mutationCandidates: mutating.length,
+    remainingMutations,
+  });
+  return {
+    schema_version: 'xhs-source-note-reconciliation-report.v1',
+    generated_at: new Date().toISOString(),
+    source_ref: sourceRef,
+    ...inventorySummary,
+    preflight_gate: 'pass',
+    preflight_gate_errors: [],
+    source_total: candidates.length,
+    source_note_target_total: candidates.length,
+    source_published_at_known: candidates.filter((item) => item.source_published_at.precision !== 'unknown').length,
+    source_published_at_unknown: candidates.filter((item) => item.source_published_at.precision === 'unknown').length,
+    anomaly_counts: summarizeAnomalies(candidates),
+    action_counts: summarize(actions),
+    mutation_candidates: mutating.length,
+    applied_count: applied.length,
+    remaining_mutations_after_run: remainingMutations,
+    final_gate: finalErrors.length ? 'blocked' : 'pass',
+    final_gate_errors: finalErrors,
+    final_dry_run_ready: finalErrors.length === 0,
+    invalid_source_notes: inventory.invalidSourceNotes,
+    repairable_invalid_source_notes: inventory.repairableSourceNotes,
+    invalid_interview_notes: inventory.invalidInterviewNotes || [],
+    closed_pending_source_notes: inventory.closedPendingSourceNotes || [],
+    closed_legacy_bulk: inventory.closedLegacyBulk || [],
+    duplicate_source_notes: Object.fromEntries(inventory.duplicateSourceNotes),
+    interview_ownership_conflicts: inventory.interviewOwnershipConflicts,
+    failure,
+    first_mutation: mutating[0] ? {
+      action: mutating[0].action,
+      source_note_id: mutating[0].projection.source_note_id,
+      source_published_at: mutating[0].projection.source_published_at,
+      protected_interview_issue_number: mutating[0].protected_interview_issue_number || null,
+    } : null,
+    applied,
+  };
+}
+
+function writeReport(report, reportPath, emit = true) {
   if (reportPath) fs.writeFileSync(reportPath, `${JSON.stringify(report, null, 2)}\n`);
-  process.stdout.write(`${JSON.stringify(report, null, 2)}\n`);
+  if (emit) process.stdout.write(`${JSON.stringify(report, null, 2)}\n`);
 }
 
 function main() {
   const args = parseArgs();
-  const sourceRef = gitOutput(['-C', args.sourceRoot, 'rev-parse', args.sourceRef || 'HEAD']);
+  if (args.sourceRef && args.sourceRef !== FIXED_SOURCE_REF) {
+    const report = {
+      schema_version: 'xhs-source-note-reconciliation-report.v1',
+      generated_at: new Date().toISOString(),
+      source_gate: 'blocked',
+      requested_source_ref: args.sourceRef,
+      expected_source_ref: FIXED_SOURCE_REF,
+      failure: 'source ref is not the required fixed snapshot',
+    };
+    writeReport(report, args.report);
+    throw new Error(`source ref must be exactly ${FIXED_SOURCE_REF}`);
+  }
+  const sourceRef = gitOutput(['-C', args.sourceRoot, 'rev-parse', args.sourceRef || FIXED_SOURCE_REF]);
+  if (sourceRef !== FIXED_SOURCE_REF) {
+    const report = {
+      schema_version: 'xhs-source-note-reconciliation-report.v1',
+      generated_at: new Date().toISOString(),
+      source_gate: 'blocked',
+      source_ref: sourceRef,
+      expected_source_ref: FIXED_SOURCE_REF,
+      failure: 'resolved source ref is not the required fixed snapshot',
+    };
+    writeReport(report, args.report);
+    throw new Error(`resolved source ref must be exactly ${FIXED_SOURCE_REF}`);
+  }
   const capturedAt = new Date().toISOString();
   const candidates = listCandidates(args.sourceRoot, sourceRef);
+  const sourceGateErrors = sourceSnapshotGateErrors(sourceRef, candidates.length);
+  if (sourceGateErrors.length) {
+    const report = {
+      schema_version: 'xhs-source-note-reconciliation-report.v1',
+      generated_at: new Date().toISOString(),
+      source_ref: sourceRef,
+      expected_source_ref: FIXED_SOURCE_REF,
+      expected_source_total: EXPECTED_SOURCE_TOTAL,
+      source_total: candidates.length,
+      source_gate: 'blocked',
+      source_gate_errors: sourceGateErrors,
+      failure: 'fixed snapshot candidate count did not match acceptance contract',
+    };
+    writeReport(report, args.report);
+    throw new Error(`fixed snapshot source gate failed: ${sourceGateErrors.join(', ')}`);
+  }
   const projections = candidates.map((candidate) => buildProjection(candidate, sourceRef, capturedAt));
 
   const validationErrors = [];
@@ -606,72 +834,65 @@ function main() {
 
   const inventory = loadInventory(args.targetRepo);
   const inventorySummary = inventoryReconciliationSummary(projections, inventory);
-  const gateErrors = inventoryGateErrors(inventorySummary);
-  if (gateErrors.length) {
+  const preflightErrors = inventoryPreflightErrors(inventorySummary);
+  if (preflightErrors.length) {
     const report = {
       schema_version: 'xhs-source-note-reconciliation-report.v1',
       generated_at: new Date().toISOString(),
       source_ref: sourceRef,
       ...inventorySummary,
-      inventory_gate: 'blocked',
-      gate_errors: gateErrors,
+      preflight_gate: 'blocked',
+      preflight_gate_errors: preflightErrors,
       invalid_source_notes: inventory.invalidSourceNotes,
       repairable_invalid_source_notes: inventory.repairableSourceNotes,
+      invalid_interview_notes: inventory.invalidInterviewNotes,
+      closed_pending_source_notes: inventory.closedPendingSourceNotes,
+      closed_legacy_bulk: inventory.closedLegacyBulk,
       duplicate_source_notes: Object.fromEntries(inventory.duplicateSourceNotes),
       interview_ownership_conflicts: inventory.interviewOwnershipConflicts,
     };
     writeReport(report, args.report);
-    throw new Error(`SourceNote inventory preflight failed closed: ${gateErrors.join(', ')}`);
+    throw new Error(`SourceNote inventory preflight failed closed: ${preflightErrors.join(', ')}`);
   }
   const actions = planActions(projections, inventory);
   const mutating = actions.filter((action) => MUTATING_ACTIONS.has(action.action));
   const selected = args.apply ? mutating.slice(0, args.maxMutations) : [];
-  const applied = [];
-  if (args.apply && selected.length) ensureProjectionLabels(args.targetRepo, selected.map((action) => action.projection));
-  for (const action of selected) {
-    const issueNumber = mutateAction(args.targetRepo, action);
-    applied.push({
-      action: action.action,
-      issue_number: issueNumber,
-      protected_interview_issue_number: action.protected_interview_issue_number || null,
-      source_note_id: action.projection.source_note_id,
-    });
-    sleepMs(args.pauseMs);
+  let applied = [];
+  if (args.apply && selected.length) {
+    try {
+      ensureProjectionLabels(args.targetRepo, selected.map((action) => action.projection));
+    } catch (error) {
+      const failure = { phase: 'ensure-labels', error: error.message, remaining: mutating.length };
+      writeReport(buildReconciliationReport({ sourceRef, candidates, inventory, inventorySummary, actions, mutating, applied, failure }), args.report);
+      throw error;
+    }
   }
-
-  const report = {
-    schema_version: 'xhs-source-note-reconciliation-report.v1',
-    generated_at: new Date().toISOString(),
-    source_ref: sourceRef,
-    ...inventorySummary,
-    inventory_gate: 'pass',
-    source_total: projections.length,
-    source_note_target_total: projections.length,
-    source_published_at_known: projections.filter((item) => item.source_published_at.precision !== 'unknown').length,
-    source_published_at_unknown: projections.filter((item) => item.source_published_at.precision === 'unknown').length,
-    anomaly_counts: summarizeAnomalies(candidates),
-    action_counts: summarize(actions),
-    mutation_candidates: mutating.length,
-    applied_count: applied.length,
-    remaining_mutations_after_run: Math.max(0, mutating.length - applied.length),
-    final_dry_run_ready: mutating.length === 0
-      && inventorySummary.unaccounted_source_id === 0
-      && inventorySummary.duplicate_source_note === 0
-      && inventorySummary.invalid_source_note === 0,
-    first_mutation: mutating[0] ? {
-      action: mutating[0].action,
-      source_note_id: mutating[0].projection.source_note_id,
-      source_published_at: mutating[0].projection.source_published_at,
-      protected_interview_issue_number: mutating[0].protected_interview_issue_number || null,
-    } : null,
-    applied,
-  };
-  writeReport(report, args.report);
+  applied = applyMutationPlan(selected, {
+    mutate: (action) => mutateAction(args.targetRepo, action),
+    persist: ({ applied: persistedApplied, failure, remaining }) => {
+      if (args.report || failure) {
+        writeReport(buildReconciliationReport({
+          sourceRef,
+          candidates,
+          inventory,
+          inventorySummary,
+          actions,
+          mutating,
+          applied: persistedApplied,
+          failure: failure ? { ...failure, remaining } : null,
+        }), args.report, Boolean(failure));
+      }
+    },
+    sleep: () => sleepMs(args.pauseMs),
+  });
+  writeReport(buildReconciliationReport({ sourceRef, candidates, inventory, inventorySummary, actions, mutating, applied }), args.report);
 }
 
 if (require.main === module) main();
 
 module.exports = {
+  FIXED_SOURCE_REF,
+  EXPECTED_SOURCE_TOTAL,
   SOURCE_NOTE_LABELS,
   MUTATING_ACTIONS,
   extractCandidate,
@@ -682,7 +903,15 @@ module.exports = {
   extractMarkers,
   buildInventory,
   inventoryReconciliationSummary,
+  sourceSnapshotGateErrors,
+  paginatedGhApi,
+  inventoryPreflightErrors,
+  finalAcceptanceErrors,
   inventoryGateErrors,
+  findSourceNoteIdentity,
+  verifyCreatedSourceNote,
+  applyMutationPlan,
+  buildReconciliationReport,
   reconcileSourceYearLabels,
   planActions,
   validateProjection,
