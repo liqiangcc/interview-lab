@@ -199,7 +199,14 @@ function verifyContextArtifact(context, artifact, repository, readers = {}) {
   try {
     const ref = readers.readRef(artifact.ref);
     const refSha = ref && (ref.sha || (ref.object && ref.object.sha));
-    if (!ref || (refSha && refSha !== artifact.commit)) errors.push('context_artifact ref does not resolve to the declared commit');
+    if (!ref || !refSha) errors.push('context_artifact ref could not be resolved');
+    else if (refSha !== artifact.commit) {
+      if (typeof readers.readCompare !== 'function') errors.push('context_artifact ref advanced; ancestry reader is required to verify the pinned commit');
+      else {
+        const comparison = readers.readCompare(artifact.commit, artifact.ref);
+        if (!comparison || !['ahead', 'identical'].includes(comparison.status) || Number(comparison.behind_by || 0) !== 0) errors.push('context_artifact ref does not contain the pinned commit or has diverged');
+      }
+    }
     const commit = readers.readCommit(artifact.commit);
     if (!commit || (commit.sha && commit.sha !== artifact.commit)) errors.push('context_artifact commit cannot be verified');
     const content = readers.readContent(artifact.path, artifact.commit);

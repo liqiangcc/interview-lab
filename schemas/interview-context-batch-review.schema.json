@@ -34,8 +34,8 @@
             "properties": {
               "repository": {"type": "string", "pattern": "^[^/]+/[^/]+$"},
               "path": {"type": "string", "pattern": "^data/interview-contexts/[A-Za-z0-9_-]+\\.v1\\.json$"},
-              "ref": {"type": "string", "pattern": "^refs/(heads|tags)/[A-Za-z0-9._/-]+$"},
-              "commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+              "ref": {"type": "string", "pattern": "^refs/(heads|tags)/[A-Za-z0-9._/-]+$", "description": "A durable ref that must contain the pinned commit; it may advance after the receipt is written."},
+              "commit": {"type": "string", "pattern": "^[0-9a-f]{40}$", "description": "The immutable authority used to read and verify the Context artifact."},
               "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
             }
           }

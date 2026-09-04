@@ -184,6 +184,7 @@ function remoteContextArtifactResults(request) {
     const refName = artifact && artifact.ref ? artifact.ref.replace(/^refs\/(heads|tags)\//, 'git/ref/$1/') : '';
     results.set(Number(item.issue_number), verifyContextArtifact(item.context, artifact, request.repository, {
       readRef: () => ghReadJson(['api', `repos/${request.repository}/${refName}`]),
+      readCompare: (commit, ref) => ghReadJson(['api', `repos/${request.repository}/compare/${commit}...${ref.replace(/^refs\/(heads|tags)\//, '')}`]),
       readCommit: (commit) => ghReadJson(['api', `repos/${request.repository}/commits/${commit}`]),
       readContent: (artifactPath, commit) => {
         const value = ghReadJson(['api', `repos/${request.repository}/contents/${artifactPath}?ref=${commit}`]);

@@ -232,6 +232,37 @@ test('verifyContextArtifact without remote readers fails closed', () => {
   assert.match(result.errors.join('\n'), /readers are required/);
 });
 
+test('pinned Context commit remains valid when its durable ref advances', () => {
+  const item = request().items[0];
+  const advanced = verifyContextArtifact(item.context, item.context_artifact, 'liqiangcc/interview-lab', {
+    readRef: () => ({ object: { sha: '1111111111111111111111111111111111111111' } }),
+    readCompare: () => ({ status: 'ahead', ahead_by: 2, behind_by: 0 }),
+    readCommit: () => ({ sha: item.context_artifact.commit }),
+    readContent: () => JSON.stringify(item.context),
+  });
+  assert.equal(advanced.ok, true, advanced.errors.join('\n'));
+});
+
+test('advanced Context ref with diverged ancestry or missing ref fails closed', () => {
+  const item = request().items[0];
+  const diverged = verifyContextArtifact(item.context, item.context_artifact, 'liqiangcc/interview-lab', {
+    readRef: () => ({ object: { sha: '1111111111111111111111111111111111111111' } }),
+    readCompare: () => ({ status: 'diverged', ahead_by: 2, behind_by: 1 }),
+    readCommit: () => ({ sha: item.context_artifact.commit }),
+    readContent: () => JSON.stringify(item.context),
+  });
+  assert.equal(diverged.ok, false);
+  assert.match(diverged.errors.join('\n'), /does not contain the pinned commit/);
+  const missing = verifyContextArtifact(item.context, item.context_artifact, 'liqiangcc/interview-lab', {
+    readRef: () => { throw new Error('404 ref not found'); },
+    readCompare: () => ({ status: 'ahead', ahead_by: 1, behind_by: 0 }),
+    readCommit: () => ({ sha: item.context_artifact.commit }),
+    readContent: () => JSON.stringify(item.context),
+  });
+  assert.equal(missing.ok, false);
+  assert.match(missing.errors.join('\n'), /could not be verified/);
+});
+
 test('receipt Context conflict fails closed instead of overwriting Derived data', () => {
   const first = plan();
   const receipt = receiptFor(request(), first.items[0], '2026-09-04T04:01:00Z');
