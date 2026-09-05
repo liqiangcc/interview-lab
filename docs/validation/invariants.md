@@ -88,7 +88,7 @@ preferred revision 必须解析到同一 InterviewNote，并通过 source integr
 
 `source-ready` 只证明 source identity、已捕获证据、已知 limitation 和 provenance 稳定。
 
-它不要求也不意味着 SourceQuestion、Canonical mapping、Answer 或 learner mastery 完成。
+它不要求也不意味着 SourceQuestion、Canonical mapping、Answer 或后续分析完成。
 
 ### I13 — 正常关闭必须满足 source-ready — HARD
 
@@ -98,7 +98,7 @@ InterviewNote 正常 complete close 前必须满足 source-ready contract。
 
 ### I14 — Reopen 只因 Source 原因 — REVIEW
 
-Knowledge、Answer、Training 变化不 reopen 已完成的 Source lifecycle。Reopen 应说明 new evidence、truncation、corruption、identity conflict、duplicate remediation 等 Source 原因。
+Knowledge、Answer、Exploration 变化不 reopen 已完成的 Source lifecycle。Reopen 应说明 new evidence、truncation、corruption、identity conflict、duplicate remediation 等 Source 原因。
 
 ## Label
 
