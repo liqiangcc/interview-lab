@@ -27,7 +27,10 @@ const {
   applyOne,
   acquireProgressLock,
 } = require('../scripts/lib/issue-1539-boundary-evidence-batch');
-const { atomicWriteText, atomicWriteJson, loadOwnership } = require('../scripts/apply-issue-1539-boundary-evidence-batch');
+const {
+  atomicWriteText, atomicWriteJson, loadIssue, loadComments, readBlob, loadOwnership,
+  ghJsonGet, ghJsonOnce,
+} = require('../scripts/apply-issue-1539-boundary-evidence-batch');
 
 const candidateManifest = JSON.parse(fs.readFileSync('data/pilot/issue-1539/boundary-expansion-candidates.json', 'utf8'));
 const sourceFixture = fs.readFileSync('test/fixtures/source-note-issue.valid.md', 'utf8');
@@ -339,6 +342,60 @@ test('boundary evidence writers round-trip durable text and JSON outputs', () =>
   } finally {
     fs.rmSync(directory, { recursive: true, force: true });
   }
+});
+
+test('read-only GET helpers retry transient network failures with bounded exponential backoff', () => {
+  const attempts = new Map();
+  const delays = [];
+  const execute = (args) => {
+    const key = args[1];
+    const count = (attempts.get(key) || 0) + 1;
+    attempts.set(key, count);
+    if (count === 1) throw Object.assign(new Error('TLS handshake timeout'), { code: 'ETIMEDOUT' });
+    if (key.includes('/comments?')) return JSON.stringify([]);
+    if (key.includes('/git/blobs/')) return JSON.stringify({ sha: 'blob', encoding: 'base64', content: '' });
+    if (key.includes('search/issues?')) return JSON.stringify({ incomplete_results: false, total_count: 1, items: [{ number: 42 }] });
+    if (key.includes('/issues/42')) return JSON.stringify({ number: 42, pull_request: false, body: '<!-- interview-note: id=xhs:test schema=interview-note-issue.v2 -->' });
+    return JSON.stringify({ number: 1, body: 'issue' });
+  };
+  const getOptions = { maxAttempts: 3, backoffMs: 10, execute, sleep: (delay) => delays.push(delay) };
+  assert.equal(loadIssue('liqiangcc/interview-lab', 1, getOptions).number, 1);
+  assert.deepEqual(loadComments('liqiangcc/interview-lab', 1, getOptions), []);
+  assert.equal(readBlob('liqiangcc/xhs', 'blob', getOptions).sha, 'blob');
+  assert.equal(loadOwnership('liqiangcc/interview-lab', 'xhs:test', { getOptions }).length, 1);
+  assert.deepEqual([...attempts.values()], [2, 2, 2, 2, 2]);
+  assert.deepEqual(delays, [10, 10, 10, 10, 10]);
+});
+
+test('GET retry exhaustion and semantic 4xx fail closed without excess attempts', () => {
+  let attempts = 0;
+  const delays = [];
+  const timeout = () => {
+    attempts += 1;
+    throw Object.assign(new Error('HTTP 503 upstream unavailable'), { status: 503 });
+  };
+  assert.throws(() => ghJsonGet(['api', 'unavailable'], { maxAttempts: 3, backoffMs: 7, execute: timeout, sleep: (delay) => delays.push(delay) }), /503/);
+  assert.equal(attempts, 3);
+  assert.deepEqual(delays, [7, 14]);
+
+  attempts = 0;
+  delays.length = 0;
+  const notFound = () => {
+    attempts += 1;
+    throw Object.assign(new Error('HTTP 404 not found'), { status: 404 });
+  };
+  assert.throws(() => ghJsonGet(['api', 'missing'], { maxAttempts: 3, backoffMs: 7, execute: notFound, sleep: (delay) => delays.push(delay) }), /404/);
+  assert.equal(attempts, 1);
+  assert.deepEqual(delays, []);
+});
+
+test('POST-shaped gh execution remains single-attempt and is not covered by GET retries', () => {
+  let attempts = 0;
+  assert.throws(() => ghJsonOnce(['api', '--method', 'POST', 'repos/example/issues/1/comments'], { body: 'marker' }, () => {
+    attempts += 1;
+    throw Object.assign(new Error('HTTP 503 after POST may have succeeded'), { status: 503 });
+  }), /503/);
+  assert.equal(attempts, 1);
 });
 
 test('apply response loss recovers a live exact comment once, writes requests/receipts, and reentry posts zero', () => {

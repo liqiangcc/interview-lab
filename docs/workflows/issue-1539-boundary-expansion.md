@@ -50,4 +50,6 @@ node scripts/apply-issue-1539-boundary-evidence-batch.js \
 
 未来 apply 必须显式 `--apply --confirm-dry-run <digest> --reviewed-at <timestamp>`，并提供 request/receipt/progress 路径。runner 先完成全量 live preflight，再在独占 lock 内持久化 pending intent、POST、live 恢复确认、写 formal Boundary Review request 和本地 receipt；response loss、冲突 marker、stale body/labels/SourceRevision 或 receipt mismatch 都 fail closed，绝不重复 POST。每次 apply 前都必须基于当前 progress/live 状态重新 plan；旧 digest 不得沿用。
 
+GitHub 只读 GET 可使用 `--get-max-attempts`（默认 3，最大 3）和 `--get-backoff-ms`（默认 250ms）的确定性指数退避。只对明确的瞬态网络错误、HTTP 429 和 HTTP 5xx 重试；HTTP 4xx 及未知错误立即 fail closed。该策略覆盖 Issue、comments、pinned blob、ownership search 及 ownership Issue reread。`createEvidenceComment` 的 POST 不经过此策略，始终只尝试一次；POST/PATCH 都不自动重试，响应丢失只能依靠 fresh live reconcile 和 durable intent 恢复。
+
 此任务不执行 apply。Evidence comment 只能支持 Boundary Review；它不创建 InterviewNote、不执行 materialization、不执行独立 Source Review、不生成 learning labels，也不将 SourceNote 标为 source-ready。
