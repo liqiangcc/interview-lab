@@ -78,6 +78,41 @@ function transitionFor(issue) {
   };
 }
 
+function makeBatchHarness() {
+  const issues = ISSUE_NUMBERS.map((number, index) => sourceIssue(number, `${String(number).padStart(3, '0')}75564d70000000001025e46`));
+  const transitions = issues.map(transitionFor);
+  const transitionReceipts = issues.map((issue, index) => ({ schema_version: 'source-note-boundary-review-applied.v1', transition_id: transitions[index].transition_id, repository: transitions[index].repository, issue_number: issue.number, source_note_id: transitions[index].source_note_id, decision: 'single-interview', reviewed_at: transitions[index].reviewed_at, applied_at: transitions[index].reviewed_at, previous_body_sha256: transitions[index].expected_body_sha256, new_body_sha256: sha256Text(issue.body), interview_note_ids: [interviewNoteId(transitions[index].source_note_id)], interview_note_cases: null }));
+  const packets = issues.map((issue, index) => {
+    const external = transitions[index].source_note_id.slice('xhs-note:'.length);
+    return { issue_number: issue.number, source_note_id: transitions[index].source_note_id, artifact: { ref: `liqiangcc/xhs:note_desc/${external}.txt@95b77bb261048059846273688e4b90a2e108b437`, git_blob_sha: issue.blob.sha, anchor: `source projection for ${external}` } };
+  });
+  const items = issues.map((issue, index) => {
+    const request = buildMaterializationRequest(transitions[index], transitionReceipts[index]);
+    return { issue_number: issue.number, source_note_issue_number: issue.number, source_note_id: request.source_note_id, interview_note_id: interviewNoteId(request.source_note_id), request_sha256: requestSha256(request) };
+  });
+  const report = { schema_version: 'issue-1556-interview-note-materialization-plan.v1', items };
+  const planSha = sha256Text(require('../scripts/lib/issue-1556-materialization-batch').canonicalJson(report));
+  const planResult = { ok: true, plan_sha256: planSha, items, report: { ...report, plan_sha256: planSha } };
+  const owners = new Map(issues.map((issue) => {
+    const parsed = parseSourceNoteIssue(issue.body);
+    const projection = buildInterviewProjection(issue, { ok: true, parsed });
+    return [issue.number, [{ number: 4000 + issue.number, state: 'open', body: projection.body, labels: projection.labels }]];
+  }));
+  const comments = new Map(issues.map((issue) => [issue.number, []]));
+  const calls = { create: [], receipt: [] };
+  const loadLive = (request) => ({ sourceIssue: issues.find((issue) => issue.number === request.source_note_issue_number), comments: comments.get(request.source_note_issue_number), allIssues: owners.get(request.source_note_issue_number) });
+  const evidenceReceipts = ISSUE_NUMBERS.map((issue_number, index) => ({ issue_number, packet_set_sha256: PACKET_SET_SHA256, transition_id: transitions[index].transition_id }));
+  const makeOptions = (overrides = {}) => ({
+    expectedPlanSha256: planSha, lock: { assertHeld() {} }, transitionRequests: transitions, transitionReceipts, evidenceReceipts, loadLive,
+    readBlob: (sha) => { const issue = issues.find((candidate) => candidate.blob.sha === sha); return { sha, encoding: 'base64', content: issue.blob.content }; },
+    persistProgress: () => {}, writeRequest: () => {}, writeReceipt: () => {}, beforeMutation: () => {},
+    createInterviewIssue: (request, projection) => { calls.create.push(request.source_note_issue_number); owners.set(request.source_note_issue_number, [{ number: 4000 + request.source_note_issue_number, state: 'open', body: projection.body, labels: projection.labels }]); },
+    postReceipt: (request, receipt) => { calls.receipt.push(request.source_note_issue_number); comments.set(request.source_note_issue_number, [{ id: 8000 + request.source_note_issue_number, issue_url: `https://api.github.com/repos/liqiangcc/interview-lab/issues/${request.source_note_issue_number}`, body: renderMaterializationReceipt(receipt) }]); },
+    ...overrides,
+  });
+  return { issues, transitions, transitionReceipts, packets, items, planResult, owners, comments, calls, loadLive, evidenceReceipts, makeOptions };
+}
+
 test('fixed materialization scope is exactly the 17 ordered SourceNotes', () => {
   assert.equal(validateFixedSet(ISSUE_NUMBERS.map((issue_number) => ({ issue_number })), 'items').length, 0);
   assert.match(validateFixedSet(ISSUE_NUMBERS.slice(0, 16).map((issue_number) => ({ issue_number })), 'items')[0], /exactly the fixed 17/);
@@ -186,4 +221,42 @@ test('pending journal phases remain readable for fresh reconcile and preserve in
   progress.items['158'].phase = 'uncertain';
   progress.items['158'].intent = makeIntent(item, 'uncertain', { prior_phase: 'receipt-pending', mutation_attempted: true, mutation_performed: null, possibly_performed: true });
   assert.equal(validateProgress(progress, [item], 'b'.repeat(64)).ok, true);
+});
+
+test('fresh drift in the final fixed item fails before any mutation', () => {
+  const harness = makeBatchHarness();
+  const drifted = { ...harness.issues[16], labels: [...harness.issues[16].labels, 'status:source-ready'] };
+  harness.issues[16] = drifted;
+  const result = applyBatch({ planResult: harness.planResult, packetSet: { packet_set_sha256: PACKET_SET_SHA256, packets: harness.packets }, transitionRequests: harness.transitions, transitionReceipts: harness.transitionReceipts, evidenceReceipts: harness.evidenceReceipts }, harness.makeOptions());
+  assert.equal(result.ok, false);
+  assert.match(result.errors.join('; '), /source-ready|forbidden/);
+  assert.deepEqual(harness.calls.create, []);
+  assert.deepEqual(harness.calls.receipt, []);
+});
+
+test('pending and uncertain apply resume reconciles without repeating the corresponding POST', () => {
+  for (const scenario of ['create-pending', 'receipt-pending', 'uncertain-create', 'uncertain-receipt']) {
+    const harness = makeBatchHarness();
+    const target = harness.items[0];
+    const progress = initialProgress(harness.items, harness.planResult.plan_sha256);
+    const phase = scenario.startsWith('uncertain') ? 'uncertain' : scenario;
+    const prior = scenario.includes('receipt') ? 'receipt-pending' : 'create-pending';
+    progress.status = 'failed';
+    progress.mutation_attempted = true;
+    progress.possibly_performed = true;
+    progress.items[String(target.issue_number)].phase = phase;
+    progress.items[String(target.issue_number)].intent = makeIntent(target, phase, { prior_phase: phase === 'uncertain' ? prior : undefined, mutation_attempted: true, mutation_performed: null, possibly_performed: true });
+    const result = applyBatch({ planResult: harness.planResult, packetSet: { packet_set_sha256: PACKET_SET_SHA256, packets: harness.packets }, transitionRequests: harness.transitions, transitionReceipts: harness.transitionReceipts, evidenceReceipts: harness.evidenceReceipts, progress }, harness.makeOptions());
+    if (scenario === 'receipt-pending' || scenario === 'uncertain-receipt') {
+      assert.equal(result.ok, false, scenario);
+      assert.equal(harness.calls.create.includes(target.issue_number), false, scenario);
+      assert.equal(harness.calls.receipt.includes(target.issue_number), false, scenario);
+      assert.equal(result.progress.items[String(target.issue_number)].phase, 'uncertain', scenario);
+    } else {
+      assert.equal(result.ok, true, result.errors && `${scenario}: ${result.errors.join('; ')}`);
+      assert.equal(harness.calls.create.includes(target.issue_number), false, scenario);
+      assert.equal(harness.calls.receipt.filter((number) => number === target.issue_number).length, 1, scenario);
+      assert.equal(result.progress.items[String(target.issue_number)].phase, 'complete', scenario);
+    }
+  }
 });
