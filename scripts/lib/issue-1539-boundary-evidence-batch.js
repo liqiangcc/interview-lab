@@ -3,7 +3,7 @@
 const crypto = require('node:crypto');
 const { parseSourceNoteIssue, validateSourceNoteIssue } = require('./source-note-issue');
 const { parseInterviewNoteIssue } = require('./interview-note-issue');
-const { verifyPinnedArtifact, validateCandidateManifest, canonicalJson, sha256Text, FIXED_ISSUES, REPOSITORY, SOURCE_REF } = require('./issue-1539-boundary-expansion');
+const { verifyPinnedArtifact, validateCandidateManifest, canonicalJson, sha256Text, FIXED_ISSUES, REPOSITORY, SOURCE_REF, normalizeLabels } = require('./issue-1539-boundary-expansion');
 const { validateTransitionRequest, planSourceNoteBoundaryReviewTransition } = require('./source-note-boundary-review-transition');
 const { acquireProgressLock } = require('./issue-1539-evidence-batch');
 
@@ -13,7 +13,7 @@ const PROGRESS_SCHEMA_VERSION = 'issue-1549-boundary-evidence-progress.v1';
 const INTENT_SCHEMA_VERSION = 'issue-1549-boundary-evidence-intent.v1';
 const RECEIPT_SCHEMA_VERSION = 'issue-1549-boundary-review-evidence-receipt.v1';
 const MAX_GITHUB_COMMENT_BYTES = 65536;
-const PHASES = new Set(['evidence-post-pending', 'evidence-post-hook-failed', 'evidence-post-uncertain', 'evidence-posted', 'request-generated', 'receipt-written', 'request-failed']);
+const PHASES = new Set(['evidence-post-pending', 'evidence-post-hook-failed', 'evidence-post-gate-failed', 'evidence-post-uncertain', 'evidence-posted', 'request-generated', 'receipt-written', 'request-failed']);
 const EVIDENCE_MARKER_RE = /<!--\s*boundary-review-evidence\.v1\s*\n([\s\S]*?)\n-->/g;
 const REQUIRED_CHECK_IDS = Object.freeze(['source_identity', 'source_revision_binding', 'source_content_coverage', 'event_boundary', 'no_cross_source_mixing', 'no_fabrication']);
 
@@ -198,7 +198,9 @@ function liveSourceValidation(packet, issue) {
   if (!issue || Number(issue.number) !== packet.issue_number) errors.push('live SourceNote Issue number mismatch');
   if (issue && String(issue.state || '').toLowerCase() !== 'open') errors.push('live SourceNote must be open');
   if (issue && sha256Text(issue.body || '') !== packet.expected_body_sha256) errors.push('live SourceNote body SHA mismatch');
-  const labels = (issue && issue.labels || []).map((label) => typeof label === 'string' ? label : label && label.name).filter(Boolean);
+  const normalizedLabels = normalizeLabels(issue ? issue.labels : []);
+  if (!normalizedLabels.ok) errors.push(...normalizedLabels.errors.map((error) => `live labels invalid: ${error}`));
+  const labels = normalizedLabels.labels;
   for (const required of ['type:source-note', 'source:xhs', 'boundary:pending', 'task:boundary-review']) if (!labels.includes(required)) errors.push(`live SourceNote is missing ${required}`);
   if (labels.filter((label) => label.startsWith('boundary:')).length !== 1 || !labels.includes('boundary:pending')) errors.push('live SourceNote boundary labels are not exactly pending');
   const parsed = parseSourceNoteIssue(issue && issue.body || '');
@@ -221,6 +223,24 @@ function exactOwnership(issues, interviewNoteId) {
     .filter((issue) => parseInterviewNoteIssue(issue.body || '').marker?.interview_note_id === interviewNoteId);
 }
 
+function livePostGate(packet, packetSet, live) {
+  const errors = [];
+  const source = liveSourceValidation(packet, live && live.sourceIssue);
+  const artifact = live && source.record
+    ? verifyPinnedArtifact({ source_note_id: packet.source_note_id, artifact: packet.artifact }, source.record, live.readBlob)
+    : { ok: false, errors: ['pinned artifact check skipped: SourceNote unavailable'] };
+  if (!live || !Array.isArray(live.comments)) errors.push('live comments inventory is required');
+  if (!live || !Array.isArray(live.allIssues)) errors.push('live InterviewNote ownership inventory is required');
+  const ownership = source.record && live && Array.isArray(live.allIssues)
+    ? exactOwnership(live.allIssues, `${source.record.source.system}:${source.record.source.external_id}`) : [];
+  if (!source.ok) errors.push(...source.errors);
+  if (!artifact.ok) errors.push(...artifact.errors);
+  if (ownership.length !== 0) errors.push(`exact InterviewNote ownership count is ${ownership.length}`);
+  const evidence = inspectEvidence(live && live.comments || [], packet, packetSet.packet_set_sha256);
+  if (!evidence.ok) errors.push(...evidence.errors);
+  return { ok: errors.length === 0, errors, source, artifact, ownership, evidence };
+}
+
 function preflightPacketSet(packetSet, manifest, liveLoader) {
   const packetValidation = validatePacketSet(packetSet, manifest);
   if (!packetValidation.ok) return { ok: false, errors: packetValidation.errors, items: [] };
@@ -229,17 +249,11 @@ function preflightPacketSet(packetSet, manifest, liveLoader) {
   for (const packet of packetSet.packets) {
     let live;
     try { live = liveLoader(packet); } catch (error) { live = null; errors.push(`${packet.packet_id}: live read failed: ${error.message}`); }
-    const source = liveSourceValidation(packet, live && live.sourceIssue);
-    const artifact = live && source.record ? verifyPinnedArtifact({ source_note_id: packet.source_note_id, artifact: packet.artifact }, source.record, live.readBlob) : { ok: false, errors: ['pinned artifact check skipped: SourceNote unavailable'] };
-    const ownership = source.record ? exactOwnership(live.allIssues || [], `${source.record.source.system}:${source.record.source.external_id}`) : [];
-    if (!source.ok) errors.push(`${packet.packet_id}: ${source.errors.join('; ')}`);
-    if (!artifact.ok) errors.push(`${packet.packet_id}: ${artifact.errors.join('; ')}`);
-    if (ownership.length !== 0) errors.push(`${packet.packet_id}: exact InterviewNote ownership count is ${ownership.length}`);
-    const evidence = inspectEvidence(live && live.comments || [], packet, packetSet.packet_set_sha256);
-    if (!evidence.ok) errors.push(`${packet.packet_id}: ${evidence.errors.join('; ')}`);
+    const gate = livePostGate(packet, packetSet, live);
+    if (!gate.ok) errors.push(`${packet.packet_id}: ${gate.errors.join('; ')}`);
     const size = evidenceBodySize(packet, packetSet.packet_set_sha256);
     if (!size.ok) errors.push(`${packet.packet_id}: ${size.errors.join('; ')}`);
-    items.push({ packet_id: packet.packet_id, issue_number: packet.issue_number, source_note_issue_number: packet.source_note_issue_number, source: { ok: source.ok, errors: source.errors }, artifact: { ok: artifact.ok, errors: artifact.errors }, ownership: { count: ownership.length, issue_numbers: ownership.map((issue) => Number(issue.number)) }, evidence: { ok: evidence.ok, exact: evidence.exact, marker_count: evidence.marker_count, errors: evidence.errors }, evidence_body_bytes: size.bytes, action: evidence.exact ? 'already-present-skip-post' : 'would-post-evidence' });
+    items.push({ packet_id: packet.packet_id, issue_number: packet.issue_number, source_note_issue_number: packet.source_note_issue_number, source: { ok: gate.source.ok, errors: gate.source.errors }, artifact: { ok: gate.artifact.ok, errors: gate.artifact.errors }, ownership: { count: gate.ownership.length, issue_numbers: gate.ownership.map((issue) => Number(issue.number)) }, evidence: { ok: gate.evidence.ok, exact: gate.evidence.exact, marker_count: gate.evidence.marker_count, errors: gate.evidence.errors }, evidence_body_bytes: size.bytes, action: gate.evidence.exact ? 'already-present-skip-post' : 'would-post-evidence' });
   }
   return { ok: errors.length === 0, errors, items };
 }
@@ -270,7 +284,7 @@ function validateProgress(progress, packetSet) {
   }
   for (const [id, result] of Object.entries(progress && progress.results || {})) {
     if (!packets.has(id)) errors.push(`progress unknown result ${id}`);
-    if (!result || !['already-present', 'published', 'post-hook-failed', 'uncertain', 'request-failed'].includes(result.status)) errors.push(`progress result status is not allowed ${id}`);
+    if (!result || !['already-present', 'published', 'post-hook-failed', 'post-gate-failed', 'published-validation-failed', 'uncertain', 'request-failed'].includes(result.status)) errors.push(`progress result status is not allowed ${id}`);
     if (result && result.status === 'uncertain' && (result.mutation_attempted !== true || result.mutation_performed === false || result.possibly_performed !== true)) errors.push(`uncertain result is unsafe ${id}`);
     if (result && result.status !== 'uncertain' && result.mutation_attempted === true && result.mutation_performed !== true) errors.push(`non-uncertain result mutation accounting is unsafe ${id}`);
     if (result && result.evidence_comment_id != null && (!Number.isInteger(result.evidence_comment_id) || result.evidence_comment_id < 1)) errors.push(`result comment id is invalid ${id}`);
@@ -316,77 +330,106 @@ function validateReceipt(receipt, packet, packetSetSha256, request = null) {
   return { ok: errors.length === 0, errors };
 }
 
+function failedResult(progress, errors) {
+  return { ok: false, errors, mutation_attempted: progress.mutation_attempted, mutation_performed: progress.mutation_performed, possibly_performed: progress.possibly_performed };
+}
+
+function markPrePostFailure(packet, progress, pending, phase, status, error, persistProgress) {
+  progress.status = 'failed';
+  progress.intents[packet.packet_id] = { ...pending, phase };
+  progress.results[packet.packet_id] = { status, evidence_comment_id: null, mutation_attempted: false, mutation_performed: false, possibly_performed: false, error };
+  persistProgress(progress);
+  return failedResult(progress, [`${packet.packet_id}: ${error}`]);
+}
+
+function markPostUncertain(packet, progress, pending, error, persistProgress) {
+  progress.status = 'failed';
+  progress.intents[packet.packet_id] = { ...pending, phase: 'evidence-post-uncertain' };
+  progress.results[packet.packet_id] = { status: 'uncertain', evidence_comment_id: null, mutation_attempted: true, mutation_performed: null, possibly_performed: true, error };
+  persistProgress(progress);
+  return failedResult(progress, [`${packet.packet_id}: ${error}`]);
+}
+
 function applyOne(packet, packetSet, progress, options) {
-  const live = options.liveLoader(packet);
-  const source = liveSourceValidation(packet, live.sourceIssue);
-  const evidence = inspectEvidence(live.comments, packet, packetSet.packet_set_sha256);
-  if (!source.ok || !evidence.ok) return { ok: false, errors: [...source.errors, ...evidence.errors], mutation_attempted: progress.mutation_attempted, mutation_performed: progress.mutation_performed, possibly_performed: progress.possibly_performed };
+  let live;
+  try { live = options.liveLoader(packet); } catch (error) { return failedResult(progress, [`${packet.packet_id}: initial live read failed: ${error.message}`]); }
+  let gate = livePostGate(packet, packetSet, live);
+  if (!gate.ok) return failedResult(progress, gate.errors.map((error) => `${packet.packet_id}: ${error}`));
+  let evidence = gate.evidence;
   let comment = evidence.exact ? evidence.comment : null;
+  let evidencePosted = false;
   const existingReceipt = typeof options.readReceipt === 'function' ? options.readReceipt(packet) : null;
   if (existingReceipt) {
     const receiptValidation = validateReceipt(existingReceipt, packet, packetSet.packet_set_sha256);
-    if (!receiptValidation.ok) return { ok: false, errors: [`${packet.packet_id}: ${receiptValidation.errors.join('; ')}`], mutation_attempted: progress.mutation_attempted, mutation_performed: progress.mutation_performed, possibly_performed: progress.possibly_performed };
-    if (!comment || Number(comment.id) !== Number(existingReceipt.evidence_comment_id)) return { ok: false, errors: [`${packet.packet_id}: receipt exists without its exact live evidence comment`], mutation_attempted: progress.mutation_attempted, mutation_performed: progress.mutation_performed, possibly_performed: progress.possibly_performed };
+    if (!receiptValidation.ok) return failedResult(progress, [`${packet.packet_id}: ${receiptValidation.errors.join('; ')}`]);
+    if (!comment || Number(comment.id) !== Number(existingReceipt.evidence_comment_id)) return failedResult(progress, [`${packet.packet_id}: receipt exists without its exact live evidence comment`]);
   }
   const prior = progress.intents[packet.packet_id];
   if (!comment) {
     if (prior && ['evidence-post-pending', 'evidence-post-uncertain'].includes(prior.phase)) {
-      return { ok: false, errors: [`${packet.packet_id}: prior POST intent has no exact live marker; refusing duplicate POST`], mutation_attempted: progress.mutation_attempted, mutation_performed: progress.mutation_performed, possibly_performed: progress.possibly_performed };
+      return failedResult(progress, [`${packet.packet_id}: prior POST intent has no exact live marker; refusing duplicate POST`]);
     }
     const pending = intentFor(packetSet.packet_set_sha256, packet, 'evidence-post-pending');
     progress.intents[packet.packet_id] = pending;
     options.persistProgress(progress);
 
-    // The durable pending intent fences re-entry before the throttle hook. The
-    // mutation accounting is deliberately advanced only after the hook returns:
-    // a hook failure has not attempted a POST and must not be reported as
-    // possibly performed.
+    // A throttle hook may allow a concurrent publisher to win the race. The
+    // final live gate is the only authorization for the POST.
     try {
       if (typeof options.beforeEvidencePost === 'function') options.beforeEvidencePost(packet);
     } catch (error) {
-      progress.status = 'failed';
-      progress.intents[packet.packet_id] = { ...pending, phase: 'evidence-post-hook-failed' };
-      progress.results[packet.packet_id] = {
-        status: 'post-hook-failed',
-        evidence_comment_id: null,
-        mutation_attempted: false,
-        mutation_performed: false,
-        possibly_performed: false,
-        error: error.message,
-      };
-      options.persistProgress(progress);
-      return {
-        ok: false,
-        errors: [`${packet.packet_id}: beforeEvidencePost failed: ${error.message}`],
-        mutation_attempted: progress.mutation_attempted,
-        mutation_performed: progress.mutation_performed,
-        possibly_performed: progress.possibly_performed,
-      };
+      return markPrePostFailure(packet, progress, pending, 'evidence-post-hook-failed', 'post-hook-failed', error.message, options.persistProgress);
     }
-
-    progress.mutation_attempted = true;
-    progress.mutation_performed = null;
-    progress.possibly_performed = true;
-    // Persist the accounting boundary immediately before POST. If the process
-    // dies after this point, recovery can truthfully treat the pending intent
-    // as a possibly-performed mutation and will never issue a duplicate POST.
-    options.persistProgress(progress);
-    let response = null;
-    try { response = options.createEvidenceComment(packet, evidenceBody(packet, packetSet.packet_set_sha256)); }
-    catch (error) { response = null; }
-    const recovered = inspectEvidence(options.liveLoader(packet).comments, packet, packetSet.packet_set_sha256);
-    if (!recovered.exact) {
-      progress.status = 'failed';
-      progress.intents[packet.packet_id] = { ...pending, phase: 'evidence-post-uncertain' };
-      progress.results[packet.packet_id] = { status: 'uncertain', evidence_comment_id: null, mutation_attempted: true, mutation_performed: null, possibly_performed: true };
-      options.persistProgress(progress);
-      return { ok: false, errors: [`${packet.packet_id}: evidence POST unconfirmed; refusing retry`], mutation_attempted: true, mutation_performed: null, possibly_performed: true };
+    let finalLive;
+    try { finalLive = options.liveLoader(packet); } catch (error) {
+      return markPrePostFailure(packet, progress, pending, 'evidence-post-gate-failed', 'post-gate-failed', `final pre-POST live read failed: ${error.message}`, options.persistProgress);
     }
-    comment = recovered.comment;
-    progress.mutation_performed = true;
-    progress.possibly_performed = false;
-    progress.intents[packet.packet_id] = { ...pending, phase: 'evidence-posted', evidence_comment_id: Number(comment.id) };
-    options.persistProgress(progress);
+    gate = livePostGate(packet, packetSet, finalLive);
+    if (!gate.ok) {
+      return markPrePostFailure(packet, progress, pending, 'evidence-post-gate-failed', 'post-gate-failed', `final pre-POST gate failed: ${gate.errors.join('; ')}`, options.persistProgress);
+    }
+    live = finalLive;
+    evidence = gate.evidence;
+    if (evidence.exact) {
+      comment = evidence.comment;
+      progress.status = 'running';
+      progress.intents[packet.packet_id] = { ...pending, phase: 'evidence-posted', evidence_comment_id: Number(comment.id) };
+      options.persistProgress(progress);
+    } else {
+      progress.mutation_attempted = true;
+      progress.mutation_performed = null;
+      progress.possibly_performed = true;
+      // Persist the possibly-performed boundary immediately before POST.
+      options.persistProgress(progress);
+      try { options.createEvidenceComment(packet, evidenceBody(packet, packetSet.packet_set_sha256)); }
+      catch (error) { /* response loss is resolved by the mandatory fresh reread below */ }
+      let afterLive;
+      try { afterLive = options.liveLoader(packet); } catch (error) {
+        return markPostUncertain(packet, progress, pending, `evidence POST response could not be reconciled: ${error.message}`, options.persistProgress);
+      }
+      const afterGate = livePostGate(packet, packetSet, afterLive);
+      if (!afterGate.ok || !afterGate.evidence.exact) {
+        if (!afterGate.ok && afterGate.evidence.exact) {
+          progress.status = 'failed';
+          progress.mutation_performed = true;
+          progress.possibly_performed = false;
+          progress.intents[packet.packet_id] = { ...pending, phase: 'request-failed', evidence_comment_id: Number(afterGate.evidence.comment.id) };
+          progress.results[packet.packet_id] = { status: 'published-validation-failed', evidence_comment_id: Number(afterGate.evidence.comment.id), mutation_attempted: true, mutation_performed: true, possibly_performed: false, error: `post-POST live gate failed: ${afterGate.errors.join('; ')}` };
+          options.persistProgress(progress);
+          return failedResult(progress, [`${packet.packet_id}: post-POST live gate failed after evidence was published: ${afterGate.errors.join('; ')}`]);
+        }
+        return markPostUncertain(packet, progress, pending, `evidence POST was not confirmed by the fresh live gate: ${afterGate.errors.join('; ')}`, options.persistProgress);
+      }
+      live = afterLive;
+      gate = afterGate;
+      evidence = gate.evidence;
+      comment = evidence.comment;
+      evidencePosted = true;
+      progress.mutation_performed = true;
+      progress.possibly_performed = false;
+      progress.intents[packet.packet_id] = { ...pending, phase: 'evidence-posted', evidence_comment_id: Number(comment.id) };
+      options.persistProgress(progress);
+    }
   }
   const reviewedAt = options.reviewedAt;
   let request;
@@ -396,21 +439,22 @@ function applyOne(packet, packetSet, progress, options) {
     progress.intents[packet.packet_id] = { ...intentFor(packetSet.packet_set_sha256, packet, 'request-failed'), evidence_comment_id: Number(comment.id) };
     progress.results[packet.packet_id] = { status: 'request-failed', evidence_comment_id: Number(comment.id), mutation_attempted: Boolean(progress.mutation_attempted), mutation_performed: progress.mutation_performed, possibly_performed: progress.possibly_performed, error: error.message };
     options.persistProgress(progress);
-    return { ok: false, errors: [`${packet.packet_id}: formal request failed: ${error.message}`], mutation_attempted: progress.mutation_attempted, mutation_performed: progress.mutation_performed, possibly_performed: progress.possibly_performed };
+    return failedResult(progress, [`${packet.packet_id}: formal request failed: ${error.message}`]);
   }
   if (existingReceipt && existingReceipt.request_sha256 !== requestSha256(request)) {
-    return { ok: false, errors: [`${packet.packet_id}: existing receipt request digest does not match the supplied reviewed_at/request facts`], mutation_attempted: progress.mutation_attempted, mutation_performed: progress.mutation_performed, possibly_performed: progress.possibly_performed };
+    return failedResult(progress, [`${packet.packet_id}: existing receipt request digest does not match the supplied reviewed_at/request facts`]);
   }
-  const planned = planSourceNoteBoundaryReviewTransition(request, live.sourceIssue, { evidenceComment: comment, receipts: [] });
-  if (!planned.ok) return { ok: false, errors: planned.errors, mutation_attempted: progress.mutation_attempted, mutation_performed: progress.mutation_performed, possibly_performed: progress.possibly_performed };
+  const planTransition = options.planTransition || planSourceNoteBoundaryReviewTransition;
+  const planned = planTransition(request, live.sourceIssue, { evidenceComment: comment, receipts: [] });
+  if (!planned.ok) return failedResult(progress, planned.errors);
   const requestDigest = requestSha256(request);
   options.writeRequest(packet, requestBody(request), request);
   const receipt = { schema_version: RECEIPT_SCHEMA_VERSION, packet_set_sha256: packetSet.packet_set_sha256, packet_id: packet.packet_id, transition_id: packet.transition_id, repository: packet.repository, issue_number: packet.issue_number, source_note_issue_number: packet.source_note_issue_number, source_note_id: packet.source_note_id, expected_body_sha256: packet.expected_body_sha256, expected_source_revision_id: packet.expected_source_revision_id, evidence_subject_sha256: packet.evidence_subject_sha256, evidence_comment_id: Number(comment.id), request_sha256: requestDigest, recorded_at: options.now ? options.now() : new Date().toISOString() };
   options.writeReceipt(packet, receipt);
   progress.intents[packet.packet_id] = { ...intentFor(packetSet.packet_set_sha256, packet, 'receipt-written'), evidence_comment_id: Number(comment.id), request_sha256: requestDigest };
-  progress.results[packet.packet_id] = { status: evidence.exact ? 'already-present' : 'published', evidence_comment_id: Number(comment.id), request_sha256: requestDigest, mutation_attempted: !evidence.exact, mutation_performed: !evidence.exact, possibly_performed: false };
+  progress.results[packet.packet_id] = { status: evidencePosted ? 'published' : 'already-present', evidence_comment_id: Number(comment.id), request_sha256: requestDigest, mutation_attempted: evidencePosted, mutation_performed: evidencePosted, possibly_performed: false };
   options.persistProgress(progress);
-  return { ok: true, item: { packet_id: packet.packet_id, issue_number: packet.issue_number, evidence_action: evidence.exact ? 'already-present-skip-post' : 'posted-evidence', evidence_comment_id: Number(comment.id), request_sha256: requestDigest, mutation_performed: !evidence.exact }, mutation_attempted: progress.mutation_attempted, mutation_performed: progress.mutation_performed, possibly_performed: progress.possibly_performed };
+  return { ok: true, item: { packet_id: packet.packet_id, issue_number: packet.issue_number, evidence_action: evidencePosted ? 'posted-evidence' : 'already-present-skip-post', evidence_comment_id: Number(comment.id), request_sha256: requestDigest, mutation_performed: evidencePosted }, mutation_attempted: progress.mutation_attempted, mutation_performed: progress.mutation_performed, possibly_performed: progress.possibly_performed };
 }
 
 function runBatch(packetSet, manifest, options = {}) {
@@ -440,6 +484,6 @@ module.exports = {
   PACKET_SET_SCHEMA_VERSION, EVIDENCE_SCHEMA_VERSION, PROGRESS_SCHEMA_VERSION, INTENT_SCHEMA_VERSION, RECEIPT_SCHEMA_VERSION,
   MAX_GITHUB_COMMENT_BYTES, PHASES, REQUIRED_CHECK_IDS, packetId, transitionId, buildPacketSet, validatePacketSet,
   sourceEvidence, evidenceRecord, evidenceBody, evidenceBodySize, commentLocatorMatches, inspectEvidence,
-  liveSourceValidation, exactOwnership, preflightPacketSet, intentFor, initialProgress, validateProgress,
+  normalizeLabels, liveSourceValidation, exactOwnership, livePostGate, preflightPacketSet, intentFor, initialProgress, validateProgress,
   buildFormalRequest, requestBody, requestSha256, validateReceipt, runBatch, applyOne, acquireProgressLock,
 };

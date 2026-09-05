@@ -16,6 +16,7 @@ const {
   evidenceRecord,
   inspectEvidence,
   liveSourceValidation,
+  livePostGate,
   preflightPacketSet,
   initialProgress,
   validateProgress,
@@ -23,8 +24,10 @@ const {
   requestSha256,
   validateReceipt,
   runBatch,
+  applyOne,
   acquireProgressLock,
 } = require('../scripts/lib/issue-1539-boundary-evidence-batch');
+const { atomicWriteText, atomicWriteJson, loadOwnership } = require('../scripts/apply-issue-1539-boundary-evidence-batch');
 
 const candidateManifest = JSON.parse(fs.readFileSync('data/pilot/issue-1539/boundary-expansion-candidates.json', 'utf8'));
 const sourceFixture = fs.readFileSync('test/fixtures/source-note-issue.valid.md', 'utf8');
@@ -56,7 +59,7 @@ function syntheticSet() {
     body = body.replace(/<!-- source-note-record\n[\s\S]*?\n-->/, `<!-- source-note-record\n${JSON.stringify(record, null, 2)}\n-->`);
     const bodySha = crypto.createHash('sha256').update(body, 'utf8').digest('hex');
     manifest.items.find((item) => item.issue_number === packet.issue_number).expected_body_sha256 = bodySha;
-    lives.set(packet.packet_id, { body, sourceIssue: { number: packet.issue_number, state: 'open', body, labels: ['type:source-note', 'source:xhs', 'status:captured', 'boundary:pending', 'task:boundary-review', 'source-year:2022'] }, blob: { sha: packet.artifact.git_blob_sha, encoding: 'base64', content: bytes.toString('base64') }, comments: [] });
+    lives.set(packet.packet_id, { body, sourceIssue: { number: packet.issue_number, state: 'open', body, labels: ['type:source-note', 'source:xhs', 'status:captured', 'boundary:pending', 'task:boundary-review', 'source-year:2022'] }, blob: { sha: packet.artifact.git_blob_sha, encoding: 'base64', content: bytes.toString('base64') }, comments: [], allIssues: [] });
   }
   // Rebuild after body SHA updates so packet facts and subject digests match the live fixtures.
   const rebuilt = buildPacketSet(manifest);
@@ -70,7 +73,7 @@ function syntheticSet() {
 function loader(state) {
   return (packet) => {
     const live = state.lives.get(packet.packet_id);
-    return { sourceIssue: live.sourceIssue, comments: live.comments, readBlob: () => live.blob, allIssues: [] };
+    return { sourceIssue: live.sourceIssue, comments: live.comments, readBlob: () => live.blob, allIssues: live.allIssues };
   };
 }
 
@@ -115,6 +118,186 @@ test('preflight verifies all 17 live SourceNotes and predicts only evidence POST
   assert.equal(result.items.length, 17);
   assert.equal(result.items.filter((item) => item.action === 'would-post-evidence').length, 17);
   assert.equal(result.items.every((item) => item.ownership.count === 0), true);
+});
+
+test('fresh post-hook gate consumes a concurrent exact marker and skips POST', () => {
+  const state = syntheticSet();
+  const packet = state.packetSet.packets[0];
+  const progress = initialProgress(state.packetSet.packet_set_sha256, state.packetSet.packets.map((item) => item.packet_id));
+  let hooks = 0;
+  let posts = 0;
+  const result = applyOne(packet, state.packetSet, progress, {
+    liveLoader: loader(state),
+    reviewedAt: '2026-09-05T00:00:00Z',
+    persistProgress: () => {},
+    beforeEvidencePost: () => {
+      hooks += 1;
+      state.lives.get(packet.packet_id).comments.push({ id: 801, issue_url: `https://api.github.com/repos/${packet.repository}/issues/${packet.issue_number}`, body: evidenceBody(packet, state.packetSet.packet_set_sha256) });
+    },
+    createEvidenceComment: () => { posts += 1; },
+    writeRequest: () => {},
+    writeReceipt: () => {},
+  });
+  assert.equal(result.ok, true, result.errors?.join('\n'));
+  assert.equal(hooks, 1);
+  assert.equal(posts, 0);
+  assert.equal(result.item.evidence_action, 'already-present-skip-post');
+  assert.equal(progress.results[packet.packet_id].mutation_attempted, false);
+});
+
+test('fresh post-hook duplicate or conflicting marker fails closed without POST', () => {
+  for (const mode of ['duplicate', 'conflict']) {
+    const state = syntheticSet();
+    const packet = state.packetSet.packets[0];
+    const progress = initialProgress(state.packetSet.packet_set_sha256, state.packetSet.packets.map((item) => item.packet_id));
+    let posts = 0;
+    const result = applyOne(packet, state.packetSet, progress, {
+      liveLoader: loader(state),
+      reviewedAt: '2026-09-05T00:00:00Z',
+      persistProgress: () => {},
+      beforeEvidencePost: () => {
+        const body = mode === 'conflict'
+          ? evidenceBody(packet, state.packetSet.packet_set_sha256).replace(packet.evidence_subject_sha256, '0'.repeat(64))
+          : evidenceBody(packet, state.packetSet.packet_set_sha256);
+        state.lives.get(packet.packet_id).comments.push({ id: mode === 'duplicate' ? 802 : 803, issue_url: `https://api.github.com/repos/${packet.repository}/issues/${packet.issue_number}`, body });
+        if (mode === 'duplicate') state.lives.get(packet.packet_id).comments.push({ id: 804, issue_url: `https://api.github.com/repos/${packet.repository}/issues/${packet.issue_number}`, body });
+      },
+      createEvidenceComment: () => { posts += 1; },
+      writeRequest: () => {},
+      writeReceipt: () => {},
+    });
+    assert.equal(result.ok, false, mode);
+    assert.equal(posts, 0, mode);
+    assert.equal(progress.results[packet.packet_id].status, 'post-gate-failed', mode);
+    assert.equal(validateProgress(progress, state.packetSet).ok, true, mode);
+  }
+});
+
+test('post-hook ownership recheck blocks a POST when an owner appears after preflight', () => {
+  const state = syntheticSet();
+  const packet = state.packetSet.packets[0];
+  const progress = initialProgress(state.packetSet.packet_set_sha256, state.packetSet.packets.map((item) => item.packet_id));
+  let posts = 0;
+  const externalId = packet.source_note_id.slice('xhs-note:'.length);
+  const result = runBatch(state.packetSet, state.manifest, {
+    apply: true,
+    progress,
+    liveLoader: loader(state),
+    reviewedAt: '2026-09-05T00:00:00Z',
+    beforeEvidencePost: () => {
+      state.lives.get(packet.packet_id).allIssues = [{ number: 999, pull_request: false, body: `<!-- interview-note: id=xhs:${externalId} schema=interview-note-issue.v2 -->` }];
+    },
+    persistProgress: () => {},
+    createEvidenceComment: () => { posts += 1; },
+    writeRequest: () => {},
+    writeReceipt: () => {},
+  });
+  assert.equal(result.ok, false);
+  assert.equal(posts, 0);
+  assert.match(result.errors.join('\n'), /ownership/);
+});
+
+test('post-POST fresh source/artifact/ownership drift never writes request or receipt', () => {
+  const drifts = {
+    body: (live) => { live.sourceIssue.body = 'changed after evidence POST'; },
+    labels: (live) => { live.sourceIssue.labels = live.sourceIssue.labels.filter((label) => label !== 'task:boundary-review'); },
+    revision: (live, packet) => { live.sourceIssue.body = live.sourceIssue.body.replace(packet.expected_source_revision_id, `${packet.expected_source_revision_id}-changed`); },
+    artifact: (live) => { live.blob.content = Buffer.from('different pinned content', 'utf8').toString('base64'); },
+    ownership: (live, packet) => { live.allIssues = [{ number: 1000, pull_request: false, body: `<!-- interview-note: id=xhs:${packet.source_note_id.slice('xhs-note:'.length)} schema=interview-note-issue.v2 -->` }]; },
+  };
+  for (const [name, mutate] of Object.entries(drifts)) {
+    const state = syntheticSet();
+    const packet = state.packetSet.packets[0];
+    const progress = initialProgress(state.packetSet.packet_set_sha256, state.packetSet.packets.map((item) => item.packet_id));
+    let posts = 0;
+    let requests = 0;
+    let receipts = 0;
+    const result = applyOne(packet, state.packetSet, progress, {
+      liveLoader: loader(state),
+      reviewedAt: '2026-09-05T00:00:00Z',
+      persistProgress: () => {},
+      createEvidenceComment: (currentPacket, body) => {
+        posts += 1;
+        state.lives.get(currentPacket.packet_id).comments.push({ id: 805, issue_url: `https://api.github.com/repos/${currentPacket.repository}/issues/${currentPacket.issue_number}`, body });
+        mutate(state.lives.get(currentPacket.packet_id), currentPacket);
+      },
+      writeRequest: () => { requests += 1; },
+      writeReceipt: () => { receipts += 1; },
+    });
+    assert.equal(result.ok, false, name);
+    assert.equal(posts, 1, name);
+    assert.equal(requests, 0, name);
+    assert.equal(receipts, 0, name);
+    assert.equal(progress.results[packet.packet_id].status, 'published-validation-failed', name);
+    assert.equal(progress.results[packet.packet_id].mutation_performed, true, name);
+    assert.equal(progress.possibly_performed, false, name);
+  }
+});
+
+test('successful POST builds the formal plan from the fresh SourceNote reread', () => {
+  const state = syntheticSet();
+  const packet = state.packetSet.packets[0];
+  const progress = initialProgress(state.packetSet.packet_set_sha256, state.packetSet.packets.map((item) => item.packet_id));
+  let plannedIssue = null;
+  const result = applyOne(packet, state.packetSet, progress, {
+    liveLoader: loader(state),
+    reviewedAt: '2026-09-05T00:00:00Z',
+    persistProgress: () => {},
+    createEvidenceComment: (currentPacket, body) => {
+      const live = state.lives.get(currentPacket.packet_id);
+      live.comments.push({ id: 806, issue_url: `https://api.github.com/repos/${currentPacket.repository}/issues/${currentPacket.issue_number}`, body });
+      live.sourceIssue = { ...live.sourceIssue, labels: [...live.sourceIssue.labels, 'concurrent:unrelated-label'] };
+    },
+    planTransition: (_request, sourceIssue) => {
+      plannedIssue = sourceIssue;
+      return { ok: true };
+    },
+    writeRequest: () => {},
+    writeReceipt: () => {},
+  });
+  assert.equal(result.ok, true, result.errors?.join('\n'));
+  assert.ok(plannedIssue);
+  assert.equal(plannedIssue.labels.includes('concurrent:unrelated-label'), true);
+});
+
+test('live SourceNote labels use strict normalization and reject malformed REST values', () => {
+  const state = syntheticSet();
+  const packet = state.packetSet.packets[0];
+  for (const labels of [null, [null], [{ name: null }], [42]]) {
+    const issue = { ...state.lives.get(packet.packet_id).sourceIssue, labels };
+    const result = liveSourceValidation(packet, issue);
+    assert.equal(result.ok, false, JSON.stringify(labels));
+    assert.match(result.errors.join('\n'), /labels|missing/);
+  }
+  assert.equal(livePostGate(packet, state.packetSet, loader(state)(packet)).ok, true);
+});
+
+test('ownership loader requires exact non-negative totals and complete pagination', () => {
+  const issue = (number) => ({ number, pull_request: false, body: '<!-- interview-note: id=xhs:test schema=interview-note-issue.v2 -->' });
+  assert.throws(() => loadOwnership('liqiangcc/interview-lab', 'xhs:test', { readPage: () => ({ incomplete_results: false, items: [] }), readIssue: issue }), /total_count|malformed/);
+  assert.throws(() => loadOwnership('liqiangcc/interview-lab', 'xhs:test', { readPage: () => ({ incomplete_results: false, total_count: 2, items: [{ number: 1 }] }), readIssue: issue }), /short page/);
+  assert.throws(() => loadOwnership('liqiangcc/interview-lab', 'xhs:test', { readPage: (page) => page === 1
+    ? { incomplete_results: false, total_count: 101, items: Array.from({ length: 100 }, (_, index) => ({ number: index + 1 })) }
+    : { incomplete_results: false, total_count: 102, items: [{ number: 101 }] }, readIssue: issue }), /total_count/);
+  const pages = [
+    { incomplete_results: false, total_count: 101, items: Array.from({ length: 100 }, (_, index) => ({ number: index + 1 })) },
+    { incomplete_results: false, total_count: 101, items: [{ number: 101 }] },
+  ];
+  assert.equal(loadOwnership('liqiangcc/interview-lab', 'xhs:test', { readPage: (page) => pages[page - 1], readIssue: issue }).length, 101);
+});
+
+test('boundary evidence writers round-trip durable text and JSON outputs', () => {
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'issue-1549-durable-'));
+  try {
+    const textPath = path.join(directory, 'request.md');
+    const jsonPath = path.join(directory, 'progress.json');
+    atomicWriteText(textPath, 'plain marker text');
+    atomicWriteJson(jsonPath, { status: 'running' });
+    assert.equal(fs.readFileSync(textPath, 'utf8'), 'plain marker text');
+    assert.deepEqual(JSON.parse(fs.readFileSync(jsonPath, 'utf8')), { status: 'running' });
+  } finally {
+    fs.rmSync(directory, { recursive: true, force: true });
+  }
 });
 
 test('apply response loss recovers a live exact comment once, writes requests/receipts, and reentry posts zero', () => {

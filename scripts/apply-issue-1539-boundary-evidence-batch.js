@@ -3,6 +3,7 @@
 
 const fs = require('node:fs');
 const path = require('node:path');
+const crypto = require('node:crypto');
 const { execFileSync } = require('node:child_process');
 const { parseInterviewNoteIssue } = require('./lib/interview-note-issue');
 const { ownershipSearchEndpoint } = require('./lib/interview-note-ownership-search');
@@ -40,10 +41,31 @@ function ghJson(args, input = null) {
 
 function atomicWriteText(file, value) {
   if (typeof value !== 'string') throw new TypeError('atomicWriteText requires text');
-  fs.mkdirSync(path.dirname(file), { recursive: true });
-  const temp = `${file}.tmp-${process.pid}`;
-  fs.writeFileSync(temp, value);
-  fs.renameSync(temp, file);
+  const absolute = path.resolve(file);
+  const directory = path.dirname(absolute);
+  fs.mkdirSync(directory, { recursive: true });
+  const temp = `${absolute}.tmp-${process.pid}-${crypto.randomUUID()}`;
+  let fd = null;
+  try {
+    fd = fs.openSync(temp, 'w', 0o600);
+    fs.writeFileSync(fd, value, 'utf8');
+    fs.fsyncSync(fd);
+    fs.closeSync(fd);
+    fd = null;
+    fs.renameSync(temp, absolute);
+  } catch (error) {
+    if (fd !== null) fs.closeSync(fd);
+    try { fs.unlinkSync(temp); } catch (_) { /* preserve the original write error */ }
+    throw error;
+  }
+  // Directory fsync makes the rename durable. Some platforms/filesystems do
+  // not permit opening directories; tolerate only those documented cases.
+  try {
+    const directoryFd = fs.openSync(directory, 'r');
+    try { fs.fsyncSync(directoryFd); } finally { fs.closeSync(directoryFd); }
+  } catch (error) {
+    if (!['EINVAL', 'ENOTSUP', 'EPERM'].includes(error.code)) throw error;
+  }
 }
 
 function atomicWriteJson(file, value) { atomicWriteText(file, `${JSON.stringify(value, null, 2)}\n`); }
@@ -69,17 +91,31 @@ function loadComments(repository, number) {
 
 function readBlob(repository, sha) { return ghJson(['api', `repos/${repository}/git/blobs/${sha}`]); }
 
-function loadOwnership(repository, interviewNoteId) {
+function loadOwnership(repository, interviewNoteId, adapters = {}) {
   const endpoint = ownershipSearchEndpoint(repository, interviewNoteId);
+  const readPage = adapters.readPage || ((page) => ghJson(['api', `${endpoint}&page=${page}`]));
+  const readIssue = adapters.readIssue || ((number) => loadIssue(repository, number));
   const owners = [];
+  let totalCount = null;
+  let collected = 0;
   for (let page = 1; page <= 10; page += 1) {
-    const result = ghJson(['api', `${endpoint}&page=${page}`]);
-    if (!result || result.incomplete_results === true || !Array.isArray(result.items)) throw new Error('ownership search is incomplete');
+    const result = readPage(page);
+    if (!result || typeof result !== 'object' || Array.isArray(result)
+      || result.incomplete_results !== false || !Array.isArray(result.items)
+      || !Number.isInteger(result.total_count) || result.total_count < 0
+      || result.items.length > 100) throw new Error('ownership search response is incomplete or malformed');
+    if (totalCount === null) totalCount = result.total_count;
+    if (result.total_count !== totalCount) throw new Error('ownership search total_count changed during pagination');
+    collected += result.items.length;
+    if (collected > totalCount) throw new Error('ownership search returned more items than total_count');
     for (const item of result.items) {
-      const issue = loadIssue(repository, Number(item.number));
+      const number = Number(item && item.number);
+      if (!Number.isInteger(number) || number < 1) throw new Error('ownership search returned an invalid Issue number');
+      const issue = readIssue(number);
       if (!issue.pull_request && parseInterviewNoteIssue(issue.body || '').marker?.interview_note_id === interviewNoteId) owners.push(issue);
     }
-    if (result.items.length < 100 || page * 100 >= Number(result.total_count || 0)) return owners;
+    if (collected === totalCount) return owners;
+    if (result.items.length < 100) throw new Error('ownership search returned a short page before total_count');
   }
   throw new Error('ownership search exceeded bounded pages');
 }
@@ -149,4 +185,4 @@ if (require.main === module) {
   try { process.exitCode = main(); } catch (error) { process.stderr.write(`ERROR: ${error.message}\n`); process.exitCode = 1; }
 }
 
-module.exports = { parseArgs, main, atomicWriteText, atomicWriteJson, writeRequestFiles, writeReceiptFile };
+module.exports = { parseArgs, main, atomicWriteText, atomicWriteJson, loadOwnership, writeRequestFiles, writeReceiptFile };
