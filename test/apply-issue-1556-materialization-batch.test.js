@@ -110,3 +110,37 @@ test('CLI apply uses the real lock/core and durably writes 17 request and receip
     assert.equal(fs.existsSync(lockPath), false);
   } finally { fs.rmSync(context.root, { recursive: true, force: true }); }
 });
+
+test('CLI wires GET retry bounds into post-create ownership reconcile', () => {
+  const context = setup();
+  try {
+    const baseLoadLive = context.runtime.loadLive;
+    const sleeps = [];
+    let created = false;
+    let postCreateReads = 0;
+    context.args[context.args.indexOf('--get-backoff-ms') + 1] = '10';
+    context.runtime.sleep = (milliseconds) => sleeps.push(milliseconds);
+    context.runtime.loadLive = (request) => {
+      const live = baseLoadLive(request);
+      if (created && request.source_note_issue_number === 158) {
+        postCreateReads += 1;
+        if (postCreateReads < 3) return { ...live, allIssues: [] };
+      }
+      return live;
+    };
+    const baseCreate = context.runtime.createInterviewIssue;
+    context.runtime.createInterviewIssue = (request, projection) => {
+      baseCreate(request, projection);
+      created = true;
+    };
+    const planExit = cli.main(context.args, context.runtime);
+    assert.equal(planExit, 0);
+    const planOutput = JSON.parse(fs.readFileSync(context.args[context.args.indexOf('--output') + 1], 'utf8'));
+    const lockPath = path.join(context.root, 'materialization.lock');
+    const applyArgs = [...context.args, '--apply', '--progress-lock', lockPath, '--confirm-plan-sha256', planOutput.plan_sha256, '--confirm-authorization-sha256', planOutput.authorization_sha256];
+    assert.equal(cli.main(applyArgs, context.runtime), 0);
+    assert.equal(postCreateReads, 4); // 3 ownership reads plus the receipt final gate.
+    assert.deepEqual(sleeps.filter((milliseconds) => milliseconds > 0), [10, 20]);
+    assert.equal(context.calls.create.filter((issue) => issue === 158).length, 1);
+  } finally { fs.rmSync(context.root, { recursive: true, force: true }); }
+});

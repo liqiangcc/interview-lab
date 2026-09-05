@@ -350,6 +350,46 @@ function compareReceiptFacts(left, right) {
   return same(strip(left), strip(right));
 }
 
+function defaultSleep(milliseconds) {
+  if (milliseconds > 0) Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, milliseconds);
+}
+
+function reconcileCreatedOwner({ packet, transitionRequest, transitionReceipt, request, loadLive, readBlob }, options = {}) {
+  const maxAttempts = options.postCreateMaxAttempts === undefined ? 3 : options.postCreateMaxAttempts;
+  const backoffMs = options.postCreateBackoff === undefined ? 250 : options.postCreateBackoff;
+  const sleep = options.sleep || defaultSleep;
+  if (!Number.isSafeInteger(maxAttempts) || maxAttempts < 1 || maxAttempts > 3) {
+    return { ok: false, reason: 'invalid-options', errors: ['post-create ownership reconcile max attempts must be an integer from 1 to 3'] };
+  }
+  if (!Number.isSafeInteger(backoffMs) || backoffMs < 0) {
+    return { ok: false, reason: 'invalid-options', errors: ['post-create ownership reconcile backoff must be a non-negative integer'] };
+  }
+  let lastGate = null;
+  let lastReadError = null;
+  for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+    let gate;
+    try {
+      const live = loadLive(request);
+      gate = targetPreflight(packet, transitionRequest, transitionReceipt, live, { readBlob });
+    } catch (error) {
+      lastReadError = error;
+      if (attempt === maxAttempts) break;
+      sleep(backoffMs * attempt);
+      continue;
+    }
+    lastGate = gate;
+    // Any gate error is a conflict or malformed live state. Retrying it could
+    // turn a concurrent duplicate/drift into an ungrounded owner claim.
+    if (!gate.ok) return { ok: false, reason: 'conflict', gate, errors: gate.errors };
+    if (gate.owners.length === 1) return { ok: true, gate, owner: gate.owners[0], attempts: attempt };
+    if (attempt < maxAttempts) sleep(backoffMs * attempt);
+  }
+  const errors = lastReadError
+    ? [`post-create ownership reconcile exhausted after ${maxAttempts} attempts: ${lastReadError.message}`]
+    : [`post-create ownership reconcile exhausted after ${maxAttempts} attempts without a unique owner`];
+  return { ok: false, reason: 'exhausted', gate: lastGate, errors };
+}
+
 function applyBatch({ planResult, packetSet, manifest, transitionRequests, transitionReceipts, evidenceReceipts, progress = null }, options = {}) {
   const countFieldsValid = progress === null || (progress && Number.isSafeInteger(progress.create_mutation_count) && progress.create_mutation_count >= 0
     && Number.isSafeInteger(progress.receipt_mutation_count) && progress.receipt_mutation_count >= 0
@@ -500,21 +540,22 @@ function applyBatch({ planResult, packetSet, manifest, transitionRequests, trans
       createMutationCount += 1;
       syncMutationCounts();
       if (options.persistProgress) options.persistProgress(state);
-      try { options.createInterviewIssue(request, gate.projection); }
-      catch (error) {
-        let reconciled;
-        try { const after = options.loadLive(request); reconciled = targetPreflight(packetSet.packets.find((packet) => packet.issue_number === item.issue_number), transitionRequest, transitionReceipt, after, { readBlob: options.readBlob }); }
-        catch (reconcileError) { return failUncertain(item, 'create-pending', `create response lost and ownership reconcile failed: ${reconcileError.message}`, { cause: error.message }); }
-        if (!reconciled.ok || reconciled.owners.length !== 1) return failUncertain(item, 'create-pending', `create response lost without exactly one reconciled owner: ${error.message}`, { reconcile_errors: reconciled.errors });
-        gate = reconciled; owner = reconciled.owners[0];
+      let createError = null;
+      try { options.createInterviewIssue(request, gate.projection); } catch (error) { createError = error; }
+      const reconciled = reconcileCreatedOwner({
+        packet: packetSet.packets.find((packet) => packet.issue_number === item.issue_number),
+        transitionRequest,
+        transitionReceipt,
+        request,
+        loadLive: options.loadLive,
+        readBlob: options.readBlob,
+      }, options);
+      if (!reconciled.ok) {
+        const prefix = createError ? `create response lost; ${createError.message}; ` : '';
+        return failUncertain(item, 'create-pending', `${prefix}${reconciled.errors.join('; ')}`, { reconcile_errors: reconciled.errors });
       }
-      if (!owner) {
-        let reconciled;
-        try { const after = options.loadLive(request); reconciled = targetPreflight(packetSet.packets.find((packet) => packet.issue_number === item.issue_number), transitionRequest, transitionReceipt, after, { readBlob: options.readBlob }); }
-        catch (error) { return failUncertain(item, 'create-pending', `create succeeded without fresh ownership reconcile: ${error.message}`); }
-        if (!reconciled.ok || reconciled.owners.length !== 1) return failUncertain(item, 'create-pending', 'create response did not reconcile to exactly one owner', { reconcile_errors: reconciled.errors });
-        gate = reconciled; owner = reconciled.owners[0];
-      }
+      gate = reconciled.gate;
+      owner = reconciled.owner;
       state.mutation_performed = true; state.possibly_performed = false;
       mark(item, 'created', { owner_issue_number: Number(owner.number), interview_body_sha256: sha256Text(gate.projection.body) });
     }
@@ -720,6 +761,7 @@ module.exports = {
   renderMaterializationReceipt,
   buildMaterializationReceipt,
   validateMaterializationReceipt,
+  reconcileCreatedOwner,
   applyBatch,
   acquireProgressLock,
 };

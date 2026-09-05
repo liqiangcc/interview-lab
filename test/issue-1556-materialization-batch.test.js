@@ -258,6 +258,107 @@ test('real applyBatch reconciles create and receipt response loss without duplic
   assert.equal(result.progress.possibly_performed, false);
 });
 
+test('post-create ownership reconcile polls delayed visibility and does not repeat create', () => {
+  const harness = makeAuthorizedHarness();
+  let created = false;
+  let postCreateReads = 0;
+  const sleeps = [];
+  const result = harness.apply(null, {
+    postCreateMaxAttempts: 3,
+    postCreateBackoff: 10,
+    sleep: (milliseconds) => sleeps.push(milliseconds),
+    loadLive: (request) => {
+      const live = harness.loadLive(request);
+      if (created && request.source_note_issue_number === 158) {
+        postCreateReads += 1;
+        if (postCreateReads < 3) return { ...live, allIssues: [] };
+      }
+      return live;
+    },
+    createInterviewIssue: (request, projection) => {
+      harness.calls.create.push(request.source_note_issue_number);
+      harness.ownersByIssue.set(request.source_note_issue_number, [{
+        number: 20000 + request.source_note_issue_number,
+        state: 'open',
+        body: projection.body,
+        labels: projection.labels,
+      }]);
+      created = true;
+    },
+  });
+  assert.equal(result.ok, true, result.errors?.join('; '));
+  // Three reads belong to the post-create helper; the fourth is the receipt
+  // final gate after ownership has converged.
+  assert.equal(postCreateReads, 4);
+  assert.deepEqual(sleeps, [10, 20]);
+  assert.equal(harness.calls.create.filter((issue) => issue === 158).length, 1);
+  assert.equal(result.create_mutation_count, 17);
+  assert.equal(result.receipt_mutation_count, 17);
+  assert.equal(result.mutation_count, 34);
+});
+
+test('post-create duplicate ownership is an immediate conflict without another read or receipt', () => {
+  const harness = makeAuthorizedHarness();
+  let postCreateReads = 0;
+  const sleeps = [];
+  const result = harness.apply(null, {
+    postCreateMaxAttempts: 3,
+    postCreateBackoff: 10,
+    sleep: (milliseconds) => sleeps.push(milliseconds),
+    loadLive: (request) => {
+      const live = harness.loadLive(request);
+      if (request.source_note_issue_number === 158 && harness.calls.create.includes(158)) {
+        postCreateReads += 1;
+      }
+      return live;
+    },
+    createInterviewIssue: (request, projection) => {
+      harness.calls.create.push(request.source_note_issue_number);
+      const owner = { number: 20158, state: 'open', body: projection.body, labels: projection.labels };
+      harness.ownersByIssue.set(request.source_note_issue_number, [owner, { ...owner, number: 30158 }]);
+    },
+  });
+  assert.equal(result.ok, false);
+  assert.equal(harness.calls.create.filter((issue) => issue === 158).length, 1);
+  assert.equal(harness.calls.receipt.length, 0);
+  assert.equal(postCreateReads, 1);
+  assert.deepEqual(sleeps, []);
+  assert.ok(result.errors.some((error) => /duplicate InterviewNote ownership/.test(error)));
+  assert.equal(result.progress.items['158'].phase, 'uncertain');
+});
+
+test('post-create ownership reconcile exhaustion remains uncertain and counts one create attempt', () => {
+  const harness = makeAuthorizedHarness();
+  let created = false;
+  let postCreateReads = 0;
+  const sleeps = [];
+  const result = harness.apply(null, {
+    postCreateMaxAttempts: 3,
+    postCreateBackoff: 5,
+    sleep: (milliseconds) => sleeps.push(milliseconds),
+    loadLive: (request) => {
+      const live = harness.loadLive(request);
+      if (created && request.source_note_issue_number === 158) postCreateReads += 1;
+      return live;
+    },
+    createInterviewIssue: (request) => {
+      harness.calls.create.push(request.source_note_issue_number);
+      created = true;
+    },
+  });
+  assert.equal(result.ok, false);
+  assert.equal(postCreateReads, 3);
+  assert.deepEqual(sleeps, [5, 10]);
+  assert.equal(harness.calls.create.filter((issue) => issue === 158).length, 1);
+  assert.equal(harness.calls.receipt.length, 0);
+  assert.equal(result.create_mutation_count, 1);
+  assert.equal(result.receipt_mutation_count, 0);
+  assert.equal(result.mutation_count, 1);
+  assert.equal(result.progress.possibly_performed, true);
+  assert.equal(result.progress.items['158'].phase, 'uncertain');
+  assert.ok(result.errors.some((error) => /exhausted after 3 attempts/.test(error)));
+});
+
 test('create-pending resume reconciles owner and posts only its missing receipt', () => {
   const harness = makeAuthorizedHarness({ owners: true });
   const result = harness.apply(pendingProgress(harness.planResult, 'create-pending'));

@@ -224,6 +224,9 @@ function main(argv = process.argv.slice(2), runtime = {}) {
       writeRequest: runtime.writeRequest || ((request, value) => durableWriteJson(path.join(path.resolve(args.materializationRequestDir), `issue-${request.source_note_issue_number}.json`), value)),
       writeReceipt: runtime.writeReceipt || ((request, receipt) => durableWriteJson(path.join(path.resolve(args.materializationReceiptDir), `issue-${request.source_note_issue_number}.json`), receipt)),
       beforeMutation,
+      postCreateMaxAttempts: args.getMaxAttempts,
+      postCreateBackoff: args.getBackoffMs,
+      sleep,
       createInterviewIssue: runtime.createInterviewIssue || ((request, projection) => createInterviewIssue(REPOSITORY, projection, runtime.ghJson || ghJson)),
       postReceipt: runtime.postReceipt || ((request, receipt) => postReceipt(REPOSITORY, request, receipt, runtime.ghJson || ghJson)),
     });
