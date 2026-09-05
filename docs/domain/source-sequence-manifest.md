@@ -26,7 +26,7 @@ Manifest 永远属于 Derived Extraction。
 - 替代 Raw artifact；
 - 把 OCR 升级成 Raw；
 - 修改原作者 wording；
-- 因为训练需要而重排第一手证据。
+- 因为学习或分析方便而重排第一手证据。
 
 ## 为什么不能直接使用 SourceQuestion
 

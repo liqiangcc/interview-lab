@@ -2,7 +2,7 @@
 
 ## 目的
 
-本协议使用真实面经训练“面试反应链路”，而不是背标准答案。
+本协议使用真实面经进行连续、低摩擦、高质量的逐层分析，而不是把面经压成标准答案清单。
 
 学习过程尽量模拟真实面试中信息逐步出现的状态。
 
@@ -46,9 +46,9 @@ revealed_within_unit
 
 真实面试是因果、增量发生的。候选人不知道下一问是什么，也不知道当前一句话后面是否还隐藏着作者事后补充的 follow-up 信息。
 
-如果允许未来上下文倒灌，就训练成了“看完答案后的事后解释”，而不是现场判断。
+如果允许未来上下文倒灌，就会退化成“看完答案后的事后解释”，失去对真实信息增量过程的分析价值。
 
-目标能力是：
+目标分析链路是：
 
 ```text
 有限信息
@@ -90,8 +90,6 @@ AI 主动解释字面要求
 
 AI 的职责是把当前信息中的隐含关系整理出来：减少术语跳跃、补足必要前提、解释为什么、区分容易混淆的边界，但不得借此读取未来 Source。
 
-只有用户明确说“考我一下 / 模拟面试 / 无提示练习 / 复测”时，才切换到 Training mode 的 attempt-first / retrieval 语义。
-
 同时，不同 Source unit 不强制使用同一组解释层。先识别 Source 类型，再选择对应 learning loop。
 
 ## Source 类型与默认 learning loop
@@ -126,9 +124,7 @@ literal
 
 当前层被充分消化后再进入下一层。
 
-Learning mode 不强制 reconstruction。用户只需要继续说“下一步 / 这里什么意思 / 再深入一点”即可推进。
-
-如果用户主动切换到 Training mode，则可以在讲解前做 baseline attempt，或在讲解后做 reconstruction / delayed recall；这些属于 Training / ReviewProgress evidence，不是普通 Learning 的日常门槛。
+用户只需要继续说“下一步 / 这里什么意思 / 再深入一点”即可推进，不增加额外练习步骤。
 
 ### 2. Stage-summary Source
 
@@ -170,7 +166,7 @@ literal
 
 ## Interview Reasoning Loop
 
-对 question-like Source，反复训练的目标链路是：
+对 question-like Source，AI 应稳定沿下面的分析链路推进：
 
 ```text
 Input
@@ -192,7 +188,7 @@ Receive new input
 Update
 ```
 
-目标不是暴露私有 chain-of-thought，而是形成可观察、可训练的 reasoning structure：cue、classification、response skeleton、boundary 和 update。
+目标不是暴露私有 chain-of-thought，而是提供可观察、可学习的 reasoning structure：cue、classification、response skeleton、boundary 和 update。
 
 Stage-summary / outcome-summary Source 可以使用不同 loop，但仍然必须保持同样严格的 evidence discipline。
 
@@ -216,7 +212,7 @@ close current learning loop
 
 > “深挖”不授权无限展开；Source 仍然决定 depth frontier。
 
-关闭当前 position 的 learning loop 不代表相关知识已经全部学完，也不代表 InterviewNote 永久探索完成。后续可以在其他 session 中针对 CanonicalQuestion、Answer、知识缺口或训练目标继续深入。
+关闭当前 position 的 learning loop 不代表相关知识已经全部学完，也不代表 InterviewNote 永久探索完成。后续可以在其他 session 中针对 CanonicalQuestion、Answer、知识缺口或新的分析问题继续深入。
 
 ## Outcome 与归因边界
 
@@ -272,45 +268,24 @@ Learning mode 下，AI 应：
 
 用户不需要为了维持协议不断输入长提示词。
 
-## 两种模式
+## 默认分析模式
 
-### Learning mode
-
-AI 主动逐步解释，并严格遵守 no-look-ahead。默认优化目标是：**高质量分析 + 最低理解摩擦**。
+AI 主动逐步解释，并严格遵守 no-look-ahead。默认优化目标是：**高质量分析 + 最低理解摩擦 + 与已知上下文逻辑连续**。
 
 Question-like Source 默认采用：
 
 ```text
 当前真实输入
-→ AI 识别 / 结构化
+→ AI 识别它到底在问什么
+→ 连接已经揭示的上下文
+→ 整理最清晰的知识结构
 → 解释关键因果与必要前提
-→ 给出当前回答骨架 / 学习点
+→ 必要时给出回答骨架
+→ 标出条件 / 边界 / 易混淆点
 → 在自然边界停下
 ```
 
-用户不需要先证明自己会，也不需要完成 reconstruction 才能继续。
-
-### Training mode
-
-只有用户明确要求训练、自测、模拟面试或无提示复测时，AI 才暂时不解释，更接近真实面试官。
-
-目标：验证反应链路是否已经内化。
-
-Training mode 可以采用 attempt-first、reconstruction、delayed retrieval 和 transfer；可以使用真实问题顺序和 follow-up，但仍然必须顺序 reveal。如果 Source unit 内存在时间片段，也必须遵守 `temporal_cursor`。
-
-重复训练时应逐步撤除 scaffold。建议统一记录 hint level：
-
-```text
-H0 = cold / 无提示
-H1 = 轻量 cue
-H2 = 结构槽位
-H3 = 部分回答骨架
-H4 = worked explanation / 完整讲解
-```
-
-能力提升的方向应表现为：回答质量保持或提高，同时需要的 hint level 不增加。
-
-同一会话内表现变好仍不足以证明 retention；后续应通过 ReviewProgress 做跨时间 delayed retrieval，并用未见过的真实 SourceQuestion variant 验证 transfer。详见 `training-effectiveness-plan.md`。
+用户不需要先证明自己会，也不需要完成额外任务才能继续。AI 应主动承担信息整理、概念桥接和结构压缩成本。
 
 ## 多遍阅读
 
@@ -325,7 +300,7 @@ H4 = worked explanation / 完整讲解
 - Canonical mapping
 - Answer coverage
 - knowledge gap
-- Mock Interview 行为
+- 分析结构在不同真实问法上的适用性
 
 Raw Source 保持不变，理解不断加深。
 
@@ -361,5 +336,5 @@ Source 与 Derived 永远分离。
 Outcome 不自动生成 Cause 或 Weakness。
 理解一次只加深一点。
 每个 learning loop 都有明确停止边界。
-反复练习形成可复用的面试反应链路。
+持续阅读高质量分析，逐渐形成可复用的面试分析框架。
 ```

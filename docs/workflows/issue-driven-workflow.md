@@ -181,7 +181,7 @@ Comment 在精神上是 append-only history，但不是不可变 Raw Evidence。
 
 - close = Source lifecycle 达到稳定 source-ready completion
 - reopen = 只因 Source-level reason
-- 下游 Knowledge / Training 变化继续进行，不 reopen Source case
+- 下游 Knowledge / Exploration 变化继续进行，不 reopen Source case
 
 ## Concurrency 与 Idempotency
 

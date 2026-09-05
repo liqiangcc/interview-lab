@@ -9,7 +9,7 @@ const SCHEMA_VERSION_V3 = 'exploration-session-checkpoint.v3';
 const SUPPORTED_SCHEMA_VERSIONS = new Set([SCHEMA_VERSION_V1, SCHEMA_VERSION_V2, SCHEMA_VERSION_V3]);
 const MARKER_RE = /<!--\s*exploration-session-checkpoint\s*([\s\S]*?)-->/g;
 
-const MODES = new Set(['learning', 'training', 'source-analysis', 'knowledge-audit']);
+const MODES = new Set(['learning', 'source-analysis', 'knowledge-audit']);
 const POSITION_STATUSES = new Set(['active', 'ready-to-close', 'complete', 'deferred']);
 const SESSION_STATUSES = new Set(['active', 'completed']);
 

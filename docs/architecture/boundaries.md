@@ -2,7 +2,7 @@
 
 ## 目的
 
-本文定义第一手面经、派生解释、知识资产、训练状态和 GitHub 工作流元数据之间不可跨越的边界。
+本文定义第一手面经、派生解释、知识资产、连续分析状态和 GitHub 工作流元数据之间不可跨越的边界。
 
 即使后续 OCR、问题提取、Canonical、Analysis 或 Answer 被证明有误，仓库仍必须能够回到第一手证据重新构建。
 
@@ -64,7 +64,7 @@ SourceSequenceManifest
 
 Manifest 只能描述有可辩护顺序的 evidence stream，不能为了获得 position 而把多个没有可靠全局顺序的 artifact 强行拼接。
 
-一旦某个 manifest 被 ExplorationSession v2 通过 `manifest_id + content_sha256` 引用，其历史版本应保持可追溯；如果 segmentation 需要修正，创建新的 manifest version，而不是静默改写历史训练所依赖的 Source frontier。
+一旦某个 manifest 被 ExplorationSession v2 通过 `manifest_id + content_sha256` 引用，其历史版本应保持可追溯；如果 segmentation 需要修正，创建新的 manifest version，而不是静默改写历史分析所依赖的 Source frontier。
 
 ## Layer 2 — Knowledge
 
@@ -85,23 +85,15 @@ Knowledge 回答：
 
 Knowledge 天然允许演化，但绝不能成为回写第一手资料的理由。
 
-## Layer 3 — Training / Review
+## Analysis Runtime — ExplorationSession
 
-Training 回答：
+ExplorationSession 只回答：
 
-> 学习者练过什么、理解了什么、哪里答不上来、哪些反应已经形成？
+> 当前连续分析已经看到哪里、解释到哪一层、为什么在这里停止？
 
-例如：
+它可以记录 Source frontier、Source type、loop phase、temporal cursor、closure 与可复用 finding。
 
-- Guided reading session
-- Mock interview session
-- response-loop 训练
-- knowledge gap
-- ReviewProgress
-- recall performance
-- follow-up failure
-
-Training 是个人化、时间性的状态，不改变 Source 事实，也不改变 Knowledge identity。
+它不是新的事实层，也不保存个人能力评级；它只引用 Raw / Derived / Knowledge 并维护分析连续性。
 
 ## GitHub Issue — 操作界面
 
@@ -127,8 +119,9 @@ Raw Source
 Derived Extraction
     ↓
 Knowledge
-    ↓
-Training / Review
+
+ExplorationSession
+→ 只读取上述层并维护当前分析 frontier
 ```
 
 Issue 可以横跨这些层提供操作入口，但领域事实仍由各自所属层负责。
@@ -139,7 +132,7 @@ Issue 可以横跨这些层提供操作入口，但领域事实仍由各自所�
 
 - Derived 覆盖 Raw Source。
 - SourceSequenceManifest 冒充 Raw 顺序证据。
-- 为了训练方便把多个无可靠先后的 artifact 强拼成一条 Source sequence。
+- 为了学习或分析方便把多个无可靠先后的 artifact 强拼成一条 Source sequence。
 - CanonicalQuestion 改写 SourceQuestion 的原始 wording。
 - Answer 在原面经中直接“纠错”。
 - AI 推断字段伪装成来源明确事实。
