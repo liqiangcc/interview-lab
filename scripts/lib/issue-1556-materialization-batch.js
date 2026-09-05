@@ -209,7 +209,6 @@ function validateProgress(progress, items, expectedPlanSha256 = null) {
   if (!progress || progress.packet_set_sha256 !== PACKET_SET_SHA256) errors.push('progress packet set digest mismatch');
   if (expectedPlanSha256 && progress && progress.plan_sha256 !== expectedPlanSha256) errors.push('progress plan digest mismatch');
   if (!progress || !['planned', 'running', 'failed', 'complete'].includes(progress.status)) errors.push('progress status is invalid');
-  if (progress && progress.possibly_performed === true) errors.push('progress contains unresolved possibly performed mutation');
   const expected = new Map((items || []).map((item) => [String(item.issue_number), item]));
   const actual = progress && progress.items || {};
   if (Object.keys(actual).length !== expected.size) errors.push('progress item count mismatch');
@@ -218,7 +217,6 @@ function validateProgress(progress, items, expectedPlanSha256 = null) {
     if (!state) { errors.push(`progress missing #${key}`); continue; }
     if (state.issue_number !== item.issue_number || state.source_note_id !== item.source_note_id || state.interview_note_id !== item.interview_note_id || state.request_sha256 !== item.request_sha256) errors.push(`progress identity mismatch for #${key}`);
     if (!PHASES.has(state.phase) || !state.intent || state.intent.intent_id !== intentId(item, state.phase) || state.intent.phase !== state.phase) errors.push(`progress intent mismatch for #${key}`);
-    if (state.phase === 'uncertain') errors.push(`progress #${key} is uncertain and requires live reconciliation`);
   }
   return { ok: errors.length === 0, errors };
 }
@@ -238,6 +236,7 @@ function buildMaterializationReceipt(request, owner, projection, packetSetSha256
     source_note_id: request.source_note_id,
     source_note_body_sha256: request.expected_source_note_body_sha256,
     source_revision_id: request.expected_source_revision_id,
+    manifest_sha256: request.expected_manifest_sha256,
     source_repository_ref: request.expected_source_repository_ref,
     interview_note_id: interviewNoteId(request.source_note_id),
     interview_issue_number: Number(owner.number),
@@ -256,6 +255,8 @@ function validateMaterializationReceipt(receipt, request, projection = null) {
     || receipt.source_note_id !== request.source_note_id
     || receipt.source_note_body_sha256 !== request.expected_source_note_body_sha256
     || receipt.source_revision_id !== request.expected_source_revision_id
+    || (receipt.manifest_sha256 ?? null) !== (request.expected_manifest_sha256 ?? null)
+    || (receipt.source_repository_ref ?? null) !== (request.expected_source_repository_ref ?? null)
     || receipt.interview_note_id !== interviewNoteId(request.source_note_id)
     || !Number.isInteger(receipt.interview_issue_number) || receipt.interview_issue_number < 1
     || !/^[0-9a-f]{64}$/.test(String(receipt.interview_body_sha256 || '')))) errors.push('materialization receipt immutable identity mismatch');
@@ -270,7 +271,17 @@ function compareReceiptFacts(left, right) {
 
 function applyBatch({ planResult, packetSet, manifest, transitionRequests, transitionReceipts, evidenceReceipts, progress = null }, options = {}) {
   if (!planResult || !planResult.ok) return { ok: false, errors: ['an approved successful plan is required'], progress };
-  if (planResult.plan_sha256 !== options.expectedPlanSha256) return { ok: false, errors: ['plan digest confirmation mismatch'], progress };
+  if (!Array.isArray(planResult.items) || validateFixedSet(planResult.items, 'plan items').length) return { ok: false, errors: ['apply requires the complete fixed 17-item plan'], progress };
+  const input = validateMaterializationInputs({ packetSet, manifest, transitionRequests, evidenceReceipts, transitionReceipts });
+  if (!input.ok) return { ok: false, errors: input.errors, progress };
+  if (!planResult.report || !Array.isArray(planResult.report.items)) return { ok: false, errors: ['apply requires the canonical plan report'], progress };
+  const canonicalReport = clone(planResult.report);
+  delete canonicalReport.plan_sha256;
+  const recomputedPlanSha256 = sha256Text(canonicalJson(canonicalReport));
+  if (planResult.report.plan_sha256 !== recomputedPlanSha256 || planResult.plan_sha256 !== recomputedPlanSha256 || planResult.plan_sha256 !== options.expectedPlanSha256) return { ok: false, errors: ['plan digest confirmation does not match the canonical fixed-batch report'], progress };
+  if (!same(planResult.report.items, planResult.items)) return { ok: false, errors: ['plan items do not match the canonical report'], progress };
+  if (!options.lock || typeof options.lock.assertHeld !== 'function') return { ok: false, errors: ['apply requires an acquired lock guard'], progress };
+  try { options.lock.assertHeld(); } catch (error) { return { ok: false, errors: [`lock guard rejected apply: ${error.message}`], progress }; }
   if (typeof options.loadLive !== 'function' || typeof options.createInterviewIssue !== 'function' || typeof options.postReceipt !== 'function') return { ok: false, errors: ['apply requires live loader, createInterviewIssue and postReceipt adapters'], progress };
   const items = planResult.items;
   let state = progress || initialProgress(items, planResult.plan_sha256);
@@ -278,8 +289,6 @@ function applyBatch({ planResult, packetSet, manifest, transitionRequests, trans
   if (!valid.ok) return { ok: false, errors: valid.errors, progress: state };
   const requests = new Map((transitionRequests || []).map((request) => [Number(request.issue_number), request]));
   const transitionByIssue = new Map((transitionReceipts || []).map((receipt) => [Number(receipt.issue_number), receipt]));
-  state.status = 'running';
-  if (options.persistProgress) options.persistProgress(state);
   const resultItems = [];
   const mark = (item, phase, extra = {}) => {
     const current = state.items[String(item.issue_number)];
@@ -287,6 +296,74 @@ function applyBatch({ planResult, packetSet, manifest, transitionRequests, trans
     current.intent = makeIntent(item, phase, extra);
     if (options.persistProgress) options.persistProgress(state);
   };
+  // A pending/uncertain journal is an evidence of an earlier mutation attempt,
+  // never permission to POST again. Reconcile it before entering the normal
+  // batch loop; unresolved state remains fail-closed.
+  for (const item of items) {
+    const current = state.items[String(item.issue_number)];
+    if (!current || !['create-pending', 'receipt-pending', 'uncertain'].includes(current.phase)) continue;
+    const transitionRequest = requests.get(item.issue_number);
+    const transitionReceipt = transitionByIssue.get(item.issue_number);
+    if (!transitionRequest || !transitionReceipt) return { ok: false, errors: [`#${item.issue_number}: pending journal input is missing`], progress: state, items: resultItems };
+    const request = buildMaterializationRequest(transitionRequest, transitionReceipt);
+    let gate;
+    try {
+      const live = options.loadLive(request);
+      gate = targetPreflight(packetSet.packets.find((packet) => packet.issue_number === item.issue_number), transitionRequest, transitionReceipt, live, { readBlob: options.readBlob });
+    } catch (error) {
+      state.status = 'failed'; state.possibly_performed = true;
+      if (options.persistProgress) options.persistProgress(state);
+      return { ok: false, errors: [`#${item.issue_number}: pending reconcile failed: ${error.message}`], progress: state, items: resultItems };
+    }
+    if (!gate.ok || gate.owners.length !== 1) {
+      state.status = 'failed'; state.possibly_performed = true;
+      current.phase = 'uncertain';
+      current.intent = makeIntent(item, 'uncertain', { prior_phase: current.intent.phase, prior_intent: current.intent, reconcile_errors: gate.errors || [] });
+      current.result = { status: 'uncertain', mutation_attempted: true, mutation_performed: null, possibly_performed: true, reconcile_errors: gate.errors || [] };
+      if (options.persistProgress) options.persistProgress(state);
+      return { ok: false, errors: [`#${item.issue_number}: pending mutation cannot be confirmed without exactly one owner`], progress: state, items: resultItems };
+    }
+    if (gate.receipts.receipt) {
+      const receipt = buildMaterializationReceipt(request, gate.owners[0], gate.projection);
+      if (!compareReceiptFacts(receipt, gate.receipts.receipt.value)) {
+        state.status = 'failed'; state.possibly_performed = true;
+        current.phase = 'uncertain';
+        current.intent = makeIntent(item, 'uncertain', { prior_phase: current.intent.phase, prior_intent: current.intent, error: 'pending receipt conflicts with live receipt' });
+        if (options.persistProgress) options.persistProgress(state);
+        return { ok: false, errors: [`#${item.issue_number}: pending receipt conflicts with live receipt`], progress: state, items: resultItems };
+      }
+      const confirmed = { ...receipt, comment_id: Number(gate.receipts.receipt.comment.id) };
+      if (options.writeReceipt) options.writeReceipt(request, confirmed);
+      state.mutation_performed = true; state.possibly_performed = false;
+      current.result = { status: 'already-materialized', receipt: confirmed, mutation_attempted: true, mutation_performed: true, possibly_performed: false };
+      mark(item, 'complete', { receipt: confirmed, reconciled: true });
+    } else if (current.intent.prior_phase === 'create-pending' || current.phase === 'create-pending') {
+      // The owner proves the create POST converged. Receipt POST is still a
+      // separate, not-yet-attempted mutation and may proceed once.
+      state.mutation_performed = true; state.possibly_performed = false;
+      mark(item, 'created', { owner_issue_number: Number(gate.owners[0].number), reconciled: true });
+    } else {
+      // A receipt POST may have happened but is not visible. Never retry it.
+      state.status = 'failed'; state.possibly_performed = true;
+      current.phase = 'uncertain';
+      current.intent = makeIntent(item, 'uncertain', { prior_phase: current.intent.phase, prior_intent: current.intent, error: 'receipt pending without a matching live receipt' });
+      if (options.persistProgress) options.persistProgress(state);
+      return { ok: false, errors: [`#${item.issue_number}: receipt mutation cannot be confirmed; refusing duplicate POST`], progress: state, items: resultItems };
+    }
+  }
+  // Re-read every item after pending reconciliation. No mutation begins until
+  // the complete fixed batch has a fresh, successful target gate.
+  for (const item of items) {
+    const transitionRequest = requests.get(item.issue_number);
+    const transitionReceipt = transitionByIssue.get(item.issue_number);
+    const request = buildMaterializationRequest(transitionRequest, transitionReceipt);
+    let gate;
+    try { gate = targetPreflight(packetSet.packets.find((packet) => packet.issue_number === item.issue_number), transitionRequest, transitionReceipt, options.loadLive(request), { readBlob: options.readBlob }); }
+    catch (error) { return { ok: false, errors: [`#${item.issue_number}: full-batch fresh preflight failed: ${error.message}`], progress: state, items: resultItems }; }
+    if (!gate.ok) return { ok: false, errors: gate.errors.map((error) => `#${item.issue_number}: ${error}`), progress: state, items: resultItems };
+  }
+  state.status = 'running';
+  if (options.persistProgress) options.persistProgress(state);
   const failUncertain = (item, phase, message, extra = {}) => {
     state.status = 'failed'; state.mutation_attempted = true; state.possibly_performed = true;
     mark(item, 'uncertain', { prior_phase: phase, error: message, ...extra });
@@ -357,7 +434,9 @@ function applyBatch({ planResult, packetSet, manifest, transitionRequests, trans
     if (!afterGate.ok || !afterGate.receipts.receipt) return failUncertain(item, 'receipt-pending', 'receipt POST did not reconcile to a unique matching live receipt', { reconcile_errors: afterGate.errors });
     const confirmed = buildMaterializationReceipt(request, afterGate.owners[0], afterGate.projection);
     const liveReceipt = { ...confirmed, comment_id: Number(afterGate.receipts.receipt.comment.id) };
-    if (!compareReceiptFacts(liveReceipt, receipt) && !compareReceiptFacts(liveReceipt, afterGate.receipts.receipt.value)) return failUncertain(item, 'receipt-pending', 'live receipt facts differ from the durable receipt intent');
+    if (!compareReceiptFacts(liveReceipt, receipt)) return failUncertain(item, 'receipt-pending', 'live receipt facts differ from the durable receipt intent');
+    const liveReceiptValidation = validateMaterializationReceipt(afterGate.receipts.receipt.value, request, afterGate.projection);
+    if (!liveReceiptValidation.ok) return failUncertain(item, 'receipt-pending', `live receipt validation failed: ${liveReceiptValidation.errors.join('; ')}`);
     if (options.writeReceipt) options.writeReceipt(request, liveReceipt);
     state.mutation_performed = true; state.possibly_performed = false;
     state.items[String(item.issue_number)].result = { status: 'materialized', interview_issue_number: Number(afterGate.owners[0].number), receipt: liveReceipt, mutation_attempted: true, mutation_performed: true, possibly_performed: false };
@@ -417,9 +496,17 @@ function targetPreflight(packet, transitionRequest, transitionReceipt, live, opt
   if (projection && owners.length === 1) {
     const ownerValidation = validateExistingOwnership(owners[0], projection);
     if (!ownerValidation.ok) errors.push(...ownerValidation.errors);
+    const ownerLabels = normalizeLabels(owners[0].labels);
+    if (!ownerLabels.ok) errors.push(...ownerLabels.errors.map((error) => `existing InterviewNote labels invalid: ${error}`));
+    else if (!same([...ownerLabels.labels].sort(), [...projection.labels].sort())) errors.push('existing InterviewNote labels do not exactly match the source-faithful projection');
+    if (sha256Text(owners[0].body || '') !== sha256Text(projection.body)) errors.push('existing InterviewNote body SHA does not exactly match the source-faithful projection');
   }
   const receipts = exactMaterializationReceipts(live && live.comments, buildMaterializationRequest(transitionRequest, transitionReceipt));
   if (!receipts.ok) errors.push(...receipts.errors);
+  if (receipts.receipt && projection) {
+    const receiptValidation = validateMaterializationReceipt(receipts.receipt.value, buildMaterializationRequest(transitionRequest, transitionReceipt), projection);
+    if (!receiptValidation.ok) errors.push(...receiptValidation.errors);
+  }
   return {
     ok: errors.length === 0,
     errors,
@@ -492,6 +579,7 @@ module.exports = {
   FORBIDDEN_SOURCE_LABELS,
   FORBIDDEN_LEARNING_PREFIXES,
   requestSha256,
+  canonicalJson,
   interviewNoteId,
   materializationId,
   buildMaterializationRequest,
