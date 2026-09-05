@@ -210,6 +210,8 @@ function main(argv = process.argv.slice(2), runtime = {}) {
         return ghJson(['api', '--method', 'POST', `repos/${request.repository}/issues/${request.issue_number}/comments`, '--input', '-'], { body: receiptBody(receipt) });
       },
       persistProgress(value) { if (runtime.persistProgress) runtime.persistProgress(value); else durableWriteJson(args.progress, value); },
+      clock: runtime.clock || Date.now,
+      sleep: runtime.sleep || sleepMs,
     });
     const output = {
       schema_version: BATCH_SCHEMA_VERSION,
