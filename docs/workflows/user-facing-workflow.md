@@ -229,11 +229,9 @@ Agent 自动确认当前可用 SourceRevision
 ↓
 Agent 恢复或创建 ExplorationSession
 ↓
-只向用户展示当前 Source
+只向用户展示当前 Source + AI 当前解释层
 ↓
-如果是第一次遇到的 question-like Source：先让用户尝试回答 / 列骨架 / 说不知道
-↓
-再进入当前解释层
+AI 主动结构化 / 解释当前已知信息
 ↓
 等待“下一步 / 提问 / 深入”
 ```
@@ -245,15 +243,15 @@ Agent 恢复或创建 ExplorationSession
 ↓
 当前输入
 ↓
-先自己尝试（question-like）
+AI 先说明它到底在问什么
 ↓
-识别
+整理结构
 ↓
-结构
+解释关键因果 / 必要前提
 ↓
 回答策略 / 学习点
 ↓
-隐藏主要提示后再复述一次
+停在自然边界
 ```
 
 而不是：
@@ -276,17 +274,18 @@ Agent 恢复或创建 ExplorationSession
 
 ```text
 真实 question-like cue
-→ 用户先尝试
-→ AI 再判断 / 给结构 / 解释关键因果
+→ AI 直接判断它在问什么
+→ 给出最清晰的结构
+→ 解释关键因果与必要前提
 → 必要时给最小回答骨架
-→ 隐藏主要 scaffold 后让用户重建一次
+→ 标出当前真正重要的边界
 → 到当前最小闭环就停
 → 等真实下一步
 ```
 
-如果用户明确说“直接讲解 / 直接分析”，可以跳过尝试与重建；但这属于 guided explanation，不应被当作独立作答能力证据。
+默认不要求用户先答题、猜测或复述。用户的最低操作可以始终只是“下一步 / 这里什么意思 / 再深入一点”。
 
-重点是帮助用户形成稳定的“识别 / 组织 / 回答 / 控制深度”能力，而不是把 checkpoint 审计日志、完整知识百科或一次性的标准答案直接暴露为学习体验。
+重点是让 AI 承担信息整理和认知压缩成本，帮助用户形成稳定的“识别 / 组织 / 回答 / 控制深度”能力，而不是把训练步骤、checkpoint 审计日志或完整知识百科变成阅读负担。
 
 训练效果的完整闭环、delayed retrieval 与 transfer 验收见 [`docs/learning/training-effectiveness-plan.md`](../learning/training-effectiveness-plan.md)。
 
@@ -326,8 +325,7 @@ Agent 应自动：
 4. 定位可信 Source；
 5. 解析当前 sequential frontier；
 6. 必要时创建/恢复 ExplorationSession；
-7. 展示第一条可学习输入；
-8. 如果是 question-like Source，默认先等待用户 attempt；用户可以直接回答、只列骨架、说“不知道”，或明确要求“直接讲解”。
+7. 展示第一条可学习输入并直接进入当前有意义的解释层。
 
 只有在真正阻塞时才向用户报告基础设施问题。
 
@@ -355,36 +353,21 @@ Agent 自己负责 checkpoint/history 更新。
 请把 loop_phase 从 classification 改成 knowledge
 ```
 
-### 直接讲解
+### 训练 / 自测
 
-用户说：
+普通阅读默认已经是直接讲解，不需要额外说“直接讲解”。
 
-```text
-直接讲解
-直接分析
-我不会，讲一下
-```
-
-Agent 可以跳过当前 attempt gate，直接进入分层解释。此时应保留：
-
-```text
-本轮 = guided understanding
-≠ unaided ability test
-```
-
-后续如果要验证掌握程度，应重新以 H0/H1 方式复测。
-
-### 考我一下 / 无提示复测
-
-用户说：
+只有用户说：
 
 ```text
 考我一下
+模拟面试
 无提示练习
 复测这道题
+让我自己答
 ```
 
-Agent 应切换到 Training / recall 语义：
+Agent 才切换到 Training / recall 语义：
 
 ```text
 只给当前真实问题
@@ -394,7 +377,7 @@ Agent 应切换到 Training / recall 语义：
 → checkpoint 后再给反馈
 ```
 
-如果是重复训练，优先降低 hint level，而不是重复展示同一套讲解。
+Training 可以使用 reconstruction、hint level、delayed retrieval 和 transfer；这些都属于可选训练机制，不改变普通 Learning 的低摩擦默认。
 
 ### 深入
 
@@ -414,7 +397,7 @@ vs
 General knowledge expansion
 ```
 
-### 复述 / Reconstruction
+### 可选复述 / Reconstruction
 
 用户说：
 
