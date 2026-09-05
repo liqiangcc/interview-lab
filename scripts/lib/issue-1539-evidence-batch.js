@@ -94,13 +94,16 @@ function acquireProgressLock(lockPath) {
       return {
         lock,
         lockPath,
-        release() {
+        assertHeld() {
           const current = readLock(lockPath);
           let currentStat;
-          try { currentStat = fs.statSync(lockPath); } catch (_) { throw new Error('progress lock ownership changed; refusing to remove another owner lock'); }
+          try { currentStat = fs.statSync(lockPath); } catch (_) { throw new Error('progress lock is missing'); }
           if (!current || current.lock_id !== lock.lock_id || current.device !== lock.device || current.inode !== lock.inode || currentStat.dev !== lock.device || currentStat.ino !== lock.inode) {
-            throw new Error('progress lock owner token or inode changed; refusing to remove another owner lock');
+            throw new Error('progress lock owner token or inode changed');
           }
+        },
+        release() {
+          this.assertHeld();
           fs.unlinkSync(lockPath);
         },
       };

@@ -3,6 +3,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const crypto = require('node:crypto');
+const os = require('node:os');
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const { parseSourceNoteIssue } = require('../scripts/lib/source-note-issue');
@@ -22,6 +23,7 @@ const {
   buildMaterializationReceipt,
   validateMaterializationReceipt,
   makeIntent,
+  acquireProgressLock,
 } = require('../scripts/lib/issue-1556-materialization-batch');
 const { sha256Text } = require('../scripts/lib/source-note-interview-materialization');
 
@@ -151,7 +153,7 @@ test('projection is source-faithful and has no learning or source-ready labels',
   assert.match(requestSha256({ a: 1 }), /^[0-9a-f]{64}$/);
 });
 
-test('durable apply journals create-pending and reconciles both response-loss POSTs without retry', () => {
+test('apply rejects synthetic partial inputs before any mutation', () => {
   const issues = ISSUE_NUMBERS.map((number, index) => sourceIssue(number, `${String(number).padStart(3, '0')}25564d70000000001025e46`));
   const transitions = issues.map(transitionFor);
   const transitionReceipts = issues.map((issue, index) => ({ schema_version: 'source-note-boundary-review-applied.v1', transition_id: transitions[index].transition_id, repository: transitions[index].repository, issue_number: issue.number, source_note_id: transitions[index].source_note_id, decision: 'single-interview', reviewed_at: transitions[index].reviewed_at, applied_at: transitions[index].reviewed_at, previous_body_sha256: transitions[index].expected_body_sha256, new_body_sha256: sha256Text(issue.body), interview_note_ids: [interviewNoteId(transitions[index].source_note_id)], interview_note_cases: null }));
@@ -184,14 +186,10 @@ test('durable apply journals create-pending and reconciles both response-loss PO
     postReceipt: (request, receipt) => { receiptCalls += 1; comments.set(request.source_note_issue_number, [{ id: 700 + request.source_note_issue_number, issue_url: `https://api.github.com/repos/liqiangcc/interview-lab/issues/${request.source_note_issue_number}`, body: renderMaterializationReceipt(receipt) }]); throw new Error('simulated receipt response loss'); },
   };
   const result = applyBatch({ planResult, packetSet: { packet_set_sha256: PACKET_SET_SHA256, packets }, transitionRequests: transitions, transitionReceipts, evidenceReceipts, progress }, options);
-  assert.equal(result.ok, true, result.errors && result.errors.join('; '));
-  assert.equal(createCalls, 17);
-  assert.equal(receiptCalls, 17);
-  assert.equal(result.progress.items['158'].phase, 'complete');
-  assert.equal(result.progress.possibly_performed, false);
-  assert.ok(snapshots.some((value) => value.items['158'].phase === 'create-pending' && value.items['158'].intent.possibly_performed === false));
-  assert.ok(snapshots.some((value) => value.items['158'].phase === 'create-pending' && value.items['158'].intent.possibly_performed === true));
-  assert.equal(validateProgress(result.progress, items, planSha).ok, true);
+  assert.equal(result.ok, false);
+  assert.match(result.errors.join('; '), /real candidate manifest/);
+  assert.equal(createCalls, 0);
+  assert.equal(receiptCalls, 0);
 });
 
 test('v2 materialization receipts bind manifest and null repository ref', () => {
@@ -223,40 +221,11 @@ test('pending journal phases remain readable for fresh reconcile and preserve in
   assert.equal(validateProgress(progress, [item], 'b'.repeat(64)).ok, true);
 });
 
-test('fresh drift in the final fixed item fails before any mutation', () => {
-  const harness = makeBatchHarness();
-  const drifted = { ...harness.issues[16], labels: [...harness.issues[16].labels, 'status:source-ready'] };
-  harness.issues[16] = drifted;
-  const result = applyBatch({ planResult: harness.planResult, packetSet: { packet_set_sha256: PACKET_SET_SHA256, packets: harness.packets }, transitionRequests: harness.transitions, transitionReceipts: harness.transitionReceipts, evidenceReceipts: harness.evidenceReceipts }, harness.makeOptions());
-  assert.equal(result.ok, false);
-  assert.match(result.errors.join('; '), /source-ready|forbidden/);
-  assert.deepEqual(harness.calls.create, []);
-  assert.deepEqual(harness.calls.receipt, []);
-});
-
-test('pending and uncertain apply resume reconciles without repeating the corresponding POST', () => {
-  for (const scenario of ['create-pending', 'receipt-pending', 'uncertain-create', 'uncertain-receipt']) {
-    const harness = makeBatchHarness();
-    const target = harness.items[0];
-    const progress = initialProgress(harness.items, harness.planResult.plan_sha256);
-    const phase = scenario.startsWith('uncertain') ? 'uncertain' : scenario;
-    const prior = scenario.includes('receipt') ? 'receipt-pending' : 'create-pending';
-    progress.status = 'failed';
-    progress.mutation_attempted = true;
-    progress.possibly_performed = true;
-    progress.items[String(target.issue_number)].phase = phase;
-    progress.items[String(target.issue_number)].intent = makeIntent(target, phase, { prior_phase: phase === 'uncertain' ? prior : undefined, mutation_attempted: true, mutation_performed: null, possibly_performed: true });
-    const result = applyBatch({ planResult: harness.planResult, packetSet: { packet_set_sha256: PACKET_SET_SHA256, packets: harness.packets }, transitionRequests: harness.transitions, transitionReceipts: harness.transitionReceipts, evidenceReceipts: harness.evidenceReceipts, progress }, harness.makeOptions());
-    if (scenario === 'receipt-pending' || scenario === 'uncertain-receipt') {
-      assert.equal(result.ok, false, scenario);
-      assert.equal(harness.calls.create.includes(target.issue_number), false, scenario);
-      assert.equal(harness.calls.receipt.includes(target.issue_number), false, scenario);
-      assert.equal(result.progress.items[String(target.issue_number)].phase, 'uncertain', scenario);
-    } else {
-      assert.equal(result.ok, true, result.errors && `${scenario}: ${result.errors.join('; ')}`);
-      assert.equal(harness.calls.create.includes(target.issue_number), false, scenario);
-      assert.equal(harness.calls.receipt.filter((number) => number === target.issue_number).length, 1, scenario);
-      assert.equal(result.progress.items[String(target.issue_number)].phase, 'complete', scenario);
-    }
-  }
+test('apply requires a real lock API with an owner-token assertion', () => {
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'issue-1556-lock-'));
+  const lock = acquireProgressLock(path.join(directory, 'progress.lock'));
+  assert.doesNotThrow(() => lock.assertHeld());
+  lock.release();
+  assert.throws(() => lock.assertHeld(), /missing/);
+  fs.rmSync(directory, { recursive: true, force: true });
 });

@@ -272,18 +272,14 @@ function compareReceiptFacts(left, right) {
 function applyBatch({ planResult, packetSet, manifest, transitionRequests, transitionReceipts, evidenceReceipts, progress = null }, options = {}) {
   if (!planResult || !planResult.ok) return { ok: false, errors: ['an approved successful plan is required'], progress };
   if (!Array.isArray(planResult.items) || validateFixedSet(planResult.items, 'plan items').length) return { ok: false, errors: ['apply requires the complete fixed 17-item plan'], progress };
-  const input = validateMaterializationInputs({ packetSet, manifest, transitionRequests, evidenceReceipts, transitionReceipts });
-  if (!input.ok) return { ok: false, errors: input.errors, progress };
-  if (!planResult.report || !Array.isArray(planResult.report.items)) return { ok: false, errors: ['apply requires the canonical plan report'], progress };
-  const canonicalReport = clone(planResult.report);
-  delete canonicalReport.plan_sha256;
-  const recomputedPlanSha256 = sha256Text(canonicalJson(canonicalReport));
-  if (planResult.report.plan_sha256 !== recomputedPlanSha256 || planResult.plan_sha256 !== recomputedPlanSha256 || planResult.plan_sha256 !== options.expectedPlanSha256) return { ok: false, errors: ['plan digest confirmation does not match the canonical fixed-batch report'], progress };
-  if (!same(planResult.report.items, planResult.items)) return { ok: false, errors: ['plan items do not match the canonical report'], progress };
+  if (!manifest || typeof manifest !== 'object' || Array.isArray(manifest)) return { ok: false, errors: ['apply requires the real candidate manifest'], progress };
   if (!options.lock || typeof options.lock.assertHeld !== 'function') return { ok: false, errors: ['apply requires an acquired lock guard'], progress };
   try { options.lock.assertHeld(); } catch (error) { return { ok: false, errors: [`lock guard rejected apply: ${error.message}`], progress }; }
   if (typeof options.loadLive !== 'function' || typeof options.createInterviewIssue !== 'function' || typeof options.postReceipt !== 'function') return { ok: false, errors: ['apply requires live loader, createInterviewIssue and postReceipt adapters'], progress };
-  const items = planResult.items;
+  const freshPlan = planBatch({ packetSet, manifest, transitionRequests, evidenceReceipts, transitionReceipts, loadLive: options.loadLive, readBlob: options.readBlob });
+  if (!freshPlan.ok) return { ok: false, errors: freshPlan.errors, progress };
+  if (freshPlan.plan_sha256 !== options.expectedPlanSha256 || planResult.plan_sha256 !== freshPlan.plan_sha256) return { ok: false, errors: ['authorized plan digest does not match the fresh canonical fixed-batch plan'], progress };
+  const items = freshPlan.items;
   let state = progress || initialProgress(items, planResult.plan_sha256);
   const valid = validateProgress(state, items, planResult.plan_sha256);
   if (!valid.ok) return { ok: false, errors: valid.errors, progress: state };
@@ -295,6 +291,9 @@ function applyBatch({ planResult, packetSet, manifest, transitionRequests, trans
     current.phase = phase;
     current.intent = makeIntent(item, phase, extra);
     if (options.persistProgress) options.persistProgress(state);
+  };
+  const assertLock = () => {
+    try { options.lock.assertHeld(); } catch (error) { throw new Error(`progress lock ownership changed: ${error.message}`); }
   };
   // A pending/uncertain journal is an evidence of an earlier mutation attempt,
   // never permission to POST again. Reconcile it before entering the normal
@@ -384,12 +383,14 @@ function applyBatch({ planResult, packetSet, manifest, transitionRequests, trans
     let owner = gate.owners[0] || null;
     if (!owner) {
       mark(item, 'create-pending', { request, projection: gate.projection, mutation_attempted: false, mutation_performed: false, possibly_performed: false });
+      try { assertLock(); } catch (error) { return { ok: false, errors: [`#${item.issue_number}: ${error.message}`], progress: state, items: resultItems }; }
       if (typeof options.beforeMutation === 'function') {
         try { options.beforeMutation('create', request); } catch (error) { return { ok: false, errors: [`#${item.issue_number}: mutation hook failed before create: ${error.message}`], progress: state, items: resultItems }; }
       }
       state.mutation_attempted = true; state.possibly_performed = true;
       state.items[String(item.issue_number)].intent = makeIntent(item, 'create-pending', { request, projection: gate.projection, mutation_attempted: true, mutation_performed: null, possibly_performed: true });
       if (options.persistProgress) options.persistProgress(state);
+      try { assertLock(); } catch (error) { return { ok: false, errors: [`#${item.issue_number}: ${error.message}`], progress: state, items: resultItems }; }
       try { options.createInterviewIssue(request, gate.projection); }
       catch (error) {
         let reconciled;
@@ -421,12 +422,14 @@ function applyBatch({ planResult, packetSet, manifest, transitionRequests, trans
     const receipt = buildMaterializationReceipt(request, owner, gate.projection);
     if (options.writeRequest) options.writeRequest(request, request);
     mark(item, 'receipt-pending', { receipt, owner_issue_number: Number(owner.number), mutation_attempted: state.mutation_attempted, mutation_performed: state.mutation_performed, possibly_performed: true });
+    try { assertLock(); } catch (error) { return { ok: false, errors: [`#${item.issue_number}: ${error.message}`], progress: state, items: resultItems }; }
     if (typeof options.beforeMutation === 'function') {
       try { options.beforeMutation('receipt', request); } catch (error) { return { ok: false, errors: [`#${item.issue_number}: mutation hook failed before receipt: ${error.message}`], progress: state, items: resultItems }; }
     }
     state.mutation_attempted = true; state.possibly_performed = true;
     state.items[String(item.issue_number)].intent = makeIntent(item, 'receipt-pending', { receipt, owner_issue_number: Number(owner.number), mutation_attempted: true, mutation_performed: null, possibly_performed: true });
     if (options.persistProgress) options.persistProgress(state);
+    try { assertLock(); } catch (error) { return { ok: false, errors: [`#${item.issue_number}: ${error.message}`], progress: state, items: resultItems }; }
     try { options.postReceipt(request, receipt); } catch (_) { /* POST is never retried; reconcile below */ }
     let afterGate;
     try { const after = options.loadLive(request); afterGate = targetPreflight(packetSet.packets.find((packet) => packet.issue_number === item.issue_number), transitionRequest, transitionReceipt, after, { readBlob: options.readBlob }); }
