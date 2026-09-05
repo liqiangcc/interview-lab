@@ -271,6 +271,23 @@ AI 主动结构化 / 解释当前已知信息
 
 正常 Learning mode 的用户可见分析必须遵循 [`docs/learning/interview-analysis-style.md`](../learning/interview-analysis-style.md)。
 
+### 开始时提示当前分析风格
+
+开始一篇新的真实面经分析时，Agent 应在第一次正式分析前提示一次当前风格。用户未指定时，不增加选择步骤，直接采用默认：
+
+```text
+本次分析风格：Golden Style（原始逐步推导）。
+你只需要继续说“下一步”；如需切换风格，可以随时直接说明。
+```
+
+同一连续 session 中，后续“下一步”不重复提示。fresh conversation 恢复已有 session 时，如果能够确认原风格，提示：
+
+```text
+已恢复分析风格：Golden Style（原始逐步推导）。
+```
+
+如果用户显式切换到另一种已经正式定义的风格，则在切换时提示一次新的风格名称。风格提示只说明“这次怎么分析”，不能改变 Source frontier、no-look-ahead 或 provenance 边界。
+
 默认节奏是：
 
 ```text
@@ -327,7 +344,10 @@ Agent 应自动：
 4. 定位可信 Source；
 5. 解析当前 sequential frontier；
 6. 必要时创建/恢复 ExplorationSession；
-7. 展示第一条可学习输入并直接进入当前有意义的解释层。
+7. 提示本次采用的分析风格；
+8. 展示第一条可学习输入并直接进入当前有意义的解释层。
+
+这里的风格提示不能变成“先让用户选模式”的新门槛；未指定时直接采用 Golden Style（原始逐步推导）。
 
 只有在真正阻塞时才向用户报告基础设施问题。
 
@@ -363,17 +383,41 @@ Agent 自己负责 checkpoint/history 更新。
 再深入一点
 ```
 
-Agent 只在当前 Source-backed depth frontier 内继续。
-
-如果继续展开已经主要由一般知识驱动，应明确区分：
+默认语义：
 
 ```text
-Source-backed learning
-vs
-General knowledge expansion
+仍然保持当前 Source frontier
+↓
+只把当前问题或当前知识节点向下展开一层
+↓
+不提前 reveal 下一条真实 Source
 ```
 
-### 复盘 / 沉淀
+### 这里什么意思
+
+用户说：
+
+```text
+这里什么意思？
+```
+
+Agent 优先围绕当前已 reveal 的 Source 和已经建立的解释，把歧义点讲清楚。
+
+除非用户明确要求，不切换到整个题目的完整答案。
+
+### 这个怎么回答
+
+用户说：
+
+```text
+这个怎么回答？
+```
+
+Agent 可以在当前 Source 已允许的范围内，把已经建立的分析压缩成一个现场可执行的回答骨架。
+
+不因为进入 answer mode 就读取未来 Source。
+
+### 复盘
 
 用户说：
 
@@ -381,199 +425,129 @@ General knowledge expansion
 复盘一下
 ```
 
-Agent 可以汇总本 session 的 reusable findings，但：
+Agent 可以回看已经揭示的内容：
 
 ```text
-Exploration finding
-≠
-自动修改 CanonicalQuestion / Analysis / Answer
+Source cues
+↓
+建立过的结构
+↓
+关键 reasoning
+↓
+当前 knowledge gaps
+↓
+可复用 finding
 ```
 
-真正 promotion 仍走相应 domain operation。
+但不能把尚未揭示的未来内容作为复盘材料。
 
-## Non-spoiler Issue projection
+## 恢复已有学习会话
 
-原始标题属于 Source，应原样保存。
-
-Issue display title 则是 Derived projection，应优先使用：
+用户在 fresh conversation 中说：
 
 ```text
-[公司] 岗位族 · 招聘类型 · 轮次 · 面试时间 · short-id
+继续 Issue #3
 ```
 
-例如：
+Agent 应优先恢复已有 ExplorationSession，而不是新开一套学习状态。
+
+对用户只展示：
 
 ```text
-Raw title:
-9.18快手五战二面凉经
-
-Issue title:
-[快手] 后端 · 校招 · 二面 · 09-18 · 6508552c
+已恢复：快手后端二面
+当前进度：HTTP 请求 / TCP 连接关系
+继续从这里分析。
 ```
 
-这样用户可以从 Issue 列表选择学习样本，而不会因为标题中的“凉经 / offer / 挂了”等字样提前知道结果。
+必要的 review identity、checkpoint、history validation 在后台完成。
 
-## 基础设施何时应该暴露
-
-默认不展示 machine ID 和 validator 细节。
-
-只有以下情况需要升级可见性：
-
-### A. 用户主动要求审计
-
-例如：
+如果恢复失败，用户看到的是一个真实 blocker：
 
 ```text
-为什么你说这是校招？
-为什么你说现在读到这里？
-这个分段怎么来的？
-检查一下 no-look-ahead 是否真的成立
+当前无法证明应从哪个 Source frontier 继续，所以我不会猜位置或提前读取后文。
 ```
 
-此时可以展示：
+而不是内部 schema dump。
+
+## 阻塞时怎么表现
+
+只有真实 correctness/provenance blocker 才阻塞用户：
+
+- Source 不可访问；
+- Source identity 不可证明；
+- approved review 与 checkpoint 冲突；
+- 无法确定 current frontier；
+- 必须的 validator 失败且无法证明 no-look-ahead。
+
+纯 runtime 噪声不应变成用户 blocker，例如：
+
+- 某个 label 还没同步但 Issue 身份明确；
+- 某个展示字段缺省但不影响 Source frontier；
+- 某个 optional derived artifact 尚未生成；
+- 用户没有手工指定 manifest/review/checkpoint ID。
+
+## 用户主动表达理解
+
+如果用户主动说：
 
 ```text
-InterviewContext evidence basis
-SourceRevision
-Manifest / Unit / Fragment
-Review
-Checkpoint / History evidence
+我觉得 HTTP 请求就是一个 TCP 连接
 ```
 
-### B. 运行时阻塞
-
-例如：
+Agent 不要忽略这个表达重新讲一遍完整答案，而是：
 
 ```text
-InterviewContext 未审核
-Raw Source 不完整
-Manifest 未审核
-SourceRevision 冲突
-Review 已变更导致 active session stale
+保留当前 Source frontier
+↓
+判断这条理解覆盖了什么
+↓
+指出最关键缺口
+↓
+解释为什么这个缺口重要
+↓
+给一个更稳定的结构
 ```
 
-用户只需要先看到可行动的高层状态，再在需要排障时展开具体 machine reason。
+用户的表达属于对话上下文，不自动成为 Source 或 CanonicalAnswer。
 
-### C. 用户正在开发 Interview Lab 本身
+## 什么时候才展示底层机制
 
-如果当前任务就是设计 schema、validator、review lifecycle、CI，则 runtime infrastructure 本身就是工作对象，可以完整暴露。
+只有以下情况才展开 runtime 细节：
 
-## 用户可见错误语言
+1. 用户明确要求审计 provenance；
+2. 当前任务本身是开发 Interview Lab；
+3. 出现 blocker，需要解释为什么不能继续；
+4. 需要证明某个 review/checkpoint 是否 stale；
+5. 需要人为处理 Source mapping 歧义。
 
-内部错误：
+其他时候，把复杂度留在系统内部。
 
-```text
-source_review_id != current effective review
-```
+## 验收标准
 
-用户默认应看到：
+一个合格的用户体验应该满足：
 
-```text
-当前学习会话依赖的 Source 审核版本已经过期，不能继续沿用旧会话。
-```
+- 用户可以用 `company / role / round` 快速筛选面经；
+- 用户看到的是 reviewed、non-spoiler context；
+- 一次只看到当前真实输入；
+- AI 基于当前输入做高质量逐层分析；
+- 用户主要通过“下一步 / 提问 / 深入 / 复盘”推进；
+- 题目之间保持逻辑连续，不要求用户自己拼上下文；
+- 结论由可见线索、必要前提、中间判断、关键因果和条件边界自然推出；
+- 不要求用户为了普通学习先答题、自测、复述或评分；
+- runtime/provenance 正确性由后台机制保护；
+- Outcome 在时间线走到之前保持 sealed；
+- 后续新机制只有真实 Pilot 暴露 correctness 问题时才增加。
 
-内部错误：
-
-```text
-source_fragment_id regressed
-```
-
-用户默认应看到：
-
-```text
-当前学习位置出现顺序冲突，系统已停止继续推进以避免偷看或回退。
-```
-
-原则：
-
-> 先说明“对学习意味着什么”，再在需要时展开机器原因。
-
-## 复杂度预算
-
-新增 runtime 对象或 machine contract 时必须问：
+最终用户心智模型应该稳定为：
 
 ```text
-它是否解决了真实 correctness / provenance / concurrency 问题？
+选真实面经
 ↓
-如果是
-它能否隐藏在 runtime 下？
+看当前输入
 ↓
-如果可以
-不要增加新的用户日常操作
-```
-
-默认规则：
-
-> **Backend complexity must not become user workflow complexity.**
-
-新增一个 validator、schema 或内部 identity，不应自动增加一个用户命令。
-
-## 新机制的进入门槛
-
-以后再增加底层机制，需要至少满足一个条件：
-
-- 真实 Pilot 已暴露可复现 correctness bug；
-- 会破坏 Raw / Derived separation；
-- 会破坏 no-look-ahead；
-- 会导致历史不可复现；
-- 会导致并发 / stale write 覆盖新状态；
-- 会使正式知识 mutation 缺少授权边界。
-
-仅仅因为“理论上还能再加一层证明”，不足以继续扩张 runtime。
-
-## 系统停止继续向下复杂化的原则
-
-当前已有严格 runtime 足以覆盖首个真实 Pilot 暴露的主要 Source-first 风险。
-
-默认优先：
-
-```text
-录入更多真实面经
+让 AI 一层一层把它讲清楚
 ↓
-先形成 reviewed InterviewContext 与学习标签
+继续下一步
 ↓
-用 Label 选择真实学习样本
-↓
-继续 source-first 学习
-↓
-验证分析质量 / 逻辑连续性 / 理解摩擦
-↓
-验证知识沉淀质量
-↓
-只有真实失败再扩展底层协议
-```
-
-## 成功标准
-
-对于普通学习者，Interview Lab 应最终表现为：
-
-```text
-我筛一组想看的面经
-↓
-我选一篇
-↓
-AI 告诉我非剧透基础信息
-↓
-AI 陪我一点一点读
-↓
-我不断说“下一步”或提问
-↓
-AI 把当前信息的结构、因果和边界讲清楚
-↓
-有价值的东西被安全沉淀
-```
-
-如果用户必须理解大量 manifest/review/checkpoint/transition 才能完成普通学习，说明系统虽然技术上更严格，但产品边界失败。
-
-## 核心原则
-
-```text
-先把面经变成可筛选学习样本。
-学习前 Context 可见，Outcome sealed。
-用户操作简单。
-领域边界清楚。
-Runtime 可以严格。
-基础设施默认隐藏。
-真正阻塞才升级可见性。
-真实 Pilot 决定是否增加复杂度。
+长期积累可复用分析能力
 ```
