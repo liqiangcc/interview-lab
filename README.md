@@ -1,8 +1,8 @@
 # Interview Lab
 
-Interview Lab 是一个以真实面经为第一手资料、由 AI 陪伴持续拆解、训练和沉淀的面试学习实验室。
+Interview Lab 是一个以真实面经为第一手资料、由 AI 持续做高质量、低摩擦、逐层分析并沉淀知识的面试学习实验室。
 
-项目不把面经当作一次性 ETL 输入。真实面经会被长期保留，并持续驱动问题提取、知识建设、答案准备、模拟面试和复盘。
+项目不把面经当作一次性 ETL 输入。真实面经会被长期保留，并持续驱动问题提取、知识建设、答案准备、逐层分析和复盘。
 
 ## 日常使用
 
@@ -41,13 +41,13 @@ AI 展示非剧透基础信息
 ↓
 AI 展示当前真实输入
 ↓
-一点一点理解 / 回答 / 追问
+AI 一点一点分析当前已知信息
 ↓
 用户说“下一步”继续
 ↓
 有价值的知识安全沉淀
 ↓
-以后再次训练
+以后继续回看 / 深挖
 ```
 
 常见交互只需要：
@@ -84,7 +84,7 @@ SourceRevision、SourceSequenceManifest、SourceSequenceReview、checkpoint/hist
         ↓
 准备答案 Answer
         ↓
-训练 / 复盘 Training / Review
+分析 / 复盘 Analysis / Review
 ```
 
 `InterviewContext` 负责学习发现与 non-spoiler 基础信息；它不替代 Source，也不包含提前泄漏的 Outcome。
@@ -99,7 +99,7 @@ SourceRevision、SourceSequenceManifest、SourceSequenceReview、checkpoint/hist
 6. **先把录入面经变成可筛选学习样本。** Reviewed InterviewContext 驱动 Learning Discovery Labels；Unknown 不猜，Outcome 不剧透。
 7. **逐步学习禁止偷看未来。** 当前步骤只能使用已经揭示的历史上下文和当前输入。
 8. **一点一点拆解。** 一篇一篇读，一次一个输入，一次一个解释层。
-9. **目标是形成面试反应链路，而不是背答案。** 训练识别问题、定位知识、组织回答、判断深度、预判追问和根据新信息更新判断。
+9. **核心是 AI 层层分析质量，而不是背答案或刻意练习。** AI 应持续展示如何识别问题、定位知识、组织因果、判断深度、预判合理下钻方向，并根据新信息更新判断；用户通过长期阅读这些高质量分析自然吸收方法。
 10. **同一篇面经可以反复挖掘。** Source 保持稳定，ExplorationSession 可以不断增加。
 11. **重要状态由 Validator 证明。** Label 只是状态投影，不能替代领域验证。
 12. **底层复杂度不能变成用户复杂度。** 新 schema、validator 或 runtime identity 默认隐藏，不自动增加用户日常操作。
@@ -110,7 +110,7 @@ SourceRevision、SourceSequenceManifest、SourceSequenceReview、checkpoint/hist
 - **Source**：真实面经、原始页面、图片、来源身份和 SourceRevision。
 - **Extraction / Discovery**：InterviewContext、OCR、SourceQuestion、问题边界、顺序和结构解释。
 - **Knowledge**：CanonicalQuestion、关系、Analysis、Answer 和证据映射。
-- **Training**：逐步学习、Mock Interview、ReviewProgress、知识缺口和反复训练。
+- **Exploration**：ExplorationSession 只维护当前 Source frontier、解释层、closure 与可复用 finding，保证跨会话连续分析。
 - **Issues**：AI / 人的操作界面和工作流控制面；Learning Discovery Labels 用于筛选真实面经。
 - **Runtime Infrastructure**：Manifest、Review、Checkpoint、Validator、staleness 等正确性机制；默认不进入学习者日常操作面。
 
@@ -174,7 +174,7 @@ AI 识别它到底在问什么
 
 也就是：未来面经内容和 Outcome 不得反向影响当前步骤的理解。
 
-面向用户的分析表达统一遵循 `docs/learning/interview-analysis-style.md`：Learning 默认由 AI 基于当前已知信息主动做高质量、低摩擦分析；只有用户明确要求自测、模拟面试或无提示复测时才进入 Training。可选训练效果计划见 `docs/learning/training-effectiveness-plan.md`。
+面向用户的分析表达统一遵循 `docs/learning/interview-analysis-style.md`：AI 基于当前已知信息主动做高质量、低摩擦、逻辑连续的逐层分析；用户不需要额外完成自测、复述或评分流程。
 
 ## 仓库语言
 
@@ -206,7 +206,6 @@ AI 识别它到底在问什么
 - `docs/workflows/issue-1539-boundary-expansion.md`
 - `docs/learning/source-first-reading.md`
 - `docs/learning/interview-analysis-style.md`
-- `docs/learning/training-effectiveness-plan.md`
 - `docs/learning/exploration-sessions.md`
 - `docs/migration/xhs-source-migration.md`
 - `docs/validation/invariants.md`
@@ -223,8 +222,8 @@ AI 识别它到底在问什么
 → 录入后完成 InterviewContext / Learning Labels
 → 用户从 Issue 池筛选学习样本
 → 验证学习体验
+→ 验证分析质量 / 逻辑连续性 / 理解摩擦
 → 验证知识沉淀质量
-→ 验证训练效果
 → 真实失败暴露新问题时再扩展底层协议
 ```
 
