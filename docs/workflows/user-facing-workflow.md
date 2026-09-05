@@ -15,11 +15,11 @@ Interview Lab 的底层可以复杂，但用户日常使用必须简单。
 ↓
 理解当前输入
 ↓
-练习回答与追问
+AI 层层分析结构 / 因果 / 边界
 ↓
 沉淀可复用知识
 ↓
-以后再次训练
+继续下一条真实信息
 ```
 
 底层机制的职责是保护这个体验，而不是成为用户必须学习的新工作流。
@@ -92,7 +92,7 @@ Unknown 不生成学习标签；结果不进入普通学习发现标签。
 
 因此 Issue 列表的职责是回答：
 
-> 我今天想练哪一类真实面试？
+> 我今天想分析哪一类真实面试？
 
 而不是提前告诉用户这篇面经最后有没有通过。
 
@@ -105,7 +105,7 @@ Unknown 不生成学习标签；结果不进入普通学习发现标签。
 ↓
 当前输入
 ↓
-学习 / 回答 / 追问
+学习 / 分析 / 深入
 ↓
 沉淀
 ```
@@ -146,7 +146,7 @@ validator command
 - 当前是哪篇 InterviewNote；
 - non-spoiler InterviewContext；
 - 当前真实 Source 输入；
-- 当前解释 / 训练内容；
+- 当前解释 / 分析内容；
 - 当前是继续、深入、复盘还是完成；
 - 有价值的知识沉淀结果；
 - 真正需要用户决策的阻塞或歧义。
@@ -160,7 +160,7 @@ Pre-learning Context
 ↓
 Current Source
 ↓
-Learn / Answer / Train
+Learn / Analyze / Deepen
 ↓
 Next
 ```
@@ -177,7 +177,6 @@ CanonicalQuestion
 Analysis
 Answer
 ExplorationSession
-ReviewProgress
 ```
 
 这是领域模型，不应该成为每一步学习都必须操作的 UI。
@@ -285,9 +284,7 @@ AI 先说明它到底在问什么
 
 默认不要求用户先答题、猜测或复述。用户的最低操作可以始终只是“下一步 / 这里什么意思 / 再深入一点”。
 
-重点是让 AI 承担信息整理和认知压缩成本，帮助用户形成稳定的“识别 / 组织 / 回答 / 控制深度”能力，而不是把训练步骤、checkpoint 审计日志或完整知识百科变成阅读负担。
-
-训练效果的完整闭环、delayed retrieval 与 transfer 验收见 [`docs/learning/training-effectiveness-plan.md`](../learning/training-effectiveness-plan.md)。
+重点是让 AI 承担信息整理和认知压缩成本，持续输出逻辑连贯的“识别 / 组织 / 因果 / 回答 / 边界”分析，而不是把额外流程、checkpoint 审计日志或完整知识百科变成阅读负担。
 
 ## 默认 Agent 行为
 
@@ -296,7 +293,7 @@ AI 先说明它到底在问什么
 用户说：
 
 ```text
-我想练快手后端二面
+我想看快手后端二面
 ```
 
 Agent 应优先使用 Learning Discovery Labels 查询：
@@ -353,32 +350,6 @@ Agent 自己负责 checkpoint/history 更新。
 请把 loop_phase 从 classification 改成 knowledge
 ```
 
-### 训练 / 自测
-
-普通阅读默认已经是直接讲解，不需要额外说“直接讲解”。
-
-只有用户说：
-
-```text
-考我一下
-模拟面试
-无提示练习
-复测这道题
-让我自己答
-```
-
-Agent 才切换到 Training / recall 语义：
-
-```text
-只给当前真实问题
-→ 默认不展示旧 analysis / answer skeleton
-→ 等用户回答
-→ 必要时沿真实 follow-up 继续
-→ checkpoint 后再给反馈
-```
-
-Training 可以使用 reconstruction、hint level、delayed retrieval 和 transfer；这些都属于可选训练机制，不改变普通 Learning 的低摩擦默认。
-
 ### 深入
 
 用户说：
@@ -395,24 +366,6 @@ Agent 只在当前 Source-backed depth frontier 内继续。
 Source-backed learning
 vs
 General knowledge expansion
-```
-
-### 可选复述 / Reconstruction
-
-用户说：
-
-```text
-我重新答一遍
-让我自己复述
-```
-
-Agent 暂时隐藏主要 scaffold，让用户重新从问题 cue 组织第一轮回答；反馈优先比较：
-
-```text
-原 attempt
-→ AI 讲解后的 reconstruction
-→ 哪些结构已经可以独立取回
-→ 哪些仍依赖提示
 ```
 
 ### 复盘 / 沉淀
@@ -578,7 +531,9 @@ source_fragment_id regressed
 ↓
 继续 source-first 学习
 ↓
-验证知识沉淀与训练效果
+验证分析质量 / 逻辑连续性 / 理解摩擦
+↓
+验证知识沉淀质量
 ↓
 只有真实失败再扩展底层协议
 ```
@@ -588,7 +543,7 @@ source_fragment_id regressed
 对于普通学习者，Interview Lab 应最终表现为：
 
 ```text
-我筛一组想练的面经
+我筛一组想看的面经
 ↓
 我选一篇
 ↓
@@ -598,7 +553,7 @@ AI 陪我一点一点读
 ↓
 我不断说“下一步”或提问
 ↓
-AI 帮我形成面试反应链路
+AI 把当前信息的结构、因果和边界讲清楚
 ↓
 有价值的东西被安全沉淀
 ```

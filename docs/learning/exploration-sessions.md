@@ -511,7 +511,7 @@ Session 可以发现：
 - 可能的 follow-up relation
 - 可能的 Canonical boundary 问题
 - Answer coverage 缺失
-- learner weakness candidate
+- 可能的 knowledge gap / analysis gap
 - Source runtime protocol 的改进候选
 
 但发现本身不授权正式 mutation。
@@ -596,7 +596,7 @@ completed_at = 可解析时间
 
 一篇 InterviewNote 不存在“永远彻底探索完成”。
 
-新的知识、新的 SourceRevision、新的 manifest/review、新的求职目标或新的薄弱点，都可以触发下一轮探索。
+新的知识、新的 SourceRevision、新的 manifest/review、新的求职目标或新的分析问题，都可以触发下一轮探索。
 
 ## 核心不变量
 
@@ -614,5 +614,5 @@ Manifest schema PASS 不等于 approved。
 Outcome 不自动生成 Cause 或 Verified Weakness。
 Finding 经过显式 review/apply 后才成为正式 mutation。
 每个 position 和 session 都应有明确 closure 语义。
-反复练习应该不断强化 Interview Reasoning Loop。
+持续分析应该保持并强化 Interview Reasoning Loop。
 ```
