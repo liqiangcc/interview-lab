@@ -144,3 +144,38 @@ test('CLI wires GET retry bounds into post-create ownership reconcile', () => {
     assert.equal(context.calls.create.filter((issue) => issue === 158).length, 1);
   } finally { fs.rmSync(context.root, { recursive: true, force: true }); }
 });
+
+test('CLI preserves a lock-loss apply result when final release also observes replacement', () => {
+  const context = setup();
+  try {
+    const baseLoadLive = context.runtime.loadLive;
+    const baseCreate = context.runtime.createInterviewIssue;
+    let created = false;
+    let replaced = false;
+    context.runtime.loadLive = (request) => {
+      const live = baseLoadLive(request);
+      if (created && request.source_note_issue_number === 158) replaced = true;
+      return live;
+    };
+    context.runtime.createInterviewIssue = (request, projection) => {
+      baseCreate(request, projection);
+      created = true;
+    };
+    context.runtime.acquireLock = () => ({
+      assertHeld() {
+        if (replaced) throw new Error('owner token changed');
+      },
+      release() { throw new Error('release saw replacement'); },
+    });
+    const planExit = cli.main(context.args, context.runtime);
+    assert.equal(planExit, 0);
+    const planOutput = JSON.parse(fs.readFileSync(context.args[context.args.indexOf('--output') + 1], 'utf8'));
+    const applyArgs = [...context.args, '--apply', '--progress-lock', 'runtime-lock', '--confirm-plan-sha256', planOutput.plan_sha256, '--confirm-authorization-sha256', planOutput.authorization_sha256];
+    assert.doesNotThrow(() => assert.equal(cli.main(applyArgs, context.runtime), 1));
+    const output = JSON.parse(fs.readFileSync(context.args[context.args.indexOf('--output') + 1], 'utf8'));
+    assert.equal(output.ok, false);
+    assert.ok(output.errors.some((error) => /lock ownership changed/.test(error)));
+    assert.equal(context.calls.create.filter((issue) => issue === 158).length, 1);
+    assert.equal(context.calls.receipt.length, 0);
+  } finally { fs.rmSync(context.root, { recursive: true, force: true }); }
+});

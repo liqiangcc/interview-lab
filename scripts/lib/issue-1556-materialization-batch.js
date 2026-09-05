@@ -354,10 +354,20 @@ function defaultSleep(milliseconds) {
   if (milliseconds > 0) Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, milliseconds);
 }
 
+class LockLostError extends Error {
+  constructor(message, context) {
+    super(message);
+    this.name = 'LockLostError';
+    this.lockLost = true;
+    this.context = context;
+  }
+}
+
 function reconcileCreatedOwner({ packet, transitionRequest, transitionReceipt, request, loadLive, readBlob }, options = {}) {
   const maxAttempts = options.postCreateMaxAttempts === undefined ? 3 : options.postCreateMaxAttempts;
   const backoffMs = options.postCreateBackoff === undefined ? 250 : options.postCreateBackoff;
   const sleep = options.sleep || defaultSleep;
+  const assertHeld = options.assertHeld || (() => {});
   if (!Number.isSafeInteger(maxAttempts) || maxAttempts < 1 || maxAttempts > 3) {
     return { ok: false, reason: 'invalid-options', errors: ['post-create ownership reconcile max attempts must be an integer from 1 to 3'] };
   }
@@ -367,22 +377,48 @@ function reconcileCreatedOwner({ packet, transitionRequest, transitionReceipt, r
   let lastGate = null;
   let lastReadError = null;
   for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+    try { assertHeld(); } catch (error) {
+      return { ok: false, reason: 'lock-lost', lock_lost: true, errors: [`progress lock ownership changed before post-create reconcile read: ${error.message}`] };
+    }
     let gate;
     try {
       const live = loadLive(request);
       gate = targetPreflight(packet, transitionRequest, transitionReceipt, live, { readBlob });
     } catch (error) {
       lastReadError = error;
+      if (attempt < maxAttempts) {
+        sleep(backoffMs * attempt);
+        try { assertHeld(); } catch (lockError) {
+          return { ok: false, reason: 'lock-lost', lock_lost: true, errors: [`progress lock ownership changed after post-create reconcile backoff: ${lockError.message}`] };
+        }
+      }
       if (attempt === maxAttempts) break;
-      sleep(backoffMs * attempt);
       continue;
     }
     lastGate = gate;
     // Any gate error is a conflict or malformed live state. Retrying it could
     // turn a concurrent duplicate/drift into an ungrounded owner claim.
-    if (!gate.ok) return { ok: false, reason: 'conflict', gate, errors: gate.errors };
-    if (gate.owners.length === 1) return { ok: true, gate, owner: gate.owners[0], attempts: attempt };
-    if (attempt < maxAttempts) sleep(backoffMs * attempt);
+    if (!gate.ok) {
+      try { assertHeld(); } catch (error) {
+        return { ok: false, reason: 'lock-lost', lock_lost: true, errors: [`progress lock ownership changed after post-create reconcile read: ${error.message}`] };
+      }
+      return { ok: false, reason: 'conflict', gate, errors: gate.errors };
+    }
+    if (gate.owners.length === 1) {
+      try { assertHeld(); } catch (error) {
+        return { ok: false, reason: 'lock-lost', lock_lost: true, errors: [`progress lock ownership changed before post-create owner acceptance: ${error.message}`] };
+      }
+      return { ok: true, gate, owner: gate.owners[0], attempts: attempt };
+    }
+    if (attempt < maxAttempts) {
+      sleep(backoffMs * attempt);
+      try { assertHeld(); } catch (error) {
+        return { ok: false, reason: 'lock-lost', lock_lost: true, errors: [`progress lock ownership changed after post-create reconcile backoff: ${error.message}`] };
+      }
+    }
+  }
+  try { assertHeld(); } catch (error) {
+    return { ok: false, reason: 'lock-lost', lock_lost: true, errors: [`progress lock ownership changed before post-create reconcile completion: ${error.message}`] };
   }
   const errors = lastReadError
     ? [`post-create ownership reconcile exhausted after ${maxAttempts} attempts: ${lastReadError.message}`]
@@ -391,6 +427,27 @@ function reconcileCreatedOwner({ packet, transitionRequest, transitionReceipt, r
 }
 
 function applyBatch({ planResult, packetSet, manifest, transitionRequests, transitionReceipts, evidenceReceipts, progress = null }, options = {}) {
+  try {
+    return applyBatchUnsafe({ planResult, packetSet, manifest, transitionRequests, transitionReceipts, evidenceReceipts, progress }, options);
+  } catch (error) {
+    if (!error.lockLost) throw error;
+    const context = error.context || {};
+    const createMutationCount = context.countStatus === 'invalid' ? null : context.createMutationCount;
+    const receiptMutationCount = context.countStatus === 'invalid' ? null : context.receiptMutationCount;
+    return {
+      ok: false,
+      errors: [error.message],
+      progress: context.state || null,
+      items: context.resultItems || [],
+      create_mutation_count: createMutationCount,
+      receipt_mutation_count: receiptMutationCount,
+      mutation_count: context.countStatus === 'invalid' ? null : (createMutationCount + receiptMutationCount),
+      count_status: context.countStatus || 'unknown',
+    };
+  }
+}
+
+function applyBatchUnsafe({ planResult, packetSet, manifest, transitionRequests, transitionReceipts, evidenceReceipts, progress = null }, options = {}) {
   const countFieldsValid = progress === null || (progress && Number.isSafeInteger(progress.create_mutation_count) && progress.create_mutation_count >= 0
     && Number.isSafeInteger(progress.receipt_mutation_count) && progress.receipt_mutation_count >= 0
     && Number.isSafeInteger(progress.mutation_count) && progress.mutation_count >= 0
@@ -430,14 +487,33 @@ function applyBatch({ planResult, packetSet, manifest, transitionRequests, trans
   const requests = new Map((transitionRequests || []).map((request) => [Number(request.issue_number), request]));
   const transitionByIssue = new Map((transitionReceipts || []).map((receipt) => [Number(receipt.issue_number), receipt]));
   const resultItems = [];
+  const assertLock = () => {
+    try { options.lock.assertHeld(); } catch (error) { throw new LockLostError(`progress lock ownership changed: ${error.message}`, { state, resultItems, createMutationCount, receiptMutationCount, countStatus }); }
+  };
+  const persistProgress = () => {
+    if (options.persistProgress) {
+      assertLock();
+      options.persistProgress(state);
+    }
+  };
+  const writeRequest = (request, value) => {
+    if (options.writeRequest) {
+      assertLock();
+      options.writeRequest(request, value);
+    }
+  };
+  const writeReceipt = (request, receipt) => {
+    if (options.writeReceipt) {
+      assertLock();
+      options.writeReceipt(request, receipt);
+    }
+  };
   const mark = (item, phase, extra = {}) => {
+    assertLock();
     const current = state.items[String(item.issue_number)];
     current.phase = phase;
     current.intent = makeIntent(item, phase, extra);
-    if (options.persistProgress) options.persistProgress(state);
-  };
-  const assertLock = () => {
-    try { options.lock.assertHeld(); } catch (error) { throw new Error(`progress lock ownership changed: ${error.message}`); }
+    persistProgress();
   };
   // A pending/uncertain journal is an evidence of an earlier mutation attempt,
   // never permission to POST again. Reconcile it before entering the normal
@@ -457,7 +533,7 @@ function applyBatch({ planResult, packetSet, manifest, transitionRequests, trans
       gate = targetPreflight(packetSet.packets.find((packet) => packet.issue_number === item.issue_number), transitionRequest, transitionReceipt, live, { readBlob: options.readBlob });
     } catch (error) {
       state.status = 'failed'; state.possibly_performed = true;
-      if (options.persistProgress) options.persistProgress(state);
+      persistProgress();
       return finish({ ok: false, errors: [`#${item.issue_number}: pending reconcile failed: ${error.message}`], progress: state, items: resultItems });
     }
     if (!gate.ok || gate.owners.length !== 1) {
@@ -465,7 +541,7 @@ function applyBatch({ planResult, packetSet, manifest, transitionRequests, trans
       current.phase = 'uncertain';
       current.intent = makeIntent(item, 'uncertain', { prior_phase: rootPhase.phase, prior_intent: current.intent, reconcile_errors: gate.errors || [] });
       current.result = { status: 'uncertain', mutation_attempted: true, mutation_performed: null, possibly_performed: true, reconcile_errors: gate.errors || [] };
-      if (options.persistProgress) options.persistProgress(state);
+      persistProgress();
       return finish({ ok: false, errors: [`#${item.issue_number}: pending mutation cannot be confirmed without exactly one owner`], progress: state, items: resultItems });
     }
     if (gate.receipts.receipt) {
@@ -474,11 +550,11 @@ function applyBatch({ planResult, packetSet, manifest, transitionRequests, trans
         state.status = 'failed'; state.possibly_performed = true;
         current.phase = 'uncertain';
         current.intent = makeIntent(item, 'uncertain', { prior_phase: rootPhase.phase, prior_intent: current.intent, error: 'pending receipt conflicts with live receipt' });
-        if (options.persistProgress) options.persistProgress(state);
+        persistProgress();
         return finish({ ok: false, errors: [`#${item.issue_number}: pending receipt conflicts with live receipt`], progress: state, items: resultItems });
       }
       const confirmed = { ...receipt, comment_id: Number(gate.receipts.receipt.comment.id) };
-      if (options.writeReceipt) options.writeReceipt(request, confirmed);
+      writeReceipt(request, confirmed);
       state.mutation_performed = true; state.possibly_performed = false;
       current.result = { status: 'already-materialized', receipt: confirmed, mutation_attempted: true, mutation_performed: true, possibly_performed: false };
       mark(item, 'complete', { receipt: confirmed, reconciled: true });
@@ -492,7 +568,7 @@ function applyBatch({ planResult, packetSet, manifest, transitionRequests, trans
       state.status = 'failed'; state.possibly_performed = true;
       current.phase = 'uncertain';
       current.intent = makeIntent(item, 'uncertain', { prior_phase: rootPhase.phase, prior_intent: current.intent, error: 'receipt pending without a matching live receipt' });
-      if (options.persistProgress) options.persistProgress(state);
+      persistProgress();
       return finish({ ok: false, errors: [`#${item.issue_number}: receipt mutation cannot be confirmed; refusing duplicate POST`], progress: state, items: resultItems });
     }
   }
@@ -508,12 +584,12 @@ function applyBatch({ planResult, packetSet, manifest, transitionRequests, trans
     if (!gate.ok) return finish({ ok: false, errors: gate.errors.map((error) => `#${item.issue_number}: ${error}`), progress: state, items: resultItems });
   }
   state.status = 'running';
-  if (options.persistProgress) options.persistProgress(state);
+  persistProgress();
   const failUncertain = (item, phase, message, extra = {}) => {
     state.status = 'failed'; state.mutation_attempted = true; state.possibly_performed = true;
     mark(item, 'uncertain', { prior_phase: phase, error: message, ...extra });
     state.items[String(item.issue_number)].result = { status: 'uncertain', error: message, mutation_attempted: true, mutation_performed: null, possibly_performed: true };
-    if (options.persistProgress) options.persistProgress(state);
+    persistProgress();
     return finish({ ok: false, errors: [`#${item.issue_number}: ${message}`], progress: state, items: resultItems });
   };
   for (const item of items) {
@@ -535,11 +611,11 @@ function applyBatch({ planResult, packetSet, manifest, transitionRequests, trans
       }
       state.mutation_attempted = true; state.possibly_performed = true;
       state.items[String(item.issue_number)].intent = makeIntent(item, 'create-pending', { request, projection: gate.projection, mutation_attempted: true, mutation_performed: null, possibly_performed: true });
-      if (options.persistProgress) options.persistProgress(state);
+      persistProgress();
       try { assertLock(); } catch (error) { return finish({ ok: false, errors: [`#${item.issue_number}: ${error.message}`], progress: state, items: resultItems }); }
       createMutationCount += 1;
       syncMutationCounts();
-      if (options.persistProgress) options.persistProgress(state);
+      persistProgress();
       let createError = null;
       try { options.createInterviewIssue(request, gate.projection); } catch (error) { createError = error; }
       const reconciled = reconcileCreatedOwner({
@@ -549,7 +625,10 @@ function applyBatch({ planResult, packetSet, manifest, transitionRequests, trans
         request,
         loadLive: options.loadLive,
         readBlob: options.readBlob,
-      }, options);
+      }, { ...options, assertHeld: assertLock });
+      // The owner decision must not be made from a stale journal after the
+      // reconcile window, even when the helper found a unique owner.
+      assertLock();
       if (!reconciled.ok) {
         const prefix = createError ? `create response lost; ${createError.message}; ` : '';
         return failUncertain(item, 'create-pending', `${prefix}${reconciled.errors.join('; ')}`, { reconcile_errors: reconciled.errors });
@@ -563,14 +642,14 @@ function applyBatch({ planResult, packetSet, manifest, transitionRequests, trans
       const foundReceipt = buildMaterializationReceipt(request, owner, gate.projection);
       const actual = { ...foundReceipt, comment_id: Number(gate.receipts.receipt.comment.id) };
       if (!compareReceiptFacts(actual, gate.receipts.receipt.value)) return failUncertain(item, 'created', 'live materialization receipt conflicts with the fresh projection');
-      if (options.writeReceipt) options.writeReceipt(request, actual);
+      writeReceipt(request, actual);
       state.items[String(item.issue_number)].result = { status: 'already-materialized', interview_issue_number: Number(owner.number), receipt: actual, mutation_attempted: false, mutation_performed: false, possibly_performed: false };
       mark(item, 'complete', { receipt: actual });
       resultItems.push({ issue_number: item.issue_number, action: 'already-materialized', interview_issue_number: Number(owner.number) });
       continue;
     }
     const receipt = buildMaterializationReceipt(request, owner, gate.projection);
-    if (options.writeRequest) options.writeRequest(request, request);
+    writeRequest(request, request);
     mark(item, 'receipt-pending', { receipt, owner_issue_number: Number(owner.number), mutation_attempted: state.mutation_attempted, mutation_performed: state.mutation_performed, possibly_performed: true });
     try { assertLock(); } catch (error) { return finish({ ok: false, errors: [`#${item.issue_number}: ${error.message}`], progress: state, items: resultItems }); }
     if (typeof options.beforeMutation === 'function') {
@@ -578,11 +657,11 @@ function applyBatch({ planResult, packetSet, manifest, transitionRequests, trans
     }
     state.mutation_attempted = true; state.possibly_performed = true;
     state.items[String(item.issue_number)].intent = makeIntent(item, 'receipt-pending', { receipt, owner_issue_number: Number(owner.number), mutation_attempted: true, mutation_performed: null, possibly_performed: true });
-    if (options.persistProgress) options.persistProgress(state);
+    persistProgress();
     try { assertLock(); } catch (error) { return finish({ ok: false, errors: [`#${item.issue_number}: ${error.message}`], progress: state, items: resultItems }); }
     receiptMutationCount += 1;
     syncMutationCounts();
-    if (options.persistProgress) options.persistProgress(state);
+    persistProgress();
     try { options.postReceipt(request, receipt); } catch (_) { /* POST is never retried; reconcile below */ }
     let afterGate;
     try { const after = options.loadLive(request); afterGate = targetPreflight(packetSet.packets.find((packet) => packet.issue_number === item.issue_number), transitionRequest, transitionReceipt, after, { readBlob: options.readBlob }); }
@@ -593,14 +672,14 @@ function applyBatch({ planResult, packetSet, manifest, transitionRequests, trans
     if (!compareReceiptFacts(liveReceipt, receipt)) return failUncertain(item, 'receipt-pending', 'live receipt facts differ from the durable receipt intent');
     const liveReceiptValidation = validateMaterializationReceipt(afterGate.receipts.receipt.value, request, afterGate.projection);
     if (!liveReceiptValidation.ok) return failUncertain(item, 'receipt-pending', `live receipt validation failed: ${liveReceiptValidation.errors.join('; ')}`);
-    if (options.writeReceipt) options.writeReceipt(request, liveReceipt);
+    writeReceipt(request, liveReceipt);
     state.mutation_performed = true; state.possibly_performed = false;
     state.items[String(item.issue_number)].result = { status: 'materialized', interview_issue_number: Number(afterGate.owners[0].number), receipt: liveReceipt, mutation_attempted: true, mutation_performed: true, possibly_performed: false };
     mark(item, 'complete', { receipt: liveReceipt });
     resultItems.push({ issue_number: item.issue_number, action: 'materialized', interview_issue_number: Number(afterGate.owners[0].number) });
   }
   state.status = 'complete'; state.possibly_performed = false;
-  if (options.persistProgress) options.persistProgress(state);
+  persistProgress();
   return finish({ ok: true, items: resultItems, progress: state, mutation_attempted: state.mutation_attempted, mutation_performed: state.mutation_performed, possibly_performed: false });
 }
 

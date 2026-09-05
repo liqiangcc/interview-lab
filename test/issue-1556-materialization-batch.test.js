@@ -71,6 +71,7 @@ function makeAuthorizedHarness({ owners = false } = {}) {
     const lockDir = fs.mkdtempSync(path.join(os.tmpdir(), 'issue-1556-real-fixture-'));
     const lock = acquireProgressLock(path.join(lockDir, 'progress.lock'));
     try {
+      const effectiveLock = typeof overrides.lockAdapter === 'function' ? overrides.lockAdapter(lock) : lock;
       return applyBatch({
         planResult,
         packetSet: authorized.packet_set,
@@ -81,7 +82,7 @@ function makeAuthorizedHarness({ owners = false } = {}) {
         progress,
       }, {
         expectedAuthorizationSha256: planResult.authorization_sha256,
-        lock,
+        lock: effectiveLock,
         loadLive,
         readBlob,
         persistProgress: (value) => snapshots.push(clone(value)),
@@ -295,6 +296,42 @@ test('post-create ownership reconcile polls delayed visibility and does not repe
   assert.equal(result.create_mutation_count, 17);
   assert.equal(result.receipt_mutation_count, 17);
   assert.equal(result.mutation_count, 34);
+});
+
+test('lock replacement after the first post-create GET stops before old progress advances or receipt POST', () => {
+  const harness = makeAuthorizedHarness();
+  let created = false;
+  let postCreateReads = 0;
+  let lockLost = false;
+  const result = harness.apply(null, {
+    lockAdapter: (realLock) => ({
+      assertHeld() {
+        realLock.assertHeld();
+        if (lockLost) throw new Error('lock was replaced');
+      },
+      release: () => realLock.release(),
+    }),
+    loadLive: (request) => {
+      const live = harness.loadLive(request);
+      if (created && request.source_note_issue_number === 158) {
+        postCreateReads += 1;
+        if (postCreateReads === 1) lockLost = true;
+      }
+      return live;
+    },
+    createInterviewIssue: (request, projection) => {
+      harness.calls.create.push(request.source_note_issue_number);
+      harness.ownersByIssue.set(request.source_note_issue_number, [{ number: 20158, state: 'open', body: projection.body, labels: projection.labels }]);
+      created = true;
+    },
+  });
+  assert.equal(result.ok, false);
+  assert.equal(postCreateReads, 1);
+  assert.equal(harness.calls.create.filter((issue) => issue === 158).length, 1);
+  assert.equal(harness.calls.receipt.length, 0);
+  assert.ok(result.errors.some((error) => /lock ownership changed/.test(error)));
+  assert.equal(result.progress.items['158'].phase, 'create-pending');
+  assert.equal(harness.snapshots.some((snapshot) => ['created', 'receipt-pending'].includes(snapshot.items['158'].phase)), false);
 });
 
 test('post-create duplicate ownership is an immediate conflict without another read or receipt', () => {

@@ -169,6 +169,7 @@ function main(argv = process.argv.slice(2), runtime = {}) {
   const liveLoader = runtime.loadLive || makeLiveLoader(REPOSITORY, getOptions);
   const readPinnedBlob = runtime.readBlob || ((sha) => readBlobForLive('liqiangcc/xhs', sha, getOptions));
   const lock = args.apply ? (runtime.acquireLock ? runtime.acquireLock(args.progressLock) : acquireProgressLock(args.progressLock)) : null;
+  let result = null;
   try {
     let progress = null;
     if (fs.existsSync(args.progress)) progress = runtime.progress || readJson(args.progress);
@@ -206,7 +207,7 @@ function main(argv = process.argv.slice(2), runtime = {}) {
       if (lastMutationAt !== null) sleep(Math.max(0, args.minMutationIntervalMs - (now - lastMutationAt)));
       lastMutationAt = clock();
     };
-    const result = applyBatch({
+    result = applyBatch({
       planResult: initial,
       packetSet,
       manifest,
@@ -238,7 +239,15 @@ function main(argv = process.argv.slice(2), runtime = {}) {
     process.stdout.write(`${JSON.stringify(output, null, 2)}\n`);
     return result.ok ? 0 : 1;
   } finally {
-    if (lock) lock.release();
+    if (lock) {
+      try { lock.release(); }
+      catch (error) {
+        // Preserve an already returned apply failure (especially a lock-loss
+        // result) instead of replacing it with the release assertion error.
+        // A successful apply still surfaces release failure to the caller.
+        if (!result || result.ok) throw error;
+      }
+    }
   }
 }
 
