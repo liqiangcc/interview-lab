@@ -377,6 +377,41 @@ function applyOne(packet, packetSet, progress, options) {
     const receiptValidation = validateReceipt(existingReceipt, packet, packetSet.packet_set_sha256);
     if (!receiptValidation.ok) return failedResult(progress, [`${packet.packet_id}: ${receiptValidation.errors.join('; ')}`]);
     if (!comment || Number(comment.id) !== Number(existingReceipt.evidence_comment_id)) return failedResult(progress, [`${packet.packet_id}: receipt exists without its exact live evidence comment`]);
+
+    // A completed item may be re-entered without rewriting durable request or
+    // receipt files. The initial livePostGate above is intentionally the one
+    // fresh gate for this fast path: it rechecks the live body, labels,
+    // revision, pinned artifact, ownership, and exact unique marker before
+    // the stored identities are trusted. The planner below binds its fresh
+    // source Issue to the existing request facts; no finalRequestGate follows.
+    if (typeof options.readRequest !== 'function') {
+      return failedResult(progress, [`${packet.packet_id}: receipt fast-path requires a durable request reader`]);
+    }
+    let existingRequest;
+    try { existingRequest = options.readRequest(packet); } catch (error) {
+      return failedResult(progress, [`${packet.packet_id}: stored request read failed: ${error.message}`]);
+    }
+    if (!existingRequest) return failedResult(progress, [`${packet.packet_id}: receipt exists without its durable request`]);
+    const requestValidation = validateTransitionRequest(existingRequest);
+    if (!requestValidation.ok) return failedResult(progress, [`${packet.packet_id}: stored request validation failed: ${requestValidation.errors.join('; ')}`]);
+    let expectedRequest;
+    try { expectedRequest = buildFormalRequest(packet, Number(comment.id), options.reviewedAt); } catch (error) {
+      return failedResult(progress, [`${packet.packet_id}: current request facts are invalid: ${error.message}`]);
+    }
+    const expectedRequestDigest = requestSha256(expectedRequest);
+    const storedReceiptValidation = validateReceipt(existingReceipt, packet, packetSet.packet_set_sha256, existingRequest);
+    if (!storedReceiptValidation.ok || existingReceipt.request_sha256 !== expectedRequestDigest || requestSha256(existingRequest) !== expectedRequestDigest) {
+      const errors = storedReceiptValidation.errors.slice();
+      if (existingReceipt.request_sha256 !== expectedRequestDigest || requestSha256(existingRequest) !== expectedRequestDigest) errors.push('stored request/receipt digest does not match current evidence facts');
+      return failedResult(progress, [`${packet.packet_id}: ${errors.join('; ')}`]);
+    }
+    const planTransition = options.planTransition || planSourceNoteBoundaryReviewTransition;
+    const planned = planTransition(existingRequest, live.sourceIssue, { evidenceComment: comment, receipts: [existingReceipt] });
+    if (!planned.ok) return failedResult(progress, planned.errors.map((error) => `${packet.packet_id}: ${error}`));
+    progress.intents[packet.packet_id] = { ...intentFor(packetSet.packet_set_sha256, packet, 'receipt-written'), evidence_comment_id: Number(comment.id), request_sha256: expectedRequestDigest };
+    progress.results[packet.packet_id] = { status: 'already-present', evidence_comment_id: Number(comment.id), request_sha256: expectedRequestDigest, mutation_attempted: false, mutation_performed: false, possibly_performed: false };
+    options.persistProgress(progress);
+    return { ok: true, item: { packet_id: packet.packet_id, issue_number: packet.issue_number, evidence_action: 'already-present-skip-post', evidence_comment_id: Number(comment.id), request_sha256: expectedRequestDigest, mutation_performed: false }, mutation_attempted: progress.mutation_attempted, mutation_performed: progress.mutation_performed, possibly_performed: progress.possibly_performed };
   }
   const prior = progress.intents[packet.packet_id];
   if (!comment) {

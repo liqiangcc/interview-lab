@@ -21,6 +21,7 @@ const {
   initialProgress,
   validateProgress,
   intentFor,
+  buildFormalRequest,
   requestSha256,
   validateReceipt,
   runBatch,
@@ -397,6 +398,50 @@ test('GET retry exhaustion and semantic 4xx fail closed without excess attempts'
   assert.equal(attempts, 1);
 });
 
+test('real gh status=1 unexpected EOF transport shape retries three times, while semantic EOF does not', () => {
+  const eofError = () => Object.assign(new Error('Command failed: gh api'), {
+    status: 1,
+    stderr: 'Get "https://api.github.com/repos/example/repo/issues/1": unexpected EOF',
+  });
+  let attempts = 0;
+  const delays = [];
+  const recovered = ghJsonGet(['api', 'eof-recovery'], {
+    maxAttempts: 3,
+    backoffMs: 7,
+    execute: () => {
+      attempts += 1;
+      if (attempts < 3) throw eofError();
+      return JSON.stringify({ ok: true });
+    },
+    sleep: (delay) => delays.push(delay),
+  });
+  assert.deepEqual(recovered, { ok: true });
+  assert.equal(attempts, 3);
+  assert.deepEqual(delays, [7, 14]);
+
+  attempts = 0;
+  delays.length = 0;
+  assert.throws(() => ghJsonGet(['api', 'eof-exhausted'], {
+    maxAttempts: 3,
+    backoffMs: 7,
+    execute: () => { attempts += 1; throw eofError(); },
+    sleep: (delay) => delays.push(delay),
+  }), (error) => error.status === 1 && /unexpected EOF/.test(error.stderr));
+  assert.equal(attempts, 3);
+  assert.deepEqual(delays, [7, 14]);
+
+  attempts = 0;
+  assert.throws(() => ghJsonGet(['api', 'semantic-eof'], {
+    maxAttempts: 3,
+    execute: () => {
+      attempts += 1;
+      throw Object.assign(new Error('Command failed: gh api'), { status: 1, stderr: 'validator: unexpected EOF in interview body' });
+    },
+    sleep: () => { throw new Error('semantic EOF must not sleep'); },
+  }), (error) => error.status === 1 && /unexpected EOF/.test(error.stderr));
+  assert.equal(attempts, 1);
+});
+
 test('POST-shaped gh execution remains single-attempt and is not covered by GET retries', () => {
   let attempts = 0;
   assert.throws(() => ghJsonOnce(['api', '--method', 'POST', 'repos/example/issues/1/comments'], { body: 'marker' }, () => {
@@ -473,6 +518,104 @@ test('apply response loss recovers a live exact comment once, writes requests/re
   assert.equal(reentry.items.every((item) => item.evidence_action === 'already-present-skip-post'), true);
   assert.equal(postCount, 17);
   assert.equal(hookCount, 17);
+});
+
+test('valid receipt reentry uses one fresh gate and planner, repairs only progress, and skips request/receipt rewrite', () => {
+  const state = syntheticSet();
+  const packet = state.packetSet.packets[0];
+  const comment = { id: 9001, issue_url: `https://api.github.com/repos/${packet.repository}/issues/${packet.issue_number}`, body: evidenceBody(packet, state.packetSet.packet_set_sha256) };
+  state.lives.get(packet.packet_id).comments = [comment];
+  const reviewedAt = '2026-09-05T00:00:00Z';
+  const request = buildFormalRequest(packet, comment.id, reviewedAt);
+  const receipt = {
+    schema_version: 'issue-1549-boundary-review-evidence-receipt.v1',
+    packet_set_sha256: state.packetSet.packet_set_sha256,
+    packet_id: packet.packet_id,
+    transition_id: packet.transition_id,
+    repository: packet.repository,
+    issue_number: packet.issue_number,
+    source_note_issue_number: packet.source_note_issue_number,
+    source_note_id: packet.source_note_id,
+    expected_body_sha256: packet.expected_body_sha256,
+    expected_source_revision_id: packet.expected_source_revision_id,
+    evidence_subject_sha256: packet.evidence_subject_sha256,
+    evidence_comment_id: comment.id,
+    request_sha256: requestSha256(request),
+    recorded_at: reviewedAt,
+  };
+  const progress = initialProgress(state.packetSet.packet_set_sha256, [packet.packet_id]);
+  let liveReads = 0;
+  let plannerCalls = 0;
+  let requestWrites = 0;
+  let receiptWrites = 0;
+  let posts = 0;
+  const result = applyOne(packet, state.packetSet, progress, {
+    apply: true,
+    liveLoader: (currentPacket) => { liveReads += 1; return loader(state)(currentPacket); },
+    reviewedAt,
+    readReceipt: () => receipt,
+    readRequest: () => request,
+    planTransition: (storedRequest, sourceIssue, context) => {
+      plannerCalls += 1;
+      assert.deepEqual(storedRequest, request);
+      assert.equal(sourceIssue.number, packet.issue_number);
+      assert.equal(context.evidenceComment.id, comment.id);
+      return { ok: true };
+    },
+    beforeRequestGate: () => { throw new Error('fast path must not run an extra final gate'); },
+    createEvidenceComment: () => { posts += 1; },
+    writeRequest: () => { requestWrites += 1; },
+    writeReceipt: () => { receiptWrites += 1; },
+    persistProgress: () => {},
+  });
+  assert.equal(result.ok, true, result.errors?.join('\n'));
+  assert.equal(liveReads, 1);
+  assert.equal(plannerCalls, 1);
+  assert.equal(posts, 0);
+  assert.equal(requestWrites, 0);
+  assert.equal(receiptWrites, 0);
+  assert.equal(result.item.evidence_action, 'already-present-skip-post');
+  assert.equal(progress.intents[packet.packet_id].phase, 'receipt-written');
+  assert.equal(progress.results[packet.packet_id].request_sha256, receipt.request_sha256);
+});
+
+test('receipt fast path still fails closed when fresh ownership gate drifts', () => {
+  const state = syntheticSet();
+  const packet = state.packetSet.packets[0];
+  const comment = { id: 9002, issue_url: `https://api.github.com/repos/${packet.repository}/issues/${packet.issue_number}`, body: evidenceBody(packet, state.packetSet.packet_set_sha256) };
+  state.lives.get(packet.packet_id).comments = [comment];
+  const reviewedAt = '2026-09-05T00:00:00Z';
+  const request = buildFormalRequest(packet, comment.id, reviewedAt);
+  const receipt = {
+    schema_version: 'issue-1549-boundary-review-evidence-receipt.v1',
+    packet_set_sha256: state.packetSet.packet_set_sha256,
+    packet_id: packet.packet_id,
+    transition_id: packet.transition_id,
+    repository: packet.repository,
+    issue_number: packet.issue_number,
+    source_note_issue_number: packet.source_note_issue_number,
+    source_note_id: packet.source_note_id,
+    expected_body_sha256: packet.expected_body_sha256,
+    expected_source_revision_id: packet.expected_source_revision_id,
+    evidence_subject_sha256: packet.evidence_subject_sha256,
+    evidence_comment_id: comment.id,
+    request_sha256: requestSha256(request),
+  };
+  state.lives.get(packet.packet_id).allIssues = [{ number: 42, pull_request: false, body: `<!-- interview-note: id=xhs:${packet.source_note_id.slice('xhs-note:'.length)} schema=interview-note-issue.v2 -->` }];
+  let requestWrites = 0;
+  const result = applyOne(packet, state.packetSet, initialProgress(state.packetSet.packet_set_sha256, [packet.packet_id]), {
+    apply: true,
+    liveLoader: loader(state),
+    reviewedAt,
+    readReceipt: () => receipt,
+    readRequest: () => request,
+    writeRequest: () => { requestWrites += 1; },
+    writeReceipt: () => {},
+    persistProgress: () => {},
+  });
+  assert.equal(result.ok, false);
+  assert.match(result.errors.join('\n'), /ownership|owner/i);
+  assert.equal(requestWrites, 0);
 });
 
 test('beforeEvidencePost failure is durable fail-closed and does not attempt POST', () => {
