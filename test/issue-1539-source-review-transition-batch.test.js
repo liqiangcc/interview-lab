@@ -130,9 +130,9 @@ function applyOptions(env, requestsValue, progress, persist = []) {
   };
 }
 
-function pendingProgress(reqs, phase, planItem) {
+function pendingProgress(reqs, phase, planItem, pendingIssueNumber = reqs[0].issue_number) {
   const progress = initialProgress(reqs);
-  const request = reqs[0];
+  const request = reqs.find((value) => value.issue_number === pendingIssueNumber);
   const item = progress.items[String(request.issue_number)];
   item.phase = phase;
   item.intent = intentFor(request, phase, phase === 'receipt-pending'
@@ -334,6 +334,44 @@ test('final-pending recovery advances a converged label write without repeating 
   assert.equal(env.patches.filter((patch) => patch.issue === 1509).length, 0);
   assert.equal(env.posts.filter((issue) => issue === 1509).length, 1);
   assert.equal(progress.items['1509'].phase, 'complete');
+});
+
+test('final-pending plan-only and apply reconcile REST object labels before ordinary validation', () => {
+  const reqs = requests();
+  const env = environment({ initialStatus: 'source-review' });
+  const initial = planBatch(reqs, pinnedManifest, { loadLive: env.loadLive, planTransition: env.planTransition });
+  const progress = pendingProgress(reqs, 'final-pending', initial.items.find((item) => item.issue_number === 1535), 1535);
+  const pendingItem = progress.items['1535'];
+  const firstOperation = pendingItem.intent.operation_plan[0];
+  assert.deepEqual(firstOperation, { kind: 'add', label: 'status:source-ready' });
+  env.state.get(1535).labels = [...new Set([...env.state.get(1535).labels, firstOperation.label])].sort();
+  const originalLoadLive = env.loadLive;
+  env.loadLive = (request) => {
+    const live = originalLoadLive(request);
+    if (request.issue_number === 1535) live.interviewIssue.labels = live.interviewIssue.labels.map((name) => ({ name }));
+    return live;
+  };
+  const originalPlanTransition = env.planTransition;
+  const planTransition = (request, interviewIssue, options) => {
+    const labels = (interviewIssue.labels || []).map((label) => typeof label === 'string' ? label : label && label.name).filter(Boolean);
+    if (request.issue_number === 1535 && labels.filter((label) => label.startsWith('status:')).length > 1) {
+      throw new Error('contradictory lifecycle labels');
+    }
+    return originalPlanTransition(request, interviewIssue, options);
+  };
+  const planned = planBatch(reqs, pinnedManifest, { loadLive: env.loadLive, planTransition, progress });
+  assert.equal(planned.ok, true, planned.errors.join('\n'));
+  assert.equal(planned.items.find((item) => item.issue_number === 1535).plan.pending_assessment.next_index, 1);
+  assert.equal(env.patches.length, 0);
+  assert.equal(env.posts.length, 0);
+  const resumed = applyBatch(reqs, pinnedManifest, progress, {
+    ...applyOptions(env, reqs, progress, []),
+    loadLive: env.loadLive,
+    planTransition,
+  });
+  assert.equal(resumed.ok, true, resumed.errors.join('\n'));
+  assert.equal(env.patches.filter((patch) => patch.issue === 1535 && patch.operation.kind === 'add' && patch.operation.label === 'status:source-ready').length, 0);
+  assert.equal(progress.items['1535'].phase, 'complete');
 });
 
 test('final-pending recovery safely retries when PATCH was not sent', () => {

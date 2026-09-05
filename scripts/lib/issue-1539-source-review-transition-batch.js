@@ -688,7 +688,10 @@ function applyBatch(requests, pinnedArtifactManifest, progress, options = {}) {
 
       if (plan.needs_begin || state.phase === 'begin-pending') patchStage('begin', plan.begin_labels, 'begin-pending', 'begin-applied');
       live = options.loadLive(request);
-      plan = planOne(request, live, pinnedArtifactManifest, options.planTransition);
+      // A final-pending journal may point at a legal API intermediate prefix
+      // (including two status labels). Reconcile that durable prefix before
+      // invoking the ordinary transition validator on the planner projection.
+      plan = planOne(request, live, pinnedArtifactManifest, options.planTransition, state);
       if (!plan.ok) throw new Error(plan.errors.join('; '));
       if (!plan.already_applied && (plan.current_status === 'source-review' || state.phase === 'begin-applied' || state.phase === 'final-pending')) patchStage('final', plan.final_labels, 'final-pending', 'final-applied');
       live = options.loadLive(request);
