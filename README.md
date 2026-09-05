@@ -153,21 +153,17 @@ Issue number、标题和显示文本都不是领域 identity。
 +
 当前新输入
         ↓
-先自己尝试（question-like）
+AI 识别它到底在问什么
         ↓
-识别
+定位并整理知识结构
         ↓
-定位知识
+解释关键因果 / 必要前提
         ↓
 判断当前意图
         ↓
 组织回答骨架
         ↓
-选择深度
-        ↓
-预判合理追问方向
-        ↓
-撤掉主要提示后重新复述
+选择深度 / 标出边界
         ↓
 等待下一条真实输入
 ```
@@ -178,7 +174,7 @@ Issue number、标题和显示文本都不是领域 identity。
 
 也就是：未来面经内容和 Outcome 不得反向影响当前步骤的理解。
 
-面向用户的分析表达统一遵循 `docs/learning/interview-analysis-style.md`。第一次遇到 question-like Source 时默认先让用户尝试，再进行分层反馈；讲解后通过 reconstruction、后续 delayed recall 和未见真实问法 transfer，逐步验证是否真正内化。完整能力计划见 `docs/learning/training-effectiveness-plan.md`。
+面向用户的分析表达统一遵循 `docs/learning/interview-analysis-style.md`：Learning 默认由 AI 基于当前已知信息主动做高质量、低摩擦分析；只有用户明确要求自测、模拟面试或无提示复测时才进入 Training。可选训练效果计划见 `docs/learning/training-effectiveness-plan.md`。
 
 ## 仓库语言
 

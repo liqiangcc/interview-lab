@@ -100,33 +100,29 @@ Recognize
 
 ## 本轮发现的问题
 
-### P0 — 默认 Learning flow 容易变成 explanation-first
+### P0 — Training 机制不能反向增加默认 Learning 摩擦
 
-当前默认流程更接近：
-
-```text
-揭示真实问题
-→ AI 立即解释当前层
-→ 用户继续“下一步”
-```
-
-这种体验很适合理解，但如果长期如此，系统很容易只训练：
+一次 guided Learning 确实不能证明独立作答能力，但普通阅读的首要目标是：
 
 ```text
-看到解释以后觉得“我懂了”
+AI 基于当前信息做高质量分析
+→ 用户低成本理解
+→ 一点一点建立知识结构
 ```
 
-而不是：
+因此不能为了未来的 effectiveness measurement，把 `attempt-first / reconstruction` 强制塞进每一个普通 Learning unit。那会把“训练有效性”优化成用户的日常交互摩擦。
+
+**修复：Learning 与 Training 明确分离。**
 
 ```text
-没有提示时我能不能自己识别、组织和回答
+Learning（默认）
+→ AI analysis-first / friction-minimized
+
+Training（用户主动选择）
+→ attempt-first / reconstruction / recall / transfer
 ```
 
-**修复：Question-like Source 默认增加 attempt-first gate。**
-
-第一次遇到真实问题时，先只展示当前 interviewer cue，让用户先作答、列骨架、说“不知道”或显式选择“直接讲解”。在 learner attempt 或 explicit skip 之前，不主动泄露 classification、knowledge structure、response skeleton 或未来追问方向。
-
-`不知道` 是有效 attempt，不应被视为失败操作；它恰好暴露真实 knowledge gap。
+用户如果只想理解面经，可以始终只说“下一步”；如果想检验掌握，再切换 Training。
 
 ### P0 — E2E completion 不等于能力提升
 
@@ -146,9 +142,9 @@ Recognize
 
 **修复：能力验收必须至少加入 baseline、delayed recall 和 transfer。**
 
-### P1 — 缺少 explanation 后的无提示 reconstruction
+### P1 — Training 需要独立的 reconstruction，而不是污染 Learning
 
-听懂 AI 的结构之后，如果不要求重新从记忆中组织一次，很难区分：
+如果用户主动选择检验能力，听懂 AI 的结构之后需要再次无提示组织，才能区分：
 
 ```text
 recognition / familiarity
@@ -156,17 +152,15 @@ vs
 retrievable response skill
 ```
 
-**修复：完成 question-like learning loop 前加入 reconstruction checkpoint。**
-
-典型流程：
+这应发生在 Training / ReviewProgress，而不是普通 Learning 的 closure gate 中。
 
 ```text
-真实问题
+用户主动进入 Training
 → learner attempt
-→ AI 分层反馈
-→ 暂时撤掉骨架 / 示例
-→ learner 用自己的话重建第一轮回答
-→ closure
+→ feedback / remediation
+→ hide scaffold
+→ learner reconstruction
+→ review result
 ```
 
 ### P1 — 缺少 scaffold fading
@@ -289,45 +283,31 @@ Learner answered well
 Source proves this is interviewer expected answer
 ```
 
-## 修复后的目标学习闭环
+## 修复后的双模式闭环
 
-### 首次 Learning
+### 默认 Learning：理解优先、低摩擦
 
 对 question-like Source：
 
 ```text
 真实 interviewer cue
 ↓
-Attempt-first
-  用户先回答 / 列骨架 / 说不知道 / explicit skip
+AI 主动解释它到底在问什么
 ↓
-AI 读取当前 attempt
+整理知识结构
 ↓
-按 Source-first 风格分层反馈
-  literal / classification / knowledge / response / depth / anticipation
+解释关键因果 / 必要前提 / 条件边界
 ↓
-只补当前缺失的结构和知识
+必要时给最小回答骨架
 ↓
-撤掉主要提示
+到当前 Source-backed 最小闭环就停
 ↓
-Immediate reconstruction
-  用户用自己的话重新组织第一轮回答
-↓
-closure
+用户“下一步”
 ```
 
-AI feedback 应优先采用：
+Learning 不要求 baseline attempt、reconstruction 或 review 操作。
 
-```text
-你已经覆盖了什么
-→ 当前最关键缺口是什么
-→ 为什么
-→ 应该怎样重组
-```
-
-而不是无视 learner attempt，直接覆盖一份全新的“标准答案”。
-
-### 后续 Training
+### 可选 Training：能力检验
 
 ```text
 同一真实问题 / 合法真实 follow-up
@@ -385,7 +365,7 @@ H0/H1 recall
 
 ### 1. Attempt coverage
 
-多少 question-like learning unit 在 AI 讲解前保留了 learner attempt 或 explicit skip。
+在**用户主动进入 Training / effectiveness Pilot 的样本**中，多少 question-like unit 在反馈前保留了 learner attempt 或 explicit skip。普通 Learning 不要求该指标。
 
 ### 2. Hint dependence
 
@@ -461,20 +441,20 @@ H0/H1 recall
 
 ## 分阶段实施计划
 
-### Phase 0 — 默认行为修复（本轮）
+### Phase 0 — 模式边界修复（本轮）
 
-- [x] Question-like Source 加入 attempt-first 原则；
-- [x] Learning loop 加入 immediate reconstruction；
-- [x] 定义 scaffold fading / hint level 方向；
-- [x] 用户工作流增加“考我一下 / 无提示复测 / 直接讲解”等语义；
+- [x] Learning 默认恢复为 AI analysis-first / friction-minimized；
+- [x] attempt-first / reconstruction 移入用户主动选择的 Training；
+- [x] 保留 scaffold fading / hint level 作为 Training 能力；
+- [x] 用户工作流用“考我一下 / 模拟面试 / 无提示复测”显式进入 Training；
 - [x] 明确 E2E completion ≠ effectiveness；
 - [x] 提交本 Training Effectiveness 总计划。
 
 这一步只改行为规范，不新增 runtime schema。
 
-### Phase 1 — Attempt / feedback contract
+### Phase 1 — Training Attempt / feedback contract
 
-目标：让每次 question-like Learning 能保留“讲解前我会什么”。
+目标：当用户进入 Training 时，保留“讲解前我会什么”，但不改变默认 Learning 体验。
 
 建议产物：
 
@@ -583,12 +563,13 @@ Source inventory
 → basic E2E usability
 ```
 
-`#925` 应增加最小 ability gate，避免把“10 次 Session 完成”误写成“训练有效”。
+`#925` 只负责 basic E2E usability 与低摩擦 Learning 验收，并明确“10 次 Session 完成”不能被写成“训练有效”。不要求普通 Learning 强制采集 baseline attempt / reconstruction。
 
-Training Effectiveness v1 应作为独立 Epic 承担：
+Training Effectiveness v1 应作为独立 Epic 承担，并只在用户主动选择 Training / effectiveness Pilot 时运行：
 
 ```text
-Attempt-first
+opt-in Training
+→ attempt / reconstruction
 → ReviewProgress
 → spacing
 → transfer
@@ -631,7 +612,17 @@ v1 不做：
 
 ## 最终成功标准
 
-Interview Lab 的成功不应是：
+Interview Lab 同时有两个成功标准：
+
+```text
+Learning success
+→ AI 高质量压缩当前信息，用户低摩擦理解
+
+Training success（用户选择时）
+→ 能在更少提示下独立识别、组织、回答和迁移
+```
+
+Training 的成功不应只是：
 
 ```text
 我看过很多面经

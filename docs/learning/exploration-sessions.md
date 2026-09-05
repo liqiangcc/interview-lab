@@ -32,20 +32,19 @@ CanonicalQuestion
 
 ### Learning
 
-AI 一点一点解释当前 Source unit 和可观察的 reasoning structure。
-
-对第一次揭示的 question-like Source，默认先保留 learner attempt：用户可以回答、列骨架、说“不知道”，或 explicit skip。attempt/skip 之前不要主动给 classification / response skeleton / follow-up dimensions。
+AI 一点一点解释当前 Source unit 和可观察的 reasoning structure。Learning 的默认产品目标是**高质量理解、低交互摩擦**：用户不需要先回答问题，AI 应主动完成当前信息的结构化和解释。
 
 目标：
 
-- 保留讲解前的 baseline attempt
-- 识别 cue
-- 判断当前问题类型或 Source unit 类型
-- 激活相关知识结构
-- 在 question-like Source 中形成 response skeleton
-- 理解新输入为什么改变之前判断
-- 在当前 Source-backed depth frontier 到达后停止
-- explanation 后撤除主要提示，让学习者做一次 immediate reconstruction
+- 识别 cue；
+- 判断当前问题类型或 Source unit 类型；
+- 激活并整理相关知识结构；
+- 补足理解当前问题所需的最短必要前提；
+- 解释关键因果、条件和边界；
+- 在 question-like Source 中形成 response skeleton；
+- 理解新输入为什么改变之前判断；
+- 在当前 Source-backed depth frontier 到达后停止；
+- 不把 attempt / reconstruction / review 操作强加到普通 Learning。
 
 ### Training
 
@@ -92,26 +91,29 @@ H4 = worked explanation / 完整讲解
 - 缺失的 follow-up handling
 - Knowledge boundary 问题
 
-## Learning → Training → Retention → Transfer
+## Learning 与 Training 分离
 
-一次 guided Learning 只能证明当前理解过程完成，不能自动证明能力已经内化。
-
-面向能力的完整路径应逐步形成：
+普通 Learning 和能力检验不是同一件事：
 
 ```text
-baseline attempt
-→ guided Learning / feedback
-→ immediate reconstruction
+Learning
+→ AI 主动分析、解释、降低理解摩擦
+
+Training（用户主动选择）
+→ baseline attempt
+→ feedback / reconstruction
 → delayed recall
 → unseen-variant transfer
 ```
 
-其中：
+一次 guided Learning 只说明当前理解过程完成，不自动证明能力已经内化；但这不构成把 retrieval practice 强加到默认阅读流程的理由。
 
-- `baseline attempt`：AI 讲解前保留的独立回答；
+只有进入 Training mode 后，才记录：
+
+- `baseline attempt`：AI 讲解前的独立回答；
 - `immediate reconstruction`：讲解后隐藏主要 scaffold，再自己重建；
 - `delayed recall`：跨真实时间间隔后 H0/H1 复测；
-- `transfer`：使用学习者此前未见过的真实 SourceQuestion variant，测试是否能迁移识别和回答结构。
+- `transfer`：用此前未见的真实 SourceQuestion variant 测迁移。
 
 这些结果属于 Training / ReviewProgress，不改变 Source 或 Knowledge identity。完整计划见 `training-effectiveness-plan.md`。
 

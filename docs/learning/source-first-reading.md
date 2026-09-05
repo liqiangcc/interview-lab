@@ -70,30 +70,27 @@ revealed_within_unit
 
 不要一次把所有层都讲完。
 
-### Question-like Source：默认先尝试，再解释
+### Question-like Source：Learning 默认低摩擦分析
 
-如果当前 Source 是第一次揭示给学习者的真实 interviewer cue，Learning mode 默认先保留一次 **attempt-first** 机会：
+Learning mode 的默认目标是**降低理解摩擦**。第一次揭示真实 interviewer cue 后，AI 应直接基于当前已经允许使用的信息进入分层分析，不要求学习者先回答、猜测或声明“不知道”。
 
 ```text
 当前真实问题
 ↓
-学习者先回答 / 列骨架 / 说“不知道”
-或显式选择“直接讲解”
+AI 主动解释字面要求
 ↓
-AI 才进入 classification / knowledge / response 等解释层
+识别问题类型 / 信号
+↓
+整理知识结构与关键因果
+↓
+必要时给第一轮回答骨架
+↓
+明确边界并停在当前最小闭环
 ```
 
-在 learner attempt 或 explicit skip 之前，不主动泄露：
+AI 的职责是把当前信息中的隐含关系整理出来：减少术语跳跃、补足必要前提、解释为什么、区分容易混淆的边界，但不得借此读取未来 Source。
 
-- 问题分类结论；
-- 知识结构；
-- 回答骨架；
-- 预计追问维度；
-- 完整示范答案。
-
-`不知道` 本身是有效 attempt：它暴露真实 knowledge gap，不需要为了“答点什么”而猜。
-
-用户明确要求“直接分析 / 直接讲解”时可以跳过 attempt gate，但该次只能证明 guided understanding，不能把它记成 unaided ability evidence。
+只有用户明确说“考我一下 / 模拟面试 / 无提示练习 / 复测”时，才切换到 Training mode 的 attempt-first / retrieval 语义。
 
 同时，不同 Source unit 不强制使用同一组解释层。先识别 Source 类型，再选择对应 learning loop。
 
@@ -129,17 +126,9 @@ literal
 
 当前层被充分消化后再进入下一层。
 
-对以能力提升为目标的 question-like Learning，closure 前还应增加一次 **immediate reconstruction**：先隐藏主要回答骨架 / 示例，让学习者用自己的话重新组织第一轮回答。
+Learning mode 不强制 reconstruction。用户只需要继续说“下一步 / 这里什么意思 / 再深入一点”即可推进。
 
-```text
-learner attempt
-→ guided analysis / feedback
-→ hide scaffold
-→ learner reconstruction
-→ closure
-```
-
-如果学习者选择跳过 reconstruction，可以正常继续阅读，但不能把当前 position 记为“已验证可独立作答”。
+如果用户主动切换到 Training mode，则可以在讲解前做 baseline attempt，或在讲解后做 reconstruction / delayed recall；这些属于 Training / ReviewProgress evidence，不是普通 Learning 的日常门槛。
 
 ### 2. Stage-summary Source
 
@@ -287,25 +276,27 @@ Learning mode 下，AI 应：
 
 ### Learning mode
 
-AI 逐步解释，并严格遵守 no-look-ahead。
+AI 主动逐步解释，并严格遵守 no-look-ahead。默认优化目标是：**高质量分析 + 最低理解摩擦**。
 
 Question-like Source 默认采用：
 
 ```text
-attempt-first
-→ 分层反馈
-→ immediate reconstruction
+当前真实输入
+→ AI 识别 / 结构化
+→ 解释关键因果与必要前提
+→ 给出当前回答骨架 / 学习点
+→ 在自然边界停下
 ```
 
-目标：不仅形成理解，还为后续无提示 retrieval 留下 baseline。
+用户不需要先证明自己会，也不需要完成 reconstruction 才能继续。
 
 ### Training mode
 
-AI 暂时不解释，更接近真实面试官。
+只有用户明确要求训练、自测、模拟面试或无提示复测时，AI 才暂时不解释，更接近真实面试官。
 
 目标：验证反应链路是否已经内化。
 
-Training mode 可以使用真实问题顺序和 follow-up，但仍然必须顺序 reveal；如果 Source unit 内存在时间片段，也必须遵守 `temporal_cursor`。
+Training mode 可以采用 attempt-first、reconstruction、delayed retrieval 和 transfer；可以使用真实问题顺序和 follow-up，但仍然必须顺序 reveal。如果 Source unit 内存在时间片段，也必须遵守 `temporal_cursor`。
 
 重复训练时应逐步撤除 scaffold。建议统一记录 hint level：
 
