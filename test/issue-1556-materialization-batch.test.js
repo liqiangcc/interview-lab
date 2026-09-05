@@ -95,6 +95,11 @@ test('target preflight binds #1554 target body, artifact, ownership and forbids 
   const forbidden = { ...issue, labels: [...issue.labels, 'status:source-ready'] };
   const forbiddenGate = targetPreflight(packet, transition, receipt, { sourceIssue: forbidden, allIssues: [], comments: [] }, { readBlob: () => ({ sha: issue.blob.sha, encoding: 'base64', content: issue.blob.content }) });
   assert.ok(forbiddenGate.errors.some((error) => /forbidden/.test(error)));
+  const badProvenance = { ...transition, expected_source_repository_ref: null };
+  const provenanceGate = targetPreflight(packet, badProvenance, receipt, { sourceIssue: issue, allIssues: [], comments: [] }, { readBlob: () => ({ sha: issue.blob.sha, encoding: 'base64', content: issue.blob.content }) });
+  assert.ok(provenanceGate.errors.some((error) => /repository ref/.test(error)));
+  const missingCommentsGate = targetPreflight(packet, transition, receipt, { sourceIssue: issue, allIssues: [] }, { readBlob: () => ({ sha: issue.blob.sha, encoding: 'base64', content: issue.blob.content }) });
+  assert.ok(missingCommentsGate.errors.some((error) => /comments inventory/.test(error)));
 });
 
 test('projection is source-faithful and has no learning or source-ready labels', () => {

@@ -120,11 +120,18 @@ function exactMaterializationReceipts(comments, request) {
   if (matches.length > 1) errors.push('multiple materialization receipts exist for this SourceNote');
   if (matches.length === 1) {
     const found = matches[0];
-    if (found.value.request_sha256 !== requestSha256(request)
+    if (found.value.schema_version !== RECEIPT_SCHEMA_VERSION
+      || found.value.packet_set_sha256 !== PACKET_SET_SHA256
+      || found.value.repository !== request.repository
+      || found.value.source_note_issue_number !== request.source_note_issue_number
+      || found.value.request_sha256 !== requestSha256(request)
       || found.value.source_note_id !== request.source_note_id
       || found.value.interview_note_id !== interviewNoteId(request.source_note_id)
       || found.value.source_note_body_sha256 !== request.expected_source_note_body_sha256
-      || found.value.source_revision_id !== request.expected_source_revision_id) errors.push('materialization receipt identity mismatch');
+      || found.value.source_revision_id !== request.expected_source_revision_id
+      || (found.value.source_repository_ref ?? null) !== (request.expected_source_repository_ref ?? null)
+      || (found.value.manifest_sha256 ?? null) !== (request.expected_manifest_sha256 ?? null)
+      || !Number.isInteger(found.value.interview_issue_number) || found.value.interview_issue_number < 1) errors.push('materialization receipt identity/body/revision/provenance/owner mismatch');
   }
   return { ok: errors.length === 0, receipt: matches.length === 1 ? matches[0] : null, errors };
 }
@@ -368,6 +375,7 @@ function targetPreflight(packet, transitionRequest, transitionReceipt, live, opt
   const labelsResult = normalizeLabels(sourceIssue && sourceIssue.labels);
   if (!labelsResult.ok) errors.push(...labelsResult.errors);
   const labels = labelsResult.labels || [];
+  if (!live || !Array.isArray(live.comments)) errors.push('live comments inventory must be an explicit array');
   if (!sourceIssue || Number(sourceIssue.number) !== transitionRequest.issue_number) errors.push('live SourceNote Issue identity mismatch');
   if (!sourceIssue || String(sourceIssue.state || '').toLowerCase() !== 'open') errors.push('live SourceNote must be open');
   if (sourceIssue && sha256Text(sourceIssue.body || '') !== transitionReceipt.new_body_sha256) errors.push('live SourceNote body does not match #1554 receipt target');
@@ -380,6 +388,14 @@ function targetPreflight(packet, transitionRequest, transitionReceipt, live, opt
   const record = validation.parsed && validation.parsed.record;
   const targetId = interviewNoteId(transitionRequest.source_note_id);
   if (!record || record.source_note_id !== transitionRequest.source_note_id) errors.push('SourceNote id mismatch');
+  if (record && record.schema_version === 'source-note-issue.v1') {
+    if (transitionRequest.expected_manifest_sha256 !== null) errors.push('v1 SourceNote must use expected_manifest_sha256=null');
+    if (record.source_revision?.source_repository_ref !== transitionRequest.expected_source_repository_ref) errors.push('v1 SourceRevision repository ref mismatch');
+  }
+  if (record && record.schema_version === 'source-note-issue.v2') {
+    if (transitionRequest.expected_source_repository_ref !== null) errors.push('v2 SourceNote must use expected_source_repository_ref=null');
+    if (record.source_revision?.manifest_sha256 !== transitionRequest.expected_manifest_sha256) errors.push('v2 SourceRevision manifest mismatch');
+  }
   if (record && (record.source_revision?.id !== transitionRequest.expected_source_revision_id || record.boundary_review?.status !== 'single-interview' || !same(record.boundary_review?.interview_note_ids || [], [targetId]))) errors.push('SourceNote target record is not the exact #1554 single-interview state');
 
   const artifact = record && packet && typeof options.readBlob === 'function'
