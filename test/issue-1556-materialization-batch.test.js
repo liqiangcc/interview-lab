@@ -215,6 +215,28 @@ test('create-pending resume reconciles owner and posts only its missing receipt'
   assert.equal(result.progress.items['158'].phase, 'complete');
 });
 
+test('uncertain create recovery keeps its root phase across a failed reconcile and later completes without recreating', () => {
+  const harness = makeAuthorizedHarness();
+  const first = harness.apply(pendingProgress(harness.planResult, 'create-pending'));
+  assert.equal(first.ok, false);
+  assert.equal(harness.calls.create.length, 0);
+  assert.equal(harness.calls.receipt.length, 0);
+  assert.equal(first.progress.items['158'].phase, 'uncertain');
+  assert.equal(first.progress.items['158'].intent.prior_phase, 'create-pending');
+
+  for (const issueNumber of ISSUE_NUMBERS) {
+    const sourceIssue = harness.sourceIssues.get(issueNumber);
+    const parsed = parseSourceNoteIssue(sourceIssue.body);
+    const projection = buildInterviewProjection(sourceIssue, { ok: true, parsed });
+    harness.ownersByIssue.set(issueNumber, [{ number: 20000 + issueNumber, state: 'open', body: projection.body, labels: projection.labels }]);
+  }
+  const second = harness.apply(first.progress);
+  assert.equal(second.ok, true, second.errors?.join('; '));
+  assert.equal(harness.calls.create.length, 0);
+  assert.equal(harness.calls.receipt.filter((issue) => issue === 158).length, 1);
+  assert.equal(second.progress.items['158'].phase, 'complete');
+});
+
 test('receipt-pending resume remains uncertain and never repeats receipt POST', () => {
   const harness = makeAuthorizedHarness({ owners: true });
   const result = harness.apply(pendingProgress(harness.planResult, 'receipt-pending'));

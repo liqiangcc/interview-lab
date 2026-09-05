@@ -209,6 +209,50 @@ function makeIntent(item, phase, extra = {}) {
   };
 }
 
+const MUTATION_PENDING_PHASES = new Set(['create-pending', 'receipt-pending']);
+
+function resolveMutationRootPhase(state) {
+  if (!state || !['create-pending', 'receipt-pending', 'uncertain'].includes(state.phase)) {
+    return { ok: false, error: 'pending journal phase is not recoverable' };
+  }
+  if (!state.intent || typeof state.intent !== 'object' || Array.isArray(state.intent) || state.intent.phase !== state.phase) {
+    return { ok: false, error: 'pending journal intent is malformed' };
+  }
+  let cursor = state.intent;
+  let root = null;
+  const visited = new Set();
+  for (let depth = 0; depth < 16; depth += 1) {
+    if (!cursor || typeof cursor !== 'object' || Array.isArray(cursor) || visited.has(cursor)) {
+      return { ok: false, error: 'pending journal prior_intent chain is cyclic or malformed' };
+    }
+    visited.add(cursor);
+    if (!['create-pending', 'receipt-pending', 'uncertain'].includes(cursor.phase)) {
+      return { ok: false, error: 'pending journal prior_intent contains an invalid phase' };
+    }
+    if (MUTATION_PENDING_PHASES.has(cursor.phase)) {
+      if (root && root !== cursor.phase) return { ok: false, error: 'pending journal mutation phases conflict' };
+      root = cursor.phase;
+      if (cursor.prior_phase !== undefined && cursor.prior_phase !== null && cursor.prior_phase !== cursor.phase) return { ok: false, error: 'pending journal pending phase has an invalid prior_phase' };
+      if (cursor.prior_intent !== undefined) cursor = cursor.prior_intent;
+      else return { ok: true, phase: root };
+      continue;
+    }
+    const priorPhase = cursor.prior_phase;
+    if (priorPhase !== 'uncertain' && !MUTATION_PENDING_PHASES.has(priorPhase)) {
+      return { ok: false, error: 'uncertain journal must retain a create-pending or receipt-pending root phase' };
+    }
+    if (MUTATION_PENDING_PHASES.has(priorPhase)) {
+      if (root && root !== priorPhase) return { ok: false, error: 'pending journal mutation phases conflict' };
+      root = priorPhase;
+    }
+    if (cursor.prior_intent === undefined) {
+      return root ? { ok: true, phase: root } : { ok: false, error: 'uncertain journal prior_intent is missing' };
+    }
+    cursor = cursor.prior_intent;
+  }
+  return { ok: false, error: 'pending journal prior_intent chain is too deep' };
+}
+
 function initialProgress(items, planSha256, authorizationSha256Value = planSha256) {
   return {
     schema_version: PROGRESS_SCHEMA_VERSION,
@@ -331,6 +375,8 @@ function applyBatch({ planResult, packetSet, manifest, transitionRequests, trans
   for (const item of items) {
     const current = state.items[String(item.issue_number)];
     if (!current || !['create-pending', 'receipt-pending', 'uncertain'].includes(current.phase)) continue;
+    const rootPhase = resolveMutationRootPhase(current);
+    if (!rootPhase.ok) return { ok: false, errors: [`#${item.issue_number}: ${rootPhase.error}`], progress: state, items: resultItems };
     const transitionRequest = requests.get(item.issue_number);
     const transitionReceipt = transitionByIssue.get(item.issue_number);
     if (!transitionRequest || !transitionReceipt) return { ok: false, errors: [`#${item.issue_number}: pending journal input is missing`], progress: state, items: resultItems };
@@ -347,7 +393,7 @@ function applyBatch({ planResult, packetSet, manifest, transitionRequests, trans
     if (!gate.ok || gate.owners.length !== 1) {
       state.status = 'failed'; state.possibly_performed = true;
       current.phase = 'uncertain';
-      current.intent = makeIntent(item, 'uncertain', { prior_phase: current.intent.phase, prior_intent: current.intent, reconcile_errors: gate.errors || [] });
+      current.intent = makeIntent(item, 'uncertain', { prior_phase: rootPhase.phase, prior_intent: current.intent, reconcile_errors: gate.errors || [] });
       current.result = { status: 'uncertain', mutation_attempted: true, mutation_performed: null, possibly_performed: true, reconcile_errors: gate.errors || [] };
       if (options.persistProgress) options.persistProgress(state);
       return { ok: false, errors: [`#${item.issue_number}: pending mutation cannot be confirmed without exactly one owner`], progress: state, items: resultItems };
@@ -357,7 +403,7 @@ function applyBatch({ planResult, packetSet, manifest, transitionRequests, trans
       if (!compareReceiptFacts(receipt, gate.receipts.receipt.value)) {
         state.status = 'failed'; state.possibly_performed = true;
         current.phase = 'uncertain';
-        current.intent = makeIntent(item, 'uncertain', { prior_phase: current.intent.phase, prior_intent: current.intent, error: 'pending receipt conflicts with live receipt' });
+        current.intent = makeIntent(item, 'uncertain', { prior_phase: rootPhase.phase, prior_intent: current.intent, error: 'pending receipt conflicts with live receipt' });
         if (options.persistProgress) options.persistProgress(state);
         return { ok: false, errors: [`#${item.issue_number}: pending receipt conflicts with live receipt`], progress: state, items: resultItems };
       }
@@ -366,7 +412,7 @@ function applyBatch({ planResult, packetSet, manifest, transitionRequests, trans
       state.mutation_performed = true; state.possibly_performed = false;
       current.result = { status: 'already-materialized', receipt: confirmed, mutation_attempted: true, mutation_performed: true, possibly_performed: false };
       mark(item, 'complete', { receipt: confirmed, reconciled: true });
-    } else if (current.intent.prior_phase === 'create-pending' || current.phase === 'create-pending') {
+    } else if (rootPhase.phase === 'create-pending') {
       // The owner proves the create POST converged. Receipt POST is still a
       // separate, not-yet-attempted mutation and may proceed once.
       state.mutation_performed = true; state.possibly_performed = false;
@@ -375,7 +421,7 @@ function applyBatch({ planResult, packetSet, manifest, transitionRequests, trans
       // A receipt POST may have happened but is not visible. Never retry it.
       state.status = 'failed'; state.possibly_performed = true;
       current.phase = 'uncertain';
-      current.intent = makeIntent(item, 'uncertain', { prior_phase: current.intent.phase, prior_intent: current.intent, error: 'receipt pending without a matching live receipt' });
+      current.intent = makeIntent(item, 'uncertain', { prior_phase: rootPhase.phase, prior_intent: current.intent, error: 'receipt pending without a matching live receipt' });
       if (options.persistProgress) options.persistProgress(state);
       return { ok: false, errors: [`#${item.issue_number}: receipt mutation cannot be confirmed; refusing duplicate POST`], progress: state, items: resultItems };
     }
