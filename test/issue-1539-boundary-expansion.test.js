@@ -10,6 +10,7 @@ const {
   SOURCE_REF,
   canonicalJson,
   sha256Text,
+  canonicalSourceProjectionRef,
   normalizeLabels,
   validateCandidateManifest,
   gitBlobSha,
@@ -63,13 +64,26 @@ test('pinned artifact verification proves Git blob content, SHA and anchor', () 
     ref: `liqiangcc/xhs:note_desc/test.txt@${SOURCE_REF}`,
     git_blob_sha: blobSha,
     anchor: '请介绍项目',
-  } };
-  const sourceRecord = { artifacts: [{ provenance: 'source_projection', kind: 'text_projection', ref: item.artifact.ref, git_blob_sha: blobSha }] };
+  }, source_note_id: 'xhs-note:test' };
+  const sourceRecord = { source_note_id: 'xhs-note:test', source: { external_id: 'test' }, artifacts: [{ provenance: 'source_projection', kind: 'text_projection', ref: item.artifact.ref, git_blob_sha: blobSha }] };
   const good = verifyPinnedArtifact(item, sourceRecord, () => ({ sha: blobSha, encoding: 'base64', content: content.toString('base64') }));
   assert.equal(good.ok, true, good.errors.join('\n'));
   const tampered = verifyPinnedArtifact(item, sourceRecord, () => ({ sha: blobSha, encoding: 'base64', content: Buffer.from('不相干', 'utf8').toString('base64') }));
   assert.equal(tampered.ok, false);
   assert.match(tampered.errors.join('\n'), /SHA|anchor/);
+});
+
+test('a different candidate valid ref/blob/anchor and path/id mismatch fail closed', () => {
+  const first = manifest.items[0];
+  const second = manifest.items[1];
+  const borrowed = structuredClone(manifest);
+  borrowed.items[0].artifact = structuredClone(second.artifact);
+  assert.equal(validateCandidateManifest(borrowed).ok, false);
+  assert.match(validateCandidateManifest(borrowed).errors.join('\n'), /canonical SourceNote projection ref/);
+  const pathMismatch = structuredClone(first);
+  pathMismatch.artifact.ref = `liqiangcc/xhs:note_desc/not-${first.source_note_id.slice('xhs-note:'.length)}.txt@${SOURCE_REF}`;
+  assert.equal(validateCandidateManifest({ ...manifest, items: [pathMismatch, ...manifest.items.slice(1)] }).ok, false);
+  assert.equal(canonicalSourceProjectionRef(first.source_note_id), first.artifact.ref);
 });
 
 test('ownership ignores SourceNote false positives and rejects duplicate exact InterviewNote owners', () => {

@@ -22,6 +22,16 @@ function canonicalJson(value) {
 
 function sha256Text(value) { return crypto.createHash('sha256').update(String(value), 'utf8').digest('hex'); }
 
+function sourceNoteExternalId(sourceNoteId) {
+  const match = typeof sourceNoteId === 'string' ? sourceNoteId.match(/^xhs-note:(.+)$/) : null;
+  return match && match[1] ? match[1] : null;
+}
+
+function canonicalSourceProjectionRef(sourceNoteId) {
+  const externalId = sourceNoteExternalId(sourceNoteId);
+  return externalId ? `${SOURCE_REPOSITORY}:note_desc/${externalId}.txt@${SOURCE_REF}` : null;
+}
+
 function normalizeLabels(labels) {
   if (!Array.isArray(labels)) return { ok: false, labels: [], errors: ['live labels must be an array'] };
   const out = [];
@@ -55,6 +65,7 @@ function validateCandidateManifest(manifest) {
     if (seen.has(item.issue_number)) errors.push(`${prefix}.issue_number is duplicated`);
     seen.add(item.issue_number);
     if (typeof item.source_note_id !== 'string' || item.source_note_id !== item.source_note_id.trim()) errors.push(`${prefix}.source_note_id is required`);
+    const canonicalRef = canonicalSourceProjectionRef(item.source_note_id);
     if (!/^[0-9a-f]{64}$/.test(String(item.expected_body_sha256 || ''))) errors.push(`${prefix}.expected_body_sha256 must be lowercase sha256`);
     if (typeof item.expected_source_revision_id !== 'string' || !item.expected_source_revision_id) errors.push(`${prefix}.expected_source_revision_id is required`);
     if (item.recommended_decision !== 'single-interview') errors.push(`${prefix}.recommended_decision must remain single-interview`);
@@ -62,7 +73,7 @@ function validateCandidateManifest(manifest) {
     const artifact = item.artifact;
     if (!artifact || typeof artifact !== 'object' || Array.isArray(artifact)) { errors.push(`${prefix}.artifact is required`); continue; }
     if (artifact.kind !== 'text_projection' || artifact.provenance !== 'source_projection') errors.push(`${prefix}.artifact must be a source_projection text_projection`);
-    if (typeof artifact.ref !== 'string' || !artifact.ref.includes(`${SOURCE_REPOSITORY}:note_desc/`) || !artifact.ref.endsWith(`@${SOURCE_REF}`)) errors.push(`${prefix}.artifact.ref must bind the fixed repository and commit`);
+    if (artifact.ref !== canonicalRef) errors.push(`${prefix}.artifact.ref must equal the canonical SourceNote projection ref ${canonicalRef || '<invalid source_note_id>'}`);
     if (!/^[0-9a-f]{40}$/.test(String(artifact.git_blob_sha || ''))) errors.push(`${prefix}.artifact.git_blob_sha must be lowercase Git blob SHA-1`);
     if (typeof artifact.anchor !== 'string' || !artifact.anchor.trim()) errors.push(`${prefix}.artifact.anchor is required`);
   }
@@ -78,7 +89,10 @@ function gitBlobSha(bytes) {
 function verifyPinnedArtifact(item, sourceRecord, readBlob) {
   const errors = [];
   const expected = item.artifact;
-  const liveArtifact = (sourceRecord.artifacts || []).find((artifact) => artifact.provenance === 'source_projection' && artifact.kind === 'text_projection');
+  const canonicalRef = canonicalSourceProjectionRef(item.source_note_id);
+  if (!canonicalRef || expected.ref !== canonicalRef) errors.push('candidate artifact ref is not canonically bound to its SourceNote external id');
+  if (!sourceRecord || sourceRecord.source_note_id !== item.source_note_id || sourceRecord.source?.external_id !== sourceNoteExternalId(item.source_note_id)) errors.push('live SourceNote identity does not match candidate artifact binding');
+  const liveArtifact = ((sourceRecord && sourceRecord.artifacts) || []).find((artifact) => artifact.provenance === 'source_projection' && artifact.kind === 'text_projection');
   if (!liveArtifact) errors.push('live SourceNote has no source_projection text_projection');
   else {
     for (const field of ['ref', 'git_blob_sha']) if (liveArtifact[field] !== expected[field]) errors.push(`live source artifact ${field} does not match candidate manifest`);
@@ -270,6 +284,6 @@ function planBoundaryExpansion(manifest, options = {}) {
 
 module.exports = {
   SCHEMA_VERSION, REPORT_SCHEMA_VERSION, REPOSITORY, SOURCE_REPOSITORY, SOURCE_REF, FIXED_ISSUES,
-  canonicalJson, sha256Text, normalizeLabels, validateCandidateManifest, gitBlobSha, verifyPinnedArtifact,
+  canonicalJson, sha256Text, sourceNoteExternalId, canonicalSourceProjectionRef, normalizeLabels, validateCandidateManifest, gitBlobSha, verifyPinnedArtifact,
   buildBoundaryRequest, buildMaterializationRequest, exactOwnership, planBoundaryExpansion,
 };
