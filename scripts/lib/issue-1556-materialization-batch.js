@@ -101,6 +101,34 @@ function validateMaterializationInputs({ packetSet, manifest, transitionRequests
   return { ok: errors.length === 0, errors };
 }
 
+function authorizationFacts({ packetSet, manifest, transitionRequests, transitionReceipts, items } = {}) {
+  const requests = new Map((transitionRequests || []).map((request) => [Number(request.issue_number), request]));
+  const receipts = new Map((transitionReceipts || []).map((receipt) => [Number(receipt.issue_number), receipt]));
+  return {
+    schema_version: 'issue-1556-materialization-authorization.v1',
+    packet_set_sha256: PACKET_SET_SHA256,
+    manifest_sha256: sha256Text(canonicalJson(manifest)),
+    items: (items || []).map((item) => {
+      const request = requests.get(item.issue_number);
+      const receipt = receipts.get(item.issue_number);
+      const packet = (packetSet?.packets || []).find((candidate) => Number(candidate.issue_number) === item.issue_number);
+      return {
+        issue_number: item.issue_number,
+        source_note_id: item.source_note_id,
+        interview_note_id: item.interview_note_id,
+        request_sha256: item.request_sha256,
+        transition_id: request?.transition_id || null,
+        transition_target_body_sha256: receipt?.new_body_sha256 || null,
+        expected_source_note_body_sha256: item.expected_source_note_body_sha256,
+        expected_interview_body_sha256: item.expected_interview_body_sha256,
+        packet_artifact: clone(packet?.artifact || null),
+      };
+    }),
+  };
+}
+
+function authorizationSha256(input) { return sha256Text(canonicalJson(authorizationFacts(input))); }
+
 function forbiddenSourceLabels(labels) {
   return labels.filter((label) => FORBIDDEN_SOURCE_LABELS.includes(label) || FORBIDDEN_LEARNING_PREFIXES.some((prefix) => label.startsWith(prefix)));
 }
@@ -181,11 +209,12 @@ function makeIntent(item, phase, extra = {}) {
   };
 }
 
-function initialProgress(items, planSha256) {
+function initialProgress(items, planSha256, authorizationSha256Value = planSha256) {
   return {
     schema_version: PROGRESS_SCHEMA_VERSION,
     packet_set_sha256: PACKET_SET_SHA256,
     plan_sha256: planSha256,
+    authorization_sha256: authorizationSha256Value,
     status: 'planned',
     mutation_attempted: false,
     mutation_performed: false,
@@ -207,7 +236,7 @@ function validateProgress(progress, items, expectedPlanSha256 = null) {
   const errors = [];
   if (!progress || progress.schema_version !== PROGRESS_SCHEMA_VERSION) errors.push('progress schema_version mismatch');
   if (!progress || progress.packet_set_sha256 !== PACKET_SET_SHA256) errors.push('progress packet set digest mismatch');
-  if (expectedPlanSha256 && progress && progress.plan_sha256 !== expectedPlanSha256) errors.push('progress plan digest mismatch');
+  if (expectedPlanSha256 && progress && progress.authorization_sha256 !== expectedPlanSha256) errors.push('progress authorization digest mismatch');
   if (!progress || !['planned', 'running', 'failed', 'complete'].includes(progress.status)) errors.push('progress status is invalid');
   const expected = new Map((items || []).map((item) => [String(item.issue_number), item]));
   const actual = progress && progress.items || {};
@@ -278,10 +307,11 @@ function applyBatch({ planResult, packetSet, manifest, transitionRequests, trans
   if (typeof options.loadLive !== 'function' || typeof options.createInterviewIssue !== 'function' || typeof options.postReceipt !== 'function') return { ok: false, errors: ['apply requires live loader, createInterviewIssue and postReceipt adapters'], progress };
   const freshPlan = planBatch({ packetSet, manifest, transitionRequests, evidenceReceipts, transitionReceipts, loadLive: options.loadLive, readBlob: options.readBlob });
   if (!freshPlan.ok) return { ok: false, errors: freshPlan.errors, progress };
-  if (freshPlan.plan_sha256 !== options.expectedPlanSha256 || planResult.plan_sha256 !== freshPlan.plan_sha256) return { ok: false, errors: ['authorized plan digest does not match the fresh canonical fixed-batch plan'], progress };
+  const expectedAuthorization = options.expectedAuthorizationSha256 || options.expectedPlanSha256;
+  if (!/^[0-9a-f]{64}$/.test(String(expectedAuthorization || '')) || freshPlan.authorization_sha256 !== expectedAuthorization || planResult.authorization_sha256 !== freshPlan.authorization_sha256) return { ok: false, errors: ['authorized stable digest does not match the fresh fixed-batch immutable facts'], progress };
   const items = freshPlan.items;
-  let state = progress || initialProgress(items, planResult.plan_sha256);
-  const valid = validateProgress(state, items, planResult.plan_sha256);
+  let state = progress || initialProgress(items, freshPlan.plan_sha256, freshPlan.authorization_sha256);
+  const valid = validateProgress(state, items, state.authorization_sha256 || freshPlan.authorization_sha256);
   if (!valid.ok) return { ok: false, errors: valid.errors, progress: state };
   const requests = new Map((transitionRequests || []).map((request) => [Number(request.issue_number), request]));
   const transitionByIssue = new Map((transitionReceipts || []).map((receipt) => [Number(receipt.issue_number), receipt]));
@@ -570,7 +600,9 @@ function planBatch({ packetSet, manifest, transitionRequests, evidenceReceipts, 
     errors,
     items,
   };
-  return { ok: errors.length === 0, report: { ...report, plan_sha256: sha256Text(canonicalJson(report)) }, plan_sha256: sha256Text(canonicalJson(report)), items, errors };
+  const planSha256 = sha256Text(canonicalJson(report));
+  const authorization_sha256 = authorizationSha256({ packetSet, manifest, transitionRequests, transitionReceipts, items });
+  return { ok: errors.length === 0, report: { ...report, plan_sha256: planSha256, authorization_sha256 }, plan_sha256: planSha256, authorization_sha256, items, errors };
 }
 
 module.exports = {
@@ -583,6 +615,8 @@ module.exports = {
   FORBIDDEN_LEARNING_PREFIXES,
   requestSha256,
   canonicalJson,
+  authorizationFacts,
+  authorizationSha256,
   interviewNoteId,
   materializationId,
   buildMaterializationRequest,

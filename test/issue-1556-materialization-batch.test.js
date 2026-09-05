@@ -94,7 +94,7 @@ function makeBatchHarness() {
   });
   const report = { schema_version: 'issue-1556-interview-note-materialization-plan.v1', items };
   const planSha = sha256Text(require('../scripts/lib/issue-1556-materialization-batch').canonicalJson(report));
-  const planResult = { ok: true, plan_sha256: planSha, items, report: { ...report, plan_sha256: planSha } };
+  const planResult = { ok: true, plan_sha256: planSha, authorization_sha256: planSha, items, report: { ...report, plan_sha256: planSha, authorization_sha256: planSha } };
   const owners = new Map(issues.map((issue) => {
     const parsed = parseSourceNoteIssue(issue.body);
     const projection = buildInterviewProjection(issue, { ok: true, parsed });
@@ -104,14 +104,19 @@ function makeBatchHarness() {
   const calls = { create: [], receipt: [] };
   const loadLive = (request) => ({ sourceIssue: issues.find((issue) => issue.number === request.source_note_issue_number), comments: comments.get(request.source_note_issue_number), allIssues: owners.get(request.source_note_issue_number) });
   const evidenceReceipts = ISSUE_NUMBERS.map((issue_number, index) => ({ issue_number, packet_set_sha256: PACKET_SET_SHA256, transition_id: transitions[index].transition_id }));
-  const makeOptions = (overrides = {}) => ({
-    expectedPlanSha256: planSha, lock: { assertHeld() {} }, transitionRequests: transitions, transitionReceipts, evidenceReceipts, loadLive,
+  const makeOptions = (overrides = {}) => {
+    const lockDir = fs.mkdtempSync(path.join(os.tmpdir(), 'issue-1556-apply-'));
+    const lock = acquireProgressLock(path.join(lockDir, 'progress.lock'));
+    return ({
+    expectedPlanSha256: planSha, expectedAuthorizationSha256: planSha, lock, planBatch: () => planResult, transitionRequests: transitions, transitionReceipts, evidenceReceipts, loadLive,
     readBlob: (sha) => { const issue = issues.find((candidate) => candidate.blob.sha === sha); return { sha, encoding: 'base64', content: issue.blob.content }; },
     persistProgress: () => {}, writeRequest: () => {}, writeReceipt: () => {}, beforeMutation: () => {},
     createInterviewIssue: (request, projection) => { calls.create.push(request.source_note_issue_number); owners.set(request.source_note_issue_number, [{ number: 4000 + request.source_note_issue_number, state: 'open', body: projection.body, labels: projection.labels }]); },
     postReceipt: (request, receipt) => { calls.receipt.push(request.source_note_issue_number); comments.set(request.source_note_issue_number, [{ id: 8000 + request.source_note_issue_number, issue_url: `https://api.github.com/repos/liqiangcc/interview-lab/issues/${request.source_note_issue_number}`, body: renderMaterializationReceipt(receipt) }]); },
     ...overrides,
+    _releaseLock: () => { lock.release(); fs.rmSync(lockDir, { recursive: true, force: true }); },
   });
+  };
   return { issues, transitions, transitionReceipts, packets, items, planResult, owners, comments, calls, loadLive, evidenceReceipts, makeOptions };
 }
 
