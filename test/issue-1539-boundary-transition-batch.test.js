@@ -252,6 +252,20 @@ test('target revision binding covers v2 manifest semantics and rejects contradic
   assert.match(wrongRef.errors.join('\n'), /repository ref|null/);
 });
 
+test('target gate requires an explicit ownership inventory array', () => {
+  for (const malformed of [undefined, null, {}, 'not-an-array']) {
+    const state = syntheticState();
+    const first = state.requests[0];
+    const firstPlan = planBatch(state.requests, state.packetSet, optionsFor(state)).items[0].plan;
+    moveLiveToTarget(state, first, firstPlan);
+    if (malformed === undefined) delete state.lives.get(first.issue_number).allIssues;
+    else state.lives.get(first.issue_number).allIssues = malformed;
+    const result = planBatch(state.requests, state.packetSet, optionsFor(state));
+    assert.equal(result.ok, false);
+    assert.match(result.errors.join('\n'), /ownership inventory must be an explicit array/);
+  }
+});
+
 test('normal PATCH fresh reconcile rejects concurrent body drift before receipt POST', () => {
   const state = syntheticState();
   const first = state.requests[0];

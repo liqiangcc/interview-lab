@@ -179,7 +179,10 @@ function targetGate(packet, request, live, expectedBodySha = null, packetSetSha2
   if (!artifact.ok) errors.push(...artifact.errors);
   const evidence = inspectEvidence(live && live.comments || [], packet, packetSetSha256);
   if (!evidence.ok || !evidence.exact || Number(evidence.comment.id) !== request.review_evidence.comment_id) errors.push(...(evidence.errors || []).concat(evidence.exact ? [] : ['exact evidence marker/comment is required']));
-  const owners = exactOwnership(live && live.allIssues || [], `xhs:${request.source_note_id.slice('xhs-note:'.length)}`);
+  if (!live || !Array.isArray(live.allIssues)) errors.push('live InterviewNote ownership inventory must be an explicit array');
+  const owners = Array.isArray(live && live.allIssues)
+    ? exactOwnership(live.allIssues, `xhs:${request.source_note_id.slice('xhs-note:'.length)}`)
+    : [];
   if (owners.length !== 0) errors.push(`exact InterviewNote ownership count is ${owners.length}`);
   return { ok: errors.length === 0, errors, issue, labels: [...labels].sort(), evidence, owners, snapshot: issueSnapshot(issue) };
 }
