@@ -50,6 +50,8 @@ node scripts/apply-issue-1539-boundary-evidence-batch.js \
 
 未来 apply 必须显式 `--apply --confirm-dry-run <digest> --reviewed-at <timestamp>`，并提供 request/receipt/progress 路径。runner 先完成全量 live preflight，再在独占 lock 内持久化 pending intent、POST、live 恢复确认、写 formal Boundary Review request 和本地 receipt；response loss、冲突 marker、stale body/labels/SourceRevision 或 receipt mismatch 都 fail closed，绝不重复 POST。每次 apply 前都必须基于当前 progress/live 状态重新 plan；旧 digest 不得沿用。
 
-GitHub 只读 GET 可使用 `--get-max-attempts`（默认 3，最大 3）和 `--get-backoff-ms`（默认 250ms）的确定性指数退避。只对明确的瞬态网络错误、HTTP 429 和 HTTP 5xx 重试；HTTP 4xx 及未知错误立即 fail closed。该策略覆盖 Issue、comments、pinned blob、ownership search 及 ownership Issue reread。`createEvidenceComment` 的 POST 不经过此策略，始终只尝试一次；POST/PATCH 都不自动重试，响应丢失只能依靠 fresh live reconcile 和 durable intent 恢复。
+GitHub 只读 GET 可使用 `--get-max-attempts`（默认 3，最大 3）和 `--get-backoff-ms`（默认 250ms）的确定性指数退避。只对明确的瞬态网络错误、HTTP 429、HTTP 5xx，以及形如 `Get "https://...": unexpected EOF` 或 `Get "https://...": EOF` 的传输层错误重试；任意其他语义文本中的 `EOF` 不匹配，HTTP 4xx 及未知错误立即 fail closed。该策略覆盖 Issue、comments、pinned blob、ownership search 及 ownership Issue reread。`createEvidenceComment` 的 POST 不经过此策略，始终只尝试一次；POST/PATCH 都不自动重试，响应丢失只能依靠 fresh live reconcile 和 durable intent 恢复。
+
+带有效 request/receipt 且 live 中仍有唯一 exact marker 的完成项重入，会在写入任何文件前执行一次 fresh live gate、request/receipt digest 校验和 transition planner 校验；校验通过后只持久化 progress，不重写 request/receipt，也不重复执行额外 final gate。该优化不跳过 body、label、revision、pinned artifact、ownership、marker 唯一性或 live CAS 校验。
 
 此任务不执行 apply。Evidence comment 只能支持 Boundary Review；它不创建 InterviewNote、不执行 materialization、不执行独立 Source Review、不生成 learning labels，也不将 SourceNote 标为 source-ready。

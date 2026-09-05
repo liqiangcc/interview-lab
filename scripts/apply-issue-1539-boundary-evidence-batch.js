@@ -69,7 +69,11 @@ function isRetryableGetError(error) {
   if (status !== null) return status === 429 || (status >= 500 && status <= 599);
   if (TRANSIENT_NETWORK_CODES.has(error && error.code)) return true;
   const text = [error && error.message, error && error.stderr, error && error.stdout].filter(Boolean).join(' ').toLowerCase();
-  return /(tls handshake timeout|i\/o timeout|connection reset|connection refused|socket hang up|temporary failure|network is unreachable|timed out)/i.test(text);
+  if (/(tls handshake timeout|i\/o timeout|connection reset|connection refused|socket hang up|temporary failure|network is unreachable|timed out)/i.test(text)) return true;
+  // gh/Go transport reports some transient reads as `Get "<URL>": unexpected EOF`.
+  // Require the complete GET-URL transport shape: arbitrary semantic messages
+  // containing EOF must remain non-retryable.
+  return /\bGet\s+["']?https?:\/\/\S+?["']?:\s*(?:unexpected\s+)?EOF\b/i.test(text);
 }
 
 function ghJsonGet(args, options = {}) {
@@ -222,6 +226,10 @@ function main(argv = process.argv.slice(2)) {
       writeReceipt: (packet, receipt) => writeReceiptFile(path.resolve(args.receiptDir), packet, receipt),
       readReceipt: (packet) => {
         const file = path.join(path.resolve(args.receiptDir), `issue-${packet.issue_number}.json`);
+        return fs.existsSync(file) ? readJson(file) : null;
+      },
+      readRequest: (packet) => {
+        const file = path.join(path.resolve(args.requestDir), `issue-${packet.issue_number}.json`);
         return fs.existsSync(file) ? readJson(file) : null;
       },
     });
