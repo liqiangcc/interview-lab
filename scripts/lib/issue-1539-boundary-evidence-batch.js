@@ -350,6 +350,20 @@ function markPostUncertain(packet, progress, pending, error, persistProgress) {
   return failedResult(progress, [`${packet.packet_id}: ${error}`]);
 }
 
+function finalRequestGate(packet, packetSet, expectedComment, options) {
+  let live;
+  try { live = options.liveLoader(packet); } catch (error) {
+    return { ok: false, errors: [`final request live read failed: ${error.message}`] };
+  }
+  const gate = livePostGate(packet, packetSet, live);
+  if (!gate.ok) return { ok: false, errors: [`final request gate failed: ${gate.errors.join('; ')}`] };
+  if (!gate.evidence.exact) return { ok: false, errors: ['final request gate requires one exact live evidence marker'] };
+  if (Number(gate.evidence.comment.id) !== Number(expectedComment.id)) {
+    return { ok: false, errors: [`final request evidence comment id changed: expected=${expectedComment.id} live=${gate.evidence.comment.id}`] };
+  }
+  return { ok: true, live, gate, comment: gate.evidence.comment };
+}
+
 function applyOne(packet, packetSet, progress, options) {
   let live;
   try { live = options.liveLoader(packet); } catch (error) { return failedResult(progress, [`${packet.packet_id}: initial live read failed: ${error.message}`]); }
@@ -431,6 +445,22 @@ function applyOne(packet, packetSet, progress, options) {
       options.persistProgress(progress);
     }
   }
+  if (typeof options.beforeRequestGate === 'function') options.beforeRequestGate(packet);
+  const requestGate = finalRequestGate(packet, packetSet, comment, options);
+  if (!requestGate.ok) {
+    if (evidencePosted) {
+      progress.status = 'failed';
+      progress.mutation_performed = true;
+      progress.possibly_performed = false;
+      progress.intents[packet.packet_id] = { ...intentFor(packetSet.packet_set_sha256, packet, 'request-failed'), evidence_comment_id: Number(comment.id) };
+      progress.results[packet.packet_id] = { status: 'published-validation-failed', evidence_comment_id: Number(comment.id), mutation_attempted: true, mutation_performed: true, possibly_performed: false, error: requestGate.errors.join('; ') };
+      options.persistProgress(progress);
+    }
+    return failedResult(progress, requestGate.errors.map((error) => `${packet.packet_id}: ${error}`));
+  }
+  live = requestGate.live;
+  evidence = requestGate.gate.evidence;
+  comment = requestGate.comment;
   const reviewedAt = options.reviewedAt;
   let request;
   try { request = buildFormalRequest(packet, Number(comment.id), reviewedAt); }

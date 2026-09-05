@@ -120,6 +120,47 @@ test('preflight verifies all 17 live SourceNotes and predicts only evidence POST
   assert.equal(result.items.every((item) => item.ownership.count === 0), true);
 });
 
+test('initial exact marker is re-gated before request/receipt and rejects every fresh-read race', () => {
+  const races = {
+    body: (live) => { live.sourceIssue.body = 'changed before request'; },
+    labels: (live) => { live.sourceIssue.labels = live.sourceIssue.labels.filter((label) => label !== 'task:boundary-review'); },
+    revision: (live, packet) => { live.sourceIssue.body = live.sourceIssue.body.replace(packet.expected_source_revision_id, `${packet.expected_source_revision_id}-changed`); },
+    artifact: (live) => { live.blob.content = Buffer.from('changed before request', 'utf8').toString('base64'); },
+    ownership: (live, packet) => { live.allIssues = [{ number: 1100, pull_request: false, body: `<!-- interview-note: id=xhs:${packet.source_note_id.slice('xhs-note:'.length)} schema=interview-note-issue.v2 -->` }]; },
+    duplicate: (live, packet, packetSetSha) => { live.comments.push({ id: 902, issue_url: `https://api.github.com/repos/${packet.repository}/issues/${packet.issue_number}`, body: evidenceBody(packet, packetSetSha) }); },
+    comment_id: (live, packet, packetSetSha) => { live.comments = [{ id: 903, issue_url: `https://api.github.com/repos/${packet.repository}/issues/${packet.issue_number}`, body: evidenceBody(packet, packetSetSha) }]; },
+  };
+  for (const [name, mutate] of Object.entries(races)) {
+    const state = syntheticSet();
+    const packet = state.packetSet.packets[0];
+    const statePacketSetSha = state.packetSet.packet_set_sha256;
+    const initialComment = { id: 901, issue_url: `https://api.github.com/repos/${packet.repository}/issues/${packet.issue_number}`, body: evidenceBody(packet, statePacketSetSha) };
+    state.lives.get(packet.packet_id).comments = [initialComment];
+    const originalLoader = loader(state);
+    let reads = 0;
+    let posts = 0;
+    let requests = 0;
+    let receipts = 0;
+    const progress = initialProgress(statePacketSetSha, state.packetSet.packets.map((item) => item.packet_id));
+    const result = applyOne(packet, state.packetSet, progress, {
+      liveLoader: (currentPacket) => {
+        reads += 1;
+        if (reads === 2) mutate(state.lives.get(currentPacket.packet_id), currentPacket, state.packetSet.packet_set_sha256);
+        return originalLoader(currentPacket);
+      },
+      reviewedAt: '2026-09-05T00:00:00Z',
+      persistProgress: () => {},
+      createEvidenceComment: () => { posts += 1; },
+      writeRequest: () => { requests += 1; },
+      writeReceipt: () => { receipts += 1; },
+    });
+    assert.equal(result.ok, false, name);
+    assert.equal(posts, 0, name);
+    assert.equal(requests, 0, name);
+    assert.equal(receipts, 0, name);
+  }
+});
+
 test('fresh post-hook gate consumes a concurrent exact marker and skips POST', () => {
   const state = syntheticSet();
   const packet = state.packetSet.packets[0];
