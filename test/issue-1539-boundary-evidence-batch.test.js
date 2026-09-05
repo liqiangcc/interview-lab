@@ -372,9 +372,9 @@ test('GET retry exhaustion and semantic 4xx fail closed without excess attempts'
   const delays = [];
   const timeout = () => {
     attempts += 1;
-    throw Object.assign(new Error('HTTP 503 upstream unavailable'), { status: 503 });
+    throw Object.assign(new Error('Command failed: gh api'), { status: 1, stderr: 'Get https://api.github.com: TLS handshake timeout' });
   };
-  assert.throws(() => ghJsonGet(['api', 'unavailable'], { maxAttempts: 3, backoffMs: 7, execute: timeout, sleep: (delay) => delays.push(delay) }), /503/);
+  assert.throws(() => ghJsonGet(['api', 'unavailable'], { maxAttempts: 3, backoffMs: 7, execute: timeout, sleep: (delay) => delays.push(delay) }), (error) => error.status === 1 && /TLS handshake timeout/.test(error.stderr));
   assert.equal(attempts, 3);
   assert.deepEqual(delays, [7, 14]);
 
@@ -382,11 +382,19 @@ test('GET retry exhaustion and semantic 4xx fail closed without excess attempts'
   delays.length = 0;
   const notFound = () => {
     attempts += 1;
-    throw Object.assign(new Error('HTTP 404 not found'), { status: 404 });
+    throw Object.assign(new Error('Command failed: gh api'), { status: 1, stderr: 'gh: HTTP 404 not found' });
   };
-  assert.throws(() => ghJsonGet(['api', 'missing'], { maxAttempts: 3, backoffMs: 7, execute: notFound, sleep: (delay) => delays.push(delay) }), /404/);
+  assert.throws(() => ghJsonGet(['api', 'missing'], { maxAttempts: 3, backoffMs: 7, execute: notFound, sleep: (delay) => delays.push(delay) }), (error) => error.status === 1 && /HTTP 404/.test(error.stderr));
   assert.equal(attempts, 1);
   assert.deepEqual(delays, []);
+
+  attempts = 0;
+  const unknownExit = () => {
+    attempts += 1;
+    throw Object.assign(new Error('Command failed: gh api'), { status: 1, stderr: 'permission denied' });
+  };
+  assert.throws(() => ghJsonGet(['api', 'unknown'], { maxAttempts: 3, backoffMs: 7, execute: unknownExit, sleep: () => { throw new Error('unknown exit must not sleep'); } }), (error) => error.status === 1 && /permission denied/.test(error.stderr));
+  assert.equal(attempts, 1);
 });
 
 test('POST-shaped gh execution remains single-attempt and is not covered by GET retries', () => {

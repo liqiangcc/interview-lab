@@ -57,7 +57,7 @@ function ghJson(args, input = null) {
 
 function httpStatusFromError(error) {
   for (const value of [error && error.status, error && error.statusCode]) {
-    if (Number.isInteger(value)) return value;
+    if (Number.isInteger(value) && value >= 400 && value <= 599) return value;
   }
   const text = [error && error.message, error && error.stderr, error && error.stdout].filter(Boolean).join(' ');
   const explicit = text.match(/\bHTTP\s*([45]\d{2})\b/i) || text.match(/\(([45]\d{2})\)/) || text.match(/\b(?:status|response)[^\d]{0,20}([45]\d{2})\b/i);
