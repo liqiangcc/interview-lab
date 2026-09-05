@@ -85,3 +85,39 @@ the batch runner is the only apply path for this set.
 The runner only changes the explicitly requested InterviewNote lifecycle
 labels and writes the corresponding applied receipt. It does not modify
 SourceNote/Raw content, create InterviewContext, or mutate unrelated Issues.
+
+## Legacy uncertain recovery
+
+The first apply attempt can leave a legacy progress file with #1509 marked
+`uncertain` even though GitHub later exposes the first legal label prefix. Do
+not reuse the old batch plan digest for this state. The explicit local recovery
+entry point binds the original complete plan artifact and digest
+`ed3770529310da7ebb20873d580011b076c1fc278b277bf22a360eec12c6bab9`, verifies
+that only #1509 is uncertain, all other items remain planned, #1509 has no
+receipt, and its raw lifecycle labels are an original plan prefix. It emits a
+`live_prefix_sha256` confirmation value and proposes a reproducible
+`begin-pending` intent; plan mode does not write progress.
+
+```text
+node scripts/recover-issue-1539-legacy-uncertain.js \
+  --request-dir data/pilot/issue-1539/source-review-requests \
+  --plan data/pilot/issue-1539/source-review-transition.dry-run.json \
+  --plan-sha256 ed3770529310da7ebb20873d580011b076c1fc278b277bf22a360eec12c6bab9 \
+  --pinned-artifact-manifest data/pilot/issue-1539/recovery.dry-run.json.pinned-artifact-manifest.json \
+  --progress data/pilot/issue-1539/source-review-transition.progress.json \
+  --progress-lock data/pilot/issue-1539/source-review-transition.progress.json.lock
+```
+
+Only after reviewing that output may the operator use the same command with
+`--confirm-live-prefix-sha256 <emitted-value> --apply`. This mode writes only
+the local progress file under the exclusive lock; it never calls a GitHub
+mutation endpoint. A wrong plan digest, issue, lifecycle prefix, receipt,
+uncontrolled-label baseline, or peer progress state fails closed. The regular
+batch runner then requires a fresh plan digest derived from the recovered
+pending journal.
+
+Each lifecycle add/delete operation now performs bounded convergence polling
+with exponential backoff after the adapter call. A delayed GitHub label read
+therefore causes additional reads rather than a duplicate operation. Only
+exhausting the configured attempt/deadline budget marks the item uncertain,
+and the complete pending sub-intent is retained inside that uncertain record.

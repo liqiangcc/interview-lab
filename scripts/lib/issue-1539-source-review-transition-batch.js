@@ -30,6 +30,10 @@ const PHASES = new Set([
 const PENDING_PHASES = new Set(['begin-pending', 'final-pending', 'receipt-pending']);
 const LIFECYCLE_LABELS = new Set(['task:source-recovery', 'task:source-review']);
 const RECEIPT_MARKER = 'interview-note-source-review-applied';
+const LABEL_CONVERGENCE_TIMEOUT_MS = 15000;
+const LABEL_CONVERGENCE_MAX_ATTEMPTS = 8;
+const LABEL_CONVERGENCE_INITIAL_BACKOFF_MS = 100;
+const LABEL_CONVERGENCE_MAX_BACKOFF_MS = 2000;
 
 function sortedLabels(issue) { return [...(issue && issue.labels || []).map((x) => typeof x === 'string' ? x : x && x.name).filter(Boolean)].sort(); }
 function issueSnapshot(issue) {
@@ -358,13 +362,19 @@ function persistIntent(progress, request, phase, extra, persistProgress) {
 
 function markUncertain(progress, request, phase, error, persistProgress) {
   const item = progress.items[String(request.issue_number)];
+  const priorPendingSubIntent = PENDING_PHASES.has(phase) && item && item.intent
+    ? JSON.parse(JSON.stringify(item.intent)) : null;
   progress.status = 'failed';
   progress.mutation_attempted = true;
   progress.mutation_performed = null;
   progress.possibly_performed = true;
   item.phase = 'uncertain';
   item.possibly_performed = true;
-  item.intent = intentFor(request, 'uncertain', { attempted_phase: phase, error });
+  item.intent = intentFor(request, 'uncertain', {
+    attempted_phase: phase,
+    error,
+    ...(priorPendingSubIntent ? { prior_pending_sub_intent: priorPendingSubIntent } : {}),
+  });
   item.result = { status: 'uncertain', phase, error, mutation_attempted: true, mutation_performed: null, possibly_performed: true };
   if (persistProgress) persistProgress(progress);
 }
@@ -385,6 +395,41 @@ function operationConverged(issue, beforeSnapshot, operation) {
   const current = lifecycleLabels(issue.labels || []);
   const expected = applyLifecycleOperation(lifecycleLabels(beforeSnapshot.labels), operation);
   return canonicalJson(current) === canonicalJson(expected) && preservesNonLifecycleLabels(issueSnapshot(issue), beforeSnapshot.labels);
+}
+
+function pollLabelOperationConvergence(request, beforeSnapshot, operation, baselineUncontrolled, loadLive, options = {}) {
+  if (typeof loadLive !== 'function') throw new Error('loadLive is required for label convergence polling');
+  const clock = typeof options.clock === 'function' ? options.clock : Date.now;
+  const sleep = typeof options.sleep === 'function' ? options.sleep : (() => {});
+  const timeoutMs = Number.isInteger(options.timeoutMs) && options.timeoutMs >= 0
+    ? options.timeoutMs : LABEL_CONVERGENCE_TIMEOUT_MS;
+  const maxAttempts = Number.isInteger(options.maxAttempts) && options.maxAttempts >= 0
+    ? options.maxAttempts : LABEL_CONVERGENCE_MAX_ATTEMPTS;
+  const initialBackoffMs = Number.isInteger(options.initialBackoffMs) && options.initialBackoffMs >= 0
+    ? options.initialBackoffMs : LABEL_CONVERGENCE_INITIAL_BACKOFF_MS;
+  const maxBackoffMs = Number.isInteger(options.maxBackoffMs) && options.maxBackoffMs >= 0
+    ? options.maxBackoffMs : LABEL_CONVERGENCE_MAX_BACKOFF_MS;
+  const startedAt = clock();
+  let attempts = 0;
+  let lastLive = null;
+  while (true) {
+    lastLive = loadLive(request);
+    const issue = lastLive && lastLive.interviewIssue;
+    const snapshot = issue && issueSnapshot(issue);
+    if (operationConverged(issue, beforeSnapshot, operation)
+      && preservesNonLifecycleLabels(snapshot, baselineUncontrolled)) {
+      return { ok: true, issue, snapshot, attempts };
+    }
+    const elapsed = clock() - startedAt;
+    if (attempts >= maxAttempts || elapsed >= timeoutMs) {
+      return { ok: false, issue, snapshot, attempts, elapsed };
+    }
+    const backoff = Math.min(maxBackoffMs, initialBackoffMs * (2 ** attempts));
+    const remaining = Math.max(0, timeoutMs - elapsed);
+    if (remaining === 0) return { ok: false, issue, snapshot, attempts, elapsed };
+    sleep(Math.min(backoff, remaining));
+    attempts += 1;
+  }
 }
 
 function labelPendingIntent(stage, desiredLabels, beforeSnapshot, operationPlan, operationIndex, uncontrolledLabels = beforeSnapshot.labels, originalBeforeControlled = null) {
@@ -555,7 +600,6 @@ function applyBatch(requests, pinnedArtifactManifest, progress, options = {}) {
         let operationIndex = existingIntent && Number.isInteger(existingIntent.operation_index) ? existingIntent.operation_index : 0;
         if (!operations.length) throw new Error(`#${request.issue_number}: ${stage} has no lifecycle label operation to apply`);
         let currentSnapshot = beforeSnapshot;
-        let safeRetries = 0;
         const originalBeforeSnapshot = { ...beforeSnapshot, labels: [...baselineUncontrolled, ...beforeControlled].sort() };
         while (operationIndex < operations.length) {
           const operation = operations[operationIndex];
@@ -591,16 +635,22 @@ function applyBatch(requests, pinnedArtifactManifest, progress, options = {}) {
           if (converged) {
             currentSnapshot = issueSnapshot(afterLive.interviewIssue);
             operationIndex += 1;
-            safeRetries = 0;
             continue;
           }
-          const safelyUnchanged = canonicalJson(lifecycleLabels(afterLive.interviewIssue && afterLive.interviewIssue.labels)) === canonicalJson(lifecycleLabels(currentSnapshot.labels))
-            && preservesNonLifecycleLabels(issueSnapshot(afterLive.interviewIssue), baselineUncontrolled);
-          if (safelyUnchanged && safeRetries < 1) {
-            safeRetries += 1;
+          const polled = pollLabelOperationConvergence(request, currentSnapshot, operation, baselineUncontrolled, options.loadLive, {
+            clock: options.clock,
+            sleep: options.sleep,
+            timeoutMs: options.labelConvergenceTimeoutMs,
+            maxAttempts: options.labelConvergenceMaxAttempts,
+            initialBackoffMs: options.labelConvergenceInitialBackoffMs,
+            maxBackoffMs: options.labelConvergenceMaxBackoffMs,
+          });
+          if (polled.ok) {
+            currentSnapshot = polled.snapshot;
+            operationIndex += 1;
             continue;
           }
-          const reason = patchError ? patchError.message : `${stage} lifecycle operation did not converge`;
+          const reason = patchError ? `${patchError.message}; label convergence polling exhausted` : `${stage} lifecycle operation did not converge after bounded polling`;
           markUncertain(progress, request, pendingPhase, reason, options.persistProgress);
           throw new Error(`#${request.issue_number}: ${reason}`);
         }
@@ -702,6 +752,10 @@ module.exports = {
   PENDING_PHASES,
   LIFECYCLE_LABELS,
   RECEIPT_MARKER,
+  LABEL_CONVERGENCE_TIMEOUT_MS,
+  LABEL_CONVERGENCE_MAX_ATTEMPTS,
+  LABEL_CONVERGENCE_INITIAL_BACKOFF_MS,
+  LABEL_CONVERGENCE_MAX_BACKOFF_MS,
   initialProgress,
   validateBatchInputs,
   validateProgress,
@@ -720,6 +774,7 @@ module.exports = {
   applyLifecycleOperation,
   pendingOperationAssessment,
   operationConverged,
+  pollLabelOperationConvergence,
   labelPendingIntent,
   batchIntentId,
   intentFor,
