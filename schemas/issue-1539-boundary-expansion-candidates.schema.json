@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/liqiangcc/interview-lab/schemas/issue-1539-boundary-expansion-candidates.schema.json",
+  "title": "Issue #1539 fixed Boundary Review candidate manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "repository", "parent_issue", "epic_issue", "source_repository", "source_repository_ref", "minimum_candidates", "items"],
+  "properties": {
+    "schema_version": {"const": "issue-1539-boundary-expansion-candidates.v1"},
+    "repository": {"const": "liqiangcc/interview-lab"},
+    "parent_issue": {"const": 923},
+    "epic_issue": {"const": 919},
+    "source_repository": {"const": "liqiangcc/xhs"},
+    "source_repository_ref": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "minimum_candidates": {"type": "integer", "minimum": 17},
+    "items": {"type": "array", "minItems": 17, "maxItems": 17, "items": {"$ref": "#/$defs/item"}}
+  },
+  "$defs": {
+    "item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["issue_number", "source_note_id", "expected_body_sha256", "expected_source_revision_id", "artifact", "recommended_decision", "rationale"],
+      "properties": {
+        "issue_number": {"type": "integer", "minimum": 1},
+        "source_note_id": {"type": "string", "pattern": "^xhs-note:.+$"},
+        "expected_body_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "expected_source_revision_id": {"type": "string", "minLength": 1},
+        "artifact": {
+          "type": "object", "additionalProperties": false,
+          "required": ["ref", "git_blob_sha", "kind", "provenance", "anchor"],
+          "properties": {
+            "ref": {"type": "string", "minLength": 1},
+            "git_blob_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+            "kind": {"const": "text_projection"},
+            "provenance": {"const": "source_projection"},
+            "anchor": {"type": "string", "minLength": 1}
+          }
+        },
+        "recommended_decision": {"const": "single-interview"},
+        "rationale": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}
