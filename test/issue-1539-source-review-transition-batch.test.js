@@ -24,6 +24,7 @@ const {
   PACKET_SET_SHA256,
   PINNED_ARTIFACT_MANIFEST_SHA256,
   intentFor,
+  isLifecycleLabel,
   lifecycleLabels,
   lifecycleOperationPlan,
   applyLifecycleOperation,
@@ -267,6 +268,48 @@ test('begin-pending recovery advances a converged label write without repeating 
   assert.equal(env.patches.filter((patch) => patch.issue === 1509).length, 3);
   assert.equal(env.patches.filter((patch) => patch.issue === 1509).some((patch) => patch.operation.kind === 'add' && patch.operation.label === 'status:source-review'), false);
   assert.equal(progress.items['1509'].phase, 'complete');
+});
+
+test('pending recovery normalizes REST label objects and preserves string-label behavior', () => {
+  const reqs = requests();
+  const env = environment();
+  const preflight = planBatch(reqs, pinnedManifest, { loadLive: env.loadLive, planTransition: env.planTransition });
+  const progress = pendingProgress(reqs, 'begin-pending', preflight.items[0]);
+  const originalLabels = [...env.state.get(1509).labels];
+  const firstOperation = progress.items['1509'].intent.operation_plan[0];
+  const prefix = applyLifecycleOperation(lifecycleLabels(originalLabels), firstOperation);
+  env.state.get(1509).labels = [...new Set([...originalLabels.filter((label) => !isLifecycleLabel(label)), ...prefix])].sort();
+  env.state.get(1509).status = 'source-review';
+  const stringAssessment = pendingOperationAssessment(progress.items['1509'], { labels: [...env.state.get(1509).labels] });
+  assert.equal(stringAssessment.ok, true, stringAssessment.error || 'string labels were rejected');
+  const originalLoadLive = env.loadLive;
+  env.loadLive = (request) => {
+    const live = originalLoadLive(request);
+    live.interviewIssue.labels = live.interviewIssue.labels.map((name) => ({ name }));
+    return live;
+  };
+  const result = applyBatch(reqs, pinnedManifest, progress, applyOptions(env, reqs, progress, []));
+  assert.equal(result.ok, true, result.errors.join('\n'));
+  assert.equal(progress.items['1509'].phase, 'complete');
+  assert.equal(env.patches.filter((patch) => patch.issue === 1509 && patch.operation.kind === firstOperation.kind && patch.operation.label === firstOperation.label).length, 0);
+});
+
+test('pending recovery fails closed for malformed labels and lost unrelated labels', () => {
+  const reqs = requests();
+  const env = environment();
+  const preflight = planBatch(reqs, pinnedManifest, { loadLive: env.loadLive, planTransition: env.planTransition });
+  const progress = pendingProgress(reqs, 'begin-pending', preflight.items[0]);
+  const validLabels = [...preflight.items[0].live_snapshot.labels];
+  const malformed = pendingOperationAssessment(progress.items['1509'], {
+    labels: validLabels.map((name, index) => index === 0 ? { name } : { malformed: name }),
+  });
+  assert.equal(malformed.ok, false);
+  assert.match(malformed.error, /malformed labels/);
+  const lostUncontrolled = pendingOperationAssessment(progress.items['1509'], {
+    labels: validLabels.filter((label) => label !== 'source:xhs'),
+  });
+  assert.equal(lostUncontrolled.ok, false);
+  assert.match(lostUncontrolled.error, /lost unrelated labels/);
 });
 
 test('begin-pending recovery safely retries when PATCH was not sent', () => {

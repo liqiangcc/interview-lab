@@ -35,7 +35,21 @@ const LABEL_CONVERGENCE_MAX_ATTEMPTS = 8;
 const LABEL_CONVERGENCE_INITIAL_BACKOFF_MS = 100;
 const LABEL_CONVERGENCE_MAX_BACKOFF_MS = 2000;
 
-function sortedLabels(issue) { return [...(issue && issue.labels || []).map((x) => typeof x === 'string' ? x : x && x.name).filter(Boolean)].sort(); }
+function normalizeLabelNames(labels, { strict = false } = {}) {
+  if (!Array.isArray(labels)) return strict ? null : [];
+  const names = [];
+  for (const label of labels) {
+    if (typeof label === 'string' && label.length > 0) {
+      names.push(label);
+    } else if (label && typeof label === 'object' && typeof label.name === 'string' && label.name.length > 0) {
+      names.push(label.name);
+    } else if (strict) {
+      return null;
+    }
+  }
+  return [...new Set(names)].sort();
+}
+function sortedLabels(issue) { return normalizeLabelNames(issue && issue.labels || []); }
 function issueSnapshot(issue) {
   return {
     number: Number(issue && issue.number),
@@ -50,8 +64,8 @@ function labelsMatch(issueSnapshotValue, labels) {
   return Boolean(issueSnapshotValue) && canonicalJson(issueSnapshotValue.labels) === canonicalJson([...labels].sort());
 }
 function isLifecycleLabel(label) { return typeof label === 'string' && (label.startsWith('status:') || LIFECYCLE_LABELS.has(label)); }
-function lifecycleLabels(labels) { return [...new Set((labels || []).filter(isLifecycleLabel))].sort(); }
-function nonLifecycleLabels(labels) { return [...new Set((labels || []).filter((label) => !isLifecycleLabel(label)))].sort(); }
+function lifecycleLabels(labels) { return normalizeLabelNames(labels).filter(isLifecycleLabel); }
+function nonLifecycleLabels(labels) { return normalizeLabelNames(labels).filter((label) => !isLifecycleLabel(label)); }
 function lifecycleLabelsMatch(issueSnapshotValue, labels) {
   return Boolean(issueSnapshotValue) && canonicalJson(lifecycleLabels(issueSnapshotValue.labels)) === canonicalJson(lifecycleLabels(labels));
 }
@@ -90,14 +104,21 @@ function pendingOperationAssessment(state, issue) {
     || !Array.isArray(intent.operation_plan) || !Number.isInteger(intent.operation_index)) {
     return { ok: false, error: 'pending label sub-intent is incomplete' };
   }
-  const before = lifecycleLabels(intent.before_controlled_labels);
-  const desired = lifecycleLabels(intent.desired_controlled_labels);
+  const liveLabels = normalizeLabelNames(issue && issue.labels, { strict: true });
+  const beforeLabels = normalizeLabelNames(intent.before_controlled_labels, { strict: true });
+  const desiredLabels = normalizeLabelNames(intent.desired_controlled_labels, { strict: true });
+  const uncontrolledLabels = normalizeLabelNames(intent.uncontrolled_labels, { strict: true });
+  if (!liveLabels || !beforeLabels || !desiredLabels || !uncontrolledLabels) {
+    return { ok: false, error: 'pending label recovery encountered malformed labels' };
+  }
+  const before = lifecycleLabels(beforeLabels);
+  const desired = lifecycleLabels(desiredLabels);
   const operations = lifecycleOperationPlan(before, desired);
   if (canonicalJson(intent.operation_plan) !== canonicalJson(operations)) return { ok: false, error: 'pending label operation plan is not reproducible' };
   if (intent.operation_index < 0 || intent.operation_index >= operations.length) return { ok: false, error: 'pending label operation index is out of range' };
-  const current = lifecycleLabels((issue && issue.labels) || []);
-  const uncontrolled = nonLifecycleLabels((issue && issue.labels) || []);
-  const baseline = nonLifecycleLabels(intent.uncontrolled_labels);
+  const current = lifecycleLabels(liveLabels);
+  const uncontrolled = nonLifecycleLabels(liveLabels);
+  const baseline = nonLifecycleLabels(uncontrolledLabels);
   if (!baseline.every((label) => uncontrolled.includes(label))) return { ok: false, error: 'pending label recovery detected lost unrelated labels' };
   let completed = -1;
   let prefix = before;
@@ -764,6 +785,7 @@ module.exports = {
   applyBatch,
   issueSnapshot,
   sameSnapshot,
+  normalizeLabelNames,
   isLifecycleLabel,
   lifecycleLabels,
   nonLifecycleLabels,
