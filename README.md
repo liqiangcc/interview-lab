@@ -201,6 +201,7 @@ Issue number、标题和显示文本都不是领域 identity。
 - `docs/workflows/issue-driven-workflow.md`
 - `docs/workflows/source-note-boundary-review.md`
 - `docs/workflows/source-note-boundary-review-batch.md`
+- `docs/workflows/issue-1539-boundary-expansion.md`
 - `docs/learning/source-first-reading.md`
 - `docs/learning/exploration-sessions.md`
 - `docs/migration/xhs-source-migration.md`
