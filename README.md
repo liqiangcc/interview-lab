@@ -174,6 +174,8 @@ Issue number、标题和显示文本都不是领域 identity。
 
 也就是：未来面经内容和 Outcome 不得反向影响当前步骤的理解。
 
+面向用户的分析表达统一遵循 `docs/learning/interview-analysis-style.md`：先判断、再给结构、再解释关键因果，第一轮只形成最小完整回答并在自然边界停下。
+
 ## 仓库语言
 
 面向人的内容默认使用中文；机器标识保持稳定英文。详见：
@@ -203,6 +205,7 @@ Issue number、标题和显示文本都不是领域 identity。
 - `docs/workflows/source-note-boundary-review-batch.md`
 - `docs/workflows/issue-1539-boundary-expansion.md`
 - `docs/learning/source-first-reading.md`
+- `docs/learning/interview-analysis-style.md`
 - `docs/learning/exploration-sessions.md`
 - `docs/migration/xhs-source-migration.md`
 - `docs/validation/invariants.md`

@@ -260,6 +260,23 @@ Agent 恢复或创建 ExplorationSession
 
 后者是 Agent/runtime 的内部责任。
 
+## 默认分析表达风格
+
+正常 Learning mode 的用户可见分析必须遵循 [`docs/learning/interview-analysis-style.md`](../learning/interview-analysis-style.md)。
+
+默认节奏是：
+
+```text
+先判断
+→ 再给结构
+→ 再解释关键因果
+→ 必要时给最小回答骨架
+→ 到当前最小闭环就停
+→ 等真实下一步
+```
+
+重点是帮助用户形成稳定的“识别 / 组织 / 回答 / 控制深度”能力，而不是把 checkpoint 审计日志、完整知识百科或一次性的标准答案直接暴露为学习体验。
+
 ## 默认 Agent 行为
 
 ### 筛选学习样本
