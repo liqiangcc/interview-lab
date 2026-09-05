@@ -33,4 +33,21 @@ planner 只生成候选 Boundary Review request template（没有 `review_eviden
 
 未来授权 apply 必须沿用现有安全工具链：固定集合、全量 preflight、body/SourceRevision/controlled-label CAS、独占 lock、durable intent/journal、逐项 receipt、response-loss 恢复和 stale re-plan。任何不确定结果都保留 pending intent 并 fail closed；不得把部分成功猜成完成。
 
-既有 #921 选择中，18 条已被判定为 not-interview，2 条为 multi-interview，#90/#92/#1115/#1452/#1460 仍因证据不足 blocked；已 source-ready 的 #3/#4/#915 与 #1509–#1538 不在本批次。题库/教程/营销汇总以及混合多个互不相干流程的记录不进入这 17 条固定集合。
+既有 #921 选择中，18 条已被判定为 not-interview，2 条为 multi-interview，#90/#92/#1115/#1452/#1460 仍因证据不足 blocked；已 source-ready 的 #3/#4/#915 与 #1509–#1538 不在本批次。题库/教程/营销汇总以及混合多个互不相干流程的记录不进入这 17 条固定集合。候选审计中 #782 被明确记录为歧义排除项：正文混合多个独立面试流程，当前不能证明 single-interview，因此不猜测、不进入本批。
+
+## Boundary Review evidence packet（Issue #1549）
+
+Evidence packet 是独立于 Source Review 的边界证据。入口默认 plan-only：
+
+```sh
+node scripts/apply-issue-1539-boundary-evidence-batch.js \
+  --candidate-manifest data/pilot/issue-1539/boundary-expansion-candidates.json \
+  --report /tmp/issue-1549-boundary-evidence.dry-run.json \
+  --progress /tmp/issue-1549-boundary-evidence.progress.json
+```
+
+固定 packet set digest 由 17 个 packet 的不可变 SourceNote/body SHA、SourceRevision、canonical pinned artifact、single-interview rationale、全部 Boundary checks 和 `source_ready_gate.allowed=false` 计算。Evidence subject digest 不包含 comment id、comment locator 或 reviewed_at；正式 transition request 只有在 POST 后 live re-read 得到唯一精确 evidence marker 才生成。
+
+未来 apply 必须显式 `--apply --confirm-dry-run <digest> --reviewed-at <timestamp>`，并提供 request/receipt/progress 路径。runner 先完成全量 live preflight，再在独占 lock 内持久化 pending intent、POST、live 恢复确认、写 formal Boundary Review request 和本地 receipt；response loss、冲突 marker、stale body/labels/SourceRevision 或 receipt mismatch 都 fail closed，绝不重复 POST。每次 apply 前都必须基于当前 progress/live 状态重新 plan；旧 digest 不得沿用。
+
+此任务不执行 apply。Evidence comment 只能支持 Boundary Review；它不创建 InterviewNote、不执行 materialization、不执行独立 Source Review、不生成 learning labels，也不将 SourceNote 标为 source-ready。

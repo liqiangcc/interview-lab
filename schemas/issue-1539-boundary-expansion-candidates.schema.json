@@ -4,7 +4,7 @@
   "title": "Issue #1539 fixed Boundary Review candidate manifest",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schema_version", "repository", "parent_issue", "epic_issue", "source_repository", "source_repository_ref", "minimum_candidates", "items"],
+  "required": ["schema_version", "repository", "parent_issue", "epic_issue", "source_repository", "source_repository_ref", "minimum_candidates", "excluded_candidates", "items"],
   "properties": {
     "schema_version": {"const": "issue-1539-boundary-expansion-candidates.v1"},
     "repository": {"const": "liqiangcc/interview-lab"},
@@ -13,6 +13,7 @@
     "source_repository": {"const": "liqiangcc/xhs"},
     "source_repository_ref": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
     "minimum_candidates": {"type": "integer", "minimum": 17},
+    "excluded_candidates": {"type": "array", "minItems": 1, "items": {"type": "object", "additionalProperties": false, "required": ["issue_number", "reason"], "properties": {"issue_number": {"type": "integer", "minimum": 1}, "reason": {"type": "string", "minLength": 1}}}},
     "items": {"type": "array", "minItems": 17, "maxItems": 17, "items": {"$ref": "#/$defs/item"}}
   },
   "$defs": {

@@ -55,6 +55,7 @@ function validateCandidateManifest(manifest) {
   if (manifest.source_repository !== SOURCE_REPOSITORY) errors.push(`source_repository must be ${SOURCE_REPOSITORY}`);
   if (manifest.source_repository_ref !== SOURCE_REF) errors.push('source_repository_ref is not the fixed XHS snapshot');
   if (!Number.isInteger(manifest.minimum_candidates) || manifest.minimum_candidates < 17) errors.push('minimum_candidates must be at least 17');
+  if (!Array.isArray(manifest.excluded_candidates) || manifest.excluded_candidates.length !== 1 || manifest.excluded_candidates[0]?.issue_number !== 782 || typeof manifest.excluded_candidates[0]?.reason !== 'string' || !manifest.excluded_candidates[0].reason.trim()) errors.push('excluded_candidates must record ambiguous #782 with a non-empty reason');
   if (!Array.isArray(manifest.items) || manifest.items.length !== FIXED_ISSUES.length) errors.push(`items must contain exactly ${FIXED_ISSUES.length} fixed candidates`);
   const seen = new Set();
   for (const [index, item] of (manifest.items || []).entries()) {

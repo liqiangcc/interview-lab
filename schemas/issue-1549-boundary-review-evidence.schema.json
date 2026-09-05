@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/liqiangcc/interview-lab/schemas/issue-1549-boundary-review-evidence.schema.json",
+  "title": "Issue #1549 Boundary Review evidence packet",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "packet_set_sha256", "packet_id", "transition_id", "repository", "issue_number", "source_note_issue_number", "source_note_id", "expected_body_sha256", "expected_source_revision_id", "expected_source_repository_ref", "evidence_subject_sha256", "decision", "rationale", "source_evidence", "checks", "limitations", "source_ready_gate"],
+  "properties": {
+    "schema_version": {"const": "boundary-review-evidence.v1"},
+    "packet_set_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "packet_id": {"type": "string", "pattern": "^issue-1549-boundary-evidence-[0-9]{4}$"},
+    "transition_id": {"type": "string", "pattern": "^issue-1549-boundary-review-[0-9]{4}$"},
+    "repository": {"const": "liqiangcc/interview-lab"},
+    "issue_number": {"type": "integer", "minimum": 1},
+    "source_note_issue_number": {"type": "integer", "minimum": 1},
+    "source_note_id": {"type": "string", "pattern": "^xhs-note:.+$"},
+    "expected_body_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "expected_source_revision_id": {"type": "string", "minLength": 1},
+    "expected_source_repository_ref": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "evidence_subject_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "decision": {"const": "single-interview"},
+    "rationale": {"type": "string", "minLength": 1},
+    "source_evidence": {
+      "type": "object", "additionalProperties": false,
+      "required": ["ref", "git_blob_sha", "kind", "provenance", "locator", "anchor"],
+      "properties": {
+        "ref": {"type": "string", "minLength": 1},
+        "git_blob_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "kind": {"const": "text_projection"},
+        "provenance": {"const": "source_projection"},
+        "locator": {"type": "string", "minLength": 1},
+        "anchor": {"type": "string", "minLength": 1}
+      }
+    },
+    "checks": {"type": "array", "minItems": 6, "items": {"type": "object", "additionalProperties": false, "required": ["check_id", "result", "note"], "properties": {"check_id": {"type": "string"}, "result": {"const": "pass"}, "note": {"type": "string", "minLength": 1}}}},
+    "limitations": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "source_ready_gate": {"type": "object", "additionalProperties": false, "required": ["allowed", "reason"], "properties": {"allowed": {"const": false}, "reason": {"type": "string", "minLength": 1}}}
+  }
+}

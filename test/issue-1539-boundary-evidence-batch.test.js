@@ -1,0 +1,204 @@
+'use strict';
+
+const fs = require('node:fs');
+const os = require('node:os');
+const path = require('node:path');
+const crypto = require('node:crypto');
+const test = require('node:test');
+const assert = require('node:assert/strict');
+const { parseSourceNoteIssue } = require('../scripts/lib/source-note-issue');
+const { gitBlobSha } = require('../scripts/lib/issue-1539-boundary-expansion');
+const {
+  EVIDENCE_SCHEMA_VERSION,
+  buildPacketSet,
+  validatePacketSet,
+  evidenceBody,
+  evidenceRecord,
+  inspectEvidence,
+  liveSourceValidation,
+  preflightPacketSet,
+  initialProgress,
+  validateProgress,
+  intentFor,
+  requestSha256,
+  validateReceipt,
+  runBatch,
+  acquireProgressLock,
+} = require('../scripts/lib/issue-1539-boundary-evidence-batch');
+
+const candidateManifest = JSON.parse(fs.readFileSync('data/pilot/issue-1539/boundary-expansion-candidates.json', 'utf8'));
+const sourceFixture = fs.readFileSync('test/fixtures/source-note-issue.valid.md', 'utf8');
+
+function clone(value) { return JSON.parse(JSON.stringify(value)); }
+
+function syntheticSet() {
+  const manifest = clone(candidateManifest);
+  for (const item of manifest.items) {
+    const bytes = Buffer.from(`真实单场面试 #${item.issue_number}\n${item.artifact.anchor}\n问题：请介绍项目。\n`, 'utf8');
+    const blobSha = gitBlobSha(bytes);
+    item.expected_body_sha256 = '0'.repeat(64);
+    item.artifact.git_blob_sha = blobSha;
+  }
+  const packetSet = buildPacketSet(manifest);
+  const lives = new Map();
+  for (const packet of packetSet.packets) {
+    const parsed = parseSourceNoteIssue(sourceFixture);
+    const record = clone(parsed.record);
+    const externalId = packet.source_note_id.slice('xhs-note:'.length);
+    record.source_note_id = packet.source_note_id;
+    record.source.external_id = externalId;
+    record.source_revision.id = packet.expected_source_revision_id;
+    record.source_revision.source_repository_ref = packet.expected_source_repository_ref;
+    record.boundary_review = { status: 'pending', reviewed_at: null, interview_note_ids: [] };
+    const bytes = Buffer.from(`真实单场面试 #${packet.issue_number}\n${packet.artifact.anchor}\n问题：请介绍项目。\n`, 'utf8');
+    record.artifacts.push({ kind: 'text_projection', ref: packet.artifact.ref, git_blob_sha: packet.artifact.git_blob_sha, sha256: null, provenance: 'source_projection', byte_size: bytes.length, integrity: 'present' });
+    let body = sourceFixture.replace(/<!-- source-note: id=[^>]+ -->/, `<!-- source-note: id=${packet.source_note_id} schema=source-note-issue.v1 -->`);
+    body = body.replace(/<!-- source-note-record\n[\s\S]*?\n-->/, `<!-- source-note-record\n${JSON.stringify(record, null, 2)}\n-->`);
+    const bodySha = crypto.createHash('sha256').update(body, 'utf8').digest('hex');
+    manifest.items.find((item) => item.issue_number === packet.issue_number).expected_body_sha256 = bodySha;
+    lives.set(packet.packet_id, { body, sourceIssue: { number: packet.issue_number, state: 'open', body, labels: ['type:source-note', 'source:xhs', 'status:captured', 'boundary:pending', 'task:boundary-review', 'source-year:2022'] }, blob: { sha: packet.artifact.git_blob_sha, encoding: 'base64', content: bytes.toString('base64') }, comments: [] });
+  }
+  // Rebuild after body SHA updates so packet facts and subject digests match the live fixtures.
+  const rebuilt = buildPacketSet(manifest);
+  for (const packet of rebuilt.packets) {
+    const live = lives.get(packet.packet_id);
+    live.sourceIssue.body = live.body;
+  }
+  return { manifest, packetSet: rebuilt, lives };
+}
+
+function loader(state) {
+  return (packet) => {
+    const live = state.lives.get(packet.packet_id);
+    return { sourceIssue: live.sourceIssue, comments: live.comments, readBlob: () => live.blob, allIssues: [] };
+  };
+}
+
+test('packet set is deterministic, fixed to 17 items, and never source-ready', () => {
+  const first = syntheticSet();
+  const second = syntheticSet();
+  assert.equal(validatePacketSet(first.packetSet, first.manifest).ok, true);
+  assert.equal(first.packetSet.packet_set_sha256, second.packetSet.packet_set_sha256);
+  assert.equal(first.packetSet.packets.length, 17);
+  assert.equal(first.packetSet.source_ready_claimed, false);
+  assert.equal(first.packetSet.packets[0].evidence_subject_sha256, second.packetSet.packets[0].evidence_subject_sha256);
+});
+
+test('evidence subject excludes comment locator and reviewed_at while body binds all packet facts', () => {
+  const { packetSet } = syntheticSet();
+  const packet = packetSet.packets[0];
+  const subject = packet.evidence_subject_sha256;
+  const body = evidenceBody(packet, packetSet.packet_set_sha256);
+  assert.match(body, new RegExp(EVIDENCE_SCHEMA_VERSION));
+  assert.match(body, new RegExp(packet.artifact.git_blob_sha));
+  assert.match(body, new RegExp(subject));
+  assert.doesNotMatch(body, /comment_id|reviewed_at/);
+  assert.equal(evidenceRecord(packet, packetSet.packet_set_sha256).evidence_subject_sha256, subject);
+});
+
+test('exact evidence reentry accepts optional repository_url only when issue_url is exact', () => {
+  const { packetSet } = syntheticSet();
+  const packet = packetSet.packets[0];
+  const exact = { id: 501, issue_url: `https://api.github.com/repos/${packet.repository}/issues/${packet.issue_number}`, body: evidenceBody(packet, packetSet.packet_set_sha256) };
+  assert.equal(inspectEvidence([exact], packet, packetSet.packet_set_sha256).exact, true);
+  const wrongRepo = { ...exact, repository_url: 'https://api.github.com/repos/other/repo' };
+  assert.equal(inspectEvidence([wrongRepo], packet, packetSet.packet_set_sha256).ok, false);
+  const wrongIssue = { ...exact, issue_url: `https://api.github.com/repos/${packet.repository}/issues/999` };
+  assert.equal(inspectEvidence([wrongIssue], packet, packetSet.packet_set_sha256).ok, false);
+  assert.equal(inspectEvidence([exact, { ...exact, id: 502 }], packet, packetSet.packet_set_sha256).ok, false);
+});
+
+test('preflight verifies all 17 live SourceNotes and predicts only evidence POSTs', () => {
+  const state = syntheticSet();
+  const result = preflightPacketSet(state.packetSet, state.manifest, loader(state));
+  assert.equal(result.ok, true, result.errors.join('\n'));
+  assert.equal(result.items.length, 17);
+  assert.equal(result.items.filter((item) => item.action === 'would-post-evidence').length, 17);
+  assert.equal(result.items.every((item) => item.ownership.count === 0), true);
+});
+
+test('apply response loss recovers a live exact comment once, writes requests/receipts, and reentry posts zero', () => {
+  const state = syntheticSet();
+  const progress = initialProgress(state.packetSet.packet_set_sha256, state.packetSet.packets.map((packet) => packet.packet_id));
+  const persisted = [];
+  const requests = [];
+  const receipts = [];
+  let postCount = 0;
+  const options = {
+    apply: true,
+    manifest: state.manifest,
+    progress,
+    liveLoader: loader(state),
+    reviewedAt: '2026-09-05T00:00:00Z',
+    persistProgress: (value) => persisted.push(clone(value)),
+    createEvidenceComment: (packet, body) => {
+      postCount += 1;
+      const live = state.lives.get(packet.packet_id);
+      live.comments.push({ id: 700 + postCount, issue_url: `https://api.github.com/repos/${packet.repository}/issues/${packet.issue_number}`, body });
+      return null;
+    },
+    writeRequest: (packet, body, request) => requests.push({ packet: packet.packet_id, body, request }),
+    writeReceipt: (packet, receipt) => receipts.push({ packet: packet.packet_id, receipt }),
+  };
+  const applied = runBatch(state.packetSet, state.manifest, options);
+  assert.equal(applied.ok, true, applied.errors?.join('\n'));
+  assert.equal(postCount, 17);
+  assert.equal(requests.length, 17);
+  assert.equal(receipts.length, 17);
+  assert.equal(applied.progress.status, 'complete');
+  const reentry = runBatch(state.packetSet, state.manifest, { ...options, progress: applied.progress, createEvidenceComment: () => { throw new Error('duplicate POST'); } });
+  assert.equal(reentry.ok, true, reentry.errors?.join('\n'));
+  assert.equal(reentry.items.every((item) => item.evidence_action === 'already-present-skip-post'), true);
+  assert.equal(postCount, 17);
+});
+
+test('unconfirmed POST is uncertain and recovery refuses a second POST', () => {
+  const state = syntheticSet();
+  const progress = initialProgress(state.packetSet.packet_set_sha256, state.packetSet.packets.map((packet) => packet.packet_id));
+  let postCount = 0;
+  const options = { apply: true, manifest: state.manifest, progress, liveLoader: loader(state), reviewedAt: '2026-09-05T00:00:00Z', persistProgress: () => {}, createEvidenceComment: () => { postCount += 1; throw new Error('response lost'); }, writeRequest: () => {}, writeReceipt: () => {} };
+  const first = runBatch(state.packetSet, state.manifest, options);
+  assert.equal(first.ok, false);
+  assert.equal(first.mutation_attempted, true);
+  assert.equal(first.mutation_performed, null);
+  assert.equal(first.possibly_performed, true);
+  const packetId = state.packetSet.packets[0].packet_id;
+  assert.equal(progress.intents[packetId].phase, 'evidence-post-uncertain');
+  const second = runBatch(state.packetSet, state.manifest, { ...options, progress, createEvidenceComment: () => { postCount += 1; throw new Error('must not retry'); } });
+  assert.equal(second.ok, false);
+  assert.equal(postCount, 1);
+});
+
+test('stale body or label drift blocks the whole batch before any POST', () => {
+  const state = syntheticSet();
+  const packet = state.packetSet.packets[3];
+  state.lives.get(packet.packet_id).sourceIssue.labels = ['type:source-note', 'source:xhs', 'status:captured', 'boundary:single-interview', 'task:boundary-review'];
+  let posts = 0;
+  const result = runBatch(state.packetSet, state.manifest, { apply: true, progress: initialProgress(state.packetSet.packet_set_sha256, state.packetSet.packets.map((item) => item.packet_id)), liveLoader: loader(state), persistProgress: () => {}, createEvidenceComment: () => { posts += 1; }, writeRequest: () => {}, writeReceipt: () => {}, reviewedAt: '2026-09-05T00:00:00Z' });
+  assert.equal(result.ok, false);
+  assert.equal(posts, 0);
+  assert.match(result.errors.join('\n'), /boundary|missing/);
+});
+
+test('progress and receipt identities are strict and lock is exclusive', () => {
+  const { packetSet } = syntheticSet();
+  const progress = initialProgress(packetSet.packet_set_sha256, packetSet.packets.map((packet) => packet.packet_id));
+  progress.intents[packetSet.packets[0].packet_id] = { ...intentFor(packetSet.packet_set_sha256, packetSet.packets[0], 'evidence-post-pending'), packet_set_sha256: '0'.repeat(64) };
+  assert.equal(validateProgress(progress, packetSet).ok, false);
+  const packet = packetSet.packets[0];
+  const receipt = { schema_version: 'wrong', packet_set_sha256: packetSet.packet_set_sha256, packet_id: packet.packet_id };
+  assert.equal(validateReceipt(receipt, packet, packetSet.packet_set_sha256).ok, false);
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'issue-1549-lock-'));
+  const lockPath = path.join(directory, 'progress.lock');
+  const first = acquireProgressLock(lockPath);
+  try { assert.throws(() => acquireProgressLock(lockPath), /progress lock is held/); } finally { first.release(); fs.rmSync(directory, { recursive: true, force: true }); }
+});
+
+test('formal request receipt binds request digest and no lifecycle mutation is included', () => {
+  const state = syntheticSet();
+  const packet = state.packetSet.packets[0];
+  const request = { schema_version: 'source-note-boundary-review-transition.v1', transition_id: packet.transition_id, repository: packet.repository, issue_number: packet.issue_number, source_note_id: packet.source_note_id, expected_body_sha256: packet.expected_body_sha256, expected_boundary_status: 'pending', expected_source_revision_id: packet.expected_source_revision_id, expected_manifest_sha256: null, expected_source_repository_ref: packet.expected_source_repository_ref, decision: 'single-interview', reviewed_at: '2026-09-05T00:00:00Z', reviewer_kind: 'ai-assisted', review_evidence: { repository: packet.repository, issue_number: packet.issue_number, comment_id: 1 }, checks: packet.checks, limitations: packet.limitations };
+  const receipt = { schema_version: 'issue-1549-boundary-review-evidence-receipt.v1', packet_set_sha256: state.packetSet.packet_set_sha256, packet_id: packet.packet_id, transition_id: packet.transition_id, repository: packet.repository, issue_number: packet.issue_number, source_note_issue_number: packet.source_note_issue_number, source_note_id: packet.source_note_id, expected_body_sha256: packet.expected_body_sha256, expected_source_revision_id: packet.expected_source_revision_id, evidence_subject_sha256: packet.evidence_subject_sha256, evidence_comment_id: 1, request_sha256: requestSha256(request) };
+  assert.equal(validateReceipt(receipt, packet, state.packetSet.packet_set_sha256, request).ok, true);
+  assert.equal(Object.keys(request).includes('labels'), false);
+});

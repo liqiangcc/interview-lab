@@ -34,9 +34,11 @@ test('fixed candidate manifest is exactly 17 ordered SourceNote Issues', () => {
 test('candidate schema is closed and runtime validation remains the authoritative fixed-set gate', () => {
   const schema = JSON.parse(fs.readFileSync(path.join(__dirname, '../schemas/issue-1539-boundary-expansion-candidates.schema.json'), 'utf8'));
   assert.equal(schema.additionalProperties, false);
-  assert.deepEqual(schema.required, ['schema_version', 'repository', 'parent_issue', 'epic_issue', 'source_repository', 'source_repository_ref', 'minimum_candidates', 'items']);
+  assert.deepEqual(schema.required, ['schema_version', 'repository', 'parent_issue', 'epic_issue', 'source_repository', 'source_repository_ref', 'minimum_candidates', 'excluded_candidates', 'items']);
   assert.equal(schema.properties.items.minItems, 17);
   assert.equal(schema.properties.items.maxItems, 17);
+  assert.equal(manifest.excluded_candidates[0].issue_number, 782);
+  assert.match(manifest.excluded_candidates[0].reason, /混合/);
   const changed = structuredClone(manifest);
   changed.items[0].issue_number = 1509;
   assert.equal(validateCandidateManifest(changed).ok, false);
