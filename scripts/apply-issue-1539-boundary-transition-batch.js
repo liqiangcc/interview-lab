@@ -69,6 +69,7 @@ function parseArgs(argv = process.argv.slice(2)) {
     ['output', '--output'],
     ['progress', '--progress'],
   ]) if (!args[key]) throw new Error(`${flag} is required`);
+  if (args.apply && !args.progressLock) throw new Error('--apply requires --progress-lock');
   if (args.apply && !/^[0-9a-f]{64}$/.test(String(args.confirmPlanDigest || ''))) throw new Error('--apply requires --confirm-plan-digest <sha256>');
   if (!Number.isInteger(args.getMaxAttempts) || args.getMaxAttempts < 1 || args.getMaxAttempts > 3) throw new Error('--get-max-attempts must be an integer from 1 to 3');
   if (!Number.isInteger(args.getBackoffMs) || args.getBackoffMs < 0) throw new Error('--get-backoff-ms must be a non-negative integer');
@@ -174,6 +175,14 @@ function main(argv = process.argv.slice(2), runtime = {}) {
   });
   const writeProgress = runtime.persistProgress || ((value) => atomicWriteJson(args.progress, value));
   const writeReceipt = runtime.writeReceipt || ((request, receipt) => atomicWriteJson(path.join(path.resolve(args.transitionReceiptDir), `issue-${request.issue_number}.json`), receipt));
+  let lastMutationAt = null;
+  const clock = runtime.clock || Date.now;
+  const sleep = runtime.sleep || sleepMs;
+  function beforeMutation() {
+    const now = clock();
+    if (lastMutationAt !== null) sleep(Math.max(0, args.minMutationIntervalMs - (now - lastMutationAt)));
+    lastMutationAt = clock();
+  }
   const lock = args.apply ? (runtime.acquireLock ? runtime.acquireLock(args.progressLock) : require('./lib/issue-1539-evidence-batch').acquireProgressLock(args.progressLock)) : null;
   try {
     const progressExists = fs.existsSync(args.progress);
@@ -209,8 +218,8 @@ function main(argv = process.argv.slice(2), runtime = {}) {
       expectedPlanSha256: args.confirmPlanDigest,
       persistProgress: writeProgress,
       writeReceipt,
-      patchIssue: runtime.patchIssue || patchSourceNote,
-      postReceipt: runtime.postReceipt || postReceipt,
+      patchIssue: (request, plan) => { beforeMutation(); return (runtime.patchIssue || patchSourceNote)(request, plan); },
+      postReceipt: (request, receipt) => { beforeMutation(); return (runtime.postReceipt || postReceipt)(request, receipt); },
       now: runtime.now,
     });
     const output = buildOutput({ ...result, report: result.report }, args, 'apply', packetSet.packet_set_sha256);

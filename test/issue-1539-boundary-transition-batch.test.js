@@ -109,6 +109,73 @@ test('fresh SourceNote body/CAS drift blocks planning before any mutation', () =
   assert.match(result.errors.join('\n'), /body SHA|stale SourceNote body/);
 });
 
+test('pre-PATCH gate/CAS drift records a resumable block without possibly-performed mutation', () => {
+  const state = syntheticState();
+  const progress = initialProgress(state.requests, state.packetSet.packet_set_sha256);
+  const first = state.requests[0];
+  const original = clone(state.lives.get(first.issue_number).sourceIssue);
+  const baseLoader = liveLoader(state);
+  let reads = 0;
+  let patches = 0;
+  const firstAttempt = applyBatch(state.requests, state.packetSet, progress, optionsFor(state, {
+    loadLive(request) {
+      const live = baseLoader(request);
+      if (request.issue_number === first.issue_number && ++reads === 3) {
+        const current = state.lives.get(first.issue_number);
+        current.sourceIssue = { ...current.sourceIssue, body: `${current.sourceIssue.body}\nexternal CAS drift\n` };
+        return baseLoader(request);
+      }
+      return live;
+    },
+    patchIssue: () => { patches += 1; },
+  }));
+  assert.equal(firstAttempt.ok, false);
+  assert.equal(patches, 0);
+  assert.equal(progress.possibly_performed, false);
+  assert.equal(progress.items[String(first.issue_number)].phase, 'planned');
+  assert.equal(progress.items[String(first.issue_number)].result.status, 'blocked-before-mutation');
+  assert.equal(validateProgress(progress, state.requests, state.packetSet.packet_set_sha256).ok, true);
+
+  state.lives.get(first.issue_number).sourceIssue = original;
+  const resumed = applyBatch(state.requests, state.packetSet, progress, optionsFor(state, {
+    patchIssue(request, plan) {
+      patches += 1;
+      const live = state.lives.get(request.issue_number);
+      live.sourceIssue = { ...live.sourceIssue, body: plan.next_body, labels: plan.next_labels };
+    },
+    postReceipt(request, receipt) {
+      state.lives.get(request.issue_number).comments.push({ id: 990000 + request.issue_number, issue_url: `https://api.github.com/repos/${request.repository}/issues/${request.issue_number}`, body: renderAppliedReceiptComment(receipt) });
+    },
+    writeReceipt: () => {},
+  }));
+  assert.equal(resumed.ok, true, resumed.errors?.join('\n'));
+  assert.equal(patches, ISSUE_NUMBERS.length);
+});
+
+test('PATCH response loss reconciles the live target before creating exactly one receipt', () => {
+  const state = syntheticState();
+  const patches = [];
+  const posts = [];
+  const result = applyBatch(state.requests, state.packetSet, initialProgress(state.requests, state.packetSet.packet_set_sha256), optionsFor(state, {
+    patchIssue(request, plan) {
+      patches.push(request.issue_number);
+      const live = state.lives.get(request.issue_number);
+      live.sourceIssue = { ...live.sourceIssue, body: plan.next_body, labels: plan.next_labels };
+      if (request.issue_number === state.requests[0].issue_number) throw new Error('PATCH response lost');
+    },
+    postReceipt(request, receipt) {
+      posts.push(request.issue_number);
+      state.lives.get(request.issue_number).comments.push({ id: 980000 + request.issue_number, issue_url: `https://api.github.com/repos/${request.repository}/issues/${request.issue_number}`, body: renderAppliedReceiptComment(receipt) });
+    },
+    writeReceipt: () => {},
+  }));
+  assert.equal(result.ok, true, result.errors?.join('\n'));
+  assert.equal(patches.length, ISSUE_NUMBERS.length);
+  assert.equal(posts.length, ISSUE_NUMBERS.length);
+  assert.equal(new Set(patches).size, ISSUE_NUMBERS.length);
+  assert.equal(result.progress.possibly_performed, false);
+});
+
 test('apply uses one PATCH and one receipt POST per item, reconciles response loss, and never creates InterviewNotes', () => {
   const state = syntheticState();
   const progress = initialProgress(state.requests, state.packetSet.packet_set_sha256);

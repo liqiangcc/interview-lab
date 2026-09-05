@@ -14,7 +14,7 @@ const {
   buildPacketSet,
   renderAppliedReceiptComment,
 } = require('../scripts/lib/issue-1539-boundary-transition-batch');
-const { main } = require('../scripts/apply-issue-1539-boundary-transition-batch');
+const { main, parseArgs } = require('../scripts/apply-issue-1539-boundary-transition-batch');
 
 const sourceFixture = fs.readFileSync('test/fixtures/source-note-issue.valid.md', 'utf8');
 const baseManifest = JSON.parse(fs.readFileSync('data/pilot/issue-1539/boundary-expansion-candidates.json', 'utf8'));
@@ -117,6 +117,15 @@ test('CLI plan-only uses the fixed packet pipeline and does not create missing p
   } finally { fs.rmSync(directory, { recursive: true, force: true }); }
 });
 
+test('CLI apply requires an explicit progress lock path', () => {
+  assert.throws(() => parseArgs([
+    '--candidate-manifest', 'manifest.json', '--request-dir', 'requests',
+    '--evidence-receipt-dir', 'evidence', '--transition-receipt-dir', 'receipts',
+    '--output', 'output.json', '--progress', 'progress.json', '--apply',
+    '--confirm-plan-digest', 'a'.repeat(64),
+  ]), /--apply requires --progress-lock/);
+});
+
 test('CLI apply requires the confirmed plan digest and writes durable progress/receipts after one mocked PATCH/POST each', () => {
   const state = syntheticState();
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'issue-1554-apply-'));
@@ -135,6 +144,8 @@ test('CLI apply requires the confirmed plan digest and writes durable progress/r
     const digest = JSON.parse(fs.readFileSync(planOutput, 'utf8')).plan_sha256;
     const patches = [];
     const posts = [];
+    let clockNow = 0;
+    const sleeps = [];
     const applyOutput = path.join(directory, 'apply.json');
     const code = main(argsFor(directory, applyOutput, progress, ['--apply', '--confirm-plan-digest', digest]), {
       ...baseRuntime,
@@ -148,6 +159,8 @@ test('CLI apply requires the confirmed plan digest and writes durable progress/r
         state.lives.get(request.issue_number).comments.push({ id: 900000 + request.issue_number, issue_url: `https://api.github.com/repos/${request.repository}/issues/${request.issue_number}`, body: renderAppliedReceiptComment(receipt) });
         return null;
       },
+      clock: () => clockNow,
+      sleep(milliseconds) { sleeps.push(milliseconds); clockNow += milliseconds; },
     });
     const result = JSON.parse(fs.readFileSync(applyOutput, 'utf8'));
     assert.equal(code, 0);
@@ -157,5 +170,7 @@ test('CLI apply requires the confirmed plan digest and writes durable progress/r
     assert.equal(JSON.parse(fs.readFileSync(progress, 'utf8')).status, 'complete');
     assert.equal(fs.readdirSync(path.join(directory, 'receipts')).filter((file) => file.endsWith('.json')).length, ISSUE_NUMBERS.length);
     assert.equal(result.possibly_performed, false);
+    assert.equal(sleeps.length, ISSUE_NUMBERS.length * 2 - 1);
+    assert.equal(sleeps.every((milliseconds) => milliseconds === 1000), true);
   } finally { fs.rmSync(directory, { recursive: true, force: true }); }
 });
