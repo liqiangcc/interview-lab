@@ -13,7 +13,7 @@ const PROGRESS_SCHEMA_VERSION = 'issue-1549-boundary-evidence-progress.v1';
 const INTENT_SCHEMA_VERSION = 'issue-1549-boundary-evidence-intent.v1';
 const RECEIPT_SCHEMA_VERSION = 'issue-1549-boundary-review-evidence-receipt.v1';
 const MAX_GITHUB_COMMENT_BYTES = 65536;
-const PHASES = new Set(['evidence-post-pending', 'evidence-post-uncertain', 'evidence-posted', 'request-generated', 'receipt-written', 'request-failed']);
+const PHASES = new Set(['evidence-post-pending', 'evidence-post-hook-failed', 'evidence-post-uncertain', 'evidence-posted', 'request-generated', 'receipt-written', 'request-failed']);
 const EVIDENCE_MARKER_RE = /<!--\s*boundary-review-evidence\.v1\s*\n([\s\S]*?)\n-->/g;
 const REQUIRED_CHECK_IDS = Object.freeze(['source_identity', 'source_revision_binding', 'source_content_coverage', 'event_boundary', 'no_cross_source_mixing', 'no_fabrication']);
 
@@ -270,7 +270,7 @@ function validateProgress(progress, packetSet) {
   }
   for (const [id, result] of Object.entries(progress && progress.results || {})) {
     if (!packets.has(id)) errors.push(`progress unknown result ${id}`);
-    if (!result || !['already-present', 'published', 'uncertain', 'request-failed'].includes(result.status)) errors.push(`progress result status is not allowed ${id}`);
+    if (!result || !['already-present', 'published', 'post-hook-failed', 'uncertain', 'request-failed'].includes(result.status)) errors.push(`progress result status is not allowed ${id}`);
     if (result && result.status === 'uncertain' && (result.mutation_attempted !== true || result.mutation_performed === false || result.possibly_performed !== true)) errors.push(`uncertain result is unsafe ${id}`);
     if (result && result.status !== 'uncertain' && result.mutation_attempted === true && result.mutation_performed !== true) errors.push(`non-uncertain result mutation accounting is unsafe ${id}`);
     if (result && result.evidence_comment_id != null && (!Number.isInteger(result.evidence_comment_id) || result.evidence_comment_id < 1)) errors.push(`result comment id is invalid ${id}`);
@@ -335,9 +335,41 @@ function applyOne(packet, packetSet, progress, options) {
     }
     const pending = intentFor(packetSet.packet_set_sha256, packet, 'evidence-post-pending');
     progress.intents[packet.packet_id] = pending;
+    options.persistProgress(progress);
+
+    // The durable pending intent fences re-entry before the throttle hook. The
+    // mutation accounting is deliberately advanced only after the hook returns:
+    // a hook failure has not attempted a POST and must not be reported as
+    // possibly performed.
+    try {
+      if (typeof options.beforeEvidencePost === 'function') options.beforeEvidencePost(packet);
+    } catch (error) {
+      progress.status = 'failed';
+      progress.intents[packet.packet_id] = { ...pending, phase: 'evidence-post-hook-failed' };
+      progress.results[packet.packet_id] = {
+        status: 'post-hook-failed',
+        evidence_comment_id: null,
+        mutation_attempted: false,
+        mutation_performed: false,
+        possibly_performed: false,
+        error: error.message,
+      };
+      options.persistProgress(progress);
+      return {
+        ok: false,
+        errors: [`${packet.packet_id}: beforeEvidencePost failed: ${error.message}`],
+        mutation_attempted: progress.mutation_attempted,
+        mutation_performed: progress.mutation_performed,
+        possibly_performed: progress.possibly_performed,
+      };
+    }
+
     progress.mutation_attempted = true;
     progress.mutation_performed = null;
     progress.possibly_performed = true;
+    // Persist the accounting boundary immediately before POST. If the process
+    // dies after this point, recovery can truthfully treat the pending intent
+    // as a possibly-performed mutation and will never issue a duplicate POST.
     options.persistProgress(progress);
     let response = null;
     try { response = options.createEvidenceComment(packet, evidenceBody(packet, packetSet.packet_set_sha256)); }

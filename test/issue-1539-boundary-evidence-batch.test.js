@@ -124,15 +124,33 @@ test('apply response loss recovers a live exact comment once, writes requests/re
   const requests = [];
   const receipts = [];
   let postCount = 0;
+  let hookCount = 0;
+  const events = [];
   const options = {
     apply: true,
     manifest: state.manifest,
     progress,
     liveLoader: loader(state),
     reviewedAt: '2026-09-05T00:00:00Z',
-    persistProgress: (value) => persisted.push(clone(value)),
+    persistProgress: (value) => {
+      persisted.push(clone(value));
+      events.push(`persist:${value.mutation_attempted}:${value.mutation_performed}:${value.possibly_performed}`);
+      if (value.mutation_attempted === true
+        && value.mutation_performed === null
+        && value.possibly_performed === true
+        && Object.values(value.intents).some((intent) => intent?.phase === 'evidence-post-pending')) {
+        assert.match(events.at(-2), /^hook:/);
+      }
+    },
+    beforeEvidencePost: (packet) => {
+      hookCount += 1;
+      events.push(`hook:${packet.packet_id}`);
+    },
     createEvidenceComment: (packet, body) => {
       postCount += 1;
+      assert.equal(events.at(-1), 'persist:true:null:true');
+      events.push(`post:${packet.packet_id}`);
+      assert.equal(events.at(-2), 'persist:true:null:true');
       const live = state.lives.get(packet.packet_id);
       live.comments.push({ id: 700 + postCount, issue_url: `https://api.github.com/repos/${packet.repository}/issues/${packet.issue_number}`, body });
       return null;
@@ -143,6 +161,21 @@ test('apply response loss recovers a live exact comment once, writes requests/re
   const applied = runBatch(state.packetSet, state.manifest, options);
   assert.equal(applied.ok, true, applied.errors?.join('\n'));
   assert.equal(postCount, 17);
+  assert.equal(hookCount, 17);
+  const firstPacketId = state.packetSet.packets[0].packet_id;
+  assert.deepEqual(events.slice(0, 4), [
+    'persist:false:false:false',
+    `hook:${firstPacketId}`,
+    'persist:true:null:true',
+    `post:${firstPacketId}`,
+  ]);
+  assert.deepEqual(persisted[0].intents[firstPacketId].phase, 'evidence-post-pending');
+  assert.equal(persisted[0].mutation_attempted, false);
+  assert.equal(persisted[0].mutation_performed, false);
+  assert.equal(persisted[0].possibly_performed, false);
+  const prePostSnapshot = persisted.find((snapshot) => snapshot.intents[firstPacketId].phase === 'evidence-post-pending' && snapshot.mutation_attempted === true);
+  assert.equal(prePostSnapshot.mutation_performed, null);
+  assert.equal(prePostSnapshot.possibly_performed, true);
   assert.equal(requests.length, 17);
   assert.equal(receipts.length, 17);
   assert.equal(applied.progress.status, 'complete');
@@ -150,6 +183,48 @@ test('apply response loss recovers a live exact comment once, writes requests/re
   assert.equal(reentry.ok, true, reentry.errors?.join('\n'));
   assert.equal(reentry.items.every((item) => item.evidence_action === 'already-present-skip-post'), true);
   assert.equal(postCount, 17);
+  assert.equal(hookCount, 17);
+});
+
+test('beforeEvidencePost failure is durable fail-closed and does not attempt POST', () => {
+  const state = syntheticSet();
+  const progress = initialProgress(state.packetSet.packet_set_sha256, state.packetSet.packets.map((packet) => packet.packet_id));
+  const persisted = [];
+  let hookCount = 0;
+  let postCount = 0;
+  const first = runBatch(state.packetSet, state.manifest, {
+    apply: true,
+    progress,
+    liveLoader: loader(state),
+    reviewedAt: '2026-09-05T00:00:00Z',
+    persistProgress: (value) => persisted.push(clone(value)),
+    beforeEvidencePost: () => {
+      hookCount += 1;
+      throw new Error('interval clock unavailable');
+    },
+    createEvidenceComment: () => { postCount += 1; },
+    writeRequest: () => {},
+    writeReceipt: () => {},
+  });
+  const packetId = state.packetSet.packets[0].packet_id;
+  assert.equal(first.ok, false);
+  assert.equal(hookCount, 1);
+  assert.equal(postCount, 0);
+  assert.equal(first.mutation_attempted, false);
+  assert.equal(first.mutation_performed, false);
+  assert.equal(first.possibly_performed, false);
+  assert.equal(progress.intents[packetId].phase, 'evidence-post-hook-failed');
+  assert.deepEqual(progress.results[packetId], {
+    status: 'post-hook-failed',
+    evidence_comment_id: null,
+    mutation_attempted: false,
+    mutation_performed: false,
+    possibly_performed: false,
+    error: 'interval clock unavailable',
+  });
+  assert.equal(persisted.at(-1).intents[packetId].phase, 'evidence-post-hook-failed');
+  assert.equal(persisted.every((snapshot) => snapshot.mutation_attempted === false && snapshot.mutation_performed === false && snapshot.possibly_performed === false), true);
+  assert.equal(validateProgress(progress, state.packetSet).ok, true);
 });
 
 test('unconfirmed POST is uncertain and recovery refuses a second POST', () => {
