@@ -2,7 +2,7 @@
 
 ## 目的
 
-Interview Lab 采用 source-first：先保存真实来源，再确认面试事件，最后派生知识与训练状态。
+Interview Lab 采用 source-first：先保存真实来源，再确认面试事件，最后派生知识；ExplorationSession 只维护连续分析所需的 Source frontier 与解释状态。
 
 本模型不绑定数据库实现。GitHub Issue 只是工作流入口，不是领域 identity。
 
@@ -25,11 +25,10 @@ SourceNote
               ↓
        CanonicalQuestion
          ├── Analysis
-         ├── Answer
-         └── ReviewProgress
+         └── Answer
 
 InterviewNote / CanonicalQuestion
-              └── ExplorationSession*
+              └── ExplorationSession*（分析 runtime）
 ```
 
 核心边界：
@@ -91,7 +90,7 @@ multi-interview
 
 InterviewNote 不拥有 Canonical 知识，也不负责改写来源中的原始技术表述。
 
-历史 Pilot #3/#4 在旧的一对一模型下已经建立正式 `xhs:<note_id>` identity。它们作为兼容历史保留；bulk reconciliation 不改写这些正式对象。多事件 child identity 在 Boundary Review 中按稳定 `case_key` 固定：`<source.system>:<source.external_id>:event:<sha256(source_note_id + "\\n" + case_key)>`。该 identity 仍属于经过审核的 Derived mapping；SourceNote 不因此变成 InterviewNote，正式 Issue 仍需后续 materialization。
+历史 Pilot #3/#4 在旧的一对一模型下已经建立正式 `xhs:<note_id>` identity。它们作为兼容历史保留；bulk reconciliation 不改写这些正式对象。多事件 child identity 在 Boundary Review 中按稳定 `case_key` 固定：`<source.system>:<source.external_id>:event:<sha256(source_note_id + "\n" + case_key)>`。该 identity 仍属于经过审核的 Derived mapping；SourceNote 不因此变成 InterviewNote，正式 Issue 仍需后续 materialization。
 
 ## SourceArtifact
 
@@ -260,7 +259,7 @@ Answer 的正确性依赖技术证据和真实 Source variants，不通过改写
 
 ## ExplorationSession
 
-表示一次有边界探索 / 学习过程。
+表示一次有边界、可恢复的连续分析过程。
 
 Sequential InterviewNote learning 的新 session 使用 review-pinned v3 checkpoint，固定：
 
@@ -277,7 +276,7 @@ position_status
 session_status
 ```
 
-这些 runtime 字段只服务可审计学习边界，不进入普通用户界面。
+这些 runtime 字段只服务可审计分析边界，不进入普通用户界面。
 
 无前视原则：
 
@@ -290,12 +289,6 @@ previously revealed Source
 ```
 
 不能使用未来 Source 解释、预测或评分当前步骤。
-
-## ReviewProgress
-
-表示训练状态，例如 recall、last review、response quality、failed follow-ups、weak dimensions。
-
-它不是 Source truth，不得修改 Source 或 Knowledge identity。
 
 ## 分层
 
@@ -316,8 +309,9 @@ Governance
 Layer 2  Knowledge
          CanonicalQuestion / Analysis / Answer
 
-Layer 3  Training
-         ExplorationSession / ReviewProgress
+Runtime
+         ExplorationSession
+         只维护 Source frontier / loop phase / closure，不表示能力评分
 ```
 
 ## Identity 规则

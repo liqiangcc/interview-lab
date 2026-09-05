@@ -2,9 +2,9 @@
 
 ## 目的
 
-真实面经不是一次性 ETL 输入，而是可以反复回看的 case。我们可以不断从中加深理解、验证回答模式、发现关系、暴露知识缺口。
+真实面经不是一次性 ETL 输入，而是可以反复回看的 case。AI 可以持续从中加深分析、验证回答结构、发现关系并暴露知识缺口。
 
-`ExplorationSession` 表示一次有明确边界的探索/学习过程，不修改 Raw Source。
+`ExplorationSession` 表示一次有明确边界的连续分析过程，不修改 Raw Source。
 
 ## 原则
 
@@ -26,11 +26,11 @@ InterviewNote
 CanonicalQuestion
 ```
 
-初期优先支持 InterviewNote，因为真实面经负责驱动学习和后续知识建设。
+初期优先支持 InterviewNote，因为真实面经负责驱动连续分析和后续知识建设。
 
 ## Session mode
 
-### Learning
+### Learning（默认用户模式）
 
 AI 一点一点解释当前 Source unit 和可观察的 reasoning structure。Learning 的默认产品目标是**高质量理解、低交互摩擦**：用户不需要先回答问题，AI 应主动完成当前信息的结构化和解释。
 
@@ -44,32 +44,7 @@ AI 一点一点解释当前 Source unit 和可观察的 reasoning structure。Le
 - 在 question-like Source 中形成 response skeleton；
 - 理解新输入为什么改变之前判断；
 - 在当前 Source-backed depth frontier 到达后停止；
-- 不把 attempt / reconstruction / review 操作强加到普通 Learning。
-
-### Training
-
-AI 更接近面试官，在合适 checkpoint 前不主动解释。
-
-目标：
-
-- 测 spontaneous recognition
-- 测 response structure
-- 测 technical correctness / boundary handling
-- 测 follow-up handling
-- 找出反应链路在哪里断掉
-- 测在更低 hint level 下是否仍能完成回答
-
-建议 hint level：
-
-```text
-H0 = cold / 无提示
-H1 = 轻量 cue
-H2 = 结构槽位
-H3 = 部分回答骨架
-H4 = worked explanation / 完整讲解
-```
-
-重复训练的目标不是永远停在 H4，而是逐步降低 scaffold。
+- 不增加自测、复述、评分或其他额外操作。
 
 ### Source analysis
 
@@ -90,32 +65,6 @@ H4 = worked explanation / 完整讲解
 - Answer 是否覆盖真实问法
 - 缺失的 follow-up handling
 - Knowledge boundary 问题
-
-## Learning 与 Training 分离
-
-普通 Learning 和能力检验不是同一件事：
-
-```text
-Learning
-→ AI 主动分析、解释、降低理解摩擦
-
-Training（用户主动选择）
-→ baseline attempt
-→ feedback / reconstruction
-→ delayed recall
-→ unseen-variant transfer
-```
-
-一次 guided Learning 只说明当前理解过程完成，不自动证明能力已经内化；但这不构成把 retrieval practice 强加到默认阅读流程的理由。
-
-只有进入 Training mode 后，才记录：
-
-- `baseline attempt`：AI 讲解前的独立回答；
-- `immediate reconstruction`：讲解后隐藏主要 scaffold，再自己重建；
-- `delayed recall`：跨真实时间间隔后 H0/H1 复测；
-- `transfer`：用此前未见的真实 SourceQuestion variant 测迁移。
-
-这些结果属于 Training / ReviewProgress，不改变 Source 或 Knowledge identity。完整计划见 `training-effectiveness-plan.md`。
 
 ## No-look-ahead
 
@@ -210,7 +159,7 @@ literal
 
 不要一次性把字面意思、考察意图、完整答案、follow-up 和总结全部倒出来。
 
-目标是训练可复用 mental path，而不是最大化一次输出的信息密度。
+目标是让可复用 mental path 清晰可见，而不是最大化一次输出的信息密度。
 
 ## Position closure 与 depth frontier
 
@@ -232,7 +181,7 @@ position_status = complete / ready-to-close
 
 > “深挖”不授权无限展开；Source 仍然决定 depth frontier。
 
-Position closure 只表示当前 Source unit 的本轮训练价值已经形成最小闭环，不表示相关领域知识已经完整，也不表示整个 InterviewNote 永远不再需要探索。
+Position closure 只表示当前 Source unit 的本轮分析已经形成最小闭环，不表示相关领域知识已经完整，也不表示整个 InterviewNote 永远不再需要探索。
 
 ## Outcome / reflection 的归因边界
 
@@ -311,9 +260,6 @@ source_review_id
 focus
 observed_cues
 classification
-learner_attempt（如有）
-attempt_kind: baseline | reconstruction | delayed | transfer
-hint_level（如有）
 response_skeleton
 plausible_followup_dimensions
 new_findings
@@ -321,8 +267,6 @@ knowledge_gaps
 relation_candidates
 actions
 ```
-
-这些字段当前首先是行为规范；是否进入新的 machine contract 由 Training Effectiveness Epic 单独设计，不能为了记录训练状态破坏已发布 checkpoint v1/v2/v3 兼容性。
 
 最重要的是稳定 target identity、SourceRevision、Source frontier、授权 provenance，以及 observation 与正式 action 的分离。
 
@@ -610,7 +554,7 @@ Pass B：检查问题边界 / SourceUnit segmentation
 Pass C：检查 sequence / follow-up
 Pass D：映射 CanonicalQuestion
 Pass E：用真实问法挑战 Answer
-Pass F：Mock Interview / response-loop 训练
+Pass F：检查不同真实问法下分析结构是否仍然成立
 Pass G：知识提升后再次回看
 ```
 
