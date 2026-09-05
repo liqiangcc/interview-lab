@@ -4,7 +4,7 @@
 
 InterviewNote lifecycle 只治理第一手 Source capture 和 Source integrity。
 
-它不能吞并下游 InterviewContext、Extraction、Canonicalization、Answer 或 learner review。
+它不能吞并下游 InterviewContext、Extraction、Canonicalization、Answer 或 Exploration。
 
 ## Source 状态机
 
@@ -107,7 +107,7 @@ task:source-recovery
 
 `source-ready` 只表示 Source 可以作为稳定第一手输入。
 
-它不表示 InterviewContext、SourceQuestion、Canonical、Answer 或 Training 完成。
+它不表示 InterviewContext、SourceQuestion、Canonical、Answer 或后续分析完成。
 
 Label：
 
@@ -119,7 +119,7 @@ status:source-ready
 
 达到 `source-ready` 且 Source lifecycle 完成后关闭 Issue。
 
-Closed InterviewNote 仍然是一等可读 case，可以继续参与 Learning Discovery、Exploration、Knowledge 和 Training。
+Closed InterviewNote 仍然是一等可读 case，可以继续参与 Learning Discovery、Exploration 和 Knowledge。
 
 # Learning Discovery Readiness
 
@@ -188,7 +188,7 @@ Learning Discovery readiness 当前通过 reviewed `InterviewContext` + Label/ti
 - SourceQuestion 提取错了
 - Canonical boundary 改变
 - Answer 过期
-- Mock Interview 答失败
+- 某次后续分析发现 Answer 需要更新
 
 而 reopen Source lifecycle。
 
