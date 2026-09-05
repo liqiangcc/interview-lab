@@ -60,6 +60,24 @@ function assertOnlyBoundaryTransition(before, after) {
   return { ok: true };
 }
 
+function targetRevisionBinding(record, request) {
+  const errors = [];
+  const revision = record && record.source_revision;
+  const liveSourceRepositoryRef = revision?.source_repository_ref ?? null;
+  if (!revision || typeof revision !== 'object' || Array.isArray(revision)) {
+    errors.push('live SourceRevision is required');
+  } else if (liveSourceRepositoryRef !== request.expected_source_repository_ref) {
+    errors.push('live SourceRevision repository ref does not match request');
+  }
+  if (record?.schema_version === 'source-note-issue.v2') {
+    if (request.expected_source_repository_ref !== null) errors.push('SourceNote v2 target must use expected_source_repository_ref=null');
+    if (!request.expected_manifest_sha256 || revision?.manifest_sha256 !== request.expected_manifest_sha256) errors.push('live SourceCapture manifest does not match request');
+  } else if (record?.schema_version === 'source-note-issue.v1') {
+    if (request.expected_manifest_sha256 !== null) errors.push('SourceNote v1 target must use expected_manifest_sha256=null');
+  }
+  return { ok: errors.length === 0, errors };
+}
+
 function validateInputs(requests, evidenceReceipts, packetSet, manifest, expectedPacketSetSha256 = PACKET_SET_SHA256) {
   const errors = [];
   const packetValidation = validatePacketSet(packetSet, manifest);
@@ -154,6 +172,7 @@ function targetGate(packet, request, live, expectedBodySha = null, packetSetSha2
   const validation = validateSourceNoteIssue({ body: issue && issue.body || '', labels, state: String(issue && issue.state || '').toLowerCase() });
   if (!validation.ok) errors.push(...validation.errors);
   const record = validation.parsed && validation.parsed.record;
+  errors.push(...targetRevisionBinding(record, request).errors);
   if (!record || record.source_note_id !== request.source_note_id || record.source_revision?.id !== request.expected_source_revision_id || record.boundary_review?.status !== 'single-interview' || record.boundary_review?.reviewed_at !== request.reviewed_at || same(record.boundary_review?.interview_note_ids || [], [`xhs:${request.source_note_id.slice('xhs-note:'.length)}`]) === false) errors.push('live SourceNote target record does not match request');
   if (expectedBodySha && sha256Text(issue.body || '') !== expectedBodySha) errors.push('live target body SHA mismatch');
   const artifact = record ? verifyPinnedArtifact({ source_note_id: request.source_note_id, artifact: packet.artifact }, record, live.readBlob) : { ok: false, errors: ['pinned artifact check skipped'] };
@@ -173,6 +192,8 @@ function planOne(request, packet, packetSet, live, localReceipt = null, planTran
     const expectedBodySha = applied.receipt?.new_body_sha256 || localReceipt?.new_body_sha256 || null;
     const gate = targetGate(packet, request, live, expectedBodySha, packetSet.packet_set_sha256);
     if (!gate.ok) return { ok: false, errors: gate.errors, action: 'blocked', live_snapshot: gate.snapshot };
+    const plannerCheck = planTransition(request, gate.issue, { evidenceComment: gate.evidence.comment, receipts: [] });
+    if (!plannerCheck.ok || !plannerCheck.already_applied) return { ok: false, errors: plannerCheck.errors?.length ? plannerCheck.errors : ['single-item planner did not confirm the target state'], action: 'blocked', live_snapshot: gate.snapshot };
     if (applied.receipt) { const validation = validateAppliedReceipt(applied.receipt, request, gate.snapshot.body_sha256); if (!validation.ok) return { ok: false, errors: validation.errors, action: 'blocked' }; }
     if (localReceipt) { const validation = validateAppliedReceipt(localReceipt, request, gate.snapshot.body_sha256); if (!validation.ok || (applied.receipt && !same(localReceipt, applied.receipt))) return { ok: false, errors: validation.errors.concat(applied.receipt && !same(localReceipt, applied.receipt) ? ['local/live applied receipt conflict'] : []), action: 'blocked' }; }
     if (localReceipt && !applied.receipt) return { ok: false, errors: ['local transition receipt exists but no matching live receipt is present'], action: 'blocked', live_snapshot: gate.snapshot };
@@ -185,7 +206,7 @@ function planOne(request, packet, packetSet, live, localReceipt = null, planTran
   if (!plan.ok) return { ...plan, action: 'blocked', live_snapshot: issueSnapshot(live.sourceIssue) };
   const labelsCheck = assertOnlyBoundaryTransition(gate.source.labels, plan.next_labels);
   if (!labelsCheck.ok) return { ok: false, errors: [labelsCheck.error], action: 'blocked', live_snapshot: issueSnapshot(live.sourceIssue) };
-  return { ...plan, ok: true, action: 'would-transition', live_snapshot: issueSnapshot(live.sourceIssue), source_issue: live.sourceIssue, evidence: gate.evidence };
+  return { ...plan, ok: true, action: 'would-transition', next_labels: [...plan.next_labels].sort(), live_snapshot: issueSnapshot(live.sourceIssue), source_issue: live.sourceIssue, evidence: gate.evidence };
 }
 
 function planBatch(requests, packetSet, options = {}) {
@@ -213,7 +234,7 @@ function markBlockedBeforeMutation(progress, request, phase, error, extra, persi
   item.intent = intentFor(request, 'planned', { blocked_from_phase: phase, prior_intent: clone(item.intent), ...clone(extra) }, progress.packet_set_sha256);
   item.result = { status: 'blocked-before-mutation', error, mutation_attempted: false, mutation_performed: false, possibly_performed: false };
   if (persistProgress) persistProgress(progress);
-  return { ok: false, errors: [`#${request.issue_number}: ${error}`] };
+  return { ok: false, errors: [`#${request.issue_number}: ${error}`], progress };
 }
 function markUncertain(progress, request, phase, error, extra, persistProgress) {
   const item = progress.items[String(requestId(request))];
@@ -224,7 +245,7 @@ function markUncertain(progress, request, phase, error, extra, persistProgress) 
   item.intent = intentFor(request, 'uncertain', { prior_phase: phase, prior_intent: clone(item.intent), ...clone(extra) }, progress.packet_set_sha256);
   item.result = { status: 'uncertain', error, mutation_attempted: true, mutation_performed: false, possibly_performed: true };
   if (persistProgress) persistProgress(progress);
-  return { ok: false, errors: [`#${request.issue_number}: ${error}`] };
+  return { ok: false, errors: [`#${request.issue_number}: ${error}`], progress };
 }
 function completed(progress, request, receipt, action, persistProgress) { const item = progress.items[String(requestId(request))]; progress.possibly_performed = false; item.phase = 'complete'; item.intent = intentFor(request, 'complete', { receipt_sha256: sha256Text(canonicalJson(receipt)) }, progress.packet_set_sha256); item.result = { status: action, receipt_sha256: sha256Text(canonicalJson(receipt)), mutation_attempted: action === 'applied', mutation_performed: action === 'applied', possibly_performed: false }; if (persistProgress) persistProgress(progress); }
 
@@ -261,6 +282,7 @@ function applyBatch(requests, packetSet, progress, options = {}) {
         try { reconciled = planOne(request, packet, packetSet, options.loadLive(request), null, options.planTransition); }
         catch (error) { return markUncertain(progress, request, 'patch-pending', `PATCH failed and fresh reconcile failed: ${patchError.message}; ${error.message}`, { mutation_attempted: true }, options.persistProgress); }
         if (!reconciled.ok || reconciled.action === 'would-transition') return markUncertain(progress, request, 'patch-pending', `PATCH failed and live target did not converge: ${patchError.message}`, { reconcile_errors: reconciled.errors || [], mutation_attempted: true }, options.persistProgress);
+        if (reconciled.current_body_sha256 !== replan.next_body_sha256 || !same(reconciled.next_labels, replan.next_labels)) return markUncertain(progress, request, 'patch-pending', `PATCH failed and live target facts drifted from the planned target: ${patchError.message}`, { expected_body_sha256: replan.next_body_sha256, live_body_sha256: reconciled.current_body_sha256, expected_labels: replan.next_labels, live_labels: reconciled.next_labels, mutation_attempted: true }, options.persistProgress);
         if (reconciled.action === 'receipt-repair' || reconciled.action === 'already-applied') {
           progress.mutation_attempted = true; progress.mutation_performed = true; progress.possibly_performed = false;
           options.writeReceipt(request, reconciled.applied_receipt || reconciled.local_receipt);
@@ -279,19 +301,24 @@ function applyBatch(requests, packetSet, progress, options = {}) {
         try { live = options.loadLive(request); after = planOne(request, packet, packetSet, live, null, options.planTransition); }
         catch (error) { return markUncertain(progress, request, 'patched', `post-PATCH reconcile failed: ${error.message}`, {}, options.persistProgress); }
         if (!after.ok || after.action === 'would-transition') return markUncertain(progress, request, 'patched', 'post-PATCH live SourceNote did not converge to the planned target', { errors: after.errors || [], live_snapshot: after.live_snapshot }, options.persistProgress);
+        if (after.current_body_sha256 !== replan.next_body_sha256 || !same(after.next_labels, replan.next_labels)) return markUncertain(progress, request, 'patched', 'post-PATCH live target body or labels drifted from the planned target', { expected_body_sha256: replan.next_body_sha256, live_body_sha256: after.current_body_sha256, expected_labels: replan.next_labels, live_labels: after.next_labels }, options.persistProgress);
         receipt = buildAppliedReceipt(request, { current_body_sha256: request.expected_body_sha256, next_body_sha256: after.current_body_sha256, interview_note_ids: [`xhs:${request.source_note_id.slice('xhs-note:'.length)}`], interview_note_cases: null }, options.now ? options.now() : new Date().toISOString());
       }
     } else if (current.action === 'receipt-needed') {
       receipt = buildAppliedReceipt(request, { current_body_sha256: request.expected_body_sha256, next_body_sha256: current.current_body_sha256, interview_note_ids: [`xhs:${request.source_note_id.slice('xhs-note:'.length)}`], interview_note_cases: null }, options.now ? options.now() : new Date().toISOString());
     }
-    persistItem(progress, request, 'receipt-pending', { receipt, receipt_request_sha256: requestSha256(request) }, options.persistProgress);
+    progress.mutation_attempted = true;
+    persistItem(progress, request, 'receipt-pending', { receipt, receipt_request_sha256: requestSha256(request), mutation_attempted: true, mutation_performed: false, possibly_performed: true }, options.persistProgress);
     try { options.postReceipt(request, receipt); } catch (_) { /* always reconcile below; never retry POST */ }
     let confirmed; try { const afterReceiptLive = options.loadLive(request); const afterReceipt = planOne(request, packet, packetSet, afterReceiptLive, null, options.planTransition); confirmed = afterReceipt.ok && afterReceipt.applied_receipt; } catch (error) { confirmed = null; }
     if (!confirmed || !same(confirmed, receipt)) return markUncertain(progress, request, 'receipt-pending', 'receipt POST was not confirmed by a matching live receipt', {}, options.persistProgress);
+    progress.mutation_attempted = true;
+    progress.mutation_performed = true;
+    progress.possibly_performed = false;
     options.writeReceipt(request, confirmed); completed(progress, request, receipt, 'applied', options.persistProgress); items.push({ issue_number: request.issue_number, action: current.action === 'receipt-needed' ? 'receipt-posted' : 'applied' });
   }
   progress.status = 'complete'; if (options.persistProgress) options.persistProgress(progress);
   return { ok: true, items, progress, report: planned.report };
 }
 
-module.exports = { BATCH_SCHEMA_VERSION, PROGRESS_SCHEMA_VERSION, INTENT_SCHEMA_VERSION, BATCH_ID, REPOSITORY, PACKET_SET_SHA256, ISSUE_NUMBERS, PHASES, buildPacketSet, validateInputs, initialProgress, validateProgress, issueSnapshot, planOne, planBatch, applyBatch, intentFor, parseAppliedReceipts, validateAppliedReceipt, renderAppliedReceiptComment, acquireProgressLock, durableWriteJson };
+module.exports = { BATCH_SCHEMA_VERSION, PROGRESS_SCHEMA_VERSION, INTENT_SCHEMA_VERSION, BATCH_ID, REPOSITORY, PACKET_SET_SHA256, ISSUE_NUMBERS, PHASES, buildPacketSet, validateInputs, initialProgress, validateProgress, issueSnapshot, targetRevisionBinding, planOne, planBatch, applyBatch, intentFor, parseAppliedReceipts, validateAppliedReceipt, renderAppliedReceiptComment, acquireProgressLock, durableWriteJson };

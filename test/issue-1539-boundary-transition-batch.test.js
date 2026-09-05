@@ -9,10 +9,11 @@ const { gitBlobSha } = require('../scripts/lib/issue-1539-boundary-expansion');
 const { evidenceBody, buildFormalRequest, requestSha256 } = require('../scripts/lib/issue-1539-boundary-evidence-batch');
 const {
   ISSUE_NUMBERS, buildPacketSet, initialProgress, planBatch, applyBatch,
-  validateProgress, renderAppliedReceiptComment, validateInputs,
+  validateProgress, renderAppliedReceiptComment, validateInputs, targetRevisionBinding,
 } = require('../scripts/lib/issue-1539-boundary-transition-batch');
 
 const sourceFixture = fs.readFileSync('test/fixtures/source-note-issue.valid.md', 'utf8');
+const sourceV2Fixture = fs.readFileSync('test/fixtures/source-note-issue-v2.valid.md', 'utf8');
 const baseManifest = JSON.parse(fs.readFileSync('data/pilot/issue-1539/boundary-expansion-candidates.json', 'utf8'));
 
 function clone(value) { return JSON.parse(JSON.stringify(value)); }
@@ -174,6 +175,154 @@ test('PATCH response loss reconciles the live target before creating exactly one
   assert.equal(posts.length, ISSUE_NUMBERS.length);
   assert.equal(new Set(patches).size, ISSUE_NUMBERS.length);
   assert.equal(result.progress.possibly_performed, false);
+});
+
+function rewriteLiveRecord(live, transform) {
+  const parsed = parseSourceNoteIssue(live.sourceIssue.body);
+  const record = clone(parsed.record);
+  transform(record);
+  live.sourceIssue = {
+    ...live.sourceIssue,
+    body: live.sourceIssue.body.replace(
+      /<!--\s*source-note-record\s*\n[\s\S]*?\n-->/,
+      `<!-- source-note-record\n${JSON.stringify(record, null, 2)}\n-->`,
+    ),
+  };
+}
+
+function moveLiveToTarget(state, request, plan) {
+  const live = state.lives.get(request.issue_number);
+  live.sourceIssue = { ...live.sourceIssue, body: plan.next_body, labels: plan.next_labels };
+  return live;
+}
+
+test('target fast path rejects SourceRevision ref drift and cannot bypass the single-item planner', () => {
+  const state = syntheticState();
+  const first = state.requests[0];
+  const firstPlan = planBatch(state.requests, state.packetSet, optionsFor(state)).items[0].plan;
+  moveLiveToTarget(state, first, firstPlan);
+  rewriteLiveRecord(state.lives.get(first.issue_number), (record) => { record.source_revision.source_repository_ref = '0'.repeat(40); });
+  let plannerCalls = 0;
+  let targetPlannerCalls = 0;
+  const result = planBatch(state.requests, state.packetSet, optionsFor(state, {
+    planTransition(request, issue, options) {
+      plannerCalls += 1;
+      if (request.issue_number === first.issue_number) targetPlannerCalls += 1;
+      return { ok: true, already_applied: true, next_labels: issue.labels, evidenceComment: options.evidenceComment };
+    },
+  }));
+  assert.equal(result.ok, false);
+  assert.match(result.errors.join('\n'), /SourceRevision repository ref/);
+  assert.equal(targetPlannerCalls, 0);
+  assert.equal(plannerCalls, ISSUE_NUMBERS.length - 1);
+});
+
+test('target fast path delegates a valid target to the single-item planner, including its manifest/version rules', () => {
+  const state = syntheticState();
+  const first = state.requests[0];
+  const firstPlan = planBatch(state.requests, state.packetSet, optionsFor(state)).items[0].plan;
+  moveLiveToTarget(state, first, firstPlan);
+  let plannerCalls = 0;
+  const result = planBatch(state.requests, state.packetSet, optionsFor(state, {
+    planTransition(request, issue, options) {
+      if (request.issue_number === first.issue_number) {
+        plannerCalls += 1;
+        assert.equal(parseSourceNoteIssue(issue.body).record.schema_version, 'source-note-issue.v1');
+        assert.equal(request.expected_manifest_sha256, null);
+        assert.equal(options.evidenceComment.id, request.review_evidence.comment_id);
+        return { ok: true, already_applied: true };
+      }
+      return planBatch(state.requests, state.packetSet, optionsFor(state)).items.find((item) => item.issue_number === request.issue_number).plan;
+    },
+  }));
+  assert.equal(result.ok, true, result.errors?.join('\n'));
+  assert.equal(plannerCalls, 1);
+  assert.equal(result.items[0].action, 'receipt-needed');
+});
+
+test('target revision binding covers v2 manifest semantics and rejects contradictory declarations', () => {
+  const v2 = parseSourceNoteIssue(sourceV2Fixture).record;
+  const request = { expected_source_repository_ref: null, expected_manifest_sha256: v2.source_revision.manifest_sha256 };
+  assert.equal(targetRevisionBinding(v2, request).ok, true);
+  const wrongManifest = targetRevisionBinding(v2, { ...request, expected_manifest_sha256: '0'.repeat(64) });
+  assert.equal(wrongManifest.ok, false);
+  assert.match(wrongManifest.errors.join('\n'), /manifest/);
+  const wrongRef = targetRevisionBinding(v2, { ...request, expected_source_repository_ref: 'a'.repeat(40) });
+  assert.equal(wrongRef.ok, false);
+  assert.match(wrongRef.errors.join('\n'), /repository ref|null/);
+});
+
+test('normal PATCH fresh reconcile rejects concurrent body drift before receipt POST', () => {
+  const state = syntheticState();
+  const first = state.requests[0];
+  const progress = initialProgress(state.requests, state.packetSet.packet_set_sha256);
+  let patches = 0;
+  let posts = 0;
+  const result = applyBatch(state.requests, state.packetSet, progress, optionsFor(state, {
+    patchIssue(request, plan) {
+      patches += 1;
+      const live = moveLiveToTarget(state, request, plan);
+      live.sourceIssue.body += '\nconcurrent body drift\n';
+    },
+    postReceipt: () => { posts += 1; },
+    writeReceipt: () => {},
+  }));
+  assert.equal(result.ok, false);
+  assert.equal(patches, 1);
+  assert.equal(posts, 0);
+  assert.equal(progress.possibly_performed, true);
+  assert.equal(progress.items[String(first.issue_number)].phase, 'uncertain');
+  assert.match(result.errors.join('\n'), /body or labels drifted/);
+});
+
+test('PATCH response-loss fresh reconcile rejects concurrent label drift before receipt POST', () => {
+  const state = syntheticState();
+  const first = state.requests[0];
+  const progress = initialProgress(state.requests, state.packetSet.packet_set_sha256);
+  let patches = 0;
+  let posts = 0;
+  const result = applyBatch(state.requests, state.packetSet, progress, optionsFor(state, {
+    patchIssue(request, plan) {
+      patches += 1;
+      const live = moveLiveToTarget(state, request, plan);
+      live.sourceIssue.labels = [...live.sourceIssue.labels, { name: 'external:concurrent' }];
+      throw new Error('PATCH response lost');
+    },
+    postReceipt: () => { posts += 1; },
+    writeReceipt: () => {},
+  }));
+  assert.equal(result.ok, false);
+  assert.equal(patches, 1);
+  assert.equal(posts, 0);
+  assert.equal(progress.possibly_performed, true);
+  assert.equal(progress.items[String(first.issue_number)].phase, 'uncertain');
+  assert.match(result.errors.join('\n'), /target facts drifted/);
+});
+
+test('receipt-only POST path accounts for attempted/performed/possibly globally', () => {
+  const state = syntheticState();
+  for (const request of state.requests) {
+    const plan = planBatch(state.requests, state.packetSet, optionsFor(state)).items.find((item) => item.issue_number === request.issue_number).plan;
+    moveLiveToTarget(state, request, plan);
+  }
+  let patches = 0;
+  let posts = 0;
+  const result = applyBatch(state.requests, state.packetSet, initialProgress(state.requests, state.packetSet.packet_set_sha256), optionsFor(state, {
+    patchIssue: () => { patches += 1; },
+    postReceipt(request, receipt) {
+      posts += 1;
+      const live = state.lives.get(request.issue_number);
+      live.comments.push({ id: 1000000 + request.issue_number, issue_url: `https://api.github.com/repos/${request.repository}/issues/${request.issue_number}`, body: renderAppliedReceiptComment(receipt) });
+    },
+    writeReceipt: () => {},
+  }));
+  assert.equal(result.ok, true, result.errors?.join('\n'));
+  assert.equal(patches, 0);
+  assert.equal(posts, ISSUE_NUMBERS.length);
+  assert.equal(result.progress.mutation_attempted, true);
+  assert.equal(result.progress.mutation_performed, true);
+  assert.equal(result.progress.possibly_performed, false);
+  assert.equal(validateProgress(result.progress, state.requests, state.packetSet.packet_set_sha256).ok, true);
 });
 
 test('apply uses one PATCH and one receipt POST per item, reconciles response loss, and never creates InterviewNotes', () => {
