@@ -1,0 +1,193 @@
+'use strict';
+
+const fs = require('node:fs');
+const crypto = require('node:crypto');
+const test = require('node:test');
+const assert = require('node:assert/strict');
+const { parseSourceNoteIssue } = require('../scripts/lib/source-note-issue');
+const { gitBlobSha } = require('../scripts/lib/issue-1539-boundary-expansion');
+const { evidenceBody, buildFormalRequest, requestSha256 } = require('../scripts/lib/issue-1539-boundary-evidence-batch');
+const {
+  ISSUE_NUMBERS, buildPacketSet, initialProgress, planBatch, applyBatch,
+  validateProgress, renderAppliedReceiptComment, validateInputs,
+} = require('../scripts/lib/issue-1539-boundary-transition-batch');
+
+const sourceFixture = fs.readFileSync('test/fixtures/source-note-issue.valid.md', 'utf8');
+const baseManifest = JSON.parse(fs.readFileSync('data/pilot/issue-1539/boundary-expansion-candidates.json', 'utf8'));
+
+function clone(value) { return JSON.parse(JSON.stringify(value)); }
+
+function syntheticState() {
+  const manifest = clone(baseManifest);
+  const lives = new Map();
+  for (const item of manifest.items) {
+    const bytes = Buffer.from(`真实单场面试 #${item.issue_number}\n${item.artifact.anchor}\n问题：请介绍项目。\n`, 'utf8');
+    item.artifact.git_blob_sha = gitBlobSha(bytes);
+    const parsed = parseSourceNoteIssue(sourceFixture);
+    const record = clone(parsed.record);
+    record.source_note_id = item.source_note_id;
+    record.source.external_id = item.source_note_id.slice('xhs-note:'.length);
+    record.source_revision.id = item.expected_source_revision_id;
+    record.source_revision.source_repository_ref = item.artifact.ref.split('@')[1];
+    record.boundary_review = { status: 'pending', reviewed_at: null, interview_note_ids: [] };
+    record.artifacts.push({ kind: 'text_projection', ref: item.artifact.ref, git_blob_sha: item.artifact.git_blob_sha, sha256: null, provenance: 'source_projection', byte_size: bytes.length, integrity: 'present' });
+    let body = sourceFixture.replace(/<!-- source-note: id=[^>]+ -->/, `<!-- source-note: id=${item.source_note_id} schema=source-note-issue.v1 -->`);
+    body = body.replace(/<!-- source-note-record\n[\s\S]*?\n-->/, `<!-- source-note-record\n${JSON.stringify(record, null, 2)}\n-->`);
+    item.expected_body_sha256 = crypto.createHash('sha256').update(body, 'utf8').digest('hex');
+    lives.set(item.issue_number, {
+      sourceIssue: { number: item.issue_number, state: 'open', body, labels: ['type:source-note', 'source:xhs', 'source-year:2022', 'status:captured', 'boundary:pending', 'task:boundary-review'].map((name) => ({ name })) },
+      comments: [],
+      allIssues: [],
+      blob: { sha: item.artifact.git_blob_sha, encoding: 'base64', content: bytes.toString('base64') },
+    });
+  }
+  const packetSet = buildPacketSet(manifest);
+  const requests = packetSet.packets.map((packet) => buildFormalRequest(packet, 7000 + packet.issue_number, '2026-09-05T04:37:00Z'));
+  const evidenceReceipts = requests.map((request, index) => ({
+    schema_version: 'issue-1549-boundary-review-evidence-receipt.v1',
+    packet_set_sha256: packetSet.packet_set_sha256,
+    packet_id: packetSet.packets[index].packet_id,
+    transition_id: request.transition_id,
+    repository: request.repository,
+    issue_number: request.issue_number,
+    source_note_issue_number: request.issue_number,
+    source_note_id: request.source_note_id,
+    expected_body_sha256: request.expected_body_sha256,
+    expected_source_revision_id: request.expected_source_revision_id,
+    evidence_subject_sha256: packetSet.packets[index].evidence_subject_sha256,
+    evidence_comment_id: request.review_evidence.comment_id,
+    request_sha256: requestSha256(request),
+  }));
+  for (const [index, request] of requests.entries()) {
+    const packet = packetSet.packets[index];
+    lives.get(request.issue_number).comments.push({ id: request.review_evidence.comment_id, issue_url: `https://api.github.com/repos/${request.repository}/issues/${request.issue_number}`, body: evidenceBody(packet, packetSet.packet_set_sha256) });
+  }
+  return { manifest, packetSet, requests, evidenceReceipts, lives, transitionReceipts: new Map() };
+}
+
+function liveLoader(state) {
+  return (request) => {
+    const live = state.lives.get(request.issue_number);
+    return { sourceIssue: live.sourceIssue, comments: live.comments, allIssues: live.allIssues, readBlob: () => live.blob };
+  };
+}
+
+function optionsFor(state, extra = {}) {
+  return {
+    manifest: state.manifest,
+    evidenceReceipts: state.evidenceReceipts,
+    expectedPacketSetSha256: state.packetSet.packet_set_sha256,
+    loadLive: liveLoader(state),
+    readTransitionReceipt: (request) => state.transitionReceipts.get(request.issue_number) || null,
+    persistProgress: () => {},
+    ...extra,
+  };
+}
+
+test('fixed 17-item preflight consumes #1549 receipts and produces a deterministic plan digest', () => {
+  const state = syntheticState();
+  const result = planBatch(state.requests, state.packetSet, optionsFor(state));
+  assert.equal(result.ok, true, result.errors.join('\n'));
+  assert.match(state.packetSet.packet_set_sha256, /^[0-9a-f]{64}$/);
+  assert.equal(result.items.length, 17);
+  assert.deepEqual(result.items.map((item) => item.issue_number), ISSUE_NUMBERS);
+  assert.equal(result.items.every((item) => item.action === 'would-transition'), true);
+  assert.equal(result.report.plan_sha256, result.report.plan_sha256.toLowerCase());
+  assert.equal(result.report.items.every((item) => item.next_labels.includes('boundary:single-interview')), true);
+  assert.equal(result.report.items.some((item) => item.next_labels.includes('status:source-ready')), false);
+  assert.equal(validateInputs(state.requests, state.evidenceReceipts, state.packetSet, state.manifest, state.packetSet.packet_set_sha256).ok, true);
+});
+
+test('fresh SourceNote body/CAS drift blocks planning before any mutation', () => {
+  const state = syntheticState();
+  const packet = state.packetSet.packets[3];
+  state.lives.get(packet.issue_number).sourceIssue.body += '\nexternal drift\n';
+  let patches = 0;
+  const result = planBatch(state.requests, state.packetSet, optionsFor(state, { patchIssue: () => { patches += 1; } }));
+  assert.equal(result.ok, false);
+  assert.equal(patches, 0);
+  assert.match(result.errors.join('\n'), /body SHA|stale SourceNote body/);
+});
+
+test('apply uses one PATCH and one receipt POST per item, reconciles response loss, and never creates InterviewNotes', () => {
+  const state = syntheticState();
+  const progress = initialProgress(state.requests, state.packetSet.packet_set_sha256);
+  const snapshots = [];
+  const patches = [];
+  const posts = [];
+  const writes = [];
+  const result = applyBatch(state.requests, state.packetSet, progress, optionsFor(state, {
+    patchIssue: (request, plan) => {
+      patches.push(request.issue_number);
+      const live = state.lives.get(request.issue_number);
+      live.sourceIssue = { ...live.sourceIssue, body: plan.next_body, labels: plan.next_labels.map((name) => ({ name })) };
+    },
+    postReceipt: (request, receipt) => {
+      posts.push(request.issue_number);
+      const live = state.lives.get(request.issue_number);
+      live.comments.push({ id: 900000 + request.issue_number, issue_url: `https://api.github.com/repos/${request.repository}/issues/${request.issue_number}`, body: renderAppliedReceiptComment(receipt) });
+      return null;
+    },
+    writeReceipt: (request, receipt) => { writes.push(request.issue_number); state.transitionReceipts.set(request.issue_number, clone(receipt)); },
+    persistProgress: (value) => snapshots.push(clone(value)),
+  }));
+  assert.equal(result.ok, true, result.errors?.join('\n'));
+  assert.equal(patches.length, 17);
+  assert.equal(posts.length, 17);
+  assert.equal(writes.length, 17);
+  assert.equal(new Set(patches).size, 17);
+  assert.equal(result.progress.status, 'complete');
+  assert.equal(result.progress.possibly_performed, false);
+  assert.equal(validateProgress(result.progress, state.requests, state.packetSet.packet_set_sha256).ok, true);
+  assert.equal(snapshots.some((value) => Object.values(value.items).some((item) => item.phase === 'patch-pending')), true);
+  assert.equal(snapshots.some((value) => Object.values(value.items).some((item) => item.phase === 'receipt-pending')), true);
+  for (const live of state.lives.values()) {
+    assert.equal(live.allIssues.length, 0);
+    assert.equal(live.sourceIssue.labels.some((label) => (label.name || label) === 'status:source-ready'), false);
+    assert.equal(live.sourceIssue.labels.some((label) => (label.name || label) === 'boundary:single-interview'), true);
+  }
+});
+
+test('resume skips an already-targeted item with its matching receipt and applies only remaining items', () => {
+  const state = syntheticState();
+  const first = state.requests[0];
+  const firstPlan = planBatch(state.requests, state.packetSet, optionsFor(state)).items[0].plan;
+  const live = state.lives.get(first.issue_number);
+  live.sourceIssue = { ...live.sourceIssue, body: firstPlan.next_body, labels: firstPlan.next_labels };
+  const receipt = {
+    schema_version: 'source-note-boundary-review-applied.v1', transition_id: first.transition_id, repository: first.repository, issue_number: first.issue_number, source_note_id: first.source_note_id, decision: 'single-interview', reviewed_at: first.reviewed_at, applied_at: '2026-09-05T05:00:00Z', previous_body_sha256: first.expected_body_sha256, new_body_sha256: crypto.createHash('sha256').update(firstPlan.next_body, 'utf8').digest('hex'), interview_note_ids: [`xhs:${first.source_note_id.slice('xhs-note:'.length)}`], interview_note_cases: null,
+  };
+  live.comments.push({ id: 910000 + first.issue_number, issue_url: `https://api.github.com/repos/${first.repository}/issues/${first.issue_number}`, body: renderAppliedReceiptComment(receipt) });
+  state.transitionReceipts.set(first.issue_number, receipt);
+  const patches = []; const posts = [];
+  const result = applyBatch(state.requests, state.packetSet, initialProgress(state.requests, state.packetSet.packet_set_sha256), optionsFor(state, {
+    patchIssue: (request, plan) => { patches.push(request.issue_number); const item = state.lives.get(request.issue_number); item.sourceIssue = { ...item.sourceIssue, body: plan.next_body, labels: plan.next_labels }; },
+    postReceipt: (request, nextReceipt) => { posts.push(request.issue_number); state.lives.get(request.issue_number).comments.push({ id: 920000 + request.issue_number, issue_url: `https://api.github.com/repos/${request.repository}/issues/${request.issue_number}`, body: renderAppliedReceiptComment(nextReceipt) }); },
+    writeReceipt: (request, nextReceipt) => state.transitionReceipts.set(request.issue_number, clone(nextReceipt)),
+  }));
+  assert.equal(result.ok, true, result.errors?.join('\n'));
+  assert.equal(patches.includes(first.issue_number), false);
+  assert.equal(posts.includes(first.issue_number), false);
+  assert.equal(patches.length, 16);
+  assert.equal(posts.length, 16);
+});
+
+test('source-ready is outside the Boundary transition scope and blocks before PATCH', () => {
+  const state = syntheticState();
+  const first = state.lives.get(state.requests[0].issue_number);
+  first.sourceIssue = { ...first.sourceIssue, labels: [...first.sourceIssue.labels, { name: 'status:source-ready' }] };
+  let patches = 0;
+  const result = planBatch(state.requests, state.packetSet, optionsFor(state, { patchIssue: () => { patches += 1; } }));
+  assert.equal(result.ok, false);
+  assert.equal(patches, 0);
+  assert.match(result.errors.join('\n'), /source-ready|source review/);
+});
+
+test('receipt conflicts and malformed live labels fail closed', () => {
+  const state = syntheticState();
+  const first = state.requests[0];
+  state.lives.get(first.issue_number).sourceIssue.labels = [...state.lives.get(first.issue_number).sourceIssue.labels, null];
+  const result = planBatch(state.requests, state.packetSet, optionsFor(state));
+  assert.equal(result.ok, false);
+  assert.match(result.errors.join('\n'), /labels|boundary/);
+});
