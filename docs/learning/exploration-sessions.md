@@ -34,14 +34,18 @@ CanonicalQuestion
 
 AI 一点一点解释当前 Source unit 和可观察的 reasoning structure。
 
+对第一次揭示的 question-like Source，默认先保留 learner attempt：用户可以回答、列骨架、说“不知道”，或 explicit skip。attempt/skip 之前不要主动给 classification / response skeleton / follow-up dimensions。
+
 目标：
 
+- 保留讲解前的 baseline attempt
 - 识别 cue
 - 判断当前问题类型或 Source unit 类型
 - 激活相关知识结构
 - 在 question-like Source 中形成 response skeleton
 - 理解新输入为什么改变之前判断
 - 在当前 Source-backed depth frontier 到达后停止
+- explanation 后撤除主要提示，让学习者做一次 immediate reconstruction
 
 ### Training
 
@@ -51,8 +55,22 @@ AI 更接近面试官，在合适 checkpoint 前不主动解释。
 
 - 测 spontaneous recognition
 - 测 response structure
+- 测 technical correctness / boundary handling
 - 测 follow-up handling
 - 找出反应链路在哪里断掉
+- 测在更低 hint level 下是否仍能完成回答
+
+建议 hint level：
+
+```text
+H0 = cold / 无提示
+H1 = 轻量 cue
+H2 = 结构槽位
+H3 = 部分回答骨架
+H4 = worked explanation / 完整讲解
+```
+
+重复训练的目标不是永远停在 H4，而是逐步降低 scaffold。
 
 ### Source analysis
 
@@ -73,6 +91,29 @@ AI 更接近面试官，在合适 checkpoint 前不主动解释。
 - Answer 是否覆盖真实问法
 - 缺失的 follow-up handling
 - Knowledge boundary 问题
+
+## Learning → Training → Retention → Transfer
+
+一次 guided Learning 只能证明当前理解过程完成，不能自动证明能力已经内化。
+
+面向能力的完整路径应逐步形成：
+
+```text
+baseline attempt
+→ guided Learning / feedback
+→ immediate reconstruction
+→ delayed recall
+→ unseen-variant transfer
+```
+
+其中：
+
+- `baseline attempt`：AI 讲解前保留的独立回答；
+- `immediate reconstruction`：讲解后隐藏主要 scaffold，再自己重建；
+- `delayed recall`：跨真实时间间隔后 H0/H1 复测；
+- `transfer`：使用学习者此前未见过的真实 SourceQuestion variant，测试是否能迁移识别和回答结构。
+
+这些结果属于 Training / ReviewProgress，不改变 Source 或 Knowledge identity。完整计划见 `training-effectiveness-plan.md`。
 
 ## No-look-ahead
 
@@ -268,6 +309,9 @@ source_review_id
 focus
 observed_cues
 classification
+learner_attempt（如有）
+attempt_kind: baseline | reconstruction | delayed | transfer
+hint_level（如有）
 response_skeleton
 plausible_followup_dimensions
 new_findings
@@ -275,6 +319,8 @@ knowledge_gaps
 relation_candidates
 actions
 ```
+
+这些字段当前首先是行为规范；是否进入新的 machine contract 由 Training Effectiveness Epic 单独设计，不能为了记录训练状态破坏已发布 checkpoint v1/v2/v3 兼容性。
 
 最重要的是稳定 target identity、SourceRevision、Source frontier、授权 provenance，以及 observation 与正式 action 的分离。
 
