@@ -94,6 +94,9 @@ test('CLI apply uses the real lock/core and durably writes 17 request and receip
     const output = JSON.parse(fs.readFileSync(context.args[context.args.indexOf('--output') + 1], 'utf8'));
     assert.equal(output.mode, 'apply');
     assert.equal(output.ok, true);
+    assert.equal(output.create_mutation_count, 17);
+    assert.equal(output.receipt_mutation_count, 17);
+    assert.equal(output.mutation_count, 34);
     assert.equal(output.possibly_performed, false);
     assert.equal(context.calls.create.length, 17);
     assert.equal(context.calls.receipt.length, 17);

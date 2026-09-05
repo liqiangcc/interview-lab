@@ -110,6 +110,10 @@ function pendingProgress(planResult, phase, issueNumber = 158, priorPhase = null
   progress.status = 'failed';
   progress.mutation_attempted = true;
   progress.possibly_performed = true;
+  const attemptedPhase = phase === 'uncertain' ? priorPhase : phase;
+  progress.create_mutation_count = attemptedPhase === 'create-pending' ? 1 : 0;
+  progress.receipt_mutation_count = attemptedPhase === 'receipt-pending' ? 1 : 0;
+  progress.mutation_count = progress.create_mutation_count + progress.receipt_mutation_count;
   const item = progress.items[String(issueNumber)];
   item.phase = phase;
   item.intent = makeIntent(planResult.items.find((candidate) => candidate.issue_number === issueNumber), phase, {
@@ -133,6 +137,9 @@ test('real authorized fixture passes module-local planBatch for all 17 fresh pre
   const harness = makeAuthorizedHarness();
   assert.equal(harness.planResult.report.total, 17);
   assert.equal(harness.planResult.report.mutation_count, 0);
+  assert.equal(harness.planResult.create_mutation_count, 0);
+  assert.equal(harness.planResult.receipt_mutation_count, 0);
+  assert.equal(harness.planResult.mutation_count, 0);
   assert.deepEqual(harness.planResult.items.map((item) => item.action), ISSUE_NUMBERS.map(() => 'would-create'));
   assert.deepEqual(harness.planResult.items.map((item) => item.ownership_count), ISSUE_NUMBERS.map(() => 0));
   assert.match(harness.planResult.plan_sha256, /^[0-9a-f]{64}$/);
@@ -201,7 +208,13 @@ test('real applyBatch reconciles create and receipt response loss without duplic
   assert.equal(new Set(harness.calls.create).size, 17);
   assert.equal(harness.calls.receipt.length, 17);
   assert.equal(new Set(harness.calls.receipt).size, 17);
+  assert.equal(result.create_mutation_count, 17);
+  assert.equal(result.receipt_mutation_count, 17);
+  assert.equal(result.mutation_count, 34);
   assert.equal(result.progress.status, 'complete');
+  assert.equal(result.progress.create_mutation_count, 17);
+  assert.equal(result.progress.receipt_mutation_count, 17);
+  assert.equal(result.progress.mutation_count, 34);
   assert.equal(result.progress.possibly_performed, false);
 });
 
@@ -212,6 +225,9 @@ test('create-pending resume reconciles owner and posts only its missing receipt'
   assert.equal(harness.calls.create.length, 0);
   assert.equal(harness.calls.receipt.length, 17);
   assert.equal(harness.calls.receipt.filter((issue) => issue === 158).length, 1);
+  assert.equal(result.create_mutation_count, 1);
+  assert.equal(result.receipt_mutation_count, 17);
+  assert.equal(result.mutation_count, 18);
   assert.equal(result.progress.items['158'].phase, 'complete');
 });
 
@@ -234,6 +250,9 @@ test('uncertain create recovery keeps its root phase across a failed reconcile a
   assert.equal(second.ok, true, second.errors?.join('; '));
   assert.equal(harness.calls.create.length, 0);
   assert.equal(harness.calls.receipt.filter((issue) => issue === 158).length, 1);
+  assert.equal(second.create_mutation_count, 1);
+  assert.equal(second.receipt_mutation_count, 17);
+  assert.equal(second.mutation_count, 18);
   assert.equal(second.progress.items['158'].phase, 'complete');
 });
 
@@ -286,6 +305,9 @@ test('pending progress phases remain readable and preserve intent identity', () 
   const harness = makeAuthorizedHarness();
   const progress = pendingProgress(harness.planResult, 'create-pending');
   assert.equal(validateProgress(progress, harness.planResult.items, harness.planResult.authorization_sha256).ok, true);
+  progress.mutation_count = 2;
+  assert.equal(validateProgress(progress, harness.planResult.items, harness.planResult.authorization_sha256).ok, false);
+  progress.mutation_count = 1;
   progress.items['158'].phase = 'uncertain';
   progress.items['158'].intent = makeIntent(harness.planResult.items[0], 'uncertain', { prior_phase: 'receipt-pending', mutation_attempted: true, mutation_performed: null, possibly_performed: true });
   assert.equal(validateProgress(progress, harness.planResult.items, harness.planResult.authorization_sha256).ok, true);

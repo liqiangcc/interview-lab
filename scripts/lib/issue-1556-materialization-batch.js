@@ -263,6 +263,9 @@ function initialProgress(items, planSha256, authorizationSha256Value = planSha25
     mutation_attempted: false,
     mutation_performed: false,
     possibly_performed: false,
+    create_mutation_count: 0,
+    receipt_mutation_count: 0,
+    mutation_count: 0,
     items: Object.fromEntries(items.map((item) => [String(item.issue_number), {
       issue_number: item.issue_number,
       source_note_issue_number: item.source_note_issue_number,
@@ -282,6 +285,11 @@ function validateProgress(progress, items, expectedPlanSha256 = null) {
   if (!progress || progress.packet_set_sha256 !== PACKET_SET_SHA256) errors.push('progress packet set digest mismatch');
   if (expectedPlanSha256 && progress && progress.authorization_sha256 !== expectedPlanSha256) errors.push('progress authorization digest mismatch');
   if (!progress || !['planned', 'running', 'failed', 'complete'].includes(progress.status)) errors.push('progress status is invalid');
+  for (const field of ['create_mutation_count', 'receipt_mutation_count', 'mutation_count']) {
+    if (!progress || !Number.isSafeInteger(progress[field]) || progress[field] < 0) errors.push(`progress ${field} must be a non-negative integer`);
+  }
+  if (progress && Number.isSafeInteger(progress.create_mutation_count) && Number.isSafeInteger(progress.receipt_mutation_count)
+    && progress.mutation_count !== progress.create_mutation_count + progress.receipt_mutation_count) errors.push('progress mutation_count must equal create_mutation_count + receipt_mutation_count');
   const expected = new Map((items || []).map((item) => [String(item.issue_number), item]));
   const actual = progress && progress.items || {};
   if (Object.keys(actual).length !== expected.size) errors.push('progress item count mismatch');
@@ -343,20 +351,30 @@ function compareReceiptFacts(left, right) {
 }
 
 function applyBatch({ planResult, packetSet, manifest, transitionRequests, transitionReceipts, evidenceReceipts, progress = null }, options = {}) {
-  if (!planResult || !planResult.ok) return { ok: false, errors: ['an approved successful plan is required'], progress };
-  if (!Array.isArray(planResult.items) || validateFixedSet(planResult.items, 'plan items').length) return { ok: false, errors: ['apply requires the complete fixed 17-item plan'], progress };
-  if (!manifest || typeof manifest !== 'object' || Array.isArray(manifest)) return { ok: false, errors: ['apply requires the real candidate manifest'], progress };
-  if (!options.lock || typeof options.lock.assertHeld !== 'function') return { ok: false, errors: ['apply requires an acquired lock guard'], progress };
-  try { options.lock.assertHeld(); } catch (error) { return { ok: false, errors: [`lock guard rejected apply: ${error.message}`], progress }; }
-  if (typeof options.loadLive !== 'function' || typeof options.createInterviewIssue !== 'function' || typeof options.postReceipt !== 'function') return { ok: false, errors: ['apply requires live loader, createInterviewIssue and postReceipt adapters'], progress };
+  let createMutationCount = 0;
+  let receiptMutationCount = 0;
+  const finish = (result) => ({ ...result, create_mutation_count: createMutationCount, receipt_mutation_count: receiptMutationCount, mutation_count: createMutationCount + receiptMutationCount });
+  if (!planResult || !planResult.ok) return finish({ ok: false, errors: ['an approved successful plan is required'], progress });
+  if (!Array.isArray(planResult.items) || validateFixedSet(planResult.items, 'plan items').length) return finish({ ok: false, errors: ['apply requires the complete fixed 17-item plan'], progress });
+  if (!manifest || typeof manifest !== 'object' || Array.isArray(manifest)) return finish({ ok: false, errors: ['apply requires the real candidate manifest'], progress });
+  if (!options.lock || typeof options.lock.assertHeld !== 'function') return finish({ ok: false, errors: ['apply requires an acquired lock guard'], progress });
+  try { options.lock.assertHeld(); } catch (error) { return finish({ ok: false, errors: [`lock guard rejected apply: ${error.message}`], progress }); }
+  if (typeof options.loadLive !== 'function' || typeof options.createInterviewIssue !== 'function' || typeof options.postReceipt !== 'function') return finish({ ok: false, errors: ['apply requires live loader, createInterviewIssue and postReceipt adapters'], progress });
   const freshPlan = planBatch({ packetSet, manifest, transitionRequests, evidenceReceipts, transitionReceipts, loadLive: options.loadLive, readBlob: options.readBlob });
-  if (!freshPlan.ok) return { ok: false, errors: freshPlan.errors, progress };
+  if (!freshPlan.ok) return finish({ ok: false, errors: freshPlan.errors, progress });
   const expectedAuthorization = options.expectedAuthorizationSha256 || options.expectedPlanSha256;
-  if (!/^[0-9a-f]{64}$/.test(String(expectedAuthorization || '')) || freshPlan.authorization_sha256 !== expectedAuthorization || planResult.authorization_sha256 !== freshPlan.authorization_sha256) return { ok: false, errors: ['authorized stable digest does not match the fresh fixed-batch immutable facts'], progress };
+  if (!/^[0-9a-f]{64}$/.test(String(expectedAuthorization || '')) || freshPlan.authorization_sha256 !== expectedAuthorization || planResult.authorization_sha256 !== freshPlan.authorization_sha256) return finish({ ok: false, errors: ['authorized stable digest does not match the fresh fixed-batch immutable facts'], progress });
   const items = freshPlan.items;
   let state = progress || initialProgress(items, freshPlan.plan_sha256, freshPlan.authorization_sha256);
   const valid = validateProgress(state, items, state.authorization_sha256 || freshPlan.authorization_sha256);
-  if (!valid.ok) return { ok: false, errors: valid.errors, progress: state };
+  if (!valid.ok) return finish({ ok: false, errors: valid.errors, progress: state });
+  createMutationCount = state.create_mutation_count;
+  receiptMutationCount = state.receipt_mutation_count;
+  const syncMutationCounts = () => {
+    state.create_mutation_count = createMutationCount;
+    state.receipt_mutation_count = receiptMutationCount;
+    state.mutation_count = createMutationCount + receiptMutationCount;
+  };
   const requests = new Map((transitionRequests || []).map((request) => [Number(request.issue_number), request]));
   const transitionByIssue = new Map((transitionReceipts || []).map((receipt) => [Number(receipt.issue_number), receipt]));
   const resultItems = [];
@@ -376,10 +394,10 @@ function applyBatch({ planResult, packetSet, manifest, transitionRequests, trans
     const current = state.items[String(item.issue_number)];
     if (!current || !['create-pending', 'receipt-pending', 'uncertain'].includes(current.phase)) continue;
     const rootPhase = resolveMutationRootPhase(current);
-    if (!rootPhase.ok) return { ok: false, errors: [`#${item.issue_number}: ${rootPhase.error}`], progress: state, items: resultItems };
+    if (!rootPhase.ok) return finish({ ok: false, errors: [`#${item.issue_number}: ${rootPhase.error}`], progress: state, items: resultItems });
     const transitionRequest = requests.get(item.issue_number);
     const transitionReceipt = transitionByIssue.get(item.issue_number);
-    if (!transitionRequest || !transitionReceipt) return { ok: false, errors: [`#${item.issue_number}: pending journal input is missing`], progress: state, items: resultItems };
+    if (!transitionRequest || !transitionReceipt) return finish({ ok: false, errors: [`#${item.issue_number}: pending journal input is missing`], progress: state, items: resultItems });
     const request = buildMaterializationRequest(transitionRequest, transitionReceipt);
     let gate;
     try {
@@ -388,7 +406,7 @@ function applyBatch({ planResult, packetSet, manifest, transitionRequests, trans
     } catch (error) {
       state.status = 'failed'; state.possibly_performed = true;
       if (options.persistProgress) options.persistProgress(state);
-      return { ok: false, errors: [`#${item.issue_number}: pending reconcile failed: ${error.message}`], progress: state, items: resultItems };
+      return finish({ ok: false, errors: [`#${item.issue_number}: pending reconcile failed: ${error.message}`], progress: state, items: resultItems });
     }
     if (!gate.ok || gate.owners.length !== 1) {
       state.status = 'failed'; state.possibly_performed = true;
@@ -396,7 +414,7 @@ function applyBatch({ planResult, packetSet, manifest, transitionRequests, trans
       current.intent = makeIntent(item, 'uncertain', { prior_phase: rootPhase.phase, prior_intent: current.intent, reconcile_errors: gate.errors || [] });
       current.result = { status: 'uncertain', mutation_attempted: true, mutation_performed: null, possibly_performed: true, reconcile_errors: gate.errors || [] };
       if (options.persistProgress) options.persistProgress(state);
-      return { ok: false, errors: [`#${item.issue_number}: pending mutation cannot be confirmed without exactly one owner`], progress: state, items: resultItems };
+      return finish({ ok: false, errors: [`#${item.issue_number}: pending mutation cannot be confirmed without exactly one owner`], progress: state, items: resultItems });
     }
     if (gate.receipts.receipt) {
       const receipt = buildMaterializationReceipt(request, gate.owners[0], gate.projection);
@@ -405,7 +423,7 @@ function applyBatch({ planResult, packetSet, manifest, transitionRequests, trans
         current.phase = 'uncertain';
         current.intent = makeIntent(item, 'uncertain', { prior_phase: rootPhase.phase, prior_intent: current.intent, error: 'pending receipt conflicts with live receipt' });
         if (options.persistProgress) options.persistProgress(state);
-        return { ok: false, errors: [`#${item.issue_number}: pending receipt conflicts with live receipt`], progress: state, items: resultItems };
+        return finish({ ok: false, errors: [`#${item.issue_number}: pending receipt conflicts with live receipt`], progress: state, items: resultItems });
       }
       const confirmed = { ...receipt, comment_id: Number(gate.receipts.receipt.comment.id) };
       if (options.writeReceipt) options.writeReceipt(request, confirmed);
@@ -423,7 +441,7 @@ function applyBatch({ planResult, packetSet, manifest, transitionRequests, trans
       current.phase = 'uncertain';
       current.intent = makeIntent(item, 'uncertain', { prior_phase: rootPhase.phase, prior_intent: current.intent, error: 'receipt pending without a matching live receipt' });
       if (options.persistProgress) options.persistProgress(state);
-      return { ok: false, errors: [`#${item.issue_number}: receipt mutation cannot be confirmed; refusing duplicate POST`], progress: state, items: resultItems };
+      return finish({ ok: false, errors: [`#${item.issue_number}: receipt mutation cannot be confirmed; refusing duplicate POST`], progress: state, items: resultItems });
     }
   }
   // Re-read every item after pending reconciliation. No mutation begins until
@@ -434,8 +452,8 @@ function applyBatch({ planResult, packetSet, manifest, transitionRequests, trans
     const request = buildMaterializationRequest(transitionRequest, transitionReceipt);
     let gate;
     try { gate = targetPreflight(packetSet.packets.find((packet) => packet.issue_number === item.issue_number), transitionRequest, transitionReceipt, options.loadLive(request), { readBlob: options.readBlob }); }
-    catch (error) { return { ok: false, errors: [`#${item.issue_number}: full-batch fresh preflight failed: ${error.message}`], progress: state, items: resultItems }; }
-    if (!gate.ok) return { ok: false, errors: gate.errors.map((error) => `#${item.issue_number}: ${error}`), progress: state, items: resultItems };
+    catch (error) { return finish({ ok: false, errors: [`#${item.issue_number}: full-batch fresh preflight failed: ${error.message}`], progress: state, items: resultItems }); }
+    if (!gate.ok) return finish({ ok: false, errors: gate.errors.map((error) => `#${item.issue_number}: ${error}`), progress: state, items: resultItems });
   }
   state.status = 'running';
   if (options.persistProgress) options.persistProgress(state);
@@ -444,29 +462,32 @@ function applyBatch({ planResult, packetSet, manifest, transitionRequests, trans
     mark(item, 'uncertain', { prior_phase: phase, error: message, ...extra });
     state.items[String(item.issue_number)].result = { status: 'uncertain', error: message, mutation_attempted: true, mutation_performed: null, possibly_performed: true };
     if (options.persistProgress) options.persistProgress(state);
-    return { ok: false, errors: [`#${item.issue_number}: ${message}`], progress: state, items: resultItems };
+    return finish({ ok: false, errors: [`#${item.issue_number}: ${message}`], progress: state, items: resultItems });
   };
   for (const item of items) {
     const transitionRequest = requests.get(item.issue_number);
     const transitionReceipt = transitionByIssue.get(item.issue_number);
-    if (!transitionRequest || !transitionReceipt) return { ok: false, errors: [`#${item.issue_number}: transition input missing`], progress: state, items: resultItems };
+    if (!transitionRequest || !transitionReceipt) return finish({ ok: false, errors: [`#${item.issue_number}: transition input missing`], progress: state, items: resultItems });
     const request = buildMaterializationRequest(transitionRequest, transitionReceipt);
     let live;
     let gate;
     try { live = options.loadLive(request); gate = targetPreflight(packetSet.packets.find((packet) => packet.issue_number === item.issue_number), transitionRequest, transitionReceipt, live, { readBlob: options.readBlob }); }
-    catch (error) { return { ok: false, errors: [`#${item.issue_number}: fresh preflight failed: ${error.message}`], progress: state, items: resultItems }; }
-    if (!gate.ok) return { ok: false, errors: gate.errors.map((error) => `#${item.issue_number}: ${error}`), progress: state, items: resultItems };
+    catch (error) { return finish({ ok: false, errors: [`#${item.issue_number}: fresh preflight failed: ${error.message}`], progress: state, items: resultItems }); }
+    if (!gate.ok) return finish({ ok: false, errors: gate.errors.map((error) => `#${item.issue_number}: ${error}`), progress: state, items: resultItems });
     let owner = gate.owners[0] || null;
     if (!owner) {
       mark(item, 'create-pending', { request, projection: gate.projection, mutation_attempted: false, mutation_performed: false, possibly_performed: false });
-      try { assertLock(); } catch (error) { return { ok: false, errors: [`#${item.issue_number}: ${error.message}`], progress: state, items: resultItems }; }
+      try { assertLock(); } catch (error) { return finish({ ok: false, errors: [`#${item.issue_number}: ${error.message}`], progress: state, items: resultItems }); }
       if (typeof options.beforeMutation === 'function') {
-        try { options.beforeMutation('create', request); } catch (error) { return { ok: false, errors: [`#${item.issue_number}: mutation hook failed before create: ${error.message}`], progress: state, items: resultItems }; }
+        try { options.beforeMutation('create', request); } catch (error) { return finish({ ok: false, errors: [`#${item.issue_number}: mutation hook failed before create: ${error.message}`], progress: state, items: resultItems }); }
       }
       state.mutation_attempted = true; state.possibly_performed = true;
       state.items[String(item.issue_number)].intent = makeIntent(item, 'create-pending', { request, projection: gate.projection, mutation_attempted: true, mutation_performed: null, possibly_performed: true });
       if (options.persistProgress) options.persistProgress(state);
-      try { assertLock(); } catch (error) { return { ok: false, errors: [`#${item.issue_number}: ${error.message}`], progress: state, items: resultItems }; }
+      try { assertLock(); } catch (error) { return finish({ ok: false, errors: [`#${item.issue_number}: ${error.message}`], progress: state, items: resultItems }); }
+      createMutationCount += 1;
+      syncMutationCounts();
+      if (options.persistProgress) options.persistProgress(state);
       try { options.createInterviewIssue(request, gate.projection); }
       catch (error) {
         let reconciled;
@@ -498,14 +519,17 @@ function applyBatch({ planResult, packetSet, manifest, transitionRequests, trans
     const receipt = buildMaterializationReceipt(request, owner, gate.projection);
     if (options.writeRequest) options.writeRequest(request, request);
     mark(item, 'receipt-pending', { receipt, owner_issue_number: Number(owner.number), mutation_attempted: state.mutation_attempted, mutation_performed: state.mutation_performed, possibly_performed: true });
-    try { assertLock(); } catch (error) { return { ok: false, errors: [`#${item.issue_number}: ${error.message}`], progress: state, items: resultItems }; }
+    try { assertLock(); } catch (error) { return finish({ ok: false, errors: [`#${item.issue_number}: ${error.message}`], progress: state, items: resultItems }); }
     if (typeof options.beforeMutation === 'function') {
-      try { options.beforeMutation('receipt', request); } catch (error) { return { ok: false, errors: [`#${item.issue_number}: mutation hook failed before receipt: ${error.message}`], progress: state, items: resultItems }; }
+      try { options.beforeMutation('receipt', request); } catch (error) { return finish({ ok: false, errors: [`#${item.issue_number}: mutation hook failed before receipt: ${error.message}`], progress: state, items: resultItems }); }
     }
     state.mutation_attempted = true; state.possibly_performed = true;
     state.items[String(item.issue_number)].intent = makeIntent(item, 'receipt-pending', { receipt, owner_issue_number: Number(owner.number), mutation_attempted: true, mutation_performed: null, possibly_performed: true });
     if (options.persistProgress) options.persistProgress(state);
-    try { assertLock(); } catch (error) { return { ok: false, errors: [`#${item.issue_number}: ${error.message}`], progress: state, items: resultItems }; }
+    try { assertLock(); } catch (error) { return finish({ ok: false, errors: [`#${item.issue_number}: ${error.message}`], progress: state, items: resultItems }); }
+    receiptMutationCount += 1;
+    syncMutationCounts();
+    if (options.persistProgress) options.persistProgress(state);
     try { options.postReceipt(request, receipt); } catch (_) { /* POST is never retried; reconcile below */ }
     let afterGate;
     try { const after = options.loadLive(request); afterGate = targetPreflight(packetSet.packets.find((packet) => packet.issue_number === item.issue_number), transitionRequest, transitionReceipt, after, { readBlob: options.readBlob }); }
@@ -524,7 +548,7 @@ function applyBatch({ planResult, packetSet, manifest, transitionRequests, trans
   }
   state.status = 'complete'; state.possibly_performed = false;
   if (options.persistProgress) options.persistProgress(state);
-  return { ok: true, items: resultItems, progress: state, mutation_attempted: state.mutation_attempted, mutation_performed: state.mutation_performed, possibly_performed: false };
+  return finish({ ok: true, items: resultItems, progress: state, mutation_attempted: state.mutation_attempted, mutation_performed: state.mutation_performed, possibly_performed: false });
 }
 
 function targetPreflight(packet, transitionRequest, transitionReceipt, live, options = {}) {
@@ -602,8 +626,8 @@ function targetPreflight(packet, transitionRequest, transitionReceipt, live, opt
 
 function planBatch({ packetSet, manifest, transitionRequests, evidenceReceipts, transitionReceipts, loadLive, readBlob } = {}) {
   const input = validateMaterializationInputs({ packetSet, manifest, transitionRequests, evidenceReceipts, transitionReceipts });
-  if (!input.ok) return { ok: false, errors: input.errors, items: [] };
-  if (typeof loadLive !== 'function') return { ok: false, errors: ['loadLive is required'], items: [] };
+  if (!input.ok) return { ok: false, errors: input.errors, items: [], create_mutation_count: 0, receipt_mutation_count: 0, mutation_count: 0 };
+  if (typeof loadLive !== 'function') return { ok: false, errors: ['loadLive is required'], items: [], create_mutation_count: 0, receipt_mutation_count: 0, mutation_count: 0 };
   const packetByIssue = new Map(packetSet.packets.map((packet) => [Number(packet.issue_number), packet]));
   const items = [];
   const errors = [];
@@ -648,7 +672,7 @@ function planBatch({ packetSet, manifest, transitionRequests, evidenceReceipts, 
   };
   const planSha256 = sha256Text(canonicalJson(report));
   const authorization_sha256 = authorizationSha256({ packetSet, manifest, transitionRequests, transitionReceipts, items });
-  return { ok: errors.length === 0, report: { ...report, plan_sha256: planSha256, authorization_sha256 }, plan_sha256: planSha256, authorization_sha256, items, errors };
+  return { ok: errors.length === 0, report: { ...report, plan_sha256: planSha256, authorization_sha256 }, plan_sha256: planSha256, authorization_sha256, items, errors, create_mutation_count: 0, receipt_mutation_count: 0, mutation_count: 0 };
 }
 
 module.exports = {
