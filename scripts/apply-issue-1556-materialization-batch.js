@@ -129,8 +129,10 @@ function postReceipt(repository, request, receipt, execute = ghJson) {
 }
 
 function outputFor(plan, args, mode, extra = {}) {
-  const createMutationCount = mode === 'plan' ? 0 : (plan.create_mutation_count ?? plan.progress?.create_mutation_count ?? 0);
-  const receiptMutationCount = mode === 'plan' ? 0 : (plan.receipt_mutation_count ?? plan.progress?.receipt_mutation_count ?? 0);
+  const countStatus = mode === 'plan' ? 'plan' : (plan.count_status || plan.progress?.count_status || 'unknown');
+  const invalidCounts = mode !== 'plan' && countStatus === 'invalid';
+  const createMutationCount = mode === 'plan' ? 0 : invalidCounts ? null : (plan.create_mutation_count ?? plan.progress?.create_mutation_count ?? 0);
+  const receiptMutationCount = mode === 'plan' ? 0 : invalidCounts ? null : (plan.receipt_mutation_count ?? plan.progress?.receipt_mutation_count ?? 0);
   return {
     schema_version: 'issue-1556-interview-note-materialization-cli.v1',
     repository: REPOSITORY,
@@ -141,7 +143,8 @@ function outputFor(plan, args, mode, extra = {}) {
     authorization_sha256: plan.authorization_sha256 || plan.report?.authorization_sha256 || null,
     create_mutation_count: createMutationCount,
     receipt_mutation_count: receiptMutationCount,
-    mutation_count: createMutationCount + receiptMutationCount,
+    mutation_count: invalidCounts ? null : createMutationCount + receiptMutationCount,
+    count_status: countStatus,
     mutation_attempted: mode === 'plan' ? false : Boolean(plan.mutation_attempted || plan.progress?.mutation_attempted),
     mutation_performed: mode === 'plan' ? false : Boolean(plan.mutation_performed || plan.progress?.mutation_performed),
     possibly_performed: mode === 'plan' ? false : Boolean(plan.possibly_performed || plan.progress?.possibly_performed),

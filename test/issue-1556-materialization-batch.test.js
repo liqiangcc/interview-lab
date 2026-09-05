@@ -187,6 +187,46 @@ test('fresh drift in the final item fails closed before any create or receipt mu
   assert.equal(harness.snapshots.length, 0);
 });
 
+test('fresh-plan failure and authorization mismatch retain valid durable historical counts', () => {
+  const driftHarness = makeAuthorizedHarness();
+  const driftProgress = initialProgress(driftHarness.planResult.items, driftHarness.planResult.plan_sha256, driftHarness.planResult.authorization_sha256);
+  driftProgress.create_mutation_count = 4;
+  driftProgress.receipt_mutation_count = 5;
+  driftProgress.mutation_count = 9;
+  driftHarness.sourceIssues.get(1301).labels.push('status:source-ready');
+  const drift = driftHarness.apply(driftProgress);
+  assert.equal(drift.ok, false);
+  assert.equal(drift.create_mutation_count, 4);
+  assert.equal(drift.receipt_mutation_count, 5);
+  assert.equal(drift.mutation_count, 9);
+  assert.equal(drift.count_status, 'valid');
+
+  const authorizationHarness = makeAuthorizedHarness();
+  const authorizationProgress = initialProgress(authorizationHarness.planResult.items, authorizationHarness.planResult.plan_sha256, authorizationHarness.planResult.authorization_sha256);
+  authorizationProgress.create_mutation_count = 6;
+  authorizationProgress.receipt_mutation_count = 7;
+  authorizationProgress.mutation_count = 13;
+  const mismatch = authorizationHarness.apply(authorizationProgress, { expectedAuthorizationSha256: 'a'.repeat(64) });
+  assert.equal(mismatch.ok, false);
+  assert.equal(mismatch.create_mutation_count, 6);
+  assert.equal(mismatch.receipt_mutation_count, 7);
+  assert.equal(mismatch.mutation_count, 13);
+  assert.equal(mismatch.count_status, 'valid');
+});
+
+test('invalid durable counts never become a fabricated zero count', () => {
+  const harness = makeAuthorizedHarness();
+  const progress = initialProgress(harness.planResult.items, harness.planResult.plan_sha256, harness.planResult.authorization_sha256);
+  progress.create_mutation_count = -1;
+  progress.mutation_count = -1;
+  const result = harness.apply(progress);
+  assert.equal(result.ok, false);
+  assert.equal(result.create_mutation_count, null);
+  assert.equal(result.receipt_mutation_count, null);
+  assert.equal(result.mutation_count, null);
+  assert.equal(result.count_status, 'invalid');
+});
+
 test('real applyBatch reconciles create and receipt response loss without duplicate POSTs', () => {
   const harness = makeAuthorizedHarness();
   let createLosses = 0;

@@ -351,9 +351,20 @@ function compareReceiptFacts(left, right) {
 }
 
 function applyBatch({ planResult, packetSet, manifest, transitionRequests, transitionReceipts, evidenceReceipts, progress = null }, options = {}) {
-  let createMutationCount = 0;
-  let receiptMutationCount = 0;
-  const finish = (result) => ({ ...result, create_mutation_count: createMutationCount, receipt_mutation_count: receiptMutationCount, mutation_count: createMutationCount + receiptMutationCount });
+  const countFieldsValid = progress === null || (progress && Number.isSafeInteger(progress.create_mutation_count) && progress.create_mutation_count >= 0
+    && Number.isSafeInteger(progress.receipt_mutation_count) && progress.receipt_mutation_count >= 0
+    && Number.isSafeInteger(progress.mutation_count) && progress.mutation_count >= 0
+    && progress.mutation_count === progress.create_mutation_count + progress.receipt_mutation_count);
+  let createMutationCount = countFieldsValid ? (progress?.create_mutation_count || 0) : null;
+  let receiptMutationCount = countFieldsValid ? (progress?.receipt_mutation_count || 0) : null;
+  let countStatus = progress === null ? 'initial' : countFieldsValid ? 'valid' : 'invalid';
+  const finish = (result) => ({
+    ...result,
+    create_mutation_count: createMutationCount,
+    receipt_mutation_count: receiptMutationCount,
+    mutation_count: countStatus === 'invalid' ? null : createMutationCount + receiptMutationCount,
+    count_status: countStatus,
+  });
   if (!planResult || !planResult.ok) return finish({ ok: false, errors: ['an approved successful plan is required'], progress });
   if (!Array.isArray(planResult.items) || validateFixedSet(planResult.items, 'plan items').length) return finish({ ok: false, errors: ['apply requires the complete fixed 17-item plan'], progress });
   if (!manifest || typeof manifest !== 'object' || Array.isArray(manifest)) return finish({ ok: false, errors: ['apply requires the real candidate manifest'], progress });
@@ -370,6 +381,7 @@ function applyBatch({ planResult, packetSet, manifest, transitionRequests, trans
   if (!valid.ok) return finish({ ok: false, errors: valid.errors, progress: state });
   createMutationCount = state.create_mutation_count;
   receiptMutationCount = state.receipt_mutation_count;
+  countStatus = 'valid';
   const syncMutationCounts = () => {
     state.create_mutation_count = createMutationCount;
     state.receipt_mutation_count = receiptMutationCount;

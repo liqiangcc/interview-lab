@@ -66,6 +66,10 @@ test('CLI defaults to plan-only and writes no progress or mutation', () => {
     assert.equal(output.ok, true);
     assert.equal(output.packet_set_sha256, fixture.packet_set.packet_set_sha256);
     assert.equal(output.items.length, 17);
+    assert.equal(output.create_mutation_count, 0);
+    assert.equal(output.receipt_mutation_count, 0);
+    assert.equal(output.mutation_count, 0);
+    assert.equal(output.count_status, 'plan');
     assert.equal(fs.existsSync(context.args[context.args.indexOf('--progress') + 1]), false);
     assert.deepEqual(context.calls, { create: [], receipt: [] });
   } finally { fs.rmSync(context.root, { recursive: true, force: true }); }
@@ -97,6 +101,7 @@ test('CLI apply uses the real lock/core and durably writes 17 request and receip
     assert.equal(output.create_mutation_count, 17);
     assert.equal(output.receipt_mutation_count, 17);
     assert.equal(output.mutation_count, 34);
+    assert.equal(output.count_status, 'valid');
     assert.equal(output.possibly_performed, false);
     assert.equal(context.calls.create.length, 17);
     assert.equal(context.calls.receipt.length, 17);
