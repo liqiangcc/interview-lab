@@ -365,7 +365,7 @@ H0/H1 recall
 
 ### 1. Attempt coverage
 
-多少 question-like learning unit 在 AI 讲解前保留了 learner attempt 或 explicit skip。
+在**用户主动进入 Training / effectiveness Pilot 的样本**中，多少 question-like unit 在反馈前保留了 learner attempt 或 explicit skip。普通 Learning 不要求该指标。
 
 ### 2. Hint dependence
 
@@ -430,7 +430,7 @@ H0/H1 recall
 - knowledge gap；
 - 中断 / 放弃 / invalid sample。
 
-只有当 delayed / transfer 结果显示**在不增加提示依赖**的情况下，独立回答质量有稳定改善时，才允许写“Pilot 提供了能力提升证据”。
+只有当 delayed / transfer 结果显示**在不增加提示依赖的情况下，独立回答质量有稳定改善**时，才允许写“Pilot 提供了能力提升证据”。
 
 如果只看到 immediate improvement，而 delayed / transfer 没改善，应诚实结论为：
 
@@ -563,12 +563,13 @@ Source inventory
 → basic E2E usability
 ```
 
-`#925` 应增加最小 ability gate，避免把“10 次 Session 完成”误写成“训练有效”。
+`#925` 只负责 basic E2E usability 与低摩擦 Learning 验收，并明确“10 次 Session 完成”不能被写成“训练有效”。不要求普通 Learning 强制采集 baseline attempt / reconstruction。
 
-Training Effectiveness v1 应作为独立 Epic 承担：
+Training Effectiveness v1 应作为独立 Epic 承担，并只在用户主动选择 Training / effectiveness Pilot 时运行：
 
 ```text
-Attempt-first
+opt-in Training
+→ attempt / reconstruction
 → ReviewProgress
 → spacing
 → transfer
