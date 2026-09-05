@@ -15,6 +15,10 @@ const {
   validateFixedSet,
   targetPreflight,
   requestSha256,
+  applyBatch,
+  initialProgress,
+  validateProgress,
+  renderMaterializationReceipt,
 } = require('../scripts/lib/issue-1556-materialization-batch');
 const { sha256Text } = require('../scripts/lib/source-note-interview-materialization');
 
@@ -102,4 +106,65 @@ test('projection is source-faithful and has no learning or source-ready labels',
   assert.match(projection.body, /SourceNote：#158/);
   assert.equal(projection.labels.includes('status:source-ready'), false);
   assert.match(requestSha256({ a: 1 }), /^[0-9a-f]{64}$/);
+});
+
+test('durable apply journals create-pending and reconciles both response-loss POSTs without retry', () => {
+  const issue = sourceIssue();
+  const transition = transitionFor(issue);
+  const transitionReceipt = { issue_number: issue.number, new_body_sha256: sha256Text(issue.body) };
+  const packet = {
+    issue_number: issue.number,
+    source_note_id: transition.source_note_id,
+    artifact: {
+      ref: `liqiangcc/xhs:note_desc/625564d70000000001025e46.txt@95b77bb261048059846273688e4b90a2e108b437`,
+      git_blob_sha: issue.blob.sha,
+      anchor: 'source projection for 625564d70000000001025e46',
+    },
+  };
+  const request = buildMaterializationRequest(transition, transitionReceipt);
+  const item = {
+    issue_number: issue.number,
+    source_note_issue_number: issue.number,
+    source_note_id: request.source_note_id,
+    interview_note_id: interviewNoteId(request.source_note_id),
+    request_sha256: requestSha256(request),
+  };
+  const planResult = { ok: true, plan_sha256: 'b'.repeat(64), items: [item] };
+  let ownerIssues = [];
+  let comments = [];
+  let createCalls = 0;
+  let receiptCalls = 0;
+  const snapshots = [];
+  const progress = initialProgress([item], planResult.plan_sha256);
+  const loadLive = () => ({ sourceIssue: issue, comments, allIssues: ownerIssues });
+  const options = {
+    expectedPlanSha256: planResult.plan_sha256,
+    transitionRequests: [transition],
+    transitionReceipts: [transitionReceipt],
+    loadLive,
+    readBlob: () => ({ sha: issue.blob.sha, encoding: 'base64', content: issue.blob.content }),
+    persistProgress: (value) => snapshots.push(JSON.parse(JSON.stringify(value))),
+    writeRequest: () => {},
+    writeReceipt: () => {},
+    beforeMutation: () => {},
+    createInterviewIssue: (_request, projection) => {
+      createCalls += 1;
+      ownerIssues = [{ number: 300, state: 'open', body: projection.body, labels: projection.labels }];
+      throw new Error('simulated create response loss');
+    },
+    postReceipt: (_request, receipt) => {
+      receiptCalls += 1;
+      comments = [{ id: 700, issue_url: 'https://api.github.com/repos/liqiangcc/interview-lab/issues/158', body: renderMaterializationReceipt(receipt) }];
+      throw new Error('simulated receipt response loss');
+    },
+  };
+  const result = applyBatch({ planResult, packetSet: { packets: [packet] }, transitionRequests: [transition], transitionReceipts: [transitionReceipt], progress }, options);
+  assert.equal(result.ok, true, result.errors && result.errors.join('; '));
+  assert.equal(createCalls, 1);
+  assert.equal(receiptCalls, 1);
+  assert.equal(result.progress.items['158'].phase, 'complete');
+  assert.equal(result.progress.possibly_performed, false);
+  assert.ok(snapshots.some((value) => value.items['158'].phase === 'create-pending' && value.items['158'].intent.possibly_performed === false));
+  assert.ok(snapshots.some((value) => value.items['158'].phase === 'create-pending' && value.items['158'].intent.possibly_performed === true));
+  assert.equal(validateProgress(result.progress, [item], planResult.plan_sha256).ok, true);
 });
