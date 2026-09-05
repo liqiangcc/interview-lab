@@ -70,6 +70,31 @@ revealed_within_unit
 
 不要一次把所有层都讲完。
 
+### Question-like Source：默认先尝试，再解释
+
+如果当前 Source 是第一次揭示给学习者的真实 interviewer cue，Learning mode 默认先保留一次 **attempt-first** 机会：
+
+```text
+当前真实问题
+↓
+学习者先回答 / 列骨架 / 说“不知道”
+或显式选择“直接讲解”
+↓
+AI 才进入 classification / knowledge / response 等解释层
+```
+
+在 learner attempt 或 explicit skip 之前，不主动泄露：
+
+- 问题分类结论；
+- 知识结构；
+- 回答骨架；
+- 预计追问维度；
+- 完整示范答案。
+
+`不知道` 本身是有效 attempt：它暴露真实 knowledge gap，不需要为了“答点什么”而猜。
+
+用户明确要求“直接分析 / 直接讲解”时可以跳过 attempt gate，但该次只能证明 guided understanding，不能把它记成 unaided ability evidence。
+
 同时，不同 Source unit 不强制使用同一组解释层。先识别 Source 类型，再选择对应 learning loop。
 
 ## Source 类型与默认 learning loop
@@ -103,6 +128,18 @@ literal
 ```
 
 当前层被充分消化后再进入下一层。
+
+对以能力提升为目标的 question-like Learning，closure 前还应增加一次 **immediate reconstruction**：先隐藏主要回答骨架 / 示例，让学习者用自己的话重新组织第一轮回答。
+
+```text
+learner attempt
+→ guided analysis / feedback
+→ hide scaffold
+→ learner reconstruction
+→ closure
+```
+
+如果学习者选择跳过 reconstruction，可以正常继续阅读，但不能把当前 position 记为“已验证可独立作答”。
 
 ### 2. Stage-summary Source
 
@@ -252,7 +289,15 @@ Learning mode 下，AI 应：
 
 AI 逐步解释，并严格遵守 no-look-ahead。
 
-目标：形成识别能力和回答结构。
+Question-like Source 默认采用：
+
+```text
+attempt-first
+→ 分层反馈
+→ immediate reconstruction
+```
+
+目标：不仅形成理解，还为后续无提示 retrieval 留下 baseline。
 
 ### Training mode
 
@@ -261,6 +306,20 @@ AI 暂时不解释，更接近真实面试官。
 目标：验证反应链路是否已经内化。
 
 Training mode 可以使用真实问题顺序和 follow-up，但仍然必须顺序 reveal；如果 Source unit 内存在时间片段，也必须遵守 `temporal_cursor`。
+
+重复训练时应逐步撤除 scaffold。建议统一记录 hint level：
+
+```text
+H0 = cold / 无提示
+H1 = 轻量 cue
+H2 = 结构槽位
+H3 = 部分回答骨架
+H4 = worked explanation / 完整讲解
+```
+
+能力提升的方向应表现为：回答质量保持或提高，同时需要的 hint level 不增加。
+
+同一会话内表现变好仍不足以证明 retention；后续应通过 ReviewProgress 做跨时间 delayed retrieval，并用未见过的真实 SourceQuestion variant 验证 transfer。详见 `training-effectiveness-plan.md`。
 
 ## 多遍阅读
 

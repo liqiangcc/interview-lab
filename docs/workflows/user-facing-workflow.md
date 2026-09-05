@@ -229,7 +229,11 @@ Agent 自动确认当前可用 SourceRevision
 ↓
 Agent 恢复或创建 ExplorationSession
 ↓
-只向用户展示当前 Source + 当前解释层
+只向用户展示当前 Source
+↓
+如果是第一次遇到的 question-like Source：先让用户尝试回答 / 列骨架 / 说不知道
+↓
+再进入当前解释层
 ↓
 等待“下一步 / 提问 / 深入”
 ```
@@ -241,11 +245,15 @@ Agent 恢复或创建 ExplorationSession
 ↓
 当前输入
 ↓
+先自己尝试（question-like）
+↓
 识别
 ↓
 结构
 ↓
 回答策略 / 学习点
+↓
+隐藏主要提示后再复述一次
 ```
 
 而不是：
@@ -267,15 +275,20 @@ Agent 恢复或创建 ExplorationSession
 默认节奏是：
 
 ```text
-先判断
-→ 再给结构
-→ 再解释关键因果
+真实 question-like cue
+→ 用户先尝试
+→ AI 再判断 / 给结构 / 解释关键因果
 → 必要时给最小回答骨架
+→ 隐藏主要 scaffold 后让用户重建一次
 → 到当前最小闭环就停
 → 等真实下一步
 ```
 
+如果用户明确说“直接讲解 / 直接分析”，可以跳过尝试与重建；但这属于 guided explanation，不应被当作独立作答能力证据。
+
 重点是帮助用户形成稳定的“识别 / 组织 / 回答 / 控制深度”能力，而不是把 checkpoint 审计日志、完整知识百科或一次性的标准答案直接暴露为学习体验。
+
+训练效果的完整闭环、delayed retrieval 与 transfer 验收见 [`docs/learning/training-effectiveness-plan.md`](../learning/training-effectiveness-plan.md)。
 
 ## 默认 Agent 行为
 
@@ -313,7 +326,8 @@ Agent 应自动：
 4. 定位可信 Source；
 5. 解析当前 sequential frontier；
 6. 必要时创建/恢复 ExplorationSession；
-7. 展示第一条可学习输入。
+7. 展示第一条可学习输入；
+8. 如果是 question-like Source，默认先等待用户 attempt；用户可以直接回答、只列骨架、说“不知道”，或明确要求“直接讲解”。
 
 只有在真正阻塞时才向用户报告基础设施问题。
 
@@ -341,6 +355,47 @@ Agent 自己负责 checkpoint/history 更新。
 请把 loop_phase 从 classification 改成 knowledge
 ```
 
+### 直接讲解
+
+用户说：
+
+```text
+直接讲解
+直接分析
+我不会，讲一下
+```
+
+Agent 可以跳过当前 attempt gate，直接进入分层解释。此时应保留：
+
+```text
+本轮 = guided understanding
+≠ unaided ability test
+```
+
+后续如果要验证掌握程度，应重新以 H0/H1 方式复测。
+
+### 考我一下 / 无提示复测
+
+用户说：
+
+```text
+考我一下
+无提示练习
+复测这道题
+```
+
+Agent 应切换到 Training / recall 语义：
+
+```text
+只给当前真实问题
+→ 默认不展示旧 analysis / answer skeleton
+→ 等用户回答
+→ 必要时沿真实 follow-up 继续
+→ checkpoint 后再给反馈
+```
+
+如果是重复训练，优先降低 hint level，而不是重复展示同一套讲解。
+
 ### 深入
 
 用户说：
@@ -357,6 +412,24 @@ Agent 只在当前 Source-backed depth frontier 内继续。
 Source-backed learning
 vs
 General knowledge expansion
+```
+
+### 复述 / Reconstruction
+
+用户说：
+
+```text
+我重新答一遍
+让我自己复述
+```
+
+Agent 暂时隐藏主要 scaffold，让用户重新从问题 cue 组织第一轮回答；反馈优先比较：
+
+```text
+原 attempt
+→ AI 讲解后的 reconstruction
+→ 哪些结构已经可以独立取回
+→ 哪些仍依赖提示
 ```
 
 ### 复盘 / 沉淀

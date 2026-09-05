@@ -153,6 +153,8 @@ Issue number、标题和显示文本都不是领域 identity。
 +
 当前新输入
         ↓
+先自己尝试（question-like）
+        ↓
 识别
         ↓
 定位知识
@@ -165,6 +167,8 @@ Issue number、标题和显示文本都不是领域 identity。
         ↓
 预判合理追问方向
         ↓
+撤掉主要提示后重新复述
+        ↓
 等待下一条真实输入
 ```
 
@@ -174,7 +178,7 @@ Issue number、标题和显示文本都不是领域 identity。
 
 也就是：未来面经内容和 Outcome 不得反向影响当前步骤的理解。
 
-面向用户的分析表达统一遵循 `docs/learning/interview-analysis-style.md`：先判断、再给结构、再解释关键因果，第一轮只形成最小完整回答并在自然边界停下。
+面向用户的分析表达统一遵循 `docs/learning/interview-analysis-style.md`。第一次遇到 question-like Source 时默认先让用户尝试，再进行分层反馈；讲解后通过 reconstruction、后续 delayed recall 和未见真实问法 transfer，逐步验证是否真正内化。完整能力计划见 `docs/learning/training-effectiveness-plan.md`。
 
 ## 仓库语言
 
@@ -206,6 +210,7 @@ Issue number、标题和显示文本都不是领域 identity。
 - `docs/workflows/issue-1539-boundary-expansion.md`
 - `docs/learning/source-first-reading.md`
 - `docs/learning/interview-analysis-style.md`
+- `docs/learning/training-effectiveness-plan.md`
 - `docs/learning/exploration-sessions.md`
 - `docs/migration/xhs-source-migration.md`
 - `docs/validation/invariants.md`
