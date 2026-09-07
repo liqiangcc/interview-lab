@@ -4,7 +4,8 @@ const fs = require('fs');
 const path = require('path');
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { sha256Text, contextSha256, planBatch, receiptFor, receiptBody, parseReceipts, receiptMatches, auditReceiptMatches, intentId, validateProgressMapping, verifyContextArtifact, validateCompletionEvidence, ISSUE_1598_FIXED_INVENTORY, validateRequest } = require('../scripts/lib/interview-context-batch');
+const { sha256Text, contextSha256, planItem, planBatch, receiptFor, receiptBody, parseReceipts, receiptMatches, auditReceiptMatches, intentId, validateProgressMapping, verifyContextArtifact, validateCompletionEvidence, ISSUE_1598_FIXED_INVENTORY, validateRequest } = require('../scripts/lib/interview-context-batch');
+const { planReloadedItem } = require('../scripts/plan-interview-context-learning-discovery');
 const { parseInterviewNoteIssue } = require('../scripts/lib/interview-note-issue');
 
 const body = fs.readFileSync(path.join(__dirname, 'fixtures/interview-note-issue.valid.md'), 'utf8');
@@ -219,6 +220,23 @@ test('audit-only items fail closed unless the exact receipt and projection alrea
   assert.equal(converged.ok, true, converged.errors.join('\n'));
   assert.equal(converged.items[0].action, 'already_applied');
   assert.equal(converged.summary.mutation_count, 0);
+});
+
+test('recovery reload preserves historical audit receipts for #3, #4, and #915', () => {
+  const auditRequest = { ...request(), batch_id: 'issue-1598-learning-contexts-50', audit_only_issue_numbers: [3, 4, 915] };
+  const historicalRequest = { ...auditRequest, batch_id: 'issue-923-reviewed-contexts-3' };
+  for (const issueNumber of [3, 4, 915]) {
+    const requestItem = { ...auditRequest.items[0], issue_number: issueNumber };
+    const liveIssue = issue({ number: issueNumber });
+    const projected = planItem(auditRequest, requestItem, liveIssue);
+    assert.equal(projected.ok, true, projected.errors.join('\n'));
+    const historicalReceipt = { ...receiptFor(historicalRequest, projected, '2026-09-04T04:01:00Z'), comment_id: issueNumber };
+    const convergedIssue = { ...liveIssue, title: projected.projection.title, labels: projected.projection.labels };
+    const reloaded = planReloadedItem(auditRequest, requestItem, convergedIssue, [historicalReceipt]);
+    assert.equal(reloaded.ok, true, reloaded.errors.join('\n'));
+    assert.equal(reloaded.action, 'already_applied');
+    assert.equal(reloaded.receipt.comment_id, issueNumber);
+  }
 });
 
 test('completion evidence is live-comment-id bound and fail closed on a forged response', () => {
