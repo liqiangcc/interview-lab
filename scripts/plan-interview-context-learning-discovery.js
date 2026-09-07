@@ -215,13 +215,19 @@ function resumeProgressItem(saved, liveItem) {
   return { ok: true, state: saved && saved.state ? saved.state : 'pending' };
 }
 
+function planReloadedItem(request, requestItem, liveIssue, receipts, artifactResult = null) {
+  const auditOnly = Array.isArray(request.audit_only_issue_numbers)
+    && request.audit_only_issue_numbers.includes(Number(requestItem.issue_number));
+  return planItem(request, requestItem, liveIssue, receipts, artifactResult, { auditOnly });
+}
+
 function reloadPlannedItem(request, plannedItem, contextArtifactResults) {
   const requestItem = request.items.find((item) => Number(item.issue_number) === Number(plannedItem.issue_number));
   const liveIssue = loadIssue(request.repository, plannedItem.issue_number);
   const parsed = parseReceipts(loadComments(request.repository, plannedItem.issue_number));
   if (parsed.errors.length) throw new Error(`Issue #${plannedItem.issue_number}: ${parsed.errors.join('; ')}`);
   const artifactResult = contextArtifactResults instanceof Map ? contextArtifactResults.get(Number(plannedItem.issue_number)) : null;
-  return planItem(request, requestItem, liveIssue, parsed.receipts, artifactResult);
+  return planReloadedItem(request, requestItem, liveIssue, parsed.receipts, artifactResult);
 }
 
 function loadDependencyEvidence(repository, gate) {
@@ -568,4 +574,4 @@ if (require.main === module) {
   try { process.exitCode = main(); } catch (error) { process.stderr.write(`ERROR: ${error.message}\n`); process.exitCode = 1; }
 }
 
-module.exports = { parseArgs, paginate, loadComments, loadAllIssues, loadLabels, buildInventoryReport, fixedInventoryAudit, resumeProgressItem, validatePatchResponse, parseGhIncludedJson, normalizeIfMatchEtag, buildPatchArgs, acquireApplyLock, parseMarker, planBatch, report };
+module.exports = { parseArgs, paginate, loadComments, loadAllIssues, loadLabels, buildInventoryReport, fixedInventoryAudit, resumeProgressItem, planReloadedItem, validatePatchResponse, parseGhIncludedJson, normalizeIfMatchEtag, buildPatchArgs, acquireApplyLock, parseMarker, planBatch, report };
