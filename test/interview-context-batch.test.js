@@ -225,6 +225,18 @@ test('Issue #1598 fixed inventory and audit-only scope cannot be weakened', () =
   assert.equal(validateRequest({ ...valid, audit_only_issue_numbers: [3, 4] }).ok, false);
 });
 
+test('Issue #1598 checked-in request is a complete 50-item audit with 47 new items', () => {
+  const raw = fs.readFileSync(path.join(__dirname, '../data/pilot/issue-1598/request-50-reviewed-contexts.md'), 'utf8');
+  const parsed = raw.match(/<!-- interview-context-batch-review\n([\s\S]*?)\n-->/);
+  assert.ok(parsed);
+  const value = JSON.parse(parsed[1]);
+  assert.equal(validateRequest(value).ok, true, validateRequest(value).errors.join('\n'));
+  assert.equal(value.items.length, 50);
+  assert.deepEqual(value.items.filter((item) => [3, 4, 915].includes(item.issue_number)).map((item) => item.issue_number), [3, 4, 915]);
+  assert.equal(value.items.filter((item) => ![3, 4, 915].includes(item.issue_number)).length, 47);
+  assert.equal(new Set(value.items.map((item) => item.context.interview_note_id)).size, 50);
+});
+
 test('closed dependency without structured acceptance evidence blocks fail-closed', () => {
   const evidence = new Map(dependencyEvidence);
   evidence.delete(dependencyGateArtifact.dependencies['922'].evidence);

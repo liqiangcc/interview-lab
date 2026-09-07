@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/liqiangcc/interview-lab/schemas/interview-context-learning-discovery-live-audit.schema.json",
+  "title": "InterviewContext learning discovery live audit v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "repository", "issue_number", "parent_issue", "source", "dry_run", "counts", "checks", "items", "excluded", "errors", "ok"],
+  "properties": {
+    "schema_version": {"const": "interview-context-learning-discovery-live-audit.v1"},
+    "repository": {"type": "string", "pattern": "^[^/]+/[^/]+$"},
+    "issue_number": {"const": 1598},
+    "parent_issue": {"const": 923},
+    "audited_at": {"type": "string", "format": "date-time"},
+    "source": {"type": "object", "required": ["inventory_query", "inventory_count", "valid_interview_note_count", "source_ready_issue_numbers"], "properties": {"inventory_query": {"type": "string"}, "inventory_count": {"type": "integer"}, "valid_interview_note_count": {"type": "integer"}, "source_ready_issue_numbers": {"type": "array", "items": {"type": "integer"}}}, "additionalProperties": false},
+    "dry_run": {"type": "object", "required": ["digest", "ready_count", "already_applied_count", "proposed_mutation_count", "mutation_count", "mutation_performed"], "properties": {"digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "ready_count": {"type": "integer"}, "already_applied_count": {"type": "integer"}, "proposed_mutation_count": {"type": "integer"}, "mutation_count": {"type": "integer"}, "mutation_performed": {"const": false}}, "additionalProperties": false},
+    "counts": {"type": "object", "required": ["fixed_inventory", "source_ready", "eligible", "existing_audited", "new_contexts", "new_learning_projections", "blocked_no_discovery", "gap_to_50", "errors"], "properties": {"fixed_inventory": {"const": 50}, "source_ready": {"type": "integer"}, "eligible": {"type": "integer"}, "existing_audited": {"const": 3}, "new_contexts": {"const": 47}, "new_learning_projections": {"const": 47}, "blocked_no_discovery": {"type": "integer"}, "gap_to_50": {"type": "integer"}, "errors": {"type": "integer"}}, "additionalProperties": false},
+    "checks": {"type": "object", "additionalProperties": {"type": "string"}},
+    "items": {"type": "array", "minItems": 50, "maxItems": 50, "items": {"type": "object", "required": ["issue_number", "interview_note_id", "action", "expected_body_sha256", "context_sha256", "context_artifact", "checks"], "additionalProperties": true}},
+    "excluded": {"type": "object", "required": ["blocked_no_discovery", "outside_fixed_source_ready"], "properties": {"blocked_no_discovery": {"type": "array", "items": {"type": "integer"}}, "outside_fixed_source_ready": {"type": "array", "items": {"type": "integer"}}}, "additionalProperties": false},
+    "errors": {"type": "array", "items": {"type": "string"}},
+    "ok": {"type": "boolean"}
+  }
+}
