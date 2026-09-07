@@ -11,7 +11,9 @@ function validateManifest(manifest) {
   if (manifest.schema_version !== SCHEMA_VERSION) errors.push(`schema_version must be ${SCHEMA_VERSION}`);
   if (typeof manifest.repository !== 'string' || !/^[^/]+\/[^/]+$/.test(manifest.repository)) errors.push('repository must use owner/repo');
   if (!manifest.source_snapshot || typeof manifest.source_snapshot.repository !== 'string' || !/^[0-9a-f]{40}$/.test(String(manifest.source_snapshot.ref || ''))) errors.push('source_snapshot must pin a 40-char commit');
-  if (!Array.isArray(manifest.items) || manifest.items.length !== 30) errors.push('items must contain the full 30-item Issue #922 mapping');
+  const expectedItemCount = manifest.scope === 'issue-1577-fixed-17' ? 17 : 30;
+  if (manifest.scope != null && manifest.scope !== 'issue-1577-fixed-17') errors.push('unsupported pinned artifact manifest scope');
+  if (!Array.isArray(manifest.items) || manifest.items.length !== expectedItemCount) errors.push(`items must contain exactly ${expectedItemCount} items for this pinned artifact manifest scope`);
   if (manifest.verified !== true) errors.push('verified must be true');
   if (!Array.isArray(manifest.errors) || manifest.errors.length !== 0) errors.push('errors must be an empty array on a verified manifest');
   const seen = new Set();
@@ -56,11 +58,12 @@ function verifyRecordedArtifacts(items, treeEntries, sourceSnapshot) {
   return { ok: errors.length === 0, errors, tree_sha: null };
 }
 
-function buildManifest({ repository, sourceSnapshot, entries, treeEntries, treeSha = null }) {
+function buildManifest({ repository, sourceSnapshot, entries, treeEntries, treeSha = null, scope = null }) {
   const verification = verifyRecordedArtifacts(entries, treeEntries, sourceSnapshot);
   const manifestWithoutDigest = {
     schema_version: SCHEMA_VERSION,
     repository,
+    ...(scope == null ? {} : { scope }),
     source_snapshot: sourceSnapshot,
     purpose: 'issue-1539-source-review-pinned-artifact-gate',
     items: (entries || []).slice().sort((a, b) => Number(a.interview_issue_number) - Number(b.interview_issue_number) || Number(a.source_note_issue_number) - Number(b.source_note_issue_number)).map((entry) => ({
