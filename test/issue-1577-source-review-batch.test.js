@@ -48,7 +48,7 @@ test('packet set finalization binds the same reproducible digest to the set and 
   const base = {
     schema_version: 'issue-1577-source-review-batch.v1',
     scope: 'issue-1577-fixed-17',
-    packets: [{ packet_id: 'one', value: 'stable' }, { packet_id: 'two', value: 'stable' }],
+    packets: [{ packet_id: 'one', value: 'stable', packet_set_sha256: undefined }, { packet_id: 'two', value: 'stable', packet_set_sha256: undefined }],
   };
   const packetSet = finalizePacketSet(base);
   assert.match(packetSet.packet_set_sha256, /^[0-9a-f]{64}$/);

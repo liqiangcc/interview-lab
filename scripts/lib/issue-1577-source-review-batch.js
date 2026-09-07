@@ -269,7 +269,12 @@ function authorizationSha256(packetSet, pinnedArtifactManifest) {
 }
 
 function finalizePacketSet(packetBase) {
-  const packetSetHash = sha256Text(canonicalJson(packetBase));
+  const { packet_set_sha256: ignoredPacketSetHash, ...packetSetWithoutHash } = packetBase;
+  const packetSetHashInput = {
+    ...packetSetWithoutHash,
+    packets: packetBase.packets.map(({ packet_set_sha256: ignoredPacketHash, ...packet }) => packet),
+  };
+  const packetSetHash = sha256Text(canonicalJson(packetSetHashInput));
   return {
     ...packetBase,
     packet_set_sha256: packetSetHash,
