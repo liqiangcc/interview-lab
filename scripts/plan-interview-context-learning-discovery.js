@@ -196,15 +196,31 @@ function fixedInventoryAudit(issues, expectedNumbers) {
 
 function remoteContextArtifactResults(request) {
   const results = new Map();
+  const refCache = new Map();
+  const compareCache = new Map();
+  const commitCache = new Map();
+  const contentCache = new Map();
   for (const item of request.items) {
     const artifact = item.context_artifact;
     const refName = artifact && artifact.ref ? artifact.ref.replace(/^refs\/(heads|tags)\//, 'git/ref/$1/') : '';
     results.set(Number(item.issue_number), verifyContextArtifact(item.context, artifact, request.repository, {
-      readRef: () => ghReadJson(['api', `repos/${request.repository}/${refName}`]),
-      readCompare: (commit, ref) => ghReadJson(['api', `repos/${request.repository}/compare/${commit}...${ref.replace(/^refs\/(heads|tags)\//, '')}`]),
-      readCommit: (commit) => ghReadJson(['api', `repos/${request.repository}/commits/${commit}`]),
+      readRef: () => {
+        if (!refCache.has(artifact.ref)) refCache.set(artifact.ref, ghReadJson(['api', `repos/${request.repository}/${refName}`]));
+        return refCache.get(artifact.ref);
+      },
+      readCompare: (commit, ref) => {
+        const key = `${commit}:${ref}`;
+        if (!compareCache.has(key)) compareCache.set(key, ghReadJson(['api', `repos/${request.repository}/compare/${commit}...${ref.replace(/^refs\/(heads|tags)\//, '')}`]));
+        return compareCache.get(key);
+      },
+      readCommit: (commit) => {
+        if (!commitCache.has(commit)) commitCache.set(commit, ghReadJson(['api', `repos/${request.repository}/commits/${commit}`]));
+        return commitCache.get(commit);
+      },
       readContent: (artifactPath, commit) => {
-        const value = ghReadJson(['api', `repos/${request.repository}/contents/${artifactPath}?ref=${commit}`]);
+        const key = `${commit}:${artifactPath}`;
+        if (!contentCache.has(key)) contentCache.set(key, ghReadJson(['api', `repos/${request.repository}/contents/${artifactPath}?ref=${commit}`]));
+        const value = contentCache.get(key);
         if (value.type !== 'file' || typeof value.content !== 'string') throw new Error('GitHub contents response is not a file');
         return Buffer.from(value.content.replace(/\n/g, ''), 'base64').toString('utf8');
       },

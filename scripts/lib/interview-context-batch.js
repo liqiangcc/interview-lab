@@ -360,6 +360,23 @@ function receiptMatches(receipt, request, item, projection) {
     && JSON.stringify(receipt.labels || []) === JSON.stringify(projection.labels);
 }
 
+function auditReceiptMatches(receipt, item, projection) {
+  return receipt && receipt.schema_version === RECEIPT_SCHEMA_VERSION
+    && receipt.batch_id === 'issue-923-reviewed-contexts-3'
+    && Number(receipt.issue_number) === Number(item.issue_number)
+    && receipt.interview_note_id === projection.interview_note_id
+    && receipt.expected_body_sha256 === item.expected_body_sha256
+    && receipt.context_sha256 === contextSha256(item.context)
+    && receipt.context_artifact && item.context_artifact
+    && receipt.context_artifact.repository === item.context_artifact.repository
+    && receipt.context_artifact.path === item.context_artifact.path
+    && receipt.context_artifact.ref === item.context_artifact.ref
+    && receipt.context_artifact.commit === item.context_artifact.commit
+    && receipt.context_artifact.sha256 === item.context_artifact.sha256
+    && receipt.title === projection.title
+    && JSON.stringify(receipt.labels || []) === JSON.stringify(projection.labels);
+}
+
 function intentId(request, item) {
   const context = item.context || (item.projection && item.projection.context);
   const bodySha = item.expected_body_sha256 || item.current_body_sha256;
@@ -464,8 +481,9 @@ function planItem(request, item, issue, receipts = [], contextArtifactResult = n
     state: String(issue && issue.state || 'open').toLowerCase(),
   });
   if (!projectedValidation.ok) errors.push(...projectedValidation.errors.map((error) => `projected InterviewNote invalid: ${error}`));
-  const relevantReceipts = receipts.filter((receipt) => receipt && receipt.batch_id === request.batch_id && Number(receipt.issue_number) === Number(item.issue_number));
-  const matchingReceipt = relevantReceipts.find((receipt) => receiptMatches(receipt, request, item, projection));
+  const auditOnly = Boolean(options.auditOnly);
+  const relevantReceipts = receipts.filter((receipt) => receipt && Number(receipt.issue_number) === Number(item.issue_number) && (auditOnly || receipt.batch_id === request.batch_id));
+  const matchingReceipt = relevantReceipts.find((receipt) => receiptMatches(receipt, request, item, projection) || (auditOnly && auditReceiptMatches(receipt, item, projection)));
   if (relevantReceipts.length > 1) errors.push('duplicate receipts exist for this batch item');
   if (relevantReceipts.length > 0 && !matchingReceipt) errors.push('conflicting receipt exists for this batch item');
   if (errors.length) return {
@@ -622,6 +640,7 @@ module.exports = {
   planDigest,
   receiptFor,
   receiptBody,
+  auditReceiptMatches,
   ISSUE_1598_FIXED_INVENTORY,
   ISSUE_1598_AUDIT_ONLY,
 };
