@@ -23,7 +23,7 @@ const {
   verifyManifestItem,
 } = require('./issue-1539-pinned-artifact-manifest');
 const { acquireProgressLock } = require('./issue-1539-evidence-batch');
-const { FIXED_ITEMS } = require('./issue-1577-source-review-batch');
+const { FIXED_ITEMS, validateFixedManifest } = require('./issue-1577-source-review-batch');
 
 const SCOPE = 'issue-1577-fixed-17';
 const SCHEMA_VERSION = 'issue-1577-source-review-transition-batch.v1';
@@ -538,4 +538,4 @@ function applyBatch({ requests, evidencePlan, pinnedArtifactManifest, liveLoader
   progress.status = 'complete'; progress.possibly_performed = false; progress.mutation_count = progress.label_attempt_count + progress.receipt_attempt_count; persist(progress); return { ok: true, errors: [], items: results, progress };
 }
 
-module.exports = { SCOPE, SCHEMA_VERSION, PROGRESS_SCHEMA_VERSION, INTENT_SCHEMA_VERSION, BATCH_ID, TARGETS, FIXED_ITEMS, normalizeLabels, controlledLabels, nonLifecycleLabels, preservesNonLifecycle, replaceControlled, operations, inspectEvidence, evidencePlanSha256, transitionReceipt, transitionReceiptBody, receiptMatchesRequest, matchingTransitionReceipt, validateEvidencePlan, validateRequests, validateLive, planBatch, initialProgress, validateProgress, applyBatch, acquireProgressLock };
+module.exports = { SCOPE, SCHEMA_VERSION, PROGRESS_SCHEMA_VERSION, INTENT_SCHEMA_VERSION, BATCH_ID, TARGETS, FIXED_ITEMS, validateFixedManifest, normalizeLabels, controlledLabels, nonLifecycleLabels, preservesNonLifecycle, replaceControlled, operations, inspectEvidence, evidencePlanSha256, transitionReceipt, transitionReceiptBody, receiptMatchesRequest, matchingTransitionReceipt, validateEvidencePlan, validateRequests, validateLive, planBatch, initialProgress, validateProgress, applyBatch, acquireProgressLock };

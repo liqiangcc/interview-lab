@@ -12,6 +12,7 @@ const {
   validateProgress,
   validateEvidencePlan,
   validateRequests,
+  validateFixedManifest,
   receiptMatchesRequest,
   transitionReceiptBody,
   acquireProgressLock,
@@ -99,12 +100,22 @@ function receiptPath(receiptDir, request) {
 function readReceipt(receiptDir, request) { const file = receiptPath(receiptDir, request); if (!fs.existsSync(file)) return null; const stat = fs.lstatSync(file); if (!stat.isFile() || stat.isSymbolicLink()) throw new Error('transition receipt must be a regular file'); const receipt = readJson(file); const validation = receiptMatchesRequest(receipt, request); if (!validation.ok) throw new Error(`transition receipt is malformed or not bound to request: ${validation.errors.join('; ')}`); return receipt; }
 function writeReceipt(receiptDir, request, receipt) { atomicWriteJson(receiptPath(receiptDir, request), receipt); }
 function ghJson(args, input = null) { return JSON.parse(execFileSync('gh', args, { input: input == null ? undefined : JSON.stringify(input), encoding: 'utf8', maxBuffer: 128 * 1024 * 1024 })); }
+function httpStatusFromError(error) {
+  for (const value of [error && error.status, error && error.statusCode, error && error.response && error.response.status]) {
+    if (Number.isInteger(value) && value >= 100 && value <= 599) return value;
+  }
+  const text = String(error && (error.stderr || error.message) || '');
+  const match = text.match(/\bHTTP(?:\s+error)?\s*([45]\d{2})\b/i) || text.match(/\b(?:status|response)(?:\s+code)?[^\d]{0,20}([45]\d{2})\b/i);
+  return match ? Number(match[1]) : null;
+}
 function isTransientReadError(error) {
+  const status = httpStatusFromError(error);
+  if (status !== null) return status === 429 || (status >= 500 && status <= 599);
   const code = String(error && error.code || '').toUpperCase();
   const message = String(error && (error.stderr || error.message) || '');
-  if (/\b(?:HTTP|status(?:\s+code)?)\s*[45]\d\d\b/i.test(message)) return false;
-  if (['ECONNRESET', 'ETIMEDOUT', 'EAI_AGAIN', 'ENETUNREACH', 'EHOSTUNREACH', 'ECONNREFUSED'].includes(code)) return true;
-  return /\bEOF\b|connection reset|socket hang up|network is unreachable|timed out|TLS handshake|temporary failure in name resolution|fetch failed/i.test(message);
+  if (['ECONNRESET', 'ETIMEDOUT', 'EAI_AGAIN', 'ENETUNREACH', 'EHOSTUNREACH', 'ECONNREFUSED', 'UND_ERR_CONNECT_TIMEOUT', 'UND_ERR_SOCKET'].includes(code)) return true;
+  if (code === 'EOF' || (error && error.transport === true && code === 'EPIPE')) return true;
+  return Boolean(error && error.transport === true && /^(?:unexpected )?EOF$/i.test(message.trim()));
 }
 function readWithRetry(read, attempts, backoffMs, sleep) { let last; for (let attempt = 1; attempt <= attempts; attempt += 1) { try { return read(); } catch (error) { last = error; if (attempt === attempts || !isTransientReadError(error)) throw error; sleep(backoffMs * (2 ** (attempt - 1))); } } throw last; }
 function collectOwnershipPages(readPage, identity) {
@@ -125,7 +136,8 @@ function collectOwnershipPages(readPage, identity) {
 }
 function main(argv = process.argv.slice(2), injected = {}) {
   const args = parseArgs(argv); if (args.help) { process.stdout.write(`${help()}\n`); return 0; }
-  const manifest = readJson(args.manifest); const evidencePlan = readJson(args.evidencePlan); const requests = requestFiles(args.requestDir);
+  const manifest = readJson(args.manifest); const manifestValidation = validateFixedManifest(manifest); if (!manifestValidation.ok) throw new Error(`fixed manifest validation failed: ${manifestValidation.errors.join('; ')}`);
+  const evidencePlan = readJson(args.evidencePlan); const requests = requestFiles(args.requestDir);
   const evidenceValidation = validateEvidencePlan(evidencePlan); if (!evidenceValidation.ok) throw new Error(`evidence plan validation failed: ${evidenceValidation.errors.join('; ')}`);
   const requestValidation = validateRequests(requests, evidencePlan); if (!requestValidation.ok) throw new Error(`request validation failed: ${requestValidation.errors.join('; ')}`);
   const command = injected.ghJson || ghJson; const sleep = injected.sleep || ((ms) => { if (ms > 0) Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms); });
@@ -161,4 +173,4 @@ function main(argv = process.argv.slice(2), injected = {}) {
   } finally { if (lock) lock.release(); }
 }
 if (require.main === module) { try { process.exitCode = main(); } catch (error) { process.stderr.write(`ERROR: ${error.message}\n`); process.exitCode = 1; } }
-module.exports = { TARGETS, parseArgs, requestFiles, receiptPath, readReceipt, writeReceipt, transitionReceiptBody, atomicWriteJson, isTransientReadError, readWithRetry, collectOwnershipPages, main };
+module.exports = { TARGETS, parseArgs, requestFiles, receiptPath, readReceipt, writeReceipt, transitionReceiptBody, atomicWriteJson, httpStatusFromError, isTransientReadError, readWithRetry, collectOwnershipPages, main };
