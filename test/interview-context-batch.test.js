@@ -201,6 +201,13 @@ test('new progress persists an exact receipt intent before its POST attempt', ()
   const requestValue = request();
   const progress = progressFromPlan(requestValue, first, 'a'.repeat(64), 1, '2026-09-04T04:01:00Z');
   const item = progress.items[0];
+  assert.equal(item.receipt_attempted, false);
+  assert.equal(item.receipt_possibly_performed, false);
+  const legacyPending = structuredClone(progress);
+  legacyPending.items[0].state = 'receipt_pending';
+  const legacyMapping = validateProgressMapping(legacyPending, requestValue, first, legacyPending.dry_run_digest, legacyPending.max_mutations);
+  assert.equal(legacyMapping.ok, false);
+  assert.match(legacyMapping.errors.join('\n'), /receipt_pending requires durable receipt intent state/);
   const intent = receiptFor(requestValue, first.items[0], '2026-09-04T04:02:00Z');
   Object.assign(item, {
     state: 'receipt_pending',

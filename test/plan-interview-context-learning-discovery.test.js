@@ -2,7 +2,7 @@
 
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { loadComments, loadAllIssues, loadLabels, fixedInventoryAudit, parseArgs, resumeProgressItem, validatePatchResponse, parseGhIncludedJson, formatGhMutationError, ghMutationJson, buildPatchArgs, patchSnapshot, assertPatchSnapshotUnchanged, acquireApplyLock } = require('../scripts/plan-interview-context-learning-discovery');
+const { loadComments, loadAllIssues, loadLabels, fixedInventoryAudit, parseArgs, resumeProgressItem, receiptPendingPatch, validatePatchResponse, parseGhIncludedJson, formatGhMutationError, ghMutationJson, buildPatchArgs, patchSnapshot, assertPatchSnapshotUnchanged, acquireApplyLock } = require('../scripts/plan-interview-context-learning-discovery');
 
 test('CLI comments pagination is explicit, bounded, and complete without --slurp', () => {
   const urls = [];
@@ -91,6 +91,11 @@ test('legacy receipt_pending progress without attempted marker fails closed', ()
   const resume = resumeProgressItem({ state: 'receipt_pending' }, { ok: true, action: 'repair_receipt' });
   assert.equal(resume.ok, false);
   assert.match(resume.error, /no durable receipt_attempted marker/);
+});
+
+test('receipt-pending patch preserves an existing receipt intent when item already has a receipt', () => {
+  const savedIntent = { intent_id: 'existing-intent', applied_at: '2026-09-04T04:02:00Z' };
+  assert.deepEqual(receiptPendingPatch({}, { receipt: { comment_id: 123 } }, { receipt_intent: savedIntent, receipt_attempted: false, receipt_possibly_performed: false }), { state: 'receipt_pending' });
 });
 
 test('PATCH response missing or dropping labels fails closed', () => {

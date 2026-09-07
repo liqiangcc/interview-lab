@@ -405,6 +405,18 @@ function addReceipt(request, item, receipt = receiptFor(request, item, new Date(
   return { receipt, comment };
 }
 
+function receiptPendingPatch(request, item, saved) {
+  if (item.receipt) return { state: 'receipt_pending' };
+  const receiptIntent = saved.receipt_intent || receiptFor(request, item, new Date().toISOString());
+  return {
+    state: 'receipt_pending',
+    receipt_intent: receiptIntent,
+    receipt_body_sha256: sha256Text(receiptBody(receiptIntent)),
+    receipt_attempted: saved.receipt_attempted === true,
+    receipt_possibly_performed: saved.receipt_possibly_performed === true,
+  };
+}
+
 function verifyLive(request, item) {
   const live = loadIssue(request.repository, item.issue_number);
   const labels = normalizeLabels(live.labels || []);
@@ -603,19 +615,8 @@ function main(argv = process.argv.slice(2)) {
       }
     }
     const savedReceipt = progress.items.find((entry) => Number(entry.issue_number) === Number(item.issue_number));
-    if (item.receipt) {
-      setProgressItem(progress, progressFile, item.issue_number, { state: 'receipt_pending' });
-    } else {
-      const receiptIntent = savedReceipt.receipt_intent || receiptFor(request, item, new Date().toISOString());
-      if (!savedReceipt.receipt_intent) {
-        setProgressItem(progress, progressFile, item.issue_number, {
-          state: 'receipt_pending',
-          receipt_intent: receiptIntent,
-          receipt_body_sha256: sha256Text(receiptBody(receiptIntent)),
-          receipt_attempted: false,
-          receipt_possibly_performed: false,
-        });
-      }
+    setProgressItem(progress, progressFile, item.issue_number, receiptPendingPatch(request, item, savedReceipt));
+    if (!item.receipt) {
       if (savedReceipt.receipt_attempted === true || savedReceipt.receipt_possibly_performed === true) {
         setProgressItem(progress, progressFile, item.issue_number, { state: 'failed', error: 'receipt POST outcome is uncertain; refusing blind retry until a matching live receipt is observed' });
         throw new Error(`Issue #${item.issue_number} receipt POST outcome is uncertain; fail closed`);
@@ -654,4 +655,4 @@ if (require.main === module) {
   try { process.exitCode = main(); } catch (error) { process.stderr.write(`ERROR: ${error.message}\n`); process.exitCode = 1; }
 }
 
-module.exports = { parseArgs, paginate, loadComments, loadAllIssues, loadLabels, buildInventoryReport, fixedInventoryAudit, resumeProgressItem, planReloadedItem, validatePatchResponse, parseGhIncludedJson, formatGhMutationError, ghMutationJson, buildPatchArgs, patchSnapshot, assertPatchSnapshotUnchanged, acquireApplyLock, parseMarker, planBatch, report };
+module.exports = { parseArgs, paginate, loadComments, loadAllIssues, loadLabels, buildInventoryReport, fixedInventoryAudit, resumeProgressItem, planReloadedItem, validatePatchResponse, parseGhIncludedJson, formatGhMutationError, ghMutationJson, buildPatchArgs, patchSnapshot, assertPatchSnapshotUnchanged, acquireApplyLock, receiptPendingPatch, parseMarker, planBatch, report };
