@@ -3,6 +3,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 const { execFileSync } = require('child_process');
 const {
   parseMarker, parseReceipts, parseIssueCommentUrl, planBatch, planItem, receiptFor, receiptBody,
@@ -27,6 +28,24 @@ function runGhJson(args, input = null) {
     input: input == null ? undefined : JSON.stringify(input), encoding: 'utf8',
     maxBuffer: 128 * 1024 * 1024, stdio: ['pipe', 'pipe', 'pipe'],
   }));
+}
+
+function parseGhIncludedJson(output) {
+  const separator = /\r?\n\r?\n/.exec(String(output));
+  if (!separator) throw new Error('gh --include response did not contain an HTTP header/body separator');
+  const headers = String(output).slice(0, separator.index).split(/\r?\n/);
+  const body = String(output).slice(separator.index + separator[0].length);
+  let json;
+  try { json = JSON.parse(body); } catch (error) { throw new Error(`gh --include response body is not JSON: ${error.message}`); }
+  const etag = headers.find((line) => /^etag:/i.test(line))?.replace(/^etag:\s*/i, '').trim() || null;
+  return { json, headers, etag };
+}
+
+function runGhJsonWithHeaders(args) {
+  const output = execFileSync('gh', [...args, '--include'], {
+    encoding: 'utf8', maxBuffer: 128 * 1024 * 1024, stdio: ['pipe', 'pipe', 'pipe'],
+  });
+  return parseGhIncludedJson(output);
 }
 
 function ghReadJson(args, input = null, attempts = 3) {
@@ -84,7 +103,23 @@ function parseArgs(argv = process.argv.slice(2)) {
   return out;
 }
 
-function loadIssue(repository, number) { return ghReadJson(['api', `repos/${repository}/issues/${number}`]); }
+function readIssueWithEtag(repository, number, attempts = 3) {
+  let lastError;
+  for (let attempt = 1; attempt <= attempts; attempt += 1) {
+    try {
+      const response = runGhJsonWithHeaders(['api', `repos/${repository}/issues/${number}`]);
+      if (!response.etag) throw new Error(`Issue #${number} GET response omitted ETag`);
+      Object.defineProperty(response.json, '__etag', { value: response.etag, enumerable: false, configurable: false });
+      return response.json;
+    } catch (error) {
+      lastError = error;
+      if (attempt < attempts) sleepMs(500 * attempt);
+    }
+  }
+  throw new Error(`Issue #${number} read with ETag failed: ${lastError.message}`);
+}
+
+function loadIssue(repository, number) { return readIssueWithEtag(repository, number); }
 
 function loadComments(repository, number, options = {}) {
   const readPage = options.readPage || ((page) => ghReadJson(['api', `repos/${repository}/issues/${number}/comments?per_page=${PAGE_SIZE}&page=${page}`]));
@@ -132,6 +167,38 @@ function writeProgress(file, progress) {
   fs.renameSync(temporary, file);
   const directoryFd = fs.openSync(path.dirname(file), 'r');
   try { fs.fsyncSync(directoryFd); } finally { fs.closeSync(directoryFd); }
+}
+
+function acquireApplyLock(file, metadata = {}) {
+  const token = crypto.randomUUID();
+  let fd;
+  try {
+    fd = fs.openSync(file, 'wx', 0o644);
+  } catch (error) {
+    if (error && error.code === 'EEXIST') throw new Error(`apply lock already exists at ${file}; refusing to steal existing or stale lock`);
+    throw new Error(`could not create apply lock ${file}: ${error.message}`);
+  }
+  const lock = { schema_version: 'interview-context-learning-discovery-apply-lock.v1', token, pid: process.pid, started_at: new Date().toISOString(), ...metadata };
+  try {
+    fs.writeFileSync(fd, `${JSON.stringify(lock, null, 2)}\n`, 'utf8');
+    fs.fsyncSync(fd);
+  } catch (error) {
+    try { fs.closeSync(fd); } finally { try { fs.unlinkSync(file); } catch {} }
+    throw new Error(`could not persist apply lock ${file}: ${error.message}`);
+  }
+  fs.closeSync(fd);
+  let released = false;
+  return {
+    file,
+    token,
+    release() {
+      if (released) return;
+      const current = JSON.parse(fs.readFileSync(file, 'utf8'));
+      if (current.token !== token) throw new Error(`apply lock ${file} ownership changed; refusing to remove another process lock`);
+      fs.unlinkSync(file);
+      released = true;
+    },
+  };
 }
 
 function setProgressItem(progress, file, issueNumber, patch) {
@@ -286,9 +353,14 @@ function validatePatchResponse(response, item) {
   return true;
 }
 
+function buildPatchArgs(request, item) {
+  if (typeof item.issue_etag !== 'string' || item.issue_etag.trim() === '') throw new Error('Issue PATCH requires the ETag captured by the immediately preceding live Issue read');
+  return ['api', '--method', 'PATCH', `repos/${request.repository}/issues/${item.issue_number}`, '--header', `If-Match: ${item.issue_etag}`, '--input', '-'];
+}
+
 function patchIssue(request, item, labelPreflight) {
   if (!labelPreflight || !labelPreflight.ok) throw new Error(`controlled label preflight is not satisfied: missing=${(labelPreflight && labelPreflight.missing || []).join(',')} unknown=${(labelPreflight && labelPreflight.unknown || []).join(',')}`);
-  const response = ghMutationJson(['api', '--method', 'PATCH', `repos/${request.repository}/issues/${item.issue_number}`, '--input', '-'], { title: item.projection.title, labels: item.projection.labels });
+  const response = ghMutationJson(buildPatchArgs(request, item), { title: item.projection.title, labels: item.projection.labels });
   validatePatchResponse(response, item);
   return response;
 }
@@ -359,6 +431,8 @@ function main(argv = process.argv.slice(2)) {
     return plan.ok ? 0 : 1;
   }
   const progressFile = args.progressFile || defaultProgressFile(request);
+  const applyLock = acquireApplyLock(`${progressFile}.lock`, { batch_id: request.batch_id, repository: request.repository, progress_file: progressFile });
+  try {
   const existingProgress = readProgress(progressFile);
   if (existingProgress) {
     dryRunDigest = existingProgress.dry_run_digest;
@@ -478,10 +552,13 @@ function main(argv = process.argv.slice(2)) {
   }
   process.stdout.write(`${JSON.stringify(report(plan, 'apply', { applied, dry_run_digest: dryRunDigest, confirmed_dry_run_digest: args.confirmDryRunDigest }), null, 2)}\n`);
   return 0;
+  } finally {
+    applyLock.release();
+  }
 }
 
 if (require.main === module) {
   try { process.exitCode = main(); } catch (error) { process.stderr.write(`ERROR: ${error.message}\n`); process.exitCode = 1; }
 }
 
-module.exports = { parseArgs, paginate, loadComments, loadAllIssues, loadLabels, buildInventoryReport, fixedInventoryAudit, resumeProgressItem, validatePatchResponse, parseMarker, planBatch, report };
+module.exports = { parseArgs, paginate, loadComments, loadAllIssues, loadLabels, buildInventoryReport, fixedInventoryAudit, resumeProgressItem, validatePatchResponse, parseGhIncludedJson, buildPatchArgs, acquireApplyLock, parseMarker, planBatch, report };

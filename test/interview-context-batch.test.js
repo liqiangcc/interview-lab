@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { sha256Text, contextSha256, planBatch, receiptFor, receiptBody, parseReceipts, intentId, validateProgressMapping, verifyContextArtifact, validateCompletionEvidence, ISSUE_1598_FIXED_INVENTORY, validateRequest } = require('../scripts/lib/interview-context-batch');
+const { sha256Text, contextSha256, planBatch, receiptFor, receiptBody, parseReceipts, receiptMatches, auditReceiptMatches, intentId, validateProgressMapping, verifyContextArtifact, validateCompletionEvidence, ISSUE_1598_FIXED_INVENTORY, validateRequest } = require('../scripts/lib/interview-context-batch');
 const { parseInterviewNoteIssue } = require('../scripts/lib/interview-note-issue');
 
 const body = fs.readFileSync(path.join(__dirname, 'fixtures/interview-note-issue.valid.md'), 'utf8');
@@ -147,6 +147,18 @@ test('matching projection receipt makes retry idempotent', () => {
   assert.equal(second.ok, true, second.errors.join('\n'));
   assert.equal(second.items[0].action, 'already_applied');
   assert.equal(second.summary.mutation_count, 0);
+});
+
+test('receipt matching is repository-bound for normal and audit receipts', () => {
+  const first = plan();
+  const baseRequest = request();
+  const receipt = receiptFor(baseRequest, first.items[0], '2026-09-04T04:01:00Z');
+  assert.equal(receiptMatches(receipt, baseRequest, baseRequest.items[0], first.items[0].projection), true);
+  assert.equal(receiptMatches({ ...receipt, repository: 'attacker/other-repo' }, baseRequest, baseRequest.items[0], first.items[0].projection), false);
+  const auditRequest = { ...baseRequest, batch_id: 'issue-1598-fixture-1' };
+  const auditReceipt = { ...receipt, batch_id: 'issue-923-reviewed-contexts-3' };
+  assert.equal(auditReceiptMatches(auditReceipt, auditRequest, auditRequest.items[0], first.items[0].projection), true);
+  assert.equal(auditReceiptMatches({ ...auditReceipt, repository: 'attacker/other-repo' }, auditRequest, auditRequest.items[0], first.items[0].projection), false);
 });
 
 test('receiptFor round-trips through its marker and binds the original request item intent', () => {

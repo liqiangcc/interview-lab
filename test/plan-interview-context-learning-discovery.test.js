@@ -2,7 +2,7 @@
 
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { loadComments, loadAllIssues, loadLabels, fixedInventoryAudit, parseArgs, resumeProgressItem, validatePatchResponse } = require('../scripts/plan-interview-context-learning-discovery');
+const { loadComments, loadAllIssues, loadLabels, fixedInventoryAudit, parseArgs, resumeProgressItem, validatePatchResponse, parseGhIncludedJson, buildPatchArgs, acquireApplyLock } = require('../scripts/plan-interview-context-learning-discovery');
 
 test('CLI comments pagination is explicit, bounded, and complete without --slurp', () => {
   const urls = [];
@@ -66,4 +66,33 @@ test('PATCH response missing or dropping labels fails closed', () => {
   assert.throws(() => validatePatchResponse({}, item), /omitted labels/);
   assert.throws(() => validatePatchResponse({ labels: [{ name: 'type:interview-note' }] }, item), /silent label loss/);
   assert.equal(validatePatchResponse({ labels: [{ name: 'type:interview-note' }, { name: 'company:alibaba' }] }, item), true);
+});
+
+test('Issue PATCH uses the immediately-read ETag as an atomic CAS precondition', () => {
+  const args = buildPatchArgs({ repository: 'liqiangcc/interview-lab' }, { issue_number: 915, issue_etag: 'W/"etag-1"' });
+  assert.deepEqual(args, ['api', '--method', 'PATCH', 'repos/liqiangcc/interview-lab/issues/915', '--header', 'If-Match: W/"etag-1"', '--input', '-']);
+  assert.throws(() => buildPatchArgs({ repository: 'liqiangcc/interview-lab' }, { issue_number: 915 }), /requires the ETag/);
+});
+
+test('GH included response parser requires and captures ETag', () => {
+  const parsed = parseGhIncludedJson('HTTP/2.0 200 OK\nEtag: W/"abc"\n\n{"number":915}');
+  assert.deepEqual(parsed.json, { number: 915 });
+  assert.equal(parsed.etag, 'W/"abc"');
+  assert.throws(() => parseGhIncludedJson('{"number":915}'), /separator/);
+});
+
+test('apply lock is exclusive, stale locks are not stolen, and release permits a later owner', () => {
+  const fs = require('fs');
+  const os = require('os');
+  const path = require('path');
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'issue-1598-lock-'));
+  const file = path.join(directory, 'apply.lock');
+  const first = acquireApplyLock(file, { batch_id: 'test' });
+  assert.throws(() => acquireApplyLock(file, { batch_id: 'test' }), /already exists/);
+  first.release();
+  const second = acquireApplyLock(file, { batch_id: 'test' });
+  second.release();
+  fs.writeFileSync(file, JSON.stringify({ token: 'stale-token' }));
+  assert.throws(() => acquireApplyLock(file, { batch_id: 'test' }), /already exists/);
+  fs.rmSync(directory, { recursive: true, force: true });
 });
