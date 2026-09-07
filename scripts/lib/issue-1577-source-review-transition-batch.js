@@ -433,9 +433,20 @@ function applyBatch({ requests, evidencePlan, pinnedArtifactManifest, liveLoader
   const permanentlyUncertain = Object.entries(progress.intents || {}).filter(([, value]) => value && value.phase === 'uncertain').map(([id]) => id);
   if (permanentlyUncertain.length) return { ok: false, errors: permanentlyUncertain.map((id) => `progress intent ${id} is permanently uncertain; explicit replan/operator recovery is required`), progress };
   const guardedLiveLoader = (request) => { assertLock(); const value = liveLoader(request); assertLock(); return value; };
+  const idFor = (request) => `issue-1577-source-review-${request.issue_number}`;
+  const pendingRecovery = Object.values(progress.intents || {}).some((value) => value && ['begin-pending', 'final-pending', 'begin-applied', 'final-applied', 'receipt-pending', 'receipt-uncertain', 'receipt-written'].includes(value.phase));
+  const resumePlanLiveLoader = (request) => {
+    const live = guardedLiveLoader(request);
+    const id = idFor(request);
+    if (!pendingRecovery || (!progress.intents[id] && !progress.results[id])) return live;
+    const labels = normalizeLabels(live.interviewIssue && live.interviewIssue.labels, true);
+    if (!labels) return live;
+    const comments = Array.isArray(live.comments) ? live.comments.filter((comment) => !String(comment && comment.body || '').includes(TRANSITION_RECEIPT_SCHEMA)) : live.comments;
+    return { ...live, interviewIssue: { ...live.interviewIssue, labels: replaceControlled(labels, 'captured') }, comments };
+  };
   const planFn = options.planBatch || planBatch;
   const validateLiveFn = options.validateLive || validateLive;
-  const freshPlan = planFn({ requests, evidencePlan, liveLoader: guardedLiveLoader, pinnedArtifactManifest });
+  const freshPlan = planFn({ requests, evidencePlan, liveLoader: resumePlanLiveLoader, pinnedArtifactManifest });
   if (!freshPlan.ok) return { ok: false, errors: freshPlan.errors, items: freshPlan.items };
   if (expectedPlanSha256 && freshPlan.plan_sha256 !== expectedPlanSha256) return { ok: false, errors: [`fresh transition plan digest mismatch: expected ${expectedPlanSha256}, got ${freshPlan.plan_sha256}`] };
   if (expectedAuthorizationSha256 && freshPlan.authorization_sha256 !== expectedAuthorizationSha256) return { ok: false, errors: [`transition authorization digest mismatch: expected ${expectedAuthorizationSha256}, got ${freshPlan.authorization_sha256}`] };
@@ -450,7 +461,6 @@ function applyBatch({ requests, evidencePlan, pinnedArtifactManifest, liveLoader
   const persistUncertainProgress = options.persistUncertainProgress || options.persistProgressUnsafe;
   const markUncertainDurably = (...args) => markUncertain(...args, persistUncertainProgress);
   const markLabelAttempt = () => { progress.label_attempt_count += 1; progress.mutation_count = progress.label_attempt_count + progress.receipt_attempt_count; progress.mutation_attempted = true; progress.mutation_performed = null; progress.possibly_performed = true; persist(progress); };
-  const idFor = (request) => `issue-1577-source-review-${request.issue_number}`;
   const ensureLocalReceipt = (request, remoteReceipt, phase = 'receipt-uncertain') => {
     const expected = transitionReceipt(request, remoteReceipt.comment_id, remoteReceipt.applied_at || (options.now ? options.now() : new Date().toISOString()));
     let local = null;
@@ -553,15 +563,18 @@ function applyBatch({ requests, evidencePlan, pinnedArtifactManifest, liveLoader
   for (const request of requests) {
     const id = idFor(request); const state = { intent: progress.intents[id], preflight: (freshPlan.items || []).find((item) => Number(item.issue_number) === request.issue_number)?.live_snapshot || null };
     try {
+      let recoveredStage = null;
       let live = readLive(request); let checked = validateLiveFn(request, live, evidencePlan, pinnedArtifactManifest || evidencePlan.pinnedArtifactManifest);
       if (!checked.ok && state.intent && ['begin-pending', 'final-pending'].includes(state.intent.phase)) {
         const prefix = pendingLabelPrefix(live.interviewIssue && live.interviewIssue.labels, state.intent);
         if (prefix.ok) {
           const stage = state.intent.stage;
-          const normalizedLabels = replaceControlled(live.interviewIssue.labels, stage === 'begin' ? 'captured' : 'source-review', stage === 'begin' ? null : 'task:source-review');
+          const normalizedLabels = replaceControlled(live.interviewIssue.labels, 'captured');
           const normalizedLive = { ...live, interviewIssue: { ...live.interviewIssue, labels: normalizedLabels } };
           const normalizedCheck = validateLiveFn(request, normalizedLive, evidencePlan, pinnedArtifactManifest || evidencePlan.pinnedArtifactManifest);
           if (normalizedCheck.ok) {
+            live = normalizedLive;
+            recoveredStage = stage;
             checked = { ...normalizedCheck, current_status: stage === 'begin' ? 'captured' : 'source-review', live_snapshot: issueSnapshot(live.interviewIssue) };
             if (prefix.next_index !== state.intent.operation_index) {
               progress.intents[id] = { ...state.intent, operation_index: prefix.next_index };
@@ -576,7 +589,7 @@ function applyBatch({ requests, evidencePlan, pinnedArtifactManifest, liveLoader
       if (checked.current_status === 'source-ready' && checked.transition_receipt) { ensureLocalReceipt(request, checked.transition_receipt); progress.intents[id] = intent(request, freshPlan, 'complete', { receipt_comment_id: checked.transition_receipt.comment_id, mutation_attempted: false, mutation_performed: false, possibly_performed: false }); progress.results[id] = { status: 'complete', issue_number: request.issue_number, transition_id: request.transition_id, request_sha256: requestSha256(request), receipt_comment_id: checked.transition_receipt.comment_id, receipt_written: true, mutation_performed: false }; persist(progress); results.push({ issue_number: request.issue_number, action: 'already-applied', mutation_performed: false, receipt_comment_id: checked.transition_receipt.comment_id }); continue; }
       if (state.intent && !['begin-pending', 'final-pending', 'receipt-pending', 'receipt-uncertain'].includes(state.intent.phase)) state.intent = null;
       if (checked.current_status === 'captured' || (state.intent && state.intent.phase === 'begin-pending')) { live = applyStage(request, 'begin', replaceControlled(normalizeLabels(live.interviewIssue.labels), 'source-review', 'task:source-review'), state); checked = validateLiveFn(request, live, evidencePlan, pinnedArtifactManifest || evidencePlan.pinnedArtifactManifest); if (!checked.ok) throw new Error(checked.errors.join('; ')); progress.intents[id] = intent(request, freshPlan, 'begin-applied', { mutation_attempted: true, mutation_performed: true, possibly_performed: false }); persist(progress); }
-      live = readLive(request); checked = validateLiveFn(request, live, evidencePlan, pinnedArtifactManifest || evidencePlan.pinnedArtifactManifest); if (!checked.ok) throw new Error(checked.errors.join('; '));
+      if (recoveredStage !== 'final') { live = readLive(request); checked = validateLiveFn(request, live, evidencePlan, pinnedArtifactManifest || evidencePlan.pinnedArtifactManifest); if (!checked.ok) throw new Error(checked.errors.join('; ')); }
       if (checked.current_status === 'source-review' || (state.intent && state.intent.phase === 'final-pending')) { live = applyStage(request, 'final', checked.final_labels, state); checked = validateLiveFn(request, live, evidencePlan, pinnedArtifactManifest || evidencePlan.pinnedArtifactManifest); if (!checked.ok) throw new Error(checked.errors.join('; ')); progress.intents[id] = intent(request, freshPlan, 'final-applied', { mutation_attempted: true, mutation_performed: true, possibly_performed: false }); persist(progress); }
       live = readLive(request); checked = validateLiveFn(request, live, evidencePlan, pinnedArtifactManifest || evidencePlan.pinnedArtifactManifest); if (!checked.ok || checked.current_status !== 'source-ready') throw new Error(`#${request.issue_number}: final source-ready gate failed`);
       let receipt = checked.transition_receipt;
