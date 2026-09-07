@@ -98,6 +98,11 @@ function loadAllIssues(repository, options = {}) {
   return issues;
 }
 
+function loadLabels(repository, options = {}) {
+  const readPage = options.readPage || ((page) => ghReadJson(['api', `repos/${repository}/labels?per_page=${PAGE_SIZE}&page=${page}`]));
+  return paginate((page) => readPage(page, `repos/${repository}/labels?per_page=${PAGE_SIZE}&page=${page}`), `${repository} labels`);
+}
+
 function readRequest(file) {
   const parsed = parseMarker(fs.readFileSync(path.resolve(file), 'utf8'));
   if (!parsed.request) throw new Error(parsed.errors.join('; '));
@@ -176,6 +181,7 @@ function loadLive(request, dependencyGateArtifact, dependencyEvidence, contextAr
   const dependencies = request.dependency_issues.map((number) => loadIssue(request.repository, number));
   const liveGate = validateLiveDependencyGate(dependencyGateArtifact, request.repository, dependencies, dependencyEvidence);
   if (!liveGate.ok) return { dependencies, completionDependencies, completionEvidence, issues: [], receiptsByIssue: new Map(), dependencyGateArtifact, dependencyEvidence, contextArtifactResults, liveGate };
+  const repositoryLabels = loadLabels(request.repository);
   const issues = request.items.map((item) => loadIssue(request.repository, item.issue_number));
   const receiptsByIssue = new Map();
   for (const issue of issues) {
@@ -183,7 +189,7 @@ function loadLive(request, dependencyGateArtifact, dependencyEvidence, contextAr
     if (parsed.errors.length) throw new Error(`Issue #${issue.number}: ${parsed.errors.join('; ')}`);
     receiptsByIssue.set(Number(issue.number), parsed.receipts);
   }
-  return { dependencies, completionDependencies, completionEvidence, issues, receiptsByIssue, dependencyGateArtifact, dependencyEvidence, contextArtifactResults, liveGate };
+  return { dependencies, completionDependencies, completionEvidence, issues, receiptsByIssue, repositoryLabels, dependencyGateArtifact, dependencyEvidence, contextArtifactResults, liveGate };
 }
 
 function fixedInventoryAudit(issues, expectedNumbers) {
@@ -274,8 +280,17 @@ function buildInventoryReport(issues, contextDir) {
   return report;
 }
 
-function patchIssue(request, item) {
-  return ghMutationJson(['api', '--method', 'PATCH', `repos/${request.repository}/issues/${item.issue_number}`, '--input', '-'], { title: item.projection.title, labels: item.projection.labels });
+function validatePatchResponse(response, item) {
+  if (!response || !Array.isArray(response.labels)) throw new Error('PATCH response omitted labels; refusing to assume projection converged');
+  if (JSON.stringify(normalizeLabels(response.labels)) !== JSON.stringify(item.projection.labels)) throw new Error('PATCH response labels did not equal the requested projection; refusing silent label loss');
+  return true;
+}
+
+function patchIssue(request, item, labelPreflight) {
+  if (!labelPreflight || !labelPreflight.ok) throw new Error(`controlled label preflight is not satisfied: missing=${(labelPreflight && labelPreflight.missing || []).join(',')} unknown=${(labelPreflight && labelPreflight.unknown || []).join(',')}`);
+  const response = ghMutationJson(['api', '--method', 'PATCH', `repos/${request.repository}/issues/${item.issue_number}`, '--input', '-'], { title: item.projection.title, labels: item.projection.labels });
+  validatePatchResponse(response, item);
+  return response;
 }
 
 function addReceipt(request, item, appliedAt) {
@@ -297,6 +312,7 @@ function verifyLive(request, item) {
 
 function report(plan, mode, extra = {}) {
   return { ok: plan.ok, mode, blocked: plan.blocked, errors: plan.errors, summary: plan.summary,
+    label_preflight: plan.label_preflight,
     items: plan.items.map((item) => ({ issue_number: item.issue_number, action: item.action, errors: item.errors, unknown_facts: item.unknown_facts,
       title: item.projection && item.projection.title, labels: item.projection && item.projection.labels,
       context_sha256: item.projection && item.projection.context_sha256, context_artifact: item.projection && item.projection.context_artifact })), ...extra };
@@ -357,6 +373,10 @@ function main(argv = process.argv.slice(2)) {
     process.stdout.write(`${JSON.stringify(report(plan, 'apply-blocked', { dependency_gate: live.liveGate, dry_run_digest: dryRunDigest }), null, 2)}\n`);
     return 1;
   }
+  if (!plan.label_preflight || !plan.label_preflight.ok) {
+    process.stdout.write(`${JSON.stringify(report(plan, 'apply-blocked-label-preflight', { dependency_gate: live.liveGate, dry_run_digest: dryRunDigest }), null, 2)}\n`);
+    return 1;
+  }
   let progress = existingProgress;
   if (!progress) {
     progress = progressFromPlan(request, plan, dryRunDigest, args.maxMutations);
@@ -387,6 +407,10 @@ function main(argv = process.argv.slice(2)) {
     process.stdout.write(`${JSON.stringify(report(plan, 'apply-blocked-after-recheck', { dependency_gate: live.liveGate, dry_run_digest: dryRunDigest }), null, 2)}\n`);
     return 1;
   }
+  if (!plan.label_preflight || !plan.label_preflight.ok) {
+    process.stdout.write(`${JSON.stringify(report(plan, 'apply-blocked-label-preflight-after-recheck', { dependency_gate: live.liveGate, dry_run_digest: dryRunDigest }), null, 2)}\n`);
+    return 1;
+  }
 
   const applied = [];
   for (const plannedItem of plan.items) {
@@ -409,7 +433,7 @@ function main(argv = process.argv.slice(2)) {
     if (item.action === 'update') {
       setProgressItem(progress, progressFile, item.issue_number, { state: 'issue_mutation_pending' });
       try {
-        patchIssue(request, item);
+        patchIssue(request, item, plan.label_preflight);
       } catch (error) {
         const afterFailure = reloadPlannedItem(request, item, live.contextArtifactResults);
         if (!afterFailure.ok || !['repair_receipt', 'already_applied'].includes(afterFailure.action)) {
@@ -460,4 +484,4 @@ if (require.main === module) {
   try { process.exitCode = main(); } catch (error) { process.stderr.write(`ERROR: ${error.message}\n`); process.exitCode = 1; }
 }
 
-module.exports = { parseArgs, paginate, loadComments, loadAllIssues, buildInventoryReport, fixedInventoryAudit, resumeProgressItem, parseMarker, planBatch, report };
+module.exports = { parseArgs, paginate, loadComments, loadAllIssues, loadLabels, buildInventoryReport, fixedInventoryAudit, resumeProgressItem, validatePatchResponse, parseMarker, planBatch, report };

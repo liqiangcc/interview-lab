@@ -9,6 +9,8 @@ const {
   parseInterviewNoteIssue,
   validateInterviewNoteIssue,
 } = require('./interview-note-issue');
+const { buildLabelProvisioningPlan } = require('./issue-label-taxonomy');
+const issueLabelConfig = require('../../config/issue-labels.json');
 
 const SCHEMA_VERSION = 'interview-context-batch-review.v1';
 const RECEIPT_SCHEMA_VERSION = 'interview-context-learning-discovery-applied.v1';
@@ -519,7 +521,7 @@ function planItem(request, item, issue, receipts = [], contextArtifactResult = n
   };
 }
 
-function planBatch(request, { dependencies = [], issues = [], receiptsByIssue = new Map(), dependencyGateArtifact = null, dependencyEvidence = null, completionDependencies = [], completionEvidence = null, contextArtifactsByIssue = new Map(), contextArtifactResults = new Map() } = {}) {
+function planBatch(request, { dependencies = [], issues = [], receiptsByIssue = new Map(), repositoryLabels = null, dependencyGateArtifact = null, dependencyEvidence = null, completionDependencies = [], completionEvidence = null, contextArtifactsByIssue = new Map(), contextArtifactResults = new Map() } = {}) {
   const requestValidation = validateRequest(request);
   if (!requestValidation.ok) return { ok: false, blocked: false, errors: requestValidation.errors, items: [], summary: null };
   const gate = dependencyGate(request, dependencies, dependencyGateArtifact, dependencyEvidence);
@@ -548,12 +550,16 @@ function planBatch(request, { dependencies = [], issues = [], receiptsByIssue = 
   const needsReview = plannedItems.filter((item) => !item.ok);
   const applied = plannedItems.filter((item) => item.ok && item.action === 'already_applied');
   const mutations = plannedItems.filter((item) => item.ok && item.action !== 'already_applied');
+  const labelPreflight = Array.isArray(repositoryLabels)
+    ? buildLabelProvisioningPlan(issueLabelConfig, plannedItems.filter((item) => item.ok).flatMap((item) => item.projection.labels), repositoryLabels)
+    : null;
   const unknownItemCount = plannedItems.filter((item) => item.unknown_facts && item.unknown_facts.length > 0).length;
   const unknownCount = plannedItems.reduce((sum, item) => sum + (item.unknown_facts || []).length, 0);
   return {
     ok: needsReview.length === 0,
     blocked: false,
     errors: needsReview.flatMap((item) => item.errors.map((error) => `Issue #${item.issue_number}: ${error}`)),
+    label_preflight: labelPreflight,
     items: plannedItems,
     summary: {
       pilot_size: request.pilot_size,

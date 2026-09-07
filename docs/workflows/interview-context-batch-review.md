@@ -51,6 +51,8 @@ node scripts/plan-interview-context-learning-discovery.js \
 
 报告必须给出 `ready_count`、`unknown_count`、`unknown_item_count`、`needs_review_count`、`already_applied_count`、`proposed_mutation_count` 与 `mutation_count`。存在需复核项时，`mutation_count` 固定为 0；任何 candidate 失败都会使整批 apply fail-closed。
 
+学习标签必须先通过受控 taxonomy 预检。`config/issue-labels.json` 的 `company.managed_values` 是允许的 company label 闭集；`scripts/lib/issue-label-taxonomy.js` 会校验 projection 中的 discovery labels，并将 live repository label catalog 显式分页读取。报告中的 `label_preflight` 必须列出 `required`、`existing`、`missing`、`unknown` 和 catalog digest。缺失或未知 label 时 planner 仍可输出 plan-only 投影，但 apply 必须 fail-closed；planner 不会隐式创建 label。经独立复核后，管理员只能通过受控的 `scripts/reconcile-labels.sh` / taxonomy provisioning 流程补齐并验证这些 label，再重新 dry-run。`PATCH` 响应必须返回并完整匹配目标 labels；缺字段、静默丢 label 或 live re-read 不收敛都会停止批次。
+
 固定 inventory 先用 GitHub 原生 `label=type:interview-note` 显式分页读取，并要求 live `status:source-ready` 集合与 request 完全相等；不扫描未筛选的全库 body，也不把 blocked/captured SourceNote 纳入候选。审计-only 条目必须已有匹配 receipt、artifact 和收敛 projection；新条目才可在 plan 中形成 mutation proposal。Context artifact 在 mutation 前必须已经存在于可解析 Git commit/ref，planner 通过 pinned commit 读取内容并校验 digest。
 
 apply 必须显式确认本次原生 dry-run digest 和 mutation 上限；`--apply` 单独使用会 fail closed：

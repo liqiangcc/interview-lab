@@ -2,7 +2,7 @@
 
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { loadComments, loadAllIssues, fixedInventoryAudit, parseArgs, resumeProgressItem } = require('../scripts/plan-interview-context-learning-discovery');
+const { loadComments, loadAllIssues, loadLabels, fixedInventoryAudit, parseArgs, resumeProgressItem, validatePatchResponse } = require('../scripts/plan-interview-context-learning-discovery');
 
 test('CLI comments pagination is explicit, bounded, and complete without --slurp', () => {
   const urls = [];
@@ -28,6 +28,18 @@ test('inventory pagination requests only type:interview-note and retains every p
   assert.ok(urls.every((url) => !url.includes('repos/liqiangcc/interview-lab/issues?state=all&per_page')));
 });
 
+test('label inventory pagination is explicit and complete', () => {
+  const urls = [];
+  const labels = loadLabels('liqiangcc/interview-lab', { readPage: (page, url) => {
+    urls.push(url);
+    return page < 2 ? Array.from({ length: 100 }, (_, index) => ({ name: `label-${page}-${index}` })) : [{ name: 'label-final' }];
+  } });
+  assert.equal(labels.length, 101);
+  assert.equal(urls.length, 2);
+  assert.ok(urls.every((url) => url.includes('/labels?per_page=100&page=')));
+  assert.ok(urls.every((url) => !url.includes('--slurp')));
+});
+
 test('fixed inventory audit requires exact source-ready set', () => {
   const issues = [3, 4, 915].map((number) => ({ number, labels: [{ name: 'type:interview-note' }, { name: 'status:source-ready' }] }));
   assert.deepEqual(fixedInventoryAudit(issues, [3, 4, 915]), { ok: true, expected_count: 3, actual_count: 3, expected: [3, 4, 915], actual: [3, 4, 915], missing: [], unexpected: [] });
@@ -47,4 +59,11 @@ test('failed progress resumes only when live re-read proves convergence', () => 
   const held = resumeProgressItem(failed, { ok: true, action: 'repair_receipt' });
   assert.equal(held.ok, false);
   assert.match(held.error, /uncertain receipt mutation/);
+});
+
+test('PATCH response missing or dropping labels fails closed', () => {
+  const item = { projection: { labels: ['company:alibaba', 'type:interview-note'] } };
+  assert.throws(() => validatePatchResponse({}, item), /omitted labels/);
+  assert.throws(() => validatePatchResponse({ labels: [{ name: 'type:interview-note' }] }, item), /silent label loss/);
+  assert.equal(validatePatchResponse({ labels: [{ name: 'type:interview-note' }, { name: 'company:alibaba' }] }, item), true);
 });

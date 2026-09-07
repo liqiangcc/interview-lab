@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/liqiangcc/interview-lab/schemas/interview-context-learning-label-provisioning.schema.json",
+  "title": "InterviewContext learning label provisioning plan",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "repository", "batch_id", "taxonomy_config", "dry_run_digest", "required_labels", "observed_existing_required_labels", "missing_labels", "observed_catalog_digest", "mode", "mutation_count"],
+  "properties": {
+    "schema_version": {"const": "interview-context-learning-label-provisioning.v1"},
+    "repository": {"const": "liqiangcc/interview-lab"},
+    "batch_id": {"const": "issue-1598-learning-contexts-50"},
+    "taxonomy_config": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"const": "config/issue-labels.json"},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "dry_run_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "required_labels": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "observed_existing_required_labels": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "missing_labels": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "observed_catalog_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "mode": {"const": "plan-only"},
+    "mutation_count": {"const": 0}
+  }
+}
