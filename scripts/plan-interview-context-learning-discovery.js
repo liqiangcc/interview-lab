@@ -41,6 +41,22 @@ function parseGhIncludedJson(output) {
   return { json, headers, etag };
 }
 
+function formatGhMutationError(error) {
+  const stdout = error && error.stdout != null ? String(error.stdout) : '';
+  let responseDetail = '';
+  if (stdout.trim()) {
+    try {
+      const parsed = parseGhIncludedJson(stdout);
+      const requestId = parsed.headers.find((line) => /^x-github-request-id:/i.test(line))?.replace(/^x-github-request-id:\s*/i, '').trim();
+      responseDetail = `${parsed.headers[0] || 'HTTP response'}${requestId ? ` request_id=${requestId}` : ''} body=${JSON.stringify(parsed.json)}`;
+    } catch {
+      responseDetail = stdout.trim();
+    }
+  }
+  const stderr = error && error.stderr ? String(error.stderr).trim() : '';
+  return `gh mutation command failed without retry: ${responseDetail || stderr || error.message}`;
+}
+
 function runGhJsonWithHeaders(args) {
   const output = execFileSync('gh', [...args, '--include'], {
     encoding: 'utf8', maxBuffer: 128 * 1024 * 1024, stdio: ['pipe', 'pipe', 'pipe'],
@@ -60,10 +76,15 @@ function ghReadJson(args, input = null, attempts = 3) {
   throw new Error(`gh read command failed: ${stderr || lastError.message}`);
 }
 
-function ghMutationJson(args, input = null) {
-  try { return runGhJson(args, input); } catch (error) {
-    const stderr = error && error.stderr ? String(error.stderr).trim() : '';
-    throw new Error(`gh mutation command failed without retry: ${stderr || error.message}`);
+function ghMutationJson(args, input = null, execute = execFileSync) {
+  try {
+    const output = execute('gh', [...args, '--include'], {
+      input: input == null ? undefined : JSON.stringify(input), encoding: 'utf8',
+      maxBuffer: 128 * 1024 * 1024, stdio: ['pipe', 'pipe', 'pipe'],
+    });
+    return parseGhIncludedJson(output).json;
+  } catch (error) {
+    throw new Error(formatGhMutationError(error));
   }
 }
 
@@ -210,8 +231,17 @@ function setProgressItem(progress, file, issueNumber, patch) {
 
 function resumeProgressItem(saved, liveItem) {
   if (liveItem && liveItem.ok && liveItem.action === 'already_applied') return { ok: true, state: 'complete' };
+  if (saved && (saved.receipt_attempted === true || saved.receipt_possibly_performed === true)) {
+    return { ok: false, state: 'failed', error: 'receipt POST outcome is uncertain; refusing blind retry until a matching live receipt is observed' };
+  }
   if (saved && saved.state === 'failed') return { ok: false, state: 'failed', error: saved.error || 'previous mutation outcome was uncertain; refusing blind retry' };
   if (saved && saved.state === 'complete') return { ok: false, state: 'failed', error: 'progress marked complete but live projection is not converged' };
+  if (saved && saved.state === 'receipt_pending' && saved.receipt_attempted === undefined) {
+    return { ok: false, state: 'failed', error: 'legacy receipt_pending progress has no durable receipt_attempted marker; refusing retry' };
+  }
+  if (saved && saved.state === 'receipt_pending' && (!liveItem || !liveItem.ok || !['repair_receipt', 'already_applied'].includes(liveItem.action))) {
+    return { ok: false, state: 'failed', error: 'receipt_pending live projection is not converged; refusing issue or receipt mutation' };
+  }
   return { ok: true, state: saved && saved.state ? saved.state : 'pending' };
 }
 
@@ -359,16 +389,8 @@ function validatePatchResponse(response, item) {
   return true;
 }
 
-function normalizeIfMatchEtag(etag) {
-  if (typeof etag !== 'string') throw new Error('Issue PATCH ETag must be a string');
-  const normalized = etag.trim().replace(/^W\//i, '');
-  if (!/^"(?:[^"\\]|\\.)*"$/.test(normalized)) throw new Error('Issue PATCH ETag must be a quoted opaque tag');
-  return normalized;
-}
-
 function buildPatchArgs(request, item) {
-  if (typeof item.issue_etag !== 'string' || item.issue_etag.trim() === '') throw new Error('Issue PATCH requires the ETag captured by the immediately preceding live Issue read');
-  return ['api', '--method', 'PATCH', `repos/${request.repository}/issues/${item.issue_number}`, '--header', `If-Match: ${normalizeIfMatchEtag(item.issue_etag)}`, '--input', '-'];
+  return ['api', '--method', 'PATCH', `repos/${request.repository}/issues/${item.issue_number}`, '--header', 'Accept: application/vnd.github+json', '--header', 'Content-Type: application/json', '--input', '-'];
 }
 
 function patchIssue(request, item, labelPreflight) {
@@ -378,10 +400,21 @@ function patchIssue(request, item, labelPreflight) {
   return response;
 }
 
-function addReceipt(request, item, appliedAt) {
-  const receipt = receiptFor(request, item, appliedAt);
+function addReceipt(request, item, receipt = receiptFor(request, item, new Date().toISOString())) {
   const comment = ghMutationJson(['api', '--method', 'POST', `repos/${request.repository}/issues/${item.issue_number}/comments`, '--input', '-'], { body: receiptBody(receipt) });
   return { receipt, comment };
+}
+
+function receiptPendingPatch(request, item, saved) {
+  if (item.receipt) return { state: 'receipt_pending' };
+  const receiptIntent = saved.receipt_intent || receiptFor(request, item, new Date().toISOString());
+  return {
+    state: 'receipt_pending',
+    receipt_intent: receiptIntent,
+    receipt_body_sha256: sha256Text(receiptBody(receiptIntent)),
+    receipt_attempted: saved.receipt_attempted === true,
+    receipt_possibly_performed: saved.receipt_possibly_performed === true,
+  };
 }
 
 function verifyLive(request, item) {
@@ -393,6 +426,25 @@ function verifyLive(request, item) {
   const validation = validateInterviewNoteIssue({ body: live.body, labels, state: String(live.state || 'open').toLowerCase() });
   if (!validation.ok) throw new Error(`Issue #${item.issue_number} post-write validator failed: ${validation.errors.join('; ')}`);
   return live;
+}
+
+function patchSnapshot(item) {
+  return {
+    issue_number: Number(item.issue_number),
+    body_sha256: item.current_body_sha256,
+    title: String(item.current_title || ''),
+    labels: normalizeLabels(item.current_labels || []),
+  };
+}
+
+function assertPatchSnapshotUnchanged(before, after) {
+  const previous = patchSnapshot(before);
+  const current = patchSnapshot(after);
+  if (previous.issue_number !== current.issue_number) throw new Error(`Issue #${current.issue_number} immediate live snapshot changed issue identity`);
+  if (previous.body_sha256 !== current.body_sha256) throw new Error(`Issue #${current.issue_number} body changed between live snapshot reads; refusing PATCH`);
+  if (previous.title !== current.title) throw new Error(`Issue #${current.issue_number} title changed between live snapshot reads; refusing PATCH`);
+  if (JSON.stringify(previous.labels) !== JSON.stringify(current.labels)) throw new Error(`Issue #${current.issue_number} labels changed between live snapshot reads; refusing PATCH`);
+  return true;
 }
 
 function report(plan, mode, extra = {}) {
@@ -518,6 +570,27 @@ function main(argv = process.argv.slice(2)) {
       continue;
     }
     if (item.action === 'update') {
+      const immediate = reloadPlannedItem(request, item, live.contextArtifactResults);
+      if (!immediate.ok) {
+        setProgressItem(progress, progressFile, item.issue_number, { state: 'failed', error: `immediate live snapshot failed: ${immediate.errors.join('; ')}` });
+        throw new Error(`Issue #${item.issue_number} immediate live snapshot failed; fail closed`);
+      }
+      if (immediate.action === 'already_applied') {
+        setProgressItem(progress, progressFile, item.issue_number, { state: 'complete', receipt_comment_id: immediate.receipt && immediate.receipt.comment_id });
+        applied.push({ issue_number: item.issue_number, action: 'already_applied', context_artifact: immediate.projection.context_artifact, receipt_comment_id: immediate.receipt && immediate.receipt.comment_id });
+        continue;
+      }
+      if (immediate.action !== 'update') {
+        setProgressItem(progress, progressFile, item.issue_number, { state: 'failed', error: `immediate live snapshot action was ${immediate.action}; refusing PATCH` });
+        throw new Error(`Issue #${item.issue_number} immediate live snapshot was not an update; fail closed`);
+      }
+      try {
+        assertPatchSnapshotUnchanged(item, immediate);
+      } catch (error) {
+        setProgressItem(progress, progressFile, item.issue_number, { state: 'failed', error: error.message });
+        throw new Error(`Issue #${item.issue_number} immediate live snapshot changed; fail closed`);
+      }
+      item = immediate;
       setProgressItem(progress, progressFile, item.issue_number, { state: 'issue_mutation_pending' });
       try {
         patchIssue(request, item, plan.label_preflight);
@@ -541,10 +614,18 @@ function main(argv = process.argv.slice(2)) {
         continue;
       }
     }
-    setProgressItem(progress, progressFile, item.issue_number, { state: 'receipt_pending' });
+    const savedReceipt = progress.items.find((entry) => Number(entry.issue_number) === Number(item.issue_number));
+    setProgressItem(progress, progressFile, item.issue_number, receiptPendingPatch(request, item, savedReceipt));
+    if (!item.receipt) {
+      if (savedReceipt.receipt_attempted === true || savedReceipt.receipt_possibly_performed === true) {
+        setProgressItem(progress, progressFile, item.issue_number, { state: 'failed', error: 'receipt POST outcome is uncertain; refusing blind retry until a matching live receipt is observed' });
+        throw new Error(`Issue #${item.issue_number} receipt POST outcome is uncertain; fail closed`);
+      }
+      setProgressItem(progress, progressFile, item.issue_number, { state: 'receipt_pending', receipt_attempted: true, receipt_possibly_performed: true });
+    }
     let receiptResult;
     try {
-      receiptResult = item.receipt ? { receipt: item.receipt, comment: { id: item.receipt.comment_id } } : addReceipt(request, item, new Date().toISOString());
+      receiptResult = item.receipt ? { receipt: item.receipt, comment: { id: item.receipt.comment_id } } : addReceipt(request, item, savedReceipt.receipt_intent);
     } catch (error) {
       const afterFailure = reloadPlannedItem(request, item, live.contextArtifactResults);
       if (!afterFailure.ok || afterFailure.action !== 'already_applied') {
@@ -574,4 +655,4 @@ if (require.main === module) {
   try { process.exitCode = main(); } catch (error) { process.stderr.write(`ERROR: ${error.message}\n`); process.exitCode = 1; }
 }
 
-module.exports = { parseArgs, paginate, loadComments, loadAllIssues, loadLabels, buildInventoryReport, fixedInventoryAudit, resumeProgressItem, planReloadedItem, validatePatchResponse, parseGhIncludedJson, normalizeIfMatchEtag, buildPatchArgs, acquireApplyLock, parseMarker, planBatch, report };
+module.exports = { parseArgs, paginate, loadComments, loadAllIssues, loadLabels, buildInventoryReport, fixedInventoryAudit, resumeProgressItem, planReloadedItem, validatePatchResponse, parseGhIncludedJson, formatGhMutationError, ghMutationJson, buildPatchArgs, patchSnapshot, assertPatchSnapshotUnchanged, acquireApplyLock, receiptPendingPatch, parseMarker, planBatch, report };

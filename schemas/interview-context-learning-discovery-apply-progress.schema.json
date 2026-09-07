@@ -18,7 +18,7 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["issue_number", "expected_body_sha256", "context_sha256", "context_artifact", "title", "labels", "intent_id", "planned_action", "state", "receipt_comment_id"],
+        "required": ["issue_number", "expected_body_sha256", "context_sha256", "context_artifact", "title", "labels", "intent_id", "planned_action", "state", "receipt_comment_id", "receipt_intent", "receipt_body_sha256", "receipt_attempted", "receipt_possibly_performed"],
         "properties": {
           "issue_number": {"type": "integer", "minimum": 1},
           "expected_body_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
@@ -30,6 +30,10 @@
           "planned_action": {"type": "string"},
           "state": {"enum": ["pending", "issue_mutation_pending", "issue_converged", "receipt_pending", "complete", "failed"]},
           "receipt_comment_id": {"type": ["integer", "null"]},
+          "receipt_intent": {"type": ["object", "null"]},
+          "receipt_body_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+          "receipt_attempted": {"type": "boolean"},
+          "receipt_possibly_performed": {"type": "boolean"},
           "error": {"type": "string"}
         }
       }

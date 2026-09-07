@@ -2,7 +2,7 @@
 
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { loadComments, loadAllIssues, loadLabels, fixedInventoryAudit, parseArgs, resumeProgressItem, validatePatchResponse, parseGhIncludedJson, normalizeIfMatchEtag, buildPatchArgs, acquireApplyLock } = require('../scripts/plan-interview-context-learning-discovery');
+const { loadComments, loadAllIssues, loadLabels, fixedInventoryAudit, parseArgs, resumeProgressItem, receiptPendingPatch, validatePatchResponse, parseGhIncludedJson, formatGhMutationError, ghMutationJson, buildPatchArgs, patchSnapshot, assertPatchSnapshotUnchanged, acquireApplyLock } = require('../scripts/plan-interview-context-learning-discovery');
 
 test('CLI comments pagination is explicit, bounded, and complete without --slurp', () => {
   const urls = [];
@@ -61,20 +61,87 @@ test('failed progress resumes only when live re-read proves convergence', () => 
   assert.match(held.error, /uncertain receipt mutation/);
 });
 
-test('PATCH response missing or dropping labels fails closed', () => {
-  const item = { projection: { labels: ['company:alibaba', 'type:interview-note'] } };
-  assert.throws(() => validatePatchResponse({}, item), /omitted labels/);
-  assert.throws(() => validatePatchResponse({ labels: [{ name: 'type:interview-note' }] }, item), /silent label loss/);
-  assert.equal(validatePatchResponse({ labels: [{ name: 'type:interview-note' }, { name: 'company:alibaba' }] }, item), true);
+test('receipt POST crash window never retries after attempted response loss', () => {
+  let postCalls = 0;
+  const afterPostCrash = {
+    state: 'receipt_pending',
+    receipt_attempted: true,
+    receipt_possibly_performed: true,
+    receipt_intent: { intent_id: 'durable-intent' },
+  };
+  const temporarilyMissingMarker = { ok: true, action: 'repair_receipt' };
+  const resume = resumeProgressItem(afterPostCrash, temporarilyMissingMarker);
+  if (resume.ok) postCalls += 1;
+  assert.equal(resume.ok, false);
+  assert.match(resume.error, /refusing blind retry/);
+  assert.equal(postCalls, 0);
 });
 
-test('Issue PATCH uses the immediately-read ETag as an atomic CAS precondition', () => {
-  const args = buildPatchArgs({ repository: 'liqiangcc/interview-lab' }, { issue_number: 915, issue_etag: 'W/"etag-1"' });
-  assert.deepEqual(args, ['api', '--method', 'PATCH', 'repos/liqiangcc/interview-lab/issues/915', '--header', 'If-Match: "etag-1"', '--input', '-']);
-  assert.equal(normalizeIfMatchEtag('W/"etag-1"'), '"etag-1"');
-  assert.equal(normalizeIfMatchEtag('"etag-1"'), '"etag-1"');
-  assert.throws(() => normalizeIfMatchEtag('etag-1'), /quoted opaque tag/);
-  assert.throws(() => buildPatchArgs({ repository: 'liqiangcc/interview-lab' }, { issue_number: 915 }), /requires the ETag/);
+test('receipt POST is recoverable only when durable state proves it was not attempted', () => {
+  const resume = resumeProgressItem({
+    state: 'receipt_pending',
+    receipt_attempted: false,
+    receipt_possibly_performed: false,
+    receipt_intent: { intent_id: 'durable-intent' },
+  }, { ok: true, action: 'repair_receipt' });
+  assert.deepEqual(resume, { ok: true, state: 'receipt_pending' });
+});
+
+test('legacy receipt_pending progress without attempted marker fails closed', () => {
+  const resume = resumeProgressItem({ state: 'receipt_pending' }, { ok: true, action: 'repair_receipt' });
+  assert.equal(resume.ok, false);
+  assert.match(resume.error, /no durable receipt_attempted marker/);
+});
+
+test('receipt-pending patch preserves an existing receipt intent when item already has a receipt', () => {
+  const savedIntent = { intent_id: 'existing-intent', applied_at: '2026-09-04T04:02:00Z' };
+  assert.deepEqual(receiptPendingPatch({}, { receipt: { comment_id: 123 } }, { receipt_intent: savedIntent, receipt_attempted: false, receipt_possibly_performed: false }), { state: 'receipt_pending' });
+});
+
+test('PATCH response missing or dropping labels fails closed', () => {
+  const item = { current_labels: ['source:xhs', 'status:source-ready', 'workflow:keep-me', 'type:interview-note'], projection: { labels: ['company:alibaba', 'source:xhs', 'status:source-ready', 'workflow:keep-me', 'type:interview-note'].sort() } };
+  assert.throws(() => validatePatchResponse({}, item), /omitted labels/);
+  assert.throws(() => validatePatchResponse({ labels: [{ name: 'type:interview-note' }, { name: 'source:xhs' }, { name: 'status:source-ready' }] }, item), /silent label loss/);
+  assert.equal(validatePatchResponse({ labels: item.projection.labels }, item), true);
+});
+
+test('Issue PATCH uses complete JSON projection without unsupported If-Match CAS', () => {
+  const args = buildPatchArgs({ repository: 'liqiangcc/interview-lab' }, { issue_number: 915 });
+  assert.deepEqual(args, ['api', '--method', 'PATCH', 'repos/liqiangcc/interview-lab/issues/915', '--header', 'Accept: application/vnd.github+json', '--header', 'Content-Type: application/json', '--input', '-']);
+  assert.ok(!args.includes('If-Match'));
+});
+
+test('immediate locked snapshot detects body/title/label drift before PATCH', () => {
+  const before = { issue_number: 1509, current_body_sha256: 'body-sha', current_title: '[XHS] 63f76452', current_labels: ['source:xhs', 'status:source-ready', 'type:interview-note'] };
+  assert.deepEqual(patchSnapshot(before), { issue_number: 1509, body_sha256: 'body-sha', title: '[XHS] 63f76452', labels: ['source:xhs', 'status:source-ready', 'type:interview-note'] });
+  assert.equal(assertPatchSnapshotUnchanged(before, { ...before, current_labels: [...before.current_labels] }), true);
+  assert.throws(() => assertPatchSnapshotUnchanged(before, { ...before, current_body_sha256: 'changed' }), /body changed/);
+  assert.throws(() => assertPatchSnapshotUnchanged(before, { ...before, current_title: 'concurrent edit' }), /title changed/);
+  assert.throws(() => assertPatchSnapshotUnchanged(before, { ...before, current_labels: ['source:xhs', 'type:interview-note'] }), /labels changed/);
+});
+
+test('PATCH HTTP 400 preserves response body/request id and never retries', () => {
+  let calls = 0;
+  let captured;
+  const response = ['HTTP/2.0 400 Bad Request', 'X-GitHub-Request-Id: MOCK:400', '', JSON.stringify({ message: 'Validation Failed', errors: [{ resource: 'Issue', field: 'labels', code: 'invalid' }] })].join('\n');
+  const error = Object.assign(new Error('gh exited 1'), { stdout: response, stderr: 'gh: Bad Request (HTTP 400)' });
+  assert.throws(() => ghMutationJson(
+    buildPatchArgs({ repository: 'liqiangcc/interview-lab' }, { issue_number: 1509 }),
+    { title: '[小米] 一面 · 63f76452', labels: ['company:xiaomi', 'source:xhs', 'status:source-ready', 'type:interview-note'] },
+    (command, args, options) => { calls += 1; captured = { command, args, options }; throw error; },
+  ), (caught) => {
+    assert.match(caught.message, /HTTP\/2\.0 400 Bad Request/);
+    assert.match(caught.message, /request_id=MOCK:400/);
+    assert.match(caught.message, /Validation Failed/);
+    assert.match(caught.message, /"field":"labels"/);
+    return true;
+  });
+  assert.equal(calls, 1);
+  assert.equal(captured.command, 'gh');
+  assert.equal(captured.args.at(-1), '--include');
+  assert.equal(captured.options.input, JSON.stringify({ title: '[小米] 一面 · 63f76452', labels: ['company:xiaomi', 'source:xhs', 'status:source-ready', 'type:interview-note'] }));
+  assert.match(captured.args.join(' '), /Content-Type: application\/json/);
+  assert.match(formatGhMutationError(error), /request_id=MOCK:400/);
 });
 
 test('GH included response parser requires and captures ETag', () => {
