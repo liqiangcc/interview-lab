@@ -81,8 +81,26 @@ function applyOperation(labels, operation) {
   return [...next].sort();
 }
 function preservesNonLifecycle(labels, baseline) {
-  const current = new Set(nonLifecycleLabels(labels));
-  return nonLifecycleLabels(baseline).every((label) => current.has(label));
+  return canonicalJson(nonLifecycleLabels(labels)) === canonicalJson(nonLifecycleLabels(baseline));
+}
+function evidencePlanSha256(evidencePlan) {
+  const { plan_sha256: ignoredPlanSha256, ...base } = evidencePlan || {};
+  return sha256Text(canonicalJson({
+    schema_version: base.schema_version,
+    mode: base.mode,
+    issue_number: base.issue_number,
+    repository: base.repository,
+    fixed_item_count: base.fixed_item_count,
+    packet_set_sha256: base.packet_set_sha256,
+    pinned_artifact_manifest_sha256: base.pinned_artifact_manifest_sha256,
+    authorization_sha256: base.authorization_sha256,
+    preflight_ok: base.preflight_ok,
+    mutation_count: base.mutation_count,
+    mutation_attempted: base.mutation_attempted,
+    mutation_performed: base.mutation_performed,
+    possibly_performed: base.possibly_performed,
+    items: base.items,
+  }));
 }
 function expectedEvidence(marker, request, packetSetSha256) {
   const errors = [];
@@ -167,6 +185,7 @@ function authSha256(requests, evidencePlan) {
     batch_id: BATCH_ID,
     packet_set_sha256: evidencePlan.packet_set_sha256,
     evidence_authorization_sha256: evidencePlan.authorization_sha256,
+    evidence_plan_sha256: evidencePlan.plan_sha256,
     pinned_artifact_manifest_sha256: evidencePlan.pinned_artifact_manifest_sha256,
     requests: requests.map((request) => ({ issue_number: request.issue_number, transition_id: request.transition_id, request_sha256: requestSha256(request), evidence_subject_sha256: request.evidence_subject_sha256 })),
   }));
@@ -177,6 +196,8 @@ function validateEvidencePlan(evidencePlan) {
   if (!evidencePlan || evidencePlan.issue_number !== 1577 || evidencePlan.fixed_item_count !== 17 || evidencePlan.mode !== 'plan') errors.push('evidence plan scope/shape mismatch');
   if (!evidencePlan || !/^[0-9a-f]{64}$/.test(String(evidencePlan.packet_set_sha256 || ''))) errors.push('evidence plan packet_set_sha256 is required');
   if (!evidencePlan || !/^[0-9a-f]{64}$/.test(String(evidencePlan.authorization_sha256 || ''))) errors.push('evidence plan authorization_sha256 is required');
+  if (!evidencePlan || !/^[0-9a-f]{64}$/.test(String(evidencePlan.plan_sha256 || ''))) errors.push('evidence plan plan_sha256 is required');
+  if (evidencePlan && /^[0-9a-f]{64}$/.test(String(evidencePlan.plan_sha256 || '')) && evidencePlan.plan_sha256 !== evidencePlanSha256(evidencePlan)) errors.push('evidence plan plan_sha256 is not reproducible');
   if (!evidencePlan || !evidencePlan.pinnedArtifactManifest || !Array.isArray(evidencePlan.pinnedArtifactManifest.items)) errors.push('evidence plan pinned artifact manifest is required');
   if (evidencePlan && evidencePlan.pinnedArtifactManifest) {
     const validation = validatePinnedManifest(evidencePlan.pinnedArtifactManifest);
@@ -205,6 +226,8 @@ function validateRequests(requests, evidencePlan) {
     if (!valid.ok) errors.push(...valid.errors.map((error) => `#${issue}: ${error}`));
     if (!request || request.repository !== 'liqiangcc/interview-lab' || request.transition_id !== `issue-1577-source-review-${issue}` || request.expected_initial_status !== 'captured' || request.recovery_mode != null || request.decision !== 'source-ready') errors.push(`#${issue}: request is not the scoped captured source-ready request`);
     if (!request || request.pinned_artifact_manifest_sha256 !== evidencePlan.pinned_artifact_manifest_sha256) errors.push(`#${issue}: pinned manifest binding mismatch`);
+    const evidenceItem = (evidencePlan.items || []).find((item) => Number(item.interview_issue_number) === issue);
+    if (!request || !evidenceItem || Number(request.review_evidence && request.review_evidence.comment_id) !== Number(evidenceItem.evidence_comment_id)) errors.push(`#${issue}: evidence plan comment binding mismatch`);
   }
   return { ok: errors.length === 0, errors };
 }
@@ -234,7 +257,8 @@ function validateLive(request, live, evidencePlan, pinnedManifest) {
   const plannerIssue = statusOf(live.interviewIssue) === 'source-ready'
     ? { ...live.interviewIssue, labels: replaceControlled(labels, 'captured') }
     : live.interviewIssue;
-  const planner = planSourceReview(request, plannerIssue, { planningOnly: false, sourceIssue: live.sourceIssue, allIssues: live.allIssues, evidenceComment: evidence.comment, receipts: live.comments, pinnedArtifactManifest: pinnedManifest });
+  const parsedReceipts = parseReceipts(live.comments);
+  const planner = planSourceReview(request, plannerIssue, { planningOnly: false, sourceIssue: live.sourceIssue, allIssues: live.allIssues, evidenceComment: evidence.comment, receipts: parsedReceipts.receipts, pinnedArtifactManifest: pinnedManifest });
   if (!planner.ok) errors.push(...planner.errors);
   const receipts = matchingTransitionReceipt(live.comments, request);
   if (receipts.errors.length) errors.push(...receipts.errors);
@@ -263,7 +287,7 @@ function planBatch({ requests, evidencePlan, liveLoader, pinnedArtifactManifest 
     items.push({ packet_id: `issue-1577-source-review-${request.issue_number}`, issue_number: request.issue_number, source_note_issue_number: request.source_note_issue_number, transition_id: request.transition_id, request_sha256: requestSha256(request), action, current_status: check.current_status, evidence_marker_count: check.evidence && check.evidence.marker_count || 0, evidence_comment_id: check.evidence && check.evidence.comment && Number(check.evidence.comment.id) || null, evidence_exact: Boolean(check.evidence && check.evidence.exact), live_snapshot: check.live_snapshot, begin_labels: check.begin_labels || [], final_labels: check.final_labels || [], transition_receipt_id: check.transition_receipt && Number(check.transition_receipt.comment_id) || null, label_operation_count: check.current_status === 'captured' ? operations(check.live_snapshot && check.live_snapshot.labels, check.begin_labels).length + operations(check.begin_labels, check.final_labels).length : 0, errors: check.errors || [] });
     if (!check.ok) errors.push(`#${request.issue_number}: ${check.errors.join('; ')}`);
   }
-  const planBase = { schema_version: SCHEMA_VERSION, batch_id: BATCH_ID, scope: SCOPE, issue_number: 1577, repository: 'liqiangcc/interview-lab', packet_set_sha256: evidencePlan.packet_set_sha256, evidence_authorization_sha256: evidencePlan.authorization_sha256, pinned_artifact_manifest_sha256: evidencePlan.pinned_artifact_manifest_sha256, authorization_sha256: authSha256(requests, evidencePlan), fixed_item_count: 17, preflight_ok: errors.length === 0, mutation_count: 0, mutation_attempted: false, mutation_performed: false, possibly_performed: false, items };
+  const planBase = { schema_version: SCHEMA_VERSION, batch_id: BATCH_ID, scope: SCOPE, issue_number: 1577, repository: 'liqiangcc/interview-lab', packet_set_sha256: evidencePlan.packet_set_sha256, evidence_authorization_sha256: evidencePlan.authorization_sha256, evidence_plan_sha256: evidencePlan.plan_sha256, pinned_artifact_manifest_sha256: evidencePlan.pinned_artifact_manifest_sha256, authorization_sha256: authSha256(requests, evidencePlan), fixed_item_count: 17, preflight_ok: errors.length === 0, mutation_count: 0, mutation_attempted: false, mutation_performed: false, possibly_performed: false, items };
   return { ...planBase, ok: planBase.preflight_ok, mode: 'plan', errors, plan_sha256: sha256Text(canonicalJson(planBase)) };
 }
 function safeCounts(progress) { return progress && ['label_attempt_count', 'receipt_attempt_count', 'mutation_count'].every((field) => Number.isSafeInteger(progress[field]) && progress[field] >= 0) && progress.label_attempt_count + progress.receipt_attempt_count === progress.mutation_count; }
@@ -284,7 +308,21 @@ function validateProgress(progress, plan) {
 }
 function intent(request, plan, phase, extra = {}) { return { schema_version: INTENT_SCHEMA_VERSION, intent_id: sha256Text(`${plan.authorization_sha256}:${request.transition_id}`), authorization_sha256: plan.authorization_sha256, packet_set_sha256: plan.packet_set_sha256, packet_id: `issue-1577-source-review-${request.issue_number}`, issue_number: request.issue_number, transition_id: request.transition_id, request_sha256: requestSha256(request), phase, ...extra }; }
 function persistIntent(progress, request, plan, phase, extra, persist) { const id = `issue-1577-source-review-${request.issue_number}`; progress.intents[id] = intent(request, plan, phase, extra); persist(progress); }
-function markUncertain(progress, request, plan, phase, error, persist, extra = {}) { progress.status = 'failed'; progress.mutation_performed = null; progress.possibly_performed = true; persistIntent(progress, request, plan, 'uncertain', { attempted_phase: phase, error, ...extra }, persist); }
+function markUncertain(progress, request, plan, phase, error, persist, extra = {}) { progress.status = 'failed'; progress.mutation_performed = null; progress.possibly_performed = true; const uncertainPhase = ['receipt-pending', 'receipt-uncertain'].includes(phase) ? 'receipt-uncertain' : 'uncertain'; persistIntent(progress, request, plan, uncertainPhase, { attempted_phase: phase, error, ...extra }, persist); }
+function pendingLabelPrefix(labels, pending) {
+  const normalized = normalizeLabels(labels, true);
+  if (!normalized || !pending || !Array.isArray(pending.operation_plan) || !Number.isInteger(pending.operation_index)) return { ok: false, errors: ['pending label intent is malformed'] };
+  if (!preservesNonLifecycle(normalized, pending.baseline_non_lifecycle_labels)) return { ok: false, errors: ['pending label intent lost non-lifecycle labels'] };
+  const before = Array.isArray(pending.before_controlled_labels) ? pending.before_controlled_labels : [];
+  const index = pending.operation_index;
+  if (index < 0 || index > pending.operation_plan.length) return { ok: false, errors: ['pending label intent operation index is invalid'] };
+  const expectedBefore = pending.operation_plan.slice(0, index).reduce((value, operation) => applyOperation(value, operation), before);
+  const expectedAfter = index < pending.operation_plan.length ? applyOperation(expectedBefore, pending.operation_plan[index]) : expectedBefore;
+  const actual = controlledLabels(normalized);
+  if (canonicalJson(actual) === canonicalJson(expectedBefore)) return { ok: true, next_index: index, kind: 'before' };
+  if (index < pending.operation_plan.length && canonicalJson(actual) === canonicalJson(expectedAfter)) return { ok: true, next_index: index + 1, kind: 'after' };
+  return { ok: false, errors: ['pending label state is neither the persisted CAS prefix nor its completed operation'] };
+}
 function applyBatch({ requests, evidencePlan, pinnedArtifactManifest, liveLoader, progress, expectedPlanSha256, expectedAuthorizationSha256 } = {}, options = {}) {
   const assertLock = () => { if (!options.lock || typeof options.lock.assertHeld !== 'function') throw new Error('transition apply requires an acquired progress lock'); options.lock.assertHeld(); };
   if (!progress) return { ok: false, errors: ['transition apply requires progress'] };
@@ -300,22 +338,44 @@ function applyBatch({ requests, evidencePlan, pinnedArtifactManifest, liveLoader
   if (expectedAuthorizationSha256 && freshPlan.authorization_sha256 !== expectedAuthorizationSha256) return { ok: false, errors: [`transition authorization digest mismatch: expected ${expectedAuthorizationSha256}, got ${freshPlan.authorization_sha256}`] };
   const validation = validateProgress(progress, freshPlan);
   if (!validation.ok) return { ok: false, errors: validation.errors };
-  progress.status = 'running'; options.persistProgress(progress);
+  progress.status = 'running'; assertLock(); options.persistProgress(progress);
   const throttle = options.beforeMutation || (() => {});
   const reconcileAttempts = Number.isInteger(options.reconcileAttempts) && options.reconcileAttempts > 0 ? options.reconcileAttempts : 3;
   const backoff = Number.isInteger(options.reconcileBackoffMs) && options.reconcileBackoffMs >= 0 ? options.reconcileBackoffMs : 1000;
   const readLive = (request) => guardedLiveLoader(request);
   const persist = (value) => { assertLock(); options.persistProgress(value); };
   const markLabelAttempt = () => { progress.label_attempt_count += 1; progress.mutation_count = progress.label_attempt_count + progress.receipt_attempt_count; progress.mutation_attempted = true; progress.mutation_performed = null; progress.possibly_performed = true; persist(progress); };
+  const idFor = (request) => `issue-1577-source-review-${request.issue_number}`;
+  const ensureLocalReceipt = (request, remoteReceipt, phase = 'receipt-uncertain') => {
+    const expected = transitionReceipt(request, remoteReceipt.comment_id, remoteReceipt.applied_at || (options.now ? options.now() : new Date().toISOString()));
+    let local = null;
+    try { assertLock(); local = options.readReceipt(request); assertLock(); } catch (_) { /* repair below */ }
+    if (local && canonicalJson(local) === canonicalJson(expected)) return expected;
+    try { assertLock(); options.writeReceipt(request, expected); assertLock(); }
+    catch (error) {
+      markUncertain(progress, request, freshPlan, phase, `local receipt persistence failed: ${error.message}`, persist, { receipt_comment_id: remoteReceipt.comment_id });
+      throw error;
+    }
+    return expected;
+  };
   const applyStage = (request, stage, desiredLabels, state) => {
     let current = readLive(request); let labels = normalizeLabels(current.interviewIssue.labels, true); if (!labels) throw new Error(`#${request.issue_number}: malformed labels during ${stage}`);
-    const baseline = state.intent && state.intent.baseline_non_lifecycle_labels || nonLifecycleLabels(labels);
+    const baseline = state.intent && state.intent.baseline_non_lifecycle_labels || nonLifecycleLabels(state.preflight && state.preflight.labels || labels);
     const beforeControlled = state.intent && state.intent.before_controlled_labels || controlledLabels(labels);
     const plan = state.intent && state.intent.stage === stage && Array.isArray(state.intent.operation_plan) ? state.intent.operation_plan : operations(beforeControlled, desiredLabels);
     let index = state.intent && state.intent.stage === stage && Number.isInteger(state.intent.operation_index) ? state.intent.operation_index : 0;
     while (index < plan.length) {
       const expectedControlled = plan.slice(0, index).reduce((value, op) => applyOperation(value, op), beforeControlled);
-      if (canonicalJson(controlledLabels(labels)) !== canonicalJson(expectedControlled) || !preservesNonLifecycle(labels, baseline)) throw new Error(`#${request.issue_number}: ${stage} state is not a legal CAS prefix`);
+      if (!preservesNonLifecycle(labels, baseline)) throw new Error(`#${request.issue_number}: ${stage} state changed non-lifecycle labels`);
+      const actualControlled = canonicalJson(controlledLabels(labels));
+      if (actualControlled === canonicalJson(applyOperation(expectedControlled, plan[index]))) {
+        index += 1;
+        if (progress.intents[idFor(request)]) progress.intents[idFor(request)] = { ...progress.intents[idFor(request)], operation_index: index };
+        state.intent = progress.intents[idFor(request)] || state.intent;
+        persist(progress);
+        continue;
+      }
+      if (actualControlled !== canonicalJson(expectedControlled)) throw new Error(`#${request.issue_number}: ${stage} state is not a legal CAS prefix`);
       const op = plan[index];
       persistIntent(progress, request, freshPlan, stage === 'begin' ? 'begin-pending' : 'final-pending', { stage, operation_plan: plan, operation_index: index, before_controlled_labels: beforeControlled, desired_controlled_labels: controlledLabels(desiredLabels), baseline_non_lifecycle_labels: nonLifecycleLabels(baseline), cas: issueSnapshot(current) }, persist);
       markLabelAttempt();
@@ -339,18 +399,36 @@ function applyBatch({ requests, evidencePlan, pinnedArtifactManifest, liveLoader
   };
   const results = [];
   for (const request of requests) {
-    const id = `issue-1577-source-review-${request.issue_number}`; const state = { intent: progress.intents[id] };
+    const id = idFor(request); const state = { intent: progress.intents[id], preflight: (freshPlan.items || []).find((item) => Number(item.issue_number) === request.issue_number)?.live_snapshot || null };
     try {
-      let live = readLive(request); let checked = validateLiveFn(request, live, evidencePlan, pinnedArtifactManifest || evidencePlan.pinnedArtifactManifest); if (!checked.ok) throw new Error(checked.errors.join('; '));
-      if (state.intent && state.intent.phase === 'complete') { if (checked.current_status !== 'source-ready' || !checked.transition_receipt) throw new Error('completed transition does not match live state'); results.push({ issue_number: request.issue_number, action: 'already-applied', mutation_performed: false, receipt_comment_id: checked.transition_receipt.comment_id }); continue; }
-      if (checked.current_status === 'source-ready' && checked.transition_receipt) { progress.intents[id] = intent(request, freshPlan, 'complete', { receipt_comment_id: checked.transition_receipt.comment_id, mutation_attempted: false, mutation_performed: false, possibly_performed: false }); progress.results[id] = { status: 'complete', receipt_comment_id: checked.transition_receipt.comment_id, receipt_written: true, mutation_performed: false }; persist(progress); results.push({ issue_number: request.issue_number, action: 'already-applied', mutation_performed: false, receipt_comment_id: checked.transition_receipt.comment_id }); continue; }
+      let live = readLive(request); let checked = validateLiveFn(request, live, evidencePlan, pinnedArtifactManifest || evidencePlan.pinnedArtifactManifest);
+      if (!checked.ok && state.intent && ['begin-pending', 'final-pending'].includes(state.intent.phase)) {
+        const prefix = pendingLabelPrefix(live.interviewIssue && live.interviewIssue.labels, state.intent);
+        if (prefix.ok) {
+          const stage = state.intent.stage;
+          const normalizedLabels = replaceControlled(live.interviewIssue.labels, stage === 'begin' ? 'captured' : 'source-review', stage === 'begin' ? null : 'task:source-review');
+          const normalizedLive = { ...live, interviewIssue: { ...live.interviewIssue, labels: normalizedLabels } };
+          const normalizedCheck = validateLiveFn(request, normalizedLive, evidencePlan, pinnedArtifactManifest || evidencePlan.pinnedArtifactManifest);
+          if (normalizedCheck.ok) {
+            checked = { ...normalizedCheck, current_status: stage === 'begin' ? 'captured' : 'source-review', live_snapshot: issueSnapshot(live.interviewIssue) };
+            if (prefix.next_index !== state.intent.operation_index) {
+              progress.intents[id] = { ...state.intent, operation_index: prefix.next_index };
+              state.intent = progress.intents[id];
+              persist(progress);
+            }
+          }
+        }
+      }
+      if (!checked.ok) throw new Error(checked.errors.join('; '));
+      if (state.intent && state.intent.phase === 'complete') { if (checked.current_status !== 'source-ready' || !checked.transition_receipt) throw new Error('completed transition does not match live state'); ensureLocalReceipt(request, checked.transition_receipt, 'receipt-uncertain'); results.push({ issue_number: request.issue_number, action: 'already-applied', mutation_performed: false, receipt_comment_id: checked.transition_receipt.comment_id }); continue; }
+      if (checked.current_status === 'source-ready' && checked.transition_receipt) { ensureLocalReceipt(request, checked.transition_receipt); progress.intents[id] = intent(request, freshPlan, 'complete', { receipt_comment_id: checked.transition_receipt.comment_id, mutation_attempted: false, mutation_performed: false, possibly_performed: false }); progress.results[id] = { status: 'complete', receipt_comment_id: checked.transition_receipt.comment_id, receipt_written: true, mutation_performed: false }; persist(progress); results.push({ issue_number: request.issue_number, action: 'already-applied', mutation_performed: false, receipt_comment_id: checked.transition_receipt.comment_id }); continue; }
       if (state.intent && !['begin-pending', 'final-pending', 'receipt-pending', 'receipt-uncertain'].includes(state.intent.phase)) state.intent = null;
       if (checked.current_status === 'captured' || (state.intent && state.intent.phase === 'begin-pending')) { live = applyStage(request, 'begin', replaceControlled(normalizeLabels(live.interviewIssue.labels), 'source-review', 'task:source-review'), state); checked = validateLiveFn(request, live, evidencePlan, pinnedArtifactManifest || evidencePlan.pinnedArtifactManifest); if (!checked.ok) throw new Error(checked.errors.join('; ')); progress.intents[id] = intent(request, freshPlan, 'begin-applied', { mutation_attempted: true, mutation_performed: true, possibly_performed: false }); persist(progress); }
       live = readLive(request); checked = validateLiveFn(request, live, evidencePlan, pinnedArtifactManifest || evidencePlan.pinnedArtifactManifest); if (!checked.ok) throw new Error(checked.errors.join('; '));
       if (checked.current_status === 'source-review' || (state.intent && state.intent.phase === 'final-pending')) { live = applyStage(request, 'final', checked.final_labels, state); checked = validateLiveFn(request, live, evidencePlan, pinnedArtifactManifest || evidencePlan.pinnedArtifactManifest); if (!checked.ok) throw new Error(checked.errors.join('; ')); progress.intents[id] = intent(request, freshPlan, 'final-applied', { mutation_attempted: true, mutation_performed: true, possibly_performed: false }); persist(progress); }
       live = readLive(request); checked = validateLiveFn(request, live, evidencePlan, pinnedArtifactManifest || evidencePlan.pinnedArtifactManifest); if (!checked.ok || checked.current_status !== 'source-ready') throw new Error(`#${request.issue_number}: final source-ready gate failed`);
       let receipt = checked.transition_receipt;
-      const priorReceiptPhase = state.intent && ['receipt-pending', 'receipt-uncertain'].includes(state.intent.phase);
+      const priorReceiptPhase = Boolean(state.intent && (['receipt-pending', 'receipt-uncertain'].includes(state.intent.phase) || (state.intent.receipt_request_sha256 === requestSha256(request) && progress.receipt_attempt_count > 0 && !progress.results[id])));
       if (priorReceiptPhase && !receipt) {
         markUncertain(progress, request, freshPlan, state.intent.phase, 'prior transition receipt is not exactly recoverable; refusing duplicate POST', persist, { receipt_request_sha256: requestSha256(request) });
         throw new Error(`#${request.issue_number}: prior transition receipt is absent; refusing duplicate POST`);
@@ -366,20 +444,15 @@ function applyBatch({ requests, evidencePlan, pinnedArtifactManifest, liveLoader
           if (checked.ok && receipt) break;
           if (attempt < reconcileAttempts) { assertLock(); if (typeof options.sleep === 'function') options.sleep(backoff * (2 ** (attempt - 1))); assertLock(); }
         }
-        if (!receipt) { markUncertain(progress, request, freshPlan, 'receipt-pending', writeError ? writeError.message : 'transition receipt did not converge', persist); throw new Error(`#${request.issue_number}: transition receipt uncertain; refusing retry`); }
-        const localReceipt = transitionReceipt(request, receipt.comment_id || response && response.id, receipt.applied_at || value.applied_at);
-        try { assertLock(); options.writeReceipt(request, localReceipt); assertLock(); } catch (error) { markUncertain(progress, request, freshPlan, 'receipt-uncertain', `local receipt persistence failed: ${error.message}`, persist, { receipt_comment_id: receipt.comment_id }); throw error; }
+        if (!receipt) { markUncertain(progress, request, freshPlan, 'receipt-pending', writeError ? writeError.message : 'transition receipt did not converge', persist, { receipt_request_sha256: requestSha256(request) }); throw new Error(`#${request.issue_number}: transition receipt uncertain; refusing retry`); }
+        ensureLocalReceipt(request, receipt);
         persistIntent(progress, request, freshPlan, 'receipt-written', { receipt_comment_id: receipt.comment_id, mutation_attempted: true, mutation_performed: true, possibly_performed: false }, persist);
       }
-      const local = options.readReceipt(request);
-      if (!local || local.request_sha256 !== requestSha256(request) || Number(local.comment_id || local.evidence_comment_id || 0) !== Number(receipt.comment_id)) {
-        const localReceipt = transitionReceipt(request, receipt.comment_id, receipt.applied_at || (options.now ? options.now() : new Date().toISOString()));
-        try { assertLock(); options.writeReceipt(request, localReceipt); assertLock(); } catch (error) { markUncertain(progress, request, freshPlan, 'receipt-uncertain', `local receipt persistence failed: ${error.message}`, persist, { receipt_comment_id: receipt.comment_id }); throw error; }
-      }
+      ensureLocalReceipt(request, receipt);
       progress.mutation_performed = true; progress.possibly_performed = false; progress.results[id] = { status: 'complete', receipt_comment_id: receipt.comment_id, receipt_written: true, mutation_attempted: true, mutation_performed: true, possibly_performed: false }; persistIntent(progress, request, freshPlan, 'complete', { receipt_comment_id: receipt.comment_id, mutation_attempted: true, mutation_performed: true, possibly_performed: false }, persist); results.push({ issue_number: request.issue_number, action: 'applied', mutation_performed: true, receipt_comment_id: receipt.comment_id });
     } catch (error) { if (!progress.possibly_performed) { progress.status = 'failed'; persist(progress); } return { ok: false, errors: [`#${request.issue_number}: ${error.message}`], items: results, progress }; }
   }
   progress.status = 'complete'; progress.possibly_performed = false; progress.mutation_count = progress.label_attempt_count + progress.receipt_attempt_count; persist(progress); return { ok: true, errors: [], items: results, progress };
 }
 
-module.exports = { SCOPE, SCHEMA_VERSION, PROGRESS_SCHEMA_VERSION, INTENT_SCHEMA_VERSION, BATCH_ID, TARGETS, FIXED_ITEMS, normalizeLabels, controlledLabels, nonLifecycleLabels, replaceControlled, operations, inspectEvidence, transitionReceipt, transitionReceiptBody, validateEvidencePlan, validateRequests, validateLive, planBatch, initialProgress, validateProgress, applyBatch, acquireProgressLock };
+module.exports = { SCOPE, SCHEMA_VERSION, PROGRESS_SCHEMA_VERSION, INTENT_SCHEMA_VERSION, BATCH_ID, TARGETS, FIXED_ITEMS, normalizeLabels, controlledLabels, nonLifecycleLabels, preservesNonLifecycle, replaceControlled, operations, inspectEvidence, evidencePlanSha256, transitionReceipt, transitionReceiptBody, validateEvidencePlan, validateRequests, validateLive, planBatch, initialProgress, validateProgress, applyBatch, acquireProgressLock };
