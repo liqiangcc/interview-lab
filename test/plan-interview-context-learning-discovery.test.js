@@ -2,7 +2,7 @@
 
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { loadComments, loadAllIssues, loadLabels, fixedInventoryAudit, parseArgs, resumeProgressItem, validatePatchResponse, parseGhIncludedJson, normalizeIfMatchEtag, buildPatchArgs, acquireApplyLock } = require('../scripts/plan-interview-context-learning-discovery');
+const { loadComments, loadAllIssues, loadLabels, fixedInventoryAudit, parseArgs, resumeProgressItem, validatePatchResponse, parseGhIncludedJson, formatGhMutationError, ghMutationJson, validateIssuePatchSafety, patchIssue, buildPatchArgs, acquireApplyLock } = require('../scripts/plan-interview-context-learning-discovery');
 
 test('CLI comments pagination is explicit, bounded, and complete without --slurp', () => {
   const urls = [];
@@ -68,13 +68,49 @@ test('PATCH response missing or dropping labels fails closed', () => {
   assert.equal(validatePatchResponse({ labels: [{ name: 'type:interview-note' }, { name: 'company:alibaba' }] }, item), true);
 });
 
-test('Issue PATCH uses the immediately-read ETag as an atomic CAS precondition', () => {
-  const args = buildPatchArgs({ repository: 'liqiangcc/interview-lab' }, { issue_number: 915, issue_etag: 'W/"etag-1"' });
-  assert.deepEqual(args, ['api', '--method', 'PATCH', 'repos/liqiangcc/interview-lab/issues/915', '--header', 'If-Match: "etag-1"', '--input', '-']);
-  assert.equal(normalizeIfMatchEtag('W/"etag-1"'), '"etag-1"');
-  assert.equal(normalizeIfMatchEtag('"etag-1"'), '"etag-1"');
-  assert.throws(() => normalizeIfMatchEtag('etag-1'), /quoted opaque tag/);
-  assert.throws(() => buildPatchArgs({ repository: 'liqiangcc/interview-lab' }, { issue_number: 915 }), /requires the ETag/);
+test('Issue PATCH fails closed because REST unsafe-method CAS is unsupported', () => {
+  assert.deepEqual(validateIssuePatchSafety({ summary: { mutation_count: 0 } }), { ok: true, error: null, mutation_count: 0 });
+  const blocked = validateIssuePatchSafety({ summary: { mutation_count: 47 } });
+  assert.equal(blocked.ok, false);
+  assert.match(blocked.error, /does not support conditional requests/);
+  assert.throws(() => buildPatchArgs(), /no supported atomic precondition/);
+  assert.throws(() => patchIssue({}, {}, { ok: true }), /no supported atomic precondition/);
+});
+
+test('PATCH HTTP 400 preserves response body/request id and never retries', () => {
+  let calls = 0;
+  let captured;
+  const response = [
+    'HTTP/2.0 400 Bad Request',
+    'X-GitHub-Request-Id: MOCK:400',
+    '',
+    JSON.stringify({ message: 'Validation Failed', errors: [{ resource: 'Issue', field: 'labels', code: 'invalid' }] }),
+  ].join('\n');
+  const error = Object.assign(new Error('gh exited 1'), {
+    stdout: response,
+    stderr: 'gh: Bad Request (HTTP 400)',
+  });
+  assert.throws(() => ghMutationJson(
+    ['api', '--method', 'PATCH', 'repos/liqiangcc/interview-lab/issues/1509', '--header', 'Accept: application/vnd.github+json', '--header', 'Content-Type: application/json', '--input', '-'],
+    { title: '[小米] 一面 · 63f76452', labels: ['company:xiaomi', 'type:interview-note'] },
+    (command, args, options) => {
+      calls += 1;
+      captured = { command, args, options };
+      throw error;
+    },
+  ), (caught) => {
+    assert.match(caught.message, /HTTP\/2\.0 400 Bad Request/);
+    assert.match(caught.message, /request_id=MOCK:400/);
+    assert.match(caught.message, /Validation Failed/);
+    assert.match(caught.message, /"field":"labels"/);
+    return true;
+  });
+  assert.equal(calls, 1);
+  assert.equal(captured.command, 'gh');
+  assert.equal(captured.args.at(-1), '--include');
+  assert.equal(captured.options.input, JSON.stringify({ title: '[小米] 一面 · 63f76452', labels: ['company:xiaomi', 'type:interview-note'] }));
+  assert.match(captured.args.join(' '), /Content-Type: application\/json/);
+  assert.match(formatGhMutationError(error), /request_id=MOCK:400/);
 });
 
 test('GH included response parser requires and captures ETag', () => {

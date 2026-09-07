@@ -41,6 +41,22 @@ function parseGhIncludedJson(output) {
   return { json, headers, etag };
 }
 
+function formatGhMutationError(error) {
+  const stdout = error && error.stdout != null ? String(error.stdout) : '';
+  let responseDetail = '';
+  if (stdout.trim()) {
+    try {
+      const parsed = parseGhIncludedJson(stdout);
+      const requestId = parsed.headers.find((line) => /^x-github-request-id:/i.test(line))?.replace(/^x-github-request-id:\s*/i, '').trim();
+      responseDetail = `${parsed.headers[0] || 'HTTP response'}${requestId ? ` request_id=${requestId}` : ''} body=${JSON.stringify(parsed.json)}`;
+    } catch {
+      responseDetail = stdout.trim();
+    }
+  }
+  const stderr = error && error.stderr ? String(error.stderr).trim() : '';
+  return `gh mutation command failed without retry: ${responseDetail || stderr || error.message}`;
+}
+
 function runGhJsonWithHeaders(args) {
   const output = execFileSync('gh', [...args, '--include'], {
     encoding: 'utf8', maxBuffer: 128 * 1024 * 1024, stdio: ['pipe', 'pipe', 'pipe'],
@@ -60,10 +76,15 @@ function ghReadJson(args, input = null, attempts = 3) {
   throw new Error(`gh read command failed: ${stderr || lastError.message}`);
 }
 
-function ghMutationJson(args, input = null) {
-  try { return runGhJson(args, input); } catch (error) {
-    const stderr = error && error.stderr ? String(error.stderr).trim() : '';
-    throw new Error(`gh mutation command failed without retry: ${stderr || error.message}`);
+function ghMutationJson(args, input = null, execute = execFileSync) {
+  try {
+    const output = execute('gh', [...args, '--include'], {
+      input: input == null ? undefined : JSON.stringify(input), encoding: 'utf8',
+      maxBuffer: 128 * 1024 * 1024, stdio: ['pipe', 'pipe', 'pipe'],
+    });
+    return parseGhIncludedJson(output).json;
+  } catch (error) {
+    throw new Error(formatGhMutationError(error));
   }
 }
 
@@ -359,23 +380,21 @@ function validatePatchResponse(response, item) {
   return true;
 }
 
-function normalizeIfMatchEtag(etag) {
-  if (typeof etag !== 'string') throw new Error('Issue PATCH ETag must be a string');
-  const normalized = etag.trim().replace(/^W\//i, '');
-  if (!/^"(?:[^"\\]|\\.)*"$/.test(normalized)) throw new Error('Issue PATCH ETag must be a quoted opaque tag');
-  return normalized;
+const ISSUE_PATCH_UNSUPPORTED_REASON = 'Issue PATCH automation is disabled: GitHub REST does not support conditional requests for unsafe methods on this endpoint; no supported atomic precondition is available, so refusing mutation';
+
+function validateIssuePatchSafety(plan) {
+  const mutationCount = Number(plan && plan.summary && plan.summary.mutation_count || 0);
+  if (mutationCount > 0) return { ok: false, error: ISSUE_PATCH_UNSUPPORTED_REASON, mutation_count: mutationCount };
+  return { ok: true, error: null, mutation_count: mutationCount };
 }
 
-function buildPatchArgs(request, item) {
-  if (typeof item.issue_etag !== 'string' || item.issue_etag.trim() === '') throw new Error('Issue PATCH requires the ETag captured by the immediately preceding live Issue read');
-  return ['api', '--method', 'PATCH', `repos/${request.repository}/issues/${item.issue_number}`, '--header', `If-Match: ${normalizeIfMatchEtag(item.issue_etag)}`, '--input', '-'];
+function buildPatchArgs() {
+  throw new Error(ISSUE_PATCH_UNSUPPORTED_REASON);
 }
 
 function patchIssue(request, item, labelPreflight) {
   if (!labelPreflight || !labelPreflight.ok) throw new Error(`controlled label preflight is not satisfied: missing=${(labelPreflight && labelPreflight.missing || []).join(',')} unknown=${(labelPreflight && labelPreflight.unknown || []).join(',')}`);
-  const response = ghMutationJson(buildPatchArgs(request, item), { title: item.projection.title, labels: item.projection.labels });
-  validatePatchResponse(response, item);
-  return response;
+  throw new Error(ISSUE_PATCH_UNSUPPORTED_REASON);
 }
 
 function addReceipt(request, item, appliedAt) {
@@ -462,6 +481,11 @@ function main(argv = process.argv.slice(2)) {
   }
   if (!plan.label_preflight || !plan.label_preflight.ok) {
     process.stdout.write(`${JSON.stringify(report(plan, 'apply-blocked-label-preflight', { dependency_gate: live.liveGate, dry_run_digest: dryRunDigest }), null, 2)}\n`);
+    return 1;
+  }
+  const patchSafety = validateIssuePatchSafety(plan);
+  if (!patchSafety.ok) {
+    process.stdout.write(`${JSON.stringify(report(plan, 'apply-blocked-unsupported-patch-cas', { dependency_gate: live.liveGate, dry_run_digest: dryRunDigest, apply_blocked_reason: patchSafety.error, mutation_count: patchSafety.mutation_count }), null, 2)}\n`);
     return 1;
   }
   let progress = existingProgress;
@@ -574,4 +598,4 @@ if (require.main === module) {
   try { process.exitCode = main(); } catch (error) { process.stderr.write(`ERROR: ${error.message}\n`); process.exitCode = 1; }
 }
 
-module.exports = { parseArgs, paginate, loadComments, loadAllIssues, loadLabels, buildInventoryReport, fixedInventoryAudit, resumeProgressItem, planReloadedItem, validatePatchResponse, parseGhIncludedJson, normalizeIfMatchEtag, buildPatchArgs, acquireApplyLock, parseMarker, planBatch, report };
+module.exports = { parseArgs, paginate, loadComments, loadAllIssues, loadLabels, buildInventoryReport, fixedInventoryAudit, resumeProgressItem, planReloadedItem, validatePatchResponse, parseGhIncludedJson, formatGhMutationError, ghMutationJson, validateIssuePatchSafety, patchIssue, buildPatchArgs, acquireApplyLock, parseMarker, planBatch, report };
