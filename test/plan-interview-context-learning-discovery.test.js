@@ -2,7 +2,7 @@
 
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { loadComments, loadAllIssues, loadLabels, fixedInventoryAudit, parseArgs, resumeProgressItem, validatePatchResponse, parseGhIncludedJson, buildPatchArgs, acquireApplyLock } = require('../scripts/plan-interview-context-learning-discovery');
+const { loadComments, loadAllIssues, loadLabels, fixedInventoryAudit, parseArgs, resumeProgressItem, validatePatchResponse, parseGhIncludedJson, normalizeIfMatchEtag, buildPatchArgs, acquireApplyLock } = require('../scripts/plan-interview-context-learning-discovery');
 
 test('CLI comments pagination is explicit, bounded, and complete without --slurp', () => {
   const urls = [];
@@ -70,7 +70,10 @@ test('PATCH response missing or dropping labels fails closed', () => {
 
 test('Issue PATCH uses the immediately-read ETag as an atomic CAS precondition', () => {
   const args = buildPatchArgs({ repository: 'liqiangcc/interview-lab' }, { issue_number: 915, issue_etag: 'W/"etag-1"' });
-  assert.deepEqual(args, ['api', '--method', 'PATCH', 'repos/liqiangcc/interview-lab/issues/915', '--header', 'If-Match: W/"etag-1"', '--input', '-']);
+  assert.deepEqual(args, ['api', '--method', 'PATCH', 'repos/liqiangcc/interview-lab/issues/915', '--header', 'If-Match: "etag-1"', '--input', '-']);
+  assert.equal(normalizeIfMatchEtag('W/"etag-1"'), '"etag-1"');
+  assert.equal(normalizeIfMatchEtag('"etag-1"'), '"etag-1"');
+  assert.throws(() => normalizeIfMatchEtag('etag-1'), /quoted opaque tag/);
   assert.throws(() => buildPatchArgs({ repository: 'liqiangcc/interview-lab' }, { issue_number: 915 }), /requires the ETag/);
 });
 

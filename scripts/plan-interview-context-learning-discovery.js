@@ -353,9 +353,16 @@ function validatePatchResponse(response, item) {
   return true;
 }
 
+function normalizeIfMatchEtag(etag) {
+  if (typeof etag !== 'string') throw new Error('Issue PATCH ETag must be a string');
+  const normalized = etag.trim().replace(/^W\//i, '');
+  if (!/^"(?:[^"\\]|\\.)*"$/.test(normalized)) throw new Error('Issue PATCH ETag must be a quoted opaque tag');
+  return normalized;
+}
+
 function buildPatchArgs(request, item) {
   if (typeof item.issue_etag !== 'string' || item.issue_etag.trim() === '') throw new Error('Issue PATCH requires the ETag captured by the immediately preceding live Issue read');
-  return ['api', '--method', 'PATCH', `repos/${request.repository}/issues/${item.issue_number}`, '--header', `If-Match: ${item.issue_etag}`, '--input', '-'];
+  return ['api', '--method', 'PATCH', `repos/${request.repository}/issues/${item.issue_number}`, '--header', `If-Match: ${normalizeIfMatchEtag(item.issue_etag)}`, '--input', '-'];
 }
 
 function patchIssue(request, item, labelPreflight) {
@@ -561,4 +568,4 @@ if (require.main === module) {
   try { process.exitCode = main(); } catch (error) { process.stderr.write(`ERROR: ${error.message}\n`); process.exitCode = 1; }
 }
 
-module.exports = { parseArgs, paginate, loadComments, loadAllIssues, loadLabels, buildInventoryReport, fixedInventoryAudit, resumeProgressItem, validatePatchResponse, parseGhIncludedJson, buildPatchArgs, acquireApplyLock, parseMarker, planBatch, report };
+module.exports = { parseArgs, paginate, loadComments, loadAllIssues, loadLabels, buildInventoryReport, fixedInventoryAudit, resumeProgressItem, validatePatchResponse, parseGhIncludedJson, normalizeIfMatchEtag, buildPatchArgs, acquireApplyLock, parseMarker, planBatch, report };
