@@ -61,6 +61,38 @@ test('failed progress resumes only when live re-read proves convergence', () => 
   assert.match(held.error, /uncertain receipt mutation/);
 });
 
+test('receipt POST crash window never retries after attempted response loss', () => {
+  let postCalls = 0;
+  const afterPostCrash = {
+    state: 'receipt_pending',
+    receipt_attempted: true,
+    receipt_possibly_performed: true,
+    receipt_intent: { intent_id: 'durable-intent' },
+  };
+  const temporarilyMissingMarker = { ok: true, action: 'repair_receipt' };
+  const resume = resumeProgressItem(afterPostCrash, temporarilyMissingMarker);
+  if (resume.ok) postCalls += 1;
+  assert.equal(resume.ok, false);
+  assert.match(resume.error, /refusing blind retry/);
+  assert.equal(postCalls, 0);
+});
+
+test('receipt POST is recoverable only when durable state proves it was not attempted', () => {
+  const resume = resumeProgressItem({
+    state: 'receipt_pending',
+    receipt_attempted: false,
+    receipt_possibly_performed: false,
+    receipt_intent: { intent_id: 'durable-intent' },
+  }, { ok: true, action: 'repair_receipt' });
+  assert.deepEqual(resume, { ok: true, state: 'receipt_pending' });
+});
+
+test('legacy receipt_pending progress without attempted marker fails closed', () => {
+  const resume = resumeProgressItem({ state: 'receipt_pending' }, { ok: true, action: 'repair_receipt' });
+  assert.equal(resume.ok, false);
+  assert.match(resume.error, /no durable receipt_attempted marker/);
+});
+
 test('PATCH response missing or dropping labels fails closed', () => {
   const item = { current_labels: ['source:xhs', 'status:source-ready', 'workflow:keep-me', 'type:interview-note'], projection: { labels: ['company:alibaba', 'source:xhs', 'status:source-ready', 'workflow:keep-me', 'type:interview-note'].sort() } };
   assert.throws(() => validatePatchResponse({}, item), /omitted labels/);

@@ -4,8 +4,8 @@ const fs = require('fs');
 const path = require('path');
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { sha256Text, contextSha256, planItem, planBatch, receiptFor, receiptBody, parseReceipts, receiptMatches, auditReceiptMatches, intentId, validateProgressMapping, verifyContextArtifact, validateCompletionEvidence, ISSUE_1598_FIXED_INVENTORY, validateRequest } = require('../scripts/lib/interview-context-batch');
-const { planReloadedItem } = require('../scripts/plan-interview-context-learning-discovery');
+const { sha256Text, contextSha256, planItem, planBatch, receiptFor, receiptBody, parseReceipts, receiptMatches, auditReceiptMatches, intentId, progressFromPlan, validateProgressMapping, verifyContextArtifact, validateCompletionEvidence, ISSUE_1598_FIXED_INVENTORY, validateRequest } = require('../scripts/lib/interview-context-batch');
+const { planReloadedItem, resumeProgressItem } = require('../scripts/plan-interview-context-learning-discovery');
 const { parseInterviewNoteIssue } = require('../scripts/lib/interview-note-issue');
 
 const body = fs.readFileSync(path.join(__dirname, 'fixtures/interview-note-issue.valid.md'), 'utf8');
@@ -194,6 +194,43 @@ test('failed progress is auditable and resumable only after live convergence', (
   };
   const mapping = validateProgressMapping(progress, request(), first, progress.dry_run_digest, progress.max_mutations);
   assert.equal(mapping.ok, true, mapping.errors.join('\n'));
+});
+
+test('new progress persists an exact receipt intent before its POST attempt', () => {
+  const first = plan();
+  const requestValue = request();
+  const progress = progressFromPlan(requestValue, first, 'a'.repeat(64), 1, '2026-09-04T04:01:00Z');
+  const item = progress.items[0];
+  const intent = receiptFor(requestValue, first.items[0], '2026-09-04T04:02:00Z');
+  Object.assign(item, {
+    state: 'receipt_pending',
+    receipt_intent: intent,
+    receipt_body_sha256: sha256Text(receiptBody(intent)),
+    receipt_attempted: false,
+    receipt_possibly_performed: false,
+  });
+  const mapping = validateProgressMapping(progress, requestValue, first, progress.dry_run_digest, progress.max_mutations);
+  assert.equal(mapping.ok, true, mapping.errors.join('\n'));
+  assert.deepEqual(resumeProgressItem(item, { ok: true, action: 'repair_receipt' }), { ok: true, state: 'receipt_pending' });
+});
+
+test('attempted receipt progress fails closed when the marker is temporarily absent', () => {
+  const first = plan();
+  const requestValue = request();
+  const intent = receiptFor(requestValue, first.items[0], '2026-09-04T04:02:00Z');
+  const progress = progressFromPlan(requestValue, first, 'a'.repeat(64), 1);
+  Object.assign(progress.items[0], {
+    state: 'receipt_pending',
+    receipt_intent: intent,
+    receipt_body_sha256: sha256Text(receiptBody(intent)),
+    receipt_attempted: true,
+    receipt_possibly_performed: true,
+  });
+  const mapping = validateProgressMapping(progress, requestValue, first, progress.dry_run_digest, progress.max_mutations);
+  assert.equal(mapping.ok, true, mapping.errors.join('\n'));
+  const resume = resumeProgressItem(progress.items[0], { ok: true, action: 'repair_receipt' });
+  assert.equal(resume.ok, false);
+  assert.match(resume.error, /uncertain/);
 });
 
 test('matching receipt still reconciles externally drifted title or labels', () => {

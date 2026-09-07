@@ -231,8 +231,17 @@ function setProgressItem(progress, file, issueNumber, patch) {
 
 function resumeProgressItem(saved, liveItem) {
   if (liveItem && liveItem.ok && liveItem.action === 'already_applied') return { ok: true, state: 'complete' };
+  if (saved && (saved.receipt_attempted === true || saved.receipt_possibly_performed === true)) {
+    return { ok: false, state: 'failed', error: 'receipt POST outcome is uncertain; refusing blind retry until a matching live receipt is observed' };
+  }
   if (saved && saved.state === 'failed') return { ok: false, state: 'failed', error: saved.error || 'previous mutation outcome was uncertain; refusing blind retry' };
   if (saved && saved.state === 'complete') return { ok: false, state: 'failed', error: 'progress marked complete but live projection is not converged' };
+  if (saved && saved.state === 'receipt_pending' && saved.receipt_attempted === undefined) {
+    return { ok: false, state: 'failed', error: 'legacy receipt_pending progress has no durable receipt_attempted marker; refusing retry' };
+  }
+  if (saved && saved.state === 'receipt_pending' && (!liveItem || !liveItem.ok || !['repair_receipt', 'already_applied'].includes(liveItem.action))) {
+    return { ok: false, state: 'failed', error: 'receipt_pending live projection is not converged; refusing issue or receipt mutation' };
+  }
   return { ok: true, state: saved && saved.state ? saved.state : 'pending' };
 }
 
@@ -391,8 +400,7 @@ function patchIssue(request, item, labelPreflight) {
   return response;
 }
 
-function addReceipt(request, item, appliedAt) {
-  const receipt = receiptFor(request, item, appliedAt);
+function addReceipt(request, item, receipt = receiptFor(request, item, new Date().toISOString())) {
   const comment = ghMutationJson(['api', '--method', 'POST', `repos/${request.repository}/issues/${item.issue_number}/comments`, '--input', '-'], { body: receiptBody(receipt) });
   return { receipt, comment };
 }
@@ -594,10 +602,29 @@ function main(argv = process.argv.slice(2)) {
         continue;
       }
     }
-    setProgressItem(progress, progressFile, item.issue_number, { state: 'receipt_pending' });
+    const savedReceipt = progress.items.find((entry) => Number(entry.issue_number) === Number(item.issue_number));
+    if (item.receipt) {
+      setProgressItem(progress, progressFile, item.issue_number, { state: 'receipt_pending' });
+    } else {
+      const receiptIntent = savedReceipt.receipt_intent || receiptFor(request, item, new Date().toISOString());
+      if (!savedReceipt.receipt_intent) {
+        setProgressItem(progress, progressFile, item.issue_number, {
+          state: 'receipt_pending',
+          receipt_intent: receiptIntent,
+          receipt_body_sha256: sha256Text(receiptBody(receiptIntent)),
+          receipt_attempted: false,
+          receipt_possibly_performed: false,
+        });
+      }
+      if (savedReceipt.receipt_attempted === true || savedReceipt.receipt_possibly_performed === true) {
+        setProgressItem(progress, progressFile, item.issue_number, { state: 'failed', error: 'receipt POST outcome is uncertain; refusing blind retry until a matching live receipt is observed' });
+        throw new Error(`Issue #${item.issue_number} receipt POST outcome is uncertain; fail closed`);
+      }
+      setProgressItem(progress, progressFile, item.issue_number, { state: 'receipt_pending', receipt_attempted: true, receipt_possibly_performed: true });
+    }
     let receiptResult;
     try {
-      receiptResult = item.receipt ? { receipt: item.receipt, comment: { id: item.receipt.comment_id } } : addReceipt(request, item, new Date().toISOString());
+      receiptResult = item.receipt ? { receipt: item.receipt, comment: { id: item.receipt.comment_id } } : addReceipt(request, item, savedReceipt.receipt_intent);
     } catch (error) {
       const afterFailure = reloadPlannedItem(request, item, live.contextArtifactResults);
       if (!afterFailure.ok || afterFailure.action !== 'already_applied') {

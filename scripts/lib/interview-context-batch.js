@@ -407,6 +407,10 @@ function progressFromPlan(request, plan, dryRunDigest, maxMutations, now = new D
       planned_action: item.action,
       state: item.action === 'already_applied' ? 'complete' : 'pending',
       receipt_comment_id: item.receipt ? item.receipt.comment_id : null,
+      receipt_intent: null,
+      receipt_body_sha256: null,
+      receipt_attempted: false,
+      receipt_possibly_performed: false,
     })),
   };
 }
@@ -432,6 +436,17 @@ function validateProgressMapping(progress, request, plan, dryRunDigest, maxMutat
       if (planned.projection && (saved.title !== planned.projection.title || JSON.stringify(saved.labels || []) !== JSON.stringify(planned.projection.labels || []))) errors.push(`apply progress Issue #${planned.issue_number} projection mapping differs`);
       if (!['pending', 'issue_mutation_pending', 'issue_converged', 'receipt_pending', 'complete', 'failed'].includes(saved.state)) errors.push(`apply progress Issue #${planned.issue_number} has unsupported state ${saved.state}`);
       if (saved.state === 'failed' && (typeof saved.error !== 'string' || saved.error.trim() === '')) errors.push(`apply progress Issue #${planned.issue_number} failed state requires a non-empty error`);
+      for (const field of ['receipt_attempted', 'receipt_possibly_performed']) {
+        if (saved[field] !== undefined && typeof saved[field] !== 'boolean') errors.push(`apply progress Issue #${planned.issue_number} ${field} must be boolean`);
+      }
+      if (saved.receipt_possibly_performed === true && saved.receipt_attempted !== true) errors.push(`apply progress Issue #${planned.issue_number} possibly_performed requires attempted=true`);
+      if (saved.receipt_body_sha256 !== undefined && saved.receipt_body_sha256 !== null && !HEX64_RE.test(saved.receipt_body_sha256)) errors.push(`apply progress Issue #${planned.issue_number} receipt_body_sha256 must be a lowercase 64-char SHA-256`);
+      if (saved.receipt_intent !== undefined && saved.receipt_intent !== null) {
+        if (!planned.projection || !receiptMatches(saved.receipt_intent, request, requestItem, planned.projection)) errors.push(`apply progress Issue #${planned.issue_number} receipt intent mapping differs`);
+        else if (saved.receipt_body_sha256 !== sha256Text(receiptBody(saved.receipt_intent))) errors.push(`apply progress Issue #${planned.issue_number} receipt intent body digest differs`);
+      }
+      if (saved.receipt_attempted === true && (!saved.receipt_intent || !saved.receipt_body_sha256)) errors.push(`apply progress Issue #${planned.issue_number} attempted receipt requires a durable receipt intent`);
+      if (saved.state === 'receipt_pending' && (!saved.receipt_intent || saved.receipt_attempted === undefined)) errors.push(`apply progress Issue #${planned.issue_number} receipt_pending requires durable receipt intent state`);
     }
   }
   return { ok: errors.length === 0, errors };

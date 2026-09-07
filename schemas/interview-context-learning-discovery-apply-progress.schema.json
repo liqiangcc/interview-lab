@@ -30,6 +30,10 @@
           "planned_action": {"type": "string"},
           "state": {"enum": ["pending", "issue_mutation_pending", "issue_converged", "receipt_pending", "complete", "failed"]},
           "receipt_comment_id": {"type": ["integer", "null"]},
+          "receipt_intent": {"type": ["object", "null"]},
+          "receipt_body_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+          "receipt_attempted": {"type": "boolean"},
+          "receipt_possibly_performed": {"type": "boolean"},
           "error": {"type": "string"}
         }
       }
