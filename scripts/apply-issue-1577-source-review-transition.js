@@ -150,15 +150,20 @@ function main(argv = process.argv.slice(2), injected = {}) {
   };
   const liveLoader = (request) => ({ sourceIssue: loadIssue(request.source_note_issue_number), interviewIssue: loadIssue(request.issue_number), comments: loadComments(request.issue_number), sourceComments: loadComments(request.source_note_issue_number), allIssues: loadOwnership(request.interview_note_id) });
   let lock = null;
+  let result = null;
+  let progress = null;
+  let primaryError = null;
   try {
     const plan = planBatch({ requests, evidencePlan, liveLoader, pinnedArtifactManifest: evidencePlan.pinnedArtifactManifest });
     if (!args.apply) { atomicWriteJson(args.output, plan); return plan.ok ? 0 : 1; }
-    lock = acquireProgressLock(args.progressLock);
-    const progress = fs.existsSync(args.progress) ? readJson(args.progress) : initialProgress(plan);
+    const acquireLock = injected.acquireProgressLock || acquireProgressLock;
+    lock = acquireLock(args.progressLock);
+    progress = fs.existsSync(args.progress) ? readJson(args.progress) : initialProgress(plan);
     const throttle = (() => { let last = null; return () => { const now = Date.now(); if (last != null) { const wait = args.minMutationIntervalMs - (now - last); if (wait > 0) sleep(wait); } last = Date.now(); }; })();
-    const result = applyBatch({ requests, evidencePlan, pinnedArtifactManifest: evidencePlan.pinnedArtifactManifest, liveLoader, progress, expectedPlanSha256: args.confirmPlanSha256, expectedAuthorizationSha256: args.confirmAuthorizationSha256 }, {
+    result = applyBatch({ requests, evidencePlan, pinnedArtifactManifest: evidencePlan.pinnedArtifactManifest, liveLoader, progress, expectedPlanSha256: args.confirmPlanSha256, expectedAuthorizationSha256: args.confirmAuthorizationSha256 }, {
       lock,
       persistProgress: (value) => atomicWriteJson(args.progress, value),
+      persistUncertainProgress: (value) => atomicWriteJson(args.progress, value),
       beforeMutation: throttle,
       patchLabel: (request, operation) => { if (operation.kind === 'add') command(['api', '--method', 'POST', `repos/${request.repository}/issues/${request.issue_number}/labels`, '--input', '-'], { labels: [operation.label] }); else command(['api', '--method', 'DELETE', `repos/${request.repository}/issues/${request.issue_number}/labels/${encodeURIComponent(operation.label)}`]); },
       postReceipt: (request, receipt) => command(['api', '--method', 'POST', `repos/${request.repository}/issues/${request.issue_number}/comments`, '--input', '-'], { body: transitionReceiptBody(receipt) }),
@@ -170,7 +175,21 @@ function main(argv = process.argv.slice(2), injected = {}) {
       now: () => args.reviewedAt || new Date().toISOString(),
     });
     atomicWriteJson(args.output, result); return result.ok ? 0 : 1;
-  } finally { if (lock) lock.release(); }
+  } catch (error) {
+    primaryError = error;
+    if (args.apply && progress) {
+      const failure = result && result.ok === false ? result : { ok: false, errors: [error.message], items: result && result.items || [], progress };
+      try { atomicWriteJson(args.output, failure); } catch (outputError) { throw new Error(`${error.message}; failed to write apply result: ${outputError.message}`); }
+      return 1;
+    }
+    throw error;
+  } finally {
+    if (lock) {
+      try { lock.release(); } catch (releaseError) {
+        if (!primaryError && (!result || result.ok !== false)) throw releaseError;
+      }
+    }
+  }
 }
 if (require.main === module) { try { process.exitCode = main(); } catch (error) { process.stderr.write(`ERROR: ${error.message}\n`); process.exitCode = 1; } }
 module.exports = { TARGETS, parseArgs, requestFiles, receiptPath, readReceipt, writeReceipt, transitionReceiptBody, atomicWriteJson, httpStatusFromError, isTransientReadError, readWithRetry, collectOwnershipPages, main };

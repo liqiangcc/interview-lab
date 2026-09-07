@@ -364,6 +364,69 @@ test('real CLI main applies all 17 production-shaped requests through an injecte
     }
     for (const [issue, state] of fixture.sourceStates) assert.equal(state.body, fixture.initialSourceBodies.get(issue), `SourceNote #${issue} body must remain unchanged`);
     assert.equal(fixture.apiCalls.every((call) => call.args[0] === 'api'), true, 'all calls remained inside the injected fixture');
+    const idempotentPlanOutput = path.join(fixture.root, 'idempotent-plan.json');
+    assert.equal(main([...common, '--output', idempotentPlanOutput], { ghJson: fixture.ghJson }), 0);
+    const idempotentPlan = JSON.parse(fs.readFileSync(idempotentPlanOutput, 'utf8'));
+    const releaseFailureOutput = path.join(fixture.root, 'release-failure-result.json');
+    let releaseCalls = 0;
+    const releaseLock = { assertHeld() {}, release() { releaseCalls += 1; throw new Error('release failure on successful apply'); } };
+    const releaseArgs = [...applyArgs];
+    releaseArgs[releaseArgs.indexOf('--output') + 1] = releaseFailureOutput;
+    releaseArgs[releaseArgs.indexOf('--confirm-plan-sha256') + 1] = idempotentPlan.plan_sha256;
+    assert.throws(() => main(releaseArgs, { ghJson: fixture.ghJson, acquireProgressLock: () => releaseLock }), /release failure on successful apply/);
+    assert.equal(releaseCalls, 1);
+  } finally {
+    fs.rmSync(fixture.root, { recursive: true, force: true });
+  }
+});
+
+test('CLI journals lock-loss uncertainty and resumes without another mutation', () => {
+  const fixture = makeProductionApplyFixture();
+  const planOutput = path.join(fixture.root, 'transition-plan.json');
+  const resultOutput = path.join(fixture.root, 'transition-result.json');
+  try {
+    const common = ['--manifest', path.resolve('data/issue-1577/source-review-manifest.json'), '--evidence-plan', fixture.evidencePlanFile, '--request-dir', fixture.requestDir, '--transition-receipt-dir', fixture.receiptDir, '--get-max-attempts', '1', '--get-backoff-ms', '0', '--min-mutation-interval-ms', '0', '--reviewed-at', '2026-09-07T00:00:00Z'];
+    assert.equal(main([...common, '--output', planOutput], { ghJson: fixture.ghJson }), 0);
+    const plan = JSON.parse(fs.readFileSync(planOutput, 'utf8'));
+    writeJson(fixture.progress, initialProgress(plan));
+    const applyArgs = [...common, '--output', resultOutput, '--progress', fixture.progress, '--progress-lock', fixture.lock, '--confirm-plan-sha256', plan.plan_sha256, '--confirm-authorization-sha256', plan.authorization_sha256, '--apply'];
+    let labelMutationCount = 0;
+    let lockLost = false;
+    const failingLock = {
+      assertHeld() { if (lockLost) throw new Error('lock lost after mutating label PATCH'); },
+      release() { throw new Error('release failed after apply error'); },
+    };
+    const ghJson = (args, input) => {
+      const value = fixture.ghJson(args, input);
+      if (args.includes('--method') && args.some((entry) => entry.includes('/labels'))) { labelMutationCount += 1; lockLost = true; }
+      return value;
+    };
+    assert.equal(main(applyArgs, { ghJson, acquireProgressLock: () => failingLock }), 1);
+    const firstProgress = JSON.parse(fs.readFileSync(fixture.progress, 'utf8'));
+    const firstResult = JSON.parse(fs.readFileSync(resultOutput, 'utf8'));
+    const uncertain = firstProgress.intents['issue-1577-source-review-1558'];
+    assert.equal(firstResult.ok, false);
+    assert.equal(firstResult.progress.possibly_performed, true);
+    assert.equal(firstProgress.status, 'failed');
+    assert.equal(uncertain.phase, 'uncertain');
+    assert.equal(uncertain.attempted_phase, 'begin-pending');
+    assert.equal(uncertain.operation_index, 0);
+    assert.deepEqual(uncertain.operation_prefix, []);
+    assert.equal(uncertain.operation_plan.length, 3);
+    assert.equal(uncertain.cas.number, 1558);
+    assert.match(uncertain.error, /lock lost after mutating label PATCH/);
+    assert.equal(labelMutationCount, 1);
+
+    const beforeResume = labelMutationCount;
+    const resumeResultOutput = path.join(fixture.root, 'transition-resume-result.json');
+    const resumeArgs = [...applyArgs];
+    resumeArgs[resumeArgs.indexOf('--output') + 1] = resumeResultOutput;
+    assert.equal(main(resumeArgs, { ghJson: fixture.ghJson, acquireProgressLock: () => ({ assertHeld() {}, release() {} }) }), 1);
+    const resumeResult = JSON.parse(fs.readFileSync(resumeResultOutput, 'utf8'));
+    assert.equal(resumeResult.ok, false);
+    assert.match(resumeResult.errors.join('\n'), /permanently uncertain|explicit replan/);
+    assert.equal(labelMutationCount, beforeResume, 'resume must not issue another label mutation');
+    assert.equal(fixture.apiCalls.filter((call) => call.args.includes('--method') && call.args.some((entry) => entry.includes('/comments'))).length, 0);
   } finally {
     fs.rmSync(fixture.root, { recursive: true, force: true });
   }

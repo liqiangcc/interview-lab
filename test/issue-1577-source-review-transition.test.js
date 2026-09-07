@@ -101,10 +101,12 @@ function applyFixture() {
 }
 
 function run(fixture, extra = {}) {
+  const lock = extra.lock || { assertHeld() {} };
   return applyBatch({ requests: fixture.reqs, evidencePlan: fixture.ep, pinnedArtifactManifest: fixture.ep.pinnedArtifactManifest, liveLoader: fixture.liveLoader, progress: fixture.progress, expectedPlanSha256: PLAN, expectedAuthorizationSha256: AUTH }, {
-    lock: { assertHeld() {} }, planBatch: fixture.planFn, validateLive: fixture.validateLive,
-    persistProgress: () => {}, patchLabel: (request, operation) => { fixture.calls.labels.push({ issue: request.issue_number, operation }); if (extra.ambiguousLabelPatch && !extra.ambiguous) { extra.ambiguous = true; throw new Error('label PATCH response was ambiguous'); } const state = fixture.states.get(request.issue_number); if (operation.kind === 'add') state.labels.push(operation.label); else state.labels = state.labels.filter((label) => label !== operation.label); if (extra.reconcileReadFailure && !extra.reconcileFailureSet) { extra.reconcileFailureSet = true; fixture.controls.reconcileReadFailure = true; } },
-    postReceipt: (request, receipt) => { fixture.calls.receipts.push(request.issue_number); const state = fixture.states.get(request.issue_number); if (extra.receiptAbsent) throw new Error('receipt response lost and receipt absent'); state.receipt = { comment_id: state.nextComment++, request_sha256: requestSha256(request), final_status: 'source-ready', applied_at: receipt.applied_at }; if (extra.responseLoss) throw new Error('response lost'); return { id: state.receipt.comment_id }; },
+    lock, planBatch: fixture.planFn, validateLive: fixture.validateLive,
+    persistProgress: extra.persistProgress || (() => {}), persistUncertainProgress: extra.persistUncertainProgress,
+    patchLabel: (request, operation) => { fixture.calls.labels.push({ issue: request.issue_number, operation }); if (extra.ambiguousLabelPatch && !extra.ambiguous) { extra.ambiguous = true; throw new Error('label PATCH response was ambiguous'); } const state = fixture.states.get(request.issue_number); if (operation.kind === 'add') state.labels.push(operation.label); else state.labels = state.labels.filter((label) => label !== operation.label); if (extra.reconcileReadFailure && !extra.reconcileFailureSet) { extra.reconcileFailureSet = true; fixture.controls.reconcileReadFailure = true; } },
+    postReceipt: (request, receipt) => { fixture.calls.receipts.push(request.issue_number); const state = fixture.states.get(request.issue_number); if (extra.receiptAbsent) throw new Error('receipt response lost and receipt absent'); state.receipt = { comment_id: state.nextComment++, request_sha256: requestSha256(request), final_status: 'source-ready', applied_at: receipt.applied_at }; if (extra.lockLostAfterReceipt && !extra.receiptLockLost) { extra.receiptLockLost = true; lock.lost = true; } if (extra.responseLoss) throw new Error('response lost'); return { id: state.receipt.comment_id }; },
     readReceipt: (request) => fixture.states.get(request.issue_number).localReceipt || null,
     writeReceipt: (request, receipt) => { fixture.calls.localWrites += 1; if (extra.localReceiptFailure && !extra.localFailed) { extra.localFailed = true; throw new Error('local receipt write failed'); } fixture.states.get(request.issue_number).localReceipt = receipt; },
     beforeMutation: extra.beforeMutation || (() => {}), afterLabelReconcile: extra.crashAfterFirstLabel && !extra.crashed ? () => { extra.crashed = true; throw new Error('simulated process crash'); } : undefined, sleep: (ms) => fixture.calls.waits.push(ms), now: () => '2026-09-07T00:00:00Z',
@@ -191,6 +193,24 @@ test('receipt response loss is recovered by exact read without a second POST', (
   assert.equal(result.ok, true, result.errors && result.errors.join('; '));
   assert.equal(fixture.calls.receipts.length, 17);
   assert.equal(fixture.progress.possibly_performed, false);
+});
+
+test('receipt POST lock loss journals uncertainty through the lock-independent fallback', () => {
+  const fixture = applyFixture();
+  const lock = { lost: false, assertHeld() { if (this.lost) throw new Error('lock lost after receipt POST'); } };
+  const journal = [];
+  const first = run(fixture, { lock, lockLostAfterReceipt: true, persistUncertainProgress: (progress) => journal.push(JSON.parse(JSON.stringify(progress))) });
+  assert.equal(first.ok, false);
+  assert.equal(first.progress.possibly_performed, true);
+  assert.equal(fixture.calls.receipts.length, 1);
+  assert.ok(journal.length > 0, 'uncertainty fallback must write a durable journal');
+  const uncertain = JSON.parse(JSON.stringify(journal.at(-1))).intents['issue-1577-source-review-1558'];
+  assert.equal(uncertain.phase, 'receipt-uncertain');
+  assert.equal(uncertain.attempted_phase, 'receipt-pending');
+  assert.equal(uncertain.receipt_request_sha256, uncertain.request_sha256);
+  const second = run(fixture, { lock: { assertHeld() {} } });
+  assert.equal(second.ok, true, second.errors && second.errors.join('; '));
+  assert.equal(fixture.calls.receipts.filter((issue) => issue === 1558).length, 1, 'resume must recover the exact receipt without reposting');
 });
 
 test('absent receipt after a POST stays possibly and refuses blind resend on resume', () => {

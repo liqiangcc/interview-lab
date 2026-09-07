@@ -397,7 +397,19 @@ function validateProgress(progress, plan) {
 }
 function intent(request, plan, phase, extra = {}) { return { schema_version: INTENT_SCHEMA_VERSION, intent_id: sha256Text(`${plan.authorization_sha256}:${request.transition_id}`), authorization_sha256: plan.authorization_sha256, packet_set_sha256: plan.packet_set_sha256, packet_id: `issue-1577-source-review-${request.issue_number}`, issue_number: request.issue_number, transition_id: request.transition_id, request_sha256: requestSha256(request), phase, ...extra }; }
 function persistIntent(progress, request, plan, phase, extra, persist) { const id = `issue-1577-source-review-${request.issue_number}`; progress.intents[id] = intent(request, plan, phase, extra); persist(progress); }
-function markUncertain(progress, request, plan, phase, error, persist, extra = {}) { progress.status = 'failed'; progress.mutation_performed = null; progress.possibly_performed = true; const uncertainPhase = ['receipt-pending', 'receipt-uncertain'].includes(phase) ? 'receipt-uncertain' : 'uncertain'; persistIntent(progress, request, plan, uncertainPhase, { attempted_phase: phase, error, ...(uncertainPhase === 'receipt-uncertain' ? { receipt_request_sha256: requestSha256(request) } : {}), ...extra }, persist); }
+function markUncertain(progress, request, plan, phase, error, persist, extra = {}, fallbackPersist = null) {
+  progress.status = 'failed';
+  progress.mutation_performed = null;
+  progress.possibly_performed = true;
+  const uncertainPhase = ['receipt-pending', 'receipt-uncertain'].includes(phase) ? 'receipt-uncertain' : 'uncertain';
+  const details = { attempted_phase: phase, error, ...(uncertainPhase === 'receipt-uncertain' ? { receipt_request_sha256: requestSha256(request) } : {}), ...extra };
+  try {
+    persistIntent(progress, request, plan, uncertainPhase, details, persist);
+  } catch (persistError) {
+    if (typeof fallbackPersist !== 'function') throw persistError;
+    persistIntent(progress, request, plan, uncertainPhase, details, fallbackPersist);
+  }
+}
 function pendingLabelPrefix(labels, pending) {
   const normalized = normalizeLabels(labels, true);
   if (!normalized || !pending || !Array.isArray(pending.operation_plan) || !Number.isInteger(pending.operation_index)) return { ok: false, errors: ['pending label intent is malformed'] };
@@ -435,6 +447,8 @@ function applyBatch({ requests, evidencePlan, pinnedArtifactManifest, liveLoader
   const backoff = Number.isInteger(options.reconcileBackoffMs) && options.reconcileBackoffMs >= 0 ? options.reconcileBackoffMs : 1000;
   const readLive = (request) => guardedLiveLoader(request);
   const persist = (value) => { assertLock(); options.persistProgress(value); };
+  const persistUncertainProgress = options.persistUncertainProgress || options.persistProgressUnsafe;
+  const markUncertainDurably = (...args) => markUncertain(...args, persistUncertainProgress);
   const markLabelAttempt = () => { progress.label_attempt_count += 1; progress.mutation_count = progress.label_attempt_count + progress.receipt_attempt_count; progress.mutation_attempted = true; progress.mutation_performed = null; progress.possibly_performed = true; persist(progress); };
   const idFor = (request) => `issue-1577-source-review-${request.issue_number}`;
   const ensureLocalReceipt = (request, remoteReceipt, phase = 'receipt-uncertain') => {
@@ -443,12 +457,12 @@ function applyBatch({ requests, evidencePlan, pinnedArtifactManifest, liveLoader
     try { assertLock(); local = options.readReceipt(request); assertLock(); }
     catch (error) {
       if (error && error.code === 'ENOENT') local = null;
-      else { markUncertain(progress, request, freshPlan, phase, `local receipt read failed: ${error.message}`, persist, { receipt_comment_id: remoteReceipt.comment_id }); throw error; }
+      else { markUncertainDurably(progress, request, freshPlan, phase, `local receipt read failed: ${error.message}`, persist, { receipt_comment_id: remoteReceipt.comment_id }); throw error; }
     }
     if (local && canonicalJson(local) === canonicalJson(expected)) return expected;
     try { assertLock(); options.writeReceipt(request, expected); assertLock(); }
     catch (error) {
-      markUncertain(progress, request, freshPlan, phase, `local receipt persistence failed: ${error.message}`, persist, { receipt_comment_id: remoteReceipt.comment_id });
+      markUncertainDurably(progress, request, freshPlan, phase, `local receipt persistence failed: ${error.message}`, persist, { receipt_comment_id: remoteReceipt.comment_id });
       throw error;
     }
     return expected;
@@ -506,7 +520,7 @@ function applyBatch({ requests, evidencePlan, pinnedArtifactManifest, liveLoader
         }
       }
       if (!converged) {
-        markUncertain(progress, request, freshPlan, stage === 'begin' ? 'begin-pending' : 'final-pending', (reconcileError || writeError || new Error(`${stage} label write did not converge`)).message, persist, uncertaintyContext);
+        markUncertainDurably(progress, request, freshPlan, stage === 'begin' ? 'begin-pending' : 'final-pending', (reconcileError || writeError || new Error(`${stage} label write did not converge`)).message, persist, uncertaintyContext);
         throw new Error(`#${request.issue_number}: ${stage} label write did not converge; refusing retry`);
       }
       if (typeof options.afterLabelReconcile === 'function') options.afterLabelReconcile(request, stage, op, index);
@@ -529,7 +543,7 @@ function applyBatch({ requests, evidencePlan, pinnedArtifactManifest, liveLoader
       return finalLive;
     } catch (error) {
       if (patchInvokedInStage) {
-        markUncertain(progress, request, freshPlan, stage === 'begin' ? 'begin-pending' : 'final-pending', error.message, persist, finalUncertaintyContext);
+        markUncertainDurably(progress, request, freshPlan, stage === 'begin' ? 'begin-pending' : 'final-pending', error.message, persist, finalUncertaintyContext);
         throw new Error(`#${request.issue_number}: ${stage} final label gate uncertain; refusing retry`);
       }
       throw error;
@@ -568,21 +582,27 @@ function applyBatch({ requests, evidencePlan, pinnedArtifactManifest, liveLoader
       let receipt = checked.transition_receipt;
       const priorReceiptPhase = Boolean(state.intent && (['receipt-pending', 'receipt-uncertain'].includes(state.intent.phase) || (state.intent.receipt_request_sha256 === requestSha256(request) && progress.receipt_attempt_count > 0 && !progress.results[id])));
       if (priorReceiptPhase && !receipt) {
-        markUncertain(progress, request, freshPlan, state.intent.phase, 'prior transition receipt is not exactly recoverable; refusing duplicate POST', persist, { receipt_request_sha256: requestSha256(request) });
+        markUncertainDurably(progress, request, freshPlan, state.intent.phase, 'prior transition receipt is not exactly recoverable; refusing duplicate POST', persist, { receipt_request_sha256: requestSha256(request) });
         throw new Error(`#${request.issue_number}: prior transition receipt is absent; refusing duplicate POST`);
       }
       if (!receipt) {
         const value = transitionReceipt(request, null, options.now ? options.now() : new Date().toISOString());
         persistIntent(progress, request, freshPlan, 'receipt-pending', { receipt_request_sha256: requestSha256(request), receipt: value }, persist);
         progress.receipt_attempt_count += 1; progress.mutation_count = progress.label_attempt_count + progress.receipt_attempt_count; progress.mutation_attempted = true; progress.mutation_performed = null; progress.possibly_performed = true; persist(progress);
-        let writeError = null; let response = null;
-        try { assertLock(); throttle(); response = options.postReceipt(request, transitionReceipt(request, 0, value.applied_at)); assertLock(); } catch (error) { writeError = error; }
+        let writeError = null; let response = null; let postInvoked = false;
+        try { assertLock(); throttle(); postInvoked = true; response = options.postReceipt(request, transitionReceipt(request, 0, value.applied_at)); assertLock(); } catch (error) { if (!postInvoked) throw error; writeError = error; }
+        let reconcileError = null;
         for (let attempt = 1; attempt <= reconcileAttempts; attempt += 1) {
-          live = readLive(request); checked = validateLiveFn(request, live, evidencePlan, pinnedArtifactManifest || evidencePlan.pinnedArtifactManifest); receipt = checked.transition_receipt;
-          if (checked.ok && receipt) break;
-          if (attempt < reconcileAttempts) { assertLock(); if (typeof options.sleep === 'function') options.sleep(backoff * (2 ** (attempt - 1))); assertLock(); }
+          try {
+            live = readLive(request); checked = validateLiveFn(request, live, evidencePlan, pinnedArtifactManifest || evidencePlan.pinnedArtifactManifest); receipt = checked.transition_receipt;
+            if (checked.ok && receipt) break;
+            if (attempt < reconcileAttempts) { assertLock(); if (typeof options.sleep === 'function') options.sleep(backoff * (2 ** (attempt - 1))); assertLock(); }
+          } catch (error) {
+            reconcileError = error;
+            break;
+          }
         }
-        if (!receipt) { markUncertain(progress, request, freshPlan, 'receipt-pending', writeError ? writeError.message : 'transition receipt did not converge', persist, { receipt_request_sha256: requestSha256(request) }); throw new Error(`#${request.issue_number}: transition receipt uncertain; refusing retry`); }
+        if (!receipt) { markUncertainDurably(progress, request, freshPlan, 'receipt-pending', (reconcileError || writeError || new Error('transition receipt did not converge')).message, persist, { receipt_request_sha256: requestSha256(request) }); throw new Error(`#${request.issue_number}: transition receipt uncertain; refusing retry`); }
         ensureLocalReceipt(request, receipt);
         persistIntent(progress, request, freshPlan, 'receipt-written', { receipt_request_sha256: requestSha256(request), receipt_comment_id: receipt.comment_id, mutation_attempted: true, mutation_performed: true, possibly_performed: false }, persist);
       }
