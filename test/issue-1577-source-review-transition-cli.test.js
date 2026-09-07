@@ -127,6 +127,9 @@ function makeProductionApplyFixture() {
   const sourceRepository = 'liqiangcc/xhs';
   const sourceStates = new Map();
   const interviewStates = new Map();
+  const initialInterviewBodies = new Map();
+  const initialSourceBodies = new Map();
+  const initialComments = new Map();
   const artifactsByIssue = new Map();
   const bodyFor = (kind, record, sections) => `<!-- ${kind === 'source' ? 'source-note' : 'interview-note'}: id=${record[kind === 'source' ? 'source_note_id' : 'interview_note_id']} schema=${record.schema_version} -->\n<!-- ${kind === 'source' ? 'source-note' : 'interview-note'}-record\n${JSON.stringify(record, null, 2)}\n-->\n\n${sections.join('\n\n')}`;
 
@@ -168,6 +171,8 @@ function makeProductionApplyFixture() {
     const interviewBody = bodyFor('interview', interviewRecord, ['## 来源身份', '## 原始标题', '## 原始正文', '## 原始附件', '## 来源限制', '## 派生链接']);
     sourceStates.set(fixed.source_note_issue_number, { number: fixed.source_note_issue_number, body: sourceBody, state: 'open', labels: ['type:source-note', 'source:xhs', 'boundary:single-interview'] });
     interviewStates.set(fixed.interview_issue_number, { number: fixed.interview_issue_number, body: interviewBody, state: 'open', labels: ['type:interview-note', 'source:xhs', 'learning:fixture', 'status:captured'], comments: [] });
+    initialInterviewBodies.set(fixed.interview_issue_number, interviewBody);
+    initialSourceBodies.set(fixed.source_note_issue_number, sourceBody);
   }
 
   const entries = FIXED_ITEMS.map((fixed) => ({
@@ -231,6 +236,7 @@ function makeProductionApplyFixture() {
     };
     const evidenceComment = { id: request.review_evidence.comment_id, issue_url: `https://api.github.com/repos/${request.repository}/issues/${request.issue_number}`, repository_url: `https://api.github.com/repos/${request.repository}`, body: `<!-- interview-note-source-review-evidence.v1\n${JSON.stringify(marker, null, 2)}\n-->` };
     interviewIssue.comments.push(evidenceComment);
+    initialComments.set(request.issue_number, [JSON.parse(JSON.stringify(evidenceComment))]);
     writeJson(path.join(requestDir, `issue-${request.issue_number}.json`), request);
     writeMarker(path.join(requestDir, `issue-${request.issue_number}.md`), 'interview-note-source-review-transition', request);
   }
@@ -298,7 +304,7 @@ function makeProductionApplyFixture() {
     if (endpoint.startsWith('repos/')) return issue === 1577 ? {} : { ...(interviewStates.get(issue) || sourceStates.get(issue)), labels: [...(interviewStates.get(issue) || sourceStates.get(issue)).labels] };
     throw new Error(`unexpected fixture read endpoint: ${endpoint}`);
   };
-  return { root, requestDir, receiptDir, progress, lock, evidencePlanFile, ghJson, apiCalls, evidencePlan, interviewStates, sourceStates };
+  return { root, requestDir, receiptDir, progress, lock, evidencePlanFile, ghJson, apiCalls, evidencePlan, interviewStates, sourceStates, initialInterviewBodies, initialSourceBodies, initialComments };
 }
 
 test('CLI validates the fixed manifest anchors before any live API call', () => {
@@ -351,7 +357,12 @@ test('real CLI main applies all 17 production-shaped requests through an injecte
     assert.equal(fixture.apiCalls.filter((call) => call.args.includes('--method') && call.args.some((value) => value.endsWith('/comments'))).length, 17);
     assert.deepEqual(result.items.map((item) => item.issue_number), TARGETS);
     assert.equal(fs.readdirSync(fixture.receiptDir).filter((name) => name.endsWith('.json')).length, 17);
-    for (const [issue, state] of fixture.interviewStates) assert.deepEqual(state.labels.sort(), ['learning:fixture', 'source:xhs', 'status:source-ready', 'type:interview-note']);
+    for (const [issue, state] of fixture.interviewStates) {
+      assert.deepEqual(state.labels.sort(), ['learning:fixture', 'source:xhs', 'status:source-ready', 'type:interview-note']);
+      assert.equal(state.body, fixture.initialInterviewBodies.get(issue), `InterviewNote #${issue} body must remain unchanged`);
+      assert.deepEqual(state.comments.slice(0, 1), fixture.initialComments.get(issue), `pre-existing comments on #${issue} must remain unchanged`);
+    }
+    for (const [issue, state] of fixture.sourceStates) assert.equal(state.body, fixture.initialSourceBodies.get(issue), `SourceNote #${issue} body must remain unchanged`);
     assert.equal(fixture.apiCalls.every((call) => call.args[0] === 'api'), true, 'all calls remained inside the injected fixture');
   } finally {
     fs.rmSync(fixture.root, { recursive: true, force: true });

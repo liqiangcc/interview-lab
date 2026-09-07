@@ -360,6 +360,15 @@ function validateIntent(id, value, plan, result) {
     if (value.phase === 'receipt-written' && (!Number.isInteger(value.receipt_comment_id) || value.receipt_comment_id < 1)) errors.push('receipt-written comment id is invalid');
   }
   if (value.phase === 'uncertain' && (typeof value.attempted_phase !== 'string' || typeof value.error !== 'string' || value.error.length === 0)) errors.push('uncertain intent requires attempted phase and error');
+  if (value.phase === 'uncertain' && ['begin-pending', 'final-pending'].includes(value.attempted_phase)) {
+    if (!Array.isArray(value.operation_plan) || value.operation_plan.length === 0 || value.operation_plan.some((operation) => !validOperation(operation))) errors.push('uncertain label intent operation_plan is invalid');
+    if (!Number.isSafeInteger(value.operation_index) || value.operation_index < 0 || value.operation_index > (value.operation_plan || []).length) errors.push('uncertain label intent operation_index is invalid');
+    if (!Array.isArray(value.operation_prefix) || value.operation_prefix.length !== value.operation_index || value.operation_prefix.some((operation) => !validOperation(operation))) errors.push('uncertain label intent operation_prefix is invalid');
+    if (!Array.isArray(value.before_controlled_labels) || canonicalJson(controlledLabels(value.before_controlled_labels)) !== canonicalJson(value.before_controlled_labels)) errors.push('uncertain before_controlled_labels are invalid');
+    if (!Array.isArray(value.desired_controlled_labels) || canonicalJson(controlledLabels(value.desired_controlled_labels)) !== canonicalJson(value.desired_controlled_labels)) errors.push('uncertain desired_controlled_labels are invalid');
+    if (!Array.isArray(value.baseline_non_lifecycle_labels) || canonicalJson(nonLifecycleLabels(value.baseline_non_lifecycle_labels)) !== canonicalJson(value.baseline_non_lifecycle_labels)) errors.push('uncertain baseline_non_lifecycle_labels are invalid');
+    if (!validSnapshot(value.cas, issue)) errors.push('uncertain CAS snapshot is invalid');
+  }
   if (value.phase === 'complete') {
     if (!result || result.status !== 'complete') errors.push('complete intent requires a complete result');
     if (result && (result.issue_number !== issue || result.transition_id !== value.transition_id || result.request_sha256 !== value.request_sha256 || Number(result.receipt_comment_id) !== Number(value.receipt_comment_id))) errors.push('complete result binding mismatch');
@@ -377,6 +386,7 @@ function validateProgress(progress, plan) {
   for (const id of Object.keys(progress && progress.intents || {})) if (!ids.has(id)) errors.push(`progress has unknown intent ${id}`);
   for (const id of Object.keys(progress && progress.results || {})) if (!ids.has(id)) errors.push(`progress has unknown result ${id}`);
   for (const [id, intent] of Object.entries(progress && progress.intents || {})) if (intent && (intent.schema_version !== INTENT_SCHEMA_VERSION || !PHASES.has(intent.phase) || validateIntent(id, intent, plan, progress.results && progress.results[id]).length)) errors.push(`progress intent ${id} is invalid: ${validateIntent(id, intent, plan, progress.results && progress.results[id]).join('; ')}`);
+  for (const [id, intent] of Object.entries(progress && progress.intents || {})) if (intent && intent.phase === 'uncertain') errors.push(`progress intent ${id} is permanently uncertain; explicit replan/operator recovery is required`);
   for (const [id, result] of Object.entries(progress && progress.results || {})) {
     const issue = Number(id.replace('issue-1577-source-review-', ''));
     const item = (plan.items || []).find((candidate) => Number(candidate.issue_number) === issue);
@@ -408,6 +418,8 @@ function applyBatch({ requests, evidencePlan, pinnedArtifactManifest, liveLoader
   if (typeof liveLoader !== 'function') return { ok: false, errors: ['transition apply requires liveLoader'] };
   if (typeof options.persistProgress !== 'function' || typeof options.patchLabel !== 'function' || typeof options.postReceipt !== 'function' || typeof options.writeReceipt !== 'function' || typeof options.readReceipt !== 'function') return { ok: false, errors: ['transition apply requires durable persistence, label, receipt, and local receipt readers/writers'] };
   try { assertLock(); } catch (error) { return { ok: false, errors: [error.message] }; }
+  const permanentlyUncertain = Object.entries(progress.intents || {}).filter(([, value]) => value && value.phase === 'uncertain').map(([id]) => id);
+  if (permanentlyUncertain.length) return { ok: false, errors: permanentlyUncertain.map((id) => `progress intent ${id} is permanently uncertain; explicit replan/operator recovery is required`), progress };
   const guardedLiveLoader = (request) => { assertLock(); const value = liveLoader(request); assertLock(); return value; };
   const planFn = options.planBatch || planBatch;
   const validateLiveFn = options.validateLive || validateLive;
@@ -462,6 +474,7 @@ function applyBatch({ requests, evidencePlan, pinnedArtifactManifest, liveLoader
       const op = plan[index];
       persistIntent(progress, request, freshPlan, stage === 'begin' ? 'begin-pending' : 'final-pending', { stage, operation_plan: plan, operation_index: index, before_controlled_labels: beforeControlled, desired_controlled_labels: controlledLabels(desiredLabels), baseline_non_lifecycle_labels: nonLifecycleLabels(baseline), cas: issueSnapshot(current.interviewIssue) }, persist);
       markLabelAttempt();
+      const casSnapshot = issueSnapshot(current.interviewIssue);
       let writeError = null;
       try { assertLock(); throttle(); options.patchLabel(request, op); assertLock(); } catch (error) { writeError = error; }
       let converged = false;
@@ -472,7 +485,19 @@ function applyBatch({ requests, evidencePlan, pinnedArtifactManifest, liveLoader
         if (canonicalJson(controlledLabels(labels)) === canonicalJson(expected)) { converged = true; break; }
         if (attempt < reconcileAttempts) { assertLock(); if (typeof options.sleep === 'function') options.sleep(backoff * (2 ** (attempt - 1))); assertLock(); }
       }
-      if (!converged) { markUncertain(progress, request, freshPlan, stage === 'begin' ? 'begin-pending' : 'final-pending', writeError ? writeError.message : `${stage} label write did not converge`, persist); throw new Error(`#${request.issue_number}: ${stage} label write did not converge; refusing retry`); }
+      if (!converged) {
+        markUncertain(progress, request, freshPlan, stage === 'begin' ? 'begin-pending' : 'final-pending', writeError ? writeError.message : `${stage} label write did not converge`, persist, {
+          stage,
+          operation_plan: clone(plan),
+          operation_index: index,
+          operation_prefix: clone(plan.slice(0, index)),
+          before_controlled_labels: clone(beforeControlled),
+          desired_controlled_labels: clone(controlledLabels(desiredLabels)),
+          baseline_non_lifecycle_labels: clone(nonLifecycleLabels(baseline)),
+          cas: casSnapshot,
+        });
+        throw new Error(`#${request.issue_number}: ${stage} label write did not converge; refusing retry`);
+      }
       index += 1;
       state.intent = null;
     }

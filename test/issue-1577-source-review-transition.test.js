@@ -103,7 +103,7 @@ function applyFixture() {
 function run(fixture, extra = {}) {
   return applyBatch({ requests: fixture.reqs, evidencePlan: fixture.ep, pinnedArtifactManifest: fixture.ep.pinnedArtifactManifest, liveLoader: fixture.liveLoader, progress: fixture.progress, expectedPlanSha256: PLAN, expectedAuthorizationSha256: AUTH }, {
     lock: { assertHeld() {} }, planBatch: fixture.planFn, validateLive: fixture.validateLive,
-    persistProgress: () => {}, patchLabel: (request, operation) => { fixture.calls.labels.push({ issue: request.issue_number, operation }); const state = fixture.states.get(request.issue_number); if (operation.kind === 'add') state.labels.push(operation.label); else state.labels = state.labels.filter((label) => label !== operation.label); if (extra.crashAfterFirstLabel && !extra.crashed) { extra.crashed = true; fixture.controls.crashOnRead = true; } },
+    persistProgress: () => {}, patchLabel: (request, operation) => { fixture.calls.labels.push({ issue: request.issue_number, operation }); if (extra.ambiguousLabelPatch && !extra.ambiguous) { extra.ambiguous = true; throw new Error('label PATCH response was ambiguous'); } const state = fixture.states.get(request.issue_number); if (operation.kind === 'add') state.labels.push(operation.label); else state.labels = state.labels.filter((label) => label !== operation.label); if (extra.crashAfterFirstLabel && !extra.crashed) { extra.crashed = true; fixture.controls.crashOnRead = true; } },
     postReceipt: (request, receipt) => { fixture.calls.receipts.push(request.issue_number); const state = fixture.states.get(request.issue_number); if (extra.receiptAbsent) throw new Error('receipt response lost and receipt absent'); state.receipt = { comment_id: state.nextComment++, request_sha256: requestSha256(request), final_status: 'source-ready', applied_at: receipt.applied_at }; if (extra.responseLoss) throw new Error('response lost'); return { id: state.receipt.comment_id }; },
     readReceipt: (request) => fixture.states.get(request.issue_number).localReceipt || null,
     writeReceipt: (request, receipt) => { fixture.calls.localWrites += 1; if (extra.localReceiptFailure && !extra.localFailed) { extra.localFailed = true; throw new Error('local receipt write failed'); } fixture.states.get(request.issue_number).localReceipt = receipt; },
@@ -219,6 +219,30 @@ test('label write convergence is resumable after crash before operation index ad
   assert.deepEqual(fixture.calls.labels.filter((call) => call.issue === 1558).map((call) => `${call.operation.kind}:${call.operation.label}`), ['add:status:source-review', 'add:task:source-review', 'remove:status:captured', 'add:status:source-ready', 'remove:status:source-review', 'remove:task:source-review']);
   assert.equal(fixture.calls.labels.length, 102, 'resume must skip the already-applied first label operation');
   assert.equal(fixture.calls.receipts.length, 17);
+});
+
+test('uncertain label PATCH is permanently fail-closed on resume', () => {
+  const fixture = applyFixture();
+  const first = run(fixture, { ambiguousLabelPatch: true });
+  assert.equal(first.ok, false);
+  assert.equal(fixture.calls.labels.length, 1);
+  assert.equal(fixture.calls.receipts.length, 0);
+  const uncertain = fixture.progress.intents['issue-1577-source-review-1558'];
+  assert.equal(uncertain.phase, 'uncertain');
+  assert.equal(uncertain.attempted_phase, 'begin-pending');
+  assert.match(uncertain.error, /ambiguous/);
+  assert.ok(Array.isArray(uncertain.operation_plan));
+  assert.deepEqual(uncertain.operation_prefix, []);
+  assert.equal(uncertain.operation_index, 0);
+  assert.ok(uncertain.cas && uncertain.cas.number === 1558);
+  assert.equal(validateProgress(fixture.progress, fixture.plan).ok, false);
+  const second = run(fixture);
+  assert.equal(second.ok, false);
+  assert.match(second.errors.join('\n'), /permanently uncertain|explicit replan/);
+  assert.equal(fixture.calls.labels.length, 1, 'resume must not retry a label PATCH');
+  assert.equal(fixture.calls.receipts.length, 0, 'resume must not reach receipt mutation');
+  assert.equal(fixture.progress.intents['issue-1577-source-review-1558'].phase, 'uncertain');
+  assert.equal(fixture.progress.possibly_performed, true);
 });
 
 test('non-lifecycle drift fails closed after a lifecycle write', () => {
