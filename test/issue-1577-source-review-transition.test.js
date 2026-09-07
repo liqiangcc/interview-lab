@@ -241,6 +241,20 @@ test('label write convergence is resumable after crash before operation index ad
   assert.equal(fixture.calls.receipts.length, 17);
 });
 
+test('pending label recovery rejects an unmatched intermediate controlled-label state', () => {
+  const fixture = applyFixture();
+  fixture.controls.strictIntermediate = true;
+  assert.equal(run(fixture, { crashAfterFirstLabel: true }).ok, false);
+  fixture.states.get(1558).labels.push('task:source-recovery');
+  const labelsBeforeResume = [...fixture.states.get(1558).labels];
+  const second = run(fixture);
+  assert.equal(second.ok, false);
+  assert.equal(fixture.calls.labels.length, 1);
+  assert.equal(fixture.calls.receipts.length, 0);
+  assert.deepEqual(fixture.states.get(1558).labels, labelsBeforeResume);
+  assert.equal(fixture.progress.intents['issue-1577-source-review-1558'].phase, 'begin-pending');
+});
+
 test('uncertain label PATCH is permanently fail-closed on resume', () => {
   const fixture = applyFixture();
   const first = run(fixture, { ambiguousLabelPatch: true });
