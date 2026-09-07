@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { sha256Text, contextSha256, planBatch, receiptFor, receiptBody, parseReceipts, intentId, validateProgressMapping, verifyContextArtifact } = require('../scripts/lib/interview-context-batch');
+const { sha256Text, contextSha256, planBatch, receiptFor, receiptBody, parseReceipts, intentId, validateProgressMapping, verifyContextArtifact, validateCompletionEvidence, ISSUE_1598_FIXED_INVENTORY, validateRequest } = require('../scripts/lib/interview-context-batch');
 const { parseInterviewNoteIssue } = require('../scripts/lib/interview-note-issue');
 
 const body = fs.readFileSync(path.join(__dirname, 'fixtures/interview-note-issue.valid.md'), 'utf8');
@@ -194,6 +194,35 @@ test('matching receipt still reconciles externally drifted title or labels', () 
   assert.equal(second.items[0].action, 'update');
   assert.equal(second.items[0].receipt.comment_id, 123);
   assert.equal(second.summary.mutation_count, 1);
+});
+
+test('audit-only items fail closed unless the exact receipt and projection already converge', () => {
+  const auditRequest = { ...request(), batch_id: 'issue-1598-fixture-1', audit_only_issue_numbers: [915] };
+  const blocked = planBatch(auditRequest, { dependencies, issues: [issue()], dependencyGateArtifact, dependencyEvidence });
+  assert.equal(blocked.ok, false);
+  assert.match(blocked.errors.join('\n'), /audit-only item/);
+  const projected = plan(auditRequest.items[0].context, { title: plan().items[0].projection.title, labels: plan().items[0].projection.labels });
+  const receipt = receiptFor(auditRequest, projected.items[0], '2026-09-07T12:00:00Z');
+  const converged = planBatch(auditRequest, { dependencies, issues: [issue({ title: projected.items[0].projection.title, labels: projected.items[0].projection.labels })], dependencyGateArtifact, dependencyEvidence, receiptsByIssue: new Map([[915, [receipt]]]) });
+  assert.equal(converged.ok, true, converged.errors.join('\n'));
+  assert.equal(converged.items[0].action, 'already_applied');
+  assert.equal(converged.summary.mutation_count, 0);
+});
+
+test('completion evidence is live-comment-id bound and fail closed on a forged response', () => {
+  const entry = { issue_number: 1539, evidence: 'https://github.com/liqiangcc/interview-lab/issues/1539#issuecomment-123' };
+  const requestWithCompletion = { repository: 'liqiangcc/interview-lab', completion_dependencies: [entry] };
+  const good = new Map([[entry.evidence, { id: 123, issue_url: 'https://api.github.com/repos/liqiangcc/interview-lab/issues/1539', body: 'Expansion complete' }]]);
+  assert.equal(validateCompletionEvidence(requestWithCompletion, [{ number: 1539, state: 'closed' }], good).ok, true);
+  const forged = new Map([[entry.evidence, { id: 124, issue_url: 'https://api.github.com/repos/liqiangcc/interview-lab/issues/1539', body: 'Expansion complete' }]]);
+  assert.equal(validateCompletionEvidence(requestWithCompletion, [{ number: 1539, state: 'closed' }], forged).ok, false);
+});
+
+test('Issue #1598 fixed inventory and audit-only scope cannot be weakened', () => {
+  const valid = { ...request(), batch_id: 'issue-1598-learning-contexts-50', fixed_inventory_issue_numbers: ISSUE_1598_FIXED_INVENTORY, audit_only_issue_numbers: [3, 4, 915] };
+  assert.equal(validateRequest(valid).ok, false);
+  assert.equal(validateRequest({ ...valid, fixed_inventory_issue_numbers: ISSUE_1598_FIXED_INVENTORY.slice(1) }).ok, false);
+  assert.equal(validateRequest({ ...valid, audit_only_issue_numbers: [3, 4] }).ok, false);
 });
 
 test('closed dependency without structured acceptance evidence blocks fail-closed', () => {

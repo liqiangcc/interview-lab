@@ -2,7 +2,7 @@
 
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { loadComments, loadAllIssues, parseArgs, resumeProgressItem } = require('../scripts/plan-interview-context-learning-discovery');
+const { loadComments, loadAllIssues, fixedInventoryAudit, parseArgs, resumeProgressItem } = require('../scripts/plan-interview-context-learning-discovery');
 
 test('CLI comments pagination is explicit, bounded, and complete without --slurp', () => {
   const urls = [];
@@ -26,6 +26,14 @@ test('inventory pagination requests only type:interview-note and retains every p
   assert.equal(urls.length, 3);
   assert.ok(urls.every((url) => url.includes('labels=type%3Ainterview-note')));
   assert.ok(urls.every((url) => !url.includes('repos/liqiangcc/interview-lab/issues?state=all&per_page')));
+});
+
+test('fixed inventory audit requires exact source-ready set', () => {
+  const issues = [3, 4, 915].map((number) => ({ number, labels: [{ name: 'type:interview-note' }, { name: 'status:source-ready' }] }));
+  assert.deepEqual(fixedInventoryAudit(issues, [3, 4, 915]), { ok: true, expected_count: 3, actual_count: 3, expected: [3, 4, 915], actual: [3, 4, 915], missing: [], unexpected: [] });
+  const drift = fixedInventoryAudit([...issues, { number: 916, labels: [{ name: 'type:interview-note' }, { name: 'status:source-ready' }] }], [3, 4, 915]);
+  assert.equal(drift.ok, false);
+  assert.deepEqual(drift.unexpected, [916]);
 });
 
 test('apply requires native dry-run confirmation and mutation ceiling', () => {

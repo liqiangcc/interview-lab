@@ -10,6 +10,8 @@
 
 Pilot request 的 `pilot_size` 最大为 50；#923 首批 request 应为恰好 50 条。每一条必须绑定 InterviewNote Issue number、body SHA-256、reviewed `InterviewContext`，以及已提交到 Git 的 Context artifact `{path, ref, commit, sha256}`。`commit` 是不可变权威，Context 内容始终从 pinned commit 读取；`ref` 只需存在且通过 compare/ancestry 证明包含该 commit，不能要求 ref 永久停留在 receipt 写入时的 tip。四个依赖的 live Issue state、结构化 acceptance anchor 和 `acceptance_evidence` final comment 都必须逐一读取并严格匹配；closed 本身不是 acceptance proof。
 
+学习子批次可以声明 `fixed_inventory_issue_numbers` 和 `audit_only_issue_numbers`。Issue #1598 固定为 50 个 source-ready Issue（#3、#4、#915、#1509–#1538、#1558、#1559、#1562–#1576），其中 #3/#4/#915 只能审计现有 Context/receipt；它们缺失或漂移时整批 fail closed，不能执行 receipt repair。#1598 另以 `completion_dependencies` 绑定 #1539/#1577 的关闭证据、返回 comment id、body digest 与必要文本，避免把 closed 状态当作完成证明。
+
 ## 输入与计算边界
 
 request 以如下 marker 包裹 JSON：
@@ -48,6 +50,8 @@ node scripts/plan-interview-context-learning-discovery.js \
 ```
 
 报告必须给出 `ready_count`、`unknown_count`、`unknown_item_count`、`needs_review_count`、`already_applied_count`、`proposed_mutation_count` 与 `mutation_count`。存在需复核项时，`mutation_count` 固定为 0；任何 candidate 失败都会使整批 apply fail-closed。
+
+固定 inventory 先用 GitHub 原生 `label=type:interview-note` 显式分页读取，并要求 live `status:source-ready` 集合与 request 完全相等；不扫描未筛选的全库 body，也不把 blocked/captured SourceNote 纳入候选。审计-only 条目必须已有匹配 receipt、artifact 和收敛 projection；新条目才可在 plan 中形成 mutation proposal。Context artifact 在 mutation 前必须已经存在于可解析 Git commit/ref，planner 通过 pinned commit 读取内容并校验 digest。
 
 apply 必须显式确认本次原生 dry-run digest 和 mutation 上限；`--apply` 单独使用会 fail closed：
 

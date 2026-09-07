@@ -29,6 +29,8 @@ const DEPENDENCY_GATE_SCHEMA_VERSION = 'interview-context-learning-discovery-dep
 const DEPENDENCY_ACCEPTANCE_SCHEMA_VERSION = 'issue-dependency-acceptance.v1';
 const DEPENDENCY_MARKER_RE = /<!--\s*issue-dependency-acceptance\s*\n([\s\S]*?)\n-->/g;
 const PROGRESS_SCHEMA_VERSION = 'interview-context-learning-discovery-apply-progress.v1';
+const ISSUE_1598_FIXED_INVENTORY = [3, 4, 915, ...Array.from({ length: 30 }, (_, index) => 1509 + index), 1558, 1559, ...Array.from({ length: 15 }, (_, index) => 1562 + index)];
+const ISSUE_1598_AUDIT_ONLY = [3, 4, 915];
 
 function sha256Text(value) {
   return crypto.createHash('sha256').update(String(value), 'utf8').digest('hex');
@@ -175,6 +177,32 @@ function validateLiveDependencyGate(gate, repository, dependencies = [], readEvi
   return { ok: errors.length === 0, errors, gate };
 }
 
+function validateCompletionEvidence(request, dependencies = [], readEvidence = null) {
+  const required = Array.isArray(request && request.completion_dependencies) ? request.completion_dependencies : [];
+  const errors = [];
+  const liveByNumber = new Map(dependencies.map((issue) => [Number(issue.number), issue]));
+  const getEvidence = (url) => {
+    if (typeof readEvidence === 'function') return readEvidence(url);
+    if (readEvidence instanceof Map) return readEvidence.get(url);
+    if (readEvidence && typeof readEvidence === 'object') return readEvidence[url];
+    return null;
+  };
+  for (const entry of required) {
+    const number = Number(entry.issue_number);
+    const live = liveByNumber.get(number);
+    if (!live) { errors.push(`completion dependency #${number} was not loaded`); continue; }
+    if (String(live.state || '').toLowerCase() !== 'closed') errors.push(`completion dependency #${number} is not closed (state=${live.state})`);
+    const evidence = getEvidence(entry.evidence);
+    const expectedId = String(entry.evidence || '').match(/#issuecomment-(\d+)$/)?.[1];
+    if (!evidence) { errors.push(`completion dependency #${number} evidence could not be read`); continue; }
+    if (Number(evidence.id) !== Number(expectedId)) errors.push(`completion dependency #${number} evidence comment id mismatch`);
+    if (evidence.issue_url !== `https://api.github.com/repos/${request.repository}/issues/${number}`) errors.push(`completion dependency #${number} evidence issue_url mismatch`);
+    if (entry.body_sha256 && sha256Text(evidence.body || '') !== entry.body_sha256) errors.push(`completion dependency #${number} evidence body digest mismatch`);
+    for (const marker of entry.required_markers || []) if (!String(evidence.body || '').includes(marker)) errors.push(`completion dependency #${number} evidence is missing required marker: ${marker}`);
+  }
+  return { ok: errors.length === 0, errors };
+}
+
 function validateContextArtifact(artifact, context, repository) {
   const errors = [];
   if (!artifact || typeof artifact !== 'object' || Array.isArray(artifact)) return { ok: false, errors: ['context_artifact must be an object'] };
@@ -222,7 +250,7 @@ function verifyContextArtifact(context, artifact, repository, readers = {}) {
 function validateRequest(request) {
   const errors = [];
   if (!request || typeof request !== 'object' || Array.isArray(request)) return { ok: false, errors: ['request must be an object'] };
-  const allowed = new Set(['schema_version', 'batch_id', 'repository', 'dependency_issues', 'dependency_gate_file', 'expected_dependency_gate_sha256', 'pilot_size', 'items']);
+  const allowed = new Set(['schema_version', 'batch_id', 'repository', 'dependency_issues', 'dependency_gate_file', 'expected_dependency_gate_sha256', 'completion_dependencies', 'fixed_inventory_issue_numbers', 'audit_only_issue_numbers', 'pilot_size', 'items']);
   for (const key of Object.keys(request)) if (!allowed.has(key)) errors.push(`unsupported request field: ${key}`);
   if (request.schema_version !== SCHEMA_VERSION) errors.push(`schema_version must be ${SCHEMA_VERSION}`);
   if (!nonEmpty(request.batch_id) || !/^[A-Za-z0-9][A-Za-z0-9._-]*$/.test(request.batch_id || '')) errors.push('batch_id must be a stable machine identifier');
@@ -236,6 +264,29 @@ function validateRequest(request) {
     for (const required of REQUIRED_DEPENDENCIES) if (!deps.includes(required)) errors.push(`dependency gate must include Issue #${required}`);
   }
   if (!Number.isInteger(request.pilot_size) || request.pilot_size < 1 || request.pilot_size > MAX_BATCH_SIZE) errors.push(`pilot_size must be an integer between 1 and ${MAX_BATCH_SIZE}`);
+  if (request.completion_dependencies !== undefined) {
+    if (!Array.isArray(request.completion_dependencies)) errors.push('completion_dependencies must be an array');
+    else {
+      const seen = new Set();
+      for (const entry of request.completion_dependencies) {
+        const number = Number(entry && entry.issue_number);
+        if (!Number.isInteger(number) || number <= 0 || seen.has(number)) errors.push('completion_dependencies must contain unique positive Issue numbers');
+        seen.add(number);
+        if (!entry || typeof entry.evidence !== 'string' || !parseIssueCommentUrl(request.repository, number, entry.evidence)) errors.push(`completion dependency #${number} evidence must be an issue comment URL for the same Issue`);
+        if (entry.body_sha256 !== undefined && !HEX64_RE.test(entry.body_sha256)) errors.push(`completion dependency #${number} body_sha256 must be a lowercase 64-char SHA-256`);
+        if (entry.required_markers !== undefined && (!Array.isArray(entry.required_markers) || entry.required_markers.some((marker) => !nonEmpty(marker)))) errors.push(`completion dependency #${number} required_markers must be non-empty strings`);
+      }
+    }
+  }
+  for (const [field, label] of [['fixed_inventory_issue_numbers', 'fixed_inventory_issue_numbers'], ['audit_only_issue_numbers', 'audit_only_issue_numbers']]) {
+    if (request[field] !== undefined && (!Array.isArray(request[field]) || request[field].some((number) => !Number.isInteger(number) || number <= 0) || new Set(request[field]).size !== request[field].length)) errors.push(`${label} must contain unique positive Issue numbers`);
+  }
+  if (request.batch_id === 'issue-1598-learning-contexts-50') {
+    if (JSON.stringify(request.fixed_inventory_issue_numbers || []) !== JSON.stringify(ISSUE_1598_FIXED_INVENTORY)) errors.push('Issue #1598 request must bind the exact fixed 50-item inventory');
+    if (JSON.stringify(request.audit_only_issue_numbers || []) !== JSON.stringify(ISSUE_1598_AUDIT_ONLY)) errors.push('Issue #1598 request must bind #3/#4/#915 as audit-only');
+    if (request.pilot_size !== 50) errors.push('Issue #1598 request pilot_size must be exactly 50');
+    if (Array.isArray(request.items) && JSON.stringify(request.items.map((item) => item && item.issue_number).sort((a, b) => a - b)) !== JSON.stringify(ISSUE_1598_FIXED_INVENTORY)) errors.push('Issue #1598 request items must equal the exact fixed 50-item inventory');
+  }
   if (!Array.isArray(request.items)) errors.push('items must be an array');
   else {
     if (Number.isInteger(request.pilot_size) && request.items.length !== request.pilot_size) errors.push('items length must equal pilot_size');
@@ -365,7 +416,7 @@ function validateProgressMapping(progress, request, plan, dryRunDigest, maxMutat
   return { ok: errors.length === 0, errors };
 }
 
-function planItem(request, item, issue, receipts = [], contextArtifactResult = null) {
+function planItem(request, item, issue, receipts = [], contextArtifactResult = null, options = {}) {
   const errors = [];
   if (contextArtifactResult && !contextArtifactResult.ok) errors.push(...contextArtifactResult.errors.map((error) => `durable Context artifact invalid: ${error}`));
   const body = String(issue && issue.body || '');
@@ -427,6 +478,15 @@ function planItem(request, item, issue, receipts = [], contextArtifactResult = n
   const currentTitle = String(issue.title || '');
   const currentLabels = normalizeLabels(issue.labels || []);
   const alreadyProjected = currentTitle === projection.title && JSON.stringify(currentLabels) === JSON.stringify(projection.labels);
+  if (options.auditOnly && (!matchingReceipt || !alreadyProjected)) {
+    return {
+      ok: false,
+      issue_number: item.issue_number,
+      action: 'needs_review',
+      errors: ['audit-only item must already have a matching receipt and converged projection; no repair mutation is permitted'],
+      unknown_facts: projection.unknown_facts,
+    };
+  }
   return {
     ok: true,
     issue_number: item.issue_number,
@@ -441,7 +501,7 @@ function planItem(request, item, issue, receipts = [], contextArtifactResult = n
   };
 }
 
-function planBatch(request, { dependencies = [], issues = [], receiptsByIssue = new Map(), dependencyGateArtifact = null, dependencyEvidence = null, contextArtifactsByIssue = new Map() } = {}) {
+function planBatch(request, { dependencies = [], issues = [], receiptsByIssue = new Map(), dependencyGateArtifact = null, dependencyEvidence = null, completionDependencies = [], completionEvidence = null, contextArtifactsByIssue = new Map(), contextArtifactResults = new Map() } = {}) {
   const requestValidation = validateRequest(request);
   if (!requestValidation.ok) return { ok: false, blocked: false, errors: requestValidation.errors, items: [], summary: null };
   const gate = dependencyGate(request, dependencies, dependencyGateArtifact, dependencyEvidence);
@@ -454,13 +514,18 @@ function planBatch(request, { dependencies = [], issues = [], receiptsByIssue = 
       summary: { pilot_size: request.pilot_size, ready_count: 0, unknown_count: 0, unknown_item_count: 0, needs_review_count: 0, already_applied_count: 0, proposed_mutation_count: 0, mutation_count: 0 },
     };
   }
+  const completionGate = validateCompletionEvidence(request, completionDependencies, completionEvidence);
+  if (!completionGate.ok) {
+    return { ok: false, blocked: true, errors: completionGate.errors, items: [], summary: { pilot_size: request.pilot_size, ready_count: 0, unknown_count: 0, unknown_item_count: 0, needs_review_count: 0, already_applied_count: 0, ...(request.audit_only_issue_numbers ? { audit_only_count: request.audit_only_issue_numbers.length } : {}), proposed_mutation_count: 0, mutation_count: 0 } };
+  }
   const byNumber = new Map(issues.map((issue) => [Number(issue.number), issue]));
   const plannedItems = request.items.map((item) => {
     const issue = byNumber.get(Number(item.issue_number));
     if (!issue) return { ok: false, issue_number: item.issue_number, action: 'needs_review', errors: ['InterviewNote Issue was not loaded'], unknown_facts: unknownFacts(item.context) };
     const receipts = receiptsByIssue instanceof Map ? (receiptsByIssue.get(Number(item.issue_number)) || []) : [];
-    const artifactResult = contextArtifactsByIssue instanceof Map ? contextArtifactsByIssue.get(Number(item.issue_number)) : null;
-    return planItem(request, item, issue, receipts, artifactResult);
+    const artifactResult = contextArtifactsByIssue instanceof Map && contextArtifactsByIssue.size ? contextArtifactsByIssue.get(Number(item.issue_number)) : contextArtifactResults.get(Number(item.issue_number));
+    const auditOnly = Array.isArray(request.audit_only_issue_numbers) && request.audit_only_issue_numbers.includes(Number(item.issue_number));
+    return planItem(request, item, issue, receipts, artifactResult, { auditOnly });
   });
   const needsReview = plannedItems.filter((item) => !item.ok);
   const applied = plannedItems.filter((item) => item.ok && item.action === 'already_applied');
@@ -479,6 +544,7 @@ function planBatch(request, { dependencies = [], issues = [], receiptsByIssue = 
       unknown_item_count: unknownItemCount,
       needs_review_count: needsReview.length,
       already_applied_count: applied.length,
+      ...(Array.isArray(request.audit_only_issue_numbers) ? { audit_only_count: request.audit_only_issue_numbers.length } : {}),
       proposed_mutation_count: mutations.length,
       mutation_count: needsReview.length === 0 ? mutations.length : 0,
     },
@@ -540,6 +606,7 @@ module.exports = {
   parseDependencyAcceptance,
   validateDependencyGateArtifact,
   validateLiveDependencyGate,
+  validateCompletionEvidence,
   validateContextArtifact,
   verifyContextArtifact,
   intentId,
@@ -555,4 +622,6 @@ module.exports = {
   planDigest,
   receiptFor,
   receiptBody,
+  ISSUE_1598_FIXED_INVENTORY,
+  ISSUE_1598_AUDIT_ONLY,
 };

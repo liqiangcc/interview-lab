@@ -16,6 +16,22 @@
     },
     "dependency_gate_file": {"const": "data/pilot/issue-923/dependency-gate.json"},
     "expected_dependency_gate_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "completion_dependencies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["issue_number", "evidence"],
+        "properties": {
+          "issue_number": {"type": "integer", "minimum": 1},
+          "evidence": {"type": "string", "pattern": "^https://github\\.com/[^/]+/[^/]+/issues/[0-9]+#issuecomment-[0-9]+$"},
+          "body_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "required_markers": {"type": "array", "items": {"type": "string", "minLength": 1}}
+        }
+      }
+    },
+    "fixed_inventory_issue_numbers": {"type": "array", "uniqueItems": true, "items": {"type": "integer", "minimum": 1}},
+    "audit_only_issue_numbers": {"type": "array", "uniqueItems": true, "items": {"type": "integer", "minimum": 1}},
     "pilot_size": {"type": "integer", "minimum": 1, "maximum": 50},
     "items": {
       "type": "array",

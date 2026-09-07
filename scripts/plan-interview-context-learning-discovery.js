@@ -7,7 +7,7 @@ const { execFileSync } = require('child_process');
 const {
   parseMarker, parseReceipts, parseIssueCommentUrl, planBatch, planItem, receiptFor, receiptBody,
   sha256Text, normalizeLabels, validateLiveDependencyGate, verifyContextArtifact, planDigest,
-  progressFromPlan, validateProgressMapping,
+  progressFromPlan, validateProgressMapping, ISSUE_1598_FIXED_INVENTORY,
 } = require('./lib/interview-context-batch');
 const { parseInterviewNoteIssue, validateInterviewNoteIssue } = require('./lib/interview-note-issue');
 const { validateInterviewContext } = require('./lib/interview-context');
@@ -163,10 +163,19 @@ function loadDependencyEvidence(repository, gate) {
   return evidence;
 }
 
-function loadLive(request, dependencyGateArtifact, dependencyEvidence, contextArtifactResults = null) {
+function loadCompletionEvidence(repository, request) {
+  const evidence = new Map();
+  for (const entry of request.completion_dependencies || []) {
+    const parsed = parseIssueCommentUrl(request.repository, entry.issue_number, entry.evidence);
+    if (parsed) evidence.set(entry.evidence, ghReadJson(['api', `repos/${repository}/issues/comments/${parsed.comment_id}`]));
+  }
+  return evidence;
+}
+
+function loadLive(request, dependencyGateArtifact, dependencyEvidence, contextArtifactResults = null, completionDependencies = [], completionEvidence = null) {
   const dependencies = request.dependency_issues.map((number) => loadIssue(request.repository, number));
   const liveGate = validateLiveDependencyGate(dependencyGateArtifact, request.repository, dependencies, dependencyEvidence);
-  if (!liveGate.ok) return { dependencies, issues: [], receiptsByIssue: new Map(), dependencyGateArtifact, dependencyEvidence, contextArtifactResults, liveGate };
+  if (!liveGate.ok) return { dependencies, completionDependencies, completionEvidence, issues: [], receiptsByIssue: new Map(), dependencyGateArtifact, dependencyEvidence, contextArtifactResults, liveGate };
   const issues = request.items.map((item) => loadIssue(request.repository, item.issue_number));
   const receiptsByIssue = new Map();
   for (const issue of issues) {
@@ -174,7 +183,15 @@ function loadLive(request, dependencyGateArtifact, dependencyEvidence, contextAr
     if (parsed.errors.length) throw new Error(`Issue #${issue.number}: ${parsed.errors.join('; ')}`);
     receiptsByIssue.set(Number(issue.number), parsed.receipts);
   }
-  return { dependencies, issues, receiptsByIssue, dependencyGateArtifact, dependencyEvidence, contextArtifactResults, liveGate };
+  return { dependencies, completionDependencies, completionEvidence, issues, receiptsByIssue, dependencyGateArtifact, dependencyEvidence, contextArtifactResults, liveGate };
+}
+
+function fixedInventoryAudit(issues, expectedNumbers) {
+  const expected = [...expectedNumbers].sort((a, b) => a - b);
+  const actual = issues.filter((issue) => normalizeLabels(issue.labels || []).includes('type:interview-note') && normalizeLabels(issue.labels || []).includes('status:source-ready')).map((issue) => Number(issue.number)).sort((a, b) => a - b);
+  const missing = expected.filter((number) => !actual.includes(number));
+  const unexpected = actual.filter((number) => !expected.includes(number));
+  return { ok: missing.length === 0 && unexpected.length === 0 && actual.length === expected.length, expected_count: expected.length, actual_count: actual.length, expected, actual, missing, unexpected };
 }
 
 function remoteContextArtifactResults(request) {
@@ -293,12 +310,20 @@ function main(argv = process.argv.slice(2)) {
   if (request.repository !== repository) throw new Error(`request.repository must be ${repository}`);
   if (request.dependency_gate_file !== path.relative(process.cwd(), args.dependencyGateFile)) throw new Error('request dependency_gate_file does not match the selected gate artifact');
   if (request.expected_dependency_gate_sha256 !== gate.sha256) throw new Error(`dependency gate digest mismatch: expected=${request.expected_dependency_gate_sha256} live=${gate.sha256}`);
+  let inventoryAudit = null;
+  if (Array.isArray(request.fixed_inventory_issue_numbers)) {
+    const inventoryIssues = loadAllIssues(repository);
+    inventoryAudit = fixedInventoryAudit(inventoryIssues, request.fixed_inventory_issue_numbers);
+    if (!inventoryAudit.ok) throw new Error(`fixed live inventory mismatch: missing=${inventoryAudit.missing.join(',')} unexpected=${inventoryAudit.unexpected.join(',')} actual_count=${inventoryAudit.actual_count}`);
+  }
+  const completionDependencies = (request.completion_dependencies || []).map((entry) => loadIssue(repository, entry.issue_number));
+  const completionEvidence = loadCompletionEvidence(repository, request);
   const contextArtifactResults = remoteContextArtifactResults(request);
-  let live = loadLive(request, gate.gate, dependencyEvidence, contextArtifactResults);
+  let live = loadLive(request, gate.gate, dependencyEvidence, contextArtifactResults, completionDependencies, completionEvidence);
   let plan = planBatch(request, live);
   let dryRunDigest = planDigest(plan);
   if (!args.apply) {
-    process.stdout.write(`${JSON.stringify(report(plan, 'plan', { dependency_gate: live.liveGate, dry_run_digest: dryRunDigest }), null, 2)}\n`);
+    process.stdout.write(`${JSON.stringify(report(plan, 'plan', { dependency_gate: live.liveGate, inventory_audit: inventoryAudit, dry_run_digest: dryRunDigest }), null, 2)}\n`);
     return plan.ok ? 0 : 1;
   }
   const progressFile = args.progressFile || defaultProgressFile(request);
@@ -328,7 +353,9 @@ function main(argv = process.argv.slice(2)) {
     process.stdout.write(`${JSON.stringify(report(plan, 'apply-blocked-after-recheck', { dependency_gate: recheckedGate }), null, 2)}\n`);
     return 1;
   }
-  live = loadLive(request, gate.gate, recheckedEvidence, remoteContextArtifactResults(request));
+  const recheckedCompletionEvidence = loadCompletionEvidence(request.repository, request);
+  const recheckedCompletionDependencies = (request.completion_dependencies || []).map((entry) => loadIssue(request.repository, entry.issue_number));
+  live = loadLive(request, gate.gate, recheckedEvidence, remoteContextArtifactResults(request), recheckedCompletionDependencies, recheckedCompletionEvidence);
   plan = planBatch(request, live);
   const recheckDigest = planDigest(plan);
   if (!existingProgress && recheckDigest !== dryRunDigest) {
@@ -417,4 +444,4 @@ if (require.main === module) {
   try { process.exitCode = main(); } catch (error) { process.stderr.write(`ERROR: ${error.message}\n`); process.exitCode = 1; }
 }
 
-module.exports = { parseArgs, paginate, loadComments, loadAllIssues, buildInventoryReport, resumeProgressItem, parseMarker, planBatch, report };
+module.exports = { parseArgs, paginate, loadComments, loadAllIssues, buildInventoryReport, fixedInventoryAudit, resumeProgressItem, parseMarker, planBatch, report };
