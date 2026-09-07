@@ -12,6 +12,7 @@ const {
   validateProgress,
   validateEvidencePlan,
   validateRequests,
+  receiptMatchesRequest,
   transitionReceiptBody,
   acquireProgressLock,
 } = require('./lib/issue-1577-source-review-transition-batch');
@@ -73,6 +74,8 @@ function atomicWriteJson(file, value) {
   const temporary = `${absolute}.tmp-${process.pid}`; const fd = fs.openSync(temporary, 'w', 0o600);
   try { fs.writeFileSync(fd, `${JSON.stringify(value, null, 2)}\n`); fs.fsyncSync(fd); } finally { fs.closeSync(fd); }
   fs.renameSync(temporary, absolute);
+  const directoryFd = fs.openSync(path.dirname(absolute), 'r');
+  try { fs.fsyncSync(directoryFd); } finally { fs.closeSync(directoryFd); }
 }
 function requestFiles(requestDir) {
   const expected = TARGETS.map((issue) => `issue-${issue}`);
@@ -93,10 +96,33 @@ function receiptPath(receiptDir, request) {
   if (!Number.isSafeInteger(issue) || issue < 1 || path.dirname(file) !== root) throw new Error('transition receipt path escapes receipt directory');
   return file;
 }
-function readReceipt(receiptDir, request) { const file = receiptPath(receiptDir, request); if (!fs.existsSync(file)) return null; const stat = fs.lstatSync(file); if (!stat.isFile() || stat.isSymbolicLink()) throw new Error('transition receipt must be a regular file'); return readJson(file); }
+function readReceipt(receiptDir, request) { const file = receiptPath(receiptDir, request); if (!fs.existsSync(file)) return null; const stat = fs.lstatSync(file); if (!stat.isFile() || stat.isSymbolicLink()) throw new Error('transition receipt must be a regular file'); const receipt = readJson(file); const validation = receiptMatchesRequest(receipt, request); if (!validation.ok) throw new Error(`transition receipt is malformed or not bound to request: ${validation.errors.join('; ')}`); return receipt; }
 function writeReceipt(receiptDir, request, receipt) { atomicWriteJson(receiptPath(receiptDir, request), receipt); }
 function ghJson(args, input = null) { return JSON.parse(execFileSync('gh', args, { input: input == null ? undefined : JSON.stringify(input), encoding: 'utf8', maxBuffer: 128 * 1024 * 1024 })); }
-function readWithRetry(read, attempts, backoffMs, sleep) { let last; for (let attempt = 1; attempt <= attempts; attempt += 1) { try { return read(); } catch (error) { last = error; if (attempt === attempts) throw error; sleep(backoffMs * (2 ** (attempt - 1))); } } throw last; }
+function isTransientReadError(error) {
+  const code = String(error && error.code || '').toUpperCase();
+  const message = String(error && (error.stderr || error.message) || '');
+  if (/\b(?:HTTP|status(?:\s+code)?)\s*[45]\d\d\b/i.test(message)) return false;
+  if (['ECONNRESET', 'ETIMEDOUT', 'EAI_AGAIN', 'ENETUNREACH', 'EHOSTUNREACH', 'ECONNREFUSED'].includes(code)) return true;
+  return /\bEOF\b|connection reset|socket hang up|network is unreachable|timed out|TLS handshake|temporary failure in name resolution|fetch failed/i.test(message);
+}
+function readWithRetry(read, attempts, backoffMs, sleep) { let last; for (let attempt = 1; attempt <= attempts; attempt += 1) { try { return read(); } catch (error) { last = error; if (attempt === attempts || !isTransientReadError(error)) throw error; sleep(backoffMs * (2 ** (attempt - 1))); } } throw last; }
+function collectOwnershipPages(readPage, identity) {
+  const items = []; let totalCount = null;
+  for (let page = 1; page <= 100; page += 1) {
+    const result = readPage(page);
+    if (!result || result.incomplete_results !== false || !Array.isArray(result.items) || !Number.isSafeInteger(result.total_count) || result.total_count < 0 || result.items.length > 100) throw new Error(`ownership search for ${identity} was incomplete or malformed`);
+    if (totalCount == null) totalCount = result.total_count;
+    if (result.total_count !== totalCount) throw new Error(`ownership search for ${identity} total_count changed during pagination`);
+    for (const item of result.items) if (!item || !Number.isSafeInteger(Number(item.number)) || Number(item.number) < 1) throw new Error(`ownership search for ${identity} returned an invalid Issue number`);
+    items.push(...result.items);
+    if (result.items.length === 0) {
+      if (items.length !== totalCount) throw new Error(`ownership search for ${identity} item count does not equal total_count`);
+      return items;
+    }
+  }
+  throw new Error(`ownership search for ${identity} exceeded bounded pages`);
+}
 function main(argv = process.argv.slice(2), injected = {}) {
   const args = parseArgs(argv); if (args.help) { process.stdout.write(`${help()}\n`); return 0; }
   const manifest = readJson(args.manifest); const evidencePlan = readJson(args.evidencePlan); const requests = requestFiles(args.requestDir);
@@ -106,7 +132,10 @@ function main(argv = process.argv.slice(2), injected = {}) {
   const apiRead = (apiArgs) => readWithRetry(() => command(['api', ...apiArgs]), args.getMaxAttempts, args.getBackoffMs, sleep);
   const loadIssue = (number) => apiRead([`repos/${manifest.repository}/issues/${number}`]);
   const loadComments = (number) => { const all = []; for (let page = 1; page <= 100; page += 1) { const batch = apiRead([`repos/${manifest.repository}/issues/${number}/comments?per_page=100&page=${page}`]); if (!Array.isArray(batch)) throw new Error(`Issue #${number} comments response was not an array`); all.push(...batch); if (batch.length < 100) return all; } throw new Error(`Issue #${number} comments exceeded 100 pages`); };
-  const loadOwnership = (id) => { const query = encodeURIComponent(`repo:${manifest.repository} is:issue in:body "${id}"`); const result = apiRead([`search/issues?q=${query}&per_page=100&page=1`]); if (!result || result.incomplete_results === true || !Array.isArray(result.items) || result.total_count !== result.items.length) throw new Error(`ownership search for ${id} was incomplete`); return result.items.map((item) => loadIssue(item.number)).filter((item) => item && !item.pull_request); };
+  const loadOwnership = (id) => {
+    const query = encodeURIComponent(`repo:${manifest.repository} is:issue in:body "${id}"`);
+    return collectOwnershipPages((page) => apiRead([`search/issues?q=${query}&per_page=100&page=${page}`]), id).map((item) => loadIssue(item.number)).filter((item) => item && !item.pull_request);
+  };
   const liveLoader = (request) => ({ sourceIssue: loadIssue(request.source_note_issue_number), interviewIssue: loadIssue(request.issue_number), comments: loadComments(request.issue_number), sourceComments: loadComments(request.source_note_issue_number), allIssues: loadOwnership(request.interview_note_id) });
   let lock = null;
   try {
@@ -132,4 +161,4 @@ function main(argv = process.argv.slice(2), injected = {}) {
   } finally { if (lock) lock.release(); }
 }
 if (require.main === module) { try { process.exitCode = main(); } catch (error) { process.stderr.write(`ERROR: ${error.message}\n`); process.exitCode = 1; } }
-module.exports = { TARGETS, parseArgs, requestFiles, receiptPath, readReceipt, writeReceipt, transitionReceiptBody, main };
+module.exports = { TARGETS, parseArgs, requestFiles, receiptPath, readReceipt, writeReceipt, transitionReceiptBody, atomicWriteJson, isTransientReadError, readWithRetry, collectOwnershipPages, main };

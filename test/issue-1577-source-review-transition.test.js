@@ -12,6 +12,9 @@ const {
   validateEvidencePlan,
   evidencePlanSha256,
   preservesNonLifecycle,
+  transitionReceipt,
+  transitionReceiptBody,
+  matchingTransitionReceipt,
   initialProgress,
   validateProgress,
   applyBatch,
@@ -76,7 +79,7 @@ function evidencePlan() {
 function applyFixture() {
   const reqs = requests();
   const ep = evidencePlan();
-  const plan = { ok: true, mode: 'plan', plan_sha256: PLAN, authorization_sha256: AUTH, packet_set_sha256: PACKET, items: reqs.map((request) => ({ issue_number: request.issue_number, live_snapshot: { number: request.issue_number, body_sha256: 'x'.repeat(64), labels: ['learning:keep', 'source:xhs', 'type:interview-note', 'status:captured'], state: 'open' } })) };
+  const plan = { ok: true, mode: 'plan', plan_sha256: PLAN, authorization_sha256: AUTH, packet_set_sha256: PACKET, items: reqs.map((request) => ({ issue_number: request.issue_number, request_sha256: requestSha256(request), live_snapshot: { number: request.issue_number, body_sha256: 'x'.repeat(64), labels: ['learning:keep', 'source:xhs', 'type:interview-note', 'status:captured'], state: 'open' } })) };
   const progress = initialProgress(plan);
   const states = new Map(reqs.map((request) => [request.issue_number, { labels: ['source:xhs', 'type:interview-note', 'learning:keep', 'status:captured'], receipt: null, nextComment: 700000 + request.issue_number }]));
   const calls = { labels: [], receipts: [], localWrites: 0, waits: [] };
@@ -148,6 +151,23 @@ test('evidence marker inspection rejects missing, duplicate, and hash-conflictin
   assert.equal(inspectEvidence([comment, comment], request, PACKET, comment.id).ok, false);
   marker.evidence_subject_sha256 = '0'.repeat(64);
   assert.equal(inspectEvidence([{ ...comment, body: `<!-- interview-note-source-review-evidence.v1\n${JSON.stringify(marker)}\n-->` }], request, PACKET, comment.id).ok, false);
+});
+
+test('remote transition receipts bind every request field and the live comment id', () => {
+  const request = { ...requests()[0], expected_interview_body_sha256: 'a'.repeat(64), expected_source_note_body_sha256: 'b'.repeat(64), pinned_artifact_manifest_sha256: 'c'.repeat(64), evidence_subject_sha256: 'd'.repeat(64) };
+  const receipt = transitionReceipt(request, 812345, '2026-09-07T00:01:00Z');
+  const comment = { id: 812345, body: transitionReceiptBody(receipt) };
+  const matching = matchingTransitionReceipt([comment], request);
+  assert.deepEqual(matching.receipts, [receipt], matching.errors.join('; '));
+  for (const field of ['schema_version', 'transition_id', 'request_sha256', 'repository', 'issue_number', 'interview_note_id', 'case_key', 'source_note_issue_number', 'source_note_body_sha256', 'interview_body_sha256', 'source_revision_id', 'manifest_sha256', 'source_repository_ref', 'decision', 'final_status', 'provenance_mode', 'provenance_statement', 'pinned_artifact_manifest_sha256', 'evidence_subject_sha256', 'reviewed_at', 'applied_at']) {
+    const changed = { ...receipt, [field]: field === 'issue_number' ? receipt[field] + 1 : field === 'applied_at' ? 'not-a-timestamp' : `wrong-${field}` };
+    const result = matchingTransitionReceipt([{ id: 812345, body: transitionReceiptBody(changed) }], request);
+    assert.equal(result.receipts.length, 0, `receipt field ${field} must be bound`);
+    assert.ok(result.errors.length, `receipt field ${field} mismatch must fail closed`);
+  }
+  const wrongCommentId = { ...receipt, comment_id: 999999 };
+  const idResult = matchingTransitionReceipt([{ id: 812345, body: transitionReceiptBody(wrongCommentId) }], request);
+  assert.deepEqual(idResult.receipts.map((value) => value.comment_id), [812345]);
 });
 
 test('apply performs two controlled label phases, preserves non-lifecycle labels, and writes one receipt per target', () => {
@@ -264,4 +284,15 @@ test('label drift and lost lock fail closed before another lifecycle mutation', 
   let asserts = 0;
   const lock = { assertHeld() { asserts += 1; if (asserts > 4) throw new Error('lock lost'); } };
   assert.throws(() => applyBatch({ requests: lockFixture.reqs, evidencePlan: lockFixture.ep, pinnedArtifactManifest: lockFixture.ep.pinnedArtifactManifest, liveLoader: lockFixture.liveLoader, progress: lockFixture.progress, expectedPlanSha256: PLAN, expectedAuthorizationSha256: AUTH }, { lock, planBatch: lockFixture.planFn, validateLive: lockFixture.validateLive, persistProgress: () => {}, patchLabel: () => {}, postReceipt: () => ({}), readReceipt: () => null, writeReceipt: () => {} }), /lock lost/);
+});
+
+test('progress intent and complete result bindings reject tampering', () => {
+  const pendingFixture = applyFixture();
+  assert.equal(run(pendingFixture, { crashAfterFirstLabel: true }).ok, false);
+  pendingFixture.progress.intents['issue-1577-source-review-1558'].issue_number = 1559;
+  assert.equal(validateProgress(pendingFixture.progress, pendingFixture.plan).ok, false);
+  const completeFixture = applyFixture();
+  assert.equal(run(completeFixture).ok, true);
+  completeFixture.progress.results['issue-1577-source-review-1558'].request_sha256 = 'd'.repeat(64);
+  assert.equal(validateProgress(completeFixture.progress, completeFixture.plan).ok, false);
 });

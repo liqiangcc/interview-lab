@@ -36,9 +36,11 @@ npm run plan:issue-1577-source-review-transition
 ```
 
 The generated plan has a transition-specific `plan_sha256` and
-`authorization_sha256`; neither is interchangeable with the evidence plan
-digest. Apply requires a newly reviewed plan digest, the transition
-authorization digest, an exclusive progress lock, and an explicit `--apply`.
+`authorization_sha256`; it also embeds the reproducible
+`evidence_plan_sha256`, so stale or swapped evidence plans cannot be reused.
+Neither plan digest is interchangeable with the other. Apply requires a newly
+reviewed plan digest, the transition authorization digest, an exclusive
+progress lock, and an explicit `--apply`.
 
 Before every individual label operation, the runner persists a pending intent,
 re-reads the target, and verifies the recorded body/label CAS prefix. Writes
@@ -48,10 +50,14 @@ labels. A response loss is reconciled with bounded read-only GETs; it never
 causes a blind retry.
 
 The same protocol applies to the final transition receipt. A pending receipt
-is recoverable only from an exact live receipt. Local progress and receipt files
-are written atomically. Any missing or ambiguous receipt, lost lock, body or
-SourceRevision drift, duplicate/missing evidence marker, ownership change, or
-non-legal label prefix fails closed and leaves a resumable/uncertain intent.
+is recoverable only from an exact live receipt whose schema, request-bound
+identity/body/revision/provenance fields, timestamps, and actual live comment
+ID all match. Local progress and receipt files are atomically renamed and
+fsynced with their parent directory. GET retry is limited to transient network
+failures; semantic, HTTP, JSON, and ownership-pagination errors fail closed.
+Any missing or ambiguous receipt, lost lock, body or SourceRevision drift,
+duplicate/missing evidence marker, ownership change, or non-legal label prefix
+fails closed and leaves a resumable/uncertain intent.
 
 ## Completion audit
 
