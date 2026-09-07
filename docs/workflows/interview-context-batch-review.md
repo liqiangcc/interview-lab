@@ -10,6 +10,8 @@
 
 Pilot request 的 `pilot_size` 最大为 50；#923 首批 request 应为恰好 50 条。每一条必须绑定 InterviewNote Issue number、body SHA-256、reviewed `InterviewContext`，以及已提交到 Git 的 Context artifact `{path, ref, commit, sha256}`。`commit` 是不可变权威，Context 内容始终从 pinned commit 读取；`ref` 只需存在且通过 compare/ancestry 证明包含该 commit，不能要求 ref 永久停留在 receipt 写入时的 tip。四个依赖的 live Issue state、结构化 acceptance anchor 和 `acceptance_evidence` final comment 都必须逐一读取并严格匹配；closed 本身不是 acceptance proof。
 
+学习子批次可以声明 `fixed_inventory_issue_numbers` 和 `audit_only_issue_numbers`。Issue #1598 固定为 50 个 source-ready Issue（#3、#4、#915、#1509–#1538、#1558、#1559、#1562–#1576），其中 #3/#4/#915 只能审计现有 Context/receipt；它们缺失或漂移时整批 fail closed，不能执行 receipt repair。#1598 另以 `completion_dependencies` 绑定 #1539/#1577 的关闭证据、返回 comment id、body digest 与必要文本，避免把 closed 状态当作完成证明。
+
 ## 输入与计算边界
 
 request 以如下 marker 包裹 JSON：
@@ -49,6 +51,10 @@ node scripts/plan-interview-context-learning-discovery.js \
 
 报告必须给出 `ready_count`、`unknown_count`、`unknown_item_count`、`needs_review_count`、`already_applied_count`、`proposed_mutation_count` 与 `mutation_count`。存在需复核项时，`mutation_count` 固定为 0；任何 candidate 失败都会使整批 apply fail-closed。
 
+学习标签必须先通过受控 taxonomy 预检。`config/issue-labels.json` 的 `company.managed_values` 是允许的 company label 闭集；`scripts/lib/issue-label-taxonomy.js` 会校验 projection 中的 discovery labels，并将 live repository label catalog 显式分页读取。报告中的 `label_preflight` 必须列出 `required`、`existing`、`missing`、`unknown` 和 catalog digest。缺失或未知 label 时 planner 仍可输出 plan-only 投影，但 apply 必须 fail-closed；planner 不会隐式创建 label。经独立复核后，管理员只能通过受控的 `scripts/reconcile-labels.sh` / taxonomy provisioning 流程补齐并验证这些 label，再重新 dry-run。`PATCH` 响应必须返回并完整匹配目标 labels；缺字段、静默丢 label 或 live re-read 不收敛都会停止批次。
+
+固定 inventory 先用 GitHub 原生 `label=type:interview-note` 显式分页读取，并要求 live `status:source-ready` 集合与 request 完全相等；不扫描未筛选的全库 body，也不把 blocked/captured SourceNote 纳入候选。审计-only 条目必须已有匹配 receipt、artifact 和收敛 projection；新条目才可在 plan 中形成 mutation proposal。Context artifact 在 mutation 前必须已经存在于可解析 Git commit/ref，planner 通过 pinned commit 读取内容并校验 digest。
+
 apply 必须显式确认本次原生 dry-run digest 和 mutation 上限；`--apply` 单独使用会 fail closed：
 
 ```bash
@@ -57,7 +63,7 @@ node scripts/plan-interview-context-learning-discovery.js \
   --apply --confirm-dry-run-digest <dry_run_digest> --max-mutations <n>
 ```
 
-apply 前会重新读取依赖、四个 acceptance evidence、Issues、receipts 和全部 Git Context artifacts，并要求 re-check digest 与已确认 dry-run 完全一致；同时先以原子写入、fsync、rename 持久化逐项 apply intent/progress journal，启动时校验 batch、Issue、body/context/artifact/title/labels 映射。成功后按默认 1 秒间隔更新 title/labels 并写 receipt。脚本不会在 apply 中写本地 Context 文件：Context 必须在 mutation 前已经存在于可解析的 Git commit/ref，receipt 同时记录 artifact path/ref/commit/digest。PATCH 或 receipt 响应异常时立即 live re-read；已收敛则记录 progress 并继续，未收敛则记录带 error 的 failed 状态并 fail closed。重跑同一 request 会先 live recheck 已成功项并跳过；failed 项只有 live 已明确收敛才能转 complete，不能盲目重发不确定 mutation。receipt 存在但 artifact 缺失/冲突、ref 不存在或 diverged、多 receipt 或 marker 冲突均 fail closed。
+apply 前会重新读取依赖、四个 acceptance evidence、Issues、receipts 和全部 Git Context artifacts，并要求 re-check digest 与已确认 dry-run 完全一致；同时先以原子写入、fsync、rename 持久化逐项 apply intent/progress journal，启动时校验 batch、Issue、body/context/artifact/title/labels 映射。apply 进程还必须独占 progress lock；已有（包括 stale）lock 一律 fail closed，只有持有者在 `finally` 中释放。GitHub Issue GET 通常返回弱 ETag（如 `W/"hash"`）；PATCH CAS 会去掉 `W/`、保留 quoted opaque tag 后发送 `If-Match: "hash"`。每次 PATCH 使用这个紧邻 live Issue GET 返回的 ETag 作为 CAS；并发修改会被 GitHub 拒绝，随后 live re-read 判定是否收敛，不能覆盖并发的 title 或非学习 labels。成功后按默认 1 秒间隔更新 title/labels 并写 receipt。脚本不会在 apply 中写本地 Context 文件：Context 必须在 mutation 前已经存在于可解析的 Git commit/ref，receipt 同时记录 artifact path/ref/commit/digest。PATCH 或 receipt 响应异常时立即 live re-read；已收敛则记录 progress 并继续，未收敛则记录带 error 的 failed 状态并 fail closed。重跑同一 request 会先 live recheck 已成功项并跳过；failed 项只有 live 已明确收敛才能转 complete，不能盲目重发不确定 mutation。receipt 存在但 artifact 缺失/冲突、ref 不存在或 diverged、多 receipt 或 marker 冲突均 fail closed。
 
 脚本不会修改 Raw Source、SourceNote body 或 InterviewNote machine record。Crash 后可用同一 request 重跑；body 漂移、identity/revision 漂移、依赖回退、validator 失败或 receipt 冲突都会停止，不自动猜测或覆盖。
 

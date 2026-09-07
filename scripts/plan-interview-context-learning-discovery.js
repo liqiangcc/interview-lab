@@ -3,11 +3,12 @@
 
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 const { execFileSync } = require('child_process');
 const {
   parseMarker, parseReceipts, parseIssueCommentUrl, planBatch, planItem, receiptFor, receiptBody,
   sha256Text, normalizeLabels, validateLiveDependencyGate, verifyContextArtifact, planDigest,
-  progressFromPlan, validateProgressMapping,
+  progressFromPlan, validateProgressMapping, ISSUE_1598_FIXED_INVENTORY,
 } = require('./lib/interview-context-batch');
 const { parseInterviewNoteIssue, validateInterviewNoteIssue } = require('./lib/interview-note-issue');
 const { validateInterviewContext } = require('./lib/interview-context');
@@ -27,6 +28,24 @@ function runGhJson(args, input = null) {
     input: input == null ? undefined : JSON.stringify(input), encoding: 'utf8',
     maxBuffer: 128 * 1024 * 1024, stdio: ['pipe', 'pipe', 'pipe'],
   }));
+}
+
+function parseGhIncludedJson(output) {
+  const separator = /\r?\n\r?\n/.exec(String(output));
+  if (!separator) throw new Error('gh --include response did not contain an HTTP header/body separator');
+  const headers = String(output).slice(0, separator.index).split(/\r?\n/);
+  const body = String(output).slice(separator.index + separator[0].length);
+  let json;
+  try { json = JSON.parse(body); } catch (error) { throw new Error(`gh --include response body is not JSON: ${error.message}`); }
+  const etag = headers.find((line) => /^etag:/i.test(line))?.replace(/^etag:\s*/i, '').trim() || null;
+  return { json, headers, etag };
+}
+
+function runGhJsonWithHeaders(args) {
+  const output = execFileSync('gh', [...args, '--include'], {
+    encoding: 'utf8', maxBuffer: 128 * 1024 * 1024, stdio: ['pipe', 'pipe', 'pipe'],
+  });
+  return parseGhIncludedJson(output);
 }
 
 function ghReadJson(args, input = null, attempts = 3) {
@@ -84,7 +103,23 @@ function parseArgs(argv = process.argv.slice(2)) {
   return out;
 }
 
-function loadIssue(repository, number) { return ghReadJson(['api', `repos/${repository}/issues/${number}`]); }
+function readIssueWithEtag(repository, number, attempts = 3) {
+  let lastError;
+  for (let attempt = 1; attempt <= attempts; attempt += 1) {
+    try {
+      const response = runGhJsonWithHeaders(['api', `repos/${repository}/issues/${number}`]);
+      if (!response.etag) throw new Error(`Issue #${number} GET response omitted ETag`);
+      Object.defineProperty(response.json, '__etag', { value: response.etag, enumerable: false, configurable: false });
+      return response.json;
+    } catch (error) {
+      lastError = error;
+      if (attempt < attempts) sleepMs(500 * attempt);
+    }
+  }
+  throw new Error(`Issue #${number} read with ETag failed: ${lastError.message}`);
+}
+
+function loadIssue(repository, number) { return readIssueWithEtag(repository, number); }
 
 function loadComments(repository, number, options = {}) {
   const readPage = options.readPage || ((page) => ghReadJson(['api', `repos/${repository}/issues/${number}/comments?per_page=${PAGE_SIZE}&page=${page}`]));
@@ -96,6 +131,11 @@ function loadAllIssues(repository, options = {}) {
   const issues = paginate((page) => readPage(page, `repos/${repository}/issues?state=all&labels=type%3Ainterview-note&per_page=${PAGE_SIZE}&page=${page}`), `${repository} type:interview-note issues`);
   if (issues.some((issue) => issue.pull_request || !normalizeLabels(issue.labels || []).includes('type:interview-note'))) throw new Error('label-filtered inventory returned a non-InterviewNote object; refusing incomplete inventory');
   return issues;
+}
+
+function loadLabels(repository, options = {}) {
+  const readPage = options.readPage || ((page) => ghReadJson(['api', `repos/${repository}/labels?per_page=${PAGE_SIZE}&page=${page}`]));
+  return paginate((page) => readPage(page, `repos/${repository}/labels?per_page=${PAGE_SIZE}&page=${page}`), `${repository} labels`);
 }
 
 function readRequest(file) {
@@ -127,6 +167,38 @@ function writeProgress(file, progress) {
   fs.renameSync(temporary, file);
   const directoryFd = fs.openSync(path.dirname(file), 'r');
   try { fs.fsyncSync(directoryFd); } finally { fs.closeSync(directoryFd); }
+}
+
+function acquireApplyLock(file, metadata = {}) {
+  const token = crypto.randomUUID();
+  let fd;
+  try {
+    fd = fs.openSync(file, 'wx', 0o644);
+  } catch (error) {
+    if (error && error.code === 'EEXIST') throw new Error(`apply lock already exists at ${file}; refusing to steal existing or stale lock`);
+    throw new Error(`could not create apply lock ${file}: ${error.message}`);
+  }
+  const lock = { schema_version: 'interview-context-learning-discovery-apply-lock.v1', token, pid: process.pid, started_at: new Date().toISOString(), ...metadata };
+  try {
+    fs.writeFileSync(fd, `${JSON.stringify(lock, null, 2)}\n`, 'utf8');
+    fs.fsyncSync(fd);
+  } catch (error) {
+    try { fs.closeSync(fd); } finally { try { fs.unlinkSync(file); } catch {} }
+    throw new Error(`could not persist apply lock ${file}: ${error.message}`);
+  }
+  fs.closeSync(fd);
+  let released = false;
+  return {
+    file,
+    token,
+    release() {
+      if (released) return;
+      const current = JSON.parse(fs.readFileSync(file, 'utf8'));
+      if (current.token !== token) throw new Error(`apply lock ${file} ownership changed; refusing to remove another process lock`);
+      fs.unlinkSync(file);
+      released = true;
+    },
+  };
 }
 
 function setProgressItem(progress, file, issueNumber, patch) {
@@ -163,10 +235,20 @@ function loadDependencyEvidence(repository, gate) {
   return evidence;
 }
 
-function loadLive(request, dependencyGateArtifact, dependencyEvidence, contextArtifactResults = null) {
+function loadCompletionEvidence(repository, request) {
+  const evidence = new Map();
+  for (const entry of request.completion_dependencies || []) {
+    const parsed = parseIssueCommentUrl(request.repository, entry.issue_number, entry.evidence);
+    if (parsed) evidence.set(entry.evidence, ghReadJson(['api', `repos/${repository}/issues/comments/${parsed.comment_id}`]));
+  }
+  return evidence;
+}
+
+function loadLive(request, dependencyGateArtifact, dependencyEvidence, contextArtifactResults = null, completionDependencies = [], completionEvidence = null) {
   const dependencies = request.dependency_issues.map((number) => loadIssue(request.repository, number));
   const liveGate = validateLiveDependencyGate(dependencyGateArtifact, request.repository, dependencies, dependencyEvidence);
-  if (!liveGate.ok) return { dependencies, issues: [], receiptsByIssue: new Map(), dependencyGateArtifact, dependencyEvidence, contextArtifactResults, liveGate };
+  if (!liveGate.ok) return { dependencies, completionDependencies, completionEvidence, issues: [], receiptsByIssue: new Map(), dependencyGateArtifact, dependencyEvidence, contextArtifactResults, liveGate };
+  const repositoryLabels = loadLabels(request.repository);
   const issues = request.items.map((item) => loadIssue(request.repository, item.issue_number));
   const receiptsByIssue = new Map();
   for (const issue of issues) {
@@ -174,20 +256,44 @@ function loadLive(request, dependencyGateArtifact, dependencyEvidence, contextAr
     if (parsed.errors.length) throw new Error(`Issue #${issue.number}: ${parsed.errors.join('; ')}`);
     receiptsByIssue.set(Number(issue.number), parsed.receipts);
   }
-  return { dependencies, issues, receiptsByIssue, dependencyGateArtifact, dependencyEvidence, contextArtifactResults, liveGate };
+  return { dependencies, completionDependencies, completionEvidence, issues, receiptsByIssue, repositoryLabels, dependencyGateArtifact, dependencyEvidence, contextArtifactResults, liveGate };
+}
+
+function fixedInventoryAudit(issues, expectedNumbers) {
+  const expected = [...expectedNumbers].sort((a, b) => a - b);
+  const actual = issues.filter((issue) => normalizeLabels(issue.labels || []).includes('type:interview-note') && normalizeLabels(issue.labels || []).includes('status:source-ready')).map((issue) => Number(issue.number)).sort((a, b) => a - b);
+  const missing = expected.filter((number) => !actual.includes(number));
+  const unexpected = actual.filter((number) => !expected.includes(number));
+  return { ok: missing.length === 0 && unexpected.length === 0 && actual.length === expected.length, expected_count: expected.length, actual_count: actual.length, expected, actual, missing, unexpected };
 }
 
 function remoteContextArtifactResults(request) {
   const results = new Map();
+  const refCache = new Map();
+  const compareCache = new Map();
+  const commitCache = new Map();
+  const contentCache = new Map();
   for (const item of request.items) {
     const artifact = item.context_artifact;
     const refName = artifact && artifact.ref ? artifact.ref.replace(/^refs\/(heads|tags)\//, 'git/ref/$1/') : '';
     results.set(Number(item.issue_number), verifyContextArtifact(item.context, artifact, request.repository, {
-      readRef: () => ghReadJson(['api', `repos/${request.repository}/${refName}`]),
-      readCompare: (commit, ref) => ghReadJson(['api', `repos/${request.repository}/compare/${commit}...${ref.replace(/^refs\/(heads|tags)\//, '')}`]),
-      readCommit: (commit) => ghReadJson(['api', `repos/${request.repository}/commits/${commit}`]),
+      readRef: () => {
+        if (!refCache.has(artifact.ref)) refCache.set(artifact.ref, ghReadJson(['api', `repos/${request.repository}/${refName}`]));
+        return refCache.get(artifact.ref);
+      },
+      readCompare: (commit, ref) => {
+        const key = `${commit}:${ref}`;
+        if (!compareCache.has(key)) compareCache.set(key, ghReadJson(['api', `repos/${request.repository}/compare/${commit}...${ref.replace(/^refs\/(heads|tags)\//, '')}`]));
+        return compareCache.get(key);
+      },
+      readCommit: (commit) => {
+        if (!commitCache.has(commit)) commitCache.set(commit, ghReadJson(['api', `repos/${request.repository}/commits/${commit}`]));
+        return commitCache.get(commit);
+      },
       readContent: (artifactPath, commit) => {
-        const value = ghReadJson(['api', `repos/${request.repository}/contents/${artifactPath}?ref=${commit}`]);
+        const key = `${commit}:${artifactPath}`;
+        if (!contentCache.has(key)) contentCache.set(key, ghReadJson(['api', `repos/${request.repository}/contents/${artifactPath}?ref=${commit}`]));
+        const value = contentCache.get(key);
         if (value.type !== 'file' || typeof value.content !== 'string') throw new Error('GitHub contents response is not a file');
         return Buffer.from(value.content.replace(/\n/g, ''), 'base64').toString('utf8');
       },
@@ -241,8 +347,29 @@ function buildInventoryReport(issues, contextDir) {
   return report;
 }
 
-function patchIssue(request, item) {
-  return ghMutationJson(['api', '--method', 'PATCH', `repos/${request.repository}/issues/${item.issue_number}`, '--input', '-'], { title: item.projection.title, labels: item.projection.labels });
+function validatePatchResponse(response, item) {
+  if (!response || !Array.isArray(response.labels)) throw new Error('PATCH response omitted labels; refusing to assume projection converged');
+  if (JSON.stringify(normalizeLabels(response.labels)) !== JSON.stringify(item.projection.labels)) throw new Error('PATCH response labels did not equal the requested projection; refusing silent label loss');
+  return true;
+}
+
+function normalizeIfMatchEtag(etag) {
+  if (typeof etag !== 'string') throw new Error('Issue PATCH ETag must be a string');
+  const normalized = etag.trim().replace(/^W\//i, '');
+  if (!/^"(?:[^"\\]|\\.)*"$/.test(normalized)) throw new Error('Issue PATCH ETag must be a quoted opaque tag');
+  return normalized;
+}
+
+function buildPatchArgs(request, item) {
+  if (typeof item.issue_etag !== 'string' || item.issue_etag.trim() === '') throw new Error('Issue PATCH requires the ETag captured by the immediately preceding live Issue read');
+  return ['api', '--method', 'PATCH', `repos/${request.repository}/issues/${item.issue_number}`, '--header', `If-Match: ${normalizeIfMatchEtag(item.issue_etag)}`, '--input', '-'];
+}
+
+function patchIssue(request, item, labelPreflight) {
+  if (!labelPreflight || !labelPreflight.ok) throw new Error(`controlled label preflight is not satisfied: missing=${(labelPreflight && labelPreflight.missing || []).join(',')} unknown=${(labelPreflight && labelPreflight.unknown || []).join(',')}`);
+  const response = ghMutationJson(buildPatchArgs(request, item), { title: item.projection.title, labels: item.projection.labels });
+  validatePatchResponse(response, item);
+  return response;
 }
 
 function addReceipt(request, item, appliedAt) {
@@ -264,6 +391,7 @@ function verifyLive(request, item) {
 
 function report(plan, mode, extra = {}) {
   return { ok: plan.ok, mode, blocked: plan.blocked, errors: plan.errors, summary: plan.summary,
+    label_preflight: plan.label_preflight,
     items: plan.items.map((item) => ({ issue_number: item.issue_number, action: item.action, errors: item.errors, unknown_facts: item.unknown_facts,
       title: item.projection && item.projection.title, labels: item.projection && item.projection.labels,
       context_sha256: item.projection && item.projection.context_sha256, context_artifact: item.projection && item.projection.context_artifact })), ...extra };
@@ -293,15 +421,25 @@ function main(argv = process.argv.slice(2)) {
   if (request.repository !== repository) throw new Error(`request.repository must be ${repository}`);
   if (request.dependency_gate_file !== path.relative(process.cwd(), args.dependencyGateFile)) throw new Error('request dependency_gate_file does not match the selected gate artifact');
   if (request.expected_dependency_gate_sha256 !== gate.sha256) throw new Error(`dependency gate digest mismatch: expected=${request.expected_dependency_gate_sha256} live=${gate.sha256}`);
+  let inventoryAudit = null;
+  if (Array.isArray(request.fixed_inventory_issue_numbers)) {
+    const inventoryIssues = loadAllIssues(repository);
+    inventoryAudit = fixedInventoryAudit(inventoryIssues, request.fixed_inventory_issue_numbers);
+    if (!inventoryAudit.ok) throw new Error(`fixed live inventory mismatch: missing=${inventoryAudit.missing.join(',')} unexpected=${inventoryAudit.unexpected.join(',')} actual_count=${inventoryAudit.actual_count}`);
+  }
+  const completionDependencies = (request.completion_dependencies || []).map((entry) => loadIssue(repository, entry.issue_number));
+  const completionEvidence = loadCompletionEvidence(repository, request);
   const contextArtifactResults = remoteContextArtifactResults(request);
-  let live = loadLive(request, gate.gate, dependencyEvidence, contextArtifactResults);
+  let live = loadLive(request, gate.gate, dependencyEvidence, contextArtifactResults, completionDependencies, completionEvidence);
   let plan = planBatch(request, live);
   let dryRunDigest = planDigest(plan);
   if (!args.apply) {
-    process.stdout.write(`${JSON.stringify(report(plan, 'plan', { dependency_gate: live.liveGate, dry_run_digest: dryRunDigest }), null, 2)}\n`);
+    process.stdout.write(`${JSON.stringify(report(plan, 'plan', { dependency_gate: live.liveGate, inventory_audit: inventoryAudit, dry_run_digest: dryRunDigest }), null, 2)}\n`);
     return plan.ok ? 0 : 1;
   }
   const progressFile = args.progressFile || defaultProgressFile(request);
+  const applyLock = acquireApplyLock(`${progressFile}.lock`, { batch_id: request.batch_id, repository: request.repository, progress_file: progressFile });
+  try {
   const existingProgress = readProgress(progressFile);
   if (existingProgress) {
     dryRunDigest = existingProgress.dry_run_digest;
@@ -316,6 +454,10 @@ function main(argv = process.argv.slice(2)) {
     process.stdout.write(`${JSON.stringify(report(plan, 'apply-blocked', { dependency_gate: live.liveGate, dry_run_digest: dryRunDigest }), null, 2)}\n`);
     return 1;
   }
+  if (!plan.label_preflight || !plan.label_preflight.ok) {
+    process.stdout.write(`${JSON.stringify(report(plan, 'apply-blocked-label-preflight', { dependency_gate: live.liveGate, dry_run_digest: dryRunDigest }), null, 2)}\n`);
+    return 1;
+  }
   let progress = existingProgress;
   if (!progress) {
     progress = progressFromPlan(request, plan, dryRunDigest, args.maxMutations);
@@ -328,7 +470,9 @@ function main(argv = process.argv.slice(2)) {
     process.stdout.write(`${JSON.stringify(report(plan, 'apply-blocked-after-recheck', { dependency_gate: recheckedGate }), null, 2)}\n`);
     return 1;
   }
-  live = loadLive(request, gate.gate, recheckedEvidence, remoteContextArtifactResults(request));
+  const recheckedCompletionEvidence = loadCompletionEvidence(request.repository, request);
+  const recheckedCompletionDependencies = (request.completion_dependencies || []).map((entry) => loadIssue(request.repository, entry.issue_number));
+  live = loadLive(request, gate.gate, recheckedEvidence, remoteContextArtifactResults(request), recheckedCompletionDependencies, recheckedCompletionEvidence);
   plan = planBatch(request, live);
   const recheckDigest = planDigest(plan);
   if (!existingProgress && recheckDigest !== dryRunDigest) {
@@ -342,6 +486,10 @@ function main(argv = process.argv.slice(2)) {
   }
   if (!plan.ok) {
     process.stdout.write(`${JSON.stringify(report(plan, 'apply-blocked-after-recheck', { dependency_gate: live.liveGate, dry_run_digest: dryRunDigest }), null, 2)}\n`);
+    return 1;
+  }
+  if (!plan.label_preflight || !plan.label_preflight.ok) {
+    process.stdout.write(`${JSON.stringify(report(plan, 'apply-blocked-label-preflight-after-recheck', { dependency_gate: live.liveGate, dry_run_digest: dryRunDigest }), null, 2)}\n`);
     return 1;
   }
 
@@ -366,7 +514,7 @@ function main(argv = process.argv.slice(2)) {
     if (item.action === 'update') {
       setProgressItem(progress, progressFile, item.issue_number, { state: 'issue_mutation_pending' });
       try {
-        patchIssue(request, item);
+        patchIssue(request, item, plan.label_preflight);
       } catch (error) {
         const afterFailure = reloadPlannedItem(request, item, live.contextArtifactResults);
         if (!afterFailure.ok || !['repair_receipt', 'already_applied'].includes(afterFailure.action)) {
@@ -411,10 +559,13 @@ function main(argv = process.argv.slice(2)) {
   }
   process.stdout.write(`${JSON.stringify(report(plan, 'apply', { applied, dry_run_digest: dryRunDigest, confirmed_dry_run_digest: args.confirmDryRunDigest }), null, 2)}\n`);
   return 0;
+  } finally {
+    applyLock.release();
+  }
 }
 
 if (require.main === module) {
   try { process.exitCode = main(); } catch (error) { process.stderr.write(`ERROR: ${error.message}\n`); process.exitCode = 1; }
 }
 
-module.exports = { parseArgs, paginate, loadComments, loadAllIssues, buildInventoryReport, resumeProgressItem, parseMarker, planBatch, report };
+module.exports = { parseArgs, paginate, loadComments, loadAllIssues, loadLabels, buildInventoryReport, fixedInventoryAudit, resumeProgressItem, validatePatchResponse, parseGhIncludedJson, normalizeIfMatchEtag, buildPatchArgs, acquireApplyLock, parseMarker, planBatch, report };
