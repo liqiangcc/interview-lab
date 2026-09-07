@@ -83,9 +83,9 @@ function applyFixture() {
   const progress = initialProgress(plan);
   const states = new Map(reqs.map((request) => [request.issue_number, { labels: ['source:xhs', 'type:interview-note', 'learning:keep', 'status:captured'], receipt: null, nextComment: 700000 + request.issue_number }]));
   const calls = { labels: [], receipts: [], localWrites: 0, waits: [] };
-  const controls = { crashOnRead: false, strictIntermediate: false };
+  const controls = { strictIntermediate: false, reconcileReadFailure: false };
   const liveLoader = (request) => {
-    if (controls.crashOnRead) { controls.crashOnRead = false; throw new Error('simulated process crash'); }
+    if (controls.reconcileReadFailure) throw new Error('bounded reconcile GET exhausted');
     const state = states.get(request.issue_number);
     return { interviewIssue: { number: request.issue_number, body: 'unchanged', state: 'open', labels: [...state.labels] }, sourceIssue: { number: request.source_note_issue_number, body: 'unchanged', state: 'open', labels: [] }, comments: [], allIssues: [{ number: request.issue_number, body: `<!-- interview-note: id=${request.interview_note_id} schema=interview-note-issue.v2 -->` }], sourceComments: [] };
   };
@@ -103,11 +103,11 @@ function applyFixture() {
 function run(fixture, extra = {}) {
   return applyBatch({ requests: fixture.reqs, evidencePlan: fixture.ep, pinnedArtifactManifest: fixture.ep.pinnedArtifactManifest, liveLoader: fixture.liveLoader, progress: fixture.progress, expectedPlanSha256: PLAN, expectedAuthorizationSha256: AUTH }, {
     lock: { assertHeld() {} }, planBatch: fixture.planFn, validateLive: fixture.validateLive,
-    persistProgress: () => {}, patchLabel: (request, operation) => { fixture.calls.labels.push({ issue: request.issue_number, operation }); if (extra.ambiguousLabelPatch && !extra.ambiguous) { extra.ambiguous = true; throw new Error('label PATCH response was ambiguous'); } const state = fixture.states.get(request.issue_number); if (operation.kind === 'add') state.labels.push(operation.label); else state.labels = state.labels.filter((label) => label !== operation.label); if (extra.crashAfterFirstLabel && !extra.crashed) { extra.crashed = true; fixture.controls.crashOnRead = true; } },
+    persistProgress: () => {}, patchLabel: (request, operation) => { fixture.calls.labels.push({ issue: request.issue_number, operation }); if (extra.ambiguousLabelPatch && !extra.ambiguous) { extra.ambiguous = true; throw new Error('label PATCH response was ambiguous'); } const state = fixture.states.get(request.issue_number); if (operation.kind === 'add') state.labels.push(operation.label); else state.labels = state.labels.filter((label) => label !== operation.label); if (extra.reconcileReadFailure && !extra.reconcileFailureSet) { extra.reconcileFailureSet = true; fixture.controls.reconcileReadFailure = true; } },
     postReceipt: (request, receipt) => { fixture.calls.receipts.push(request.issue_number); const state = fixture.states.get(request.issue_number); if (extra.receiptAbsent) throw new Error('receipt response lost and receipt absent'); state.receipt = { comment_id: state.nextComment++, request_sha256: requestSha256(request), final_status: 'source-ready', applied_at: receipt.applied_at }; if (extra.responseLoss) throw new Error('response lost'); return { id: state.receipt.comment_id }; },
     readReceipt: (request) => fixture.states.get(request.issue_number).localReceipt || null,
     writeReceipt: (request, receipt) => { fixture.calls.localWrites += 1; if (extra.localReceiptFailure && !extra.localFailed) { extra.localFailed = true; throw new Error('local receipt write failed'); } fixture.states.get(request.issue_number).localReceipt = receipt; },
-    beforeMutation: extra.beforeMutation || (() => {}), sleep: (ms) => fixture.calls.waits.push(ms), now: () => '2026-09-07T00:00:00Z',
+    beforeMutation: extra.beforeMutation || (() => {}), afterLabelReconcile: extra.crashAfterFirstLabel && !extra.crashed ? () => { extra.crashed = true; throw new Error('simulated process crash'); } : undefined, sleep: (ms) => fixture.calls.waits.push(ms), now: () => '2026-09-07T00:00:00Z',
   });
 }
 
@@ -243,6 +243,31 @@ test('uncertain label PATCH is permanently fail-closed on resume', () => {
   assert.equal(fixture.calls.receipts.length, 0, 'resume must not reach receipt mutation');
   assert.equal(fixture.progress.intents['issue-1577-source-review-1558'].phase, 'uncertain');
   assert.equal(fixture.progress.possibly_performed, true);
+});
+
+test('reconcile GET exhaustion after a mutating label PATCH persists uncertainty and blocks resume', () => {
+  const fixture = applyFixture();
+  const first = run(fixture, { reconcileReadFailure: true });
+  assert.equal(first.ok, false);
+  assert.equal(fixture.calls.labels.length, 1);
+  assert.equal(fixture.calls.receipts.length, 0);
+  const uncertain = fixture.progress.intents['issue-1577-source-review-1558'];
+  assert.equal(uncertain.phase, 'uncertain');
+  assert.equal(uncertain.attempted_phase, 'begin-pending');
+  assert.match(uncertain.error, /bounded reconcile GET exhausted/);
+  assert.equal(uncertain.operation_index, 0);
+  assert.equal(uncertain.operation_prefix.length, 0);
+  assert.equal(uncertain.operation_plan.length, 3);
+  assert.equal(uncertain.cas.number, 1558);
+  assert.equal(fixture.progress.possibly_performed, true);
+  const labelsAfterFirst = [...fixture.states.get(1558).labels];
+  const second = run(fixture);
+  assert.equal(second.ok, false);
+  assert.match(second.errors.join('\n'), /permanently uncertain|explicit replan/);
+  assert.equal(fixture.calls.labels.length, 1);
+  assert.equal(fixture.calls.receipts.length, 0);
+  assert.deepEqual(fixture.states.get(1558).labels, labelsAfterFirst);
+  assert.equal(fixture.progress.intents['issue-1577-source-review-1558'].phase, 'uncertain');
 });
 
 test('non-lifecycle drift fails closed after a lifecycle write', () => {

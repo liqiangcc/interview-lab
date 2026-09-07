@@ -459,6 +459,8 @@ function applyBatch({ requests, evidencePlan, pinnedArtifactManifest, liveLoader
     const beforeControlled = state.intent && state.intent.before_controlled_labels || controlledLabels(labels);
     const plan = state.intent && state.intent.stage === stage && Array.isArray(state.intent.operation_plan) ? state.intent.operation_plan : operations(beforeControlled, desiredLabels);
     let index = state.intent && state.intent.stage === stage && Number.isInteger(state.intent.operation_index) ? state.intent.operation_index : 0;
+    let lastCasSnapshot = issueSnapshot(current.interviewIssue);
+    let patchInvokedInStage = false;
     while (index < plan.length) {
       const expectedControlled = plan.slice(0, index).reduce((value, op) => applyOperation(value, op), beforeControlled);
       if (!preservesNonLifecycle(labels, baseline)) throw new Error(`#${request.issue_number}: ${stage} state changed non-lifecycle labels`);
@@ -475,35 +477,63 @@ function applyBatch({ requests, evidencePlan, pinnedArtifactManifest, liveLoader
       persistIntent(progress, request, freshPlan, stage === 'begin' ? 'begin-pending' : 'final-pending', { stage, operation_plan: plan, operation_index: index, before_controlled_labels: beforeControlled, desired_controlled_labels: controlledLabels(desiredLabels), baseline_non_lifecycle_labels: nonLifecycleLabels(baseline), cas: issueSnapshot(current.interviewIssue) }, persist);
       markLabelAttempt();
       const casSnapshot = issueSnapshot(current.interviewIssue);
+      const uncertaintyContext = {
+        stage,
+        operation_plan: clone(plan),
+        operation_index: index,
+        operation_prefix: clone(plan.slice(0, index)),
+        before_controlled_labels: clone(beforeControlled),
+        desired_controlled_labels: clone(controlledLabels(desiredLabels)),
+        baseline_non_lifecycle_labels: clone(nonLifecycleLabels(baseline)),
+        cas: casSnapshot,
+      };
+      let patchInvoked = false;
       let writeError = null;
-      try { assertLock(); throttle(); options.patchLabel(request, op); assertLock(); } catch (error) { writeError = error; }
+      try { assertLock(); throttle(); patchInvokedInStage = true; patchInvoked = true; options.patchLabel(request, op); assertLock(); } catch (error) { if (!patchInvoked) throw error; writeError = error; }
       let converged = false;
+      let reconcileError = null;
       for (let attempt = 1; attempt <= reconcileAttempts; attempt += 1) {
-        current = readLive(request); labels = normalizeLabels(current.interviewIssue.labels, true);
-        if (!labels || !preservesNonLifecycle(labels, baseline)) throw new Error(`#${request.issue_number}: ${stage} lost non-lifecycle labels`);
-        const expected = applyOperation(expectedControlled, op);
-        if (canonicalJson(controlledLabels(labels)) === canonicalJson(expected)) { converged = true; break; }
-        if (attempt < reconcileAttempts) { assertLock(); if (typeof options.sleep === 'function') options.sleep(backoff * (2 ** (attempt - 1))); assertLock(); }
+        try {
+          current = readLive(request); labels = normalizeLabels(current.interviewIssue.labels, true);
+          if (!labels || !preservesNonLifecycle(labels, baseline)) throw new Error(`#${request.issue_number}: ${stage} lost non-lifecycle labels`);
+          lastCasSnapshot = issueSnapshot(current.interviewIssue);
+          const expected = applyOperation(expectedControlled, op);
+          if (canonicalJson(controlledLabels(labels)) === canonicalJson(expected)) { converged = true; break; }
+          if (attempt < reconcileAttempts) { assertLock(); if (typeof options.sleep === 'function') options.sleep(backoff * (2 ** (attempt - 1))); assertLock(); }
+        } catch (error) {
+          reconcileError = error;
+          break;
+        }
       }
       if (!converged) {
-        markUncertain(progress, request, freshPlan, stage === 'begin' ? 'begin-pending' : 'final-pending', writeError ? writeError.message : `${stage} label write did not converge`, persist, {
-          stage,
-          operation_plan: clone(plan),
-          operation_index: index,
-          operation_prefix: clone(plan.slice(0, index)),
-          before_controlled_labels: clone(beforeControlled),
-          desired_controlled_labels: clone(controlledLabels(desiredLabels)),
-          baseline_non_lifecycle_labels: clone(nonLifecycleLabels(baseline)),
-          cas: casSnapshot,
-        });
+        markUncertain(progress, request, freshPlan, stage === 'begin' ? 'begin-pending' : 'final-pending', (reconcileError || writeError || new Error(`${stage} label write did not converge`)).message, persist, uncertaintyContext);
         throw new Error(`#${request.issue_number}: ${stage} label write did not converge; refusing retry`);
       }
+      if (typeof options.afterLabelReconcile === 'function') options.afterLabelReconcile(request, stage, op, index);
       index += 1;
       state.intent = null;
     }
-    const finalLive = readLive(request); const finalLabels = normalizeLabels(finalLive.interviewIssue.labels, true);
-    if (!finalLabels || !preservesNonLifecycle(finalLabels, baseline) || canonicalJson(controlledLabels(finalLabels)) !== canonicalJson(controlledLabels(desiredLabels))) throw new Error(`#${request.issue_number}: ${stage} final label gate failed`);
-    return finalLive;
+    const finalUncertaintyContext = {
+      stage,
+      operation_plan: clone(plan),
+      operation_index: index,
+      operation_prefix: clone(plan.slice(0, index)),
+      before_controlled_labels: clone(beforeControlled),
+      desired_controlled_labels: clone(controlledLabels(desiredLabels)),
+      baseline_non_lifecycle_labels: clone(nonLifecycleLabels(baseline)),
+      cas: lastCasSnapshot,
+    };
+    try {
+      const finalLive = readLive(request); const finalLabels = normalizeLabels(finalLive.interviewIssue.labels, true);
+      if (!finalLabels || !preservesNonLifecycle(finalLabels, baseline) || canonicalJson(controlledLabels(finalLabels)) !== canonicalJson(controlledLabels(desiredLabels))) throw new Error(`#${request.issue_number}: ${stage} final label gate failed`);
+      return finalLive;
+    } catch (error) {
+      if (patchInvokedInStage) {
+        markUncertain(progress, request, freshPlan, stage === 'begin' ? 'begin-pending' : 'final-pending', error.message, persist, finalUncertaintyContext);
+        throw new Error(`#${request.issue_number}: ${stage} final label gate uncertain; refusing retry`);
+      }
+      throw error;
+    }
   };
   const results = [];
   for (const request of requests) {
