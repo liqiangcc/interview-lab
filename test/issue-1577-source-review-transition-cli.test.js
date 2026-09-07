@@ -19,6 +19,7 @@ const { canonicalJson, sha256Text } = require('../scripts/lib/issue-1539-recover
 const {
   FIXED_ITEMS,
   TARGETS,
+  operations,
   initialProgress,
   validateFixedManifest,
   evidencePlanSha256,
@@ -427,6 +428,80 @@ test('CLI journals lock-loss uncertainty and resumes without another mutation', 
     assert.match(resumeResult.errors.join('\n'), /permanently uncertain|explicit replan/);
     assert.equal(labelMutationCount, beforeResume, 'resume must not issue another label mutation');
     assert.equal(fixture.apiCalls.filter((call) => call.args.includes('--method') && call.args.some((entry) => entry.includes('/comments'))).length, 0);
+  } finally {
+    fs.rmSync(fixture.root, { recursive: true, force: true });
+  }
+});
+
+test('CLI reclaims a dead lock and resumes a persisted intermediate label prefix', () => {
+  const fixture = makeProductionApplyFixture();
+  const planOutput = path.join(fixture.root, 'transition-plan.json');
+  const resultOutput = path.join(fixture.root, 'transition-resume-result.json');
+  try {
+    const common = ['--manifest', path.resolve('data/issue-1577/source-review-manifest.json'), '--evidence-plan', fixture.evidencePlanFile, '--request-dir', fixture.requestDir, '--transition-receipt-dir', fixture.receiptDir, '--get-max-attempts', '1', '--get-backoff-ms', '0', '--min-mutation-interval-ms', '0', '--reviewed-at', '2026-09-07T00:00:00Z'];
+    assert.equal(main([...common, '--output', planOutput], { ghJson: fixture.ghJson }), 0);
+    const plan = JSON.parse(fs.readFileSync(planOutput, 'utf8'));
+    writeJson(fixture.progress, initialProgress(plan));
+    const fullApplyArgs = [...common, '--output', path.join(fixture.root, 'full-result.json'), '--progress', fixture.progress, '--progress-lock', fixture.lock, '--confirm-plan-sha256', plan.plan_sha256, '--confirm-authorization-sha256', plan.authorization_sha256, '--apply'];
+    assert.equal(main(fullApplyArgs, { ghJson: fixture.ghJson }), 0);
+    const completedProgress = JSON.parse(fs.readFileSync(fixture.progress, 'utf8'));
+    const pendingProgress = JSON.parse(JSON.stringify(completedProgress));
+    const pendingIssue = 1574;
+    const pendingId = `issue-1577-source-review-${pendingIssue}`;
+    for (const issue of TARGETS.slice(14)) {
+      const id = `issue-1577-source-review-${issue}`;
+      pendingProgress.intents[id] = null;
+      delete pendingProgress.results[id];
+    }
+    const interview = fixture.interviewStates.get(pendingIssue);
+    interview.labels = interview.labels.filter((label) => !label.startsWith('status:') && label !== 'task:source-review' && label !== 'task:source-recovery');
+    interview.labels.push('status:source-review', 'task:source-review');
+    interview.comments = interview.comments.filter((comment) => !String(comment.body || '').includes('interview-note-source-review-applied.v1'));
+    for (const issue of [1575, 1576]) {
+      const untouched = fixture.interviewStates.get(issue);
+      untouched.labels = untouched.labels.filter((label) => !label.startsWith('status:') && label !== 'task:source-review' && label !== 'task:source-recovery');
+      untouched.labels.push('status:captured');
+      untouched.comments = untouched.comments.filter((comment) => !String(comment.body || '').includes('interview-note-source-review-applied.v1'));
+    }
+    const beforeControlled = ['status:source-review', 'task:source-review'];
+    const desiredControlled = ['status:source-ready'];
+    const pendingIntent = { ...completedProgress.intents[pendingId], phase: 'final-pending', stage: 'final', operation_plan: operations(beforeControlled, desiredControlled), operation_index: 0, before_controlled_labels: beforeControlled, desired_controlled_labels: desiredControlled, baseline_non_lifecycle_labels: ['learning:fixture', 'source:xhs', 'type:interview-note'], cas: { number: pendingIssue, body_sha256: sha256Text(interview.body), labels: [...interview.labels], state: interview.state } };
+    delete pendingIntent.receipt_comment_id;
+    pendingProgress.intents[pendingId] = pendingIntent;
+    interview.labels.push('status:source-ready');
+    pendingProgress.label_attempt_count = 88;
+    pendingProgress.receipt_attempt_count = 14;
+    pendingProgress.mutation_count = 102;
+    pendingProgress.status = 'running';
+    pendingProgress.mutation_performed = null;
+    pendingProgress.possibly_performed = true;
+    writeJson(fixture.progress, pendingProgress);
+    const staleLock = { schema_version: 'issue-1539-evidence-apply-lock.v1', lock_id: '00000000-0000-4000-8000-000000000001', pid: 99999999, hostname: os.hostname(), acquired_at: '2026-09-07T00:00:00Z', device: 0, inode: 0 };
+    writeJson(fixture.lock, staleLock);
+    const lockStat = fs.statSync(fixture.lock);
+    staleLock.device = lockStat.dev;
+    staleLock.inode = lockStat.ino;
+    writeJson(fixture.lock, staleLock);
+    const beforeLabelMutations = fixture.apiCalls.filter((call) => call.args.includes('--method') && call.args.some((value) => value.includes('/labels'))).length;
+    const beforeReceiptMutations = fixture.apiCalls.filter((call) => call.args.includes('--method') && call.args.some((value) => value.endsWith('/comments'))).length;
+    const resumeArgs = [...fullApplyArgs];
+    resumeArgs[resumeArgs.indexOf('--output') + 1] = resultOutput;
+    const resumeExit = main(resumeArgs, { ghJson: fixture.ghJson });
+    const resumeResult = fs.existsSync(resultOutput) ? JSON.parse(fs.readFileSync(resultOutput, 'utf8')) : null;
+    assert.equal(resumeExit, 0, JSON.stringify(resumeResult));
+    const result = JSON.parse(fs.readFileSync(resultOutput, 'utf8'));
+    const resumedProgress = JSON.parse(fs.readFileSync(fixture.progress, 'utf8'));
+    assert.equal(result.ok, true, result.errors && result.errors.join('; '));
+    assert.equal(resumedProgress.status, 'complete');
+    assert.equal(resumedProgress.label_attempt_count, 102);
+    assert.equal(resumedProgress.receipt_attempt_count, 17);
+    assert.equal(resumedProgress.mutation_count, 119);
+    assert.equal(resumedProgress.possibly_performed, false);
+    assert.equal(fixture.apiCalls.filter((call) => call.args.includes('--method') && call.args.some((value) => value.includes('/labels'))).length - beforeLabelMutations, 14);
+    assert.equal(fixture.apiCalls.filter((call) => call.args.includes('--method') && call.args.some((value) => value.endsWith('/comments'))).length - beforeReceiptMutations, 3);
+    const resumed1574Labels = fixture.apiCalls.filter((call) => call.args.includes('--method') && call.args.some((value) => value.includes('/issues/1574/labels'))).slice(-2).map((call) => call.args.some((value) => value === 'DELETE') ? call.args.at(-1) : call.input);
+    assert.equal(resumed1574Labels.length, 2);
+    assert.equal(resumed1574Labels.every((value) => typeof value === 'string' && !value.includes('status%3Asource-ready')), true);
   } finally {
     fs.rmSync(fixture.root, { recursive: true, force: true });
   }
