@@ -41,6 +41,8 @@ const MULTI_TRANSITION_SCHEMA = 'source-note-boundary-review-transition.v2';
 const EVIDENCE_AUTHORIZATION_SCHEMA = 'issue-1605-remaining-boundary-evidence-authorization.v1';
 const EVIDENCE_AUTHORIZATION_MARKER = 'issue-1605-remaining-boundary-evidence-authorization';
 const SAFE_HEX64 = /^[0-9a-f]{64}$/;
+const MAX_READ_ATTEMPTS = 5;
+const READ_RETRY_BASE_DELAY_MS = 100;
 const REQUIRED_CHECKS = Object.freeze([
   'source_identity',
   'source_revision_binding',
@@ -645,6 +647,36 @@ function sleep(ms) {
   Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms);
 }
 
+function isTransientReadError(error) {
+  const transientStatuses = new Set([408, 425, 429, 500, 502, 503, 504]);
+  const status = Number(error?.status ?? error?.statusCode);
+  if (transientStatuses.has(status)) return true;
+  // execFileSync failures from `gh` commonly expose exit status 1 while the
+  // HTTP status is only rendered in stderr (for example, "HTTP 429").
+  const text = String([error?.message, error?.stderr, error?.code].filter(Boolean).join(' ')).toLowerCase();
+  const reportedStatuses = [...text.matchAll(/\b(?:http(?:\/\d(?:\.\d)?)?|status(?:\s*code)?)\s*[:=]?\s*(408|425|429|500|502|503|504)\b/g)].map((match) => Number(match[1]));
+  if (reportedStatuses.some((reportedStatus) => transientStatuses.has(reportedStatus))) return true;
+  return /(tls|ssl|handshake|timed? ?out|timeout|deadline|econnreset|econnrefused|eai_again|enetunreach|ehostunreach|network|temporar|bad gateway|service unavailable)/.test(text);
+}
+
+function readWithRetry(operation, options = {}) {
+  const maxAttempts = options.maxAttempts == null ? MAX_READ_ATTEMPTS : options.maxAttempts;
+  const baseDelayMs = options.baseDelayMs == null ? READ_RETRY_BASE_DELAY_MS : options.baseDelayMs;
+  const wait = options.sleepFn || sleep;
+  if (!Number.isSafeInteger(maxAttempts) || maxAttempts < 1 || maxAttempts > MAX_READ_ATTEMPTS) throw new Error(`read retry attempts must be a safe integer from 1 to ${MAX_READ_ATTEMPTS}`);
+  if (!Number.isSafeInteger(baseDelayMs) || baseDelayMs < 0) throw new Error('read retry base delay must be a non-negative safe integer');
+  let lastError;
+  for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+    try { return operation(); }
+    catch (error) {
+      lastError = error;
+      if (!isTransientReadError(error) || attempt === maxAttempts) throw error;
+      wait(baseDelayMs * (2 ** (attempt - 1)));
+    }
+  }
+  throw lastError;
+}
+
 function acquireLock(file) {
   const target = path.resolve(file);
   fs.mkdirSync(path.dirname(target), { recursive: true });
@@ -684,9 +716,13 @@ function acquireLock(file) {
 
 function issueEndpoint(number) { return `repos/${REPOSITORY}/issues/${number}`; }
 
-function readLiveIssue(number) { return ghJson(['api', issueEndpoint(number)]); }
+function readGhJson(args, input = null, options = {}) {
+  return readWithRetry(() => (options.ghJson || ghJson)(args, input), options);
+}
 
-function readCommentsPage(number, page) { return ghJson(['api', `${issueEndpoint(number)}/comments?per_page=100&page=${page}`]); }
+function readLiveIssue(number, options = {}) { return readGhJson(['api', issueEndpoint(number)], null, options); }
+
+function readCommentsPage(number, page, options = {}) { return readGhJson(['api', `${issueEndpoint(number)}/comments?per_page=100&page=${page}`], null, options); }
 
 function findMarkerComments(number, marker, maxPages = 100, readPage = readCommentsPage) {
   const matches = [];
@@ -728,8 +764,12 @@ function parseEvidenceComment(comment, item) {
   return { ok: errors.length === 0, errors, payload };
 }
 
-function findExactEvidenceComments(item, maxPages = 100, readPage = readCommentsPage) {
-  const comments = findMarkerComments(item.issue_number, item.transition_id, maxPages, readPage);
+function findExactEvidenceComments(item, maxPages = 100, readPage = null, readOptions = {}) {
+  // Keep the production default on the bounded readCommentsPage path while
+  // allowing tests/callers to inject its GET wrapper without replacing the
+  // whole marker lookup implementation.
+  const pageReader = readPage || ((number, page) => readCommentsPage(number, page, readOptions));
+  const comments = findMarkerComments(item.issue_number, item.transition_id, maxPages, pageReader);
   const exact = [];
   const errors = [];
   for (const comment of comments) {
@@ -983,5 +1023,6 @@ module.exports = {
   pendingInventory, remainingInventory, deriveBoundaryACases, deriveBoundaryBCases, parseArgs,
   isAllowedBlockedAuditError, parseEvidenceComment, findExactEvidenceComments,
   evidenceAuthorizationDigest, renderEvidenceAuthorizationMarker, validateEvidenceAuthorization,
+  isTransientReadError, readWithRetry, readGhJson, readLiveIssue, readCommentsPage,
   reconcileEvidenceItem, evidencePreflight, runEvidence, acquireLock,
 };

@@ -115,7 +115,9 @@ snapshot digest（必须等于当前 plan 的 `frozen_inventory.digest`）、当
 在 #1605 上恰好对应一个完全相同的 authorization marker；CLI 的 `--max-mutations` 不得
 超过 proof ceiling。没有 proof 或 marker 时 evidence mode fail-closed，默认仍是 plan-only。
 
-它对每条 actionable item 在 POST 前重新 GET 并检查 `boundary:pending` 与 body SHA；只 POST
+它对每条 actionable item 在 POST 前重新 GET 并检查 `boundary:pending` 与 body SHA；live Issue
+GET 与 comments 分页 GET 仅对 transient TLS/网络/timeout 错误使用最多 5 次短指数退避，非
+transient 错误或耗尽重试都保持 fail-closed。只 POST
 review-evidence comment，绝不 PATCH SourceNote。POST 响应未知时最多做 bounded exact-marker
 reconcile；不会自动重试 POST。每条成功 marker 生成独立 request 文件，journal 与 request 使用
 带 file/parent-directory fsync 的 atomic write，并在每次 durable write 前验证独占 lock。
