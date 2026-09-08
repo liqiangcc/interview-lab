@@ -381,6 +381,12 @@ function contextInventoryAudit(contextDir) {
     }
     byInterviewNote.set(context.interview_note_id, { path: file, context });
   }
+  // An identity is only eligible when its complete local artifact set is
+  // exactly one valid Context. Do this after the full scan so the result does
+  // not depend on whether the invalid artifact sorted before or after the
+  // valid one.
+  for (const interviewNoteId of invalidIdentities) byInterviewNote.delete(interviewNoteId);
+  for (const interviewNoteId of duplicateIdentities) byInterviewNote.delete(interviewNoteId);
   return { byInterviewNote, blocked, invalidIdentities, duplicateIdentities };
 }
 
@@ -466,8 +472,11 @@ function buildInventoryReport(issues, contextDir) {
       report.source_ready_count += 1;
       report.source_ready_issue_numbers.push(Number(issue.number));
       const duplicateContext = contextAudit.duplicateIdentities.has(parsed.record.interview_note_id);
+      const invalidContext = contextAudit.invalidIdentities.has(parsed.record.interview_note_id);
       const item = duplicateContext
         ? { ok: false, issue_number: Number(issue.number), reason: 'duplicate reviewed Context identity', errors: ['duplicate reviewed Context identity'] }
+        : invalidContext
+          ? { ok: false, issue_number: Number(issue.number), reason: 'invalid reviewed Context identity', errors: ['invalid reviewed Context identity'] }
         : sourceReadyPlanItem(issue, contexts.get(parsed.record.interview_note_id));
       if (item.ok) {
         report.eligible_count += 1;
@@ -475,7 +484,9 @@ function buildInventoryReport(issues, contextDir) {
         if (item.action === 'plan-update') report.planned_count += 1;
         else report.unchanged_count += 1;
       } else {
-        if (item.reason === 'reviewed Context artifact is missing' && !contextAudit.invalidIdentities.has(parsed.record.interview_note_id)) report.source_ready_missing_context_count += 1;
+        if (item.reason === 'reviewed Context artifact is missing'
+          && !contextAudit.invalidIdentities.has(parsed.record.interview_note_id)
+          && !contextAudit.duplicateIdentities.has(parsed.record.interview_note_id)) report.source_ready_missing_context_count += 1;
         report.blocked.push({ issue_number: item.issue_number, reason: item.reason });
       }
     }

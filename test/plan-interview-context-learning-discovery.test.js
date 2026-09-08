@@ -161,7 +161,51 @@ test('missing, malformed, invalid, and mismatched Context evidence are blocked i
   fs.rmSync(directory, { recursive: true, force: true });
 });
 
-test('duplicate reviewed Context identities fail closed instead of selecting an arbitrary artifact', () => {
+test('invalid and valid Context artifacts for one identity fail closed regardless of scan order', () => {
+  const fs = require('fs');
+  const os = require('os');
+  const path = require('path');
+  for (const [validName, invalidName] of [['a-valid.json', 'z-invalid.json'], ['a-invalid.json', 'z-valid.json']]) {
+    const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'learning-discovery-invalid-context-'));
+    const fixture = discoveryFixture(401);
+    const invalid = discoveryFixture(402);
+    invalid.context.interview_note_id = fixture.id;
+    invalid.context.context_id = `${fixture.id}:invalid-context`;
+    invalid.context.review_status = 'pending';
+    writeContext(directory, fixture, validName);
+    writeContext(directory, invalid, invalidName);
+    const report = buildInventoryReport([fixture.issue], directory);
+    assert.equal(report.eligible_count, 0);
+    assert.equal(report.items.length, 0);
+    assert.ok(report.blocked.some((entry) => entry.issue_number === fixture.issue.number && entry.reason === 'invalid reviewed Context identity'));
+    fs.rmSync(directory, { recursive: true, force: true });
+  }
+});
+
+test('multiple invalid reviewed Context artifacts for one identity fail closed', () => {
+  const fs = require('fs');
+  const os = require('os');
+  const path = require('path');
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'learning-discovery-multiple-invalid-context-'));
+  const fixture = discoveryFixture(403);
+  const first = discoveryFixture(404);
+  const second = discoveryFixture(405);
+  for (const invalid of [first, second]) {
+    invalid.context.interview_note_id = fixture.id;
+    invalid.context.context_id = `${fixture.id}:${invalid.issue.number}`;
+    invalid.context.review_status = 'pending';
+  }
+  writeContext(directory, first, 'a.json');
+  writeContext(directory, second, 'b.json');
+  const report = buildInventoryReport([fixture.issue], directory);
+  assert.equal(report.eligible_count, 0);
+  assert.equal(report.items.length, 0);
+  assert.equal(report.source_ready_missing_context_count, 0);
+  assert.ok(report.blocked.some((entry) => entry.issue_number === fixture.issue.number && entry.reason === 'invalid reviewed Context identity'));
+  fs.rmSync(directory, { recursive: true, force: true });
+});
+
+test('multiple valid reviewed Context identities fail closed instead of selecting an arbitrary artifact', () => {
   const fs = require('fs');
   const os = require('os');
   const path = require('path');
