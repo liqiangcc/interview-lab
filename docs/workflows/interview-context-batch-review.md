@@ -70,3 +70,9 @@ apply 前会重新读取依赖、四个 acceptance evidence、Issues、receipts 
 ## 学习发现语义
 
 只有 `status:source-ready` 且 Context `reviewed` 的 InterviewNote 才可进入 discovery。输出的 title 不复制 Raw title；Outcome 始终保持 `sealed-until-source-reveal`。`source-year:*` 与 `interview-year:*` 是不同事实，不能互相替代。
+
+## #1605 全量 plan-only discovery
+
+关联父 Issue #1605 的全量 discovery 使用 `--inventory` 读取显式分页的 `type:interview-note` inventory，并在本地已提交的 `data/interview-contexts/*.json` Context artifacts 上生成 `interview-context-learning-discovery-plan.v2`。每条 source-ready InterviewNote 只有在 v2 marker/record、reviewed Context、InterviewNote identity 和 SourceRevision 全部一致时才进入 `items`；缺失、无效或不匹配证据进入 `blocked` ledger，不能被猜测修复。`source-year` 只来自 record 的 `source_published_at`，`interview-year` 只来自 Context 的 `interview_occurred_at`；未知事实留在 `unknown_facts`，不生成标签。
+
+该报告是稳定 digest 的 plan-only 输出：`mutation_authorized=false`、`mutation_count=0`、`raw_body_modified=false`，transport 仅允许 `GET`，不提供 PATCH/POST 路径。proposal 只包含建议 title/labels、Context digest/artifact 和当前 Raw body digest；它不会改写 Raw body、machine record 或 GitHub Issue。输入规模不固定为 pilot，报告同时给出全量计数、eligible/planned/unchanged 计数和可审计 blocked ledger。

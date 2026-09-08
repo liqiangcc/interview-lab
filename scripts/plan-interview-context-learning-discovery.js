@@ -11,7 +11,7 @@ const {
   progressFromPlan, validateProgressMapping, ISSUE_1598_FIXED_INVENTORY,
 } = require('./lib/interview-context-batch');
 const { parseInterviewNoteIssue, validateInterviewNoteIssue } = require('./lib/interview-note-issue');
-const { validateInterviewContext } = require('./lib/interview-context');
+const { validateInterviewContext, buildLearningDiscovery } = require('./lib/interview-context');
 
 const DEFAULT_CONTEXT_DIR = path.resolve('data/interview-contexts');
 const DEFAULT_GATE_FILE = path.resolve('data/pilot/issue-923/dependency-gate.json');
@@ -353,13 +353,108 @@ function contextInventory(contextDir) {
   return byInterviewNote;
 }
 
+function contextInventoryAudit(contextDir) {
+  const byInterviewNote = new Map();
+  const blocked = [];
+  const invalidIdentities = new Set();
+  const duplicateIdentities = new Set();
+  if (!fs.existsSync(contextDir)) return { byInterviewNote, blocked, invalidIdentities, duplicateIdentities };
+  for (const name of fs.readdirSync(contextDir).filter((value) => value.endsWith('.json')).sort()) {
+    const file = path.join(contextDir, name);
+    let context;
+    try {
+      context = JSON.parse(fs.readFileSync(file, 'utf8'));
+    } catch (error) {
+      blocked.push({ artifact: path.relative(process.cwd(), file), reason: `invalid_context_json: ${error.message}` });
+      continue;
+    }
+    const validation = validateInterviewContext(context);
+    if (!validation.ok) {
+      if (context && context.interview_note_id) invalidIdentities.add(context.interview_note_id);
+      blocked.push({ artifact: path.relative(process.cwd(), file), interview_note_id: context && context.interview_note_id || null, reason: `invalid_context: ${validation.errors.join('; ')}` });
+      continue;
+    }
+    if (byInterviewNote.has(context.interview_note_id)) {
+      duplicateIdentities.add(context.interview_note_id);
+      blocked.push({ artifact: path.relative(process.cwd(), file), interview_note_id: context.interview_note_id, reason: 'duplicate_context_identity' });
+      continue;
+    }
+    byInterviewNote.set(context.interview_note_id, { path: file, context });
+  }
+  // An identity is only eligible when its complete local artifact set is
+  // exactly one valid Context. Do this after the full scan so the result does
+  // not depend on whether the invalid artifact sorted before or after the
+  // valid one.
+  for (const interviewNoteId of invalidIdentities) byInterviewNote.delete(interviewNoteId);
+  for (const interviewNoteId of duplicateIdentities) byInterviewNote.delete(interviewNoteId);
+  return { byInterviewNote, blocked, invalidIdentities, duplicateIdentities };
+}
+
+function learningLabelsForInventory(labels, discoveryLabels) {
+  const prefixes = ['company:', 'role:', 'recruitment:', 'round:', 'source-year:', 'interview-year:'];
+  return normalizeLabels(labels).filter((label) => !prefixes.some((prefix) => label.startsWith(prefix))).concat(discoveryLabels).sort();
+}
+
+function unknownFactsForContext(context) {
+  return [
+    ['company', context.company && context.company.id == null],
+    ['role', context.role && context.role.family === 'unknown'],
+    ['recruitment_type', context.recruitment_type && context.recruitment_type.value === 'unknown'],
+    ['round', context.round && context.round.value === 'unknown'],
+    ['interview_occurred_at', context.interview_occurred_at && context.interview_occurred_at.precision === 'unknown'],
+  ].filter(([, unknown]) => unknown).map(([name]) => name);
+}
+
+function sourceReadyPlanItem(issue, contextEntry) {
+  const number = Number(issue && issue.number);
+  const labels = normalizeLabels(issue && issue.labels || []);
+  const body = String(issue && issue.body || '');
+  const parsed = parseInterviewNoteIssue(body);
+  const validation = validateInterviewNoteIssue({ body, labels, state: String(issue && issue.state || 'open').toLowerCase() });
+  const errors = [];
+  if (!validation.ok) errors.push(...validation.errors);
+  if (!parsed.marker || !parsed.record) errors.push('InterviewNote marker/record is not parseable');
+  if (parsed.record && parsed.record.schema_version !== 'interview-note-issue.v2') errors.push('InterviewNote record must use interview-note-issue.v2');
+  if (!contextEntry) errors.push('reviewed Context artifact is missing');
+  const context = contextEntry && contextEntry.context;
+  if (context && parsed.marker && parsed.marker.interview_note_id !== context.interview_note_id) errors.push('Context identity does not match InterviewNote marker');
+  if (context && parsed.record && parsed.record.interview_note_id !== context.interview_note_id) errors.push('Context identity does not match InterviewNote record');
+  if (context && parsed.record && parsed.record.source_revision && parsed.record.source_revision.id !== context.source_revision_id) errors.push('Context source_revision_id does not match InterviewNote record');
+  if (errors.length) return { ok: false, issue_number: number, reason: errors.join('; '), errors, body_sha256: sha256Text(body) };
+
+  const discovery = buildLearningDiscovery(context, parsed.record.source_published_at);
+  if (!discovery.ok) return { ok: false, issue_number: number, reason: discovery.errors.join('; '), errors: discovery.errors, body_sha256: sha256Text(body) };
+  const proposedLabels = learningLabelsForInventory(labels, discovery.learning_labels);
+  const proposedTitle = discovery.non_spoiler_title;
+  return {
+    ok: true,
+    issue_number: number,
+    interview_note_id: context.interview_note_id,
+    action: String(issue.title || '') === proposedTitle && JSON.stringify(labels) === JSON.stringify(proposedLabels) ? 'unchanged' : 'plan-update',
+    current_title: String(issue.title || ''),
+    proposed_title: proposedTitle,
+    current_labels: labels,
+    proposed_labels: proposedLabels,
+    current_body_sha256: sha256Text(body),
+    context_sha256: sha256Text(JSON.stringify(context)),
+    context_artifact: { path: path.relative(process.cwd(), contextEntry.path), sha256: sha256Text(JSON.stringify(context)), schema_version: 'interview-context.v1' },
+    unknown_facts: unknownFactsForContext(context),
+    raw_body_modified: false,
+  };
+}
+
 function buildInventoryReport(issues, contextDir) {
-  const contexts = contextInventory(contextDir);
+  const contextAudit = contextInventoryAudit(contextDir);
+  const contexts = contextAudit.byInterviewNote;
   const report = {
-    schema_version: 'interview-context-learning-discovery-inventory.v1', dry_run: true, mutation_count: 0,
+    schema_version: 'interview-context-learning-discovery-plan.v2', parent_issue: 1605,
+    dry_run: true, plan_only: true, mutation_authorized: false, mutation_count: 0,
+    raw_body_modified: false, transport: { method: 'GET', writes: false },
     pilot_target: PILOT_TARGET, interview_note_count: 0, valid_interview_note_count: 0,
     source_ready_count: 0, eligible_count: 0, source_ready_missing_context_count: 0,
     source_review_blocked_count: 0, reviewed_context_count: contexts.size,
+    planned_count: 0, unchanged_count: 0, blocked_count: contextAudit.blocked.length,
+    items: [], blocked: [...contextAudit.blocked],
     gap_to_50_source_ready: PILOT_TARGET, gap_to_50_eligible: PILOT_TARGET, source_ready_issue_numbers: [],
   };
   for (const issue of issues) {
@@ -368,18 +463,41 @@ function buildInventoryReport(issues, contextDir) {
     report.interview_note_count += 1;
     const parsed = parseInterviewNoteIssue(issue.body || '');
     const validation = validateInterviewNoteIssue({ body: issue.body || '', labels, state: String(issue.state || 'open').toLowerCase() });
-    if (!parsed.marker || !parsed.record || !validation.ok || parsed.record.schema_version !== 'interview-note-issue.v2') continue;
+    if (!parsed.marker || !parsed.record || !validation.ok || parsed.record.schema_version !== 'interview-note-issue.v2') {
+      if (labels.includes('status:source-ready')) report.blocked.push({ issue_number: Number(issue.number), reason: validation.errors.join('; ') || 'invalid InterviewNote marker/record' });
+      continue;
+    }
     report.valid_interview_note_count += 1;
     if (labels.includes('status:source-ready')) {
       report.source_ready_count += 1;
       report.source_ready_issue_numbers.push(Number(issue.number));
-      if (contexts.has(parsed.record.interview_note_id)) report.eligible_count += 1;
-      else report.source_ready_missing_context_count += 1;
+      const duplicateContext = contextAudit.duplicateIdentities.has(parsed.record.interview_note_id);
+      const invalidContext = contextAudit.invalidIdentities.has(parsed.record.interview_note_id);
+      const item = duplicateContext
+        ? { ok: false, issue_number: Number(issue.number), reason: 'duplicate reviewed Context identity', errors: ['duplicate reviewed Context identity'] }
+        : invalidContext
+          ? { ok: false, issue_number: Number(issue.number), reason: 'invalid reviewed Context identity', errors: ['invalid reviewed Context identity'] }
+        : sourceReadyPlanItem(issue, contexts.get(parsed.record.interview_note_id));
+      if (item.ok) {
+        report.eligible_count += 1;
+        report.items.push(item);
+        if (item.action === 'plan-update') report.planned_count += 1;
+        else report.unchanged_count += 1;
+      } else {
+        if (item.reason === 'reviewed Context artifact is missing'
+          && !contextAudit.invalidIdentities.has(parsed.record.interview_note_id)
+          && !contextAudit.duplicateIdentities.has(parsed.record.interview_note_id)) report.source_ready_missing_context_count += 1;
+        report.blocked.push({ issue_number: item.issue_number, reason: item.reason });
+      }
     }
     if (labels.includes('status:blocked') && labels.includes('task:source-recovery')) report.source_review_blocked_count += 1;
   }
   report.gap_to_50_source_ready = Math.max(0, PILOT_TARGET - report.source_ready_count);
   report.gap_to_50_eligible = Math.max(0, PILOT_TARGET - report.eligible_count);
+  report.items.sort((left, right) => Number(left.issue_number) - Number(right.issue_number));
+  report.blocked.sort((left, right) => Number(left.issue_number || 0) - Number(right.issue_number || 0) || String(left.artifact || '').localeCompare(String(right.artifact || '')));
+  report.blocked_count = report.blocked.length;
+  report.digest = sha256Text(JSON.stringify({ ...report, digest: undefined }));
   return report;
 }
 
@@ -464,7 +582,7 @@ function main(argv = process.argv.slice(2)) {
   const liveGate = validateLiveDependencyGate(gate.gate, repository, dependencies, dependencyEvidence);
   if (!liveGate.ok) {
     if (args.inventory) {
-      process.stdout.write(`${JSON.stringify({ schema_version: 'interview-context-learning-discovery-inventory.v1', dry_run: true, mutation_count: 0, dependency_gate: liveGate, pilot_target: PILOT_TARGET }, null, 2)}\n`);
+      process.stdout.write(`${JSON.stringify({ schema_version: 'interview-context-learning-discovery-plan.v2', parent_issue: 1605, dry_run: true, plan_only: true, mutation_authorized: false, mutation_count: 0, dependency_gate: liveGate, pilot_target: PILOT_TARGET, blocked: liveGate.errors }, null, 2)}\n`);
       return 1;
     }
     throw new Error(liveGate.errors.join('; '));
@@ -655,4 +773,4 @@ if (require.main === module) {
   try { process.exitCode = main(); } catch (error) { process.stderr.write(`ERROR: ${error.message}\n`); process.exitCode = 1; }
 }
 
-module.exports = { parseArgs, paginate, loadComments, loadAllIssues, loadLabels, buildInventoryReport, fixedInventoryAudit, resumeProgressItem, planReloadedItem, validatePatchResponse, parseGhIncludedJson, formatGhMutationError, ghMutationJson, buildPatchArgs, patchSnapshot, assertPatchSnapshotUnchanged, acquireApplyLock, receiptPendingPatch, parseMarker, planBatch, report };
+module.exports = { parseArgs, paginate, loadComments, loadAllIssues, loadLabels, contextInventory, contextInventoryAudit, sourceReadyPlanItem, buildInventoryReport, fixedInventoryAudit, resumeProgressItem, planReloadedItem, validatePatchResponse, parseGhIncludedJson, formatGhMutationError, ghMutationJson, buildPatchArgs, patchSnapshot, assertPatchSnapshotUnchanged, acquireApplyLock, receiptPendingPatch, parseMarker, planBatch, report };
