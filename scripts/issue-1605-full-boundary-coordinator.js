@@ -62,8 +62,16 @@ function writeJson(file, value) {
   const target = path.resolve(file);
   fs.mkdirSync(path.dirname(target), { recursive: true });
   const temporary = `${target}.tmp-${process.pid}`;
-  fs.writeFileSync(temporary, `${JSON.stringify(value, null, 2)}\n`, 'utf8');
+  const fd = fs.openSync(temporary, 'w', 0o600);
+  try {
+    fs.writeFileSync(fd, `${JSON.stringify(value, null, 2)}\n`, 'utf8');
+    fs.fsyncSync(fd);
+  } finally {
+    fs.closeSync(fd);
+  }
   fs.renameSync(temporary, target);
+  const directory = fs.openSync(path.dirname(target), 'r');
+  try { fs.fsyncSync(directory); } finally { fs.closeSync(directory); }
 }
 
 function writeRequest(file, request) {
@@ -71,8 +79,16 @@ function writeRequest(file, request) {
   fs.mkdirSync(path.dirname(target), { recursive: true });
   const temporary = `${target}.tmp-${process.pid}`;
   const body = `<!-- source-note-boundary-review-transition\n${JSON.stringify(request, null, 2)}\n-->\n`;
-  fs.writeFileSync(temporary, body, 'utf8');
+  const fd = fs.openSync(temporary, 'w', 0o600);
+  try {
+    fs.writeFileSync(fd, body, 'utf8');
+    fs.fsyncSync(fd);
+  } finally {
+    fs.closeSync(fd);
+  }
   fs.renameSync(temporary, target);
+  const directory = fs.openSync(path.dirname(target), 'r');
+  try { fs.fsyncSync(directory); } finally { fs.closeSync(directory); }
 }
 
 function labelsOf(issue) {
@@ -330,9 +346,28 @@ function acquireLock(file) {
   fs.mkdirSync(path.dirname(target), { recursive: true });
   let fd;
   try { fd = fs.openSync(target, 'wx', 0o600); } catch (error) { throw new Error(`evidence writer lock is already held: ${error.message}`); }
-  fs.writeFileSync(fd, `${JSON.stringify({ schema_version: 'issue-1605-evidence-lock.v1', pid: process.pid, acquired_at: new Date().toISOString() })}\n`);
+  const token = crypto.randomBytes(16).toString('hex');
+  const record = { schema_version: 'issue-1605-evidence-lock.v1', pid: process.pid, token, acquired_at: new Date().toISOString() };
+  fs.writeFileSync(fd, `${JSON.stringify(record)}\n`);
+  fs.fsyncSync(fd);
   fs.closeSync(fd);
-  return { target, release() { if (fs.existsSync(target)) fs.unlinkSync(target); } };
+  const directory = fs.openSync(path.dirname(target), 'r');
+  try { fs.fsyncSync(directory); } finally { fs.closeSync(directory); }
+  const inode = fs.statSync(target);
+  return {
+    target,
+    release() {
+      if (!fs.existsSync(target)) return;
+      let current;
+      try { current = JSON.parse(fs.readFileSync(target, 'utf8')); } catch (error) { throw new Error(`refusing to remove replaced evidence lock: ${error.message}`); }
+      if (!current || current.token !== token) throw new Error('refusing to remove replaced evidence lock');
+      const currentStat = fs.statSync(target);
+      if (currentStat.dev !== inode.dev || currentStat.ino !== inode.ino) throw new Error('refusing to remove replaced evidence lock inode');
+      fs.unlinkSync(target);
+      const dir = fs.openSync(path.dirname(target), 'r');
+      try { fs.fsyncSync(dir); } finally { fs.closeSync(dir); }
+    },
+  };
 }
 
 function issueEndpoint(number) { return `repos/${REPOSITORY}/issues/${number}`; }
@@ -352,6 +387,45 @@ function findMarkerComments(number, marker, maxPages = 100) {
   }
   if (!observedShort) throw new Error(`#${number} comment pagination did not expose a short terminal page`);
   return matches;
+}
+
+function parseEvidenceComment(comment, item) {
+  const body = String(comment && comment.body || '');
+  const matches = [...body.matchAll(/<!--\s*source-note-boundary-review-evidence\s*([\s\S]*?)-->/g)];
+  if (matches.length !== 1) return { ok: false, errors: ['evidence comment must contain exactly one machine marker'] };
+  let payload;
+  try { payload = JSON.parse(matches[0][1].trim()); }
+  catch (error) { return { ok: false, errors: [`evidence marker JSON is invalid: ${error.message}`] }; }
+  const errors = [];
+  if (payload.schema_version !== 'source-note-boundary-review-evidence.v1') errors.push('evidence schema_version mismatch');
+  const expected = {
+    transition_id: item.transition_id,
+    repository: REPOSITORY,
+    parent_issue: PARENT_ISSUE,
+    issue_number: item.issue_number,
+    source_note_id: item.source_note_id,
+    expected_body_sha256: item.expected_body_sha256,
+    expected_source_revision_id: item.expected_source_revision_id,
+    expected_source_repository_ref: SOURCE_REF,
+    decision: item.decision,
+  };
+  for (const [key, value] of Object.entries(expected)) if (payload[key] !== value) errors.push(`evidence ${key} mismatch`);
+  if (!Array.isArray(payload.checks) || REQUIRED_CHECKS.some((id) => !payload.checks.some((check) => check && check.check_id === id && check.result === 'pass'))) {
+    errors.push('evidence comment does not prove all required checks');
+  }
+  return { ok: errors.length === 0, errors, payload };
+}
+
+function findExactEvidenceComments(item, maxPages = 100) {
+  const comments = findMarkerComments(item.issue_number, item.transition_id, maxPages);
+  const exact = [];
+  const errors = [];
+  for (const comment of comments) {
+    const parsed = parseEvidenceComment(comment, item);
+    if (parsed.ok) exact.push({ ...comment, evidence: parsed.payload });
+    else errors.push(`comment ${comment.id || 'unknown'}: ${parsed.errors.join('; ')}`);
+  }
+  return { exact, errors };
 }
 
 function evidenceBody(item, reviewedAt) {
@@ -383,7 +457,7 @@ function formalRequest(item, commentId, reviewedAt) {
 }
 
 function parseArgs(argv = process.argv.slice(2)) {
-  const args = { mode: 'plan', output: DEFAULT_OUTPUT, journal: DEFAULT_JOURNAL, lock: DEFAULT_LOCK, requestDir: DEFAULT_REQUEST_DIR, cache: SNAPSHOT_CACHE, pending: PENDING_SNAPSHOT, confirmPlan: null, maxMutations: 25, pauseMs: 1000 };
+  const args = { mode: 'plan', output: DEFAULT_OUTPUT, journal: DEFAULT_JOURNAL, lock: DEFAULT_LOCK, requestDir: DEFAULT_REQUEST_DIR, cache: SNAPSHOT_CACHE, pending: PENDING_SNAPSHOT, confirmPlan: null, maxMutations: 25, pauseMs: 1000, allowUncertainRetry: false };
   for (let index = 0; index < argv.length; index += 1) {
     const arg = argv[index];
     if (arg === '--mode') args.mode = argv[++index];
@@ -396,12 +470,91 @@ function parseArgs(argv = process.argv.slice(2)) {
     else if (arg === '--confirm-plan') args.confirmPlan = argv[++index];
     else if (arg === '--max-mutations') args.maxMutations = Number(argv[++index]);
     else if (arg === '--pause-ms') args.pauseMs = Number(argv[++index]);
+    else if (arg === '--allow-uncertain-retry') args.allowUncertainRetry = true;
     else throw new Error(`unknown argument: ${arg}`);
   }
   if (!['plan', 'evidence'].includes(args.mode)) throw new Error('--mode must be plan or evidence');
   if (!Number.isInteger(args.maxMutations) || args.maxMutations < 1) throw new Error('--max-mutations must be positive');
   if (!Number.isInteger(args.pauseMs) || args.pauseMs < 0) throw new Error('--pause-ms must be non-negative');
   return args;
+}
+
+function journalRows(journal, byNumber) {
+  journal.items = [...byNumber.values()].sort((a, b) => Number(a.issue_number) - Number(b.issue_number));
+  journal.posted = journal.items.filter((entry) => entry.status === 'posted').length;
+}
+
+function reconcileEvidenceItem(item, previous, options = {}) {
+  const attempts = Number.isInteger(options.attempts) && options.attempts > 0 ? options.attempts : 1;
+  const pauseMs = Number.isInteger(options.pauseMs) && options.pauseMs >= 0 ? options.pauseMs : 0;
+  let lastResult = null;
+  for (let attempt = 1; attempt <= attempts; attempt += 1) {
+    const result = findExactEvidenceComments(item);
+    lastResult = result;
+    if (result.errors.length) throw new Error(`#${item.issue_number} evidence marker validation failed: ${result.errors.join('; ')}`);
+    if (result.exact.length > 1) throw new Error(`#${item.issue_number} has multiple exact evidence markers; refusing to choose one`);
+    if (result.exact.length === 1) {
+      const comment = result.exact[0];
+      const reviewedAt = comment.evidence.reviewed_at;
+      if (!reviewedAt || Number.isNaN(Date.parse(reviewedAt))) throw new Error(`#${item.issue_number} evidence marker has invalid reviewed_at`);
+      if (previous.comment_id != null && Number(previous.comment_id) !== Number(comment.id)) throw new Error(`#${item.issue_number} journal comment_id does not match the exact live evidence marker`);
+      return {
+        ...previous,
+        issue_number: item.issue_number,
+        transition_id: item.transition_id,
+        status: 'posted',
+        comment_id: Number(comment.id),
+        reviewed_at: reviewedAt,
+        possibly_posted: false,
+        error: null,
+        request: formalRequest(item, Number(comment.id), reviewedAt),
+      };
+    }
+    if (attempt < attempts) sleep(pauseMs * attempt);
+  }
+  return lastResult && lastResult.exact.length === 0 ? null : null;
+}
+
+function assertEvidencePrecondition(item, live) {
+  const liveLabels = labelsOf(live);
+  if (String(live.state).toLowerCase() !== 'open' || !liveLabels.includes('boundary:pending')) throw new Error(`#${item.issue_number} live SourceNote is not open+boundary:pending`);
+  const liveSha = sha256(live.body || '');
+  if (liveSha !== item.expected_body_sha256) throw new Error(`#${item.issue_number} live body SHA drifted: ${liveSha}`);
+}
+
+function evidencePreflight(plan, journal, byNumber, journalFile, requestDir, allowUncertainRetry = false) {
+  // A complete read-only preflight happens before any new POST.  This makes
+  // the bounded evidence writer all-or-nothing with respect to the current
+  // live pending frontier and also validates every previously recorded POST.
+  for (const item of plan.items) {
+    let previous = byNumber.get(item.issue_number) || {
+      issue_number: item.issue_number, transition_id: item.transition_id, status: 'pending', comment_id: null,
+    };
+    if (previous.transition_id !== item.transition_id) throw new Error(`#${item.issue_number} journal transition_id drifted`);
+    const reconciled = reconcileEvidenceItem(item, previous);
+    if (reconciled) {
+      byNumber.set(item.issue_number, reconciled);
+      writeRequest(path.join(requestDir, `${pad(item.issue_number)}.json`), reconciled.request);
+      continue;
+    }
+    if (previous.status === 'posted') throw new Error(`#${item.issue_number} journal says posted but no exact live evidence marker exists`);
+    if (['uncertain', 'post-pending'].includes(previous.status) || previous.possibly_posted === true) {
+      if (!allowUncertainRetry) throw new Error(`#${item.issue_number} remains uncertain without an exact live evidence marker; refusing automatic re-POST (explicit --allow-uncertain-retry required)`);
+      previous = { ...previous, status: 'pending', possibly_posted: false, error: null, uncertain_retry_authorized_at: new Date().toISOString() };
+    }
+    let live;
+    try { live = readLiveIssue(item.issue_number); }
+    catch (error) { throw new Error(`#${item.issue_number} evidence preflight read failed: ${error.message}`); }
+    assertEvidencePrecondition(item, live);
+    previous = { ...previous, status: 'pending', possibly_posted: false, error: null };
+    byNumber.set(item.issue_number, previous);
+  }
+  journalRows(journal, byNumber);
+  journal.status = 'preflight-complete';
+  journal.preflight_completed_at = new Date().toISOString();
+  journal.last_error = null;
+  journal.canonical_digest = sha256(canonical(journal));
+  writeJson(journalFile, journal);
 }
 
 function runEvidence(args, plan) {
@@ -413,99 +566,61 @@ function runEvidence(args, plan) {
     const journal = fs.existsSync(journalFile) ? readJson(journalFile) : { schema_version: 'issue-1605-full-boundary-evidence-progress.v1', plan_digest: plan.canonical_digest, status: 'running', items: [] };
     if (journal.plan_digest !== plan.canonical_digest) throw new Error('existing evidence journal belongs to another plan');
     const byNumber = new Map(journal.items.map((item) => [Number(item.issue_number), item]));
+    try { evidencePreflight(plan, journal, byNumber, journalFile, path.resolve(args.requestDir), args.allowUncertainRetry); }
+    catch (error) {
+      journal.status = 'blocked'; journal.last_error = error.message; journalRows(journal, byNumber); journal.canonical_digest = sha256(canonical(journal)); writeJson(journalFile, journal);
+      throw error;
+    }
     let attempted = 0;
     for (const item of plan.items) {
       if (attempted >= args.maxMutations) break;
-      const previous = byNumber.get(item.issue_number) || { issue_number: item.issue_number, transition_id: item.transition_id, status: 'pending', comment_id: null };
-      if (previous.status === 'posted') {
-        const requestFile = path.join(args.requestDir, `${pad(item.issue_number)}.json`);
-        if (previous.request && (!fs.existsSync(requestFile) || !fs.readFileSync(requestFile, 'utf8').includes('<!-- source-note-boundary-review-transition'))) {
-          writeRequest(requestFile, previous.request);
-        }
-        continue;
-      }
-      if (previous.status === 'uncertain') {
-        // A transport failure may have happened after GitHub accepted the
-        // POST.  Reconcile before ever issuing another POST; zero matches is
-        // safe to return to pending, one is converged, and anything else is
-        // an unrecoverable duplicate/unknown state.
-        let matches;
-        try { matches = findMarkerComments(item.issue_number, item.transition_id); }
-        catch (error) { throw new Error(`#${item.issue_number} remains uncertain; marker reconciliation failed: ${error.message}`); }
-        if (matches.length > 1) throw new Error(`#${item.issue_number} has multiple evidence markers after uncertain POST; refusing retry`);
-        if (matches.length === 1) {
-          previous.status = 'posted'; previous.comment_id = Number(matches[0].id); previous.possibly_posted = false;
-          previous.reviewed_at = previous.reviewed_at || new Date().toISOString();
-          previous.request = formalRequest(item, previous.comment_id, previous.reviewed_at);
-          byNumber.set(item.issue_number, previous);
-          journal.items = [...byNumber.values()].sort((a, b) => a.issue_number - b.issue_number);
-          writeJson(journalFile, journal);
-          writeRequest(path.join(args.requestDir, `${pad(item.issue_number)}.json`), previous.request);
-          continue;
-        }
-        previous.status = 'pending'; previous.possibly_posted = false; previous.error = null;
-        byNumber.set(item.issue_number, previous);
-        journal.items = [...byNumber.values()].sort((a, b) => a.issue_number - b.issue_number);
-        writeJson(journalFile, journal);
-      }
+      let previous = byNumber.get(item.issue_number) || { issue_number: item.issue_number, transition_id: item.transition_id, status: 'pending', comment_id: null };
+      if (previous.status === 'posted') continue;
+
+      // Re-read immediately before each write and check the exact marker one
+      // more time.  A crash after this intent is recoverable without guessing.
       let live;
-      try {
-        live = readLiveIssue(item.issue_number);
-      } catch (error) {
-        // A failed precondition read is non-mutating.  Record it and move to
-        // the next candidate so a transient GitHub outage cannot strand the
-        // whole bounded batch; the item remains unposted for a later retry.
-        previous.status = 'read-failed';
-        previous.error = error.message;
-        previous.possibly_posted = false;
-        byNumber.set(item.issue_number, previous);
-        journal.items = [...byNumber.values()].sort((a, b) => a.issue_number - b.issue_number);
-        journal.last_error = `#${item.issue_number}: ${error.message}`;
-        writeJson(journalFile, journal);
-        continue;
+      try { live = readLiveIssue(item.issue_number); }
+      catch (error) { throw new Error(`#${item.issue_number} evidence write precondition read failed: ${error.message}`); }
+      assertEvidencePrecondition(item, live);
+      const converged = reconcileEvidenceItem(item, previous);
+      if (converged) {
+        previous = converged; byNumber.set(item.issue_number, previous); journalRows(journal, byNumber); writeJson(journalFile, journal); writeRequest(path.join(args.requestDir, `${pad(item.issue_number)}.json`), previous.request); continue;
       }
-      const liveLabels = labelsOf(live);
-      if (String(live.state).toLowerCase() !== 'open' || !liveLabels.includes('boundary:pending')) throw new Error(`#${item.issue_number} live SourceNote is not open+boundary:pending`);
-      const liveSha = sha256(live.body || '');
-      if (liveSha !== item.expected_body_sha256) throw new Error(`#${item.issue_number} live body SHA drifted: ${liveSha}`);
       const reviewedAt = previous.reviewed_at || new Date().toISOString();
       const body = evidenceBody(item, reviewedAt);
+      previous = { ...previous, status: 'post-pending', reviewed_at: reviewedAt, possibly_posted: true, error: null };
+      byNumber.set(item.issue_number, previous); journalRows(journal, byNumber); journal.status = 'running'; journal.canonical_digest = sha256(canonical(journal)); writeJson(journalFile, journal);
       let response;
       try {
         response = ghJson(['api', '--method', 'POST', `${issueEndpoint(item.issue_number)}/comments`, '--input', '-'], { body });
       } catch (error) {
-        let matches;
-        try {
-          matches = findMarkerComments(item.issue_number, item.transition_id);
-        } catch (reconcileError) {
-          previous.status = 'uncertain';
-          previous.error = `${error.message}; marker reconciliation failed: ${reconcileError.message}`;
-          previous.possibly_posted = true;
-          byNumber.set(item.issue_number, previous);
-          journal.items = [...byNumber.values()].sort((a, b) => a.issue_number - b.issue_number);
-          journal.status = 'uncertain';
-          writeJson(journalFile, journal);
+        let reconciledAfterError;
+        try { reconciledAfterError = reconcileEvidenceItem(item, previous, { attempts: 3, pauseMs: Math.max(250, args.pauseMs) }); }
+        catch (reconcileError) {
+          previous = { ...previous, status: 'uncertain', error: `${error.message}; marker reconciliation failed: ${reconcileError.message}`, possibly_posted: true };
+          byNumber.set(item.issue_number, previous); journalRows(journal, byNumber); journal.status = 'uncertain'; journal.canonical_digest = sha256(canonical(journal)); writeJson(journalFile, journal);
           throw new Error(`#${item.issue_number} evidence POST response unknown and marker reconciliation failed: ${reconcileError.message}`);
         }
-        if (matches.length !== 1) {
-          previous.status = 'uncertain'; previous.error = error.message; previous.possibly_posted = true;
-          byNumber.set(item.issue_number, previous);
-          journal.items = [...byNumber.values()]; journal.status = 'uncertain'; writeJson(journalFile, journal);
-          throw new Error(`#${item.issue_number} evidence POST response unknown; marker reconciliation found ${matches.length} matches`);
+        if (!reconciledAfterError) {
+          previous = { ...previous, status: 'uncertain', error: error.message, possibly_posted: true };
+          byNumber.set(item.issue_number, previous); journalRows(journal, byNumber); journal.status = 'uncertain'; journal.canonical_digest = sha256(canonical(journal)); writeJson(journalFile, journal);
+          throw new Error(`#${item.issue_number} evidence POST response unknown; exact marker reconciliation found 0 matches`);
         }
-        response = matches[0];
+        response = { id: reconciledAfterError.comment_id };
+        previous = reconciledAfterError;
       }
       if (!response || !Number.isInteger(Number(response.id))) throw new Error(`#${item.issue_number} evidence POST returned no comment id`);
-      previous.status = 'posted'; previous.comment_id = Number(response.id); previous.reviewed_at = reviewedAt; previous.possibly_posted = false;
-      previous.request = formalRequest(item, Number(response.id), reviewedAt);
-      byNumber.set(item.issue_number, previous); journal.items = [...byNumber.values()].sort((a, b) => a.issue_number - b.issue_number); journal.attempted = (journal.attempted || 0) + 1; journal.posted = journal.items.filter((entry) => entry.status === 'posted').length; writeJson(journalFile, journal);
+      previous = previous.status === 'posted' ? previous : { ...previous, status: 'posted', comment_id: Number(response.id), reviewed_at: reviewedAt, possibly_posted: false, request: formalRequest(item, Number(response.id), reviewedAt), error: null };
+      byNumber.set(item.issue_number, previous); journalRows(journal, byNumber); journal.attempted = (journal.attempted || 0) + 1; journal.status = 'running'; journal.canonical_digest = sha256(canonical(journal)); writeJson(journalFile, journal);
       writeRequest(path.join(args.requestDir, `${pad(item.issue_number)}.json`), previous.request);
       attempted += 1; sleep(args.pauseMs);
     }
-    const hasUncertain = journal.items.some((entry) => entry.status === 'uncertain');
+    const hasUncertain = journal.items.some((entry) => ['uncertain', 'post-pending'].includes(entry.status) || entry.possibly_posted === true);
     journal.status = journal.items.filter((entry) => entry.status === 'posted').length === plan.items.length
       ? 'complete'
       : hasUncertain ? 'uncertain' : 'partial';
+    if (journal.status === 'complete') journal.last_error = null;
     journal.canonical_digest = sha256(canonical(journal)); writeJson(journalFile, journal);
     const posted = journal.items.filter((entry) => entry.status === 'posted');
     const manifest = { schema_version: 'source-note-boundary-review-batch.v1', repository: REPOSITORY, parent_issue: PARENT_ISSUE, source_snapshot: { repository: SOURCE_REPOSITORY, ref: SOURCE_REF }, plan_digest: plan.canonical_digest, items: posted.map((entry) => ({ issue_number: entry.issue_number, transition_id: entry.transition_id, request_file: path.relative(path.dirname(args.output), path.join(args.requestDir, `${pad(entry.issue_number)}.json`)) })) };
