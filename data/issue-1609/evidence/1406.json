@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "3900c41dc4096dba8826c3ce71076665073937072f96eb6292e2e46e1153db81",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event"
+    ],
+    "questions": 15,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68d9021d000000000e032bea.json@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "4884f86a9c7094095a3ecd8867d2be3259a22e28",
@@ -20,7 +40,7 @@
       "excerpt": "\"global\": {",
       "line": 2,
       "locator": "artifact-line:2",
-      "semantic_excerpt": "岗位：C++/PHP/GO研发工程师 1、自我介绍 2、介绍实习项目 3、为什么做ai agent这个项目（说了一下spring ai云云） 4、怎么理解mcp的，和直接调api有什么区别 5、你觉得agent这个东西有什么缺点吗，因为目前人们普遍觉得agent好像也没有做出什么特别亮眼的产品或者功能（进行一番不知天地为何物的市场现状分析） 6、如果让你设计一个agent的产品或者功能，你会考虑什么方向的功能 7、手撕：力扣93，复原IP地址 8、用Linux命令实现功能：在一个日志文件中，每条日志中都有一个client_ip字段记录一个ip，找出该日志中出现最多次的ip 9、epoll和select的优缺点，怎么理解异步非阻塞 10、项目中MySQL做了什么 11、用SQL语句实现功能：一个数据库表中存储三个字段：username、key、value，一个用户会有多条不同的字段记录，越活跃的用户对应字段越多，找出最活跃的10个用户，例： username key value zhangsan sex 1 lisi sex 0 zhangsan name zhangsan 上面表中zhangsan比lisi活跃，因为他对应两个属性，lisi只有一个 12、项目中用redis做了什么 13、用redis去存微信朋友圈，你会怎么设计（时间不够了，没让我再想） 14、redis中，zset用什么命令实现根据分值倒序排列 15、反问"
+      "semantic_excerpt": "岗位：C++/PHP/GO研发工程师\n1、自我介绍\n2、介绍实习项目\n3、为什么做ai agent这个项目（说了一下spring ai云云）\n4、怎么理解mcp的，和直接调api有什么区别\n5、你觉得agent这个东西有什么缺点吗，因为目前人们普遍觉得agent好像也没有做出什么特别亮眼的产品或者功能（进行一番不知天地为何物的市场现状分析）\n6、如果让你设计一个agent的产品或者功能，你会考虑什么方向的功能\n7、手撕：力扣93，复原IP地址\n8、用Linux命令实现功能：在一个日志文件中，每条日志中都有一个client_ip字段记录一个ip，找出该日志中出现最多次的ip\n9、epoll和select的优缺点，怎么理解异步非阻塞\n10、项目中MySQL做了什么\n11、用SQL语句实现功能：一个数据库表中存储三个字段：username、key、value，一个用户会有多条不同的字段记录，越活跃的用户对应字段越多，找出最活跃的10个用户，例：\nusername key value\nzhangsan sex 1\nlisi sex 0\nzhangsan name zhangsan\n上面表中zhangsan比lisi活跃，因为他对应两个属性，lisi只有一个\n12、项目中用redis做了什么\n13、用redis去存微信朋友圈，你会怎么设计（时间不够了，没让我再想）\n14、redis中，zset用什么命令实现根据分值倒序排列\n15、反问"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "87790edf780e66d54a8ae54c5e1e64cabad64d1efdd71e574e64f5af0b2d3b17"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "b8e593850395034cd28e35bd4446f5267811b13088d954b66f9f650fec6a7d75"
 }

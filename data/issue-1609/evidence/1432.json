@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "a6e85a0434dbb1fe8f11e313daa8c7120e5656e8e754ec12340fa26bc868b50e",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event"
+    ],
+    "questions": 14,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68e103a70000000003037ab6.json@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "4524e6c30cfffb4a40a9fe321fe53ddf28257299",
@@ -20,7 +40,7 @@
       "excerpt": "\"global\": {",
       "line": 2,
       "locator": "artifact-line:2",
-      "semantic_excerpt": "1.java中Object类都有哪些方法？ 2.getClass ()方法一般在什么时候会被使用？ 3.在各种框架里面为什么要用到反射？ 4.介绍一下jvm的内存模型（结构） 5.本地方法栈怎么快速造成oom？ 6.堆区有一个for循环，然后里面new一个对象，这个for循环次数多，会发生oom吗？ 7.Java 中主流的垃圾收集器的原理介绍一下？ 8.G1如何精确控制 STW的时间？ 9.介绍一下在并发编程中如何保证可见性？ 10.可见性的前提是什么？为什么Java中存在可见性的问题？ 11.volatile 关键字怎么确保可见性？ 12.并发编程的工具类有哪些类？ 13.线程池的核心参数介绍？ 14.ReentrantLock的底层实现原理是什么？ 手撕：忘了[失望R]"
+      "semantic_excerpt": "1.java中Object类都有哪些方法？\n2.getClass ()方法一般在什么时候会被使用？\n3.在各种框架里面为什么要用到反射？\n4.介绍一下jvm的内存模型（结构）\n5.本地方法栈怎么快速造成oom？\n6.堆区有一个for循环，然后里面new一个对象，这个for循环次数多，会发生oom吗？\n7.Java 中主流的垃圾收集器的原理介绍一下？\n8.G1如何精确控制 STW的时间？\n9.介绍一下在并发编程中如何保证可见性？\n10.可见性的前提是什么？为什么Java中存在可见性的问题？\n11.volatile 关键字怎么确保可见性？\n12.并发编程的工具类有哪些类？\n13.线程池的核心参数介绍？\n14.ReentrantLock的底层实现原理是什么？\n手撕：忘了[失望R]"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "2291e00627c94d3a4aa931cd88588ebb4dbf55755c8170d0a17b0d0ec60bf8fb"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "45052e1aaa621eccee50b059a15400ef6ae10797c3251e1d37b2a812cd4e2e3f"
 }

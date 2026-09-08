@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "b1506afdfc0a61cb4dba016aca438261cc56e8cb4b22714b856cfc0088181a65",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event"
+    ],
+    "questions": 20,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68bc082b000000001d0055dc.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "fb5cd124e621903c9b3e88d9ac8da30349c8cb1a",
@@ -20,7 +40,7 @@
       "excerpt": "1. 选择语言",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "1. 选择语言 2. 自我介绍。同时，我们作为一家拥抱新技术的公司，也特别想了解像 AI 大模型这类新工具，是如何融入你的学习和实践中的？给你的经历带来了哪些帮助或变化？ 3. 请你解释一下正向代理和反向代理的机制及其应用场景。 3.1 追问 你提到正向代理可以用来访问受限制的网站，那如果目标服务器对代理服务器也进行了限制，你觉得可以怎么解决？ 3.2 追问 多级代理在实际应用中可能会带来哪些潜在问题或者挑战？ 4. 你解释一下 Java 中的 JVM 内存结构，包括堆、栈、方法区、程序计数器和本地方法栈。 4.1 追问 那么如果多个线程同时访问堆中的同一个对象， JVM 是如和保证现场安全的呢？ 4.2 追问 除了内置锁之外， Java 中还有哪些机制可以用来实现线程安全？它们和内置锁相比有什么优劣势？ 5. SQL 查询优化中有哪些常用的方法？ 5.1 追问 除了索引优化，你提到的减少数据传输量具体可以怎么实现？ 5.2 追问 分页查询时，如果数据量特别大，如何避免性能问题？ 6. 一个简单的内容审核系统，确保上传内容的合法性和合规性。你会考虑哪些技术方案？ 6.1 追问 针对你提到的敏感词过滤，具体来说，你会如何设计这个敏感词库的更新和维护机制呢？ 6.2 追问 如果在高并发的场景下，敏感词过滤的性能可能会成为瓶颈，你会采取哪些优化手段来提升过滤效率呢？ 7. 应用大模型为骑手提供一个路线优化智能助手。它能综合考虑实时交通、天气、订单优先级和用户对时效的要求，动态调整和预测最佳配送路线。 7.1 追问 那么如果模型在实际应用中出现了幻觉问题，比如预测的路线中包含了不存在的道路或错误的天气信息，你会如何检测并缓解这种问题？ 7.2 追问 如果在实际应用中，骑手反馈的频率较低，导致问题难以及时发现，你会如何设计一个机制来主动监测和验证模型输出的准确性。 8. 实习或项目经历中，请描述一次你遇到的复杂问题，你是如何识别出问题的根本原因的？请举例说明。 8.1 追问 除了请教组长之外，你们有没有尝试过其他方法来定位问题的根本原因？如果有，具体是怎么做的？ 8.2 追问 在这个过程中，你们有没有总结出一些经验或者教训来避免类似问题在后续项目中再次发生？具体是怎么做的呢？"
+      "semantic_excerpt": "1. 选择语言\n2. 自我介绍。同时，我们作为一家拥抱新技术的公司，也特别想了解像 AI 大模型这类新工具，是如何融入你的学习和实践中的？给你的经历带来了哪些帮助或变化？\n3. 请你解释一下正向代理和反向代理的机制及其应用场景。\n3.1 追问 你提到正向代理可以用来访问受限制的网站，那如果目标服务器对代理服务器也进行了限制，你觉得可以怎么解决？\n3.2 追问 多级代理在实际应用中可能会带来哪些潜在问题或者挑战？\n4. 你解释一下 Java 中的 JVM 内存结构，包括堆、栈、方法区、程序计数器和本地方法栈。\n4.1 追问 那么如果多个线程同时访问堆中的同一个对象， JVM 是如和保证现场安全的呢？\n4.2 追问 除了内置锁之外， Java 中还有哪些机制可以用来实现线程安全？它们和内置锁相比有什么优劣势？\n5. SQL 查询优化中有哪些常用的方法？\n5.1 追问 除了索引优化，你提到的减少数据传输量具体可以怎么实现？\n5.2 追问 分页查询时，如果数据量特别大，如何避免性能问题？\n6. 一个简单的内容审核系统，确保上传内容的合法性和合规性。你会考虑哪些技术方案？\n6.1 追问 针对你提到的敏感词过滤，具体来说，你会如何设计这个敏感词库的更新和维护机制呢？\n6.2 追问 如果在高并发的场景下，敏感词过滤的性能可能会成为瓶颈，你会采取哪些优化手段来提升过滤效率呢？\n7. 应用大模型为骑手提供一个路线优化智能助手。它能综合考虑实时交通、天气、订单优先级和用户对时效的要求，动态调整和预测最佳配送路线。\n7.1 追问 那么如果模型在实际应用中出现了幻觉问题，比如预测的路线中包含了不存在的道路或错误的天气信息，你会如何检测并缓解这种问题？\n7.2 追问 如果在实际应用中，骑手反馈的频率较低，导致问题难以及时发现，你会如何设计一个机制来主动监测和验证模型输出的准确性。\n8. 实习或项目经历中，请描述一次你遇到的复杂问题，你是如何识别出问题的根本原因的？请举例说明。\n8.1 追问 除了请教组长之外，你们有没有尝试过其他方法来定位问题的根本原因？如果有，具体是怎么做的？\n8.2 追问 在这个过程中，你们有没有总结出一些经验或者教训来避免类似问题在后续项目中再次发生？具体是怎么做的呢？"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "a60fcf901c897ec1b2da1e5b4ad4c3dae52c0771824c6b6bbe773969692fd212"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "693723376c87a281d7a5438f5a94ac8c189d836047c2bfe25877b6de01e7bb01"
 }

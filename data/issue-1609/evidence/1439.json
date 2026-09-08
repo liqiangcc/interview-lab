@@ -8,7 +8,26 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "9c0e2f7a247cfd78f65b8faafae0fe037c761084ed9a7b9c16108f89a6f00a00",
   "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "rationale": "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event"
+    ],
+    "questions": 22,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68e4733d0000000004020439.json@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "27b0905e1d7036b2ff169463d201732dc835ee86",
@@ -20,7 +39,7 @@
       "excerpt": "\"global\": {",
       "line": 2,
       "locator": "artifact-line:2",
-      "semantic_excerpt": "一面（30min） 自我介绍 项目难点 八股文： 1.TCP三次握手、四次挥手 2.Java基础数据类型 3.泛化 4.反射及其应用 5.HashMap 6.HashMap是否线程安全 7.JVM运行时空间 8.JVM运行时空间 9.JVM类加载机制 10.MySQL索引like什么时候失效 11.MySQL事务的特性 12.MySQL事务的隔离级别 13.Redis数据类型 14.Redis缓存击穿、缓存穿透、缓存雪崩 15.设计模式 16.Spring常用注解 17.自动注入 18.了解分布式问题吗？ 19.了解MySQL分页吗？ 反问 二面（40min） 拷打项目细节（10min） 场景题： 1.生产者、消费者的一致性，具体代码实现 2.设计一个秒杀系统，要考虑哪些问题，用那些技术栈 3.银行转账，两个账号和一个转正金额，一条行记录相当于一个账号，具体代码实现 反问"
+      "semantic_excerpt": "一面（30min）\n自我介绍\n项目难点\n八股文：\n1.TCP三次握手、四次挥手\n2.Java基础数据类型\n3.泛化\n4.反射及其应用\n5.HashMap\n6.HashMap是否线程安全\n7.JVM运行时空间\n8.JVM运行时空间\n9.JVM类加载机制\n10.MySQL索引like什么时候失效\n11.MySQL事务的特性\n12.MySQL事务的隔离级别\n13.Redis数据类型\n14.Redis缓存击穿、缓存穿透、缓存雪崩\n15.设计模式\n16.Spring常用注解\n17.自动注入\n18.了解分布式问题吗？\n19.了解MySQL分页吗？\n反问\n \n二面（40min）\n拷打项目细节（10min）\n场景题：\n1.生产者、消费者的一致性，具体代码实现\n2.设计一个秒杀系统，要考虑哪些问题，用那些技术栈\n3.银行转账，两个账号和一个转正金额，一条行记录相当于一个账号，具体代码实现\n反问"
     }
   },
   "checks": [
@@ -42,7 +61,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +75,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "d5ac5792829398ee2e5947ff86f53e97c1f76f45b2280d6cf6fb36e987acfa2b"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "7b14558ec247da92572e0cb775b808b1571e5b44d46d0e1181269c76068fd350"
 }

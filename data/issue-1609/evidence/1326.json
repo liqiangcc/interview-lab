@@ -8,7 +8,26 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "ada8055601cad232101241923ce99c7dc8c5884bffae59cb61c864cf14f6e9fe",
   "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "rationale": "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event"
+    ],
+    "questions": 19,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": false,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68c82557000000001d00fb7c.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "d7b9ce897c249bd685ebccc784cf5b60b1169b55",
@@ -20,7 +39,7 @@
       "excerpt": "一面",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "一面 1、实习经历 2、设计模式 3、Redis的主从同步是怎么实现的 4、Redis的大key 5、Redis的过期策略 6、Redis是怎么找到key存储在哪个节点上 7、Redis中的zset的应用场景 8、Redis中的string的数据结构 9、MySQL的事务隔离级别，RR下怎么解决幻读的 10、MySQL三层B+树能存储多少数据 11、索引为什么需要最左前缀 12、MySQL索引键的排列顺序是按照什么排序的 13、synchronized的锁升级 14、Spring中Bean的初始化过程 15、sql题：有一个订单表tb order有2个宁段order id和user id 写一个sql查这个表里的下单量大于2的用户有哪些 16、算法题：三数之和 二面 1、实习经历 2、多线程实现数组排序 3、实现队列"
+      "semantic_excerpt": "一面\n1、实习经历\n2、设计模式\n3、Redis的主从同步是怎么实现的\n4、Redis的大key\n5、Redis的过期策略\n6、Redis是怎么找到key存储在哪个节点上\n7、Redis中的zset的应用场景\n8、Redis中的string的数据结构\n9、MySQL的事务隔离级别，RR下怎么解决幻读的\n10、MySQL三层B+树能存储多少数据\n11、索引为什么需要最左前缀\n12、MySQL索引键的排列顺序是按照什么排序的\n13、synchronized的锁升级\n14、Spring中Bean的初始化过程\n15、sql题：有一个订单表tb order有2个宁段order id和user id 写一个sql查这个表里的下单量大于2的用户有哪些\n16、算法题：三数之和\n \n二面\n1、实习经历\n2、多线程实现数组排序\n3、实现队列"
     }
   },
   "checks": [
@@ -42,7 +61,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +75,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "e99c2869972d04cb2270f416bcb213f74888e9bcef94bbfdb08a3a3167137a65"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "3b94312990615b1ff8764d02631adcb2fab2c3db3896bac6d42a18c02d0ccdfc"
 }

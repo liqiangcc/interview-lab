@@ -7,8 +7,37 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "b90c69fba5cb09edd42d7175669cf587f0017b2e0714c7ea15cad561a3c4ef20",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event"
+    ],
+    "questions": 14,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": true,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": [
+      {
+        "case_key": "bytedance-process",
+        "anchor": "字节",
+        "line": 1,
+        "locator": "artifact-line:1#offset:6-8",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:字节"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68c8d776000000001d037905.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "12b1bc808aeb7df1a97eed3e1261ad44a87b4c3c",
@@ -20,7 +49,7 @@
       "excerpt": "9.15  字节跳动后端开发一面面经",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "9.15 字节跳动后端开发一面面经 1、拷打短链接项目，聊项目背景意义，具体怎么做的，聊了二十多分钟 2、拷打实习期间做的事情 3、实习公司的数据库是怎么部署的？ 4、MySQL一主多从怎么保证数据一致性的？ 5、主节点挂了怎么办？ 6、从节点之间是怎么保证数据一致性的？ 7、为什么项目中的消息队列用kafka？ 8、kafka怎么保证消息被可靠的消费？ 9、http请求可以拼接几个参数？上限是多少？ 10、http的状态码有哪些？504状态码代表什么？ 11、Java创建一个对象的过程？ 12、分配内存是怎么分配的？ 13、Java是怎么知道创建的对象在内存的哪个地方的？ 算法题：无重复字符的最长子串（力扣第三题，区别在于力扣中输出长度，字节要求输出最长的子串本身）"
+      "semantic_excerpt": "9.15 字节跳动后端开发一面面经\n1、拷打短链接项目，聊项目背景意义，具体怎么做的，聊了二十多分钟\n2、拷打实习期间做的事情\n3、实习公司的数据库是怎么部署的？\n4、MySQL一主多从怎么保证数据一致性的？\n5、主节点挂了怎么办？\n6、从节点之间是怎么保证数据一致性的？\n7、为什么项目中的消息队列用kafka？\n8、kafka怎么保证消息被可靠的消费？\n9、http请求可以拼接几个参数？上限是多少？\n10、http的状态码有哪些？504状态码代表什么？\n11、Java创建一个对象的过程？\n12、分配内存是怎么分配的？\n13、Java是怎么知道创建的对象在内存的哪个地方的？\n算法题：无重复字符的最长子串（力扣第三题，区别在于力扣中输出长度，字节要求输出最长的子串本身）"
     }
   },
   "checks": [
@@ -41,8 +70,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +85,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "57d20a62f58bfe3ea2f5438907a41993a543d4890b8cab1ee8a49a733afdbaa3"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "9f1e91d0027d903794d3012704a66b92ab1d87eff398f03f4753a59c4f3aae2f"
 }

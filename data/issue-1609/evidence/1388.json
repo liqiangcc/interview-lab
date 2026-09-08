@@ -8,7 +8,33 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "8d048791a1dfd0cda352c6bcf03724483f0c5b310ca9052d5e44bf1a621cac2b",
   "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "rationale": "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [],
+    "questions": 7,
+    "has_first_person_event": true,
+    "has_explicit_candidate_event": true,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": [
+      {
+        "case_key": "meituan-process",
+        "anchor": "美团",
+        "line": 1,
+        "locator": "artifact-line:500#offset:30-32",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:美团"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68d39def00000000140090b5.json@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "905222e0fd2d2ff5240e6262fb87c06201edc127",
@@ -20,7 +46,7 @@
       "excerpt": "\"global\": {",
       "line": 2,
       "locator": "artifact-line:2",
-      "semantic_excerpt": "美团后端面经（疑似kpi面） 📍面试公司：美团 🕐面试时间：9月24 💻面试岗位：后端开发-业务研发平台 ❓面试问题： 上来先自我介绍，我在讲我的项目的时候打断我，说自我介绍不想了解项目，后面会有这个环节😓，我说了我的优点，他说怎么证明😓。自我介绍完直接扔上来两道手撕（看到先手撕我就觉得kpi无疑了，） 1.最小k个数 2.合并有序数组，力扣原题秒了。 开始问八股，我只说我在觉得有点深度的： 1.深浅拷贝了解吗，怎么实现深拷贝，多说几种方法，为什么序列号反序列话是深拷贝，知道swift反序列化吗 2.CAS在MYSQL中的应用，不是乐观锁，是mysql源码里哪些地方用了CAS😓，MVCC哪里用到了CAS😓。 3.redis的geo结构底层原理说说。 问项目： 1.你用了DDD，为什么没践行到底，说我订单服务写在交易域里不符合DDD😓。 2.说说最难最有挑战的一个流程 🙌面试感想：面试官全程一副低沉脸，声音也小，整个人无精打采的，我说他声音小没听到，他来一句嗯，然后也不重复刚刚说的话，感觉下一秒就要昏过去了精神状态，面感很差，还得是美团。"
+      "semantic_excerpt": "美团后端面经（疑似kpi面）\n📍面试公司：美团\n🕐面试时间：9月24\n💻面试岗位：后端开发-业务研发平台\n❓面试问题：\n上来先自我介绍，我在讲我的项目的时候打断我，说自我介绍不想了解项目，后面会有这个环节😓，我说了我的优点，他说怎么证明😓。自我介绍完直接扔上来两道手撕（看到先手撕我就觉得kpi无疑了，）\n1.最小k个数\n2.合并有序数组，力扣原题秒了。\n开始问八股，我只说我在觉得有点深度的：\n1.深浅拷贝了解吗，怎么实现深拷贝，多说几种方法，为什么序列号反序列话是深拷贝，知道swift反序列化吗\n2.CAS在MYSQL中的应用，不是乐观锁，是mysql源码里哪些地方用了CAS😓，MVCC哪里用到了CAS😓。\n3.redis的geo结构底层原理说说。\n问项目：\n1.你用了DDD，为什么没践行到底，说我订单服务写在交易域里不符合DDD😓。\n2.说说最难最有挑战的一个流程\n🙌面试感想：面试官全程一副低沉脸，声音也小，整个人无精打采的，我说他声音小没听到，他来一句嗯，然后也不重复刚刚说的话，感觉下一秒就要昏过去了精神状态，面感很差，还得是美团。"
     }
   },
   "checks": [
@@ -42,7 +68,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +82,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "ead84d725081f571b511a3c16a874252d5e95d964f9b1706472a54f6eb23ea82"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "6ba77de65db0b116680494ddfd99146121be01f5c0dc23f4139cda3e8b700f86"
 }

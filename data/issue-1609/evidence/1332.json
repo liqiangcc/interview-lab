@@ -7,8 +7,37 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "3e12c3806c404a3d139171a58def9aa9ac762b1f896d1a69abe76a54a35d91ec",
-  "disposition": "not-interview",
-  "rationale": "Exact Source projection is a generic resource/recruitment/advice record and does not record one candidate interview event.",
+  "disposition": "blocked",
+  "rationale": "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 0,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": false,
+    "has_detailed_event": false,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": [
+      {
+        "case_key": "didi-process",
+        "anchor": "滴滴",
+        "line": 4,
+        "locator": "artifact-line:4#offset:4-6",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:滴滴"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68c9322b0000000013012d31.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "3fd23ce3ded467659bb5a2bf4b0428d30b74fd69",
@@ -20,7 +49,7 @@
       "excerpt": "成都有没有做golang或者愿意转go的",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "成都有没有做golang或者愿意转go的 思特沃克正编岗位 5年经验 有意愿的滴滴"
+      "semantic_excerpt": "成都有没有做golang或者愿意转go的\n思特沃克正编岗位\n5年经验\n有意愿的滴滴"
     }
   },
   "checks": [
@@ -41,8 +70,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +85,11 @@
     }
   ],
   "limitations": [
-    "Exact Source projection is a generic resource/recruitment/advice record and does not record one candidate interview event.",
+    "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "903feee7898be9b84ab4b4eb73378ac674b3000e30819183739455df7217e07a"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "7ce40c87a9383ba9ed23f4f5ec39f6a219cd7966ef3015a6e7534a5fcfc8da82"
 }

@@ -8,7 +8,37 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "4c0f53a9c2408887daf671d66674b0e0af023554deb1b2a7ccaea8c3e47bba09",
   "disposition": "blocked",
-  "rationale": "The available Source evidence does not establish a bounded interview event; retain pending.",
+  "rationale": "Exact Source provides only an interview outcome, offer, rejection, or result without a bounded candidate event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "outcome-or-offer-only",
+      "no-first-person-event",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 0,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": false,
+    "has_detailed_event": false,
+    "outcome_signal": true,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": true,
+    "multi_signal": false,
+    "case_segments": [
+      {
+        "case_key": "jd-process",
+        "anchor": "京东",
+        "line": 2,
+        "locator": "artifact-line:2#offset:0-2",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:京东"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68a74ef6000000001b0371b4.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "f8fecee6ad20f649ddcf6fe5c225de431adb9ce5",
@@ -20,7 +50,7 @@
       "excerpt": "双非本8年经验",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "双非本8年经验 京东科技给的offer 职级P7，月base24k×20，地点北京亦庄，说的20薪到时应该拿不满吧？ 现在在二线城市25k×15，和J D 谈薪被压了 要不要去呀，感觉工资有点低，社招入职容易背低绩效吗？而且今年全部启动竞业协议？要是试用期或者做个一年半载顶不住跑路会被卡吗"
+      "semantic_excerpt": "双非本8年经验\n京东科技给的offer 职级P7，月base24k×20，地点北京亦庄，说的20薪到时应该拿不满吧？\n \n现在在二线城市25k×15，和J D 谈薪被压了\n \n要不要去呀，感觉工资有点低，社招入职容易背低绩效吗？而且今年全部启动竞业协议？要是试用期或者做个一年半载顶不住跑路会被卡吗"
     }
   },
   "checks": [
@@ -42,7 +72,7 @@
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source provides only an interview outcome, offer, rejection, or result without a bounded candidate event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +86,11 @@
     }
   ],
   "limitations": [
-    "The available Source evidence does not establish a bounded interview event; retain pending.",
+    "Exact Source provides only an interview outcome, offer, rejection, or result without a bounded candidate event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "6c8663ce5d37a882fb2c8d602f1e7e67b2143040c20772cd58bd6e233767e425"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "1dbc5e4c9eafd2f73bfc40e999eede7e296b515f5d476bea35c97f9c997de752"
 }

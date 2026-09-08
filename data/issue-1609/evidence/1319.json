@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "a1803c5f0d7e2dea4f98d6be02ce51f9b2ccfc317256e94209738453fb48e8d6",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event"
+    ],
+    "questions": 21,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68c7f34a000000001d007186.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "de804845bc925ced92ed0ad4a0347d35c45599ed",
@@ -20,7 +40,7 @@
       "excerpt": "日期：9.15",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "日期：9.15 时间：55 分钟 1、自我介绍 2、项目拷打 ------------------------------------------ 2.1、浏览器和服务器之间如何消息传递？ 2.2、http协议是否安全？需要如何加密 2.3、服务器如何找到对应用户？ 2.4、讲讲JWT鉴权 2.5、redis的哈希表是如何实现的 2.6、除了kafka，消息队列中间件还有哪些 2.7、为什么需要布隆过滤器？有什么衡量指标 ------------------------------------------ 3、进程和线程的区别？怎么建立 4、进程间、线程间通信方式 5、如何解决哈希冲突 6、介绍虚拟内存 7、内存泄漏的检测工具以及解决方法 8、介绍c++迭代器，几种容器中迭代器的表现 9、几种容器查找数据的时间复杂度 10、常见的排序算法及其时间复杂度与是否稳定 11、死锁怎么避免 12、手撕：最大为 N 的数字组合（hard）非hot100 有思路但是25分钟撕不出来[呃R]最后讲了思路 13、反问 前面答得都还行，日常实习一面就手撕hard人麻了[哭惹R] ------------------------------------ 9.17 回复非技术问题🤦‍♂️被横向对比了"
+      "semantic_excerpt": "日期：9.15\n时间：55 分钟\n1、自我介绍\n2、项目拷打\n------------------------------------------\n2.1、浏览器和服务器之间如何消息传递？\n2.2、http协议是否安全？需要如何加密\n2.3、服务器如何找到对应用户？\n2.4、讲讲JWT鉴权\n2.5、redis的哈希表是如何实现的\n2.6、除了kafka，消息队列中间件还有哪些\n2.7、为什么需要布隆过滤器？有什么衡量指标\n------------------------------------------\n3、进程和线程的区别？怎么建立\n4、进程间、线程间通信方式\n5、如何解决哈希冲突\n6、介绍虚拟内存\n7、内存泄漏的检测工具以及解决方法\n8、介绍c++迭代器，几种容器中迭代器的表现\n9、几种容器查找数据的时间复杂度\n10、常见的排序算法及其时间复杂度与是否稳定\n11、死锁怎么避免\n12、手撕：最大为 N 的数字组合（hard）非hot100 有思路但是25分钟撕不出来[呃R]最后讲了思路\n13、反问\n \n前面答得都还行，日常实习一面就手撕hard人麻了[哭惹R]\n------------------------------------\n9.17 回复非技术问题🤦‍♂️被横向对比了"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "c9535017dd2e279c5f99b2782ad41ff520dc71965e211aac11f8d6f2ca3176ab"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "fbd43a686acb47ceb5a7930f906027b0caa65aea840fd74821c8ef1dbef9858e"
 }

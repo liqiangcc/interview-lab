@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "a4d4e616162f9917f1758c1ccd8b1a4b0bfe2eaa950e28509143d843a2404a31",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 0,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68ad81cb000000001d018ba3.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "d8e5539653ea5926518d290d4bb04efcfb52ccf8",
@@ -20,7 +40,7 @@
       "excerpt": "近期京东3面压力感拉满，综合粉丝投稿及当前市场环境，核心特点如下：",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "近期京东3面压力感拉满，综合粉丝投稿及当前市场环境，核心特点如下： 深度碾压式追问 项目难点被持续深挖至源码/极端场景（如：“Redis宕机后本地缓存如何兜底？数据延迟怎么控？”），必须展现技术本质思考，而非简单应用。 高可用设计是必考题 商品详情页、订单交易等京东核心场景的系统设计，必须考虑多级缓存、池化容灾、分布式一致性（如RocketMQ事务消息）的真实落地细节。 Java基础再升级 HashMap扩容、ThreadLocal内存泄漏等老问题，会结合线程池/GC场景连环问，弱引用、伪共享等底层机制常成追问点。 压力来自节奏与边界试探 面试官语速快、连续质疑方案缺陷，考验抗压与思维韧性。需保持冷静，坦诚不足的同时展现迭代思路（如：“当前方案确有延迟，我会用定时补偿+事务消息改进”）。 总结：当前面试更看重技术深度与高可用实战经验，准备时需重点打磨项目中的设计权衡与容灾逻辑，并训练在高压下清晰表达的能力。"
+      "semantic_excerpt": "近期京东3面压力感拉满，综合粉丝投稿及当前市场环境，核心特点如下：\n \n深度碾压式追问\n项目难点被持续深挖至源码/极端场景（如：“Redis宕机后本地缓存如何兜底？数据延迟怎么控？”），必须展现技术本质思考，而非简单应用。\n \n高可用设计是必考题\n商品详情页、订单交易等京东核心场景的系统设计，必须考虑多级缓存、池化容灾、分布式一致性（如RocketMQ事务消息）的真实落地细节。\n \nJava基础再升级\nHashMap扩容、ThreadLocal内存泄漏等老问题，会结合线程池/GC场景连环问，弱引用、伪共享等底层机制常成追问点。\n \n压力来自节奏与边界试探\n面试官语速快、连续质疑方案缺陷，考验抗压与思维韧性。需保持冷静，坦诚不足的同时展现迭代思路（如：“当前方案确有延迟，我会用定时补偿+事务消息改进”）。\n \n总结：当前面试更看重技术深度与高可用实战经验，准备时需重点打磨项目中的设计权衡与容灾逻辑，并训练在高压下清晰表达的能力。"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "483f5dd04343f90d3a37916596ff85b87d3c2771545586b6debd6e7cbd9768d5"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "e9d3e81c5848b643dc0995b1966e44a2db6ab19a8afea85345be0731e4ca94d9"
 }

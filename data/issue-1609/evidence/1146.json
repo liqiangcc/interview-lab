@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "55d0de315c2a2c13e0e1e4d325289c00b7c332afe7e14f26e698846b5ca3147a",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event"
+    ],
+    "questions": 8,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": true,
+    "resource_signal": true,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68a69c46000000001c00fb1f.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "b87b36437594580b25af0c6e5d5f1f8e7f22bddf",
@@ -20,7 +40,7 @@
       "excerpt": "没开摄像头，但是中午12.的面试就原谅他了",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "没开摄像头，但是中午12.的面试就原谅他了 1. java线程池的参数，线程池的执行过程 2. 建立mysql索引的时候需要考虑什么，使用mysql数据库的时候可能要关注哪些数值 3. redis持久化 4. 对AI的了解，对 Milvus的了解（这两块我讲了一大堆，但是基本没追问，可能是因为都是理论知识没啥实操） 5. JVM垃圾回收的算法，CMS和G1的区别 6. 为什么要用分布式锁，什么场景会用到分布式锁 7. 项目中解决问题的过程 8. 学习新东西的方法 手撕：一个很简单的HashMap字符串拆分+数值统计+排序 反问业务：内部的AI工具搭建 结果要等测评笔试做了才知道（？？？本来想着一面挂了就不做笔试了） 后续：已挂，不用做笔试了[笑哭R]"
+      "semantic_excerpt": "没开摄像头，但是中午12.的面试就原谅他了\n1. java线程池的参数，线程池的执行过程\n2. 建立mysql索引的时候需要考虑什么，使用mysql数据库的时候可能要关注哪些数值\n3. redis持久化\n4. 对AI的了解，对 Milvus的了解（这两块我讲了一大堆，但是基本没追问，可能是因为都是理论知识没啥实操）\n5. JVM垃圾回收的算法，CMS和G1的区别\n6. 为什么要用分布式锁，什么场景会用到分布式锁\n7. 项目中解决问题的过程\n8. 学习新东西的方法\n \n手撕：一个很简单的HashMap字符串拆分+数值统计+排序\n \n反问业务：内部的AI工具搭建\n结果要等测评笔试做了才知道（？？？本来想着一面挂了就不做笔试了）\n后续：已挂，不用做笔试了[笑哭R]"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "2af46a1e85d228a39aaaace65eb69522ab6e3a27bcf0cc7835602cb6a4c257da"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "08930d0243049ad3eeac374d9ab62ba701e9f6879dfd7b4980f7138d3b70ae23"
 }

@@ -7,8 +7,37 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "2084464e9457a7f39bc8b5edccd95a2b22e9af585103cf83974ce7a502f70ed5",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event"
+    ],
+    "questions": 12,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": [
+      {
+        "case_key": "jd-process",
+        "anchor": "京东",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-2",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:京东"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68c0da11000000001d038307.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "6ce95d15f27fc2ea59d8972bc9ec01a9c8d77bb4",
@@ -20,7 +49,7 @@
       "excerpt": "京东java面经",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "京东java面经 金融-信用卡支付 1.自我介绍 2.讲讲以前从0开始上手一个新东西的过程 3.新东西遇到的困难如何解决 4.hashmapget一个元素的过程 5.java的内存分配和回收过程 6.你如何创建一个线程池 7.对aop的了解程度 8.详细讲讲java agent 9.http和https区别 10.为什么握手要三次 11.10w顾客抢购一个只有10个库存的商品如何设计 12.之前遇到最挫折的事情"
+      "semantic_excerpt": "京东java面经\n金融-信用卡支付\n1.自我介绍\n2.讲讲以前从0开始上手一个新东西的过程\n3.新东西遇到的困难如何解决\n4.hashmapget一个元素的过程\n5.java的内存分配和回收过程\n6.你如何创建一个线程池\n7.对aop的了解程度\n8.详细讲讲java agent\n9.http和https区别\n10.为什么握手要三次\n11.10w顾客抢购一个只有10个库存的商品如何设计\n12.之前遇到最挫折的事情"
     }
   },
   "checks": [
@@ -41,8 +70,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +85,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "c9256cbc0181b75839477d59f9785e74de7f03b742066d06ef06d6b8c5b758bc"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "3bfa241d681212affe42df56f8ecf405ad5840365a7ac51dcd5a6caa15d4da2d"
 }

@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "6acb5ab7fd536049a0177a9d90ef623da547871b9727fc7f776132fc4af9447f",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 0,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": false,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68c51b4d000000001d026648.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "c15fb667454c27fca4e88d63341d1a993ff139fe",
@@ -20,7 +40,7 @@
       "excerpt": "* java和python有什么区别",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "* java和python有什么区别 * java为什么性能好 * stringBuilder和stringBuffer和String有什么区别 * java反射？应用场景？代理类和被代理类 * tcp三次握手？服务端如果没有开启一个端口监听怎么办 * tcp怎么判断网络阻塞 * 协程是什么 * MVCC怎么保证的？readView是什么，怎么实现的不同版本 * 索引a>=某个数可以走索引吗 * 怎么判断是否会走索引 🍀总结： 一面整体比较偏八股文，问的不是很深入但是会偶尔来个深入的点，答不上来会比较减分，不会硬编会非常减分。私企相对于国企更偏向于单点技术深挖。"
+      "semantic_excerpt": "* java和python有什么区别\n* java为什么性能好\n* stringBuilder和stringBuffer和String有什么区别\n* java反射？应用场景？代理类和被代理类\n* tcp三次握手？服务端如果没有开启一个端口监听怎么办\n* tcp怎么判断网络阻塞\n* 协程是什么\n* MVCC怎么保证的？readView是什么，怎么实现的不同版本\n* 索引a>=某个数可以走索引吗\n* 怎么判断是否会走索引\n🍀总结：\n一面整体比较偏八股文，问的不是很深入但是会偶尔来个深入的点，答不上来会比较减分，不会硬编会非常减分。私企相对于国企更偏向于单点技术深挖。"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "5e5d426ceb78707c9bc97b6b844a9a3438755c06c501ab02b792a0eb2347b48c"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "d9143e52b3ba022e85a721c2db9cd85995813e8ca97e7f3be11e736f821bf404"
 }

@@ -8,7 +8,26 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "bd26fe1652ec916bbca623ecfd0bac3816405fc5fe40b730acd073be666bfd11",
   "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "rationale": "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event"
+    ],
+    "questions": 7,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": true,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68cc206f000000001300e00e.json@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "26bd2e05277241b9ad444a5bab0fed9b907b6526",
@@ -20,7 +39,7 @@
       "excerpt": "\"global\": {",
       "line": 2,
       "locator": "artifact-line:2",
-      "semantic_excerpt": "宁波银行-金融科技岗实习生-二面 1、技术栈是什么？ 2、java垃圾回收机制说一下。 3、DDL和DML列举一下。 数据定义语言，数据操作语言 DDL：CREATE，ALTER，DROP，TRUNCATE，RENAME DML：INSERT，UPDATE，DELETE，SELECT 区别：DDL自动提交，不可回滚，需要的权限更高，DML需手动提交/回滚。 4、string，stringbuilder，stringbuffer，说一下 5、spring IOC和AOP说一下 6、mybatis说一下，其中# 和 $ 的区别? 上半年面的，过了 后来三面挂了 三面 不用自我介绍 1、使用过哪些金融APP，对其使用的框架有什么了解 没了"
+      "semantic_excerpt": "宁波银行-金融科技岗实习生-二面\n \n1、技术栈是什么？\n2、java垃圾回收机制说一下。\n3、DDL和DML列举一下。\n数据定义语言，数据操作语言\nDDL：CREATE，ALTER，DROP，TRUNCATE，RENAME\nDML：INSERT，UPDATE，DELETE，SELECT\n区别：DDL自动提交，不可回滚，需要的权限更高，DML需手动提交/回滚。\n \n4、string，stringbuilder，stringbuffer，说一下\n5、spring IOC和AOP说一下\n6、mybatis说一下，其中# 和 $ 的区别?\n \n上半年面的，过了\n后来三面挂了\n三面\n不用自我介绍\n1、使用过哪些金融APP，对其使用的框架有什么了解\n没了"
     }
   },
   "checks": [
@@ -42,7 +61,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +75,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "df463c14269c5757eb922d11230124dfd402bb97d125ac0c682986ae6073d43b"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "df2f56fa5421f915523b834bc0ad5d40b5ef1d0d9439461d1b90c3c5a90711c2"
 }

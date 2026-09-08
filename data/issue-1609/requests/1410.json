@@ -1,32 +1,21 @@
 {
-  "schema_version": "issue-1609-boundary-review-request.v1",
-  "request_id": "issue-1609-boundary-1410",
+  "schema_version": "source-note-boundary-review-transition.v1",
+  "transition_id": "issue-1609-boundary-1410-review-1",
   "repository": "liqiangcc/interview-lab",
-  "parent_issue": 1605,
   "issue_number": 1410,
-  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1410",
   "source_note_id": "xhs-note:68d9d126000000000e0333d1",
   "expected_body_sha256": "0b226c76640b69f928c0418a42ca46c0db34114ded29587bfa5a55c34bd19bd9",
   "expected_boundary_status": "pending",
   "expected_source_revision_id": "xhs-note:68d9d126000000000e0333d1:snapshot-95b77bb26104",
-  "expected_source_repository": "liqiangcc/xhs",
+  "expected_manifest_sha256": null,
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
-  "evidence_file": "evidence/1410.json",
-  "source_evidence": {
-    "ref": "liqiangcc/xhs:note_json/68d9d126000000000e0333d1.json@95b77bb261048059846273688e4b90a2e108b437",
-    "git_blob_sha": "74275ef1080d1fc1d52a7b3a25dedaf3cbff0bc8",
-    "kind": "json",
-    "provenance": "source_projection",
-    "byte_size": 22125,
-    "content_sha256": "4370bbfe943042e0b7a9120ae8f0bc4f5d2651d6f05bb6606106d73fa00bc9ba",
-    "excerpt": {
-      "excerpt": "\"global\": {",
-      "line": 2,
-      "locator": "artifact-line:2",
-      "semantic_excerpt": "一面1h，一天后约二面 介绍项目 堆栈区别 常见设计模式和应用场景 select和epoll区别 分布式锁和本地锁 mysql查询优化、如何判断字段区分度 https链接过程 手撕单例和比较版本号 二面1h，一天后约三面 项目难点介绍 了解哪些序列化方式 如何实现限流降级 了解哪些限流方案 熔断器如何实现 https的具体实现 缓存穿透和缓存雪崩如何解决 redis持久化 syntronize原理、锁升级 aop的原理 object有哪些方法？clone注意事项？equals注意事项？ 单例模式的实现方式有哪些？ 线程和携程的区别？ 手撕：链表反转k个节点，不足k个也反转。 三面1h，面完半小时发感谢信 有无实习项目经验？ 微服务框架了解吗？ 数据结构了解吗？普里姆算法如何数学证明？最小联通图的定义？ session和cookie的区别？ 乐观锁的原理？ 垃圾回收器介绍 大模型用过吗？有没有自己搭过agent？ 智商题：用小鼠找有毒的水 如何在栈的基础上实现o1拿到最小值 手撕：前序遍历和中序数组实现后续数组，不能构建二叉树（没见过）。手撕了一个小时撕出来了。 面完秒挂。 （感谢面试官容忍我做了1h算法题，实力太差，错过了很好的机会）"
-    }
+  "decision": "single-interview",
+  "reviewed_at": "2026-09-08T00:00:00.000Z",
+  "reviewer_kind": "ai-assisted",
+  "review_evidence": {
+    "repository": "liqiangcc/interview-lab",
+    "issue_number": 1410,
+    "comment_id": 1609001410
   },
   "checks": [
     {
@@ -47,7 +36,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -61,9 +50,8 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
-    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
-  ],
-  "evidence_sha256": "6691cb4763097bcf76f4d0b21a61b551f01dc76c7ae74e5bd26395cbdf79099f",
-  "request_sha256": "22ee66e9ab1e33ece44b94d7244d931a0f4d8d7f14a736590d0f3e3fd70502a5"
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+    "Candidate only: review_evidence.comment_id is a deterministic placeholder; no live evidence comment was created.",
+    "No body PATCH, label write, or InterviewNote materialization was performed; controller authorization is required."
+  ]
 }

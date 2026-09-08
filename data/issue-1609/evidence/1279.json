@@ -8,7 +8,33 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "e57de87cb8c3e79a2133c3c1ac324f663616bc8748e4556860ca0a278d31b773",
   "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "rationale": "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [],
+    "questions": 0,
+    "has_first_person_event": true,
+    "has_explicit_candidate_event": true,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": true,
+    "resource_signal": true,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": [
+      {
+        "case_key": "alibaba-process",
+        "anchor": "阿里",
+        "line": 10,
+        "locator": "artifact-line:10#offset:2-4",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:阿里"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68bf8e69000000001d024a16.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "2991a783c77d5332cc3e5d74ff2ad504d63cdab1",
@@ -20,7 +46,7 @@
       "excerpt": "后续：9.26约业务二面，拒绝面试",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "后续：9.26约业务二面，拒绝面试 只能选晚上面试…emmmm大概知道了什么作息hhhh 一面： 学springboot的过程中，你主要是了解哪一块内容？ Springboot与springmvc相比，解决了哪些问题？ 你说自动配置可以简化springmvc的配置，那这一块你看过他的源码吗？是什么逻辑？ 在使用springboot的过程中，会引用第三方的一些starter，这块主要用过哪些一些比较常见的依赖？ 如果让你手写一个日志log的starter，你会是什么思路？ AOP你了解吗？ 你在阿里实习，用过arthas吗？ 项目排查你会通过什么方式? JVM学过吗，报错怎么去排查？ 怎么定位线程阻塞问题？ 介绍一下常用的垃圾回收器，在不同的jdk版本 Springcloud是通过什么组件可以实现服务发现？ 你了解feign吗？ 为什么企业里面选用rpc而不是http呢？ 你实习的部分关于支付链路比较复杂，你是怎么去设计他的一个熔断和限流的呢？ 现在一个整体的支付响应链路变慢，你会怎么去排查？怎么定位到哪个环节出问题？ （这里我只记得通过云图能看出来哪一个系统模块超时响应） 有没有了解过一些熔断降级的方案？ 在这段实习中，对你成长最大帮助的是什么？ 在实习的时候你应该接触过一些内部分享的资料，主要关注过哪些方面的一些分享？ LLM有了解吗？ RAG你了解吗？与传统ES有什么区别？ 什么是模型训练和推理的过程？ 你还用过哪些编程语言？ 你了解云原生和Docker吗？ 全程30分钟左右，🈚️手撕，面试官很和蔼 反问环节，说是做llm开发平台的，但是简历一面面完之后还回到大池子里然后别的部门捞二面，所以也确定不了最后做什么，面试结果大概1-2天就出[失望R]整体感觉没有特别难，但是LLM对于我一个非科班来说有点为难了😅 主包最近面试比较多，随缘出面经，科大讯飞是老家的企业，不管咋样也得面一下[doge]"
+      "semantic_excerpt": "后续：9.26约业务二面，拒绝面试\n只能选晚上面试…emmmm大概知道了什么作息hhhh\n一面：\n学springboot的过程中，你主要是了解哪一块内容？\nSpringboot与springmvc相比，解决了哪些问题？\n你说自动配置可以简化springmvc的配置，那这一块你看过他的源码吗？是什么逻辑？\n在使用springboot的过程中，会引用第三方的一些starter，这块主要用过哪些一些比较常见的依赖？\n如果让你手写一个日志log的starter，你会是什么思路？\nAOP你了解吗？\n你在阿里实习，用过arthas吗？\n项目排查你会通过什么方式?\nJVM学过吗，报错怎么去排查？\n怎么定位线程阻塞问题？\n介绍一下常用的垃圾回收器，在不同的jdk版本\nSpringcloud是通过什么组件可以实现服务发现？\n你了解feign吗？\n为什么企业里面选用rpc而不是http呢？\n你实习的部分关于支付链路比较复杂，你是怎么去设计他的一个熔断和限流的呢？\n现在一个整体的支付响应链路变慢，你会怎么去排查？怎么定位到哪个环节出问题？\n（这里我只记得通过云图能看出来哪一个系统模块超时响应）\n有没有了解过一些熔断降级的方案？\n在这段实习中，对你成长最大帮助的是什么？\n在实习的时候你应该接触过一些内部分享的资料，主要关注过哪些方面的一些分享？\nLLM有了解吗？\nRAG你了解吗？与传统ES有什么区别？\n什么是模型训练和推理的过程？\n你还用过哪些编程语言？\n你了解云原生和Docker吗？\n全程30分钟左右，🈚️手撕，面试官很和蔼\n反问环节，说是做llm开发平台的，但是简历一面面完之后还回到大池子里然后别的部门捞二面，所以也确定不了最后做什么，面试结果大概1-2天就出[失望R]整体感觉没有特别难，但是LLM对于我一个非科班来说有点为难了😅\n主包最近面试比较多，随缘出面经，科大讯飞是老家的企业，不管咋样也得面一下[doge]"
     }
   },
   "checks": [
@@ -42,7 +68,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +82,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "d6d01f50d1931f71107be9b74c6a75726754ade08fbcb3c6297c0fe6f942eded"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "8b0aa6d3874665100452b3e595194eea68a95a92d9c3bb18db4888dc1e469a25"
 }

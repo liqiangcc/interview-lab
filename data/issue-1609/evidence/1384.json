@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "877c803196a9877aa7aa1fa82a976ea1d287dcdfa10760cad51287d02003638a",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event"
+    ],
+    "questions": 24,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": true,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68d27ceb0000000013034068.json@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "7e2f4878f7125be4d26d98bd5f756d71e1906c1b",
@@ -20,7 +40,7 @@
       "excerpt": "\"global\": {",
       "line": 2,
       "locator": "artifact-line:2",
-      "semantic_excerpt": "1.自我介绍 2.面试官开始介绍部门做的业务 3.聊一下自己做的项目（我自己挑了一个黑马点评） 4.UV统计怎么做的?为什么要这么实现呢? 用HyperLogLog为什么不会占用很大空间 呢?16KB怎么去存储这个数据呢 5.好友关注怎么做的 6.项目的哪个点是有挑战性的（回答了优惠券秒杀） 7.秒杀为什么要用消息队列 8.Redis挂了怎么办（回答用集群方案来解决）整个集群挂了就不行了对吧?（面试官 追问 回答考虑限流） 9.但你的库存信息都是在 Redis里面，对吧?就是限流，你取不到库存了吗 10.你怎么保证那个 Redis 里面库存和 DB 里面的库存它是一致的，没有可能出错? 11.你那个 Redis 你去做扣减库存怎么保障它的原子性呢? 12.不用lua脚本会带来什么样的问题? 13.扣减库存的原子性是为了解决什么样的问题 14.假设这个地方我们不用 lua脚本，对吧?就用最普通的方案会带来什么样的问题? 15.乐观锁怎么解决超卖的问题 16.你能那个详细的描述一下lua脚本里面是用了什么样的Redis的命令? 17.你lua脚本就是怎么写的?就是你肯定是用了Redis的命令，对吧? 18.比如说你扣了库存，我们肯定是要做支付，对吧?那库存和支付的顺序是怎么样?先支付再扣，或者先扣库存再支付，这个过程你来讲一下吧。 19.创建订单，然后假设支付失败了呢。 20.那怎么去把数据写到 Redis 里面呢?你这个时候你 Redis里面库存也得回加，对吧?这里就可以会涉及到一个你DB的库存跟 Redis的库存的一致性的问题，怎么去保障它们一致性? 21.因为消息丢失导致的这个消息消费失败导致的库存不一致，怎么发现这个问题 22.重新发消息的时候会不会导致那个库存的操作重复? 23.通过订单号去做幂等是吗。 24.那假设那个用户量进一步的变大，就可能你一步的去消费MO的消息的时候，DB的压力还是会比较大，还是会消化不完，这个时候我们应该怎么去优化呢?（考虑集群、分库)"
+      "semantic_excerpt": "1.自我介绍\n2.面试官开始介绍部门做的业务\n3.聊一下自己做的项目（我自己挑了一个黑马点评）\n4.UV统计怎么做的?为什么要这么实现呢?\n用HyperLogLog为什么不会占用很大空间\n呢?16KB怎么去存储这个数据呢\n5.好友关注怎么做的\n6.项目的哪个点是有挑战性的（回答了优惠券秒杀）\n7.秒杀为什么要用消息队列\n8.Redis挂了怎么办（回答用集群方案来解决）整个集群挂了就不行了对吧?（面试官\n追问 回答考虑限流）\n9.但你的库存信息都是在 Redis里面，对吧?就是限流，你取不到库存了吗\n10.你怎么保证那个 Redis 里面库存和 DB 里面的库存它是一致的，没有可能出错?\n11.你那个 Redis 你去做扣减库存怎么保障它的原子性呢?\n12.不用lua脚本会带来什么样的问题?\n13.扣减库存的原子性是为了解决什么样的问题\n14.假设这个地方我们不用 lua脚本，对吧?就用最普通的方案会带来什么样的问题?\n15.乐观锁怎么解决超卖的问题\n16.你能那个详细的描述一下lua脚本里面是用了什么样的Redis的命令?\n17.你lua脚本就是怎么写的?就是你肯定是用了Redis的命令，对吧?\n18.比如说你扣了库存，我们肯定是要做支付，对吧?那库存和支付的顺序是怎么样?先支付再扣，或者先扣库存再支付，这个过程你来讲一下吧。\n19.创建订单，然后假设支付失败了呢。\n20.那怎么去把数据写到 Redis 里面呢?你这个时候你 Redis里面库存也得回加，对吧?这里就可以会涉及到一个你DB的库存跟 Redis的库存的一致性的问题，怎么去保障它们一致性?\n21.因为消息丢失导致的这个消息消费失败导致的库存不一致，怎么发现这个问题\n22.重新发消息的时候会不会导致那个库存的操作重复?\n23.通过订单号去做幂等是吗。\n24.那假设那个用户量进一步的变大，就可能你一步的去消费MO的消息的时候，DB的压力还是会比较大，还是会消化不完，这个时候我们应该怎么去优化呢?（考虑集群、分库)"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "d937f26910df8548e5590408a49a43d9ce33121e60274ae7371791bee1ac1d7b"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "88808a6fc404e6c9ef80e0f6b9d9531cfacbe3177e95934781192cd025ea063e"
 }

@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "3ab5abf7819ad596fb07bb296d3c204f923386ffa0ac3adf12a28adecd32d24c",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event"
+    ],
+    "questions": 14,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b593ab000000001c0077c1.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "9ca62ac9d458e1e7f04062ab91ce2e2aaa931a4b",
@@ -20,7 +40,7 @@
       "excerpt": "1. 面试官介绍业务（go开发）",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "1. 面试官介绍业务（go开发） 2. 擅长的开发语言 3. 手撕：线程交替输出abc 和123（信号量实现的），解释代码 4. 介绍信号量底层原理、volatile作用、代码关键字（private、static、final）加不加的区别 5. 加 static 和不用 static 修饰的变量在内存上有什么区别，会被 GC 掉吗 6. 介绍一下熟悉的几个GC 算法，分别适用于什么场景 7. 为什么要把堆给分成 young 和 old 两个区域 8. 手撕sql：查询表中每门课程得分都不低于 60 分的学生的名字 9. 描述一下TCP 网络断开连接的过程 10. 客户端为什么要等2MSL，此时服务端是一个什么状态，重发FIN的间隔时间 11. MSL取值多少 12. 介绍一下专业知识或其他技能擅长的地方 13. 有没有面对一些压力比较大的场景 14. 对工作时间是怎么看的"
+      "semantic_excerpt": "1. 面试官介绍业务（go开发）\n2. 擅长的开发语言\n3. 手撕：线程交替输出abc 和123（信号量实现的），解释代码\n4. 介绍信号量底层原理、volatile作用、代码关键字（private、static、final）加不加的区别\n5. 加 static 和不用 static 修饰的变量在内存上有什么区别，会被 GC 掉吗\n6. 介绍一下熟悉的几个GC 算法，分别适用于什么场景\n7. 为什么要把堆给分成 young 和 old 两个区域\n8. 手撕sql：查询表中每门课程得分都不低于 60 分的学生的名字\n9. 描述一下TCP 网络断开连接的过程\n10. 客户端为什么要等2MSL，此时服务端是一个什么状态，重发FIN的间隔时间\n11. MSL取值多少\n12. 介绍一下专业知识或其他技能擅长的地方\n13. 有没有面对一些压力比较大的场景\n14. 对工作时间是怎么看的"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "7bf81cfa5dc52f924e33d07c172f320acb5f7b42698f537fcacba79556a60acc"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "6215fbaf2a6b8c5d960df018622edc7462386857a4a2ca267ddeb43cb5562b74"
 }

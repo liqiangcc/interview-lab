@@ -8,7 +8,28 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "ee063aaed4038e70b6fd38b27d7763a11cfdf36b9bb938b5edd051a66ac29db4",
   "disposition": "blocked",
-  "rationale": "The available Source evidence does not establish a bounded interview event; retain pending.",
+  "rationale": "Exact Source provides only an interview outcome, offer, rejection, or result without a bounded candidate event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "outcome-or-offer-only",
+      "no-first-person-event",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 0,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": false,
+    "has_detailed_event": false,
+    "outcome_signal": true,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": true,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68e885380000000005012384.json@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "035ca69645766fe2eb78d18fdecf01cc91986c59",
@@ -42,7 +63,7 @@
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source provides only an interview outcome, offer, rejection, or result without a bounded candidate event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +77,11 @@
     }
   ],
   "limitations": [
-    "The available Source evidence does not establish a bounded interview event; retain pending.",
+    "Exact Source provides only an interview outcome, offer, rejection, or result without a bounded candidate event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "dd96925dc1cb09bf9467e97bacd5c104b8bcdaffaf245d4ca268c77d5f89ab97"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "da78f2162262f3ddd71f74047421f0a14b26da0452b3c7aeaf6d1f9307531fab"
 }

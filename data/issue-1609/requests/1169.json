@@ -1,32 +1,21 @@
 {
-  "schema_version": "issue-1609-boundary-review-request.v1",
-  "request_id": "issue-1609-boundary-1169",
+  "schema_version": "source-note-boundary-review-transition.v1",
+  "transition_id": "issue-1609-boundary-1169-review-1",
   "repository": "liqiangcc/interview-lab",
-  "parent_issue": 1605,
   "issue_number": 1169,
-  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1169",
   "source_note_id": "xhs-note:68aae954000000001d0117cc",
   "expected_body_sha256": "190880848b8c81462d50d897088f234a9e2d6bd5acdb5f176d638fa4d54310d7",
   "expected_boundary_status": "pending",
   "expected_source_revision_id": "xhs-note:68aae954000000001d0117cc:snapshot-95b77bb26104",
-  "expected_source_repository": "liqiangcc/xhs",
+  "expected_manifest_sha256": null,
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
-  "evidence_file": "evidence/1169.json",
-  "source_evidence": {
-    "ref": "liqiangcc/xhs:note_desc/68aae954000000001d0117cc.txt@95b77bb261048059846273688e4b90a2e108b437",
-    "git_blob_sha": "50804a88b6d8853b2c2e037e1c90fe6459bb0106",
-    "kind": "text_projection",
-    "provenance": "source_projection",
-    "byte_size": 1333,
-    "content_sha256": "516865489e756cfebf478f09b6f7e3f0d9f78cb4c5344667099d4e9631ce4c7f",
-    "excerpt": {
-      "excerpt": "小米一面面经（Java后端开发社招，耗时约1小时，面试时间：2025年8月）",
-      "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "小米一面面经（Java后端开发社招，耗时约1小时，面试时间：2025年8月） 1.自我介绍和项目经历介绍 2.你了解哪些Java集合？讲下ConcurrentHashMap的1.7和1.8的区别 3.介绍一下Java内存模型，再说下内存回收，知道逃逸分析吗？ 4.讲下你对并发编程中锁的理解，说下CAS的实现原理 5.拦截器和过滤器有什么区别？ 6.介绍一下对MySQL的事务理解，默认隔离级别为什么是可重复读？ 7.项目中是否有遇到Redis热点数据问题？你是怎么解决的？ 8.计算机网络还记得吧，说下HTTPS的加密与认证过程 9.Linux命令如何查看超大日志文件内容 10.算法题：代码实现一个生产者消费者模型 ps: 小米面试考察范围比较广，包含计算网络和操作系统等，建议面试前多准备一下相关知识。 其他常规的八股文知识没有考察很深，关键信息答出来就可以了。 本次面试结果是通过，后续会继续更新。"
-    }
+  "decision": "single-interview",
+  "reviewed_at": "2026-09-08T00:00:00.000Z",
+  "reviewer_kind": "ai-assisted",
+  "review_evidence": {
+    "repository": "liqiangcc/interview-lab",
+    "issue_number": 1169,
+    "comment_id": 1609001169
   },
   "checks": [
     {
@@ -47,7 +36,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -61,9 +50,8 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
-    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
-  ],
-  "evidence_sha256": "e2dcac7daad47360a3134417a9ba24c3bf32ee3279a784647b3e0ca0479c4008",
-  "request_sha256": "d0570dd82779b8da75097827bb7fa778ab2cd31fd244be53ec596cc6e379066c"
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+    "Candidate only: review_evidence.comment_id is a deterministic placeholder; no live evidence comment was created.",
+    "No body PATCH, label write, or InterviewNote materialization was performed; controller authorization is required."
+  ]
 }

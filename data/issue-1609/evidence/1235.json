@@ -8,7 +8,35 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "c2e76b5544568a1e0f806f534607f2c05d5d35e852af2f5bd8a2a46afe748d02",
   "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "rationale": "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event"
+    ],
+    "questions": 22,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": false,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": [
+      {
+        "case_key": "meituan-process",
+        "anchor": "美团",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-2",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:美团"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b55dcc000000001d02760e.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "10f5d3099bacfd7b10961596496eaa0dd3d81fae",
@@ -20,7 +48,7 @@
       "excerpt": "美团后端一面",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "美团后端一面 1.为什么会出现缓存穿透的问题？ 2.缓存和数据库的一致性 3.修改数据库后，为什么不直接update缓存，而是删除缓存 4.拷打强一致性和最终一致性 5.缓存击穿 6.你的意思是重建业务不复杂的key是没有缓存击穿的风险是吗？ 7.热点key的含义 8.雪花算法 9.雪花算法生成ID的逻辑 10.倒排索引 11.全文索引 12.和聚簇索引有什么区别 13.算法：爬楼梯 14.算法：编辑距离 15.算法：两个有序链表合并 16.简单SQL 17.MVCC 18.JVM内存模型 19.Integer a = new Integer(100); a在哪 20.Integer b = new Integer(100); a==b？ 21.integer c = 100; a==c? 22.线程池核心线程数和最大线程数的区别"
+      "semantic_excerpt": "美团后端一面\n1.为什么会出现缓存穿透的问题？\n2.缓存和数据库的一致性\n3.修改数据库后，为什么不直接update缓存，而是删除缓存\n4.拷打强一致性和最终一致性\n5.缓存击穿\n6.你的意思是重建业务不复杂的key是没有缓存击穿的风险是吗？\n7.热点key的含义\n8.雪花算法\n9.雪花算法生成ID的逻辑\n10.倒排索引\n11.全文索引\n12.和聚簇索引有什么区别\n13.算法：爬楼梯\n14.算法：编辑距离\n15.算法：两个有序链表合并\n16.简单SQL\n17.MVCC\n18.JVM内存模型\n19.Integer a = new Integer(100); a在哪\n20.Integer b = new Integer(100); a==b？\n21.integer c = 100; a==c?\n22.线程池核心线程数和最大线程数的区别"
     }
   },
   "checks": [
@@ -42,7 +70,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +84,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "71ef3aa64204171f4111c007061d12df9b1bcfdd0076de36fb1c9a320331eeac"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "c289dd9b1c897caea15b1e817ea740c6f7376df4147881fa18282e6573fb5b64"
 }

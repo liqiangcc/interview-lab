@@ -8,7 +8,26 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "beb23efff3cd0ba13b08f157a6d4f306119208fd24b92bad0676c593457a5a38",
   "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "rationale": "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event"
+    ],
+    "questions": 1,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": true,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68cd356f000000001300f281.json@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "f41820d02363eefbf6852ac80f7a02cac8400419",
@@ -20,7 +39,7 @@
       "excerpt": "\"global\": {",
       "line": 2,
       "locator": "artifact-line:2",
-      "semantic_excerpt": "一面 9.16 自我介绍 拷打实习、项目 线程池核心参数、拒绝策略 怎么设计一个线程池 cms g1 cms配合的新生代算法是什么 mysql死锁的情况 ThreadLocal mysql索引 mysql隔离级别 给个sql语句问加了什么锁 redis数据结构 redis内存淘汰 进程和线程区别 AOP和IOC 双亲委派 jvm内存区域 堆是怎么划分的 hashmap concurrenthashmap RDB和AOF synchronized和reentrantlock的区别 synchronized底层 最长不重复子串 二面9.18 疯狂拷打实习 TCP握手和挥手 TCP挥手什么情况变成三次（说了一种不满意，还有别的情况） 线程池核心参数 算法没撕出来 本来以为已经寄穿了 没想到过了两天oc了 这下也是团孝子了[吧唧R]"
+      "semantic_excerpt": "一面 9.16\n自我介绍\n拷打实习、项目\n线程池核心参数、拒绝策略\n怎么设计一个线程池\ncms g1\ncms配合的新生代算法是什么\nmysql死锁的情况\nThreadLocal\nmysql索引\nmysql隔离级别\n给个sql语句问加了什么锁\nredis数据结构\nredis内存淘汰\n进程和线程区别\nAOP和IOC\n双亲委派\njvm内存区域\n堆是怎么划分的\nhashmap concurrenthashmap\nRDB和AOF\nsynchronized和reentrantlock的区别\nsynchronized底层\n最长不重复子串\n二面9.18\n疯狂拷打实习\nTCP握手和挥手\nTCP挥手什么情况变成三次（说了一种不满意，还有别的情况）\n线程池核心参数\n算法没撕出来\n本来以为已经寄穿了 没想到过了两天oc了 这下也是团孝子了[吧唧R]"
     }
   },
   "checks": [
@@ -42,7 +61,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +75,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "2b0842afcfbe67b5ce241a428da33ee97f233a48afadaef3679df19420125cda"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "a69e9e151f2f405da00259d0c940550679d00872f4e841a3ac579de3a8a95a24"
 }

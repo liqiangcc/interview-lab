@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "cee1a4661b17b3e3eb2648dc37803ca56d0c89299c09e9ba33ba17d92cfa7b0d",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event"
+    ],
+    "questions": 13,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68e67463000000000301a1d8.json@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "bd19053b8e338e01a13f086150dd5822ccab248f",
@@ -20,7 +40,7 @@
       "excerpt": "\"global\": {",
       "line": 2,
       "locator": "artifact-line:2",
-      "semantic_excerpt": "国庆前面的，想起来记录一下，线上面 1、自我介绍 2、所在实验室是做什么方向的研究 3、项目是自己做的吗？项目实现过程中有遇到哪些问题？ 4、了解mysql的索引架构吗 5、缓存穿透和缓存击穿了解吗，区别是什么，怎么解决的 6、项目中的缓存怎么设计的？缓存的更新策略怎么设计的 7、谈谈Redis可以从哪些方面保证高可用 8、Redis的过期删除策略了解吗 9、谈谈synchronized和reentrantlock的区别 10、迪杰斯特拉算法的过程 11、了解JDK25的新特性吗 12、平时用大模型干什么？ 13、能实习多久 手撕：力扣105原题，从前序和中序遍历序列构造二叉树 反问环节 答的七七八八的，一面感觉都是八股，项目没怎么问，外卖点评太烂了，而且简历上没写指标提升多少"
+      "semantic_excerpt": "国庆前面的，想起来记录一下，线上面\n1、自我介绍\n2、所在实验室是做什么方向的研究\n3、项目是自己做的吗？项目实现过程中有遇到哪些问题？\n4、了解mysql的索引架构吗\n5、缓存穿透和缓存击穿了解吗，区别是什么，怎么解决的\n6、项目中的缓存怎么设计的？缓存的更新策略怎么设计的\n7、谈谈Redis可以从哪些方面保证高可用\n8、Redis的过期删除策略了解吗\n9、谈谈synchronized和reentrantlock的区别\n10、迪杰斯特拉算法的过程\n11、了解JDK25的新特性吗\n12、平时用大模型干什么？\n13、能实习多久\n手撕：力扣105原题，从前序和中序遍历序列构造二叉树\n反问环节\n答的七七八八的，一面感觉都是八股，项目没怎么问，外卖点评太烂了，而且简历上没写指标提升多少"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "7dc9359d266ee890a3b9ade3f4cd66055a53748db96b76c0d461c0e164de3d46"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "00fb91f3050ee831f24ca301b1bc4bc9600d8d095a38de1c766a0372d4523e4f"
 }

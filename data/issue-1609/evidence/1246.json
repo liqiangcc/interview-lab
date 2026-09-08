@@ -8,7 +8,37 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "9f35f13bd89812aea40827743cf8b0b5a48e8dd71e9f73eb60f3fecffc2628a5",
   "disposition": "blocked",
-  "rationale": "The available Source evidence does not establish a bounded interview event; retain pending.",
+  "rationale": "Exact Source provides only an interview outcome, offer, rejection, or result without a bounded candidate event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "outcome-or-offer-only",
+      "no-first-person-event",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 0,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": false,
+    "has_detailed_event": false,
+    "outcome_signal": true,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": true,
+    "multi_signal": false,
+    "case_segments": [
+      {
+        "case_key": "meituan-process",
+        "anchor": "美团",
+        "line": 1,
+        "locator": "artifact-line:1#offset:2-4",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:美团"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b6f773000000001d010e8e.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "4eb7e3e4f34e58b1f3cbd258254b80b07337c96f",
@@ -20,7 +50,7 @@
       "excerpt": "成都美团闪购部门怎么样？",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "成都美团闪购部门怎么样？ 刚拿到offer"
+      "semantic_excerpt": "成都美团闪购部门怎么样？\n刚拿到offer"
     }
   },
   "checks": [
@@ -42,7 +72,7 @@
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source provides only an interview outcome, offer, rejection, or result without a bounded candidate event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +86,11 @@
     }
   ],
   "limitations": [
-    "The available Source evidence does not establish a bounded interview event; retain pending.",
+    "Exact Source provides only an interview outcome, offer, rejection, or result without a bounded candidate event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "e302b4197cd44f8f0b554a55033a28ab454e7633fd3760cd8f805351cb3beb7d"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "3ad649996ad958fd2ddabf22d89f008bed543065721ba5258d73907f452dfd44"
 }

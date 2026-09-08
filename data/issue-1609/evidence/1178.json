@@ -8,7 +8,33 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "519cbfacd93238f6e891add1ab6139e2c2dc586aa4b8f49d89f7f6656bb8a4c2",
   "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "rationale": "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [],
+    "questions": 0,
+    "has_first_person_event": true,
+    "has_explicit_candidate_event": true,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": true,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": [
+      {
+        "case_key": "baidu-process",
+        "anchor": "百度",
+        "line": 2,
+        "locator": "artifact-line:2#offset:0-2",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:百度"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68ad29ea000000001c01160c.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "0754455b5e14f2a3d764d0ca3d3822c34504becb",
@@ -20,7 +46,7 @@
       "excerpt": "整体感受：",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "整体感受： 百度是纯简历面，简历从上到下挨个问的，除了有一个可能和深度学习关系不大没问，其余都问了[举手R]。所以写在简历上的内容，大家也一定要熟记于心，做到对答如流。这是唯一一个自己可控的事情[微笑R]。 然后一道手撕代码题，由于自己之前做过，所以一看到题目就知道怎么做，然后很快就把代码写出来了。之后面试官让我写一个样例跑一下，一跑一个准，直接秒了hhh 由于我使用的语言是 C++，但是推荐算法一般都是 Python，所以面试官又让我用 Python 对数组进行排序，使用什么排序方法都可以。其实我早就开始用 Python 刷题了，所以很快就写出来了[害羞R]，这点如果还没有留意的uu要注意咯。 整体来说感觉很好，没有什么很致命的失误[鼓掌R]，唯一需要改进的可能是有时候表达再清晰一些。 每次面试都能学到很多东西。上面整理的内容肯定都是常考的。但是有的时候不止考察你对推荐算法的理解，还有很多实际的问题。而这些问题是我自己在做的时候完全没有想过的内容。不同的模型感觉现在自己的理解还是停留在表面。希望能够打开这个算法黑箱，这样我觉得才有机会自己开发出新的算法[加油R][加油R]。"
+      "semantic_excerpt": "整体感受：\n百度是纯简历面，简历从上到下挨个问的，除了有一个可能和深度学习关系不大没问，其余都问了[举手R]。所以写在简历上的内容，大家也一定要熟记于心，做到对答如流。这是唯一一个自己可控的事情[微笑R]。\n \n然后一道手撕代码题，由于自己之前做过，所以一看到题目就知道怎么做，然后很快就把代码写出来了。之后面试官让我写一个样例跑一下，一跑一个准，直接秒了hhh\n \n由于我使用的语言是 C++，但是推荐算法一般都是 Python，所以面试官又让我用 Python 对数组进行排序，使用什么排序方法都可以。其实我早就开始用 Python 刷题了，所以很快就写出来了[害羞R]，这点如果还没有留意的uu要注意咯。\n \n整体来说感觉很好，没有什么很致命的失误[鼓掌R]，唯一需要改进的可能是有时候表达再清晰一些。\n \n每次面试都能学到很多东西。上面整理的内容肯定都是常考的。但是有的时候不止考察你对推荐算法的理解，还有很多实际的问题。而这些问题是我自己在做的时候完全没有想过的内容。不同的模型感觉现在自己的理解还是停留在表面。希望能够打开这个算法黑箱，这样我觉得才有机会自己开发出新的算法[加油R][加油R]。"
     }
   },
   "checks": [
@@ -42,7 +68,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +82,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "23f36f7d9cf1537258146268d07a80b9bec67b6aa4ec19779153f51ecd307161"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "ca8c5ea8475ff000900865a793a539b7989862ff62be2347d71a0a8d9e9ffb16"
 }

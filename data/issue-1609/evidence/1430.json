@@ -8,7 +8,27 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "27039401b6780c2f81b7133925a222d784f11d16ea0b8119fe13d235b92f4475",
   "disposition": "blocked",
-  "rationale": "The available Source evidence does not establish a bounded interview event; retain pending.",
+  "rationale": "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 0,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": false,
+    "has_detailed_event": false,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68e0e8ea0000000004014c82.json@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "f662dcc3e7e51085b3ddb1ed432f3ed0e2657e77",
@@ -42,7 +62,7 @@
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "The available Source evidence does not establish a bounded interview event; retain pending.",
+    "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "43946c176c5fb1624f5d9224c3a3eacba45846caf6767635cc221f54ef4ab340"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "7db552b4ff5409c27103a26fce0daefdb06f9c7f58ef06f009158da44255c361"
 }

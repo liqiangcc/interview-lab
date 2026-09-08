@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "0376853c630b87d3a198ffdef4851ed2c1e0e9e3bcf48f5ee1cd9d12c9a64f9b",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event"
+    ],
+    "questions": 10,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b18d94000000001c032b08.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "bd4c27c68c12470938bcff732fb21fa1d6a8e6d5",
@@ -20,7 +40,7 @@
       "excerpt": "问项目",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "问项目 1. 三方授权登录怎么做的（感谢百度问了，不然讲不清楚），Oauth2对比传统的账号密码登录有什么优势 2. AOP+Redis 实现限流怎么做的，滑动窗口和令牌痛限流是怎么样的，如果突然有一波大流量进来那种限流方法最好 3. 还问了些实习的小点，但是没深挖 4. 对k8s了解怎么样 5. redis的常见数据类型，zset是怎么样的，持久化的机制（问了些项目相关的拓展） 6. 消息队列主要解决什么问题，消息队列怎么保证消息的有序和幂等 7. http和https的区别，SSL/TLS保证安全的流程，非对称加密这么安全为什么不全使用非对称加密，加密算法了解吗 8. http2.0有哪些升级，多路复用怎么实现的，头部压缩怎么实现的 算法： 1. topk出现次数（最小堆，然后让我手撕最小堆的实现，不会换了一题） 2. 先序中序构建二叉树（最后看了半天没找到哪有问题，面试官提醒了循环条件少了等于号） 体验很好，说对了都会点头，说的不全面的也会讲解一下 已二面"
+      "semantic_excerpt": "问项目\n1. 三方授权登录怎么做的（感谢百度问了，不然讲不清楚），Oauth2对比传统的账号密码登录有什么优势\n2. AOP+Redis 实现限流怎么做的，滑动窗口和令牌痛限流是怎么样的，如果突然有一波大流量进来那种限流方法最好\n3. 还问了些实习的小点，但是没深挖\n4. 对k8s了解怎么样\n5. redis的常见数据类型，zset是怎么样的，持久化的机制（问了些项目相关的拓展）\n6. 消息队列主要解决什么问题，消息队列怎么保证消息的有序和幂等\n7. http和https的区别，SSL/TLS保证安全的流程，非对称加密这么安全为什么不全使用非对称加密，加密算法了解吗\n8. http2.0有哪些升级，多路复用怎么实现的，头部压缩怎么实现的\n算法：\n1. topk出现次数（最小堆，然后让我手撕最小堆的实现，不会换了一题）\n2. 先序中序构建二叉树（最后看了半天没找到哪有问题，面试官提醒了循环条件少了等于号）\n体验很好，说对了都会点头，说的不全面的也会讲解一下\n已二面"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "9b9d2a977d094dd49a22332ce904889a09441f50294e0b9eef064d64a51acae8"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "3fd2ed76450c3701eb701463640ef620ac5853890d3e8bccf1bf9af3e37ab5e0"
 }

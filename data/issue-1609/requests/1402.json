@@ -1,32 +1,21 @@
 {
-  "schema_version": "issue-1609-boundary-review-request.v1",
-  "request_id": "issue-1609-boundary-1402",
+  "schema_version": "source-note-boundary-review-transition.v1",
+  "transition_id": "issue-1609-boundary-1402-review-1",
   "repository": "liqiangcc/interview-lab",
-  "parent_issue": 1605,
   "issue_number": 1402,
-  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1402",
   "source_note_id": "xhs-note:68d6bdb3000000000e030e95",
   "expected_body_sha256": "818ce2cabf8d667e5c15adc787ae757199a2bac676b360f35de7feb6501e3f31",
   "expected_boundary_status": "pending",
   "expected_source_revision_id": "xhs-note:68d6bdb3000000000e030e95:snapshot-95b77bb26104",
-  "expected_source_repository": "liqiangcc/xhs",
+  "expected_manifest_sha256": null,
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
-  "evidence_file": "evidence/1402.json",
-  "source_evidence": {
-    "ref": "liqiangcc/xhs:note_json/68d6bdb3000000000e030e95.json@95b77bb261048059846273688e4b90a2e108b437",
-    "git_blob_sha": "eba4e2e70f8bd1c6c57012268ff238e9da416e80",
-    "kind": "json",
-    "provenance": "source_projection",
-    "byte_size": 22858,
-    "content_sha256": "8fb3f307621f6e8ae08e8b478e4e0c5c9117f23fb6722028f495f06d3d7bb233",
-    "excerpt": {
-      "excerpt": "\"global\": {",
-      "line": 2,
-      "locator": "artifact-line:2",
-      "semantic_excerpt": "京东 1 面 面试被约在周五晚上，从时间段就隐约觉得大概率是 KPI 面试。果不其然，面试官还迟到了一会儿，上来三分戏谑两分冷哼，把项目草草问完，眼神里写满了“这啥玩意儿”。接着又随便扫了下简历，象征性地问了几句，然后我回答问题也没啥回应。 八股： 1. GRPO DPO 2. KL 散度维度 3. GRPO 变体 手撕： 全程投屏写的，手忙脚乱关闭vscode 里的Copilot，面试官一脸不耐烦说开个 txt就行，然后抽象的京东 ME会议投屏还有一堆权限问题 1. 写题，BFS 走路，样例都没有，面试官随口胡诌的一个 2. GRPO 手撕 全程没有反问环节，看样子面试官就想赶紧下班。真心话，如果不想面，其实完全可以不约，何必出来折腾苦命的秋招人呢。"
-    }
+  "decision": "single-interview",
+  "reviewed_at": "2026-09-08T00:00:00.000Z",
+  "reviewer_kind": "ai-assisted",
+  "review_evidence": {
+    "repository": "liqiangcc/interview-lab",
+    "issue_number": 1402,
+    "comment_id": 1609001402
   },
   "checks": [
     {
@@ -47,7 +36,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -61,9 +50,8 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
-    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
-  ],
-  "evidence_sha256": "db29ffc11882d829722b08d7f89155310a6dbfdcc8228b3b12bd9fa0274a5df8",
-  "request_sha256": "c5923d4cf0c8a5d5fa93bb6e501ba181fe8772cd9f7c4f0fed1f700a1917d066"
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+    "Candidate only: review_evidence.comment_id is a deterministic placeholder; no live evidence comment was created.",
+    "No body PATCH, label write, or InterviewNote materialization was performed; controller authorization is required."
+  ]
 }

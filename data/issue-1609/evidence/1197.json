@@ -8,7 +8,26 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "48f2603ffba8f86318fb96b7cf9517f316e612b3949a92092727f4f8eab16817",
   "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "rationale": "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event"
+    ],
+    "questions": 12,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b0046b000000001c032001.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "dd3c0d0047c92c4305b9c27e2a04ac560d0e2aaa",
@@ -20,7 +39,7 @@
       "excerpt": "小鹏后端一面#面经[话题]# #后端面试[话题]##发个面经攒人品[话题]#",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "小鹏后端一面 全程40min，无手撕，开放性比较大 1.我们知道http协议是无状态的，你是怎么理解这种状态的？我们要解决这种无状态的问题，有什么解决办法？ 2.操作系统里面进程的状态有哪些？ 3.进程间主要的通讯手段有哪些？ 4.在Java面向对象的程序开发中，谈一谈对类的实例化的理解？ 5. Java是一种高级语言，那么比如一段最简单的代码helloworld，它的底层，操作系统去执行它的整个流程？ 6.关于设计模式的 7.计算机领域数字0和1的用途有很多，可以代表不同的含义，你能想到哪些？ 8.库存扣减与数据库缓存一致性问题 9.有一个手机app的应用，比如在一个简单的页面，用户名和密码点击之后没有反应，你该怎么排查？ 10.场景题：比如有一个视频上传网站，上传一个大视频，涉及到编码解码，你来设计一个高可用高性能，用户体验良好的方案 11.介绍一下简历的项目＋提问 12.闲聊+反问"
+      "semantic_excerpt": "小鹏后端一面 \n全程40min，无手撕，开放性比较大\n1.我们知道http协议是无状态的，你是怎么理解这种状态的？我们要解决这种无状态的问题，有什么解决办法？\n2.操作系统里面进程的状态有哪些？\n3.进程间主要的通讯手段有哪些？\n4.在Java面向对象的程序开发中，谈一谈对类的实例化的理解？\n5. Java是一种高级语言，那么比如一段最简单的代码helloworld，它的底层，操作系统去执行它的整个流程？\n6.关于设计模式的\n7.计算机领域数字0和1的用途有很多，可以代表不同的含义，你能想到哪些？\n8.库存扣减与数据库缓存一致性问题\n9.有一个手机app的应用，比如在一个简单的页面，用户名和密码点击之后没有反应，你该怎么排查？\n10.场景题：比如有一个视频上传网站，上传一个大视频，涉及到编码解码，你来设计一个高可用高性能，用户体验良好的方案\n11.介绍一下简历的项目＋提问\n12.闲聊+反问"
     }
   },
   "checks": [
@@ -42,7 +61,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +75,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "f5eb76542b7f360b276fe512e129e24c3f93fec4b673c35c19632b31c0949b9a"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "a7bf1a2011013de43665a14d2b2c1d302d50bd58d0ee24e2989b2caa8beee917"
 }

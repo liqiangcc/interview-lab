@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "12ce629ce8ce12b8cb74dcd5169055586af9efc3fba69570fb61250db1992b53",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event"
+    ],
+    "questions": 27,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68bd5fff000000001d023680.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "57b07bf64cc2488a15bb4bd63e45d0a90e242723",
@@ -20,7 +40,7 @@
       "excerpt": "1.项目中设计过那些表，设计思路是什么?",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "1.项目中设计过那些表，设计思路是什么? 2.了解过mysql索引吗? 3.讲一下b+树? 4.mysql中的数据类型底层怎么存的?（当时没理解，然后面试官提示比如INT TIME，但是答的感觉一般) 5.mysql基础架构（说了连接器 分析器优化器) 6.mysql的事物隔离级别有哪些? 7.mycc是什么，原理是什么? 8.悲观锁和乐观锁讲一下 9.数据库范式有哪些?（没答上来，只记得说有五个） 10.HTTP协议和TCP协议的区别是什么? 11.TCP和HTTP分别作用于网络层那几层? 12.七层网络协议有哪些? 13.UDP协议是什么? 14.常见的linux命令有哪些? 15.查看CPU负载内存使用率这些比如用哪些命令?（只答上来了top) 16.用户态和内核态有了解吗? 17.进程和线程的区别 18.进程间通信有哪些? 19.redis和kafka有了解吗?（根本没咋了解过kafka,Redis也只是看过没用过，硬着头皮开始吟唱） 20.kafka基础组件有什么?（答确实没用过kafka) 21.redis的基础数据类型有哪些? 22.redis的列表底层数据结构是什么? 23.redis的哈希类型的结构是什么? 24.redis的删除策略有哪些? 25.redis的分布式锁是什么? 26.redis的持久化怎么做? 27.手撕：字符串中的最长不重复子串"
+      "semantic_excerpt": "1.项目中设计过那些表，设计思路是什么?\n2.了解过mysql索引吗?\n3.讲一下b+树?\n4.mysql中的数据类型底层怎么存的?（当时没理解，然后面试官提示比如INT TIME，但是答的感觉一般)\n5.mysql基础架构（说了连接器 分析器优化器)\n6.mysql的事物隔离级别有哪些?\n7.mycc是什么，原理是什么?\n8.悲观锁和乐观锁讲一下\n9.数据库范式有哪些?（没答上来，只记得说有五个）\n10.HTTP协议和TCP协议的区别是什么?\n11.TCP和HTTP分别作用于网络层那几层?\n12.七层网络协议有哪些?\n13.UDP协议是什么?\n14.常见的linux命令有哪些?\n15.查看CPU负载内存使用率这些比如用哪些命令?（只答上来了top)\n16.用户态和内核态有了解吗?\n17.进程和线程的区别\n18.进程间通信有哪些?\n19.redis和kafka有了解吗?（根本没咋了解过kafka,Redis也只是看过没用过，硬着头皮开始吟唱）\n20.kafka基础组件有什么?（答确实没用过kafka)\n21.redis的基础数据类型有哪些?\n22.redis的列表底层数据结构是什么?\n23.redis的哈希类型的结构是什么?\n24.redis的删除策略有哪些?\n25.redis的分布式锁是什么?\n26.redis的持久化怎么做?\n27.手撕：字符串中的最长不重复子串"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "44508ee774032922e9f0183edccef3e8e0866bd4b85be1ff65cb65f354c68bf5"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "7b07dda72756af416d9b2042221596bd52a6f5b0d7f406533e58288bb6707a3b"
 }

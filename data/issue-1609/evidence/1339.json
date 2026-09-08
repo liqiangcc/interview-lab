@@ -7,8 +7,37 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "3d0afb2ec5472a646b4a5021295ab167deab674aa47c200401fba5bf8c82e282",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event"
+    ],
+    "questions": 11,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": [
+      {
+        "case_key": "bytedance-process",
+        "anchor": "字节",
+        "line": 1,
+        "locator": "artifact-line:1#offset:4-6",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:字节"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68ca59e000000000110141e1.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "6b3a6394ea4638eb226f0679b40c58873448e7a5",
@@ -20,7 +49,7 @@
       "excerpt": "9.17字节—广告",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "9.17字节—广告 大数据开发面经 自我介绍 实习简单介绍 八股： 1.java类特点 2.常见数据结构及特点 3.hdfs写流程 4.mapreduce和spark的shuffle过程 5.如何处理数据倾斜 6.tcp与udp区别 7.olap和clickhouse是否了解 8.hdfs中的namenode和datanode作用 9.secondary namenode作用 10.宽窄依赖是啥 介绍之前的一个项目以及难点 是否了解实时数据处理方式 sql题目：行转列和分数前五的学生 row_number和rank，dense_rank区别 算法题目：求给定数组，选三个数作为三角形三条边，求三角形最大周长 总体八股考的很基础，面试半个小时草率结束[石化R]，反问环节大脑一片空白[汗颜R]"
+      "semantic_excerpt": "9.17字节—广告\n大数据开发面经\n自我介绍\n实习简单介绍\n八股：\n1.java类特点\n2.常见数据结构及特点\n3.hdfs写流程\n4.mapreduce和spark的shuffle过程\n5.如何处理数据倾斜\n6.tcp与udp区别\n7.olap和clickhouse是否了解\n8.hdfs中的namenode和datanode作用\n9.secondary namenode作用\n10.宽窄依赖是啥\n介绍之前的一个项目以及难点\n是否了解实时数据处理方式\nsql题目：行转列和分数前五的学生\nrow_number和rank，dense_rank区别\n算法题目：求给定数组，选三个数作为三角形三条边，求三角形最大周长\n总体八股考的很基础，面试半个小时草率结束[石化R]，反问环节大脑一片空白[汗颜R]"
     }
   },
   "checks": [
@@ -41,8 +70,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +85,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "d16d4d0a9ba8c06eaa8815e7494e229b438b3ca9522e4ff221a52a470027cf37"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "ab78ba41f2e65de7fe3c3dd09a90c193b241f7e3d7bb5cffe582284289ff4dad"
 }

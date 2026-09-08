@@ -7,8 +7,27 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "3a09cd6dc45e20430bba5d1216dfcbd7ec91c1783cef88e415d604db98495c2a",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only"
+    ],
+    "questions": 17,
+    "has_first_person_event": true,
+    "has_explicit_candidate_event": true,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": true,
+    "resource_signal": true,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68c56207000000001b033600.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "c651a87e0757f61e838b9cb1ce39e90e1aa34f68",
@@ -20,7 +39,7 @@
       "excerpt": "一、部门介绍",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "一、部门介绍 微信读书产品部（包括微信读书和微信输入法），部门负责微信输入法。主要做离线和在线的推荐（文字、表情、书籍和音乐）。 二、自我介绍 学历背景、获得荣誉、专业基础、项目实践。 三、面试 1.研一吗？能实习多久？ 2.语言是C++、go和python觉得有问题吗？ 3.说下java的垃圾回收？ 4.介绍下tcp和udp的区别？ 5.说下tcp的拥塞控制算法？（丢包的时候窗口就要降为1吗） 6.详细介绍项目？是应用过的还是课程设计一类的？ 7.为什么不是用户领取一次就写一次数据库？ 8.分发的位置什么意思？分发的机器只有一台吗？多个节点怎么保证处理的用户没有交集？如果节点挂了很久都没有发放下去呢（定期扫描）？优雅的方法？MQ的消息存一个用户的领券任务？ 9.MQ为什么能解耦？如果不解耦有什么问题？节点宕机了消息不也丢了吗？试过执行5分钟没有ack，MQ是什么状态？用MQ传的意义在哪，直接执行就好了？不太能理解这种做法，至少这些分发任务，反正不会有太多吧？ 10.编程，第k大的数？讨论一下，可以用优先队列实现，复杂度是多少？可以采用快速排序的思想，用快排方式写？解释，p是下标，k是第k大？ 四、反问 1.给我一些建议？挺好的，多实习，多咱经验就好了。 2.一般多久出结果呢（很快，一两天吧）。 五、总结 详细问项目，面试官可能不太理解我的做法，也有很多思考的地方，讨论了很久。"
+      "semantic_excerpt": "一、部门介绍\n微信读书产品部（包括微信读书和微信输入法），部门负责微信输入法。主要做离线和在线的推荐（文字、表情、书籍和音乐）。\n二、自我介绍\n学历背景、获得荣誉、专业基础、项目实践。\n三、面试\n1.研一吗？能实习多久？\n2.语言是C++、go和python觉得有问题吗？\n3.说下java的垃圾回收？\n4.介绍下tcp和udp的区别？\n5.说下tcp的拥塞控制算法？（丢包的时候窗口就要降为1吗）\n6.详细介绍项目？是应用过的还是课程设计一类的？\n7.为什么不是用户领取一次就写一次数据库？\n8.分发的位置什么意思？分发的机器只有一台吗？多个节点怎么保证处理的用户没有交集？如果节点挂了很久都没有发放下去呢（定期扫描）？优雅的方法？MQ的消息存一个用户的领券任务？\n9.MQ为什么能解耦？如果不解耦有什么问题？节点宕机了消息不也丢了吗？试过执行5分钟没有ack，MQ是什么状态？用MQ传的意义在哪，直接执行就好了？不太能理解这种做法，至少这些分发任务，反正不会有太多吧？\n10.编程，第k大的数？讨论一下，可以用优先队列实现，复杂度是多少？可以采用快速排序的思想，用快排方式写？解释，p是下标，k是第k大？\n四、反问\n1.给我一些建议？挺好的，多实习，多咱经验就好了。\n2.一般多久出结果呢（很快，一两天吧）。\n五、总结\n详细问项目，面试官可能不太理解我的做法，也有很多思考的地方，讨论了很久。"
     }
   },
   "checks": [
@@ -41,8 +60,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +75,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "301cedef2a2ef3771493f77224187552e6d57ee691a7ae050ed69d9e3408c71d"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "9c0c2fe5e93f39579571c59334960e0db47b02cd4ec3bf3825853512ac58cafc"
 }

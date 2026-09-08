@@ -8,7 +8,27 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "c126a45788d2633297a9055c22dff8cd0c53692f6ca7c85ac1955f9f74821834",
   "disposition": "blocked",
-  "rationale": "The available Source evidence does not establish a bounded interview event; retain pending.",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event"
+    ],
+    "questions": 35,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": false,
+    "has_detailed_event": false,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68d17a53000000001301d75d.json@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "8e5def6b79a1837a2545b089109537943717791f",
@@ -20,7 +40,7 @@
       "excerpt": "\"global\": {",
       "line": 2,
       "locator": "artifact-line:2",
-      "semantic_excerpt": "菜鸟-Java后端开发-电话面面经 纯八股盛宴 1. 讲讲你实习过程中遇到最大的困难是什么，你是如何解决的 2. JVM的垃圾回收算法有哪些 3. java启动时可以设置哪些JVM参数 4. 什么时候会发生fullGC 5. java的HashMap是如何实现的 6. jdk1.8和jdk1.7有什么改进 7. 你实习jdk用的什么版本 8. jdk11有什么新特性 9. 你知道哪些java中是线程安全的类吗？ 10. 线程池有哪些参数？ 11. redis为什么那么快 12. 讲一讲redis的I/O多路复用是什么 13. 如何实现redis分布式锁 14. 如何实现多个redis命令的原子性 15. 更新一个key的value是原子的吗？ 16. mysql索引采用的是什么数据结构 17. 为什么用B+树，有什么优势 18. 什么时候会用用到覆盖索引 19. 什么时候联合索引会失效 20. 你会如何设计索引 21. 为什么不要用业务值作为主键ID，会有什么问题 22. 听说过索引下推吗？原理是什么 23. 乐观锁和悲观锁的区别 24. 如何解决乐观锁的ABA问题 25. 间歇锁听说过吗 26. 如何排查一条慢sql是什么问题 27. mysql有哪些事务，innodb默认事务是什么 28. 看过Spring的源码吗 29. mybatis的sql注入问题是什么 30. 你用过哪些消息队列或者知道哪些 31. 知道rocketMQ吗 32. 听说过rocketMQ中的消息事务吗 33. 你实习的项目的用户有多少，qps一般是多少 34. 大模型的MCP听说过吗 35. 线上遇到过问题吗？如果CPU飙到100%了，如何排查故障"
+      "semantic_excerpt": "菜鸟-Java后端开发-电话面面经\n纯八股盛宴\n1. 讲讲你实习过程中遇到最大的困难是什么，你是如何解决的\n2. JVM的垃圾回收算法有哪些\n3. java启动时可以设置哪些JVM参数\n4. 什么时候会发生fullGC\n5. java的HashMap是如何实现的\n6. jdk1.8和jdk1.7有什么改进\n7. 你实习jdk用的什么版本\n8. jdk11有什么新特性\n9. 你知道哪些java中是线程安全的类吗？\n10. 线程池有哪些参数？\n11. redis为什么那么快\n12. 讲一讲redis的I/O多路复用是什么\n13. 如何实现redis分布式锁\n14. 如何实现多个redis命令的原子性\n15. 更新一个key的value是原子的吗？\n16. mysql索引采用的是什么数据结构\n17. 为什么用B+树，有什么优势\n18. 什么时候会用用到覆盖索引\n19. 什么时候联合索引会失效\n20. 你会如何设计索引\n21. 为什么不要用业务值作为主键ID，会有什么问题\n22. 听说过索引下推吗？原理是什么\n23. 乐观锁和悲观锁的区别\n24. 如何解决乐观锁的ABA问题\n25. 间歇锁听说过吗\n26. 如何排查一条慢sql是什么问题\n27. mysql有哪些事务，innodb默认事务是什么\n28. 看过Spring的源码吗\n29. mybatis的sql注入问题是什么\n30. 你用过哪些消息队列或者知道哪些\n31. 知道rocketMQ吗\n32. 听说过rocketMQ中的消息事务吗\n33. 你实习的项目的用户有多少，qps一般是多少\n34. 大模型的MCP听说过吗\n35. 线上遇到过问题吗？如果CPU飙到100%了，如何排查故障"
     }
   },
   "checks": [
@@ -42,7 +62,7 @@
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "The available Source evidence does not establish a bounded interview event; retain pending.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "7305d684c90bba59328b8ec22a6f686a0a5e35385904b30c5f8985e8561aa09d"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "96ccdea8d893aa8fd2759f4a534d34819dc81f02ad4086622141e17ad360046f"
 }

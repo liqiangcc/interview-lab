@@ -7,8 +7,27 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "c3a980b2cf9f0944a81fe34f68ef96916ac40604c3ed6189e2845852f6c9f8e5",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source indicates multiple independent processes, but does not provide separately reviewable bounded event evidence for every process; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "multi-company-or-process"
+    ],
+    "questions": 14,
+    "has_first_person_event": true,
+    "has_explicit_candidate_event": true,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": true,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": true,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68e7a288000000000301b7aa.json@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "b904952826f07d44b6c32077fff3b389e54fb6db",
@@ -20,7 +39,7 @@
       "excerpt": "\"desc\": \"面试官迟到七八分钟，实习和项目经历一点没问，八股拷打十几分钟，让我写算法题的时候他人就离开了，半小时后才回来，面完十几分钟官网就显示共享中。\\n1、ThreadLocal 的实现原理？\\n2、ThreadLocalMap中的key和value是什么类型的引用？\\n3、为什么key 能被 GC 自动回收，但 value不能被 GC 自动回收？\\n4、value主要是什么？\\n5、垃圾回收器有哪些？\\n6、可达性分析法的GC Roost有哪些？\\n7、为什么选这些对象作为GC Root?\\n8、平时使用MySQL是怎么用的？（其实没太get到这个问题的点）\\n9、MySQL的存储引擎？\\n10、为什么用InnoDB做默认存储引擎？\\n11、事务隔离级别有哪些？\\n12、update b = b + 1 where b = 5 在可重复读隔离级别下，5个线程并发执行，最后b的值是多少？\\n13、OSI网络模型？\\n14、数据链路层有哪些协议？（我直接问号脸，不是哥们，面了这么多家第一次问数据链路层的协议的， 面完翻了翻小林codiing和面渣逆袭都没提，之前一直感觉不是重点来着，这玩意本科学计网的时候还能看看，现在真是想不起来了，还是太菜了）\\n算法题：二叉树的最近公共祖先，写的时候我看到上面导入了TreeNode类的，结果编译不通过，问面试官没人回应，最后50分钟左右面试官回来了，说要把二叉树的定义作为静态内部类写到solution里面。\\n#后端开发[话题]# #秋招面试[话题]# #面经[话题]#\",",
       "line": 526,
       "locator": "artifact-line:526",
-      "semantic_excerpt": "面试官迟到七八分钟，实习和项目经历一点没问，八股拷打十几分钟，让我写算法题的时候他人就离开了，半小时后才回来，面完十几分钟官网就显示共享中。 1、ThreadLocal 的实现原理？ 2、ThreadLocalMap中的key和value是什么类型的引用？ 3、为什么key 能被 GC 自动回收，但 value不能被 GC 自动回收？ 4、value主要是什么？ 5、垃圾回收器有哪些？ 6、可达性分析法的GC Roost有哪些？ 7、为什么选这些对象作为GC Root? 8、平时使用MySQL是怎么用的？（其实没太get到这个问题的点） 9、MySQL的存储引擎？ 10、为什么用InnoDB做默认存储引擎？ 11、事务隔离级别有哪些？ 12、update b = b + 1 where b = 5 在可重复读隔离级别下，5个线程并发执行，最后b的值是多少？ 13、OSI网络模型？ 14、数据链路层有哪些协议？（我直接问号脸，不是哥们，面了这么多家第一次问数据链路层的协议的， 面完翻了翻小林codiing和面渣逆袭都没提，之前一直感觉不是重点来着，这玩意本科学计网的时候还能看看，现在真是想不起来了，还是太菜了） 算法题：二叉树的最近公共祖先，写的时候我看到上面导入了TreeNode类的，结果编译不通过，问面试官没人回应，最后50分钟左右面试官回来了，说要把二叉树的定义作为静态内部类写到solution里面。"
+      "semantic_excerpt": "面试官迟到七八分钟，实习和项目经历一点没问，八股拷打十几分钟，让我写算法题的时候他人就离开了，半小时后才回来，面完十几分钟官网就显示共享中。\n1、ThreadLocal 的实现原理？\n2、ThreadLocalMap中的key和value是什么类型的引用？\n3、为什么key 能被 GC 自动回收，但 value不能被 GC 自动回收？\n4、value主要是什么？\n5、垃圾回收器有哪些？\n6、可达性分析法的GC Roost有哪些？\n7、为什么选这些对象作为GC Root?\n8、平时使用MySQL是怎么用的？（其实没太get到这个问题的点）\n9、MySQL的存储引擎？\n10、为什么用InnoDB做默认存储引擎？\n11、事务隔离级别有哪些？\n12、update b = b + 1 where b = 5 在可重复读隔离级别下，5个线程并发执行，最后b的值是多少？\n13、OSI网络模型？\n14、数据链路层有哪些协议？（我直接问号脸，不是哥们，面了这么多家第一次问数据链路层的协议的， 面完翻了翻小林codiing和面渣逆袭都没提，之前一直感觉不是重点来着，这玩意本科学计网的时候还能看看，现在真是想不起来了，还是太菜了）\n算法题：二叉树的最近公共祖先，写的时候我看到上面导入了TreeNode类的，结果编译不通过，问面试官没人回应，最后50分钟左右面试官回来了，说要把二叉树的定义作为静态内部类写到solution里面。"
     }
   },
   "checks": [
@@ -41,8 +60,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source indicates multiple independent processes, but does not provide separately reviewable bounded event evidence for every process; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +75,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source indicates multiple independent processes, but does not provide separately reviewable bounded event evidence for every process; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "71868cb938eb4631909b7a19d60b168d271ebae565d36dfd030dfeb322e0e69b"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "b9053161f957e58e7e3d3a42639622e20751132044e204a2f5f16d1ef247d0b3"
 }

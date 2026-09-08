@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "042f06bbd8a9ccf2c8607d3243264e67ec29ec3e3d2449771ebf862421682598",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event"
+    ],
+    "questions": 23,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68ba5eee000000001d00f0eb.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "b355c7e15733e976468429c2c10befad4a38ec3e",
@@ -20,7 +40,7 @@
       "excerpt": "凉，虽说全问的八股，小登已汗流浃背[再见R][再见R]",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "凉，虽说全问的八股，小登已汗流浃背[再见R][再见R] 最后还出了个hard算法题，初面心态就被团子搞崩了[捂脸R][捂脸R] 1. 你对ThreadLocal的理解是什么，以及解决了什么问题 2. 除了强引用变成弱引用之外，还有什么方法能避免内存泄漏 3. ThreadLocal在项目中具体是怎么使用的 4. 在多线程下用ThreadLocal来解决每个线程都有一个独立副本的问题，还有什么方法也是使用相同的get，set方法来解决相同的场景吗（这里蒙圈了好久，面试官这里应该想引出redis分布式锁） 5. 你之前用锁解决了一个什么场景问题，怎么使用的 6. 你知道使用的什么命令吗实现redis分布式锁，怎么去获取锁，怎么去释放锁 7. setnx命令有哪些参数 8. setnx命令和set命令的区别是什么 9. 除了redis可以实现分布式锁之外，你还了解其他的中间件可以加分布式锁吗 10. Java的内存模型有了解吗（由于JMM不了解，以下几问连续蒙圈） 11. 你有了解JMM主内存和工作内存吗 12. volatile解决了一个什么问题 13. volatile可见性底层的原理 14. volatile你知道哪些应用场景吗 15. 写一下单例模式 16. 平时你有看过Java的JUC包下的类吗 17. 有了解CountDownLatch和CylicBarrier这些类吗 18. CompeletableFuture任务编排的底层实现原理 19. redis集群了解吗 20. redis集群是怎么保证高可用的 21. 分片集群redis是怎么故障检测的 22. 在集群情况下，一个请求刚好打到了一个故障的redis，这时候怎么保证请求能拿到正确的数据 23. 令牌桶限流算法是一个什么思路具体怎么实现 算法题：最长有效括号（hard）"
+      "semantic_excerpt": "凉，虽说全问的八股，小登已汗流浃背[再见R][再见R]\n最后还出了个hard算法题，初面心态就被团子搞崩了[捂脸R][捂脸R]\n \n1. 你对ThreadLocal的理解是什么，以及解决了什么问题\n2. 除了强引用变成弱引用之外，还有什么方法能避免内存泄漏\n3. ThreadLocal在项目中具体是怎么使用的\n4. 在多线程下用ThreadLocal来解决每个线程都有一个独立副本的问题，还有什么方法也是使用相同的get，set方法来解决相同的场景吗（这里蒙圈了好久，面试官这里应该想引出redis分布式锁）\n5. 你之前用锁解决了一个什么场景问题，怎么使用的\n6. 你知道使用的什么命令吗实现redis分布式锁，怎么去获取锁，怎么去释放锁\n7. setnx命令有哪些参数\n8. setnx命令和set命令的区别是什么\n9. 除了redis可以实现分布式锁之外，你还了解其他的中间件可以加分布式锁吗\n10. Java的内存模型有了解吗（由于JMM不了解，以下几问连续蒙圈）\n11. 你有了解JMM主内存和工作内存吗\n12. volatile解决了一个什么问题\n13. volatile可见性底层的原理\n14. volatile你知道哪些应用场景吗\n15. 写一下单例模式\n16. 平时你有看过Java的JUC包下的类吗\n17. 有了解CountDownLatch和CylicBarrier这些类吗\n18. CompeletableFuture任务编排的底层实现原理\n19. redis集群了解吗\n20. redis集群是怎么保证高可用的\n21. 分片集群redis是怎么故障检测的\n22. 在集群情况下，一个请求刚好打到了一个故障的redis，这时候怎么保证请求能拿到正确的数据\n23. 令牌桶限流算法是一个什么思路具体怎么实现\n算法题：最长有效括号（hard）"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "edbffc54e8cd0ae9331bdddd00cb104a79ca8d445a6a6737785ad290681a3aee"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "c3d163e6f7a79511c4449434528be065da3e75eeac7b0ce803f2f2f545c515c5"
 }

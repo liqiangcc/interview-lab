@@ -7,8 +7,79 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "dfd12c0dae6cf60375d66616db9ac3cd2e9f48b666d675abd02b8e10f716a5a9",
-  "disposition": "blocked",
-  "rationale": "The available Source evidence does not establish a bounded interview event; retain pending.",
+  "disposition": "multi-interview",
+  "rationale": "Exact Source separately identifies multiple independent interview processes, each with its own source anchor and bounded detail.",
+  "interview_cases": [
+    {
+      "case_key": "dewuu-process",
+      "anchor": "得物",
+      "line": 4,
+      "locator": "artifact-line:539#offset:60-62",
+      "local_detail": true,
+      "semantic_locator": "semantic-anchor:得物"
+    },
+    {
+      "case_key": "ke-house-process",
+      "anchor": "贝壳找房",
+      "line": 11,
+      "locator": "artifact-line:539#offset:116-120",
+      "local_detail": true,
+      "semantic_locator": "semantic-anchor:贝壳找房"
+    },
+    {
+      "case_key": "oppo-process",
+      "anchor": "OPPO",
+      "line": 1,
+      "locator": "artifact-line:539#offset:29-33",
+      "local_detail": true,
+      "semantic_locator": "semantic-anchor:OPPO"
+    }
+  ],
+  "ambiguity_audit": {
+    "flags": [
+      "multi-company-or-process",
+      "no-first-person-event",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 0,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": false,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": [
+      {
+        "case_key": "dewuu-process",
+        "anchor": "得物",
+        "line": 4,
+        "locator": "artifact-line:539#offset:60-62",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:得物"
+      },
+      {
+        "case_key": "ke-house-process",
+        "anchor": "贝壳找房",
+        "line": 11,
+        "locator": "artifact-line:539#offset:116-120",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:贝壳找房"
+      },
+      {
+        "case_key": "oppo-process",
+        "anchor": "OPPO",
+        "line": 1,
+        "locator": "artifact-line:539#offset:29-33",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:OPPO"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68e8c504000000000300e7f2.json@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "9139490cf4f0d96e80592c664282e46bdf9872d9",
@@ -20,7 +91,7 @@
       "excerpt": "\"global\": {",
       "line": 2,
       "locator": "artifact-line:2",
-      "semantic_excerpt": "oppo 模型加速 对简历的提问 对业务的介绍 得物 聊项目 哈希分桶 问多路召回 fass搜索 问模型调优和尝试 代码题：合并有序链表 贝壳找房 场景题：给用户和一块新地，构建机器学习框架去预测用户是否有兴趣 回归任务，逻辑回归介绍 介绍一个树模型 讲一下序列建模"
+      "semantic_excerpt": "oppo 模型加速\n对简历的提问\n对业务的介绍\n \n得物\n聊项目\n哈希分桶\n问多路召回\nfass搜索\n问模型调优和尝试\n代码题：合并有序链表\n \n贝壳找房\n场景题：给用户和一块新地，构建机器学习框架去预测用户是否有兴趣\n回归任务，逻辑回归介绍\n介绍一个树模型\n讲一下序列建模"
     }
   },
   "checks": [
@@ -41,8 +112,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source separately identifies multiple independent interview processes, each with its own source anchor and bounded detail."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +127,11 @@
     }
   ],
   "limitations": [
-    "The available Source evidence does not establish a bounded interview event; retain pending.",
+    "Exact Source separately identifies multiple independent interview processes, each with its own source anchor and bounded detail.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "709f2fd062048249a6ec599bcfee796440cdbfe1cf5a99ece7dafb7788d505cf"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "12f8a6b6d4fc91fdd9f7e76eb45fd9f4d91cca699003770944065e5b5958de75"
 }

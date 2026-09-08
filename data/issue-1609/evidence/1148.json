@@ -7,8 +7,27 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "61a0f89e2cb8d3dd5284a64e9e5cdb1302e528fc671f1499ae9b623bfe42d1d0",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only"
+    ],
+    "questions": 16,
+    "has_first_person_event": true,
+    "has_explicit_candidate_event": true,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68a6da14000000001d028405.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "9a8b411227251bdb89c740b6d697761a16681fe0",
@@ -20,7 +39,7 @@
       "excerpt": "0.ai-coding(两个小时时间 面试前一个半小时发给我 面试前一个小时截止进入 无敌）",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "0.ai-coding(两个小时时间 面试前一个半小时发给我 面试前一个小时截止进入 无敌） 1.挑一个项目介绍一下 2.mcp是什么 有什么作用 在哪里作用 3.hashmap线程安全否 为什么 4.stringbuffer和stringbuilder 5.tcp/udp 特点 应用场景 6.rand5()实现rand7() （讲了大体思路没讲具体思路 估计死了) 6.做过全栈吗 7.mysql索引介绍一下 为什么是b+树 每个节点存什么 聚簇索引一张表里有几个（把我问死了） 8.一台手机 1000个额度 晚上八点开抢 设计秒杀系统 9.看我的ai-coding过程（p2是ai- coding平台的logo 有点糊凑合看） 10.知道在ai-coding里怎么设置mcp吗 11.一个好的prompt都要有什么内容 12.agent和ask是什么区别 13.手撕 特定区间反转链表 给反转区间头和尾索引 链表头 反转特定区间的节点 14.反问 是不是都是在推动全栈（是） 是不是都是在推动aicoding（是） 建议意见"
+      "semantic_excerpt": "0.ai-coding(两个小时时间 面试前一个半小时发给我 面试前一个小时截止进入 无敌）\n1.挑一个项目介绍一下\n2.mcp是什么 有什么作用 在哪里作用\n3.hashmap线程安全否 为什么\n4.stringbuffer和stringbuilder\n5.tcp/udp 特点 应用场景\n6.rand5()实现rand7() （讲了大体思路没讲具体思路 估计死了)\n6.做过全栈吗\n7.mysql索引介绍一下 为什么是b+树 每个节点存什么 聚簇索引一张表里有几个（把我问死了）\n8.一台手机 1000个额度 晚上八点开抢 设计秒杀系统\n9.看我的ai-coding过程（p2是ai- coding平台的logo 有点糊凑合看）\n10.知道在ai-coding里怎么设置mcp吗\n11.一个好的prompt都要有什么内容\n12.agent和ask是什么区别\n13.手撕 特定区间反转链表 给反转区间头和尾索引 链表头 反转特定区间的节点\n14.反问 是不是都是在推动全栈（是） 是不是都是在推动aicoding（是） 建议意见"
     }
   },
   "checks": [
@@ -41,8 +60,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +75,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "2ea657832569311617c0aafc6f47a71fe953380612a602539267e64be0ddf040"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "1dfba5194954d2d4c7686bdd99223f2168722704f290f2a757aed17657ddf5d6"
 }

@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "d22c1cf9deede51f8e5cbbc44b463e9727ca7616b13d7296c1b25ff830d3fc3c",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event"
+    ],
+    "questions": 8,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68c281cd000000001c00434e.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "0354865db5b6ad0aaaa0ac550df34f99775195a6",
@@ -20,7 +40,7 @@
       "excerpt": "自我介绍 5 min",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "自我介绍 5 min 项目+java 20min 1.项目里面遇到的困难有什么，怎么解决的 2.jwt令牌用来干什么 3.threadlocal了解吗，干什么的，是怎么实现的 4.nginx是自己部署的吗？说一下nginx 5.项目中涉及一个tcp上应用层设计的问题 6.java多线程安全性，类中静态变量，类的成员变量，方法中的局部变量是否线程安全 7.一个final成员变量是一个类，类里面的变量是否线程安全 8.假设我有一个父线程，父线程中new子线程，把父线程的局部变量传入子线程，是否会有线程安全问题 手撕：一个二叉树的平均高度（dfs） 10min 手撕：一个升序数组不重复，经过了循环左移k次。给你左移后的数组，问左移了几次（二分），如果数组中有重复元素呢？ 10min 什么时候能来实习 反问 后续 3小时后约二面"
+      "semantic_excerpt": "自我介绍 5 min\n项目+java 20min\n1.项目里面遇到的困难有什么，怎么解决的\n2.jwt令牌用来干什么\n3.threadlocal了解吗，干什么的，是怎么实现的\n4.nginx是自己部署的吗？说一下nginx\n5.项目中涉及一个tcp上应用层设计的问题\n6.java多线程安全性，类中静态变量，类的成员变量，方法中的局部变量是否线程安全\n7.一个final成员变量是一个类，类里面的变量是否线程安全\n8.假设我有一个父线程，父线程中new子线程，把父线程的局部变量传入子线程，是否会有线程安全问题\n手撕：一个二叉树的平均高度（dfs） 10min\n手撕：一个升序数组不重复，经过了循环左移k次。给你左移后的数组，问左移了几次（二分），如果数组中有重复元素呢？ 10min\n什么时候能来实习\n反问\n后续\n3小时后约二面"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "3131fcb6bd914ef6e99623d659a2dc58749725a46d37ab3bf3c1ff055556bf79"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "0a4b4f8e3628742e2ccdb81f0362f27a1e84bd7624b0302d1f717364f3b78c79"
 }

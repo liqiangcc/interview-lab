@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "9e2931ca5e999481f0794ced73637b87a62c06b417a7ee6d1f78029da38ec897",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event"
+    ],
+    "questions": 10,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68cebd3f000000001301510b.json@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "90705e057cbc197d45d2b62f7c1c3fbe66db43a8",
@@ -20,7 +40,7 @@
       "excerpt": "\"global\": {",
       "line": 2,
       "locator": "artifact-line:2",
-      "semantic_excerpt": "1、自我介绍 2、介绍实习经历，项目中DDD是怎么落地的？ 3、DDD中聚合根和实体的概念 4、高并发场景下，给一个人投票怎么维护其高可用 5、怎么保证缓存一致性 6、Redis中的槽位为什么是1024？ 7、MySQL中B+树为什么只有2-3层 8、sql题：找出下单数top5的用户 9、算法：锯齿形层次遍历树 10、反问"
+      "semantic_excerpt": "1、自我介绍\n2、介绍实习经历，项目中DDD是怎么落地的？\n3、DDD中聚合根和实体的概念\n4、高并发场景下，给一个人投票怎么维护其高可用\n5、怎么保证缓存一致性\n6、Redis中的槽位为什么是1024？\n7、MySQL中B+树为什么只有2-3层\n8、sql题：找出下单数top5的用户\n9、算法：锯齿形层次遍历树\n10、反问"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "a25efb1484ccbc93412b6e35581ce0342f08f32da5a6e41c98213cab3a115ad7"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "920074a0bc95c89e2a4c8b54bb19cbcd8bf0e854331e1f010561619819db2fdc"
 }

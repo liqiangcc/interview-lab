@@ -7,8 +7,37 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "4c895f9dfab24b463992d878aec13ce63f1067865c38f3605aa0ee8adddf86cd",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event"
+    ],
+    "questions": 25,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": true,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": [
+      {
+        "case_key": "jd-process",
+        "anchor": "京东",
+        "line": 2,
+        "locator": "artifact-line:506#offset:39-41",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:京东"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68d15744000000001202cfba.json@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "78eb6e340b5eb6de1f8fe795b2e1944365b8b21e",
@@ -20,7 +49,7 @@
       "excerpt": "\"global\": {",
       "line": 2,
       "locator": "artifact-line:2",
-      "semantic_excerpt": "1.自我介绍 2.京东实习期间最大的收获？ 3.BIO、NIO的区别？ 4.java反射机制了解吗？ 5.JVM内存结构？ 6.OOM是什么？什么情况下会产生？ 7.对多态的理解？有什么方式可以实现？ 8.抽象类一定要包含抽象方法吗？ 9.项目中用了JUC？都用了什么？应对哪些业务场景的？ 10.分布式环境下怎么实现一个锁？ 11.synchronized、volatile关键字 12.CAS原理？用在什么场景下？ 13.垃圾回收算法了解哪些？ 14.mysql水平分表要注意哪些问题？ 15.数据库怎么实现乐观锁？那悲观锁呢？ 16.慢sql怎么优化？ 17.你实习和项目中的redis用来应对哪些业务场景的？ 18.缓存穿透是怎么预防的？ 19.分布式环境下，注册中心的原理？rpc调用的过程？ 20.注册中心挂掉之后对系统的影响？ 21.数据库MVCC的原理 22.spring的事务管理是怎么做的？除了AOP呢？了解更底层的吗？ 23.分布式事务了解哪些？TCC模式主要关注什么？ 24.MQ怎么避免重复消费？ 25.手撕：给一个链接进去做，编程、SQL、思路题都有，是我没见过的形式"
+      "semantic_excerpt": "1.自我介绍\n2.京东实习期间最大的收获？\n3.BIO、NIO的区别？\n4.java反射机制了解吗？\n5.JVM内存结构？\n6.OOM是什么？什么情况下会产生？\n7.对多态的理解？有什么方式可以实现？\n8.抽象类一定要包含抽象方法吗？\n9.项目中用了JUC？都用了什么？应对哪些业务场景的？\n10.分布式环境下怎么实现一个锁？\n11.synchronized、volatile关键字\n12.CAS原理？用在什么场景下？\n13.垃圾回收算法了解哪些？\n14.mysql水平分表要注意哪些问题？\n15.数据库怎么实现乐观锁？那悲观锁呢？\n16.慢sql怎么优化？\n17.你实习和项目中的redis用来应对哪些业务场景的？\n18.缓存穿透是怎么预防的？\n19.分布式环境下，注册中心的原理？rpc调用的过程？\n20.注册中心挂掉之后对系统的影响？\n21.数据库MVCC的原理\n22.spring的事务管理是怎么做的？除了AOP呢？了解更底层的吗？\n23.分布式事务了解哪些？TCC模式主要关注什么？\n24.MQ怎么避免重复消费？\n25.手撕：给一个链接进去做，编程、SQL、思路题都有，是我没见过的形式"
     }
   },
   "checks": [
@@ -41,8 +70,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +85,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "a0bdef8755c26e6f5677638d4b180fe8a1c253756dce8c38e5665f7ba1e7ab16"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "384d466d4e1a467d5dd95d85dc9944090bb26cd9584ac48da1cf1fac5283c368"
 }

@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "a852ca059ef266284c4953e15f8e6742d44482f2ff8571ff59fdb8008f53b4b4",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event"
+    ],
+    "questions": 8,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68ad5735000000001c033a19.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "9b2f359e2c33a70f7c2dd7a092f58542e3713203",
@@ -20,7 +40,7 @@
       "excerpt": "20min手撕",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "20min手撕 1. 二叉树路径和 2. 最长连续序列长度 40min面试 1. PPO算法中马尔可夫决策过程起到什么作用？是否是必要的？可以用什么方法替代？ 2. 高效微调方法有哪些？有哪些训练框架？ 3. RAG的流程？有哪些好用的RAG框架？ 4. RAG的检索模型有哪些类别？ 5. 知识图谱的构建流程？实体关系抽取有哪些方法？如何实现消岐？ 6. 如何设计一个好的提示词？如何对Prompt输入进一步处理让LLM给出更好的输出？（提了一篇文章，但我忘了他说的哪篇了，懂哥可以评论区分享下）"
+      "semantic_excerpt": "20min手撕\n1. 二叉树路径和\n2. 最长连续序列长度\n \n40min面试\n1. PPO算法中马尔可夫决策过程起到什么作用？是否是必要的？可以用什么方法替代？\n2. 高效微调方法有哪些？有哪些训练框架？\n3. RAG的流程？有哪些好用的RAG框架？\n4. RAG的检索模型有哪些类别？\n5. 知识图谱的构建流程？实体关系抽取有哪些方法？如何实现消岐？\n6. 如何设计一个好的提示词？如何对Prompt输入进一步处理让LLM给出更好的输出？（提了一篇文章，但我忘了他说的哪篇了，懂哥可以评论区分享下）"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "43f4ef288b139abc0246ec2c5bae4622e8d9abbd0325db367c5cc5485b5cded7"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "352622bb5066a2a1778f6867b04b2ca9435bdc84b8171ff62130ff4dc0ff298a"
 }

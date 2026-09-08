@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "3e7e7f0d8ec4d8d2f72781c4009a9b7ab0c8329c82c3373ec4af1b3546a1b8f1",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 0,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b939f0000000001d029aba.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "78ba412a0aff7ebb01c7b9773e819a0e136f564f",
@@ -20,7 +40,7 @@
       "excerpt": "面试官没开摄像头，声音比较甜的小姐姐(难得[萌萌哒R])，45min",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "面试官没开摄像头，声音比较甜的小姐姐(难得[萌萌哒R])，45min 上来不用自我介绍，直接让挑最有挑战的问题讲 问熟悉啥问啥[捂脸R] redis底层数据结构 跳表，与其他区别 redis单线程模型 mysql数据库 联合索引 手撕: 要用kmp优化，不过忘了，讲时间复杂度 反问:base北京，上海少，后端用的是go，业务是百度地图，几面 八股乱答，铁g[失望R]"
+      "semantic_excerpt": "面试官没开摄像头，声音比较甜的小姐姐(难得[萌萌哒R])，45min\n \n上来不用自我介绍，直接让挑最有挑战的问题讲\n问熟悉啥问啥[捂脸R]\nredis底层数据结构 跳表，与其他区别\nredis单线程模型\nmysql数据库 联合索引\n手撕: 要用kmp优化，不过忘了，讲时间复杂度\n反问:base北京，上海少，后端用的是go，业务是百度地图，几面\n \n八股乱答，铁g[失望R]"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "603fdc5873a66d33e805025ac1865231b6fc1ce87750712400b01ace456c6c9c"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "19e28a64a89a6862c30380c2ab5c90f3cb07b8fc5a72a7ef4d10720b13638e07"
 }

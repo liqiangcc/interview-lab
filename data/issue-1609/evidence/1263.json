@@ -8,7 +8,24 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "a9effb046112f594db3f20f80c97c7f43be9b112292e611ee545de7836ad51a6",
   "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "rationale": "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [],
+    "questions": 0,
+    "has_first_person_event": true,
+    "has_explicit_candidate_event": true,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b983bb000000001d01931a.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "14543e51bb97ca61080de0e4af65acc0316da327",
@@ -20,7 +37,7 @@
       "excerpt": "部门：财务科技",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "部门：财务科技 面试官非常好，先做了自我介绍和部门介绍，超级客气～希望多来点这样的面试官！ 求给二面(🙏ˊᗜˋ*)"
+      "semantic_excerpt": "部门：财务科技\n面试官非常好，先做了自我介绍和部门介绍，超级客气～希望多来点这样的面试官！\n求给二面(🙏ˊᗜˋ*)"
     }
   },
   "checks": [
@@ -42,7 +59,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +73,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "b8e43741aa59d261ae87483b449b995e9407d0a25ede07f6ea433bb6482e70a5"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "8b89d44a22ca284f848e9c7d08f4d7d24cf1fff294c8b761a7d0b43e79d03537"
 }

@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "7f6bc4f6265209f057372dfca08d2102b91d7f42adebd2bc81fb4ac3e73a90a0",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 0,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68d39bac0000000012016b9e.json@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "70d581dacd52a78e7a1a719ebcd09bcf1dd5c78f",
@@ -20,7 +40,7 @@
       "excerpt": "\"global\": {",
       "line": 2,
       "locator": "artifact-line:2",
-      "semantic_excerpt": "从实习入手，说一下你做的具体的业务 sql查询的参数是写死的吗，怎么注入到sql语句的 lua脚本用过吗，B指令报错了，A会回滚吗 异步的协程如果报错了怎么办，怎么处理这种问题 如果进程内存占满了，怎么在代码层面追踪，怎么在linux查看 进程端口号被占用了，怎么查看 kafka幂等性 redis连续执行多个set和get会有什么问题 redis批处理 go代码判断问题，断言和slice方面的 什么时候会触发panic，应对panic的机制 mysql查询语句时间很长怎么办 binlog是什么，及binlog的延时问题 手撕LRU缓存 就想到这些暂时，攒人品"
+      "semantic_excerpt": "从实习入手，说一下你做的具体的业务\nsql查询的参数是写死的吗，怎么注入到sql语句的\nlua脚本用过吗，B指令报错了，A会回滚吗\n异步的协程如果报错了怎么办，怎么处理这种问题\n如果进程内存占满了，怎么在代码层面追踪，怎么在linux查看\n进程端口号被占用了，怎么查看\nkafka幂等性\nredis连续执行多个set和get会有什么问题\nredis批处理\ngo代码判断问题，断言和slice方面的\n什么时候会触发panic，应对panic的机制\nmysql查询语句时间很长怎么办\nbinlog是什么，及binlog的延时问题\n手撕LRU缓存\n就想到这些暂时，攒人品"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "dbded9bf627658be637f52558ef83a0741f5981cb4292e6ed3d472765679e94e"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "f154e217b2a6d12727fc0b009f1f80ba170e454dfb8911b9a9750d93c767d0ca"
 }

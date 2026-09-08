@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "609c057018f8f8bebc1debe756569e3fbdd0387fb48a6043c7aaeb07b9475611",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event"
+    ],
+    "questions": 13,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68ab42b1000000001d01626e.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "04bb8413a8f2f47504c8c3f734588a191475c8cc",
@@ -20,7 +40,7 @@
       "excerpt": "1、redis 的主从复制中，主节点数据同步到从节点的底层原理 2、MQ 消息的可靠性机制（回答了消息确认机制，持久化机制等，面试官说不行） 3、MySQL 一张表最多存储多少行数据（拿出计算器演示） 4、Sentinel的全局限流和局部限流如何实现，底层的限流算法是否了解（项目中有使用，但回答的不好） 5、RPC 调用的底层原理，需要具体到网络协议那里（不会） 6、Linux 中用户态和内核态的切换 7、进程和协程的区别 8、手撕：leetcode005-最长回文子串的变体 找到字符串中第二长的回文子串，第二长的回文子串不能是最长回文子串的子串 9、反问  时间线： 8.10 投递 8.11 约面 - 8.13 一面  8.13 晚约二面-8.19 二面 第二天流程终止",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "1、redis 的主从复制中，主节点数据同步到从节点的底层原理 2、MQ 消息的可靠性机制（回答了消息确认机制，持久化机制等，面试官说不行） 3、MySQL 一张表最多存储多少行数据（拿出计算器演示） 4、Sentinel的全局限流和局部限流如何实现，底层的限流算法是否了解（项目中有使用，但回答的不好） 5、RPC 调用的底层原理，需要具体到网络协议那里（不会） 6、Linux 中用户态和内核态的切换 7、进程和协程的区别 8、手撕：leetcode005-最长回文子串的变体 找到字符串中第二长的回文子串，第二长的回文子串不能是最长回文子串的子串 9、反问 时间线： 8.10 投递 8.11 约面 - 8.13 一面 8.13 晚约二面-8.19 二面 第二天流程终止"
+      "semantic_excerpt": "1、redis 的主从复制中，主节点数据同步到从节点的底层原理 2、MQ 消息的可靠性机制（回答了消息确认机制，持久化机制等，面试官说不行） 3、MySQL 一张表最多存储多少行数据（拿出计算器演示） 4、Sentinel的全局限流和局部限流如何实现，底层的限流算法是否了解（项目中有使用，但回答的不好） 5、RPC 调用的底层原理，需要具体到网络协议那里（不会） 6、Linux 中用户态和内核态的切换 7、进程和协程的区别 8、手撕：leetcode005-最长回文子串的变体 找到字符串中第二长的回文子串，第二长的回文子串不能是最长回文子串的子串 9、反问  时间线： 8.10 投递 8.11 约面 - 8.13 一面  8.13 晚约二面-8.19 二面 第二天流程终止"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "7dcf1225fc25e890201a7d310fb709d295bbedc9df7d97c17d302d87ba6cb1e6"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "4256ab2d26eb8d8cd089217428e6dc67f4b37120339d67c474655d2ade3e923a"
 }

@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "a983f449c0969b6f600e259c7458be0fefe4aecdf274e6d28c9280caed2d3190",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 0,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": true,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68cd57010000000013035e2d.json@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "8cc9f83aeb9bb80876c3a14a8f2f2419ca14b07a",
@@ -20,7 +40,7 @@
       "excerpt": "\"global\": {",
       "line": 2,
       "locator": "artifact-line:2",
-      "semantic_excerpt": "复活赛再打向了二面 上一次二面挂 我也不知道啥原因 就是没手撕😮‍💨 这次二面又没手撕 三十分钟就愉快的结束了面试 整个过程聊的挺好的 提到我的科研成果（1a1b）还有奖学金 说能力不错 反问也问了快手对校招生的要求 说看重成绩 论文 还有实习经历（感觉都挺符合的） 最后问了 手上的意向offer情况 面试结束后发了一个测评（不知道是不是过了才会发的）[哭惹R][哭惹R] 还是很慌 毕竟没手撕[哭惹R] 但又给我的感觉还不错 这该死的幻觉[合十R][合十R] 手子 给个机会 让我进三面 目前最中意的业务了[合十R][合十R][合十R]"
+      "semantic_excerpt": "复活赛再打向了二面 上一次二面挂 我也不知道啥原因 就是没手撕😮‍💨\n这次二面又没手撕 三十分钟就愉快的结束了面试\n整个过程聊的挺好的 提到我的科研成果（1a1b）还有奖学金 说能力不错 反问也问了快手对校招生的要求 说看重成绩 论文 还有实习经历（感觉都挺符合的） 最后问了 手上的意向offer情况\n面试结束后发了一个测评（不知道是不是过了才会发的）[哭惹R][哭惹R]\n还是很慌 毕竟没手撕[哭惹R] 但又给我的感觉还不错 这该死的幻觉[合十R][合十R]\n手子 给个机会 让我进三面 目前最中意的业务了[合十R][合十R][合十R]"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "ccf49cde30c3f6fbda29ae04adc43d02836eafafa29c5296f2d7525cd06f015f"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "ba02359f9da75e03dac7dd0c06d9efd7be4a2fbeea9da578c7f6e1f962bb10c5"
 }

@@ -8,7 +8,26 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "2591b670316c65929fda9eb088bce68592b42487fb9f3eb7c9c7b54eefe95673",
   "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "rationale": "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event"
+    ],
+    "questions": 25,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68e0f189000000000303b96e.json@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "3c611de2ce8eb6b025e3d48ecf2a6bf812b86dfa",
@@ -20,7 +39,7 @@
       "excerpt": "\"global\": {",
       "line": 2,
       "locator": "artifact-line:2",
-      "semantic_excerpt": "一面： 1.线程池有些参数？ 2.选用线程池怎么使用，用自定义的还是用其他的？ 3.一个线程任务提交到线程池的时候，线程池的工作原理是什么？ 4.FixedThreadPool介绍一下，它的参数是怎么定义的？ 5.手撕：合并 K 个有序链表 6.创建线程有哪些方式？ 7.synchronized锁介绍一下？ 8.平时用锁用Synchronized还是ReentrantLock？ 9.MySQL 中，Redo Log和 Bin log的作用是什么？ 10.Redis 的数据结构是什么？ 11.介绍一下ZSet的数据结构？ 12.缓存都有哪些常见问题？ 13.Java反射介绍下？ 14.介绍下hashmap ？ 15.项目拷打 二面： 1.你未来的职业规划？ 2.你如何学习相关的计算机技术？ 3.你如何优化你的大模型的回答？ 4.介绍一下大语言模型的RAG？ 5.你项目中的数据分析平台在未来要如何在功能上进行拓展？ 6.从用户方面来看，你的数据分析平台目前有哪些比较重要的问题？ 7.业界目前的解决方案是什么？在整个调用链路上面有区别吗？ 8.全双工的通信方式，除了websocket，还有什么？ 9.讲述一个java项目debug的最深的经历，以及你是如何修改的？ 10.找到10亿个数中的topK用什么数据结构？"
+      "semantic_excerpt": "一面：\n1.线程池有些参数？\n2.选用线程池怎么使用，用自定义的还是用其他的？\n3.一个线程任务提交到线程池的时候，线程池的工作原理是什么？\n4.FixedThreadPool介绍一下，它的参数是怎么定义的？\n5.手撕：合并 K 个有序链表\n6.创建线程有哪些方式？\n7.synchronized锁介绍一下？\n8.平时用锁用Synchronized还是ReentrantLock？\n9.MySQL 中，Redo Log和 Bin log的作用是什么？\n10.Redis 的数据结构是什么？\n11.介绍一下ZSet的数据结构？\n12.缓存都有哪些常见问题？\n13.Java反射介绍下？\n14.介绍下hashmap ？\n15.项目拷打\n二面：\n1.你未来的职业规划？\n2.你如何学习相关的计算机技术？\n3.你如何优化你的大模型的回答？\n4.介绍一下大语言模型的RAG？\n5.你项目中的数据分析平台在未来要如何在功能上进行拓展？\n6.从用户方面来看，你的数据分析平台目前有哪些比较重要的问题？\n7.业界目前的解决方案是什么？在整个调用链路上面有区别吗？\n8.全双工的通信方式，除了websocket，还有什么？\n9.讲述一个java项目debug的最深的经历，以及你是如何修改的？\n10.找到10亿个数中的topK用什么数据结构？"
     }
   },
   "checks": [
@@ -42,7 +61,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +75,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "4d843ad052eea5b6784d18f7b6971c27adad6cbd2d23351c2928b74a6f34334f"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "4ea3978f973620a2819e74da7deeda54d61fe75a2503878aff1e523f23003035"
 }

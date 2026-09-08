@@ -1,32 +1,21 @@
 {
-  "schema_version": "issue-1609-boundary-review-request.v1",
-  "request_id": "issue-1609-boundary-1344",
+  "schema_version": "source-note-boundary-review-transition.v1",
+  "transition_id": "issue-1609-boundary-1344-review-1",
   "repository": "liqiangcc/interview-lab",
-  "parent_issue": 1605,
   "issue_number": 1344,
-  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1344",
   "source_note_id": "xhs-note:68cb7e2e000000001400a5ca",
   "expected_body_sha256": "74bab1784e615e61fcfb1b4c6622df53b8450bc198d82b28722374067324f7ce",
   "expected_boundary_status": "pending",
   "expected_source_revision_id": "xhs-note:68cb7e2e000000001400a5ca:snapshot-95b77bb26104",
-  "expected_source_repository": "liqiangcc/xhs",
+  "expected_manifest_sha256": null,
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "disposition": "not-interview",
-  "rationale": "Exact Source projection is a generic resource/recruitment/advice record and does not record one candidate interview event.",
-  "evidence_file": "evidence/1344.json",
-  "source_evidence": {
-    "ref": "liqiangcc/xhs:note_desc/68cb7e2e000000001400a5ca.txt@95b77bb261048059846273688e4b90a2e108b437",
-    "git_blob_sha": "f1ee77dc1e09341a2ea9f3fc067c87000a3e6e5f",
-    "kind": "text_projection",
-    "provenance": "source_projection",
-    "byte_size": 1619,
-    "content_sha256": "1bfd5f2e1118b3190ccdd0f57df94ac2eb815770d1139038a7a2c7868ceda5f7",
-    "excerpt": {
-      "excerpt": "岗位职责：",
-      "line": 5,
-      "locator": "artifact-line:5",
-      "semantic_excerpt": "[郁金香R]岗位名称：运营后台开发工程师 [郁金香R]签约主体：腾讯全资子公司，非外包 [郁金香R]月薪：15-25k 岗位职责： 1、参与腾讯客服千万级海量用户后台系统的需求分析、系统设计、开发等工作，提供高并发、高性能、高可用后台服务支撑； 2、参与腾讯客服AI应用开发，基于LLM，结合RAG、微调、MCP等技术，实现新一代智能客服，形成行业标杆； 3、参与前沿后台技术和大模型技术的调研和工程化落地，优化后台服务架构，提升大模型应用效果； 4、负责将后台公共能力抽象成微服务，形成技术中台，提升研发效率； 岗位要求： 1、具备3年及以上相关工作经验，计算机相关专业，本科及以上学历； 2、精通Go语言开发，掌握常用Go开发框架（如GoFrame、Gin、Grpc框架），掌握Python脚本语言； 3、熟悉MySQL、ES、Kafka、Redis等中间件的使用，熟悉底层原理，有服务调优、故障定位经验者优先； 4、有AI开发经验者优先，如：深度学习算法、自然语言处理、神经网络、提示词工程、huggingface实践； 5、有微服务架构、云原生、分布式系统开发经验者优先； 6、熟悉linux，了解linux常用命令及工具； 7、具备强烈的学习欲望和自驱力，有好奇心，喜欢挑战攻克技术难关，责任心强，踏实上进，良好的服务、沟通、协作意识；"
-    }
+  "decision": "not-interview",
+  "reviewed_at": "2026-09-08T00:00:00.000Z",
+  "reviewer_kind": "ai-assisted",
+  "review_evidence": {
+    "repository": "liqiangcc/interview-lab",
+    "issue_number": 1344,
+    "comment_id": 1609001344
   },
   "checks": [
     {
@@ -47,7 +36,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source is a generic question bank, recruitment/job advertisement, tutorial, written-test, or preparation resource; it does not record one candidate interview event."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -61,9 +50,8 @@
     }
   ],
   "limitations": [
-    "Exact Source projection is a generic resource/recruitment/advice record and does not record one candidate interview event.",
-    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
-  ],
-  "evidence_sha256": "d82e99d168e0eb3378b90fc45154f425a5c92156c58cfdf8f3a994ad6f43a227",
-  "request_sha256": "d3bf6c030703036f6b88c8f2834e494baaf72c910fcb7e8f468422bee0af2a8f"
+    "Exact Source is a generic question bank, recruitment/job advertisement, tutorial, written-test, or preparation resource; it does not record one candidate interview event.",
+    "Candidate only: review_evidence.comment_id is a deterministic placeholder; no live evidence comment was created.",
+    "No body PATCH, label write, or InterviewNote materialization was performed; controller authorization is required."
+  ]
 }

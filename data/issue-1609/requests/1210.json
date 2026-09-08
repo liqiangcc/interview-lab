@@ -1,32 +1,21 @@
 {
-  "schema_version": "issue-1609-boundary-review-request.v1",
-  "request_id": "issue-1609-boundary-1210",
+  "schema_version": "source-note-boundary-review-transition.v1",
+  "transition_id": "issue-1609-boundary-1210-review-1",
   "repository": "liqiangcc/interview-lab",
-  "parent_issue": 1605,
   "issue_number": 1210,
-  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1210",
   "source_note_id": "xhs-note:68b18847000000001c00a528",
   "expected_body_sha256": "807e035d5b1602297ca8a7a8773b6abddeb95d6ba39ef8cfc64f2630c81f3e2a",
   "expected_boundary_status": "pending",
   "expected_source_revision_id": "xhs-note:68b18847000000001c00a528:snapshot-95b77bb26104",
-  "expected_source_repository": "liqiangcc/xhs",
+  "expected_manifest_sha256": null,
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "disposition": "blocked",
-  "rationale": "The available Source evidence does not establish a bounded interview event; retain pending.",
-  "evidence_file": "evidence/1210.json",
-  "source_evidence": {
-    "ref": "liqiangcc/xhs:note_desc/68b18847000000001c00a528.txt@95b77bb261048059846273688e4b90a2e108b437",
-    "git_blob_sha": "138025470c3edee4864b8c712b0285327ec08cc3",
-    "kind": "text_projection",
-    "provenance": "source_projection",
-    "byte_size": 227,
-    "content_sha256": "e379c8dfe13a89f47c6fbd4fd57a39363956742530b75962de6d231bc494474d",
-    "excerpt": {
-      "excerpt": "果然，面试的时候，SQL题目没有正确口述出来，问到一些问题的原理的时候也不是很清楚，上午面完，下午就给我挂掉了[哭惹R][哭惹R][哭惹R]",
-      "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "果然，面试的时候，SQL题目没有正确口述出来，问到一些问题的原理的时候也不是很清楚，上午面完，下午就给我挂掉了[哭惹R][哭惹R][哭惹R] 再接再厉吧！积累经验了也是"
-    }
+  "decision": "single-interview",
+  "reviewed_at": "2026-09-08T00:00:00.000Z",
+  "reviewer_kind": "ai-assisted",
+  "review_evidence": {
+    "repository": "liqiangcc/interview-lab",
+    "issue_number": 1210,
+    "comment_id": 1609001210
   },
   "checks": [
     {
@@ -46,8 +35,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -61,9 +50,8 @@
     }
   ],
   "limitations": [
-    "The available Source evidence does not establish a bounded interview event; retain pending.",
-    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
-  ],
-  "evidence_sha256": "a703de6fa4782fe841d24ffc9f18fc16a0a8bd4064c225f8add13683db5b89b7",
-  "request_sha256": "6dfa1e9a6abaec2488b350a0ebb406ae28e8678792687418ee7982b5c14ec492"
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+    "Candidate only: review_evidence.comment_id is a deterministic placeholder; no live evidence comment was created.",
+    "No body PATCH, label write, or InterviewNote materialization was performed; controller authorization is required."
+  ]
 }

@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "9c94c810e5348caf15fcf7af373e40d86ac2a8bf06f40c87f10044ef0d6d963b",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event"
+    ],
+    "questions": 7,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68d7f9a9000000001201c0c6.json@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "5429b4989d4826e5610fd48a029332d57f53774c",
@@ -20,7 +40,7 @@
       "excerpt": "\"global\": {",
       "line": 2,
       "locator": "artifact-line:2",
-      "semantic_excerpt": "1、自我介绍，学校课程 2、redis中缓存读的是MySQL中的从数据库，怎么感知数据发生修改 3、印象中做过的最有难度的事情 4、实习经历的项目介绍下 5、redis中ttl的实现原理 6、算法题：手写一个简易版线程池 7、算法题：二叉树的z字型遍历"
+      "semantic_excerpt": "1、自我介绍，学校课程\n2、redis中缓存读的是MySQL中的从数据库，怎么感知数据发生修改\n3、印象中做过的最有难度的事情\n4、实习经历的项目介绍下\n5、redis中ttl的实现原理\n6、算法题：手写一个简易版线程池\n7、算法题：二叉树的z字型遍历"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "601ab398605e6fd323d3a96b1476468ed7368769ffabd382995a0fec1cb06515"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "473fcb3efd9f9f9d22f4356a271df771e07a388c45f24f076f9d85d296192f6a"
 }

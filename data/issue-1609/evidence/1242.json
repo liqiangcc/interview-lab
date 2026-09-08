@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "b66a9a2c8a2c31513d6c942e23a70f89751260ac7682d60d57accd810ce2a4ce",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event"
+    ],
+    "questions": 15,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": true,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b69d6d000000001c00e844.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "78ade932ae3b7629903b824decac0d6554a42511",
@@ -20,7 +40,7 @@
       "excerpt": "1. 自我介绍",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "1. 自我介绍 2. 研究生期间的研究方向 3. 为什么选择应用开发 4. 介绍项目，与市面竞品的对比优势是什么 5. 项目数据如何存储等等项目细节 6. 用户量暴增，处理图片时需要考虑哪些场景，如何控制并发量 7. 了解的限流的策略有哪些 8. Mybatis 中和 $的区别 9. 如何防止重复提交 10. 数据库如何实现幂等 11. Redis如何做防重，setnx 和 setex 的区别 12. 缓存的选型对比 13. 使用本地缓存，发现JVM 的内存不断的增加，如何优化 14. 介绍一下缓存击穿场景，如何解决 15. 怎么看待大模型写代码 【30min，感觉都回答上了，第二天直接挂了】"
+      "semantic_excerpt": "1. 自我介绍\n2. 研究生期间的研究方向\n3. 为什么选择应用开发\n4. 介绍项目，与市面竞品的对比优势是什么\n5. 项目数据如何存储等等项目细节\n6. 用户量暴增，处理图片时需要考虑哪些场景，如何控制并发量\n7. 了解的限流的策略有哪些\n8. Mybatis 中和 $的区别\n9. 如何防止重复提交\n10. 数据库如何实现幂等\n11. Redis如何做防重，setnx 和 setex 的区别\n12. 缓存的选型对比\n13. 使用本地缓存，发现JVM 的内存不断的增加，如何优化\n14. 介绍一下缓存击穿场景，如何解决\n15. 怎么看待大模型写代码\n【30min，感觉都回答上了，第二天直接挂了】"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "ade28bace56f5a876bff1058a9e4b1a73436fdc8f960bbcd9605913c8f355614"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "486bc4985452388f749023d5ca7030bbaadd25e2b61ddaee7248ea61f6df3e68"
 }

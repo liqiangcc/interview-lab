@@ -7,8 +7,29 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "2ab6971e938ad6faf9bb17b148b72c99ea6b8ac51580aa664ff5a6ac38d2b4d1",
-  "disposition": "not-interview",
-  "rationale": "Exact Source projection is a generic resource/recruitment/advice record and does not record one candidate interview event.",
+  "disposition": "blocked",
+  "rationale": "Exact Source contains only a job/title, round, duration, or location descriptor; it does not record candidate experience, questions, or interview process.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event",
+      "job-or-title-only",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 0,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": false,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": true,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b045a6000000001c0105e6.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "2c7cb2774489e42c1513fffe89e6bb9b793586ed",
@@ -41,8 +62,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source contains only a job/title, round, duration, or location descriptor; it does not record candidate experience, questions, or interview process."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +77,11 @@
     }
   ],
   "limitations": [
-    "Exact Source projection is a generic resource/recruitment/advice record and does not record one candidate interview event.",
+    "Exact Source contains only a job/title, round, duration, or location descriptor; it does not record candidate experience, questions, or interview process.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "3b6dc79bf928345373d0adf5c4ef76724e28a0cf116f34b84b7237d81472e0d8"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "04ab91610b93ea7335a2a017fdcab782a1eac8bf5c894314101d80443257e5d6"
 }

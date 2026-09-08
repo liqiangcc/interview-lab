@@ -8,7 +8,35 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "e32b2fa785f799061c42b74893a425a33f94e918c155eeb80c09e9070adbb16e",
   "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "rationale": "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event"
+    ],
+    "questions": 3,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": true,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": [
+      {
+        "case_key": "didi-process",
+        "anchor": "滴滴",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-2",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:滴滴"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68c4148e000000001d025dca.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "e37de158268f89b70bc4efd9deb6ff5e1b2d4ffa",
@@ -20,7 +48,7 @@
       "excerpt": "滴滴一面",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "滴滴一面 自我介绍 **1.进程与线程的区别** **2.c++11用户态线程coroutine** **3.介绍Reactor模型** **4.深挖reactor模型的底层实现** **5.问I/O多路复用，epoll上层是否有封装？ libev? libevent? LT、ET** **6.负载均衡，Round Robin实现带权重的分配任务，并严格按照比例分配** **7.OS内存淘汰算法 ？ 随机淘汰有哪些好处？** **8.c++STL容器 ？ unordered_map和map区别 ？ 优劣？ 两者性能(内存利用率)如何？** **9.c++智能指针 ？ 又问到QT信号与槽底层原理** **10.mysql聚簇索引、覆盖索引、二级索引都要回表 ？** **11.mysql深度分页 ？ 怎么解决 ？** **12.要实现路由匹配应该用什么数据结构** **13.关于https、http八股，tls握手过程、报文解析过程** **14.内存池分配算法 ？ 为什么这样做** **15.跨域问题 ？ 简单请求、非简单请求 ？ 怎么区分简单请求与非简单请求 ？** **16.剩下是项目相关 **最后手撕 力扣hot100** 一面的面试官超级好，不会给你解释，答不全给你补充 ### 滴滴二面 面试官一副不想搭理人的样子！！！！ 1.自我介绍 2.问实习相关的东西 ，一脸鄙夷，嫌工作量少，嫌代码行数写的少。。。我****你ancestor 3.然后直接就手撕，hot100困难题变种，最后撕出来了，过程虽然有点狼狈 最后假惺惺问你3-5年职业规划 过了一会儿然后挂了"
+      "semantic_excerpt": "滴滴一面\n自我介绍\n**1.进程与线程的区别**\n**2.c++11用户态线程coroutine**\n**3.介绍Reactor模型**\n**4.深挖reactor模型的底层实现**\n**5.问I/O多路复用，epoll上层是否有封装？ libev? libevent? LT、ET**\n**6.负载均衡，Round Robin实现带权重的分配任务，并严格按照比例分配**\n**7.OS内存淘汰算法 ？ 随机淘汰有哪些好处？**\n**8.c++STL容器 ？ unordered_map和map区别 ？ 优劣？ 两者性能(内存利用率)如何？**\n**9.c++智能指针 ？ 又问到QT信号与槽底层原理**\n**10.mysql聚簇索引、覆盖索引、二级索引都要回表 ？**\n**11.mysql深度分页 ？ 怎么解决 ？**\n**12.要实现路由匹配应该用什么数据结构**\n**13.关于https、http八股，tls握手过程、报文解析过程**\n**14.内存池分配算法 ？ 为什么这样做**\n**15.跨域问题 ？ 简单请求、非简单请求 ？ 怎么区分简单请求与非简单请求 ？**\n**16.剩下是项目相关\n**最后手撕 力扣hot100**\n一面的面试官超级好，不会给你解释，答不全给你补充\n### 滴滴二面\n面试官一副不想搭理人的样子！！！！\n1.自我介绍\n2.问实习相关的东西 ，一脸鄙夷，嫌工作量少，嫌代码行数写的少。。。我****你ancestor\n3.然后直接就手撕，hot100困难题变种，最后撕出来了，过程虽然有点狼狈\n最后假惺惺问你3-5年职业规划 过了一会儿然后挂了"
     }
   },
   "checks": [
@@ -42,7 +70,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +84,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "4d9841dbe4f7315536540e16fd81a2c9197f0206e5bf4d5c4bcccbc4bf2cb693"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "41591305e1c70d984e09896be1631dbfd00cf9b973c7b9ba8ccba9164e583388"
 }

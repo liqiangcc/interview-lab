@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "a09593427e26e854740c8fb944e4f8779d91ad781d30b675281cf6cb95a96eea",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 0,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68e47c910000000003010cb7.json@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "444744e15af12f07ea066cdcd47f6c5e3c88f758",
@@ -20,7 +40,7 @@
       "excerpt": "\"global\": {",
       "line": 2,
       "locator": "artifact-line:2",
-      "semantic_excerpt": "[向右R]Time：24/2(30mins) [向右R]部门：CSIG（腾讯云）暑期实习 [向右R]面感：面试官没开摄像头，但感觉比较nice。写题的时候还说自己离开会议一会你先写着。后面写了一会就又进来了，写完之后解释了一下思路和复杂度就结束了，也没有反问环节。 [向右R]流程：自我介绍->基础拷打->手撕 [向右R]涉及内容：os、计网 [向右R]手撕：搜索二维矩阵2 ———————————详细版—————————— 基础八股： [红书R]讲一下进程和线程？ [红书R]解释一下用户态与核心态？ [红书R]说一下TCP四次挥手的过程？ [红书R]其中TIME_WAIT状态是哪一方产生？作用和持续时间？"
+      "semantic_excerpt": "[向右R]Time：24/2(30mins)\n[向右R]部门：CSIG（腾讯云）暑期实习\n[向右R]面感：面试官没开摄像头，但感觉比较nice。写题的时候还说自己离开会议一会你先写着。后面写了一会就又进来了，写完之后解释了一下思路和复杂度就结束了，也没有反问环节。\n[向右R]流程：自我介绍->基础拷打->手撕\n[向右R]涉及内容：os、计网\n[向右R]手撕：搜索二维矩阵2\n———————————详细版——————————\n基础八股：\n[红书R]讲一下进程和线程？\n[红书R]解释一下用户态与核心态？\n[红书R]说一下TCP四次挥手的过程？\n[红书R]其中TIME_WAIT状态是哪一方产生？作用和持续时间？"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "87f85a2f8a81b6c3f523a1e4fc72be15df55d15eef33ba094d0e5cde37ad61e8"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "93bf20f9fba0cbad2a92d506eeba9306985f148bcf3bb579838c2e89f19e3c8e"
 }

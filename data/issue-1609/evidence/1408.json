@@ -7,8 +7,37 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "0cc3ab5de8db73e03f479466be44b50b03cc4f6ed3256444360ffc4b98910083",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event"
+    ],
+    "questions": 14,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": [
+      {
+        "case_key": "kuaishou-process",
+        "anchor": "快手",
+        "line": 11,
+        "locator": "artifact-line:501#offset:208-210",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:快手"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68d931d900000000130112d0.json@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "fb61626b967563050ea03b2bfa10eff555461638",
@@ -20,7 +49,7 @@
       "excerpt": "\"global\": {",
       "line": 2,
       "locator": "artifact-line:2",
-      "semantic_excerpt": "🕰️时长：45min 1. 自我介绍 2. Hadoop组件有哪些 3. mapreduce执行流程 4. mapreduce shuffle流程 5. Hive和Spark的区别 6. hive shuffle和spark shuffle 7. spark怎么划分stage 8. 怎么理解数据仓库 9. 数仓和数据库的区别 10. 快手数仓分层规范 11. 维度建模流程 12. 你平时写不写代码（？？？？？？） 13. 你是e人还是i人 手撕： 1. 二分查找"
+      "semantic_excerpt": "🕰️时长：45min\n1. 自我介绍\n2. Hadoop组件有哪些\n3. mapreduce执行流程\n4. mapreduce shuffle流程\n5. Hive和Spark的区别\n6. hive shuffle和spark shuffle\n7. spark怎么划分stage\n8. 怎么理解数据仓库\n9. 数仓和数据库的区别\n10. 快手数仓分层规范\n11. 维度建模流程\n12. 你平时写不写代码（？？？？？？）\n13. 你是e人还是i人\n手撕：\n1. 二分查找"
     }
   },
   "checks": [
@@ -41,8 +70,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +85,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "40bcb8347773af2717be2223154426d8bc71cfa3344d8e54b596b87a1ed5bb72"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "1590e0f6a7984ac11185227fb9ad8e113f1fb8504f77fe5aa08c87744ac2709d"
 }

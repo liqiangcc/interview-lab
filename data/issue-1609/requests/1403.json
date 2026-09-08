@@ -1,32 +1,21 @@
 {
-  "schema_version": "issue-1609-boundary-review-request.v1",
-  "request_id": "issue-1609-boundary-1403",
+  "schema_version": "source-note-boundary-review-transition.v1",
+  "transition_id": "issue-1609-boundary-1403-review-1",
   "repository": "liqiangcc/interview-lab",
-  "parent_issue": 1605,
   "issue_number": 1403,
-  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1403",
   "source_note_id": "xhs-note:68d8a078000000000b0128fa",
   "expected_body_sha256": "6beb84f13cebd7067bd57750a37f2ab666498102bb1573b8c03ac916512b9745",
   "expected_boundary_status": "pending",
   "expected_source_revision_id": "xhs-note:68d8a078000000000b0128fa:snapshot-95b77bb26104",
-  "expected_source_repository": "liqiangcc/xhs",
+  "expected_manifest_sha256": null,
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
-  "evidence_file": "evidence/1403.json",
-  "source_evidence": {
-    "ref": "liqiangcc/xhs:note_json/68d8a078000000000b0128fa.json@95b77bb261048059846273688e4b90a2e108b437",
-    "git_blob_sha": "12bead8055727683980171518c2b6c69383dbccf",
-    "kind": "json",
-    "provenance": "source_projection",
-    "byte_size": 22790,
-    "content_sha256": "1bb0fe6cabeeb5aef8da1b07e2b9aed7705705855a4f60ad58b729b8a0a42ac1",
-    "excerpt": {
-      "excerpt": "\"desc\": \"📍背景：学员刚结束电网相关Java项目技术面试，两轮面试聚焦高可靠高并发架构设计及国产化适配要求，面试官深度考察技术落地能力。\\n\\t\\n📌 第一轮技术面（60分钟）\\n\\t\\n1. 业务与系统设计\\n\\t\\n- 问题：如何设计一个实时数据采集与监控系统？\\n- 考点：\\n- 实时数据采集：使用Netty处理TCP长连接，解析自定义二进制协议。\\n- 故障判断逻辑：配置阈值管理与动态调整。\\n- 问题：计量系统如何保证数据准确性？\\n- 考点：\\n- 数据完整性：通信中断补采、数据校验（CRC16、总和校验）。\\n- 高精度计算： BigDecimal处理小数计算，避免浮点精度丢失。\\n- 数据一致性：分布式事务或本地事务+对账机制。\\n\\t\\n2. 高可靠与高并发架构\\n\\t\\n- 问题：如何保证监控系统7*24小时高可用？\\n- 考点：\\n- 冗余设计：应用集群部署（Nginx负载均衡）、数据库主从复制+故障切换。\\n- 容灾设计：同城双活或异地灾备架构，数据实时同步。\\n- 快速恢复：健康检查、服务熔断降级（Sentinel/Hystrix）、故障自动转移。\\n- 问题：如何应对终端大规模并发上线和数据上报？\\n- 考点：\\n- 异步处理：使用Kafka等消息队列削峰填谷，异步落库。\\n- 连接优化：基于Netty设计可靠的长连接管理，心跳保活，断线重连。\\n\\t\\n3. 国产化与安全要求\\n\\t\\n- 问题：系统如何适配国产化环境（如麒麟OS、鲲鹏CPU、达梦数据库）？\\n- 考点：\\n- 环境兼容：JDK选择（龙芯JDK或OpenJDK龙芯版本）、依赖库的国产化替代。\\n- 数据库适配：SQL语法差异处理、达梦JDBC连接配置与性能调优。\\n\\t\\n📌 第二轮技术面（40分钟）\\n\\t\\n1. 手撕代码题\\n\\t\\n- 题目：实现一个简单的自定义二进制协议帧解析器。\\n- 要求：给定一个字节数组，解析出各个字段。\\n- 考察点：字节操作、位运算、数据结构设计\\n\\t\\n2. 系统设计题\\n\\t\\n- 问题：设计一个设备资产管理系统（涵盖设备台账、巡检、维修全生命周期）。\\n- 架构要点：\\n- 微服务划分：资产服务、巡检服务、工单服务等。\\n- 数据模型：核心设备台账表结构设计（父子设备关联、位置信息）。\\n\\t\\n3. 深度拷问与",
-      "line": 525,
-      "locator": "artifact-line:525",
-      "semantic_excerpt": "📍背景：学员刚结束电网相关Java项目技术面试，两轮面试聚焦高可靠高并发架构设计及国产化适配要求，面试官深度考察技术落地能力。 📌 第一轮技术面（60分钟） 1. 业务与系统设计 - 问题：如何设计一个实时数据采集与监控系统？ - 考点： - 实时数据采集：使用Netty处理TCP长连接，解析自定义二进制协议。 - 故障判断逻辑：配置阈值管理与动态调整。 - 问题：计量系统如何保证数据准确性？ - 考点： - 数据完整性：通信中断补采、数据校验（CRC16、总和校验）。 - 高精度计算： BigDecimal处理小数计算，避免浮点精度丢失。 - 数据一致性：分布式事务或本地事务+对账机制。 2. 高可靠与高并发架构 - 问题：如何保证监控系统7*24小时高可用？ - 考点： - 冗余设计：应用集群部署（Nginx负载均衡）、数据库主从复制+故障切换。 - 容灾设计：同城双活或异地灾备架构，数据实时同步。 - 快速恢复：健康检查、服务熔断降级（Sentinel/Hystrix）、故障自动转移。 - 问题：如何应对终端大规模并发上线和数据上报？ - 考点： - 异步处理：使用Kafka等消息队列削峰填谷，异步落库。 - 连接优化：基于Netty设计可靠的长连接管理，心跳保活，断线重连。 3. 国产化与安全要求 - 问题：系统如何适配国产化环境（如麒麟OS、鲲鹏CPU、达梦数据库）？ - 考点： - 环境兼容：JDK选择（龙芯JDK或OpenJDK龙芯版本）、依赖库的国产化替代。 - 数据库适配：SQL语法差异处理、达梦JDBC连接配置与性能调优。 📌 第二轮技术面（40分钟） 1. 手撕代码题 - 题目：实现一个简单的自定义二进制协议帧解析器。 - 要求：给定一个字节数组，解析出各个字段。 - 考察点：字节操作、位运算、数据结构设计 2. 系统设计题 - 问题：设计一个设备资产管理系统（涵盖设备台账、巡检、维修全生命周期）。 - 架构要点： - 微服务划分：资产服务、巡检服务、工单服务等。 - 数据模型：核心设备台账表结构设计（父子设备关联、位置信息）。 3. 深度拷问与故障排查 - 问题：现场某区域所有终端同时掉线，如何快速定位问题？ - 排查思路： 1. 检查网络：核心交换机、汇聚交换机状态。 2. 检查服务：采集服务是否假死（查看日志、监控指标）、数据库连接"
-    }
+  "decision": "single-interview",
+  "reviewed_at": "2026-09-08T00:00:00.000Z",
+  "reviewer_kind": "ai-assisted",
+  "review_evidence": {
+    "repository": "liqiangcc/interview-lab",
+    "issue_number": 1403,
+    "comment_id": 1609001403
   },
   "checks": [
     {
@@ -47,7 +36,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -61,9 +50,8 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
-    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
-  ],
-  "evidence_sha256": "1bab829211d98c0d4f45ffb4f33f75e06165bd97dbdc8bd9912998cc28c7cfdb",
-  "request_sha256": "c1f3b36ca64fd4c13c18c9bbb9d08a3f9c6713aab277b1e9ba5017bc7fa4192f"
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+    "Candidate only: review_evidence.comment_id is a deterministic placeholder; no live evidence comment was created.",
+    "No body PATCH, label write, or InterviewNote materialization was performed; controller authorization is required."
+  ]
 }

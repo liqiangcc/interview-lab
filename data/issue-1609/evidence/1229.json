@@ -7,8 +7,25 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "0968da62d29d24035cc084ed8f0368deda73f2961c3e13d7183cd6a98bc99f48",
-  "disposition": "blocked",
-  "rationale": "The available Source evidence does not establish a bounded interview event; retain pending.",
+  "disposition": "single-interview",
+  "rationale": "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [],
+    "questions": 0,
+    "has_first_person_event": true,
+    "has_explicit_candidate_event": true,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": true,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b504e6000000001d014514.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "341c4b884a6ca4a3671ffeda3eea6ef9a088d104",
@@ -20,7 +37,7 @@
       "excerpt": "第一次Java正式面试。",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "第一次Java正式面试。 问了： 1有没有用linux部署。 2，SQL关联查询语句，我知道怎么查，但是都是用到的时候去查语句，所以这次面试挂了。 3，怎么回滚MySQL 4，怎么操作MySQL 接下来手搓SQL语句，刻在DNA里😀继续加油"
+      "semantic_excerpt": "第一次Java正式面试。\n问了：\n1有没有用linux部署。\n2，SQL关联查询语句，我知道怎么查，但是都是用到的时候去查语句，所以这次面试挂了。\n3，怎么回滚MySQL\n4，怎么操作MySQL\n接下来手搓SQL语句，刻在DNA里😀继续加油"
     }
   },
   "checks": [
@@ -41,8 +58,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +73,11 @@
     }
   ],
   "limitations": [
-    "The available Source evidence does not establish a bounded interview event; retain pending.",
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "de03a484494936608a7515f1727bbb12ca970d04ff9279c00c79d1fd34d77335"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "4658ba464f414b5c18b8e0b03f3dd52736f0c6b5c2a3df3f89156845ee9fff9f"
 }

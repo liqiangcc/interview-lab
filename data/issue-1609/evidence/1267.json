@@ -7,8 +7,87 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "550b6999324a78dccf210674d48eef5b54aed53932ed7b1ff8472ed84e912536",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source indicates multiple independent processes, but does not provide separately reviewable bounded event evidence for every process; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "multi-company-or-process",
+      "question-list-only",
+      "outcome-or-offer-only",
+      "no-first-person-event"
+    ],
+    "questions": 5,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": false,
+    "outcome_signal": true,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": true,
+    "multi_signal": true,
+    "case_segments": [
+      {
+        "case_key": "bytedance-process",
+        "anchor": "字节",
+        "line": 2,
+        "locator": "artifact-line:2#offset:2-4",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:字节"
+      },
+      {
+        "case_key": "meituan-process",
+        "anchor": "美团",
+        "line": 5,
+        "locator": "artifact-line:5#offset:2-4",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:美团"
+      },
+      {
+        "case_key": "xiaomi-process",
+        "anchor": "小米",
+        "line": 6,
+        "locator": "artifact-line:6#offset:2-4",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:小米"
+      },
+      {
+        "case_key": "kuaishou-process",
+        "anchor": "快手",
+        "line": 3,
+        "locator": "artifact-line:3#offset:2-4",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:快手"
+      },
+      {
+        "case_key": "didi-process",
+        "anchor": "滴滴",
+        "line": 6,
+        "locator": "artifact-line:6#offset:8-10",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:滴滴"
+      },
+      {
+        "case_key": "shopee-process",
+        "anchor": "虾皮",
+        "line": 6,
+        "locator": "artifact-line:6#offset:5-7",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:虾皮"
+      },
+      {
+        "case_key": "xiaohongshu-process",
+        "anchor": "小红书",
+        "line": 4,
+        "locator": "artifact-line:4#offset:2-5",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:小红书"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68bacb0c000000001c03d8f5.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "c9f04accf7a7b9d17dbf2148d51d3bf0ff6b5aa4",
@@ -20,7 +99,7 @@
       "excerpt": "秋招进度...",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "秋招进度... 1.字节三面挂.. 2.快手2+1到HR面 3.小红书2+1+1到主管面 4.美团一面挂.. 5.小米、虾皮、滴滴简历挂.."
+      "semantic_excerpt": "秋招进度...\n1.字节三面挂..\n2.快手2+1到HR面\n3.小红书2+1+1到主管面\n4.美团一面挂..\n5.小米、虾皮、滴滴简历挂.."
     }
   },
   "checks": [
@@ -41,8 +120,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source indicates multiple independent processes, but does not provide separately reviewable bounded event evidence for every process; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +135,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source indicates multiple independent processes, but does not provide separately reviewable bounded event evidence for every process; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "e72e7d0a3c3caf9053107d3bd41f7cdaf844538c655caf9cddb29966bf25d30b"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "4714e0d053893bd2397e585c782d0adaceceb50e7840d2e844c44945b7542e3d"
 }

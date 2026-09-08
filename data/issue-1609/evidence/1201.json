@@ -7,8 +7,37 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "4121a361192045125653bd7e6b460345737d777ec89e395e65b2ec6d0b76d3e8",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 0,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": true,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": [
+      {
+        "case_key": "baidu-process",
+        "anchor": "百度",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-2",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:百度"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b05b3d000000001d02312f.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "8875751983aa710e1dd919246040dd137df0d677",
@@ -20,7 +49,7 @@
       "excerpt": "百度的AI面试像💩一样又臭又长 完全不考虑求职者的嗓子和状态 进入前只写了有哪些部分 以为后面的视频一个一道 没想到讲完一个有又一个又一个又一个 没完没了 感情你们搞ai面试是因为面试官也没办法熬这么久是吗 哪有考虑求职者的感受吗",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "百度的AI面试像💩一样又臭又长 完全不考虑求职者的嗓子和状态 进入前只写了有哪些部分 以为后面的视频一个一道 没想到讲完一个有又一个又一个又一个 没完没了 感情你们搞ai面试是因为面试官也没办法熬这么久是吗 哪有考虑求职者的感受吗 系统也非常不稳定 平时没啥事的网络 动不动就崩溃 或者是点完开始答题之后没有出现答题时间的那个白色按钮 答了不知道多久之后 发现后面还有情景模拟和未来规划（btw未来规划前面明明出现过这道题了神经）我选择直接退出 这份工作不要也罢 反正也不见得入职后会有多好 不过也是天天加班卷生卷死罢了 说到这个里面的很多问题也非常的无厘头 比如“如果发现入职后岗位和预期岗位不同 你会怎么处理” 又比如好几道和加班相关的 已经不想回忆了 一句话总结就是面个AI精力已经耗尽 谁爱去谁去吧 大家有没有参加过百度AI面的 可以来讨论一下"
+      "semantic_excerpt": "百度的AI面试像💩一样又臭又长 完全不考虑求职者的嗓子和状态 进入前只写了有哪些部分 以为后面的视频一个一道 没想到讲完一个有又一个又一个又一个 没完没了 感情你们搞ai面试是因为面试官也没办法熬这么久是吗 哪有考虑求职者的感受吗\n系统也非常不稳定 平时没啥事的网络 动不动就崩溃 或者是点完开始答题之后没有出现答题时间的那个白色按钮\n答了不知道多久之后 发现后面还有情景模拟和未来规划（btw未来规划前面明明出现过这道题了神经）我选择直接退出 这份工作不要也罢 反正也不见得入职后会有多好 不过也是天天加班卷生卷死罢了\n说到这个里面的很多问题也非常的无厘头 比如“如果发现入职后岗位和预期岗位不同 你会怎么处理” 又比如好几道和加班相关的 已经不想回忆了 一句话总结就是面个AI精力已经耗尽 谁爱去谁去吧\n大家有没有参加过百度AI面的 可以来讨论一下"
     }
   },
   "checks": [
@@ -41,8 +70,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +85,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "8cc0397e7ba1c6f20edea253d11dfc5cab8df260f77aa222fa82af4a3b19905f"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "b238158ca862d42acc68be45e4794c5013040cc76702f63392ea7b8e835c5982"
 }

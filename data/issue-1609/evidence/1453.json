@@ -8,7 +8,24 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "b9cf1d2d2dded0cf0f8bdf77afc5d8133752fd54aa4ba922f85109b0562fd741",
   "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "rationale": "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [],
+    "questions": 7,
+    "has_first_person_event": true,
+    "has_explicit_candidate_event": true,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68e8d2ed0000000007000373.json@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "caf20f06e0e31990d9c7fbe92fd12c29ef8e4874",
@@ -20,7 +37,7 @@
       "excerpt": "\"global\": {",
       "line": 2,
       "locator": "artifact-line:2",
-      "semantic_excerpt": "招银网络Java一面，全程25分钟。 1.自我介绍，1分钟 2.项目相关问题，主要是自己来讲，介绍项目，项目中的难点，怎么解决的。6分钟 3.final，finally，finalize有什么区别 4.jvm的结构 5.慢查询及如何优化，可能我说的比较多，到第15分钟了面试官说开始做题吧。 6.非hot100，给一个字符串，判断是否可以由cm随机插入组成，比如ccmm可以是先插入一个cm再在中间插入一个cm，核心代码模式，用了5分钟 7.反问，问了面试官对我有什么建议，面试官回答了又闲聊了几分钟，25分钟结束面试。"
+      "semantic_excerpt": "招银网络Java一面，全程25分钟。\n1.自我介绍，1分钟\n2.项目相关问题，主要是自己来讲，介绍项目，项目中的难点，怎么解决的。6分钟\n3.final，finally，finalize有什么区别\n4.jvm的结构\n5.慢查询及如何优化，可能我说的比较多，到第15分钟了面试官说开始做题吧。\n6.非hot100，给一个字符串，判断是否可以由cm随机插入组成，比如ccmm可以是先插入一个cm再在中间插入一个cm，核心代码模式，用了5分钟\n7.反问，问了面试官对我有什么建议，面试官回答了又闲聊了几分钟，25分钟结束面试。"
     }
   },
   "checks": [
@@ -42,7 +59,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +73,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "750de69837276804fc3c6c961bdbd24970f897535b017367ee186ecccf336eac"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "cb91e9d3ff9e865beff627ca5114a1967578c59ffa16759303bbc3e9a7281f9e"
 }

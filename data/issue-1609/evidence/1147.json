@@ -8,7 +8,35 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "839f9d31228cf6de8c88d9e8181abd2f526619e74e310608dbe8016532e309d6",
   "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "rationale": "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event"
+    ],
+    "questions": 6,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": true,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": [
+      {
+        "case_key": "kuaishou-process",
+        "anchor": "快手",
+        "line": 1,
+        "locator": "artifact-line:1#offset:3-5",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:快手"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68a6c3ff000000001c008d95.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "924a4a72958ededf3b2593bc36f1af816cfd0d4a",
@@ -20,7 +48,7 @@
       "excerpt": "秋招-快手后端-二面",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "秋招-快手后端-二面 1.自我介绍 2.反复考打我的项目（实习没东西可说） 3.看你简历上写了熟悉这些东西，选一个你熟悉的知识 4.我选的redis，然后考点redis相关知识 5.算法题，hot100的一道动态规划（会写不会说，纯背的） 6.反问 面试官自己也表明了不喜欢考八股 太难了，我这辣鸡项目哟 快手秋招总共是三轮技术面+一轮hr"
+      "semantic_excerpt": "秋招-快手后端-二面\n1.自我介绍\n2.反复考打我的项目（实习没东西可说）\n3.看你简历上写了熟悉这些东西，选一个你熟悉的知识\n4.我选的redis，然后考点redis相关知识\n5.算法题，hot100的一道动态规划（会写不会说，纯背的）\n6.反问\n面试官自己也表明了不喜欢考八股\n太难了，我这辣鸡项目哟\n快手秋招总共是三轮技术面+一轮hr"
     }
   },
   "checks": [
@@ -42,7 +70,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +84,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "088786a3ac15be7d6253a228f098abe994d9f7d7dc9e3f49657bfa0c0fb98ef6"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "ead30df3851a601d3200d13f54a1869ae423a3b095dc328809346b7ca041b526"
 }

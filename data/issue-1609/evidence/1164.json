@@ -7,8 +7,29 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "9645865ccccfdaf0ea3b83cabb1411d33c39ef557c911a896ece503ce03a7daa",
-  "disposition": "blocked",
-  "rationale": "The available Source evidence does not establish a bounded interview event; retain pending.",
+  "disposition": "not-interview",
+  "rationale": "Exact Source is a generic question bank, recruitment/job advertisement, tutorial, written-test, or preparation resource; it does not record one candidate interview event.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event",
+      "generic-question-bank-or-job-ad",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 0,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": false,
+    "has_detailed_event": false,
+    "outcome_signal": false,
+    "resource_signal": true,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68a88fe0000000001c00f50c.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "bf7ff781a6a0bfff8bd6e96aa49347ce19d3a8ea",
@@ -20,7 +41,7 @@
       "excerpt": "救命～无业3个月陆陆续续投了很多简历都没回应",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "救命～无业3个月陆陆续续投了很多简历都没回应 珠海java真的招人吗[哭惹R][哭惹R] 求捞@同海科技"
+      "semantic_excerpt": "救命～无业3个月陆陆续续投了很多简历都没回应\n珠海java真的招人吗[哭惹R][哭惹R]\n求捞@同海科技"
     }
   },
   "checks": [
@@ -41,8 +62,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is a generic question bank, recruitment/job advertisement, tutorial, written-test, or preparation resource; it does not record one candidate interview event."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +77,11 @@
     }
   ],
   "limitations": [
-    "The available Source evidence does not establish a bounded interview event; retain pending.",
+    "Exact Source is a generic question bank, recruitment/job advertisement, tutorial, written-test, or preparation resource; it does not record one candidate interview event.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "40fc0e0ddb463cad5290d3bb2fb029890468df5d0d39c768041b2c02bdf80069"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "6c862c7f6f011b71a8db658a9aa5e4a101437516a253f0d1857a370e9dfeac59"
 }

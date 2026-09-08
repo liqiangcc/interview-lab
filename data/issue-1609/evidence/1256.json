@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "5fdd64eabaf2acc83e91c93fa89544d51f5c7045fcf4c8b1a37fe7cbbebdcbe5",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event"
+    ],
+    "questions": 8,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b9178c000000001b02060a.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "3d14a1dfc482c6cbadfb8617b98f8a4e5ade8422",
@@ -20,7 +40,7 @@
       "excerpt": "自我介绍",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "自我介绍 问项目15分钟左右 然后都是简单八股 1. HashMap和LinkedHashMap 2. java虚拟机的内存分区？哪些是线程私有的 哪些是共享的? 3. java虚拟机内存回收策略 4. synchornized和 votaile区别？synchronized实现原理 5. java线程池，运行原理 6. 进程和线程区别,进程之间通信方式 TCP UDP区别，TCP为什么要三次握手 四次挥手?不能少一次吗? 7. HTTP和HTTPS区别？http get post put 区别？ 8. 快速排序思想，时间复杂度，最坏多少？什么情况最坏?稳定吗? 手撕：实现字符串中第一个只出现一次的字符。"
+      "semantic_excerpt": "自我介绍\n问项目15分钟左右\n然后都是简单八股\n1. HashMap和LinkedHashMap\n2. java虚拟机的内存分区？哪些是线程私有的 哪些是共享的?\n3. java虚拟机内存回收策略\n4. synchornized和 votaile区别？synchronized实现原理\n5. java线程池，运行原理\n6. 进程和线程区别,进程之间通信方式\nTCP UDP区别，TCP为什么要三次握手 四次挥手?不能少一次吗?\n7. HTTP和HTTPS区别？http get post put 区别？\n8. 快速排序思想，时间复杂度，最坏多少？什么情况最坏?稳定吗?\n手撕：实现字符串中第一个只出现一次的字符。"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "514789416ebfe73d861aceb5f47ab48e30ca2b9c1eee2b2975bf61d98be8d87b"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "8dcf43437081c0e7e676dc9dfc6517b2146cae41faff890ad4822ef9e20a304f"
 }

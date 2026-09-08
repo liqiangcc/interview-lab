@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "7a16f588a2a0c4c6eeea9f1c9c606193211aa541fac86bd5c1c5bfa927284e09",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event"
+    ],
+    "questions": 13,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": true,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": true,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b912d5000000001d02565b.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "07b248062049bc2ecd2836d42298e577d3c3a9c8",
@@ -20,7 +40,7 @@
       "excerpt": "（bg双非 9硕 不是佬，玻璃心求请大家嘴下留情）",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "（bg双非 9硕 不是佬，玻璃心求请大家嘴下留情） 1.自我介绍 实习： 2.实习拷打（介绍你负责的业务模块，平台特色的点，技术突出的点） 项目 3.项目拷打（介绍一个特出的技术点） 4.秒杀里你的redis是怎么做到抗住高并发写的能力 5.reids+lua脚本性能达不到十几万的高并发，有没有考虑过 6.那你为什么要用redis+lua脚本 7.除了rabbitmq，还了解过kafka和rocketmq吗 八股 8.hashmap里的put方法的流程 9.hashmap什么时候触发扩容，扩容的过程 10.二叉树核心的优点 11.MVCC 12.mysql主从延迟和解决方案 13.mysql间隙锁概念，什么情况下会产生间隙锁 手撕：反转链表（反转的函数写出来了，但是自定义输入输出没写出来，[哭惹R][哭惹R] 力扣做多了的坏处，最后只讲了思路） 反问环节 总结：面试官人很好，不会的问题就说没事问过一个，手撕输入输出不会他就说你自己构造输入，结果还是没写出来，奈何自己编程太菜了[汗颜R]，其他八股答的七七八八，还是需要继续熟练，加油吧[皱眉R] 上午12点面完，下午看就流程结束了[汗颜R]"
+      "semantic_excerpt": "（bg双非 9硕 不是佬，玻璃心求请大家嘴下留情）\n \n1.自我介绍\n \n实习：\n2.实习拷打（介绍你负责的业务模块，平台特色的点，技术突出的点）\n \n项目\n3.项目拷打（介绍一个特出的技术点）\n4.秒杀里你的redis是怎么做到抗住高并发写的能力\n5.reids+lua脚本性能达不到十几万的高并发，有没有考虑过\n6.那你为什么要用redis+lua脚本\n7.除了rabbitmq，还了解过kafka和rocketmq吗\n \n八股\n8.hashmap里的put方法的流程\n9.hashmap什么时候触发扩容，扩容的过程\n10.二叉树核心的优点\n11.MVCC\n12.mysql主从延迟和解决方案\n13.mysql间隙锁概念，什么情况下会产生间隙锁\n \n手撕：反转链表（反转的函数写出来了，但是自定义输入输出没写出来，[哭惹R][哭惹R] 力扣做多了的坏处，最后只讲了思路）\n \n反问环节\n \n总结：面试官人很好，不会的问题就说没事问过一个，手撕输入输出不会他就说你自己构造输入，结果还是没写出来，奈何自己编程太菜了[汗颜R]，其他八股答的七七八八，还是需要继续熟练，加油吧[皱眉R]\n \n上午12点面完，下午看就流程结束了[汗颜R]"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "108004b3686fa5caebdfe315f3b86f82a0c46b9fdcf90d132ec42c1d57751b7c"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "aa73fdfd4d3a0c8da88145d581e562816b5e2ce7ff7085bb543cbe53acb23a1f"
 }

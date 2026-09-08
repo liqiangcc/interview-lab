@@ -8,7 +8,24 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "5938797541ae095a23e7bec87988834c10cf0ab4094aa7138defa7ba7306e1b3",
   "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "rationale": "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [],
+    "questions": 0,
+    "has_first_person_event": true,
+    "has_explicit_candidate_event": true,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68aed790000000001b037ec1.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "78e7f87e65fac3575e15b72fef657f15c47b4a50",
@@ -20,7 +37,7 @@
       "excerpt": "面试官看着挺年轻，会引导我的思路，感觉比较考察线上排查问题和解决问题的能力，还有实际的代码能力.",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "面试官看着挺年轻，会引导我的思路，感觉比较考察线上排查问题和解决问题的能力，还有实际的代码能力. 反问为什么没有手撕[失望R] 面试官最后一句：谢谢你的时间[失望R]"
+      "semantic_excerpt": "面试官看着挺年轻，会引导我的思路，感觉比较考察线上排查问题和解决问题的能力，还有实际的代码能力.\n反问为什么没有手撕[失望R]\n面试官最后一句：谢谢你的时间[失望R]"
     }
   },
   "checks": [
@@ -42,7 +59,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +73,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "ba5b65bcc88d3fd2058c0f8ca6eb19639c3159995952e6bb98c1b60a0663f875"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "e4ffac423f06bb5b3ba42bbcc0d14e33cbdaeb5a0d6de1e9759bda4a34d05ff4"
 }

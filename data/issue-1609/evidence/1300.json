@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "fa461a7ee225c50d5190a12b524361da5c0ced9c1071bc1e38b7c7b618f672b0",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event"
+    ],
+    "questions": 9,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68c2f9a8000000001d02803d.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "44a8cbea4a4e0c4fb31cd5c99e141a776fa76a96",
@@ -20,7 +40,7 @@
       "excerpt": "csig，一个小时后已过，大概率聊了二十几分钟，主要围绕做过的东西",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "csig，一个小时后已过，大概率聊了二十几分钟，主要围绕做过的东西 1.介绍项目 2.echarts和three.js的实现原理是什么？实现echarts之类的数据可视化功能，除了canvas还有什么？ 3.项目中大模型相关的SSE是怎么做的？ 4.Websocket中1xx相关的状态码代表什么意思 5.tailwind和其他样式方案的区别 6.缓存和懒加载是怎么实现的？不使用lazy这个属性来实现懒加载，怎么做？控制缓存的http头有哪些 7.事件循环机制，nodejs和浏览器环境的有什么区别 8.路由的实现有什么方案，react router是如何实现的？history方案是基于哪些api，hash方案的监听是基于哪个api 9.手撕：节流，分割银行卡号；判断是否为对称二叉树"
+      "semantic_excerpt": "csig，一个小时后已过，大概率聊了二十几分钟，主要围绕做过的东西\n \n1.介绍项目\n2.echarts和three.js的实现原理是什么？实现echarts之类的数据可视化功能，除了canvas还有什么？\n3.项目中大模型相关的SSE是怎么做的？\n4.Websocket中1xx相关的状态码代表什么意思\n5.tailwind和其他样式方案的区别\n6.缓存和懒加载是怎么实现的？不使用lazy这个属性来实现懒加载，怎么做？控制缓存的http头有哪些\n7.事件循环机制，nodejs和浏览器环境的有什么区别\n8.路由的实现有什么方案，react router是如何实现的？history方案是基于哪些api，hash方案的监听是基于哪个api\n9.手撕：节流，分割银行卡号；判断是否为对称二叉树"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "170de46266100a1aecf132874ef4ea660bc7295b25e97574fe3d7ac4dcd0678c"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "282cd212817dafaae1cc94a593e417cb6ac30d9b0d29ee799c70a5f9580f0580"
 }

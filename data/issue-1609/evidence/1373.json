@@ -8,7 +8,24 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "213e6db6b9f568c98e60fade345416c193120584a49212cde5479fe8bc651dc6",
   "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "rationale": "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [],
+    "questions": 6,
+    "has_first_person_event": true,
+    "has_explicit_candidate_event": true,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": true,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68d149ce000000000e025490.json@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "8a77536580622106f004208176b96e810cddd752",
@@ -20,7 +37,7 @@
       "excerpt": "\"global\": {",
       "line": 2,
       "locator": "artifact-line:2",
-      "semantic_excerpt": "bg:末2本计科，无实习 面试官是个大哥很和蔼，全程微笑。 问题: 1、TCP UDP区别，TCP的拥塞控制 2、三次握手 为什么不是两次、四次 3、输入一个url之后的过程，DNS如何把域名解析成IP地址 4、进程和线程区别 进程之间如何切换 5、虚拟内存是干什么的，有什么好处，页表的映射机制 6、对面向对象了解什么， 封装有什么好处 项目问题 项目中的架构怎么选择的，MVM和MVVM有什么区别，项目中担任什么角色。 算法题:两数之和。 面试官看着我的简历主修课程和项目经历问的，都是你回答之后然后根据你的回答继续追问。算法题我看了说不会写，只能说一下思路 结果还说错了。最后27分钟结束。中间不会的问题我说不太清楚，算法说不会写面试官就说下来学一学什么的[笑哭R][笑哭R]反正知道自己水平也没抱希望能过，就是感受一下面试氛围积累经验啦[害羞R]"
+      "semantic_excerpt": "bg:末2本计科，无实习\n面试官是个大哥很和蔼，全程微笑。\n问题:\n1、TCP UDP区别，TCP的拥塞控制\n2、三次握手 为什么不是两次、四次\n3、输入一个url之后的过程，DNS如何把域名解析成IP地址\n4、进程和线程区别 进程之间如何切换\n5、虚拟内存是干什么的，有什么好处，页表的映射机制\n6、对面向对象了解什么， 封装有什么好处\n项目问题\n项目中的架构怎么选择的，MVM和MVVM有什么区别，项目中担任什么角色。\n算法题:两数之和。\n面试官看着我的简历主修课程和项目经历问的，都是你回答之后然后根据你的回答继续追问。算法题我看了说不会写，只能说一下思路 结果还说错了。最后27分钟结束。中间不会的问题我说不太清楚，算法说不会写面试官就说下来学一学什么的[笑哭R][笑哭R]反正知道自己水平也没抱希望能过，就是感受一下面试氛围积累经验啦[害羞R]"
     }
   },
   "checks": [
@@ -42,7 +59,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +73,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "915543873bdddf541a887c5fb3255d0bc9d5e2d6a2c3bab9bf9cf61af08b4bc3"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "194ca49d15116e7c1fdbf088f44b869307dd0a8bc810ffcb40d4e9c9e0d64212"
 }

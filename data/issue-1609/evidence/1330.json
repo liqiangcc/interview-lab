@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "9d14dd1da048b5a88cca203066281d1922f4a6bce4b21e2c82042b30bffdf43e",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event"
+    ],
+    "questions": 13,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68c926620000000013029638.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "4ab4add2ca056736a78c7b2ef44f437ddae80a43",
@@ -20,7 +40,7 @@
       "excerpt": "1. java常见的集合，以及底层实现",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "1. java常见的集合，以及底层实现 2. HashMap的扩容过程 3. 讲一下JVM的垃圾回收机制 4. 介绍TreadLocal类，什么场景需要使用TreadLocal类？ 5. 介绍volatile关键字 6. 指定重排序的话什么场景会出现问题？ 7. 什么场景需要使用volatile关键字？ 8. 讲一下MySQL的索引 9. 怎么建索引，是怎么考虑的呢？ 10. 加联合索引的时候有什么需要注意的呢？ 11. 手撕：螺旋矩阵II 20min 反问： 1. 部门业务 2. 对我的表现有什么建议"
+      "semantic_excerpt": "1. java常见的集合，以及底层实现\n2. HashMap的扩容过程\n3. 讲一下JVM的垃圾回收机制\n4. 介绍TreadLocal类，什么场景需要使用TreadLocal类？\n5. 介绍volatile关键字\n6. 指定重排序的话什么场景会出现问题？\n7. 什么场景需要使用volatile关键字？\n8. 讲一下MySQL的索引\n9. 怎么建索引，是怎么考虑的呢？\n10. 加联合索引的时候有什么需要注意的呢？ 11. 手撕：螺旋矩阵II 20min\n反问： 1. 部门业务 2. 对我的表现有什么建议"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "bea8f9034577317ce04a7a2fb6a9c28f975eda429f78e918dee12ce726b31ec7"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "42702ac7ad9ce1e01ee1a740e3352dee683da9615c5ec4f7c7a72e556266b512"
 }

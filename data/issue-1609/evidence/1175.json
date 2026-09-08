@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "22b9d9a6f30debc0cc20039d447ddb8916cc3b507690f811e181a06e07ea5839",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 0,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": true,
+    "resource_signal": true,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68ac2d19000000001d0236f3.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "f996939c6b1656afc3fa458cdcaa49cb7febf8d5",
@@ -20,7 +40,7 @@
       "excerpt": "这份来自粉丝投稿的字节 Java 压力面，精准还原了大厂面试的 “硬核逻辑”：面试官完全跳出纯概念考察，全程围绕 “真实业务场景 + 技术落地细节” 展开，核心特点可总结为三点：",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "这份来自粉丝投稿的字节 Java 压力面，精准还原了大厂面试的 “硬核逻辑”：面试官完全跳出纯概念考察，全程围绕 “真实业务场景 + 技术落地细节” 展开，核心特点可总结为三点： 一是追问极致细节，拒绝模糊表述。从 JVM 的 ZGC 停顿时间（要具体毫秒数）、线程池核心参数依据（关联压测 CPU 利用率），到缓存延迟双删的时间设定（需匹配接口耗时），每类问题都要求用数据、工具命令、源码逻辑支撑，比如明确问 Spring 事务源码中TransactionInterceptor的invoke方法处理逻辑，考察是否真的读过源码、做过实战。 二是聚焦极端场景，考验风险兜底能力。高频针对 “缓存删失败重试策略”“Redis 主从切换数据丢失防护”“热点用户缓存隔离” 等极端情况追问，比如质疑延迟双删时间是否合理、大 V 用户请求集中的节点防护方案，本质是考察高并发系统设计中 “防崩溃” 的思维，避免候选人只谈理想方案、忽略实际风险。 三是绑定业务落地，区分 “背题” 与 “实战”。无论是推荐接口优化（要求说清 Caffeine 缓存命中率变化、索引字段顺序影响），还是短视频推荐接口设计（需关联用户等级限流、非核心标签降级），都要求技术方案与业务场景强绑定，比如线程池参数要结合推荐系统的 IO / 计算密集属性，而非套用 “CPU 核数 ×2” 的通用公式。 整体来看，字节这类压力面的核心是筛选 “能解决真实问题的开发者”—— 不仅要懂技术原理，更要能说清 “为什么这么选、实际效果如何、风险怎么扛”，这也给 Java 后端求职者提了醒：面试准备需跳出 “背八股”，多积累带数据、带工具、带风险处理的实战案例。"
+      "semantic_excerpt": "这份来自粉丝投稿的字节 Java 压力面，精准还原了大厂面试的 “硬核逻辑”：面试官完全跳出纯概念考察，全程围绕 “真实业务场景 + 技术落地细节” 展开，核心特点可总结为三点：\n \n一是追问极致细节，拒绝模糊表述。从 JVM 的 ZGC 停顿时间（要具体毫秒数）、线程池核心参数依据（关联压测 CPU 利用率），到缓存延迟双删的时间设定（需匹配接口耗时），每类问题都要求用数据、工具命令、源码逻辑支撑，比如明确问 Spring 事务源码中TransactionInterceptor的invoke方法处理逻辑，考察是否真的读过源码、做过实战。\n \n二是聚焦极端场景，考验风险兜底能力。高频针对 “缓存删失败重试策略”“Redis 主从切换数据丢失防护”“热点用户缓存隔离” 等极端情况追问，比如质疑延迟双删时间是否合理、大 V 用户请求集中的节点防护方案，本质是考察高并发系统设计中 “防崩溃” 的思维，避免候选人只谈理想方案、忽略实际风险。\n \n三是绑定业务落地，区分 “背题” 与 “实战”。无论是推荐接口优化（要求说清 Caffeine 缓存命中率变化、索引字段顺序影响），还是短视频推荐接口设计（需关联用户等级限流、非核心标签降级），都要求技术方案与业务场景强绑定，比如线程池参数要结合推荐系统的 IO / 计算密集属性，而非套用 “CPU 核数 ×2” 的通用公式。\n \n整体来看，字节这类压力面的核心是筛选 “能解决真实问题的开发者”—— 不仅要懂技术原理，更要能说清 “为什么这么选、实际效果如何、风险怎么扛”，这也给 Java 后端求职者提了醒：面试准备需跳出 “背八股”，多积累带数据、带工具、带风险处理的实战案例。"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "0bc3fb4aaddf7c72a56efb9950f74419d3044f2f6de594b5177b031c36730421"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "0a5a7fca6d55283bf518b6f57bad2337def9e21014d38d5ad5682aeef9854644"
 }

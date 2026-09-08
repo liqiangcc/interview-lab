@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "035ee0376089340f65729740fe07077a7ae933fff14bc75ab9e8a1c769820bcb",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event"
+    ],
+    "questions": 9,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": true,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b2bb7c000000001d00459e.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "28275696cfdb9e5f5ffde78653468da4836b411f",
@@ -20,7 +40,7 @@
       "excerpt": "开头自我介绍，问下base地要求，问下在哪里学习的知识",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "开头自我介绍，问下base地要求，问下在哪里学习的知识 1.项目中有什么自己比较了解的点？ 讲了下分布式锁，threadlocal，之后项目没怎么问，开始主攻八股 2.java的集合都有什么，其中有什么线程安全的，通过什么实现线程安全的 3.讲一下线程池参数，拒绝策略都有什么 4.java的锁都有什么，底层分别是什么 5.springboot启动流程（不会） 6.mysql用过什么索引，怎么知道用没用索引，讲一下索引底层原理，b+树优势，数据库部署都有哪些方式 7.怎么进行数据库和缓存的同步的，怎么保证一致性，讲一下分库分表 8.redis缓存三兄弟，常用数据类型，hll是干什么的 9.jvm用过什么启动参数，jvm用过什么看性能的工具（都不会） 场景题：给一个高并发接口，怎么优化 手撕：k个一组翻转链表 ————————————————————— 应该还有些简单的问题回答完就忘了，感觉问的都不深对我来说刚好[偷笑R]，范围倒是挺广，许愿二面"
+      "semantic_excerpt": "开头自我介绍，问下base地要求，问下在哪里学习的知识\n1.项目中有什么自己比较了解的点？\n讲了下分布式锁，threadlocal，之后项目没怎么问，开始主攻八股\n2.java的集合都有什么，其中有什么线程安全的，通过什么实现线程安全的\n3.讲一下线程池参数，拒绝策略都有什么\n4.java的锁都有什么，底层分别是什么\n5.springboot启动流程（不会）\n6.mysql用过什么索引，怎么知道用没用索引，讲一下索引底层原理，b+树优势，数据库部署都有哪些方式\n7.怎么进行数据库和缓存的同步的，怎么保证一致性，讲一下分库分表\n8.redis缓存三兄弟，常用数据类型，hll是干什么的\n9.jvm用过什么启动参数，jvm用过什么看性能的工具（都不会）\n \n场景题：给一个高并发接口，怎么优化\n手撕：k个一组翻转链表\n \n—————————————————————\n应该还有些简单的问题回答完就忘了，感觉问的都不深对我来说刚好[偷笑R]，范围倒是挺广，许愿二面"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "02a25728ed152aa269640d5af0c42ed38619d6ee35bbfc7e595cc1e23e63c51f"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "26a5ce18a66ef1b2bcb2ce2c1f18dc504d5277c09da0056a5adcd4d54abac0fb"
 }

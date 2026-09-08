@@ -8,7 +8,36 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "7bd2eacf9d3212f3152c66c5d2880edc2b54749f0b4248166c7f5c2c8004c7d8",
   "disposition": "blocked",
-  "rationale": "The available Source evidence does not establish a bounded interview event; retain pending.",
+  "rationale": "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 0,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": false,
+    "has_detailed_event": false,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": [
+      {
+        "case_key": "meituan-process",
+        "anchor": "美团",
+        "line": 3,
+        "locator": "artifact-line:3#offset:0-2",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:美团"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b65baf000000001c00f01e.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "dd9fdfa47584b81ffea7a7865adbe7310eceea82",
@@ -20,7 +49,7 @@
       "excerpt": "我敲",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "我敲 没人告诉我 美团面试这么难啊啊啊啊"
+      "semantic_excerpt": "我敲\n没人告诉我\n美团面试这么难啊啊啊啊"
     }
   },
   "checks": [
@@ -42,7 +71,7 @@
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +85,11 @@
     }
   ],
   "limitations": [
-    "The available Source evidence does not establish a bounded interview event; retain pending.",
+    "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "588ef647360b5907474b47956973a49129e46c0267bbca116e68faeb566e08e0"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "17e2a55939adbe9fd87f4cef2ea5e3941513831dbeb459bef4912432cd31819e"
 }

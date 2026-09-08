@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "b95dee285963df2ccb5f81f28c8908238859bcebcef43254aa75b676b6d95e44",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event"
+    ],
+    "questions": 4,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": false,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68a71103000000001d035790.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "08847ce1456b88945f09f2b839d6de6da08102a4",
@@ -20,7 +40,7 @@
       "excerpt": "tl：8.11投递",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "tl：8.11投递 8.13一面 8.15约二面 8.18二面 当天约三面 8.21三面 当天约hr面"
+      "semantic_excerpt": "tl：8.11投递\n8.13一面\n8.15约二面\n8.18二面\n当天约三面\n8.21三面\n当天约hr面"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "878195722e14e080bad4b5c76e87824af4819ec0477645d8791ef4693426f5df"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "4e702980d67bf924ed4331b7c435aa3922672400ec2688aee8085472a0973386"
 }

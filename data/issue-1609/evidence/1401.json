@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "c2cac39e5a814ac1669eb073bbad4146bc0084aca2603be65de4a05db3a2f0c2",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event"
+    ],
+    "questions": 15,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68d682d00000000011014a18.json@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "45d960d888ac16fc506537ad0117a03f408fa78f",
@@ -20,7 +40,7 @@
       "excerpt": "\"global\": {",
       "line": 2,
       "locator": "artifact-line:2",
-      "semantic_excerpt": "岗位：后端研发工程师（出行方向-北京） 1、自我介绍 2、手撕：力扣138. 随机链表的复制 3、spring的IOC原理是什么 4、MySQL的联合索引是什么，和单独建几个索引有什么区别 5、三个SQL语句，分别判断会不会用索引，联合索引a、b、c - b=1 and a=2 - c=1 - a=1 and b>3 and c=4 6、你刚刚说第一个不会用索引，所以我们在写语句的时候还需要专门去关注他的顺序吗（不用，会优化） 7、在实际场景中，什么时候用abc的联合索引，什么时候单独建3个索引 8、除了redis缓存，还有哪些缓存方式 9、什么情况下会用到redis缓存 10、如何保证缓存和数据库的数据一致性 11、讲实习项目，接到任务后如何分析需求的 12、有没有对比过其他的日志库 13、有关注过比较新的日志方案吗，和自己写日志库对比，有什么优劣，用新的日志方案替换当前的，成本是怎么样的 14、介绍另一个实习项目，如果服务重启了，你的定时巡检任务是不是就丢了？如何解决呢？ 15、反问 面的一般，感觉不会有后续了[扶墙R]"
+      "semantic_excerpt": "岗位：后端研发工程师（出行方向-北京）\n1、自我介绍\n2、手撕：力扣138. 随机链表的复制\n3、spring的IOC原理是什么\n4、MySQL的联合索引是什么，和单独建几个索引有什么区别\n5、三个SQL语句，分别判断会不会用索引，联合索引a、b、c\n- b=1 and a=2\n- c=1\n- a=1 and b>3 and c=4\n6、你刚刚说第一个不会用索引，所以我们在写语句的时候还需要专门去关注他的顺序吗（不用，会优化）\n7、在实际场景中，什么时候用abc的联合索引，什么时候单独建3个索引\n8、除了redis缓存，还有哪些缓存方式\n9、什么情况下会用到redis缓存\n10、如何保证缓存和数据库的数据一致性\n11、讲实习项目，接到任务后如何分析需求的\n12、有没有对比过其他的日志库\n13、有关注过比较新的日志方案吗，和自己写日志库对比，有什么优劣，用新的日志方案替换当前的，成本是怎么样的\n14、介绍另一个实习项目，如果服务重启了，你的定时巡检任务是不是就丢了？如何解决呢？\n15、反问\n \n面的一般，感觉不会有后续了[扶墙R]"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "68b7b8cb8da27f1641f4d42fd0244ec6134bcb7a0a6f1e1cd60a59c68afbab37"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "975a4009b1d25c79d8fda0b9d17334690ecea0160e89d3f582ff030dd7b8c937"
 }

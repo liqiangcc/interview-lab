@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "9025c6c0b2d96879cca8394f608e6928d665315dd1910cb737a9df22fb3c531c",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 0,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b2a592000000001b03e355.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "103b22d1b6d23565046d2b8223104a4f39c51a10",
@@ -20,7 +40,7 @@
       "excerpt": "五年经验，这次被迫离职，记录一下面经过程",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "五年经验，这次被迫离职，记录一下面经过程 自我介绍+项目介绍 项目中有过安全问题解决吗，是否做过数据加密 mq消息丢失如何处理 mq如何保证消息防重复消费 redis缓存穿透和雪崩 说一下redis分布式锁 redis过期策略 mysql如何优化性能 mysql分库分表方案 mysql缓存失效场景 谈一下Java中的集合 arraylist和linkedlist区别？使用场景？ 你在项目中如何使用集合的？ hashmap如何解决hash冲突的 spring bean的生命周期 springmvc执行流程 mvc中一个接口过来之后会经过哪些程序 spring循环依赖问题，如何解决 说一下spring三级缓存 spring bean的注入方式 介绍一下beanfactory 说一下es倒排索引 反问环节"
+      "semantic_excerpt": "五年经验，这次被迫离职，记录一下面经过程\n自我介绍+项目介绍\n项目中有过安全问题解决吗，是否做过数据加密\nmq消息丢失如何处理\nmq如何保证消息防重复消费\nredis缓存穿透和雪崩\n说一下redis分布式锁\nredis过期策略\nmysql如何优化性能\nmysql分库分表方案\nmysql缓存失效场景\n谈一下Java中的集合\narraylist和linkedlist区别？使用场景？\n你在项目中如何使用集合的？\nhashmap如何解决hash冲突的\nspring bean的生命周期\nspringmvc执行流程\nmvc中一个接口过来之后会经过哪些程序\nspring循环依赖问题，如何解决\n说一下spring三级缓存\nspring bean的注入方式\n介绍一下beanfactory\n说一下es倒排索引\n反问环节"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "dc5a61f83143567a707af739ea2b47fd3a6950e5c44e9a55fb7fe373e3c76ed8"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "83d1f4234d8463398451144d3eda5b990b6c94211a9d74c2ae29abec257fb900"
 }

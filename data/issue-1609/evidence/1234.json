@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "525ceafcc3d37c5945e166b32581b141cf5400de4578366340d75bf7156022d3",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 0,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b53f35000000001d00d881.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "0c086bbd0a681762a75d7276c960cc92ad1f6497",
@@ -20,7 +40,7 @@
       "excerpt": "自我介绍",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "自我介绍 实习拷打 与大模型对话，数据交互的基本流程 如何获取当前对话的上下文 模型在给用户传输数据的主要方式 流式输出对应的请求有几次 多模态返回以什么结构或方式返回给用户 go和c的区别 gc的主要算法 go的并发手段有哪些 一道思维题（题目忘了） 算法题 三数之和"
+      "semantic_excerpt": "自我介绍\n实习拷打\n与大模型对话，数据交互的基本流程\n如何获取当前对话的上下文\n模型在给用户传输数据的主要方式\n流式输出对应的请求有几次\n多模态返回以什么结构或方式返回给用户\ngo和c的区别\ngc的主要算法\ngo的并发手段有哪些\n一道思维题（题目忘了）\n算法题 三数之和"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "27e9897c83d469511db63166a1495cda1d9d632dd18b2ba4592d3228382b0df8"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "5bcf40eda10afc892b0eb8b02f9972943a70a1c80e249ac008185c6efab5ce1e"
 }

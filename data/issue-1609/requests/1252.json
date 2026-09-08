@@ -1,32 +1,21 @@
 {
-  "schema_version": "issue-1609-boundary-review-request.v1",
-  "request_id": "issue-1609-boundary-1252",
+  "schema_version": "source-note-boundary-review-transition.v1",
+  "transition_id": "issue-1609-boundary-1252-review-1",
   "repository": "liqiangcc/interview-lab",
-  "parent_issue": 1605,
   "issue_number": 1252,
-  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1252",
   "source_note_id": "xhs-note:68b85f51000000001c0338c8",
   "expected_body_sha256": "b3654bee03d6163a63e48b013165c5a4965ac17737117e50c862f55fc1698393",
   "expected_boundary_status": "pending",
   "expected_source_revision_id": "xhs-note:68b85f51000000001c0338c8:snapshot-95b77bb26104",
-  "expected_source_repository": "liqiangcc/xhs",
+  "expected_manifest_sha256": null,
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
-  "evidence_file": "evidence/1252.json",
-  "source_evidence": {
-    "ref": "liqiangcc/xhs:note_desc/68b85f51000000001c0338c8.txt@95b77bb261048059846273688e4b90a2e108b437",
-    "git_blob_sha": "7141782311a7f5a3b7d9086023147f329914f953",
-    "kind": "text_projection",
-    "provenance": "source_projection",
-    "byte_size": 2531,
-    "content_sha256": "4b958ab6d37c0334763f424228ef753a6a9dafc17f34a2ac9bec4764fff66a39",
-    "excerpt": {
-      "excerpt": "🔥蚂蚁金服Java外包面试一轮过",
-      "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "🔥蚂蚁金服Java外包面试一轮过 💡学员刚刚结束蚂蚁金服Java外包岗面试，一轮直接通过！迫不及待来和大家分享这次经历和准备技巧，希望能帮到正在备战大厂面试的你~ 📌 学员背景 非985/211本科，3年Java开发经验（2年外包经历），主要做电商和金融项目。这次面试是通过内推获得的社招机会。 📌 面试流程 1️⃣ 在线笔试（24小时内完成） 题目：实现一个本地缓存，要求： - 缓存用户信息（User对象） - 30分钟自动过期 - 必须考虑多线程安全 - 禁止用第三方库💡我的思路：用HashMap+同步块+定时任务（面试官反馈方案合理） 2️⃣ 电话技术面（55分钟） 疯狂问基础！覆盖： - JVM内存模型（堆/栈/方法区） - HashMap和ConcurrentHashMap区别 - Redis缓存雪崩/穿透解决方案 - Spring Bean生命周期 - MySQL索引优化（聚簇索引/回表查询） - 分布式事务二段提交 3️⃣ 编程加面（30分钟） 现场写代码： - 用快排解决TopK问题（数组第10大的数） - 逆时针打印矩阵💡关键点：面试官更关注边界处理和多线程安全意识！ 🚀 我的备战策略 1️⃣ 八股文深度梳理 - 每天啃2个核心知识点（JVM/并发/MySQL/Spring） - 用思维导图串联知识体系（比如从HashMap延伸到ConcurrentHashMap再到锁机制） 2️⃣ 代码实战重点 - 重点刷链表/树/排序算法 - 多线程场景必练！(线程池/锁/原子类) - 所有代码手写3遍以上（面试真的限时手写） 3️⃣ 项目包装技巧 - 把外包项目包装成高并发场景（如：“我处理的系统日订单100万+”） - 重点突出：技术选型理由 + 踩坑解决方案 ✨ 面试官透露的加分项 ✅ 遇到不会的问题时：先说思路，再求提示（比如我问了“Redis持久化选RDB还是AOP”） ✅ 聊项目时：用STAR法则（场景-任务-行动-结果） ✅ 主动提问：我问了“团队技术栈和外包转正机会” 💬 最后想说： 学历一般真的没关系！蚂蚁更看重基础扎实（JVM/并发/MySQL必杀）和代码能力。冲就完了！ ✨ P.S. 记得面试时保持自信！即使问题不会也要展示思考过程，通过后觉得一切值得~ 希望你们也能收到心仪的offer！"
-    }
+  "decision": "single-interview",
+  "reviewed_at": "2026-09-08T00:00:00.000Z",
+  "reviewer_kind": "ai-assisted",
+  "review_evidence": {
+    "repository": "liqiangcc/interview-lab",
+    "issue_number": 1252,
+    "comment_id": 1609001252
   },
   "checks": [
     {
@@ -47,7 +36,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -61,9 +50,8 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
-    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
-  ],
-  "evidence_sha256": "b4ed1428750aa8b432cddc55c861342d47aaa4b71ef076f73c4224682a0bb97b",
-  "request_sha256": "4206d71008a93815ed4fd6db71570b5c45f35daba676b029570e59bc37b2ef28"
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+    "Candidate only: review_evidence.comment_id is a deterministic placeholder; no live evidence comment was created.",
+    "No body PATCH, label write, or InterviewNote materialization was performed; controller authorization is required."
+  ]
 }

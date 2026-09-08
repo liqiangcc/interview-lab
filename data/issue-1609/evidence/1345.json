@@ -8,7 +8,26 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "0a504bd8a36b4c328f0850f121425e7ddee2615bc8a1cc92942d7837a438b6b4",
   "disposition": "blocked",
-  "rationale": "The available Source evidence does not establish a bounded interview event; retain pending.",
+  "rationale": "The available Source evidence does not establish a bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event"
+    ],
+    "questions": 0,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": true,
+    "has_bounded_event": false,
+    "has_detailed_event": false,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68cb8936000000001201c69d.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "32ad19be0b5e8bd1a288213a796ce7e8bf0cba40",
@@ -20,7 +39,7 @@
       "excerpt": "前段时间面的高开，过了但薪资没谈拢😔有需要的朋友自取~",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "前段时间面的高开，过了但薪资没谈拢😔有需要的朋友自取~ 心得：多面几家，做好复盘，你就会发现每家问的都差不多，心里就有底气了 And…主包最近没更新，是因为上班了，新环境新同事新的工作模式，适应中🤣🤣🤣"
+      "semantic_excerpt": "前段时间面的高开，过了但薪资没谈拢😔有需要的朋友自取~\n心得：多面几家，做好复盘，你就会发现每家问的都差不多，心里就有底气了\nAnd…主包最近没更新，是因为上班了，新环境新同事新的工作模式，适应中🤣🤣🤣"
     }
   },
   "checks": [
@@ -42,7 +61,7 @@
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. The available Source evidence does not establish a bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +75,11 @@
     }
   ],
   "limitations": [
-    "The available Source evidence does not establish a bounded interview event; retain pending.",
+    "The available Source evidence does not establish a bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "62752cfea221b50e9ab95db6e72119dd63781844be5ace97815a8b5115d8084a"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "0d04f152632126a840c93dacab75ab1c7b256be9cc949a8a153d8b51ec1c469d"
 }

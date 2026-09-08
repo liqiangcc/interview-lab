@@ -7,8 +7,37 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "7bbd195c34a2a58ef01d34c47479f760fc233fa51f3fe53586257098a99beb37",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 0,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": [
+      {
+        "case_key": "jd-process",
+        "anchor": "京东",
+        "line": 1,
+        "locator": "artifact-line:547#offset:29-31",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:京东"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68e8ad8c000000000503a014.json@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "7a98214fc9f7901d72999430ed3a5ba1c007ddeb",
@@ -20,7 +49,7 @@
       "excerpt": "\"global\": {",
       "line": 2,
       "locator": "artifact-line:2",
-      "semantic_excerpt": "京东后端一面 就是闲聊 然后讲了讲项目 摄像头也没开 也没有手撕 闲聊20分钟结束 唯一一个技术问题就是redis为什么性能高 答内存数据库"
+      "semantic_excerpt": "京东后端一面\n就是闲聊 然后讲了讲项目 摄像头也没开 也没有手撕 闲聊20分钟结束 唯一一个技术问题就是redis为什么性能高 答内存数据库"
     }
   },
   "checks": [
@@ -41,8 +70,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +85,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "80b6a7f2f52a7441cbdd515d4514bb551d9a91164fedd30f6c6dc99dc21c1fc4"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "7beaa0610ea7807717cb3ad3b64450c61d674542b634d07389ac610ad0c95df6"
 }

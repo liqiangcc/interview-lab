@@ -8,7 +8,26 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "f7b369f678db122fa05ea875b8eee5fe34c6c2b821448ef2c4c71d6c4e82b53d",
   "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "rationale": "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event"
+    ],
+    "questions": 0,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": true,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68c4db7a000000001d0220c5.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "74fff138f99c1c1d008387dedec183334cb1fb4c",
@@ -20,7 +39,7 @@
       "excerpt": "整体 50min",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "整体 50min 面试官人很好，问的问题也不难，sql 写的有点瑕疵被提醒了一下也写对了 算法也 a 出来了 八股就是很基本的八股"
+      "semantic_excerpt": "整体 50min\n面试官人很好，问的问题也不难，sql 写的有点瑕疵被提醒了一下也写对了\n算法也 a 出来了\n八股就是很基本的八股"
     }
   },
   "checks": [
@@ -42,7 +61,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +75,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "c2d3cbf00975ed3dd2614083800b6afdc57b4a0b3ba3822f8d530f39afa7e4ca"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "18455c400cafaabff5c1e42006b5ed145ac6ee46212ebcacb57ae4909a169576"
 }

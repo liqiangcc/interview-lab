@@ -8,7 +8,24 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "c811e1270fa2a1c4f461d4ee33ea8e989cd657c961a48cd2a7c53081c44b65fc",
   "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "rationale": "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [],
+    "questions": 0,
+    "has_first_person_event": true,
+    "has_explicit_candidate_event": true,
+    "has_bounded_event": true,
+    "has_detailed_event": false,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68c38179000000001b037cca.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "4f10ac8430ff59329453433642fdb89ae06c8c73",
@@ -20,7 +37,7 @@
       "excerpt": "贝壳社招软件开发",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "贝壳社招软件开发 二面挂 我猜测应该是涨幅20%触碰上限了，本来聊的也挺好的，醉了。"
+      "semantic_excerpt": "贝壳社招软件开发\n二面挂\n \n我猜测应该是涨幅20%触碰上限了，本来聊的也挺好的，醉了。"
     }
   },
   "checks": [
@@ -42,7 +59,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +73,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "9a6bf23d4d392b9655153f8b462092cafe62e8f6e656c5f568bc7a189a2c0ec3"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "79368ad8bae405b36a156e44eaeb8f4bc1e9d6e86267179610b02a021f43b6ef"
 }

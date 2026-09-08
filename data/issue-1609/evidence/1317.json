@@ -8,7 +8,24 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "d23c7a7f64615fe051a9b80bc9b0db6aab091561e1a1a7412fec849f59499659",
   "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "rationale": "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [],
+    "questions": 0,
+    "has_first_person_event": true,
+    "has_explicit_candidate_event": true,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": true,
+    "resource_signal": true,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68c6a561000000001c03e165.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "da8781f3ac7611dbacdce386b917ecc82056a7c2",
@@ -20,7 +37,7 @@
       "excerpt": "投了快一个月才被捞，cdg广告，结果开局ai拷打心都凉了",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "投了快一个月才被捞，cdg广告，结果开局ai拷打心都凉了 面试官人还是很不错的，前面问完ai其实就知道我不合适了，还是帮我查缺补漏，根据我的简历问一些相关问题，所以参考意义可能不是很大，正常应该不会问这么多知识点。并且可以看出面试官水平巨高，后端和ai都很懂"
+      "semantic_excerpt": "投了快一个月才被捞，cdg广告，结果开局ai拷打心都凉了\n面试官人还是很不错的，前面问完ai其实就知道我不合适了，还是帮我查缺补漏，根据我的简历问一些相关问题，所以参考意义可能不是很大，正常应该不会问这么多知识点。并且可以看出面试官水平巨高，后端和ai都很懂"
     }
   },
   "checks": [
@@ -42,7 +59,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +73,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "096af387b2f2828d1c96d4bf5a1b558c18c3680feb16a83ef31125ba037ac157"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "6eb52158fee835ad375cf48511e157fe32b5611e25f2210c37ca24163e1a6270"
 }

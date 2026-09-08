@@ -8,7 +8,24 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "46c060bdbe9a94aedb3434f094a63c5a4b1ccca1be3aa9286f411e493513b741",
   "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "rationale": "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [],
+    "questions": 9,
+    "has_first_person_event": true,
+    "has_explicit_candidate_event": true,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68da3412000000001301cace.json@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "80f8f522256ee901eaf214593448faa196026cee",
@@ -20,7 +37,7 @@
       "excerpt": "\"global\": {",
       "line": 2,
       "locator": "artifact-line:2",
-      "semantic_excerpt": "第二个部门的美团面试Java开发工程师二面面经 1、 是哪里人，有意愿来北京吗 2、 专业不是计算机，保研还是考研的，为什么选择来这一行呢 3、 那你觉得你和科班比有哪些优势和劣势 4、 无感刷新是什么意思？ 然后中间的问题是项目问题，这里不多说 20、 说说Java里面类加载的顺序，面试官说名词，让我排个序 21、 Tcp和udp有了解吗，是七层协议中的哪一层，主要区别是什么 22、 可以举几个相关的实际的落地场景吗 23、 mySQL有了解吗，数据库索引一般用什么数据结构，有了解过其他的索引数据结构吗 24、 有一个单机的redis，内存是50M，现在有100m的数据要去使用，你想想有哪些设计方案 手撕：斐波那契数列，要求用递归，然后说问题在哪，然后继续改善（换成了for），然后继续问问题在哪（int换成了long），然后问优化的算法的时间和空间复杂度是什么 反问。"
+      "semantic_excerpt": "第二个部门的美团面试Java开发工程师二面面经\n1、 是哪里人，有意愿来北京吗\n2、 专业不是计算机，保研还是考研的，为什么选择来这一行呢\n3、 那你觉得你和科班比有哪些优势和劣势\n4、 无感刷新是什么意思？\n然后中间的问题是项目问题，这里不多说\n20、 说说Java里面类加载的顺序，面试官说名词，让我排个序\n21、 Tcp和udp有了解吗，是七层协议中的哪一层，主要区别是什么\n22、 可以举几个相关的实际的落地场景吗\n23、 mySQL有了解吗，数据库索引一般用什么数据结构，有了解过其他的索引数据结构吗\n24、 有一个单机的redis，内存是50M，现在有100m的数据要去使用，你想想有哪些设计方案\n手撕：斐波那契数列，要求用递归，然后说问题在哪，然后继续改善（换成了for），然后继续问问题在哪（int换成了long），然后问优化的算法的时间和空间复杂度是什么\n反问。"
     }
   },
   "checks": [
@@ -42,7 +59,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +73,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "f16ba494990a61271b416e89af737a5ff755f5eb62f512327b531da96313a7fd"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "c9aa47c6f667109601900e3eb3a81885d5a545451a6f8ec9aab24219d4418745"
 }

@@ -8,7 +8,24 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "19968b25022ac5fcf34ad923a63d61b201ed1ac4773f77607d1759f29aef5669",
   "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "rationale": "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [],
+    "questions": 0,
+    "has_first_person_event": true,
+    "has_explicit_candidate_event": true,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": true,
+    "resource_signal": true,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68d25ba4000000000b03fa11.json@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "27c6b510fa600cbf7850d7ed3cf600cf49c4395d",
@@ -20,7 +37,7 @@
       "excerpt": "\"desc\": \"今天去面试，招聘信息上写着3-5年，薪资10-15。然后我问HR，你们招几年的？她说最低三年，不设上限。\\n结果我去了，面试官一通问我为什么要用spring，mybatis二级缓存开了会怎么样的等类似的问题，我当时都无语了，但我还是硬着头皮回答了。大概半小时，后面让我问完问题后，他说你能不能接受15以下？ 我靠，我11年开发经验，你在说什么兄弟？？！！\\n#java面试谈薪[话题]#\",",
       "line": 499,
       "locator": "artifact-line:499",
-      "semantic_excerpt": "今天去面试，招聘信息上写着3-5年，薪资10-15。然后我问HR，你们招几年的？她说最低三年，不设上限。 结果我去了，面试官一通问我为什么要用spring，mybatis二级缓存开了会怎么样的等类似的问题，我当时都无语了，但我还是硬着头皮回答了。大概半小时，后面让我问完问题后，他说你能不能接受15以下？ 我靠，我11年开发经验，你在说什么兄弟？？！！"
+      "semantic_excerpt": "今天去面试，招聘信息上写着3-5年，薪资10-15。然后我问HR，你们招几年的？她说最低三年，不设上限。\n结果我去了，面试官一通问我为什么要用spring，mybatis二级缓存开了会怎么样的等类似的问题，我当时都无语了，但我还是硬着头皮回答了。大概半小时，后面让我问完问题后，他说你能不能接受15以下？ 我靠，我11年开发经验，你在说什么兄弟？？！！"
     }
   },
   "checks": [
@@ -42,7 +59,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +73,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "8b2c5c02a615998a93ed7957462876b9d25fab8a2181002126d8c0c167303348"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "5be4c15f88cc7f78d568e20c0be6d424e6704392e4ac25fcbacbbffa72af5b7d"
 }

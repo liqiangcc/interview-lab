@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "cafc9c11627eece12a2c16fbc23fd9362b89a5b2c356aaa928e4be682af1073e",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event"
+    ],
+    "questions": 10,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68c2e9c3000000001d015b0e.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "50fc69ec450315917e7da2b436847a9b1130000b",
@@ -20,7 +40,7 @@
       "excerpt": "好久没整理了，业务是dataworks开发",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "好久没整理了，业务是dataworks开发 1、实习项目中怎么处理并发和保障一致性的 2、有状态机器怎么扩容 3、智力题：一个水杯5l，一个水杯6l，怎么得到1l，2l，3l，4l的水 4、多线程的实现方式 5、如何停止一个线程，优雅停机 6、synchronized和reentrantlock区别，lock()和trylock()的区别 7、怎么排查oom，相关的jvm参数有哪些 8、类冲突怎么排查和解决 手撕： 1、给一个shell脚本(遍历目录)，用java实现相关功能 2、字符串匹配，第一个字符串是abba，第二个字符串如果是abba模式则输出true"
+      "semantic_excerpt": "好久没整理了，业务是dataworks开发\n1、实习项目中怎么处理并发和保障一致性的\n2、有状态机器怎么扩容\n3、智力题：一个水杯5l，一个水杯6l，怎么得到1l，2l，3l，4l的水\n4、多线程的实现方式\n5、如何停止一个线程，优雅停机\n6、synchronized和reentrantlock区别，lock()和trylock()的区别\n7、怎么排查oom，相关的jvm参数有哪些\n8、类冲突怎么排查和解决\n手撕：\n1、给一个shell脚本(遍历目录)，用java实现相关功能\n2、字符串匹配，第一个字符串是abba，第二个字符串如果是abba模式则输出true"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "d388ccfc5bc4496eea8fdd64d702db86d89f25591f581ad7d792b0d0e97e3433"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "0285c06da60a09f244fb05c42623e95e07ee3dadfc86ed89b43430d13801300f"
 }

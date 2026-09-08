@@ -8,7 +8,33 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "a9c0f51c506ee2c399b47410022e7d62710af68da946a54255f6c7a238382422",
   "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "rationale": "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [],
+    "questions": 0,
+    "has_first_person_event": true,
+    "has_explicit_candidate_event": true,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": [
+      {
+        "case_key": "meituan-process",
+        "anchor": "美团",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-2",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:美团"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68c26a54000000001d0104a7.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "b9fbe2d2adaea1958688d4d013a405ff7d67e4f7",
@@ -20,7 +46,7 @@
       "excerpt": "美团到底招不招go学长啊[扯脸H][扯脸H]",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "美团到底招不招go学长啊[扯脸H][扯脸H] 核心本地商业后端开发，byd一面上来就问我hashMap，我寻思这不是java吗就跟面试官反馈技术栈是go和c++，然后面试官说她搞错了(此时主包已经隐隐有不详的预感)，接着拷打八股全部答出来了，聊了聊项目和实习，两道手撕也15分钟完成。。。 然后一直没动静，过了5天回到人才库[扯脸H][扯脸H][扯脸H]气笑了属于是"
+      "semantic_excerpt": "美团到底招不招go学长啊[扯脸H][扯脸H]\n \n核心本地商业后端开发，byd一面上来就问我hashMap，我寻思这不是java吗就跟面试官反馈技术栈是go和c++，然后面试官说她搞错了(此时主包已经隐隐有不详的预感)，接着拷打八股全部答出来了，聊了聊项目和实习，两道手撕也15分钟完成。。。\n \n然后一直没动静，过了5天回到人才库[扯脸H][扯脸H][扯脸H]气笑了属于是"
     }
   },
   "checks": [
@@ -42,7 +68,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +82,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "5902b74fdb9d797c0486a0f138e6a332c521e8caee3bfa29a48c76e715a9e3a0"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "55af7bd72336723a25eed4e45d8656e6a19a4e05a8e39dac3e7bc8758b25575f"
 }

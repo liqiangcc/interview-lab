@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "34dad79769d4d1cb550176fe553a1a31913ca5b280a421ec1ab224b38471b666",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event"
+    ],
+    "questions": 18,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b827bf000000001d02f001.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "9106236bff69799fc24bfec1c8c6d2c5c0bd144a",
@@ -20,7 +40,7 @@
       "excerpt": "1.自我介绍",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "1.自我介绍 2.说一下实习做的工作，技术方案是什么样的，为什么要这样设计，有其他方案吗？ 3.如何存储上一次的数据(实习相关) 4.手撕 爬楼梯 5.HTTP和HTTPS的区别 6.什么是证书，证书作用在哪个阶段 7.MySQL的事务隔离级别 8.系统出现OOM如何进行排查 9.说一下ThreadLocal的原理，应用场景 10.Redis是多线程还是单线程 11.说一下Redis的性能为什么好 12.Redis的数据结构 13.对比一下RabbitMQ和Kafka 14.消费者消息处理失败怎么办，Kafka有死信队列吗 15.线程池的核心参数，如何根据不同应用场景进行设置 16.说一下什么是IO密集型什么是CPU密集型 17.为什么核心线程数要按照这两种方式设置不同的数量 18.说一下什么是倒排索引"
+      "semantic_excerpt": "1.自我介绍\n2.说一下实习做的工作，技术方案是什么样的，为什么要这样设计，有其他方案吗？\n3.如何存储上一次的数据(实习相关)\n4.手撕 爬楼梯\n5.HTTP和HTTPS的区别\n6.什么是证书，证书作用在哪个阶段\n7.MySQL的事务隔离级别\n8.系统出现OOM如何进行排查\n9.说一下ThreadLocal的原理，应用场景\n10.Redis是多线程还是单线程\n11.说一下Redis的性能为什么好\n12.Redis的数据结构\n13.对比一下RabbitMQ和Kafka\n14.消费者消息处理失败怎么办，Kafka有死信队列吗\n15.线程池的核心参数，如何根据不同应用场景进行设置\n16.说一下什么是IO密集型什么是CPU密集型\n17.为什么核心线程数要按照这两种方式设置不同的数量\n18.说一下什么是倒排索引"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "c5ab2508f7359c56cb4583c2cccaaafee341b80377aadd497cbf9d1c1d1c5d1b"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "f3708e0d0447e714baffc89f8ae6eae0eeb4b15a4d7d0956e84ca8f17a2f3dc6"
 }

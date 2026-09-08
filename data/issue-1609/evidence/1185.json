@@ -8,7 +8,27 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "dead7445a31dbda57bd8eaea99f99f40650371565b0ef97e78cf54c9fccd38e6",
   "disposition": "blocked",
-  "rationale": "The available Source evidence does not establish a bounded interview event; retain pending.",
+  "rationale": "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 0,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": false,
+    "has_detailed_event": false,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68ada8ea000000001b03f910.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "269f3828e40697aa4a94f052e940082d11be119c",
@@ -20,7 +40,7 @@
       "excerpt": "已满-淘天社招HC Java P5/P6一位",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "已满-淘天社招HC Java P5/P6一位 8月26开始 核心部门 1-5年工作经验的友友们来 部门 供应链 带简历DD"
+      "semantic_excerpt": "已满-淘天社招HC Java P5/P6一位\n8月26开始 核心部门 1-5年工作经验的友友们来\n部门 供应链\n \n带简历DD"
     }
   },
   "checks": [
@@ -42,7 +62,7 @@
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "The available Source evidence does not establish a bounded interview event; retain pending.",
+    "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "9783500f022d9ce4c3d89f9fb6a16a9a594134fb7949e262cc8543e2b3d69baf"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "04b380081084b4f8accf608fb21173f4141070d3892defc26a770edbab63248b"
 }

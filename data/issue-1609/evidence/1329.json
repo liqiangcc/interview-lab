@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "8141c38e6bac88aab1e48a42062e11df8d686cbd5255d5cc5b461d5b8ab4c32b",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 0,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": true,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68c90e4f000000001203e8fe.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "98246717fbfba65c51002ab5d5caaf500d47ab47",
@@ -20,7 +40,7 @@
       "excerpt": "只记录我没答上或者答得不太好的问题。",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "只记录我没答上或者答得不太好的问题。 类似黑马点评项目，用了caffeine做本地缓存，问：你知道本地缓存可以用那个谷歌的guava cache吧，这二者有什么区别，为什么用caffeine，它解决了guava的什么问题？ 本地缓存的缓存一致性保证？删本地缓存失败了怎么办？（为什么不问我redis。。。） 用了kafka消息队列，如何保证顺序消费和消息不丢失？ 数据库里的几张表怎么建的索引？ 缓存穿透解决方案，你说了可以防止一个用户频繁发送恶意请求，那你说说这个咋实现，怎么记录判断这个用户ip。 另一个项目做了rag相关。问：如果公司的大模型要和spring ai适配，应该做些什么，来让别人能通过spirng ai框架调用？ spirng ai的chat memory的逻辑上的数据结构？chat memory怎么实现的？除了数据库存储之外，还有哪些持久化方式？ 文档处理有图片表格怎么办？ 工具调用是用注解实现的吧，这个注解的底层原理？ embedding模型多少维的？你用到的大模型的参数量是多少？为什么不用别的模型？为什么用spring ai框架？ 怎么判断rag效果的？ 八股：分布式锁的实现方式？你说除了redis之外用zookeeper也能实现分布式锁是吧，那你说说zookeeper咋实现的。 synchronize锁静态方法和非静态方法的时候，锁对象的不同？ elastic search用过没？transformer原理了解不？ 手撕倒是挺简单的。"
+      "semantic_excerpt": "只记录我没答上或者答得不太好的问题。\n类似黑马点评项目，用了caffeine做本地缓存，问：你知道本地缓存可以用那个谷歌的guava cache吧，这二者有什么区别，为什么用caffeine，它解决了guava的什么问题？\n本地缓存的缓存一致性保证？删本地缓存失败了怎么办？（为什么不问我redis。。。）\n用了kafka消息队列，如何保证顺序消费和消息不丢失？\n数据库里的几张表怎么建的索引？\n缓存穿透解决方案，你说了可以防止一个用户频繁发送恶意请求，那你说说这个咋实现，怎么记录判断这个用户ip。\n另一个项目做了rag相关。问：如果公司的大模型要和spring ai适配，应该做些什么，来让别人能通过spirng ai框架调用？\nspirng ai的chat memory的逻辑上的数据结构？chat memory怎么实现的？除了数据库存储之外，还有哪些持久化方式？\n文档处理有图片表格怎么办？\n工具调用是用注解实现的吧，这个注解的底层原理？\nembedding模型多少维的？你用到的大模型的参数量是多少？为什么不用别的模型？为什么用spring ai框架？\n怎么判断rag效果的？\n八股：分布式锁的实现方式？你说除了redis之外用zookeeper也能实现分布式锁是吧，那你说说zookeeper咋实现的。\nsynchronize锁静态方法和非静态方法的时候，锁对象的不同？\nelastic search用过没？transformer原理了解不？\n手撕倒是挺简单的。"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "07cb2ea1bf185e280029e72f75fdc38c6da07f2beda72333e4fab0fdf2b7053b"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "dd3c437d2ab689dc0bfb12f60bc8f540fef1eab263c4b4374226d94b6bf22310"
 }

@@ -8,7 +8,28 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "81d95b95b0b4d2d6af545fbc4e6d97014f80086b71ed83ce140d7a17a73775fe",
   "disposition": "blocked",
-  "rationale": "The available Source evidence does not establish a bounded interview event; retain pending.",
+  "rationale": "Exact Source provides only an interview outcome, offer, rejection, or result without a bounded candidate event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "outcome-or-offer-only",
+      "no-first-person-event"
+    ],
+    "questions": 12,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": false,
+    "has_detailed_event": false,
+    "outcome_signal": true,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": true,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68a70c22000000001d02cff5.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "cc515ba9f139a008ddfc0feec110540432a090ee",
@@ -20,7 +41,7 @@
       "excerpt": "攒人品了",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "攒人品了 26min问答+12min算法 JAVA 1、反射的原理，应用场景，哪些场景不能使用反射？自定义一个注解需要定义哪些方面的信息 2、线程的生命周期，各个状态之间的转变通过哪些语句？保证线程安全的方式及优缺点？ThreadLocal会导致什么问题？ 3、JAVA中的锁有几种方式？同步锁原理及申请流程、可重入锁原理及申请流程 4、MYSQL事务的隔离级别，分别会导致什么问题？如何在MYSQL中查询隔离级别 5、MYSQL主从同步机制 6、Redis持久化机制、AOF文件重写、Redis宕机重启后，什么机制保证其快速恢复？ SPRING 1、IOC、AOP、bean的实例化流程。IOC中如何解决循环依赖 项目 1、使用过什么消息队列？怎么确保一个消息发送成功？ 2、介绍实习项目的背景、技术架构、负责的内容。使用了哪些中间件？ 3、怎么使用分布式锁？怎么设置锁的key，拿锁成功和拿锁失败对于下游业务的影响，怎么保证幂等性 4、怎么设置限流参数，阈值等？ 5、在项目中做了什么优化手段，最终拿到了什么结果？ 算法题目 二叉搜索树中第K小的数字"
+      "semantic_excerpt": "攒人品了\n26min问答+12min算法\nJAVA\n1、反射的原理，应用场景，哪些场景不能使用反射？自定义一个注解需要定义哪些方面的信息\n2、线程的生命周期，各个状态之间的转变通过哪些语句？保证线程安全的方式及优缺点？ThreadLocal会导致什么问题？\n3、JAVA中的锁有几种方式？同步锁原理及申请流程、可重入锁原理及申请流程\n4、MYSQL事务的隔离级别，分别会导致什么问题？如何在MYSQL中查询隔离级别\n5、MYSQL主从同步机制\n6、Redis持久化机制、AOF文件重写、Redis宕机重启后，什么机制保证其快速恢复？\nSPRING\n1、IOC、AOP、bean的实例化流程。IOC中如何解决循环依赖\n项目\n1、使用过什么消息队列？怎么确保一个消息发送成功？\n2、介绍实习项目的背景、技术架构、负责的内容。使用了哪些中间件？\n3、怎么使用分布式锁？怎么设置锁的key，拿锁成功和拿锁失败对于下游业务的影响，怎么保证幂等性\n4、怎么设置限流参数，阈值等？\n5、在项目中做了什么优化手段，最终拿到了什么结果？\n算法题目\n二叉搜索树中第K小的数字"
     }
   },
   "checks": [
@@ -42,7 +63,7 @@
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source provides only an interview outcome, offer, rejection, or result without a bounded candidate event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +77,11 @@
     }
   ],
   "limitations": [
-    "The available Source evidence does not establish a bounded interview event; retain pending.",
+    "Exact Source provides only an interview outcome, offer, rejection, or result without a bounded candidate event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "d0030edd12b24e3bf0aded41f92156c84a029fd5a4cb823c78f81d44878e9508"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "74864cce2246863c12084c9f07338c26212a0d3fcbea1cfe700e2ccf5014f2bb"
 }

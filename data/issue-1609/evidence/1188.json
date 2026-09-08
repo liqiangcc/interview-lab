@@ -8,7 +8,37 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "9eebae831e703ad9f4aaf6cbe82b7617f6be3704fa36759b3d8478bd23203262",
   "disposition": "not-interview",
-  "rationale": "Exact Source projection is a generic resource/recruitment/advice record and does not record one candidate interview event.",
+  "rationale": "Exact Source is a generic question bank, recruitment/job advertisement, tutorial, written-test, or preparation resource; it does not record one candidate interview event.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event",
+      "generic-question-bank-or-job-ad",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 0,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": false,
+    "has_detailed_event": false,
+    "outcome_signal": false,
+    "resource_signal": true,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": [
+      {
+        "case_key": "xiaomi-process",
+        "anchor": "小米",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-2",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:小米"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68ae8960000000001d01e3a2.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "5c4d1f1e7bfa004c13af2cf0d7d8d0f1e5513029",
@@ -20,7 +50,7 @@
       "excerpt": "小米研发岗内推 非外包岗位",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "小米研发岗内推 非外包岗位 不是猎头，自己人帮忙推推小米的岗。都是正式岗位，不是外包哦。 岗位还挺全的，Java、前端、大数据这些研发岗有缺，安卓、iOS、测试、运维也在招，产品、算法、嵌入式、AI相关的也有。 都是同事们实际在做的岗位，信息靠谱。有兴趣的可以多留意下～"
+      "semantic_excerpt": "小米研发岗内推 非外包岗位\n \n不是猎头，自己人帮忙推推小米的岗。都是正式岗位，不是外包哦。\n \n岗位还挺全的，Java、前端、大数据这些研发岗有缺，安卓、iOS、测试、运维也在招，产品、算法、嵌入式、AI相关的也有。\n \n都是同事们实际在做的岗位，信息靠谱。有兴趣的可以多留意下～"
     }
   },
   "checks": [
@@ -42,7 +72,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source is a generic question bank, recruitment/job advertisement, tutorial, written-test, or preparation resource; it does not record one candidate interview event."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +86,11 @@
     }
   ],
   "limitations": [
-    "Exact Source projection is a generic resource/recruitment/advice record and does not record one candidate interview event.",
+    "Exact Source is a generic question bank, recruitment/job advertisement, tutorial, written-test, or preparation resource; it does not record one candidate interview event.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "a04588dc2ccca6a33768bd81534aab74b31d29be59a6daacc3d4387ee227ab00"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "e10f65d27e341decac4b3a71072bf962536110dd6bc019fac9abb965be1341cd"
 }

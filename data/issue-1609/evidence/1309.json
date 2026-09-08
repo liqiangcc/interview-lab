@@ -7,8 +7,36 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "5e44c6f0d92da79bbcf1420630424551f27635b93b17e5d7cdcdc56ee8810ea0",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only"
+    ],
+    "questions": 25,
+    "has_first_person_event": true,
+    "has_explicit_candidate_event": true,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": true,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": [
+      {
+        "case_key": "kuaishou-process",
+        "anchor": "快手",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-2",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:快手"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68c40288000000001b03ecd6.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "f74af9f22f6b76cf9c199b564bd8a6f10eb8e66c",
@@ -20,7 +48,7 @@
       "excerpt": "快手 9.12一面",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "快手 9.12一面 1.自我介绍 2.介绍项目，拷打了一下 3.nacos单点扛不住怎么办 4.nacos集群数据一致性让我设计怎么设计 5.rocketmq的工作流程 6.消费者怎么消费消息，一亿条消息他怎么拉取，是每次从头开始拉取吗？ 7.偏移值broker怎么存的？怎么根据偏移值定位消息的物理位置？ 8. rocketmq的底层源码有去看过吗？ 9.redis和数据库的数据一致性怎么做的？说了写后删。 10.有没有别的方法？我说后台线程binlog异步去做。 一个请求过来写了数据并删除了缓存，但是另一条请求读到了旧数据，刷新到了缓存上怎么做？我说删一次后隔个100毫秒再删除一次，面试官问再删一次谁去做？说了用后台线程去做。 11.redis的ha怎么做的，然后问了redis主节点选举， 12.哨兵有主节点吗，哨兵怎么选举？哨兵选举的原理是什么？为什么要设置奇数个节点？ 13. Cpu多级缓存的数据一致性是怎么做的？ 14.操作系统为什么要设置内核态呢？用户态和内核态怎么切换？ 15.什么是多路复用？ 16. Select epoll的原理是什么？ 17. Tcp挥手的close wait是用来干嘛的？ 18. Close wait的状态是客户端和服务端都有吗？ 18.1 什么情况会出现大量closewait状态 19. Java有哪些锁 20. Reentrantlock和 sychronized的区别 21.链表k个一组翻转。（10分钟就写好了，但是需要自己初始化链表调试。最后讲了下思路。 22.面试官说有实习和没实习差距还是挺大的 23.反问业务，说是非常偏底层的，我知道肯定挂了，涉及源码的是真一点不会。 让我多学习，多思考，有空多看看源码。 总共面了68分钟。感觉自己答的还可以，两小时后已挂。"
+      "semantic_excerpt": "快手 9.12一面\n1.自我介绍\n2.介绍项目，拷打了一下\n3.nacos单点扛不住怎么办\n4.nacos集群数据一致性让我设计怎么设计\n5.rocketmq的工作流程\n6.消费者怎么消费消息，一亿条消息他怎么拉取，是每次从头开始拉取吗？\n7.偏移值broker怎么存的？怎么根据偏移值定位消息的物理位置？\n8. rocketmq的底层源码有去看过吗？\n9.redis和数据库的数据一致性怎么做的？说了写后删。\n10.有没有别的方法？我说后台线程binlog异步去做。\n一个请求过来写了数据并删除了缓存，但是另一条请求读到了旧数据，刷新到了缓存上怎么做？我说删一次后隔个100毫秒再删除一次，面试官问再删一次谁去做？说了用后台线程去做。\n11.redis的ha怎么做的，然后问了redis主节点选举，\n12.哨兵有主节点吗，哨兵怎么选举？哨兵选举的原理是什么？为什么要设置奇数个节点？\n13. Cpu多级缓存的数据一致性是怎么做的？\n14.操作系统为什么要设置内核态呢？用户态和内核态怎么切换？\n15.什么是多路复用？\n16. Select epoll的原理是什么？\n17. Tcp挥手的close wait是用来干嘛的？\n18. Close wait的状态是客户端和服务端都有吗？\n18.1 什么情况会出现大量closewait状态\n19. Java有哪些锁\n20. Reentrantlock和 sychronized的区别\n21.链表k个一组翻转。（10分钟就写好了，但是需要自己初始化链表调试。最后讲了下思路。\n22.面试官说有实习和没实习差距还是挺大的\n23.反问业务，说是非常偏底层的，我知道肯定挂了，涉及源码的是真一点不会。\n让我多学习，多思考，有空多看看源码。\n总共面了68分钟。感觉自己答的还可以，两小时后已挂。"
     }
   },
   "checks": [
@@ -41,8 +69,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +84,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "c24474a21bd1f5a227c4e9752bcecf4dac827fc188591c7b229cd8c2da3923ce"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "bf7f03c413df32aeda22b57cca84f1f1b0293adb42e614d770ec446b200d617c"
 }

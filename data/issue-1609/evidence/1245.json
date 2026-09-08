@@ -8,7 +8,36 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "4dab02384bc05ebd01e83064c96be3b16adbd7e872ccd2115405c93d76d50af0",
   "disposition": "blocked",
-  "rationale": "The available Source evidence does not establish a bounded interview event; retain pending.",
+  "rationale": "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 0,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": false,
+    "has_detailed_event": false,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": [
+      {
+        "case_key": "xiaomi-process",
+        "anchor": "小米",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-2",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:小米"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b6e662000000001c03d11d.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "33233b4626214f14e13a4f8c00809a1682d93aee",
@@ -20,7 +49,7 @@
       "excerpt": "小米",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "小米 26校招 精益工程师-大家电 有没有uu了解 求面经！！！！"
+      "semantic_excerpt": "小米\n26校招\n精益工程师-大家电\n有没有uu了解\n求面经！！！！"
     }
   },
   "checks": [
@@ -42,7 +71,7 @@
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +85,11 @@
     }
   ],
   "limitations": [
-    "The available Source evidence does not establish a bounded interview event; retain pending.",
+    "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "2b5ce48bfc63e70227f794cd68942b58fe799b0065572f87da853c74cc5000f8"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "26d069e4a43536dde93e437ab15f574b4e80c0c8980b04357f6438dd67c1c26f"
 }

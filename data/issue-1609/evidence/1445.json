@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "fd8e2df445c38c0976ee96146421abffec9c9f88bae231c8982cacdfccd3e80d",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event"
+    ],
+    "questions": 11,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68e77a09000000000500073f.json@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "31e2cc827d70605888f0d0d0942819c4336ebd33",
@@ -20,7 +40,7 @@
       "excerpt": "\"global\": {",
       "line": 2,
       "locator": "artifact-line:2",
-      "semantic_excerpt": "1.自我介绍 2.询问base意向 3.介绍数据建模流程 4.维度建模和范式建模的区别 5.会java吗 6.python去重操作和多线程 7.介绍spark的shuffle 8.介绍数据倾斜 9.mysql的索引为什么能加快速度 b+树和b树的区别 b+树的特点 10.冒泡排序和堆排序 11.写sql和leetcode（寻找第一个不重复的字符）"
+      "semantic_excerpt": "1.自我介绍\n2.询问base意向\n3.介绍数据建模流程\n4.维度建模和范式建模的区别\n5.会java吗\n6.python去重操作和多线程\n7.介绍spark的shuffle\n8.介绍数据倾斜\n9.mysql的索引为什么能加快速度 b+树和b树的区别 b+树的特点\n10.冒泡排序和堆排序\n11.写sql和leetcode（寻找第一个不重复的字符）"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "5a3d498a54b6ef3b38075496e02a5763f6f6e441abc9e361e93e9a982846de30"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "640e8681e8ba2b83a47e1295b9258dde1f4d6cb42a39bdfc29f1bd4f9370e08c"
 }

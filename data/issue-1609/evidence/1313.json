@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "642dbcb72834b902a76028d06d65abfb9e9ff766180d65ff0ba02a9f18070803",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event"
+    ],
+    "questions": 37,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68c5502e000000001b033c11.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "a4c8dab19f89ec315b0551e04aa2797007198411",
@@ -20,7 +40,7 @@
       "excerpt": "个人面试题笔记",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "个人面试题笔记 1. 请简单做一下自我介绍？ 2. 介绍一下上一个项目？ 3. MySQL调优你是怎么做的？ 4. RocketMQ如何处理消息堆积？ 5. RocketMQ如何防止消息丢失？ 6. RocketMQ同步刷盘和异步刷盘的机制是怎样的？ 7. RocketMQ消费模式有几种？ 8. RocketMQ Broker中的消息被消费后会立即删除吗？ 9. RocketMQ消费者获取消息有几种模型？ 10. 一个接口的流量非常大且逻辑处理久应该如何处理? 11. 线上出现了bug你是如何解决的？ 12. Redis持久化有几种方式？ 13. AOF重写机制是什么？ 14. AOF文件为什么可以变小？ 15. AOF和RDB都开启，重启使用什么来恢复数据？ 16. 怎样保证MySQL和Redis的数据一致？ 17. 缓存穿透，缓存击穿，缓存雪崩是什么，怎么解决？ 18. Redis为什么这么快？ 19. Redis为什么选择单线程？ 20. 既然单线程这么好，为什么逐渐又加入了多线程特征？ 21. 说说Redis的多线程？ 22. 使用Redis需要注意什么？ 23. 为什么使用MongoDB？ 24. MongoDB的索引有哪些？ 25. MongoDB副本集原理？ 26. MongoDB什么时候考虑使用分片集群？ 27. 什么是服务雪崩？ 28. 幂等性问题是如何产生的？ 29. 常见幂等性解决方案？ 30. 分布式系统中出现哪些故障会导致数据不一致？ 31. cap理论？ 32. BASE理论? 33. SpringBoot启动流程？ 34. Spring Bean的生命周期？ 35. 其它springboot面试题（了解）？ 36. 你们项目中为什么使用feign不用dubbo?他们之间的效率差异？ 37. 你了解那些设计模式？那些情况下会使用？"
+      "semantic_excerpt": "个人面试题笔记\n1. 请简单做一下自我介绍？\n2. 介绍一下上一个项目？\n3. MySQL调优你是怎么做的？\n4. RocketMQ如何处理消息堆积？\n5. RocketMQ如何防止消息丢失？\n6. RocketMQ同步刷盘和异步刷盘的机制是怎样的？\n7. RocketMQ消费模式有几种？\n8. RocketMQ Broker中的消息被消费后会立即删除吗？\n9. RocketMQ消费者获取消息有几种模型？\n10. 一个接口的流量非常大且逻辑处理久应该如何处理?\n11. 线上出现了bug你是如何解决的？\n12. Redis持久化有几种方式？\n13. AOF重写机制是什么？\n14. AOF文件为什么可以变小？\n15. AOF和RDB都开启，重启使用什么来恢复数据？\n16. 怎样保证MySQL和Redis的数据一致？\n17. 缓存穿透，缓存击穿，缓存雪崩是什么，怎么解决？\n18. Redis为什么这么快？\n19. Redis为什么选择单线程？\n20. 既然单线程这么好，为什么逐渐又加入了多线程特征？\n21. 说说Redis的多线程？\n22. 使用Redis需要注意什么？\n23. 为什么使用MongoDB？\n24. MongoDB的索引有哪些？\n25. MongoDB副本集原理？\n26. MongoDB什么时候考虑使用分片集群？\n27. 什么是服务雪崩？\n28. 幂等性问题是如何产生的？\n29. 常见幂等性解决方案？\n30. 分布式系统中出现哪些故障会导致数据不一致？\n31. cap理论？\n32. BASE理论?\n33. SpringBoot启动流程？\n34. Spring Bean的生命周期？\n35. 其它springboot面试题（了解）？\n36. 你们项目中为什么使用feign不用dubbo?他们之间的效率差异？\n37. 你了解那些设计模式？那些情况下会使用？"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "193cc4431b6c2dd2bb32968d89934a01ebb287726d7c9096b163426ff395e814"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "d613617dc0bfc1abe79a8f3df6a367a83a7c5bb6146a585f308afda1538a168c"
 }

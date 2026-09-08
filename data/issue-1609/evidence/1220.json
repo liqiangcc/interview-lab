@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "5e202c618fe68a660cd359acdfa5df582144588ff56b6005863989831a505766",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event"
+    ],
+    "questions": 7,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": true,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b2bd8a000000001d024de6.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "6c6f6820d99690de1da2a8e17a1418174c5bcdc3",
@@ -20,7 +40,7 @@
       "excerpt": "1.自我介绍，ai怎么使用",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "1.自我介绍，ai怎么使用 2.数组和链表的区别，队列用什么实现，用数组实现有哪些问题，你怎么解决 3.jvm内存模型，volatite作用和实现原理，静止指令重排原理（这个真不会[失望R]） 4.设计一个爬虫系统，怎么减轻爬虫给网站的压力，具体怎么描述的忘了（答的也是乱七八糟）追问：分期爬虫，怎么调度（胡乱说了一通，脑子一片空白） 5.数据库隔离级别，每个隔离级别怎么实现（这个实现我也不会[捂脸R]）追问：mvcc原理，可重复读怎么解决幻读问题。然后我就反驳串行化解决幻读，他说你说的对（震惊我，竟然会故意说错，我以为是真的说错了[汗颜R][汗颜R]） 6.大模型实现一个用户语音点餐，怎么设计（我也是乱说一通）然后一直追问，真的服了[捂脸R] 7.新的技术怎么学习（具体怎么描述也不记得了）然后追问如果资料查不到 ，身边没人能帮你，ai也帮不了你，你怎么办（我能怎么办，我当然是放弃啊！！[哭惹R][哭惹R][哭惹R][哭惹R]） 面完感觉自己水平真的很一般[捂脸R][捂脸R][捂脸R]晚上准备第四场笔试了，已经随遇而安了"
+      "semantic_excerpt": "1.自我介绍，ai怎么使用\n2.数组和链表的区别，队列用什么实现，用数组实现有哪些问题，你怎么解决\n3.jvm内存模型，volatite作用和实现原理，静止指令重排原理（这个真不会[失望R]）\n4.设计一个爬虫系统，怎么减轻爬虫给网站的压力，具体怎么描述的忘了（答的也是乱七八糟）追问：分期爬虫，怎么调度（胡乱说了一通，脑子一片空白）\n5.数据库隔离级别，每个隔离级别怎么实现（这个实现我也不会[捂脸R]）追问：mvcc原理，可重复读怎么解决幻读问题。然后我就反驳串行化解决幻读，他说你说的对（震惊我，竟然会故意说错，我以为是真的说错了[汗颜R][汗颜R]）\n6.大模型实现一个用户语音点餐，怎么设计（我也是乱说一通）然后一直追问，真的服了[捂脸R]\n7.新的技术怎么学习（具体怎么描述也不记得了）然后追问如果资料查不到 ，身边没人能帮你，ai也帮不了你，你怎么办（我能怎么办，我当然是放弃啊！！[哭惹R][哭惹R][哭惹R][哭惹R]）\n \n面完感觉自己水平真的很一般[捂脸R][捂脸R][捂脸R]晚上准备第四场笔试了，已经随遇而安了"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "90154737947518ef0170614f7b79d266c146de51b327f4b5aff8e23761d4748d"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "eb7e4bdaa50d68f68efe8d046f40a31a43c2bf4580b1f5b18719ad7cd06981e1"
 }

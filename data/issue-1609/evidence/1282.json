@@ -8,7 +8,27 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "2e916594daaa2e33af0e7225cd4ff833f26cb7a1616df68fabe0dd80198f2d6a",
   "disposition": "blocked",
-  "rationale": "The available Source evidence does not establish a bounded interview event; retain pending.",
+  "rationale": "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 0,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": false,
+    "has_detailed_event": false,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68c0d118000000001c012521.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "b9d00cc30763c18a091b9a0be36bc4b43ee44748",
@@ -20,7 +40,7 @@
       "excerpt": "体验很不错，60min，中途设备故障调试了五六分钟",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "体验很不错，60min，中途设备故障调试了五六分钟 具体是简历深挖，每一个简历部分都有发散以及具体的八股深挖。 目前有印象的有： mapreduce执行流程 hdfs如何保证数据一致性 flink和kafka如何保证数据的一致性 flink的checkpoint里的barrier对齐和非对齐分别如何实现exactly-once；非对齐实现需要怎么做？ kafka如何保证数据一致性 spark和mr的shuffle有哪些区别 spark的内存参数一般怎么调整；一般集群的spark内存参数会在什么样的一个级别？ 数仓分层，每一层有什么作用？具体的全链路流程是什么样的？ 维表应该如何进行设计？ 用户画像如何搭建？ 然后是一些数据结构的考察。 答得蛮顺的，考的很细，然后是两道sparksql题，不难。其中一个是考察数据构造，需要对sparksql有较深的使用了解。 总体来说问题比较多和深入。"
+      "semantic_excerpt": "体验很不错，60min，中途设备故障调试了五六分钟\n具体是简历深挖，每一个简历部分都有发散以及具体的八股深挖。\n目前有印象的有：\nmapreduce执行流程\nhdfs如何保证数据一致性\nflink和kafka如何保证数据的一致性\nflink的checkpoint里的barrier对齐和非对齐分别如何实现exactly-once；非对齐实现需要怎么做？\nkafka如何保证数据一致性\nspark和mr的shuffle有哪些区别\nspark的内存参数一般怎么调整；一般集群的spark内存参数会在什么样的一个级别？\n数仓分层，每一层有什么作用？具体的全链路流程是什么样的？\n维表应该如何进行设计？\n用户画像如何搭建？\n然后是一些数据结构的考察。\n \n答得蛮顺的，考的很细，然后是两道sparksql题，不难。其中一个是考察数据构造，需要对sparksql有较深的使用了解。\n \n总体来说问题比较多和深入。"
     }
   },
   "checks": [
@@ -42,7 +62,7 @@
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "The available Source evidence does not establish a bounded interview event; retain pending.",
+    "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "bba2f7dfe42dfc441e4b6af9712fae731f361bf971e60a59c48e024edeff924e"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "b138855ef993d55f1e03284acc164ef554956cc1e41541c283cba4fff1a0fab1"
 }

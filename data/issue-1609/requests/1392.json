@@ -1,32 +1,21 @@
 {
-  "schema_version": "issue-1609-boundary-review-request.v1",
-  "request_id": "issue-1609-boundary-1392",
+  "schema_version": "source-note-boundary-review-transition.v1",
+  "transition_id": "issue-1609-boundary-1392-review-1",
   "repository": "liqiangcc/interview-lab",
-  "parent_issue": 1605,
   "issue_number": 1392,
-  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1392",
   "source_note_id": "xhs-note:68d3e831000000001303691b",
   "expected_body_sha256": "8597eb9eba926048ff43a5f65441eef1bf250140f659017f3fec895d1e3ab561",
   "expected_boundary_status": "pending",
   "expected_source_revision_id": "xhs-note:68d3e831000000001303691b:snapshot-95b77bb26104",
-  "expected_source_repository": "liqiangcc/xhs",
+  "expected_manifest_sha256": null,
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
-  "evidence_file": "evidence/1392.json",
-  "source_evidence": {
-    "ref": "liqiangcc/xhs:note_json/68d3e831000000001303691b.json@95b77bb261048059846273688e4b90a2e108b437",
-    "git_blob_sha": "2770fcdae4eadb183bc61131fced92e8d655507f",
-    "kind": "json",
-    "provenance": "source_projection",
-    "byte_size": 22044,
-    "content_sha256": "335ac95bd8f5f38075f9e3a2ee83d4bb8a65e3ac71312390b4fd4530df75b588",
-    "excerpt": {
-      "excerpt": "\"global\": {",
-      "line": 2,
-      "locator": "artifact-line:2",
-      "semantic_excerpt": "一个没人要的后端开发，HR捞到客户端岗位。 一面也聊不了什么东西，就着八股问几句，就着项目吹水，还让我混过去了，岗位jd说什么“接受零经验”。手撕滑窗和bfs，一眼的事[叹气R]，面试官还是太温柔了。。 隔天吃饭时候约二面，二面上来就是“你知道自己投的客户端吗？”瞎扯几句，手撕反转链表和接雨水，净耽误功夫了。 秋招结束了。。。奇怪，晚上七点的面试都过了，下午五点的面试全挂了。[失望R] 二编： 其实好好想想，以前端客户端进去大厂，压力会小很多。面试面着面着就有种疲了的感觉，还是我太菜了，可能面试官也不想多说什么，也没难为什么。可惜最后跟二面面试官解释代码的时候没什么精力了，没把自己想法说清楚，其实想说前后缀分解，双指针优化，考虑水平扩展可以用单调栈，但是最后嘟嘟囔囔，啥也没说出来。该挂！[叹气R] 没来个笔试，直接进面试有点猝不及防，HR直接加微信约一面，然后我还推迟了一次，二面也不太好意思了，结果搞得乱七八糟。秋招还是泰难！面试比笔试难多了，面试比笔试累多了！想笔试（应该没有三机位吧，设备不够的），不想面试！"
-    }
+  "decision": "single-interview",
+  "reviewed_at": "2026-09-08T00:00:00.000Z",
+  "reviewer_kind": "ai-assisted",
+  "review_evidence": {
+    "repository": "liqiangcc/interview-lab",
+    "issue_number": 1392,
+    "comment_id": 1609001392
   },
   "checks": [
     {
@@ -47,7 +36,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -61,9 +50,8 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
-    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
-  ],
-  "evidence_sha256": "55baf4982dc1d297d557f8c4a43856fe375247e898a4ed59620a14cbdefaa9f1",
-  "request_sha256": "8ec4b5b7eced9eaf7598aef85b7ffef7904360808e13e6ffe074c365d622860d"
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+    "Candidate only: review_evidence.comment_id is a deterministic placeholder; no live evidence comment was created.",
+    "No body PATCH, label write, or InterviewNote materialization was performed; controller authorization is required."
+  ]
 }

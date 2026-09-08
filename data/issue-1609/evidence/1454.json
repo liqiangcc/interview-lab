@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "7ffaa93ddbb847d8b1931a38c1991ee51eee9cb266f6d2cb9a5df4489aec9a5b",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event"
+    ],
+    "questions": 11,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68e7d470000000000700d609.json@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "7888f1ce7ffc46852d69ddc3955f81cab39fd201",
@@ -20,7 +40,7 @@
       "excerpt": "\"global\": {",
       "line": 2,
       "locator": "artifact-line:2",
-      "semantic_excerpt": "1、自我介绍 2、实习经历 3、redis的淘汰策略 4、怎么处理redis中的大key 5、http和https的区别 6、浏览器输入网址的全过程 7、TCP协议的连接和断开过程 8、分布式锁的使用场景，怎么实现分布式锁？ 9、MySQL的锁机制 10、询问base地意向 11、反问"
+      "semantic_excerpt": "1、自我介绍\n2、实习经历\n3、redis的淘汰策略\n4、怎么处理redis中的大key\n5、http和https的区别\n6、浏览器输入网址的全过程\n7、TCP协议的连接和断开过程\n8、分布式锁的使用场景，怎么实现分布式锁？\n9、MySQL的锁机制\n10、询问base地意向\n11、反问"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "d1df2f5ed9e74e7d28bb8923c0bbe0bbd465ae7527d330bb815654e87373862d"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "c8b675f610b2e6dfe4c1436f099d9a3df2704cd7265caf3aa775cbef2faf8bae"
 }

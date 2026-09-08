@@ -8,7 +8,35 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "d8790464368a2e4fafbe936da93cbbfd0a69118376d7a284fa7703b1c33a57a4",
   "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "rationale": "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event"
+    ],
+    "questions": 2,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": true,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": [
+      {
+        "case_key": "meituan-process",
+        "anchor": "美团",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-2",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:美团"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b126be000000001d0000dc.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "59d8b7e963ab9d389c0764d114c9e466da288e22",
@@ -20,7 +48,7 @@
       "excerpt": "美团金融服务平台，8.25三面，今早8.29第四个工作日进人才库了，但是过了大概1h又被捞回之前的流程，然后发了hr面的链接。",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "美团金融服务平台，8.25三面，今早8.29第四个工作日进人才库了，但是过了大概1h又被捞回之前的流程，然后发了hr面的链接。 我看金融服务平台的面经，进hr面代表要排序的。。有可能会挂。。 有没有面过的佬解答一下 有uu问美团时间线在此更新一下： 一面上午11点，当天晚上8点约二面。 二面上午11点，第二个工作日下午5点约三面。 三面下午3点，第四个工作日上午10点约hr面。 9.1日更新：hr面已面完。 [皱眉R]问了hr说：三面结束曾经回到人才库1h又被捞起来是排序的意思吗？ 答：不是，因为美团要求流转要快，系统自动推的，一般过了面试会捞起来。 [皱眉R]hr面完什么时候出结果? 两周内 9.4日更新：已offer"
+      "semantic_excerpt": "美团金融服务平台，8.25三面，今早8.29第四个工作日进人才库了，但是过了大概1h又被捞回之前的流程，然后发了hr面的链接。\n \n我看金融服务平台的面经，进hr面代表要排序的。。有可能会挂。。\n \n有没有面过的佬解答一下\n \n \n有uu问美团时间线在此更新一下：\n一面上午11点，当天晚上8点约二面。\n二面上午11点，第二个工作日下午5点约三面。\n三面下午3点，第四个工作日上午10点约hr面。\n \n9.1日更新：hr面已面完。\n[皱眉R]问了hr说：三面结束曾经回到人才库1h又被捞起来是排序的意思吗？\n答：不是，因为美团要求流转要快，系统自动推的，一般过了面试会捞起来。\n[皱眉R]hr面完什么时候出结果?\n两周内\n \n9.4日更新：已offer"
     }
   },
   "checks": [
@@ -42,7 +70,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +84,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "2313f04f90f8b3c36ca1c4b3105a92b4d54e8d25c3d704f19f3fd2279c0575e0"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "7d8fb7c3317a446075cec0d8719ace975dad4e38df392748423f388be215adc0"
 }

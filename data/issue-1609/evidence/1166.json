@@ -8,7 +8,24 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "8d522b1b6c8406c54eb592e61bbae7dfdb0db77198523295423ae36f7d8a9ea6",
   "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "rationale": "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [],
+    "questions": 0,
+    "has_first_person_event": true,
+    "has_explicit_candidate_event": true,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": true,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68a8a8aa000000001c00d4dc.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "6ec91302c515e2390fb92b9c4f14521b53b73c33",
@@ -20,7 +37,7 @@
       "excerpt": "2min",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "2min 自我介绍 20min [一R] 实习内容 [二R] 除了prompt，还有哪些方式可以补充大模型的上下文 [中等肤色R] rag检索增强生成，mcp外部工具调用，多模态输入如图片、文件 [三R] Prompt caching有用过么 [中等肤色R] Prompt在多轮对话中有很多重复部分，通过缓存重复的prompt 注意力 embedding可以降低大模型的成本和响应时间。 [中等肤色R] 通过PML(提示标记语言)可以基于prompt模板定位重复部分，进而实现固定内容的匹配，做到更高效的缓存。 10min [一R] jwt令牌介绍一下 [中等肤色R] header(JWT和签名算法) + payload(包含用户信息) + Signature(签名后校验和)，用于登录后用户身份的验证。 [二R]索引底层原理 [中等肤色R] B+树 [三R] k8s了解的多么 [中等肤色R] 容器编排平台，用于自动化容器化应用的部署、扩展、管理和运维，常用于微服务架构中服务实例和服务器节点管理 [四R] 业务内容介绍 面试时间很短且没有手撕，不知道是不是压根没打算要我，到点面试官就想下线，而且貌似是暗示我要先去实习才给offer[汗颜R][汗颜R]。"
+      "semantic_excerpt": "2min\n自我介绍\n \n20min\n[一R] 实习内容\n[二R] 除了prompt，还有哪些方式可以补充大模型的上下文\n[中等肤色R] rag检索增强生成，mcp外部工具调用，多模态输入如图片、文件\n[三R] Prompt caching有用过么\n[中等肤色R] Prompt在多轮对话中有很多重复部分，通过缓存重复的prompt 注意力 embedding可以降低大模型的成本和响应时间。\n[中等肤色R] 通过PML(提示标记语言)可以基于prompt模板定位重复部分，进而实现固定内容的匹配，做到更高效的缓存。\n \n10min\n[一R] jwt令牌介绍一下\n[中等肤色R] header(JWT和签名算法) + payload(包含用户信息) + Signature(签名后校验和)，用于登录后用户身份的验证。\n[二R]索引底层原理\n[中等肤色R] B+树\n[三R] k8s了解的多么\n[中等肤色R] 容器编排平台，用于自动化容器化应用的部署、扩展、管理和运维，常用于微服务架构中服务实例和服务器节点管理\n[四R] 业务内容介绍\n \n面试时间很短且没有手撕，不知道是不是压根没打算要我，到点面试官就想下线，而且貌似是暗示我要先去实习才给offer[汗颜R][汗颜R]。"
     }
   },
   "checks": [
@@ -42,7 +59,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +73,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "34b74ef6bb5b0838aa25624d69a1f92ace7b201bd889aee960cf8947302c230f"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "9748504755a3282bb4e47af263e5b134ecbf383af85a212e2fbf054dbfac35d6"
 }

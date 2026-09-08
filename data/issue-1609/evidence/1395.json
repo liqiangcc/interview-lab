@@ -7,8 +7,27 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "4ec2741463fc07d52d4ceaa52856ab48c7a8ed12ba24911914939f465a6ca8ac",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only"
+    ],
+    "questions": 9,
+    "has_first_person_event": true,
+    "has_explicit_candidate_event": true,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": true,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68d4edc60000000012021d0a.json@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "7ad5aa6ef72f2f7224ef49f8bfb2380bebb46bac",
@@ -20,7 +39,7 @@
       "excerpt": "\"global\": {",
       "line": 2,
       "locator": "artifact-line:2",
-      "semantic_excerpt": "1.对一个项目进行提问，是一个数据库项目，夹杂问了索引的八股 剩下全是场景 2.一堆数字 要你找第k大的数 快排？分区快排复杂度？ 3.一个日志10G 4G内存要找出现次数最多的整数？N分片数怎么确定啊？数据分布肯定是有问题的，怎么解决？ 4.mysql里写个查询次数最多的数字sql，为啥要加索引？加不加索引有区别吗？ 5.hive用过吗 6.抖音的历史观看记录，说一下设计思路 从内存数据库到应用层，写qps高还是读qps高？ 7.为啥要用Redis，你怎么控制redis里面数据不是一直增长？ 8.为啥要用脚本？ 9.手撕一个子序列，没撕出来 换了个打劫的，写的时候把写成dp［0］=0了，我真服了自己了😇，后面又问要输出具体房间号该怎么做？ 整体和面试官聊的很欢乐，甚至有说有笑的…就是手撕有点难崩，飞书客户端怎么感觉不全屏就是有bug我点一下面试官那边就弹一次跳出 场景题还问了好多细节的，有的也没怎么答上来，每道最后追问不会为止 挂了也认了，算是秋招以来第一场压力面，面试官也笑呵呵的没冷场，体验好很多"
+      "semantic_excerpt": "1.对一个项目进行提问，是一个数据库项目，夹杂问了索引的八股\n剩下全是场景\n2.一堆数字 要你找第k大的数 快排？分区快排复杂度？\n3.一个日志10G 4G内存要找出现次数最多的整数？N分片数怎么确定啊？数据分布肯定是有问题的，怎么解决？\n4.mysql里写个查询次数最多的数字sql，为啥要加索引？加不加索引有区别吗？\n5.hive用过吗\n6.抖音的历史观看记录，说一下设计思路 从内存数据库到应用层，写qps高还是读qps高？\n7.为啥要用Redis，你怎么控制redis里面数据不是一直增长？\n8.为啥要用脚本？\n9.手撕一个子序列，没撕出来 换了个打劫的，写的时候把写成dp［0］=0了，我真服了自己了😇，后面又问要输出具体房间号该怎么做？\n整体和面试官聊的很欢乐，甚至有说有笑的…就是手撕有点难崩，飞书客户端怎么感觉不全屏就是有bug我点一下面试官那边就弹一次跳出\n场景题还问了好多细节的，有的也没怎么答上来，每道最后追问不会为止\n挂了也认了，算是秋招以来第一场压力面，面试官也笑呵呵的没冷场，体验好很多"
     }
   },
   "checks": [
@@ -41,8 +60,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +75,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "79abc15400554a79311c2ad534d869a708711ab51a267f7e2e4bb5e16a64ec1b"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "8dbb4efcd83701b171962da749e57e8474515be2920dde27c23032142fbd7d8d"
 }

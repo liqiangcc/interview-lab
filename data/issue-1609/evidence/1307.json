@@ -8,7 +8,24 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "a07628f2636d636ac920b50fde3760e006ec577d2cf24b7eee7386b6d658c22f",
   "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "rationale": "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [],
+    "questions": 5,
+    "has_first_person_event": true,
+    "has_explicit_candidate_event": true,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68c3ee94000000001c00a772.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "13d9d7f61923f32cb731fe3a1367b6217671ddca",
@@ -20,7 +37,7 @@
       "excerpt": "面试30分钟 自我介绍👉拷打项目👉八股👉算法",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "面试30分钟 自我介绍👉拷打项目👉八股👉算法 面试前30分钟接到导师电话布置任务 完全没心情面试 面的也一塌糊涂了就是说 1. 项目拷打20分钟左右 难点是什么 如何解决的 数据库的设计理念是什么 对其中ai的理解 2. 对大模型的理解 说了一下attention 3. 为什么使用redis存储缓存数据 4. mysql和redis mongodb分别的使用场景是什么 5. 算法 写一个单例模式的简单应用 就算法问了些单例的使用 面经"
+      "semantic_excerpt": "面试30分钟 自我介绍👉拷打项目👉八股👉算法\n面试前30分钟接到导师电话布置任务 完全没心情面试 面的也一塌糊涂了就是说\n1. 项目拷打20分钟左右 难点是什么 如何解决的 数据库的设计理念是什么 对其中ai的理解\n2. 对大模型的理解 说了一下attention\n3. 为什么使用redis存储缓存数据\n4. mysql和redis mongodb分别的使用场景是什么\n5. 算法 写一个单例模式的简单应用 就算法问了些单例的使用\n \n 面经"
     }
   },
   "checks": [
@@ -42,7 +59,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +73,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "69197502fc0242016c9e29032d219f392a041917ad1d07b00ba738227fb0ecc6"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "7d40c84f1412a26bf45f5f7dd5b047459236d2a7a4686e5e114edd62daa977aa"
 }

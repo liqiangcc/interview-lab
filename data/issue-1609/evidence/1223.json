@@ -8,7 +8,27 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "05ef9f5e2030acdc3953a40c7589d212ef0e91ed19e51f4538eca0fb7222b2ba",
   "disposition": "blocked",
-  "rationale": "The available Source evidence does not establish a bounded interview event; retain pending.",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event"
+    ],
+    "questions": 13,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": false,
+    "has_detailed_event": false,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b2c53c000000001d00e86b.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "33039798a3c1595754162fbf67abdc7c9415cdef",
@@ -20,7 +40,7 @@
       "excerpt": "1、ArrayList和LinkedList的区别，ArrayList初始化数组容量多少",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "1、ArrayList和LinkedList的区别，ArrayList初始化数组容量多少 2、方法的重写和重载 3、Java常用的锁：synchronized、轻量级锁和偏向锁 4、synchronized可以作用在哪些地方 5、Redis数据类型有哪些，用到了redis哪些数据类型，redis分布式锁的实现 6、Redis中的缓存穿透、缓存击穿、缓存雪崩 7、docker命令、git命令：将某些特定的提交合并到 master 分支上，使用 git cherry-pick 命令。 8、HashMap和ConcurrentHashMap的区别 9、线程的创建方法，run和start 10、索引失效的场景 11、MySQL中的b+树，为什么不适用b树，覆盖索引 12、MyBatis中#{}和${}的区别，表中的字段和实体类不对应怎么解决 13、算法题：环形链表"
+      "semantic_excerpt": "1、ArrayList和LinkedList的区别，ArrayList初始化数组容量多少\n2、方法的重写和重载\n3、Java常用的锁：synchronized、轻量级锁和偏向锁\n4、synchronized可以作用在哪些地方\n5、Redis数据类型有哪些，用到了redis哪些数据类型，redis分布式锁的实现\n6、Redis中的缓存穿透、缓存击穿、缓存雪崩\n7、docker命令、git命令：将某些特定的提交合并到 master 分支上，使用 git cherry-pick 命令。\n8、HashMap和ConcurrentHashMap的区别\n9、线程的创建方法，run和start\n10、索引失效的场景\n11、MySQL中的b+树，为什么不适用b树，覆盖索引\n12、MyBatis中#{}和${}的区别，表中的字段和实体类不对应怎么解决\n13、算法题：环形链表"
     }
   },
   "checks": [
@@ -42,7 +62,7 @@
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "The available Source evidence does not establish a bounded interview event; retain pending.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "3b4a849b228f3ed17beeb53a103239084c56b50a3d2e8a43e584cbf5f2107003"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "a0cab46ad5741aaf5946d2d432ec4c89b331c96b210f60c37a9dfabd42322867"
 }

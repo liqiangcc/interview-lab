@@ -8,7 +8,24 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "568ca80d178a44bd23c441d70c9ced1184d845abde4b3a4df4c58e8db93195c4",
   "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "rationale": "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [],
+    "questions": 0,
+    "has_first_person_event": true,
+    "has_explicit_candidate_event": true,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": true,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68abdb29000000001c0075e3.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "36baf0733e29328dd177f5637336f400f220feb7",
@@ -20,7 +37,7 @@
       "excerpt": "2min",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "2min [中等肤色R] 自我介绍 20min [中等肤色R] 实习工作讨论 15min [一R] Redis分布式锁的原理 [中等肤色R] Set key val NX EX time, 加锁成功返回OK，锁被其他节点持有返回nil。以及过期时间，续期策略，看门狗等。 [二R] 介绍一下mysql [中等肤色R] 数据表 -> 数据页(避免从磁盘读取全部数据) -> 根据页号和索引字段建立B+树索引、热点数据页自适应哈希索引 -> buffer pool 缓存数据页，减少读磁盘次数 -> 执行器(执行计划) -> 优化器(生成执行计划) -> 分析器(拆解语句) -> 连接管理 [三R] 联合索引原理 [中等肤色R] a_b_c联合索引，先a排序，a相同再b排序，ab均相同按c排序。 [四R] 数据库事务性质介绍一下 [中等肤色R] ACID [五R] 业务上两条Update语句在一个事务中会产生冲突或污染吗 [中等肤色R] 一个事务中两条Update语句要么全部成功，要么全部失败，且同一个事务中多条语句共享一个数据库连接，语句顺序执行，后一条会基于前一条的结果，所以不会冲突 [六R] @Transaction 注解原理 [中等肤色R] 基于AOP面向切面编程，方法被标注，会创建一个动态代理对象，先执行代理增强逻辑，再调用目标方法。根据捕获的异常判断是否回滚。 [七R] 事务的自动提交介绍一下 [中等肤色R] 数据库连接(如JDBC连接)正常情况下，单条语句默认开启自动提交，多条语句需要关闭自动提交，等多条语句执行完后再手动提交，出现异常则回滚。@Transaction获得连接后也封装了上面的逻辑 15min [一R] 判断A树是不是B树的子结构 [中等肤色R] 递归多子树 [二R] 我定义了一个全局静态变量用来观测结果，会出现什么问题，怎么解决 [中等肤色R] 多实例时会发现内容冲突，可以用ThreadLocal做变量备份，或者改成实例变量 上周面的，这周已经凉了，面试的时候我都没搞清楚面试官想问什么，面试官提问题的时候提的很大，梳理之后我觉得可能是想问这些问题。"
+      "semantic_excerpt": "2min\n[中等肤色R] 自我介绍\n \n20min\n[中等肤色R] 实习工作讨论\n \n15min\n[一R] Redis分布式锁的原理\n[中等肤色R] Set key val NX EX time, 加锁成功返回OK，锁被其他节点持有返回nil。以及过期时间，续期策略，看门狗等。\n[二R] 介绍一下mysql\n[中等肤色R] 数据表 -> 数据页(避免从磁盘读取全部数据) -> 根据页号和索引字段建立B+树索引、热点数据页自适应哈希索引 -> buffer pool 缓存数据页，减少读磁盘次数 -> 执行器(执行计划) -> 优化器(生成执行计划) -> 分析器(拆解语句) -> 连接管理\n[三R] 联合索引原理\n[中等肤色R] a_b_c联合索引，先a排序，a相同再b排序，ab均相同按c排序。\n[四R] 数据库事务性质介绍一下\n[中等肤色R] ACID\n[五R] 业务上两条Update语句在一个事务中会产生冲突或污染吗\n[中等肤色R] 一个事务中两条Update语句要么全部成功，要么全部失败，且同一个事务中多条语句共享一个数据库连接，语句顺序执行，后一条会基于前一条的结果，所以不会冲突\n[六R] @Transaction 注解原理\n[中等肤色R] 基于AOP面向切面编程，方法被标注，会创建一个动态代理对象，先执行代理增强逻辑，再调用目标方法。根据捕获的异常判断是否回滚。\n[七R] 事务的自动提交介绍一下\n[中等肤色R] 数据库连接(如JDBC连接)正常情况下，单条语句默认开启自动提交，多条语句需要关闭自动提交，等多条语句执行完后再手动提交，出现异常则回滚。@Transaction获得连接后也封装了上面的逻辑\n \n15min\n[一R] 判断A树是不是B树的子结构\n[中等肤色R] 递归多子树\n[二R] 我定义了一个全局静态变量用来观测结果，会出现什么问题，怎么解决\n[中等肤色R] 多实例时会发现内容冲突，可以用ThreadLocal做变量备份，或者改成实例变量\n上周面的，这周已经凉了，面试的时候我都没搞清楚面试官想问什么，面试官提问题的时候提的很大，梳理之后我觉得可能是想问这些问题。"
     }
   },
   "checks": [
@@ -42,7 +59,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +73,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "052d10885f73de780ba23e85adb9af4b86e7061c8f0effec5233d95a6b5a6188"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "548b02b81717992c5b7dc5e14439e801b774b4c02e9ed040965f4443cd047bac"
 }

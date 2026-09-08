@@ -7,8 +7,29 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "991af67f61f82d29ccae34c3bbb4f3c90e407cc02f8b5da588f17722ffc8f925",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "not-interview",
+  "rationale": "Exact Source is a generic question bank, recruitment/job advertisement, tutorial, written-test, or preparation resource; it does not record one candidate interview event.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event",
+      "generic-question-bank-or-job-ad",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 0,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": false,
+    "has_detailed_event": false,
+    "outcome_signal": false,
+    "resource_signal": true,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b3c286000000001c006096.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "15b3f8701a0afef41305fc0fad81029393f90071",
@@ -20,7 +41,7 @@
       "excerpt": "还在找工作的Java后端们上点心吧，现在的面试主要都是问场景题，近期面试过的都应该深有体会吧，准备金九银十的小伙伴要抓紧了！",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "还在找工作的Java后端们上点心吧，现在的面试主要都是问场景题，近期面试过的都应该深有体会吧，准备金九银十的小伙伴要抓紧了！ 整理了一份高频的场景题库放在后面了，有面试计划的小伙伴都可以看看，不要再迷茫了！"
+      "semantic_excerpt": "还在找工作的Java后端们上点心吧，现在的面试主要都是问场景题，近期面试过的都应该深有体会吧，准备金九银十的小伙伴要抓紧了！\n整理了一份高频的场景题库放在后面了，有面试计划的小伙伴都可以看看，不要再迷茫了！"
     }
   },
   "checks": [
@@ -42,7 +63,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source is a generic question bank, recruitment/job advertisement, tutorial, written-test, or preparation resource; it does not record one candidate interview event."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +77,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is a generic question bank, recruitment/job advertisement, tutorial, written-test, or preparation resource; it does not record one candidate interview event.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "1b41ad0980c6aa6de19c79eaeb0d906e033ca23ddebde8f6bfb2b8a32209fa44"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "edb10e4c377f7b0d3e35503eff681311f5e9195eb3aa9ed3a4848e4eb2ad29e6"
 }

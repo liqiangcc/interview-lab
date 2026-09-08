@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "8b5d993160104a5c8fe057669088c2fa33650bab77aa34cc7ccdd678e367006b",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event"
+    ],
+    "questions": 10,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68caa7b0000000000e02205d.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "37bccbb2dea6e0df7ca7ffa0d6343f5999edf57e",
@@ -20,7 +40,7 @@
       "excerpt": "岗位：研发工程师JAVA",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "岗位：研发工程师JAVA 1、自我介绍 2、介绍实习项目解决的具体问题是什么 3、日志按等级输出的话，如何区分日志分别属于info、warning、debug哪个等级呢 4、你这个项目的功能（日志器）需要开发吗，Linux里面可以直接用shell实现这些功能吧？ 5、如何理解mcp的，他主要解决什么问题，他这个协议的发展现状有什么问题吗，哪些地方可以优化呢 6、mcp的api和普通大模型的api有什么区别呢 7、sse是什么呢，如何实现的呢，在调用过程中他具体做了什么 8、一个普通的api，如何把他mcp化 9、手撕：有一个长度为m的环形小球序列，这些小球一共有n种颜色，找到最小的连续小球序列，使得序列中的小球包含全部n中颜色（用双指针） 10、反问 面试官没有开摄像头，本来就不会，更答的没底气了[捂脸R][捂脸R]"
+      "semantic_excerpt": "岗位：研发工程师JAVA\n1、自我介绍\n2、介绍实习项目解决的具体问题是什么\n3、日志按等级输出的话，如何区分日志分别属于info、warning、debug哪个等级呢\n4、你这个项目的功能（日志器）需要开发吗，Linux里面可以直接用shell实现这些功能吧？\n5、如何理解mcp的，他主要解决什么问题，他这个协议的发展现状有什么问题吗，哪些地方可以优化呢\n6、mcp的api和普通大模型的api有什么区别呢\n7、sse是什么呢，如何实现的呢，在调用过程中他具体做了什么\n8、一个普通的api，如何把他mcp化\n9、手撕：有一个长度为m的环形小球序列，这些小球一共有n种颜色，找到最小的连续小球序列，使得序列中的小球包含全部n中颜色（用双指针）\n10、反问\n \n面试官没有开摄像头，本来就不会，更答的没底气了[捂脸R][捂脸R]"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "0a63c8eec972e7dbe6aab991d8c585e5ec7e6c45970a445af7a825da299fc86c"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "d8420ab0495bc99724792dac46673a104581799f516e4ab6ed9408dc24ae9795"
 }

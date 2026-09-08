@@ -1,32 +1,21 @@
 {
-  "schema_version": "issue-1609-boundary-review-request.v1",
-  "request_id": "issue-1609-boundary-1373",
+  "schema_version": "source-note-boundary-review-transition.v1",
+  "transition_id": "issue-1609-boundary-1373-review-1",
   "repository": "liqiangcc/interview-lab",
-  "parent_issue": 1605,
   "issue_number": 1373,
-  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1373",
   "source_note_id": "xhs-note:68d149ce000000000e025490",
   "expected_body_sha256": "213e6db6b9f568c98e60fade345416c193120584a49212cde5479fe8bc651dc6",
   "expected_boundary_status": "pending",
   "expected_source_revision_id": "xhs-note:68d149ce000000000e025490:snapshot-95b77bb26104",
-  "expected_source_repository": "liqiangcc/xhs",
+  "expected_manifest_sha256": null,
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
-  "evidence_file": "evidence/1373.json",
-  "source_evidence": {
-    "ref": "liqiangcc/xhs:note_json/68d149ce000000000e025490.json@95b77bb261048059846273688e4b90a2e108b437",
-    "git_blob_sha": "8a77536580622106f004208176b96e810cddd752",
-    "kind": "json",
-    "provenance": "source_projection",
-    "byte_size": 21955,
-    "content_sha256": "f162cd774b5ea222d20365a2ee77e848e9a84f382b936e0cbdd391983986e1c2",
-    "excerpt": {
-      "excerpt": "\"global\": {",
-      "line": 2,
-      "locator": "artifact-line:2",
-      "semantic_excerpt": "bg:末2本计科，无实习 面试官是个大哥很和蔼，全程微笑。 问题: 1、TCP UDP区别，TCP的拥塞控制 2、三次握手 为什么不是两次、四次 3、输入一个url之后的过程，DNS如何把域名解析成IP地址 4、进程和线程区别 进程之间如何切换 5、虚拟内存是干什么的，有什么好处，页表的映射机制 6、对面向对象了解什么， 封装有什么好处 项目问题 项目中的架构怎么选择的，MVM和MVVM有什么区别，项目中担任什么角色。 算法题:两数之和。 面试官看着我的简历主修课程和项目经历问的，都是你回答之后然后根据你的回答继续追问。算法题我看了说不会写，只能说一下思路 结果还说错了。最后27分钟结束。中间不会的问题我说不太清楚，算法说不会写面试官就说下来学一学什么的[笑哭R][笑哭R]反正知道自己水平也没抱希望能过，就是感受一下面试氛围积累经验啦[害羞R]"
-    }
+  "decision": "single-interview",
+  "reviewed_at": "2026-09-08T00:00:00.000Z",
+  "reviewer_kind": "ai-assisted",
+  "review_evidence": {
+    "repository": "liqiangcc/interview-lab",
+    "issue_number": 1373,
+    "comment_id": 1609001373
   },
   "checks": [
     {
@@ -47,7 +36,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -61,9 +50,8 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
-    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
-  ],
-  "evidence_sha256": "915543873bdddf541a887c5fb3255d0bc9d5e2d6a2c3bab9bf9cf61af08b4bc3",
-  "request_sha256": "9517585939645573e6367aaa96a94eef299fb63edfda0556b1264d7f5025d2b4"
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+    "Candidate only: review_evidence.comment_id is a deterministic placeholder; no live evidence comment was created.",
+    "No body PATCH, label write, or InterviewNote materialization was performed; controller authorization is required."
+  ]
 }

@@ -7,8 +7,37 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "37a373aaedcba5e67921eb0f90f9b9d2928ce6237a7f5d9d23f8b58f7b93f923",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event"
+    ],
+    "questions": 9,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": [
+      {
+        "case_key": "tencent-process",
+        "anchor": "腾讯",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-2",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:腾讯"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68ca2ddb0000000013011bbb.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "823e1b6ad213b73b9883fd15981c70db7d74a672",
@@ -20,7 +49,7 @@
       "excerpt": "腾讯技术面经",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "腾讯技术面经 1、自我介绍 3min 2、讲讲Java、Python、Go三者区别 3、Python比Java快吗，比Go快吗 4、讲讲解释型语言和编译型语言的区别 5、GMP模型 6、Redis ： 一台机器256GB，很多台机器，一共有1T数据，怎么存 7、Redis： 原来访问量1000w QPS，已经最高，现在2000w，怎么优化 8、除了读写分离呢？（可以加资源） 9、数组和链表的区别，体现在内存读取和cpu计算上 算法：大数相乘"
+      "semantic_excerpt": "腾讯技术面经\n1、自我介绍 3min\n2、讲讲Java、Python、Go三者区别\n3、Python比Java快吗，比Go快吗\n4、讲讲解释型语言和编译型语言的区别\n5、GMP模型\n6、Redis ： 一台机器256GB，很多台机器，一共有1T数据，怎么存\n7、Redis： 原来访问量1000w QPS，已经最高，现在2000w，怎么优化\n8、除了读写分离呢？（可以加资源）\n9、数组和链表的区别，体现在内存读取和cpu计算上\n算法：大数相乘"
     }
   },
   "checks": [
@@ -41,8 +70,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +85,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "41db77cbe90c65ba0a1d2f4335bd32163cb6ae9618d8c1e00bb761c96f91cac3"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "721e6384d728a9c4b65d12a751ea148d18d88f126a35013059f0a62823a2ff37"
 }

@@ -7,8 +7,27 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "9276cd65ada8f647d80307e4ac63453fdd512cde46de102c610f36f91f77f393",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only"
+    ],
+    "questions": 8,
+    "has_first_person_event": true,
+    "has_explicit_candidate_event": true,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68d9ef4c000000001300ff92.json@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "ee27c0e68cf54a2eaf6c6ebea4e3bd75e7ccca13",
@@ -20,7 +39,7 @@
       "excerpt": "\"global\": {",
       "line": 2,
       "locator": "artifact-line:2",
-      "semantic_excerpt": "1、自我介绍 2、讲实习的项目，要求把设计思路和技术调研的步骤都讲清楚 3、讲本科毕设，然后又聊到ai上了（我每次面java最后都会聊到ai上，可能是因为之前有ai背景？…）聊了聊平时怎么学的ai，看过什么论文，模型训练的一些内容 4、聊了聊之前做的rocketmq的开源 5、rocketmq的幂等性如何实现 6、唯一性id算法（uuid+雪花算法，还聊了一下美团的leaf） 7、项目的难点（讲了分布式一致性，用的本地消息表+定时任务实现） 8、反问业务+转正 无手撕"
+      "semantic_excerpt": "1、自我介绍\n2、讲实习的项目，要求把设计思路和技术调研的步骤都讲清楚\n3、讲本科毕设，然后又聊到ai上了（我每次面java最后都会聊到ai上，可能是因为之前有ai背景？…）聊了聊平时怎么学的ai，看过什么论文，模型训练的一些内容\n4、聊了聊之前做的rocketmq的开源\n5、rocketmq的幂等性如何实现\n6、唯一性id算法（uuid+雪花算法，还聊了一下美团的leaf）\n7、项目的难点（讲了分布式一致性，用的本地消息表+定时任务实现）\n8、反问业务+转正 无手撕"
     }
   },
   "checks": [
@@ -41,8 +60,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +75,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "983727c5d1543cfc8c6e4d5c779004716b0a828d6ae5039e2b94e2ad97fca94a"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "a8643e4758c6ad1c0f48cc93bf779d0a3cad4ea9b94f1d19e66bacf95a1a8c71"
 }

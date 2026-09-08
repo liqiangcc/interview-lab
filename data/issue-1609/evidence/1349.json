@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "0a706f2414a82582def536c76901b6256bd386489e102bd55c5b5afac42e85c4",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event"
+    ],
+    "questions": 48,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68cbfa1f0000000013009b09.json@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "3854311d44adb56cf0dd4c71694331ef4718b454",
@@ -20,7 +40,7 @@
       "excerpt": "\"global\": {",
       "line": 2,
       "locator": "artifact-line:2",
-      "semantic_excerpt": "时间线和面经： ❇️ 8.17-投递 ❇️ 9.1-一面 1. 实习+项目拷打 2. 看门狗机制讲一下 3. redis加锁解锁的本身操作是什么 4. Lua脚本是干什么的 5. udp和tcp讲一下 6. 流量控制讲一下 7. 令牌桶算法说一下 8. 大端和小端是什么 9. 线程和协程有什么区别 10. 怎么切换协程 11. 切换的时候具体做了什么 12. 对于程序来说，你刚才提到的保存和恢复现场，这个现场有哪些信息 13. udp优势 14. 现在有一个客户端和服务端，要实现TCP的通信，我们的代码要怎么写 15. 服务器怎么感知有新的连接 16. 怎么处理多个客户端的请求连接 17. TCP怎么处理粘包和分包 18. 现在有两个文件，然后每个文件都有一亿条URL，每个的长度都很长，要怎么快速查找这两个文件共有的URL 19. Hashmap底层说一下 20. 怎么尽量提升插入和查询的效率 • 手撕：堆排序 ❇️ 9.4-二面 1. 部门的leader，超级压力面 2. 拷打实习+项目，被喷完全没东西 3. 类的加载到垃圾回收整个底层原理讲一遍 4. 类加载谁来执行 5. 类加载器是什么东西，和进程的关系 6. Java虚拟机是什么东西，和进程的关系 7. 如果我们要执行hello world，那虚拟机干了什么呢 8. 谁把字节码翻译成机器码，操作时机是什么 9. Java虚拟机是一个执行单元吗 10. Java虚拟机和操作系统的关系到底什么，假如我是个完全不懂技术的人，举例说明让我明白 11. 一个操作系统有两个Java程序的话，有几个虚拟机 12. 有没有单独的JVM进程存在 13. 启动一个hello world编译的时候，有几个进程 14. JVM什么时候启动 15. 比如执行一条Java命令的时候对应一个进程，然后这个JVM虚拟机到底是不是在这个进程里面，还是说要先启动一个JVM虚拟机的进程 16. 垃圾回收机制的时机 17. 能手动触发垃圾回收吗 18. 垃圾回收会抢占业务代码的CPU吗 19. 垃圾回收算法简单说说 20. 垃圾回收机制的stop the world存在于哪些时机 21. 垃圾回收中的计算Region的时候怎么和业务代码并行执行 22. 假如只有一个线程，怎么实现并行 23. Java为什么要这么实现 24. Java效率比C++慢"
+      "semantic_excerpt": "时间线和面经：\n❇️ 8.17-投递\n❇️ 9.1-一面\n1. 实习+项目拷打\n2. 看门狗机制讲一下\n3. redis加锁解锁的本身操作是什么\n4. Lua脚本是干什么的\n5. udp和tcp讲一下\n6. 流量控制讲一下\n7. 令牌桶算法说一下\n8. 大端和小端是什么\n9. 线程和协程有什么区别\n10. 怎么切换协程\n11. 切换的时候具体做了什么\n12. 对于程序来说，你刚才提到的保存和恢复现场，这个现场有哪些信息\n13. udp优势\n14. 现在有一个客户端和服务端，要实现TCP的通信，我们的代码要怎么写\n15. 服务器怎么感知有新的连接\n16. 怎么处理多个客户端的请求连接\n17. TCP怎么处理粘包和分包\n18. 现在有两个文件，然后每个文件都有一亿条URL，每个的长度都很长，要怎么快速查找这两个文件共有的URL\n19. Hashmap底层说一下\n20. 怎么尽量提升插入和查询的效率\n• 手撕：堆排序\n \n❇️ 9.4-二面\n1. 部门的leader，超级压力面\n2. 拷打实习+项目，被喷完全没东西\n3. 类的加载到垃圾回收整个底层原理讲一遍\n4. 类加载谁来执行\n5. 类加载器是什么东西，和进程的关系\n6. Java虚拟机是什么东西，和进程的关系\n7. 如果我们要执行hello world，那虚拟机干了什么呢\n8. 谁把字节码翻译成机器码，操作时机是什么\n9. Java虚拟机是一个执行单元吗\n10. Java虚拟机和操作系统的关系到底什么，假如我是个完全不懂技术的人，举例说明让我明白\n11. 一个操作系统有两个Java程序的话，有几个虚拟机\n12. 有没有单独的JVM进程存在\n13. 启动一个hello world编译的时候，有几个进程\n14. JVM什么时候启动\n15. 比如执行一条Java命令的时候对应一个进程，然后这个JVM虚拟机到底是不是在这个进程里面，还是说要先启动一个JVM虚拟机的进程\n16. 垃圾回收机制的时机\n17. 能手动触发垃圾回收吗\n18. 垃圾回收会抢占业务代码的CPU吗\n19. 垃圾回收算法简单说说\n20. 垃圾回收机制的stop the world存在于哪些时机\n21. 垃圾回收中的计算Region的时候怎么和业务代码并行执行\n22. 假如只有一个线程，怎么实现并行\n23. Java为什么要这么实现\n24. Java效率比C+"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "356333bb018c82fbd000c8cdff554de12866078ecc710a7d50808f6e12699461"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "3027dc32e96721fa7a783a035a1c32769be5d62a33001626e98156870409b9e1"
 }

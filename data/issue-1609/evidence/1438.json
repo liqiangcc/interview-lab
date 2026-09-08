@@ -8,7 +8,26 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "9c67f7e8adb795acff5d28475d35cc78d09a05537bed9f6faa6ced37f9d0e8a4",
   "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "rationale": "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event"
+    ],
+    "questions": 34,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": true,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68e3d96c0000000007000451.json@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "8125813df593f83dd6114e1a7b3f96e09c254890",
@@ -20,7 +39,7 @@
       "excerpt": "\"global\": {",
       "line": 2,
       "locator": "artifact-line:2",
-      "semantic_excerpt": "一面 1、拷打实验室项目（10min） 2、讲一下秒杀活动的实现 3、前端防刷能解决哪些问题，有哪些局限性 4、如果用户不通过浏览器界面，而是直接模拟或调用后端接口进行刷单，如何防范？ 5、在应对局域网下（同一IP）大量用户同时抢购的场景时，怎么设计IP限流策略？ 6、高并发场景下“热Key”问题会对系统产生什么影响？怎么解决 7、除了“下单”环节，整个秒杀链路中还有哪些环节可能存在性能瓶颈或挑战？ 8、在秒杀活动正式开始前，如何应对用户不断刷新页面等行为带来的流量冲击？ 9、为什么决定做这个Agent项目？ 10、怎么用Graph框架来设计和控制任务流程的？ 11、RAG知识引擎包含了哪些核心功能？ 12、如果知识库的内容非常庞杂，包括多种类型，如何智能地判断和优先提供最相关的知识？ 13、讲一下MCP的实际开发或集成经验？ 14、MCP与传统的Function Calling在工具调用层面，主要的区别和优势是什么？ 15、反问 二面 1、自我介绍 2、简单问了下实习（5min） 3、做过的项目里，遇到的核心挑战有哪些？如何解决的 4、做这个项目的核心目标是什么？具体场景是啥 5、RAG引擎具体是做什么的？ 6、用于RAG的数据是从哪里来的？ 7、针对RAG这部分，有没有自己构建知识库进行对比实验来评估效果？ 8、具体使用了哪些知识？如何评估这些知识的质量？ 9、RAG里面的向量化是怎么做的 10、如何评测这个RAG引擎的具体效果 11、系统生成一次回答反馈大概需要多长时间？ 12、知识检索过程为什么会花费这么长时间？你预估每个步骤的时间是多少？ 13、实验室项目微调的训练集是怎么构造的？ 14、微调后的效果怎么样，怎么评测微调效果？ 15、有没有阅读过Java生态中一些经典框架或工具的源代码？ 16、平时怎么学习大模型和AI相关知识的？ 17、AI Coding的掌握程度 18、让你实现一个类似Copilot的代码生成工具，大致思路是怎样的？如何让它达到较高的准确度？ 19、如果实习的话最早能什么时候来？持续多久？ HR面 教育背景与职业选择、实习经历与动机、求职意向与现状、反问 国庆前面完的，部门和业务感觉都很不错，希望能泡出来吧[哭惹R]"
+      "semantic_excerpt": "一面\n1、拷打实验室项目（10min）\n2、讲一下秒杀活动的实现\n3、前端防刷能解决哪些问题，有哪些局限性\n4、如果用户不通过浏览器界面，而是直接模拟或调用后端接口进行刷单，如何防范？\n5、在应对局域网下（同一IP）大量用户同时抢购的场景时，怎么设计IP限流策略？\n6、高并发场景下“热Key”问题会对系统产生什么影响？怎么解决\n7、除了“下单”环节，整个秒杀链路中还有哪些环节可能存在性能瓶颈或挑战？\n8、在秒杀活动正式开始前，如何应对用户不断刷新页面等行为带来的流量冲击？\n9、为什么决定做这个Agent项目？\n10、怎么用Graph框架来设计和控制任务流程的？\n11、RAG知识引擎包含了哪些核心功能？\n12、如果知识库的内容非常庞杂，包括多种类型，如何智能地判断和优先提供最相关的知识？\n13、讲一下MCP的实际开发或集成经验？\n14、MCP与传统的Function Calling在工具调用层面，主要的区别和优势是什么？\n15、反问\n \n二面\n1、自我介绍\n2、简单问了下实习（5min）\n3、做过的项目里，遇到的核心挑战有哪些？如何解决的\n4、做这个项目的核心目标是什么？具体场景是啥\n5、RAG引擎具体是做什么的？\n6、用于RAG的数据是从哪里来的？\n7、针对RAG这部分，有没有自己构建知识库进行对比实验来评估效果？\n8、具体使用了哪些知识？如何评估这些知识的质量？\n9、RAG里面的向量化是怎么做的\n10、如何评测这个RAG引擎的具体效果\n11、系统生成一次回答反馈大概需要多长时间？\n12、知识检索过程为什么会花费这么长时间？你预估每个步骤的时间是多少？\n13、实验室项目微调的训练集是怎么构造的？\n14、微调后的效果怎么样，怎么评测微调效果？\n15、有没有阅读过Java生态中一些经典框架或工具的源代码？\n16、平时怎么学习大模型和AI相关知识的？\n17、AI Coding的掌握程度\n18、让你实现一个类似Copilot的代码生成工具，大致思路是怎样的？如何让它达到较高的准确度？\n19、如果实习的话最早能什么时候来？持续多久？\n \nHR面\n教育背景与职业选择、实习经历与动机、求职意向与现状、反问\n \n国庆前面完的，部门和业务感觉都很不错，希望能泡出来吧[哭惹R]"
     }
   },
   "checks": [
@@ -42,7 +61,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +75,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "9060b28fc8c82f83f3a5192b068d5fd77e6fd96826b573b13c5b3e8b4d053383"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "d4ded6cb9a6e0ed7c54f6fa1ca0c260024040fc4fd3ce93ae5d9ad86edc9b770"
 }

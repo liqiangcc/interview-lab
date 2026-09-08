@@ -8,7 +8,27 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "61f7b10e40fa490c82e129c7cf0aba8e843532dae0691ee3764f6ae4e53ebf60",
   "disposition": "blocked",
-  "rationale": "The available Source evidence does not establish a bounded interview event; retain pending.",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event"
+    ],
+    "questions": 5,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": false,
+    "has_detailed_event": false,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b27075000000001b035e94.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "814bb1b87e53a69966dbcfafe89d1dd19af2b68f",
@@ -20,7 +40,7 @@
       "excerpt": "1. 你是否有 Android/iOS 开发经验（包括课程项目或个人作品）？请描述你开发的 App 功能和技术栈。",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "1. 你是否有 Android/iOS 开发经验（包括课程项目或个人作品）？请描述你开发的 App 功能和技术栈。 ◦ 追问 1：如何实现页面之间的数据传递？ ◦ 追问 2：遇到过哪些兼容性问题？如何解决的？ 2. 解释 Activity 和 Fragment 的生命周期，在你的项目中如何管理它们？ 3. 移动端开发中，如何优化应用的启动速度？请结合你的项目经验回答。 ◦ 追问 1：冷启动和热启动有什么区别？ ◦ 追问 2：你使用过哪些性能分析工具？ 4. 你在项目中如何实现本地数据存储？比较不同存储方式的优缺点。 5. 作为应届生，如何快速适应移动开发的技术更新速度？ ◦ 追问 1：你关注哪些技术博客或社区？ ◦ 追问 2：如何平衡学习原生开发和跨平台框架？"
+      "semantic_excerpt": "1. 你是否有 Android/iOS 开发经验（包括课程项目或个人作品）？请描述你开发的 App 功能和技术栈。\n◦ 追问 1：如何实现页面之间的数据传递？\n◦ 追问 2：遇到过哪些兼容性问题？如何解决的？\n2. 解释 Activity 和 Fragment 的生命周期，在你的项目中如何管理它们？\n3. 移动端开发中，如何优化应用的启动速度？请结合你的项目经验回答。\n◦ 追问 1：冷启动和热启动有什么区别？\n◦ 追问 2：你使用过哪些性能分析工具？\n4. 你在项目中如何实现本地数据存储？比较不同存储方式的优缺点。\n5. 作为应届生，如何快速适应移动开发的技术更新速度？\n◦ 追问 1：你关注哪些技术博客或社区？\n◦ 追问 2：如何平衡学习原生开发和跨平台框架？"
     }
   },
   "checks": [
@@ -42,7 +62,7 @@
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "The available Source evidence does not establish a bounded interview event; retain pending.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "1a946bd8cf3184b528f31eda9e231a7b79891388c814a652ee355522c1271c39"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "512de908fcc80d11b4c9c7c7ad5e27b81937c4bc5c6d74357913e15dbff34afb"
 }

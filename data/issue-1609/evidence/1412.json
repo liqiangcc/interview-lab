@@ -8,7 +8,26 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "db684c9c70944704e562a05f2af19c74e8e1485f713c9d53689682329d2be8bb",
   "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "rationale": "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event"
+    ],
+    "questions": 3,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68da266d000000001101db29.json@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "a1edb3e3293f5c4abe878b2840a03a16e1f10261",
@@ -20,7 +39,7 @@
       "excerpt": "\"global\": {",
       "line": 2,
       "locator": "artifact-line:2",
-      "semantic_excerpt": "除了实习之外问的都是比较基础的八股，面试时间半小时左右，2轮技术，一轮线下hr 一面有手撕，二面无手撕，总结了三个有价值的问题其余都是实习和基础八股： 1. rpc框架下，负载均衡是客户端做的还是注册中心做的 2. rpc框架下，当服务端收到任务后，是一个个任务完成的还是哪种模式完成的 3. 线程池死锁如果没有对应的日志该怎么排查？"
+      "semantic_excerpt": "除了实习之外问的都是比较基础的八股，面试时间半小时左右，2轮技术，一轮线下hr\n一面有手撕，二面无手撕，总结了三个有价值的问题其余都是实习和基础八股：\n1. rpc框架下，负载均衡是客户端做的还是注册中心做的\n2. rpc框架下，当服务端收到任务后，是一个个任务完成的还是哪种模式完成的\n3. 线程池死锁如果没有对应的日志该怎么排查？"
     }
   },
   "checks": [
@@ -42,7 +61,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +75,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "ddfcca66595cfbf38e2cd7632ee2dfe5727578b3e172a4d17790ffac8f0710ae"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "e184e6fa95c2dca92b959327ca9df4a880cdae188ed5c40841d8f892d8ef6d77"
 }

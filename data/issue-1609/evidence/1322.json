@@ -8,7 +8,26 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "9f4d515c2776e5d51196fad47e6bc15cc9ce0c1b362986c6e4190584cd35fe22",
   "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "rationale": "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event"
+    ],
+    "questions": 8,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": true,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": true,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68c8ae76000000001c010c54.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "8398039468867d28e004ed53a7cb5f35568a0774",
@@ -20,7 +39,7 @@
       "excerpt": "🔥 字节跳动Java外包面经｜支付+高并发+微服务真题揭秘",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "🔥 字节跳动Java外包面经｜支付+高并发+微服务真题揭秘 📍背景：学员刚面完字节跳动Java外包岗，两轮技术面聚焦支付系统设计、高并发处理及微服务架构，面试官疯狂追问底层原理和实战细节！整理高频真题+避坑指南，助你冲刺大厂Offer！💻 📌 第一轮技术面（50分钟） 1. 支付系统设计 - 问题：如何设计一个支持多通道（微信/支付宝）的支付系统？ - 答案： - 接入层：API网关统一接收请求，路由到不同支付渠道（策略模式+工厂模式）。 - 异步处理：支付回调通过Kafka异步通知，保证最终一致性。 - 防重设计：Redis分布式锁+订单幂等性（UUID+业务ID）。 2. 高并发场景 - 问题：秒杀场景下如何防止超卖？ - 方案： - Redis原子操作：Lua脚本扣减库存（DECR+判断库存≥0）。 - 异步落库：MQ异步处理订单，DB层唯一索引防重复。 - 优化：本地缓存+Redis分层缓存（热点商品预加载）。 3. 微服务治理 - 问题：如何保证微服务间数据一致性？ - 答案： - Saga模式：长事务拆分子事务+补偿机制（如订单失败触发退款）。 - 分布式事务：Seata AT模式（二阶段提交+回滚日志）。 📌 第二轮技术面（40分钟） 1. 手撕算法题 - 题目：实现LRU缓存（LeetCode 146） - 要求：哈希表+双向链表，O(1)时间复杂度。 class LRUCache { private Map<Integer, Node> map; private DoubleList list; private int cap; // 实现get/put方法，维护链表顺序 } - 扩展：如何设计一个支持过期时间的LRU？→ 增加时间轮+异步清理线程。 2. JVM与性能调优 - 问题：线上Full GC频繁，如何排查？ - 步骤： - \"jstat -gc\"查看GC频率； - \"jstack\"分析线程栈，定位内存泄漏（如ThreadLocal未清理）； - 优化：调整G1参数（-XX:MaxGCPauseMillis=200ms）。 3. 系统设计 - 问题：设计一个每日亿级请求的支付对账系统。 - 架构： - 分库分表：按商户ID哈希分片，避免热点； - 增量同步：Binlog监听+Canel同步到数仓（HBase+Spark计算）； "
+      "semantic_excerpt": "🔥 字节跳动Java外包面经｜支付+高并发+微服务真题揭秘\n📍背景：学员刚面完字节跳动Java外包岗，两轮技术面聚焦支付系统设计、高并发处理及微服务架构，面试官疯狂追问底层原理和实战细节！整理高频真题+避坑指南，助你冲刺大厂Offer！💻\n📌 第一轮技术面（50分钟）\n1. 支付系统设计\n- 问题：如何设计一个支持多通道（微信/支付宝）的支付系统？\n- 答案：\n- 接入层：API网关统一接收请求，路由到不同支付渠道（策略模式+工厂模式）。\n- 异步处理：支付回调通过Kafka异步通知，保证最终一致性。\n- 防重设计：Redis分布式锁+订单幂等性（UUID+业务ID）。\n2. 高并发场景\n- 问题：秒杀场景下如何防止超卖？\n- 方案：\n- Redis原子操作：Lua脚本扣减库存（DECR+判断库存≥0）。\n- 异步落库：MQ异步处理订单，DB层唯一索引防重复。\n- 优化：本地缓存+Redis分层缓存（热点商品预加载）。\n3. 微服务治理\n- 问题：如何保证微服务间数据一致性？\n- 答案：\n- Saga模式：长事务拆分子事务+补偿机制（如订单失败触发退款）。\n- 分布式事务：Seata AT模式（二阶段提交+回滚日志）。\n📌 第二轮技术面（40分钟）\n1. 手撕算法题\n- 题目：实现LRU缓存（LeetCode 146）\n- 要求：哈希表+双向链表，O(1)时间复杂度。\nclass LRUCache {\nprivate Map<Integer, Node> map;\nprivate DoubleList list;\nprivate int cap;\n// 实现get/put方法，维护链表顺序\n}\n- 扩展：如何设计一个支持过期时间的LRU？→ 增加时间轮+异步清理线程。\n2. JVM与性能调优\n- 问题：线上Full GC频繁，如何排查？\n- 步骤：\n-\n\"jstat -gc\"查看GC频率；\n-\n\"jstack\"分析线程栈，定位内存泄漏（如ThreadLocal未清理）；\n- 优化：调整G1参数（-XX:MaxGCPauseMillis=200ms）。\n3. 系统设计\n- 问题：设计一个每日亿级请求的支付对账系统。\n- 架构：\n- 分库分表：按商户ID哈希分片，避免热点；\n- 增量同步：Binlog监听+Canel同步到数仓（HBase+Spark计算）；\n"
     }
   },
   "checks": [
@@ -42,7 +61,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +75,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "eb8dd73e945c7d03fe3de004b3f093b16dd322e26a70282709530e92331ed643"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "a57167f2f0b1ffb9f3ebfd722f603a979799deaab1a28854fca8b7f95fedbe25"
 }

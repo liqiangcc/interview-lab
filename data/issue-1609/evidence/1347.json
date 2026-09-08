@@ -8,7 +8,24 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "04d17b34d21f006889c2d4d633af286d8f48ca9fe5415d200ac00e91cd4eae68",
   "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "rationale": "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [],
+    "questions": 0,
+    "has_first_person_event": true,
+    "has_explicit_candidate_event": true,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": true,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68cbd296000000000e00c123.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "4e0fbb2e70f494803f8b865c5eafa5de93c5a477",
@@ -20,7 +37,7 @@
       "excerpt": "本来看了很多面经，都是拷打八股和项目，结果我聊了半小时的科研，问的很细，还有解决了什么问题、具体的实现流程、输入输出的具体参数设置、遇到的最难的工程问题等等",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "本来看了很多面经，都是拷打八股和项目，结果我聊了半小时的科研，问的很细，还有解决了什么问题、具体的实现流程、输入输出的具体参数设置、遇到的最难的工程问题等等 手撕：用面向对象的思想写一个solution，实现一个功能：输入一个字符串，输出所有字符组合 追问：写出这个类的拷贝构造、移动构造、拷贝赋值、移动赋值 感觉面试官不是很想理我，淡淡的[哭惹R][哭惹R]"
+      "semantic_excerpt": "本来看了很多面经，都是拷打八股和项目，结果我聊了半小时的科研，问的很细，还有解决了什么问题、具体的实现流程、输入输出的具体参数设置、遇到的最难的工程问题等等\n \n手撕：用面向对象的思想写一个solution，实现一个功能：输入一个字符串，输出所有字符组合\n追问：写出这个类的拷贝构造、移动构造、拷贝赋值、移动赋值\n \n感觉面试官不是很想理我，淡淡的[哭惹R][哭惹R]"
     }
   },
   "checks": [
@@ -42,7 +59,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +73,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "2843de6f431cef99cfb7d43bf076c75faa02d461782eb8054607a1aed1b860b5"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "b059b82818f42e694fcb855c50707509081cbaf5dd13c36de62b055476241a39"
 }

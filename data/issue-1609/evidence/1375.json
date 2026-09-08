@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "ad59a483555d3197b63e1440fcb38c5120997396f5ce3b752a529d13335bbd40",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event"
+    ],
+    "questions": 14,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68d16a2d000000001101fea1.json@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "de93648ef913b612aa887cac98a774642634ba2c",
@@ -20,7 +40,7 @@
       "excerpt": "\"global\": {",
       "line": 2,
       "locator": "artifact-line:2",
-      "semantic_excerpt": "岗位：基础平台研发工程师-Java（电话面） 1、自我介绍 2、问了一些个人情况（岗位选择、计算机相关课程、竞赛和保研） 3、讲实习 4、主机突然断电了，日志会丢失吗 5、如何保证日志按时被清理了 6、你在重构时，如何考虑和原有的代码兼容 7、死锁是什么 8、什么是线程安全，Java如何实现线程安全 9、数据库中如果对一个数据有读有写的话，要加锁吗 10、事务的隔离级别 11、事务中的一致性和分布式系统中的一致性是一样的吗 12、手撕1：非严格递增序列，原地去掉重复的数字，返回不同数字的个数，例子[1，1，2，3，3，3，4，4]，返回k=4，且原数组需变为[1，2，3，4，_，_，_，_]的形式 13、手撕2：顺时针螺旋输出矩阵（hot100原题） 14、反问"
+      "semantic_excerpt": "岗位：基础平台研发工程师-Java（电话面）\n1、自我介绍\n2、问了一些个人情况（岗位选择、计算机相关课程、竞赛和保研）\n3、讲实习\n4、主机突然断电了，日志会丢失吗\n5、如何保证日志按时被清理了\n6、你在重构时，如何考虑和原有的代码兼容\n7、死锁是什么\n8、什么是线程安全，Java如何实现线程安全\n9、数据库中如果对一个数据有读有写的话，要加锁吗\n10、事务的隔离级别\n11、事务中的一致性和分布式系统中的一致性是一样的吗\n12、手撕1：非严格递增序列，原地去掉重复的数字，返回不同数字的个数，例子[1，1，2，3，3，3，4，4]，返回k=4，且原数组需变为[1，2，3，4，_，_，_，_]的形式\n13、手撕2：顺时针螺旋输出矩阵（hot100原题）\n14、反问"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "92f0368f6b10871643194dd30a1408db6cab593638e147b4372afbfc01bcab02"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "1b2e0bb95d6ed0dabf55b86dcf026fe1fef7adc2f456fda9f00a875db8c6aa8e"
 }

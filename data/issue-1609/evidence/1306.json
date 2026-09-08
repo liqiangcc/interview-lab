@@ -8,7 +8,36 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "6aa003e733bbf471c4308c96b959032108fd4cb00c8fbe9a6b833084cef3dccf",
   "disposition": "blocked",
-  "rationale": "The available Source evidence does not establish a bounded interview event; retain pending.",
+  "rationale": "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 0,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": false,
+    "has_detailed_event": false,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": [
+      {
+        "case_key": "kuaishou-process",
+        "anchor": "快手",
+        "line": 1,
+        "locator": "artifact-line:1#offset:1-3",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:快手"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68c3e416000000001c033781.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "606d84ed8600e23f5a6b4203ef06d3b13b7044e0",
@@ -20,7 +49,7 @@
       "excerpt": "【快手主站运营技术】",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "【快手主站运营技术】 急招java ，给简历现在就能面，这个月就能来 求简历、求推荐！！！！ 简历直接给我就行"
+      "semantic_excerpt": "【快手主站运营技术】\n急招java ，给简历现在就能面，这个月就能来\n求简历、求推荐！！！！\n简历直接给我就行"
     }
   },
   "checks": [
@@ -42,7 +71,7 @@
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +85,11 @@
     }
   ],
   "limitations": [
-    "The available Source evidence does not establish a bounded interview event; retain pending.",
+    "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "128872451df2a26b0a24d771a5e9b4dbcb2901102ce54ff46a666371a16f5b4f"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "8e30fb338f801579bd0620181fa5426e042d24ef22c659467717f4f43f41b1b2"
 }

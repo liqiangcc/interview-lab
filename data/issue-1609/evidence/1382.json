@@ -8,7 +8,24 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "f8cba8bb6db669f0a9178c1176e4085313b3a54b2b11fa3b2b2067b89c127f19",
   "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "rationale": "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [],
+    "questions": 0,
+    "has_first_person_event": true,
+    "has_explicit_candidate_event": true,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": true,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68d25cf10000000013036f86.json@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "d6ab1dfb0d282a3034af993f9496b9821aff1023",
@@ -20,7 +37,7 @@
       "excerpt": "\"global\": {",
       "line": 2,
       "locator": "artifact-line:2",
-      "semantic_excerpt": "🕐面试时间：8.12、8.20、8.29、9.8；意向是9.18发的 无笔试 💻面试岗位：后端开发工程师 写在前面： ❇️快手倾向项目、实习匹配度，对我的Golang云原生开发经历兴趣不大， 因此更多在考察八股、项目、场景题 ✅一面（8.12） 总时长：40分钟 1⃣️算法题：LRU 2⃣️写完LRU后问，对map的get、put如果出现并发访问会出什么问题？应该如何解决？ConcurrentHashMap能解决吗？如果使用CAS的方式应该怎么写，可以用伪码表示？ 3⃣️Java创建线程池的参数中有哪些？其中核心线程数、最大线程数具体考虑哪些问题来决定？ 4⃣️两段实习各简单介绍主要做的事 5⃣️对数据库项目进行了详细的拷打，如果多个线程同时访问时，那么对操作底层数据库的过程中，会不会出现并发问题？MySQL对这种问题是如何解决的呢？ ✅二面（8.20） 总时长：1小时 1⃣️算法题：有n个6面的骰子，求掷一次后和为k的概率为多少。一开始想回溯，问要不要求复杂度，后面试官给了一些简单的提示，想出来动态规划解法 2⃣️MySQL的主从同步的过程是怎样的 3⃣️MySQL有哪些锁，能不能构造一个间隙锁的死锁？MySQL对这种死锁是如何处理的 4⃣️select a from xxx where c > 1 and d != 2 and b = 3，建立索引，怎么建，能最高效 5⃣️对实习中提到的K8s很感兴趣，想让我介绍一下K8s以及我做的东西是什么（10多分钟） 6⃣️用markdown写一个实现共享单车服务的技术方案，包括核心表结构，过程包含扫码取车，骑行过程的位置监控，关锁还车（这里就用了20分钟） ✅三面（8.29） 总时长：40分钟 1⃣️分别介绍两段实习的项目背景，以及其中的难点 2⃣️自己的项目中手搓的数据库，其事务问题和索引问题是如何解决的 3⃣️如果拓展手搓的数据库为分布式的该怎么办（提到了raft） 4⃣️那讲讲raft核心思想 5⃣️对于新技术是如何学习的 6⃣️业务侧这边在对接真实客户，压力很大我会怎么办 7⃣️对当下ai这部分的理解"
+      "semantic_excerpt": "🕐面试时间：8.12、8.20、8.29、9.8；意向是9.18发的 无笔试\n💻面试岗位：后端开发工程师\n \n写在前面：\n❇️快手倾向项目、实习匹配度，对我的Golang云原生开发经历兴趣不大， 因此更多在考察八股、项目、场景题\n \n✅一面（8.12）\n总时长：40分钟\n1⃣️算法题：LRU\n2⃣️写完LRU后问，对map的get、put如果出现并发访问会出什么问题？应该如何解决？ConcurrentHashMap能解决吗？如果使用CAS的方式应该怎么写，可以用伪码表示？\n3⃣️Java创建线程池的参数中有哪些？其中核心线程数、最大线程数具体考虑哪些问题来决定？\n4⃣️两段实习各简单介绍主要做的事\n5⃣️对数据库项目进行了详细的拷打，如果多个线程同时访问时，那么对操作底层数据库的过程中，会不会出现并发问题？MySQL对这种问题是如何解决的呢？\n \n✅二面（8.20）\n总时长：1小时\n1⃣️算法题：有n个6面的骰子，求掷一次后和为k的概率为多少。一开始想回溯，问要不要求复杂度，后面试官给了一些简单的提示，想出来动态规划解法\n2⃣️MySQL的主从同步的过程是怎样的\n3⃣️MySQL有哪些锁，能不能构造一个间隙锁的死锁？MySQL对这种死锁是如何处理的\n4⃣️select a from xxx where c > 1 and d != 2 and b = 3，建立索引，怎么建，能最高效\n5⃣️对实习中提到的K8s很感兴趣，想让我介绍一下K8s以及我做的东西是什么（10多分钟）\n6⃣️用markdown写一个实现共享单车服务的技术方案，包括核心表结构，过程包含扫码取车，骑行过程的位置监控，关锁还车（这里就用了20分钟）\n \n✅三面（8.29）\n总时长：40分钟\n1⃣️分别介绍两段实习的项目背景，以及其中的难点\n2⃣️自己的项目中手搓的数据库，其事务问题和索引问题是如何解决的\n3⃣️如果拓展手搓的数据库为分布式的该怎么办（提到了raft）\n4⃣️那讲讲raft核心思想\n5⃣️对于新技术是如何学习的\n6⃣️业务侧这边在对接真实客户，压力很大我会怎么办\n7⃣️对当下ai这部分的理解"
     }
   },
   "checks": [
@@ -42,7 +59,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +73,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "1046f83cdd34a96a3d5d8d32bf089083e51b7c3d823cd4de98954198f88c248f"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "1bcdaff0123296a7a974432e8c559bd1d0380df811515013e2211707bface186"
 }

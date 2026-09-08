@@ -8,7 +8,35 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "ce20af64a3908822b802129f3a07baae4d0b14bc5d344b9d3021354f7b0d098a",
   "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "rationale": "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event"
+    ],
+    "questions": 8,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": [
+      {
+        "case_key": "kuaishou-process",
+        "anchor": "快手",
+        "line": 1,
+        "locator": "artifact-line:1#offset:10-12",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:快手"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68c17701000000001d010360.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "95ff24bf81ebd1dfe7f4e03cf98134296e99800c",
@@ -20,7 +48,7 @@
       "excerpt": "26届秋招之后端开发快手二面",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "26届秋招之后端开发快手二面 1.介绍实习并且回答提问 2.实习收获 3.Java内存模型 4.垃圾回收算法，原理和优缺点 5.什么是线程不安全 6.怎么理解微服务，优缺点 7.场景题：设计一个秒杀活动 8.手撕：不记得是没有还是我忘了"
+      "semantic_excerpt": "26届秋招之后端开发快手二面\n1.介绍实习并且回答提问\n2.实习收获\n3.Java内存模型\n4.垃圾回收算法，原理和优缺点\n5.什么是线程不安全\n6.怎么理解微服务，优缺点\n7.场景题：设计一个秒杀活动\n8.手撕：不记得是没有还是我忘了"
     }
   },
   "checks": [
@@ -42,7 +70,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +84,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "65fe3984dba8be9877cc107fcb8628e69689d44333dcdd85963dd00b9f7664b2"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "eeeeca773afd68305639ef25f3f8b840c39bea0214981a6941a7c4128eb58667"
 }

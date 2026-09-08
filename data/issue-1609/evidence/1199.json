@@ -8,7 +8,24 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "99c2ae67090bc1e828e0fadb8dbfa58d4ec2089a4086213af22045a893fbd5f2",
   "disposition": "blocked",
-  "rationale": "The available Source evidence does not establish a bounded interview event; retain pending.",
+  "rationale": "The available Source evidence does not establish a bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [],
+    "questions": 0,
+    "has_first_person_event": true,
+    "has_explicit_candidate_event": true,
+    "has_bounded_event": false,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b01c1a000000001c00f2d2.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "5f04e618ba59c66940289a21ee370a8ee4254fb0",
@@ -20,7 +37,7 @@
       "excerpt": "在日本找Java工作，面试问题很多，而且有些问题非常容易答错。我今天整理下在日Java工程师面试中最常见的坑，以及实用回答。",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "在日本找Java工作，面试问题很多，而且有些问题非常容易答错。我今天整理下在日Java工程师面试中最常见的坑，以及实用回答。 大家自行收藏取用，编辑不宜，如果大家还有其他问题都可以问，希望问前能点个关注，谢谢。"
+      "semantic_excerpt": "在日本找Java工作，面试问题很多，而且有些问题非常容易答错。我今天整理下在日Java工程师面试中最常见的坑，以及实用回答。\n大家自行收藏取用，编辑不宜，如果大家还有其他问题都可以问，希望问前能点个关注，谢谢。"
     }
   },
   "checks": [
@@ -42,7 +59,7 @@
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. The available Source evidence does not establish a bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +73,11 @@
     }
   ],
   "limitations": [
-    "The available Source evidence does not establish a bounded interview event; retain pending.",
+    "The available Source evidence does not establish a bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "56c038608e8becafadc8be6c3f92e19687b2c0c10407496737f6ea681eb68b07"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "7e5e15d11c0e6fa247bced3204257650fce3de3b21e40a8a1dbacebdf097e1cd"
 }

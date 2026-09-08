@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "5c990a1aa07a2e68c789d40818659d3e3b8201b721bc483cb0ec93a50974eebc",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 0,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": true,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68a71089000000001b021798.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "a5b112660f0764d54bf76f0fc6fa726a230fc3b8",
@@ -20,7 +40,7 @@
       "excerpt": "2min",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "2min 自我介绍 15min [一R] Redis分布式锁和乐观锁概念 悲观锁和乐观锁，区别于在进入共享资源区之前是否允许其他请求修改共享资源 [二R]Toc上亿流量的分布式锁相比Tob场景需要额外考虑什么问题 分段加锁 [三R]怎么把Redis的热点Key分布到不同节点上承压 热点key拆分+哈希到不同节点上；只读场景可以直接复制副本到不同节点 [四R] Redis cluster集群分片+主从复制介绍 哈希槽+gossip+主从节点读写分离 [五R]Redis的慢查询可能是由什么原因导致的 网络波动、Redis大Key [六R]怎么判断是网络波动问题还是key设置不合理问题 通过ping检测，同时看Redis的慢查询日志 15min [一R]消息队列容器或者消费者宕机，通过什么机制保证数据的一致性 容器宕机有持久化机制，消费者宕机考虑消息堆积、消息消费幂等性、消息丢失 [二R]缓存穿透和布隆过滤器 请求直接访问数据库，哈希函数+bitmap [三R]介绍几个你知道的设计模式和应用场景 单例模式（全局配置类），责任链模式（用户登录过滤） [四R]spring中经典的设计模式介绍一下 工厂模式，代理模式 [五R]代理模式怎么工作的 不修改目标对象基础上新增额外功能 [六R]浏览器输入url，执行过程是什么 http, dns, tcp, ip, arp, 数据帧传输 [七R]你的技术学习路径是什么 视频，博客，源码，实践 12min 已知每个员工的位置和每个食堂的位置，求出每个员工到食堂最近距离之和。 双指针题 上一个字节流程已经g了，表现太差了，新开一个岗位面试"
+      "semantic_excerpt": "2min\n自我介绍\n \n15min\n[一R] Redis分布式锁和乐观锁概念\n悲观锁和乐观锁，区别于在进入共享资源区之前是否允许其他请求修改共享资源\n[二R]Toc上亿流量的分布式锁相比Tob场景需要额外考虑什么问题\n分段加锁\n[三R]怎么把Redis的热点Key分布到不同节点上承压\n热点key拆分+哈希到不同节点上；只读场景可以直接复制副本到不同节点\n[四R] Redis cluster集群分片+主从复制介绍\n哈希槽+gossip+主从节点读写分离\n[五R]Redis的慢查询可能是由什么原因导致的\n网络波动、Redis大Key\n[六R]怎么判断是网络波动问题还是key设置不合理问题\n通过ping检测，同时看Redis的慢查询日志\n \n15min\n[一R]消息队列容器或者消费者宕机，通过什么机制保证数据的一致性\n容器宕机有持久化机制，消费者宕机考虑消息堆积、消息消费幂等性、消息丢失\n[二R]缓存穿透和布隆过滤器\n请求直接访问数据库，哈希函数+bitmap\n[三R]介绍几个你知道的设计模式和应用场景\n单例模式（全局配置类），责任链模式（用户登录过滤）\n[四R]spring中经典的设计模式介绍一下\n工厂模式，代理模式\n[五R]代理模式怎么工作的\n不修改目标对象基础上新增额外功能\n[六R]浏览器输入url，执行过程是什么\nhttp, dns, tcp, ip, arp, 数据帧传输\n[七R]你的技术学习路径是什么\n视频，博客，源码，实践\n \n12min\n已知每个员工的位置和每个食堂的位置，求出每个员工到食堂最近距离之和。\n双指针题\n上一个字节流程已经g了，表现太差了，新开一个岗位面试"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "3e752a5e1136623ae7cd3ac05b24962e83eedbca70c83d62e35540c317bbc236"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "ac61de357a298785bec58daf4e4d14da88c074d8ef934aec97b1fd5b778bd068"
 }

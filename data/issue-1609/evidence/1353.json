@@ -8,7 +8,26 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "55026c4abc0a563abeb6cc49d3ce1860e1f9ba908150abe357f37def2cd41993",
   "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "rationale": "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event"
+    ],
+    "questions": 9,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": true,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": true,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68ccaea5000000001003ed45.json@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "98d87d615d3661fb9ba5d8e61a705961792b46af",
@@ -20,7 +39,7 @@
       "excerpt": "\"desc\": \"📍背景：学员刚结束腾讯外包Java开发岗两轮技术面，面试官深挖Java底层、分布式场景、AI集成与手撕算法，全程高能！整理高频真题+避坑指南，助你冲刺Offer！💻\\n\\t\\n📌 第一轮技术面（50分钟）\\n\\t\\n1. Java基础与并发\\n\\t\\n- HashMap底层原理：\\n- 数组+链表/红黑树（JDK8），哈希冲突时链表转树阈值=8，退化阈值=6。\\n- 扩容优化：2倍扩容，避免重新计算哈希（高位运算优化）。\\n- 线程池参数：\\n-\\n\\\"corePoolSize=CPU核心数\\\"，\\n\\\"maxPoolSize=CPU*2\\\"，\\n\\\"Queue=LinkedBlockingQueue\\\"，拒绝策略\\n\\\"CallerRunsPolicy\\\"（回调主线程执行）。\\n- Synchronized vs Lock：\\n-\\n\\\"Synchronized\\\" JVM层面锁，自动释放；\\n\\\"ReentrantLock\\\"可中断、公平锁，需手动释放。\\n\\t\\n2. 分布式与MySQL\\n\\t\\n- 缓存穿透/雪崩：\\n- 穿透：布隆过滤器+空值缓存；雪崩：随机过期时间+集群部署。\\n- 索引失效场景：\\n- 对字段运算（如\\n\\\"YEAR(create_time)\\\"）、左模糊\\n\\\"LIKE '%xx'\\\"、OR条件未全覆盖索引。\\n- 事务隔离级别：\\n- MySQL默认可重复读（MVCC+间隙锁防幻读），读已提交解决脏读。\\n\\t\\n3. AI Agent与MCP协议\\n\\t\\n- Java调用AI服务：\\n- 封装HTTP请求调用腾讯TI-API，JSON解析响应（如语音识别结果）；异步处理用Kafka解耦。\\n- MCP协议作用：\\n- 标准化AI模型输入输出（JSON/Protobuf格式），提升多模型交互效率。\\n\\t\\n📌 第二轮技术面（40分钟）\\n\\t\\n1. 手撕算法题\\n- 二叉树层序遍历（LeetCode 102）：\\n- BFS+队列，记录每层节点列表。\\n\\t\\n2. 系统设计题\\n\\t\\n- 高并发支付系统：\\n- 分库分表（用户ID哈希），Redis缓存热点订单，MQ异步通知账务。\\n- 分布式ID生成：\\n- 雪花算法（时间戳+机器ID+序列号），解决时钟回拨（本地缓存历史时间戳）。\\n\\t\\n",
       "line": 556,
       "locator": "artifact-line:556",
-      "semantic_excerpt": "📍背景：学员刚结束腾讯外包Java开发岗两轮技术面，面试官深挖Java底层、分布式场景、AI集成与手撕算法，全程高能！整理高频真题+避坑指南，助你冲刺Offer！💻 📌 第一轮技术面（50分钟） 1. Java基础与并发 - HashMap底层原理： - 数组+链表/红黑树（JDK8），哈希冲突时链表转树阈值=8，退化阈值=6。 - 扩容优化：2倍扩容，避免重新计算哈希（高位运算优化）。 - 线程池参数： - \"corePoolSize=CPU核心数\"， \"maxPoolSize=CPU*2\"， \"Queue=LinkedBlockingQueue\"，拒绝策略 \"CallerRunsPolicy\"（回调主线程执行）。 - Synchronized vs Lock： - \"Synchronized\" JVM层面锁，自动释放； \"ReentrantLock\"可中断、公平锁，需手动释放。 2. 分布式与MySQL - 缓存穿透/雪崩： - 穿透：布隆过滤器+空值缓存；雪崩：随机过期时间+集群部署。 - 索引失效场景： - 对字段运算（如 \"YEAR(create_time)\"）、左模糊 \"LIKE '%xx'\"、OR条件未全覆盖索引。 - 事务隔离级别： - MySQL默认可重复读（MVCC+间隙锁防幻读），读已提交解决脏读。 3. AI Agent与MCP协议 - Java调用AI服务： - 封装HTTP请求调用腾讯TI-API，JSON解析响应（如语音识别结果）；异步处理用Kafka解耦。 - MCP协议作用： - 标准化AI模型输入输出（JSON/Protobuf格式），提升多模型交互效率。 📌 第二轮技术面（40分钟） 1. 手撕算法题 - 二叉树层序遍历（LeetCode 102）： - BFS+队列，记录每层节点列表。 2. 系统设计题 - 高并发支付系统： - 分库分表（用户ID哈希），Redis缓存热点订单，MQ异步通知账务。 - 分布式ID生成： - 雪花算法（时间戳+机器ID+序列号），解决时钟回拨（本地缓存历史时间戳）。 3. AI集成场景 - 客服机器人： - 用户输入→NLP服务（腾讯TI）→意图识别→返回应答模板；MCP协议封装请求元数据。 - 性能优化： - 本地缓存热点问答，Redis存储会话状态，超时降级默认回复。 💡 面试官深"
+      "semantic_excerpt": "📍背景：学员刚结束腾讯外包Java开发岗两轮技术面，面试官深挖Java底层、分布式场景、AI集成与手撕算法，全程高能！整理高频真题+避坑指南，助你冲刺Offer！💻\n \n📌 第一轮技术面（50分钟）\n \n1. Java基础与并发\n \n- HashMap底层原理：\n- 数组+链表/红黑树（JDK8），哈希冲突时链表转树阈值=8，退化阈值=6。\n- 扩容优化：2倍扩容，避免重新计算哈希（高位运算优化）。\n- 线程池参数：\n-\n\"corePoolSize=CPU核心数\"，\n\"maxPoolSize=CPU*2\"，\n\"Queue=LinkedBlockingQueue\"，拒绝策略\n\"CallerRunsPolicy\"（回调主线程执行）。\n- Synchronized vs Lock：\n-\n\"Synchronized\" JVM层面锁，自动释放；\n\"ReentrantLock\"可中断、公平锁，需手动释放。\n \n2. 分布式与MySQL\n \n- 缓存穿透/雪崩：\n- 穿透：布隆过滤器+空值缓存；雪崩：随机过期时间+集群部署。\n- 索引失效场景：\n- 对字段运算（如\n\"YEAR(create_time)\"）、左模糊\n\"LIKE '%xx'\"、OR条件未全覆盖索引。\n- 事务隔离级别：\n- MySQL默认可重复读（MVCC+间隙锁防幻读），读已提交解决脏读。\n \n3. AI Agent与MCP协议\n \n- Java调用AI服务：\n- 封装HTTP请求调用腾讯TI-API，JSON解析响应（如语音识别结果）；异步处理用Kafka解耦。\n- MCP协议作用：\n- 标准化AI模型输入输出（JSON/Protobuf格式），提升多模型交互效率。\n \n📌 第二轮技术面（40分钟）\n \n1. 手撕算法题\n- 二叉树层序遍历（LeetCode 102）：\n- BFS+队列，记录每层节点列表。\n \n2. 系统设计题\n \n- 高并发支付系统：\n- 分库分表（用户ID哈希），Redis缓存热点订单，MQ异步通知账务。\n- 分布式ID生成：\n- 雪花算法（时间戳+机器ID+序列号），解决时钟回拨（本地缓存历史时间戳）。\n \n3. AI集成场景\n \n- 客服机器人：\n- 用户输入→NLP服务（腾讯TI）→意图识别→返回应答模板；MCP协议封装请求元数据。\n- 性能优化：\n- 本地缓存热点问答，Red"
     }
   },
   "checks": [
@@ -42,7 +61,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +75,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "5e6ecf279b4501c20d174586a374bb35f85546ee1764b9854bcc7303b6cf40cb"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "a3bb28bb2f0d3b9dee20fff4d2de7b247e40ae8df1110a260bf85c3a38127a24"
 }

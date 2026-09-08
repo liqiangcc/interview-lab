@@ -1,32 +1,21 @@
 {
-  "schema_version": "issue-1609-boundary-review-request.v1",
-  "request_id": "issue-1609-boundary-1416",
+  "schema_version": "source-note-boundary-review-transition.v1",
+  "transition_id": "issue-1609-boundary-1416-review-1",
   "repository": "liqiangcc/interview-lab",
-  "parent_issue": 1605,
   "issue_number": 1416,
-  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1416",
   "source_note_id": "xhs-note:68da3412000000001301cace",
   "expected_body_sha256": "46c060bdbe9a94aedb3434f094a63c5a4b1ccca1be3aa9286f411e493513b741",
   "expected_boundary_status": "pending",
   "expected_source_revision_id": "xhs-note:68da3412000000001301cace:snapshot-95b77bb26104",
-  "expected_source_repository": "liqiangcc/xhs",
+  "expected_manifest_sha256": null,
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
-  "evidence_file": "evidence/1416.json",
-  "source_evidence": {
-    "ref": "liqiangcc/xhs:note_json/68da3412000000001301cace.json@95b77bb261048059846273688e4b90a2e108b437",
-    "git_blob_sha": "80f8f522256ee901eaf214593448faa196026cee",
-    "kind": "json",
-    "provenance": "source_projection",
-    "byte_size": 20729,
-    "content_sha256": "5b408593a37a1be3a9b08024fd54e0906e3a2292bbf16377883c977c6a76bc2a",
-    "excerpt": {
-      "excerpt": "\"global\": {",
-      "line": 2,
-      "locator": "artifact-line:2",
-      "semantic_excerpt": "第二个部门的美团面试Java开发工程师二面面经 1、 是哪里人，有意愿来北京吗 2、 专业不是计算机，保研还是考研的，为什么选择来这一行呢 3、 那你觉得你和科班比有哪些优势和劣势 4、 无感刷新是什么意思？ 然后中间的问题是项目问题，这里不多说 20、 说说Java里面类加载的顺序，面试官说名词，让我排个序 21、 Tcp和udp有了解吗，是七层协议中的哪一层，主要区别是什么 22、 可以举几个相关的实际的落地场景吗 23、 mySQL有了解吗，数据库索引一般用什么数据结构，有了解过其他的索引数据结构吗 24、 有一个单机的redis，内存是50M，现在有100m的数据要去使用，你想想有哪些设计方案 手撕：斐波那契数列，要求用递归，然后说问题在哪，然后继续改善（换成了for），然后继续问问题在哪（int换成了long），然后问优化的算法的时间和空间复杂度是什么 反问。"
-    }
+  "decision": "single-interview",
+  "reviewed_at": "2026-09-08T00:00:00.000Z",
+  "reviewer_kind": "ai-assisted",
+  "review_evidence": {
+    "repository": "liqiangcc/interview-lab",
+    "issue_number": 1416,
+    "comment_id": 1609001416
   },
   "checks": [
     {
@@ -47,7 +36,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -61,9 +50,8 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
-    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
-  ],
-  "evidence_sha256": "f16ba494990a61271b416e89af737a5ff755f5eb62f512327b531da96313a7fd",
-  "request_sha256": "f297b274dc0816da57b602fe54cb1bb71dc8b141a32f5df9a194bab4a735b26c"
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+    "Candidate only: review_evidence.comment_id is a deterministic placeholder; no live evidence comment was created.",
+    "No body PATCH, label write, or InterviewNote materialization was performed; controller authorization is required."
+  ]
 }

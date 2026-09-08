@@ -8,7 +8,27 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "f01ecf135f8b7762b591256752ca2ed3317cc4c2bb54790f71fa3265217ec988",
   "disposition": "blocked",
-  "rationale": "The available Source evidence does not establish a bounded interview event; retain pending.",
+  "rationale": "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 0,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": false,
+    "has_detailed_event": false,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68c6d930000000001d019618.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "903bcdb4f6a49dbafbd61798f409260ec59e98b3",
@@ -20,7 +40,7 @@
       "excerpt": "抱歉🙇标题党了",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "抱歉🙇标题党了 主播毕业两个半月，发现新公司技术还不错能学到很多分布式相关的运用，还有链路追踪，染色日志这些微服知识。 但是目前鼠鼠能写的还是一些很简单的活。 项目经历都是自己私底下研究组长写的项目和知识星球自学的项目。 想知道日常除了八股，应该怎么提升技术？或者说哪一部分技术比较值钱？ 目前鼠鼠的自学方向是把星球的项目搭建部署完之后，自己运营，魔改和搭建监控体系，进行压测搞一些真实点的数据写到上去。 等监控体系搭建好之后，再搞一些线上解决OOM，消息挤压的线上问题解决场景出来，然后写成逐字稿面试的时候用。"
+      "semantic_excerpt": "抱歉🙇标题党了\n主播毕业两个半月，发现新公司技术还不错能学到很多分布式相关的运用，还有链路追踪，染色日志这些微服知识。\n但是目前鼠鼠能写的还是一些很简单的活。\n项目经历都是自己私底下研究组长写的项目和知识星球自学的项目。\n想知道日常除了八股，应该怎么提升技术？或者说哪一部分技术比较值钱？\n目前鼠鼠的自学方向是把星球的项目搭建部署完之后，自己运营，魔改和搭建监控体系，进行压测搞一些真实点的数据写到上去。\n等监控体系搭建好之后，再搞一些线上解决OOM，消息挤压的线上问题解决场景出来，然后写成逐字稿面试的时候用。"
     }
   },
   "checks": [
@@ -42,7 +62,7 @@
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "The available Source evidence does not establish a bounded interview event; retain pending.",
+    "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "9eaf4584a8407afcd90fb622b899c982629d27e660ba6ca38a658ed5a87ea5cc"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "7c3de7e2e8d0a766caae196c782d361b5fce94368c72f10c13eed86b0a04bbc7"
 }

@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "2e44c4a7eef1543079d01719133fec508dacb5369d6c9c92154c9a5f917c40cc",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event"
+    ],
+    "questions": 6,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": true,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68e9bbda000000000302fd09.json@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "37913b0c7720588e2ce99bd1c2252d71ffdbac0d",
@@ -20,7 +40,7 @@
       "excerpt": "\"global\": {",
       "line": 2,
       "locator": "artifact-line:2",
-      "semantic_excerpt": "1.成绩介绍和家庭介绍 2.对公司有了解吗 3.实习经历，前后端技术（只问了一下，没有具体深入） 4.项目经历，做什么的 5.Java的三大特性（封装，继承，多态） 6.jvm介绍（说完之后问了是通过什么途径学的，学校是不是没教） 7反问:觉得入职后需要提升什么？有没有加班？（校招不会要求很多，跟着他们节奏一步一步来，没有加班。） 总结:没有自我介绍，没有二面，还有个评测，然后就就是人事沟通（bg211本）奖学金、实习、项目是加分项"
+      "semantic_excerpt": "1.成绩介绍和家庭介绍\n2.对公司有了解吗\n3.实习经历，前后端技术（只问了一下，没有具体深入）\n4.项目经历，做什么的\n5.Java的三大特性（封装，继承，多态）\n6.jvm介绍（说完之后问了是通过什么途径学的，学校是不是没教）\n7反问:觉得入职后需要提升什么？有没有加班？（校招不会要求很多，跟着他们节奏一步一步来，没有加班。）\n \n总结:没有自我介绍，没有二面，还有个评测，然后就就是人事沟通（bg211本）奖学金、实习、项目是加分项"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "81036da37d10aeaa5ad82d40fb1a32b393a216bf439cadd7a0a22bdd3141e8f4"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "1edd67b27b9000e397c6a87e5cbb99c9b0bf28d8c231e1416f6f599f7068881c"
 }

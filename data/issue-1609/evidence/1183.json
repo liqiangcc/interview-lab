@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "d7f2faef09b10a2918f5696300eaf1dcc636eb23ff639a34e6e5a0d87c5ae0f7",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 0,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68ad82ba000000001c00e5d8.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "9bd50a6b01e585b54265abea44c08998a97b18aa",
@@ -20,7 +40,7 @@
       "excerpt": "二面时长：一小时+",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "二面时长：一小时+ 主要问实习，jdk 8升级到jdk 21出现的问题啥的 问了udp广播 场景题：微博大v发帖用户量大咋优化 问项目是不是自己写的，问分布式事务 计网问了拥塞控制 问jvm，怎么去塞满元空间 问了一些docker细节 问了redis的bitmap 问了垃圾处理器 问咋用大模型的 手撕：合并两个有序数组"
+      "semantic_excerpt": "二面时长：一小时+\n主要问实习，jdk 8升级到jdk 21出现的问题啥的\n问了udp广播\n场景题：微博大v发帖用户量大咋优化\n问项目是不是自己写的，问分布式事务\n计网问了拥塞控制\n问jvm，怎么去塞满元空间\n问了一些docker细节\n问了redis的bitmap\n问了垃圾处理器\n问咋用大模型的\n \n手撕：合并两个有序数组"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "56f3c2ced1f25f06abf7dd5f314b05df04d9ce88adc9ef0dc2d6536a1805dd87"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "40882be8b41b78a5b6d97f038d9e7ca82bf34cd319feb0ade60cbb33dcb3aac1"
 }

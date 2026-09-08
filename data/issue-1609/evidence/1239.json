@@ -8,7 +8,33 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "a348dc4282c0bcb5fcba71b7ae61a550ad5dba6eda293815b2b3f73d31461af6",
   "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "rationale": "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [],
+    "questions": 11,
+    "has_first_person_event": true,
+    "has_explicit_candidate_event": true,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": [
+      {
+        "case_key": "xiaomi-process",
+        "anchor": "小米",
+        "line": 7,
+        "locator": "artifact-line:7#offset:9-11",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:小米"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b5964a000000001d00b27d.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "f2fb8d2496a4371a5754f2096224ba1fbb05f7f1",
@@ -20,7 +46,7 @@
       "excerpt": "这次是同部门另一个面试官来面试的，时间40分钟左右，面试体验还是非常好的，面试官也很专业很和蔼，聊起来很开心，给予好评[赞R][赞R][赞R]",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "这次是同部门另一个面试官来面试的，时间40分钟左右，面试体验还是非常好的，面试官也很专业很和蔼，聊起来很开心，给予好评[赞R][赞R][赞R] 面试内容 1、面试官做自我介绍，然后我自我介绍 2、针对做的项目进行细致提问，包括项目介绍，一些项目用到的工具，原理机制提问等等 3、针对研究生课题进行提问，尤其是对与应聘岗位相关的方面，对我一些课题用到的实验方法、原理，应用提问。对我课题的创新性，应用进行提问。对课题构建的实验装置进行提问。 4、介绍研究生期间遇到的困难，怎么解决的 5、询问为什么选择小米汽车，对小米的了解 6、对我应聘岗位的了解 7、对小米文化，小米价值观进行提问 8、询问负责项目的时候，团队合作交流沟通怎么做的，怎么主导项目的？要举例子谈谈 9、兴趣爱好的了解，主要是 聊天 10、穿插:面试官对所在部门的一些工作进行介绍，讲小米汽车整车部门的一些内容，尤其是与应聘岗位有关的内容 11、反问环节"
+      "semantic_excerpt": "这次是同部门另一个面试官来面试的，时间40分钟左右，面试体验还是非常好的，面试官也很专业很和蔼，聊起来很开心，给予好评[赞R][赞R][赞R]\n面试内容\n1、面试官做自我介绍，然后我自我介绍\n2、针对做的项目进行细致提问，包括项目介绍，一些项目用到的工具，原理机制提问等等\n3、针对研究生课题进行提问，尤其是对与应聘岗位相关的方面，对我一些课题用到的实验方法、原理，应用提问。对我课题的创新性，应用进行提问。对课题构建的实验装置进行提问。\n4、介绍研究生期间遇到的困难，怎么解决的\n5、询问为什么选择小米汽车，对小米的了解\n6、对我应聘岗位的了解\n7、对小米文化，小米价值观进行提问\n8、询问负责项目的时候，团队合作交流沟通怎么做的，怎么主导项目的？要举例子谈谈\n9、兴趣爱好的了解，主要是 聊天\n10、穿插:面试官对所在部门的一些工作进行介绍，讲小米汽车整车部门的一些内容，尤其是与应聘岗位有关的内容\n11、反问环节"
     }
   },
   "checks": [
@@ -42,7 +68,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +82,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "f84ce6324d85620629299c7d169f791a2c5cc911582045e405121441a707c031"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "308c5ebcc2fcf81875efae4249e8c65e524627b318f7f4f68586a5a4108f91b0"
 }

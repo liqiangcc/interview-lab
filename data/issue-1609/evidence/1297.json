@@ -7,8 +7,29 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "b03069b63378e4de8c93b8984480d0ad5261b2984b29ea031aac50289a13d912",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "not-interview",
+  "rationale": "Exact Source is a generic question bank, recruitment/job advertisement, tutorial, written-test, or preparation resource; it does not record one candidate interview event.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event",
+      "generic-question-bank-or-job-ad",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 0,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": true,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68c271cf000000001d036e15.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "ffbf8fff9b10017b6df7034cdc49d78b2a442726",
@@ -20,7 +41,7 @@
       "excerpt": "📣2026届ADC秋招首场集中面试即将开启！研发的宝子们莫慌，面试攻略它来啦！",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "📣2026届ADC秋招首场集中面试即将开启！研发的宝子们莫慌，面试攻略它来啦！ 📅面试时间：本周六（9月13日） 💻面试形式：牛客平台线上面试 📃面试岗位： Java、前端开发工程师、测试开发工程师、数据产品经理、数仓工程师、B端产品经理（大数据工具方向）、全栈开发工程师、AI工具开发工程师、B端产品经理 ⚠️注意：本周面试岗位和容量有限，后续还将安排单点约面，未处理到简历的宝子们请耐心等待！ @招聘薯"
+      "semantic_excerpt": "📣2026届ADC秋招首场集中面试即将开启！研发的宝子们莫慌，面试攻略它来啦！\n \n📅面试时间：本周六（9月13日）\n💻面试形式：牛客平台线上面试\n📃面试岗位：\nJava、前端开发工程师、测试开发工程师、数据产品经理、数仓工程师、B端产品经理（大数据工具方向）、全栈开发工程师、AI工具开发工程师、B端产品经理\n \n⚠️注意：本周面试岗位和容量有限，后续还将安排单点约面，未处理到简历的宝子们请耐心等待！\n \n @招聘薯"
     }
   },
   "checks": [
@@ -42,7 +63,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source is a generic question bank, recruitment/job advertisement, tutorial, written-test, or preparation resource; it does not record one candidate interview event."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +77,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is a generic question bank, recruitment/job advertisement, tutorial, written-test, or preparation resource; it does not record one candidate interview event.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "858ab603dcc1339f93737b8cb1ff9bb8e048750fb26aa7f8a9ca0d3311a7f998"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "cc092e61f281ef4b4ccccd3f93f84e60126f7e17168a3a1a6201cc18cc3ffaf4"
 }

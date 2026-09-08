@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "b9b0c707e1d0d1bb38a6ac465abee6e23f310814e88a97efef9b39edf1c22f98",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event"
+    ],
+    "questions": 10,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": false,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b83bdb000000001d02e1fa.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "c951aa91f617a13ef96ab36a931e027b8b8febef",
@@ -20,7 +40,7 @@
       "excerpt": "1、一道算法题，给了一个场景，然后需要完成这道题，不是力扣上面的，这里怕被开盒，我就不说了。（写了差不多一小时，有点难）",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "1、一道算法题，给了一个场景，然后需要完成这道题，不是力扣上面的，这里怕被开盒，我就不说了。（写了差不多一小时，有点难） 2、实习方面最大的收获是什么 3、对于MQ，为什么写吞吐比较高，可以做削峰填谷 4、RocketMQ怎么保证数据不丢失，主从一致怎么保证的 5、RocketMQ的同步复制和异步复制，异步复制的作用 6、RocketMQ和Kafka的区别，RocketMQ为什么更加轻量级 7、RocketMQ怎么保证节点一致性的，前端怎么知道访问哪个节点的 8、如果Server宕机怎么办，怎么选用哪个Server呢 9、Java的JNI有了解吗、它里面是做了什么功能吗 10、设计模式了解吗，平时会用到设计模式吗，开放封闭原则了解吗 好难，压力很大，三面 每面都是一个半小时，顶不住了！"
+      "semantic_excerpt": "1、一道算法题，给了一个场景，然后需要完成这道题，不是力扣上面的，这里怕被开盒，我就不说了。（写了差不多一小时，有点难）\n2、实习方面最大的收获是什么\n3、对于MQ，为什么写吞吐比较高，可以做削峰填谷\n4、RocketMQ怎么保证数据不丢失，主从一致怎么保证的\n5、RocketMQ的同步复制和异步复制，异步复制的作用\n6、RocketMQ和Kafka的区别，RocketMQ为什么更加轻量级\n7、RocketMQ怎么保证节点一致性的，前端怎么知道访问哪个节点的\n8、如果Server宕机怎么办，怎么选用哪个Server呢\n9、Java的JNI有了解吗、它里面是做了什么功能吗\n10、设计模式了解吗，平时会用到设计模式吗，开放封闭原则了解吗\n好难，压力很大，三面 每面都是一个半小时，顶不住了！"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "6fc0a454397697b4fa688ea7e88ab01cffe0f503d2de041a86b78d927458b04d"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "cb6dfd735c6144a7a2999eea9a8a330495c2e96ea53e04589795b7ab0cf1e78c"
 }

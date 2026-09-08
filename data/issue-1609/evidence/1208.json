@@ -8,7 +8,33 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "4716b3d7be5154018326aa98cb16038175ed3df155472d68237d2df8b4789137",
   "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "rationale": "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [],
+    "questions": 0,
+    "has_first_person_event": true,
+    "has_explicit_candidate_event": true,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": true,
+    "resource_signal": true,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": [
+      {
+        "case_key": "alibaba-process",
+        "anchor": "阿里",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-2",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:阿里"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b16867000000001c007a6e.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "db87d009eced01d28a978ded221a485679403ef1",
@@ -20,7 +46,7 @@
       "excerpt": "阿里云Java一面",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "阿里云Java一面 面试官比较随和，一直保持微笑 先是让自己介绍一段项目，说出来难点和技术架构 然后对这段项目进行一个深挖 之后又问到大模型了[哭惹R]我哭了，真的不是太了解这个底层啊（可能因为面试官的业务部门会有大模型相关的开发需求） 然后是Java的八股，主要都问的JVM 然后问了TreadLocal 平时会看哪些书籍（这个没咋准备，平时我也不咋看书） 无手撕，大概40分钟 反问面试结果什么时候可以得知，面试官说大概一周，可能要横向对比"
+      "semantic_excerpt": "阿里云Java一面\n面试官比较随和，一直保持微笑\n先是让自己介绍一段项目，说出来难点和技术架构\n然后对这段项目进行一个深挖\n之后又问到大模型了[哭惹R]我哭了，真的不是太了解这个底层啊（可能因为面试官的业务部门会有大模型相关的开发需求）\n然后是Java的八股，主要都问的JVM\n然后问了TreadLocal\n平时会看哪些书籍（这个没咋准备，平时我也不咋看书）\n无手撕，大概40分钟\n \n反问面试结果什么时候可以得知，面试官说大概一周，可能要横向对比"
     }
   },
   "checks": [
@@ -42,7 +68,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +82,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "d9c2678cffcb23917bd9a1de7fc15f39f0815aec199438ae5cb4f7547706d757"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "de05a6e2c4f561d587f1bd272e0398248d75e8baeb398f1b620d2c419fdf5e8b"
 }

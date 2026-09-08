@@ -8,7 +8,26 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "ace54f3d5ebbbecf65d614369cb2bf72738831ff81b7ac4884b7e6072119f7ea",
   "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "rationale": "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event"
+    ],
+    "questions": 15,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": true,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b90ca4000000001d0388d4.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "9e3f0a0617e2af2aef36e6f2306f15a0def7207f",
@@ -20,7 +39,7 @@
       "excerpt": "无手撕 没问实习 总计30min",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "无手撕 没问实习 总计30min 1. 库存不足怎么解决的 2. 还有更好的办法吗 3. 分库分表的思路 4. 为什么会有缓存击穿的问题？如何解决 5. ArrayList扩容机制，存在哪些问题 6. contains方法的执行原理 7. 多线程你平时怎么使用 8. mysql清空一张表有几种方式 9. 遍历分页查询一个非常大的表，有几种比较快的 10. 联合索引怎么用 11. 强制使用索引的关键字 12. 乐观锁的sql 13. 用redis做分布式锁一般怎么用 14. 在开发过程中，在使用contains方法要注意什么 15. hashmap是怎么执行contains的 16 多线程场景下，主线程需要同步所有子线程执行结果需要怎么做"
+      "semantic_excerpt": "无手撕 没问实习 总计30min\n1. 库存不足怎么解决的\n2. 还有更好的办法吗\n3. 分库分表的思路\n4. 为什么会有缓存击穿的问题？如何解决\n5. ArrayList扩容机制，存在哪些问题\n6. contains方法的执行原理\n7. 多线程你平时怎么使用\n8. mysql清空一张表有几种方式\n9. 遍历分页查询一个非常大的表，有几种比较快的\n10. 联合索引怎么用\n11. 强制使用索引的关键字\n12. 乐观锁的sql\n13. 用redis做分布式锁一般怎么用\n14. 在开发过程中，在使用contains方法要注意什么\n15. hashmap是怎么执行contains的\n16 多线程场景下，主线程需要同步所有子线程执行结果需要怎么做"
     }
   },
   "checks": [
@@ -42,7 +61,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +75,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "1478a5af993206846bf3055d0eee615946e1fe1612bc0cc9e1166beaa919808e"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "72d9e6c5385ecc1bff9b31c0d4b7c72e35922a900a7d5e482269827cb6efb529"
 }

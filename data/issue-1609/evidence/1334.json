@@ -7,8 +7,37 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "494b6232e56b0b7fa3213237cbd6cf069323d47a515f5a385c18d67be048b5fa",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 0,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": true,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": [
+      {
+        "case_key": "bytedance-process",
+        "anchor": "字节",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-2",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:字节"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68c93611000000001202d364.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "6cbf6bce97d536598877cd001484f7c40c8e4652",
@@ -20,7 +49,7 @@
       "excerpt": "字节客户端开发一面凉经",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "字节客户端开发一面凉经 拷打的很深入 问论文，transformer 问擅长哪个科目，答计网，开始深入拷打 tcp udp区别 tcp每个消息是否都需要一个确认 tcp怎么确认每个消息都收到，怎么知道某个消息未收到 设计一个协议判断哪些消息缺失了 设计一个安全的方法，能够防止黑客抓到包通过加密算法攻破 https是怎样实现的，如何保障安全，有哪些算法 java关键字，访问修饰符 手撕多线程打印1-10 最后问了下实习有没有什么亮点 总结 问得很深入，会一直追问细节，面试官也会相应做出补充。大厂面试强度还是很大的"
+      "semantic_excerpt": "字节客户端开发一面凉经\n拷打的很深入\n问论文，transformer\n问擅长哪个科目，答计网，开始深入拷打\ntcp udp区别\ntcp每个消息是否都需要一个确认\ntcp怎么确认每个消息都收到，怎么知道某个消息未收到\n设计一个协议判断哪些消息缺失了\n设计一个安全的方法，能够防止黑客抓到包通过加密算法攻破\nhttps是怎样实现的，如何保障安全，有哪些算法\njava关键字，访问修饰符\n手撕多线程打印1-10\n最后问了下实习有没有什么亮点\n总结 问得很深入，会一直追问细节，面试官也会相应做出补充。大厂面试强度还是很大的"
     }
   },
   "checks": [
@@ -41,8 +70,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +85,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "2a0c5c052925d91a602898605ed572bd151f25524341cf68602762774622b23d"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "1fd682929f3f73f03c57937b4b2bf10366318116a6d1351759de6989c8637a7b"
 }

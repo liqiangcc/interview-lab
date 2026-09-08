@@ -8,7 +8,35 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "b6163fea9fb5984c4fd0987ba8b8fd7ec4e3b991bf34fca38d78e0df26760454",
   "disposition": "blocked",
-  "rationale": "The available Source evidence does not establish a bounded interview event; retain pending.",
+  "rationale": "The available Source evidence does not establish a bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event"
+    ],
+    "questions": 2,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": false,
+    "has_detailed_event": false,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": [
+      {
+        "case_key": "xiaomi-process",
+        "anchor": "小米",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-2",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:小米"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68c8b9bc000000001c0062de.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "da26ba891f05f17fa7a7f754dae0c3696f647c56",
@@ -20,7 +48,7 @@
       "excerpt": "小米 本组招收java开发实习继任，有意的发我邮箱2738180350@qq.com#互联网大厂实习[话题]##小米实习[话题]##实习继任[话题]##Java实习[话题]#",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "小米 本组招收java开发实习继任，有意的发我邮箱2738180350@qq.com 要求： 1.两段及以上实习，其中有一段大厂实习 2.能快速融入团队"
+      "semantic_excerpt": "小米 本组招收java开发实习继任，有意的发我邮箱2738180350@qq.com \n要求：\n1.两段及以上实习，其中有一段大厂实习\n2.能快速融入团队"
     }
   },
   "checks": [
@@ -42,7 +70,7 @@
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. The available Source evidence does not establish a bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +84,11 @@
     }
   ],
   "limitations": [
-    "The available Source evidence does not establish a bounded interview event; retain pending.",
+    "The available Source evidence does not establish a bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "fff987dbb867652d559b7b8e9b6722c45d54eb24b28551f461b2771e75bc3fc3"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "8f70687af0b2992a336dbaec17b867b94c6c06fbce711b79060c5b54399ee7e9"
 }

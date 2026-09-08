@@ -7,8 +7,27 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "8428f4e30ae260e3662fc084f154391c46885c11763f7c46cb3e039b19ed63af",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only"
+    ],
+    "questions": 14,
+    "has_first_person_event": true,
+    "has_explicit_candidate_event": true,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": true,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68e32a570000000005002930.json@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "016dbfae5cb172709d078753cdef0aee7b65871d",
@@ -20,7 +39,7 @@
       "excerpt": "\"global\": {",
       "line": 2,
       "locator": "artifact-line:2",
-      "semantic_excerpt": "📖背景：26应届 本硕软工 后端开发 Timeline: 9.15投递 9.19收到笔试通知 9.21笔试 9.23面试通知 9.25晚面试 9.26晚收到挂 1️⃣2025.9.21完成的笔试，两个小时的时间，回忆版题目见图 9.23收到面试通知 2️⃣2025.9.25 一面 时长：面试约的是1h，但是实际大约是45min（可能因为我回答的不是很好吧hhh 1. 网络 问：TCP 连接是逻辑还是物理概念？ 追问：同一条物理链路上有多个 TCP 连接，怎么区分？ 2. 并发 问：多线程环境下，整数加一是线程安全的吗？ 问：如何限制只有 5 个线程能访问？ 3. 数据结构 & 算法 问：栈的应用场景？ 问：如何用栈实现队列？ 4. 数据库 问：MYSQL的索引和索引失效的情况。LIKE %%。追问问LIKE 里面索引失效具体发生了什么，我可能回答的不够深入。 问：MySQL ACID 的一致性是什么？ 追问：一致性和另外三个的关系？追问隔离性如何保证一致性，这个具体说说。 问：脏读、不可重复读？ 5. 项目 简单问了简历上写的实习项目和竞赛项目，难点和亮点是什么？ 6. 手撕：不超过 K 的最长子串 编译器没有输入输出 要自己写。【leetcode 340，滑动窗口+hashmap】 7. 反问 问了业务和技术栈：银行业务用 Java，电商更多用 Go。 问了是否会用AI，向AI转型：内部会用AI提效。 问了对英文的要求：有要求但是要求不高会基本文书就行。 感想就是秋招第一面随着秋天的到来一起凉了。发个面经攒人品[哭惹R]"
+      "semantic_excerpt": "📖背景：26应届 本硕软工 后端开发\nTimeline:\n9.15投递\n9.19收到笔试通知\n9.21笔试\n9.23面试通知\n9.25晚面试\n9.26晚收到挂\n1️⃣2025.9.21完成的笔试，两个小时的时间，回忆版题目见图\n9.23收到面试通知\n \n2️⃣2025.9.25 一面\n时长：面试约的是1h，但是实际大约是45min（可能因为我回答的不是很好吧hhh\n1. 网络\n问：TCP 连接是逻辑还是物理概念？\n追问：同一条物理链路上有多个 TCP 连接，怎么区分？\n2. 并发\n问：多线程环境下，整数加一是线程安全的吗？\n问：如何限制只有 5 个线程能访问？\n3. 数据结构 & 算法\n问：栈的应用场景？\n问：如何用栈实现队列？\n4. 数据库\n问：MYSQL的索引和索引失效的情况。LIKE %%。追问问LIKE 里面索引失效具体发生了什么，我可能回答的不够深入。\n问：MySQL ACID 的一致性是什么？\n追问：一致性和另外三个的关系？追问隔离性如何保证一致性，这个具体说说。\n问：脏读、不可重复读？\n5. 项目\n简单问了简历上写的实习项目和竞赛项目，难点和亮点是什么？\n6. 手撕：不超过 K 的最长子串\n编译器没有输入输出 要自己写。【leetcode 340，滑动窗口+hashmap】\n7. 反问\n问了业务和技术栈：银行业务用 Java，电商更多用 Go。\n问了是否会用AI，向AI转型：内部会用AI提效。\n问了对英文的要求：有要求但是要求不高会基本文书就行。\n感想就是秋招第一面随着秋天的到来一起凉了。发个面经攒人品[哭惹R]"
     }
   },
   "checks": [
@@ -41,8 +60,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +75,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "a34e31166cd2b8cc2df91c84b01e27974e3f7c59dcf7467205eae00970589e80"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "94d5cd709e4546edfb18daadcad3470aa456edcf9d40b5d13287b3283316416d"
 }

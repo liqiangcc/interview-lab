@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "a194e180ca6142c76f6c8c5b6fd894cea023f116b9a87c3cd062e130768e1706",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event"
+    ],
+    "questions": 35,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": true,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b5b495000000001d02fd4f.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "3ee18df316ee19efa3fb57dd37caad68a14c513e",
@@ -20,7 +40,7 @@
       "excerpt": "1.redis的提前缓存的同步链路怎么实现？",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "1.redis的提前缓存的同步链路怎么实现？ 2.rabbitMQ的幂等性怎么实现？ 3.你在开发时怎么提高接口性能？ 4.java的常用集合介绍一下？ 5.哪些集合是线程安全的哪些是线程不安全的？ 6.HashMap和concurrentHashMap的对比？ 7.ConcurrentHashMap线程安全怎么实现？ 8.java的锁机制介绍一下？ 9.ReentrantLock的实现原理介绍一下 10.volatile关键字介绍下 11.java创建线程池怎么实现？ 12.线程池的工作原理？ 13.拒绝策略都有什么？ 14.你项目中使用到了两个线程池，他们的拒绝策略不一致是怎么考虑的？ 15.jvm调参怎么实现？ 16.什么是GC？ 17.知道哪些垃圾回收器？ 18.jvm怎么分析线上进程线程对象的信息？ 19.性能分析工具有了解过吗？ 20.你的工具是怎么使用的？ 21.springboot的启动流程讲一下？ 22.在 Spring 启动过程中，若要在其生命周期的特定阶段执行自定义操作，怎么实现？ 23.mysql的底层索引的数据结构是什么？ 24.你都知道哪些索引？ 25.怎么分析建立的索引有没有生效？ 26.什么是索引失效？ 27.联合索引建立之后，使用了两个字段做过滤，那么有没有可能不走索引？ 28.mysql基于成本的优化考量通过什么算法来实现的？ 29.mysql怎么分库分表？什么情况下分库，什么情况下分表？ 30.redis的数据结构有什么？ 31.解释一下缓存穿透、缓存击穿和缓存雪崩？怎么解决？ 32.高并发系统中怎么保证数据一致性？ 33.加锁如何保证数据一致性？ 34.rabbitmq介绍下底层原理？ 35.当一条消息被发送到 RabbitMQ 集群后，这条消息去哪了？ 手撕：字符串相加"
+      "semantic_excerpt": "1.redis的提前缓存的同步链路怎么实现？\n2.rabbitMQ的幂等性怎么实现？\n3.你在开发时怎么提高接口性能？\n4.java的常用集合介绍一下？\n5.哪些集合是线程安全的哪些是线程不安全的？\n6.HashMap和concurrentHashMap的对比？\n7.ConcurrentHashMap线程安全怎么实现？\n8.java的锁机制介绍一下？\n9.ReentrantLock的实现原理介绍一下\n10.volatile关键字介绍下\n11.java创建线程池怎么实现？\n12.线程池的工作原理？\n13.拒绝策略都有什么？\n14.你项目中使用到了两个线程池，他们的拒绝策略不一致是怎么考虑的？\n15.jvm调参怎么实现？\n16.什么是GC？\n17.知道哪些垃圾回收器？\n18.jvm怎么分析线上进程线程对象的信息？\n19.性能分析工具有了解过吗？\n20.你的工具是怎么使用的？\n21.springboot的启动流程讲一下？\n22.在 Spring 启动过程中，若要在其生命周期的特定阶段执行自定义操作，怎么实现？\n23.mysql的底层索引的数据结构是什么？\n24.你都知道哪些索引？\n25.怎么分析建立的索引有没有生效？\n26.什么是索引失效？\n27.联合索引建立之后，使用了两个字段做过滤，那么有没有可能不走索引？\n28.mysql基于成本的优化考量通过什么算法来实现的？\n29.mysql怎么分库分表？什么情况下分库，什么情况下分表？\n30.redis的数据结构有什么？\n31.解释一下缓存穿透、缓存击穿和缓存雪崩？怎么解决？\n32.高并发系统中怎么保证数据一致性？\n33.加锁如何保证数据一致性？\n34.rabbitmq介绍下底层原理？\n35.当一条消息被发送到 RabbitMQ 集群后，这条消息去哪了？\n手撕：字符串相加"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "ffba4b55f8b9c8067d4d6ae22c3ba4b11da7922753dbf27456ee1c35c3c587e6"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "a78b5d84d180bbb63bbfa77abdaca9a9a82a7995f727668f82534da5e1dae05a"
 }

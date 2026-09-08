@@ -1,32 +1,21 @@
 {
-  "schema_version": "issue-1609-boundary-review-request.v1",
-  "request_id": "issue-1609-boundary-1336",
+  "schema_version": "source-note-boundary-review-transition.v1",
+  "transition_id": "issue-1609-boundary-1336-review-1",
   "repository": "liqiangcc/interview-lab",
-  "parent_issue": 1605,
   "issue_number": 1336,
-  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1336",
   "source_note_id": "xhs-note:68c93cec000000001301be2e",
   "expected_body_sha256": "1376ecc55943265894de7f35e0cc49eab627f8a0fdc84d6ecb7ce95a4342a346",
   "expected_boundary_status": "pending",
   "expected_source_revision_id": "xhs-note:68c93cec000000001301be2e:snapshot-95b77bb26104",
-  "expected_source_repository": "liqiangcc/xhs",
+  "expected_manifest_sha256": null,
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "disposition": "not-interview",
-  "rationale": "Exact Source projection is a generic resource/recruitment/advice record and does not record one candidate interview event.",
-  "evidence_file": "evidence/1336.json",
-  "source_evidence": {
-    "ref": "liqiangcc/xhs:note_desc/68c93cec000000001301be2e.txt@95b77bb261048059846273688e4b90a2e108b437",
-    "git_blob_sha": "06456eb8c525219b78f13d955d5ccdda84e8258e",
-    "kind": "text_projection",
-    "provenance": "source_projection",
-    "byte_size": 2958,
-    "content_sha256": "705f551131f6bbb2f68f80286e15411816acad63ef470f79b90d2bdbe8b31ab7",
-    "excerpt": {
-      "excerpt": "Q1：被问“为什么想加入百度”",
-      "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "Q1：被问“为什么想加入百度” 避免单纯说：“因为百度是大公司”——这种回答显得缺乏深度。 试试这样回答： “百度在人工智能和自动驾驶领域的前沿布局让我非常欣赏。尤其是百度在AI技术与实际场景结合上的持续创新，无论是自动驾驶技术还是搜索引擎的智能化，都展现了技术与商业的双重实力。我希望能在这样一个创新驱动的环境中，发挥自己的技术能力，与团队一起探索未来科技的无限可能。” -- Q2：被问“你认为百度的最大优势是什么” 避免只说：“百度的技术很强”——这种回答过于表面 回答： “我认为百度最大的优势在于其‘技术创新与市场应用的结合能力’。从百度大脑到自动驾驶，每一项技术的落地都体现了百度极强的研发能力与对市场的敏锐洞察力。能够将前沿技术转化为用户需求的解决方案，这是百度能在激烈的竞争中始终占据领先地位的关键。” -- Q3：被问“加入百度后，你的成长目标是什么” 避免简单回答：“想提升自己”——这显得目标不清晰 回答： “短期内，我希望通过与优秀团队的合作，深化对AI产品和技术的理解，并提高项目管理和跨团队沟通能力；长期来看，我希望能在技术创新和产品战略上发挥作用，逐步成长为能独立推动项目、解决复杂问题的核心成员。” -- Q4：被问“如果遇到团队冲突，你会如何处理？” 避免回答：“我会尽量避免冲突”——这种回答太消极 回答： “遇到团队冲突时，我会首先保持冷静，倾听各方意见，理解冲突的根源。然后，我会积极寻找共识，推动解决方案的讨论。在保持团队协作的同时，也能为团队提供有效的意见和建议，确保冲突得到合理解决。” -- Q5：被问“没有相关经验，你能胜任吗？” 避免回答：“我会尽快学习”——显得缺乏自信 回答： “虽然我的经验与岗位要求有所差距，但我在之前的工作中积累了快速学习和适应新环境的能力。例如，在跨部门合作时，我能够通过迅速了解不同领域的知识并做出有效决策。对百度的技术背景和行业动态也进行了深入学习，相信凭借我的学习能力和解决问题的能力，能够迅速上手并做出贡献。” -- 个人经验分享： 1. 简历精简有力：简历不必覆盖所有经历，挑出那些最能体现能力和成长的几项，简洁有力，容易引起HR注意 2. 模拟面试练习：面试前可以先自己写下可能的问题和答案，练习几遍，不仅可以让你思路更清晰，也能减少紧张感 3. 面试中的自信：保持微笑和眼神交流，注意语速和语气"
-    }
+  "decision": "not-interview",
+  "reviewed_at": "2026-09-08T00:00:00.000Z",
+  "reviewer_kind": "ai-assisted",
+  "review_evidence": {
+    "repository": "liqiangcc/interview-lab",
+    "issue_number": 1336,
+    "comment_id": 1609001336
   },
   "checks": [
     {
@@ -47,7 +36,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source is a generic question bank, recruitment/job advertisement, tutorial, written-test, or preparation resource; it does not record one candidate interview event."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -61,9 +50,8 @@
     }
   ],
   "limitations": [
-    "Exact Source projection is a generic resource/recruitment/advice record and does not record one candidate interview event.",
-    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
-  ],
-  "evidence_sha256": "f34f20b172f5c59ce5da2822b6b5a46e14a7d55c499f55eceb5ce4bb7790b0b4",
-  "request_sha256": "43b1b9ef18956d5ce010ca6d2dce9ab7b5589b6a180ce3e4cc1108429bd9d9a1"
+    "Exact Source is a generic question bank, recruitment/job advertisement, tutorial, written-test, or preparation resource; it does not record one candidate interview event.",
+    "Candidate only: review_evidence.comment_id is a deterministic placeholder; no live evidence comment was created.",
+    "No body PATCH, label write, or InterviewNote materialization was performed; controller authorization is required."
+  ]
 }

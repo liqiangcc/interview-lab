@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "4b8603616e11295edb431fdbb9e63efc02507574d1b9b1f662bbf76e51f066f9",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 0,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": true,
+    "resource_signal": true,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68d62e71000000001301777d.json@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "5c3cc99a59d3e6b605afc3f24e1bd3f3db5559dd",
@@ -20,7 +40,7 @@
       "excerpt": "\"global\": {",
       "line": 2,
       "locator": "artifact-line:2",
-      "semantic_excerpt": "🕐面试时间：7.14，7.23，7.31；意向是9.22发的 提前批无笔试 💻面试岗位：后端开发工程师（上海） ✅一面 总时长：60分钟 1⃣️算法题，重排链表 2⃣️ThreadLocal原理，使用时要注意的问题，线程如果再开子线程如何传递 3⃣️MySQL的索引，聚簇索引，非聚簇索引，索引失效的情况 4⃣️MySQL中MVCC的原理，对应的log是什么，介绍下三种log，并介绍他们的本质区别；并且从redo log迁移到WAL技术 5⃣️MySQL的深度分页问题 6⃣️Redis的big key问题，缓存使用时要注意什么 7⃣️Spring的三级缓存，解决的是什么问题 8⃣️SpringBoot中的Autowired和Resource的区别 9⃣️SpringBoot中的事务管理，传播级别，失效的情况，用于解决什么问题 🔟线上的问题如何排查，如果日志一下看不出来结果该如何做 ✅二面 总时长：30分种 1⃣️MySQL假如有一个用户表，有一个字段是name，并且为其创建了非唯一索引，并且当前表中有三条记录都是name=xxx，那么开启一个事务后，并且执行select * from 这个表 where name = 'XXX' for update，加的什么锁？ 如果此时又来一个insert into 这个表 values(....)，其中name也是'XXX'，能插入的了嘛 如果自己设计mysql的锁会怎么设计 2⃣️一个BS架构的系统，怎么从前端后端的角度来设计，使得不要那么阻塞 3⃣️如果有一个后端的接口，接口内需要访问其他四个服务，这四个服务都是100ms，如果顺序访问要400ms，如果只用一个线程，不用多线程，怎么降到100ms多（IO多路复用那一套，具体到Java是NIO） 4⃣️喜欢业务开发还是基架开发 5⃣️喜欢C端还是B端 ✅三面 总时长：30分钟 1⃣️介绍一下自己的实习做的事 2⃣️对大模型的了解 3⃣️喜欢C端还是B端的业务 4⃣️后面的时间安排（是不是要回学校之类） 5⃣️对之后自己成长的想法 6⃣️为什么不喜欢做算法，为什么我这么喜欢做开发 ✳️需要模拟面试，简历修改的同学们可以来私戳了解呀"
+      "semantic_excerpt": "🕐面试时间：7.14，7.23，7.31；意向是9.22发的 提前批无笔试\n💻面试岗位：后端开发工程师（上海）\n \n✅一面\n总时长：60分钟\n1⃣️算法题，重排链表\n2⃣️ThreadLocal原理，使用时要注意的问题，线程如果再开子线程如何传递\n3⃣️MySQL的索引，聚簇索引，非聚簇索引，索引失效的情况\n4⃣️MySQL中MVCC的原理，对应的log是什么，介绍下三种log，并介绍他们的本质区别；并且从redo log迁移到WAL技术\n5⃣️MySQL的深度分页问题\n6⃣️Redis的big key问题，缓存使用时要注意什么\n7⃣️Spring的三级缓存，解决的是什么问题\n8⃣️SpringBoot中的Autowired和Resource的区别\n9⃣️SpringBoot中的事务管理，传播级别，失效的情况，用于解决什么问题\n🔟线上的问题如何排查，如果日志一下看不出来结果该如何做\n \n✅二面\n总时长：30分种\n1⃣️MySQL假如有一个用户表，有一个字段是name，并且为其创建了非唯一索引，并且当前表中有三条记录都是name=xxx，那么开启一个事务后，并且执行select * from 这个表 where name = 'XXX' for update，加的什么锁？\n如果此时又来一个insert into 这个表 values(....)，其中name也是'XXX'，能插入的了嘛\n如果自己设计mysql的锁会怎么设计\n2⃣️一个BS架构的系统，怎么从前端后端的角度来设计，使得不要那么阻塞\n3⃣️如果有一个后端的接口，接口内需要访问其他四个服务，这四个服务都是100ms，如果顺序访问要400ms，如果只用一个线程，不用多线程，怎么降到100ms多（IO多路复用那一套，具体到Java是NIO）\n4⃣️喜欢业务开发还是基架开发\n5⃣️喜欢C端还是B端\n \n✅三面\n总时长：30分钟\n1⃣️介绍一下自己的实习做的事\n2⃣️对大模型的了解\n3⃣️喜欢C端还是B端的业务\n4⃣️后面的时间安排（是不是要回学校之类）\n5⃣️对之后自己成长的想法\n6⃣️为什么不喜欢做算法，为什么我这么喜欢做开发\n \n✳️需要模拟面试，简历修改的同学们可以来私戳了解呀"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "a8284a6f431ce05f02dd07365a5700e43c0dafb41cbc4efd9099310530c11afd"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "562aea729e290fd088f29d033ff28e08a21d03de4d0472a28a8f293c1456936a"
 }

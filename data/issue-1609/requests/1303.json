@@ -1,32 +1,21 @@
 {
-  "schema_version": "issue-1609-boundary-review-request.v1",
-  "request_id": "issue-1609-boundary-1303",
+  "schema_version": "source-note-boundary-review-transition.v1",
+  "transition_id": "issue-1609-boundary-1303-review-1",
   "repository": "liqiangcc/interview-lab",
-  "parent_issue": 1605,
   "issue_number": 1303,
-  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1303",
   "source_note_id": "xhs-note:68c38179000000001b037cca",
   "expected_body_sha256": "c811e1270fa2a1c4f461d4ee33ea8e989cd657c961a48cd2a7c53081c44b65fc",
   "expected_boundary_status": "pending",
   "expected_source_revision_id": "xhs-note:68c38179000000001b037cca:snapshot-95b77bb26104",
-  "expected_source_repository": "liqiangcc/xhs",
+  "expected_manifest_sha256": null,
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
-  "evidence_file": "evidence/1303.json",
-  "source_evidence": {
-    "ref": "liqiangcc/xhs:note_desc/68c38179000000001b037cca.txt@95b77bb261048059846273688e4b90a2e108b437",
-    "git_blob_sha": "4f10ac8430ff59329453433642fdb89ae06c8c73",
-    "kind": "text_projection",
-    "provenance": "source_projection",
-    "byte_size": 247,
-    "content_sha256": "a6060ecdd1fa6613882e4820c6c4bedd3c90a5397ef99d1f23c72e38117c47fd",
-    "excerpt": {
-      "excerpt": "贝壳社招软件开发",
-      "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "贝壳社招软件开发 二面挂 我猜测应该是涨幅20%触碰上限了，本来聊的也挺好的，醉了。"
-    }
+  "decision": "single-interview",
+  "reviewed_at": "2026-09-08T00:00:00.000Z",
+  "reviewer_kind": "ai-assisted",
+  "review_evidence": {
+    "repository": "liqiangcc/interview-lab",
+    "issue_number": 1303,
+    "comment_id": 1609001303
   },
   "checks": [
     {
@@ -47,7 +36,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -61,9 +50,8 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
-    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
-  ],
-  "evidence_sha256": "9a6bf23d4d392b9655153f8b462092cafe62e8f6e656c5f568bc7a189a2c0ec3",
-  "request_sha256": "be86a0293e52479091ff1d6876a82e2feb4b7d895872d20d03f48bffbe27b7ca"
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+    "Candidate only: review_evidence.comment_id is a deterministic placeholder; no live evidence comment was created.",
+    "No body PATCH, label write, or InterviewNote materialization was performed; controller authorization is required."
+  ]
 }

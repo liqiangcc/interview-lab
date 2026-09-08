@@ -7,8 +7,37 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "ed895f6e9653b435aa521c32989f8be44e8f363878c063402ac24e28afe4c8ac",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 0,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": [
+      {
+        "case_key": "baidu-process",
+        "anchor": "百度",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-2",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:百度"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68ad597f000000001d00752e.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "ea8fd9b4e71c6c6ec4f0f6006828c5e8141c2f5d",
@@ -20,7 +49,7 @@
       "excerpt": "百度-搜索引擎研发面经",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "百度-搜索引擎研发面经 一面： 聊实习 手撕-二叉树查找一个节点，输出路径，自己构造树 二面： 聊实习 设计模式 开放聊天，场景聊天 手撕-生产者消费者模型手撕"
+      "semantic_excerpt": "百度-搜索引擎研发面经\n一面：\n聊实习\n手撕-二叉树查找一个节点，输出路径，自己构造树\n二面：\n聊实习\n设计模式\n开放聊天，场景聊天\n手撕-生产者消费者模型手撕"
     }
   },
   "checks": [
@@ -41,8 +70,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +85,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "c524dd192512aa833372a84884f0ca08b777934f4c276977ae32ed379a216d6a"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "b9677b4348778182652668fe49514f4ac67beca837324bf5af85d7c8fd4b479e"
 }

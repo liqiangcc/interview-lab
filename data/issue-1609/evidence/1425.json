@@ -7,8 +7,37 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "28696a2d8a3a07c9fa5311da3f4d63c02d28c05295d47108acbb17ef4d3438a7",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 0,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": true,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": [
+      {
+        "case_key": "kuaishou-process",
+        "anchor": "快手",
+        "line": 1,
+        "locator": "artifact-line:541#offset:29-31",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:快手"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68dd7b1e0000000003018e4b.json@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "d13a310b227e6a47c86aa9718ed08858fd494e7c",
@@ -20,7 +49,7 @@
       "excerpt": "\"global\": {",
       "line": 2,
       "locator": "artifact-line:2",
-      "semantic_excerpt": "快手JAVA研发 录用评估中 一个月了 能泡出来吗[皱眉R] 从8月中旬开始面，到9月初hr面完，进入录用评估 一面完第二天 约二面 二面完，填了个测评，隔天约三面 三面完，隔天约了hr面 hr面完，秒进录用评估。 几乎都是面完，隔天就约下一面的，不知道面评如何？hr面的时候，hr说要跟校招流程走，不知道什么时候才出结果？业务应该算比较核的[皱眉R]不知道能不能泡得出来。"
+      "semantic_excerpt": "快手JAVA研发 录用评估中 一个月了 能泡出来吗[皱眉R]\n \n从8月中旬开始面，到9月初hr面完，进入录用评估\n一面完第二天 约二面\n二面完，填了个测评，隔天约三面\n三面完，隔天约了hr面\nhr面完，秒进录用评估。\n \n几乎都是面完，隔天就约下一面的，不知道面评如何？hr面的时候，hr说要跟校招流程走，不知道什么时候才出结果？业务应该算比较核的[皱眉R]不知道能不能泡得出来。"
     }
   },
   "checks": [
@@ -41,8 +70,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +85,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "942b05b8570cf14fd5a8f36271dfd4fd5e630d82c271e3ddaeb2abbae1aa03b4"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "b893a4ce3e686f812c9b28a0c66b1ef5e1faceed989cf54f73b06f8dca78fd96"
 }

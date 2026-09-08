@@ -1,32 +1,21 @@
 {
-  "schema_version": "issue-1609-boundary-review-request.v1",
-  "request_id": "issue-1609-boundary-1326",
+  "schema_version": "source-note-boundary-review-transition.v1",
+  "transition_id": "issue-1609-boundary-1326-review-1",
   "repository": "liqiangcc/interview-lab",
-  "parent_issue": 1605,
   "issue_number": 1326,
-  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1326",
   "source_note_id": "xhs-note:68c82557000000001d00fb7c",
   "expected_body_sha256": "ada8055601cad232101241923ce99c7dc8c5884bffae59cb61c864cf14f6e9fe",
   "expected_boundary_status": "pending",
   "expected_source_revision_id": "xhs-note:68c82557000000001d00fb7c:snapshot-95b77bb26104",
-  "expected_source_repository": "liqiangcc/xhs",
+  "expected_manifest_sha256": null,
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
-  "evidence_file": "evidence/1326.json",
-  "source_evidence": {
-    "ref": "liqiangcc/xhs:note_desc/68c82557000000001d00fb7c.txt@95b77bb261048059846273688e4b90a2e108b437",
-    "git_blob_sha": "d7b9ce897c249bd685ebccc784cf5b60b1169b55",
-    "kind": "text_projection",
-    "provenance": "source_projection",
-    "byte_size": 862,
-    "content_sha256": "3de34e4f822d8ab7f960613f8df0dbe0679fa781422c8eb5b0d4722de852f895",
-    "excerpt": {
-      "excerpt": "一面",
-      "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "一面 1、实习经历 2、设计模式 3、Redis的主从同步是怎么实现的 4、Redis的大key 5、Redis的过期策略 6、Redis是怎么找到key存储在哪个节点上 7、Redis中的zset的应用场景 8、Redis中的string的数据结构 9、MySQL的事务隔离级别，RR下怎么解决幻读的 10、MySQL三层B+树能存储多少数据 11、索引为什么需要最左前缀 12、MySQL索引键的排列顺序是按照什么排序的 13、synchronized的锁升级 14、Spring中Bean的初始化过程 15、sql题：有一个订单表tb order有2个宁段order id和user id 写一个sql查这个表里的下单量大于2的用户有哪些 16、算法题：三数之和 二面 1、实习经历 2、多线程实现数组排序 3、实现队列"
-    }
+  "decision": "single-interview",
+  "reviewed_at": "2026-09-08T00:00:00.000Z",
+  "reviewer_kind": "ai-assisted",
+  "review_evidence": {
+    "repository": "liqiangcc/interview-lab",
+    "issue_number": 1326,
+    "comment_id": 1609001326
   },
   "checks": [
     {
@@ -47,7 +36,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -61,9 +50,8 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
-    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
-  ],
-  "evidence_sha256": "e99c2869972d04cb2270f416bcb213f74888e9bcef94bbfdb08a3a3167137a65",
-  "request_sha256": "3c28dd6af1c890b906b1026db6c093e02cab7de337b542dfcb0486da43d11379"
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+    "Candidate only: review_evidence.comment_id is a deterministic placeholder; no live evidence comment was created.",
+    "No body PATCH, label write, or InterviewNote materialization was performed; controller authorization is required."
+  ]
 }

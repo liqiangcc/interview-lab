@@ -8,7 +8,33 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "818ce2cabf8d667e5c15adc787ae757199a2bac676b360f35de7feb6501e3f31",
   "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "rationale": "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [],
+    "questions": 5,
+    "has_first_person_event": true,
+    "has_explicit_candidate_event": true,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": [
+      {
+        "case_key": "jd-process",
+        "anchor": "京东",
+        "line": 1,
+        "locator": "artifact-line:498#offset:29-31",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:京东"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68d6bdb3000000000e030e95.json@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "eba4e2e70f8bd1c6c57012268ff238e9da416e80",
@@ -20,7 +46,7 @@
       "excerpt": "\"global\": {",
       "line": 2,
       "locator": "artifact-line:2",
-      "semantic_excerpt": "京东 1 面 面试被约在周五晚上，从时间段就隐约觉得大概率是 KPI 面试。果不其然，面试官还迟到了一会儿，上来三分戏谑两分冷哼，把项目草草问完，眼神里写满了“这啥玩意儿”。接着又随便扫了下简历，象征性地问了几句，然后我回答问题也没啥回应。 八股： 1. GRPO DPO 2. KL 散度维度 3. GRPO 变体 手撕： 全程投屏写的，手忙脚乱关闭vscode 里的Copilot，面试官一脸不耐烦说开个 txt就行，然后抽象的京东 ME会议投屏还有一堆权限问题 1. 写题，BFS 走路，样例都没有，面试官随口胡诌的一个 2. GRPO 手撕 全程没有反问环节，看样子面试官就想赶紧下班。真心话，如果不想面，其实完全可以不约，何必出来折腾苦命的秋招人呢。"
+      "semantic_excerpt": "京东 1 面\n面试被约在周五晚上，从时间段就隐约觉得大概率是 KPI 面试。果不其然，面试官还迟到了一会儿，上来三分戏谑两分冷哼，把项目草草问完，眼神里写满了“这啥玩意儿”。接着又随便扫了下简历，象征性地问了几句，然后我回答问题也没啥回应。\n八股：\n1. GRPO DPO\n2. KL 散度维度\n3. GRPO 变体\n手撕：\n全程投屏写的，手忙脚乱关闭vscode 里的Copilot，面试官一脸不耐烦说开个 txt就行，然后抽象的京东 ME会议投屏还有一堆权限问题\n1. 写题，BFS 走路，样例都没有，面试官随口胡诌的一个\n2. GRPO 手撕\n全程没有反问环节，看样子面试官就想赶紧下班。真心话，如果不想面，其实完全可以不约，何必出来折腾苦命的秋招人呢。"
     }
   },
   "checks": [
@@ -42,7 +68,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +82,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "db29ffc11882d829722b08d7f89155310a6dbfdcc8228b3b12bd9fa0274a5df8"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "6afb749a578716d8894eda7f5a6a6e06d2bc320a4c11bc7f391ac82dbb3bcf41"
 }

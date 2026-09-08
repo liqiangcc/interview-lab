@@ -8,7 +8,33 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "42f2a6e78a551757c1efe7ee5f8909bb2888d6aa552d1f3b04a34101ccdf76d3",
   "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "rationale": "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [],
+    "questions": 0,
+    "has_first_person_event": true,
+    "has_explicit_candidate_event": true,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": true,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": [
+      {
+        "case_key": "meituan-process",
+        "anchor": "美团",
+        "line": 1,
+        "locator": "artifact-line:500#offset:29-31",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:美团"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68ea23b5000000000700e3d3.json@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "4adf8f26d1818f32188cb75b6538979bd76ae85f",
@@ -20,7 +46,7 @@
       "excerpt": "\"global\": {",
       "line": 2,
       "locator": "artifact-line:2",
-      "semantic_excerpt": "美团 后端开发二面 面试官还是很友好的 刚开始自我介绍 上来就是一道手撕题，第k大数 也是比较熟悉了，背诵默写，然后面试官问了问思路 后面就让讲一下自己印象最深的项目 我就讲了实验室乙方项目，一把辛酸一把泪 然后问了问offer情况，职业规划 开始八股拷打 Java垃圾回收器，MySQL事务是怎么实现的等等 Redis内存满了会触发什么 订单超时功能怎么做 微信抢红包怎么设计 什么是模型蒸馏，什么是ai幻觉，大模型优化算法 什么是分布式事务 国庆放假回来，感觉自己脑子像是被洗过一样，面试直接卡壳了，很多背过的都没想起来，寄"
+      "semantic_excerpt": "美团 后端开发二面\n \n面试官还是很友好的\n刚开始自我介绍\n上来就是一道手撕题，第k大数\n也是比较熟悉了，背诵默写，然后面试官问了问思路\n \n后面就让讲一下自己印象最深的项目\n我就讲了实验室乙方项目，一把辛酸一把泪\n \n然后问了问offer情况，职业规划\n开始八股拷打\nJava垃圾回收器，MySQL事务是怎么实现的等等\nRedis内存满了会触发什么\n订单超时功能怎么做\n微信抢红包怎么设计\n什么是模型蒸馏，什么是ai幻觉，大模型优化算法\n什么是分布式事务\n \n国庆放假回来，感觉自己脑子像是被洗过一样，面试直接卡壳了，很多背过的都没想起来，寄"
     }
   },
   "checks": [
@@ -42,7 +68,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +82,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "c60b31cb9fafe45831cdc76e5497b3eb0ac10cf389ca38a10871fa97b8fc53e2"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "85a867ce7284394fe81d623b36dfc1001c64698815abbf6c4e45f37c777e82c0"
 }

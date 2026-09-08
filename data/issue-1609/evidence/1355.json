@@ -8,7 +8,37 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "280cbd9aa82bd93147abc6ccb0a5299fac9c0b05f8776782828317ff6f98a1f4",
   "disposition": "not-interview",
-  "rationale": "Exact Source projection is a generic resource/recruitment/advice record and does not record one candidate interview event.",
+  "rationale": "Exact Source is a generic question bank, recruitment/job advertisement, tutorial, written-test, or preparation resource; it does not record one candidate interview event.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event",
+      "generic-question-bank-or-job-ad",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 0,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": false,
+    "has_detailed_event": false,
+    "outcome_signal": false,
+    "resource_signal": true,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": [
+      {
+        "case_key": "xiaomi-process",
+        "anchor": "小米",
+        "line": 1,
+        "locator": "artifact-line:525#offset:31-33",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:小米"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68cd062a000000001202e912.json@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "4383f7c5085cb6f0c02c4f0f00325b3eaad6a4c1",
@@ -20,7 +50,7 @@
       "excerpt": "\"global\": {",
       "line": 2,
       "locator": "artifact-line:2",
-      "semantic_excerpt": "武汉小米后端开发急招，要求实习六个月 可以先投 然后发简历看下帮忙推进 内推码: GGSGZH4 投递链接https://xiaomi.jobs.f.mioffice.cn/s/4uvEbE1ATkw"
+      "semantic_excerpt": "武汉小米后端开发急招，要求实习六个月\n可以先投 然后发简历看下帮忙推进\n内推码: GGSGZH4\n投递链接https://xiaomi.jobs.f.mioffice.cn/s/4uvEbE1ATkw"
     }
   },
   "checks": [
@@ -42,7 +72,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source is a generic question bank, recruitment/job advertisement, tutorial, written-test, or preparation resource; it does not record one candidate interview event."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +86,11 @@
     }
   ],
   "limitations": [
-    "Exact Source projection is a generic resource/recruitment/advice record and does not record one candidate interview event.",
+    "Exact Source is a generic question bank, recruitment/job advertisement, tutorial, written-test, or preparation resource; it does not record one candidate interview event.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "df5fd501b8ee60e029bc3ea1c5d36f7f66e0e932f4ea30ae37815abd3ef4adfe"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "3f88066d1e0558cfb315ffebc4c3687b5ee9477fbe7377744057ee4d86b5824f"
 }

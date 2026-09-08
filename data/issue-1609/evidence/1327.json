@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "bc51965d3b21473a351ccf1aceeee8afb359f506410fbdf8fc8189cf046b966e",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event"
+    ],
+    "questions": 10,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68c8f26a000000000e027051.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "df712cbe5d695be5640d97b3187f91e14bebeff0",
@@ -20,7 +40,7 @@
       "excerpt": "1.自我介绍 4min",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "1.自我介绍 4min 八股15min 2.redis缓存击穿，缓存穿透，缓存雪崩 3.mysql索引的结构是什么 4.使用索引查询的时候什么时候会发生回表 5.了解sql注入吗，什么原理怎么放防范 6.什么是死锁，怎么解决 7.说一下jvm内存分布 8.说一下类的加载机制，类加载器，类加载流程 9.手撕：有序数组合并，要求额外空间o1（从后向前） 17min 10.手撕：力扣198打家劫舍，简单dp 10min 反问：略 八股答的不太好，感觉有点凉"
+      "semantic_excerpt": "1.自我介绍 4min\n八股15min\n2.redis缓存击穿，缓存穿透，缓存雪崩\n3.mysql索引的结构是什么\n4.使用索引查询的时候什么时候会发生回表\n5.了解sql注入吗，什么原理怎么放防范\n6.什么是死锁，怎么解决\n7.说一下jvm内存分布\n8.说一下类的加载机制，类加载器，类加载流程\n9.手撕：有序数组合并，要求额外空间o1（从后向前） 17min\n10.手撕：力扣198打家劫舍，简单dp 10min\n反问：略\n八股答的不太好，感觉有点凉"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "dfcf10401a28b42eb8244e88cd968832abd8199845bd97909226f53cb0c9fe9d"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "9616866d45251c3c725b127ef80db9def43152574116b5e6b652decf0107300c"
 }

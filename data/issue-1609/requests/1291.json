@@ -1,32 +1,21 @@
 {
-  "schema_version": "issue-1609-boundary-review-request.v1",
-  "request_id": "issue-1609-boundary-1291",
+  "schema_version": "source-note-boundary-review-transition.v1",
+  "transition_id": "issue-1609-boundary-1291-review-1",
   "repository": "liqiangcc/interview-lab",
-  "parent_issue": 1605,
   "issue_number": 1291,
-  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1291",
   "source_note_id": "xhs-note:68c18d20000000001d0376f9",
   "expected_body_sha256": "801400346283674b13675d37caefd4a36d49ca06e8cb2fa849a531380d2cc29f",
   "expected_boundary_status": "pending",
   "expected_source_revision_id": "xhs-note:68c18d20000000001d0376f9:snapshot-95b77bb26104",
-  "expected_source_repository": "liqiangcc/xhs",
+  "expected_manifest_sha256": null,
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
-  "evidence_file": "evidence/1291.json",
-  "source_evidence": {
-    "ref": "liqiangcc/xhs:note_desc/68c18d20000000001d0376f9.txt@95b77bb261048059846273688e4b90a2e108b437",
-    "git_blob_sha": "d4a9dcd952f3ca9f778c7a742f233bcd387cd98c",
-    "kind": "text_projection",
-    "provenance": "source_projection",
-    "byte_size": 1144,
-    "content_sha256": "cc650376d52630ed4eaf929357b484e6b0eb80fd6ed2ca44705b7bed2a71e9c5",
-    "excerpt": {
-      "excerpt": "字节生活服务后端开发一面",
-      "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "字节生活服务后端开发一面 1.问了下为什么要跨到计算机来，怎么学习的。 2.慢SQL调优的步骤 3.查询语句offset+limit为什么慢，如何优化。 4.联合索引失效的场景有哪些。什么是覆盖索引？ 5.悲观锁和乐观锁的区别，举例什么场景下会用到。 6.分布式锁解决并发问题的时候，锁是否设置了失效时间？为什么要引入看门狗机制？普通的分布式锁会存在哪些问题。 7.MySQL与Redis的一致性是如何保证的？ 8.监听binglog的方式。消息队列如果丢失掉监听到的信息怎么办？重试多次都失败怎么办？ 9.消息队列消费幂等性是怎么保证的？有序性呢？ 10.在团队协作中是如何跟同事沟通解决问题的？ 11.项目中最困难的部分是什么？怎么解决的。 12.金融人眼中的技术有什么独特的视角。 手撕：给一个数组，一个int型target。求使得子数组和大于等于target时，最小的子数组长度。 就给了15min没写完说了思路。"
-    }
+  "decision": "single-interview",
+  "reviewed_at": "2026-09-08T00:00:00.000Z",
+  "reviewer_kind": "ai-assisted",
+  "review_evidence": {
+    "repository": "liqiangcc/interview-lab",
+    "issue_number": 1291,
+    "comment_id": 1609001291
   },
   "checks": [
     {
@@ -47,7 +36,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -61,9 +50,8 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
-    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
-  ],
-  "evidence_sha256": "078f0deef413f53b590b6710e229923938abebd8a27b1c80f95e7e0df42f2661",
-  "request_sha256": "7b967aacc86f991830d830fc42008f55526d6f5ffcc795c39efb8da12235446a"
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+    "Candidate only: review_evidence.comment_id is a deterministic placeholder; no live evidence comment was created.",
+    "No body PATCH, label write, or InterviewNote materialization was performed; controller authorization is required."
+  ]
 }

@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "8afa11af3d87b596e15270ba32a07d19f5cd8473c720699f35eaa0147ea15f0a",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event"
+    ],
+    "questions": 6,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": false,
+    "has_detailed_event": false,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68caef63000000000b03c3bf.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "4525e17030e125c3fd3b40d3c558e314f6564534",
@@ -20,7 +40,7 @@
       "excerpt": "9.17Java面试复盘",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "9.17Java面试复盘 今天面了某安包，凉了，总结了一下，项目问题和一些场景问题回答自认还可以，但八股文久不看了，有近4.5个没回答上来，以下是没回答上问题。 1.kafka消息保证顺序性问题 ? 2.spring中bean的生命周期，创建与销毁?spring事务的执行原理? 3.存储过程?怎么使用? 4.springboot中的启动原理?如果要自己实现一个stater要怎么实现? 5.api指定使用某个索引?"
+      "semantic_excerpt": "9.17Java面试复盘\n \n今天面了某安包，凉了，总结了一下，项目问题和一些场景问题回答自认还可以，但八股文久不看了，有近4.5个没回答上来，以下是没回答上问题。\n1.kafka消息保证顺序性问题 ?\n2.spring中bean的生命周期，创建与销毁?spring事务的执行原理?\n3.存储过程?怎么使用?\n4.springboot中的启动原理?如果要自己实现一个stater要怎么实现?\n5.api指定使用某个索引?"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "1d2447da7620d46c1e73e4ff99e0a768f9072b8778972ac682ef06599f1529c6"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "2d32573d422703022de7af26e1ec36755fbc854834ee472430b0704762e09f7d"
 }

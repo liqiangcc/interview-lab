@@ -8,7 +8,35 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "cba780dc5b0e41904e416fe180faddb44a5cfd1a70e54ad7245b322ef85caa75",
   "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "rationale": "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event"
+    ],
+    "questions": 4,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": [
+      {
+        "case_key": "baidu-process",
+        "anchor": "百度",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-2",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:百度"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68c3747b000000001c0112fd.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "3584703df265520d9e4634e419c59289b3b7b94b",
@@ -20,7 +48,7 @@
       "excerpt": "百度C++一二面",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "百度C++一二面 一面 你了解你的岗位吗 问项目 智能指针，协程 rtos和linux调度的区别 tcp/ip协议，socket是处于什么层 手撕lru缓存 对百度处境的看法 用过什么百度产品 二面 自我介绍之后 一直手撕 1.strcpy函数，不知道数组大小n 2.不使用递归遍历二叉树 3.二叉树的层数 4.二叉树节点存储代价，到达叶子节点的最大代价 追问：可以这样迭代的算底层假设是什么（先计算上一层，再计算下层） ——- 想到再补充"
+      "semantic_excerpt": "百度C++一二面\n一面\n你了解你的岗位吗\n问项目\n智能指针，协程\nrtos和linux调度的区别\ntcp/ip协议，socket是处于什么层\n手撕lru缓存\n对百度处境的看法\n用过什么百度产品\n \n二面\n自我介绍之后\n一直手撕\n1.strcpy函数，不知道数组大小n\n2.不使用递归遍历二叉树\n3.二叉树的层数\n4.二叉树节点存储代价，到达叶子节点的最大代价\n追问：可以这样迭代的算底层假设是什么（先计算上一层，再计算下层）\n——-\n想到再补充"
     }
   },
   "checks": [
@@ -42,7 +70,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +84,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "8a7d9557f739bf99ac9df3e252ee636207238978cd63ce458d703df825056e93"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "1888f0c079127ae12fefc1b1093ef01438a3119783bd32b5e1fc5146c47036ca"
 }

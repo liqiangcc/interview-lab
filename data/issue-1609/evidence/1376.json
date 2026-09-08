@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "6b4dc2ca5f4b6d51015a2661ca8fd3610331d036eeaf1c9f95fa272d4c41c808",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event"
+    ],
+    "questions": 24,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68d16a7d000000000e031041.json@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "bebfff3a3c43a15908059932b46e2e914ad0a3c4",
@@ -20,7 +40,7 @@
       "excerpt": "\"global\": {",
       "line": 2,
       "locator": "artifact-line:2",
-      "semantic_excerpt": "岗位：研发工程师C/C++ 1、自我介绍 2、介绍基于c++的即时通信项目 3、消息发送的协议是自定义的还是用了什么 4、用画板做了一个思考题：两个矩形，长宽分别平行于xy坐标轴，计算两个矩形的重叠面积 5、手撕：写一个myString，实现构造，析构，拷贝构造，移动构造 6、const可以用来修饰哪些东西，如果修饰成员函数表示什么 7、引用和指针的区别 8、如何避免野指针、内存泄漏的问题（答了智能指针，还问有其他方法吗，没想出来） 9、智能指针有哪些 10、unique_ptr如何转移所有权 11、线程和进程的区别 12、线程间和进程间分别是怎么通信 13、线程间有哪些锁 14、条件变量怎么去通知另一个线程？唤醒之后就能获得锁吗？ 15、mmap如何实现通信呢，另一个进程怎么知道这个进程写入了东西呢？ 16、tcp和udp的区别 17、tcp的接收端应用层是否可能收到乱序的数据，在哪里实现排序的，tcp的缓存区是在哪 18、tcp的拥塞控制 19、对比http1.1、http2.0、http3.0 20、http3.0如何实现0RTT 21、说一下常用的数据结构 22、常用的设计模式 23、手写单例模式，你的实现是安全的吗，为什么 24、反问"
+      "semantic_excerpt": "岗位：研发工程师C/C++\n1、自我介绍\n2、介绍基于c++的即时通信项目\n3、消息发送的协议是自定义的还是用了什么\n4、用画板做了一个思考题：两个矩形，长宽分别平行于xy坐标轴，计算两个矩形的重叠面积\n5、手撕：写一个myString，实现构造，析构，拷贝构造，移动构造\n6、const可以用来修饰哪些东西，如果修饰成员函数表示什么\n7、引用和指针的区别\n8、如何避免野指针、内存泄漏的问题（答了智能指针，还问有其他方法吗，没想出来）\n9、智能指针有哪些\n10、unique_ptr如何转移所有权\n11、线程和进程的区别\n12、线程间和进程间分别是怎么通信\n13、线程间有哪些锁\n14、条件变量怎么去通知另一个线程？唤醒之后就能获得锁吗？\n15、mmap如何实现通信呢，另一个进程怎么知道这个进程写入了东西呢？\n16、tcp和udp的区别\n17、tcp的接收端应用层是否可能收到乱序的数据，在哪里实现排序的，tcp的缓存区是在哪\n18、tcp的拥塞控制\n19、对比http1.1、http2.0、http3.0\n20、http3.0如何实现0RTT\n21、说一下常用的数据结构\n22、常用的设计模式\n23、手写单例模式，你的实现是安全的吗，为什么\n24、反问"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "9f0e365e887abe7b8e4f676268da67596fad92dff65d2a68dfb64b701c653eed"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "e2ffb0cd0c8fda82657dcec9c99054ebdf7be3d71d29cd4da54ce4f711841f36"
 }

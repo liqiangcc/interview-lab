@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "52f79a3bed2a8f8142219143a79445a98b4f73fe610072e8e6c9636ba4ff4636",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event"
+    ],
+    "questions": 14,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68e5063f0000000007035c48.json@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "322d5c26efc49271c946fbc33bf79230d8fe6f28",
@@ -20,7 +40,7 @@
       "excerpt": "\"global\": {",
       "line": 2,
       "locator": "artifact-line:2",
-      "semantic_excerpt": "1、自我介绍 2、挑个有挑战性的项目讲一下，其中的优化点 3、线程池中的各个参数设置的考虑因素 4、技术方案为什么这么选择？数据实时性是怎么保证的？ 5、Redis怎么保证一次只能获取到一个可以的？ 6、Redis的工作机制 7、java语言的三大特性 8、jvm内存区域分布，静态变量存储位置 9、jvm的垃圾回收机制，垃圾回收算法详细说下 10、Spring中的IoC和AOP 11、线程和进程的区别 12、MySQL的事务，怎么解决幻读问题？ 13、TCP三次握手的过程 14、反问"
+      "semantic_excerpt": "1、自我介绍\n2、挑个有挑战性的项目讲一下，其中的优化点\n3、线程池中的各个参数设置的考虑因素\n4、技术方案为什么这么选择？数据实时性是怎么保证的？\n5、Redis怎么保证一次只能获取到一个可以的？\n6、Redis的工作机制\n7、java语言的三大特性\n8、jvm内存区域分布，静态变量存储位置\n9、jvm的垃圾回收机制，垃圾回收算法详细说下\n10、Spring中的IoC和AOP\n11、线程和进程的区别\n12、MySQL的事务，怎么解决幻读问题？\n13、TCP三次握手的过程\n14、反问"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "6df30653e8eb24db33f41a81a9ce8c6e290708183ff2e7c1d7f49fb2323bfcf3"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "dc27d5800f8717f9955375bef59d4c624f26a6bfdceedc8c595e676e4afd66be"
 }

@@ -7,8 +7,27 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "57361f1ae893e845c3d741bbc29ce953fc1567cc2e73816ab892b511fe750c9e",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only"
+    ],
+    "questions": 8,
+    "has_first_person_event": true,
+    "has_explicit_candidate_event": true,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68aec41e000000001c009621.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "0c67d905727beab99e30306435a11896f653da83",
@@ -20,7 +39,7 @@
       "excerpt": "bg：社招本三（一共聊了1h40mins）",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "bg：社招本三（一共聊了1h40mins） 1、自我介绍 2mins 2、说一下项目，还往深了聊了一些 3、Java基础 equals和== concurrenthashmap实现原理 线程池参数 怎么配置最大线程数和核心线程数 理由？ 为什么cpu密集型是cpu核数+1 怎么达到软硬件都比较好的一个状态 synchronize的锁升级 4、垃圾回收 垃圾回收算法 和垃圾回收器 老年代和新生代分别用什么算法 为什么新生代要用标记复制 5、项目的一些调度细问了一些 6、并发解析excel的整个方案 接口延时、表设计、并发插入（限流）、鉴权、重复提交、数据合规等问题 7、算法题：找到链表的倒数第m个元素（一开始没想到快慢指针，后面面试官提醒了一下） 8、反问：部门主要做什么，面试反馈 总结：面试官提出的问题先思考，思考完后再回答，回答时要言简意赅，不要过于发散 （已经是第三个面试官说我介绍项目和回答问题有点啰嗦和找不到重点了🥲🥲） 继续加油准备吧"
+      "semantic_excerpt": "bg：社招本三（一共聊了1h40mins）\n1、自我介绍 2mins\n2、说一下项目，还往深了聊了一些\n3、Java基础\nequals和==\nconcurrenthashmap实现原理\n线程池参数\n怎么配置最大线程数和核心线程数\n理由？\n为什么cpu密集型是cpu核数+1\n怎么达到软硬件都比较好的一个状态\nsynchronize的锁升级\n4、垃圾回收\n垃圾回收算法\n和垃圾回收器\n老年代和新生代分别用什么算法\n为什么新生代要用标记复制\n5、项目的一些调度细问了一些\n6、并发解析excel的整个方案\n接口延时、表设计、并发插入（限流）、鉴权、重复提交、数据合规等问题\n7、算法题：找到链表的倒数第m个元素（一开始没想到快慢指针，后面面试官提醒了一下）\n8、反问：部门主要做什么，面试反馈\n总结：面试官提出的问题先思考，思考完后再回答，回答时要言简意赅，不要过于发散\n（已经是第三个面试官说我介绍项目和回答问题有点啰嗦和找不到重点了🥲🥲）\n继续加油准备吧"
     }
   },
   "checks": [
@@ -41,8 +60,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +75,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "8bdee283da559437dc0e2895554040d701c18ad3614ea9c5601c020a9fa64722"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "1ff7d7aaf92f591647f41e49f5c28b926ac6dd5066b6612e1a777f65cfab52a0"
 }

@@ -8,7 +8,27 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "3d59a141090305f6cdd9f6c0e627e6003c18fb2cab4e5404dcb35da749a1f62f",
   "disposition": "blocked",
-  "rationale": "The available Source evidence does not establish a bounded interview event; retain pending.",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event"
+    ],
+    "questions": 11,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": false,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b85518000000001d026c52.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "690e33626a7dcd71fb268cbe0e4792df8d3bdc9e",
@@ -20,7 +40,7 @@
       "excerpt": "开头聊了一会儿部门业务 有了初步了解 知道我有一段美团实习 就开始猛猛追问美团实习 然后延伸拓展一些场景题 八股也有不少",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "开头聊了一会儿部门业务 有了初步了解 知道我有一段美团实习 就开始猛猛追问美团实习 然后延伸拓展一些场景题 八股也有不少 1.实习问了二十分钟 2.cow机制 以及应用场景 设计的数据结构 3.redis哨兵模式的leader选举 4.两阶段提交了解么 mysql的 5.redis网络模型 以及EL TL 6.concurrent hashmap 如何保证并发安全 7.mysql主从复制实现原理 8.还有一些八股记不住了 有点多…… 9.一道sql题 一道索引分析题 10.算法 滑动窗口的最大值 11.怎么学习一门新技术 以及沉淀知识？"
+      "semantic_excerpt": "开头聊了一会儿部门业务 有了初步了解 知道我有一段美团实习 就开始猛猛追问美团实习 然后延伸拓展一些场景题 八股也有不少\n1.实习问了二十分钟\n2.cow机制 以及应用场景 设计的数据结构\n3.redis哨兵模式的leader选举\n4.两阶段提交了解么 mysql的\n5.redis网络模型 以及EL TL\n6.concurrent hashmap 如何保证并发安全\n7.mysql主从复制实现原理\n8.还有一些八股记不住了 有点多……\n9.一道sql题 一道索引分析题\n10.算法 滑动窗口的最大值\n11.怎么学习一门新技术 以及沉淀知识？"
     }
   },
   "checks": [
@@ -42,7 +62,7 @@
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "The available Source evidence does not establish a bounded interview event; retain pending.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "98135c7d6b70bca0beb4cc8a1260fb7eeb7c33d460e520ed3882aca84f4e12b5"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "6b4c4f6809da5404df6159bce4b0708bdc1612251f303ba8296ea89cb108c712"
 }

@@ -8,7 +8,24 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "05bd0dffaed955741e4d3c6e0bc452c40371f5ea0277d787915bc9759589875b",
   "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "rationale": "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [],
+    "questions": 22,
+    "has_first_person_event": true,
+    "has_explicit_candidate_event": true,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": true,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68d3cffc000000001300c370.json@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "9f3d7fa8354a5bf95cf62e63ba481620b7584424",
@@ -20,7 +37,7 @@
       "excerpt": "\"global\": {",
       "line": 2,
       "locator": "artifact-line:2",
-      "semantic_excerpt": "二面 1.看你实习和项目经历都是后端，为什么投测开 2. 实习中的有个工作的事务是用来干嘛的 3. 你是怎么发现会有这个问题，然后解决的思路和结果 4. 为什么要用redis队列 5. redis为什么快 6. 讲讲redis I/O多路复用 7. 布隆过滤器怎么实现的 8. 你在实习过程中做了哪些自测 9. 你一般会从哪些方面进行测试 10. 假如一个版本要在一周内上线，你作为测试负责人，你应该怎么设计回归测试（测试八股没看过，纯在凭感觉答）（答了半天，他说你应该回答不到我点上） 11. 假如只给了你一句话的需求，你应该怎么做（我说让产品出详细的需求文档，然后拉会一起需求评审，包括风险分析巴啦巴拉的） 12. 他打断我了，说假如我就是客户，我现在给你一句话：我要做大模型的监控系统，你现在模拟一下怎么回答我（我说：您好，稍等一下，我拉下我们的产品一起评审一下。然后把他逗笑了，他肯定觉得我是个逗比吧） 13. 问项目经历中有个项目上线了吗？（没有） 14. RAG技术的原理，解决了什么问题（我项目中有写这个） 15. 项目中的一个场景为什么要用redis+rabbitmq 16. 为什么选择rabbitmq不选其他的mq（我说当时选的时候，感觉这个相比rocketmq和kafka简单一点，而且kafka用这种场景有点杀鸡用牛刀。还有rabbitmq是专门一家叫rabbit的公司做的，一生只干一件事，比较专一，肯定牛批。又把他整笑了） 17. java中的线程池有哪些参数 18. 怎么保证线程池的稳定运行 19. 你平时用大模型是怎么提效的 20. 手撕：输入一个数字代表有几个（），输出一个字符串，有效所有的组合方式。（比如输入1，输出（）。输出2，输出（）（）（（）），开始想错方向了，然后没手撕出来，后来我讲了一下大概思路） 21. 反问，问了没手撕出来是不是g了，他说还好，我们看综合能力 22. 再问了一些其他业务的问题 总结：残缺记忆版，问的八股都比较常规，而且不深入，强度肯定比后端问的小。然后主要还是根据你简历上的内容在问，还是会问一点测试的东西"
+      "semantic_excerpt": "二面\n1.看你实习和项目经历都是后端，为什么投测开\n2. 实习中的有个工作的事务是用来干嘛的\n3. 你是怎么发现会有这个问题，然后解决的思路和结果\n4. 为什么要用redis队列\n5. redis为什么快\n6. 讲讲redis I/O多路复用\n7. 布隆过滤器怎么实现的\n8. 你在实习过程中做了哪些自测\n9. 你一般会从哪些方面进行测试\n10. 假如一个版本要在一周内上线，你作为测试负责人，你应该怎么设计回归测试（测试八股没看过，纯在凭感觉答）（答了半天，他说你应该回答不到我点上）\n11. 假如只给了你一句话的需求，你应该怎么做（我说让产品出详细的需求文档，然后拉会一起需求评审，包括风险分析巴啦巴拉的）\n12. 他打断我了，说假如我就是客户，我现在给你一句话：我要做大模型的监控系统，你现在模拟一下怎么回答我（我说：您好，稍等一下，我拉下我们的产品一起评审一下。然后把他逗笑了，他肯定觉得我是个逗比吧）\n13. 问项目经历中有个项目上线了吗？（没有）\n14. RAG技术的原理，解决了什么问题（我项目中有写这个）\n15. 项目中的一个场景为什么要用redis+rabbitmq\n16. 为什么选择rabbitmq不选其他的mq（我说当时选的时候，感觉这个相比rocketmq和kafka简单一点，而且kafka用这种场景有点杀鸡用牛刀。还有rabbitmq是专门一家叫rabbit的公司做的，一生只干一件事，比较专一，肯定牛批。又把他整笑了）\n17. java中的线程池有哪些参数\n18. 怎么保证线程池的稳定运行\n19. 你平时用大模型是怎么提效的\n20. 手撕：输入一个数字代表有几个（），输出一个字符串，有效所有的组合方式。（比如输入1，输出（）。输出2，输出（）（）（（）），开始想错方向了，然后没手撕出来，后来我讲了一下大概思路）\n21. 反问，问了没手撕出来是不是g了，他说还好，我们看综合能力\n22. 再问了一些其他业务的问题\n \n总结：残缺记忆版，问的八股都比较常规，而且不深入，强度肯定比后端问的小。然后主要还是根据你简历上的内容在问，还是会问一点测试的东西"
     }
   },
   "checks": [
@@ -42,7 +59,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +73,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "8fa3f90fc2a99324888620723a3f7c19e3e7dcaa60627f69065ccce876234737"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "baa63e645ed00b68f2dc25a0d2dcbd5ed063459f69174616fe591b94f9a7140f"
 }

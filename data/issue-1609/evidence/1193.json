@@ -8,7 +8,26 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "9067e5cb5b76d5a201be8bbdef855d6f772d3afeeb556fb3842b1af6ccdf750f",
   "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "rationale": "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event"
+    ],
+    "questions": 6,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68af2e09000000001c0349cf.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "733a44587d0243869b39677092a8ec8e1909a0d4",
@@ -20,7 +39,7 @@
       "excerpt": "挺有意思的一次面试",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "挺有意思的一次面试 感觉和面试官八字不合 1、实习项目中怎么保证一致性 答了领域事件驱动保障最终一致性，继续追问这种思想和分布式事务底层逻辑的相通之处 2、常见分布式事务的实现 3、tcp三次握手和四次挥手 追问这个思想和分布式事务的共同点 3、volatile和synchronized 要求有底层思考 4、延迟队列怎么做？rabbitmq的死信交换机怎么实现延迟队列？从算法层面来说 5、CAS 手撕：单例模式，用递归的方式实现两个排序列表的合并 还有一些忘了，整场感受不是很好，一直在强调思考，也确实是很长时间没背过八股了，中途说漏嘴了，被面试官教育，他觉得这些不是八股[笑哭R]"
+      "semantic_excerpt": "挺有意思的一次面试\n感觉和面试官八字不合\n1、实习项目中怎么保证一致性\n答了领域事件驱动保障最终一致性，继续追问这种思想和分布式事务底层逻辑的相通之处\n2、常见分布式事务的实现\n3、tcp三次握手和四次挥手\n追问这个思想和分布式事务的共同点\n3、volatile和synchronized\n要求有底层思考\n4、延迟队列怎么做？rabbitmq的死信交换机怎么实现延迟队列？从算法层面来说\n5、CAS\n手撕：单例模式，用递归的方式实现两个排序列表的合并\n还有一些忘了，整场感受不是很好，一直在强调思考，也确实是很长时间没背过八股了，中途说漏嘴了，被面试官教育，他觉得这些不是八股[笑哭R]"
     }
   },
   "checks": [
@@ -42,7 +61,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +75,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "02214bd1c2f57bcec863dd504280e21f02e31f02da3a8b394768538d343a855a"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "9244d4af2e3cee850ae2e5c4ebe25aac2294c1e068be5c39b9d4940a5e8a88b3"
 }

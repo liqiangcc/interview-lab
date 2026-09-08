@@ -8,7 +8,24 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "c63913bd43a340bbb786c2465a92b5df6b4a25c6781edfe418359885a9b35ef7",
   "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "rationale": "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [],
+    "questions": 18,
+    "has_first_person_event": true,
+    "has_explicit_candidate_event": true,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68ccd94700000000130191f9.json@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "b9363e63fd6f3d17c4d806943413c6d773a0eb13",
@@ -20,7 +37,7 @@
       "excerpt": "\"global\": {",
       "line": 2,
       "locator": "artifact-line:2",
-      "semantic_excerpt": "❓面试问题： 简直就是一场酣畅淋漓的八股拷打 基础的我不写了，我只写我觉得稍微有难度的 一.八股 1.i++是原子操作吗？ 2.a=Interger（200）和b=Interger（200），ab相同吗，a=Interger（0）和b=Interger（0）呢 2.1 为什么要有包装数据类型 2.2 基本数据类型存储在哪里，引用数据存储在哪里（有例外吗） 3.String可变吗，StringBuilder可变吗，具体你用哪个，java里面运算符可以重载吗（我说变的频繁就用StringBuilder，面试官跟我说现在String优化了，源码里面对于String的+操作被重载了，重载为使用StringBuilder，所以大部分情况用String就行了，我汗颜😓） 4.重载和重写区别，构造方法可以重写吗，构造方法可以重载吗？ 5.Redis实现延时队列？说出两种以上方法 6.sql中执行一个update语句加了哪些锁？（我答出来加了行锁，面试官说不止，还有其他的。） 7.给我一段代码，看什么问题，具体是单例模式的饿汉式加载，我说没有用两次判断，以及单例对象没有用volatile修饰。 8.进程和线程的区别，协程是什么 9.cpu操作内存主要些什么？ 10.虚拟内存有什么好处？ 11.spring中说出五种设计模式？ 二.项目 项目没怎么问，感觉是跟他们的平时的业务不太相关。 1.为什么动态配置中心要用redis的发布订阅呢，为什么不用MQ。 2.讲一讲接口限流怎么实现的。 三.手撕 实现一个数据结构，O(1)时间实现插入，删除，和返回一个随机值。 🙌面试感想： 纯八股拷打，自认为八股掌握的比较好了，但是一个点越问越深。"
+      "semantic_excerpt": "❓面试问题：\n简直就是一场酣畅淋漓的八股拷打\n基础的我不写了，我只写我觉得稍微有难度的\n一.八股\n1.i++是原子操作吗？\n2.a=Interger（200）和b=Interger（200），ab相同吗，a=Interger（0）和b=Interger（0）呢\n2.1 为什么要有包装数据类型\n2.2 基本数据类型存储在哪里，引用数据存储在哪里（有例外吗）\n3.String可变吗，StringBuilder可变吗，具体你用哪个，java里面运算符可以重载吗（我说变的频繁就用StringBuilder，面试官跟我说现在String优化了，源码里面对于String的+操作被重载了，重载为使用StringBuilder，所以大部分情况用String就行了，我汗颜😓）\n4.重载和重写区别，构造方法可以重写吗，构造方法可以重载吗？\n5.Redis实现延时队列？说出两种以上方法\n6.sql中执行一个update语句加了哪些锁？（我答出来加了行锁，面试官说不止，还有其他的。）\n7.给我一段代码，看什么问题，具体是单例模式的饿汉式加载，我说没有用两次判断，以及单例对象没有用volatile修饰。\n8.进程和线程的区别，协程是什么\n9.cpu操作内存主要些什么？\n10.虚拟内存有什么好处？\n11.spring中说出五种设计模式？\n二.项目\n项目没怎么问，感觉是跟他们的平时的业务不太相关。\n1.为什么动态配置中心要用redis的发布订阅呢，为什么不用MQ。\n2.讲一讲接口限流怎么实现的。\n三.手撕\n实现一个数据结构，O(1)时间实现插入，删除，和返回一个随机值。\n🙌面试感想：\n纯八股拷打，自认为八股掌握的比较好了，但是一个点越问越深。"
     }
   },
   "checks": [
@@ -42,7 +59,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +73,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "a0393560fb1751a3346b4014266edac8e0ea698c925cfbf59b7427ed049d67a2"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "9f45cd0726840a3e876aae9acf49f4187af6bca22bd22749ab00a6c312b6e117"
 }

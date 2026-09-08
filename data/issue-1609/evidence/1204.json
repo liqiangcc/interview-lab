@@ -8,7 +8,27 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "5e4f4859074d45e73174ba1b68c63919dddc338ba1391bef3560add8f33549e5",
   "disposition": "blocked",
-  "rationale": "The available Source evidence does not establish a bounded interview event; retain pending.",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event"
+    ],
+    "questions": 17,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": false,
+    "has_detailed_event": false,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b124e8000000001b032114.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "822766ae96c5da1870f6591ecf3bd590b89b08e1",
@@ -20,7 +40,7 @@
       "excerpt": "实习：10min，没有细问",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "实习：10min，没有细问 Java基础: 1. 编程语言: 确认主要技术栈是Java。 2. Java内存模型 (JMM): 要求解释JMM。 3. 原子性保证: 追问在JMM中，原子性是如何保证的。 4. 锁的使用场景: 询问不同锁（如乐观锁、悲观锁、ReentrantLock）的适用场景。 数据库 (MySQL): 5. 事务隔离级别: 考察MySQL的事务隔离级别。 6. 索引结构: 询问MySQL主要使用什么索引结构（B+树）。 7. Redo Log vs. Binlog: 要求辨析Redo Log和Binlog的区别。 8. 自增ID连续性: 提问自增ID是否一定是连续的，以及在什么情况下会不连续。 9. 慢查询排查: 给出一个场景题，如何排查和优化慢查询SQL。 缓存 (Redis): 10. Redis项目应用: 询问在哪一个项目中使用过Redis，以及具体做了什么。 11. 分布式锁问题 (SETNX): 针对分布式锁，询问使用时可能会遇到什么问题。 12. Redis单线程性能: 提问为什么Redis单线程模型速度还很快。 计算机网络与操作系统: 13. I/O模型: 要求讲解几种I/O模型的区别（特别是select, poll, epoll）。 14. TCP握手与挥手: 询问为什么TCP是三次握手和四次挥手。 15. 滑动窗口作用: 提问TCP滑动窗口的作用是什么。 16. 操作系统启动过程: 考察操作系统的启动流程。 17. 进程、线程、协程: 要求辨析这三者的区别。 算法题: 给定一个数组和滑动窗口大小K，返回每个滑动窗口的最大值。"
+      "semantic_excerpt": "实习：10min，没有细问\nJava基础:\n1. 编程语言: 确认主要技术栈是Java。\n2. Java内存模型 (JMM): 要求解释JMM。\n3. 原子性保证: 追问在JMM中，原子性是如何保证的。\n4. 锁的使用场景: 询问不同锁（如乐观锁、悲观锁、ReentrantLock）的适用场景。\n数据库 (MySQL):\n5. 事务隔离级别: 考察MySQL的事务隔离级别。\n6. 索引结构: 询问MySQL主要使用什么索引结构（B+树）。\n7. Redo Log vs. Binlog: 要求辨析Redo Log和Binlog的区别。\n8. 自增ID连续性: 提问自增ID是否一定是连续的，以及在什么情况下会不连续。\n9. 慢查询排查: 给出一个场景题，如何排查和优化慢查询SQL。\n缓存 (Redis):\n10. Redis项目应用: 询问在哪一个项目中使用过Redis，以及具体做了什么。\n11. 分布式锁问题 (SETNX): 针对分布式锁，询问使用时可能会遇到什么问题。\n12. Redis单线程性能: 提问为什么Redis单线程模型速度还很快。\n计算机网络与操作系统:\n13. I/O模型: 要求讲解几种I/O模型的区别（特别是select, poll, epoll）。\n14. TCP握手与挥手: 询问为什么TCP是三次握手和四次挥手。\n15. 滑动窗口作用: 提问TCP滑动窗口的作用是什么。\n16. 操作系统启动过程: 考察操作系统的启动流程。\n17. 进程、线程、协程: 要求辨析这三者的区别。\n算法题: 给定一个数组和滑动窗口大小K，返回每个滑动窗口的最大值。"
     }
   },
   "checks": [
@@ -42,7 +62,7 @@
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "The available Source evidence does not establish a bounded interview event; retain pending.",
+    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "2e1755e7d0d42b809b1eb34b38f28c2fcc0f04acca3ab75989425871f356daa8"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "8fb810ea3a14890df73f0729c946932b932feda4a6f9e8f546cefe2f30610db6"
 }

@@ -8,7 +8,33 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "61925c89cd35abe9c18dcd18b1795b366038a76a085ac84f702b70103a6cd67a",
   "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "rationale": "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [],
+    "questions": 13,
+    "has_first_person_event": true,
+    "has_explicit_candidate_event": true,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": [
+      {
+        "case_key": "baidu-process",
+        "anchor": "百度",
+        "line": 2,
+        "locator": "artifact-line:2#offset:0-2",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:百度"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68c80460000000001d029216.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "39e2414d7de7dab931039b8f528a972ac3b10df2",
@@ -20,7 +46,7 @@
       "excerpt": "自我介绍",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "自我介绍 百度的面试官真的问我的措手不及 1.论文科研介绍 2.讲一下我熟悉的大模型涉及的技术（讲了agent，增强检索，逻辑链，moe和Lora） 3.状态空间选择模型的架构 4.transformer的自注意力怎么实现的？qkv计算，初始化是怎么做的。 5.数学知识矩阵的相关运算（求逆，点乘，行列式） 6.MCP协议（不会） 7.我所了解的Redis的最佳实践。（答了避免大key） 8.大key是什么？多大算大key？怎么解决（＞1m，拆分key） 9.跳表的数据结构 10.MySQL的update语句执行全流程 11.MySQL的簇聚索引底层数据结构 12.为什么用b+树不用其它数据结构，比较一下。 13.问实习经历 手撕1.给两个树判断是否相等2.给一个数组判断能否拆成两个数组，这两个数组的元素和相等 都不难"
+      "semantic_excerpt": "自我介绍\n百度的面试官真的问我的措手不及\n1.论文科研介绍\n2.讲一下我熟悉的大模型涉及的技术（讲了agent，增强检索，逻辑链，moe和Lora）\n3.状态空间选择模型的架构\n4.transformer的自注意力怎么实现的？qkv计算，初始化是怎么做的。\n5.数学知识矩阵的相关运算（求逆，点乘，行列式）\n6.MCP协议（不会）\n7.我所了解的Redis的最佳实践。（答了避免大key）\n8.大key是什么？多大算大key？怎么解决（＞1m，拆分key）\n9.跳表的数据结构\n10.MySQL的update语句执行全流程\n11.MySQL的簇聚索引底层数据结构\n12.为什么用b+树不用其它数据结构，比较一下。\n13.问实习经历\n手撕1.给两个树判断是否相等2.给一个数组判断能否拆成两个数组，这两个数组的元素和相等\n都不难"
     }
   },
   "checks": [
@@ -42,7 +68,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +82,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "3e5153527d305caef7960cd4a179000dd24dc4780645ebde9bc7279ccf868799"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "8f7a557537f4070c1c3cdf301da4d0f3ea505f99dbee10db7a67c3848bd641e4"
 }

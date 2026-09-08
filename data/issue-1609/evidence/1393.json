@@ -8,7 +8,33 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "f119593ada3ca004da826fedd2057ad556d34e2f20bfd572762226f25e5836d1",
   "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "rationale": "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [],
+    "questions": 28,
+    "has_first_person_event": true,
+    "has_explicit_candidate_event": true,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": false,
+    "resource_signal": true,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": [
+      {
+        "case_key": "bytedance-process",
+        "anchor": "字节",
+        "line": 1,
+        "locator": "artifact-line:499#offset:30-32",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:字节"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68d49596000000000e025108.json@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "e0a7faa81b15880ad1e6b3e8015fec0c40df81a0",
@@ -20,7 +46,7 @@
       "excerpt": "\"global\": {",
       "line": 2,
       "locator": "artifact-line:2",
-      "semantic_excerpt": "字节客户端三面、HR面面经 📍面试公司：字节 🕐面试时间：2025-09 💻面试岗位：客户端 ❓面试问题： 三面： 1.自我介绍 2.问项目，有很多项目衍生问题，答得不算好，需要对项目很熟悉的同时做一些情景假设 3.手写消费者-生产者模式，可能是前面答得太差了，面试官让我先做题了 4.面试官想问数据库，我直接说不会（确实不会 5.TCP和UDP的区别 6.http3是基于什么协议做的 7.http1.1和http2有甚区别 8.http2的多路复用 9.http2的ip帧可以乱序吗，接收方怎么处理 9.TLS是什么 10.https怎么完成加密的 11.加密算法都有哪些 12.手撕 有N阶楼梯，一只猴子一次可以跳1或3阶，有多少种方法爬完楼梯 13.const关键字作用 14.函数重载怎么做的，编译器怎么做的 15.C++内存分区都有哪些，全局变量和常量存放在哪 16.什么情况下会栈溢出 17.什么时候会内存不够用 18.怎么查内存泄漏 19.分析内存泄漏的工具有哪些 20.智能指针有哪些 21.反问 HR面： 1.自我介绍 2.询问校园经历 3.项目或科研中与他人合作的经历 4.再写一遍技术面的代码题能写出来吗 5.家庭情况 6.反问 🙌面试感想： 技术面每次都有手撕，HR面时间很短，强度个人感觉挺大的，会问一些场景题，并且追问。三面后补了一个笔试才进的HR面。目前没有收到后续通知 2025-09-30更新：HR电话沟通转岗"
+      "semantic_excerpt": "字节客户端三面、HR面面经\n📍面试公司：字节\n🕐面试时间：2025-09\n💻面试岗位：客户端\n❓面试问题：\n三面：\n1.自我介绍\n2.问项目，有很多项目衍生问题，答得不算好，需要对项目很熟悉的同时做一些情景假设\n3.手写消费者-生产者模式，可能是前面答得太差了，面试官让我先做题了\n4.面试官想问数据库，我直接说不会（确实不会\n5.TCP和UDP的区别\n6.http3是基于什么协议做的\n7.http1.1和http2有甚区别\n8.http2的多路复用\n9.http2的ip帧可以乱序吗，接收方怎么处理\n9.TLS是什么\n10.https怎么完成加密的\n11.加密算法都有哪些\n12.手撕\n有N阶楼梯，一只猴子一次可以跳1或3阶，有多少种方法爬完楼梯\n13.const关键字作用\n14.函数重载怎么做的，编译器怎么做的\n15.C++内存分区都有哪些，全局变量和常量存放在哪\n16.什么情况下会栈溢出\n17.什么时候会内存不够用\n18.怎么查内存泄漏\n19.分析内存泄漏的工具有哪些\n20.智能指针有哪些\n21.反问\nHR面：\n1.自我介绍\n2.询问校园经历\n3.项目或科研中与他人合作的经历\n4.再写一遍技术面的代码题能写出来吗\n5.家庭情况\n6.反问\n🙌面试感想：\n技术面每次都有手撕，HR面时间很短，强度个人感觉挺大的，会问一些场景题，并且追问。三面后补了一个笔试才进的HR面。目前没有收到后续通知\n2025-09-30更新：HR电话沟通转岗"
     }
   },
   "checks": [
@@ -42,7 +68,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +82,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "a6d59f6ce5c5035b40adf11c7265e372ebbf4344fe0de2c70f8d4748df0dc959"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "1d8af32864a30cd2a6c9612cc27dd3832bcb40941e4451e1077400c4d523c491"
 }

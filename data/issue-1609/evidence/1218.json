@@ -8,7 +8,24 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "d019eaa4145e67e1e2c16cdf7e571d4d829645c5fad6ee8872990a9f998d161f",
   "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "rationale": "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [],
+    "questions": 4,
+    "has_first_person_event": true,
+    "has_explicit_candidate_event": true,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": true,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b2aa77000000001d03aa47.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "b92acc0861e4d4539481f0bb6bff0f3e0ba025a7",
@@ -20,7 +37,7 @@
       "excerpt": "💻 面了百度健康的 Go 后端岗位，面试官全程“拷打式提问”，从短链系统到点赞设计，再到微服务与 Http/GRPC，全程技术满点！",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "💻 面了百度健康的 Go 后端岗位，面试官全程“拷打式提问”，从短链系统到点赞设计，再到微服务与 Http/GRPC，全程技术满点！ 来给大家还原这场面试 👇 --- 🎯 面试问题倾向 整理下来，主要分三大类： ① 系统设计 & 数据结构 * 短链接是如何实现的？ * 点赞数以及点赞用户如何设计？ * 表结构如何设计？什么时候写入、生成短链、分发？ * 项目整体流程展开讲解 👉 倾向点：考察你能否 从需求到落地完整思路清晰地讲清楚，尤其是高并发场景下的设计。 --- ### ② 网络协议 & 微服务 * DNS 原理，域名如何解析成 IP？ * Http 流程详解 * Http 与 GRPC 的区别 * 服务 A 如何找到服务 B？服务注册是怎么做的？ 👉 倾向点：关注 微服务间调用、协议理解与线上可行性**，面试官喜欢结合项目讲场景。 --- ③ 算法 & 并发 * 算法题：使用三个协程交替打印 1\\~100 👉 倾向点：考察 Go 协程、channel、并发控制思维，不仅仅是写代码，还要讲逻辑。 --- 📝 我的总结 & 反思 *短链设计：一开始只说了哈希生成短链，没有讲到写入数据库、缓存和映射回长链的完整流程，下次要梳理清楚 写入→暴露→映射→分发。 点赞系统：答得简单，没提高并发下的缓存更新策略和幂等性，面试官很看重性能优化。 DNS/Http/GRPC：流程答对了，但讲得太流水账，没有结合微服务场景说明调用逻辑。 算法题：代码能写，但没讲时间复杂度和协程间同步机制。 --- ⚡ 注意点（面后心得） 1. 系统设计要完整：短链、点赞系统不仅写出来，更要讲清楚 流程、缓存、并发控制。 2. 协议与微服务结合场景：Http/GRPC、服务发现、注册中心，一定要能口头复述流程。 3. 并发算法要讲思路：面试官更看重你 协程逻辑清晰、channel 控制合理，而不是光写出结果。 4. 项目经验要贴实战：高并发、性能优化、服务调用场景，都能加分。 --- ❤ 最后一句 这场面试让我意识到： 👉 八股+项目经历等= 百度健康 Go 面试必杀技 --- 🔥 互动区： 有同学面过百度 或类似互联网大厂后台岗位吗？ 你们都遇到哪些灵魂拷问？留言交流一下吧\\~"
+      "semantic_excerpt": "💻 面了百度健康的 Go 后端岗位，面试官全程“拷打式提问”，从短链系统到点赞设计，再到微服务与 Http/GRPC，全程技术满点！\n来给大家还原这场面试 👇\n---\n🎯 面试问题倾向\n整理下来，主要分三大类：\n① 系统设计 & 数据结构\n* 短链接是如何实现的？\n* 点赞数以及点赞用户如何设计？\n* 表结构如何设计？什么时候写入、生成短链、分发？\n* 项目整体流程展开讲解\n👉 倾向点：考察你能否 从需求到落地完整思路清晰地讲清楚，尤其是高并发场景下的设计。\n---\n### ② 网络协议 & 微服务\n* DNS 原理，域名如何解析成 IP？\n* Http 流程详解\n* Http 与 GRPC 的区别\n* 服务 A 如何找到服务 B？服务注册是怎么做的？\n👉 倾向点：关注 微服务间调用、协议理解与线上可行性**，面试官喜欢结合项目讲场景。\n---\n③ 算法 & 并发\n* 算法题：使用三个协程交替打印 1\\~100\n👉 倾向点：考察 Go 协程、channel、并发控制思维，不仅仅是写代码，还要讲逻辑。\n---\n📝 我的总结 & 反思\n*短链设计：一开始只说了哈希生成短链，没有讲到写入数据库、缓存和映射回长链的完整流程，下次要梳理清楚 写入→暴露→映射→分发。\n点赞系统：答得简单，没提高并发下的缓存更新策略和幂等性，面试官很看重性能优化。\nDNS/Http/GRPC：流程答对了，但讲得太流水账，没有结合微服务场景说明调用逻辑。\n算法题：代码能写，但没讲时间复杂度和协程间同步机制。\n---\n⚡ 注意点（面后心得）\n1. 系统设计要完整：短链、点赞系统不仅写出来，更要讲清楚 流程、缓存、并发控制。\n2. 协议与微服务结合场景：Http/GRPC、服务发现、注册中心，一定要能口头复述流程。\n3. 并发算法要讲思路：面试官更看重你 协程逻辑清晰、channel 控制合理，而不是光写出结果。\n4. 项目经验要贴实战：高并发、性能优化、服务调用场景，都能加分。\n---\n❤ 最后一句\n这场面试让我意识到：\n👉 八股+项目经历等= 百度健康 Go 面试必杀技\n---\n🔥 互动区：\n有同学面过百度 或类似互联网大厂后台岗位吗？\n你们都遇到哪些灵魂拷问？留言交流一下吧\\~"
     }
   },
   "checks": [
@@ -42,7 +59,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +73,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "3a0f5050ca779bc93a44cb080b3b13d60fe395e1db771f3a132b6f580ee61a97"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "3f8645e5e7632f8d6bb3739964a925241f2dbf8670154ddbb11d953aedef3609"
 }

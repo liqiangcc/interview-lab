@@ -8,7 +8,26 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "b1e9fc88c83e665379aa3cae73dd78818a00d2c9f76f5477de8a015453ad5ae9",
   "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "rationale": "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event"
+    ],
+    "questions": 2,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": false,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b52c7a000000001b01cc78.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "4c266e9f5a251435ff5aca3a1dea026fae0adb6f",
@@ -20,7 +39,7 @@
       "excerpt": "timeline：",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "timeline： 9.1 一面 9.5 二面 没想到进二面了 好难[哭惹R][哭惹R]"
+      "semantic_excerpt": "timeline：\n9.1 一面\n9.5 二面\n没想到进二面了\n好难[哭惹R][哭惹R]"
     }
   },
   "checks": [
@@ -42,7 +61,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +75,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "bcb05226ee2ad845b2223e4a517ffa3ec2a8e35e2e87accd50b6889f2cc08402"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "4abb14eef5386947befcbf555fe1e5ed2bc4afe86e920a90f3977020e4b74e66"
 }

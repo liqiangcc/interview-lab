@@ -1,32 +1,21 @@
 {
-  "schema_version": "issue-1609-boundary-review-request.v1",
-  "request_id": "issue-1609-boundary-1364",
+  "schema_version": "source-note-boundary-review-transition.v1",
+  "transition_id": "issue-1609-boundary-1364-review-1",
   "repository": "liqiangcc/interview-lab",
-  "parent_issue": 1605,
   "issue_number": 1364,
-  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1364",
   "source_note_id": "xhs-note:68cf72690000000013029d1b",
   "expected_body_sha256": "67020a54987f14076abbeabf8ddde4a545f5cf7854aadc867538a5420fc0f869",
   "expected_boundary_status": "pending",
   "expected_source_revision_id": "xhs-note:68cf72690000000013029d1b:snapshot-95b77bb26104",
-  "expected_source_repository": "liqiangcc/xhs",
+  "expected_manifest_sha256": null,
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
-  "evidence_file": "evidence/1364.json",
-  "source_evidence": {
-    "ref": "liqiangcc/xhs:note_json/68cf72690000000013029d1b.json@95b77bb261048059846273688e4b90a2e108b437",
-    "git_blob_sha": "2189b3716f3232e64dc600a6fa5c10480bc887e5",
-    "kind": "json",
-    "provenance": "source_projection",
-    "byte_size": 23753,
-    "content_sha256": "fdcf88b1345001ec2454429e0a1ca86d821e7369aad8a42da3ce00e2798f089a",
-    "excerpt": {
-      "excerpt": "\"global\": {",
-      "line": 2,
-      "locator": "artifact-line:2",
-      "semantic_excerpt": "一面： 1、自我介绍 2、是否参加过淘天其它部门的面试 3、介绍项目 2 4、用 Redis 做了什么？用的什么数据结构？ 5、Redis 的 Zset 底层实现 6、Redis 是单线程的还是多线程的？ 7、假设线程池中有多个线程，同时对同一个 Redis 进行 put 操作，这是可以的吗？ 8、Redis 除了做缓存之外，还可以做什么？ 9、Redis 做分布式锁用什么命令？PX 和 EX 的区别？ 10、Redis 做分布式锁，锁过期了会怎么样？如何避免锁过期带来的问题？ 11、假设一个 Redis 集群，集群存储了当前锁的一个实例，如果挂掉的话，怎么去避免锁的丢失？ 12、项目 2 中图片检索一部分怎么实现的？ 13、数据库中索引怎么设计的？联合索引什么情况下会失效？ 14、百度网盘存储了图片后，它会识别这个图片里面有哪些人，然后点击这个人之后会把包含这个人的图片都给检索出来，谈谈这个功能怎么实现的？谈谈你对向量的理解？ 15、如何设计一个秒杀模块？（从发起请求到最后数据库落盘完整的设计） 16、什么是 CDN？为什么你的方案要用 CDN ？ 17、谈谈有哪些限流算法，秒杀场景适合哪种？ 18、秒杀模块中 MQ 的作用是什么？ 19、高并发的秒杀场景适合哪种 MQ？为什么选 Kafka 而不是 RocketMQ？了解它们的差异吗？ 20、项目中怎么使用分布式事务的？解决什么问题？用的哪种分布式事务模式？谈谈 TCC 和其它分布式事务模式的区别？ 21、如何在 Spring 中实现一个简单的事务？ 22、Spring Bean 的 Test 类中，a 方法调用加了 @Transaction 的 b 方法（a 无注解），调用 a 时事务是否生效？若 a 也加 @Transaction，事务是否生效？ 23、项目中 ES 和 数据库的同步怎么做的？还了解哪些方案？ 24、为什么 ES 能够支持叶子查询和复合查询？ 25、ES 的数据存储在不同的分片上，其范围查询的内部实现逻辑是怎样的？ 26、数据库进行分库分表场景下，生成全局唯一的分布式 ID有哪些方法？ 27、谈谈雪花算法的底层实现 28、如何排查 CPU 使用率高的问题，Java 的 GC 日志长什么样？ 29、了解 RAG、Agent、MCP吗？ 30、谈谈自己的优缺点 31、反问"
-    }
+  "decision": "single-interview",
+  "reviewed_at": "2026-09-08T00:00:00.000Z",
+  "reviewer_kind": "ai-assisted",
+  "review_evidence": {
+    "repository": "liqiangcc/interview-lab",
+    "issue_number": 1364,
+    "comment_id": 1609001364
   },
   "checks": [
     {
@@ -47,7 +36,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -61,9 +50,8 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
-    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
-  ],
-  "evidence_sha256": "918fdeed6c35c6e6842204b411b649de2b9e32a8a006f07e87780c7b07b916a1",
-  "request_sha256": "82d668d88053f430e33700062dc366c3874eb76b988fba1d1d619af75775d148"
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+    "Candidate only: review_evidence.comment_id is a deterministic placeholder; no live evidence comment was created.",
+    "No body PATCH, label write, or InterviewNote materialization was performed; controller authorization is required."
+  ]
 }

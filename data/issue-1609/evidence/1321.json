@@ -7,8 +7,30 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "d8c0c52712b24f523bb9d28626d73270353fe1dbc27c8f4fbe9099a4d6bd9f99",
-  "disposition": "blocked",
-  "rationale": "The available Source evidence does not establish a bounded interview event; retain pending.",
+  "disposition": "not-interview",
+  "rationale": "Exact Source identifies a written-test/non-interview format rather than a candidate interview event.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event",
+      "generic-question-bank-or-job-ad",
+      "non-interview-format"
+    ],
+    "questions": 13,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": false,
+    "has_detailed_event": false,
+    "outcome_signal": false,
+    "resource_signal": true,
+    "job_or_title_only": false,
+    "non_interview_format": true,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68c80995000000001d022d8d.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "9a2ad4276016fc06f2f4ee766772539c181ef93f",
@@ -20,7 +42,7 @@
       "excerpt": "1. TCP 三次握手",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "1. TCP 三次握手 a. 能否改成两次、会有什么问题？ 2. TCP 四次挥手 a. TIME_WAIT 状态有什么用？ 3. TCP 如何保证可靠传输 4. MySQL 索引数据结构 5. 什么是最左前缀匹配？ 6. B+树结构相比 B 树有哪些优点？相比平衡树、跳表呢？ 7. 想过 Mysql 的 B+树索引有哪些可优化的地方吗？ 8. 讲一下隔离级别？ 9. 可重复读如何解决？MVCC 能解决吗？ 10. Java 的 HashMap 讲一下 11. Java 的线程池 笔试题目： 1. 一道原创题 2. 最长无重复字符字串"
+      "semantic_excerpt": "1. TCP 三次握手\na. 能否改成两次、会有什么问题？\n2. TCP 四次挥手\na. TIME_WAIT 状态有什么用？\n3. TCP 如何保证可靠传输\n4. MySQL 索引数据结构\n5. 什么是最左前缀匹配？\n6. B+树结构相比 B 树有哪些优点？相比平衡树、跳表呢？\n7. 想过 Mysql 的 B+树索引有哪些可优化的地方吗？\n8. 讲一下隔离级别？\n9. 可重复读如何解决？MVCC 能解决吗？\n10. Java 的 HashMap 讲一下\n11. Java 的线程池\n笔试题目：\n1. 一道原创题\n2. 最长无重复字符字串"
     }
   },
   "checks": [
@@ -41,8 +63,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source identifies a written-test/non-interview format rather than a candidate interview event."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +78,11 @@
     }
   ],
   "limitations": [
-    "The available Source evidence does not establish a bounded interview event; retain pending.",
+    "Exact Source identifies a written-test/non-interview format rather than a candidate interview event.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "f2531905a41b7b9500c89c521a22b11bb2aa6224c0a6f041650d206e6cd0a77e"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "1d4a5268f49b52766d5e96449ca8fa95443b41a2b8852f8cdd7cb1b321874172"
 }

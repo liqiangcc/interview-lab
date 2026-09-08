@@ -8,7 +8,33 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "7b16964c6c84e4b8011725940367e07c1670277945661d4ace1e35124b3dd711",
   "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "rationale": "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [],
+    "questions": 0,
+    "has_first_person_event": true,
+    "has_explicit_candidate_event": true,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": true,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": [
+      {
+        "case_key": "jd-process",
+        "anchor": "京东",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-2",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:京东"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68c29a74000000001d02005c.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "d4af735d651209625447887218e814672eba241f",
@@ -20,7 +46,7 @@
       "excerpt": "京东JDS一面",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "京东JDS一面 大约30分钟左右，整体比较轻松，无手撕，已约二面 先问了为什么暑期撕offer没有来京东（这里如实说了支付宝的业务更好一点） 介绍一下实习做了哪些项目 你是做的支付相关的，这种是比较专业谨慎的一些业务，为什么也会用规则引擎的这种的东西来做？ 你们在通过这种开关或配置上下线的处理的时候，你们的标准流程是什么样的？ 面试官说他听懂了我做的业务逻辑就没有再问了，不过说了一下我说的诸葛实验平台计算AB实验是错的，感觉他好懂[失望R]） Java创建多线程的方式有哪几种？用哪种方式比较合适获得结果返回？（秒了，面试刚被问过） 多线程编程如何等到所有结果都返回，并且保证不丢失的情况下，再处理下一步？ 那如果线程里边出现一些共用资源的话，共同处理一些比如处理订单，然后会产生一些并发问题的话，我们需要怎么解决？ 分布式的情况下，如果出现这种资源争抢，然后保证这种一致性的话应该怎么做？ 分布式锁用什么方法做？ SetNx有返回值吗？ 没有抢到锁返回0的这种情况下，那你会怎么处理？（这里答的不好，面试官提醒用自旋锁） 用自旋锁应该怎么解决重试的问题？ Redis有几种数据结构? Set和zset有什么区别？ 布隆过滤器有了解过吗？误判情况解释一下？如何解决哈希冲突？ 反问业务，面试官说涉密，但是是和人工智能结合java有关，主要是java； 反问表现，评价是基础知识过关，实习做的项目业务逻辑比较复杂但是可以讲明白，还是比较优秀的，很希望能够以后一起共事，但是说如果入职了之后也是一年后了也不知道部门发展到了什么进度.... 面试官真的很好很温柔，暑期面试也是jd最后给的正反馈比较多，感觉这次问的八股都是我项目里涉及到的，就还比较简单；"
+      "semantic_excerpt": "京东JDS一面\n大约30分钟左右，整体比较轻松，无手撕，已约二面\n先问了为什么暑期撕offer没有来京东（这里如实说了支付宝的业务更好一点）\n介绍一下实习做了哪些项目\n你是做的支付相关的，这种是比较专业谨慎的一些业务，为什么也会用规则引擎的这种的东西来做？\n你们在通过这种开关或配置上下线的处理的时候，你们的标准流程是什么样的？\n面试官说他听懂了我做的业务逻辑就没有再问了，不过说了一下我说的诸葛实验平台计算AB实验是错的，感觉他好懂[失望R]）\nJava创建多线程的方式有哪几种？用哪种方式比较合适获得结果返回？（秒了，面试刚被问过）\n多线程编程如何等到所有结果都返回，并且保证不丢失的情况下，再处理下一步？\n那如果线程里边出现一些共用资源的话，共同处理一些比如处理订单，然后会产生一些并发问题的话，我们需要怎么解决？\n分布式的情况下，如果出现这种资源争抢，然后保证这种一致性的话应该怎么做？\n分布式锁用什么方法做？\nSetNx有返回值吗？\n没有抢到锁返回0的这种情况下，那你会怎么处理？（这里答的不好，面试官提醒用自旋锁）\n用自旋锁应该怎么解决重试的问题？\nRedis有几种数据结构?\nSet和zset有什么区别？\n布隆过滤器有了解过吗？误判情况解释一下？如何解决哈希冲突？\n反问业务，面试官说涉密，但是是和人工智能结合java有关，主要是java；\n反问表现，评价是基础知识过关，实习做的项目业务逻辑比较复杂但是可以讲明白，还是比较优秀的，很希望能够以后一起共事，但是说如果入职了之后也是一年后了也不知道部门发展到了什么进度....\n面试官真的很好很温柔，暑期面试也是jd最后给的正反馈比较多，感觉这次问的八股都是我项目里涉及到的，就还比较简单；"
     }
   },
   "checks": [
@@ -42,7 +68,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +82,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "b921ccb8d9c49b5b46850075df2366f55081b31acd37b5ffd62c372dc53dc1c7"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "67542322a60fdb8761addacbbf96ae394240c05a0708790bb84d110a38dfa911"
 }

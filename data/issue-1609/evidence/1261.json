@@ -7,8 +7,28 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "dc00913c9688abf54f7eeedaff919a060f5a423c39f1df8bbafdae130dbff12e",
-  "disposition": "single-interview",
-  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "disposition": "blocked",
+  "rationale": "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 0,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "outcome_signal": true,
+    "resource_signal": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b97f25000000001b030121.txt@95b77bb261048059846273688e4b90a2e108b437",
     "git_blob_sha": "38c56e94cdea39568f3f02b63a0a0979d0fd6e40",
@@ -20,7 +40,7 @@
       "excerpt": "后端开发 全程不开摄像头不问实习",
       "line": 1,
       "locator": "artifact-line:1",
-      "semantic_excerpt": "后端开发 全程不开摄像头不问实习 问了两个八股 1 优先队列怎么实现的 答二插堆，默认小顶堆，可以传参改变排序方式，因为是小顶堆所以插入删除都很快，是logn 2 插入删除咋做的 答插入先插队尾，根据小顶堆性质做交换，删除先记录，再移动最后一个元素，向下调整 3 HashMap了解吗 我真的。。。吟唱2分钟 手撕统计区间用户数量 第二题撕完了人消失了5分钟。。。 反问问了下技术栈是做java的 微信广告 也是专业对口 好恶心啊 秋招面到现在没遇到过这样的 我建议你赶快给我挂了我要好好给你反馈一下[生气R][生气R][生气R]"
+      "semantic_excerpt": "后端开发 全程不开摄像头不问实习\n问了两个八股\n1 优先队列怎么实现的\n答二插堆，默认小顶堆，可以传参改变排序方式，因为是小顶堆所以插入删除都很快，是logn\n2 插入删除咋做的\n答插入先插队尾，根据小顶堆性质做交换，删除先记录，再移动最后一个元素，向下调整\n3 HashMap了解吗\n我真的。。。吟唱2分钟\n \n手撕统计区间用户数量\n第二题撕完了人消失了5分钟。。。\n反问问了下技术栈是做java的 微信广告 也是专业对口\n \n好恶心啊 秋招面到现在没遇到过这样的\n我建议你赶快给我挂了我要好好给你反馈一下[生气R][生气R][生气R]"
     }
   },
   "checks": [
@@ -41,8 +61,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -56,9 +76,11 @@
     }
   ],
   "limitations": [
-    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
-  "evidence_sha256": "67fb260bbe95a77e9962eb69d0b87d6fc76991e1e1108d17cd6097b89bc3cb40"
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "70b1fe57b1cec5748040db6445d9ca9005c0b59844e52f681eb9d1f99eb7ad85"
 }
