@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/liqiangcc/interview-lab/schemas/aggregate-interview-note-ownership-inventory.schema.json",
+  "title": "Complete InterviewNote Issue ownership inventory",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "repository", "coverage", "complete", "count", "entries", "canonical_digest"],
+  "properties": {
+    "schema_version": {"const": "aggregate-interview-note-ownership-inventory.v1"},
+    "repository": {"const": "liqiangcc/interview-lab"},
+    "coverage": {"const": "all-repository-interview-note-issues"},
+    "complete": {"const": true},
+    "count": {"type": "integer", "minimum": 0},
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["interview_note_id", "issue_number", "body_sha256", "labels"],
+        "properties": {
+          "interview_note_id": {"type": "string", "minLength": 1},
+          "issue_number": {"type": "integer", "minimum": 1},
+          "body_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "source_note_id": {"type": ["string", "null"]},
+          "source_revision_id": {"type": ["string", "null"]},
+          "labels": {"type": "array", "items": {"type": "string"}}
+        },
+        "additionalProperties": false
+      }
+    },
+    "canonical_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}
