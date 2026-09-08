@@ -107,6 +107,44 @@ test('explicit comments pagination requires a short terminal page', () => {
   assert.throws(() => readCommentsPaged(REPOSITORY, 42, () => Array(100).fill({})), /short terminal page/);
 });
 
+test('read-only issue GET and comments page retry transient EOF/TLS failures at most three times', () => {
+  const { buildLiveLoader } = require('../scripts/apply-issue-1605-full-boundary-transition');
+  const calls = new Map();
+  const delays = [];
+  const read = (args) => {
+    const endpoint = args[1];
+    const count = (calls.get(endpoint) || 0) + 1;
+    calls.set(endpoint, count);
+    if (count === 1) throw Object.assign(new Error('TLS handshake EOF'), { code: 'ECONNRESET' });
+    if (endpoint.includes('/comments?')) return [{ id: 101 }];
+    return { number: 42, state: 'open', body: sourceFixture, labels: [] };
+  };
+  const live = buildLiveLoader(read, { sleep: (milliseconds) => delays.push(milliseconds) })({ issue_number: 42 });
+  assert.equal(live.issue.number, 42);
+  assert.deepEqual(live.comments, [{ id: 101 }]);
+  assert.deepEqual([...calls.values()], [2, 2]);
+  assert.deepEqual(delays, [100, 100]);
+});
+
+test('a permanently failing read exhausts three attempts and remains blocked in the plan', () => {
+  const value = fixture();
+  const { buildLiveLoader } = require('../scripts/apply-issue-1605-full-boundary-transition');
+  let attempts = 0;
+  const plan = buildPlan({
+    manifest: value.manifest,
+    manifestFile: path.join(value.directory, 'full-boundary-manifest.json'),
+    records: [value.records[0]],
+    liveLoader: buildLiveLoader(() => {
+      attempts += 1;
+      throw Object.assign(new Error('unexpected EOF'), { code: 'ECONNRESET' });
+    }, { sleep: () => {} }),
+  });
+  assert.equal(attempts, 3);
+  assert.equal(plan.ok, false);
+  assert.equal(plan.items[0].status, 'blocked');
+  assert.match(plan.errors.join('\n'), /live read failed: unexpected EOF/);
+});
+
 test('default live loader and mutation writers resolve the strict repository endpoints', () => {
   const { buildLiveLoader, buildMutationWriters, assertMutationCeiling } = require('../scripts/apply-issue-1605-full-boundary-transition');
   const calls = [];
@@ -128,6 +166,21 @@ test('default live loader and mutation writers resolve the strict repository end
     ['api', '--method', 'POST', `repos/${REPOSITORY}/issues/42/comments`],
   ]);
   assert.throws(() => assertMutationCeiling(3, { max_mutations: 2 }), /exceeds authorization proof ceiling/);
+});
+
+test('mutation writers do not retry PATCH or POST failures', () => {
+  const { buildMutationWriters } = require('../scripts/apply-issue-1605-full-boundary-transition');
+  let patchAttempts = 0;
+  let postAttempts = 0;
+  const writers = buildMutationWriters((args) => {
+    if (args[3].includes('/comments')) postAttempts += 1;
+    else patchAttempts += 1;
+    throw Object.assign(new Error('TLS response unknown'), { code: 'ECONNRESET' });
+  });
+  assert.throws(() => writers.patchIssue(42, { body: 'next', labels: [] }), /TLS response unknown/);
+  assert.throws(() => writers.postReceipt(42, 'receipt'), /TLS response unknown/);
+  assert.equal(patchAttempts, 1);
+  assert.equal(postAttempts, 1);
 });
 
 test('planner calls the formal transition parser/planner path and records a zero-mutation plan', () => {

@@ -15,6 +15,8 @@ const DEFAULT_MANIFEST = 'data/pilot/issue-1605/full-boundary-manifest.json';
 const DEFAULT_OUTPUT = 'data/pilot/issue-1605/full-boundary-transition.plan.json';
 const DEFAULT_JOURNAL = 'data/pilot/issue-1605/full-boundary-transition.journal.json';
 const DEFAULT_LOCK = 'data/pilot/issue-1605/full-boundary-transition.lock';
+const READ_RETRY_MAX_ATTEMPTS = 3;
+const READ_RETRY_BASE_DELAY_MS = 100;
 
 function parseArgs(argv = process.argv.slice(2)) {
   const args = {
@@ -58,10 +60,38 @@ function ghJson(args, input = null) {
 }
 
 function issueEndpoint(repository, number) { return `repos/${repository}/issues/${number}`; }
-function readCommentsPaged(repository, number, read = ghJson) {
+function sleepForReadRetry(milliseconds) {
+  if (milliseconds > 0) Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, milliseconds);
+}
+
+function isTransientReadFailure(error) {
+  const details = [error && error.code, error && error.message, error && error.stderr]
+    .filter(Boolean).join(' ').toLowerCase();
+  return /eof|tls|ssl|timed? ?out|timeout|connection reset|socket hang up|network is unreachable|temporary failure|temporarily unavailable|econnreset|eai_again|enetunreach/.test(details);
+}
+
+function readGhJson(args, input = null, options = {}) {
+  const read = options.read || ghJson;
+  const maxAttempts = options.maxAttempts == null ? READ_RETRY_MAX_ATTEMPTS : options.maxAttempts;
+  if (!Number.isSafeInteger(maxAttempts) || maxAttempts < 1 || maxAttempts > READ_RETRY_MAX_ATTEMPTS) throw new Error(`read retry maxAttempts must be an integer from 1 to ${READ_RETRY_MAX_ATTEMPTS}`);
+  const sleep = options.sleep || sleepForReadRetry;
+  const shouldRetry = options.shouldRetry || isTransientReadFailure;
+  let lastError = null;
+  for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+    try { return read(args, input); }
+    catch (error) {
+      lastError = error;
+      if (attempt === maxAttempts || !shouldRetry(error)) throw error;
+      sleep(READ_RETRY_BASE_DELAY_MS * (2 ** (attempt - 1)));
+    }
+  }
+  throw lastError || new Error('bounded read failed without an error');
+}
+
+function readCommentsPaged(repository, number, read = ghJson, options = {}) {
   const comments = [];
   for (let page = 1; page <= 100; page += 1) {
-    const batch = read(['api', `${issueEndpoint(repository, number)}/comments?per_page=100&page=${page}`]);
+    const batch = readGhJson(['api', `${issueEndpoint(repository, number)}/comments?per_page=100&page=${page}`], null, { ...options, read });
     if (!Array.isArray(batch)) throw new Error(`#${number} comments page ${page} was not an array`);
     comments.push(...batch);
     if (batch.length < 100) return comments;
@@ -69,10 +99,10 @@ function readCommentsPaged(repository, number, read = ghJson) {
   throw new Error(`#${number} comments pagination did not expose a short terminal page`);
 }
 
-function buildLiveLoader(read = ghJson) {
+function buildLiveLoader(read = ghJson, options = {}) {
   return (request) => ({
-    issue: read(['api', issueEndpoint(REPOSITORY, request.issue_number)]),
-    comments: readCommentsPaged(REPOSITORY, request.issue_number, read),
+    issue: readGhJson(['api', issueEndpoint(REPOSITORY, request.issue_number)], null, { ...options, read }),
+    comments: readCommentsPaged(REPOSITORY, request.issue_number, read, options),
   });
 }
 
