@@ -648,9 +648,14 @@ function sleep(ms) {
 }
 
 function isTransientReadError(error) {
+  const transientStatuses = new Set([408, 425, 429, 500, 502, 503, 504]);
   const status = Number(error?.status ?? error?.statusCode ?? error?.code);
-  if ([408, 425, 429, 500, 502, 503, 504].includes(status)) return true;
+  if (transientStatuses.has(status)) return true;
+  // execFileSync failures from `gh` commonly expose exit status 1 while the
+  // HTTP status is only rendered in stderr (for example, "HTTP 429").
   const text = String([error?.message, error?.stderr, error?.code].filter(Boolean).join(' ')).toLowerCase();
+  const reportedStatuses = [...text.matchAll(/\b(?:http(?:\/\d(?:\.\d)?)?\s*)?(408|425|429|500|502|503|504)\b/g)].map((match) => Number(match[1]));
+  if (reportedStatuses.some((reportedStatus) => transientStatuses.has(reportedStatus))) return true;
   return /(tls|ssl|handshake|timed? ?out|timeout|deadline|econnreset|econnrefused|eai_again|enetunreach|ehostunreach|network|temporar|bad gateway|service unavailable)/.test(text);
 }
 

@@ -13,7 +13,7 @@ const {
   evidenceBody, findExactEvidenceComments,
   formalRequest, parseEvidenceComment, runEvidence, isAllowedBlockedAuditError,
   evidenceAuthorizationDigest, renderEvidenceAuthorizationMarker, validateEvidenceAuthorization,
-  readWithRetry, readLiveIssue, readCommentsPage,
+  readWithRetry, readLiveIssue, readCommentsPage, isTransientReadError,
 } = require('../scripts/issue-1605-full-boundary-coordinator');
 const { validateTransitionRequest } = require('../scripts/lib/source-note-boundary-review-transition');
 
@@ -114,6 +114,24 @@ test('read-only Issue and comments GETs retry transient TLS failures with bounde
   });
   assert.deepEqual(comments, []);
   assert.equal(commentAttempts, 2);
+});
+
+test('read retry recognizes gh execFileSync HTTP status rendered in stderr', () => {
+  assert.equal(isTransientReadError({ status: 1, stderr: 'gh: request failed: HTTP 500 Internal Server Error' }), true);
+  let attempts = 0;
+  const issue = readLiveIssue(735, {
+    ghJson() {
+      attempts += 1;
+      if (attempts === 1) throw Object.assign(new Error('gh command failed'), {
+        status: 1,
+        stderr: 'error: HTTP 429 Too Many Requests',
+      });
+      return { number: 735, state: 'open' };
+    },
+    sleepFn() {},
+  });
+  assert.equal(issue.number, 735);
+  assert.equal(attempts, 2);
 });
 
 test('default exact evidence lookup routes comments pages through bounded read retry', () => {
