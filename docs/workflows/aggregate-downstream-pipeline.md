@@ -99,7 +99,7 @@ The future candidate handoff is executable through:
 npm run plan:issue-1611-context-learning
 ```
 
-It consumes the 419-row `issue-1605-boundary-transition-report.v1` and emits one plan row for each of the exact 350 InterviewNote identities. Each row carries the same ordered contract:
+It consumes the 419-row `issue-1605-boundary-transition-report.v1` plus the required complete `aggregate-interview-note-ownership-inventory.v1` snapshot at `data/pilot/issue-1611/interview-note-ownership-inventory.json`, and emits one plan row for each of the exact 350 InterviewNote identities. The inventory must carry a recomputable `canonical_digest`, unique `interview_note_id` and `issue_number` values, and bidirectional ownership is checked before any downstream stage. Each row carries the same ordered contract:
 
 ```text
 materialization
@@ -108,6 +108,6 @@ materialization
   -> buildLearningDiscovery title and labels
 ```
 
-The planner never invents an InterviewNote Issue number before materialization. It records `pending-materialization` and blocks the later three stages until a unique owner exists. Source Review must use `interview-note-source-review-applied.v1` with `independent=true`; Boundary Review evidence cannot be reused. Context must bind the InterviewNote identity, SourceRevision, and Raw body SHA, and must not contain `body`, `next_body`, `result`, or `outcome`. Only then may `buildLearningDiscovery` produce `company:*`, coarse `role:*`, `recruitment:*`, `round:*`, `source-year:*`, and proven `interview-year:*` labels; Unknown values produce no label and Outcome remains sealed.
+The planner never invents an InterviewNote Issue number before materialization. It records `pending-materialization` and blocks the later three stages until a unique owner exists. For an `already-materialized` row, both `interview_note_id -> issue_number` and `issue_number -> interview_note_id` must match the full inventory; an outside or colliding Issue cannot satisfy the gate. Source Review must use `interview-note-source-review-applied.v1` with `independent=true`; Boundary Review evidence cannot be reused. Context must bind the InterviewNote identity, SourceRevision, and Raw body SHA, and must not contain `body`, `next_body`, `result`, or `outcome`. Only then may `buildLearningDiscovery` produce `company:*`, coarse `role:*`, `recruitment:*`, `round:*`, `source-year:*`, and proven `interview-year:*` labels; Unknown values produce no label and Outcome remains sealed.
 
-The output schema is `schemas/issue-1611-context-learning-plan.schema.json`. `mode=plan-only`, `mutation_performed=false`, and `{patch:0,post:0,create:0}` are mandatory. Missing materialization plan, Source Review receipt, Context, or body-pinned live snapshot is an explicit blocked ledger entry; it is not treated as a successful no-op.
+The output schema is `schemas/issue-1611-context-learning-plan.schema.json`. `mode=plan-only`, `mutation_performed=false`, and `{patch:0,post:0,create:0}` are mandatory. Missing, incomplete, digest-drifted, or ownership-colliding inventory; missing materialization plan, Source Review receipt, Context, or body-pinned live snapshot are explicit blocked ledger entries; they are not treated as successful no-ops.

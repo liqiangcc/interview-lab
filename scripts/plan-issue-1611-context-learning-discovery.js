@@ -11,6 +11,7 @@ const DEFAULTS = Object.freeze({
   sourceReviewReceipts: 'data/pilot/issue-1611/source-review.receipts.json',
   contextReport: 'data/pilot/issue-1611/new-context.projections.json',
   liveIssueSnapshot: 'data/pilot/issue-1611/live-interview-note-snapshot.json',
+  ownershipInventory: 'data/pilot/issue-1611/interview-note-ownership-inventory.json',
   output: 'data/pilot/issue-1611/context-learning.plan.json',
 });
 
@@ -22,6 +23,7 @@ function parseArgs(argv = process.argv.slice(2)) {
     '--source-review-receipts': 'sourceReviewReceipts',
     '--context-report': 'contextReport',
     '--live-issue-snapshot': 'liveIssueSnapshot',
+    '--ownership-inventory': 'ownershipInventory',
     '--output': 'output',
   };
   for (let index = 0; index < argv.length; index += 1) {
@@ -55,12 +57,14 @@ function main(argv = process.argv.slice(2)) {
   const sourceReviewReceipts = readOptional(args.sourceReviewReceipts);
   const contextReport = readOptional(args.contextReport);
   const liveIssueSnapshot = readOptional(args.liveIssueSnapshot);
+  const interviewNoteOwnershipInventory = readOptional(args.ownershipInventory);
   const result = buildPlan({
     boundaryReport,
     materializationPlan,
     sourceReviewReceipts,
     contextReport,
     liveIssueSnapshot,
+    interviewNoteOwnershipInventory,
     paths: args,
   });
   const validation = validatePlan(result.plan);

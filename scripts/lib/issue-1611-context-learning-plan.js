@@ -5,9 +5,11 @@ const {
   MATERIALIZATION_PLAN_SCHEMA,
   MATERIALIZATION_CANDIDATE_COUNT,
   SOURCE_REF,
+  OWNERSHIP_INVENTORY_SCHEMA,
   canonicalDigest,
   sha256Text,
   validateBoundaryTransitionReport,
+  validateInterviewNoteOwnershipInventory,
   validateIssue1605MaterializationPlan,
 } = require('./aggregate-downstream-pipeline');
 const { validateInterviewContext, buildLearningDiscovery } = require('./interview-context');
@@ -28,6 +30,7 @@ const LEARNING_LABEL_TEMPLATES = Object.freeze([
   'interview-year:<proven-year>',
 ]);
 const ZERO_WRITES = Object.freeze({ patch: 0, post: 0, create: 0 });
+const READY_STAGE_STATUSES = new Set(['inventory-unowned', 'owner-validated', 'materialized', 'source-ready', 'reviewed-context', 'projectable']);
 
 const STAGE_CONTRACTS = Object.freeze([
   {
@@ -181,6 +184,49 @@ function validateSourceReview(candidate, row, liveIssue, errors) {
     : { stage: 'source-review', status: 'blocked', reason: 'independent Source Review ended blocked' };
 }
 
+function validateCandidateOwnership(candidate, materialization, inventoryValidation, errors) {
+  if (!inventoryValidation.ok) {
+    return emptyStage('ownership', 'blocked', 'requires a complete canonical-digest full-repository InterviewNote ownership inventory', {
+      required_schema: OWNERSHIP_INVENTORY_SCHEMA,
+      inventory_digest: inventoryValidation.canonical_digest || null,
+    });
+  }
+
+  const candidateOwner = inventoryValidation.byInterview.get(candidate.interview_note_id);
+  const isPending = !materialization || materialization.kind === 'materialization-pending' || !Number.isInteger(materialization.interview_issue_number);
+  if (isPending) {
+    if (candidateOwner) {
+      errors.push(`materialization candidate ${candidate.interview_note_id} is already owned by InterviewNote Issue #${candidateOwner.issue_number} in the complete inventory`);
+      return emptyStage('ownership', 'blocked', 'candidate identity already has an inventory owner', {
+        inventory_digest: inventoryValidation.canonical_digest,
+        issue_number: candidateOwner.issue_number,
+      });
+    }
+    return { stage: 'ownership', status: 'inventory-unowned', reason: 'candidate has no current full-inventory owner', inventory_digest: inventoryValidation.canonical_digest };
+  }
+
+  const issueNumber = materialization.interview_issue_number;
+  const issueOwner = inventoryValidation.byIssue.get(issueNumber);
+  let valid = true;
+  if (!candidateOwner || Number(candidateOwner.issue_number) !== issueNumber) {
+    errors.push(`materialization candidate ${candidate.interview_note_id} has no exact interview_note_id -> Issue #${issueNumber} binding in the complete inventory`);
+    valid = false;
+  }
+  if (!issueOwner || issueOwner.interview_note_id !== candidate.interview_note_id) {
+    errors.push(`InterviewNote Issue #${issueNumber} has no exact Issue -> interview_note_id binding for ${candidate.interview_note_id} in the complete inventory`);
+    valid = false;
+  }
+  if (!valid) {
+    return emptyStage('ownership', 'blocked', 'materialized owner is absent, mismatched, or collides with another InterviewNote', {
+      inventory_digest: inventoryValidation.canonical_digest,
+      issue_number: issueNumber,
+      expected_interview_note_id: candidate.interview_note_id,
+      observed_interview_note_id: issueOwner && issueOwner.interview_note_id || null,
+    });
+  }
+  return { stage: 'ownership', status: 'owner-validated', reason: 'bidirectional full-inventory owner binding matches', inventory_digest: inventoryValidation.canonical_digest, issue_number: issueNumber };
+}
+
 function validateContext(candidate, item, liveIssue, errors) {
   if (!item) return emptyStage('context', 'blocked', 'requires source-ready independent Source Review');
   if (Object.prototype.hasOwnProperty.call(item, 'body') || Object.prototype.hasOwnProperty.call(item, 'next_body')
@@ -206,16 +252,16 @@ function validateContext(candidate, item, liveIssue, errors) {
 }
 
 function learningProjection(candidate, contextStage, contextItem, liveIssue, errors) {
-  if (contextStage.status !== 'reviewed-context') return emptyStage('learning-discovery', 'blocked', 'requires reviewed Context');
+  if (contextStage.status !== 'reviewed-context') return emptyStage('learning-discovery', 'blocked', 'requires reviewed Context', { required_label_templates: LEARNING_LABEL_TEMPLATES });
   const parsed = parseInterviewNoteIssue(liveIssue.body || '');
   if (!parsed.record) {
     errors.push(`Context #${candidate.interview_issue_number} live InterviewNote record is not parseable`);
-    return emptyStage('learning-discovery', 'invalid', 'live InterviewNote record is not parseable');
+    return emptyStage('learning-discovery', 'invalid', 'live InterviewNote record is not parseable', { required_label_templates: LEARNING_LABEL_TEMPLATES });
   }
   const discovery = buildLearningDiscovery(contextItem.context, parsed.record.source_published_at);
   if (!discovery.ok) {
     errors.push(...discovery.errors.map((error) => `Learning #${candidate.interview_issue_number}: ${error}`));
-    return emptyStage('learning-discovery', 'invalid', 'learning discovery derivation failed');
+    return emptyStage('learning-discovery', 'invalid', 'learning discovery derivation failed', { required_label_templates: LEARNING_LABEL_TEMPLATES });
   }
   const preserved = withoutDiscoveryLabels(labelsOf(liveIssue));
   const labels = [...new Set([...preserved, ...discovery.learning_labels])].sort();
@@ -264,6 +310,9 @@ function validatePlan(plan) {
   if (JSON.stringify(plan.write_operations) !== JSON.stringify(ZERO_WRITES)) errors.push('write_operations must be patch=0, post=0, create=0');
   if (plan.candidate_count !== MATERIALIZATION_CANDIDATE_COUNT) errors.push(`candidate_count must be ${MATERIALIZATION_CANDIDATE_COUNT}`);
   if (!Array.isArray(plan.candidates) || plan.candidates.length !== MATERIALIZATION_CANDIDATE_COUNT) errors.push(`candidates must contain exactly ${MATERIALIZATION_CANDIDATE_COUNT} rows`);
+  if (!plan.ownership_inventory || plan.ownership_inventory.required_schema !== OWNERSHIP_INVENTORY_SCHEMA) errors.push(`ownership_inventory must declare ${OWNERSHIP_INVENTORY_SCHEMA}`);
+  if (plan.ownership_inventory && plan.ownership_inventory.valid && plan.ownership_inventory.complete !== true) errors.push('valid ownership_inventory must declare complete=true');
+  if (plan.ownership_inventory && plan.ownership_inventory.canonical_digest !== null && !/^[0-9a-f]{64}$/.test(plan.ownership_inventory.canonical_digest || '')) errors.push('ownership_inventory canonical_digest must be a lowercase SHA-256 or null');
   const seen = new Set();
   for (const candidate of plan.candidates || []) {
     if (!candidate || typeof candidate !== 'object') { errors.push('candidate must be an object'); continue; }
@@ -271,6 +320,8 @@ function validatePlan(plan) {
     seen.add(candidate.interview_note_id);
     if (candidate.interview_issue_number !== null && (!Number.isInteger(candidate.interview_issue_number) || candidate.interview_issue_number < 1)) errors.push(`candidate ${candidate.interview_note_id} has an invalid InterviewNote Issue owner`);
     if (JSON.stringify(candidate.required_sequence) !== JSON.stringify(['materialization', 'source-review', 'context', 'learning-discovery'])) errors.push(`candidate ${candidate.interview_note_id} has an invalid required sequence`);
+    if (!candidate.ownership || candidate.ownership.stage !== 'ownership') errors.push(`candidate ${candidate.interview_note_id} is missing the ownership gate`);
+    if (candidate.ownership && candidate.ownership.status === 'owner-validated' && candidate.interview_issue_number !== candidate.ownership.issue_number) errors.push(`candidate ${candidate.interview_note_id} has an ownership owner mismatch`);
     if (hasForbiddenField(candidate)) errors.push(`candidate ${candidate.interview_note_id} contains a forbidden Raw body field`);
     if (!candidate.materialization || !candidate.source_review || !candidate.context || !candidate.learning) errors.push(`candidate ${candidate.interview_note_id} is missing a stage contract`);
   }
@@ -280,7 +331,7 @@ function validatePlan(plan) {
   return { ok: errors.length === 0, errors };
 }
 
-function buildPlan({ boundaryReport, materializationPlan = null, sourceReviewReceipts = null, contextReport = null, liveIssueSnapshot = null, paths = {}, fsImpl = require('fs') } = {}) {
+function buildPlan({ boundaryReport, materializationPlan = null, sourceReviewReceipts = null, contextReport = null, liveIssueSnapshot = null, interviewNoteOwnershipInventory = null, paths = {}, fsImpl = require('fs') } = {}) {
   const errors = [];
   const blockedPrerequisites = [];
   const manifest = boundaryManifest();
@@ -288,6 +339,16 @@ function buildPlan({ boundaryReport, materializationPlan = null, sourceReviewRec
   errors.push(...boundaryResult.errors);
   const boundaryCandidates = boundaryResult.ok ? boundaryResult.items.flatMap((item) => makeCandidate(item)) : [];
   if (boundaryCandidates.length !== MATERIALIZATION_CANDIDATE_COUNT) blockedPrerequisites.push({ code: 'boundary-candidate-union-incomplete', count: boundaryCandidates.length, required: MATERIALIZATION_CANDIDATE_COUNT });
+
+  const ownershipValidation = interviewNoteOwnershipInventory == null
+    ? { ok: false, errors: [], byInterview: new Map(), byIssue: new Map(), count: 0, canonical_digest: null }
+    : validateInterviewNoteOwnershipInventory(interviewNoteOwnershipInventory, manifest);
+  if (interviewNoteOwnershipInventory == null) {
+    blockedPrerequisites.push({ code: 'ownership-inventory-missing', required_schema: OWNERSHIP_INVENTORY_SCHEMA, path: paths.ownershipInventory || null });
+  } else if (!ownershipValidation.ok) {
+    errors.push(...ownershipValidation.errors.map((error) => `InterviewNote ownership: ${error}`));
+    blockedPrerequisites.push({ code: 'ownership-inventory-invalid', required_schema: OWNERSHIP_INVENTORY_SCHEMA, path: paths.ownershipInventory || null });
+  }
 
   let materializationRows = new Map();
   if (materializationPlan == null) {
@@ -309,13 +370,14 @@ function buildPlan({ boundaryReport, materializationPlan = null, sourceReviewRec
   const candidates = boundaryCandidates.map((candidate) => {
     const materialization = materializationRows.get(candidate.interview_note_id);
     const base = { ...candidate, required_sequence: ['materialization', 'source-review', 'context', 'learning-discovery'], blocked_stages: [] };
+    base.ownership = validateCandidateOwnership(candidate, materialization, ownershipValidation, errors);
     if (!materialization) {
       base.interview_issue_number = null;
       base.materialization = emptyStage('materialization', 'pending-materialization', 'Issue #1605 materialization plan is missing or candidate has no row', { required_schema: MATERIALIZATION_PLAN_SCHEMA });
       base.source_review = emptyStage('source-review', 'blocked', 'requires a unique materialized InterviewNote owner', { request: sourceReviewRequest(candidate) });
       base.context = emptyStage('context', 'blocked', 'requires source-ready independent Source Review');
       base.learning = emptyStage('learning-discovery', 'blocked', 'requires reviewed Context', { required_label_templates: LEARNING_LABEL_TEMPLATES });
-      base.blocked_stages = [base.materialization, base.source_review, base.context, base.learning];
+      base.blocked_stages = [base.ownership, base.materialization, base.source_review, base.context, base.learning];
       return base;
     }
     base.interview_issue_number = materialization.interview_issue_number;
@@ -324,10 +386,17 @@ function buildPlan({ boundaryReport, materializationPlan = null, sourceReviewRec
       base.source_review = emptyStage('source-review', 'blocked', 'requires a unique materialized InterviewNote owner', { request: sourceReviewRequest(candidate) });
       base.context = emptyStage('context', 'blocked', 'requires source-ready independent Source Review');
       base.learning = emptyStage('learning-discovery', 'blocked', 'requires reviewed Context', { required_label_templates: LEARNING_LABEL_TEMPLATES });
-      base.blocked_stages = [base.materialization, base.source_review, base.context, base.learning];
+      base.blocked_stages = [base.ownership, base.materialization, base.source_review, base.context, base.learning];
       return base;
     }
     base.materialization = { stage: 'materialization', status: 'materialized', materialization_id: materialization.materialization_id, interview_issue_number: materialization.interview_issue_number };
+    if (base.ownership.status !== 'owner-validated') {
+      base.source_review = emptyStage('source-review', 'blocked', 'requires exact bidirectional full-inventory InterviewNote owner binding', { request: sourceReviewRequest(candidate) });
+      base.context = emptyStage('context', 'blocked', 'requires source-ready independent Source Review');
+      base.learning = emptyStage('learning-discovery', 'blocked', 'requires reviewed Context', { required_label_templates: LEARNING_LABEL_TEMPLATES });
+      base.blocked_stages = [base.ownership, base.source_review, base.context, base.learning];
+      return base;
+    }
     const liveIssue = liveIssues.get(materialization.interview_issue_number);
     base.interview_body_sha256 = liveIssue && sha256Text(liveIssue.body || '') || null;
     base.source_review = validateSourceReview(candidate, receipts.get(candidate.interview_note_id), liveIssue, errors);
@@ -339,13 +408,13 @@ function buildPlan({ boundaryReport, materializationPlan = null, sourceReviewRec
     }
     const contextItem = contexts.get(materialization.interview_issue_number);
     base.context = validateContext({ ...candidate, interview_issue_number: materialization.interview_issue_number, interview_body_sha256: base.interview_body_sha256 }, contextItem, liveIssue, errors);
-    base.learning = liveIssue ? learningProjection({ ...candidate, interview_issue_number: materialization.interview_issue_number }, base.context, contextItem, liveIssue, errors) : emptyStage('learning-discovery', 'blocked', 'requires body-pinned live Issue snapshot');
+    base.learning = liveIssue ? learningProjection({ ...candidate, interview_issue_number: materialization.interview_issue_number }, base.context, contextItem, liveIssue, errors) : emptyStage('learning-discovery', 'blocked', 'requires body-pinned live Issue snapshot', { required_label_templates: LEARNING_LABEL_TEMPLATES });
     if (base.context.status !== 'reviewed-context' || base.learning.status !== 'projectable') base.blocked_stages = [base.context, base.learning];
     return base;
   });
 
   for (const candidate of candidates) {
-    candidate.blocked_stages = candidate.blocked_stages.filter((stage) => stage.status !== 'projectable' && stage.status !== 'materialized');
+    candidate.blocked_stages = candidate.blocked_stages.filter((stage) => !READY_STAGE_STATUSES.has(stage.status));
   }
   const sourceReady = candidates.filter((candidate) => candidate.source_review.status === 'source-ready').length;
   const contextReady = candidates.filter((candidate) => candidate.context.status === 'reviewed-context').length;
@@ -369,9 +438,19 @@ function buildPlan({ boundaryReport, materializationPlan = null, sourceReviewRec
       source_review_receipts: inputEvidence(paths.sourceReviewReceipts, sourceReviewReceipts),
       context_report: inputEvidence(paths.contextReport, contextReport),
       live_issue_snapshot: inputEvidence(paths.liveIssueSnapshot, liveIssueSnapshot),
+      interview_note_ownership_inventory: inputEvidence(paths.ownershipInventory, interviewNoteOwnershipInventory),
+    },
+    ownership_inventory: {
+      required_schema: OWNERSHIP_INVENTORY_SCHEMA,
+      present: interviewNoteOwnershipInventory != null,
+      valid: ownershipValidation.ok,
+      complete: interviewNoteOwnershipInventory && interviewNoteOwnershipInventory.complete === true,
+      count: ownershipValidation.count,
+      canonical_digest: ownershipValidation.canonical_digest,
     },
     dependency_status: {
       boundary_transition: boundaryResult.ok ? 'satisfied' : 'blocked',
+      ownership_inventory: ownershipValidation.ok ? 'satisfied' : 'blocked',
       materialization: materializationPlan ? 'provided-and-validated-if-no-errors' : 'blocked',
       source_review: sourceReady === MATERIALIZATION_CANDIDATE_COUNT ? 'satisfied' : 'blocked-until-independent-receipts',
       context: contextReady === MATERIALIZATION_CANDIDATE_COUNT ? 'satisfied' : 'blocked-until-reviewed-contexts',

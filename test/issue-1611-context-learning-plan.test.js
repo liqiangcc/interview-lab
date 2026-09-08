@@ -12,6 +12,7 @@ const {
 const { canonicalDigest, sha256Text, SOURCE_REF } = require('../scripts/lib/aggregate-downstream-pipeline');
 
 const boundary = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data/pilot/issue-1605/boundary-transition-report.json'), 'utf8'));
+const ownershipFixture = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures/aggregate-upstream/interview-note-ownership-inventory.json'), 'utf8'));
 
 function candidatesFromBoundary() {
   return boundary.items.flatMap((item) => (item.interview_note_ids || []).map((id) => ({
@@ -50,6 +51,15 @@ function materializationPlan(actionFor = () => 'would-materialize') {
   return { ...input, dry_run_sha256: canonicalDigest(input) };
 }
 
+function ownershipInventory(extraEntries = []) {
+  const { canonical_digest: ignoredDigest, ...digestInput } = {
+    ...ownershipFixture,
+    count: ownershipFixture.entries.length + extraEntries.length,
+    entries: [...ownershipFixture.entries, ...extraEntries],
+  };
+  return { ...digestInput, canonical_digest: canonicalDigest(digestInput) };
+}
+
 function interviewBody(candidate) {
   const record = {
     schema_version: 'interview-note-issue.v2',
@@ -82,8 +92,9 @@ function reviewedContext(candidate) {
 }
 
 test('future plan derives exactly 350 rows and blocks every downstream stage when materialization is absent', () => {
-  const first = buildPlan({ boundaryReport: boundary, paths: { boundaryReport: 'boundary-transition-report.json', materializationPlan: 'materialization.dry-run.json' } });
-  const second = buildPlan({ boundaryReport: boundary, paths: { boundaryReport: 'boundary-transition-report.json', materializationPlan: 'materialization.dry-run.json' } });
+  const inventory = ownershipInventory();
+  const first = buildPlan({ boundaryReport: boundary, interviewNoteOwnershipInventory: inventory, paths: { boundaryReport: 'boundary-transition-report.json', materializationPlan: 'materialization.dry-run.json' } });
+  const second = buildPlan({ boundaryReport: boundary, interviewNoteOwnershipInventory: inventory, paths: { boundaryReport: 'boundary-transition-report.json', materializationPlan: 'materialization.dry-run.json' } });
   assert.equal(first.ok, false);
   assert.equal(first.plan.candidate_count, MATERIALIZATION_CANDIDATE_COUNT);
   assert.equal(first.plan.candidates.length, MATERIALIZATION_CANDIDATE_COUNT);
@@ -92,6 +103,8 @@ test('future plan derives exactly 350 rows and blocks every downstream stage whe
   assert.equal(first.plan.summary.context_ready, 0);
   assert.equal(first.plan.summary.learning_projectable, 0);
   assert.equal(first.plan.summary.mutation_count, 0);
+  assert.equal(first.plan.dependency_status.ownership_inventory, 'satisfied');
+  assert.equal(first.plan.ownership_inventory.canonical_digest, inventory.canonical_digest);
   assert.deepEqual(first.plan.write_operations, { patch: 0, post: 0, create: 0 });
   assert.equal(first.plan.candidates.every((candidate) => candidate.interview_issue_number === null && candidate.blocked_stages.length === 4), true);
   assert.equal(first.plan.candidates.every((candidate) => candidate.source_review.request.boundary_evidence_reuse === false), true);
@@ -144,6 +157,7 @@ test('one materialized candidate can advance only through independent Source Rev
     sourceReviewReceipts: [receipt],
     contextReport: { items: [{ issue_number: issueNumber, expected_body_sha256: sha256Text(body), context }] },
     liveIssueSnapshot: { items: [liveIssue] },
+    interviewNoteOwnershipInventory: ownershipInventory([{ interview_note_id: candidate.id, issue_number: issueNumber }]),
   });
   const row = result.plan.candidates.find((item) => item.interview_note_id === candidate.id);
   assert.equal(result.plan.summary.source_review_ready, 1);
@@ -184,6 +198,7 @@ test('Context body fields and malformed boundary input fail closed', () => {
     sourceReviewReceipts: [{ schema_version: SOURCE_REVIEW_RECEIPT_SCHEMA, interview_note_id: candidate.id, source_note_body_sha256: candidate.item.live_source_note_body_sha256, interview_body_sha256: sha256Text(body), source_revision_id: candidate.item.source_revision_id, source_repository_ref: SOURCE_REF, final_status: 'source-ready', independent: true }],
     contextReport: { items: [{ issue_number: issueNumber, expected_body_sha256: sha256Text(body), context }] },
     liveIssueSnapshot: { items: [{ number: issueNumber, state: 'open', body, labels: ['source:xhs', 'status:source-ready', 'type:interview-note'] }] },
+    interviewNoteOwnershipInventory: ownershipInventory([{ interview_note_id: candidate.id, issue_number: issueNumber }]),
   });
   assert.equal(result.ok, false);
   assert.ok(result.plan.errors.some((error) => /attempts to mutate Raw InterviewNote body/.test(error)));
@@ -193,4 +208,71 @@ test('Context body fields and malformed boundary input fail closed', () => {
   assert.equal(malformed.ok, false);
   assert.equal(malformed.plan.candidates.length, 0);
   assert.equal(malformed.plan.summary.mutation_count, 0);
+});
+
+test('missing full-repository ownership inventory blocks an otherwise materialized candidate', () => {
+  const plan = materializationPlan((id) => id === candidatesFromBoundary()[0].id ? 'already-materialized' : 'would-materialize');
+  const candidate = candidatesFromBoundary()[0];
+  plan.results[0].materialization = { existing_issue_number: 2003, interview_note_id: candidate.id };
+  const { dry_run_sha256: ignored, ...digestInput } = plan;
+  const pinnedPlan = { ...digestInput, dry_run_sha256: canonicalDigest(digestInput) };
+  const result = buildPlan({ boundaryReport: boundary, materializationPlan: pinnedPlan, paths: { ownershipInventory: 'ownership.json' } });
+  const row = result.plan.candidates.find((item) => item.interview_note_id === candidate.id);
+  assert.equal(result.ok, false);
+  assert.ok(result.plan.blocked_prerequisites.some((item) => item.code === 'ownership-inventory-missing'));
+  assert.equal(result.plan.ownership_inventory.present, false);
+  assert.equal(row.ownership.status, 'blocked');
+  assert.equal(row.source_review.status, 'blocked');
+  assert.equal(row.context.status, 'blocked');
+  assert.equal(row.learning.status, 'blocked');
+});
+
+test('ownership inventory canonical digest drift blocks the plan before downstream projection', () => {
+  const plan = materializationPlan((id) => id === candidatesFromBoundary()[0].id ? 'already-materialized' : 'would-materialize');
+  const candidate = candidatesFromBoundary()[0];
+  plan.results[0].materialization = { existing_issue_number: 2004, interview_note_id: candidate.id };
+  const { dry_run_sha256: ignoredPlanDigest, ...planDigestInput } = plan;
+  const pinnedPlan = { ...planDigestInput, dry_run_sha256: canonicalDigest(planDigestInput) };
+  const driftedInventory = { ...ownershipInventory(), canonical_digest: '0'.repeat(64) };
+  const result = buildPlan({ boundaryReport: boundary, materializationPlan: pinnedPlan, interviewNoteOwnershipInventory: driftedInventory });
+  assert.equal(result.ok, false);
+  assert.ok(result.plan.blocked_prerequisites.some((item) => item.code === 'ownership-inventory-invalid'));
+  assert.ok(result.plan.errors.some((error) => /canonical_digest does not match/.test(error)));
+  assert.equal(result.plan.summary.source_review_ready, 0);
+});
+
+test('an outside-owner Issue cannot satisfy a future candidate bidirectional ownership gate', () => {
+  const plan = materializationPlan((id) => id === candidatesFromBoundary()[0].id ? 'already-materialized' : 'would-materialize');
+  const candidate = candidatesFromBoundary()[0];
+  const base = {
+    source_note_issue_number: candidate.item.source_note_issue_number,
+    source_note_id: candidate.item.source_note_id,
+    source_note_body_sha256: candidate.item.live_source_note_body_sha256,
+    source_revision_id: candidate.item.source_revision_id,
+    source_ref: SOURCE_REF,
+    interview_note_id: candidate.id,
+  };
+  const body = interviewBody(base);
+  const outsideIssueNumber = 2000;
+  plan.results[0].materialization = { existing_issue_number: outsideIssueNumber, interview_note_id: candidate.id, projected_body_sha256: sha256Text(body) };
+  const { dry_run_sha256: ignored, ...digestInput } = plan;
+  const pinnedPlan = { ...digestInput, dry_run_sha256: canonicalDigest(digestInput) };
+  const result = buildPlan({
+    boundaryReport: boundary,
+    materializationPlan: pinnedPlan,
+    interviewNoteOwnershipInventory: ownershipInventory(),
+    sourceReviewReceipts: [{ schema_version: SOURCE_REVIEW_RECEIPT_SCHEMA, interview_note_id: candidate.id, source_note_body_sha256: base.source_note_body_sha256, interview_body_sha256: sha256Text(body), source_revision_id: base.source_revision_id, source_repository_ref: SOURCE_REF, final_status: 'source-ready', independent: true }],
+    contextReport: { items: [{ issue_number: outsideIssueNumber, expected_body_sha256: sha256Text(body), context: reviewedContext(base) }] },
+    liveIssueSnapshot: { items: [{ number: outsideIssueNumber, state: 'open', body, labels: ['source:xhs', 'status:source-ready', 'type:interview-note'] }] },
+  });
+  const row = result.plan.candidates.find((item) => item.interview_note_id === candidate.id);
+  assert.equal(result.ok, false);
+  assert.ok(result.plan.errors.some((error) => /Issue #2000 has no exact Issue -> interview_note_id binding/.test(error)));
+  assert.equal(row.ownership.status, 'blocked');
+  assert.equal(row.source_review.status, 'blocked');
+  assert.equal(row.context.status, 'blocked');
+  assert.equal(row.learning.status, 'blocked');
+  assert.equal(result.plan.summary.source_review_ready, 0);
+  assert.equal(result.plan.summary.context_ready, 0);
+  assert.equal(result.plan.summary.learning_projectable, 0);
 });
