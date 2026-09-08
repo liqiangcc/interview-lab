@@ -67,7 +67,10 @@ apply 在每个 item 写入前重新 GET + 分页 comments 并再次调用同一
 PATCH 或 receipt POST 的 response 不确定时只做 bounded read-only reconcile。若没有恰好一个
 收敛结果，journal 进入 `uncertain`，后续运行拒绝 blind retry；不会根据错误重新发送同一
 mutation。journal 和 exclusive lock 都是 apply 的强制条件，`--max-mutations` 统计实际
-PATCH/POST 尝试。每个 applied receipt 必须精确绑定当前 plan digest、manifest digest、
+PATCH/POST 尝试。目标已经到位但缺少 receipt 时，item 会进入 `receipt-needed`；repair receipt
+对 `already_applied` 使用 request 的旧 body SHA 作为 `previous_body_sha256`，使用 live 当前
+目标 body SHA 作为 `new_body_sha256`，这样仍能通过同一 SourceRevision/ref、body CAS 和 plan
+digest 校验并安全重规划。每个 applied receipt 必须精确绑定当前 plan digest、manifest digest、
 expected SourceRevision id/ref 和唯一 transition；同一 transition 出现多个 applied receipt
 会 fail closed。journal 带 canonical digest；exclusive lock 持有并持续校验 lock file 的
 device/inode，并在创建、释放时 fsync parent directory。journal/plan 的 atomic JSON rename
