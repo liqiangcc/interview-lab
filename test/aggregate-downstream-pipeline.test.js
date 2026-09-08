@@ -3,11 +3,14 @@
 const assert = require('node:assert/strict');
 const test = require('node:test');
 const fs = require('node:fs');
+const path = require('node:path');
 const {
   SOURCE_REF,
   BOUNDARY_BATCHES,
   canonicalDigest,
   jsonDigest,
+  upstreamDigest,
+  validateUpstreamReport,
   sha256Text,
   planAggregate,
   validateAuthorization,
@@ -25,6 +28,7 @@ const sourceNoteId = `xhs-note:${parsed.record.source.external_id}`;
 const issueNumber = 2000;
 const sourceIssueNumber = 20;
 const sourceBodySha = '1'.repeat(64);
+const issue1609Fixture = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures/aggregate-upstream/issue-1609-boundary-dry-run.json'), 'utf8'));
 
 function boundaryReport(batch, includeCandidate = batch.issue_number === 1606) {
   const items = [];
@@ -121,7 +125,8 @@ function manifest() {
 function validInputs() {
   const reports = {};
   for (const batch of BOUNDARY_BATCHES) reports[batch.issue_number] = boundaryReport(batch);
-  const recovery = { schema_version: 'issue-1610-source-recovery.v1', repository, items: [{ interview_issue_number: 1, final_status: 'blocked' }, { interview_issue_number: 2, final_status: 'blocked' }], report_sha256: '3'.repeat(64) };
+  const recoveryWithoutDigest = { schema_version: 'issue-1610-source-recovery.v1', repository, items: [{ interview_issue_number: 1, final_status: 'blocked' }, { interview_issue_number: 2, final_status: 'blocked' }] };
+  const recovery = { ...recoveryWithoutDigest, report_sha256: canonicalDigest(recoveryWithoutDigest) };
   const review = [{
     schema_version: 'interview-note-source-review-applied.v1',
     interview_note_id: interviewNoteId,
@@ -151,6 +156,24 @@ test('aggregate fails closed when dependency receipts are absent', () => {
   assert.equal(result.plan.mutation_performed, false);
   assert.equal(result.plan.summary.mutation_count, 0);
   assert.match(result.errors.join('\n'), /boundary #1606/);
+});
+
+test('real #1609 dry-run report shape validates with recursive canonical JSON', () => {
+  const validation = validateUpstreamReport(issue1609Fixture, 'boundary #1609', 'issue-1609-boundary-dry-run.v1');
+  assert.equal(validation.ok, true, validation.errors.join('\n'));
+  assert.equal(upstreamDigest(issue1609Fixture, 'issue-1609-boundary-dry-run.v1').expected, issue1609Fixture.dry_run_sha256);
+  const { dry_run_sha256: ignored, ...input } = issue1609Fixture;
+  assert.notEqual(sha256Text(JSON.stringify(input)), issue1609Fixture.dry_run_sha256, 'fixture must exercise canonical ordering rather than insertion-order JSON');
+  const insertionOrderReport = { ...issue1609Fixture, dry_run_sha256: sha256Text(JSON.stringify(input)) };
+  assert.equal(validateUpstreamReport(insertionOrderReport, 'boundary #1609', 'issue-1609-boundary-dry-run.v1').ok, false);
+});
+
+test('recovery dry-run uses its declared plan_sha256 digest input', () => {
+  const digestInput = { schema_version: 'issue-1610-recovery-digest-input.v1', items: [{ issue_number: 1, status: 'blocked' }, { issue_number: 2, status: 'blocked' }] };
+  const report = { schema_version: 'issue-1610-recovery-dry-run.v1', digest_input: digestInput, plan_sha256: canonicalDigest(digestInput) };
+  const validation = upstreamDigest(report);
+  assert.equal(validation.ok, true, validation.errors && validation.errors.join('\n'));
+  assert.equal(validation.expected, report.plan_sha256);
 });
 
 test('aggregate requires the parent pending inventory and ownership dependency when pinned', () => {

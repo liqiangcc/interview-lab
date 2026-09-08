@@ -16,7 +16,7 @@ source ref    = 95b77bb261048059846273688e4b90a2e108b437
 
 ## 输入门禁
 
-四个 boundary report 必须是 `source-note-boundary-review-batch.v1`，其自身 `dry_run_sha256` 必须可重算，且每条输入已经是 `already_applied`。Materialization report 必须是 `source-note-interview-materialization-batch.v1`，每个实际 child 必须已经是 `already-materialized`，并绑定：
+四个 boundary report 必须是 `source-note-boundary-review-batch.v1`，其自身 `dry_run_sha256` 必须按项目 canonical JSON（递归 key sort）可重算，且每条输入已经是 `already_applied`。Materialization report 必须是 `source-note-interview-materialization-batch.v1`，其 `dry_run_sha256` 使用同一 canonical 算法；Recovery 则按其 schema 的明确规则校验（例如 `issue-1610-recovery-dry-run.v1` 的 `plan_sha256` 覆盖 `digest_input`）。每个实际 child 必须已经是 `already-materialized`，并绑定：
 
 ```text
 SourceNote body SHA

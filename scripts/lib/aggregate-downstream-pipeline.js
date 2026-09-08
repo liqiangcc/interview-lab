@@ -19,6 +19,15 @@ const EXISTING_SOURCE_READY_ISSUES = Object.freeze([3, 4, 915, ...Array.from({ l
 const RECEIPT_SCHEMA_VERSION = 'aggregate-downstream-receipt.v1';
 const SOURCE_REVIEW_RECEIPT_SCHEMA = 'interview-note-source-review-applied.v1';
 const HEX64 = /^[0-9a-f]{64}$/;
+const UPSTREAM_DIGEST_RULES = Object.freeze({
+  'source-note-boundary-review-batch.v1': Object.freeze({ field: 'dry_run_sha256', input: (report) => without(report, 'dry_run_sha256') }),
+  'source-note-interview-materialization-batch.v1': Object.freeze({ field: 'dry_run_sha256', input: (report) => without(report, 'dry_run_sha256') }),
+  'issue-1539-interview-note-materialization-batch.v1': Object.freeze({ field: 'dry_run_sha256', input: (report) => without(report, 'dry_run_sha256') }),
+  'issue-1609-boundary-dry-run.v1': Object.freeze({ field: 'dry_run_sha256', input: (report) => without(report, 'dry_run_sha256') }),
+  'issue-1610-source-recovery.v1': Object.freeze({ field: 'report_sha256', input: (report) => without(report, 'report_sha256') }),
+  'issue-1610-recovery-dry-run.v1': Object.freeze({ field: 'plan_sha256', input: (report) => report.digest_input }),
+  'issue-1539-recovery-dry-run.v1': Object.freeze({ field: 'dry_run_sha256', input: (report) => without(report, 'dry_run_sha256') }),
+});
 
 function sha256Text(value) {
   return crypto.createHash('sha256').update(String(value), 'utf8').digest('hex');
@@ -34,7 +43,9 @@ function canonicalize(value) {
 
 function canonicalDigest(value) { return sha256Text(canonicalize(value)); }
 
-function jsonDigest(value) { return sha256Text(JSON.stringify(value)); }
+// Kept as a compatibility export for callers that used the old name. All
+// upstream report validation uses the canonical recursive key-sort algorithm.
+function jsonDigest(value) { return canonicalDigest(value); }
 
 function without(value, field) {
   const copy = { ...value };
@@ -101,12 +112,25 @@ function validateManifest(manifest) {
   return { ok: errors.length === 0, errors };
 }
 
+function upstreamDigest(report, expectedSchema = report && report.schema_version) {
+  const rule = UPSTREAM_DIGEST_RULES[expectedSchema];
+  if (!rule) return { ok: false, errors: [`${expectedSchema || 'unknown'} has no declared upstream digest algorithm`] };
+  const value = report && report[rule.field];
+  if (!HEX64.test(value || '')) return { ok: false, errors: [`${expectedSchema}.${rule.field} is required`] };
+  const input = rule.input(report);
+  if (input == null || (expectedSchema === 'issue-1610-recovery-dry-run.v1' && typeof input !== 'object')) {
+    return { ok: false, errors: [`${expectedSchema}.${rule.field} digest input is required`] };
+  }
+  return { ok: true, field: rule.field, expected: canonicalDigest(input), actual: value };
+}
+
 function validateUpstreamReport(report, label, expectedSchema) {
   const errors = [];
   if (!report || typeof report !== 'object' || Array.isArray(report)) return { ok: false, errors: [`${label} must be an object`] };
   if (report.schema_version !== expectedSchema) errors.push(`${label}.schema_version must be ${expectedSchema}`);
-  if (!HEX64.test(report.dry_run_sha256 || '')) errors.push(`${label}.dry_run_sha256 is required`);
-  else if (jsonDigest(without(report, 'dry_run_sha256')) !== report.dry_run_sha256) errors.push(`${label}.dry_run_sha256 does not match the report content`);
+  const digest = upstreamDigest(report, expectedSchema);
+  if (!digest.ok) errors.push(...digest.errors.map((error) => `${label}: ${error}`));
+  else if (digest.expected !== digest.actual) errors.push(`${label}.${digest.field} does not match its declared canonical digest input`);
   return { ok: errors.length === 0, errors };
 }
 
@@ -186,7 +210,9 @@ function materializationRows(reports, manifest, errors) {
 
 function validateRecovery(report, manifest, errors) {
   if (!report || typeof report !== 'object' || Array.isArray(report)) { errors.push('recovery report must be an object'); return []; }
-  if (!HEX64.test(report.report_sha256 || report.dry_run_sha256 || '')) errors.push('recovery report must carry a SHA-256 digest');
+  const digest = upstreamDigest(report);
+  if (!digest.ok) errors.push(...digest.errors.map((error) => `recovery report: ${error}`));
+  else if (digest.expected !== digest.actual) errors.push(`recovery report.${digest.field} does not match its declared canonical digest input`);
   if (report.repository && report.repository !== manifest.repository) errors.push('recovery report repository drifted');
   const rows = Array.isArray(report.items) ? report.items : [];
   if (rows.length !== 2) errors.push('recovery report must contain exactly #1 and #2');
@@ -448,7 +474,7 @@ function applyPlan(plan, options = {}) {
 
 module.exports = {
   SCHEMA_VERSION, PLAN_SCHEMA_VERSION, SOURCE_REF, BOUNDARY_BATCHES, REQUIRED_DEPENDENCIES, EXISTING_SOURCE_READY_ISSUES,
-  RECEIPT_SCHEMA_VERSION, sha256Text, canonicalize, canonicalDigest, jsonDigest, without,
+  RECEIPT_SCHEMA_VERSION, UPSTREAM_DIGEST_RULES, sha256Text, canonicalize, canonicalDigest, upstreamDigest, jsonDigest, without,
   validateManifest, validateUpstreamReport, validateBoundaryReports, materializationRows,
   validateRecovery, independentEvidenceRequest, validateSourceReviewReceipts,
   validateContextReports, planAggregate, validateAuthorization, applyPlan,

@@ -323,6 +323,7 @@ module.exports = {
   SCHEMA_VERSION,
   MULTI_SCHEMA_VERSION,
   sha256Text,
+  canonicalJson,
   requestSha256,
   parseMaterializationRequest,
   parseMaterializationReceipts,
