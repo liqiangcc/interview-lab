@@ -29,6 +29,8 @@ test('single decision rejects weak packaging without interview facts', () => {
 });
 
 test('scheduled-only and question-only projections are blocked', () => {
+  assert.strictEqual(classify(999000, '预约面试，面试时间：明天').stratum, 'scheduled-only-source-evidence');
+  assert.strictEqual(evidenceDecisionConsistent('single-interview', '预约面试，面试时间：明天'), false);
   assert.strictEqual(classify(999001, '投递时间：5.9\n4月16日约面，等待面试安排，暂时没有面试结果或问答内容').disposition, 'blocked');
   assert.strictEqual(classify(999002, '背景：线下面试\n深圳中小厂\n1.线程池参数以及参数含义？\n2.Redis缓存？\n3.算法题？').disposition, 'blocked');
   assert.strictEqual(classify(999003, '恒生电子java面经\n1、JRE、JDK的区别是什么？\n2、finally？\n3、集合？').disposition, 'blocked');

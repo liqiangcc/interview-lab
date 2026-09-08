@@ -2,7 +2,7 @@
   "schema_version": "issue-1608-boundary-audit.v1",
   "repository": "liqiangcc/interview-lab",
   "issue": 1608,
-  "selection_sha256": "f89d1994eb3ea14f5f7ca37214b351e1c7dbfc444666dbd4489b459215cff3c2",
+  "selection_sha256": "0466cf310876b0cf504945e5d39140c7b2714c16e48d6e4de63bf8201bfe2778",
   "source_snapshot": {
     "repository": "liqiangcc/xhs",
     "ref": "95b77bb261048059846273688e4b90a2e108b437"
@@ -205,7 +205,7 @@
     },
     {
       "issue_number": 907,
-      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+      "reason": "固定 Source projection 只有预约/投递/面试时间或排期信号，没有已完成面试事件事实；保留 pending，不 materialize。"
     },
     {
       "issue_number": 938,
@@ -224,6 +224,10 @@
       "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
+      "issue_number": 960,
+      "reason": "固定 Source projection 只有预约/投递/面试时间或排期信号，没有已完成面试事件事实；保留 pending，不 materialize。"
+    },
+    {
       "issue_number": 967,
       "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
@@ -233,7 +237,7 @@
     },
     {
       "issue_number": 970,
-      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+      "reason": "固定 Source projection 只有预约/投递/面试时间或排期信号，没有已完成面试事件事实；保留 pending，不 materialize。"
     },
     {
       "issue_number": 972,
@@ -273,7 +277,7 @@
     },
     {
       "issue_number": 996,
-      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+      "reason": "固定 Source projection 只有预约/投递/面试时间或排期信号，没有已完成面试事件事实；保留 pending，不 materialize。"
     },
     {
       "issue_number": 998,
@@ -438,5 +442,5 @@
   ],
   "out_of_scope_issue_numbers_read": [],
   "duplicate_ownership_check": "deferred to controller-owned materialization phase; no InterviewNote identity is created here",
-  "audit_sha256": "70b2572e1ebefb4d48a9f9354505eb2e3adb93af25046165a977d6ee5695e153"
+  "audit_sha256": "8882eaea87ede62f973a5311fa00da427c50793d550c29e30d1a5056bd1a5a20"
 }

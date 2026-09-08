@@ -60,8 +60,8 @@
   "captured_at": "2026-09-08T00:56:33.846Z",
   "total": 337,
   "counts": {
-    "not-interview": 13,
-    "blocked": 92,
+    "not-interview": 12,
+    "blocked": 93,
     "single-interview": 229,
     "multi-interview": 3
   },
@@ -7216,8 +7216,8 @@
       },
       "disposition": "blocked",
       "decision": null,
-      "stratum": "insufficient-source-evidence",
-      "rationale": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。",
+      "stratum": "scheduled-only-source-evidence",
+      "rationale": "固定 Source projection 只有预约/投递/面试时间或排期信号，没有已完成面试事件事实；保留 pending，不 materialize。",
       "case_keys": [],
       "evidence_file": "evidence/0907.json",
       "request_file": "requests/0907.json.md",
@@ -8367,14 +8367,14 @@
         "byte_size": 247,
         "git_blob_sha": "487407b3e51acd5f5711ba46f0d0e453146b49cf"
       },
-      "disposition": "decided",
-      "decision": "not-interview",
-      "stratum": "generic-or-non-event",
-      "rationale": "固定 Source projection 只有通用题目/教程/招聘或建议内容，没有可定位的实际面试事件。",
+      "disposition": "blocked",
+      "decision": null,
+      "stratum": "scheduled-only-source-evidence",
+      "rationale": "固定 Source projection 只有预约/投递/面试时间或排期信号，没有已完成面试事件事实；保留 pending，不 materialize。",
       "case_keys": [],
       "evidence_file": "evidence/0960.json",
       "request_file": "requests/0960.json.md",
-      "evidence_status": "sufficient-for-controller-review",
+      "evidence_status": "insufficient-blocked",
       "evidence_locator": "source-projection:artifact-line:1",
       "evidence_excerpt_sha256": "48e951ab53dc69d9587fc54870d97462885588e343afde12c47e24bb996666da"
     },
@@ -8869,8 +8869,8 @@
       },
       "disposition": "blocked",
       "decision": null,
-      "stratum": "insufficient-source-evidence",
-      "rationale": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。",
+      "stratum": "scheduled-only-source-evidence",
+      "rationale": "固定 Source projection 只有预约/投递/面试时间或排期信号，没有已完成面试事件事实；保留 pending，不 materialize。",
       "case_keys": [],
       "evidence_file": "evidence/0970.json",
       "request_file": "requests/0970.json.md",
@@ -10119,8 +10119,8 @@
       },
       "disposition": "blocked",
       "decision": null,
-      "stratum": "insufficient-source-evidence",
-      "rationale": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。",
+      "stratum": "scheduled-only-source-evidence",
+      "rationale": "固定 Source projection 只有预约/投递/面试时间或排期信号，没有已完成面试事件事实；保留 pending，不 materialize。",
       "case_keys": [],
       "evidence_file": "evidence/0996.json",
       "request_file": "requests/0996.json.md",
@@ -17179,5 +17179,5 @@
       "evidence_excerpt_sha256": "9f14c8f43493ddcde19c4f9124e07330c08cfa12f158bcf321b9c12f6829fdc3"
     }
   ],
-  "selection_sha256": "f89d1994eb3ea14f5f7ca37214b351e1c7dbfc444666dbd4489b459215cff3c2"
+  "selection_sha256": "0466cf310876b0cf504945e5d39140c7b2714c16e48d6e4de63bf8201bfe2778"
 }

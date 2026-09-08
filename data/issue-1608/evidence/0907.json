@@ -14,7 +14,7 @@
   },
   "evidence_status": "insufficient-blocked",
   "decision": null,
-  "rationale": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。",
+  "rationale": "固定 Source projection 只有预约/投递/面试时间或排期信号，没有已完成面试事件事实；保留 pending，不 materialize。",
   "artifact": {
     "ref": "liqiangcc/xhs:note_desc/656861da000000000f024258.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -51,7 +51,7 @@
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+      "note": "固定 Source projection 只有预约/投递/面试时间或排期信号，没有已完成面试事件事实；保留 pending，不 materialize。"
     },
     {
       "check_id": "no_cross_source_mixing",

@@ -2,7 +2,7 @@
   "schema_version": "issue-1608-boundary-dry-run.v1",
   "repository": "liqiangcc/interview-lab",
   "issue": 1608,
-  "selection_sha256": "f89d1994eb3ea14f5f7ca37214b351e1c7dbfc444666dbd4489b459215cff3c2",
+  "selection_sha256": "0466cf310876b0cf504945e5d39140c7b2714c16e48d6e4de63bf8201bfe2778",
   "source_snapshot": {
     "repository": "liqiangcc/xhs",
     "ref": "95b77bb261048059846273688e4b90a2e108b437"
@@ -62,9 +62,9 @@
   "mutation_count": 0,
   "counts": {
     "total": 337,
-    "decided": 245,
-    "blocked": 92,
-    "not_interview": 13,
+    "decided": 244,
+    "blocked": 93,
+    "not_interview": 12,
     "single_interview": 229,
     "multi_interview": 3
   },
@@ -1447,7 +1447,7 @@
       "status": "blocked",
       "evidence_file": "evidence/0907.json",
       "mutation": null,
-      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+      "reason": "固定 Source projection 只有预约/投递/面试时间或排期信号，没有已完成面试事件事实；保留 pending，不 materialize。"
     },
     {
       "issue_number": 933,
@@ -1673,11 +1673,11 @@
       "issue_number": 960,
       "source_note_id": "xhs-note:684c1a6a000000000303e2a3",
       "body_sha256": "d9ce6d84f29fc60226fd64c7a87975b47559a83cf9c2d6b324bfc0fab852ba55",
-      "decision": "not-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/0960.json",
       "mutation": null,
-      "reason": "固定 Source projection 只有通用题目/教程/招聘或建议内容，没有可定位的实际面试事件。"
+      "reason": "固定 Source projection 只有预约/投递/面试时间或排期信号，没有已完成面试事件事实；保留 pending，不 materialize。"
     },
     {
       "issue_number": 961,
@@ -1777,7 +1777,7 @@
       "status": "blocked",
       "evidence_file": "evidence/0970.json",
       "mutation": null,
-      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+      "reason": "固定 Source projection 只有预约/投递/面试时间或排期信号，没有已完成面试事件事实；保留 pending，不 materialize。"
     },
     {
       "issue_number": 971,
@@ -2027,7 +2027,7 @@
       "status": "blocked",
       "evidence_file": "evidence/0996.json",
       "mutation": null,
-      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+      "reason": "固定 Source projection 只有预约/投递/面试时间或排期信号，没有已完成面试事件事实；保留 pending，不 materialize。"
     },
     {
       "issue_number": 997,
@@ -3447,5 +3447,5 @@
     "any non-expected GitHub response",
     "controller has not supplied explicit apply authorization"
   ],
-  "dry_run_sha256": "cb5e74e8efaaf41a5abc41e2fe30f08e3d4a4a2acc3f9f0947aa9c8e5472bc46"
+  "dry_run_sha256": "ab17eaf232f2e299071fe6800b728927a3c32d7ae366a263a85ed13e060faa5f"
 }

@@ -213,6 +213,10 @@ function hasCompletedInterviewFact(text) {
   return completed && !explicitlyMissing;
 }
 
+function hasScheduledOnlySignal(text) {
+  return /(预约面试|预约|约面|面试时间|面试安排|待面试|投递时间|投递.*面试|面试日期|明天|后天)/i.test(String(text || ''));
+}
+
 function evidenceDecisionConsistent(decision, excerpt) {
   if (decision !== 'single-interview') return decision === 'multi-interview' || decision === 'not-interview';
   const value = String(excerpt || '').replace(/[\uFEFF\u200B-\u200D\u2060]/g, '').replace(/#[^\s#]+\[话题\]#/g, '').trim();
@@ -254,6 +258,10 @@ function classify(number, text) {
   if (/^字节的效率真的很高\s*$/u.test(String(text || '').split('\n').map((line) => line.trim()).find((line) => line && !line.startsWith('#')) || '')) {
     return { disposition: 'blocked', decision: null, stratum: 'evidence-decision-mismatch', rationale: '固定 Source projection 的首个可读 artifact 行仅是弱效率描述；拒绝用其他未绑定行包装为 single-interview。' };
   }
+  const completedFact = hasCompletedInterviewFact(cleaned);
+  if (hasScheduledOnlySignal(cleaned) && !completedFact) {
+    return { disposition: 'blocked', decision: null, stratum: 'scheduled-only-source-evidence', rationale: '固定 Source projection 只有预约/投递/面试时间或排期信号，没有已完成面试事件事实；保留 pending，不 materialize。' };
+  }
   const multi = detectMultiCandidate(text);
   if (multi) {
     const candidate = { ...multi, issue_number: number, decision: 'multi-interview' };
@@ -264,9 +272,8 @@ function classify(number, text) {
     }
     return { disposition: 'decided', decision: 'multi-interview', stratum: 'multiple-independent-processes', case_keys: multi.case_keys, case_anchors: multi.case_anchors, rationale: '固定 Source projection 明确记录多个相互独立的公司/流程；每个 case 均有独立 artifact locator 与流程细节，未把同一流程多轮机械拆开。' };
   }
-  const explicitEvent = /(面试官|面试时间|面试时长|面完|面试了|面试过|面了|约面|约的.{0,20}面试|收到.*(?:二面|三面|offer|意向)|一面\s*[:：]|二面\s*[:：]|三面\s*[:：]|四面\s*[:：]|一面\s*\d|二面\s*\d|三面\s*\d|一次面试|时间\s*[:：]|时间线|投递.*约面|手撕|自我介绍|项目拷打|拷打|反问|面试公司|面试岗位|一轮面试|技术面|HR面|线下面试|线上面试|面试感想|面试成功|面试通过|面经|凉经|凉凉|三面|二面)/i.test(cleaned);
+  const explicitEvent = /(面试官|面完|面试了|面试过|面了|收到.*(?:二面|三面|offer|意向)|一次面试|手撕|自我介绍|项目拷打|拷打|反问|面试公司|面试岗位|一轮面试|技术面|HR面|线下面试|线上面试|面试感想|面试成功|面试通过|面经|凉经|凉凉|三面|二面)/i.test(cleaned);
   const generic = /(题库|真题|教程|整理|分享|建议|复习|准备|资料|面试技巧|内推|招聘|岗位职责|薪资|可分享|完整.*(?:答案|pdf)|统计出了|模拟面试|面试工具)/.test(cleaned);
-  const completedFact = hasCompletedInterviewFact(cleaned);
   const questionList = /^\s*(?:[-*]\s*)?\d+[.、:：](?:\s|$)/m.test(String(text || ''));
   if (generic && !completedFact && !questionList) {
     return { disposition: 'decided', decision: 'not-interview', stratum: 'generic-or-non-event', rationale: '固定 Source projection 只有通用题目/教程/招聘或建议内容，没有可定位的实际面试事件。' };
