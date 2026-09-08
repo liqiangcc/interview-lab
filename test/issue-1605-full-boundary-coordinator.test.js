@@ -118,6 +118,10 @@ test('read-only Issue and comments GETs retry transient TLS failures with bounde
 
 test('read retry recognizes gh execFileSync HTTP status rendered in stderr', () => {
   assert.equal(isTransientReadError({ status: 1, stderr: 'gh: request failed: HTTP 500 Internal Server Error' }), true);
+  assert.equal(isTransientReadError({ status: 500 }), true);
+  assert.equal(isTransientReadError({ statusCode: 429 }), true);
+  assert.equal(isTransientReadError({ status: 1, stderr: 'failed while reading Issue #500 body' }), false);
+  assert.equal(isTransientReadError({ status: 1, message: 'Issue #500 body error' }), false);
   let attempts = 0;
   const issue = readLiveIssue(735, {
     ghJson() {
