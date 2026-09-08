@@ -382,6 +382,8 @@ function atomicWriteJson(file, value) {
   const fd = fs.openSync(temporary, 'wx', 0o600);
   try { fs.writeFileSync(fd, `${JSON.stringify(value, null, 2)}\n`, 'utf8'); fs.fsyncSync(fd); } finally { fs.closeSync(fd); }
   fs.renameSync(temporary, target);
+  const directoryFd = fs.openSync(path.dirname(target), 'r');
+  try { fs.fsyncSync(directoryFd); } finally { fs.closeSync(directoryFd); }
 }
 
 function acquireExclusiveLock(file) {

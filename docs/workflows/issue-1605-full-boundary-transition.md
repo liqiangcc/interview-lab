@@ -65,7 +65,8 @@ mutation。journal 和 exclusive lock 都是 apply 的强制条件，`--max-muta
 PATCH/POST 尝试。每个 applied receipt 必须精确绑定当前 plan digest、manifest digest、
 expected SourceRevision id/ref 和唯一 transition；同一 transition 出现多个 applied receipt
 会 fail closed。journal 带 canonical digest；exclusive lock 持有并持续校验 lock file 的
-device/inode，并在创建、释放时 fsync parent directory。预算不足时在下一笔 mutation 前停止。
+device/inode，并在创建、释放时 fsync parent directory。journal/plan 的 atomic JSON rename
+之后也会 fsync parent directory，确保崩溃后目录项持久化。预算不足时在下一笔 mutation 前停止。
 
 本变更不执行 live mutation。取得主控 transition authorization、reviewer 评审和明确 apply
 窗口前，不应提供 `--apply`。

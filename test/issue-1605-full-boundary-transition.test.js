@@ -11,7 +11,7 @@ const {
   REPOSITORY, SOURCE_REF, PARENT_ISSUE, AUTHORIZATION_MARKER,
   canonical, sha256Text, manifestDigest, validateManifest, requestFiles,
   validateAuthorization, assertBoundaryOnly, buildPlan, applyBatch, buildReceipt,
-  validateReceipt, planItem, acquireExclusiveLock, initialJournal, validateJournal,
+  validateReceipt, planItem, acquireExclusiveLock, initialJournal, validateJournal, atomicWriteJson,
 } = require('../scripts/lib/issue-1605-full-boundary-transition');
 const { parseSourceNoteIssue } = require('../scripts/lib/source-note-issue');
 
@@ -355,4 +355,26 @@ test('exclusive lock records and verifies device/inode, and release removes it s
   assert.throws(() => replaced.assertHeld(), /ownership or inode changed/);
   assert.throws(() => replaced.release(), /ownership or inode changed/);
   fs.unlinkSync(lockPath);
+});
+
+test('atomic JSON write fsyncs the renamed file and its parent directory', () => {
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'issue-1605-atomic-write-'));
+  const target = path.join(directory, 'journal.json');
+  const originalOpenSync = fs.openSync;
+  const originalFsyncSync = fs.fsyncSync;
+  const opened = [];
+  let fsyncCount = 0;
+  fs.openSync = function patchedOpenSync(file, ...args) {
+    opened.push(typeof file === 'string' ? path.resolve(file) : file);
+    return originalOpenSync.call(fs, file, ...args);
+  };
+  fs.fsyncSync = function patchedFsyncSync(fd) {
+    fsyncCount += 1;
+    return originalFsyncSync.call(fs, fd);
+  };
+  try { atomicWriteJson(target, { status: 'durable' }); }
+  finally { fs.openSync = originalOpenSync; fs.fsyncSync = originalFsyncSync; }
+  assert.equal(JSON.parse(fs.readFileSync(target, 'utf8')).status, 'durable');
+  assert.ok(opened.includes(path.resolve(directory)), `parent directory was not opened: ${opened.join(', ')}`);
+  assert.ok(fsyncCount >= 2, `expected file and parent fsync, got ${fsyncCount}`);
 });
