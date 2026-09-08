@@ -29,7 +29,7 @@ node scripts/prepare-issue-1607-boundary-batch.js \
   --output-dir data/issue-1607
 ```
 
-`--body-only` 仅保留为明确的离线诊断模式；它会把每项标记为 blocked，不能替代 pinned Source bytes。本次 B 运行复用了主控缓存，并完成 367/367 条 projection 的独立 SHA/长度校验；例如 #394 为 943 bytes，Git blob SHA 为 `94d93fb8bb42d5b1ad0adb1242cb647c3f8f0eb6`。
+`--body-only` 仅保留为明确的离线诊断模式；它会把每项标记为 blocked，不能替代 pinned Source bytes。原始 B 基线为 367 条；本次 scope-clean rerun 依据 fresh live labels 只选择其中仍为 pending 的 257 条，并复用主控缓存完成 257/257 条 projection 的独立 SHA/长度校验。原先已不再 pending 的 110 条不在本次处理范围内；例如 #394 的固定 projection 为 943 bytes，Git blob SHA 为 `94d93fb8bb42d5b1ad0adb1242cb647c3f8f0eb6`。
 
 然后生成每条 evidence、不可执行 request template、dry-run plan、digest 和零 mutation journal：
 
@@ -41,7 +41,9 @@ node scripts/generate-issue-1607-boundary-evidence.js \
 
 ## 当前审计结论
 
-当前产物中的 367 条都保持 `decision=pending`、`evidence_status=review-required`；Source bytes 全部已独立验证，但分类仅是基于完整 projection 文本的 deterministic proposal，不是 durable human review。proposal 统计为 `single-interview=105`、`not-interview=5`、`pending=257`，详见 `classification-ledger.json`。每条 evidence 绑定完整 projection 文本、SHA/长度与分类依据行号；`dry-run.plan.json` 的 `mutation_count` 与 `apply.journal.json` 的 `mutation_count` 均为 0，ready=0。
+当前 rerun 产物中的 257 条都保持 `decision=pending`、`evidence_status=review-required`；Source bytes 全部已独立验证，但分类仅是基于完整 projection 文本的 deterministic proposal，不是 durable human review。由于本次剩余 pending 集合不包含原先已提出明确 proposal 的已处理项，当前 proposal 统计为 `pending=257`，详见 `classification-ledger.json`。每条 evidence 绑定完整 projection 文本、SHA/长度与分类依据行号；`dry-run.plan.json` 的 `mutation_count` 与 `apply.journal.json` 的 `mutation_count` 均为 0，ready=0。
+
+本次 scope-clean rerun 的 live GraphQL snapshot 时间为 `2026-09-08T14:37:24.759Z`，只生成 #393..#765 的 aliases；`scope_compliance=pass`、`scope_regression=pass`、`out_of_scope_reads=0`、`out_of_scope_mutations=0`。父级 419-row authorization 不覆盖本次选择集，本次未使用任何新的 live authorization。
 
 分类规则要求第一人称、明确已发生的过程事实和问题证据同时出现；邀约、据说、求助、经验建议、面试官分享、题库/题目列表保持 pending，明确拒面才提出 not-interview。分类仍只是 proposal，不能改变 pending 或授权 transition。
 

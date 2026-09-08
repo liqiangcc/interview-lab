@@ -139,7 +139,8 @@ test('checked-in audit outputs are complete and mutation-free', () => {
   const journal = JSON.parse(fs.readFileSync(path.join(dir, 'apply.journal.json'), 'utf8'));
   const classification = JSON.parse(fs.readFileSync(path.join(dir, 'classification-ledger.json'), 'utf8'));
   const evidence = JSON.parse(fs.readFileSync(path.join(dir, 'evidence-ledger.json'), 'utf8'));
-  assert.equal(selection.items.length, EXPECTED_COUNT);
+  assert.equal(selection.items.length, selection.scope.expected_count);
+  assert.equal(selection.scope.baseline_pending_count, EXPECTED_COUNT);
   assert.equal(selection.scope.first_issue, FIRST_ISSUE);
   assert.equal(selection.scope.last_issue, LAST_ISSUE);
   assert.equal(plan.counts.mutation_count, 0);
@@ -151,8 +152,8 @@ test('checked-in audit outputs are complete and mutation-free', () => {
   assert.equal(plan.scope_regression.status, 'pass');
   assert.equal(plan.scope_regression.out_of_scope_reads, 0);
   assert.equal(plan.scope_compliance.out_of_scope_mutations, 0);
-  assert.equal(classification.total, EXPECTED_COUNT);
+  assert.equal(classification.total, selection.items.length);
   assert.equal(classification.status, 'proposal-only');
-  assert.equal(evidence.items.length, EXPECTED_COUNT);
+  assert.equal(evidence.items.length, selection.items.length);
   assert.ok(evidence.items.every((item) => item.decision === 'pending' && item.source_evidence.text !== undefined && item.source_evidence.line_count !== undefined));
 });

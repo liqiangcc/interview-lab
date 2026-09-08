@@ -112,7 +112,8 @@ function main(argv = process.argv.slice(2)) {
   const outputDir = path.resolve(argv[argv.indexOf('--output-dir') + 1] || 'data/issue-1607');
   const selection = JSON.parse(fs.readFileSync(path.resolve(selectionFile), 'utf8'));
   if (selection.schema_version !== 'issue-1607-boundary-b-selection.v1' || selection.repository !== REPOSITORY) throw new Error('selection is not bound to Boundary B');
-  if (selection.items.length !== EXPECTED_COUNT) throw new Error(`selection must contain ${EXPECTED_COUNT} items`);
+  const expectedCount = selection.scope?.expected_count;
+  if (!Number.isInteger(expectedCount) || selection.items.length !== expectedCount) throw new Error(`selection count does not match selection.scope.expected_count: ${selection.items.length}/${expectedCount}`);
   if (selection.source_snapshot?.ref !== SOURCE_REF) throw new Error('selection source ref is not the fixed ref');
   const evidenceItems = selection.items.map(evidenceFor);
   const requestItems = selection.items.map((item, index) => requestFor(item, evidenceItems[index]));
@@ -185,7 +186,7 @@ function main(argv = process.argv.slice(2)) {
     request_set_sha256: sha256Text(canonicalJson(requestSet)),
     mode: 'dry-run',
     fail_closed: true,
-    counts: { total: EXPECTED_COUNT, pending: EXPECTED_COUNT, blocked: sourceBlockedCount, review_required: sourceVerifiedCount, ready: 0, already_applied: 0, mutation_count: 0 },
+    counts: { total: expectedCount, pending: expectedCount, blocked: sourceBlockedCount, review_required: sourceVerifiedCount, ready: 0, already_applied: 0, mutation_count: 0 },
     blocked_reasons: [
       ...(sourceBlockedCount ? ['one or more pinned Source projection items remain independently unverified'] : []),
       'classification output is proposal-only and requires controller review',
@@ -242,7 +243,7 @@ function main(argv = process.argv.slice(2)) {
   fs.mkdirSync(path.join(outputDir, 'requests'), { recursive: true });
   evidenceItems.forEach((item) => writeJson(path.join(outputDir, 'evidence', `${String(item.issue_number).padStart(4, '0')}.json`), item));
   requestItems.forEach((item) => writeJson(path.join(outputDir, 'requests', `${String(item.issue_number).padStart(4, '0')}.json`), item));
-  process.stdout.write(`${JSON.stringify({ total: EXPECTED_COUNT, source_verified: sourceVerifiedCount, source_blocked: sourceBlockedCount, mutation_count: 0, dry_run_sha256: plan.dry_run_sha256 }, null, 2)}\n`);
+  process.stdout.write(`${JSON.stringify({ total: expectedCount, source_verified: sourceVerifiedCount, source_blocked: sourceBlockedCount, mutation_count: 0, dry_run_sha256: plan.dry_run_sha256 }, null, 2)}\n`);
 }
 
 if (require.main === module) {

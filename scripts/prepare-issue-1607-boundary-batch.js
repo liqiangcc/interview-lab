@@ -180,7 +180,7 @@ function buildSelection(cache, options = {}) {
   const scope = cache.issues.filter((issue) => issue.number >= FIRST_ISSUE && issue.number <= LAST_ISSUE);
   const selected = scope.filter(isSelected);
   const excluded = scope.filter((issue) => !isSelected(issue)).map((issue) => ({ issue_number: issue.number, title: issue.title, state: issue.state, labels: labelsOf(issue) }));
-  if (selected.length !== EXPECTED_COUNT) throw new Error(`selection count mismatch: expected ${EXPECTED_COUNT}, got ${selected.length}`);
+  if (!options.scopeClean && selected.length !== EXPECTED_COUNT) throw new Error(`selection count mismatch: expected ${EXPECTED_COUNT}, got ${selected.length}`);
   const items = [];
   const errors = [];
   const candidates = [];
@@ -255,7 +255,7 @@ function buildSelection(cache, options = {}) {
     repository: REPOSITORY,
     parent_issue: 1605,
     child_issue: 1607,
-    scope: { first_issue: FIRST_ISSUE, last_issue: LAST_ISSUE, expected_count: EXPECTED_COUNT },
+    scope: { first_issue: FIRST_ISSUE, last_issue: LAST_ISSUE, expected_count: items.length, baseline_pending_count: EXPECTED_COUNT },
     source_snapshot: { repository: SOURCE_REPOSITORY, ref: SOURCE_REF },
     source_fetch: { transport: 'controlled-raw-get', concurrency: 1, retries_per_item: 3, cache_validation: ['byte_size', 'git_blob_sha'], cache_directory: options.sourceCacheDir || '/tmp/xhs-note-desc-cache' },
     scope_compliance: scopeCompliance,
