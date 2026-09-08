@@ -1,0 +1,98 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1402,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1402",
+  "source_note_id": "xhs-note:68d6bdb3000000000e030e95",
+  "source_revision_id": "xhs-note:68d6bdb3000000000e030e95:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "818ce2cabf8d667e5c15adc787ae757199a2bac676b360f35de7feb6501e3f31",
+  "disposition": "single-interview",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [],
+    "questions": 5,
+    "has_first_person_event": true,
+    "has_explicit_candidate_event": true,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "has_completed_event_evidence": true,
+    "has_structured_candidate_event": true,
+    "generic_advice_or_aggregated": false,
+    "scheduled_only": false,
+    "question_only": false,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "aggregated_text": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": [
+      {
+        "case_key": "jd-process",
+        "anchor": "京东",
+        "line": 1,
+        "locator": "artifact-line:498#offset:29-31",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:京东"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_json/68d6bdb3000000000e030e95.json@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "eba4e2e70f8bd1c6c57012268ff238e9da416e80",
+    "kind": "json",
+    "provenance": "source_projection",
+    "byte_size": 22858,
+    "content_sha256": "8fb3f307621f6e8ae08e8b478e4e0c5c9117f23fb6722028f495f06d3d7bb233",
+    "excerpt": {
+      "excerpt": "\"global\": {",
+      "line": 2,
+      "locator": "artifact-line:2",
+      "semantic_excerpt": "京东 1 面\n面试被约在周五晚上，从时间段就隐约觉得大概率是 KPI 面试。果不其然，面试官还迟到了一会儿，上来三分戏谑两分冷哼，把项目草草问完，眼神里写满了“这啥玩意儿”。接着又随便扫了下简历，象征性地问了几句，然后我回答问题也没啥回应。\n八股：\n1. GRPO DPO\n2. KL 散度维度\n3. GRPO 变体\n手撕：\n全程投屏写的，手忙脚乱关闭vscode 里的Copilot，面试官一脸不耐烦说开个 txt就行，然后抽象的京东 ME会议投屏还有一堆权限问题\n1. 写题，BFS 走路，样例都没有，面试官随口胡诌的一个\n2. GRPO 手撕\n全程没有反问环节，看样子面试官就想赶紧下班。真心话，如果不想面，其实完全可以不约，何必出来折腾苦命的秋招人呢。"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "82542b90e02d445dea993318914ac378349c8c9abec69ec89ab225f85dc45962"
+}

@@ -1,0 +1,37 @@
+{
+  "schema_version": "issue-1609-boundary-post-apply-audit.v1",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue": 1609,
+  "selection_sha256": "500bb51557ffed8898caed61faf7bceacff5b25b3d7261b1f49b3ab9f4fc3eb8",
+  "dry_run_sha256": "396220b55d792b15c162043eec6f98a445c43432898aee221ecde2cedc12372b",
+  "audit_status": "not-run",
+  "mutation_authorized": false,
+  "mutation_count": 0,
+  "live_post_apply_reads": 0,
+  "reason": "No controller authorization for live GitHub PATCH/POST was present; no apply was attempted.",
+  "pre_apply_artifact_audit": {
+    "selection_items": 366,
+    "evidence_files": 366,
+    "request_files": 366,
+    "planned_receipt_files": 366,
+    "unique_issue_numbers": 366,
+    "range": {
+      "min": 1139,
+      "max": 1508
+    },
+    "out_of_range_issue_numbers": [],
+    "body_sha_anchors_verified": true,
+    "source_ref_anchors_verified": true,
+    "raw_overwritten": false,
+    "derived_overwrote_raw": false,
+    "pending_mutations": 0,
+    "possibly_performed": 0
+  },
+  "blocked_for_controller": [
+    "Independent live evidence comments have not been posted.",
+    "Boundary transition requests are candidate-only and cannot be applied without controller review/authorization.",
+    "After any authorized apply, a fresh live body/label/receipt audit must replace this not-run record."
+  ],
+  "audit_sha256": "f85f6f14b43b9e795294bb14f456fe9f7821fc3fe940a4806a2ab103488a504f"
+}

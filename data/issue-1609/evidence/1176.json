@@ -1,0 +1,93 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1176,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1176",
+  "source_note_id": "xhs-note:68ac4d41000000001d00c5c6",
+  "source_revision_id": "xhs-note:68ac4d41000000001d00c5c6:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "bceb2a6537b38055dc99306896eec4a84c36dbe12ca1c10327c912a80b075e95",
+  "disposition": "blocked",
+  "rationale": "Exact Source is generic advice or aggregated/summarized material without a bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event",
+      "generic-question-bank-or-job-ad",
+      "generic-advice-or-aggregated"
+    ],
+    "questions": 0,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "has_completed_event_evidence": true,
+    "has_structured_candidate_event": true,
+    "generic_advice_or_aggregated": true,
+    "scheduled_only": false,
+    "question_only": false,
+    "outcome_signal": true,
+    "resource_signal": true,
+    "aggregated_text": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68ac4d41000000001d00c5c6.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "1f6edfc03cae5633d0322ecf3f568564278f3662",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 525,
+    "content_sha256": "9695749434f48644280e7760d31bb291e4b1ea3e3343758976efe714efebbcf1",
+    "excerpt": {
+      "excerpt": "经典的Java必备书籍JavaGuide，助力秋招冲offer！！内容涵盖了自我介绍、面试、Java、计算机基础、数据库、各类框架、微服务分布式、优质面经，总共424页，直接下载了慢慢看！",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "经典的Java必备书籍JavaGuide，助力秋招冲offer！！内容涵盖了自我介绍、面试、Java、计算机基础、数据库、各类框架、微服务分布式、优质面经，总共424页，直接下载了慢慢看！\n \nPs:文件上传需要审核，还要等一会儿。可以先点个收藏哦[害羞R][害羞R]"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is generic advice or aggregated/summarized material without a bounded candidate interview event; retain pending."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source is generic advice or aggregated/summarized material without a bounded candidate interview event; retain pending.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "c7e85ceb4ae4be01cffce68b7dc72639d00eafb7978b5137082a44cb3d56dd08"
+}

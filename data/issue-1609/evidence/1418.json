@@ -1,0 +1,94 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1418,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1418",
+  "source_note_id": "xhs-note:68da4876000000001101eebb",
+  "source_revision_id": "xhs-note:68da4876000000001101eebb:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "e1231a6389f9e766a41dcfdb9f18c41028a612fc618e5ba37702d4320eb7d901",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event",
+      "question-only",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 10,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "has_completed_event_evidence": true,
+    "has_structured_candidate_event": false,
+    "generic_advice_or_aggregated": false,
+    "scheduled_only": false,
+    "question_only": true,
+    "outcome_signal": true,
+    "resource_signal": false,
+    "aggregated_text": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_json/68da4876000000001101eebb.json@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "76fe60341e8a3dc4da0bb7e5c55f42ddadf78d88",
+    "kind": "json",
+    "provenance": "source_projection",
+    "byte_size": 22529,
+    "content_sha256": "af8df9b73f185e46a9b8f1a2866396876724ec6dddb2fe3c12b9b2c05f9ed6c8",
+    "excerpt": {
+      "excerpt": "\"global\": {",
+      "line": 2,
+      "locator": "artifact-line:2",
+      "semantic_excerpt": "1.项目抢单逻辑怎么实现的\n2.redis geo怎么使用\n3.mysql和mongodb区别\n4.关系型数据库为啥叫做这样\n5.事务的隔离级别\n6.解释一下啊什么是脏读幻读不可重复读\n7.可重复读具体是啥\n8.hashmap具体说一下\n9.hashmap是线程安全的吗解释一下，currenthashmap\n10.手撕给你一个 32 位的有符号整数 x ，返回将 x 中的数字部分反转后的结果。\n如果反转后整数超过 32 位的有符号整数的范围 [−2^31, 2^31 − 1] ，就返回 0。\n假设环境不允许存储 64 位整数（有符号或无符号）。示例 1：输入：x = 123输出：321示例 2：输入：x = -123输出：-321示例 3：输入：x = 120输出：21"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "c324e494c514cd28dfcd0a3bc5c5a0320bd8fb17aa9398fa7e476578e5897814"
+}

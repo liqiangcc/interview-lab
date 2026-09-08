@@ -1,0 +1,93 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1326,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1326",
+  "source_note_id": "xhs-note:68c82557000000001d00fb7c",
+  "source_revision_id": "xhs-note:68c82557000000001d00fb7c:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "ada8055601cad232101241923ce99c7dc8c5884bffae59cb61c864cf14f6e9fe",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event",
+      "question-only",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 19,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": false,
+    "has_completed_event_evidence": true,
+    "has_structured_candidate_event": false,
+    "generic_advice_or_aggregated": false,
+    "scheduled_only": false,
+    "question_only": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "aggregated_text": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68c82557000000001d00fb7c.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "d7b9ce897c249bd685ebccc784cf5b60b1169b55",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 862,
+    "content_sha256": "3de34e4f822d8ab7f960613f8df0dbe0679fa781422c8eb5b0d4722de852f895",
+    "excerpt": {
+      "excerpt": "一面",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "一面\n1、实习经历\n2、设计模式\n3、Redis的主从同步是怎么实现的\n4、Redis的大key\n5、Redis的过期策略\n6、Redis是怎么找到key存储在哪个节点上\n7、Redis中的zset的应用场景\n8、Redis中的string的数据结构\n9、MySQL的事务隔离级别，RR下怎么解决幻读的\n10、MySQL三层B+树能存储多少数据\n11、索引为什么需要最左前缀\n12、MySQL索引键的排列顺序是按照什么排序的\n13、synchronized的锁升级\n14、Spring中Bean的初始化过程\n15、sql题：有一个订单表tb order有2个宁段order id和user id 写一个sql查这个表里的下单量大于2的用户有哪些\n16、算法题：三数之和\n \n二面\n1、实习经历\n2、多线程实现数组排序\n3、实现队列"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "2240fca96d875cbf1f1028aba2d2d12b7ebf49f68bdd12ec2fc02990b1fff2ae"
+}

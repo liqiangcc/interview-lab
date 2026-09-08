@@ -1,0 +1,100 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1324,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1324",
+  "source_note_id": "xhs-note:68c8d178000000001d03bf5e",
+  "source_revision_id": "xhs-note:68c8d178000000001d03bf5e:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "d447792a10cdd36b27ac17ee656d9c489b00624a2590df833e6e3ec37f3083bc",
+  "disposition": "single-interview",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event"
+    ],
+    "questions": 23,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "has_completed_event_evidence": true,
+    "has_structured_candidate_event": true,
+    "generic_advice_or_aggregated": false,
+    "scheduled_only": false,
+    "question_only": false,
+    "outcome_signal": true,
+    "resource_signal": false,
+    "aggregated_text": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": [
+      {
+        "case_key": "meituan-process",
+        "anchor": "美团",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-2",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:美团"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68c8d178000000001d03bf5e.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "c0f82681da4084adbc34d1df44d809646e2ef849",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 2106,
+    "content_sha256": "85387cd3e05f7bb5d239a974e96d2034e52e758f487a771f5a9f90b1bb327a0a",
+    "excerpt": {
+      "excerpt": "美团java后端一面凉经，泡池子三个工作日还是挂了",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "美团java后端一面凉经，泡池子三个工作日还是挂了\n一、八股拷打\n1. ArrayList 内部实现方式及扩容机制\n2. BIO、NIO、AIO 三种 IO 的区别，NIO 底层所用机制\n3. 线程池常用参数，拒绝策略\n4. AQS 是什么以及其实现方式\n5. 为什么需要双亲委派机制，双亲委派机制如何保证用户写的类不污染核心类\n6. Spring 容器的原理及作用\n7. Spring 中容器与 AOP 的连接方式，AOP 实现是否只有动态代理一种机制，是否有其他机制\n8. MyBatis 的 XML 文件中有哪几种标签\n9. 当参数传列表要生成 where ID in（ID1，ID2，…）这样的 SQL 语句时，如何去掉最后一个逗号\n10. MySQL 中索引存储形式，是否了解联合索引，结合 B + 树结构，为什么联合索引要遵循最左前缀匹配原则\n11. MySQL 中 InnoDB 存储引擎的事务实现方式\n12. Redis数据结构，持久化策略，缓存淘汰策略\n13. 在 Redis 中对一个数据进行删除时的过程，是否会立马删除\n二、项目相关\n1. 项目的目标、功能、用户群体及核心业务流程\n2. 该项目中私聊功能的实现方式\n3. 当项目服务器有多台时，如何处理私聊功能以避免消息乱序等问题结合具体场景消息传递流程\n4. 该项目中双 Token 机制实现无感刷新的方式5. 该项目中使用 Elasticsearch（ES）的目的\n6. ES 为什么有很强的搜索能力，什么是倒排索引，ES 的倒排索引与 MySQL 的 B + 树索引的区别\n三、手撕\n1. 反转链表，秒了\n2. 要求编写一个表示停车场的 Java 类，需运用面向对象思想，包含入库、出库方法，可自由发挥添加其他方法，且需考虑生产者和消费者模式（停车场共 100 个车位，停满时需等有车出库才能再入库，无车时无法出库），这个完全不会😭\n小结：很多问题都是连环追问到不会为止，MyBatis去逗号很常见但太久不写完全想不起来了，扣大分。还有为什么别人面经手撕都是力扣原题，我的这么难😭"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "56ed7037f8b92d5030577700e8afe3cfa6c648ca394705ae9ab8548b8bcb7189"
+}

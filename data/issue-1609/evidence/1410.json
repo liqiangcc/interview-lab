@@ -1,0 +1,98 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1410,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1410",
+  "source_note_id": "xhs-note:68d9d126000000000e0333d1",
+  "source_revision_id": "xhs-note:68d9d126000000000e0333d1:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "0b226c76640b69f928c0418a42ca46c0db34114ded29587bfa5a55c34bd19bd9",
+  "disposition": "single-interview",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [],
+    "questions": 0,
+    "has_first_person_event": true,
+    "has_explicit_candidate_event": true,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "has_completed_event_evidence": true,
+    "has_structured_candidate_event": true,
+    "generic_advice_or_aggregated": false,
+    "scheduled_only": false,
+    "question_only": false,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "aggregated_text": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": [
+      {
+        "case_key": "ctrip-process",
+        "anchor": "携程",
+        "line": 23,
+        "locator": "artifact-line:499#offset:318-320",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:携程"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_json/68d9d126000000000e0333d1.json@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "74275ef1080d1fc1d52a7b3a25dedaf3cbff0bc8",
+    "kind": "json",
+    "provenance": "source_projection",
+    "byte_size": 22125,
+    "content_sha256": "4370bbfe943042e0b7a9120ae8f0bc4f5d2651d6f05bb6606106d73fa00bc9ba",
+    "excerpt": {
+      "excerpt": "\"global\": {",
+      "line": 2,
+      "locator": "artifact-line:2",
+      "semantic_excerpt": "一面1h，一天后约二面\n介绍项目\n堆栈区别\n常见设计模式和应用场景\nselect和epoll区别\n分布式锁和本地锁\nmysql查询优化、如何判断字段区分度\nhttps链接过程\n手撕单例和比较版本号\n \n二面1h，一天后约三面\n项目难点介绍\n了解哪些序列化方式\n如何实现限流降级\n了解哪些限流方案\n熔断器如何实现\nhttps的具体实现\n缓存穿透和缓存雪崩如何解决\nredis持久化\nsyntronize原理、锁升级\naop的原理\nobject有哪些方法？clone注意事项？equals注意事项？\n单例模式的实现方式有哪些？\n线程和携程的区别？\n手撕：链表反转k个节点，不足k个也反转。\n \n三面1h，面完半小时发感谢信\n有无实习项目经验？\n微服务框架了解吗？\n数据结构了解吗？普里姆算法如何数学证明？最小联通图的定义？\nsession和cookie的区别？\n乐观锁的原理？\n垃圾回收器介绍\n大模型用过吗？有没有自己搭过agent？\n智商题：用小鼠找有毒的水\n如何在栈的基础上实现o1拿到最小值\n手撕：前序遍历和中序数组实现后续数组，不能构建二叉树（没见过）。手撕了一个小时撕出来了。\n面完秒挂。\n（感谢面试官容忍我做了1h算法题，实力太差，错过了很好的机会）"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "e9f0ba3b9610b7f37a04b4a276da6eb6cc98f1f8438fc10e110ac72197b637b2"
+}

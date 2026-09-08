@@ -1,0 +1,94 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1225,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1225",
+  "source_note_id": "xhs-note:68b332ac000000001d005b69",
+  "source_revision_id": "xhs-note:68b332ac000000001d005b69:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "cb56859521747c3ef9a6a142a46f1ef6da28d747febd7445cfe928a255dab363",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event",
+      "question-only",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 9,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": false,
+    "has_detailed_event": false,
+    "has_completed_event_evidence": false,
+    "has_structured_candidate_event": false,
+    "generic_advice_or_aggregated": false,
+    "scheduled_only": false,
+    "question_only": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "aggregated_text": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68b332ac000000001d005b69.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "ac9e003be1a2af139b06fd14629eb227ddc010bb",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 441,
+    "content_sha256": "3b1dd6a661a64ef9258371579db8059ea0fba2c714c6fd97f1f6043837093fba",
+    "excerpt": {
+      "excerpt": "1、实习项目介绍",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "1、实习项目介绍\n2、springboot和springcloud的区别\n3、HashMap的实现原理\n4、Spring中的AOP\n5、一张表的数据量非常大时访问速度变慢，怎么解决\n6、MySQL的隔离级别\n7、分布式锁实现的几种方式\n8、redis宕机问题怎么解决\n9、场景题：抢红包，100个人同时抢红包，但只能有20人抢到"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "4e43cc9418648d4732461b66f433a9423cc5487bb52149c80e347eb2047e736c"
+}

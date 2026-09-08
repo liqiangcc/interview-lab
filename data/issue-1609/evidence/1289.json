@@ -1,0 +1,105 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1289,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1289",
+  "source_note_id": "xhs-note:68c15ba3000000001d03b3ff",
+  "source_revision_id": "xhs-note:68c15ba3000000001d03b3ff:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "3a2e78301a3ac339b4964b6eafb5e7eb57b2270b6ff9df1b1f596f39a9018206",
+  "disposition": "blocked",
+  "rationale": "Exact Source is generic advice or aggregated/summarized material without a bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event",
+      "generic-question-bank-or-job-ad",
+      "generic-advice-or-aggregated",
+      "question-only",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 4,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "has_completed_event_evidence": true,
+    "has_structured_candidate_event": false,
+    "generic_advice_or_aggregated": true,
+    "scheduled_only": false,
+    "question_only": true,
+    "outcome_signal": false,
+    "resource_signal": true,
+    "aggregated_text": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": [
+      {
+        "case_key": "didi-process",
+        "anchor": "滴滴",
+        "line": 6,
+        "locator": "artifact-line:6#offset:8-10",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:滴滴"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68c15ba3000000001d03b3ff.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "b2b02e190e67b537480620d18ddbec66b41ae1b0",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 2648,
+    "content_sha256": "12475754d6bbdce0747fbd952c4119388af802f76de0d6edf2889deac0eae87b",
+    "excerpt": {
+      "excerpt": "🔢 算法环节（基础打底）",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "🔢 算法环节（基础打底）\n数组转链表\n链表翻转\n写一个 Go 并发\n---\n🏗 项目拷打（滴滴最狠的部分）\n1. 短链服务：高并发场景如何避免冲突，怎么快速反查？\n* 哈希+Base62 编码，配合 分布式唯一 ID（Snowflake、Leaf 等）生成短链。\n* 反查时依赖 Redis 缓存 + DB 持久化，提高 QPS。\n2. 分布式环境下有没有考虑？\n* 必问！要提 一致性（分布式锁 / CAS）和可扩展性（分库分表 + 缓存层）。\n3. JWT 怎么保证安全？\n* 使用 HMAC-SHA256 或 RSA 签名，设置过期时间，配合 Refresh Token\n* 敏感信息不要放 JWT Payload。\n4. 为什么用 MongoDB？\n* JSON 文档存储方便，扩展性强，天然支持水平扩展。\n* 但要提到 缺点（事务弱、复杂查询性能差），证明你考虑过 trade-off。\n👉 反思：讲项目时不要死背，要结合高并发、分布式、缓存、容灾这些关键词，才显得你真的“想过”\n---\n⚙ Go 基础（高频必考）\n* 变量声明：`var` 和 `:=` 的区别\n* 切片是引用还是传值？（引用类型，但本质上传值传的是 slice header）\n* slice 和 array 的区别\n* map 并发安全？（默认不安全，用 `sync.Map` 或加锁）\n* GPM 模型（Go 调度器核心）\n* channel 使用与关闭\n* 协程并发安全（锁、原子操作）\n* context：取消 context 后，goroutine 不一定立即结束，需要主动检查 `<-ctx.Done()`\n* defer执行顺序（LIFO）\n* interface 和其他语言区别\n👉 反思：这些知识点最好结合项目里的实际使用场景来回答，效果比死记硬背强 10 倍。\n---\n🌐 计算机网络\n* HTTP 基础流程（请求行、请求头、请求体、响应）\n👉 注意要讲清楚：DNS 解析 → TCP 三次握手 → TLS → HTTP 请求/响应。\n---\n💾 数据库\n* 索引生效条件：前缀匹配原则、最左前缀法则，避免在索引列上做函数计算。\n👉 加分点：能结合 短链服务的查询优化讲到索引，会显得更专业。\n---\n🎯 面试总结\n* 滴滴偏好：\n* 高并发 & 分布式场景\n* Go 并发模型理"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is generic advice or aggregated/summarized material without a bounded candidate interview event; retain pending."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source is generic advice or aggregated/summarized material without a bounded candidate interview event; retain pending.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "0fd539eb57615e814c5e3b98a28aad26d3f70be9fd94144f51168fe3c998e8b1"
+}

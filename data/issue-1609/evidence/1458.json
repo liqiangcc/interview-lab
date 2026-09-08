@@ -1,0 +1,95 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1458,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1458",
+  "source_note_id": "xhs-note:68ea11580000000003038e9b",
+  "source_revision_id": "xhs-note:68ea11580000000003038e9b:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "9734753e646af604f6498707ef4ae32286dfa4e96ab36c53e756cb064b8b8e4d",
+  "disposition": "blocked",
+  "rationale": "Exact Source provides only an interview outcome, offer, rejection, or result without a bounded candidate event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "outcome-or-offer-only",
+      "no-first-person-event",
+      "question-only",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 13,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": false,
+    "has_detailed_event": false,
+    "has_completed_event_evidence": false,
+    "has_structured_candidate_event": false,
+    "generic_advice_or_aggregated": false,
+    "scheduled_only": false,
+    "question_only": true,
+    "outcome_signal": true,
+    "resource_signal": false,
+    "aggregated_text": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": true,
+    "multi_signal": false,
+    "case_segments": []
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_json/68ea11580000000003038e9b.json@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "4360ffa7dd7d62130505cd79e8022057901a6d27",
+    "kind": "json",
+    "provenance": "source_projection",
+    "byte_size": 20641,
+    "content_sha256": "05b490e56f9aa79045a9123c785b44f06ef03c8644c2b8765c3b6690a293aa73",
+    "excerpt": {
+      "excerpt": "\"global\": {",
+      "line": 2,
+      "locator": "artifact-line:2",
+      "semantic_excerpt": "1.javaweb 挑一个自己能讲的过程讲\n2.在java处理一个http请求的过程当中 spring起到了什么作用 扮演什么角色\n3.像腾讯那样的通过qq去登陆多种软件 怎么实现（sso技术 我不会）\n4.给你一张贴吧表 post（id,uid,title,like_cnt,comment_cnt,create_time(unix时间戳形式）\n4.1.查询三十天内 前五十条 评论超5000 点赞超500的帖子标题 按点赞数降序\n4.2.针对这张表 你会怎么建立索引 为什么\n4.3.这张表你会怎么去优化他\n4.4.你会怎么设计缓存 将这五十条帖子存在缓存当中\n5.讲一讲面向对象编程的三大特征\n6.hashmap的key要满足什么特征\n7.枚举类的特征\n8.算法 a和b两个长度相同的数组 定义 a[i]>b[i]时 a[i]比b[i]优秀 求a的任意排列 使a比b优秀的元素数最多 (想到了排列a没想到连b一起排列 大概率没了)\n9.反问"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source provides only an interview outcome, offer, rejection, or result without a bounded candidate event; retain pending."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source provides only an interview outcome, offer, rejection, or result without a bounded candidate event; retain pending.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "afb5b26e55f9dd738f3ed77c3b2b00ac1ef851bbcbf99e67a799c0cd3fd16086"
+}

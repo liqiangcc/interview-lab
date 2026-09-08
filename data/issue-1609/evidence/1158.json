@@ -1,0 +1,94 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1158,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1158",
+  "source_note_id": "xhs-note:68a7d1ed000000001b0214a7",
+  "source_revision_id": "xhs-note:68a7d1ed000000001b0214a7:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "7d481c7e210c744c03bd4795f3fb2cb25372a9bd821baac433a6bd036ab39e3b",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event",
+      "question-only",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 12,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "has_completed_event_evidence": true,
+    "has_structured_candidate_event": false,
+    "generic_advice_or_aggregated": false,
+    "scheduled_only": false,
+    "question_only": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "aggregated_text": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68a7d1ed000000001b0214a7.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "710a1eb7d6ab2c7357d5cebaf42a5ad319f1a6ff",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 601,
+    "content_sha256": "97e5ed2eef87ede39490f6e86078e054c446057bcb915c07b06090142431b540",
+    "excerpt": {
+      "excerpt": "1.介绍业务",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "1.介绍业务\n2.数据如何从kafka到Hive\n3.kafka是什么\n4.如果出现数据漂移怎么办\n5.Hive中SQL语句执行流程（回答抽象语法树->逻辑计划->优化器->物理计划...）\n6.SQL语句如何解析成抽象语法树\n7.Hadoop了解多少\n8.sql和redis区别\n9.sql有哪些索引\n10.mysql的存储引擎是什么\n11.主键索引为什么能够加快查询速度\n12.什么是二叉树有什么应用场景，前中后序是什么\n手撕简单sql题\n手撕类似于力扣在排序数组中查找元素的第一个和最后一个位置\n面试忘记很多[哭惹R]继续沉淀学习"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "a29eec1ba3bdd392033a63a8a4620d3cedecbd74fe647b538347b4eff6bdca86"
+}

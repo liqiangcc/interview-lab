@@ -1,0 +1,94 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1238,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1238",
+  "source_note_id": "xhs-note:68b593ab000000001c0077c1",
+  "source_revision_id": "xhs-note:68b593ab000000001c0077c1:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "3ab5abf7819ad596fb07bb296d3c204f923386ffa0ac3adf12a28adecd32d24c",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event",
+      "question-only",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 14,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "has_completed_event_evidence": true,
+    "has_structured_candidate_event": false,
+    "generic_advice_or_aggregated": false,
+    "scheduled_only": false,
+    "question_only": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "aggregated_text": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68b593ab000000001c0077c1.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "9ca62ac9d458e1e7f04062ab91ce2e2aaa931a4b",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 961,
+    "content_sha256": "0c6251ce24f3b0c9da76fa4decee44fc273829e50905a8e853e2192357ad7648",
+    "excerpt": {
+      "excerpt": "1. 面试官介绍业务（go开发）",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "1. 面试官介绍业务（go开发）\n2. 擅长的开发语言\n3. 手撕：线程交替输出abc 和123（信号量实现的），解释代码\n4. 介绍信号量底层原理、volatile作用、代码关键字（private、static、final）加不加的区别\n5. 加 static 和不用 static 修饰的变量在内存上有什么区别，会被 GC 掉吗\n6. 介绍一下熟悉的几个GC 算法，分别适用于什么场景\n7. 为什么要把堆给分成 young 和 old 两个区域\n8. 手撕sql：查询表中每门课程得分都不低于 60 分的学生的名字\n9. 描述一下TCP 网络断开连接的过程\n10. 客户端为什么要等2MSL，此时服务端是一个什么状态，重发FIN的间隔时间\n11. MSL取值多少\n12. 介绍一下专业知识或其他技能擅长的地方\n13. 有没有面对一些压力比较大的场景\n14. 对工作时间是怎么看的"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "253b853d9be39f0e67484680a42f6ecbfdc724ff2ac49ea039e6a80cc9aed1ae"
+}

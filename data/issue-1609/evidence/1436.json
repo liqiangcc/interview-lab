@@ -1,0 +1,94 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1436,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1436",
+  "source_note_id": "xhs-note:68e32a570000000005002930",
+  "source_revision_id": "xhs-note:68e32a570000000005002930:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "8428f4e30ae260e3662fc084f154391c46885c11763f7c46cb3e039b19ed63af",
+  "disposition": "blocked",
+  "rationale": "Exact Source records only a scheduled, invited, or arranged interview and no completed candidate interview process; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "scheduled-only",
+      "question-only",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 14,
+    "has_first_person_event": true,
+    "has_explicit_candidate_event": true,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "has_completed_event_evidence": true,
+    "has_structured_candidate_event": false,
+    "generic_advice_or_aggregated": false,
+    "scheduled_only": true,
+    "question_only": true,
+    "outcome_signal": false,
+    "resource_signal": true,
+    "aggregated_text": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_json/68e32a570000000005002930.json@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "016dbfae5cb172709d078753cdef0aee7b65871d",
+    "kind": "json",
+    "provenance": "source_projection",
+    "byte_size": 25883,
+    "content_sha256": "a7bb677ff7aa3554fd751555d3ac6e88f15e5c78037d520e4fff601f2a856c3d",
+    "excerpt": {
+      "excerpt": "\"global\": {",
+      "line": 2,
+      "locator": "artifact-line:2",
+      "semantic_excerpt": "📖背景：26应届 本硕软工 后端开发\nTimeline:\n9.15投递\n9.19收到笔试通知\n9.21笔试\n9.23面试通知\n9.25晚面试\n9.26晚收到挂\n1️⃣2025.9.21完成的笔试，两个小时的时间，回忆版题目见图\n9.23收到面试通知\n \n2️⃣2025.9.25 一面\n时长：面试约的是1h，但是实际大约是45min（可能因为我回答的不是很好吧hhh\n1. 网络\n问：TCP 连接是逻辑还是物理概念？\n追问：同一条物理链路上有多个 TCP 连接，怎么区分？\n2. 并发\n问：多线程环境下，整数加一是线程安全的吗？\n问：如何限制只有 5 个线程能访问？\n3. 数据结构 & 算法\n问：栈的应用场景？\n问：如何用栈实现队列？\n4. 数据库\n问：MYSQL的索引和索引失效的情况。LIKE %%。追问问LIKE 里面索引失效具体发生了什么，我可能回答的不够深入。\n问：MySQL ACID 的一致性是什么？\n追问：一致性和另外三个的关系？追问隔离性如何保证一致性，这个具体说说。\n问：脏读、不可重复读？\n5. 项目\n简单问了简历上写的实习项目和竞赛项目，难点和亮点是什么？\n6. 手撕：不超过 K 的最长子串\n编译器没有输入输出 要自己写。【leetcode 340，滑动窗口+hashmap】\n7. 反问\n问了业务和技术栈：银行业务用 Java，电商更多用 Go。\n问了是否会用AI，向AI转型：内部会用AI提效。\n问了对英文的要求：有要求但是要求不高会基本文书就行。\n感想就是秋招第一面随着秋天的到来一起凉了。发个面经攒人品[哭惹R]"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records only a scheduled, invited, or arranged interview and no completed candidate interview process; retain pending."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source records only a scheduled, invited, or arranged interview and no completed candidate interview process; retain pending.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "6583380b6b89680f6468db901fb673649956f4200aef2dff963964d7b407076c"
+}

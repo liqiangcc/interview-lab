@@ -1,0 +1,94 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1444,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1444",
+  "source_note_id": "xhs-note:68e67463000000000301a1d8",
+  "source_revision_id": "xhs-note:68e67463000000000301a1d8:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "cee1a4661b17b3e3eb2648dc37803ca56d0c89299c09e9ba33ba17d92cfa7b0d",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event",
+      "question-only",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 13,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "has_completed_event_evidence": true,
+    "has_structured_candidate_event": false,
+    "generic_advice_or_aggregated": false,
+    "scheduled_only": false,
+    "question_only": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "aggregated_text": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_json/68e67463000000000301a1d8.json@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "bd19053b8e338e01a13f086150dd5822ccab248f",
+    "kind": "json",
+    "provenance": "source_projection",
+    "byte_size": 21301,
+    "content_sha256": "9a8935f664d4d6b0e5f7b863719316db67092bb57138ae44df5b8052360d9968",
+    "excerpt": {
+      "excerpt": "\"global\": {",
+      "line": 2,
+      "locator": "artifact-line:2",
+      "semantic_excerpt": "国庆前面的，想起来记录一下，线上面\n1、自我介绍\n2、所在实验室是做什么方向的研究\n3、项目是自己做的吗？项目实现过程中有遇到哪些问题？\n4、了解mysql的索引架构吗\n5、缓存穿透和缓存击穿了解吗，区别是什么，怎么解决的\n6、项目中的缓存怎么设计的？缓存的更新策略怎么设计的\n7、谈谈Redis可以从哪些方面保证高可用\n8、Redis的过期删除策略了解吗\n9、谈谈synchronized和reentrantlock的区别\n10、迪杰斯特拉算法的过程\n11、了解JDK25的新特性吗\n12、平时用大模型干什么？\n13、能实习多久\n手撕：力扣105原题，从前序和中序遍历序列构造二叉树\n反问环节\n答的七七八八的，一面感觉都是八股，项目没怎么问，外卖点评太烂了，而且简历上没写指标提升多少"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "0d463145761eb1a2878ed95a963dd116c574c1b17342f12285916894b303d9d5"
+}

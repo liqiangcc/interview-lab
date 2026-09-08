@@ -1,0 +1,94 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1448,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1448",
+  "source_note_id": "xhs-note:68e85cc500000000030346f2",
+  "source_revision_id": "xhs-note:68e85cc500000000030346f2:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "a0d1032f5c7d413e07a295216db7eaddf4f158ee8ad3e3af1ac3810f4a6f6230",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event",
+      "question-only",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 13,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "has_completed_event_evidence": true,
+    "has_structured_candidate_event": false,
+    "generic_advice_or_aggregated": false,
+    "scheduled_only": false,
+    "question_only": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "aggregated_text": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_json/68e85cc500000000030346f2.json@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "3e2c0948542c977033c50fe80939bb2c7d134d84",
+    "kind": "json",
+    "provenance": "source_projection",
+    "byte_size": 22536,
+    "content_sha256": "6875c0f5972caa01ad362d86d84cb38cb28b7cb57cd9b5f6b9f202bd84f02b85",
+    "excerpt": {
+      "excerpt": "\"global\": {",
+      "line": 2,
+      "locator": "artifact-line:2",
+      "semantic_excerpt": "⏰时长：1h\n1. 自我介绍\n2. 实习经历 难点\n3. 数据倾斜\n4. CTE的执行计划\n5. spark stage怎么划分\n6. 什么算子会触发宽依赖\n7. hive内部表和外部表区别\n8. HDFS小文件过多会有什么问题\n9. 对数仓分层的理解\n10. 数仓业务域和主题域的区别\n手撕：\n1. sql：查询某段时间借书的uid\n2. sql：查询至少连续两天登录的用户\n3. 算法：有序重复数组返回n出现的次数"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "aafd5a0cb67e1f6a1e42024c553168039ed71e9cca3c98ba3ba34188daba210c"
+}

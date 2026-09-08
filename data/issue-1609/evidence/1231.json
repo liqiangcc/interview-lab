@@ -1,0 +1,93 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1231,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1231",
+  "source_note_id": "xhs-note:68b50c4b000000001c011403",
+  "source_revision_id": "xhs-note:68b50c4b000000001c011403:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "8bfdb97a19e79514930671edd82637f5eec6450e0bdc7c9c488dd33d5b14188e",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event",
+      "question-only",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 11,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": false,
+    "has_completed_event_evidence": true,
+    "has_structured_candidate_event": false,
+    "generic_advice_or_aggregated": false,
+    "scheduled_only": false,
+    "question_only": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "aggregated_text": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68b50c4b000000001c011403.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "274c06c7d5147bfa434dfb30ab02239eac2a2a4f",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 2211,
+    "content_sha256": "a4670ec964ee106d4f61203b16a936aaf326c968160039a7b5ec54b4dfb400f9",
+    "excerpt": {
+      "excerpt": "哥们燃尽啦，节奏比一面紧凑太多了，追问密集，几乎每个问题都要结合业务场景答，对于校招生来说有点过于考验工程能力和业务能力了",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "哥们燃尽啦，节奏比一面紧凑太多了，追问密集，几乎每个问题都要结合业务场景答，对于校招生来说有点过于考验工程能力和业务能力了\n \n面经去图书馆复盘了一下👇\n1. 你的 Agent 系统Prompt 是怎么设计和迭代的？有没有做过 Prompt 自动优化？当用户提出不完整的请求时，如何补全用户意图的？\n2. 构建 Agent 的时候，遇到过哪些瓶颈？LangChain 的 memory 默认机制在多用户并发中怎么做隔离？你是如何保证线程安全的？\n3. 微调 Llama2 你是怎么选择训练样本的？清洗逻辑是什么？你有没有观察到哪些训练样本质量问题对模型行为有很大影响？举例说明。\n4. DPO相比 SFT，有哪些优劣？它在 Agent 任务上效果提升明显吗？你怎么构造偏好对？构造逻辑是自动的还是人工？\n5. 你说你服务部署在 vLLM 上，为何选择它？KV-cache 如何帮助推理加速？你自己做过哪些优化？\n6. 假如需要支持 Streaming 输出，但当前服务延迟又超标，你会怎么折中设计？\n7. 多轮对话上下文状态管理是如何做的？如何在高并发场景下保证一致性？\n8. 你做的 Agent 使用了多少个外部工具，在调用链条上如何保障故障容错和超时机制？\n追问：有没有做过工具调用失败后的feedback策略设计？\n9. 训练过程中数据来自用户行为日志，你是如何从这些数据中抽取训练对话的？有没有做过归一化或事件抽象？\n10. 有没有了解过带有时间窗口/偏移限制的对话系统？模型怎么“理解时间”？\n11. 你觉得 Agent 哪些模块最容易在真实业务中出问题？你会如何监控和定位的？\n \n【反问环节】\n这个岗位未来是更偏 Agent 系统研发，还是大模型底层调优？\n能否举个业务中实际落地的例子？\n下一轮面试大概多久会安排？\n平时团队的工作节奏和沟通方式是怎样的？"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "90d5b5a669245bb5cb6d4d1afc00c2061fce6fc22eac2ce0ce57662546728856"
+}

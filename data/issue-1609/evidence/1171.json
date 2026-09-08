@@ -1,0 +1,102 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1171,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1171",
+  "source_note_id": "xhs-note:68ab2cd7000000001b03e90c",
+  "source_revision_id": "xhs-note:68ab2cd7000000001b03e90c:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "b07a4cf39d48529ec900028773f2be8a86b757ce9600af7cf9afadbffea9c8f0",
+  "disposition": "blocked",
+  "rationale": "Exact Source provides only an interview outcome, offer, rejection, or result without a bounded candidate event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "outcome-or-offer-only",
+      "no-first-person-event",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 0,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": false,
+    "has_completed_event_evidence": false,
+    "has_structured_candidate_event": false,
+    "generic_advice_or_aggregated": false,
+    "scheduled_only": false,
+    "question_only": false,
+    "outcome_signal": true,
+    "resource_signal": false,
+    "aggregated_text": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": true,
+    "multi_signal": false,
+    "case_segments": [
+      {
+        "case_key": "kuaishou-process",
+        "anchor": "快手",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-2",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:快手"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68ab2cd7000000001b03e90c.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "7107a1cf5311b57a29339148eb1bb5073529e7a8",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 133,
+    "content_sha256": "a903a91b1ed4ebaccb051f855bce46c8bddc6b530fb7aa17eb1db9a35c4faded",
+    "excerpt": {
+      "excerpt": "快手秋招三面挂掉几率大吗[可怜R]",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "快手秋招三面挂掉几率大吗[可怜R]"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source provides only an interview outcome, offer, rejection, or result without a bounded candidate event; retain pending."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source provides only an interview outcome, offer, rejection, or result without a bounded candidate event; retain pending.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "5ede89a5d755dc3fc8c913cb01a66f5a3c8afb840d7a8ca580fedb1e35eda4d0"
+}

@@ -1,0 +1,103 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1339,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1339",
+  "source_note_id": "xhs-note:68ca59e000000000110141e1",
+  "source_revision_id": "xhs-note:68ca59e000000000110141e1:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "3d0afb2ec5472a646b4a5021295ab167deab674aa47c200401fba5bf8c82e282",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event",
+      "question-only",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 11,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "has_completed_event_evidence": true,
+    "has_structured_candidate_event": false,
+    "generic_advice_or_aggregated": false,
+    "scheduled_only": false,
+    "question_only": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "aggregated_text": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": [
+      {
+        "case_key": "bytedance-process",
+        "anchor": "字节",
+        "line": 1,
+        "locator": "artifact-line:1#offset:4-6",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:字节"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68ca59e000000000110141e1.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "6b3a6394ea4638eb226f0679b40c58873448e7a5",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 780,
+    "content_sha256": "8a3bcfa207d77cd24fa1645c7ec6f2ab273ca2745b1e3cdcb3f4504ac38f1d95",
+    "excerpt": {
+      "excerpt": "9.17字节—广告",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "9.17字节—广告\n大数据开发面经\n自我介绍\n实习简单介绍\n八股：\n1.java类特点\n2.常见数据结构及特点\n3.hdfs写流程\n4.mapreduce和spark的shuffle过程\n5.如何处理数据倾斜\n6.tcp与udp区别\n7.olap和clickhouse是否了解\n8.hdfs中的namenode和datanode作用\n9.secondary namenode作用\n10.宽窄依赖是啥\n介绍之前的一个项目以及难点\n是否了解实时数据处理方式\nsql题目：行转列和分数前五的学生\nrow_number和rank，dense_rank区别\n算法题目：求给定数组，选三个数作为三角形三条边，求三角形最大周长\n总体八股考的很基础，面试半个小时草率结束[石化R]，反问环节大脑一片空白[汗颜R]"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "66c89c8e1f17d179d641eca341f587ad59c62b34f0d72357b16034f743106689"
+}

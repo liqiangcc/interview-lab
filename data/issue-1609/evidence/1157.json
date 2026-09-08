@@ -1,0 +1,93 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1157,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1157",
+  "source_note_id": "xhs-note:68a7c755000000001c03e45c",
+  "source_revision_id": "xhs-note:68a7c755000000001c03e45c:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "4f88326bc2641e0098a70b86ea58c8f02eed4ee8721411ea930ce54f0ce21751",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event",
+      "question-only",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 2,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": false,
+    "has_detailed_event": false,
+    "has_completed_event_evidence": false,
+    "has_structured_candidate_event": false,
+    "generic_advice_or_aggregated": false,
+    "scheduled_only": false,
+    "question_only": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "aggregated_text": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68a7c755000000001c03e45c.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "5b26d57d8c38e0d93c39d46b7b7e69cd575f2b32",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 809,
+    "content_sha256": "43df11310e300e07b314e1c9b7e6549eeaa0a33e971a210204a31dbd6397574e",
+    "excerpt": {
+      "excerpt": "1.题目: 无重复字符的最长子串",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "1.题目: 无重复字符的最长子串\n描述:\n给定一个字符串 s，请你找出其中不含有重复字符的 最长子串 的长度。\n示例 1:\n输入: s = \"abcabcbb\"\n输出: 3\n解释: 最长子串是 \"abc\"，长度为 3\n示例 2:\n输入: s = \"bbbbb\"\n输出: 1\n解释: 最长子串是 \"b\"，长度为 1\n \n2. 题目: 最小覆盖子串 (Min Window Substring)\n给定两个字符串 s 和 t，请在 s 中找出包含 t 所有字符（出现次数也要满足）的最短子串。\n如果不存在这样的子串，返回空字符串 \"\" 。\n- 字符集: ASCII (包含大小写、数字及符号)\n- 要求: 时间复杂度尽量接近 O(n)\n示例\n- 输入: s = \"ADOBECODEBANC\", t = \"ABC\"\n输出: \"BANC\"\n- 输入: s = \"a\", t = \"aa\"\n输出: \"\"\n- 输入: s = \"aafslslflsldkalskaaa\", t = \"aaa\"\n输出: \"aaa\""
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "cb99bda6057842a14fdcadab410015df26d3446f64d2c65716c7e933992e51b9"
+}
