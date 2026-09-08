@@ -387,6 +387,25 @@ test('complete resume performs read-only target/receipt verification before skip
   assert.equal(posts, 1);
 });
 
+test('complete resume treats REST-reordered labels as the same target set', () => {
+  const value = planFixture();
+  const harness = journalHarness(value);
+  applyBatch({
+    plan: value.plan, records: value.records, liveLoader: () => ({ issue: value.issue, comments: value.comments }),
+    patchIssue(_number, payload) { value.issue.body = payload.body; value.issue.labels = payload.labels; return {}; },
+    postReceipt(_number, body) { const comment = { id: 553, body }; value.comments.push(comment); return comment; },
+    readComments: () => value.comments, maxMutations: 2, reconcileAttempts: 1,
+    now: () => '2026-09-08T00:01:00.000Z', ...harness,
+  });
+  const reordered = { ...value.issue, labels: [...value.issue.labels].reverse() };
+  const resumed = applyBatch({
+    plan: value.plan, records: value.records, liveLoader: () => ({ issue: reordered, comments: value.comments }),
+    patchIssue() { throw new Error('complete resume must not PATCH'); }, postReceipt() { throw new Error('complete resume must not POST'); },
+    readComments: () => value.comments, maxMutations: 2, reconcileAttempts: 1, ...harness,
+  });
+  assert.equal(resumed.ok, true);
+});
+
 test('journal counters, types, sum, and max ceiling are fail-closed before mutation', () => {
   const value = planFixture();
   const valid = initialJournal(value.plan);
