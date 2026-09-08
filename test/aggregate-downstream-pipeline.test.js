@@ -278,6 +278,57 @@ test('latest #1605 materialization adapter rejects a duplicate candidate and pla
   assert.match(result.errors.join('\n'), /materialization plan digest differs/);
 });
 
+function reDigestMaterializationPlan(plan, patchResult) {
+  const { dry_run_sha256: ignored, ...withoutDigest } = plan;
+  const results = withoutDigest.results.map((result, index) => patchResult(result, index));
+  const digestInput = { ...withoutDigest, results };
+  return { ...digestInput, dry_run_sha256: canonicalDigest(digestInput) };
+}
+
+test('latest #1605 materialization adapter binds each candidate to its exact boundary SourceNote', () => {
+  const input = latestMainAggregateInputs();
+  const boundary = validateBoundaryTransitionReport(input.boundaryTransitionReport, input.manifest);
+  const original = input.materializationPlan;
+  const other = original.results.find((result) => result.source_note_issue_number !== original.results[0].source_note_issue_number);
+  const swappedSource = reDigestMaterializationPlan(original, (result, index) => index === 0
+    ? { ...result, source_note_issue_number: other.source_note_issue_number }
+    : result);
+  const swappedValidation = validateIssue1605MaterializationPlan(swappedSource, input.manifest, boundary);
+  assert.equal(swappedValidation.ok, false);
+  assert.match(swappedValidation.errors.join('\n'), /does not belong to SourceNote/);
+
+  const wrongBinding = reDigestMaterializationPlan(original, (result, index) => index === 0
+    ? { ...result, request: { ...result.request, expected_source_revision_id: 'wrong-revision', expected_source_repository_ref: 'wrong/repository@ref' } }
+    : result);
+  const wrongBindingValidation = validateIssue1605MaterializationPlan(wrongBinding, input.manifest, boundary);
+  assert.equal(wrongBindingValidation.ok, false);
+  assert.match(wrongBindingValidation.errors.join('\n'), /expected_source_revision_id|expected_source_repository_ref/);
+});
+
+test('latest #1605 materialization adapter rejects wrong and exchanged multi-interview case keys', () => {
+  const input = latestMainAggregateInputs();
+  const boundary = validateBoundaryTransitionReport(input.boundaryTransitionReport, input.manifest);
+  const multi = boundary.items.find((item) => item.decision === 'multi-interview' && item.interview_note_cases.length >= 2);
+  assert.ok(multi, 'fixture must contain a multi-interview boundary SourceNote');
+  const multiResults = input.materializationPlan.results.filter((result) => result.source_note_issue_number === multi.issue_number);
+  assert.equal(multiResults.length, multi.interview_note_cases.length);
+  const wrongCase = reDigestMaterializationPlan(input.materializationPlan, (result) => result === multiResults[0]
+    ? { ...result, case_key: 'case-key-not-in-boundary' }
+    : result);
+  const wrongCaseValidation = validateIssue1605MaterializationPlan(wrongCase, input.manifest, boundary);
+  assert.equal(wrongCaseValidation.ok, false);
+  assert.match(wrongCaseValidation.errors.join('\n'), /case_key does not match/);
+
+  const exchangedCase = reDigestMaterializationPlan(input.materializationPlan, (result) => {
+    if (result === multiResults[0]) return { ...result, case_key: multiResults[1].case_key };
+    if (result === multiResults[1]) return { ...result, case_key: multiResults[0].case_key };
+    return result;
+  });
+  const exchangedValidation = validateIssue1605MaterializationPlan(exchangedCase, input.manifest, boundary);
+  assert.equal(exchangedValidation.ok, false);
+  assert.match(exchangedValidation.errors.join('\n'), /case_key does not match/);
+});
+
 test('pending materialization cannot bypass the complete InterviewNote owner inventory', () => {
   const input = latestMainAggregateInputs();
   const candidate = input.materializationPlan.results[0].derived_interview_note_id;
