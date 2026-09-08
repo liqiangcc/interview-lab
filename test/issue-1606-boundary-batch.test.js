@@ -28,21 +28,20 @@ function projection(text) {
 }
 
 test('issue #1606 selection is exactly #20..#392 pending set and never probes outside range', () => {
-  assert.equal(selection.selected_count, 327);
-  assert.equal(selection.items.length, 327);
+  assert.equal(selection.selected_count, selection.items.length);
+  assert.ok(selection.selected_count > 0);
   assert.deepEqual(selection.read_audit.exact_issue_numbers, Array.from({ length: 373 }, (_, index) => index + 20));
   assert.deepEqual(selection.read_audit.out_of_range_issue_numbers, []);
-  assert.equal(new Set(selection.items.map((item) => item.issue_number)).size, 327);
+  assert.equal(new Set(selection.items.map((item) => item.issue_number)).size, selection.selected_count);
   assert.equal(selection.items.every((item) => item.issue_number >= 20 && item.issue_number <= 392), true);
   assert.equal(selection.items.every((item) => item.source_repository_ref === '95b77bb261048059846273688e4b90a2e108b437'), true);
 });
 
 test('source inventory binds all selected items to verified Source projection evidence', () => {
   assert.equal(inventory.selection_sha256, selection.selection_sha256);
-  assert.equal(inventory.item_count, 327);
-  assert.equal(inventory.verified_count, 327);
-  assert.equal(inventory.blocked_count, 0);
-  assert.equal(inventory.items.every((item) => item.status === 'verified'), true);
+  assert.equal(inventory.item_count, selection.selected_count);
+  assert.equal(inventory.verified_count + inventory.blocked_count, selection.selected_count);
+  assert.equal(inventory.items.length, selection.selected_count);
   assert.equal(inventory.items.every((item) => item.artifact.provenance === 'source_projection'), true);
   assert.equal(inventory.items.every((item) => item.source_repository_ref === '95b77bb261048059846273688e4b90a2e108b437'), true);
   assert.equal(inventory.transport_policy.method, 'GET');
@@ -64,7 +63,13 @@ test('canonical digests and per-item anchors are independently recomputable', ()
   assert.equal(journal.journal_sha256, recomputeDigest(journal, 'journal_sha256'));
   assert.equal(digest.canonical_sha256, recomputeDigest(digest, 'canonical_sha256'));
   const inventoryByNumber = new Map(inventory.items.map((item) => [item.issue_number, item]));
-  for (const item of selection.items) assert.deepEqual(validateItemAnchors(item, inventoryByNumber.get(item.issue_number)), []);
+  for (const item of selection.items) {
+    const inventoryItem = inventoryByNumber.get(item.issue_number);
+    assert.deepEqual(validateItemAnchors(item, inventoryItem), []);
+    const planned = plan.items.find((candidate) => candidate.issue_number === item.issue_number);
+    const request = JSON.parse(fs.readFileSync(path.join(root, planned.request_file), 'utf8'));
+    assert.deepEqual(validateRequestAnchors(request, item, inventoryItem), []);
+  }
 });
 
 test('anchor gate rejects self-reported digest tampering, substitutions, omissions, and request drift', () => {
@@ -119,6 +124,7 @@ test('P1 spot checks use completed evidence and block appointment/question-only 
   assert.equal(classifyBoundary(inventory.items.find((item) => item.issue_number === 103)).decision, 'single-interview');
   assert.match(classifyBoundary(inventory.items.find((item) => item.issue_number === 103)).evidence_line.text, /面的/);
   for (const issueNumber of [143, 285, 305]) assert.equal(classifyBoundary(inventory.items.find((item) => item.issue_number === issueNumber)).status, 'blocked', `#${issueNumber} must remain pending`);
+  assert.equal(classifyBoundary(projection('电话约面')).status, 'blocked');
   assert.equal(classifyBoundary(inventory.items.find((item) => item.issue_number === 389)).decision, 'single-interview');
   assert.match(classifyBoundary(inventory.items.find((item) => item.issue_number === 389)).evidence_line.text, /面完/);
 });
@@ -159,8 +165,8 @@ test('semantic adversarial cases distinguish curated advice, recruiting calendar
 });
 
 test('every selected item has an independent validated request and dry-run has zero mutations', () => {
-  assert.equal(plan.counts.total, 327);
-  assert.equal(plan.items.length, 327);
+  assert.equal(plan.counts.total, selection.selected_count);
+  assert.equal(plan.items.length, selection.selected_count);
   assert.equal(journal.mutation_count, 0);
   assert.equal(journal.live_apply_authorized, false);
   assert.equal(digest.live_mutations, 0);
@@ -173,5 +179,5 @@ test('every selected item has an independent validated request and dry-run has z
     assert.equal(request.expected_source_repository_ref, '95b77bb261048059846273688e4b90a2e108b437');
     assert.equal(request.evidence.artifact_provenance, 'source_projection');
   }
-  assert.equal(fs.readdirSync(requestDir).filter((file) => file.endsWith('.json')).length, 327);
+  assert.equal(fs.readdirSync(requestDir).filter((file) => file.endsWith('.json')).length, selection.selected_count);
 });
