@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/liqiangcc/interview-lab/schemas/issue-1605-interview-note-materialization-plan.schema.json",
+  "title": "Issue 1605 post-boundary InterviewNote materialization plan-only manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "repository", "parent_issue", "source_repository", "source_ref", "mode", "mutation_performed", "write_operations", "boundary_reports", "boundary_manifest", "boundary_evidence", "source_snapshot", "ownership", "counts", "blocked_reasons", "results", "errors", "dry_run_sha256", "ok"],
+  "properties": {
+    "schema_version": {"const": "issue-1605-interview-note-materialization-plan.v1"},
+    "repository": {"const": "liqiangcc/interview-lab"},
+    "parent_issue": {"const": 1605},
+    "source_repository": {"const": "liqiangcc/xhs"},
+    "source_ref": {"const": "95b77bb261048059846273688e4b90a2e108b437"},
+    "mode": {"const": "plan-only"},
+    "mutation_performed": {"const": false},
+    "write_operations": {"const": {"patch": 0, "post": 0, "create": 0}},
+    "boundary_reports": {"type": "array", "minItems": 1, "items": {"type": "object", "additionalProperties": false, "required": ["schema_version", "ok", "errors"], "properties": {"schema_version": {"type": ["string", "null"]}, "digest": {}, "ok": {"type": "boolean"}, "errors": {"type": "array", "items": {"type": "string"}}}}},
+    "boundary_manifest": {"type": ["object", "null"], "properties": {"schema_version": {"type": "string"}, "parent_issue": {"const": 1605}, "plan_digest": {"type": ["string", "null"]}, "canonical_digest": {"type": ["string", "null"]}, "candidate_count": {"type": "integer", "minimum": 0}, "complete": {"type": "boolean"}}},
+    "boundary_evidence": {"type": "object"},
+    "source_snapshot": {"type": ["object", "null"]},
+    "ownership": {"type": "object", "required": ["identity_count", "ownership_search_errors", "mode"], "properties": {"identity_count": {"type": "integer", "minimum": 0}, "ownership_search_errors": {"type": "array"}, "mode": {"type": "string"}, "proof": {}}},
+    "counts": {"type": "object", "additionalProperties": {"type": "integer", "minimum": 0}},
+    "blocked_reasons": {"type": "object", "additionalProperties": {"type": "integer", "minimum": 0}},
+    "results": {"type": "array", "items": {"type": "object", "additionalProperties": true}},
+    "errors": {"type": "array", "items": {"type": "string"}},
+    "dry_run_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "ok": {"type": "boolean"}
+  }
+}
