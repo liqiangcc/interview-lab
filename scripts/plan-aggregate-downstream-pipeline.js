@@ -234,6 +234,7 @@ function applyLive(plan, manifest, args, dependencies = {}) {
     const reconcileReceipt = (issueNumber, expectedBody) => {
       for (let attempt = 1; attempt <= maxReceiptReconcile; attempt += 1) {
         const matches = [];
+        let observedShortPage = false;
         for (let page = 1; page <= maxReceiptCommentPages; page += 1) {
           writerLock.assertHeld();
           let comments;
@@ -241,8 +242,9 @@ function applyLive(plan, manifest, args, dependencies = {}) {
           catch (error) { throw new Error(`receipt response unknown and marker GET failed on attempt ${attempt}, page ${page}: ${error.message}`); }
           if (!Array.isArray(comments)) throw new Error('receipt marker GET returned a non-array response; refusing unknown state');
           matches.push(...comments.filter((comment) => typeof comment.body === 'string' && comment.body.includes(expectedBody)));
-          if (comments.length < 100) break;
+          if (comments.length < 100) { observedShortPage = true; break; }
         }
+        if (!observedShortPage) throw new Error(`receipt marker pagination incomplete for Issue #${issueNumber} after ${maxReceiptCommentPages} full pages; refusing unknown state`);
         if (matches.length > 1) throw new Error(`receipt marker GET found multiple matching markers for Issue #${issueNumber}; refusing unknown state`);
         const found = matches[0];
         if (found && Number.isInteger(Number(found.id)) && Number(found.id) > 0) return { id: Number(found.id), attempts: attempt };

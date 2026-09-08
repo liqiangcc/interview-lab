@@ -497,6 +497,38 @@ test('applyLive paginates bounded receipt marker reconciliation beyond page one'
   assert.deepEqual(pages, [1, 2]);
 });
 
+test('applyLive refuses an early marker without a short terminal page and rejects duplicate markers across pages', () => {
+  const incomplete = applyFixture();
+  incomplete.args.maxReceiptCommentPages = 2;
+  let incompleteBody = null;
+  assert.throws(() => applyLive(incomplete.plan, incomplete.input.manifest, incomplete.args, {
+    replan() { return { ok: true, plan: incomplete.plan }; },
+    readIssue() { return incomplete.live; },
+    patchIssueMetadata(issueNumber, projection) { incomplete.live.title = projection.title; incomplete.live.labels = projection.labels; },
+    postComment(issueNumber, body) { incompleteBody = body; throw new Error('simulated response loss'); },
+    readComments(issueNumber, page) {
+      if (page === 1) return [{ id: 904, body: incompleteBody }, ...Array.from({ length: 99 }, () => ({ id: 1, body: 'unrelated' }))];
+      return Array.from({ length: 100 }, () => ({ id: 2, body: 'unrelated' }));
+    },
+  }), /pagination incomplete/);
+  const incompleteJournal = JSON.parse(fs.readFileSync(incomplete.args.journal, 'utf8'));
+  assert.equal(incompleteJournal.status, 'uncertain');
+  assert.equal(incompleteJournal.possibly_performed, true);
+
+  const duplicate = applyFixture();
+  let duplicateBody = null;
+  assert.throws(() => applyLive(duplicate.plan, duplicate.input.manifest, duplicate.args, {
+    replan() { return { ok: true, plan: duplicate.plan }; },
+    readIssue() { return duplicate.live; },
+    patchIssueMetadata(issueNumber, projection) { duplicate.live.title = projection.title; duplicate.live.labels = projection.labels; },
+    postComment(issueNumber, body) { duplicateBody = body; throw new Error('simulated response loss'); },
+    readComments(issueNumber, page) {
+      if (page === 1) return [{ id: 905, body: duplicateBody }, ...Array.from({ length: 99 }, () => ({ id: 3, body: 'unrelated' }))];
+      return [{ id: 906, body: duplicateBody }];
+    },
+  }), /multiple matching markers/);
+});
+
 test('applyLive enforces a positive mutation ceiling before any writer lock is acquired', () => {
   const fixture = applyFixture();
   fixture.args.maxMutations = 0;
