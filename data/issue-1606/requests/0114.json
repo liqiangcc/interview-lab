@@ -1,0 +1,70 @@
+{
+  "schema_version": "issue-1606-boundary-review-request.v1",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "child_issue": 1606,
+  "issue_number": 114,
+  "source_note_id": "xhs-note:65d7654a000000000102967a",
+  "source_id": "xhs:65d7654a000000000102967a",
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/114",
+  "expected_body_sha256": "282a4e24a2569f8c5f9833843bd09df594eda71533ac334dda195385b2145abc",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:65d7654a000000000102967a:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "transition_id": "issue-1606-114-boundary-review-1",
+  "reviewed_at": "2026-09-08T02:05:50Z",
+  "reviewer_kind": "ai-assisted",
+  "disposition": "ready",
+  "decision": "single-interview",
+  "evidence": {
+    "artifact_ref": "liqiangcc/xhs:note_desc/65d7654a000000000102967a.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "artifact_provenance": "source_projection",
+    "kind": "text_projection",
+    "git_blob_sha": "07e023fe20b16044d16e0fa2ceff2a44bc1f5c6d",
+    "byte_size": 278,
+    "excerpts": [
+      {
+        "excerpt": "面试时长半小时，一开始我说话面试官听不见，点击设备检测显示正常，我戴了耳机面试官才能听见，不知道什么原因。",
+        "line": 2,
+        "locator": "artifact-line:2"
+      }
+    ]
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:2"
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:2"
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:2"
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "Source projection explicitly records one candidate interview activity; no independent multi-event boundary is evidenced in the reviewed projection. Same-process rounds remain one case."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:2"
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:2"
+    }
+  ],
+  "limitations": [
+    "Boundary Review only determines whether 0/1/N InterviewNote case identity may be materialized; it does not write source-ready, InterviewContext, learning labels, or InterviewNote Issues.",
+    "No live evidence comment or transition mutation is authorized by this artifact; any later apply must create/bind durable per-issue evidence and recheck body/state/source CAS."
+  ]
+}

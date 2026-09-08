@@ -1,0 +1,71 @@
+{
+  "schema_version": "issue-1606-boundary-review-request.v1",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "child_issue": 1606,
+  "issue_number": 336,
+  "source_note_id": "xhs-note:66ecde2f000000001e01b1ae",
+  "source_id": "xhs:66ecde2f000000001e01b1ae",
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/336",
+  "expected_body_sha256": "7b920c3cf83fa9de7c45352c17ee67e9b1ed01eb11bc382887dd8593b254437c",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:66ecde2f000000001e01b1ae:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "transition_id": "issue-1606-336-boundary-review-1",
+  "reviewed_at": "2026-09-08T02:05:50Z",
+  "reviewer_kind": "ai-assisted",
+  "disposition": "blocked",
+  "decision": null,
+  "evidence": {
+    "artifact_ref": "liqiangcc/xhs:note_desc/66ecde2f000000001e01b1ae.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "artifact_provenance": "source_projection",
+    "kind": "text_projection",
+    "git_blob_sha": "38bf0a19451a03e579b27756cbea1de92ad2e252",
+    "byte_size": 2461,
+    "excerpts": [
+      {
+        "excerpt": "Spring AOP",
+        "line": 1,
+        "locator": "artifact-line:1"
+      }
+    ]
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:1"
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:1"
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:1"
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "Source projection does not provide enough direct event-boundary evidence; retain boundary:pending rather than infer from title or hashtags."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:1"
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:1"
+    }
+  ],
+  "limitations": [
+    "Boundary Review only determines whether 0/1/N InterviewNote case identity may be materialized; it does not write source-ready, InterviewContext, learning labels, or InterviewNote Issues.",
+    "No live evidence comment or transition mutation is authorized by this artifact; any later apply must create/bind durable per-issue evidence and recheck body/state/source CAS.",
+    "Source projection does not provide enough direct event-boundary evidence; retain boundary:pending rather than infer from title or hashtags."
+  ]
+}

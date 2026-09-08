@@ -1,0 +1,71 @@
+{
+  "schema_version": "issue-1606-boundary-review-request.v1",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "child_issue": 1606,
+  "issue_number": 223,
+  "source_note_id": "xhs-note:6673bf8b000000001e010d64",
+  "source_id": "xhs:6673bf8b000000001e010d64",
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/223",
+  "expected_body_sha256": "939d87408d201062f1f9fe44c50659b4eb635c5a58456ebac8d5494360332a17",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:6673bf8b000000001e010d64:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "transition_id": "issue-1606-223-boundary-review-1",
+  "reviewed_at": "2026-09-08T02:05:50Z",
+  "reviewer_kind": "ai-assisted",
+  "disposition": "blocked",
+  "decision": null,
+  "evidence": {
+    "artifact_ref": "liqiangcc/xhs:note_desc/6673bf8b000000001e010d64.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "artifact_provenance": "source_projection",
+    "kind": "text_projection",
+    "git_blob_sha": "4d509df83cbc9bcc68a17d37a0dc5a372090dcd1",
+    "byte_size": 364,
+    "excerpts": [
+      {
+        "excerpt": "与传统的JDBC相比，MyBatis的优点？ #程序员[话题]#  #程序员面试[话题]#  #程序员面试题[话题]#  #java[话题]#  #java学习[话题]#  #java面试[话题]#  #后端[话题]#  #后端开发[话题]#  #后端面试[话题]#  #后端工程师[话题]#  #java后端[话题]#  #阿里[话题]#  #阿里面试[话题]#",
+        "line": 1,
+        "locator": "artifact-line:1"
+      }
+    ]
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:1"
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:1"
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:1"
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "Source projection does not provide enough direct event-boundary evidence; retain boundary:pending rather than infer from title or hashtags."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:1"
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:1"
+    }
+  ],
+  "limitations": [
+    "Boundary Review only determines whether 0/1/N InterviewNote case identity may be materialized; it does not write source-ready, InterviewContext, learning labels, or InterviewNote Issues.",
+    "No live evidence comment or transition mutation is authorized by this artifact; any later apply must create/bind durable per-issue evidence and recheck body/state/source CAS.",
+    "Source projection does not provide enough direct event-boundary evidence; retain boundary:pending rather than infer from title or hashtags."
+  ]
+}

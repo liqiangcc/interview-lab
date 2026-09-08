@@ -1,0 +1,70 @@
+{
+  "schema_version": "issue-1606-boundary-review-request.v1",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "child_issue": 1606,
+  "issue_number": 128,
+  "source_note_id": "xhs-note:65f3d1b5000000001302669c",
+  "source_id": "xhs:65f3d1b5000000001302669c",
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/128",
+  "expected_body_sha256": "baaf6d8d3865710e12c0226ff9fb05fd3777ce492585607cba91acd3fba8a33c",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:65f3d1b5000000001302669c:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "transition_id": "issue-1606-128-boundary-review-1",
+  "reviewed_at": "2026-09-08T02:05:50Z",
+  "reviewer_kind": "ai-assisted",
+  "disposition": "ready",
+  "decision": "single-interview",
+  "evidence": {
+    "artifact_ref": "liqiangcc/xhs:note_desc/65f3d1b5000000001302669c.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "artifact_provenance": "source_projection",
+    "kind": "text_projection",
+    "git_blob_sha": "9f5c3c28e2df19909f60678e052c6d08b401c93a",
+    "byte_size": 777,
+    "excerpts": [
+      {
+        "excerpt": "面试官真的很有深度，也会引导，但我只是一个死背八股选手，寄了",
+        "line": 4,
+        "locator": "artifact-line:4"
+      }
+    ]
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:4"
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:4"
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:4"
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "Source projection explicitly records one candidate interview activity; no independent multi-event boundary is evidenced in the reviewed projection. Same-process rounds remain one case."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:4"
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:4"
+    }
+  ],
+  "limitations": [
+    "Boundary Review only determines whether 0/1/N InterviewNote case identity may be materialized; it does not write source-ready, InterviewContext, learning labels, or InterviewNote Issues.",
+    "No live evidence comment or transition mutation is authorized by this artifact; any later apply must create/bind durable per-issue evidence and recheck body/state/source CAS."
+  ]
+}

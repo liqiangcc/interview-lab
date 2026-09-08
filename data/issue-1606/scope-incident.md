@@ -2,7 +2,7 @@
 
 ## Status
 
-`blocked` / `fail-closed`
+`resolved by controller reset; incident retained`
 
 ## Incident
 
@@ -12,10 +12,11 @@ outside the explicitly authorized range `#20–#392`. No content from #393 was
 used to construct a selection, evidence request, plan, digest, journal, or
 mutation. No live GitHub write was attempted.
 
-Because the task requires proving that the selection was formed without
-reading issues after #392, this run cannot produce a valid frozen selection or
-claim completion. Work stops here until the controller explicitly resets or
-re-authorizes the run with this incident recorded.
+The controller explicitly reset authorization on 2026-09-08 and confirmed
+that the accidental read does not invalidate the A-batch selection. The
+incident remains recorded, but the new selection/dry-run run starts from the
+current live baseline and is still restricted to exact issue numbers
+`#20–#392`; it does not use #393 content.
 
 ## Reads in this run
 
@@ -24,12 +25,19 @@ re-authorizes the run with this incident recorded.
   boundaries, invariants, schemas, scripts, fixtures, and tests.
 - GitHub: parent/task metadata for `#1605`/`#1606`; boundary samples `#20`,
   `#21`, `#392`; and the out-of-scope accidental read `#393`.
-- No issues after `#393` were requested or read.
+- No issues after `#393` were requested or read; the only out-of-scope read was
+  the single accidental request for `#393` described above.
 
 ## Mutation audit
 
 - Live GitHub: no PATCH, POST, label change, comment, close/reopen, or batch
   apply.
-- Worktree: this incident record only; no source evidence or Raw artifact was
-  changed or overwritten.
+- Worktree: the incident record is preserved; subsequent authorized work only
+  added selection/evidence/dry-run artifacts and did not change or overwrite
+  any Raw source artifact.
 
+## Controller reset
+
+The controller authorized continuation while retaining this audit record. The
+continuation must not probe an upper-bound issue and must not read or modify
+issues outside `#20–#392`.

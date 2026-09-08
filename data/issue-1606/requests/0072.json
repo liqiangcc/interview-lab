@@ -1,0 +1,70 @@
+{
+  "schema_version": "issue-1606-boundary-review-request.v1",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "child_issue": 1606,
+  "issue_number": 72,
+  "source_note_id": "xhs-note:6505c4e5000000001302c04a",
+  "source_id": "xhs:6505c4e5000000001302c04a",
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/72",
+  "expected_body_sha256": "331e3b435f45e6b6e7b56c46a0711d62186d5790a4df0bd741e10dd0a4c44100",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:6505c4e5000000001302c04a:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "transition_id": "issue-1606-72-boundary-review-1",
+  "reviewed_at": "2026-09-08T02:05:50Z",
+  "reviewer_kind": "ai-assisted",
+  "disposition": "ready",
+  "decision": "single-interview",
+  "evidence": {
+    "artifact_ref": "liqiangcc/xhs:note_desc/6505c4e5000000001302c04a.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "artifact_provenance": "source_projection",
+    "kind": "text_projection",
+    "git_blob_sha": "6b1bdd275da80db3f7d14cf6c2fe1f856d383406",
+    "byte_size": 234,
+    "excerpts": [
+      {
+        "excerpt": "#24届秋招[话题]# #产品经理面试[话题]# #校招[话题]# 一天结束三轮面试，十分钟感觉约下一场！面试体验真的很好啦，夸夸贝壳！[偷笑R][偷笑R][偷笑R]不泡池子 主打一个爽快hahah",
+        "line": 1,
+        "locator": "artifact-line:1"
+      }
+    ]
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:1"
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:1"
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:1"
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "Source projection explicitly records one candidate interview activity; no independent multi-event boundary is evidenced in the reviewed projection. Same-process rounds remain one case."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:1"
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:1"
+    }
+  ],
+  "limitations": [
+    "Boundary Review only determines whether 0/1/N InterviewNote case identity may be materialized; it does not write source-ready, InterviewContext, learning labels, or InterviewNote Issues.",
+    "No live evidence comment or transition mutation is authorized by this artifact; any later apply must create/bind durable per-issue evidence and recheck body/state/source CAS."
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "schema_version": "issue-1606-boundary-review-request.v1",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "child_issue": 1606,
+  "issue_number": 184,
+  "source_note_id": "xhs-note:6644a844000000001e0304a3",
+  "source_id": "xhs:6644a844000000001e0304a3",
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/184",
+  "expected_body_sha256": "4c53d810e9bb6a4de5f80ce8e86cd41859caa5142522ac23626c5055f8e9c229",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:6644a844000000001e0304a3:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "transition_id": "issue-1606-184-boundary-review-1",
+  "reviewed_at": "2026-09-08T02:05:50Z",
+  "reviewer_kind": "ai-assisted",
+  "disposition": "blocked",
+  "decision": null,
+  "evidence": {
+    "artifact_ref": "liqiangcc/xhs:note_desc/6644a844000000001e0304a3.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "artifact_provenance": "source_projection",
+    "kind": "text_projection",
+    "git_blob_sha": "0441b378e032f96ec8d75eb0df337a82e49ac162",
+    "byte_size": 868,
+    "excerpts": [
+      {
+        "excerpt": "1.聊项目实习：每次未读动态的位点是怎样设计的，自定义注解是怎么写的、有没有RPC的一些通信、RocketMQ和Kafka之间是怎么选择的、了解Dubbo吗、实习期间有没有注意公司里实现的RPC框架、整个业务的上下文和你中间这一层处理的流程大概业务上的理解是怎样的",
+        "line": 1,
+        "locator": "artifact-line:1"
+      }
+    ]
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:1"
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:1"
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:1"
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "Source projection does not provide enough direct event-boundary evidence; retain boundary:pending rather than infer from title or hashtags."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:1"
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:1"
+    }
+  ],
+  "limitations": [
+    "Boundary Review only determines whether 0/1/N InterviewNote case identity may be materialized; it does not write source-ready, InterviewContext, learning labels, or InterviewNote Issues.",
+    "No live evidence comment or transition mutation is authorized by this artifact; any later apply must create/bind durable per-issue evidence and recheck body/state/source CAS.",
+    "Source projection does not provide enough direct event-boundary evidence; retain boundary:pending rather than infer from title or hashtags."
+  ]
+}
