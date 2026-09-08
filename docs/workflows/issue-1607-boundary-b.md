@@ -40,7 +40,7 @@ node scripts/generate-issue-1607-boundary-evidence.js \
 
 ## 当前审计结论
 
-当前产物中的 367 条都保持 `decision=pending`、`evidence_status=review-required`；Source bytes 全部已独立验证，但分类仅是基于完整 projection 文本的 deterministic proposal，不是 durable human review。proposal 统计为 `single-interview=12`、`not-interview=3`、`pending=352`，详见 `classification-ledger.json`。每条 evidence 绑定完整 projection 文本、SHA/长度与分类依据行号；`dry-run.plan.json` 的 `mutation_count` 与 `apply.journal.json` 的 `mutation_count` 均为 0，ready=0。
+当前产物中的 367 条都保持 `decision=pending`、`evidence_status=review-required`；Source bytes 全部已独立验证，但分类仅是基于完整 projection 文本的 deterministic proposal，不是 durable human review。proposal 统计为 `single-interview=105`、`not-interview=5`、`pending=257`，详见 `classification-ledger.json`。每条 evidence 绑定完整 projection 文本、SHA/长度与分类依据行号；`dry-run.plan.json` 的 `mutation_count` 与 `apply.journal.json` 的 `mutation_count` 均为 0，ready=0。
 
 分类规则要求第一人称、明确已发生的过程事实和问题证据同时出现；邀约、据说、求助、经验建议、面试官分享、题库/题目列表保持 pending，明确拒面才提出 not-interview。分类仍只是 proposal，不能改变 pending 或授权 transition。
 
