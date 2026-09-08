@@ -196,7 +196,7 @@ test('full-source semantic boundary keeps events, rounds, and non-events distinc
     ['single-event-with-bank-words', '候选人一面记录', '我参加了一面，面试官问了我项目难点和八股问题，最后拿到了结果', 'single-interview'],
     ['multi-round', '面试复盘', '我参加了一面和二面，分别记录面试官的问题和回答', 'multi-interview'],
     ['timeline-multi-round', '后端开发面经', '投简历 11.18 一面 11.20 挂；投简历 11.29 一面 12.02 挂', 'multi-interview'],
-    ['telephone-review', '电话面试复盘', 'Java基础类型和占的字节数\n讲讲二分查找和二叉搜索树\n算法题：两个队列实现栈', 'single-interview'],
+    ['telephone-review-question-list', '电话面试复盘', 'Java基础类型和占的字节数\n讲讲二分查找和二叉搜索树\n算法题：两个队列实现栈', 'single-interview'],
     ['advice-question', '面试官问我的问题', '面试官问我的问题回答不上来怎么办，如何准备面试', 'not-interview'],
     ['marketing-repost', '前端二面通关秘籍', '三面挂掉的同学整理出的通关秘籍，必问的高频题和标准答案，关注我不迷路', 'not-interview'],
   ];
@@ -217,7 +217,74 @@ test('actual high-risk B samples keep candidate events ahead of advice and title
   }
   const item444 = selection.items.find((candidate) => candidate.issue_number === 444);
   assert.ok(item444, '#444 must remain selected');
-  assert.notEqual(classifyFullSource(item444).proposed_decision, 'not-interview');
+  assert.equal(classifyFullSource(item444).proposed_decision, 'single-interview');
   const repeatedTitleOnly = classifyFullSource(fullSourceItem('快手二面面经', '1. JVM内存模型\n2. 线程池拒绝策略\n3. 算法题'));
-  assert.equal(repeatedTitleOnly.proposed_decision, 'single-interview');
+  assert.equal(repeatedTitleOnly.proposed_decision, 'single-interview', 'a title-labelled interview with a substantive question list is an event');
+});
+
+test('real non-event samples receive exact non-event decisions', () => {
+  const selection = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'issue-1607', 'selection.json'), 'utf8'));
+  const expected = {
+    395: 'not-interview', 415: 'not-interview', 467: 'not-interview', 469: 'not-interview',
+    470: 'not-interview', 475: 'not-interview', 476: 'not-interview', 494: 'not-interview',
+    497: 'not-interview', 501: 'not-interview', 511: 'not-interview', 560: 'not-interview',
+    569: 'not-interview', 601: 'not-interview', 654: 'not-interview', 727: 'not-interview',
+    435: 'not-interview', 485: 'not-interview', 739: 'not-interview',
+    563: 'not-interview',
+    658: 'not-interview',
+  };
+  for (const [numberText, decision] of Object.entries(expected)) {
+    const number = Number(numberText);
+    const item = selection.items.find((candidate) => candidate.issue_number === number);
+    assert.ok(item, `#${number} must remain selected`);
+    assert.equal(classifyFullSource(item).proposed_decision, decision, `#${number} must classify exactly as ${decision}`);
+  }
+  assert.equal(classifyFullSource(fullSourceItem('Java面经', '题库放在后面了，大家可以参考。')).proposed_decision, 'not-interview');
+});
+
+test('real candidate-event samples are not suppressed by question or advice vocabulary', () => {
+  const selection = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'issue-1607', 'selection.json'), 'utf8'));
+  const expected = {
+    404: 'single-interview', 407: 'single-interview', 422: 'multi-interview',
+    440: 'single-interview', 505: 'single-interview', 547: 'single-interview',
+    557: 'single-interview', 591: 'multi-interview', 678: 'single-interview',
+    610: 'single-interview', 665: 'single-interview', 710: 'multi-interview',
+    713: 'multi-interview', 405: 'single-interview', 473: 'multi-interview',
+    526: 'single-interview', 628: 'single-interview', 683: 'single-interview',
+    463: 'single-interview', 466: 'single-interview', 479: 'single-interview',
+    480: 'single-interview', 498: 'single-interview', 499: 'single-interview',
+    509: 'single-interview', 525: 'single-interview', 541: 'single-interview',
+    545: 'single-interview', 561: 'single-interview', 570: 'single-interview',
+    579: 'single-interview', 588: 'single-interview', 611: 'single-interview',
+    618: 'single-interview', 633: 'single-interview', 634: 'single-interview',
+    656: 'single-interview', 670: 'single-interview', 672: 'single-interview',
+    673: 'single-interview', 714: 'single-interview', 725: 'single-interview',
+    474: 'single-interview', 503: 'single-interview', 603: 'single-interview',
+    490: 'single-interview', 491: 'single-interview', 408: 'single-interview',
+    471: 'single-interview', 518: 'single-interview', 537: 'single-interview',
+    703: 'single-interview', 761: 'single-interview', 559: 'single-interview',
+    594: 'single-interview',
+  };
+  for (const [numberText, decision] of Object.entries(expected)) {
+    const number = Number(numberText);
+    const item = selection.items.find((candidate) => candidate.issue_number === number);
+    assert.ok(item, `#${number} must remain selected`);
+    assert.equal(classifyFullSource(item).proposed_decision, decision, `#${number} must classify exactly as ${decision}`);
+  }
+});
+
+test('ambiguous title-only, invitation, and result-only samples retain exact fail-closed status', () => {
+  const selection = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'issue-1607', 'selection.json'), 'utf8'));
+  const expected = {
+    412: 'blocked', 451: 'blocked', 464: 'blocked', 486: 'blocked',
+    519: 'blocked', 522: 'blocked', 580: 'blocked', 632: 'blocked', 760: 'blocked',
+    449: 'not-interview', 553: 'not-interview', 695: 'not-interview',
+    452: 'blocked', 531: 'blocked', 704: 'blocked', 752: 'blocked',
+  };
+  for (const [numberText, decision] of Object.entries(expected)) {
+    const number = Number(numberText);
+    const item = selection.items.find((candidate) => candidate.issue_number === number);
+    assert.ok(item, `#${number} must remain selected`);
+    assert.equal(classifyFullSource(item).proposed_decision, decision, `#${number} must classify exactly as ${decision}`);
+  }
 });

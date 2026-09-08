@@ -35,11 +35,11 @@ node scripts/generate-issue-1607-boundary-evidence.js \
 ## 当前审计结论
 
 ```text
-single-interview: 178
-multi-interview: 19
-not-interview: 50
-blocked: 10
-semantic_ready: 197
+single-interview: 142
+multi-interview: 25
+not-interview: 73
+blocked: 17
+semantic_ready: 167
 ready: 0
 executable: false
 mutation_count: 0
@@ -53,9 +53,9 @@ scope audit：`selection.scope_compliance=pass`、`plan.scope_compliance=pass`�
 
 ```text
 selection_sha256: 20b9deb520f8c111cc969b749a45d0e56308126ae5f228ac9e1251ea92d8f7be
-evidence_ledger_sha256: b13bdd74996a00495347203da5bc6b303b2a60ca5ab17088a3848aaa53dacfa6
-request_set_sha256: 26f1a4f4845d6cea13ad3733040f6019fd255e63212c668414c9980fb7c390cc
-classification_ledger_sha256: 1e6add76aa5c7d99d5c81bef22156db92020d7cefa52252861b0597dfca5b6f8
-dry_run_sha256: e3cb87b342b0bd87804cb5ae956bf645ee73e3a1541d264e6f71f71cd0bf6623
-journal_sha256: 1dbb767d8239c81028690c8219f7b0d05b3a0b419e1fdddae040a0d6228b7cb7
+evidence_ledger_sha256: a620236f58b9502cde787d015a6a6d441d0a3b48f2104c99ef140430bea22bba
+request_set_sha256: 424756ee0d0c76e6072cdeff8f8b5f5ed0aca0168bbf86ea85edd75846d06d91
+classification_ledger_sha256: 24ddcdb5b9323e33ba24ae9021fc1c1e9e0bedd8bcfadac85d0ccc57a70a8002
+dry_run_sha256: abd13f26e448dfc2ef6e7f9e209274706cd0a08e27a24285335ae2d67d970a52
+journal_sha256: 1ced068734bb782c5444a1a25e2546168002cd01d1d35d91eed05a4d0b5a3215
 ```

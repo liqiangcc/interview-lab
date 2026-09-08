@@ -9,13 +9,13 @@
   "expected_body_sha256": "7bff5d7c3a5bb70d6972535aa7903267ae4bb65b9bd4db93dddb2d9d56324caa",
   "expected_source_revision_id": "xhs-note:67d2c43b000000001201c0df:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "reviewed",
-  "decision": "single-interview",
-  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
+  "evidence_status": "blocked",
+  "decision": "blocked",
+  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified for this item.",
   "classification": {
-    "status": "reviewed",
-    "proposed_decision": "single-interview",
-    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "status": "blocked",
+    "proposed_decision": "blocked",
+    "basis": "round-labelled title with only generic topic hashtags lacks independent candidate-process or question evidence",
     "basis_lines": [],
     "semantic_evidence": [
       {
@@ -125,8 +125,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
+      "result": "blocked",
+      "note": "Full Source material remains semantically insufficient to decide the boundary."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -140,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The semantic decision is review-ready but is not durable controller authorization.",
+    "Complete pinned artifacts were read, but their semantics do not establish a 0/1/N boundary decision.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]
