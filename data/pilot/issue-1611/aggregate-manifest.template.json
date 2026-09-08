@@ -1,0 +1,29 @@
+{
+  "schema_version": "aggregate-downstream-pipeline.v1",
+  "aggregate_id": "issue-1611-full-downstream-v1",
+  "repository": "liqiangcc/interview-lab",
+  "source_repository": "liqiangcc/xhs",
+  "source_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "parent_issue": 1605,
+  "issue_number": 1611,
+  "dependency_issues": [1606, 1607, 1608, 1609, 1610],
+  "boundary_batches": [
+    { "issue_number": 1606, "first": 20, "last": 392, "expected_count": 327, "report": "../issue-1606/boundary.final.json" },
+    { "issue_number": 1607, "first": 393, "last": 765, "expected_count": 367, "report": "../issue-1607/boundary.final.json" },
+    { "issue_number": 1608, "first": 766, "last": 1138, "expected_count": 337, "report": "../issue-1608/boundary.final.json" },
+    { "issue_number": 1609, "first": 1139, "last": 1508, "expected_count": 366, "report": "../issue-1609/boundary.final.json" }
+  ],
+  "recovery_report": "../issue-1610/recovery.final.json",
+  "materialization_reports": [
+    "materialization.final.json"
+  ],
+  "source_review_receipts": "source-review.receipts.json",
+  "context_reports": [
+    "new-context.projections.json"
+  ],
+  "existing_context_reports": [
+    "existing-50-context.audit.json"
+  ],
+  "existing_source_ready_issue_numbers": [3, 4, 915, 1509, 1510, 1511, 1512, 1513, 1514, 1515, 1516, 1517, 1518, 1519, 1520, 1521, 1522, 1523, 1524, 1525, 1526, 1527, 1528, 1529, 1530, 1531, 1532, 1533, 1534, 1535, 1536, 1537, 1538, 1558, 1559, 1562, 1563, 1564, 1565, 1566, 1567, 1568, 1569, 1570, 1571, 1572, 1573, 1574, 1575, 1576],
+  "live_issue_snapshot": "live-interview-note-snapshot.json"
+}
