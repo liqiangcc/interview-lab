@@ -346,6 +346,24 @@ test('target-already-applied without a receipt can repair and validate its recei
   assert.equal(resumed.items[0].status, 'already-applied');
 });
 
+test('resuming from the frozen plan ignores REST label ordering without changing its digest', () => {
+  const value = planFixture();
+  const frozen = JSON.parse(JSON.stringify(value.plan));
+  value.issue.body = frozen.items[0].next_body;
+  value.issue.labels = [...frozen.items[0].next_labels].reverse();
+  const resumed = buildPlan({
+    manifest: value.manifest,
+    manifestFile: path.join(value.directory, 'full-boundary-manifest.json'),
+    records: value.records,
+    priorPlan: frozen,
+    liveLoader: () => ({ issue: value.issue, comments: value.comments }),
+  });
+  assert.equal(resumed.ok, true, resumed.errors.join('; '));
+  assert.equal(resumed.items[0].status, 'receipt-needed');
+  assert.deepEqual(resumed.items[0].next_labels, frozen.items[0].next_labels);
+  assert.equal(resumed.canonical_digest, frozen.canonical_digest);
+});
+
 test('complete resume performs read-only target/receipt verification before skipping', () => {
   const value = planFixture();
   const harness = journalHarness(value);

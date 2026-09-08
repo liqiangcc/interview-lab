@@ -42,6 +42,12 @@ function without(value, key) {
   return copy;
 }
 function labelsOf(issue) { return normalizeLabels(issue && issue.labels || []).sort(); }
+// GitHub's REST API does not preserve label ordering.  Keep the requested
+// order for the frozen plan, but use a canonical set comparison when a live
+// target is already applied and we need to resume from that plan.
+function sameLabelSet(left, right) {
+  return same(normalizeLabels(left || []).sort(), normalizeLabels(right || []).sort());
+}
 function bodySha256(issue) { return sha256Text(issue && issue.body || ''); }
 function same(a, b) { return canonical(a) === canonical(b); }
 
@@ -296,9 +302,11 @@ function appendBlockedItemErrors(errors, item) {
   if (item.errors.length) errors.push(`#${item.issue_number}: ${item.errors.join('; ')}`);
 }
 
-function buildPlan({ manifest, manifestFile, records, liveLoader }) {
+function buildPlan({ manifest, manifestFile, records, liveLoader, priorPlan = null }) {
   const errors = [];
   const items = [];
+  const priorItems = new Map((priorPlan && Array.isArray(priorPlan.items) ? priorPlan.items : [])
+    .map((item) => [Number(item.issue_number), item]));
   for (const record of records) {
     let live;
     try { live = liveLoader(record.request); }
@@ -313,6 +321,18 @@ function buildPlan({ manifest, manifestFile, records, liveLoader }) {
     // applied receipt during the first planning pass; that check happens once
     // this function has computed planDigestValue below.
     const planned = planItem({ ...record, manifest_digest: manifest.canonical_digest, plan_digest: null }, live);
+    const prior = priorItems.get(Number(record.issue_number));
+    if (planned.already_applied && prior && Array.isArray(prior.next_labels) && Array.isArray(planned.next_labels)) {
+      // A resumed plan must retain the exact per-item label representation
+      // that was authorized originally, while proving that the live label
+      // *set* is unchanged.  This keeps the existing authorization/receipt
+      // digest valid without treating REST ordering as semantic drift.
+      if (!sameLabelSet(planned.next_labels, prior.next_labels)) {
+        planned.errors = [...(planned.errors || []), 'already-applied target label set differs from the prior frozen plan'];
+      } else {
+        planned.next_labels = [...prior.next_labels];
+      }
+    }
     const item = {
       issue_number: Number(record.issue_number), transition_id: record.transition_id,
       source_note_id: record.request.source_note_id, decision: record.request.decision,
