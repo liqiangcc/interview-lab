@@ -1,7 +1,6 @@
 'use strict';
 
 const crypto = require('node:crypto');
-const { canonicalJson } = require('./issue-1539-recovery-plan');
 
 const SCHEMA_VERSION = 'issue-1610-recovery-selection.v1';
 const PLAN_SCHEMA_VERSION = 'issue-1610-recovery-dry-run.v1';
@@ -24,6 +23,14 @@ const REQUIRED_CHECK_IDS = Object.freeze([
 
 function sha256Text(value) {
   return crypto.createHash('sha256').update(String(value), 'utf8').digest('hex');
+}
+
+function canonicalJson(value) {
+  if (Array.isArray(value)) return `[${value.map(canonicalJson).join(',')}]`;
+  if (value && typeof value === 'object') {
+    return `{${Object.keys(value).sort().map((key) => `${JSON.stringify(key)}:${canonicalJson(value[key])}`).join(',')}}`;
+  }
+  return JSON.stringify(value);
 }
 
 function clone(value) {

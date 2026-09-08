@@ -9,7 +9,7 @@ const { spawnSync, execFileSync } = require('node:child_process');
 const {
   buildManifest: buildPinnedArtifactManifest,
   validateManifest: validatePinnedArtifactManifest,
-} = require('./lib/issue-1539-pinned-artifact-manifest');
+} = require('./lib/issue-1610-pinned-artifact-manifest');
 const {
   parseInterviewNoteIssue,
   validateInterviewNoteIssue,

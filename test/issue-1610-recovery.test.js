@@ -2,13 +2,15 @@
 
 const test = require('node:test');
 const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
 const selection = require('../data/issue-1610/recovery-selection.json');
 const { parseArgs, checkResults } = require('../scripts/plan-issue-1610-recovery');
 const { validateSelection, attemptsDigest, buildEvidencePacket } = require('../scripts/lib/issue-1610-recovery');
 const {
   buildManifest,
   validateManifest,
-} = require('../scripts/lib/issue-1539-pinned-artifact-manifest');
+} = require('../scripts/lib/issue-1610-pinned-artifact-manifest');
 
 function sourceRecord(item) {
   return {
@@ -126,4 +128,13 @@ test('independent evidence packet is blocked, unposted, and cannot authorize Raw
 
 test('planner rejects an apply flag instead of exposing a mutation path', () => {
   assert.throws(() => parseArgs(['--selection', 'selection.json', '--apply']), /no apply entrypoint/);
+});
+
+test('recovery stays isolated from issue-1539 library and package wiring', () => {
+  const planner = fs.readFileSync(path.join(__dirname, '..', 'scripts/plan-issue-1610-recovery.js'), 'utf8');
+  const recovery = fs.readFileSync(path.join(__dirname, '..', 'scripts/lib/issue-1610-recovery.js'), 'utf8');
+  const packageJson = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'package.json'), 'utf8'));
+  assert.doesNotMatch(planner, /issue-1539/);
+  assert.doesNotMatch(recovery, /issue-1539/);
+  assert.equal(packageJson.scripts['plan:issue-1610-recovery'], undefined);
 });
