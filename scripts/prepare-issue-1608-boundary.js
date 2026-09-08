@@ -56,7 +56,7 @@ const PARENT_DEPENDENCY = Object.freeze({
 
 const OVERRIDES = Object.freeze({
   blocked: [
-    766, 779, 782, 807, 829, 833, 838, 841, 842, 849, 862, 868, 870, 885, 886, 956,
+    766, 767, 779, 782, 807, 829, 833, 838, 841, 842, 849, 862, 868, 870, 885, 886, 956,
     972, 985, 998, 1003, 1004, 1013, 1022, 1027, 1035, 1036, 1039, 1043, 1052,
     1066, 1076, 1080, 1092, 1101, 1115, 1122, 1132, 1135,
   ],
@@ -78,6 +78,7 @@ const CASE_ANCHORS = Object.freeze({
   865: { baidu: '百度', jd: '京东', meituan: '美团', ant: '蚂蚁' },
   958: { huawei: '华为', bytedance: '字节' },
 });
+const CASE_DETAIL_FROM_NEXT = new Set([853]);
 
 function sha256Text(value) {
   return crypto.createHash('sha256').update(String(value), 'utf8').digest('hex');
@@ -165,6 +166,49 @@ function sourceLine(text, anchor = null, allowFallback = true, allowHashtag = tr
   };
 }
 
+function nextSourceLine(text, lineNumber) {
+  const lines = String(text || '').split('\n');
+  for (let index = lineNumber; index < lines.length; index += 1) {
+    const normalized = lines[index].replace(/[\uFEFF\u200B-\u200D\u2060]/g, '').trim();
+    if (normalized && !normalized.startsWith('#')) {
+      return { line: index + 1, locator: `source-projection:artifact-line:${index + 1}`, excerpt: normalized.slice(0, 360) };
+    }
+  }
+  return null;
+}
+
+function singleInterviewEvidenceLine(text) {
+  const lines = String(text || '').split('\n');
+  const strongFact = /(面试官|面试完|面试了|面试过|面了|一次面试|一面|二面|三面|四面|技术面|HR面|手撕|自我介绍|反问|拷打|面试时间|面试时长|面试成功|面试通过|面试感想|\d+\s*分钟|时间\s*[:：])/i;
+  const questionFact = /(?:^|\s)(?:[-*]\s*)?\d+[.、:：]|[？?]/;
+  const usable = lines.map((line, index) => ({ line, index }))
+    .filter(({ line }) => {
+      const normalized = line.replace(/[\uFEFF\u200B-\u200D\u2060]/g, '').trim();
+      return normalized && !normalized.startsWith('#');
+    });
+  const candidate = usable.find(({ line }) => strongFact.test(line))
+    || usable.find(({ line }) => questionFact.test(line));
+  if (!candidate) return null;
+  const normalized = candidate.line.replace(/[\uFEFF\u200B-\u200D\u2060]/g, '').trim();
+  return { line: candidate.index + 1, locator: `source-projection:artifact-line:${candidate.index + 1}`, excerpt: normalized.slice(0, 360) };
+}
+
+function evidenceDecisionConsistent(decision, excerpt) {
+  if (decision !== 'single-interview') return decision === 'multi-interview' || decision === 'not-interview';
+  const value = String(excerpt || '').replace(/[\uFEFF\u200B-\u200D\u2060]/g, '').replace(/#[^\s#]+\[话题\]#/g, '').trim();
+  return Boolean(singleInterviewEvidenceLine(value));
+}
+
+function multiProcessDetail(evidence, detail) {
+  if (!evidence || !detail) return false;
+  const section = evidence.excerpt.replace(/[\uFEFF\u200B-\u200D\u2060]/g, '').trim();
+  const detailText = detail.excerpt.replace(/[\uFEFF\u200B-\u200D\u2060]/g, '').trim();
+  return !section.startsWith('#')
+    && !detailText.startsWith('#')
+    && (evidence.locator !== detail.locator
+      || /(面试|提问|手撕|问|拷打|聊了|分钟|offer|一面|二面|三面|技术面|HR面)/i.test(`${section} ${detailText}`));
+}
+
 function caseEvidence(text, classification) {
   if (classification.decision !== 'multi-interview') return [];
   const anchors = CASE_ANCHORS[classification.issue_number] || {};
@@ -172,6 +216,12 @@ function caseEvidence(text, classification) {
     case_key: caseKey,
     anchor: anchors[caseKey] || null,
     evidence: sourceLine(text, anchors[caseKey] || null, false, false),
+  })).map((item) => ({
+    ...item,
+    detail_evidence: item.evidence && !CASE_DETAIL_FROM_NEXT.has(classification.issue_number)
+      && /(面试|提问|手撕|问|拷打|聊了|分钟|offer|一面|二面|三面|技术面|HR面)/i.test(item.evidence.excerpt)
+      ? item.evidence
+      : item.evidence ? nextSourceLine(text, item.evidence.line) : null,
   }));
 }
 
@@ -196,19 +246,25 @@ function classify(number, text) {
   if (!explicitEvent || cleaned.length < 30) {
     return { disposition: 'blocked', decision: null, stratum: 'insufficient-source-evidence', rationale: '固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。' };
   }
+  if (!singleInterviewEvidenceLine(text)) {
+    return { disposition: 'blocked', decision: null, stratum: 'evidence-decision-mismatch', rationale: '分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。' };
+  }
   return { disposition: 'decided', decision: 'single-interview', stratum: 'single-bounded-process', rationale: '固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。' };
 }
 
 function makeEvidence(item, classification, text) {
   classification.issue_number = item.issue_number;
-  const line = sourceLine(text);
+  const line = classification.decision === 'single-interview' ? singleInterviewEvidenceLine(text) : sourceLine(text);
   const cases = caseEvidence(text, classification);
   const caseLocators = cases.map((item) => item.evidence && item.evidence.locator).filter(Boolean);
   const sufficient = classification.disposition === 'decided'
     && Boolean(line)
-    && (classification.decision !== 'multi-interview'
-      || (cases.length === classification.case_keys.length
+    && (classification.decision === 'not-interview'
+      || (classification.decision === 'single-interview' && evidenceDecisionConsistent(classification.decision, line.excerpt))
+      || (classification.decision === 'multi-interview'
+        && cases.length === classification.case_keys.length
         && cases.every((item) => item.evidence)
+        && cases.every((item) => multiProcessDetail(item.evidence, item.detail_evidence))
         && new Set(caseLocators).size === caseLocators.length));
   return {
     schema_version: 'issue-1608-boundary-evidence.v1',
@@ -532,4 +588,4 @@ if (require.main === module) {
   }
 }
 
-module.exports = { canonicalJson, classify, gitBlobSha, issueNumbers, sha256Text, PARENT_DEPENDENCY };
+module.exports = { canonicalJson, classify, evidenceDecisionConsistent, gitBlobSha, issueNumbers, sha256Text, PARENT_DEPENDENCY };

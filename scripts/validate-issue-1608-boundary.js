@@ -4,7 +4,7 @@
 const assert = require('assert');
 const fs = require('fs');
 const path = require('path');
-const { canonicalJson, sha256Text, PARENT_DEPENDENCY } = require('./prepare-issue-1608-boundary');
+const { canonicalJson, evidenceDecisionConsistent, sha256Text, PARENT_DEPENDENCY } = require('./prepare-issue-1608-boundary');
 
 const ROOT = path.resolve(__dirname, '..', 'data', 'issue-1608');
 const FIRST_ISSUE = 766;
@@ -119,14 +119,19 @@ function validateDirectory(root = ROOT) {
       assert.strictEqual(intent.transition_status, 'staged-awaiting-independent-live-evidence-comment');
       assert(['not-interview', 'single-interview', 'multi-interview'].includes(item.decision));
       assert.strictEqual(intent.decision, item.decision);
+      if (item.decision === 'single-interview') {
+        assert(evidence.excerpts[0] && evidenceDecisionConsistent(item.decision, evidence.excerpts[0].excerpt), `single evidence does not support decision on #${item.issue_number}`);
+      }
       if (item.decision === 'multi-interview') {
         assert(item.case_keys.length >= 2);
         assert.strictEqual(evidence.case_evidence.length, item.case_keys.length);
         const locators = evidence.case_evidence.map((caseItem) => caseItem.evidence && caseItem.evidence.locator);
         assert.strictEqual(new Set(locators).size, locators.length, `duplicate case locator on #${item.issue_number}`);
         for (const caseItem of evidence.case_evidence) {
-          assert(caseItem.anchor && caseItem.evidence && caseItem.evidence.locator);
+          assert(caseItem.anchor && caseItem.evidence && caseItem.evidence.locator && caseItem.detail_evidence && caseItem.detail_evidence.locator);
           assert(!caseItem.evidence.excerpt.replace(/[\uFEFF\u200B-\u200D\u2060]/g, '').trim().startsWith('#'), `case evidence is hashtag-only on #${item.issue_number}`);
+          assert(!caseItem.detail_evidence.excerpt.replace(/[\uFEFF\u200B-\u200D\u2060]/g, '').trim().startsWith('#'), `case detail is hashtag-only on #${item.issue_number}`);
+          assert(caseItem.evidence.locator !== caseItem.detail_evidence.locator || /(面试|提问|手撕|问|拷打|聊了|分钟|offer|一面|二面|三面|技术面|HR面)/i.test(`${caseItem.evidence.excerpt} ${caseItem.detail_evidence.excerpt}`), `multi case lacks process detail on #${item.issue_number}`);
         }
       }
     }

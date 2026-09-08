@@ -2,7 +2,7 @@
   "schema_version": "issue-1608-boundary-dry-run.v1",
   "repository": "liqiangcc/interview-lab",
   "issue": 1608,
-  "selection_sha256": "636a76ebcd3ee31b6eb9a7bbb8c660ca58db8b953bd647eb607c9c78dee8a74f",
+  "selection_sha256": "78c4c807df82d2e6843986011c53ac3bcc6f7e2754c89ded5df3e4edfa935239",
   "source_snapshot": {
     "repository": "liqiangcc/xhs",
     "ref": "95b77bb261048059846273688e4b90a2e108b437"
@@ -62,10 +62,10 @@
   "mutation_count": 0,
   "counts": {
     "total": 337,
-    "decided": 291,
-    "blocked": 46,
+    "decided": 290,
+    "blocked": 47,
     "not_interview": 54,
-    "single_interview": 234,
+    "single_interview": 233,
     "multi_interview": 3
   },
   "items": [
@@ -83,11 +83,11 @@
       "issue_number": 767,
       "source_note_id": "xhs-note:68075d56000000000d017fd3",
       "body_sha256": "ec464c14e831139f5cecd788e92ad9aa847839868fb5cb5d9da1770662b7cbdd",
-      "decision": "single-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/0767.json",
       "mutation": null,
-      "reason": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
+      "reason": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。"
     },
     {
       "issue_number": 768,
@@ -3447,5 +3447,5 @@
     "any non-expected GitHub response",
     "controller has not supplied explicit apply authorization"
   ],
-  "dry_run_sha256": "9887e7c3c36947df45fb75551848dcef30d3b7b6fde12d57eaa14c1526be6ab0"
+  "dry_run_sha256": "b5a1e5c1abde3bad8425c7fee1773d5025add474281a21610491ccd4b4bd7580"
 }

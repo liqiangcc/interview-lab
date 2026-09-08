@@ -12,6 +12,10 @@
     "expected_boundary_status": {"const": "pending"},
     "expected_source_repository_ref": {"const": "95b77bb261048059846273688e4b90a2e108b437"},
     "decision": {"enum": ["not-interview", "single-interview", "multi-interview", null]},
+    "case_evidence": {
+      "type": "array",
+      "items": {"type": "object", "required": ["case_key", "anchor", "evidence", "detail_evidence"]}
+    },
     "evidence_comment": {
       "type": "object",
       "required": ["status", "comment_id"],
