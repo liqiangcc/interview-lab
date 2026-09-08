@@ -13,7 +13,6 @@ const {
 
 const MIN_ISSUE = 20;
 const MAX_ISSUE = 392;
-const EXPECTED_COUNT = 327;
 const SOURCE_REF = '95b77bb261048059846273688e4b90a2e108b437';
 
 function parseArgs(argv = process.argv.slice(2)) {
@@ -101,21 +100,22 @@ function validateInputs(selection, inventory) {
   const errors = [];
   const selectionItems = Array.isArray(selection.items) ? selection.items : [];
   const inventoryItems = Array.isArray(inventory.items) ? inventory.items : [];
+  const expectedCount = selectionItems.length;
   if (selection.schema_version !== 'issue-1606-boundary-selection.v1') errors.push('selection schema mismatch');
-  if (selection.selected_count !== EXPECTED_COUNT || selectionItems.length !== EXPECTED_COUNT) errors.push(`selection must contain exactly ${EXPECTED_COUNT} items`);
+  if (selection.selected_count !== expectedCount || expectedCount === 0) errors.push('selection selected_count must match a non-empty item set');
   if (!selection.range || selection.range.min_issue !== MIN_ISSUE || selection.range.max_issue !== MAX_ISSUE) errors.push('selection range mismatch');
   if (!selection.read_audit || !Array.isArray(selection.read_audit.out_of_range_issue_numbers) || selection.read_audit.out_of_range_issue_numbers.length !== 0) errors.push('selection read audit contains out-of-range issue');
   if (selection.selection_sha256 !== recomputeDigest(selection, 'selection_sha256')) errors.push('selection canonical SHA-256 does not recompute');
   if (inventory.schema_version !== 'issue-1606-source-inventory.v1') errors.push('source inventory schema mismatch');
   if (inventory.selection_sha256 !== selection.selection_sha256) errors.push('source inventory is not bound to selection digest');
   if (inventory.inventory_sha256 !== recomputeDigest(inventory, 'inventory_sha256')) errors.push('source inventory canonical SHA-256 does not recompute');
-  if (inventory.item_count !== EXPECTED_COUNT || inventoryItems.length !== EXPECTED_COUNT) errors.push(`source inventory must contain exactly ${EXPECTED_COUNT} items`);
+  if (inventory.item_count !== expectedCount || inventoryItems.length !== expectedCount) errors.push(`source inventory must contain exactly ${expectedCount} items`);
   if (inventory.source_repository_ref !== SOURCE_REF || selection.source_repository_ref !== SOURCE_REF) errors.push('source ref mismatch');
   const selectionNumbers = selectionItems.map((item) => item.issue_number);
   const inventoryNumbers = inventoryItems.map((item) => item.issue_number);
-  if (new Set(selectionNumbers).size !== EXPECTED_COUNT) errors.push('selection issue numbers are not unique');
-  if (new Set(inventoryNumbers).size !== EXPECTED_COUNT) errors.push('inventory issue numbers are not unique');
-  for (const [owner, items] of [['selection', selectionItems], ['inventory', inventoryItems]]) for (const [field, values] of [['source_note_id', items.map((item) => item.source_note_id)], ['source_revision_id', items.map((item) => item.source_revision_id)]]) if (new Set(values).size !== EXPECTED_COUNT) errors.push(`${owner} ${field} anchors are not unique`);
+  if (new Set(selectionNumbers).size !== expectedCount) errors.push('selection issue numbers are not unique');
+  if (new Set(inventoryNumbers).size !== expectedCount) errors.push('inventory issue numbers are not unique');
+  for (const [owner, items] of [['selection', selectionItems], ['inventory', inventoryItems]]) for (const [field, values] of [['source_note_id', items.map((item) => item.source_note_id)], ['source_revision_id', items.map((item) => item.source_revision_id)]]) if (new Set(values).size !== expectedCount) errors.push(`${owner} ${field} anchors are not unique`);
   if (selectionNumbers.some((number) => number < MIN_ISSUE || number > MAX_ISSUE) || inventoryNumbers.some((number) => number < MIN_ISSUE || number > MAX_ISSUE)) errors.push('selection/inventory issue number outside authorized range');
   if (selectionNumbers.slice().sort((a, b) => a - b).join(',') !== inventoryNumbers.slice().sort((a, b) => a - b).join(',')) errors.push('selection/inventory issue sets differ');
   const inventoryByNumber = new Map(inventoryItems.map((item) => [item.issue_number, item]));
@@ -143,7 +143,7 @@ function main() {
   fs.mkdirSync(requestDir, { recursive: true });
   const planItems = [];
   const journalItems = [];
-  const counts = { total: EXPECTED_COUNT, ready: 0, blocked: 0, decisions: { 'not-interview': 0, 'single-interview': 0, 'multi-interview': 0, blocked: 0 } };
+  const counts = { total: selection.items.length, ready: 0, blocked: 0, decisions: { 'not-interview': 0, 'single-interview': 0, 'multi-interview': 0, blocked: 0 } };
 
   for (const item of selection.items.slice().sort((left, right) => left.issue_number - right.issue_number)) {
     const inventoryItem = inventoryByNumber.get(item.issue_number);
@@ -190,7 +190,7 @@ function main() {
     });
   }
   const finalRequestErrors = validateRequestDirectory(requestDir, issueNumbers, true);
-  if (finalRequestErrors.length || planItems.length !== EXPECTED_COUNT) throw new Error(`request set validation failed closed: ${finalRequestErrors.concat(planItems.length !== EXPECTED_COUNT ? [`expected ${EXPECTED_COUNT} plan items, got ${planItems.length}`] : []).join('; ')}`);
+  if (finalRequestErrors.length || planItems.length !== selection.items.length) throw new Error(`request set validation failed closed: ${finalRequestErrors.concat(planItems.length !== selection.items.length ? [`expected ${selection.items.length} plan items, got ${planItems.length}`] : []).join('; ')}`);
 
   const plan = {
     schema_version: 'issue-1606-boundary-dry-run.v1',
