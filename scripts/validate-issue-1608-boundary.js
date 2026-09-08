@@ -4,12 +4,12 @@
 const assert = require('assert');
 const fs = require('fs');
 const path = require('path');
-const { canonicalJson, evidenceDecisionConsistent, sha256Text, PARENT_DEPENDENCY } = require('./prepare-issue-1608-boundary');
+const { canonicalJson, evidenceDecisionConsistent, sha256Text, PARENT_DEPENDENCY, PARENT_LIVE_PROGRESS } = require('./prepare-issue-1608-boundary');
 
 const ROOT = path.resolve(__dirname, '..', 'data', 'issue-1608');
 const FIRST_ISSUE = 766;
 const LAST_ISSUE = 1138;
-const TOTAL = 337;
+const INTERVAL_TOTAL = 373;
 const REPOSITORY = 'liqiangcc/interview-lab';
 const SOURCE_REPOSITORY = 'liqiangcc/xhs';
 const SOURCE_REF = '95b77bb261048059846273688e4b90a2e108b437';
@@ -44,12 +44,15 @@ function validateDirectory(root = ROOT) {
   assert.deepStrictEqual(selection.scope, {
     first_issue: FIRST_ISSUE,
     last_issue: LAST_ISSUE,
-    expected_pending_count: TOTAL,
+    expected_pending_count: selection.scope.expected_pending_count,
     membership_policy: 'open issues in the exact interval carrying type:source-note + status:captured + boundary:pending',
     no_out_of_scope_reads: true,
   });
   assert.deepStrictEqual(selection.source_snapshot, { repository: SOURCE_REPOSITORY, ref: SOURCE_REF });
+  assert(selection.live_issue_snapshot && selection.live_issue_snapshot.path && /^[0-9a-f]{64}$/.test(selection.live_issue_snapshot.sha256));
+  assert(selection.source_artifact_snapshot && selection.source_artifact_snapshot.path && /^[0-9a-f]{64}$/.test(selection.source_artifact_snapshot.sha256));
   assert.deepStrictEqual(selection.parent_dependency, PARENT_DEPENDENCY);
+  assert.deepStrictEqual(selection.parent_live_progress, PARENT_LIVE_PROGRESS);
   assert.deepStrictEqual(readJson(path.join(root, 'parent-dependency.json')), PARENT_DEPENDENCY);
   assert.strictEqual(PARENT_DEPENDENCY.pending_count, 1397);
   assert.strictEqual(PARENT_DEPENDENCY.union.count, 1397);
@@ -61,18 +64,20 @@ function validateDirectory(root = ROOT) {
   }
   const ownPartition = PARENT_DEPENDENCY.partitions.find((item) => item.child_issue === 1608);
   assert(ownPartition);
-  assert.strictEqual(ownPartition.pending_count, TOTAL);
-  assert.strictEqual(selection.total, TOTAL);
-  assert.strictEqual(selection.items.length, TOTAL);
+  assert.strictEqual(ownPartition.pending_count, 337);
+  const total = selection.scope.expected_pending_count;
+  assert(Number.isInteger(total) && total >= 0 && total <= INTERVAL_TOTAL);
+  assert.strictEqual(selection.total, total);
+  assert.strictEqual(selection.items.length, total);
 
   const numbers = selection.items.map((item) => item.issue_number);
-  assert.strictEqual(new Set(numbers).size, TOTAL, 'duplicate/missing selected issue');
+  assert.strictEqual(new Set(numbers).size, total, 'duplicate selected issue');
   assert(numbers.every((number) => number >= FIRST_ISSUE && number <= LAST_ISSUE), 'selected issue outside scope');
   const rejectedNumbers = selection.rejected_in_range.map((item) => item.issue_number);
   assert.strictEqual(new Set(rejectedNumbers).size, rejectedNumbers.length, 'duplicate rejected issue');
   assert.deepStrictEqual(
     [...numbers, ...rejectedNumbers].sort((left, right) => left - right),
-    Array.from({ length: LAST_ISSUE - FIRST_ISSUE + 1 }, (_, i) => FIRST_ISSUE + i),
+    Array.from({ length: INTERVAL_TOTAL }, (_, i) => FIRST_ISSUE + i),
     'selection/rejection does not cover the exact enumerated interval',
   );
   const counts = selection.items.reduce((out, item) => {
@@ -97,6 +102,18 @@ function validateDirectory(root = ROOT) {
     assert.strictEqual(item.artifact.kind, 'text_projection');
     assert.match(item.artifact.git_blob_sha, /^[0-9a-f]{40}$/);
     assert.match(item.artifact.content_sha256, /^[0-9a-f]{64}$/);
+    assert(Array.isArray(item.source_artifacts) && item.source_artifacts.length >= 3, `missing complete Source artifacts on #${item.issue_number}`);
+    const artifactKinds = new Set(item.source_artifacts.map((artifact) => artifact.kind));
+    for (const kind of ['html', 'json', 'text_projection']) {
+      const sourceArtifact = item.source_artifacts.find((artifact) => artifact.kind === kind);
+      assert(sourceArtifact, `missing ${kind} Source artifact on #${item.issue_number}`);
+      assert(sourceArtifact.ref.endsWith(`@${SOURCE_REF}`));
+      assert.match(sourceArtifact.git_blob_sha, /^[0-9a-f]{40}$/);
+      assert(Number.isInteger(sourceArtifact.byte_size) && sourceArtifact.byte_size > 0);
+      assert.match(sourceArtifact.content_sha256, /^[0-9a-f]{64}$/);
+      assert.strictEqual(sourceArtifact.complete_content_read, true);
+    }
+    assert.strictEqual(artifactKinds.size, 3);
 
     const evidence = readJson(path.join(root, item.evidence_file));
     assert.strictEqual(evidence.issue_number, item.issue_number);
@@ -105,6 +122,7 @@ function validateDirectory(root = ROOT) {
     assert.strictEqual(evidence.artifact.provenance, 'source_projection');
     assert.strictEqual(evidence.artifact.git_blob_sha, item.artifact.git_blob_sha);
     assert.deepStrictEqual(evidence.source_retrieval, item.source_retrieval);
+    assert.deepStrictEqual(evidence.source_artifacts, item.source_artifacts);
     assert.strictEqual(evidence.evidence_comment, undefined);
     const intent = parseIntent(path.join(root, item.request_file));
     assert.strictEqual(intent.issue_number, item.issue_number);
@@ -112,6 +130,7 @@ function validateDirectory(root = ROOT) {
     assert.strictEqual(intent.expected_boundary_status, 'pending');
     assert.strictEqual(intent.expected_source_repository_ref, SOURCE_REF);
     assert.deepStrictEqual(intent.source_retrieval, item.source_retrieval);
+    assert.deepStrictEqual(intent.source_artifacts, item.source_artifacts);
     assert.deepStrictEqual(intent.evidence_comment, { status: 'not-created', comment_id: null });
     assert.deepStrictEqual(intent.case_evidence, evidence.case_evidence || []);
     assert.match(intent.apply_authorization, /controller-only/);
@@ -133,6 +152,11 @@ function validateDirectory(root = ROOT) {
           && evidenceDecisionConsistent(item.decision, evidence.excerpts), `single evidence does not support decision on #${item.issue_number}`);
         const locators = evidence.excerpts.map((excerpt) => excerpt.locator);
         assert.strictEqual(new Set(locators).size, locators.length, `duplicate single evidence locator on #${item.issue_number}`);
+        for (const excerpt of evidence.excerpts) {
+          assert(excerpt.artifact_ref, `missing artifact ref on #${item.issue_number}`);
+          assert(item.source_artifacts.some((artifact) => artifact.ref === excerpt.artifact_ref), `excerpt artifact is not pinned on #${item.issue_number}`);
+          assert(excerpt.excerpt && excerpt.locator, `incomplete excerpt on #${item.issue_number}`);
+        }
       }
       if (item.decision === 'multi-interview') {
         assert(item.case_keys.length >= 2);
@@ -148,38 +172,50 @@ function validateDirectory(root = ROOT) {
       }
     }
   }
-  assert.strictEqual(decided + blocked, TOTAL);
+  assert.strictEqual(decided + blocked, total);
 
   const batch = readJson(path.join(root, 'boundary-batch.json'));
   assert.strictEqual(batch.mutation_allowed, false);
+  assert.deepStrictEqual(batch.live_issue_snapshot, selection.live_issue_snapshot);
+  assert.deepStrictEqual(batch.source_artifact_snapshot, selection.source_artifact_snapshot);
   assert.deepStrictEqual(batch.parent_dependency, PARENT_DEPENDENCY);
+  assert.deepStrictEqual(batch.parent_live_progress, PARENT_LIVE_PROGRESS);
   assert.strictEqual(batch.items.length, decided);
   assert(batch.items.every((item) => selection.items.find((selected) => selected.issue_number === item.issue_number).disposition === 'decided'));
 
   const plan = readJson(path.join(root, 'dry-run-plan.json'));
   validateDigest(plan, 'dry_run_sha256');
   assert.strictEqual(plan.selection_sha256, selection.selection_sha256);
+  assert.deepStrictEqual(plan.live_issue_snapshot, selection.live_issue_snapshot);
+  assert.deepStrictEqual(plan.source_artifact_snapshot, selection.source_artifact_snapshot);
   assert.deepStrictEqual(plan.parent_dependency, PARENT_DEPENDENCY);
+  assert.deepStrictEqual(plan.parent_live_progress, PARENT_LIVE_PROGRESS);
   assert.strictEqual(plan.mutation_allowed, false);
   assert.strictEqual(plan.mutation_count, 0);
   assert.strictEqual(plan.live_evidence_comments_created, 0);
-  assert.strictEqual(plan.items.length, TOTAL);
+  assert.strictEqual(plan.items.length, total);
 
   const journal = readJson(path.join(root, 'apply-journal.json'));
   validateDigest(journal, 'journal_sha256');
   assert.strictEqual(journal.mode, 'not-authorized');
   assert.strictEqual(journal.mutation_allowed, false);
   assert.deepStrictEqual(journal.parent_dependency, PARENT_DEPENDENCY);
+  assert.deepStrictEqual(journal.live_issue_snapshot, selection.live_issue_snapshot);
+  assert.deepStrictEqual(journal.source_artifact_snapshot, selection.source_artifact_snapshot);
+  assert.deepStrictEqual(journal.parent_live_progress, PARENT_LIVE_PROGRESS);
   assert(journal.entries.every((entry) => entry.mutation_performed === false && entry.evidence_comment_id === null));
 
   const audit = readJson(path.join(root, 'audit.json'));
   validateDigest(audit, 'audit_sha256');
   assert.deepStrictEqual(audit.out_of_scope_issue_numbers_read, []);
   assert.deepStrictEqual(audit.parent_dependency, PARENT_DEPENDENCY);
+  assert.deepStrictEqual(audit.live_issue_snapshot, selection.live_issue_snapshot);
+  assert.deepStrictEqual(audit.source_artifact_snapshot, selection.source_artifact_snapshot);
+  assert.deepStrictEqual(audit.parent_live_progress, PARENT_LIVE_PROGRESS);
   assert.strictEqual(audit.checks.no_mutations, true);
   assert.strictEqual(audit.checks.no_live_evidence_comments, true);
 
-  return { total: TOTAL, decided, blocked, selection_sha256: selection.selection_sha256, dry_run_sha256: plan.dry_run_sha256 };
+  return { total, decided, blocked, selection_sha256: selection.selection_sha256, dry_run_sha256: plan.dry_run_sha256 };
 }
 
 if (require.main === module) {

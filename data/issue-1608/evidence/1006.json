@@ -8,10 +8,48 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "source_retrieval": {
     "method": "frozen-source-snapshot",
-    "path": "/tmp/issue-1608-source-texts.json",
+    "path": "/tmp/issue-1608-source-artifacts-v2.json",
     "byte_size": 368,
     "git_blob_sha": "56750e01084c9bfa9d28892a9cbba176b889d1a1"
   },
+  "source_artifacts": [
+    {
+      "kind": "html",
+      "ref": "liqiangcc/xhs:note_detail/686c8a9500000000150213ce.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "63d87ac979207b5c64063b9d55e4a41e312f9913",
+      "byte_size": 385824,
+      "content_sha256": "fa9a38e27c5669427ff3c8a25e6d33851ef8dcea50c38b414185ad9d16421e2d",
+      "retrieval": {
+        "method": "fixed-ref-local-partial-clone",
+        "path": "/tmp/xhs-issue-1608-source/note_detail/686c8a9500000000150213ce.html"
+      },
+      "complete_content_read": true
+    },
+    {
+      "kind": "json",
+      "ref": "liqiangcc/xhs:note_json/686c8a9500000000150213ce.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "cb904daf6d7daa9c319e28922e7c98d03250fbf8",
+      "byte_size": 19980,
+      "content_sha256": "bdc00d98a19f15055ed7de2dfcd14c52228323e0095b945448fbede5584b8d94",
+      "retrieval": {
+        "method": "fixed-ref-local-partial-clone",
+        "path": "/tmp/xhs-issue-1608-source/note_json/686c8a9500000000150213ce.json"
+      },
+      "complete_content_read": true
+    },
+    {
+      "kind": "text_projection",
+      "ref": "liqiangcc/xhs:note_desc/686c8a9500000000150213ce.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "56750e01084c9bfa9d28892a9cbba176b889d1a1",
+      "byte_size": 368,
+      "content_sha256": "542eb0e7ba5ca9f4090e67026f3eb3e58a412c60bbcdb042bb2497903ce39c57",
+      "retrieval": {
+        "method": "github-git-blob",
+        "path": "repos/liqiangcc/xhs/git/blobs/56750e01084c9bfa9d28892a9cbba176b889d1a1"
+      },
+      "complete_content_read": true
+    }
+  ],
   "evidence_status": "insufficient-blocked",
   "decision": null,
   "rationale": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。",
@@ -27,7 +65,9 @@
     {
       "line": 1,
       "locator": "source-projection:artifact-line:1",
-      "excerpt": "java后端程序员工作内容crud怎么写简历[哭惹R]，本专业不是这个专业，本科毕业去机构学习的。主包现在在职，当前公司没有上升空间，开发流程不健全。主包99年，26岁，主包已经在这个地方工作两年了，如果再待下去更不好跳槽。求问如何把crud的工作内容的简历写得好一点？"
+      "excerpt": "java后端程序员工作内容crud怎么写简历[哭惹R]，本专业不是这个专业，本科毕业去机构学习的。主包现在在职，当前公司没有上升空间，开发流程不健全。主包99年，26岁，主包已经在这个地方工作两年了，如果再待下去更不好跳槽。求问如何把crud的工作内容的简历写得好一点？",
+      "artifact_ref": "liqiangcc/xhs:note_desc/686c8a9500000000150213ce.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "artifact_kind": "text_projection"
     }
   ],
   "case_keys": [],

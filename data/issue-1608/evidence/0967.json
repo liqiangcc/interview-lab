@@ -8,13 +8,51 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "source_retrieval": {
     "method": "frozen-source-snapshot",
-    "path": "/tmp/issue-1608-source-texts.json",
+    "path": "/tmp/issue-1608-source-artifacts-v2.json",
     "byte_size": 373,
     "git_blob_sha": "70d40d9aa981540f8fa5cd0192a2cf3ef52e65c2"
   },
+  "source_artifacts": [
+    {
+      "kind": "html",
+      "ref": "liqiangcc/xhs:note_detail/6851421b00000000220279a1.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "1281bf02ad0d2a91408b6ed37a412825726b404f",
+      "byte_size": 385239,
+      "content_sha256": "54d9cee88e6606f7fffdbf8fff335688a9357239de3c9f256da0825a2de376c4",
+      "retrieval": {
+        "method": "fixed-ref-local-partial-clone",
+        "path": "/tmp/xhs-issue-1608-source/note_detail/6851421b00000000220279a1.html"
+      },
+      "complete_content_read": true
+    },
+    {
+      "kind": "json",
+      "ref": "liqiangcc/xhs:note_json/6851421b00000000220279a1.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "bf83037f256dcde9d3b94d7cf9b3f10422c96332",
+      "byte_size": 20038,
+      "content_sha256": "102971d87b61a634391303ef6a76f1cde3d106b0f8051b96617b79796c09e36d",
+      "retrieval": {
+        "method": "fixed-ref-local-partial-clone",
+        "path": "/tmp/xhs-issue-1608-source/note_json/6851421b00000000220279a1.json"
+      },
+      "complete_content_read": true
+    },
+    {
+      "kind": "text_projection",
+      "ref": "liqiangcc/xhs:note_desc/6851421b00000000220279a1.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "70d40d9aa981540f8fa5cd0192a2cf3ef52e65c2",
+      "byte_size": 373,
+      "content_sha256": "f82a23bb60057d3c804f4c0ac210539c1480dff29841ee0d52bb53fa3ddcfa07",
+      "retrieval": {
+        "method": "github-git-blob",
+        "path": "repos/liqiangcc/xhs/git/blobs/70d40d9aa981540f8fa5cd0192a2cf3ef52e65c2"
+      },
+      "complete_content_read": true
+    }
+  ],
   "evidence_status": "insufficient-blocked",
   "decision": null,
-  "rationale": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。",
+  "rationale": "固定 SourceNote 虽有面试标题或事件描述，但未同时提供已完成面试事件与至少两条 substantive Q&A；拒绝用预约、结果、题目列表或营销包装为 single-interview。",
   "artifact": {
     "ref": "liqiangcc/xhs:note_desc/6851421b00000000220279a1.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -27,7 +65,9 @@
     {
       "line": 1,
       "locator": "source-projection:artifact-line:1",
-      "excerpt": "京东外包新增需求，非常急，抢一下资源。"
+      "excerpt": "京东外包新增需求，非常急，抢一下资源。",
+      "artifact_ref": "liqiangcc/xhs:note_desc/6851421b00000000220279a1.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "artifact_kind": "text_projection"
     }
   ],
   "case_keys": [],
@@ -51,7 +91,7 @@
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+      "note": "固定 SourceNote 虽有面试标题或事件描述，但未同时提供已完成面试事件与至少两条 substantive Q&A；拒绝用预约、结果、题目列表或营销包装为 single-interview。"
     },
     {
       "check_id": "no_cross_source_mixing",

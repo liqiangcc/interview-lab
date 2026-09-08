@@ -8,13 +8,51 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "source_retrieval": {
     "method": "frozen-source-snapshot",
-    "path": "/tmp/issue-1608-source-texts.json",
+    "path": "/tmp/issue-1608-source-artifacts-v2.json",
     "byte_size": 207,
     "git_blob_sha": "ee6a16a634372bf663d87e69f4aba94821f51b7a"
   },
+  "source_artifacts": [
+    {
+      "kind": "html",
+      "ref": "liqiangcc/xhs:note_detail/6886f8d70000000017036544.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "dca4bcd120e54f32d8205af9df1285f03ac19af0",
+      "byte_size": 387633,
+      "content_sha256": "b943889ef6388d32bddcf26e0f9d177fcbd91b64fe1e193d9f47374e2e56a518",
+      "retrieval": {
+        "method": "fixed-ref-local-partial-clone",
+        "path": "/tmp/xhs-issue-1608-source/note_detail/6886f8d70000000017036544.html"
+      },
+      "complete_content_read": true
+    },
+    {
+      "kind": "json",
+      "ref": "liqiangcc/xhs:note_json/6886f8d70000000017036544.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "9ff83e90507e35ee822ac8c8ba6c254e7f3dfba1",
+      "byte_size": 21712,
+      "content_sha256": "2edcf8e3729f7ea97e4618f237592774b72fedfd9b0f214436ace62190e81a6c",
+      "retrieval": {
+        "method": "fixed-ref-local-partial-clone",
+        "path": "/tmp/xhs-issue-1608-source/note_json/6886f8d70000000017036544.json"
+      },
+      "complete_content_read": true
+    },
+    {
+      "kind": "text_projection",
+      "ref": "liqiangcc/xhs:note_desc/6886f8d70000000017036544.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "ee6a16a634372bf663d87e69f4aba94821f51b7a",
+      "byte_size": 207,
+      "content_sha256": "6e09be4e4369f0c09f65d473834b5cd7c9c4aed366ca60d0785e7839ddfdbf5f",
+      "retrieval": {
+        "method": "github-git-blob",
+        "path": "repos/liqiangcc/xhs/git/blobs/ee6a16a634372bf663d87e69f4aba94821f51b7a"
+      },
+      "complete_content_read": true
+    }
+  ],
   "evidence_status": "insufficient-blocked",
   "decision": null,
-  "rationale": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。",
+  "rationale": "固定 SourceNote 虽有面试标题或事件描述，但未同时提供已完成面试事件与至少两条 substantive Q&A；拒绝用预约、结果、题目列表或营销包装为 single-interview。",
   "artifact": {
     "ref": "liqiangcc/xhs:note_desc/6886f8d70000000017036544.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -27,7 +65,9 @@
     {
       "line": 1,
       "locator": "source-projection:artifact-line:1",
-      "excerpt": "常规八股，但是问的比较底层比较细，手撕hard滑动窗口，不是hot100没做过完全不知道如何下手，总时长45min[捂脸R]，p2八股面经#面经[话题]# #面试日常[话题]#"
+      "excerpt": "常规八股，但是问的比较底层比较细，手撕hard滑动窗口，不是hot100没做过完全不知道如何下手，总时长45min[捂脸R]，p2八股面经#面经[话题]# #面试日常[话题]#",
+      "artifact_ref": "liqiangcc/xhs:note_desc/6886f8d70000000017036544.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "artifact_kind": "text_projection"
     }
   ],
   "case_keys": [],
@@ -51,7 +91,7 @@
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+      "note": "固定 SourceNote 虽有面试标题或事件描述，但未同时提供已完成面试事件与至少两条 substantive Q&A；拒绝用预约、结果、题目列表或营销包装为 single-interview。"
     },
     {
       "check_id": "no_cross_source_mixing",

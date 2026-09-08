@@ -8,13 +8,51 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "source_retrieval": {
     "method": "frozen-source-snapshot",
-    "path": "/tmp/issue-1608-source-texts.json",
+    "path": "/tmp/issue-1608-source-artifacts-v2.json",
     "byte_size": 725,
     "git_blob_sha": "f95d0f5b8bebcbe57ec98a0b5a821dbe6ace1812"
   },
+  "source_artifacts": [
+    {
+      "kind": "html",
+      "ref": "liqiangcc/xhs:note_detail/6859252c0000000017033a37.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "6616fe973a56d4918e74701f10353d2f9f04e48a",
+      "byte_size": 406568,
+      "content_sha256": "b9a37fc1c33adb2f40c7abc4d8c761a47f6c7965d34a84a8500ca6b329c670e9",
+      "retrieval": {
+        "method": "fixed-ref-local-partial-clone",
+        "path": "/tmp/xhs-issue-1608-source/note_detail/6859252c0000000017033a37.html"
+      },
+      "complete_content_read": true
+    },
+    {
+      "kind": "json",
+      "ref": "liqiangcc/xhs:note_json/6859252c0000000017033a37.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "4a2b83715709d074025b6dcd8c15e4f0380c9c29",
+      "byte_size": 38809,
+      "content_sha256": "d88dac533b86a820a65f647a647a33246992d051a9e384e45a84a907254f7d8d",
+      "retrieval": {
+        "method": "fixed-ref-local-partial-clone",
+        "path": "/tmp/xhs-issue-1608-source/note_json/6859252c0000000017033a37.json"
+      },
+      "complete_content_read": true
+    },
+    {
+      "kind": "text_projection",
+      "ref": "liqiangcc/xhs:note_desc/6859252c0000000017033a37.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "f95d0f5b8bebcbe57ec98a0b5a821dbe6ace1812",
+      "byte_size": 725,
+      "content_sha256": "8d1c43de21813cc8cefbe6cbb5c5bfc82dbcf4775a1c47b8cbefbe04b9b699cd",
+      "retrieval": {
+        "method": "github-git-blob",
+        "path": "repos/liqiangcc/xhs/git/blobs/f95d0f5b8bebcbe57ec98a0b5a821dbe6ace1812"
+      },
+      "complete_content_read": true
+    }
+  ],
   "evidence_status": "insufficient-blocked",
   "decision": null,
-  "rationale": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。",
+  "rationale": "固定 SourceNote 虽有面试标题或事件描述，但未同时提供已完成面试事件与至少两条 substantive Q&A；拒绝用预约、结果、题目列表或营销包装为 single-interview。",
   "artifact": {
     "ref": "liqiangcc/xhs:note_desc/6859252c0000000017033a37.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -27,7 +65,9 @@
     {
       "line": 1,
       "locator": "source-projection:artifact-line:1",
-      "excerpt": "分享一下二面过美团Java后端开发的经验"
+      "excerpt": "分享一下二面过美团Java后端开发的经验",
+      "artifact_ref": "liqiangcc/xhs:note_desc/6859252c0000000017033a37.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "artifact_kind": "text_projection"
     }
   ],
   "case_keys": [],
@@ -51,7 +91,7 @@
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+      "note": "固定 SourceNote 虽有面试标题或事件描述，但未同时提供已完成面试事件与至少两条 substantive Q&A；拒绝用预约、结果、题目列表或营销包装为 single-interview。"
     },
     {
       "check_id": "no_cross_source_mixing",

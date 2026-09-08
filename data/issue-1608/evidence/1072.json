@@ -8,13 +8,51 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "source_retrieval": {
     "method": "frozen-source-snapshot",
-    "path": "/tmp/issue-1608-source-texts.json",
+    "path": "/tmp/issue-1608-source-artifacts-v2.json",
     "byte_size": 565,
     "git_blob_sha": "953cc9e3cefbc7278766f0b4955986973c3700ec"
   },
+  "source_artifacts": [
+    {
+      "kind": "html",
+      "ref": "liqiangcc/xhs:note_detail/6891ae300000000023035e6e.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "a64dd332120b0025126aabd6ab983d66a6420539",
+      "byte_size": 386907,
+      "content_sha256": "9a36afdb6e4382fe7616439e728fdd0fec18cdeb1cc869871890b68d84fa3b10",
+      "retrieval": {
+        "method": "fixed-ref-local-partial-clone",
+        "path": "/tmp/xhs-issue-1608-source/note_detail/6891ae300000000023035e6e.html"
+      },
+      "complete_content_read": true
+    },
+    {
+      "kind": "json",
+      "ref": "liqiangcc/xhs:note_json/6891ae300000000023035e6e.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "3faf3b2c403bfc6146c0ad714250610a46ad4791",
+      "byte_size": 20921,
+      "content_sha256": "7fe4d1cb135279a49cff4c393e7221981607d1e9f3ddf62cc9a9b8f7f6e4bb35",
+      "retrieval": {
+        "method": "fixed-ref-local-partial-clone",
+        "path": "/tmp/xhs-issue-1608-source/note_json/6891ae300000000023035e6e.json"
+      },
+      "complete_content_read": true
+    },
+    {
+      "kind": "text_projection",
+      "ref": "liqiangcc/xhs:note_desc/6891ae300000000023035e6e.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "953cc9e3cefbc7278766f0b4955986973c3700ec",
+      "byte_size": 565,
+      "content_sha256": "1c84e6ec7f8684c720e00a1b44d4ffc92e2bfeede4d20982c419482019aef425",
+      "retrieval": {
+        "method": "github-git-blob",
+        "path": "repos/liqiangcc/xhs/git/blobs/953cc9e3cefbc7278766f0b4955986973c3700ec"
+      },
+      "complete_content_read": true
+    }
+  ],
   "evidence_status": "insufficient-blocked",
   "decision": null,
-  "rationale": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。",
+  "rationale": "固定 SourceNote 虽有面试标题或事件描述，但未同时提供已完成面试事件与至少两条 substantive Q&A；拒绝用预约、结果、题目列表或营销包装为 single-interview。",
   "artifact": {
     "ref": "liqiangcc/xhs:note_desc/6891ae300000000023035e6e.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -27,7 +65,9 @@
     {
       "line": 1,
       "locator": "source-projection:artifact-line:1",
-      "excerpt": "不敢裸辞，加薪也不敢提，调休了三天，上午睡觉，下午面试，看看有没有好点的Java开发岗位和机会，反正现在有真的工作经验了也不虚，昨天下午有个面试官还当我面去csdn搜面试题面我，我直接应付下就走了。（有合适的岗位也可以内推，只要不加班太晚 都可接受。主要是薪资方面[黄金薯R]）"
+      "excerpt": "不敢裸辞，加薪也不敢提，调休了三天，上午睡觉，下午面试，看看有没有好点的Java开发岗位和机会，反正现在有真的工作经验了也不虚，昨天下午有个面试官还当我面去csdn搜面试题面我，我直接应付下就走了。（有合适的岗位也可以内推，只要不加班太晚 都可接受。主要是薪资方面[黄金薯R]）",
+      "artifact_ref": "liqiangcc/xhs:note_desc/6891ae300000000023035e6e.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "artifact_kind": "text_projection"
     }
   ],
   "case_keys": [],
@@ -51,7 +91,7 @@
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+      "note": "固定 SourceNote 虽有面试标题或事件描述，但未同时提供已完成面试事件与至少两条 substantive Q&A；拒绝用预约、结果、题目列表或营销包装为 single-interview。"
     },
     {
       "check_id": "no_cross_source_mixing",

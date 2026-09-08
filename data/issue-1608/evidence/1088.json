@@ -8,13 +8,51 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "source_retrieval": {
     "method": "frozen-source-snapshot",
-    "path": "/tmp/issue-1608-source-texts.json",
+    "path": "/tmp/issue-1608-source-artifacts-v2.json",
     "byte_size": 469,
     "git_blob_sha": "cc5d70dc8ca20d4b5db63103ef329a22a171c3f2"
   },
+  "source_artifacts": [
+    {
+      "kind": "html",
+      "ref": "liqiangcc/xhs:note_detail/6895649b0000000025024714.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "88e87ea42912937965011c2f78c0e91710601a38",
+      "byte_size": 386422,
+      "content_sha256": "df687cad8381c196f301d89f0c589f6919bd4483600133cf01e103e81a0d7a9e",
+      "retrieval": {
+        "method": "fixed-ref-local-partial-clone",
+        "path": "/tmp/xhs-issue-1608-source/note_detail/6895649b0000000025024714.html"
+      },
+      "complete_content_read": true
+    },
+    {
+      "kind": "json",
+      "ref": "liqiangcc/xhs:note_json/6895649b0000000025024714.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "a514a33f3c3c5662ae1f4fad3f75775f1011d0b1",
+      "byte_size": 20768,
+      "content_sha256": "00479a8853fee5a43b855aac9a120bead442266ee7042a4d16e1eef1e915dbcc",
+      "retrieval": {
+        "method": "fixed-ref-local-partial-clone",
+        "path": "/tmp/xhs-issue-1608-source/note_json/6895649b0000000025024714.json"
+      },
+      "complete_content_read": true
+    },
+    {
+      "kind": "text_projection",
+      "ref": "liqiangcc/xhs:note_desc/6895649b0000000025024714.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "cc5d70dc8ca20d4b5db63103ef329a22a171c3f2",
+      "byte_size": 469,
+      "content_sha256": "f9d5584a3ad4cfa2932cf7115ad4687903eca1fbcda985c48ae4a62f026c3fa3",
+      "retrieval": {
+        "method": "github-git-blob",
+        "path": "repos/liqiangcc/xhs/git/blobs/cc5d70dc8ca20d4b5db63103ef329a22a171c3f2"
+      },
+      "complete_content_read": true
+    }
+  ],
   "evidence_status": "insufficient-blocked",
   "decision": null,
-  "rationale": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。",
+  "rationale": "固定 SourceNote 虽有面试标题或事件描述，但未同时提供已完成面试事件与至少两条 substantive Q&A；拒绝用预约、结果、题目列表或营销包装为 single-interview。",
   "artifact": {
     "ref": "liqiangcc/xhs:note_desc/6895649b0000000025024714.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -27,7 +65,9 @@
     {
       "line": 1,
       "locator": "source-projection:artifact-line:1",
-      "excerpt": "可以说百度的面试真的是压力拉满，面试官也没有问项目和八股，上来就是手撕，第一题是三数之和，上来就写完了，然后面试官感觉我像背的，出了一题链表的两数之和2，不是hot100的题，最后还是做出来了，但是面试官过程中很不耐烦，感觉嫌我笨。后来问了他们部门，应该是搜推的商业化部门应该是要求感觉高#算法[话题]# #秋招[话题]# #大厂[话题]#"
+      "excerpt": "可以说百度的面试真的是压力拉满，面试官也没有问项目和八股，上来就是手撕，第一题是三数之和，上来就写完了，然后面试官感觉我像背的，出了一题链表的两数之和2，不是hot100的题，最后还是做出来了，但是面试官过程中很不耐烦，感觉嫌我笨。后来问了他们部门，应该是搜推的商业化部门应该是要求感觉高#算法[话题]# #秋招[话题]# #大厂[话题]#",
+      "artifact_ref": "liqiangcc/xhs:note_desc/6895649b0000000025024714.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "artifact_kind": "text_projection"
     }
   ],
   "case_keys": [],
@@ -51,7 +91,7 @@
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+      "note": "固定 SourceNote 虽有面试标题或事件描述，但未同时提供已完成面试事件与至少两条 substantive Q&A；拒绝用预约、结果、题目列表或营销包装为 single-interview。"
     },
     {
       "check_id": "no_cross_source_mixing",

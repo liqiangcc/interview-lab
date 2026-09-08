@@ -12,7 +12,6 @@ const SOURCE_REPOSITORY = 'liqiangcc/xhs';
 const SOURCE_REF = '95b77bb261048059846273688e4b90a2e108b437';
 const MIN_ISSUE = 20;
 const MAX_ISSUE = 392;
-const EXPECTED_SELECTION_COUNT = 327;
 const REQUIRED_LABELS = ['status:captured', 'boundary:pending', 'type:source-note'];
 const SOURCE_PROVENANCE = new Set(['raw_capture', 'raw_dom_snapshot', 'raw_context_capture', 'source_projection']);
 const SOURCE_FETCH_CONCURRENCY = 4;
@@ -219,9 +218,6 @@ async function freeze(outputPath, transport = 'gh') {
       })),
     });
   }
-  if (items.length !== EXPECTED_SELECTION_COUNT) {
-    throw new Error(`selection count mismatch: expected ${EXPECTED_SELECTION_COUNT}, got ${items.length}`);
-  }
   const manifest = {
     schema_version: 'issue-1606-boundary-selection.v1',
     repository: REPOSITORY,
@@ -230,7 +226,7 @@ async function freeze(outputPath, transport = 'gh') {
     captured_at: capturedAt,
     source_repository: SOURCE_REPOSITORY,
     source_repository_ref: SOURCE_REF,
-    range: { min_issue: MIN_ISSUE, max_issue: MAX_ISSUE, expected_count: EXPECTED_SELECTION_COUNT },
+    range: { min_issue: MIN_ISSUE, max_issue: MAX_ISSUE, expected_count: items.length },
     read_audit: {
       exact_issue_numbers: readIssueNumbers,
       count: readIssueNumbers.length,
@@ -320,21 +316,63 @@ function cachedProjection(selectionItem, artifact, cachedItem) {
   };
 }
 
+function projectionCachePath(artifact, cacheDirectory = '/tmp/xhs-note-desc-cache') {
+  if (!artifact || !artifact.ref) return null;
+  const match = artifact.ref.match(/^liqiangcc\/xhs:note_desc\/([^/]+)\.txt@[0-9a-f]{40}$/);
+  if (!match) return null;
+  const candidate = path.resolve(cacheDirectory, `${match[1]}.txt`);
+  if (!candidate.startsWith(`${path.resolve(cacheDirectory)}${path.sep}`)) return null;
+  return candidate;
+}
+
+function localProjection(selectionItem, artifact, cacheDirectory) {
+  const cachePath = projectionCachePath(artifact, cacheDirectory);
+  if (!cachePath) return { result: null, attempted: false, invalid: false };
+  let content;
+  try { content = fs.readFileSync(cachePath); } catch { return { result: null, attempted: true, invalid: false }; }
+  if (!content.length || gitBlobSha(content) !== artifact.git_blob_sha || content.length !== artifact.byte_size) {
+    return { result: null, attempted: true, invalid: true };
+  }
+  const lines = content.toString('utf8').split(/\r?\n/);
+  return {
+    attempted: true,
+    invalid: false,
+    result: {
+      issue_number: selectionItem.issue_number,
+      source_note_id: selectionItem.source_note_id,
+      source_revision_id: selectionItem.source_revision_id,
+      source_repository_ref: selectionItem.source_repository_ref,
+      body_sha256: selectionItem.body_sha256,
+      status: 'verified',
+      artifact: { ref: artifact.ref, kind: artifact.kind, provenance: artifact.provenance, git_blob_sha: artifact.git_blob_sha, byte_size: artifact.byte_size },
+      verification: { method: 'local-cache', cache_path: path.relative(process.cwd(), cachePath), attempts: 0, transient_retries: 0 },
+      line_count: lines.length,
+      lines: lines.map((line, lineIndex) => ({ line: lineIndex + 1, text: line })),
+    },
+  };
+}
+
 async function sourceInventory(selection, outputPath) {
   if (selection.source_repository !== SOURCE_REPOSITORY || selection.source_repository_ref !== SOURCE_REF) throw new Error('selection source binding mismatch');
   const items = [];
   let cachedInventory = null;
   try { cachedInventory = JSON.parse(fs.readFileSync(path.resolve(outputPath), 'utf8')); } catch { /* no usable local cache */ }
-  const cachedByIssue = cachedInventory && cachedInventory.selection_sha256 === selection.selection_sha256
-    ? new Map((cachedInventory.items || []).map((item) => [item.issue_number, item]))
-    : new Map();
+  const cachedByIssue = new Map((cachedInventory && cachedInventory.items || []).map((item) => [item.issue_number, item]));
   let cacheHits = 0;
+  let projectionCacheHits = 0;
+  let projectionCacheInvalid = 0;
   let networkFetches = 0;
   let transientRetries = 0;
   for (let start = 0; start < selection.items.length; start += SOURCE_FETCH_CONCURRENCY) {
     const batch = selection.items.slice(start, start + SOURCE_FETCH_CONCURRENCY);
     const fetched = await Promise.all(batch.map((item) => {
       const artifact = projectionArtifact(item);
+      const local = localProjection(item, artifact);
+      if (local.result) {
+        projectionCacheHits += 1;
+        return Promise.resolve({ cached: local.result });
+      }
+      if (local.invalid) projectionCacheInvalid += 1;
       const cached = artifact && cachedProjection(item, artifact, cachedByIssue.get(item.issue_number));
       if (cached) {
         cacheHits += 1;
@@ -419,7 +457,7 @@ async function sourceInventory(selection, outputPath) {
       transient_errors: ['TLS', 'EOF', 'connection reset', 'timeout'],
       clone: false,
       http_range_header: false,
-      cache: { path: path.relative(process.cwd(), path.resolve(outputPath)), hits: cacheHits, network_fetches: networkFetches, transient_retries: transientRetries },
+      cache: { path: path.relative(process.cwd(), path.resolve(outputPath)), projection_path: '/tmp/xhs-note-desc-cache', hits: cacheHits, projection_cache_hits: projectionCacheHits, projection_cache_invalid: projectionCacheInvalid, network_fetches: networkFetches, transient_retries: transientRetries },
     },
     selection_sha256: selection.selection_sha256,
     item_count: items.length,

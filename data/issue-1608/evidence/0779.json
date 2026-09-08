@@ -8,10 +8,48 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "source_retrieval": {
     "method": "frozen-source-snapshot",
-    "path": "/tmp/issue-1608-source-texts.json",
+    "path": "/tmp/issue-1608-source-artifacts-v2.json",
     "byte_size": 80,
     "git_blob_sha": "2fed1eed66bb24fd02beac8d8b318a50b87f5db5"
   },
+  "source_artifacts": [
+    {
+      "kind": "html",
+      "ref": "liqiangcc/xhs:note_detail/6809f4c9000000001d015531.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "2d0c2965904fbaf356bf4c25aa19fdf720355f1c",
+      "byte_size": 385822,
+      "content_sha256": "e7fd0fdaab3cf4f1b641cfde5c86a2bcf49696f272f0a27c3e9f14d265df71a5",
+      "retrieval": {
+        "method": "fixed-ref-local-partial-clone",
+        "path": "/tmp/xhs-issue-1608-source/note_detail/6809f4c9000000001d015531.html"
+      },
+      "complete_content_read": true
+    },
+    {
+      "kind": "json",
+      "ref": "liqiangcc/xhs:note_json/6809f4c9000000001d015531.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "118cd14019c96c4b94d01f657101a65b3d6d2d25",
+      "byte_size": 20673,
+      "content_sha256": "0c26221c86e230b26d5dc5a7ee44c1f72e469b91d6cb4c974c01f3afe096d25a",
+      "retrieval": {
+        "method": "fixed-ref-local-partial-clone",
+        "path": "/tmp/xhs-issue-1608-source/note_json/6809f4c9000000001d015531.json"
+      },
+      "complete_content_read": true
+    },
+    {
+      "kind": "text_projection",
+      "ref": "liqiangcc/xhs:note_desc/6809f4c9000000001d015531.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "2fed1eed66bb24fd02beac8d8b318a50b87f5db5",
+      "byte_size": 80,
+      "content_sha256": "6e936fbb87cc450cf3c332b1325dc5a0a33a9219491a945a4770c19300978028",
+      "retrieval": {
+        "method": "github-git-blob",
+        "path": "repos/liqiangcc/xhs/git/blobs/2fed1eed66bb24fd02beac8d8b318a50b87f5db5"
+      },
+      "complete_content_read": true
+    }
+  ],
   "evidence_status": "insufficient-blocked",
   "decision": null,
   "rationale": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。",

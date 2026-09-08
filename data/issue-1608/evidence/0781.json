@@ -8,10 +8,48 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "source_retrieval": {
     "method": "frozen-source-snapshot",
-    "path": "/tmp/issue-1608-source-texts.json",
+    "path": "/tmp/issue-1608-source-artifacts-v2.json",
     "byte_size": 217,
     "git_blob_sha": "9a922c3ec7f8487577fb4c3a49662231c188a5a3"
   },
+  "source_artifacts": [
+    {
+      "kind": "html",
+      "ref": "liqiangcc/xhs:note_detail/680a3852000000001b0258ea.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "1d9a0af987dc69e9d9c6c60c6c37d07f80bb88bf",
+      "byte_size": 389894,
+      "content_sha256": "13599535949b7b0486cca4dc0cf6f13c78f4e7eef8422ed38557e8de6cf2a3cf",
+      "retrieval": {
+        "method": "fixed-ref-local-partial-clone",
+        "path": "/tmp/xhs-issue-1608-source/note_detail/680a3852000000001b0258ea.html"
+      },
+      "complete_content_read": true
+    },
+    {
+      "kind": "json",
+      "ref": "liqiangcc/xhs:note_json/680a3852000000001b0258ea.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "955ead0397374e32a58173ba00731c288796cad0",
+      "byte_size": 23758,
+      "content_sha256": "7023ac5d59a8e8b2a62bc34d6e1d301a394bb03130b873abd48cbd38384fb257",
+      "retrieval": {
+        "method": "fixed-ref-local-partial-clone",
+        "path": "/tmp/xhs-issue-1608-source/note_json/680a3852000000001b0258ea.json"
+      },
+      "complete_content_read": true
+    },
+    {
+      "kind": "text_projection",
+      "ref": "liqiangcc/xhs:note_desc/680a3852000000001b0258ea.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "9a922c3ec7f8487577fb4c3a49662231c188a5a3",
+      "byte_size": 217,
+      "content_sha256": "4affd7283c89d858f285752178e74490b29873ae42625a70f78e44a724a84223",
+      "retrieval": {
+        "method": "github-git-blob",
+        "path": "repos/liqiangcc/xhs/git/blobs/9a922c3ec7f8487577fb4c3a49662231c188a5a3"
+      },
+      "complete_content_read": true
+    }
+  ],
   "evidence_status": "insufficient-blocked",
   "decision": null,
   "rationale": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。",
@@ -27,7 +65,9 @@
     {
       "line": 1,
       "locator": "source-projection:artifact-line:1",
-      "excerpt": "摸鱼时不定时更新一些面试套文。 能抄一点是一点，觉得有用的话，"
+      "excerpt": "摸鱼时不定时更新一些面试套文。 能抄一点是一点，觉得有用的话，",
+      "artifact_ref": "liqiangcc/xhs:note_desc/680a3852000000001b0258ea.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "artifact_kind": "text_projection"
     }
   ],
   "case_keys": [],
