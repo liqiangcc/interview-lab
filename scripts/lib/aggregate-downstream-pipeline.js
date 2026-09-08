@@ -3,6 +3,7 @@
 const crypto = require('crypto');
 const { parseInterviewNoteIssue, validateInterviewNoteIssue } = require('./interview-note-issue');
 const { validateInterviewContext, buildLearningDiscovery } = require('./interview-context');
+const { validateSnapshot } = require('./issue-1605-pending-inventory');
 
 const SCHEMA_VERSION = 'aggregate-downstream-pipeline.v1';
 const PLAN_SCHEMA_VERSION = 'aggregate-downstream-pipeline-plan.v1';
@@ -57,7 +58,8 @@ function validateManifest(manifest) {
     'parent_issue', 'issue_number', 'dependency_issues', 'boundary_batches',
     'recovery_report', 'materialization_reports', 'source_review_receipts',
     'context_reports', 'existing_context_reports', 'existing_source_ready_issue_numbers',
-    'live_issue_snapshot', 'expected_dependency_body_sha256',
+    'live_issue_snapshot', 'expected_dependency_body_sha256', 'pending_inventory_snapshot',
+    'pending_inventory_ownership', 'expected_pending_inventory_digest', 'expected_pending_ownership_digest',
   ]);
   for (const key of Object.keys(manifest)) if (!allowed.has(key)) errors.push(`unsupported manifest field: ${key}`);
   if (manifest.schema_version !== SCHEMA_VERSION) errors.push(`schema_version must be ${SCHEMA_VERSION}`);
@@ -86,6 +88,12 @@ function validateManifest(manifest) {
   if (!Array.isArray(manifest.existing_context_reports) || manifest.existing_context_reports.length === 0 || manifest.existing_context_reports.some((file) => !nonEmpty(file))) errors.push('existing_context_reports must be a non-empty list of audited Context report paths');
   if (JSON.stringify(manifest.existing_source_ready_issue_numbers || []) !== JSON.stringify(EXISTING_SOURCE_READY_ISSUES)) errors.push('existing_source_ready_issue_numbers must equal the frozen 50-item source-ready inventory');
   if (!nonEmpty(manifest.live_issue_snapshot)) errors.push('live_issue_snapshot is required; planning without a body-pinned read snapshot is forbidden');
+  const inventoryFields = ['pending_inventory_snapshot', 'pending_inventory_ownership'];
+  if (inventoryFields.some((field) => manifest[field] !== undefined)) {
+    for (const field of inventoryFields) if (!nonEmpty(manifest[field])) errors.push(`${field} is required when pending inventory dependency is enabled`);
+    if (!HEX64.test(manifest.expected_pending_inventory_digest || '')) errors.push('expected_pending_inventory_digest must be a lowercase SHA-256');
+    if (!HEX64.test(manifest.expected_pending_ownership_digest || '')) errors.push('expected_pending_ownership_digest must be a lowercase SHA-256');
+  }
   if (manifest.expected_dependency_body_sha256 !== undefined) {
     if (!manifest.expected_dependency_body_sha256 || typeof manifest.expected_dependency_body_sha256 !== 'object') errors.push('expected_dependency_body_sha256 must be an object');
     else for (const issue of REQUIRED_DEPENDENCIES) if (!HEX64.test(manifest.expected_dependency_body_sha256[String(issue)] || '')) errors.push(`expected dependency #${issue} body SHA must be lowercase SHA-256`);
@@ -298,11 +306,20 @@ function validateContextReports(reports, rows, liveIssues, errors) {
   return contexts;
 }
 
-function planAggregate({ manifest, boundaryReports, recoveryReport, materializationReports, sourceReviewReceipts, contextReports, existingContextReports, liveIssues = new Map() } = {}) {
+function planAggregate({ manifest, boundaryReports, recoveryReport, materializationReports, sourceReviewReceipts, contextReports, existingContextReports, liveIssues = new Map(), pendingInventorySnapshot = null, pendingInventoryOwnership = null } = {}) {
   const errors = [];
   const manifestValidation = validateManifest(manifest);
   errors.push(...manifestValidation.errors);
   if (!manifestValidation.ok) return blockedPlan(manifest, errors);
+  if (manifest.pending_inventory_snapshot) {
+    if (!pendingInventorySnapshot || !pendingInventoryOwnership) errors.push('parent pending inventory snapshot and ownership index are required dependencies');
+    else {
+      const inventory = validateSnapshot(pendingInventorySnapshot, pendingInventoryOwnership);
+      errors.push(...inventory.errors.map((error) => `pending inventory: ${error}`));
+      if (pendingInventorySnapshot.canonical_digest !== manifest.expected_pending_inventory_digest) errors.push('pending inventory snapshot digest differs from manifest pin');
+      if (pendingInventoryOwnership.canonical_digest !== manifest.expected_pending_ownership_digest) errors.push('pending inventory ownership digest differs from manifest pin');
+    }
+  }
   const boundary = validateBoundaryReports(manifest, boundaryReports || {});
   errors.push(...boundary.errors);
   const rows = materializationRows(materializationReports || [], manifest, errors);
@@ -365,6 +382,11 @@ function planAggregate({ manifest, boundaryReports, recoveryReport, materializat
       source_review_pending: review.evidence_requests.length,
       context_ready: contexts.size + existingContexts.size,
       mutation_count: errors.length > 0 ? 0 : sourceReady.length,
+      pending_inventory: manifest.pending_inventory_snapshot ? {
+        count: pendingInventorySnapshot && pendingInventorySnapshot.count || 0,
+        canonical_digest: pendingInventorySnapshot && pendingInventorySnapshot.canonical_digest || null,
+        ownership_digest: pendingInventoryOwnership && pendingInventoryOwnership.canonical_digest || null,
+      } : null,
     },
     selection,
     independent_source_review_evidence_requests: review.evidence_requests,

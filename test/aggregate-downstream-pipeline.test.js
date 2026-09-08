@@ -153,6 +153,18 @@ test('aggregate fails closed when dependency receipts are absent', () => {
   assert.match(result.errors.join('\n'), /boundary #1606/);
 });
 
+test('aggregate requires the parent pending inventory and ownership dependency when pinned', () => {
+  const input = validInputs();
+  input.manifest.pending_inventory_snapshot = '../issue-1605/pending-inventory.snapshot.json';
+  input.manifest.pending_inventory_ownership = '../issue-1605/pending-inventory.ownership.json';
+  input.manifest.expected_pending_inventory_digest = '1'.repeat(64);
+  input.manifest.expected_pending_ownership_digest = '2'.repeat(64);
+  const result = planAggregate(input);
+  assert.equal(result.ok, false);
+  assert.equal(result.plan.summary.mutation_count, 0);
+  assert.match(result.errors.join('\n'), /pending inventory snapshot and ownership index are required dependencies/);
+});
+
 test('aggregate freezes the four disjoint boundary ranges and source ref', () => {
   const input = validInputs();
   const result = planAggregate(input);
