@@ -196,7 +196,7 @@ test('full-source semantic boundary keeps events, rounds, and non-events distinc
     ['single-event-with-bank-words', '候选人一面记录', '我参加了一面，面试官问了我项目难点和八股问题，最后拿到了结果', 'single-interview'],
     ['multi-round', '面试复盘', '我参加了一面和二面，分别记录面试官的问题和回答', 'multi-interview'],
     ['timeline-multi-round', '后端开发面经', '投简历 11.18 一面 11.20 挂；投简历 11.29 一面 12.02 挂', 'multi-interview'],
-    ['telephone-review', '电话面试复盘', 'Java基础类型和占的字节数\n讲讲二分查找和二叉搜索树\n算法题：两个队列实现栈', 'single-interview'],
+    ['telephone-review-question-list', '电话面试复盘', 'Java基础类型和占的字节数\n讲讲二分查找和二叉搜索树\n算法题：两个队列实现栈', 'not-interview'],
     ['advice-question', '面试官问我的问题', '面试官问我的问题回答不上来怎么办，如何准备面试', 'not-interview'],
     ['marketing-repost', '前端二面通关秘籍', '三面挂掉的同学整理出的通关秘籍，必问的高频题和标准答案，关注我不迷路', 'not-interview'],
   ];
@@ -219,5 +219,17 @@ test('actual high-risk B samples keep candidate events ahead of advice and title
   assert.ok(item444, '#444 must remain selected');
   assert.notEqual(classifyFullSource(item444).proposed_decision, 'not-interview');
   const repeatedTitleOnly = classifyFullSource(fullSourceItem('快手二面面经', '1. JVM内存模型\n2. 线程池拒绝策略\n3. 算法题'));
-  assert.equal(repeatedTitleOnly.proposed_decision, 'single-interview');
+  assert.equal(repeatedTitleOnly.proposed_decision, 'not-interview', 'title plus question list is not a candidate event');
+});
+
+test('real non-event samples receive exact non-event decisions', () => {
+  const selection = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'issue-1607', 'selection.json'), 'utf8'));
+  const expected = { 415: 'not-interview', 467: 'not-interview', 511: 'not-interview', 601: 'not-interview', 654: 'not-interview', 658: 'not-interview' };
+  for (const [numberText, decision] of Object.entries(expected)) {
+    const number = Number(numberText);
+    const item = selection.items.find((candidate) => candidate.issue_number === number);
+    assert.ok(item, `#${number} must remain selected`);
+    assert.equal(classifyFullSource(item).proposed_decision, decision, `#${number} must classify exactly as ${decision}`);
+  }
+  assert.equal(classifyFullSource(fullSourceItem('Java面经', '题库放在后面了，大家可以参考。')).proposed_decision, 'not-interview');
 });

@@ -10,13 +10,18 @@
   "expected_source_revision_id": "xhs-note:677deb41000000001a01d349:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "evidence_status": "reviewed",
-  "decision": "single-interview",
+  "decision": "not-interview",
   "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
     "status": "reviewed",
-    "proposed_decision": "single-interview",
-    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
-    "basis_lines": [],
+    "proposed_decision": "not-interview",
+    "basis": "question-bank or answer-key content lacks a clear candidate event",
+    "basis_lines": [
+      {
+        "line_number": 20,
+        "excerpt": "20) 线程池的拒绝策略"
+      }
+    ],
     "semantic_evidence": [
       {
         "ref": "liqiangcc/xhs:note_json/677deb41000000001a01d349.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -126,7 +131,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
+      "note": "Semantic boundary result is not-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",

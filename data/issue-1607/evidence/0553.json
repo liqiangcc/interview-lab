@@ -9,14 +9,27 @@
   "expected_body_sha256": "4623cdedd199bc342eee23c77c9283e0b59731ed722097bb5fde0183342928d4",
   "expected_source_revision_id": "xhs-note:67c7e99a000000000603c442:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "reviewed",
-  "decision": "single-interview",
-  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
+  "evidence_status": "blocked",
+  "decision": "blocked",
+  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified for this item.",
   "classification": {
-    "status": "reviewed",
-    "proposed_decision": "single-interview",
-    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
-    "basis_lines": [],
+    "status": "blocked",
+    "proposed_decision": "blocked",
+    "basis": "full Source artifacts are present but do not establish whether this is a candidate interview event or a non-event",
+    "basis_lines": [
+      {
+        "line_number": 1,
+        "excerpt": "好焦灼，抱着试试的心态投了一些大厂，没想到收到小米面试了，技术岗啥也不会恶补了两天但是效果甚微，啊啊啊啊啊啊啊啊啊啊，一想到一小时后就要在屏幕前脚趾抓地，我现在真的坐立难安，背也背不进去，有种死到临头的感觉"
+      },
+      {
+        "line_number": 2,
+        "excerpt": "也不是怕面试，我知道通过的概率几乎没有，但是真的好丢人…谁懂"
+      },
+      {
+        "line_number": 3,
+        "excerpt": "#面试[话题]# #春招[话题]# #我的找工作日记[话题]#"
+      }
+    ],
     "semantic_evidence": [
       {
         "ref": "liqiangcc/xhs:note_json/67c7e99a000000000603c442.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -125,8 +138,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
+      "result": "blocked",
+      "note": "Full Source material remains semantically insufficient to decide the boundary."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -140,7 +153,7 @@
     }
   ],
   "limitations": [
-    "The semantic decision is review-ready but is not durable controller authorization.",
+    "Complete pinned artifacts were read, but their semantics do not establish a 0/1/N boundary decision.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

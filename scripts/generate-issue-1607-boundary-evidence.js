@@ -74,12 +74,14 @@ function classifyFullSource(item) {
   const timelineEvidence = /(?:timeline|投简历|约面|流程|官网流程|\d{1,2}[./-]\d{1,2})/i.test(body);
   const durationEvidence = /\d+\s*(?:min(?:ute)?s?|分钟)/i.test(body);
   const actualResult = /(?:我|本人|自己).{0,28}(?:拿到|收到.*结果|面试通过|面试挂|挂了|凉了|过了|拒了|offer)/s.test(text)
-    || /(?:面完|面过|面了|实际面|(?:今天|昨天|刚刚).{0,30}面试|面试.*(?:结束|结果|通过|挂)|面试官问了我|候选人回答)/.test(text)
+    || /(?:面完|面过|实际面|(?:我|本人|自己)\s*面了|(?:今天|昨天|刚刚).{0,30}面试|面试.*(?:结束|结果|通过|挂)|面试官问了我|候选人回答)/.test(text)
     || ((titleExperience || titleRound) && /(?:挂|凉|offer|oc|面试结果)/i.test(text));
-  const explicitQuestionBank = /(?:面试八股|八股文|题库|高频题|常问问题汇总|技术栈攻略|一图流攻略|面试题分享|面试真题|必问的高频题|标准答案|及格答案)/.test(text);
+  const explicitQuestionBank = /(?:面试八股|八股文|题库|高频题|常问问题汇总|技术栈攻略|一图流攻略|面试题(?:分享|库|汇总|列表|清单)?|面试真题|必问的高频题|标准答案|及格答案|刷题(?:清单|建议)?|可能的题库|搜集的.*题库)/.test(text);
   const questionOnlyAdvice = /(?:怎么办|怎么回答|一般考啥|求助|有没有知道|推荐去|如何准备)/.test(text) && !titleRound && !titleExperience;
   const eventContext = /(?:面试流程|面试体验|面试记录|面经|面试|一面|二面|三面|四面|初试|终面)/.test(title) || /(?:面试流程|面试体验|面试记录|面经|面试官|候选人|一面|二面|三面|四面|初试|终面)/.test(body);
-  const narratedEvent = /(?:记录一次|第一次遇到|本人|今天|昨天|上个月|面试官.*(?:问了|问我(?:什么|哪些)|说|让)|被拷打|秒挂|凉经|挂了|面完|面过|面了|实际面)/.test(body);
+  // “后面了” in question-bank promotion copy must not satisfy a generic
+  // “面了” event marker. Keep ownership/process expressions explicit.
+  const narratedEvent = /(?:记录一次|第一次遇到|本人|今天|昨天|上个月|面试官.*(?:问了|问我(?:什么|哪些)|说|让)|被拷打|秒挂|凉经|挂了|面完|面过|实际面|(?:我|本人|自己)\s*面了)/.test(body);
   const adviceOnly = /(?:怎么办|怎么回答|一般考啥|求助|有没有知道|推荐去|如何准备)/.test(text)
     && !titleRound
     && !titleExperience
@@ -98,10 +100,29 @@ function classifyFullSource(item) {
     || (durationEvidence && questionEvidence)
   ));
   const assessmentOnly = /(?:笔试题|笔试|刷题|题库)/.test(body) && !candidateEvent && !/(?:面试官|候选人回答|面试问题|实际面|面试结果)/.test(body);
-  const experienced = !questionOnlyAdvice && !adviceOnly && !assessmentOnly && ((candidateEvent && (questionEvidence || actualResult || roundMatches.length > 0)) || (titleRound && questionEvidence));
+  const narratedCandidateEvent = /(?:记录一次|第一次遇到|面试官.*(?:问了|问我(?:什么|哪些)|说|让)|被拷打|秒挂|凉经|挂了|面完|面过|实际面|(?:我|本人|自己)\s*面了)/.test(body);
+  const actualProcess = /(?:参加(?:过|了)?\s*面试|被问|问了我|候选人回答|面过|面完|实际面|第一次面试|面试结果|收到.*结果|拿到.*offer|(?:我|本人|自己)\s*面了)/.test(text) || narratedCandidateEvent;
+  const candidateNarrativeDetail = /(?:面试官|候选人|回答|参加|实际|面完|被问|反问|结果|\d+\s*(?:min(?:ute)?s?|分钟)|timeline|投简历|约面)/i.test(body);
+  // Title/question vocabulary is insufficient on its own. Non-event signals
+  // may be overridden only by an independently strong candidate event.
+  const strongCandidateEvent = actualProcess
+    || (durationEvidence && questionEvidence)
+    || (timelineEvidence && roundMatches.length > 0 && questionEvidence)
+    || ((titleExperience || titleRound)
+      && candidateEvent
+      && !marketing
+      && !interviewerShare
+      && !explicitQuestionBank
+      && !adviceOnly
+      && !invitationOrAdvice
+      && !assessmentOnly
+      && candidateNarrativeDetail);
+  const clearCandidateEvent = strongCandidateEvent;
+  const explicitNonEvent = marketing || interviewerShare || explicitQuestionBank || adviceOnly || questionOnlyAdvice || invitationOrAdvice || assessmentOnly || /(?:题库|题目列表|求职|岗位|招聘|整理收集|实习一个月体验|刚入职|求助|可以去么|能进么|推荐去|外包|部门怎么样|想不想试试)/.test(text);
+  const experienced = strongCandidateEvent && !questionOnlyAdvice && !adviceOnly && !assessmentOnly;
 
-  if (refusal || marketing || (interviewerShare && !experienced)) {
-    return { status: 'reviewed', proposed_decision: 'not-interview', basis: refusal ? 'explicit first-person refusal/non-attendance is non-event' : marketing ? 'marketing/repost or answer-key content is explicitly non-event' : 'interviewer-perspective sharing is not a candidate interview event', basis_lines: lineBasis([/(通关秘籍|标准答案|转载|营销|面试官|拒绝|不面|未参加)/]), semantic_evidence: evidence };
+  if (refusal || (explicitNonEvent && !clearCandidateEvent)) {
+    return { status: 'reviewed', proposed_decision: 'not-interview', basis: refusal ? 'explicit first-person refusal/non-attendance is non-event' : marketing ? 'marketing/repost or answer-key content lacks a candidate event' : explicitQuestionBank ? 'question-bank or answer-key content lacks a clear candidate event' : interviewerShare ? 'interviewer-perspective sharing is not a candidate interview event' : 'explicit invitation, job/advice, or non-event content lacks a clear candidate event', basis_lines: lineBasis([/(通关秘籍|标准答案|转载|营销|题库|刷题|面试官|拒绝|不面|未参加|建议|求助)/]), semantic_evidence: evidence };
   }
   if (experienced && explicitMulti) {
     return { status: 'reviewed', proposed_decision: 'multi-interview', basis: 'complete candidate interview evidence names multiple distinct interview events/rounds', basis_lines: lineBasis([/(一面|二面|三面|四面|多场|多次|两家|两轮)/]), semantic_evidence: evidence };

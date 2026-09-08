@@ -9,17 +9,29 @@
   "expected_body_sha256": "72ef94cd552278f6a6ca2418319d5d277296c7561a8bd07c3f453a6b05b2c782",
   "expected_source_revision_id": "xhs-note:67c941e20000000029031ef6:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "reviewed",
-  "decision": "single-interview",
-  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
+  "evidence_status": "blocked",
+  "decision": "blocked",
+  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified for this item.",
   "classification": {
-    "status": "reviewed",
-    "proposed_decision": "single-interview",
-    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "status": "blocked",
+    "proposed_decision": "blocked",
+    "basis": "full Source artifacts are present but do not establish whether this is a candidate interview event or a non-event",
     "basis_lines": [
       {
-        "line_number": 12,
-        "excerpt": "（前一个回答没有深入了解）那让你来设计Redis的set？（回答的会学习Java的set，用map，数组➕链表➕红黑树）"
+        "line_number": 4,
+        "excerpt": "为什么学习微服务，微服务和单体项目相比的优点和带来的问题。"
+      },
+      {
+        "line_number": 15,
+        "excerpt": "为什么选择rabbitmq，rabbitmq的一些相关问题，问的如何确保消息可靠性，答不全，又问觉得rabbitmq的设计精巧之处"
+      },
+      {
+        "line_number": 17,
+        "excerpt": "日常开发中最困扰你的问题"
+      },
+      {
+        "line_number": 19,
+        "excerpt": "最后的问题 LeetCode 16.26  计算器 只做了个从左到右计算的计算器，想到可能用栈，没想到具体怎么让乘除法优先[哭惹R]"
       }
     ],
     "semantic_evidence": [
@@ -130,8 +142,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
+      "result": "blocked",
+      "note": "Full Source material remains semantically insufficient to decide the boundary."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -145,7 +157,7 @@
     }
   ],
   "limitations": [
-    "The semantic decision is review-ready but is not durable controller authorization.",
+    "Complete pinned artifacts were read, but their semantics do not establish a 0/1/N boundary decision.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]
