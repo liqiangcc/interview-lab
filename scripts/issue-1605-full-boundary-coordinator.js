@@ -26,6 +26,11 @@ const SOURCE_REPOSITORY = 'liqiangcc/xhs';
 const SOURCE_REF = '95b77bb261048059846273688e4b90a2e108b437';
 const PARENT_ISSUE = 1605;
 const PENDING_SNAPSHOT = 'data/pilot/issue-1605/pending-inventory.snapshot.json';
+const REMAINING_MANIFEST = 'data/pilot/issue-1605/remaining-boundary.manifest.json';
+const REMAINING_SCOPE_DIGEST = '6ef4fa26e838fe8c30d571c08807c09d5a3280eb40aa4af57d679274f6a131a1';
+const REMAINING_MANIFEST_DIGEST = 'fea78669500c0986eff96b67b7e2d35afdf46355bc7caa9b862116eca40b4ba9';
+const COMPLETED_MANIFEST = 'data/pilot/issue-1605/full-boundary-manifest.json';
+const COMPLETED_MANIFEST_DIGEST = '40fd63cccea624a567778f5c679a9e0e77b0784181de4d54cacad9873ae6c97a';
 const DEFAULT_OUTPUT = 'data/pilot/issue-1605/full-boundary-evidence-plan.json';
 const DEFAULT_JOURNAL = 'data/pilot/issue-1605/full-boundary-evidence-progress.json';
 const DEFAULT_LOCK = 'data/pilot/issue-1605/full-boundary-evidence-progress.lock';
@@ -122,13 +127,197 @@ function pendingInventory(file = PENDING_SNAPSHOT) {
   if (numbers.length !== 1397 || new Set(numbers).size !== numbers.length) {
     throw new Error(`pending inventory must contain 1397 unique SourceNotes; got ${numbers.length}`);
   }
+  const digestInput = { ...snapshot };
+  delete digestInput.canonical_digest;
+  delete digestInput.validation;
+  delete digestInput.generated_at;
+  if (snapshot.canonical_digest !== sha256(canonical(digestInput))
+      || snapshot.canonical_digest !== '5bbf8de3dc61ed382ee31e0d0286c3e7374efec243f60b245c76ee2e0b553dfd') {
+    throw new Error('pending inventory canonical digest is not the approved 1397-row snapshot');
+  }
   return { snapshot, numbers: new Set(numbers) };
+}
+
+function remainingInventory(file = REMAINING_MANIFEST, frozen) {
+  const manifest = readJson(file);
+  const errors = [];
+  if (manifest.schema_version !== 'issue-1605-next-boundary-manifest.v1') errors.push(`unexpected remaining manifest schema: ${manifest.schema_version}`);
+  if (manifest.repository !== REPOSITORY || manifest.parent_issue !== PARENT_ISSUE) errors.push('remaining manifest repository/parent mismatch');
+  if (manifest.source_snapshot?.repository !== SOURCE_REPOSITORY || manifest.source_snapshot?.ref !== SOURCE_REF) errors.push('remaining manifest is not pinned to the approved XHS source ref');
+  if (manifest.scope_digest !== REMAINING_SCOPE_DIGEST) errors.push('remaining manifest scope digest is not the approved 978-row scope');
+  if (manifest.canonical_digest !== REMAINING_MANIFEST_DIGEST) errors.push('remaining manifest canonical digest is not the approved 978-row manifest');
+  const digestInput = { ...manifest };
+  delete digestInput.ok;
+  delete digestInput.canonical_digest;
+  if (manifest.canonical_digest !== sha256(canonical(digestInput))) errors.push('remaining manifest canonical digest does not match content');
+  if (manifest.ok !== true) errors.push('remaining manifest is not marked valid');
+  const items = Array.isArray(manifest.items) ? manifest.items : [];
+  if (manifest.remaining_count !== 978 || items.length !== 978) errors.push(`remaining manifest must contain 978 unique SourceNotes; got ${items.length}`);
+  const numbers = items.map((item) => Number(item.issue_number));
+  if (new Set(numbers).size !== numbers.length) errors.push('remaining manifest contains duplicate issue numbers');
+  const frozenNumbers = frozen?.numbers || new Set();
+  for (const number of numbers) if (!frozenNumbers.has(number)) errors.push(`#${number} in remaining manifest is outside the approved frozen inventory`);
+  const expectedBatches = { A: 235, B: 257, C: 248, D: 238 };
+  for (const batch of Object.entries(expectedBatches)) {
+    const [name, expected] = batch;
+    const actual = manifest.batches?.find((candidate) => candidate.batch === name);
+    if (!actual || actual.count !== expected || actual.remaining_count !== expected || actual.issue_numbers?.length !== expected) {
+      errors.push(`remaining manifest Boundary ${name} count is not ${expected}`);
+    }
+  }
+  if (errors.length) throw new Error(errors.join('; '));
+  return { manifest, numbers: new Set(numbers) };
+}
+
+// Boundary A predates the v2 case contract and its multi decisions carry only
+// a single controller excerpt.  These are the exact, independently observed
+// event lines in the pinned note_desc projection.  They are deliberately
+// controller-owned so that a later transition cannot silently invent case
+// identities from a one-line child request.
+const BOUNDARY_A_MULTI_CASE_LINES = Object.freeze({
+  139: [2, 15],
+  179: [4, 28],
+  187: [1, 4],
+  234: [4, 5],
+  253: [2, 3, 5],
+  388: [2, 3],
+});
+
+function caseKeyForRound(raw) {
+  const token = String(raw || '');
+  if (/^(?:一面|1️⃣面|1面|第一轮|第一面|第[一]面)$/.test(token)) return 'round-1';
+  if (/^(?:二面|2️⃣面|2面|第二轮|第二面|第[二]面)$/.test(token)) return 'round-2';
+  if (/^(?:三面|3️⃣面|3面|第三轮|第三面|第[三]面)$/.test(token)) return 'round-3';
+  if (/^(?:四面|4️⃣面|4面|第四轮|第四面|第[四]面)$/.test(token)) return 'round-4';
+  if (/^(?:五面|5️⃣面|5面|第五轮|第五面|第[五]面)$/.test(token)) return 'round-5';
+  if (token === '初面') return 'round-initial';
+  if (token === '终面') return 'round-final';
+  return null;
+}
+
+function completedRoundTokenMatches(value) {
+  const pattern = /(?:一面|二面|三面|四面|五面|[1-5]️⃣面|[1-5]面|初面|终面|第[一二三四五]面|第[一二三四五]轮|第一轮|第二轮|第三轮)/g;
+  return [...String(value || '').matchAll(pattern)].filter((match) => {
+    const raw = match[0];
+    const before = String(value || '').slice(Math.max(0, match.index - 8), match.index);
+    const after = String(value || '').slice(match.index + raw.length, match.index + raw.length + 2);
+    // Numeric page references (p12面试), question counts (2面试题), and
+    // future/speculative rounds do not establish another completed event.
+    if (/^[1-5](?:️⃣)?面$/.test(raw) && (after.startsWith('试') || /[0-9pP]$/.test(before))) return false;
+    if (/(?:听说有|据说有|可能有|大概有|预计有|已约|约了|预约|计划|准备|即将|明天|后天|将要|取消|流程结束)\s*$/.test(before)) return false;
+    if (new RegExp(`${raw}的`).test(String(value || '')) || /(?:尤其|但是|但|没答好|没说到|感觉)/.test(before)) return false;
+    return Boolean(caseKeyForRound(raw));
+  }).map((match) => ({ raw: match[0], key: caseKeyForRound(match[0]), index: match.index }));
+}
+
+function deriveBoundaryACases(item, evidence) {
+  const ref = evidence?.artifact_ref;
+  const lines = BOUNDARY_A_MULTI_CASE_LINES[Number(item?.issue_number)] || [];
+  if (!ref || lines.length < 2) return [];
+  return lines.map((line, index) => ({
+    case_key: `event-${index + 1}`,
+    evidence: [{ ref, locator: `artifact-line:${line}` }],
+  }));
+}
+
+function deriveBoundaryBCases(evidence) {
+  if (Array.isArray(evidence?.interview_cases) && evidence.interview_cases.length >= 2) {
+    return evidence.interview_cases.map((candidate) => ({
+      case_key: candidate.case_key,
+      evidence: (candidate.evidence || []).map((reference) => ({ ref: reference.ref, locator: reference.locator })),
+    }));
+  }
+  const source = evidence?.source_evidence || {};
+  const sourceRef = source.ref;
+  const sourceLocator = String(source.locator || 'note_desc:full-file');
+  const text = String(source.text || source.excerpt || '');
+  const anchors = [];
+  const usedLocators = new Set();
+  const usedKeys = new Set();
+  const sourceAnchorLines = new Set();
+  const sourceRoundKeys = new Set();
+  const eventOrdinalsSeen = new Set();
+  let directThreeRoundsAdded = false;
+  const add = (baseKey, ref, locator) => {
+    if (!ref || !locator || usedLocators.has(locator)) return;
+    let key = baseKey || 'event';
+    let suffix = 1;
+    while (usedKeys.has(key)) key = `${baseKey || 'event'}-event-${suffix++}`;
+    usedKeys.add(key); usedLocators.add(locator);
+    anchors.push({ case_key: key, evidence: [{ ref, locator }] });
+  };
+  const addLineRound = (line, lineNumber, round, occurrence) => {
+    const base = round.key || `event-${occurrence || anchors.length + 1}`;
+    const key = occurrence > 1 ? `${base}-event-${occurrence}` : base;
+    add(key, sourceRef, `${sourceLocator}:line-${lineNumber}:round-${occurrence || 1}`);
+  };
+  const lines = text.split(/\r?\n/);
+  const roundOccurrences = new Map();
+  for (const [lineIndex, line] of lines.entries()) {
+    const value = String(line || '').trim();
+    if (!value) continue;
+    const eventMatches = [...value.matchAll(/(?:第)?([一二三四五六七八九十]+)家/g)];
+    for (const match of eventMatches) {
+      const ordinal = { 一: 1, 二: 2, 三: 3, 四: 4, 五: 5, 六: 6, 七: 7, 八: 8, 九: 9, 十: 10 }[match[1]];
+      if (ordinal && !eventOrdinalsSeen.has(ordinal)) {
+        eventOrdinalsSeen.add(ordinal);
+        add(`event-${ordinal}`, sourceRef, `${sourceLocator}:line-${lineIndex + 1}:event-${ordinal}`);
+      }
+    }
+    const directThreeRounds = /(?:三面直通|直通三面)/.test(value);
+    const rounds = directThreeRounds ? [] : completedRoundTokenMatches(value);
+    for (const round of rounds) {
+      sourceAnchorLines.add(lineIndex + 1);
+      sourceRoundKeys.add(round.key);
+      const occurrence = (roundOccurrences.get(round.key) || 0) + 1;
+      roundOccurrences.set(round.key, occurrence);
+      addLineRound(value, lineIndex + 1, round, occurrence);
+    }
+    if (directThreeRounds && !directThreeRoundsAdded) {
+      directThreeRoundsAdded = true;
+      for (let number = 1; number <= 3; number += 1) add(`round-${number}`, sourceRef, `${sourceLocator}:line-${lineIndex + 1}:direct-${number}`);
+    }
+    if (/(?:两个|两家|两场|两次|两个小公司|两个自研)/.test(value)) {
+      for (let number = 1; number <= 2; number += 1) add(`event-${number}`, sourceRef, `${sourceLocator}:line-${lineIndex + 1}:segment-${number}`);
+    }
+  }
+  // Some compact projections put the only completed round markers in the
+  // classification ledger's explicit basis lines.  Use them only when the
+  // source projection did not already yield two events, and retain their
+  // line-number provenance rather than manufacturing text excerpts.
+  if (anchors.length < 2) {
+    for (const basis of evidence?.classification?.basis_lines || []) {
+      const lineNumber = Number(basis.line_number);
+      if (!Number.isInteger(lineNumber) || lineNumber < 1) continue;
+      if (sourceAnchorLines.has(lineNumber)) continue;
+      const basisText = String(basis.excerpt || '');
+      if (/(?:已约|约了|预约|计划|准备|即将|取消|流程结束|听说有|据说有)/.test(basisText)) continue;
+      const rounds = completedRoundTokenMatches(basisText);
+      if (rounds.length) {
+        for (const round of rounds) add(`${round.key || 'event'}-basis`, sourceRef, `${sourceLocator}:line-${lineNumber}`);
+      }
+    }
+  }
+  // A title can establish a first completed round when the body explicitly
+  // records a later round (for example #406).  It is never sufficient on its
+  // own, which keeps title-only and page-reference notes fail-closed.
+  if (anchors.length < 2) {
+    for (const title of evidence?.semantic_evidence || []) {
+      if (!/\/title$/.test(String(title.locator || ''))) continue;
+      for (const round of completedRoundTokenMatches(title.excerpt)) {
+        if (sourceRoundKeys.has(round.key)) continue;
+        add(round.key || 'event-title', title.ref, `${title.locator}:${round.key}`);
+      }
+    }
+  }
+  return anchors;
 }
 
 function loadArtifactInputs() {
   const root = path.resolve('.');
   const rows = [];
   const errors = [];
+  const auditedNumbers = new Set();
   const addError = (message) => errors.push(message);
   const add = (row) => {
     if (!row || !Number.isInteger(Number(row.issue_number))) return addError('artifact row has no issue_number');
@@ -138,6 +327,7 @@ function loadArtifactInputs() {
   // Boundary A: custom request files contain formal source anchors and checks.
   const aPlan = readJson(path.join(root, 'data/issue-1606/boundary.dry-run.json'));
   for (const item of aPlan.items || []) {
+    auditedNumbers.add(Number(item.issue_number));
     if (!item.decision) continue;
     const request = readJson(path.join(root, 'data/issue-1606/requests', `${pad(item.issue_number)}.json`));
     const evidence = request.evidence || {};
@@ -150,6 +340,7 @@ function loadArtifactInputs() {
         git_blob_sha: evidence.git_blob_sha, byte_size: evidence.byte_size,
       },
       excerpts: evidence.excerpts || [], checks: request.checks || [],
+      cases: item.decision === 'multi-interview' ? deriveBoundaryACases(item, evidence) : [],
       rationale: request.checks?.find((check) => check.check_id === 'event_boundary')?.note || 'Boundary A controller-reviewed decision.',
       transition_id: `issue-1605-boundary-${item.issue_number}-a`,
     });
@@ -168,23 +359,31 @@ function loadArtifactInputs() {
     const evidenceByNumber = new Map((bEvidence.items || []).map((item) => [Number(item.issue_number), item]));
     if (!clean) addError('Boundary B scope-compliance is not pass; no B proposal may enter the full transition plan');
     if (clean) for (const item of bClass.items || []) {
+      auditedNumbers.add(Number(item.issue_number));
       const decision = item.proposed_decision;
-      if (!['not-interview', 'single-interview'].includes(decision)) continue;
+      if (!['not-interview', 'single-interview', 'multi-interview'].includes(decision)) continue;
       const evidence = evidenceByNumber.get(Number(item.issue_number));
       if (!evidence || evidence.source_evidence?.verification?.status === 'blocked') {
         addError(`Boundary B #${item.issue_number} lacks independently verified source evidence`);
         continue;
       }
+      const sourceEvidence = evidence.source_evidence || {};
+      const fallbackExcerpt = !sourceEvidence.excerpt
+        ? (evidence.semantic_evidence || []).find((candidate) => candidate && String(candidate.excerpt || '').trim())
+        : null;
       add({
         batch: 'B', issue_number: Number(item.issue_number), decision,
         source_note_id: item.source_note_id, expected_body_sha256: evidence.expected_body_sha256,
         expected_source_revision_id: evidence.expected_source_revision_id,
         artifact: {
-          ref: evidence.source_evidence.ref, kind: evidence.source_evidence.kind,
-          provenance: evidence.source_evidence.provenance, git_blob_sha: evidence.source_evidence.git_blob_sha,
-          byte_size: evidence.source_evidence.byte_size,
+          ref: sourceEvidence.ref, kind: sourceEvidence.kind,
+          provenance: sourceEvidence.provenance, git_blob_sha: sourceEvidence.git_blob_sha,
+          byte_size: sourceEvidence.byte_size,
         },
-        excerpts: evidence.source_evidence.excerpt ? [{ locator: evidence.source_evidence.locator, excerpt: evidence.source_evidence.excerpt }] : [],
+        excerpts: sourceEvidence.excerpt
+          ? [{ locator: sourceEvidence.locator, excerpt: sourceEvidence.excerpt }]
+          : (fallbackExcerpt ? [{ locator: fallbackExcerpt.locator, excerpt: fallbackExcerpt.excerpt }] : []),
+        cases: decision === 'multi-interview' ? deriveBoundaryBCases(evidence) : [],
         checks: evidence.checks || [], rationale: item.basis || evidence.decision_basis || 'Boundary B scope-clean controller review.',
         transition_id: `issue-1605-boundary-${item.issue_number}-b`,
       });
@@ -194,6 +393,7 @@ function loadArtifactInputs() {
   // Boundary C: one evidence JSON per selected SourceNote.
   const cPlan = readJson(path.join(root, 'data/issue-1608/dry-run-plan.json'));
   for (const item of cPlan.items || []) {
+    auditedNumbers.add(Number(item.issue_number));
     if (!item.decision) continue;
     const evidence = readJson(path.join(root, 'data/issue-1608', item.evidence_file));
     const artifact = evidence.artifact || evidence.source_evidence;
@@ -216,6 +416,7 @@ function loadArtifactInputs() {
   // Boundary D: the dry-run item points to a separately committed evidence file.
   const dPlan = readJson(path.join(root, 'data/issue-1609/dry-run-plan.json'));
   for (const item of dPlan.items || []) {
+    auditedNumbers.add(Number(item.issue_number));
     if (!['single-interview', 'multi-interview', 'not-interview'].includes(item.disposition)) continue;
     const evidence = readJson(path.join(root, 'data/issue-1609/evidence', `${item.issue_number}.json`));
     const artifact = evidence.source_evidence;
@@ -238,7 +439,7 @@ function loadArtifactInputs() {
     });
   }
 
-  return { rows, errors };
+  return { rows, errors, auditedNumbers };
 }
 
 function normalizeExcerpt(value) {
@@ -266,9 +467,11 @@ function normalizedCases(row) {
 
 function validateRows(rows, pending) {
   const errors = [];
+  const invalidIssueNumbers = new Set();
   const seen = new Set();
   for (const row of rows) {
     const issueNumber = Number(row.issue_number);
+    const errorCount = errors.length;
     if (!pending.has(issueNumber)) errors.push(`#${issueNumber} is outside the frozen pending inventory`);
     if (seen.has(issueNumber)) errors.push(`#${issueNumber} appears in more than one boundary batch`);
     seen.add(issueNumber);
@@ -286,17 +489,25 @@ function validateRows(rows, pending) {
       const locators = cases.flatMap((candidate) => candidate.evidence.map((reference) => reference.locator));
       if (new Set(locators).size !== locators.length) errors.push(`#${issueNumber} multi-interview reuses an evidence locator`);
     }
+    if (errors.length !== errorCount) invalidIssueNumbers.add(issueNumber);
   }
-  return { errors, seen };
+  return { errors, seen, invalidIssueNumbers };
 }
 
 function buildPlan(options = {}) {
-  const pending = pendingInventory(options.pending || PENDING_SNAPSHOT);
+  const frozen = pendingInventory(options.pending || PENDING_SNAPSHOT);
+  const remaining = remainingInventory(options.remaining || REMAINING_MANIFEST, frozen);
   const cache = issueMapFromCache(options.cache || SNAPSHOT_CACHE);
   const loaded = loadArtifactInputs();
-  const validation = validateRows(loaded.rows, pending.numbers);
+  const candidateRows = loaded.rows.filter((row) => remaining.numbers.has(Number(row.issue_number)));
+  const validation = validateRows(candidateRows, remaining.numbers);
   const errors = [...loaded.errors, ...validation.errors];
-  const items = loaded.rows.sort((left, right) => left.issue_number - right.issue_number).map((row) => {
+  const missingAudits = [...remaining.numbers].filter((number) => !loaded.auditedNumbers.has(number)).sort((a, b) => a - b);
+  if (missingAudits.length) errors.push(`remaining scope has no child audit for ${missingAudits.length} issue(s): ${missingAudits.slice(0, 20).map((number) => `#${number}`).join(', ')}${missingAudits.length > 20 ? ', …' : ''}`);
+  const invalidNumbers = validation.invalidIssueNumbers;
+  const items = candidateRows
+    .filter((row) => !invalidNumbers.has(Number(row.issue_number)))
+    .sort((left, right) => left.issue_number - right.issue_number).map((row) => {
     const sourceIssue = cache.get(row.issue_number);
     if (!sourceIssue) errors.push(`#${row.issue_number} is absent from SourceNote cache`);
     const labels = labelsOf(sourceIssue || {});
@@ -317,13 +528,36 @@ function buildPlan(options = {}) {
       source_snapshot_body_sha256: sourceIssue ? bodySha : null,
     };
   });
-  const counts = { total: items.length, 'not-interview': 0, 'single-interview': 0, 'multi-interview': 0 };
+  const actionNumbers = new Set(items.map((item) => item.issue_number));
+  const blockedIssueNumbers = [...remaining.numbers].filter((number) => !actionNumbers.has(number)).sort((a, b) => a - b);
+  const blockedByBatch = {};
+  for (const number of blockedIssueNumbers) {
+    const batch = remaining.manifest.batches?.find((candidate) => candidate.issue_numbers?.includes(number))?.batch || 'unknown';
+    blockedByBatch[batch] = (blockedByBatch[batch] || 0) + 1;
+  }
+  const counts = { total: items.length, scope_total: remaining.numbers.size, actionable_total: items.length, blocked: blockedIssueNumbers.length, 'not-interview': 0, 'single-interview': 0, 'multi-interview': 0 };
   for (const item of items) counts[item.decision] += 1;
   const report = {
     schema_version: 'issue-1605-full-boundary-evidence-plan.v1', repository: REPOSITORY,
     parent_issue: PARENT_ISSUE, source_snapshot: { repository: SOURCE_REPOSITORY, ref: SOURCE_REF },
-    pending_inventory: { path: options.pending || PENDING_SNAPSHOT, count: pending.numbers.size, digest: sha256(canonical(pending.snapshot)) },
-    scope: { ranges: [{ batch: 'A', first_issue: 20, last_issue: 392 }, { batch: 'B', first_issue: 393, last_issue: 765 }, { batch: 'C', first_issue: 766, last_issue: 1138 }, { batch: 'D', first_issue: 1139, last_issue: 1508 }] },
+    pending_inventory: { path: options.remaining || REMAINING_MANIFEST, count: remaining.numbers.size, digest: remaining.manifest.canonical_digest },
+    frozen_inventory: { path: options.pending || PENDING_SNAPSHOT, count: frozen.numbers.size, digest: frozen.snapshot.canonical_digest },
+    completed_exclusion: { path: COMPLETED_MANIFEST, count: 419, digest: COMPLETED_MANIFEST_DIGEST, purpose: 'exclusion-only; no completed authorization is reused' },
+    scope: {
+      remaining_scope_digest: remaining.manifest.scope_digest,
+      remaining_total: remaining.numbers.size,
+      ranges: [{ batch: 'A', first_issue: 20, last_issue: 392, remaining_count: 235 }, { batch: 'B', first_issue: 393, last_issue: 765, remaining_count: 257 }, { batch: 'C', first_issue: 766, last_issue: 1138, remaining_count: 248 }, { batch: 'D', first_issue: 1139, last_issue: 1508, remaining_count: 238 }],
+    },
+    coverage: {
+      remaining_total: remaining.numbers.size,
+      audited_total: [...remaining.numbers].filter((number) => loaded.auditedNumbers.has(number)).length,
+      actionable_total: items.length,
+      blocked_total: blockedIssueNumbers.length,
+      blocked_by_batch: blockedByBatch,
+      blocked_issue_numbers: blockedIssueNumbers,
+      invalid_decision_issue_numbers: [...invalidNumbers].filter((number) => remaining.numbers.has(number)).sort((a, b) => a - b),
+      uncovered_issue_numbers: missingAudits,
+    },
     counts, mutation_count: 0, live_evidence_comments: 0, live_transitions: 0,
     errors, items,
   };
@@ -465,7 +699,7 @@ function formalRequest(item, commentId, reviewedAt) {
 }
 
 function parseArgs(argv = process.argv.slice(2)) {
-  const args = { mode: 'plan', output: DEFAULT_OUTPUT, journal: DEFAULT_JOURNAL, lock: DEFAULT_LOCK, requestDir: DEFAULT_REQUEST_DIR, cache: SNAPSHOT_CACHE, pending: PENDING_SNAPSHOT, confirmPlan: null, maxMutations: 25, pauseMs: 1000, allowUncertainRetry: false };
+  const args = { mode: 'plan', output: DEFAULT_OUTPUT, journal: DEFAULT_JOURNAL, lock: DEFAULT_LOCK, requestDir: DEFAULT_REQUEST_DIR, cache: SNAPSHOT_CACHE, pending: PENDING_SNAPSHOT, remaining: REMAINING_MANIFEST, confirmPlan: null, maxMutations: 25, pauseMs: 1000, allowUncertainRetry: false };
   for (let index = 0; index < argv.length; index += 1) {
     const arg = argv[index];
     if (arg === '--mode') args.mode = argv[++index];
@@ -475,6 +709,7 @@ function parseArgs(argv = process.argv.slice(2)) {
     else if (arg === '--request-dir') args.requestDir = argv[++index];
     else if (arg === '--cache') args.cache = argv[++index];
     else if (arg === '--pending') args.pending = argv[++index];
+    else if (arg === '--remaining') args.remaining = argv[++index];
     else if (arg === '--confirm-plan') args.confirmPlan = argv[++index];
     else if (arg === '--max-mutations') args.maxMutations = Number(argv[++index]);
     else if (arg === '--pause-ms') args.pauseMs = Number(argv[++index]);
@@ -654,4 +889,7 @@ if (require.main === module) {
   try { main(); } catch (error) { console.error(`ERROR: ${error.message}`); process.exitCode = 1; }
 }
 
-module.exports = { canonical, sha256, buildPlan, evidenceBody, formalRequest, normalizeExcerpt, validateRows };
+module.exports = {
+  canonical, sha256, buildPlan, evidenceBody, formalRequest, normalizeExcerpt, validateRows,
+  pendingInventory, remainingInventory, deriveBoundaryACases, deriveBoundaryBCases, parseArgs,
+};
