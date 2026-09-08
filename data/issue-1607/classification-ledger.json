@@ -6,10 +6,10 @@
   "status": "semantic-review",
   "source_artifact_ledger_sha256": "f69f21cbf2eff456df84b14602b38d54f5bd3d021c0f0e1f544013dd9f9f54ee",
   "counts": {
-    "single-interview": 166,
-    "not-interview": 65,
-    "blocked": 10,
-    "multi-interview": 16
+    "single-interview": 178,
+    "not-interview": 50,
+    "multi-interview": 19,
+    "blocked": 10
   },
   "total": 257,
   "items": [
@@ -227,8 +227,8 @@
         }
       ],
       "status": "reviewed",
-      "proposed_decision": "not-interview",
-      "basis": "interviewer-perspective sharing is not a candidate interview event"
+      "proposed_decision": "multi-interview",
+      "basis": "complete candidate interview evidence names multiple distinct interview events/rounds"
     },
     {
       "issue_number": 407,
@@ -421,8 +421,8 @@
         }
       ],
       "status": "reviewed",
-      "proposed_decision": "not-interview",
-      "basis": "interviewer-perspective sharing is not a candidate interview event"
+      "proposed_decision": "single-interview",
+      "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence"
     },
     {
       "issue_number": 417,
@@ -455,7 +455,32 @@
       "locator": "note_desc:1-10",
       "excerpt": "⭕字节飞书（转go）\n抖音挂了被隔壁飞书捞起来了，又来一轮拷打，麻了\n⚜️一面 50min\n1.  项目相关\n2.  项目重新设计的话可以有哪些优化\n场景：海外规避隐私合规获取用户数据\n算法：智能水龙头\n⚜️二面 1h",
       "full_projection_sha256": "f59fa46237046a42b5a961547938ad277a078dffb86346796a6916b95fad735b",
-      "basis_lines": [],
+      "basis_lines": [
+        {
+          "line_number": 4,
+          "excerpt": "⚜️一面 50min"
+        },
+        {
+          "line_number": 10,
+          "excerpt": "⚜️二面 1h"
+        },
+        {
+          "line_number": 25,
+          "excerpt": "面试难度比字节简单，但二面的系统设计没答好给挂了，有点可惜"
+        },
+        {
+          "line_number": 26,
+          "excerpt": "⚜️一面 50min"
+        },
+        {
+          "line_number": 27,
+          "excerpt": "⚜️二面 1h"
+        },
+        {
+          "line_number": 31,
+          "excerpt": "面试感觉很水，尤其二面感觉啥也没问，最后还给挂了，问了下在招银的同学感觉应该是给不起薪资。。。"
+        }
+      ],
       "semantic_evidence": [
         {
           "ref": "liqiangcc/xhs:note_json/6744571d00000000060179e9.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -469,8 +494,8 @@
         }
       ],
       "status": "reviewed",
-      "proposed_decision": "not-interview",
-      "basis": "explicit invitation, job/advice, or question-bank content lacks a candidate event"
+      "proposed_decision": "multi-interview",
+      "basis": "complete candidate interview evidence names multiple distinct interview events/rounds"
     },
     {
       "issue_number": 421,
@@ -867,7 +892,20 @@
       "locator": "note_desc:1-8",
       "excerpt": "成都某银行软件测试外包笔试面试回忆录\n[星R]【笔试题】\n40多道选择题。都是测试理论相关的，还有几道java题，我不会java，所以乱蒙的。\n大题总共有5道。\nQ1 银行业务场景的用例设计题，有涉及到数据库。\nQ2 自动化测试里有哪些结构（这道题我接口自动化 ui自动化都回答了\nQ3 一道三表检查的sql（刚开始看没有思路，后面想了一下用了子查询）\nQ4 一道算法题，实在没思路，题都没读懂。乱写的",
       "full_projection_sha256": "c84ff47a2197795bff00d624cf019dedf40aae397f69ceacab9be52fe9ae3709",
-      "basis_lines": [],
+      "basis_lines": [
+        {
+          "line_number": 6,
+          "excerpt": "Q2 自动化测试里有哪些结构（这道题我接口自动化 ui自动化都回答了"
+        },
+        {
+          "line_number": 15,
+          "excerpt": "4.根据我的回答又问了一下分页功能怎么测"
+        },
+        {
+          "line_number": 16,
+          "excerpt": "5.根据我的回答，深挖了一下pymysql怎么用的"
+        }
+      ],
       "semantic_evidence": [
         {
           "ref": "liqiangcc/xhs:note_json/67541ef40000000002014dce.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -881,8 +919,8 @@
         }
       ],
       "status": "reviewed",
-      "proposed_decision": "not-interview",
-      "basis": "explicit invitation, job/advice, or question-bank content lacks a candidate event"
+      "proposed_decision": "single-interview",
+      "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence"
     },
     {
       "issue_number": 442,
@@ -953,8 +991,8 @@
         }
       ],
       "status": "reviewed",
-      "proposed_decision": "not-interview",
-      "basis": "explicit invitation, job/advice, or question-bank content lacks a candidate event"
+      "proposed_decision": "single-interview",
+      "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence"
     },
     {
       "issue_number": 445,
@@ -1451,16 +1489,7 @@
       "locator": "note_desc:1-2",
       "excerpt": "我们学员用过的题库放在后面了，春招有想法的小伙伴，现在可以对照背起来了！[派对R]\n﻿#Java[话题]#﻿ ﻿#java面试[话题]#﻿ ﻿#java面试题[话题]#﻿ ﻿#java场景题[话题]#﻿ ﻿#java面经[话题]#﻿ ﻿#java八股[话题]#﻿ ﻿#程序员[话题]#﻿ ﻿#中航信[话题]#﻿ ﻿#我爱官方[话题]#﻿",
       "full_projection_sha256": "3dc1e7e204e74600c04d6baeb38846e747983e4062529089691344dbf4003a95",
-      "basis_lines": [
-        {
-          "line_number": 1,
-          "excerpt": "我们学员用过的题库放在后面了，春招有想法的小伙伴，现在可以对照背起来了！[派对R]"
-        },
-        {
-          "line_number": 2,
-          "excerpt": "﻿#Java[话题]#﻿ ﻿#java面试[话题]#﻿ ﻿#java面试题[话题]#﻿ ﻿#java场景题[话题]#﻿ ﻿#java面经[话题]#﻿ ﻿#java八股[话题]#﻿ ﻿#程序员[话题]#﻿ ﻿#中航信[话题]#﻿ ﻿#我爱官方[话题]#﻿"
-        }
-      ],
+      "basis_lines": [],
       "semantic_evidence": [
         {
           "ref": "liqiangcc/xhs:note_json/676d559d000000000b02236d.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -1474,8 +1503,8 @@
         }
       ],
       "status": "reviewed",
-      "proposed_decision": "not-interview",
-      "basis": "explicit invitation, job/advice, or question-bank content lacks a candidate event"
+      "proposed_decision": "single-interview",
+      "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence"
     },
     {
       "issue_number": 468,
@@ -2194,12 +2223,7 @@
       "locator": "note_desc:1-1",
       "excerpt": "现在面试还是以考察场景题为主，其实问得问题都大差不差，只要针对背一些常考题目，结合项目知识进行拆解背记，面试真的不算难！我面试用的题库放在后面了，大家可以看看参考一下。#爱上工作的瞬间[话题]# #互联网大厂[话题]# #java面试[话题]# #java[话题]# #计算机[话题]# #编程[话题]# #求职[话题]# #后端开发[话题]# #面试[话题]# #Java场景题[话题]#",
       "full_projection_sha256": "7d3eef34f27a7cc07b4574e797908803d37e000456c16a475ac54e83927cfa57",
-      "basis_lines": [
-        {
-          "line_number": 1,
-          "excerpt": "现在面试还是以考察场景题为主，其实问得问题都大差不差，只要针对背一些常考题目，结合项目知识进行拆解背记，面试真的不算难！我面试用的题库放在后面了，大家可以看看参考一下。#爱上工作的瞬间[话题]# #互联网大厂[话题]# #java面试[话题]# #java[话题]# #计算机[话题]# #编程[话题]# #求职[话题]# #后端开发[话题]# #面试[话题]# #Java场景题[话题]#"
-        }
-      ],
+      "basis_lines": [],
       "semantic_evidence": [
         {
           "ref": "liqiangcc/xhs:note_json/67b05e320000000018009c85.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -2213,8 +2237,8 @@
         }
       ],
       "status": "reviewed",
-      "proposed_decision": "not-interview",
-      "basis": "explicit invitation, job/advice, or question-bank content lacks a candidate event"
+      "proposed_decision": "single-interview",
+      "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence"
     },
     {
       "issue_number": 512,
@@ -2290,8 +2314,8 @@
         }
       ],
       "status": "reviewed",
-      "proposed_decision": "not-interview",
-      "basis": "interviewer-perspective sharing is not a candidate interview event"
+      "proposed_decision": "single-interview",
+      "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence"
     },
     {
       "issue_number": 516,
@@ -3314,20 +3338,7 @@
       "locator": "note_desc:1-10",
       "excerpt": "0实习0面试经验非科班，这辈子第一次面试想着攒经验，已然是意外之喜。\n先问了项目，老实交代了项目是网上找的。\n八股从我简历里写的内容提问，面试官喜欢问一长串相关问题然后让我慢慢回答。\n1.Mysql事务的特性，如何保证这些特性？\n2.JVM内存了解嘛，由哪些部分组成，有哪些垃圾回收算法，哪些垃圾回收器，垃圾回收器之间有什么区别？\n3.高并发的情况下应该选什么垃圾回收器？\n4.redis怎么保证和mysql的数据一致性。\n项目加八股三十多分钟",
       "full_projection_sha256": "04eae6e7b2ecf69687e62f5cd851a218c57485eb47fe1de79f68cb2c7ae230f1",
-      "basis_lines": [
-        {
-          "line_number": 4,
-          "excerpt": "八股从我简历里写的内容提问，面试官喜欢问一长串相关问题然后让我慢慢回答。"
-        },
-        {
-          "line_number": 14,
-          "excerpt": "面试官一看答案不对说你弄反了，我说不好意思没看清楚题，然后面试官说没事就这样吧。"
-        },
-        {
-          "line_number": 17,
-          "excerpt": "总的来说面试官很好，说话很温和，一直引导回答问题，给了我初次面试的良好体验。"
-        }
-      ],
+      "basis_lines": [],
       "semantic_evidence": [
         {
           "ref": "liqiangcc/xhs:note_json/67d177f7000000002803fe76.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -3341,8 +3352,8 @@
         }
       ],
       "status": "reviewed",
-      "proposed_decision": "not-interview",
-      "basis": "interviewer-perspective sharing is not a candidate interview event"
+      "proposed_decision": "multi-interview",
+      "basis": "complete candidate interview evidence names multiple distinct interview events/rounds"
     },
     {
       "issue_number": 573,
@@ -3977,8 +3988,8 @@
         }
       ],
       "status": "reviewed",
-      "proposed_decision": "not-interview",
-      "basis": "interviewer-perspective sharing is not a candidate interview event"
+      "proposed_decision": "single-interview",
+      "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence"
     },
     {
       "issue_number": 601,
@@ -3987,12 +3998,7 @@
       "locator": "note_desc:1-4",
       "excerpt": "1. 八股文\n2. 项目\n3. 刷题\n#互联网大厂[话题]# #大数据开发[话题]# #面试记录[话题]#",
       "full_projection_sha256": "26f02751d2908d90d1ae1af5212703ff46103200686c0be220d977903dbaf14e",
-      "basis_lines": [
-        {
-          "line_number": 1,
-          "excerpt": "1. 八股文"
-        }
-      ],
+      "basis_lines": [],
       "semantic_evidence": [
         {
           "ref": "liqiangcc/xhs:note_json/67d96692000000001c0019bd.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -4006,8 +4012,8 @@
         }
       ],
       "status": "reviewed",
-      "proposed_decision": "not-interview",
-      "basis": "explicit invitation, job/advice, or question-bank content lacks a candidate event"
+      "proposed_decision": "single-interview",
+      "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence"
     },
     {
       "issue_number": 603,
@@ -4865,12 +4871,7 @@
       "locator": "note_desc:1-1",
       "excerpt": "面试还是以考察场景题为主，其实问得题目都大差不差，只要针对一些常考题目，结合项目知识进行拆解背记，面试真的不算难！我面试用的题库放在后面了，大家可以看看参考一下。#爱上工作的瞬间[话题]# #java[话题]# #java面试[话题]# #计算机[话题]# #互联网大厂[话题]# #编程[话题]# #后端开发[话题]# #求职[话题]# #面试[话题]# #Java场景题[话题]#",
       "full_projection_sha256": "395f28e7c4046ba2f05f8ddba82507999a0a320b065536133699bf1d98f7de0f",
-      "basis_lines": [
-        {
-          "line_number": 1,
-          "excerpt": "面试还是以考察场景题为主，其实问得题目都大差不差，只要针对一些常考题目，结合项目知识进行拆解背记，面试真的不算难！我面试用的题库放在后面了，大家可以看看参考一下。#爱上工作的瞬间[话题]# #java[话题]# #java面试[话题]# #计算机[话题]# #互联网大厂[话题]# #编程[话题]# #后端开发[话题]# #求职[话题]# #面试[话题]# #Java场景题[话题]#"
-        }
-      ],
+      "basis_lines": [],
       "semantic_evidence": [
         {
           "ref": "liqiangcc/xhs:note_json/67e7b562000000000b02d451.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -4884,8 +4885,8 @@
         }
       ],
       "status": "reviewed",
-      "proposed_decision": "not-interview",
-      "basis": "explicit invitation, job/advice, or question-bank content lacks a candidate event"
+      "proposed_decision": "single-interview",
+      "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence"
     },
     {
       "issue_number": 656,
@@ -4944,16 +4945,16 @@
       "full_projection_sha256": "7fd97d6cf747e706661e863b966e330af97e6f8f75e79fe3498f8ff0bc7cba5e",
       "basis_lines": [
         {
-          "line_number": 1,
-          "excerpt": "p1是今天的面试题，后面是搜集的可能的题库。"
-        },
-        {
           "line_number": 2,
           "excerpt": "规则: 前面八股有三到五秒思考时间，后面场景有十六秒左右思考时间，回答时间是两三分钟可以提前结束回答，有两次换题机会。"
         },
         {
-          "line_number": 6,
-          "excerpt": "3. 可以准备水杯在旁边，答到后面感觉口干舌燥了[猪头R][猪头R]"
+          "line_number": 4,
+          "excerpt": "1. 后面项目场景会根据你的回答追问，千万不要说自己不会的埋雷，可以引导它问你比较擅长的部分。"
+        },
+        {
+          "line_number": 5,
+          "excerpt": "2. 尽量在截止时间前一个半小时开始，注意总时间是一个小时，没注意时间最后一题就剩十几秒回答了[捂脸R][捂脸R]"
         }
       ],
       "semantic_evidence": [
@@ -4969,8 +4970,8 @@
         }
       ],
       "status": "reviewed",
-      "proposed_decision": "not-interview",
-      "basis": "explicit invitation, job/advice, or question-bank content lacks a candidate event"
+      "proposed_decision": "single-interview",
+      "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence"
     },
     {
       "issue_number": 660,
@@ -5333,8 +5334,8 @@
         }
       ],
       "status": "reviewed",
-      "proposed_decision": "not-interview",
-      "basis": "interviewer-perspective sharing is not a candidate interview event"
+      "proposed_decision": "single-interview",
+      "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence"
     },
     {
       "issue_number": 677,
@@ -5742,8 +5743,8 @@
         }
       ],
       "status": "reviewed",
-      "proposed_decision": "not-interview",
-      "basis": "interviewer-perspective sharing is not a candidate interview event"
+      "proposed_decision": "single-interview",
+      "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence"
     },
     {
       "issue_number": 699,

@@ -6,9 +6,9 @@
   "source_artifact_ledger_sha256": "f69f21cbf2eff456df84b14602b38d54f5bd3d021c0f0e1f544013dd9f9f54ee",
   "total": 257,
   "counts": {
-    "single_interview": 166,
-    "multi_interview": 16,
-    "not_interview": 65,
+    "single_interview": 178,
+    "multi_interview": 19,
+    "not_interview": 50,
     "blocked": 10,
     "review_required": 247,
     "authorized": 0
@@ -1075,12 +1075,12 @@
       "expected_source_revision_id": "xhs-note:6732fa5e000000001b02ed03:snapshot-95b77bb26104",
       "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
       "evidence_status": "reviewed",
-      "decision": "not-interview",
+      "decision": "multi-interview",
       "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
       "classification": {
         "status": "reviewed",
-        "proposed_decision": "not-interview",
-        "basis": "interviewer-perspective sharing is not a candidate interview event",
+        "proposed_decision": "multi-interview",
+        "basis": "complete candidate interview evidence names multiple distinct interview events/rounds",
         "basis_lines": [
           {
             "line_number": 3,
@@ -1196,7 +1196,7 @@
         {
           "check_id": "event_boundary",
           "result": "pass",
-          "note": "Semantic boundary result is not-interview; no live transition is authorized by this artifact."
+          "note": "Semantic boundary result is multi-interview; no live transition is authorized by this artifact."
         },
         {
           "check_id": "no_cross_source_mixing",
@@ -2130,12 +2130,12 @@
       "expected_source_revision_id": "xhs-note:673ea10d0000000002039de7:snapshot-95b77bb26104",
       "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
       "evidence_status": "reviewed",
-      "decision": "not-interview",
+      "decision": "single-interview",
       "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
       "classification": {
         "status": "reviewed",
-        "proposed_decision": "not-interview",
-        "basis": "interviewer-perspective sharing is not a candidate interview event",
+        "proposed_decision": "single-interview",
+        "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
         "basis_lines": [
           {
             "line_number": 1,
@@ -2251,7 +2251,7 @@
         {
           "check_id": "event_boundary",
           "result": "pass",
-          "note": "Semantic boundary result is not-interview; no live transition is authorized by this artifact."
+          "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
         },
         {
           "check_id": "no_cross_source_mixing",
@@ -2429,13 +2429,38 @@
       "expected_source_revision_id": "xhs-note:6744571d00000000060179e9:snapshot-95b77bb26104",
       "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
       "evidence_status": "reviewed",
-      "decision": "not-interview",
+      "decision": "multi-interview",
       "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
       "classification": {
         "status": "reviewed",
-        "proposed_decision": "not-interview",
-        "basis": "explicit invitation, job/advice, or question-bank content lacks a candidate event",
-        "basis_lines": [],
+        "proposed_decision": "multi-interview",
+        "basis": "complete candidate interview evidence names multiple distinct interview events/rounds",
+        "basis_lines": [
+          {
+            "line_number": 4,
+            "excerpt": "⚜️一面 50min"
+          },
+          {
+            "line_number": 10,
+            "excerpt": "⚜️二面 1h"
+          },
+          {
+            "line_number": 25,
+            "excerpt": "面试难度比字节简单，但二面的系统设计没答好给挂了，有点可惜"
+          },
+          {
+            "line_number": 26,
+            "excerpt": "⚜️一面 50min"
+          },
+          {
+            "line_number": 27,
+            "excerpt": "⚜️二面 1h"
+          },
+          {
+            "line_number": 31,
+            "excerpt": "面试感觉很水，尤其二面感觉啥也没问，最后还给挂了，问了下在招银的同学感觉应该是给不起薪资。。。"
+          }
+        ],
         "semantic_evidence": [
           {
             "ref": "liqiangcc/xhs:note_json/6744571d00000000060179e9.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -2545,7 +2570,7 @@
         {
           "check_id": "event_boundary",
           "result": "pass",
-          "note": "Semantic boundary result is not-interview; no live transition is authorized by this artifact."
+          "note": "Semantic boundary result is multi-interview; no live transition is authorized by this artifact."
         },
         {
           "check_id": "no_cross_source_mixing",
@@ -4809,13 +4834,26 @@
       "expected_source_revision_id": "xhs-note:67541ef40000000002014dce:snapshot-95b77bb26104",
       "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
       "evidence_status": "reviewed",
-      "decision": "not-interview",
+      "decision": "single-interview",
       "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
       "classification": {
         "status": "reviewed",
-        "proposed_decision": "not-interview",
-        "basis": "explicit invitation, job/advice, or question-bank content lacks a candidate event",
-        "basis_lines": [],
+        "proposed_decision": "single-interview",
+        "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+        "basis_lines": [
+          {
+            "line_number": 6,
+            "excerpt": "Q2 自动化测试里有哪些结构（这道题我接口自动化 ui自动化都回答了"
+          },
+          {
+            "line_number": 15,
+            "excerpt": "4.根据我的回答又问了一下分页功能怎么测"
+          },
+          {
+            "line_number": 16,
+            "excerpt": "5.根据我的回答，深挖了一下pymysql怎么用的"
+          }
+        ],
         "semantic_evidence": [
           {
             "ref": "liqiangcc/xhs:note_json/67541ef40000000002014dce.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -4925,7 +4963,7 @@
         {
           "check_id": "event_boundary",
           "result": "pass",
-          "note": "Semantic boundary result is not-interview; no live transition is authorized by this artifact."
+          "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
         },
         {
           "check_id": "no_cross_source_mixing",
@@ -5250,12 +5288,12 @@
       "expected_source_revision_id": "xhs-note:6757f8340000000002036fb7:snapshot-95b77bb26104",
       "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
       "evidence_status": "reviewed",
-      "decision": "not-interview",
+      "decision": "single-interview",
       "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
       "classification": {
         "status": "reviewed",
-        "proposed_decision": "not-interview",
-        "basis": "explicit invitation, job/advice, or question-bank content lacks a candidate event",
+        "proposed_decision": "single-interview",
+        "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
         "basis_lines": [],
         "semantic_evidence": [
           {
@@ -5366,7 +5404,7 @@
         {
           "check_id": "event_boundary",
           "result": "pass",
-          "note": "Semantic boundary result is not-interview; no live transition is authorized by this artifact."
+          "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
         },
         {
           "check_id": "no_cross_source_mixing",
@@ -8099,22 +8137,13 @@
       "expected_source_revision_id": "xhs-note:676d559d000000000b02236d:snapshot-95b77bb26104",
       "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
       "evidence_status": "reviewed",
-      "decision": "not-interview",
+      "decision": "single-interview",
       "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
       "classification": {
         "status": "reviewed",
-        "proposed_decision": "not-interview",
-        "basis": "explicit invitation, job/advice, or question-bank content lacks a candidate event",
-        "basis_lines": [
-          {
-            "line_number": 1,
-            "excerpt": "我们学员用过的题库放在后面了，春招有想法的小伙伴，现在可以对照背起来了！[派对R]"
-          },
-          {
-            "line_number": 2,
-            "excerpt": "﻿#Java[话题]#﻿ ﻿#java面试[话题]#﻿ ﻿#java面试题[话题]#﻿ ﻿#java场景题[话题]#﻿ ﻿#java面经[话题]#﻿ ﻿#java八股[话题]#﻿ ﻿#程序员[话题]#﻿ ﻿#中航信[话题]#﻿ ﻿#我爱官方[话题]#﻿"
-          }
-        ],
+        "proposed_decision": "single-interview",
+        "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+        "basis_lines": [],
         "semantic_evidence": [
           {
             "ref": "liqiangcc/xhs:note_json/676d559d000000000b02236d.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -8224,7 +8253,7 @@
         {
           "check_id": "event_boundary",
           "result": "pass",
-          "note": "Semantic boundary result is not-interview; no live transition is authorized by this artifact."
+          "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
         },
         {
           "check_id": "no_cross_source_mixing",
@@ -12409,18 +12438,13 @@
       "expected_source_revision_id": "xhs-note:67b05e320000000018009c85:snapshot-95b77bb26104",
       "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
       "evidence_status": "reviewed",
-      "decision": "not-interview",
+      "decision": "single-interview",
       "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
       "classification": {
         "status": "reviewed",
-        "proposed_decision": "not-interview",
-        "basis": "explicit invitation, job/advice, or question-bank content lacks a candidate event",
-        "basis_lines": [
-          {
-            "line_number": 1,
-            "excerpt": "现在面试还是以考察场景题为主，其实问得问题都大差不差，只要针对背一些常考题目，结合项目知识进行拆解背记，面试真的不算难！我面试用的题库放在后面了，大家可以看看参考一下。#爱上工作的瞬间[话题]# #互联网大厂[话题]# #java面试[话题]# #java[话题]# #计算机[话题]# #编程[话题]# #求职[话题]# #后端开发[话题]# #面试[话题]# #Java场景题[话题]#"
-          }
-        ],
+        "proposed_decision": "single-interview",
+        "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+        "basis_lines": [],
         "semantic_evidence": [
           {
             "ref": "liqiangcc/xhs:note_json/67b05e320000000018009c85.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -12530,7 +12554,7 @@
         {
           "check_id": "event_boundary",
           "result": "pass",
-          "note": "Semantic boundary result is not-interview; no live transition is authorized by this artifact."
+          "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
         },
         {
           "check_id": "no_cross_source_mixing",
@@ -12855,12 +12879,12 @@
       "expected_source_revision_id": "xhs-note:67b40040000000002803da82:snapshot-95b77bb26104",
       "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
       "evidence_status": "reviewed",
-      "decision": "not-interview",
+      "decision": "single-interview",
       "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
       "classification": {
         "status": "reviewed",
-        "proposed_decision": "not-interview",
-        "basis": "interviewer-perspective sharing is not a candidate interview event",
+        "proposed_decision": "single-interview",
+        "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
         "basis_lines": [
           {
             "line_number": 1,
@@ -12976,7 +13000,7 @@
         {
           "check_id": "event_boundary",
           "result": "pass",
-          "note": "Semantic boundary result is not-interview; no live transition is authorized by this artifact."
+          "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
         },
         {
           "check_id": "no_cross_source_mixing",
@@ -18818,26 +18842,13 @@
       "expected_source_revision_id": "xhs-note:67d177f7000000002803fe76:snapshot-95b77bb26104",
       "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
       "evidence_status": "reviewed",
-      "decision": "not-interview",
+      "decision": "multi-interview",
       "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
       "classification": {
         "status": "reviewed",
-        "proposed_decision": "not-interview",
-        "basis": "interviewer-perspective sharing is not a candidate interview event",
-        "basis_lines": [
-          {
-            "line_number": 4,
-            "excerpt": "八股从我简历里写的内容提问，面试官喜欢问一长串相关问题然后让我慢慢回答。"
-          },
-          {
-            "line_number": 14,
-            "excerpt": "面试官一看答案不对说你弄反了，我说不好意思没看清楚题，然后面试官说没事就这样吧。"
-          },
-          {
-            "line_number": 17,
-            "excerpt": "总的来说面试官很好，说话很温和，一直引导回答问题，给了我初次面试的良好体验。"
-          }
-        ],
+        "proposed_decision": "multi-interview",
+        "basis": "complete candidate interview evidence names multiple distinct interview events/rounds",
+        "basis_lines": [],
         "semantic_evidence": [
           {
             "ref": "liqiangcc/xhs:note_json/67d177f7000000002803fe76.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -18947,7 +18958,7 @@
         {
           "check_id": "event_boundary",
           "result": "pass",
-          "note": "Semantic boundary result is not-interview; no live transition is authorized by this artifact."
+          "note": "Semantic boundary result is multi-interview; no live transition is authorized by this artifact."
         },
         {
           "check_id": "no_cross_source_mixing",
@@ -22287,12 +22298,12 @@
       "expected_source_revision_id": "xhs-note:67d94d05000000001c003748:snapshot-95b77bb26104",
       "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
       "evidence_status": "reviewed",
-      "decision": "not-interview",
+      "decision": "single-interview",
       "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
       "classification": {
         "status": "reviewed",
-        "proposed_decision": "not-interview",
-        "basis": "interviewer-perspective sharing is not a candidate interview event",
+        "proposed_decision": "single-interview",
+        "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
         "basis_lines": [
           {
             "line_number": 1,
@@ -22412,7 +22423,7 @@
         {
           "check_id": "event_boundary",
           "result": "pass",
-          "note": "Semantic boundary result is not-interview; no live transition is authorized by this artifact."
+          "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
         },
         {
           "check_id": "no_cross_source_mixing",
@@ -22443,18 +22454,13 @@
       "expected_source_revision_id": "xhs-note:67d96692000000001c0019bd:snapshot-95b77bb26104",
       "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
       "evidence_status": "reviewed",
-      "decision": "not-interview",
+      "decision": "single-interview",
       "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
       "classification": {
         "status": "reviewed",
-        "proposed_decision": "not-interview",
-        "basis": "explicit invitation, job/advice, or question-bank content lacks a candidate event",
-        "basis_lines": [
-          {
-            "line_number": 1,
-            "excerpt": "1. 八股文"
-          }
-        ],
+        "proposed_decision": "single-interview",
+        "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+        "basis_lines": [],
         "semantic_evidence": [
           {
             "ref": "liqiangcc/xhs:note_json/67d96692000000001c0019bd.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -22564,7 +22570,7 @@
         {
           "check_id": "event_boundary",
           "result": "pass",
-          "note": "Semantic boundary result is not-interview; no live transition is authorized by this artifact."
+          "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
         },
         {
           "check_id": "no_cross_source_mixing",
@@ -27257,18 +27263,13 @@
       "expected_source_revision_id": "xhs-note:67e7b562000000000b02d451:snapshot-95b77bb26104",
       "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
       "evidence_status": "reviewed",
-      "decision": "not-interview",
+      "decision": "single-interview",
       "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
       "classification": {
         "status": "reviewed",
-        "proposed_decision": "not-interview",
-        "basis": "explicit invitation, job/advice, or question-bank content lacks a candidate event",
-        "basis_lines": [
-          {
-            "line_number": 1,
-            "excerpt": "面试还是以考察场景题为主，其实问得题目都大差不差，只要针对一些常考题目，结合项目知识进行拆解背记，面试真的不算难！我面试用的题库放在后面了，大家可以看看参考一下。#爱上工作的瞬间[话题]# #java[话题]# #java面试[话题]# #计算机[话题]# #互联网大厂[话题]# #编程[话题]# #后端开发[话题]# #求职[话题]# #面试[话题]# #Java场景题[话题]#"
-          }
-        ],
+        "proposed_decision": "single-interview",
+        "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+        "basis_lines": [],
         "semantic_evidence": [
           {
             "ref": "liqiangcc/xhs:note_json/67e7b562000000000b02d451.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -27378,7 +27379,7 @@
         {
           "check_id": "event_boundary",
           "result": "pass",
-          "note": "Semantic boundary result is not-interview; no live transition is authorized by this artifact."
+          "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
         },
         {
           "check_id": "no_cross_source_mixing",
@@ -27703,24 +27704,24 @@
       "expected_source_revision_id": "xhs-note:67e91cb4000000000900eae5:snapshot-95b77bb26104",
       "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
       "evidence_status": "reviewed",
-      "decision": "not-interview",
+      "decision": "single-interview",
       "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
       "classification": {
         "status": "reviewed",
-        "proposed_decision": "not-interview",
-        "basis": "explicit invitation, job/advice, or question-bank content lacks a candidate event",
+        "proposed_decision": "single-interview",
+        "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
         "basis_lines": [
-          {
-            "line_number": 1,
-            "excerpt": "p1是今天的面试题，后面是搜集的可能的题库。"
-          },
           {
             "line_number": 2,
             "excerpt": "规则: 前面八股有三到五秒思考时间，后面场景有十六秒左右思考时间，回答时间是两三分钟可以提前结束回答，有两次换题机会。"
           },
           {
-            "line_number": 6,
-            "excerpt": "3. 可以准备水杯在旁边，答到后面感觉口干舌燥了[猪头R][猪头R]"
+            "line_number": 4,
+            "excerpt": "1. 后面项目场景会根据你的回答追问，千万不要说自己不会的埋雷，可以引导它问你比较擅长的部分。"
+          },
+          {
+            "line_number": 5,
+            "excerpt": "2. 尽量在截止时间前一个半小时开始，注意总时间是一个小时，没注意时间最后一题就剩十几秒回答了[捂脸R][捂脸R]"
           }
         ],
         "semantic_evidence": [
@@ -27832,7 +27833,7 @@
         {
           "check_id": "event_boundary",
           "result": "pass",
-          "note": "Semantic boundary result is not-interview; no live transition is authorized by this artifact."
+          "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
         },
         {
           "check_id": "no_cross_source_mixing",
@@ -29674,12 +29675,12 @@
       "expected_source_revision_id": "xhs-note:67ed5649000000001d02cbac:snapshot-95b77bb26104",
       "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
       "evidence_status": "reviewed",
-      "decision": "not-interview",
+      "decision": "single-interview",
       "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
       "classification": {
         "status": "reviewed",
-        "proposed_decision": "not-interview",
-        "basis": "interviewer-perspective sharing is not a candidate interview event",
+        "proposed_decision": "single-interview",
+        "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
         "basis_lines": [
           {
             "line_number": 25,
@@ -29795,7 +29796,7 @@
         {
           "check_id": "event_boundary",
           "result": "pass",
-          "note": "Semantic boundary result is not-interview; no live transition is authorized by this artifact."
+          "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
         },
         {
           "check_id": "no_cross_source_mixing",
@@ -31928,12 +31929,12 @@
       "expected_source_revision_id": "xhs-note:67f50f4b000000000f032e63:snapshot-95b77bb26104",
       "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
       "evidence_status": "reviewed",
-      "decision": "not-interview",
+      "decision": "single-interview",
       "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
       "classification": {
         "status": "reviewed",
-        "proposed_decision": "not-interview",
-        "basis": "interviewer-perspective sharing is not a candidate interview event",
+        "proposed_decision": "single-interview",
+        "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
         "basis_lines": [
           {
             "line_number": 3,
@@ -32049,7 +32050,7 @@
         {
           "check_id": "event_boundary",
           "result": "pass",
-          "note": "Semantic boundary result is not-interview; no live transition is authorized by this artifact."
+          "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
         },
         {
           "check_id": "no_cross_source_mixing",

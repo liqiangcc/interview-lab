@@ -17,17 +17,17 @@ scope_reads: #393..#765 only; out_of_scope_reads=0; #392/#766 forbidden
 mutation_count: 0
 ```
 
-最终分类计数：`single-interview=166`、`multi-interview=16`、`not-interview=65`、`blocked=10`。其中 182 条为 `semantic_ready`，但 `ready=0`、`executable=false`，因为本产物不是主控授权，也没有复用父级 419-row authorization。每条非 blocked 记录保留完整 projection、三类 artifact ref/blob SHA/byte size、JSON locator 和独立 excerpt；blocked 仅表示完整材料仍不足以确定 0/1/N boundary。
+最终分类计数：`single-interview=178`、`multi-interview=19`、`not-interview=50`、`blocked=10`。其中 197 条为 `semantic_ready`，但 `ready=0`、`executable=false`，因为本产物不是主控授权，也没有复用父级 419-row authorization。每条非 blocked 记录保留完整 projection、三类 artifact ref/blob SHA/byte size、JSON locator 和独立 excerpt；blocked 仅表示完整材料仍不足以确定 0/1/N boundary。
 
 Canonical digest：
 
 ```text
 selection_sha256: 20b9deb520f8c111cc969b749a45d0e56308126ae5f228ac9e1251ea92d8f7be
-evidence_ledger_sha256: 438d4efeb990f3eeffe24dab97b8cfd6b7dc1df6f759931487d3acb3bdbce632
-request_set_sha256: 0d7a11116b9e85f55375dfc1f7ff79abd3a4f39addba9ce623d96e27ebeeea2f
-classification_ledger_sha256: 736c9d3893ea98d1623016f2d794efed42af9c69f2238602bf0872da06dd3063
-dry_run_sha256: 8bb193db4d229aec084789305b6f33f68e9c3b0acfe1d62d7257d4b59694573b
-journal_sha256: d2ba838ca66f13520c959f0a5d2b4b26a8b5cd3023a5544137581af1ef97e788
+evidence_ledger_sha256: b13bdd74996a00495347203da5bc6b303b2a60ca5ab17088a3848aaa53dacfa6
+request_set_sha256: 26f1a4f4845d6cea13ad3733040f6019fd255e63212c668414c9980fb7c390cc
+classification_ledger_sha256: 1e6add76aa5c7d99d5c81bef22156db92020d7cefa52252861b0597dfca5b6f8
+dry_run_sha256: e3cb87b342b0bd87804cb5ae956bf645ee73e3a1541d264e6f71f71cd0bf6623
+journal_sha256: 1dbb767d8239c81028690c8219f7b0d05b3a0b419e1fdddae040a0d6228b7cb7
 ```
 
 语义规则已包含 #393/#394/#401/#415/#437/#524/#584/#727 等反例：明确候选人已发生的一面/二面、问答、结果才可提出 single；同帖明确多场/多轮才是 multi；拒面、不参加、邀约、岗位咨询、建议、题库、面试官分享和营销转载为 not-interview；材料不足则 blocked。原始 Source 与 Derived 解释保持分离，未修改 Raw。

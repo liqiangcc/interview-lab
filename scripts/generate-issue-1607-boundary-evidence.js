@@ -72,6 +72,7 @@ function classifyFullSource(item) {
     || /(?:两场|多场|两次面试|多次面试|面了两家|面了多家|连续面了|两个小公司)/.test(text);
   const titleRound = /(?:一面|二面|三面|四面|五面|初面|终面|第[一二三四五]面|第[一二三四五]轮)/.test(title);
   const timelineEvidence = /(?:timeline|投简历|约面|流程|官网流程|\d{1,2}[./-]\d{1,2})/i.test(body);
+  const durationEvidence = /\d+\s*(?:min(?:ute)?s?|分钟)/i.test(body);
   const actualResult = /(?:我|本人|自己).{0,28}(?:拿到|收到.*结果|面试通过|面试挂|挂了|凉了|过了|拒了|offer)/s.test(text)
     || /(?:面完|面过|面了|实际面|(?:今天|昨天|刚刚).{0,30}面试|面试.*(?:结束|结果|通过|挂)|面试官问了我|候选人回答)/.test(text)
     || ((titleExperience || titleRound) && /(?:挂|凉|offer|oc|面试结果)/i.test(text));
@@ -85,17 +86,21 @@ function classifyFullSource(item) {
     && !actualResult
     && !narratedEvent
     && !/(?:参加(?:过|了)?面试|收到.*结果|拿到.*offer)/.test(text);
-  const questionEvidence = /(?:问了|问题|问(?:项目|系统|基础|什么)|讲讲|面试题|题目|算法题|八股|反问|Q\s*\d+|怎么|为什么|如何|介绍一下|候选人回答|被问)/.test(text);
-  const candidateEvent = !adviceOnly && (actualResult || (eventContext && (
-    narratedEvent
-    || (firstPerson && /(?:\d+[.、)]|自我介绍|问题|提问|面试官|回答|反问|项目|算法题|八股)/.test(body))
-    || ((titleExperience || titleRound) && (questionEvidence || /(?:挂|凉|offer|oc|结果)/i.test(body) || roundMatches.length > 0))
-    || (timelineEvidence && (roundMatches.length > 0 || /(?:挂|凉|offer|oc|结果)/i.test(body)))
-  )));
-  const assessmentOnly = /(?:笔试题|笔试|刷题|题库)/.test(body) && !/(?:面试官|候选人回答|面试问题|实际面|面试结果)/.test(body);
+  const questionEvidence = /(?:问了|问的|问题|问(?:项目|系统|基础|什么)|讲讲|面试题|题目|算法题|八股|反问|Q\s*\d+|怎么|为什么|如何|介绍一下|候选人回答|被问)/.test(text);
+  const candidateEvent = (!adviceOnly && (
+    actualResult
+    || (eventContext && (
+      narratedEvent
+      || (firstPerson && /(?:\d+[.、)]|自我介绍|问题|提问|面试官|回答|反问|项目|算法题|八股)/.test(body))
+      || ((titleExperience || titleRound) && (questionEvidence || /(?:挂|凉|offer|oc|结果)/i.test(body) || roundMatches.length > 0))
+      || (timelineEvidence && (roundMatches.length > 0 || /(?:挂|凉|offer|oc|结果)/i.test(body)))
+    ))
+    || (durationEvidence && questionEvidence)
+  ));
+  const assessmentOnly = /(?:笔试题|笔试|刷题|题库)/.test(body) && !candidateEvent && !/(?:面试官|候选人回答|面试问题|实际面|面试结果)/.test(body);
   const experienced = !questionOnlyAdvice && !adviceOnly && !assessmentOnly && ((candidateEvent && (questionEvidence || actualResult || roundMatches.length > 0)) || (titleRound && questionEvidence));
 
-  if (refusal || marketing || interviewerShare) {
+  if (refusal || marketing || (interviewerShare && !experienced)) {
     return { status: 'reviewed', proposed_decision: 'not-interview', basis: refusal ? 'explicit first-person refusal/non-attendance is non-event' : marketing ? 'marketing/repost or answer-key content is explicitly non-event' : 'interviewer-perspective sharing is not a candidate interview event', basis_lines: lineBasis([/(通关秘籍|标准答案|转载|营销|面试官|拒绝|不面|未参加)/]), semantic_evidence: evidence };
   }
   if (experienced && explicitMulti) {
@@ -177,6 +182,9 @@ function evidenceFor(item) {
 }
 
 function requestFor(item, evidence) {
+  const requestFile = evidence.decision === 'blocked'
+    ? null
+    : `requests/${String(item.issue_number).padStart(4, '0')}.json`;
   return {
     schema_version: 'issue-1607-boundary-request-template.v1',
     transition_id: evidence.transition_id,
@@ -192,6 +200,7 @@ function requestFor(item, evidence) {
     review_evidence: null,
     reviewed_at: null,
     evidence_file: `../evidence/${String(item.issue_number).padStart(4, '0')}.json`,
+    request_file: requestFile,
     executable: false,
     block_reason: `${evidence.decision === 'blocked' ? 'Full pinned Source material is semantically insufficient or unverified' : 'Live transition authorization and durable controller evidence are absent'}; controller must independently review and bind a valid transition request before any apply authorization.`,
   };
@@ -353,14 +362,15 @@ function main(argv = process.argv.slice(2)) {
   fs.mkdirSync(path.join(outputDir, 'evidence'), { recursive: true });
   fs.mkdirSync(path.join(outputDir, 'requests'), { recursive: true });
   const selectedFiles = new Set(selection.items.map((item) => `${String(item.issue_number).padStart(4, '0')}.json`));
+  const blockedRequestFiles = new Set(requestItems.filter((item) => item.request_file === null).map((item) => `${String(item.issue_number).padStart(4, '0')}.json`));
   for (const subdirectory of ['evidence', 'requests']) {
     const directory = path.join(outputDir, subdirectory);
     for (const filename of fs.readdirSync(directory)) {
-      if (/^\d{4}\.json$/.test(filename) && !selectedFiles.has(filename)) fs.unlinkSync(path.join(directory, filename));
+      if (/^\d{4}\.json$/.test(filename) && (!selectedFiles.has(filename) || (subdirectory === 'requests' && blockedRequestFiles.has(filename)))) fs.unlinkSync(path.join(directory, filename));
     }
   }
   evidenceItems.forEach((item) => writeJson(path.join(outputDir, 'evidence', `${String(item.issue_number).padStart(4, '0')}.json`), item));
-  requestItems.forEach((item) => writeJson(path.join(outputDir, 'requests', `${String(item.issue_number).padStart(4, '0')}.json`), item));
+  requestItems.filter((item) => item.request_file !== null).forEach((item) => writeJson(path.join(outputDir, item.request_file), item));
   process.stdout.write(`${JSON.stringify({ total: expectedCount, source_verified: sourceVerifiedCount, source_blocked: sourceBlockedCount, mutation_count: 0, dry_run_sha256: plan.dry_run_sha256 }, null, 2)}\n`);
 }
 

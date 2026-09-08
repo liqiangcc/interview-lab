@@ -158,6 +158,7 @@ test('checked-in audit outputs are complete and mutation-free', () => {
   const journal = JSON.parse(fs.readFileSync(path.join(dir, 'apply.journal.json'), 'utf8'));
   const classification = JSON.parse(fs.readFileSync(path.join(dir, 'classification-ledger.json'), 'utf8'));
   const evidence = JSON.parse(fs.readFileSync(path.join(dir, 'evidence-ledger.json'), 'utf8'));
+  const requestSet = JSON.parse(fs.readFileSync(path.join(dir, 'request-set.json'), 'utf8'));
   assert.equal(selection.items.length, selection.scope.expected_count);
   assert.equal(selection.scope.baseline_pending_count, EXPECTED_COUNT);
   assert.equal(selection.scope.first_issue, FIRST_ISSUE);
@@ -175,6 +176,12 @@ test('checked-in audit outputs are complete and mutation-free', () => {
   assert.equal(classification.status, 'semantic-review');
   assert.equal(evidence.items.length, selection.items.length);
   assert.ok(evidence.items.every((item) => ['single-interview', 'multi-interview', 'not-interview', 'blocked'].includes(item.decision) && item.source_evidence.text !== undefined && item.source_evidence.line_count !== undefined));
+  const blocked = new Set(evidence.items.filter((item) => item.decision === 'blocked').map((item) => item.issue_number));
+  assert.equal(requestSet.items.length, selection.items.length);
+  assert.ok(requestSet.items.every((item) => blocked.has(item.issue_number) ? item.request_file === null : item.request_file === `requests/${String(item.issue_number).padStart(4, '0')}.json`));
+  const requestFiles = fs.readdirSync(path.join(dir, 'requests')).filter((file) => /^\d{4}\.json$/.test(file));
+  assert.equal(requestFiles.length, selection.items.length - blocked.size);
+  assert.ok([...blocked].every((issueNumber) => !requestFiles.includes(`${String(issueNumber).padStart(4, '0')}.json`)));
 });
 
 test('full-source semantic boundary keeps events, rounds, and non-events distinct', () => {
@@ -198,4 +205,19 @@ test('full-source semantic boundary keeps events, rounds, and non-events distinc
     assert.equal(result.proposed_decision, expected, `${name} should classify as ${expected}`);
     assert.ok(result.semantic_evidence.every((entry) => entry.ref && entry.locator && entry.excerpt !== undefined), `${name} must retain independent evidence`);
   }
+});
+
+test('actual high-risk B samples keep candidate events ahead of advice and title duplication', () => {
+  const selection = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'issue-1607', 'selection.json'), 'utf8'));
+  const expected = { 406: 'multi-interview', 418: 'multi-interview', 514: 'single-interview', 748: 'multi-interview' };
+  for (const [number, decision] of Object.entries(expected)) {
+    const item = selection.items.find((candidate) => candidate.issue_number === Number(number));
+    assert.ok(item, `#${number} must remain selected`);
+    assert.equal(classifyFullSource(item).proposed_decision, decision, `#${number} should classify as ${decision}`);
+  }
+  const item444 = selection.items.find((candidate) => candidate.issue_number === 444);
+  assert.ok(item444, '#444 must remain selected');
+  assert.notEqual(classifyFullSource(item444).proposed_decision, 'not-interview');
+  const repeatedTitleOnly = classifyFullSource(fullSourceItem('快手二面面经', '1. JVM内存模型\n2. 线程池拒绝策略\n3. 算法题'));
+  assert.equal(repeatedTitleOnly.proposed_decision, 'single-interview');
 });
