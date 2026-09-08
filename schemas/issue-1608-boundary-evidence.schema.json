@@ -23,6 +23,19 @@
     },
     "evidence_status": {"enum": ["sufficient-for-controller-review", "insufficient-blocked"]},
     "decision": {"enum": ["not-interview", "single-interview", "multi-interview", null]},
+    "excerpts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["line", "locator", "excerpt"],
+        "properties": {
+          "line": {"type": "integer", "minimum": 1},
+          "locator": {"type": "string", "pattern": "^source-projection:artifact-line:[0-9]+$"},
+          "excerpt": {"type": "string", "minLength": 1, "maxLength": 360}
+        },
+        "additionalProperties": false
+      }
+    },
     "artifact": {
       "type": "object",
       "required": ["ref", "kind", "provenance", "git_blob_sha", "byte_size", "content_sha256"],
@@ -39,5 +52,35 @@
       "items": {"type": "object", "required": ["case_key", "anchor", "evidence", "detail_evidence"]}
     },
     "checks": {"type": "array", "minItems": 6}
-  }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "evidence_status": {"const": "sufficient-for-controller-review"},
+          "decision": {"const": "single-interview"}
+        },
+        "required": ["evidence_status", "decision"]
+      },
+      "then": {
+        "anyOf": [
+          {"properties": {"excerpts": {"minItems": 3}}},
+          {
+            "properties": {
+              "excerpts": {
+                "minItems": 1,
+                "maxItems": 1,
+                "contains": {
+                  "properties": {
+                    "excerpt": {"pattern": "一次面试.*(oc|offer)"}
+                  },
+                  "required": ["excerpt"]
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
 }

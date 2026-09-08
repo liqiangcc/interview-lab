@@ -179,22 +179,65 @@ function nextSourceLine(text, lineNumber) {
   return null;
 }
 
-function singleInterviewEvidenceLine(text) {
+function usableSourceLines(text) {
   const lines = String(text || '').split('\n');
-  const completedFact = /(面试官|面试完|面试了|面试过|面了|一次面试|技术面|HR面|手撕|自我介绍|反问|拷打|面试成功|面试通过|面试结果|面试情况|面试感想|挂了|面完|笔试题|做完|offer|通知\s*oc|(?:^|[\s，。！？])oc(?:$|[\s，。！？#])|\d+\s*分钟)/i;
-  const substantiveFact = /(面试官|面试完|面试了|面试过|面了|手撕|反问|拷打|面试成功|面试通过|挂了|面完|笔试题|做完|offer|通知\s*oc|(?:^|[\s，。！？])oc(?:$|[\s，。！？#])|\d+\s*分钟)/i;
-  const questionFact = /^\s*(?:[-*]\s*)?\d+[.、:：](?:\s|$)|[？?]/;
-  const usable = lines.map((line, index) => ({ line, index }))
+  return lines.map((line, index) => ({ line, index }))
     .filter(({ line }) => {
       const normalized = line.replace(/[\uFEFF\u200B-\u200D\u2060]/g, '').trim();
       return normalized && !normalized.startsWith('#');
     });
-  const candidate = usable.find(({ line }) => substantiveFact.test(line) && !/^(?:面试结果|面试情况)\s*[:：]?\s*$/u.test(line.trim()))
-    || usable.find(({ line }) => completedFact.test(line) && !/^(?:面试结果|面试情况)\s*[:：]?\s*$/u.test(line.trim()))
-    || usable.find(({ line }) => questionFact.test(line));
-  if (!candidate) return null;
+}
+
+function sourceExcerpt(candidate) {
   const normalized = candidate.line.replace(/[\uFEFF\u200B-\u200D\u2060]/g, '').trim();
   return { line: candidate.index + 1, locator: `source-projection:artifact-line:${candidate.index + 1}`, excerpt: normalized.slice(0, 360) };
+}
+
+function singleInterviewEvidenceLine(text) {
+  const usable = usableSourceLines(text);
+  const substantiveFact = /(面试官|面试完|面试了|面试过|一次面试|技术面|HR面|面试成功|面试通过|面完|通知\s*oc|(?:^|[\s，。！？])oc(?:$|[\s，。！？#])|发offer)/i;
+  const questionFact = /^\s*(?:[-*]\s*)?\d+[.、:：](?!\d)|[？?]/;
+  const candidate = usable.find(({ line }) => substantiveFact.test(line) && !/^(?:面试结果|面试情况)\s*[:：]?\s*$/u.test(line.trim()))
+    || usable.find(({ line }) => questionFact.test(line));
+  if (!candidate) return null;
+  return sourceExcerpt(candidate);
+}
+
+function singleInterviewEvidenceLines(text) {
+  const usable = usableSourceLines(text);
+  const completedEventFact = /(面试官|面试完|面试了|面试过|一次面试|面试流程|线下面试|线上面试|总体感觉|收到.*(?:二面|三面|offer|意向)|发二面|发offer|通知\s*oc|(?:^|[\s，。！？])oc(?:$|[\s，。！？#]))/i;
+  const outcomeEventFact = /(面试结果|结果\s*[:：])/i;
+  const contextFact = /(时间\s*[:：]|日期\s*[:：]|(?<![A-Za-z0-9])[0-9]{1,2}[./月][0-9]{1,2}(?![0-9])|一面|二面|三面|线下面试|线上面试|面试背景|形式\s*[:：]|公司(?:规模)?\s*[:：]|中小厂|大厂)/iu;
+  const numberedQuestion = /^\s*(?:[-*]\s*)?\d+[.、:：](?!\d)/;
+  const questionDetail = /[？?]|手撕|场景\s*[:：]|八股|介绍一下|什么|如何|为什么|区别|原理|项目|算法|线程|缓存|索引|事务|redis|mysql|spring|java|怎么做|怎么解决/i;
+  const notOnlyLabel = ({ line }) => !/^(?:面试结果|面试情况)\s*[:：]?\s*$/u.test(line.trim());
+  const processEvent = usable.find((candidate) => completedEventFact.test(candidate.line)
+    && notOnlyLabel(candidate)
+    && !/^背景\s*[:：]/u.test(candidate.line.trim()));
+  const contextCandidates = usable.filter((candidate) => candidate !== processEvent && contextFact.test(candidate.line) && !/(投递时间|预约|约面|面试安排|简历项目)/i.test(candidate.line));
+  const questionCandidates = usable.filter((candidate) => numberedQuestion.test(candidate.line) || /[？?]/.test(candidate.line) || questionDetail.test(candidate.line));
+  const notWeakQuestion = (candidate) => !/^(?:笔试题|手撕题?)\s*[.。:：]?/i.test(candidate.line.trim())
+    && !/(自我介绍|哪里人|期望薪资|离职原因)/i.test(candidate.line);
+  const question = questionCandidates.find((candidate) => /[？?]/.test(candidate.line) && notWeakQuestion(candidate))
+    || questionCandidates.find((candidate) => questionDetail.test(candidate.line) && notWeakQuestion(candidate))
+    || questionCandidates.find((candidate) => /手撕|八股/i.test(candidate.line))
+    || questionCandidates[0];
+  const event = processEvent || usable.find((candidate) => outcomeEventFact.test(candidate.line) && notOnlyLabel(candidate));
+  const eventHasProcess = Boolean(processEvent);
+  const eventHasOutcomeOnly = Boolean(event && !eventHasProcess && outcomeEventFact.test(event.line));
+  const context = contextCandidates.find((candidate) => /时间\s*[:：]|日期\s*[:：]|(?<![A-Za-z0-9])[0-9]{1,2}[./月][0-9]{1,2}(?![0-9])|一面|二面|三面|线下面试|线上面试|形式\s*[:：]|公司(?:规模)?\s*[:：]|中小厂|大厂/iu.test(candidate.line)) || contextCandidates[0];
+  const contextDetail = contextCandidates.find((candidate) => candidate !== context && /(线下面试|线上面试|形式\s*[:：]|一面|二面|三面|公司(?:规模)?\s*[:：]|中小厂|大厂)/i.test(candidate.line));
+  const explicitOneInterviewOutcome = usable.find(({ line }) => /一次面试.*(?:通知\s*oc|oc|offer)/i.test(line));
+  const candidates = explicitOneInterviewOutcome
+    ? [explicitOneInterviewOutcome]
+    : [event, context, contextDetail, question].filter(Boolean);
+  const unique = [];
+  for (const candidate of candidates) {
+    const excerpt = sourceExcerpt(candidate);
+    if (!unique.some((item) => item.locator === excerpt.locator)) unique.push(excerpt);
+  }
+  if (explicitOneInterviewOutcome) return unique;
+  return event && context && question && (eventHasProcess || (eventHasOutcomeOnly && questionDetail.test(question.line))) ? unique : [];
 }
 
 function detectMultiCandidate(text) {
@@ -208,7 +251,7 @@ function detectMultiCandidate(text) {
 
 function hasCompletedInterviewFact(text) {
   const value = String(text || '');
-  const completed = /(面试官|面试完|面试了|面试过|面了|一次面试|面试结果|面试情况|面试通过|面试成功|挂了|面完|手撕|反问|拷打|发二面|二面.*(?:挂|过)|三面.*(?:挂|过)|offer|通知\s*oc|(?:^|[\s，。！？])oc(?:$|[\s，。！？#]))/i.test(value);
+  const completed = /(面试官|面试完|面试了|面试过|一次面试|面试流程|线下面试|线上面试|总体感觉|面试结果|面试通过|面试成功|挂了|面完|发二面|二面.*(?:挂|过)|三面.*(?:挂|过)|offer|通知\s*oc|(?:^|[\s，。！？])oc(?:$|[\s，。！？#]))/i.test(value);
   const explicitlyMissing = /(?:没有|暂无|尚未|未有|还没|没(?:有)?)[^\n。！？]{0,16}(?:面试结果|面试情况|问答内容|实际面试)/i.test(value);
   return completed && !explicitlyMissing;
 }
@@ -219,8 +262,14 @@ function hasScheduledOnlySignal(text) {
 
 function evidenceDecisionConsistent(decision, excerpt) {
   if (decision !== 'single-interview') return decision === 'multi-interview' || decision === 'not-interview';
-  const value = String(excerpt || '').replace(/[\uFEFF\u200B-\u200D\u2060]/g, '').replace(/#[^\s#]+\[话题\]#/g, '').trim();
-  return Boolean(singleInterviewEvidenceLine(value));
+  const values = (Array.isArray(excerpt) ? excerpt : [excerpt]).map((item) => (item && typeof item === 'object' ? item.excerpt : item))
+    .map((item) => String(item || '').replace(/[\uFEFF\u200B-\u200D\u2060]/g, '').replace(/#[^\s#]+\[话题\]#/g, '').trim());
+  if (values.length === 1) return /(面试官|面试完|面试了|面试过|一次面试)/i.test(values[0]) && !hasScheduledOnlySignal(values[0]);
+  const joined = values.join('\n');
+  const hasEvent = /(面试官|面试完|面试了|面试过|一次面试|线下面试|线上面试|面试流程|总体感觉|面试结果|结果\s*[:：]|收到.*(?:二面|三面|offer|意向)|发二面|发offer|通知\s*oc|(?:^|[\s，。！？])oc(?:$|[\s，。！？#]))/i.test(joined);
+  const hasContext = /(时间\s*[:：]|日期\s*[:：]|(?<![A-Za-z0-9])[0-9]{1,2}[./月][0-9]{1,2}(?![0-9])|一面|二面|三面|线下面试|线上面试|面试背景|形式\s*[:：]|公司(?:规模)?\s*[:：])/iu.test(joined);
+  const hasQuestion = /[？?]|手撕|场景\s*[:：]|八股|介绍一下|什么|如何|为什么|区别|原理|项目|算法|线程|缓存|索引|事务|redis|mysql|spring|java|怎么做|怎么解决/i.test(joined);
+  return hasEvent && hasContext && hasQuestion;
 }
 
 function multiProcessDetail(evidence, detail) {
@@ -272,7 +321,7 @@ function classify(number, text) {
     }
     return { disposition: 'decided', decision: 'multi-interview', stratum: 'multiple-independent-processes', case_keys: multi.case_keys, case_anchors: multi.case_anchors, rationale: '固定 Source projection 明确记录多个相互独立的公司/流程；每个 case 均有独立 artifact locator 与流程细节，未把同一流程多轮机械拆开。' };
   }
-  const explicitEvent = /(面试官|面完|面试了|面试过|面了|收到.*(?:二面|三面|offer|意向)|一次面试|手撕|自我介绍|项目拷打|拷打|反问|面试公司|面试岗位|一轮面试|技术面|HR面|线下面试|线上面试|面试感想|面试成功|面试通过|面经|凉经|凉凉|三面|二面)/i.test(cleaned);
+  const explicitEvent = /(面试官|面完|面试了|面试过|收到.*(?:二面|三面|offer|意向)|一次面试|手撕|自我介绍|项目拷打|拷打|反问|面试公司|面试岗位|一轮面试|技术面|HR面|线下面试|线上面试|面试感想|面试成功|面试通过|面经|凉经|凉凉|三面|二面)/i.test(cleaned);
   const generic = /(题库|真题|教程|整理|分享|建议|复习|准备|资料|面试技巧|内推|招聘|岗位职责|薪资|可分享|完整.*(?:答案|pdf)|统计出了|模拟面试|面试工具)/.test(cleaned);
   const questionList = /^\s*(?:[-*]\s*)?\d+[.、:：](?:\s|$)/m.test(String(text || ''));
   if (generic && !completedFact && !questionList) {
@@ -281,7 +330,9 @@ function classify(number, text) {
   if (!explicitEvent || !completedFact || cleaned.length < 30) {
     return { disposition: 'blocked', decision: null, stratum: 'insufficient-source-evidence', rationale: '固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。' };
   }
-  if (!singleInterviewEvidenceLine(text)) {
+  const evidenceLines = singleInterviewEvidenceLines(text);
+  const explicitOneInterviewOutcome = /一次面试.*(?:通知\s*oc|oc|offer)/i.test(cleaned);
+  if (!explicitOneInterviewOutcome && (evidenceLines.length < 3 || !evidenceDecisionConsistent('single-interview', evidenceLines))) {
     return { disposition: 'blocked', decision: null, stratum: 'evidence-decision-mismatch', rationale: '分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。' };
   }
   return { disposition: 'decided', decision: 'single-interview', stratum: 'single-bounded-process', rationale: '固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。' };
@@ -289,13 +340,14 @@ function classify(number, text) {
 
 function makeEvidence(item, classification, text) {
   classification.issue_number = item.issue_number;
-  const line = classification.decision === 'single-interview' ? singleInterviewEvidenceLine(text) : sourceLine(text, null, true, false);
+  const lines = classification.decision === 'single-interview' ? singleInterviewEvidenceLines(text) : [];
+  const line = classification.decision === 'single-interview' ? lines[0] : sourceLine(text, null, true, false);
   const cases = caseEvidence(text, classification);
   const caseLocators = cases.map((item) => item.evidence && item.evidence.locator).filter(Boolean);
   const sufficient = classification.disposition === 'decided'
     && Boolean(line)
     && (classification.decision === 'not-interview'
-      || (classification.decision === 'single-interview' && evidenceDecisionConsistent(classification.decision, line.excerpt))
+      || (classification.decision === 'single-interview' && evidenceDecisionConsistent(classification.decision, lines))
       || (classification.decision === 'multi-interview'
         && cases.length === classification.case_keys.length
         && cases.every((item) => item.evidence)
@@ -321,7 +373,7 @@ function makeEvidence(item, classification, text) {
       byte_size: item.artifact.byte_size,
       content_sha256: item.artifact.content_sha256,
     },
-    excerpts: line ? [line] : [],
+    excerpts: classification.decision === 'single-interview' ? lines : (line ? [line] : []),
     case_keys: sufficient && classification.decision === 'multi-interview' ? classification.case_keys : [],
     case_evidence: sufficient && classification.decision === 'multi-interview' ? cases : [],
     checks: CHECKS.map((check_id) => ({

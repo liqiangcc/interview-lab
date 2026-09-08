@@ -127,7 +127,12 @@ function validateDirectory(root = ROOT) {
       assert(['not-interview', 'single-interview', 'multi-interview'].includes(item.decision));
       assert.strictEqual(intent.decision, item.decision);
       if (item.decision === 'single-interview') {
-        assert(evidence.excerpts[0] && evidenceDecisionConsistent(item.decision, evidence.excerpts[0].excerpt), `single evidence does not support decision on #${item.issue_number}`);
+        const explicitOneInterviewOutcome = evidence.excerpts.length === 1
+          && /一次面试.*(?:通知\s*oc|oc|offer)/i.test(evidence.excerpts[0].excerpt);
+        assert((evidence.excerpts.length >= 3 || explicitOneInterviewOutcome)
+          && evidenceDecisionConsistent(item.decision, evidence.excerpts), `single evidence does not support decision on #${item.issue_number}`);
+        const locators = evidence.excerpts.map((excerpt) => excerpt.locator);
+        assert.strictEqual(new Set(locators).size, locators.length, `duplicate single evidence locator on #${item.issue_number}`);
       }
       if (item.decision === 'multi-interview') {
         assert(item.case_keys.length >= 2);

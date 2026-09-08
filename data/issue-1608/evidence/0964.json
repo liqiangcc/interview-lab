@@ -12,9 +12,9 @@
     "byte_size": 679,
     "git_blob_sha": "2865a382eede197b6bac2a8cf50ef68ebf35f60b"
   },
-  "evidence_status": "sufficient-for-controller-review",
-  "decision": "single-interview",
-  "rationale": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。",
+  "evidence_status": "insufficient-blocked",
+  "decision": null,
+  "rationale": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。",
   "artifact": {
     "ref": "liqiangcc/xhs:note_desc/6850d934000000002001f387.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -25,9 +25,9 @@
   },
   "excerpts": [
     {
-      "line": 3,
-      "locator": "source-projection:artifact-line:3",
-      "excerpt": "面试官提问紧扣金融场景，既考察技术方案设计，又深究业务落地细节，全程专业严谨，对解决方案的完整性和可行性要求很高，交流中能感受到对技术与业务结合能力的重视。"
+      "line": 1,
+      "locator": "source-projection:artifact-line:1",
+      "excerpt": "粉丝投稿本科学历，3年金融系统开发经验"
     }
   ],
   "case_keys": [],
@@ -50,8 +50,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
+      "result": "fail",
+      "note": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -65,7 +65,7 @@
     }
   ],
   "limitations": [
-    "This local evidence is not a GitHub review comment; no live evidence comment was created by this run.",
-    "Boundary Review only determines 0/1/N and does not create InterviewNote Issues or source-ready/learning labels."
+    "Evidence is insufficient for a boundary transition; no body/label mutation is proposed.",
+    "Title, labels, OCR/Derived data, and image existence are not used to fill the missing boundary proof."
   ]
 }

@@ -12,9 +12,9 @@
     "byte_size": 421,
     "git_blob_sha": "58d55b74d84d3d706e57b0118f18e93a78c0038b"
   },
-  "evidence_status": "sufficient-for-controller-review",
-  "decision": "single-interview",
-  "rationale": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。",
+  "evidence_status": "insufficient-blocked",
+  "decision": null,
+  "rationale": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。",
   "artifact": {
     "ref": "liqiangcc/xhs:note_desc/6881d586000000002400a943.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -27,7 +27,7 @@
     {
       "line": 1,
       "locator": "source-projection:artifact-line:1",
-      "excerpt": "整理了一下Java面试场景题型，篇幅太多就不一一展示了，完整面经+答案pdf可以分享，祝大家早日拿到心仪的offer #编程[话题]# #java[话题]# #程序员[话题]# #Java面试[话题]# #面经[话题]# #互联网大厂面试[话题]# #干货分享[话题]# #java面试题[话题]# #技术宅[话题]# #后端开发[话题]#"
+      "excerpt": "整理了一下Java面试场景题型，篇幅太多就不一一展示了，完整面经+答案pdf可以分享，祝大家早日拿到心仪的offer ﻿#编程[话题]#﻿ ﻿#java[话题]#﻿ ﻿#程序员[话题]#﻿ ﻿#Java面试[话题]#﻿ ﻿#面经[话题]#﻿ ﻿#互联网大厂面试[话题]#﻿ ﻿#干货分享[话题]#﻿ ﻿#java面试题[话题]#﻿ ﻿#技术宅[话题]#﻿ ﻿#后端开发[话题]#"
     }
   ],
   "case_keys": [],
@@ -50,8 +50,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
+      "result": "fail",
+      "note": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -65,7 +65,7 @@
     }
   ],
   "limitations": [
-    "This local evidence is not a GitHub review comment; no live evidence comment was created by this run.",
-    "Boundary Review only determines 0/1/N and does not create InterviewNote Issues or source-ready/learning labels."
+    "Evidence is insufficient for a boundary transition; no body/label mutation is proposed.",
+    "Title, labels, OCR/Derived data, and image existence are not used to fill the missing boundary proof."
   ]
 }

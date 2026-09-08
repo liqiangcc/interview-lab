@@ -12,9 +12,9 @@
     "byte_size": 124,
     "git_blob_sha": "c82399f97a5fabe860a5d677d8c7f86b0b9e8dc4"
   },
-  "evidence_status": "sufficient-for-controller-review",
-  "decision": "single-interview",
-  "rationale": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。",
+  "evidence_status": "insufficient-blocked",
+  "decision": null,
+  "rationale": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。",
   "artifact": {
     "ref": "liqiangcc/xhs:note_desc/6847b0f1000000002202a92f.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -50,8 +50,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
+      "result": "fail",
+      "note": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -65,7 +65,7 @@
     }
   ],
   "limitations": [
-    "This local evidence is not a GitHub review comment; no live evidence comment was created by this run.",
-    "Boundary Review only determines 0/1/N and does not create InterviewNote Issues or source-ready/learning labels."
+    "Evidence is insufficient for a boundary transition; no body/label mutation is proposed.",
+    "Title, labels, OCR/Derived data, and image existence are not used to fill the missing boundary proof."
   ]
 }

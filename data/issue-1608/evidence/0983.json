@@ -12,9 +12,9 @@
     "byte_size": 394,
     "git_blob_sha": "60ccf72d6af333b23f5e5c1effbfe5e4fffb0efd"
   },
-  "evidence_status": "sufficient-for-controller-review",
-  "decision": "single-interview",
-  "rationale": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。",
+  "evidence_status": "insufficient-blocked",
+  "decision": null,
+  "rationale": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。",
   "artifact": {
     "ref": "liqiangcc/xhs:note_desc/685bfbdf0000000022032c37.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -25,9 +25,9 @@
   },
   "excerpts": [
     {
-      "line": 4,
-      "locator": "source-projection:artifact-line:4",
-      "excerpt": "3、一到手撕算法题，我用暴力破解[笑哭R]"
+      "line": 1,
+      "locator": "source-projection:artifact-line:1",
+      "excerpt": "时长差不多一个小时，问了项目但是没有聊太多的细节[失望R]，八股文也是非常简单:"
     }
   ],
   "case_keys": [],
@@ -50,8 +50,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
+      "result": "fail",
+      "note": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -65,7 +65,7 @@
     }
   ],
   "limitations": [
-    "This local evidence is not a GitHub review comment; no live evidence comment was created by this run.",
-    "Boundary Review only determines 0/1/N and does not create InterviewNote Issues or source-ready/learning labels."
+    "Evidence is insufficient for a boundary transition; no body/label mutation is proposed.",
+    "Title, labels, OCR/Derived data, and image existence are not used to fill the missing boundary proof."
   ]
 }

@@ -1,6 +1,8 @@
 'use strict';
 
 const assert = require('assert');
+const fs = require('fs');
+const path = require('path');
 const test = require('node:test');
 const { classify, evidenceDecisionConsistent, issueNumbers } = require('../scripts/prepare-issue-1608-boundary');
 const { validateDirectory } = require('../scripts/validate-issue-1608-boundary');
@@ -14,6 +16,16 @@ test('issue #1608 classification fails closed for empty and generic source text'
   assert.strictEqual(classify(999999, '一份面试技巧和复习资料整理').decision, 'not-interview');
 });
 
+test('real marketing/question-bank fixtures #796 and #1077 are not interview events', () => {
+  const fixture = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures/issue-1608-boundary-negative-marketing.json'), 'utf8'));
+  for (const item of fixture.cases) {
+    const result = classify(item.issue_number, item.source_projection);
+    assert.strictEqual(result.decision, 'not-interview', `#${item.issue_number} decision`);
+    assert.strictEqual(result.stratum, 'generic-or-non-event', `#${item.issue_number} stratum`);
+    assert.strictEqual(evidenceDecisionConsistent('single-interview', item.source_projection), false, `#${item.issue_number} must not package as single`);
+  }
+});
+
 test('multi cases without unique non-hashtag artifact locators are blocked', () => {
   assert.strictEqual(classify(782, '京东物流 京东科技').disposition, 'blocked');
   assert.strictEqual(classify(849, '腾讯 字节跳动').disposition, 'blocked');
@@ -24,8 +36,34 @@ test('multi cases without unique non-hashtag artifact locators are blocked', () 
 test('single decision rejects weak packaging without interview facts', () => {
   assert.strictEqual(evidenceDecisionConsistent('single-interview', '字节的效率真的很高'), false);
   assert.strictEqual(evidenceDecisionConsistent('single-interview', '投递时间：5.9'), false);
+  assert.strictEqual(evidenceDecisionConsistent('single-interview', '手撕数组逆序和求两个数组的交集'), false);
+  assert.strictEqual(evidenceDecisionConsistent('single-interview', '面试结果：又挂了'), false);
+  assert.strictEqual(evidenceDecisionConsistent('single-interview', '笔试题。三道sql题，5分钟内做完'), false);
+  assert.strictEqual(evidenceDecisionConsistent('single-interview', '结果：hr说下周可以约二面，但是还没约'), false);
+  assert.strictEqual(evidenceDecisionConsistent('single-interview', ['线下面试。', '时间：明天', '笔试题。三道sql题，5分钟内做完']), false);
   assert.strictEqual(evidenceDecisionConsistent('single-interview', '4月22日面试官有事推迟，12点面试完'), true);
   assert.strictEqual(classify(767, '字节的效率真的很高\n4.16投递\n4.16约面\n12点面试完').disposition, 'blocked');
+});
+
+test('complete four reviewer samples require event context plus substantive Q&A excerpts', () => {
+  const complete = [
+    ['一面：5.21', '手撕数组逆序和求两个数组的交集', '反问环节总结，面试官人挺好，面完一会儿发二面邮件'],
+    ['时间：25-06-06', '面试结果：又挂了', '1.自我介绍\n2.介绍一下你最近项目中你主要开发工作是什么？'],
+    ['时间：2025-06-12 15:00', '线下面试。', '笔试题。三道sql题，5分钟内做完。\n10.事务是什么？'],
+    ['时间：2025-06-20 14:00', '形式：深圳线下\n总体感觉：答的还行', '1.自我介绍\n2.介绍一下你最近项目的工作和角色'],
+  ];
+  for (const excerpts of complete) assert.strictEqual(evidenceDecisionConsistent('single-interview', excerpts), true);
+});
+
+test('regenerated #893/#950/#955/#975 evidence has strong multi-line excerpts', () => {
+  const selection = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/issue-1608/selection.json'), 'utf8'));
+  for (const issueNumber of [893, 950, 955, 975]) {
+    const item = selection.items.find((candidate) => candidate.issue_number === issueNumber);
+    const evidence = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/issue-1608', item.evidence_file), 'utf8'));
+    assert.strictEqual(item.decision, 'single-interview');
+    assert(evidence.excerpts.length >= 3, `expected strong multi-line evidence for #${issueNumber}`);
+    assert(evidenceDecisionConsistent('single-interview', evidence.excerpts));
+  }
 });
 
 test('scheduled-only and question-only projections are blocked', () => {
