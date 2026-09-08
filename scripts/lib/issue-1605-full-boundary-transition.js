@@ -26,6 +26,9 @@ const AUTHORIZATION_SCHEMA = 'issue-1605-full-boundary-transition-authorization.
 const JOURNAL_SCHEMA = 'issue-1605-full-boundary-transition-journal.v1';
 const LOCK_SCHEMA = 'issue-1605-full-boundary-transition-lock.v1';
 const AUTHORIZATION_MARKER = 'issue-1605-full-boundary-transition-authorization';
+const FULL_MANIFEST_ITEM_COUNT = 419;
+const FULL_MANIFEST_PLAN_DIGEST = 'ad3e3974c21415e2371b8fe77a2ae54b65dd7783516ed6a68ef61bb070877781';
+const FULL_MANIFEST_CANONICAL_DIGEST = '40fd63cccea624a567778f5c679a9e0e77b0784181de4d54cacad9873ae6c97a';
 const DEFAULT_RECONCILE_ATTEMPTS = 3;
 const HEX64 = /^[0-9a-f]{64}$/;
 const HEX40 = /^[0-9a-f]{40}$/;
@@ -72,10 +75,12 @@ function validateManifest(manifest) {
   if (manifest.parent_issue !== PARENT_ISSUE) errors.push(`manifest parent_issue must be ${PARENT_ISSUE}`);
   if (!manifest.source_snapshot || manifest.source_snapshot.repository !== SOURCE_REPOSITORY) errors.push('manifest source repository is not pinned');
   if (manifest.source_snapshot && manifest.source_snapshot.ref !== SOURCE_REF) errors.push('manifest source ref is not the fixed approved ref');
-  if (!HEX64.test(String(manifest.plan_digest || ''))) errors.push('manifest plan_digest must be a SHA-256');
+  if (manifest.items?.length !== FULL_MANIFEST_ITEM_COUNT) errors.push(`manifest must contain the complete #1605 full scope of ${FULL_MANIFEST_ITEM_COUNT} items`);
+  if (manifest.plan_digest !== FULL_MANIFEST_PLAN_DIGEST) errors.push('manifest plan_digest is not the approved #1605 full-boundary plan');
   if (!Array.isArray(manifest.items) || manifest.items.length === 0) errors.push('manifest items must be a non-empty array');
   if (!HEX64.test(String(manifest.canonical_digest || ''))) errors.push('manifest canonical_digest must be a SHA-256');
   else if (manifestDigest(manifest) !== manifest.canonical_digest) errors.push('manifest canonical_digest does not match canonical manifest content');
+  if (manifest.canonical_digest !== FULL_MANIFEST_CANONICAL_DIGEST) errors.push('manifest canonical_digest is not the approved #1605 full manifest');
   const seenIssues = new Set();
   const seenTransitions = new Set();
   for (const [index, item] of (manifest.items || []).entries()) {
@@ -197,7 +202,9 @@ function validateReceipt(receipt, request, plan, manifestDigestValue, planDigest
   if (receipt?.repository !== REPOSITORY || receipt?.parent_issue !== PARENT_ISSUE) errors.push('receipt repository/parent binding mismatch');
   if (receipt?.issue_number !== request.issue_number || receipt?.source_note_id !== request.source_note_id) errors.push('receipt SourceNote identity mismatch');
   if (receipt?.decision !== request.decision || receipt?.reviewed_at !== request.reviewed_at) errors.push('receipt decision/reviewed_at mismatch');
-  if (receipt?.manifest_digest !== manifestDigestValue || !HEX64.test(String(receipt?.plan_digest || ''))) errors.push('receipt manifest/plan digest mismatch');
+  if (receipt?.manifest_digest !== manifestDigestValue || receipt?.plan_digest !== planDigestValue) errors.push('receipt manifest/plan digest mismatch');
+  if (receipt?.expected_source_revision_id !== request.expected_source_revision_id) errors.push('receipt SourceRevision binding mismatch');
+  if (receipt?.expected_source_repository_ref !== request.expected_source_repository_ref) errors.push('receipt source repository ref binding mismatch');
   if (receipt?.previous_body_sha256 !== request.expected_body_sha256 || receipt?.new_body_sha256 !== (plan.already_applied ? plan.current_body_sha256 : plan.next_body_sha256)) errors.push('receipt body CAS digest mismatch');
   if (!same(receipt?.interview_note_ids, plan.interview_note_ids)) errors.push('receipt InterviewNote ids mismatch');
   if (request.decision === 'multi-interview' && !same(receipt?.interview_note_cases || [], plan.interview_note_cases || [])) errors.push('receipt interview case mapping mismatch');
@@ -223,8 +230,10 @@ function planItem(record, live) {
     errors.push(...assertBoundaryOnly(live.issue.body, planned.next_body, labelsOf(live.issue), planned.next_labels, request.decision).errors);
     if (!validateSourceNoteIssue({ body: planned.next_body, labels: planned.next_labels, state: 'open' }).ok) errors.push('planned SourceNote fails validator');
   }
-  const receipt = receiptsResult.receipts.find((candidate) => candidate.transition_id === request.transition_id) || null;
-  if (receipt && planned.ok && !validateReceipt(receipt, request, planned, record.manifest_digest, record.plan_digest).ok) errors.push('existing applied receipt is not bound to this request/plan');
+  const matchingReceipts = receiptsResult.receipts.filter((candidate) => candidate.transition_id === request.transition_id);
+  if (matchingReceipts.length > 1) errors.push(`multiple applied receipts found for transition ${request.transition_id}; refusing to choose one`);
+  const receipt = matchingReceipts[0] || null;
+  if (receipt && planned.ok && record.plan_digest && !validateReceipt(receipt, request, planned, record.manifest_digest, record.plan_digest).ok) errors.push('existing applied receipt is not bound to this request/plan');
   return {
     ...planned,
     ok: errors.length === 0,
@@ -260,7 +269,7 @@ function buildPlan({ manifest, manifestFile, records, liveLoader }) {
     let live;
     try { live = liveLoader(record.request); }
     catch (error) { items.push({ issue_number: Number(record.issue_number), transition_id: record.transition_id, status: 'blocked', errors: [`live read failed: ${error.message}`] }); continue; }
-    const planned = planItem({ ...record, manifest_digest: manifest.canonical_digest, plan_digest: manifest.plan_digest }, live);
+    const planned = planItem({ ...record, manifest_digest: manifest.canonical_digest }, live);
     const item = {
       issue_number: Number(record.issue_number), transition_id: record.transition_id,
       source_note_id: record.request.source_note_id, decision: record.request.decision,
@@ -273,6 +282,7 @@ function buildPlan({ manifest, manifestFile, records, liveLoader }) {
       current_labels: planned.current_labels || labelsOf(live.issue),
       next_labels: planned.next_labels || null,
       interview_note_ids: planned.interview_note_ids || [],
+      interview_note_cases: planned.interview_note_cases || [],
       existing_receipt: planned.existing_receipt || null,
       status: planned.status || 'blocked', errors: planned.errors || [],
     };
@@ -300,10 +310,28 @@ function buildPlan({ manifest, manifestFile, records, liveLoader }) {
       expected_source_revision_id: item.expected_source_revision_id,
       request_marker_sha256: item.request_marker_sha256,
       next_body_sha256: item.next_body_sha256, next_labels: item.next_labels,
-      interview_note_ids: item.interview_note_ids,
+      interview_note_ids: item.interview_note_ids, interview_note_cases: item.interview_note_cases,
     })),
   };
-  return { ...content, ok: errors.length === 0, canonical_digest: sha256Text(canonical(digestContent)) };
+  const planDigestValue = sha256Text(canonical(digestContent));
+  for (const item of items) {
+    if (!item.existing_receipt || item.errors.length) continue;
+    const receiptPlan = {
+      already_applied: item.status === 'already-applied',
+      current_body_sha256: item.current_body_sha256,
+      next_body_sha256: item.next_body_sha256,
+      interview_note_ids: item.interview_note_ids,
+      interview_note_cases: item.interview_note_cases || [],
+    };
+    const record = records.find((candidate) => Number(candidate.issue_number) === Number(item.issue_number));
+    const validation = validateReceipt(item.existing_receipt, record.request, receiptPlan, manifest.canonical_digest, planDigestValue);
+    if (!validation.ok) {
+      item.errors.push(...validation.errors);
+      errors.push(`#${item.issue_number}: existing applied receipt is not bound to this request/plan: ${validation.errors.join('; ')}`);
+      item.status = 'blocked';
+    }
+  }
+  return { ...content, ok: errors.length === 0, canonical_digest: planDigestValue };
 }
 
 function initialJournal(plan) {
@@ -346,22 +374,42 @@ function atomicWriteJson(file, value) {
 function acquireExclusiveLock(file) {
   const target = path.resolve(file); fs.mkdirSync(path.dirname(target), { recursive: true });
   const lock = { schema_version: LOCK_SCHEMA, lock_id: crypto.randomUUID(), pid: process.pid, hostname: os.hostname(), acquired_at: new Date().toISOString() };
+  const parent = path.dirname(target);
   let fd;
-  try { fd = fs.openSync(target, 'wx', 0o600); fs.writeFileSync(fd, `${JSON.stringify(lock)}\n`, 'utf8'); fs.fsyncSync(fd); }
+  let inode;
+  try {
+    fd = fs.openSync(target, 'wx', 0o600);
+    inode = fs.fstatSync(fd);
+    lock.device = inode.dev;
+    lock.inode = inode.ino;
+    lock.dev = inode.dev;
+    lock.ino = inode.ino;
+    fs.writeFileSync(fd, `${JSON.stringify(lock)}\n`, 'utf8');
+    fs.fsyncSync(fd);
+  }
   catch (error) { throw new Error(`exclusive transition lock is held or unavailable: ${error.message}`); }
   finally { if (fd != null) fs.closeSync(fd); }
+  const fsyncParent = () => {
+    const directoryFd = fs.openSync(parent, 'r');
+    try { fs.fsyncSync(directoryFd); } finally { fs.closeSync(directoryFd); }
+  };
+  fsyncParent();
   const assertHeld = () => {
     let current;
     try { current = JSON.parse(fs.readFileSync(target, 'utf8')); } catch (error) { throw new Error(`exclusive transition lock disappeared: ${error.message}`); }
-    if (!current || current.lock_id !== lock.lock_id) throw new Error('exclusive transition lock ownership changed');
+    let currentStat;
+    try { currentStat = fs.lstatSync(target); } catch (error) { throw new Error(`exclusive transition lock disappeared: ${error.message}`); }
+    if (!currentStat.isFile() || currentStat.isSymbolicLink() || !current || current.lock_id !== lock.lock_id || current.device !== lock.device || current.inode !== lock.inode || current.dev !== lock.dev || current.ino !== lock.ino || currentStat.dev !== lock.device || currentStat.ino !== lock.inode) throw new Error('exclusive transition lock ownership or inode changed');
   };
-  return { assertHeld, release() { assertHeld(); fs.unlinkSync(target); } };
+  return { assertHeld, release() { assertHeld(); fs.unlinkSync(target); fsyncParent(); } };
 }
 
 function buildReceipt(request, planned, manifestDigestValue, planDigestValue, now = new Date().toISOString()) {
   return {
     ...buildAppliedReceipt(request, planned, now), parent_issue: PARENT_ISSUE,
     manifest_digest: manifestDigestValue, plan_digest: planDigestValue,
+    expected_source_revision_id: request.expected_source_revision_id,
+    expected_source_repository_ref: request.expected_source_repository_ref,
   };
 }
 
@@ -477,6 +525,7 @@ function applyBatch({ plan, records, liveLoader, patchIssue, postReceipt, readCo
 
 module.exports = {
   REPOSITORY, SOURCE_REPOSITORY, SOURCE_REF, PARENT_ISSUE, MANIFEST_SCHEMA, PLAN_SCHEMA,
+  FULL_MANIFEST_ITEM_COUNT, FULL_MANIFEST_PLAN_DIGEST, FULL_MANIFEST_CANONICAL_DIGEST,
   AUTHORIZATION_SCHEMA, JOURNAL_SCHEMA, AUTHORIZATION_MARKER, sha256Text, canonical,
   manifestDigest, validateManifest, readRequestMarker, validateRequestBinding, requestFiles,
   validateAuthorization, stripBoundary, assertBoundaryOnly, validateReceipt, planItem,

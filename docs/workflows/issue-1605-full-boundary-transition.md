@@ -4,6 +4,11 @@
 `source-note-boundary-review-transition` machine marker。默认是 plan-only；它不会因为
 plan 成功而修改 GitHub。
 
+入口 validator 固定要求 #1605 full scope 的 419 条 item、既定
+`plan_digest=ad3e3974c21415e2371b8fe77a2ae54b65dd7783516ed6a68ef61bb070877781`，并校验
+当前 full manifest canonical digest `40fd63cccea624a567778f5c679a9e0e77b0784181de4d54cacad9873ae6c97a`。
+任意 subset、重算后不同的 manifest 或只伪造 item count 的 manifest 都会被拒绝。
+
 ## Plan gate
 
 ```bash
@@ -55,7 +60,10 @@ apply 在每个 item 写入前重新 GET + 分页 comments 并再次调用同一
 PATCH 或 receipt POST 的 response 不确定时只做 bounded read-only reconcile。若没有恰好一个
 收敛结果，journal 进入 `uncertain`，后续运行拒绝 blind retry；不会根据错误重新发送同一
 mutation。journal 和 exclusive lock 都是 apply 的强制条件，`--max-mutations` 统计实际
-PATCH/POST 尝试，预算不足时在下一笔 mutation 前停止。
+PATCH/POST 尝试。每个 applied receipt 必须精确绑定当前 plan digest、manifest digest、
+expected SourceRevision id/ref 和唯一 transition；同一 transition 出现多个 applied receipt
+会 fail closed。journal 带 canonical digest；exclusive lock 持有并持续校验 lock file 的
+device/inode，并在创建、释放时 fsync parent directory。预算不足时在下一笔 mutation 前停止。
 
 本变更不执行 live mutation。取得主控 transition authorization、reviewer 评审和明确 apply
 窗口前，不应提供 `--apply`。

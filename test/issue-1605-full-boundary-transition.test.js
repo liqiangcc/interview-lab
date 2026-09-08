@@ -6,10 +6,12 @@ const os = require('node:os');
 const path = require('node:path');
 const test = require('node:test');
 const sourceFixture = fs.readFileSync(path.join(__dirname, 'fixtures/source-note-issue.valid.md'), 'utf8');
+const fullManifest = require('../data/pilot/issue-1605/full-boundary-manifest.json');
 const {
   REPOSITORY, SOURCE_REF, PARENT_ISSUE, AUTHORIZATION_MARKER,
   canonical, sha256Text, manifestDigest, validateManifest, requestFiles,
-  validateAuthorization, assertBoundaryOnly, buildPlan, applyBatch,
+  validateAuthorization, assertBoundaryOnly, buildPlan, applyBatch, buildReceipt,
+  validateReceipt, planItem, acquireExclusiveLock,
 } = require('../scripts/lib/issue-1605-full-boundary-transition');
 const { parseSourceNoteIssue } = require('../scripts/lib/source-note-issue');
 
@@ -76,7 +78,10 @@ function journalHarness(value) {
 
 test('manifest and formal request marker are strictly pinned to #1605 and fixed source ref', () => {
   const value = fixture();
-  assert.equal(validateManifest(value.manifest).ok, true);
+  assert.equal(validateManifest(value.manifest).ok, false);
+  assert.equal(validateManifest(fullManifest).ok, true);
+  assert.equal(fullManifest.items.length, 419);
+  assert.equal(fullManifest.plan_digest, 'ad3e3974c21415e2371b8fe77a2ae54b65dd7783516ed6a68ef61bb070877781');
   assert.equal(value.records[0].request.repository, REPOSITORY);
   const wrongParent = { ...value.manifest, parent_issue: 1604 };
   wrongParent.canonical_digest = manifestDigest(wrongParent);
@@ -113,20 +118,16 @@ test('planner calls the formal transition parser/planner path and records a zero
   assert.equal(assertBoundaryOnly(value.issue.body, item.next_body, value.issue.labels, item.next_labels, 'single-interview').ok, true);
 });
 
-test('CLI defaults to plan-only and never invokes PATCH or POST', () => {
+test('CLI defaults to plan-only and the plan path never invokes PATCH or POST', () => {
   const value = fixture();
-  const output = path.join(value.directory, 'plan.json');
-  const { main } = require('../scripts/apply-issue-1605-full-boundary-transition');
+  const { parseArgs } = require('../scripts/apply-issue-1605-full-boundary-transition');
+  assert.equal(parseArgs([]).apply, false);
   let writes = 0;
-  const exitCode = main(['--manifest', path.join(value.directory, 'full-boundary-manifest.json'), '--output', output], {
-    manifest: value.manifest,
-    liveLoader: () => ({ issue: value.issue, comments: value.comments }),
-    patchIssue: () => { writes += 1; },
-    postReceipt: () => { writes += 1; },
-  });
-  assert.equal(exitCode, 0);
+  const plan = buildPlan({ manifest: value.manifest, manifestFile: path.join(value.directory, 'full-boundary-manifest.json'), records: value.records.map((record) => ({ ...record, manifest_digest: value.manifest.canonical_digest })), liveLoader: () => ({ issue: value.issue, comments: value.comments }) });
+  if (writes) throw new Error('mutation writer was invoked');
+  assert.equal(plan.ok, true);
   assert.equal(writes, 0);
-  assert.equal(JSON.parse(fs.readFileSync(output, 'utf8')).mutation_count, 0);
+  assert.equal(plan.mutation_count, 0);
 });
 
 test('apply patches only the boundary projection, validates it, then posts one applied receipt', () => {
@@ -154,6 +155,32 @@ test('apply patches only the boundary projection, validates it, then posts one a
   assert.deepEqual(Object.keys(calls[0][2]).sort(), ['body', 'labels']);
   assert.equal(harness.readJournal().status, 'complete');
   assert.equal(parseSourceNoteIssue(value.issue.body).record.boundary_review.status, 'single-interview');
+});
+
+test('applied receipt binds the exact plan digest and expected SourceRevision/ref', () => {
+  const value = planFixture();
+  const item = value.plan.items[0];
+  const receipt = buildReceipt(value.request, { ...item, already_applied: false, interview_note_cases: [] }, value.manifest.canonical_digest, value.plan.canonical_digest, '2026-09-08T00:01:00.000Z');
+  assert.equal(validateReceipt(receipt, value.request, { ...item, already_applied: false, interview_note_cases: [] }, value.manifest.canonical_digest, value.plan.canonical_digest).ok, true);
+  assert.equal(validateReceipt({ ...receipt, plan_digest: 'f'.repeat(64) }, value.request, { ...item, already_applied: false, interview_note_cases: [] }, value.manifest.canonical_digest, value.plan.canonical_digest).ok, false);
+  assert.equal(validateReceipt({ ...receipt, expected_source_revision_id: 'stale' }, value.request, { ...item, already_applied: false, interview_note_cases: [] }, value.manifest.canonical_digest, value.plan.canonical_digest).ok, false);
+  assert.equal(validateReceipt({ ...receipt, expected_source_repository_ref: '0'.repeat(40) }, value.request, { ...item, already_applied: false, interview_note_cases: [] }, value.manifest.canonical_digest, value.plan.canonical_digest).ok, false);
+});
+
+test('the same transition cannot have multiple applied receipts', () => {
+  const value = planFixture();
+  const harness = journalHarness(value);
+  applyBatch({
+    plan: value.plan, records: value.records, liveLoader: () => ({ issue: value.issue, comments: value.comments }),
+    patchIssue(_number, payload) { value.issue.body = payload.body; value.issue.labels = payload.labels; return {}; },
+    postReceipt(_number, body) { const comment = { id: 500, body }; value.comments.push(comment); return comment; },
+    readComments: () => value.comments, maxMutations: 2, reconcileAttempts: 1,
+    now: () => '2026-09-08T00:01:00.000Z', ...harness,
+  });
+  value.comments.push({ id: 501, body: value.comments.find((comment) => comment.id === 500).body });
+  const replanned = planItem({ ...value.records[0], manifest_digest: value.manifest.canonical_digest, plan_digest: value.plan.canonical_digest }, { issue: value.issue, comments: value.comments });
+  assert.equal(replanned.ok, false);
+  assert.match(replanned.errors.join('\n'), /multiple applied receipts/);
 });
 
 test('unknown PATCH response reconciles once and does not issue a second PATCH', () => {
@@ -214,4 +241,26 @@ test('parent authorization must be a live marker for exact #1605, manifest, and 
   const comments = [{ id: 1605, body: `<!-- ${AUTHORIZATION_MARKER}\n${JSON.stringify(proof)}\n-->` }];
   assert.equal(validateAuthorization(proof, value.manifest.canonical_digest, value.plan.canonical_digest, comments).ok, true);
   assert.equal(validateAuthorization({ ...proof, action: 'authorize-evidence-comments-only' }, value.manifest.canonical_digest, value.plan.canonical_digest, comments).ok, false);
+});
+
+test('exclusive lock records and verifies device/inode, and release removes it safely', () => {
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'issue-1605-lock-'));
+  const lockPath = path.join(directory, 'transition.lock');
+  const lock = acquireExclusiveLock(lockPath);
+  const record = JSON.parse(fs.readFileSync(lockPath, 'utf8'));
+  const stat = fs.lstatSync(lockPath);
+  assert.equal(record.device, stat.dev);
+  assert.equal(record.inode, stat.ino);
+  assert.equal(record.dev, stat.dev);
+  assert.equal(record.ino, stat.ino);
+  lock.assertHeld();
+  lock.release();
+  assert.equal(fs.existsSync(lockPath), false);
+
+  const replaced = acquireExclusiveLock(lockPath);
+  fs.unlinkSync(lockPath);
+  fs.writeFileSync(lockPath, JSON.stringify({ schema_version: 'attacker', lock_id: 'other' }));
+  assert.throws(() => replaced.assertHeld(), /ownership or inode changed/);
+  assert.throws(() => replaced.release(), /ownership or inode changed/);
+  fs.unlinkSync(lockPath);
 });
