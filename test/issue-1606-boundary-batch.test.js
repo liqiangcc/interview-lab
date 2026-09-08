@@ -39,6 +39,15 @@ test('source inventory binds all selected items to verified Source projection ev
   assert.equal(inventory.items.every((item) => item.status === 'verified'), true);
   assert.equal(inventory.items.every((item) => item.artifact.provenance === 'source_projection'), true);
   assert.equal(inventory.items.every((item) => item.source_repository_ref === '95b77bb261048059846273688e4b90a2e108b437'), true);
+  assert.equal(inventory.transport_policy.method, 'GET');
+  assert.equal(inventory.transport_policy.endpoint, 'raw.githubusercontent.com');
+  assert.equal(inventory.transport_policy.source_projection_only, true);
+  assert.equal(inventory.transport_policy.single_object_get, true);
+  assert.equal(inventory.transport_policy.concurrency, 4);
+  assert.equal(inventory.transport_policy.max_attempts_per_item, 3);
+  assert.equal(inventory.transport_policy.clone, false);
+  assert.equal(inventory.transport_policy.http_range_header, false);
+  assert.equal(inventory.items.every((item) => item.verification.method === 'local-cache' || item.verification.method === 'controlled-get'), true);
 });
 
 test('same-process rounds are single boundary, aggregate events remain blocked', () => {
