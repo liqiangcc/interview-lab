@@ -171,10 +171,14 @@ function main(argv = process.argv.slice(2)) {
     child_issue: 1607,
     scope: selection.scope,
     source_snapshot: selection.source_snapshot,
-    scope_compliance: {
-      status: 'blocked',
-      reason: 'This preparation run recorded an accidental read-only probe of #766 before the scoped inventory. No mutation occurred, but the run is not scope-clean and must not authorize apply.',
+    scope_compliance: selection.scope_compliance || { status: 'blocked', reason: 'Selection has no scope-clean audit record.', out_of_scope_mutations: 0 },
+    scope_regression: {
+      status: selection.scope_compliance?.status === 'pass' ? 'pass' : 'blocked',
+      read_issue_range: [393, 765],
+      forbidden_issue_numbers: [392, 766],
+      out_of_scope_reads: selection.scope_compliance?.out_of_scope_reads ?? null,
       out_of_scope_mutations: 0,
+      assertion: 'No live read is permitted outside the frozen inclusive range #393..#765.',
     },
     selection_sha256: evidenceLedger.selection_sha256,
     evidence_ledger_sha256: sha256Text(canonicalJson(evidenceLedger)),
@@ -213,7 +217,9 @@ function main(argv = process.argv.slice(2)) {
     status: 'not-started',
     mutation_count: 0,
     entries: [],
-    terminal_reason: 'No live GitHub apply is authorized by the child issue; each item remains blocked or review-required pending controller review, durable evidence, and remediation of the recorded out-of-scope read incident.',
+    terminal_reason: selection.scope_compliance?.status === 'pass'
+      ? 'Scope-clean preparation completed with zero out-of-scope reads and zero mutations; no live GitHub apply is authorized by the child issue.'
+      : 'No live GitHub apply is authorized by the child issue; scope compliance is not proven for this selection.',
   };
   const digest = {
     schema_version: 'issue-1607-boundary-canonical-digest.v1',

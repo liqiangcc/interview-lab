@@ -3,7 +3,7 @@
   "$id": "https://github.com/liqiangcc/interview-lab/schemas/issue-1607-boundary-selection.schema.json",
   "title": "Issue 1607 Boundary B selection",
   "type": "object",
-  "required": ["schema_version", "repository", "parent_issue", "child_issue", "scope", "source_snapshot", "source_fetch", "frozen_at", "source_verification", "excluded", "items"],
+  "required": ["schema_version", "repository", "parent_issue", "child_issue", "scope", "source_snapshot", "source_fetch", "scope_compliance", "frozen_at", "source_verification", "excluded", "items"],
   "properties": {
     "schema_version": { "const": "issue-1607-boundary-b-selection.v1" },
     "repository": { "const": "liqiangcc/interview-lab" },
@@ -12,6 +12,7 @@
     "scope": { "type": "object", "required": ["first_issue", "last_issue", "expected_count"], "properties": { "first_issue": { "const": 393 }, "last_issue": { "const": 765 }, "expected_count": { "const": 367 } } },
     "source_snapshot": { "type": "object", "required": ["repository", "ref"], "properties": { "repository": { "const": "liqiangcc/xhs" }, "ref": { "const": "95b77bb261048059846273688e4b90a2e108b437" } } },
     "source_fetch": { "type": "object", "required": ["transport", "concurrency", "retries_per_item", "cache_validation"], "properties": { "transport": { "const": "controlled-raw-get" }, "concurrency": { "const": 1 }, "retries_per_item": { "const": 3 }, "cache_validation": { "const": ["byte_size", "git_blob_sha"] } } },
+    "scope_compliance": { "type": "object", "required": ["status", "out_of_scope_mutations"], "properties": { "status": { "enum": ["pass", "blocked"] }, "out_of_scope_mutations": { "const": 0 } } },
     "frozen_at": { "type": "string", "format": "date-time" },
     "source_verification": { "enum": ["verified", "partial", "blocked"] },
     "excluded": { "type": "array" },

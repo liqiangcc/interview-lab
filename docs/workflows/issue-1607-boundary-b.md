@@ -15,6 +15,7 @@ type:source-note + source:xhs + status:captured + boundary:pending + task:bounda
 ```sh
 node scripts/prepare-issue-1607-boundary-batch.js \
   --fetch-live \
+  --scope-clean \
   --cache data/issue-1607/live-issues.json
 ```
 
@@ -22,7 +23,7 @@ node scripts/prepare-issue-1607-boundary-batch.js \
 
 ```sh
 node scripts/prepare-issue-1607-boundary-batch.js \
-  --prepare --allow-unverified-source \
+  --prepare --scope-clean --allow-unverified-source \
   --cache data/issue-1607/live-issues.json \
   --source-cache-dir /tmp/xhs-note-desc-cache \
   --output-dir data/issue-1607
@@ -44,7 +45,7 @@ node scripts/generate-issue-1607-boundary-evidence.js \
 
 分类规则要求第一人称、明确已发生的过程事实和问题证据同时出现；邀约、据说、求助、经验建议、面试官分享、题库/题目列表保持 pending，明确拒面才提出 not-interview。分类仍只是 proposal，不能改变 pending 或授权 transition。
 
-另已记录一次早期抽样阶段对 #766 的只读越界探测；无写入，但因此本运行不是 scope-clean，必须由主控审计后重新执行严格 scoped read。
+本次 rerun 为 scope-clean：fresh live snapshot 只读取 #393–#765，`scope_compliance=pass`、`out_of_scope_reads=0`、`out_of_scope_mutations=0`；历史准备运行的 #766 只读 incident 不属于本次 rerun。
 
 这些 request template 不是 `source-note-boundary-review-transition.v1/v2` 的可执行请求：它们没有伪造 comment id/review timestamp。后续必须由独立 reviewer 完成 Source evidence 复核、生成 durable evidence comment，再依据最新 live body/labels 重新 plan；未经主控明确授权不得 POST/PATCH。
 
