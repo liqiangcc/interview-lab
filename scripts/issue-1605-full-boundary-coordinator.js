@@ -759,8 +759,12 @@ function parseEvidenceComment(comment, item) {
   return { ok: errors.length === 0, errors, payload };
 }
 
-function findExactEvidenceComments(item, maxPages = 100, readPage = readCommentsPage) {
-  const comments = findMarkerComments(item.issue_number, item.transition_id, maxPages, readPage);
+function findExactEvidenceComments(item, maxPages = 100, readPage = null, readOptions = {}) {
+  // Keep the production default on the bounded readCommentsPage path while
+  // allowing tests/callers to inject its GET wrapper without replacing the
+  // whole marker lookup implementation.
+  const pageReader = readPage || ((number, page) => readCommentsPage(number, page, readOptions));
+  const comments = findMarkerComments(item.issue_number, item.transition_id, maxPages, pageReader);
   const exact = [];
   const errors = [];
   for (const comment of comments) {

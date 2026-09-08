@@ -10,6 +10,7 @@ const frozenSnapshot = require('../data/pilot/issue-1605/pending-inventory.snaps
 const boundaryBEvidence = require('../data/issue-1607/evidence-ledger.json');
 const {
   buildPlan, deriveBoundaryBCases, pendingInventory, remainingInventory, parseArgs, sha256,
+  evidenceBody, findExactEvidenceComments,
   formalRequest, parseEvidenceComment, runEvidence, isAllowedBlockedAuditError,
   evidenceAuthorizationDigest, renderEvidenceAuthorizationMarker, validateEvidenceAuthorization,
   readWithRetry, readLiveIssue, readCommentsPage,
@@ -113,6 +114,33 @@ test('read-only Issue and comments GETs retry transient TLS failures with bounde
   });
   assert.deepEqual(comments, []);
   assert.equal(commentAttempts, 2);
+});
+
+test('default exact evidence lookup routes comments pages through bounded read retry', () => {
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'issue-1605-default-comments-retry-'));
+  const cacheFile = path.join(directory, 'source-notes.json');
+  fs.writeFileSync(cacheFile, JSON.stringify(frozenSnapshot.items.map((item) => ({
+    number: item.issue_number, body_sha256: item.body_sha256, labels: item.labels,
+  }))));
+  const plan = buildPlan({ cache: cacheFile });
+  const item = plan.items.find((candidate) => candidate.decision === 'not-interview');
+  const body = evidenceBody(item, '2026-09-09T00:00:00Z');
+  let attempts = 0;
+  const delays = [];
+  const result = findExactEvidenceComments(item, 5, undefined, {
+    ghJson() {
+      attempts += 1;
+      if (attempts === 1) throw new Error('TLS handshake timeout');
+      return [{ id: 1605004, body }];
+    },
+    baseDelayMs: 3,
+    sleepFn: (delay) => delays.push(delay),
+  });
+  assert.equal(result.errors.length, 0);
+  assert.equal(result.exact.length, 1);
+  assert.equal(result.exact[0].id, 1605004);
+  assert.equal(attempts, 2);
+  assert.deepEqual(delays, [3]);
 });
 
 test('remaining and frozen inventory validators reject a digest or scope drift', () => {
