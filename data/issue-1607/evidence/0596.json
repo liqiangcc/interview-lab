@@ -9,19 +9,31 @@
   "expected_body_sha256": "40432025dd4ef231601d9992efc136aeca38fa70e2362a612100aeeae2afedb4",
   "expected_source_revision_id": "xhs-note:67d81c93000000001e003502:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67d81c93000000001e003502.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "6e14e338448d6ebef653c4da2a18131bd4903638",
-    "locator": "issue-body-copy:lines-157-165",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 1：编辑距离  leetcode 72\n> 2：买卖股票  leetcode  121\n> 3：合并两个有序数组  leetcode 88\n> 4：和最大的子数组  leetcode53\n> 5：最长回文子串     leetcode5\n> #算法[话题]# #leetcode刷题[话题]# #leetcode打卡[话题]# #编辑距离[话题]# #买卖股票的最佳时机[话题]# #最长回文数[话题]# #和最大子数组[话题]# #美团算法[话题]# #美团代码[话题]# #美团面试[话题]#\n>",
+    "byte_size": 431,
+    "sha256": "0919433b23236a1abfa896a932f00a03ade006ddefcab370c36d02bba2e3053f",
+    "locator": "note_desc:1-6",
+    "excerpt": "1：编辑距离  leetcode 72\n2：买卖股票  leetcode  121\n3：合并两个有序数组  leetcode 88\n4：和最大的子数组  leetcode53\n5：最长回文子串     leetcode5\n#算法[话题]# #leetcode刷题[话题]# #leetcode打卡[话题]# #编辑距离[话题]# #买卖股票的最佳时机[话题]# #最长回文数[话题]# #和最大子数组[话题]# #美团算法[话题]# #美团代码[话题]# #美团面试[话题]#",
+    "text": "1：编辑距离  leetcode 72\n2：买卖股票  leetcode  121\n3：合并两个有序数组  leetcode 88\n4：和最大的子数组  leetcode53\n5：最长回文子串     leetcode5\n#算法[话题]# #leetcode刷题[话题]# #leetcode打卡[话题]# #编辑距离[话题]# #买卖股票的最佳时机[话题]# #最长回文数[话题]# #和最大子数组[话题]# #美团算法[话题]# #美团代码[话题]# #美团面试[话题]#\n",
+    "line_count": 7,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:67d81c93000000001e003502.txt",
+      "byte_size": 431,
+      "git_blob_sha": "6e14e338448d6ebef653c4da2a18131bd4903638"
     }
   },
   "checks": [
@@ -37,13 +49,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +69,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

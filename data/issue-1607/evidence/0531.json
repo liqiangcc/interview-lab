@@ -9,19 +9,31 @@
   "expected_body_sha256": "610c19010b8210e29c0bd1300899eaffa89097a4aa519d76ba49ac04ec10e978",
   "expected_source_revision_id": "xhs-note:67bc46df000000000d014ff7:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67bc46df000000000d014ff7.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "b3756402b891d1e4c04b7b1941ae796d388eeb23",
-    "locator": "issue-body-copy:lines-108-112",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> [抓狂R][抓狂R]日常实习这么难找吗[哭惹R]其他大厂的简历也一直处于筛选 好难[哭惹R][哭惹R]\n> #后端开发[话题]# #实习[话题]# #大厂实习[话题]# #互联网大厂[话题]# #Java开发[话题]# #Java[话题]# #程序员[话题]#\n>",
+    "byte_size": 267,
+    "sha256": "df4feb2c08213c2fcc7f849228e164ff98557d45ba1665817fa3e36fd7d1f570",
+    "locator": "note_desc:1-2",
+    "excerpt": "[抓狂R][抓狂R]日常实习这么难找吗[哭惹R]其他大厂的简历也一直处于筛选 好难[哭惹R][哭惹R]\n#后端开发[话题]# #实习[话题]# #大厂实习[话题]# #互联网大厂[话题]# #Java开发[话题]# #Java[话题]# #程序员[话题]#",
+    "text": "[抓狂R][抓狂R]日常实习这么难找吗[哭惹R]其他大厂的简历也一直处于筛选 好难[哭惹R][哭惹R]\n#后端开发[话题]# #实习[话题]# #大厂实习[话题]# #互联网大厂[话题]# #Java开发[话题]# #Java[话题]# #程序员[话题]#\n",
+    "line_count": 3,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:67bc46df000000000d014ff7.txt",
+      "byte_size": 267,
+      "git_blob_sha": "b3756402b891d1e4c04b7b1941ae796d388eeb23"
     }
   },
   "checks": [
@@ -37,13 +49,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +69,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

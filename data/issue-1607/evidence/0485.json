@@ -9,19 +9,31 @@
   "expected_body_sha256": "fb5555aa43f3876db860ee37e9309c62e3c2b745656cb7f4e2c6da54597df8d9",
   "expected_source_revision_id": "xhs-note:678f60c5000000001701eb84:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/678f60c5000000001701eb84.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "f1f6d6e533b60db12dde867537d030731aa92c8c",
-    "locator": "issue-body-copy:lines-180-183",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 面试好容易紧张，一紧张什么都忘了，一定要提前做好准备！不然面试的时候冷场很尴尬，给大家整理了能面过2025后端岗的面试真题，篇幅过多就不一一展示了。#爱上工作的瞬间[话题]# #互联网大厂[话题]# #计算机[话题]# #java面试[话题]# #java[话题]# #求职[话题]# #编程[话题]# #程序员[话题]# #后端开发[话题]# #面试[话题]#\n>",
+    "byte_size": 422,
+    "sha256": "a5238749f5db3970e745cd55f747b66a64ba89ad3f1141c290f162bd02d7a145",
+    "locator": "note_desc:1-1",
+    "excerpt": "面试好容易紧张，一紧张什么都忘了，一定要提前做好准备！不然面试的时候冷场很尴尬，给大家整理了能面过2025后端岗的面试真题，篇幅过多就不一一展示了。#爱上工作的瞬间[话题]# #互联网大厂[话题]# #计算机[话题]# #java面试[话题]# #java[话题]# #求职[话题]# #编程[话题]# #程序员[话题]# #后端开发[话题]# #面试[话题]#",
+    "text": "面试好容易紧张，一紧张什么都忘了，一定要提前做好准备！不然面试的时候冷场很尴尬，给大家整理了能面过2025后端岗的面试真题，篇幅过多就不一一展示了。#爱上工作的瞬间[话题]# #互联网大厂[话题]# #计算机[话题]# #java面试[话题]# #java[话题]# #求职[话题]# #编程[话题]# #程序员[话题]# #后端开发[话题]# #面试[话题]#\n",
+    "line_count": 2,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:678f60c5000000001701eb84.txt",
+      "byte_size": 422,
+      "git_blob_sha": "f1f6d6e533b60db12dde867537d030731aa92c8c"
     }
   },
   "checks": [
@@ -37,13 +49,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +69,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

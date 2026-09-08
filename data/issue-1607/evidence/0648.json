@@ -9,19 +9,40 @@
   "expected_body_sha256": "9c2256e0c9f92b8257a15c47625134171ff1405958b3ab867beb496893e7a611",
   "expected_source_revision_id": "xhs-note:67e5f4260000000009038a91:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 8,
+        "excerpt": "7. 场景题：hive上大量数据流转到sql上，有个字段是json结构体，怎么操作"
+      },
+      {
+        "line_number": 11,
+        "excerpt": "#互联网大厂[话题]# #面经[话题]# #面试题[话题]# #腾讯[话题]# #腾讯实习[话题]# #数据工程[话题]#"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67e5f4260000000009038a91.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "f3f3e7f88c71a6a5e762637cd4c7999296f60f22",
-    "locator": "issue-body-copy:lines-103-116",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 时长：25min\n> 1. 自我介绍\n> 2. 结合项目介绍 python爬虫流程、数据清洗\n> 3. spark和 flink的区别，什么情況下用spark\n> 4. hivesql查询时间长，怎么优化\n> 5. 数据倾斜\n> 6. 数据看板\n> 7. 场景题：hive上大量数据流转到sql上，有个字段是json结构体，怎么操作\n> 8.实战经验相关\n> 进度：打电话没接到，三天后挂了但马上被另一个部门捞了，点名表扬🐧的效率\n> #互联网大厂[话题]# #面经[话题]# #面试题[话题]# #腾讯[话题]# #腾讯实习[话题]# #数据工程[话题]#\n>",
+    "byte_size": 563,
+    "sha256": "ea80af75d725b98816bcfba18c1d349c45ce8e7f1aa62159d31fc3e4e7baf229",
+    "locator": "note_desc:1-8",
+    "excerpt": "时长：25min\n1. 自我介绍\n2. 结合项目介绍 python爬虫流程、数据清洗\n3. spark和 flink的区别，什么情況下用spark\n4. hivesql查询时间长，怎么优化\n5. 数据倾斜\n6. 数据看板\n7. 场景题：hive上大量数据流转到sql上，有个字段是json结构体，怎么操作",
+    "text": "时长：25min\n1. 自我介绍\n2. 结合项目介绍 python爬虫流程、数据清洗\n3. spark和 flink的区别，什么情況下用spark\n4. hivesql查询时间长，怎么优化\n5. 数据倾斜\n6. 数据看板\n7. 场景题：hive上大量数据流转到sql上，有个字段是json结构体，怎么操作\n8.实战经验相关\n进度：打电话没接到，三天后挂了但马上被另一个部门捞了，点名表扬🐧的效率\n#互联网大厂[话题]# #面经[话题]# #面试题[话题]# #腾讯[话题]# #腾讯实习[话题]# #数据工程[话题]#\n",
+    "line_count": 12,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:67e5f4260000000009038a91.txt",
+      "byte_size": 563,
+      "git_blob_sha": "f3f3e7f88c71a6a5e762637cd4c7999296f60f22"
     }
   },
   "checks": [
@@ -37,13 +58,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +78,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

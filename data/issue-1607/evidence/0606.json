@@ -9,19 +9,31 @@
   "expected_body_sha256": "e636fcf1824fcf44cafe562d4ead5f2e308f136d924532fe5a586438d349efa8",
   "expected_source_revision_id": "xhs-note:67da8a810000000006028d98:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67da8a810000000006028d98.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "744af0b6903463c902f0f93cc2059e62619e3530",
-    "locator": "issue-body-copy:lines-103-124",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 小米嵌入式软件开发面试\n> 一面\n> 1、C语言变量的生命周期和可见性\n> 2、空指针和野指针的区别\n> 3、访问野指针会发生什么情况，访问空指针会发生什么情况\n> 4、释放之后的指针再次调用会发生什么情况、如何避免释放之后的指针再次调用\n> 5、C++面向对象的三要素、虚函数和多态概念\n> 6、进程间通信\n> 7、constin *p和 int * const pe\n> 8、堆和栈的区别\n> 二面\n> 1、操作系统学过吗，Linux启动流程\n> 2、一直 uboot.做了什么工作\n> 3、移植过程中，网卡驱动做了什么工作\n> 4、SPI是什么，有几种模式、几条线←\n> 5、调用函数时，那些内容需要压栈\n> 6、自旋锁和信号量有什么区别\n> \t\n> #嵌入式学习[话题]# #嵌入式开发[话题]# #嵌入式面试[话题]# #面试求职[话题]# #嵌入式[话题]# #大厂[话题]# #斩获offer的秘诀[话题]# #嵌入式自学[话题]# #嵌入式学习[话题]# #嵌入式工程师[话题]#\n>",
+    "byte_size": 975,
+    "sha256": "24ae1e4e8980f8d235e055baa0455c1cbb2751496c66a40362665e90ffb40a17",
+    "locator": "note_desc:1-8",
+    "excerpt": "小米嵌入式软件开发面试\n一面\n1、C语言变量的生命周期和可见性\n2、空指针和野指针的区别\n3、访问野指针会发生什么情况，访问空指针会发生什么情况\n4、释放之后的指针再次调用会发生什么情况、如何避免释放之后的指针再次调用\n5、C++面向对象的三要素、虚函数和多态概念\n6、进程间通信",
+    "text": "小米嵌入式软件开发面试\n一面\n1、C语言变量的生命周期和可见性\n2、空指针和野指针的区别\n3、访问野指针会发生什么情况，访问空指针会发生什么情况\n4、释放之后的指针再次调用会发生什么情况、如何避免释放之后的指针再次调用\n5、C++面向对象的三要素、虚函数和多态概念\n6、进程间通信\n7、constin *p和 int * const pe\n8、堆和栈的区别\n二面\n1、操作系统学过吗，Linux启动流程\n2、一直 uboot.做了什么工作\n3、移植过程中，网卡驱动做了什么工作\n4、SPI是什么，有几种模式、几条线←\n5、调用函数时，那些内容需要压栈\n6、自旋锁和信号量有什么区别\n\t\n#嵌入式学习[话题]# #嵌入式开发[话题]# #嵌入式面试[话题]# #面试求职[话题]# #嵌入式[话题]# #大厂[话题]# #斩获offer的秘诀[话题]# #嵌入式自学[话题]# #嵌入式学习[话题]# #嵌入式工程师[话题]#\n",
+    "line_count": 20,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:67da8a810000000006028d98.txt",
+      "byte_size": 975,
+      "git_blob_sha": "744af0b6903463c902f0f93cc2059e62619e3530"
     }
   },
   "checks": [
@@ -37,13 +49,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +69,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

@@ -9,19 +9,31 @@
   "expected_body_sha256": "1bf1b7f02d5fc3c07e2c819f2637c560055fff3e68965d24458562a8d68b6a67",
   "expected_source_revision_id": "xhs-note:67d446d70000000009039ec7:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67d446d70000000009039ec7.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "3ad71a726c8782c717427172f159c78d1c60a2d2",
-    "locator": "issue-body-copy:lines-103-120",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 北京JAVA，双非普本，5年经验，找工作的第九天！[太阳R]今天两个自研线下面试，自我感觉良好，目前是等通知[失望R]希望能过给点动力吧[太阳R]\n> 今日面经分享:\n> 1.说一个你最拿手的项目，简单介绍一下\n> 2.Cloud组件有哪些，项目中用到了哪些？\n> 3.openfegin底层原理是什么，他是如何拿到请求路径的？\n> 4.用户信息放在哪里了，如果是你你怎么设计？\n> 5.用过其他语言吗？\n> 6.说一下mysql设计原则\n> 7.说一下mq是如何传递数据的。有几种模式？\n> 8.xxljob这边都用来做什么？\n> 9.分库分表做过吗？\n> 10.在项目中你用过哪些设计模式\n> 11.你项目中的权限验证是怎么做的？Auth2知道吗？\n> 12.你多线程应用场景？为什么这么用\n> #互联网大厂[话题]# #后端开发[话题]# #java[话题]# #程序员[话题]# #程序员的出路[话题]# #面经[话题]#\n>",
+    "byte_size": 920,
+    "sha256": "24d9b8a375816b262cad8880989578bd45aabc10b94351d45dfcde3491f2efce",
+    "locator": "note_desc:1-8",
+    "excerpt": "北京JAVA，双非普本，5年经验，找工作的第九天！[太阳R]今天两个自研线下面试，自我感觉良好，目前是等通知[失望R]希望能过给点动力吧[太阳R]\n今日面经分享:\n1.说一个你最拿手的项目，简单介绍一下\n2.Cloud组件有哪些，项目中用到了哪些？\n3.openfegin底层原理是什么，他是如何拿到请求路径的？\n4.用户信息放在哪里了，如果是你你怎么设计？\n5.用过其他语言吗？\n6.说一下mysql设计原则",
+    "text": "北京JAVA，双非普本，5年经验，找工作的第九天！[太阳R]今天两个自研线下面试，自我感觉良好，目前是等通知[失望R]希望能过给点动力吧[太阳R]\n今日面经分享:\n1.说一个你最拿手的项目，简单介绍一下\n2.Cloud组件有哪些，项目中用到了哪些？\n3.openfegin底层原理是什么，他是如何拿到请求路径的？\n4.用户信息放在哪里了，如果是你你怎么设计？\n5.用过其他语言吗？\n6.说一下mysql设计原则\n7.说一下mq是如何传递数据的。有几种模式？\n8.xxljob这边都用来做什么？\n9.分库分表做过吗？\n10.在项目中你用过哪些设计模式\n11.你项目中的权限验证是怎么做的？Auth2知道吗？\n12.你多线程应用场景？为什么这么用\n#互联网大厂[话题]# #后端开发[话题]# #java[话题]# #程序员[话题]# #程序员的出路[话题]# #面经[话题]#\n",
+    "line_count": 16,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:67d446d70000000009039ec7.txt",
+      "byte_size": 920,
+      "git_blob_sha": "3ad71a726c8782c717427172f159c78d1c60a2d2"
     }
   },
   "checks": [
@@ -37,13 +49,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +69,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

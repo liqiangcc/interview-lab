@@ -9,19 +9,36 @@
   "expected_body_sha256": "e8160b1be4379fb3830f78ab7a2354e9882eb6c97efd3aeea573f7304114fd57",
   "expected_source_revision_id": "xhs-note:676d559d000000000b02236d:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 2,
+        "excerpt": "﻿#Java[话题]#﻿ ﻿#java面试[话题]#﻿ ﻿#java面试题[话题]#﻿ ﻿#java场景题[话题]#﻿ ﻿#java面经[话题]#﻿ ﻿#java八股[话题]#﻿ ﻿#程序员[话题]#﻿ ﻿#中航信[话题]#﻿ ﻿#我爱官方[话题]#﻿"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/676d559d000000000b02236d.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "f27a0ba889d1ce32b1ff5b032e003e6f768a6fd4",
-    "locator": "issue-body-copy:lines-171-175",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 我们学员用过的题库放在后面了，春招有想法的小伙伴，现在可以对照背起来了！[派对R]\n> ﻿#Java[话题]#﻿ ﻿#java面试[话题]#﻿ ﻿#java面试题[话题]#﻿ ﻿#java场景题[话题]#﻿ ﻿#java面经[话题]#﻿ ﻿#java八股[话题]#﻿ ﻿#程序员[话题]#﻿ ﻿#中航信[话题]#﻿ ﻿#我爱官方[话题]#﻿\n>",
+    "byte_size": 361,
+    "sha256": "3dc1e7e204e74600c04d6baeb38846e747983e4062529089691344dbf4003a95",
+    "locator": "note_desc:1-2",
+    "excerpt": "我们学员用过的题库放在后面了，春招有想法的小伙伴，现在可以对照背起来了！[派对R]\n﻿#Java[话题]#﻿ ﻿#java面试[话题]#﻿ ﻿#java面试题[话题]#﻿ ﻿#java场景题[话题]#﻿ ﻿#java面经[话题]#﻿ ﻿#java八股[话题]#﻿ ﻿#程序员[话题]#﻿ ﻿#中航信[话题]#﻿ ﻿#我爱官方[话题]#﻿",
+    "text": "我们学员用过的题库放在后面了，春招有想法的小伙伴，现在可以对照背起来了！[派对R]\n﻿#Java[话题]#﻿ ﻿#java面试[话题]#﻿ ﻿#java面试题[话题]#﻿ ﻿#java场景题[话题]#﻿ ﻿#java面经[话题]#﻿ ﻿#java八股[话题]#﻿ ﻿#程序员[话题]#﻿ ﻿#中航信[话题]#﻿ ﻿#我爱官方[话题]#﻿\n",
+    "line_count": 3,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:676d559d000000000b02236d.txt",
+      "byte_size": 361,
+      "git_blob_sha": "f27a0ba889d1ce32b1ff5b032e003e6f768a6fd4"
     }
   },
   "checks": [
@@ -37,13 +54,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +74,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

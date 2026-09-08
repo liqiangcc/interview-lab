@@ -9,19 +9,48 @@
   "expected_body_sha256": "bd21d959e3084aba8703ea358c84ea2c0dd45709e993309945d009f9c49daaca",
   "expected_source_revision_id": "xhs-note:67e13c24000000000302a976:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "proposal-only",
+    "proposed_decision": "single-interview",
+    "basis": "first-person experienced process fact plus question evidence; no appointment/advice marker",
+    "basis_lines": [
+      {
+        "line_number": 4,
+        "excerpt": "介绍一下第一个项目（agent相关）"
+      },
+      {
+        "line_number": 6,
+        "excerpt": "如何实现的？"
+      },
+      {
+        "line_number": 10,
+        "excerpt": "介绍一下第二个项目（天池新闻大赛）"
+      },
+      {
+        "line_number": 12,
+        "excerpt": "itemcf的物品-用户向量是怎么生成的？"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67e13c24000000000302a976.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "835db38e5fd2e98bf2398937285a56eecfe9b8b0",
-    "locator": "issue-body-copy:lines-103-135",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 面试经验：\n> 无自我介绍\n> 没有问实习（数分相关，不对口）\n> 介绍一下第一个项目（agent相关）\n> 做什么用的？\n> 如何实现的？\n> 用的什么基座大模型？做过大模型训练吗？\n> 了解基座大模型的模型结构吗？\n> 关于RAG / AI agent / 自训练大模型的一些看法？\n> 介绍一下第二个项目（天池新闻大赛）\n> itemcf召回原理？\n> itemcf的物品-用户向量是怎么生成的？\n> 介绍一下排序模型是怎么做的？\n> 对于快手这样的应用场景，用户数量可能为亿级别，采用itemcf构建的矩阵会很庞大，如何解决？\n> 如果两个物品是相似的，但是他们没有共同交互过的用户，是不是就无法召回了？\n> 基于内容embedding的召回是怎么做的？\n> 是否知道题目里基于内容的embedding是如何获得的？（不知道，但是知道基于图文内容的向量表征是如何训练的）\n> 如果训练的时候图文不符怎么办？\n> \t\n> 手撕代码：\n> 最大子数组和（面试官提示采用动态规划，但是dp数组的定义没想清楚，最后输出的时候面试官又提示了一下）\n> 硬币问题：给定一个金额，用50，25，5，1分硬币，共有多少种组合方式（整体思路正确，但是还是没有完全写出来）\n> \t\n> 反问：\n> 快手海外搜索业务主要面向巴西，包括视频搜索，根据用户的搜索内容生成推荐词，基于大模型的电商搜索 。\n> 海外搜索业务都在北京，国内搜索业务有部分在杭州 。\n> 大模型推荐，生成式推荐，大模型分词\n> \t\n> 面试前真的巨紧张，但面试官人很好，很耐心（虽然被拷打版）前面项目只问了十五分钟，做了两道题，都没完全写出来[失望R] 看后面的反问感觉现在大模型推荐是热门业务，估计面试官是看我有agent相关的经验才给我捞起来的吧，捞完不出所料没有意外[暗中观察R]  面完十分钟后秒挂\n> #互联网大厂实习[话题]# #面试问题[话题]# #面经[话题]# #快手[话题]#\n>",
+    "byte_size": 2040,
+    "sha256": "b512bda8542c9be05c13414587629826a85b4ff367b023e35ea5e26337bf590b",
+    "locator": "note_desc:1-8",
+    "excerpt": "面试经验：\n无自我介绍\n没有问实习（数分相关，不对口）\n介绍一下第一个项目（agent相关）\n做什么用的？\n如何实现的？\n用的什么基座大模型？做过大模型训练吗？\n了解基座大模型的模型结构吗？",
+    "text": "面试经验：\n无自我介绍\n没有问实习（数分相关，不对口）\n介绍一下第一个项目（agent相关）\n做什么用的？\n如何实现的？\n用的什么基座大模型？做过大模型训练吗？\n了解基座大模型的模型结构吗？\n关于RAG / AI agent / 自训练大模型的一些看法？\n介绍一下第二个项目（天池新闻大赛）\nitemcf召回原理？\nitemcf的物品-用户向量是怎么生成的？\n介绍一下排序模型是怎么做的？\n对于快手这样的应用场景，用户数量可能为亿级别，采用itemcf构建的矩阵会很庞大，如何解决？\n如果两个物品是相似的，但是他们没有共同交互过的用户，是不是就无法召回了？\n基于内容embedding的召回是怎么做的？\n是否知道题目里基于内容的embedding是如何获得的？（不知道，但是知道基于图文内容的向量表征是如何训练的）\n如果训练的时候图文不符怎么办？\n\t\n手撕代码：\n最大子数组和（面试官提示采用动态规划，但是dp数组的定义没想清楚，最后输出的时候面试官又提示了一下）\n硬币问题：给定一个金额，用50，25，5，1分硬币，共有多少种组合方式（整体思路正确，但是还是没有完全写出来）\n\t\n反问：\n快手海外搜索业务主要面向巴西，包括视频搜索，根据用户的搜索内容生成推荐词，基于大模型的电商搜索 。\n海外搜索业务都在北京，国内搜索业务有部分在杭州 。\n大模型推荐，生成式推荐，大模型分词\n\t\n面试前真的巨紧张，但面试官人很好，很耐心（虽然被拷打版）前面项目只问了十五分钟，做了两道题，都没完全写出来[失望R] 看后面的反问感觉现在大模型推荐是热门业务，估计面试官是看我有agent相关的经验才给我捞起来的吧，捞完不出所料没有意外[暗中观察R]  面完十分钟后秒挂\n#互联网大厂实习[话题]# #面试问题[话题]# #面经[话题]# #快手[话题]#\n",
+    "line_count": 31,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:67e13c24000000000302a976.txt",
+      "byte_size": 2040,
+      "git_blob_sha": "835db38e5fd2e98bf2398937285a56eecfe9b8b0"
     }
   },
   "checks": [
@@ -37,13 +66,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +86,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

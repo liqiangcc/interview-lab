@@ -9,19 +9,31 @@
   "expected_body_sha256": "d23834a355e25a1a01f73cc2d7aecc12baeb20c38fa51cbd17a52332337bbb30",
   "expected_source_revision_id": "xhs-note:67e15a7c000000001e009b06:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67e15a7c000000001e009b06.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "27a15ba133a2a5b6780fb5656bbf6e53c2e51a8b",
-    "locator": "issue-body-copy:lines-103-115",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> #java[话题]# #面经[话题]# #快手[话题]#\n> 实习项目拷打\n> \t\n> 算法：java实现用户短视频一分钟只能最多有10个点赞\n> \t\n> sql优化：select * from table where a > ? and b = ? or c = ? order by d decs limit 10\n> \t\n> sql实现：实现一个死锁情况，必须是必然发生。\n> \t\n> java代码：synchronized实现必发死锁。\n>",
+    "byte_size": 345,
+    "sha256": "71fd52a76992f2957539dc221c886966e415abd8af59a927dff4b8c4b97f136f",
+    "locator": "note_desc:1-10",
+    "excerpt": "#java[话题]# #面经[话题]# #快手[话题]#\n实习项目拷打\n算法：java实现用户短视频一分钟只能最多有10个点赞\nsql优化：select * from table where a > ? and b = ? or c = ? order by d decs limit 10\nsql实现：实现一个死锁情况，必须是必然发生。\njava代码：synchronized实现必发死锁。",
+    "text": "#java[话题]# #面经[话题]# #快手[话题]#\n实习项目拷打\n\t\n算法：java实现用户短视频一分钟只能最多有10个点赞\n\t\nsql优化：select * from table where a > ? and b = ? or c = ? order by d decs limit 10\n\t\nsql实现：实现一个死锁情况，必须是必然发生。\n\t\njava代码：synchronized实现必发死锁。\n",
+    "line_count": 11,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:67e15a7c000000001e009b06.txt",
+      "byte_size": 345,
+      "git_blob_sha": "27a15ba133a2a5b6780fb5656bbf6e53c2e51a8b"
     }
   },
   "checks": [
@@ -37,13 +49,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +69,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

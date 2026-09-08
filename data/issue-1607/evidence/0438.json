@@ -9,19 +9,31 @@
   "expected_body_sha256": "a30834b8d1552d5b37c112026631adcdf0c3be78e5eda7f6a67a0924a2f8d94b",
   "expected_source_revision_id": "xhs-note:6751bdd200000000060178c0:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/6751bdd200000000060178c0.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "e273c864e4ec50d8436d98f9ee58aa4285e51d17",
-    "locator": "issue-body-copy:lines-117-124",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 【36岁Java程序员失业第35天】\n> 1、下午2点面试了一个联想外包，类加载过程、自己项目登录过程说的都不太好，结果待定！\n> 2、2点面试一直到3点，然后赶紧打车到下一个4点的现场面试，到了现场给了电脑敲代码题。有些方法记不住，偷偷用了下豆包App询问。最后用了20分钟敲完三道题，面试官让我回去等电话复试，估计凉凉了。\n> 3、原定另一个公司7点的面试因为地铁不能赶回去，被迫取消了！\n> 4、想对自己说，要冷静、要专注、要坚定！要加油！\n>",
+    "byte_size": 594,
+    "sha256": "67a55e8d04e9ed19efe7979314b8181a3c9cf7f51178b3a148f88867eef02b13",
+    "locator": "note_desc:1-5",
+    "excerpt": "【36岁Java程序员失业第35天】\n1、下午2点面试了一个联想外包，类加载过程、自己项目登录过程说的都不太好，结果待定！\n2、2点面试一直到3点，然后赶紧打车到下一个4点的现场面试，到了现场给了电脑敲代码题。有些方法记不住，偷偷用了下豆包App询问。最后用了20分钟敲完三道题，面试官让我回去等电话复试，估计凉凉了。\n3、原定另一个公司7点的面试因为地铁不能赶回去，被迫取消了！\n4、想对自己说，要冷静、要专注、要坚定！要加油！",
+    "text": "【36岁Java程序员失业第35天】\n1、下午2点面试了一个联想外包，类加载过程、自己项目登录过程说的都不太好，结果待定！\n2、2点面试一直到3点，然后赶紧打车到下一个4点的现场面试，到了现场给了电脑敲代码题。有些方法记不住，偷偷用了下豆包App询问。最后用了20分钟敲完三道题，面试官让我回去等电话复试，估计凉凉了。\n3、原定另一个公司7点的面试因为地铁不能赶回去，被迫取消了！\n4、想对自己说，要冷静、要专注、要坚定！要加油！\n",
+    "line_count": 6,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:6751bdd200000000060178c0.txt",
+      "byte_size": 594,
+      "git_blob_sha": "e273c864e4ec50d8436d98f9ee58aa4285e51d17"
     }
   },
   "checks": [
@@ -37,13 +49,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +69,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

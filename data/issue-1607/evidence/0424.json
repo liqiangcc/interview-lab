@@ -9,19 +9,31 @@
   "expected_body_sha256": "dd3ca178f9a0aa9641039b93047cdffb03727cd7dde653c7292456a188ed607c",
   "expected_source_revision_id": "xhs-note:6748931e000000000202f7c0:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/6748931e000000000202f7c0.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "00ef48bf2087e81674b23dded41af9e40d7a2890",
-    "locator": "issue-body-copy:lines-108-111",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 刚入职 有没有uu也在滴滴 可以一起交流下！#后端开发[话题]# #java实习生[话题]# #滴滴实习[话题]# #万科天空之城[话题]#\n>",
+    "byte_size": 157,
+    "sha256": "3a51b62117cc69b9b349efe0d23ca2d32202ae0dd7034460179a85ba930db767",
+    "locator": "note_desc:1-1",
+    "excerpt": "刚入职 有没有uu也在滴滴 可以一起交流下！#后端开发[话题]# #java实习生[话题]# #滴滴实习[话题]# #万科天空之城[话题]#",
+    "text": "刚入职 有没有uu也在滴滴 可以一起交流下！#后端开发[话题]# #java实习生[话题]# #滴滴实习[话题]# #万科天空之城[话题]#\n",
+    "line_count": 2,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:6748931e000000000202f7c0.txt",
+      "byte_size": 157,
+      "git_blob_sha": "00ef48bf2087e81674b23dded41af9e40d7a2890"
     }
   },
   "checks": [
@@ -37,13 +49,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +69,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

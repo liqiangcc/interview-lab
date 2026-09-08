@@ -9,19 +9,44 @@
   "expected_body_sha256": "7d108b408886431146732443c9dc8aede3b9d16ad80a1049a879fed834a9069d",
   "expected_source_revision_id": "xhs-note:67dccdb2000000000900ce21:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 6,
+        "excerpt": "5. 项目中有没有遇到一些出现内存泄露的问题"
+      },
+      {
+        "line_number": 14,
+        "excerpt": "13. 说一下CAS和ABA问题"
+      },
+      {
+        "line_number": 32,
+        "excerpt": "31. 什么情况下索引才会失效？这个你平时有去做一些问题的一些排查和定位吗？"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67dccdb2000000000900ce21.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "a1affa1d02d34127ca893809c38c93cc7184b099",
-    "locator": "issue-body-copy:lines-103-148",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 时长：一个半小时（面试官很和蔼，体验很好）\n> 1. java里面string类型，它能不能继承？\n> 2. JVM，你有一些了解吗？\n> 3. 你对整个类加载的机制有一些了解吗？比如说他累的一个生命周期，以及他的一个工作流程是咋样。\n> 4. 有些场景会打破那个双亲委派模型的机制。你有了解过吗\n> 5. 项目中有没有遇到一些出现内存泄露的问题\n> 6. java里面的对象其实在内存中也有一个内存模型。你有了解吗？（我回答了有哪些部分）\n> 7. 这几个部分你可以介绍一下，它大概是有什么作用\n> 8. 垃圾回收机制知道吗？说一下原理，以及目前这边里面一些比较主流的一些回收器。\n> 9. 性能调优有做过吗？就比如说当前可能比如说机器负载过高，然后去排查一下到底是哪一个线程会导致它整个资源使用比较紧张的情况\n> 10. 什么是线程安全\n> 11. java里面有哪些加锁的方式\n> 12. 说一下乐观锁\n> 13. 说一下CAS和ABA问题\n> 14. 死锁的必要条件有哪些？\n> 15. 说一下银行家算法\n> 16. 说一下threadlocal\n> 17. threadlocal的实现原理\n> 18. threadlocal会内存泄露，原因是什么？\n> 19. 了解过线程安全容器吗？\n> 20. 说一下ConcurrentHashMap\n> 21. java里面有哪些创建线程的方法\n> 22. 线程池在java里面有哪些？就是定义好的线程池，就可以简单说一说。\n> 23. 如果让你去自定义一个线程池的话，它有哪些需要去注意的？\n> 24. 有哪些具体的拒绝策略，以及为什么要拒绝。\n> 25. AQS你用过吗？\n> 26. 说一下数据库里面的那个ACID\n> 27. 索引它的一个原理你有了解吗？\n> 28. 索引创建的原则\n> 29. 实践中，有没有使用索引的经验\n> 30. 说一下最左前缀匹配原则\n> 31. 什么情况下索引才会失效？这个你平时有去做一些问题的一些排查和定位吗？\n> 32. 说一下传输层的协议\n> 33. TCP怎么保证可靠传输\n> 34. 你刚刚说有一些拥塞控制，然后这拥塞控制有一些算法你有了解吗？\n> 35. 说你对分布式有一些了解吗？一下分表分库\n> 36. 场景：针对淘宝订单怎么去对数据做一个分库分表（会疯狂追问）\n> 37. 说一下分布式的框架\n> 38. TCC有了解吗？\n> 39. 最近AI不是比较热吗，AI有没有对他有一定的了解\n> 40. 然后是项目拷打\n> 41. 2道算法题，求根节点到叶子节点的数字之和,多线程打印a,b,c\n> ﻿#美团[话题]# ﻿ ﻿#互联网大厂实习[话题]# ﻿ ﻿#java[话题]# ﻿\n>",
+    "byte_size": 2524,
+    "sha256": "944bd72578b3b0a1de07b2f777ff34f9cafd82c57a149132cf99456daa6e3de8",
+    "locator": "note_desc:1-8",
+    "excerpt": "时长：一个半小时（面试官很和蔼，体验很好）\n1. java里面string类型，它能不能继承？\n2. JVM，你有一些了解吗？\n3. 你对整个类加载的机制有一些了解吗？比如说他累的一个生命周期，以及他的一个工作流程是咋样。\n4. 有些场景会打破那个双亲委派模型的机制。你有了解过吗\n5. 项目中有没有遇到一些出现内存泄露的问题\n6. java里面的对象其实在内存中也有一个内存模型。你有了解吗？（我回答了有哪些部分）\n7. 这几个部分你可以介绍一下，它大概是有什么作用",
+    "text": "时长：一个半小时（面试官很和蔼，体验很好）\n1. java里面string类型，它能不能继承？\n2. JVM，你有一些了解吗？\n3. 你对整个类加载的机制有一些了解吗？比如说他累的一个生命周期，以及他的一个工作流程是咋样。\n4. 有些场景会打破那个双亲委派模型的机制。你有了解过吗\n5. 项目中有没有遇到一些出现内存泄露的问题\n6. java里面的对象其实在内存中也有一个内存模型。你有了解吗？（我回答了有哪些部分）\n7. 这几个部分你可以介绍一下，它大概是有什么作用\n8. 垃圾回收机制知道吗？说一下原理，以及目前这边里面一些比较主流的一些回收器。\n9. 性能调优有做过吗？就比如说当前可能比如说机器负载过高，然后去排查一下到底是哪一个线程会导致它整个资源使用比较紧张的情况\n10. 什么是线程安全\n11. java里面有哪些加锁的方式\n12. 说一下乐观锁\n13. 说一下CAS和ABA问题\n14. 死锁的必要条件有哪些？\n15. 说一下银行家算法\n16. 说一下threadlocal\n17. threadlocal的实现原理\n18. threadlocal会内存泄露，原因是什么？\n19. 了解过线程安全容器吗？\n20. 说一下ConcurrentHashMap\n21. java里面有哪些创建线程的方法\n22. 线程池在java里面有哪些？就是定义好的线程池，就可以简单说一说。\n23. 如果让你去自定义一个线程池的话，它有哪些需要去注意的？\n24. 有哪些具体的拒绝策略，以及为什么要拒绝。\n25. AQS你用过吗？\n26. 说一下数据库里面的那个ACID\n27. 索引它的一个原理你有了解吗？\n28. 索引创建的原则\n29. 实践中，有没有使用索引的经验\n30. 说一下最左前缀匹配原则\n31. 什么情况下索引才会失效？这个你平时有去做一些问题的一些排查和定位吗？\n32. 说一下传输层的协议\n33. TCP怎么保证可靠传输\n34. 你刚刚说有一些拥塞控制，然后这拥塞控制有一些算法你有了解吗？\n35. 说你对分布式有一些了解吗？一下分表分库\n36. 场景：针对淘宝订单怎么去对数据做一个分库分表（会疯狂追问）\n37. 说一下分布式的框架\n38. TCC有了解吗？\n39. 最近AI不是比较热吗，AI有没有对他有一定的了解\n40. 然后是项目拷打\n41. 2道算法题，求根节点到叶子节点的数字之和,多线程打印a,b,c\n﻿#美团[话题]# ﻿ ﻿#互联网大厂实习[话题]# ﻿ ﻿#java[话题]# ﻿\n",
+    "line_count": 44,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:67dccdb2000000000900ce21.txt",
+      "byte_size": 2524,
+      "git_blob_sha": "a1affa1d02d34127ca893809c38c93cc7184b099"
     }
   },
   "checks": [
@@ -37,13 +62,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +82,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

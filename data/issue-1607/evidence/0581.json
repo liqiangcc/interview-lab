@@ -9,19 +9,40 @@
   "expected_body_sha256": "ec58291fd27772f58e062a9a1b24bd56f4a5acf43073976732c7f021dc2dc687",
   "expected_source_revision_id": "xhs-note:67d2cf38000000000602b6f7:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 6,
+        "excerpt": "💻八股暴击："
+      },
+      {
+        "line_number": 19,
+        "excerpt": "• 面试官引导性问题要抓住"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67d2cf38000000000602b6f7.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "deab92659ae103e39d13f64c30c9e4b9395b73db",
-    "locator": "issue-body-copy:lines-103-127",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 📌项目深挖：\n> 线程池核心参数+工厂模式实现\n> 令牌桶限流 vs 固定窗口\n> 布隆过滤器实战：穿透/击穿场景解决\n> QPS预估技巧\n> 💻八股暴击：\n> ✔ ThreadLocal底层原理\n> ✔ volatile+synchronized组合拳\n> ✔ 死锁四条件→预防策略\n> ✔ HashMap底层结构连环问\n> ✔ GC机制→MySQL索引→三次挥手→进程通信\n> ✔ SpringAOP实现+@Aspect注解原理\n> 🧠算法考验：\n> 合并两链表（注意static陷阱！）\n> K链表升级版→PriorityQueue最优解\n> 💡经验总结：\n> • 项目难点要准备多种解决方案\n> • 手撕代码注意类修饰符！\n> • 面试官引导性问题要抓住\n> 虽然被疯狂追问，但保持思考过程展示就能加分！稳住别慌，实习更看重基础扎实度~\n> \t\n> #后端开发[话题]# #大厂[话题]# #面经[话题]# #java[话题]# #算法[话题]# #百度面经[话题]#\n>",
+    "byte_size": 879,
+    "sha256": "55a3c40c728d233e3b4a6e9d44253335c1516299970175dfe00221238717a048",
+    "locator": "note_desc:1-8",
+    "excerpt": "📌项目深挖：\n线程池核心参数+工厂模式实现\n令牌桶限流 vs 固定窗口\n布隆过滤器实战：穿透/击穿场景解决\nQPS预估技巧\n💻八股暴击：\n✔ ThreadLocal底层原理\n✔ volatile+synchronized组合拳",
+    "text": "📌项目深挖：\n线程池核心参数+工厂模式实现\n令牌桶限流 vs 固定窗口\n布隆过滤器实战：穿透/击穿场景解决\nQPS预估技巧\n💻八股暴击：\n✔ ThreadLocal底层原理\n✔ volatile+synchronized组合拳\n✔ 死锁四条件→预防策略\n✔ HashMap底层结构连环问\n✔ GC机制→MySQL索引→三次挥手→进程通信\n✔ SpringAOP实现+@Aspect注解原理\n🧠算法考验：\n合并两链表（注意static陷阱！）\nK链表升级版→PriorityQueue最优解\n💡经验总结：\n• 项目难点要准备多种解决方案\n• 手撕代码注意类修饰符！\n• 面试官引导性问题要抓住\n虽然被疯狂追问，但保持思考过程展示就能加分！稳住别慌，实习更看重基础扎实度~\n\t\n#后端开发[话题]# #大厂[话题]# #面经[话题]# #java[话题]# #算法[话题]# #百度面经[话题]#\n",
+    "line_count": 23,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:67d2cf38000000000602b6f7.txt",
+      "byte_size": 879,
+      "git_blob_sha": "deab92659ae103e39d13f64c30c9e4b9395b73db"
     }
   },
   "checks": [
@@ -37,13 +58,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +78,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

@@ -9,19 +9,31 @@
   "expected_body_sha256": "eed6517e23a6a429c40d649311ad93914712d3304cfb1eb4277311ee92a0c76e",
   "expected_source_revision_id": "xhs-note:676a97f80000000013018c3c:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/676a97f80000000013018c3c.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "6445cd793931184ff250412f8effb7349221ab65",
-    "locator": "issue-body-copy:lines-108-124",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 一面\n> 拷打实习经历\n> Java线程池核心参数\n> JVM组成\n> 增大堆内存命令，增大栈内存命令\n> MyBatis $与#的区别有哪些[话题]#\n> \t\n> 使用$如何防止sql注入\n> MyBatis如何设置超时时间\n> MyBatis如何实现分页效果\n> PageHelper插件原理，哪个包提供的\n> mysql索引，B+树原理\n> B+树为什么比B树更高效\n> #学习[话题]# #金融科技岗[话题]# #银行面试真题[话题]# #面试技巧[话题]# #应届生[话题]# #应届生找工作[话题]# #应届生求职[话题]# #银行招聘[话题]# #国企工作[话题]# #国企招聘[话题]# #java学习[话题]# #java[话题]# #java面试[话题]# #java项目[话题]#\n>",
+    "byte_size": 662,
+    "sha256": "d774880fbb247291a56e9d662138fea4fb5623be111bb62f2586f4258f93b0a2",
+    "locator": "note_desc:1-9",
+    "excerpt": "一面\n拷打实习经历\nJava线程池核心参数\nJVM组成\n增大堆内存命令，增大栈内存命令\nMyBatis $与#的区别有哪些[话题]#\n使用$如何防止sql注入\nMyBatis如何设置超时时间",
+    "text": "一面\n拷打实习经历\nJava线程池核心参数\nJVM组成\n增大堆内存命令，增大栈内存命令\nMyBatis $与#的区别有哪些[话题]#\n\t\n使用$如何防止sql注入\nMyBatis如何设置超时时间\nMyBatis如何实现分页效果\nPageHelper插件原理，哪个包提供的\nmysql索引，B+树原理\nB+树为什么比B树更高效\n#学习[话题]# #金融科技岗[话题]# #银行面试真题[话题]# #面试技巧[话题]# #应届生[话题]# #应届生找工作[话题]# #应届生求职[话题]# #银行招聘[话题]# #国企工作[话题]# #国企招聘[话题]# #java学习[话题]# #java[话题]# #java面试[话题]# #java项目[话题]#\n",
+    "line_count": 15,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:676a97f80000000013018c3c.txt",
+      "byte_size": 662,
+      "git_blob_sha": "6445cd793931184ff250412f8effb7349221ab65"
     }
   },
   "checks": [
@@ -37,13 +49,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +69,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

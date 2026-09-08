@@ -9,19 +9,48 @@
   "expected_body_sha256": "59f007b6dff3bc4518cb8e968194c5251c29602cfadcaa4b6da8c88e07dc3846",
   "expected_source_revision_id": "xhs-note:67cc07a0000000002503cbb9:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 2,
+        "excerpt": "然后正常问一些计算机网络，操作系统，Linux和Java的一些八股"
+      },
+      {
+        "line_number": 5,
+        "excerpt": "项目中有没有什么需要迅速学习新技术解决问题的地方"
+      },
+      {
+        "line_number": 6,
+        "excerpt": "遇到最难的问题是如何解决的"
+      },
+      {
+        "line_number": 8,
+        "excerpt": "然后问了一下未来三年的规划啥啥的非技术问题"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67cc07a0000000002503cbb9.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "307136277bfce34d85ae69dd9e6ee9844ebeb9fb",
-    "locator": "issue-body-copy:lines-108-119",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 上来可以选擅长的语言\n> 然后正常问一些计算机网络，操作系统，Linux和Java的一些八股\n> 每个题都有两次更换机会，不会的话直接换就行\n> 然后拷打项目\n> 项目中有没有什么需要迅速学习新技术解决问题的地方\n> 遇到最难的问题是如何解决的\n> 中间根据你的回答它会追问\n> 然后问了一下未来三年的规划啥啥的非技术问题\n> #后端开发[话题]# #面经[话题]# #java[话题]# #找实习[话题]# #程序员[话题]#\n>",
+    "byte_size": 505,
+    "sha256": "4e12135cebcf771f78afc3722b0fb75993c4d3dcca437541b4c485706df4664e",
+    "locator": "note_desc:1-8",
+    "excerpt": "上来可以选擅长的语言\n然后正常问一些计算机网络，操作系统，Linux和Java的一些八股\n每个题都有两次更换机会，不会的话直接换就行\n然后拷打项目\n项目中有没有什么需要迅速学习新技术解决问题的地方\n遇到最难的问题是如何解决的\n中间根据你的回答它会追问\n然后问了一下未来三年的规划啥啥的非技术问题",
+    "text": "上来可以选擅长的语言\n然后正常问一些计算机网络，操作系统，Linux和Java的一些八股\n每个题都有两次更换机会，不会的话直接换就行\n然后拷打项目\n项目中有没有什么需要迅速学习新技术解决问题的地方\n遇到最难的问题是如何解决的\n中间根据你的回答它会追问\n然后问了一下未来三年的规划啥啥的非技术问题\n#后端开发[话题]# #面经[话题]# #java[话题]# #找实习[话题]# #程序员[话题]#\n",
+    "line_count": 10,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:67cc07a0000000002503cbb9.txt",
+      "byte_size": 505,
+      "git_blob_sha": "307136277bfce34d85ae69dd9e6ee9844ebeb9fb"
     }
   },
   "checks": [
@@ -37,13 +66,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +86,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

@@ -9,19 +9,40 @@
   "expected_body_sha256": "ab6b67ed1c6f317e60c6c35f2f1db0d82d27c39e0cc2562c2600f66d77dda422",
   "expected_source_revision_id": "xhs-note:67fdeb0e000000001c01215b:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 13,
+        "excerpt": "12.场景题，比如说如果我们某一个接口的QPS在10-15，就是并发比较低的情况下，出现了量级的攀升，然后你有那些思路来解决这种问题？量级的攀升是就是一个接口就支撑不住，接口返回的错误率持续升高，最后接近百分百。然后我单个请求借口一定不会报错，只是有了并发的情况然后才开始出现大面积的错误。"
+      },
+      {
+        "line_number": 17,
+        "excerpt": "16.判断树B是否是树A的子结构。题目描述，输入两颗二叉树，判断B是否是A的子结构。约定 空树不是任意树的子结构，用Java实现。"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67fdeb0e000000001c01215b.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "2c0a91f7812bfc130ede5fa883691302dc392785",
-    "locator": "issue-body-copy:lines-103-123",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 2024.9.15日常实习一面#互联网大厂实习[话题]# #面经[话题]# #自动化测试[话题]##软件测试开发[话题]#\n> 1.你面试的是国际化商业产品技术的测试开发实习生岗位，先自我介绍一下。\n> 2.先简单的介绍一下项目的一个业务背景？\n> 3.然后这里面涉及到订单管理、库存相关的一些场景QPS有多少？\n> 4.在这个项目中出现缓存穿透的话怎么处理呢？\n> 5.依赖注入你是怎么理解的？具体是怎么实现的？原码没读过吗？\n> 6.两个相同的对象会有不同的hashcode吗？\n> 7.用过mybatis吧，mybatis分页查询的原理？\n> 8.过滤器了解过吗？它是怎么在mybatis当中实现分页的逻辑的？\n> 9.mybatis的一级二级缓存，你是怎么理解的？\n> 10.TreeMap是用的什么数据结构？\n> 11.多线程了解吗？线程的局部变量是怎么理解的？\n> 12.场景题，比如说如果我们某一个接口的QPS在10-15，就是并发比较低的情况下，出现了量级的攀升，然后你有那些思路来解决这种问题？量级的攀升是就是一个接口就支撑不住，接口返回的错误率持续升高，最后接近百分百。然后我单个请求借口一定不会报错，只是有了并发的情况然后才开始出现大面积的错误。\n> 13.如果我这个接口里面的逻辑调用链比较长了，那你怎么去排查？\n> 14.然后问项目，问接口的上下游数据调用链路。\n> 15.你之前应该都是做开发相关的工作，然后为什么想做测试？\n> 16.判断树B是否是树A的子结构。题目描述，输入两颗二叉树，判断B是否是A的子结构。约定 空树不是任意树的子结构，用Java实现。\n> 需要先说一下思路，然后开始编写。然后问算法的时间复杂度和空间复杂度。\n>",
+    "byte_size": 1800,
+    "sha256": "b027bedd85ecc625d422ecbca2eb28a3104d695b2a684402985f7823db10dac3",
+    "locator": "note_desc:1-8",
+    "excerpt": "2024.9.15日常实习一面#互联网大厂实习[话题]# #面经[话题]# #自动化测试[话题]##软件测试开发[话题]#\n1.你面试的是国际化商业产品技术的测试开发实习生岗位，先自我介绍一下。\n2.先简单的介绍一下项目的一个业务背景？\n3.然后这里面涉及到订单管理、库存相关的一些场景QPS有多少？\n4.在这个项目中出现缓存穿透的话怎么处理呢？\n5.依赖注入你是怎么理解的？具体是怎么实现的？原码没读过吗？\n6.两个相同的对象会有不同的hashcode吗？\n7.用过mybatis吧，mybatis分页查询的原理？",
+    "text": "2024.9.15日常实习一面#互联网大厂实习[话题]# #面经[话题]# #自动化测试[话题]##软件测试开发[话题]#\n1.你面试的是国际化商业产品技术的测试开发实习生岗位，先自我介绍一下。\n2.先简单的介绍一下项目的一个业务背景？\n3.然后这里面涉及到订单管理、库存相关的一些场景QPS有多少？\n4.在这个项目中出现缓存穿透的话怎么处理呢？\n5.依赖注入你是怎么理解的？具体是怎么实现的？原码没读过吗？\n6.两个相同的对象会有不同的hashcode吗？\n7.用过mybatis吧，mybatis分页查询的原理？\n8.过滤器了解过吗？它是怎么在mybatis当中实现分页的逻辑的？\n9.mybatis的一级二级缓存，你是怎么理解的？\n10.TreeMap是用的什么数据结构？\n11.多线程了解吗？线程的局部变量是怎么理解的？\n12.场景题，比如说如果我们某一个接口的QPS在10-15，就是并发比较低的情况下，出现了量级的攀升，然后你有那些思路来解决这种问题？量级的攀升是就是一个接口就支撑不住，接口返回的错误率持续升高，最后接近百分百。然后我单个请求借口一定不会报错，只是有了并发的情况然后才开始出现大面积的错误。\n13.如果我这个接口里面的逻辑调用链比较长了，那你怎么去排查？\n14.然后问项目，问接口的上下游数据调用链路。\n15.你之前应该都是做开发相关的工作，然后为什么想做测试？\n16.判断树B是否是树A的子结构。题目描述，输入两颗二叉树，判断B是否是A的子结构。约定 空树不是任意树的子结构，用Java实现。\n需要先说一下思路，然后开始编写。然后问算法的时间复杂度和空间复杂度。\n",
+    "line_count": 19,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:67fdeb0e000000001c01215b.txt",
+      "byte_size": 1800,
+      "git_blob_sha": "2c0a91f7812bfc130ede5fa883691302dc392785"
     }
   },
   "checks": [
@@ -37,13 +58,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +78,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

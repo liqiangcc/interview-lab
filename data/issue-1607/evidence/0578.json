@@ -9,19 +9,40 @@
   "expected_body_sha256": "fa72c444a5878aa3a1741ce97f353049c6b237a58fe66b61684800387fdfacfc",
   "expected_source_revision_id": "xhs-note:67d269630000000009039352:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 17,
+        "excerpt": "5️⃣数据库分库分表解决什么问题？什么场景需要分库分表"
+      },
+      {
+        "line_number": 21,
+        "excerpt": "9️⃣排查线上出现大量close wait，可能问题是什么，产生的后果是什么"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67d269630000000009039352.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "8fb5b773e9eacc9b2486259cb7a8ee48b3d04a9d",
-    "locator": "issue-body-copy:lines-139-165",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 25.2.12 字节番茄一面\n> \t\n> 1️⃣手撕：单例模式双重检查锁定+中缀表达式转后缀（不考虑括号版）+考虑括号的思路\n> 2️⃣静态方法和非静态方法的区别，synchronized在静态和非静态方法下的区别\n> 3️⃣浏览器输入url到返回的整个过程\n> 4️⃣TCP和UDP的区别，应用场景\n> 5️⃣TCP可靠传输中，5个按顺序的包第三个丢失会发生什么？（服务端出现空洞，不再接收4和5，连续发送第二个的ack；客户端收到两个ack进行快速重传，或到时间后超时重传；后续重传3号成功后可以正常接收4和5）\n> 6️⃣mysql的mvcc是做什么的，隔离级别，选择其中两个举例说明一下区别\n> 7️⃣场景：所有数据都会经过函数，如何在里面对所有数据等概率的采样k条？\n> \t\n> 25.2.13字节番茄二面\n> \t\n> 1️⃣数据库join关联查询大表驱动小表还是小表驱动大表\n> 2️⃣联合索引（A，B，C）和单个索引ABC的区别\n> 3️⃣redis中string存储出现的内存碎片是怎么回事\n> 4️⃣redis的哈希，缓存查库布隆过滤器无法有效过滤，且不加锁的情况如何让用户无感知的情况下查库\n> 5️⃣数据库分库分表解决什么问题？什么场景需要分库分表\n> 6️⃣springboot单体转为微服务后有什么好处，单体springboot也可以完成业务拆分，为什么还要微服务\n> 7️⃣手撕：字符串转为32位整数\n> 8️⃣并发编程提高效率的根本原因\n> 9️⃣排查线上出现大量close wait，可能问题是什么，产生的后果是什么\n> \t\n> 总结：是被年前投的番茄捞起来了，一面很顺利，面完四分钟约二面，二面感觉回答的时候虽然尽量答得比较完善，但似乎没说到面试官的点子上，虽然整体感觉还行，但心里总是玄乎，果然第二天感谢信\n> #互联网大厂实习[话题]# #互联网大厂[话题]# #计算机专业[话题]# #计算机[话题]# #后端开发[话题]# #面经[话题]# #春招[话题]# #java[话题]# #字节面经[话题]##字节跳动[话题]#\n>",
+    "byte_size": 2078,
+    "sha256": "eafc3ca3d9dbc8d24394f16e3e464b5a7f803e4e61249776ea3de3c75c695c49",
+    "locator": "note_desc:1-9",
+    "excerpt": "25.2.12 字节番茄一面\n1️⃣手撕：单例模式双重检查锁定+中缀表达式转后缀（不考虑括号版）+考虑括号的思路\n2️⃣静态方法和非静态方法的区别，synchronized在静态和非静态方法下的区别\n3️⃣浏览器输入url到返回的整个过程\n4️⃣TCP和UDP的区别，应用场景\n5️⃣TCP可靠传输中，5个按顺序的包第三个丢失会发生什么？（服务端出现空洞，不再接收4和5，连续发送第二个的ack；客户端收到两个ack进行快速重传，或到时间后超时重传；后续重传3号成功后可以正常接收4和5）\n6️⃣mysql的mvcc是做什么的，隔离级别，选择其中两个举例说明一下区别\n7️⃣场景：所有数据都会经过函数，如何在里面对所有数据等概率的采样k条？",
+    "text": "25.2.12 字节番茄一面\n\t\n1️⃣手撕：单例模式双重检查锁定+中缀表达式转后缀（不考虑括号版）+考虑括号的思路\n2️⃣静态方法和非静态方法的区别，synchronized在静态和非静态方法下的区别\n3️⃣浏览器输入url到返回的整个过程\n4️⃣TCP和UDP的区别，应用场景\n5️⃣TCP可靠传输中，5个按顺序的包第三个丢失会发生什么？（服务端出现空洞，不再接收4和5，连续发送第二个的ack；客户端收到两个ack进行快速重传，或到时间后超时重传；后续重传3号成功后可以正常接收4和5）\n6️⃣mysql的mvcc是做什么的，隔离级别，选择其中两个举例说明一下区别\n7️⃣场景：所有数据都会经过函数，如何在里面对所有数据等概率的采样k条？\n\t\n25.2.13字节番茄二面\n\t\n1️⃣数据库join关联查询大表驱动小表还是小表驱动大表\n2️⃣联合索引（A，B，C）和单个索引ABC的区别\n3️⃣redis中string存储出现的内存碎片是怎么回事\n4️⃣redis的哈希，缓存查库布隆过滤器无法有效过滤，且不加锁的情况如何让用户无感知的情况下查库\n5️⃣数据库分库分表解决什么问题？什么场景需要分库分表\n6️⃣springboot单体转为微服务后有什么好处，单体springboot也可以完成业务拆分，为什么还要微服务\n7️⃣手撕：字符串转为32位整数\n8️⃣并发编程提高效率的根本原因\n9️⃣排查线上出现大量close wait，可能问题是什么，产生的后果是什么\n\t\n总结：是被年前投的番茄捞起来了，一面很顺利，面完四分钟约二面，二面感觉回答的时候虽然尽量答得比较完善，但似乎没说到面试官的点子上，虽然整体感觉还行，但心里总是玄乎，果然第二天感谢信\n#互联网大厂实习[话题]# #互联网大厂[话题]# #计算机专业[话题]# #计算机[话题]# #后端开发[话题]# #面经[话题]# #春招[话题]# #java[话题]# #字节面经[话题]##字节跳动[话题]#\n",
+    "line_count": 25,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:67d269630000000009039352.txt",
+      "byte_size": 2078,
+      "git_blob_sha": "8fb5b773e9eacc9b2486259cb7a8ee48b3d04a9d"
     }
   },
   "checks": [
@@ -37,13 +58,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +78,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

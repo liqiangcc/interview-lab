@@ -9,19 +9,31 @@
   "expected_body_sha256": "e16fa7d51003a5e477fadd602d43ed0d7d29b7184171f9a9491538d0744345de",
   "expected_source_revision_id": "xhs-note:67fcc8fc000000001200d5ba:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67fcc8fc000000001200d5ba.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "9ee2213c699cebe4643a228d66c4b10c9152c824",
-    "locator": "issue-body-copy:lines-112-115",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 这是真的还是假的啊？刚才接到电话说我之前投递的某某岗位在哪里有招聘，然后给我发了这个面试邮件？！！（最近确实有在招聘软件上投过，但是投的简历太多了已经不记得是在哪个app上投的了[汗颜R][汗颜R]#互联网大厂[话题]# #找工作避雷[话题]# #面试[话题]# #反电信诈骗[话题]#\n>",
+    "byte_size": 374,
+    "sha256": "6ef415d620b916b8c702f7d4f018b288e5a537bb4fca7f4e8bd0869b84e259b5",
+    "locator": "note_desc:1-1",
+    "excerpt": "这是真的还是假的啊？刚才接到电话说我之前投递的某某岗位在哪里有招聘，然后给我发了这个面试邮件？！！（最近确实有在招聘软件上投过，但是投的简历太多了已经不记得是在哪个app上投的了[汗颜R][汗颜R]#互联网大厂[话题]# #找工作避雷[话题]# #面试[话题]# #反电信诈骗[话题]#",
+    "text": "这是真的还是假的啊？刚才接到电话说我之前投递的某某岗位在哪里有招聘，然后给我发了这个面试邮件？！！（最近确实有在招聘软件上投过，但是投的简历太多了已经不记得是在哪个app上投的了[汗颜R][汗颜R]#互联网大厂[话题]# #找工作避雷[话题]# #面试[话题]# #反电信诈骗[话题]#\n",
+    "line_count": 2,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:67fcc8fc000000001200d5ba.txt",
+      "byte_size": 374,
+      "git_blob_sha": "9ee2213c699cebe4643a228d66c4b10c9152c824"
     }
   },
   "checks": [
@@ -37,13 +49,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +69,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

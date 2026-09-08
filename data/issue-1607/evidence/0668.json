@@ -9,19 +9,48 @@
   "expected_body_sha256": "ac556512972596df9c1e4e9a33ecd75f5feca6f319963cb7dd66325de2c202ad",
   "expected_source_revision_id": "xhs-note:67eb878e000000001d01cfed:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 2,
+        "excerpt": "快手实习一面，没准备好。八股文勉勉强强背完，笔试题也才刷过一遍，都不太记得了。唯一一个投了能面试的第一场面试，快到面试时间的时候，我紧张到想逃，想钻地缝。不是担心自己状态不好而紧张，是自己背的不熟练，可能脑袋空白啥也说不出来。然后快手用的是萝卜面试小程序，我在面之前没有测试过系统，不知道这个摄像头的权限一直没开，也不知道能在哪里进行调试。最后是没开摄像头面完的，后面代入面试官的视角，真的会对我很无语啊[哭惹R]感谢面试官一直耐心推进进程，尊重我。"
+      },
+      {
+        "line_number": 3,
+        "excerpt": "具体面试的问题如下："
+      },
+      {
+        "line_number": 4,
+        "excerpt": "1、自我介绍，着重描述一下项目的目标，自己承担的角色和做项目过程中遇到的重点和难点的问题怎么解决的。"
+      },
+      {
+        "line_number": 10,
+        "excerpt": "7、redis分布式锁是如何保证redis数据的读写会不会触发编程问题中的可见性、有序性和原子性问题。"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67eb878e000000001d01cfed.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "e9c3ba1a46d5bc137aa64fae8980a44697d61a42",
-    "locator": "issue-body-copy:lines-103-122",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 快手Java实习一面，太差了[可怜R]\n> 快手实习一面，没准备好。八股文勉勉强强背完，笔试题也才刷过一遍，都不太记得了。唯一一个投了能面试的第一场面试，快到面试时间的时候，我紧张到想逃，想钻地缝。不是担心自己状态不好而紧张，是自己背的不熟练，可能脑袋空白啥也说不出来。然后快手用的是萝卜面试小程序，我在面之前没有测试过系统，不知道这个摄像头的权限一直没开，也不知道能在哪里进行调试。最后是没开摄像头面完的，后面代入面试官的视角，真的会对我很无语啊[哭惹R]感谢面试官一直耐心推进进程，尊重我。\n> 具体面试的问题如下：\n> 1、自我介绍，着重描述一下项目的目标，自己承担的角色和做项目过程中遇到的重点和难点的问题怎么解决的。\n> 2、项目中用到线程池审核流水线，是做的什么功能。谈谈你对线程池的理解，他是用来做什么的，有哪些参数，怎样的工作机制。\n> 3、线程池每个参数的作用，什么时候销毁。\n> 4、项目中volatile无锁化更新具体指什么功能。为什么要用volatile呢，怎么保证线程之间的可见性的。\n> 5、JVM内存结构分为哪些部分\n> 6、项目中redis分布式锁是怎么实现的\n> 7、redis分布式锁是如何保证redis数据的读写会不会触发编程问题中的可见性、有序性和原子性问题。\n> 8、redis基本数据结构\n> 9、redis集群主从复制是怎么实现的\n> 10、rabbitMQ在你分布式系统的架构中起什么作用\n> 11、MQ作为分布式系统的中间件，如果一个用户生产者需要发送三条连续指令。如何保证消费者消费的这个顺序和发送的这个顺序完全一致。\n> 12、TCP三次握手，为什么不能只用两次\n> 13、编程题：A.合并—排序B.翻转链表。\n> #快手暑期实习[话题]# #快手Java实习生面试[话题]##后端实习面试[话题]#\n>",
+    "byte_size": 1994,
+    "sha256": "aa32978f6082f584e6e54c7b7cf0feed844183f7a393a0fcef44309b5e3cfb93",
+    "locator": "note_desc:1-8",
+    "excerpt": "快手Java实习一面，太差了[可怜R]\n快手实习一面，没准备好。八股文勉勉强强背完，笔试题也才刷过一遍，都不太记得了。唯一一个投了能面试的第一场面试，快到面试时间的时候，我紧张到想逃，想钻地缝。不是担心自己状态不好而紧张，是自己背的不熟练，可能脑袋空白啥也说不出来。然后快手用的是萝卜面试小程序，我在面之前没有测试过系统，不知道这个摄像头的权限一直没开，也不知道能在哪里进行调试。最后是没开摄像头面完的，后面代入面试官的视角，真的会对我很无语啊[哭惹R]感谢面试官一直耐心推进进程，尊重我。\n具体面试的问题如下：\n1、自我介绍，着重描述一下项目的目标，自己承担的角色和做项目过程中遇到的重点和难点的问题怎么解决的。\n2、项目中用到线程池审核流水线，是做的什么功能。谈谈你对线程池的理解，他是用来做什么的，有哪些参数，怎样的工作机制。\n3、线程池每个参数的作用，什么时候销毁。\n4、项目中volatile无锁化更新具体指什么功能。为什么要用volatile呢，怎么保证线程之间的可见性的。\n5、JVM内存结构分为哪些部分",
+    "text": "快手Java实习一面，太差了[可怜R]\n快手实习一面，没准备好。八股文勉勉强强背完，笔试题也才刷过一遍，都不太记得了。唯一一个投了能面试的第一场面试，快到面试时间的时候，我紧张到想逃，想钻地缝。不是担心自己状态不好而紧张，是自己背的不熟练，可能脑袋空白啥也说不出来。然后快手用的是萝卜面试小程序，我在面之前没有测试过系统，不知道这个摄像头的权限一直没开，也不知道能在哪里进行调试。最后是没开摄像头面完的，后面代入面试官的视角，真的会对我很无语啊[哭惹R]感谢面试官一直耐心推进进程，尊重我。\n具体面试的问题如下：\n1、自我介绍，着重描述一下项目的目标，自己承担的角色和做项目过程中遇到的重点和难点的问题怎么解决的。\n2、项目中用到线程池审核流水线，是做的什么功能。谈谈你对线程池的理解，他是用来做什么的，有哪些参数，怎样的工作机制。\n3、线程池每个参数的作用，什么时候销毁。\n4、项目中volatile无锁化更新具体指什么功能。为什么要用volatile呢，怎么保证线程之间的可见性的。\n5、JVM内存结构分为哪些部分\n6、项目中redis分布式锁是怎么实现的\n7、redis分布式锁是如何保证redis数据的读写会不会触发编程问题中的可见性、有序性和原子性问题。\n8、redis基本数据结构\n9、redis集群主从复制是怎么实现的\n10、rabbitMQ在你分布式系统的架构中起什么作用\n11、MQ作为分布式系统的中间件，如果一个用户生产者需要发送三条连续指令。如何保证消费者消费的这个顺序和发送的这个顺序完全一致。\n12、TCP三次握手，为什么不能只用两次\n13、编程题：A.合并—排序B.翻转链表。\n#快手暑期实习[话题]# #快手Java实习生面试[话题]##后端实习面试[话题]#\n",
+    "line_count": 18,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:67eb878e000000001d01cfed.txt",
+      "byte_size": 1994,
+      "git_blob_sha": "e9c3ba1a46d5bc137aa64fae8980a44697d61a42"
     }
   },
   "checks": [
@@ -37,13 +66,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +86,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

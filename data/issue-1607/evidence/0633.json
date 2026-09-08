@@ -9,19 +9,31 @@
   "expected_body_sha256": "a1551f251e6c99a63db92979c6ff16647462023edd84314960605a6430784572",
   "expected_source_revision_id": "xhs-note:67e36002000000000603df46:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67e36002000000000603df46.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "82449ef4e94b9070b710090d36ef780e51188938",
-    "locator": "issue-body-copy:lines-112-128",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 项目部署在哪里 服务器配置是什么\n> Linux启动服务器的命令\n> jdk jre jvm\n> 继承和多态\n> 序列化的作用\n> 反射的原理和应用场景\n> redis的数据结构\n> redis的字符串和普通字符串的区别\n> redis怎么实现持久化\n> redis哨兵的作用\n> mysql索引的作用\n> mysql怎么实现 ACID 4 大特性\n> 无手撕\n> #Java面试[话题]# #面经[话题]#\n>",
+    "byte_size": 373,
+    "sha256": "4a5d0067fa6fcae3ffeb01152ad38d5ff16ae3b016bc20077264e7b13685ed8e",
+    "locator": "note_desc:1-8",
+    "excerpt": "项目部署在哪里 服务器配置是什么\nLinux启动服务器的命令\njdk jre jvm\n继承和多态\n序列化的作用\n反射的原理和应用场景\nredis的数据结构\nredis的字符串和普通字符串的区别",
+    "text": "项目部署在哪里 服务器配置是什么\nLinux启动服务器的命令\njdk jre jvm\n继承和多态\n序列化的作用\n反射的原理和应用场景\nredis的数据结构\nredis的字符串和普通字符串的区别\nredis怎么实现持久化\nredis哨兵的作用\nmysql索引的作用\nmysql怎么实现 ACID 4 大特性\n无手撕\n#Java面试[话题]# #面经[话题]#\n",
+    "line_count": 15,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:67e36002000000000603df46.txt",
+      "byte_size": 373,
+      "git_blob_sha": "82449ef4e94b9070b710090d36ef780e51188938"
     }
   },
   "checks": [
@@ -37,13 +49,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +69,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

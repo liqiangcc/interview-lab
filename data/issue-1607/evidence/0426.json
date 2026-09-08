@@ -9,19 +9,40 @@
   "expected_body_sha256": "83a3f61af030e5cf248bf83eb6f4f9a2f7556dbce390f4df279f80f819292bab",
   "expected_source_revision_id": "xhs-note:67492ea90000000007032789:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 3,
+        "excerpt": "部分脱敏后问题"
+      },
+      {
+        "line_number": 14,
+        "excerpt": "八股：10min"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67492ea90000000007032789.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "1907ff990794092a8fa49e1cc50490a72f9943a7",
-    "locator": "issue-body-copy:lines-126-154",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 1. 自我介绍\n> 2. 实习经历20min\n> 部分脱敏后问题\n> 1. rocketmq如何哈希到queue\n> 2. 为什么顺序消费 如何实现顺序消费\n> 3. 双机房部署\n> 4. 对帐任务如何做的\n> 5. 热点怎么处理的\n> 6. TCC怎么做的\n> 7. 为什么分库\n> 8. 限流组件\n> 9. 幂等怎么做的\n> 9. 自己觉得原来快手实习的难点\n> 八股：10min\n> 1. HashMap如何实现\n> 2. java锁有哪些\n> 3. mysql事务\n> 4. 隔离级别\n> 5. 脏读可重复读幻读举例\n> 6. undolog redolog\n> 6. spring好处 aop ioc\n> 7. spring常见注解\n> 算法：20min\n> 最长公共前缀\n> 暴力做的\n> #学习[话题]# #金融科技岗[话题]# #银行面试真题[话题]# #面试技巧[话题]# #应届生[话题]# #应届生找工作[话题]# #应届生求职[话题]# #银行招聘[话题]# #国企工作[话题]# #国企招聘[话题]# #java学习[话题]# #java[话题]# #java面试[话题]# #java项目[话题]#\n>",
+    "byte_size": 884,
+    "sha256": "3ca31c753f005ed716ee7c1fa827a0d04273c35ccceead73d4498c30607c63dc",
+    "locator": "note_desc:1-8",
+    "excerpt": "1. 自我介绍\n2. 实习经历20min\n部分脱敏后问题\n1. rocketmq如何哈希到queue\n2. 为什么顺序消费 如何实现顺序消费\n3. 双机房部署\n4. 对帐任务如何做的\n5. 热点怎么处理的",
+    "text": "1. 自我介绍\n2. 实习经历20min\n部分脱敏后问题\n1. rocketmq如何哈希到queue\n2. 为什么顺序消费 如何实现顺序消费\n3. 双机房部署\n4. 对帐任务如何做的\n5. 热点怎么处理的\n6. TCC怎么做的\n7. 为什么分库\n8. 限流组件\n9. 幂等怎么做的\n9. 自己觉得原来快手实习的难点\n八股：10min\n1. HashMap如何实现\n2. java锁有哪些\n3. mysql事务\n4. 隔离级别\n5. 脏读可重复读幻读举例\n6. undolog redolog\n6. spring好处 aop ioc\n7. spring常见注解\n算法：20min\n最长公共前缀\n暴力做的\n#学习[话题]# #金融科技岗[话题]# #银行面试真题[话题]# #面试技巧[话题]# #应届生[话题]# #应届生找工作[话题]# #应届生求职[话题]# #银行招聘[话题]# #国企工作[话题]# #国企招聘[话题]# #java学习[话题]# #java[话题]# #java面试[话题]# #java项目[话题]#\n",
+    "line_count": 27,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:67492ea90000000007032789.txt",
+      "byte_size": 884,
+      "git_blob_sha": "1907ff990794092a8fa49e1cc50490a72f9943a7"
     }
   },
   "checks": [
@@ -37,13 +58,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +78,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

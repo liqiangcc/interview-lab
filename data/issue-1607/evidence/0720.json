@@ -9,19 +9,36 @@
   "expected_body_sha256": "948b9df9772b58af106519e1dd078dd317a8ec6cfa3c5919fb09caa623dbcf3d",
   "expected_source_revision_id": "xhs-note:67f9c763000000001c016f0f:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 3,
+        "excerpt": "📖面试问题："
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67f9c763000000001c016f0f.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "98d6f50a05123ec14683775d3d25f83bc341d020",
-    "locator": "issue-body-copy:lines-103-124",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 📍面试公司：字节跳动 - 广告业务\n> 👜面试岗位：后端开发\n> 📖面试问题：\n> 1. 自我介绍\n> 2. 项目拷问\n> 3. MySQL的索引是怎么实现的？B树就不能实现范围查询吗？\n> 4. 如果有(a,b,c)联合索引，如果查询where a=1 and b>2 and c=3，能用到几个索引字段？\n> 5. ES中有一个索引，分了三个分片，需要等全部分片都写入成功后才能返回吗？\n> 6. 为什么ES的检索效率高？如果有一个全年级成绩的索引，有3个分片，如果我想查top10的排名，这个结果是准确的吗？\n> 7. 进程、线程、协程有什么区别？\n> 8. ArrayList和LinkedList都是什么？有什么区别？一般都用在什么场景？\n> 9. Spring IOC是什么？\n> 10. 手撕LC 25. K 个一组翻转链表\n> 🙌面试体验：\n> es和spring的内容还都不太会，需要再学习下。\n> 最后看到题的时候人都傻了，没想到竟然会考困难题，因为之前看到过但是没写（以为不会考困难），所以脑子当时是蒙的，用了25min硬写出来了。\n> 感觉字节面试的难度确实稍高一些，我也确实太菜了\n> ----------------------------------\n> 4.1 晚上通知一面通过了，很意外，没觉得自己能过\n>",
+    "byte_size": 1223,
+    "sha256": "62a8442dc80600fb8ec9d69dcfae6e886e8e81e48eff52fa1e2637e584352e60",
+    "locator": "note_desc:1-8",
+    "excerpt": "📍面试公司：字节跳动 - 广告业务\n👜面试岗位：后端开发\n📖面试问题：\n1. 自我介绍\n2. 项目拷问\n3. MySQL的索引是怎么实现的？B树就不能实现范围查询吗？\n4. 如果有(a,b,c)联合索引，如果查询where a=1 and b>2 and c=3，能用到几个索引字段？\n5. ES中有一个索引，分了三个分片，需要等全部分片都写入成功后才能返回吗？",
+    "text": "📍面试公司：字节跳动 - 广告业务\n👜面试岗位：后端开发\n📖面试问题：\n1. 自我介绍\n2. 项目拷问\n3. MySQL的索引是怎么实现的？B树就不能实现范围查询吗？\n4. 如果有(a,b,c)联合索引，如果查询where a=1 and b>2 and c=3，能用到几个索引字段？\n5. ES中有一个索引，分了三个分片，需要等全部分片都写入成功后才能返回吗？\n6. 为什么ES的检索效率高？如果有一个全年级成绩的索引，有3个分片，如果我想查top10的排名，这个结果是准确的吗？\n7. 进程、线程、协程有什么区别？\n8. ArrayList和LinkedList都是什么？有什么区别？一般都用在什么场景？\n9. Spring IOC是什么？\n10. 手撕LC 25. K 个一组翻转链表\n🙌面试体验：\nes和spring的内容还都不太会，需要再学习下。\n最后看到题的时候人都傻了，没想到竟然会考困难题，因为之前看到过但是没写（以为不会考困难），所以脑子当时是蒙的，用了25min硬写出来了。\n感觉字节面试的难度确实稍高一些，我也确实太菜了\n----------------------------------\n4.1 晚上通知一面通过了，很意外，没觉得自己能过\n",
+    "line_count": 20,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:67f9c763000000001c016f0f.txt",
+      "byte_size": 1223,
+      "git_blob_sha": "98d6f50a05123ec14683775d3d25f83bc341d020"
     }
   },
   "checks": [
@@ -37,13 +54,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +74,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

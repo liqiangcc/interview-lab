@@ -9,19 +9,36 @@
   "expected_body_sha256": "ae8be3df90a284d587cc1142ef2ce3df9e2dcb1537c5d55bd33cd5527fd80e3a",
   "expected_source_revision_id": "xhs-note:67ee9654000000000b02e0c2:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 4,
+        "excerpt": "前面是我自己的项目 下面是点评和八股"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67ee9654000000000b02e0c2.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "0ec39082712b30c25d48ad53d06d81eded251207",
-    "locator": "issue-body-copy:lines-103-129",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 岗位是java开发 部门是 财务科技\n> 总时长1h面试+0.5h手撕，项目占将近40分钟\n> \t\n> 前面是我自己的项目 下面是点评和八股\n> 1. 为什么要用redis（答效率高 kv结构）\n> 3. feed流推送具体怎么实现与推送方式\n> 4. 对feed流推送，如果用户规模很大怎么实现\n> 4.CAS机制在库存操作中的实现（问得很细）\n> 5.ZSET底层实现（ziplist 跳表）\n> 7.布隆过滤器原理（过滤器判断不存在就一定不存在，过滤器判断存在就一定存在吗）\n> 8.缓存雪崩概念及应对措施（说工程中不会用多级缓存\n> 9.单体项目使用分布式锁的必要性\n> 10. mysql的锁（还没看到 答的表锁行锁）\n> 11. 什么情况下会触发表锁（不会）\n> 12. 讲一下mysql的索引（答了多种分类）\n> 13. 介绍一下覆盖索引，举一个具体的例子\n> 14.介绍一下IOC（讲了IOC作用和循环依赖）\n> 15. 介绍一下AOP（动态代理 字节码增强 织入时机）\n> 16.线程池有用过吗，怎么用的（答热点数据预热用了\n> 17. 有什么必要用？用线程池会比用单线程性能更好吗\n> 18. java阻塞队列（答了几种类型\n> 19. java阻塞队列阻塞的是什么（生产者消费者\n> 20. AQS原理，java中封装了哪些\n> 手撕是盛最多水的容器\n>",
+    "byte_size": 1283,
+    "sha256": "91b683fdd8840130b706cf40631e2e782ad416afc5cff76eb118950583062da6",
+    "locator": "note_desc:1-9",
+    "excerpt": "岗位是java开发 部门是 财务科技\n总时长1h面试+0.5h手撕，项目占将近40分钟\n前面是我自己的项目 下面是点评和八股\n1. 为什么要用redis（答效率高 kv结构）\n3. feed流推送具体怎么实现与推送方式\n4. 对feed流推送，如果用户规模很大怎么实现\n4.CAS机制在库存操作中的实现（问得很细）\n5.ZSET底层实现（ziplist 跳表）",
+    "text": "岗位是java开发 部门是 财务科技\n总时长1h面试+0.5h手撕，项目占将近40分钟\n\t\n前面是我自己的项目 下面是点评和八股\n1. 为什么要用redis（答效率高 kv结构）\n3. feed流推送具体怎么实现与推送方式\n4. 对feed流推送，如果用户规模很大怎么实现\n4.CAS机制在库存操作中的实现（问得很细）\n5.ZSET底层实现（ziplist 跳表）\n7.布隆过滤器原理（过滤器判断不存在就一定不存在，过滤器判断存在就一定存在吗）\n8.缓存雪崩概念及应对措施（说工程中不会用多级缓存\n9.单体项目使用分布式锁的必要性\n10. mysql的锁（还没看到 答的表锁行锁）\n11. 什么情况下会触发表锁（不会）\n12. 讲一下mysql的索引（答了多种分类）\n13. 介绍一下覆盖索引，举一个具体的例子\n14.介绍一下IOC（讲了IOC作用和循环依赖）\n15. 介绍一下AOP（动态代理 字节码增强 织入时机）\n16.线程池有用过吗，怎么用的（答热点数据预热用了\n17. 有什么必要用？用线程池会比用单线程性能更好吗\n18. java阻塞队列（答了几种类型\n19. java阻塞队列阻塞的是什么（生产者消费者\n20. AQS原理，java中封装了哪些\n手撕是盛最多水的容器\n",
+    "line_count": 25,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:67ee9654000000000b02e0c2.txt",
+      "byte_size": 1283,
+      "git_blob_sha": "0ec39082712b30c25d48ad53d06d81eded251207"
     }
   },
   "checks": [
@@ -37,13 +54,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +74,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

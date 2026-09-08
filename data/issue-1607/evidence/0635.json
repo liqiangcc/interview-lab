@@ -9,19 +9,36 @@
   "expected_body_sha256": "843b963ef599fcdb9de280237a9bbb8fdad6f783cb087ce820743fe7594e1eeb",
   "expected_source_revision_id": "xhs-note:67e3d0d3000000001d03a4b7:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 5,
+        "excerpt": "4. 了解多继承吗？哪些语言支持多继承？多继承存在什么问题？如何解决？"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67e3d0d3000000001d03a4b7.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "b8032b8493ce293c32219765122039d08db43d92",
-    "locator": "issue-body-copy:lines-103-127",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 时长1小时20分钟。\n> 1. 自我介绍。\n> 2. 算法题：手撕LRU。\n> 3. 本科有什么有趣的项目经历？\n> 4. 了解多继承吗？哪些语言支持多继承？多继承存在什么问题？如何解决？\n> 5. 讲述面向对象三大要素，谈谈你对面向对象的理解。\n> 6. 多范式有了解过吗？\n> 7. C++和Java在语言层面有什么区别？\n> 8. 了解Go吗？讲讲Go有什么优势。\n> 9. 读写一个已关闭的、无缓冲的channel会发生什么？\n> 10. Go指针底层是怎么实现的？和其他语言的指针有什么区别？\n> 11. Go函数的多返回值是怎么实现的？和Python的多返回值机制有什么区别？\n> 12. MySQL和MongoDB的区别，各自的使用场景是什么？\n> 13. MongoDB的底层存储引擎和MySQL有什么不同？\n> 14. MySQL是否可以保存非结构化数据？\n> 15. 为什么说Redis性能好？\n> 16. 简述TCP流量控制过程。\n> 17. 腾讯实习经历拷打。\n> 18. 反问。\n> \t\n> 总结：被IEG的运营开发部门捞起来了，这次面试总体比较轻松。我发现腾讯真的很喜欢考LRU诶，都连着考两次了。\n> #暑期实习[话题]# #后端开发[话题]# #面经[话题]# #互联网大厂[话题]# #腾讯[话题]#\n>",
+    "byte_size": 1204,
+    "sha256": "7dfca0072c11916066bdb704e838ac8739efa1ba418e00981cc81bc7114503bd",
+    "locator": "note_desc:1-8",
+    "excerpt": "时长1小时20分钟。\n1. 自我介绍。\n2. 算法题：手撕LRU。\n3. 本科有什么有趣的项目经历？\n4. 了解多继承吗？哪些语言支持多继承？多继承存在什么问题？如何解决？\n5. 讲述面向对象三大要素，谈谈你对面向对象的理解。\n6. 多范式有了解过吗？\n7. C++和Java在语言层面有什么区别？",
+    "text": "时长1小时20分钟。\n1. 自我介绍。\n2. 算法题：手撕LRU。\n3. 本科有什么有趣的项目经历？\n4. 了解多继承吗？哪些语言支持多继承？多继承存在什么问题？如何解决？\n5. 讲述面向对象三大要素，谈谈你对面向对象的理解。\n6. 多范式有了解过吗？\n7. C++和Java在语言层面有什么区别？\n8. 了解Go吗？讲讲Go有什么优势。\n9. 读写一个已关闭的、无缓冲的channel会发生什么？\n10. Go指针底层是怎么实现的？和其他语言的指针有什么区别？\n11. Go函数的多返回值是怎么实现的？和Python的多返回值机制有什么区别？\n12. MySQL和MongoDB的区别，各自的使用场景是什么？\n13. MongoDB的底层存储引擎和MySQL有什么不同？\n14. MySQL是否可以保存非结构化数据？\n15. 为什么说Redis性能好？\n16. 简述TCP流量控制过程。\n17. 腾讯实习经历拷打。\n18. 反问。\n\t\n总结：被IEG的运营开发部门捞起来了，这次面试总体比较轻松。我发现腾讯真的很喜欢考LRU诶，都连着考两次了。\n#暑期实习[话题]# #后端开发[话题]# #面经[话题]# #互联网大厂[话题]# #腾讯[话题]#\n",
+    "line_count": 23,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:67e3d0d3000000001d03a4b7.txt",
+      "byte_size": 1204,
+      "git_blob_sha": "b8032b8493ce293c32219765122039d08db43d92"
     }
   },
   "checks": [
@@ -37,13 +54,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +74,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

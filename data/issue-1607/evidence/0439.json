@@ -9,19 +9,48 @@
   "expected_body_sha256": "2d9517a1126411907ef88f73f6f8c287ae4c3ff297caeae0fd811b61e691492e",
   "expected_source_revision_id": "xhs-note:6752eb6100000000070267c2:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 6,
+        "excerpt": "聊简历中的项目，项目细节，挑战，遇到哪些实际问题，如何解决的"
+      },
+      {
+        "line_number": 9,
+        "excerpt": "mysql八股文: 事务，幻读"
+      },
+      {
+        "line_number": 23,
+        "excerpt": "自我介绍，介绍最近做的一个项目，有什么难点工作有哪些亮点，解决了哪些技术问题，有没有提升过系统性能"
+      },
+      {
+        "line_number": 24,
+        "excerpt": "hystrix解决了什么问题，如何使用的，有什么收益"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/6752eb6100000000070267c2.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "2c3f80d086f40c73dae359106e53d5dea5d17037",
-    "locator": "issue-body-copy:lines-126-162",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 一面:1小时左右\n> 自我介绍\n> 详细解释微服务\n> 如何实现服务发现与注册以\n> 如果某个服务挂掉，如何通知调用者\n> 聊简历中的项目，项目细节，挑战，遇到哪些实际问题，如何解决的\n> mongodb\n> mongodb比mysql究竟快多少，压测什么场景适合使用mongodb\n> mysql八股文: 事务，幻读\n> 详细解释JWT\n> 编程:二叉树右视图\n> 聊聊日志打印\n> java，php，go有哪些区别(静态语言、动态语言)\n> 二面:40分钟左右\n> 自我介绍\n> 最近一家公司做了哪些事情，有哪些挑战\n> ORM框架是做什么的\n> thrift框架的理解，要有足够深度\n> mysql索引，要有足够的深度索引如何优化，如何优化查询\n> 熔断限流怎么做的，hystrix怎么实现的开放题如何写出健壮的代码方法/变量命名\n> 测试用例，测试覆盖度异常处理\n> 对工作强度怎么看三面:40分钟左右\n> 自我介绍，介绍最近做的一个项目，有什么难点工作有哪些亮点，解决了哪些技术问题，有没有提升过系统性能\n> hystrix解决了什么问题，如何使用的，有什么收益\n> spring cloud 与spring什么关系，怎么使用的，参数怎么配置的\n> springioc，aop八股文，spring如何注入bean@transaction 事务传播机制\n> mysql事务，生产环境遇到过死锁吗，怎么理解死锁\n> mysql怎么做的分库分表，有没有遇到跨库查询问题\n> 某个分库数据量特别大的情况，怎么解决\n> mysql慢查询怎么解决的，explain怎么使用，重点关注哪里\n> 分库分表，线上数据量有多大数据库连接池怎么设计的\n> 定时任务，数据量会不会特别大 redis 集群了解哪些 redis 数据如何做的备份\n> 项目中为什么使用mongodb，不用redis线程池怎么使用的 gc有没有线上调优经验 java 有哪些锁怎么理解可重入锁\n> #面经[话题]# #滴滴面试题[话题]# #java[话题]# #程序员[话题]# #互联网大厂[话题]# #经验分享[话题]#\n>",
+    "byte_size": 1964,
+    "sha256": "d282c3e0a679f8a1e04f69996f422d8d19a9f3b0f7102810560fd946cd850b45",
+    "locator": "note_desc:1-8",
+    "excerpt": "一面:1小时左右\n自我介绍\n详细解释微服务\n如何实现服务发现与注册以\n如果某个服务挂掉，如何通知调用者\n聊简历中的项目，项目细节，挑战，遇到哪些实际问题，如何解决的\nmongodb\nmongodb比mysql究竟快多少，压测什么场景适合使用mongodb",
+    "text": "一面:1小时左右\n自我介绍\n详细解释微服务\n如何实现服务发现与注册以\n如果某个服务挂掉，如何通知调用者\n聊简历中的项目，项目细节，挑战，遇到哪些实际问题，如何解决的\nmongodb\nmongodb比mysql究竟快多少，压测什么场景适合使用mongodb\nmysql八股文: 事务，幻读\n详细解释JWT\n编程:二叉树右视图\n聊聊日志打印\njava，php，go有哪些区别(静态语言、动态语言)\n二面:40分钟左右\n自我介绍\n最近一家公司做了哪些事情，有哪些挑战\nORM框架是做什么的\nthrift框架的理解，要有足够深度\nmysql索引，要有足够的深度索引如何优化，如何优化查询\n熔断限流怎么做的，hystrix怎么实现的开放题如何写出健壮的代码方法/变量命名\n测试用例，测试覆盖度异常处理\n对工作强度怎么看三面:40分钟左右\n自我介绍，介绍最近做的一个项目，有什么难点工作有哪些亮点，解决了哪些技术问题，有没有提升过系统性能\nhystrix解决了什么问题，如何使用的，有什么收益\nspring cloud 与spring什么关系，怎么使用的，参数怎么配置的\nspringioc，aop八股文，spring如何注入bean@transaction 事务传播机制\nmysql事务，生产环境遇到过死锁吗，怎么理解死锁\nmysql怎么做的分库分表，有没有遇到跨库查询问题\n某个分库数据量特别大的情况，怎么解决\nmysql慢查询怎么解决的，explain怎么使用，重点关注哪里\n分库分表，线上数据量有多大数据库连接池怎么设计的\n定时任务，数据量会不会特别大 redis 集群了解哪些 redis 数据如何做的备份\n项目中为什么使用mongodb，不用redis线程池怎么使用的 gc有没有线上调优经验 java 有哪些锁怎么理解可重入锁\n#面经[话题]# #滴滴面试题[话题]# #java[话题]# #程序员[话题]# #互联网大厂[话题]# #经验分享[话题]#\n",
+    "line_count": 35,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:6752eb6100000000070267c2.txt",
+      "byte_size": 1964,
+      "git_blob_sha": "2c3f80d086f40c73dae359106e53d5dea5d17037"
     }
   },
   "checks": [
@@ -37,13 +66,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +86,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

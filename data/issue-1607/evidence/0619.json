@@ -9,19 +9,40 @@
   "expected_body_sha256": "404ecdf6f05d3c9e943a84dc20b4470690de4853c999780d1b4a7322a5d0dde4",
   "expected_source_revision_id": "xhs-note:67debbb300000000070369a8:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 1,
+        "excerpt": "阿里系经典第一面喜欢电话先面，会提前打电话沟通时间。只有项目和个别八股，没有手撕。面完跟我说保持电话畅通，还期待了了一下，结果期待来了感谢信[再见R]，估计是横向对比挂了吧……"
+      },
+      {
+        "line_number": 2,
+        "excerpt": "#后端开发[话题]#   #面经[话题]#    #面试题[话题]#   #蚂蚁集团[话题]#     #阿里巴巴[话题]#   #互联网大厂[话题]#   #后台开发[话题]#   #暑期实习[话题]#   #阿里面试[话题]#"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67debbb300000000070369a8.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "919ff2ebfba5cef62e949478e8f4364d58e66efc",
-    "locator": "issue-body-copy:lines-112-116",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 阿里系经典第一面喜欢电话先面，会提前打电话沟通时间。只有项目和个别八股，没有手撕。面完跟我说保持电话畅通，还期待了了一下，结果期待来了感谢信[再见R]，估计是横向对比挂了吧……\n> #后端开发[话题]#   #面经[话题]#    #面试题[话题]#   #蚂蚁集团[话题]#     #阿里巴巴[话题]#   #互联网大厂[话题]#   #后台开发[话题]#   #暑期实习[话题]#   #阿里面试[话题]#\n>",
+    "byte_size": 479,
+    "sha256": "85759d7e8151ebc7aae037446fcc01cc4cc2be30c1271b59443a1521aae42c9e",
+    "locator": "note_desc:1-2",
+    "excerpt": "阿里系经典第一面喜欢电话先面，会提前打电话沟通时间。只有项目和个别八股，没有手撕。面完跟我说保持电话畅通，还期待了了一下，结果期待来了感谢信[再见R]，估计是横向对比挂了吧……\n#后端开发[话题]#   #面经[话题]#    #面试题[话题]#   #蚂蚁集团[话题]#     #阿里巴巴[话题]#   #互联网大厂[话题]#   #后台开发[话题]#   #暑期实习[话题]#   #阿里面试[话题]#",
+    "text": "阿里系经典第一面喜欢电话先面，会提前打电话沟通时间。只有项目和个别八股，没有手撕。面完跟我说保持电话畅通，还期待了了一下，结果期待来了感谢信[再见R]，估计是横向对比挂了吧……\n#后端开发[话题]#   #面经[话题]#    #面试题[话题]#   #蚂蚁集团[话题]#     #阿里巴巴[话题]#   #互联网大厂[话题]#   #后台开发[话题]#   #暑期实习[话题]#   #阿里面试[话题]#\n",
+    "line_count": 3,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:67debbb300000000070369a8.txt",
+      "byte_size": 479,
+      "git_blob_sha": "919ff2ebfba5cef62e949478e8f4364d58e66efc"
     }
   },
   "checks": [
@@ -37,13 +58,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +78,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

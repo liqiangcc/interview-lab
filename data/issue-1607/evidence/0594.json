@@ -9,19 +9,36 @@
   "expected_body_sha256": "5a761d781ced3f2722955c4259983b66dd49f27d9e47a56b8ea354d68e11bcba",
   "expected_source_revision_id": "xhs-note:67d6ef13000000001e00a5b6:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 2,
+        "excerpt": "技术栈写的很全，问的都是相关八股文，平常👀八股倒是不觉得，讲出来和理解真是两回事，还会讲混淆，想学两个实际应用这些技术栈的项目，项目有的问就结合项目来，也不会是干巴巴的八股了，一问真实使用场景就噶掉，还得练[捂脸R]"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67d6ef13000000001e00a5b6.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "aad00005cb47314f3a04f42b036570dc8af5f3d7",
-    "locator": "issue-body-copy:lines-103-109",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 简历项目没什么亮点，面试官没什么问的\n> 技术栈写的很全，问的都是相关八股文，平常👀八股倒是不觉得，讲出来和理解真是两回事，还会讲混淆，想学两个实际应用这些技术栈的项目，项目有的问就结合项目来，也不会是干巴巴的八股了，一问真实使用场景就噶掉，还得练[捂脸R]\n> \t\n> #面试[话题]##Java面试[话题]# #凉经[话题]# #记录感想[话题]#\n>",
+    "byte_size": 454,
+    "sha256": "0c74bfd87aaef17b709f66b74229535c015a1cd4908052f0115f25bba4396422",
+    "locator": "note_desc:1-4",
+    "excerpt": "简历项目没什么亮点，面试官没什么问的\n技术栈写的很全，问的都是相关八股文，平常👀八股倒是不觉得，讲出来和理解真是两回事，还会讲混淆，想学两个实际应用这些技术栈的项目，项目有的问就结合项目来，也不会是干巴巴的八股了，一问真实使用场景就噶掉，还得练[捂脸R]\n#面试[话题]##Java面试[话题]# #凉经[话题]# #记录感想[话题]#",
+    "text": "简历项目没什么亮点，面试官没什么问的\n技术栈写的很全，问的都是相关八股文，平常👀八股倒是不觉得，讲出来和理解真是两回事，还会讲混淆，想学两个实际应用这些技术栈的项目，项目有的问就结合项目来，也不会是干巴巴的八股了，一问真实使用场景就噶掉，还得练[捂脸R]\n\t\n#面试[话题]##Java面试[话题]# #凉经[话题]# #记录感想[话题]#\n",
+    "line_count": 5,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:67d6ef13000000001e00a5b6.txt",
+      "byte_size": 454,
+      "git_blob_sha": "aad00005cb47314f3a04f42b036570dc8af5f3d7"
     }
   },
   "checks": [
@@ -37,13 +54,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +74,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

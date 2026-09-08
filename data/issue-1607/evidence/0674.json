@@ -9,19 +9,40 @@
   "expected_body_sha256": "5ddabc3e7e72bed0912d83d9b0e06d95af943adbb5926f633dafc55da06f07f8",
   "expected_source_revision_id": "xhs-note:67ed2207000000001c03db4e:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 14,
+        "excerpt": "多线程问题锁计网"
+      },
+      {
+        "line_number": 21,
+        "excerpt": "#面经[话题]# #面试真题[话题]# #滴滴面试题[话题]# #java[话题]# #程序员[话题]# #计算机专业[话题]# #互联网大厂[话题]# #经验分享[话题]#"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67ed2207000000001c03db4e.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "d24c5f099bf10cc4c8350e9674fb893ccadfece6",
-    "locator": "issue-body-copy:lines-130-153",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 一面 50min\n> 自我介绍怼项目 apollo流程介绍\n> 客户端如何与服务端进行连接\n> 业务端如何与客户端连接，需要的信息手撕\n> 二叉树中序遍历\n> 1-N的硬币，1-N个人从每个硬币走过，如果硬币编号可以整除人编号，硬币翻面，求最后被翻面朝上的硬币有哪些(说思路) sql redis应用场景跳表\n> 设计模式\n> 工厂，单例，责任链，策略模式应用场景二面15min\n> 自我介绍策略模式 java\n> hashmap结构红黑树的限制条件 gc\n> 说垃圾回收器 mysql索引失效索引结构\n> 使用的框架，中间件三面50min\n> 自我介绍进程和线程区别\n> 多线程问题锁计网\n> http与tcp区别长连接与短连接\n> time wait，过多怎么办数据库\n> 使用注意事项\n> 什么情况不建议使用索引索引结构隔离级别幻读\n> 快照读与当前读如何避免幻读手撕\n> 100万个ip地址，如何存这些ip地址，需要加入ip地址及判断ip地址是否存在，如何做 ipv4转int兴趣爱好优点和缺点职业规划\n> #面经[话题]# #面试真题[话题]# #滴滴面试题[话题]# #java[话题]# #程序员[话题]# #计算机专业[话题]# #互联网大厂[话题]# #经验分享[话题]#\n>",
+    "byte_size": 1196,
+    "sha256": "fec0e4ba8d7501f3b59b655e6cc4600a26460d4889d34ba64d4f55e1c3e93748",
+    "locator": "note_desc:1-8",
+    "excerpt": "一面 50min\n自我介绍怼项目 apollo流程介绍\n客户端如何与服务端进行连接\n业务端如何与客户端连接，需要的信息手撕\n二叉树中序遍历\n1-N的硬币，1-N个人从每个硬币走过，如果硬币编号可以整除人编号，硬币翻面，求最后被翻面朝上的硬币有哪些(说思路) sql redis应用场景跳表\n设计模式\n工厂，单例，责任链，策略模式应用场景二面15min",
+    "text": "一面 50min\n自我介绍怼项目 apollo流程介绍\n客户端如何与服务端进行连接\n业务端如何与客户端连接，需要的信息手撕\n二叉树中序遍历\n1-N的硬币，1-N个人从每个硬币走过，如果硬币编号可以整除人编号，硬币翻面，求最后被翻面朝上的硬币有哪些(说思路) sql redis应用场景跳表\n设计模式\n工厂，单例，责任链，策略模式应用场景二面15min\n自我介绍策略模式 java\nhashmap结构红黑树的限制条件 gc\n说垃圾回收器 mysql索引失效索引结构\n使用的框架，中间件三面50min\n自我介绍进程和线程区别\n多线程问题锁计网\nhttp与tcp区别长连接与短连接\ntime wait，过多怎么办数据库\n使用注意事项\n什么情况不建议使用索引索引结构隔离级别幻读\n快照读与当前读如何避免幻读手撕\n100万个ip地址，如何存这些ip地址，需要加入ip地址及判断ip地址是否存在，如何做 ipv4转int兴趣爱好优点和缺点职业规划\n#面经[话题]# #面试真题[话题]# #滴滴面试题[话题]# #java[话题]# #程序员[话题]# #计算机专业[话题]# #互联网大厂[话题]# #经验分享[话题]#\n",
+    "line_count": 22,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:67ed2207000000001c03db4e.txt",
+      "byte_size": 1196,
+      "git_blob_sha": "d24c5f099bf10cc4c8350e9674fb893ccadfece6"
     }
   },
   "checks": [
@@ -37,13 +58,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +78,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

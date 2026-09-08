@@ -9,19 +9,40 @@
   "expected_body_sha256": "600f7cf2fd5564627013538893f1bf05ebb145bd10bf0bafcba27f4eebd47fc0",
   "expected_source_revision_id": "xhs-note:67fdf6ab000000001c002d17:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 1,
+        "excerpt": "周五面试，问了关于首屏优化，正好我手上正在做关于 flutter 到 h5 的优化，回答的我觉得很不错，面试官也表示肯定，问了很多关于项目问题，开发缓存问题，架构问题就问了关于乾坤的问题，面试过程本人感觉很愉快，但是依旧没有过🥲"
+      },
+      {
+        "line_number": 11,
+        "excerpt": "#面试日常[话题]# #求职[话题]# #面试[话题]# #换工作[话题]# #面试求职[话题]# #工作迷茫中[话题]# #继续找工作[话题]# #面试问题[话题]#"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67fdf6ab000000001c002d17.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "2de06b6fd358f15a53d8f12683283f1d6bc41ed9",
-    "locator": "issue-body-copy:lines-103-116",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 周五面试，问了关于首屏优化，正好我手上正在做关于 flutter 到 h5 的优化，回答的我觉得很不错，面试官也表示肯定，问了很多关于项目问题，开发缓存问题，架构问题就问了关于乾坤的问题，面试过程本人感觉很愉快，但是依旧没有过🥲\n> \t\n> 今天信心满满等待复试\n> \t\n> 没有想到评论一般[失望R]\n> \t\n> 持续加油\n> \t\n> 继续面试\n> \t\n> #面试日常[话题]# #求职[话题]# #面试[话题]# #换工作[话题]# #面试求职[话题]# #工作迷茫中[话题]# #继续找工作[话题]# #面试问题[话题]#\n>",
+    "byte_size": 594,
+    "sha256": "d060fe2a204c5603e0bb9a68b71244b92779171ff39008635de7ae28e7544ff4",
+    "locator": "note_desc:1-11",
+    "excerpt": "周五面试，问了关于首屏优化，正好我手上正在做关于 flutter 到 h5 的优化，回答的我觉得很不错，面试官也表示肯定，问了很多关于项目问题，开发缓存问题，架构问题就问了关于乾坤的问题，面试过程本人感觉很愉快，但是依旧没有过🥲\n今天信心满满等待复试\n没有想到评论一般[失望R]\n持续加油\n继续面试\n#面试日常[话题]# #求职[话题]# #面试[话题]# #换工作[话题]# #面试求职[话题]# #工作迷茫中[话题]# #继续找工作[话题]# #面试问题[话题]#",
+    "text": "周五面试，问了关于首屏优化，正好我手上正在做关于 flutter 到 h5 的优化，回答的我觉得很不错，面试官也表示肯定，问了很多关于项目问题，开发缓存问题，架构问题就问了关于乾坤的问题，面试过程本人感觉很愉快，但是依旧没有过🥲\n\t\n今天信心满满等待复试\n\t\n没有想到评论一般[失望R]\n\t\n持续加油\n\t\n继续面试\n\t\n#面试日常[话题]# #求职[话题]# #面试[话题]# #换工作[话题]# #面试求职[话题]# #工作迷茫中[话题]# #继续找工作[话题]# #面试问题[话题]#\n",
+    "line_count": 12,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:67fdf6ab000000001c002d17.txt",
+      "byte_size": 594,
+      "git_blob_sha": "2de06b6fd358f15a53d8f12683283f1d6bc41ed9"
     }
   },
   "checks": [
@@ -37,13 +58,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +78,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

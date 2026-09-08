@@ -9,19 +9,31 @@
   "expected_body_sha256": "75ab2f03cf93245a6fb3e45f57e6e590175e9bdbe4df0b43039992809ee02ba8",
   "expected_source_revision_id": "xhs-note:68011995000000000903b54c:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68011995000000000903b54c.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "b1939e869206083fa23189dc76d0ab3ae93befec",
-    "locator": "issue-body-copy:lines-103-107",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 后续：包拒的，不把人当人[黑薯问号R]\n> 不知道会问点什么，牛客说都是电话面，怎么我是腾讯会议面[失望R][失望R][失望R]#面经[话题]# #亚信科技[话题]# #找实习[话题]#\n>",
+    "byte_size": 220,
+    "sha256": "49d6cbf91e0e86131a33d1456847bcefbcba5bd00afd56ec5818445095cdec89",
+    "locator": "note_desc:1-2",
+    "excerpt": "后续：包拒的，不把人当人[黑薯问号R]\n不知道会问点什么，牛客说都是电话面，怎么我是腾讯会议面[失望R][失望R][失望R]#面经[话题]# #亚信科技[话题]# #找实习[话题]#",
+    "text": "后续：包拒的，不把人当人[黑薯问号R]\n不知道会问点什么，牛客说都是电话面，怎么我是腾讯会议面[失望R][失望R][失望R]#面经[话题]# #亚信科技[话题]# #找实习[话题]#\n",
+    "line_count": 3,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:68011995000000000903b54c.txt",
+      "byte_size": 220,
+      "git_blob_sha": "b1939e869206083fa23189dc76d0ab3ae93befec"
     }
   },
   "checks": [
@@ -37,13 +49,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +69,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

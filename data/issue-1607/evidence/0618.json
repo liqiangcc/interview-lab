@@ -9,19 +9,48 @@
   "expected_body_sha256": "edff97999cb320e61c7064066dbd0cdaffbeb436ab73fbfd0c44f4815bc75f60",
   "expected_source_revision_id": "xhs-note:67de724c000000001c0015c0:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 3,
+        "excerpt": "AI面试问题："
+      },
+      {
+        "line_number": 4,
+        "excerpt": "项目遇到了什么问题？如何解决？"
+      },
+      {
+        "line_number": 7,
+        "excerpt": "在项目中遇到新问题时，该如何考虑采用新技术？"
+      },
+      {
+        "line_number": 9,
+        "excerpt": "无八股！！！无专业知识问题！！！"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67de724c000000001c0015c0.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "6fa9d69dd97f4f3af00166a6a733b8c21e81d7e0",
-    "locator": "issue-body-copy:lines-103-115",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 岗位：JAVA开发工程师\n> 美的AI面试之后，一直在评估中，怎么这么慢[哭惹R][哭惹R][哭惹R]#面试求职[话题]# #面经[话题]# #面试[话题]# #美的[话题]# .#java[话题]#\n> AI面试问题：\n> 项目遇到了什么问题？如何解决？\n> 项目过程中最有成就感的是？\n> 项目采用了什么新技术？为什么采用新技术？\n> 在项目中遇到新问题时，该如何考虑采用新技术？\n> 有两道英文问答：未来三年规划\n> 无八股！！！无专业知识问题！！！\n> 后面是一些数学找规律的题，或者是计算题\n>",
+    "byte_size": 587,
+    "sha256": "5e448e3c0ec38e30f036c4941b8f45dede75eed280bea401df5c079bb8f14926",
+    "locator": "note_desc:1-8",
+    "excerpt": "岗位：JAVA开发工程师\n美的AI面试之后，一直在评估中，怎么这么慢[哭惹R][哭惹R][哭惹R]#面试求职[话题]# #面经[话题]# #面试[话题]# #美的[话题]# .#java[话题]#\nAI面试问题：\n项目遇到了什么问题？如何解决？\n项目过程中最有成就感的是？\n项目采用了什么新技术？为什么采用新技术？\n在项目中遇到新问题时，该如何考虑采用新技术？\n有两道英文问答：未来三年规划",
+    "text": "岗位：JAVA开发工程师\n美的AI面试之后，一直在评估中，怎么这么慢[哭惹R][哭惹R][哭惹R]#面试求职[话题]# #面经[话题]# #面试[话题]# #美的[话题]# .#java[话题]#\nAI面试问题：\n项目遇到了什么问题？如何解决？\n项目过程中最有成就感的是？\n项目采用了什么新技术？为什么采用新技术？\n在项目中遇到新问题时，该如何考虑采用新技术？\n有两道英文问答：未来三年规划\n无八股！！！无专业知识问题！！！\n后面是一些数学找规律的题，或者是计算题\n",
+    "line_count": 11,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:67de724c000000001c0015c0.txt",
+      "byte_size": 587,
+      "git_blob_sha": "6fa9d69dd97f4f3af00166a6a733b8c21e81d7e0"
     }
   },
   "checks": [
@@ -37,13 +66,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +86,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

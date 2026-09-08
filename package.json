@@ -17,7 +17,7 @@
     "validate:review-transition-fixture": "node scripts/plan-source-sequence-review-transition.js test/fixtures/source-sequence-review-transition.valid.md",
     "plan:boundary-review-batch": "node scripts/plan-source-note-boundary-review-batch.js",
     "prepare:issue-1607-live": "node scripts/prepare-issue-1607-boundary-batch.js --fetch-live --cache data/issue-1607/live-issues.json",
-    "prepare:issue-1607-boundary": "node scripts/prepare-issue-1607-boundary-batch.js --prepare --body-only --cache data/issue-1607/live-issues.json --output-dir data/issue-1607 && node scripts/generate-issue-1607-boundary-evidence.js --selection data/issue-1607/selection.json --output-dir data/issue-1607",
+    "prepare:issue-1607-boundary": "node scripts/prepare-issue-1607-boundary-batch.js --prepare --allow-unverified-source --cache data/issue-1607/live-issues.json --output-dir data/issue-1607 && node scripts/generate-issue-1607-boundary-evidence.js --selection data/issue-1607/selection.json --output-dir data/issue-1607",
     "validate:exploration-fixture": "node scripts/validate-exploration-session-checkpoint.js test/fixtures/exploration-session-checkpoint.valid.md",
     "validate:exploration-v2-fixture": "node scripts/validate-exploration-session-checkpoint.js test/fixtures/exploration-session-checkpoint-v2.valid.md",
     "validate:exploration-v3-fixture": "node scripts/validate-exploration-session-checkpoint.js test/fixtures/exploration-session-checkpoint-v3.valid.md",

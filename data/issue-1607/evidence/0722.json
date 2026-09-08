@@ -9,19 +9,31 @@
   "expected_body_sha256": "fbcd567ccf900f83b1d879abe0f49137527de6ad0a882fa0f5cf98ecf194443b",
   "expected_source_revision_id": "xhs-note:67f9ea74000000000b014488:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67f9ea74000000000b014488.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "de810bae818ec0c32578de9b52a344f6548ee1f6",
-    "locator": "issue-body-copy:lines-112-118",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 时隔十八天居然收到了美的二面，本来已经以为早就没戏了，居然还是线下面，想着刚好周六进城面完玩一玩[吧唧R][吧唧R]\n> 总体问的不难，线下也没有那么紧张，面试官都是很亲和的人，提前一个小时到了，提前半个小时就让进去了，整个过程也很顺利大概半个小时多就结束了。\n> 救命，一想到已经推了两周没科研进展都不知道怎么面对老师[再见R][再见R]\n> 继续加油呀！\n>",
+    "byte_size": 490,
+    "sha256": "1f2b24508d20349100a92c5cfda30d1dd777c812d4bb2a08a6e1b1e7da97c4a9",
+    "locator": "note_desc:1-4",
+    "excerpt": "时隔十八天居然收到了美的二面，本来已经以为早就没戏了，居然还是线下面，想着刚好周六进城面完玩一玩[吧唧R][吧唧R]\n总体问的不难，线下也没有那么紧张，面试官都是很亲和的人，提前一个小时到了，提前半个小时就让进去了，整个过程也很顺利大概半个小时多就结束了。\n救命，一想到已经推了两周没科研进展都不知道怎么面对老师[再见R][再见R]\n继续加油呀！",
+    "text": "时隔十八天居然收到了美的二面，本来已经以为早就没戏了，居然还是线下面，想着刚好周六进城面完玩一玩[吧唧R][吧唧R]\n总体问的不难，线下也没有那么紧张，面试官都是很亲和的人，提前一个小时到了，提前半个小时就让进去了，整个过程也很顺利大概半个小时多就结束了。\n救命，一想到已经推了两周没科研进展都不知道怎么面对老师[再见R][再见R]\n继续加油呀！\n",
+    "line_count": 5,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:67f9ea74000000000b014488.txt",
+      "byte_size": 490,
+      "git_blob_sha": "de810bae818ec0c32578de9b52a344f6548ee1f6"
     }
   },
   "checks": [
@@ -37,13 +49,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +69,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

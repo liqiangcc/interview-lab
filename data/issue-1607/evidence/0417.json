@@ -9,19 +9,44 @@
   "expected_body_sha256": "539cb36d849d9cd124954a91985f6b3e9ed8adff8325f067b7d953c6207718d0",
   "expected_source_revision_id": "xhs-note:67431e2900000000080068ca:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 11,
+        "excerpt": "8、zookeeper的结构以及功能，有什么问题"
+      },
+      {
+        "line_number": 12,
+        "excerpt": "(类似于Linux的树结构，服务的注册发现，问题之前看过阿里为什么弃用zookeeper具体忘了)"
+      },
+      {
+        "line_number": 28,
+        "excerpt": "#面经[话题]# #程序员[话题]# #java[话题]# #腾讯面试题[话题]# #经验分享[话题]# #互联网大厂[话题]#"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67431e2900000000080068ca.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "c301f3575bf7373738ab83626686ae6de4cb917d",
-    "locator": "issue-body-copy:lines-135-165",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 约的早上10点准时电话来了\n> 1、自我介绍(末流双211)实习做的项目\n> 2、jvm结构分区以及调优\n> (栈、堆、方法区、程序计数器，简单的-ea- Xmx2g-Xms2g-XX:MaxPermSize=1024m)\n> 3、线程池的各个参数以及值，用了什么队列，拒绝策略\n> (核心线程数50，最大100， ArrayBlockingQueue 默认丢弃)\n> 4、MQ用过哪些kafka,mafka，kafka处理流程，瓶颈\n> 5、rpc框架用的thrift怎么通信的，配置(客户端、服务端以及APPKEY)\n> 6、elasticSearch结构以及语法index和term(索引，集群名称和IP地址配置)\n> 7、前端ajax的闭包是什么(没听说过--)\n> 8、zookeeper的结构以及功能，有什么问题\n> (类似于Linux的树结构，服务的注册发现，问题之前看过阿里为什么弃用zookeeper具体忘了)\n> 9、项目中有没用到微服务(没有)\n> 10、mybatis和hibernate相比\n> (轻量级，不需要反向生成，动态sql直接在接口上写注解sql语句，方便)11、为什么选ssm框架(主流，方便易用)\n> 12、hystrix怎么熔断的，一些参数\n> (熔断时间，数量，百分比，超时重试，熔断返回默认值)\n> 13、mafka对kafka的改进\n> (同机房优先，客户端和zookeeper解耦加入一层)\n> 14、如何做到服务治理，就是动态的修改运行的项目的参数\n> (mcc把值记录到zk中，在平台上配的时候会通知服务修改参数的值并改变缓存的值)15、项目运行的服务器多少个\n> (55个，多个端口提供不同的服务)\n> \t\n> 实习这里的留任offer和腾讯怎么考虑这里是IEG部门写java的\n> 还要实习多久--!\n> 最后说放新我们不会放弃优秀的人才(--我这么弱鸡，感谢某大场实习经历)\n> 听说有4面，4面手撕代码?\n> #面经[话题]# #程序员[话题]# #java[话题]# #腾讯面试题[话题]# #经验分享[话题]# #互联网大厂[话题]#\n>",
+    "byte_size": 1847,
+    "sha256": "5e1efe1972b2ef04342039ef5c2e43dd982ac672b9641de2a29e8c3a73243ced",
+    "locator": "note_desc:1-8",
+    "excerpt": "约的早上10点准时电话来了\n1、自我介绍(末流双211)实习做的项目\n2、jvm结构分区以及调优\n(栈、堆、方法区、程序计数器，简单的-ea- Xmx2g-Xms2g-XX:MaxPermSize=1024m)\n3、线程池的各个参数以及值，用了什么队列，拒绝策略\n(核心线程数50，最大100， ArrayBlockingQueue 默认丢弃)\n4、MQ用过哪些kafka,mafka，kafka处理流程，瓶颈\n5、rpc框架用的thrift怎么通信的，配置(客户端、服务端以及APPKEY)",
+    "text": "约的早上10点准时电话来了\n1、自我介绍(末流双211)实习做的项目\n2、jvm结构分区以及调优\n(栈、堆、方法区、程序计数器，简单的-ea- Xmx2g-Xms2g-XX:MaxPermSize=1024m)\n3、线程池的各个参数以及值，用了什么队列，拒绝策略\n(核心线程数50，最大100， ArrayBlockingQueue 默认丢弃)\n4、MQ用过哪些kafka,mafka，kafka处理流程，瓶颈\n5、rpc框架用的thrift怎么通信的，配置(客户端、服务端以及APPKEY)\n6、elasticSearch结构以及语法index和term(索引，集群名称和IP地址配置)\n7、前端ajax的闭包是什么(没听说过--)\n8、zookeeper的结构以及功能，有什么问题\n(类似于Linux的树结构，服务的注册发现，问题之前看过阿里为什么弃用zookeeper具体忘了)\n9、项目中有没用到微服务(没有)\n10、mybatis和hibernate相比\n(轻量级，不需要反向生成，动态sql直接在接口上写注解sql语句，方便)11、为什么选ssm框架(主流，方便易用)\n12、hystrix怎么熔断的，一些参数\n(熔断时间，数量，百分比，超时重试，熔断返回默认值)\n13、mafka对kafka的改进\n(同机房优先，客户端和zookeeper解耦加入一层)\n14、如何做到服务治理，就是动态的修改运行的项目的参数\n(mcc把值记录到zk中，在平台上配的时候会通知服务修改参数的值并改变缓存的值)15、项目运行的服务器多少个\n(55个，多个端口提供不同的服务)\n\t\n实习这里的留任offer和腾讯怎么考虑这里是IEG部门写java的\n还要实习多久--!\n最后说放新我们不会放弃优秀的人才(--我这么弱鸡，感谢某大场实习经历)\n听说有4面，4面手撕代码?\n#面经[话题]# #程序员[话题]# #java[话题]# #腾讯面试题[话题]# #经验分享[话题]# #互联网大厂[话题]#\n",
+    "line_count": 29,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:67431e2900000000080068ca.txt",
+      "byte_size": 1847,
+      "git_blob_sha": "c301f3575bf7373738ab83626686ae6de4cb917d"
     }
   },
   "checks": [
@@ -37,13 +62,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +82,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

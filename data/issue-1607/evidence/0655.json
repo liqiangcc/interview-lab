@@ -9,19 +9,48 @@
   "expected_body_sha256": "08fdcb0cf3b993d405406bccfe7ec7b85f0acc9c10608fcd9eb9a62978de1857",
   "expected_source_revision_id": "xhs-note:67e7cba3000000001b03ffd4:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 8,
+        "excerpt": "一个概率问题，一副扑克牌，没有大小王，一共52张牌，随机抽取2张，求抽到同一花色的概率。(同一花色是，黑桃、红桃、梅花、方块四种)"
+      },
+      {
+        "line_number": 16,
+        "excerpt": "进程池三个核心参数，执行流程，阻塞队列有几种(面试官说我八股挺扎实的。哈哈哈哈笑死) final关键字，static关键字 MySQL索引为什么用B+树。最左匹配原则回表查询"
+      },
+      {
+        "line_number": 21,
+        "excerpt": "总结下来，面试官很好，有的问题会引导你。许愿通过。"
+      },
+      {
+        "line_number": 22,
+        "excerpt": "#面经[话题]# #面试题[话题]# #美团面试题[话题]# #java[话题]# #程序员[话题]# #后端开发[话题]# #互联网大厂[话题]# #经验分享[话题]#"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67e7cba3000000001b03ffd4.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "984fd974dfddebac872e592009e15d987d39544f",
-    "locator": "issue-body-copy:lines-130-154",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 美团一面(50min)\n> 自我介绍(我在自我介绍中提到了实验室的工作)\n> 介绍实验室工作\n> 项目中登录怎么做的(验证码，拦截器)确定 JVM内存结构，如何主动出发栈溢出(两个方法互相调用就行) Java类加载机制\n> 双亲委派模型，双亲委派模型的好处。如果自己实现一个String类，如何加载\n> 锁是如何保证并发时避免死锁，写一个锁的实现，或者是两个线程加锁并发了，如何处理的。(有大佬会吗，可以在评论区说一下)\n> Java中的锁，synchronized和Reentrantlock的区别，非公平锁和公平锁的区别锁升级过程\n> 一个概率问题，一副扑克牌，没有大小王，一共52张牌，随机抽取2张，求抽到同一花色的概率。(同一花色是，黑桃、红桃、梅花、方块四种)\n> Redis的基本数据类型 MySQL的事务机制\n> 编程题:二叉树层序遍历。力扣102题反问\n> 美团二面(1h10min)\n> 自我介绍\n> 介绍实验室工作 Udp和Tcp的区别\n> TCP的流量控制和拥塞控制为什么是三次握手，四次挥手为什么不是两次握手进程线程区别\n> 线程在Java中的状态\n> 进程池三个核心参数，执行流程，阻塞队列有几种(面试官说我八股挺扎实的。哈哈哈哈笑死) final关键字，static关键字 MySQL索引为什么用B+树。最左匹配原则回表查询\n> 索引的叶子节点存储在哪个地方?\t(有无大佬解\n> 答一下)\n> 问到了mysql中的buffer池(不会呀)，然后我提到了redol;og和undolog，面试官又问了redolog和undolog能够保证什么特性 MVCC多版本并发控制，讲一下\n> 系统设计题，提出三个功能，让设计mysql表结构，还有一个功能如何用表结构实现。例如在微博中，实现三个功能，1.发布微博，2.单向关注，3，某个用户关注了博主，查看自己关注的所有博主的前50条微博(按照时间排序)。编程题:岛屿数量。力扣200题反问\n> 总结下来，面试官很好，有的问题会引导你。许愿通过。\n> #面经[话题]# #面试题[话题]# #美团面试题[话题]# #java[话题]# #程序员[话题]# #后端开发[话题]# #互联网大厂[话题]# #经验分享[话题]#\n>",
+    "byte_size": 2196,
+    "sha256": "6736ecfe1748a18d83c9d414f930600baf526bc5ce0d586ebe88923bd134ba60",
+    "locator": "note_desc:1-8",
+    "excerpt": "美团一面(50min)\n自我介绍(我在自我介绍中提到了实验室的工作)\n介绍实验室工作\n项目中登录怎么做的(验证码，拦截器)确定 JVM内存结构，如何主动出发栈溢出(两个方法互相调用就行) Java类加载机制\n双亲委派模型，双亲委派模型的好处。如果自己实现一个String类，如何加载\n锁是如何保证并发时避免死锁，写一个锁的实现，或者是两个线程加锁并发了，如何处理的。(有大佬会吗，可以在评论区说一下)\nJava中的锁，synchronized和Reentrantlock的区别，非公平锁和公平锁的区别锁升级过程\n一个概率问题，一副扑克牌，没有大小王，一共52张牌，随机抽取2张，求抽到同一花色的概率。(同一花色是，黑桃、红桃、梅花、方块四种)",
+    "text": "美团一面(50min)\n自我介绍(我在自我介绍中提到了实验室的工作)\n介绍实验室工作\n项目中登录怎么做的(验证码，拦截器)确定 JVM内存结构，如何主动出发栈溢出(两个方法互相调用就行) Java类加载机制\n双亲委派模型，双亲委派模型的好处。如果自己实现一个String类，如何加载\n锁是如何保证并发时避免死锁，写一个锁的实现，或者是两个线程加锁并发了，如何处理的。(有大佬会吗，可以在评论区说一下)\nJava中的锁，synchronized和Reentrantlock的区别，非公平锁和公平锁的区别锁升级过程\n一个概率问题，一副扑克牌，没有大小王，一共52张牌，随机抽取2张，求抽到同一花色的概率。(同一花色是，黑桃、红桃、梅花、方块四种)\nRedis的基本数据类型 MySQL的事务机制\n编程题:二叉树层序遍历。力扣102题反问\n美团二面(1h10min)\n自我介绍\n介绍实验室工作 Udp和Tcp的区别\nTCP的流量控制和拥塞控制为什么是三次握手，四次挥手为什么不是两次握手进程线程区别\n线程在Java中的状态\n进程池三个核心参数，执行流程，阻塞队列有几种(面试官说我八股挺扎实的。哈哈哈哈笑死) final关键字，static关键字 MySQL索引为什么用B+树。最左匹配原则回表查询\n索引的叶子节点存储在哪个地方?\t(有无大佬解\n答一下)\n问到了mysql中的buffer池(不会呀)，然后我提到了redol;og和undolog，面试官又问了redolog和undolog能够保证什么特性 MVCC多版本并发控制，讲一下\n系统设计题，提出三个功能，让设计mysql表结构，还有一个功能如何用表结构实现。例如在微博中，实现三个功能，1.发布微博，2.单向关注，3，某个用户关注了博主，查看自己关注的所有博主的前50条微博(按照时间排序)。编程题:岛屿数量。力扣200题反问\n总结下来，面试官很好，有的问题会引导你。许愿通过。\n#面经[话题]# #面试题[话题]# #美团面试题[话题]# #java[话题]# #程序员[话题]# #后端开发[话题]# #互联网大厂[话题]# #经验分享[话题]#\n",
+    "line_count": 23,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:67e7cba3000000001b03ffd4.txt",
+      "byte_size": 2196,
+      "git_blob_sha": "984fd974dfddebac872e592009e15d987d39544f"
     }
   },
   "checks": [
@@ -37,13 +66,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +86,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

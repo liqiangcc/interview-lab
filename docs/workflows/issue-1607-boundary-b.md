@@ -18,14 +18,17 @@ node scripts/prepare-issue-1607-boundary-batch.js \
   --cache data/issue-1607/live-issues.json
 ```
 
-默认 `--prepare` 会继续读取并校验每个 pinned `note_desc` blob 的 Git object SHA；任意网络或内容校验失败都会整体 fail closed。当前网络审计运行使用了显式 body-only fallback，它只冻结 live body digest 和 Issue 中声明的 artifact ref/blob，不把 body copy 当作已验证 Source bytes：
+默认 `--prepare` 会读取并校验每个 pinned `note_desc` projection 的 byte size 与 Git object SHA。读取顺序是主控提供的非空缓存、再到单线程受控 Raw GET；每项独立重试，失败只阻塞该项，不把网络抖动升级为全批失败：
 
 ```sh
 node scripts/prepare-issue-1607-boundary-batch.js \
-  --prepare --body-only \
+  --prepare --allow-unverified-source \
   --cache data/issue-1607/live-issues.json \
+  --source-cache-dir /tmp/xhs-note-desc-cache \
   --output-dir data/issue-1607
 ```
+
+`--body-only` 仅保留为明确的离线诊断模式；它会把每项标记为 blocked，不能替代 pinned Source bytes。本次 B 运行复用了主控缓存，并完成 367/367 条 projection 的独立 SHA/长度校验；例如 #394 为 943 bytes，Git blob SHA 为 `94d93fb8bb42d5b1ad0adb1242cb647c3f8f0eb6`。
 
 然后生成每条 evidence、不可执行 request template、dry-run plan、digest 和零 mutation journal：
 
@@ -37,7 +40,11 @@ node scripts/generate-issue-1607-boundary-evidence.js \
 
 ## 当前审计结论
 
-当前产物中的 367 条都保持 `decision=pending`、`evidence_status=blocked`。原因是本次 pinned Source projection bytes 未完成独立复核，且子 issue 没有授予 live GitHub apply 权限。另已记录一次早期抽样阶段对 #766 的只读越界探测；无写入，但因此本运行不是 scope-clean，必须由主控审计后重新执行。`dry-run.plan.json` 的 `mutation_count` 与 `apply.journal.json` 的 `mutation_count` 均为 0。
+当前产物中的 367 条都保持 `decision=pending`、`evidence_status=review-required`；Source bytes 全部已独立验证，但分类仅是基于完整 projection 文本的 deterministic proposal，不是 durable human review。proposal 统计为 `single-interview=20`、`not-interview=3`、`pending=344`，详见 `classification-ledger.json`。每条 evidence 绑定完整 projection 文本、SHA/长度与分类依据行号；`dry-run.plan.json` 的 `mutation_count` 与 `apply.journal.json` 的 `mutation_count` 均为 0，ready=0。
+
+分类规则要求第一人称、明确已发生的过程事实和问题证据同时出现；邀约、据说、求助、经验建议、面试官分享、题库/题目列表保持 pending，明确拒面才提出 not-interview。分类仍只是 proposal，不能改变 pending 或授权 transition。
+
+另已记录一次早期抽样阶段对 #766 的只读越界探测；无写入，但因此本运行不是 scope-clean，必须由主控审计后重新执行严格 scoped read。
 
 这些 request template 不是 `source-note-boundary-review-transition.v1/v2` 的可执行请求：它们没有伪造 comment id/review timestamp。后续必须由独立 reviewer 完成 Source evidence 复核、生成 durable evidence comment，再依据最新 live body/labels 重新 plan；未经主控明确授权不得 POST/PATCH。
 

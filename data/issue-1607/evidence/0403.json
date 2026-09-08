@@ -9,19 +9,36 @@
   "expected_body_sha256": "362cddac21e1abc2b2b65a81dbcef41ff3f23bb534ccfb6193169cdb53d3930b",
   "expected_source_revision_id": "xhs-note:6731a05b000000001b013f6a:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "proposal-only",
+    "proposed_decision": "single-interview",
+    "basis": "first-person experienced process fact plus question evidence; no appointment/advice marker",
+    "basis_lines": [
+      {
+        "line_number": 1,
+        "excerpt": "面试大概持续了一小时多一点，整体氛围很好。感觉主要问题就出在自己的主力语言和部门的技术栈完全对不上，面试官全程都在试图问题我Java问题，然而我都只能通过说如果在Cpp里面是什么样的来回答（为了防止冷场），当时面完就感觉凉凉了。"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/6731a05b000000001b013f6a.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "7af20f56fe9d8785a90907b6a1278568da81bf2a",
-    "locator": "issue-body-copy:lines-117-122",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 面试大概持续了一小时多一点，整体氛围很好。感觉主要问题就出在自己的主力语言和部门的技术栈完全对不上，面试官全程都在试图问题我Java问题，然而我都只能通过说如果在Cpp里面是什么样的来回答（为了防止冷场），当时面完就感觉凉凉了。\n> 几天后一看！果不其然！回到人才库！SHIFT！\n> ﻿#美团[话题]#﻿ ﻿#秋招信息差[话题]#﻿ ﻿#java[话题]#﻿ ﻿#面试[话题]#﻿\n>",
+    "byte_size": 488,
+    "sha256": "a41ac195486d9610938a5324e5a00c366ee7f69002f64583c78b038c535aab9b",
+    "locator": "note_desc:1-3",
+    "excerpt": "面试大概持续了一小时多一点，整体氛围很好。感觉主要问题就出在自己的主力语言和部门的技术栈完全对不上，面试官全程都在试图问题我Java问题，然而我都只能通过说如果在Cpp里面是什么样的来回答（为了防止冷场），当时面完就感觉凉凉了。\n几天后一看！果不其然！回到人才库！SHIFT！\n﻿#美团[话题]#﻿ ﻿#秋招信息差[话题]#﻿ ﻿#java[话题]#﻿ ﻿#面试[话题]#﻿",
+    "text": "面试大概持续了一小时多一点，整体氛围很好。感觉主要问题就出在自己的主力语言和部门的技术栈完全对不上，面试官全程都在试图问题我Java问题，然而我都只能通过说如果在Cpp里面是什么样的来回答（为了防止冷场），当时面完就感觉凉凉了。\n几天后一看！果不其然！回到人才库！SHIFT！\n﻿#美团[话题]#﻿ ﻿#秋招信息差[话题]#﻿ ﻿#java[话题]#﻿ ﻿#面试[话题]#﻿\n",
+    "line_count": 4,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:6731a05b000000001b013f6a.txt",
+      "byte_size": 488,
+      "git_blob_sha": "7af20f56fe9d8785a90907b6a1278568da81bf2a"
     }
   },
   "checks": [
@@ -37,13 +54,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +74,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

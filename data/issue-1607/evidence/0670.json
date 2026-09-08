@@ -9,19 +9,40 @@
   "expected_body_sha256": "9764dfe7cb7f971eee14b39f67a62210805876e4c888ec47b886cb3a71531a35",
   "expected_source_revision_id": "xhs-note:67ebb597000000001c01eba8:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 2,
+        "excerpt": "2.ConcurrentHashMap存放商品数据会有什么问题"
+      },
+      {
+        "line_number": 4,
+        "excerpt": "4.超买问题如何解决，少买问题如何解决"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67ebb597000000001c01eba8.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "aa18eb2033cc8bd787555e16008a7ea98efb17f0",
-    "locator": "issue-body-copy:lines-103-115",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 1.设计一个秒杀系统\n> 2.ConcurrentHashMap存放商品数据会有什么问题\n> 3.设计商品表，库存字段增加索引合理吗\n> 4.超买问题如何解决，少买问题如何解决\n> 5.mysql的事务隔离级别有哪些，秒杀场景用哪种隔离级别会好一点\n> 6.redis与mysql的数据一致性如何保证\n> 7.线程安全如何解决，aqs原理，线程池工作原理\n> 8.缓存击穿如何解决，布隆过滤网如何实现过滤\n> 9.spring事务失效的场景\n> #面经[话题]# #互联网大厂[话题]# #百度[话题]# #电商[话题]# #java面试[话题]#\n>",
+    "byte_size": 577,
+    "sha256": "2f78d4eed20629eab33b55b6ca1b849dabd425de89d1b87148523c5718ff18d5",
+    "locator": "note_desc:1-8",
+    "excerpt": "1.设计一个秒杀系统\n2.ConcurrentHashMap存放商品数据会有什么问题\n3.设计商品表，库存字段增加索引合理吗\n4.超买问题如何解决，少买问题如何解决\n5.mysql的事务隔离级别有哪些，秒杀场景用哪种隔离级别会好一点\n6.redis与mysql的数据一致性如何保证\n7.线程安全如何解决，aqs原理，线程池工作原理\n8.缓存击穿如何解决，布隆过滤网如何实现过滤",
+    "text": "1.设计一个秒杀系统\n2.ConcurrentHashMap存放商品数据会有什么问题\n3.设计商品表，库存字段增加索引合理吗\n4.超买问题如何解决，少买问题如何解决\n5.mysql的事务隔离级别有哪些，秒杀场景用哪种隔离级别会好一点\n6.redis与mysql的数据一致性如何保证\n7.线程安全如何解决，aqs原理，线程池工作原理\n8.缓存击穿如何解决，布隆过滤网如何实现过滤\n9.spring事务失效的场景\n#面经[话题]# #互联网大厂[话题]# #百度[话题]# #电商[话题]# #java面试[话题]#\n",
+    "line_count": 11,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:67ebb597000000001c01eba8.txt",
+      "byte_size": 577,
+      "git_blob_sha": "aa18eb2033cc8bd787555e16008a7ea98efb17f0"
     }
   },
   "checks": [
@@ -37,13 +58,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +78,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

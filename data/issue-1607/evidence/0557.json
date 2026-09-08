@@ -9,19 +9,48 @@
   "expected_body_sha256": "72ef94cd552278f6a6ca2418319d5d277296c7561a8bd07c3f453a6b05b2c782",
   "expected_source_revision_id": "xhs-note:67c941e20000000029031ef6:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 4,
+        "excerpt": "为什么学习微服务，微服务和单体项目相比的优点和带来的问题。"
+      },
+      {
+        "line_number": 15,
+        "excerpt": "为什么选择rabbitmq，rabbitmq的一些相关问题，问的如何确保消息可靠性，答不全，又问觉得rabbitmq的设计精巧之处"
+      },
+      {
+        "line_number": 17,
+        "excerpt": "日常开发中最困扰你的问题"
+      },
+      {
+        "line_number": 19,
+        "excerpt": "最后的问题 LeetCode 16.26  计算器 只做了个从左到右计算的计算器，想到可能用栈，没想到具体怎么让乘除法优先[哭惹R]"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67c941e20000000029031ef6.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "9da3d9f6de7e16fae7260eaddb9bd8a4143a0c8d",
-    "locator": "issue-body-copy:lines-108-132",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 不熟悉我的bg的友友们可以看看我之前发的帖。\n> 腾讯处女面，被狠狠拷打了[笑哭R]。\n> 首先让我自我介绍，然后问职业规划（准备读研吗），然后开始让我介绍自己的项目（外卖➕微服务商城）。\n> 为什么学习微服务，微服务和单体项目相比的优点和带来的问题。\n> 分布式事务管理的手段。\n> 微服务单点崩溃对其他微服务的影响，解决方法\n> 慢SQL排查\n> 数据库MySQL底层的数据结构？现在的数据结构和以前的早期MySQL数据结构相比，有何区别和优势？\n> 刚刚你提到了Redis和分库分表，数据量多大需要分库分表\n> 假设用Redis存储一亿个可能会被访问QQ昵称，你会用Redis的数据结构，估算需要的内存容量。\n> 你刚刚说用set，有了解过set在Redis的底层结构吗\n> （前一个回答没有深入了解）那让你来设计Redis的set？（回答的会学习Java的set，用map，数组➕链表➕红黑树）\n> 如何解决哈希冲突\n> 内存泄露了解吗，怎么解决\n> 为什么选择rabbitmq，rabbitmq的一些相关问题，问的如何确保消息可靠性，答不全，又问觉得rabbitmq的设计精巧之处\n> 估算北京市地铁每日乘坐的人总数量\n> 日常开发中最困扰你的问题\n> 每天的代码量大概多少\n> 最后的问题 LeetCode 16.26  计算器 只做了个从左到右计算的计算器，想到可能用栈，没想到具体怎么让乘除法优先[哭惹R]\n> 反问：觉得我还有什么不足？\n> 可以多关注技术底层实现\n> #后端开发[话题]# #互联网大厂[话题]# #java[话题]# #程序员[话题]# #面经[话题]#\n>",
+    "byte_size": 1647,
+    "sha256": "f3376cb92b0e68a03c3a3e60eee23d12282cf82481ff081e2e02ddbc6a65da75",
+    "locator": "note_desc:1-8",
+    "excerpt": "不熟悉我的bg的友友们可以看看我之前发的帖。\n腾讯处女面，被狠狠拷打了[笑哭R]。\n首先让我自我介绍，然后问职业规划（准备读研吗），然后开始让我介绍自己的项目（外卖➕微服务商城）。\n为什么学习微服务，微服务和单体项目相比的优点和带来的问题。\n分布式事务管理的手段。\n微服务单点崩溃对其他微服务的影响，解决方法\n慢SQL排查\n数据库MySQL底层的数据结构？现在的数据结构和以前的早期MySQL数据结构相比，有何区别和优势？",
+    "text": "不熟悉我的bg的友友们可以看看我之前发的帖。\n腾讯处女面，被狠狠拷打了[笑哭R]。\n首先让我自我介绍，然后问职业规划（准备读研吗），然后开始让我介绍自己的项目（外卖➕微服务商城）。\n为什么学习微服务，微服务和单体项目相比的优点和带来的问题。\n分布式事务管理的手段。\n微服务单点崩溃对其他微服务的影响，解决方法\n慢SQL排查\n数据库MySQL底层的数据结构？现在的数据结构和以前的早期MySQL数据结构相比，有何区别和优势？\n刚刚你提到了Redis和分库分表，数据量多大需要分库分表\n假设用Redis存储一亿个可能会被访问QQ昵称，你会用Redis的数据结构，估算需要的内存容量。\n你刚刚说用set，有了解过set在Redis的底层结构吗\n（前一个回答没有深入了解）那让你来设计Redis的set？（回答的会学习Java的set，用map，数组➕链表➕红黑树）\n如何解决哈希冲突\n内存泄露了解吗，怎么解决\n为什么选择rabbitmq，rabbitmq的一些相关问题，问的如何确保消息可靠性，答不全，又问觉得rabbitmq的设计精巧之处\n估算北京市地铁每日乘坐的人总数量\n日常开发中最困扰你的问题\n每天的代码量大概多少\n最后的问题 LeetCode 16.26  计算器 只做了个从左到右计算的计算器，想到可能用栈，没想到具体怎么让乘除法优先[哭惹R]\n反问：觉得我还有什么不足？\n可以多关注技术底层实现\n#后端开发[话题]# #互联网大厂[话题]# #java[话题]# #程序员[话题]# #面经[话题]#\n",
+    "line_count": 23,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:67c941e20000000029031ef6.txt",
+      "byte_size": 1647,
+      "git_blob_sha": "9da3d9f6de7e16fae7260eaddb9bd8a4143a0c8d"
     }
   },
   "checks": [
@@ -37,13 +66,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +86,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

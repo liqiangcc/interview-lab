@@ -9,19 +9,31 @@
   "expected_body_sha256": "4623cdedd199bc342eee23c77c9283e0b59731ed722097bb5fde0183342928d4",
   "expected_source_revision_id": "xhs-note:67c7e99a000000000603c442:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67c7e99a000000000603c442.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "9e8b2331d53c57ff55721ea5778ffa21eea4e5c8",
-    "locator": "issue-body-copy:lines-108-113",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 好焦灼，抱着试试的心态投了一些大厂，没想到收到小米面试了，技术岗啥也不会恶补了两天但是效果甚微，啊啊啊啊啊啊啊啊啊啊，一想到一小时后就要在屏幕前脚趾抓地，我现在真的坐立难安，背也背不进去，有种死到临头的感觉\n> 也不是怕面试，我知道通过的概率几乎没有，但是真的好丢人…谁懂\n> #面试[话题]# #春招[话题]# #我的找工作日记[话题]#\n>",
+    "byte_size": 467,
+    "sha256": "f359210f9259f854105e02f669ab7a7df13f582217fe0c58f697ccf9fc279be0",
+    "locator": "note_desc:1-3",
+    "excerpt": "好焦灼，抱着试试的心态投了一些大厂，没想到收到小米面试了，技术岗啥也不会恶补了两天但是效果甚微，啊啊啊啊啊啊啊啊啊啊，一想到一小时后就要在屏幕前脚趾抓地，我现在真的坐立难安，背也背不进去，有种死到临头的感觉\n也不是怕面试，我知道通过的概率几乎没有，但是真的好丢人…谁懂\n#面试[话题]# #春招[话题]# #我的找工作日记[话题]#",
+    "text": "好焦灼，抱着试试的心态投了一些大厂，没想到收到小米面试了，技术岗啥也不会恶补了两天但是效果甚微，啊啊啊啊啊啊啊啊啊啊，一想到一小时后就要在屏幕前脚趾抓地，我现在真的坐立难安，背也背不进去，有种死到临头的感觉\n也不是怕面试，我知道通过的概率几乎没有，但是真的好丢人…谁懂\n#面试[话题]# #春招[话题]# #我的找工作日记[话题]#\n",
+    "line_count": 4,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:67c7e99a000000000603c442.txt",
+      "byte_size": 467,
+      "git_blob_sha": "9e8b2331d53c57ff55721ea5778ffa21eea4e5c8"
     }
   },
   "checks": [
@@ -37,13 +49,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +69,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

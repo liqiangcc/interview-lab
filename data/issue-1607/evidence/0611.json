@@ -9,19 +9,40 @@
   "expected_body_sha256": "07decb40e6afb73714eb1b1848268d1023ee44b99309983df801986b1c55a1b9",
   "expected_source_revision_id": "xhs-note:67dcc3ec000000001c007e3a:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 14,
+        "excerpt": "sql题目：表：学生名，科目名，成绩；1）查找学生名字和成绩总和；2）查找张姓的学生的名字和最高成绩"
+      },
+      {
+        "line_number": 16,
+        "excerpt": "八股文："
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67dcc3ec000000001c007e3a.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "8b5f804614e067a3ce43bd7c49b87b45dfa4581c",
-    "locator": "issue-body-copy:lines-103-126",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> #快手面试[话题]# #面经[话题]# #快手面经[话题]# #Java面试[话题]#\n> \t\n> java基础：\n> Int 和Integer区别\n> ==和equal()区别\n> equal()和hashCode()需要同时重写的原因？\n> Int a == 1000,Integer b = 1000; a == b是false还是true？\n> Object中wait()和notify()的作用？\n> thread中sleep()和wait()的区别？\n> \t\n> 代码：\n> 手写单例模式，为什么要用valitile？为什么要二次检查空？\n> 算法：遍历一次，翻转从m到n的链表结点\n> sql题目：表：学生名，科目名，成绩；1）查找学生名字和成绩总和；2）查找张姓的学生的名字和最高成绩\n> \t\n> 八股文：\n> 索引失效场景\n> 深拷贝和浅拷贝\n> 分布式锁的实现\n> \t\n> ps：没有看简历，直接最基础的 java 知识\n>",
+    "byte_size": 747,
+    "sha256": "66a5e59a75efc7f8396ffc519a36671236d1841977acfb1576a862701a4cc834",
+    "locator": "note_desc:1-9",
+    "excerpt": "#快手面试[话题]# #面经[话题]# #快手面经[话题]# #Java面试[话题]#\njava基础：\nInt 和Integer区别\n==和equal()区别\nequal()和hashCode()需要同时重写的原因？\nInt a == 1000,Integer b = 1000; a == b是false还是true？\nObject中wait()和notify()的作用？\nthread中sleep()和wait()的区别？",
+    "text": "#快手面试[话题]# #面经[话题]# #快手面经[话题]# #Java面试[话题]#\n\t\njava基础：\nInt 和Integer区别\n==和equal()区别\nequal()和hashCode()需要同时重写的原因？\nInt a == 1000,Integer b = 1000; a == b是false还是true？\nObject中wait()和notify()的作用？\nthread中sleep()和wait()的区别？\n\t\n代码：\n手写单例模式，为什么要用valitile？为什么要二次检查空？\n算法：遍历一次，翻转从m到n的链表结点\nsql题目：表：学生名，科目名，成绩；1）查找学生名字和成绩总和；2）查找张姓的学生的名字和最高成绩\n\t\n八股文：\n索引失效场景\n深拷贝和浅拷贝\n分布式锁的实现\n\t\nps：没有看简历，直接最基础的 java 知识\n",
+    "line_count": 22,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:67dcc3ec000000001c007e3a.txt",
+      "byte_size": 747,
+      "git_blob_sha": "8b5f804614e067a3ce43bd7c49b87b45dfa4581c"
     }
   },
   "checks": [
@@ -37,13 +58,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +78,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

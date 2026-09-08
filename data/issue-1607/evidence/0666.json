@@ -9,19 +9,36 @@
   "expected_body_sha256": "6b47322f8b666de5524702006f3b9d34ab469c575841c49f13f991f654955afd",
   "expected_source_revision_id": "xhs-note:67eaad5d000000000b014631:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 8,
+        "excerpt": "8.如果我某个字段很多99%都是null，你按照这个字段分区会发生什么问题？能怎么解决？"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67eaad5d000000000b014631.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "42f3608426ef807a5fd9af2f79aecd6fc2af7603",
-    "locator": "issue-body-copy:lines-103-119",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 1.自我介绍，然后长驱直入开始问项目。\n> 2.问项目比较杂和细，从具体指标的计算到数据仓库分层再到SQL的使用。\n> 3.用过什么函数？SUM函数可以开窗吗？\n> 4.row_number、rank、dense_rank的区别？\n> 5.如果我有三行数据， 100 200 300，sum开窗默认条件下窗口是多大？我这些数据会得到什么结果？怎么制定SQL开窗函数窗口的大小？\n> 6.比如我有ABC三列数据，我想同时输出Group by AC Group by BC的数据，有什么办法？（全场唯一不会的一题。\n> 7.SQL题，开窗count秒了，增加需求，子查询打标，再增加需求，开窗dense_rank。\n> 8.如果我某个字段很多99%都是null，你按照这个字段分区会发生什么问题？能怎么解决？\n> 9.写过UDF吗？我一直以为java才能写，面试官告诉我python也行。\n> 10.如果我要在python里建一个字典对象，我可以怎么做？这里我用的collections里的defaultdict函数。\n> 11.defaultdict（int）和defaultdict（list）有什么区别？\n> 12.如果我想取出字典中的value值，有哪几种方法？\n> 13.反问。\n> #面经[话题]# #互联网大厂[话题]# #互联网大厂实习[话题]# #面试求职[话题]# #大厂[话题]#\n>",
+    "byte_size": 1238,
+    "sha256": "ce72bee5ddb66eb7f0411bd91847fe442b0ccedf625bc15226340f38d0b21e48",
+    "locator": "note_desc:1-8",
+    "excerpt": "1.自我介绍，然后长驱直入开始问项目。\n2.问项目比较杂和细，从具体指标的计算到数据仓库分层再到SQL的使用。\n3.用过什么函数？SUM函数可以开窗吗？\n4.row_number、rank、dense_rank的区别？\n5.如果我有三行数据， 100 200 300，sum开窗默认条件下窗口是多大？我这些数据会得到什么结果？怎么制定SQL开窗函数窗口的大小？\n6.比如我有ABC三列数据，我想同时输出Group by AC Group by BC的数据，有什么办法？（全场唯一不会的一题。\n7.SQL题，开窗count秒了，增加需求，子查询打标，再增加需求，开窗dense_rank。\n8.如果我某个字段很多99%都是null，你按照这个字段分区会发生什么问题？能怎么解决？",
+    "text": "1.自我介绍，然后长驱直入开始问项目。\n2.问项目比较杂和细，从具体指标的计算到数据仓库分层再到SQL的使用。\n3.用过什么函数？SUM函数可以开窗吗？\n4.row_number、rank、dense_rank的区别？\n5.如果我有三行数据， 100 200 300，sum开窗默认条件下窗口是多大？我这些数据会得到什么结果？怎么制定SQL开窗函数窗口的大小？\n6.比如我有ABC三列数据，我想同时输出Group by AC Group by BC的数据，有什么办法？（全场唯一不会的一题。\n7.SQL题，开窗count秒了，增加需求，子查询打标，再增加需求，开窗dense_rank。\n8.如果我某个字段很多99%都是null，你按照这个字段分区会发生什么问题？能怎么解决？\n9.写过UDF吗？我一直以为java才能写，面试官告诉我python也行。\n10.如果我要在python里建一个字典对象，我可以怎么做？这里我用的collections里的defaultdict函数。\n11.defaultdict（int）和defaultdict（list）有什么区别？\n12.如果我想取出字典中的value值，有哪几种方法？\n13.反问。\n#面经[话题]# #互联网大厂[话题]# #互联网大厂实习[话题]# #面试求职[话题]# #大厂[话题]#\n",
+    "line_count": 15,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:67eaad5d000000000b014631.txt",
+      "byte_size": 1238,
+      "git_blob_sha": "42f3608426ef807a5fd9af2f79aecd6fc2af7603"
     }
   },
   "checks": [
@@ -37,13 +54,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +74,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

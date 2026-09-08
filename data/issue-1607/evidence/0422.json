@@ -9,19 +9,31 @@
   "expected_body_sha256": "efbe2d148e69dedaa41a7e2e05c79876f019da893dfbe34a60b68cad7ed1aef0",
   "expected_source_revision_id": "xhs-note:6747060b0000000006015b7e:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/6747060b0000000006015b7e.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "b989e3e600620dfa3e947ba498b1931c93e134a0",
-    "locator": "issue-body-copy:lines-135-145",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 日历timeline：8.27投递➡️9.5约面➡️9.8三面直通➡️9.25oc➡️10.25offer\n> \t\n> 周日下午三小时直通三面，面试官都很温和专业（除了面试间排队超久以外没毛病[睡觉R]\n> 感觉贝壳的校招文化还不错，传说中的1075和wlb也很吸引人，只可惜面试发挥太一般拿了个超级大白菜[哭惹R]\n> 先接啦，不管怎样还是感谢贝壳为我送来秋招的第一封offer[大笑R]\n> \t\n> （另外主页还有网易、pdd和字节的秋招面经，后续还会持续更新我的秋招面经复盘，欢迎感兴趣的uu自取[喝奶茶R]\n> #面经[话题]# #校招[话题]# #互联网校招[话题]# #贝壳找房[话题]# #秋招offer[话题]# #校招offer[话题]# #秋招人的精神状态[话题]# #秋招好累[话题]# #大厂实习[话题]# #大厂女孩[话题]#\n>",
+    "byte_size": 825,
+    "sha256": "73a162f83ea28fc05297a8c594d1253288f6abebdaf830780356cfc202f6506b",
+    "locator": "note_desc:1-8",
+    "excerpt": "日历timeline：8.27投递➡️9.5约面➡️9.8三面直通➡️9.25oc➡️10.25offer\n周日下午三小时直通三面，面试官都很温和专业（除了面试间排队超久以外没毛病[睡觉R]\n感觉贝壳的校招文化还不错，传说中的1075和wlb也很吸引人，只可惜面试发挥太一般拿了个超级大白菜[哭惹R]\n先接啦，不管怎样还是感谢贝壳为我送来秋招的第一封offer[大笑R]\n（另外主页还有网易、pdd和字节的秋招面经，后续还会持续更新我的秋招面经复盘，欢迎感兴趣的uu自取[喝奶茶R]\n#面经[话题]# #校招[话题]# #互联网校招[话题]# #贝壳找房[话题]# #秋招offer[话题]# #校招offer[话题]# #秋招人的精神状态[话题]# #秋招好累[话题]# #大厂实习[话题]# #大厂女孩[话题]#",
+    "text": "日历timeline：8.27投递➡️9.5约面➡️9.8三面直通➡️9.25oc➡️10.25offer\n\t\n周日下午三小时直通三面，面试官都很温和专业（除了面试间排队超久以外没毛病[睡觉R]\n感觉贝壳的校招文化还不错，传说中的1075和wlb也很吸引人，只可惜面试发挥太一般拿了个超级大白菜[哭惹R]\n先接啦，不管怎样还是感谢贝壳为我送来秋招的第一封offer[大笑R]\n\t\n（另外主页还有网易、pdd和字节的秋招面经，后续还会持续更新我的秋招面经复盘，欢迎感兴趣的uu自取[喝奶茶R]\n#面经[话题]# #校招[话题]# #互联网校招[话题]# #贝壳找房[话题]# #秋招offer[话题]# #校招offer[话题]# #秋招人的精神状态[话题]# #秋招好累[话题]# #大厂实习[话题]# #大厂女孩[话题]#\n",
+    "line_count": 9,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:6747060b0000000006015b7e.txt",
+      "byte_size": 825,
+      "git_blob_sha": "b989e3e600620dfa3e947ba498b1931c93e134a0"
     }
   },
   "checks": [
@@ -37,13 +49,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +69,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

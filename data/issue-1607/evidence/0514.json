@@ -9,19 +9,31 @@
   "expected_body_sha256": "819267353b3ea59177fad3b662f01f5d9f83109f0548af22c2d603a15993e26a",
   "expected_source_revision_id": "xhs-note:67b40040000000002803da82:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67b40040000000002803da82.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "0bfe0af1c08403998098553f8f9508f0906f083d",
-    "locator": "issue-body-copy:lines-117-120",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 第一次面试，总共三十分钟，问的都很基础，最后，面试官建议要注重基础。#后端开发[话题]# #计算机[话题]# #面经[话题]# #java[话题]# #腾讯[话题]#\n>",
+    "byte_size": 194,
+    "sha256": "97a93fb5984ba64a44c7c13ac3cd19f62119fb0130adef0a5b26296e02e9696d",
+    "locator": "note_desc:1-1",
+    "excerpt": "第一次面试，总共三十分钟，问的都很基础，最后，面试官建议要注重基础。#后端开发[话题]# #计算机[话题]# #面经[话题]# #java[话题]# #腾讯[话题]#",
+    "text": "第一次面试，总共三十分钟，问的都很基础，最后，面试官建议要注重基础。#后端开发[话题]# #计算机[话题]# #面经[话题]# #java[话题]# #腾讯[话题]#\n",
+    "line_count": 2,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:67b40040000000002803da82.txt",
+      "byte_size": 194,
+      "git_blob_sha": "0bfe0af1c08403998098553f8f9508f0906f083d"
     }
   },
   "checks": [
@@ -37,13 +49,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +69,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

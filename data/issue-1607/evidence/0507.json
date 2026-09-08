@@ -9,19 +9,31 @@
   "expected_body_sha256": "4cb610494b1bb45d89c5e6332f1b344ac20f57bcaea94ea32f27a71413e36689",
   "expected_source_revision_id": "xhs-note:67ac5d95000000001801a869:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67ac5d95000000001801a869.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "86da6688354028cd999534d134883d3d376cf8ab",
-    "locator": "issue-body-copy:lines-108-123",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 发面经攒人品\n> 聊了10分钟项目\n> 高并发秒杀方案，前后端怎么实现\n> 对电商相关业务的理解\n> 手撕\n> 翻转链表\n> java基础\n> 集合\n> aqs\n> 反问\n> 评价和建议\n> 总结:对项目不够熟悉，没有电商相关的经验，面试官人很好，但是我太菜了😢😢\n> #面经[话题]# #快手[话题]# #实习[话题]#\n>",
+    "byte_size": 342,
+    "sha256": "e1c6b37589916e8bfb6607462d4dde46b72ba18f96552df1a56e5c7457fcc8e6",
+    "locator": "note_desc:1-8",
+    "excerpt": "发面经攒人品\n聊了10分钟项目\n高并发秒杀方案，前后端怎么实现\n对电商相关业务的理解\n手撕\n翻转链表\njava基础\n集合",
+    "text": "发面经攒人品\n聊了10分钟项目\n高并发秒杀方案，前后端怎么实现\n对电商相关业务的理解\n手撕\n翻转链表\njava基础\n集合\naqs\n反问\n评价和建议\n总结:对项目不够熟悉，没有电商相关的经验，面试官人很好，但是我太菜了😢😢\n#面经[话题]# #快手[话题]# #实习[话题]#\n",
+    "line_count": 14,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:67ac5d95000000001801a869.txt",
+      "byte_size": 342,
+      "git_blob_sha": "86da6688354028cd999534d134883d3d376cf8ab"
     }
   },
   "checks": [
@@ -37,13 +49,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +69,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

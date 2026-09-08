@@ -9,19 +9,48 @@
   "expected_body_sha256": "c9387b199d97d2198e4ebe5a8cea700d6002339421c60eb451a5196765375b50",
   "expected_source_revision_id": "xhs-note:67fc9e5b000000001b03d02e:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 2,
+        "excerpt": "寒暄了下项目经历，抓住一个mysql的点开始进入八股朗诵环节[抠鼻R]"
+      },
+      {
+        "line_number": 9,
+        "excerpt": "6.事务的各隔离级别分别解决了什么问题；"
+      },
+      {
+        "line_number": 10,
+        "excerpt": "7.如何在可重复读级别下解决幻读问题；"
+      },
+      {
+        "line_number": 15,
+        "excerpt": "12.Redisson实现的分布式锁解决了哪些问题，RedLock是什么原理；"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67fc9e5b000000001b03d02e.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "d49a3507f8c19e7a866273c8c2b2b6f3ef1c2df0",
-    "locator": "issue-body-copy:lines-112-140",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 一上来就手撕：矩阵螺旋输出（给15分钟，超时就叫停）\n> 寒暄了下项目经历，抓住一个mysql的点开始进入八股朗诵环节[抠鼻R]\n> \t\n> 1.你是如何设置数据库索引的；\n> 2.为什么索引覆盖之后查询速度会变快；\n> 3.联合索引是（A B C），要查询（B A C）还能用到索引吗；（这个答错了，叫我回去再研究下）\n> 4.索引失效的场景；\n> 5.什么是事务，事务的特性，分别是怎么保证的；\n> 6.事务的各隔离级别分别解决了什么问题；\n> 7.如何在可重复读级别下解决幻读问题；\n> 8.事务传播机制，如何设置传播机制；\n> 9.Redis各数据类型的底层实现，跳表查询、插入、删除数据的原理；\n> 10.布隆过滤器有哪些优缺点；\n> 11.分布式锁的key和value分别设置的是什么；\n> 12.Redisson实现的分布式锁解决了哪些问题，RedLock是什么原理；\n> 13.创建线程的方式，各自的应用场景；\n> 14.设置线程池的7个参数分别是哪些；\n> 15.IO密集型任务设置核心线程数的计算方式；\n> 16.Kafka、RabbitMQ用过吗；（没有）\n> 17.JVM的组成部分；\n> 18.讲一下Full GC、Old GC、Young GC；\n> 19.G1相较于CMS的优势；\n> 20.发送一个HTTP请求到返回响应的全过程；\n> \t\n> 总体而言难度适中，虽然覆盖面大，但没有很深入，能回答出基本内容也就不会追问，直接进入下一个问题[萌萌哒R] 反问阶段问表现的如何也得到了正面肯定，美团面试好感度拉满[亲一个R]\n> #java开发[话题]# #26届实习[话题]# #美团面试[话题]# #软件开发java后端[话题]#\n>",
+    "byte_size": 1622,
+    "sha256": "214ba87be5a59fee3a1774584a73a063e2efef59dc5618f3bd95c06170d88c58",
+    "locator": "note_desc:1-9",
+    "excerpt": "一上来就手撕：矩阵螺旋输出（给15分钟，超时就叫停）\n寒暄了下项目经历，抓住一个mysql的点开始进入八股朗诵环节[抠鼻R]\n1.你是如何设置数据库索引的；\n2.为什么索引覆盖之后查询速度会变快；\n3.联合索引是（A B C），要查询（B A C）还能用到索引吗；（这个答错了，叫我回去再研究下）\n4.索引失效的场景；\n5.什么是事务，事务的特性，分别是怎么保证的；\n6.事务的各隔离级别分别解决了什么问题；",
+    "text": "一上来就手撕：矩阵螺旋输出（给15分钟，超时就叫停）\n寒暄了下项目经历，抓住一个mysql的点开始进入八股朗诵环节[抠鼻R]\n\t\n1.你是如何设置数据库索引的；\n2.为什么索引覆盖之后查询速度会变快；\n3.联合索引是（A B C），要查询（B A C）还能用到索引吗；（这个答错了，叫我回去再研究下）\n4.索引失效的场景；\n5.什么是事务，事务的特性，分别是怎么保证的；\n6.事务的各隔离级别分别解决了什么问题；\n7.如何在可重复读级别下解决幻读问题；\n8.事务传播机制，如何设置传播机制；\n9.Redis各数据类型的底层实现，跳表查询、插入、删除数据的原理；\n10.布隆过滤器有哪些优缺点；\n11.分布式锁的key和value分别设置的是什么；\n12.Redisson实现的分布式锁解决了哪些问题，RedLock是什么原理；\n13.创建线程的方式，各自的应用场景；\n14.设置线程池的7个参数分别是哪些；\n15.IO密集型任务设置核心线程数的计算方式；\n16.Kafka、RabbitMQ用过吗；（没有）\n17.JVM的组成部分；\n18.讲一下Full GC、Old GC、Young GC；\n19.G1相较于CMS的优势；\n20.发送一个HTTP请求到返回响应的全过程；\n\t\n总体而言难度适中，虽然覆盖面大，但没有很深入，能回答出基本内容也就不会追问，直接进入下一个问题[萌萌哒R] 反问阶段问表现的如何也得到了正面肯定，美团面试好感度拉满[亲一个R]\n#java开发[话题]# #26届实习[话题]# #美团面试[话题]# #软件开发java后端[话题]#\n",
+    "line_count": 27,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:67fc9e5b000000001b03d02e.txt",
+      "byte_size": 1622,
+      "git_blob_sha": "d49a3507f8c19e7a866273c8c2b2b6f3ef1c2df0"
     }
   },
   "checks": [
@@ -37,13 +66,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +86,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

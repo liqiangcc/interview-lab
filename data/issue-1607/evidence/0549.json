@@ -9,19 +9,40 @@
   "expected_body_sha256": "45bcf9b44e61103c88a39bb6b05d8decb9d093303952e9071789fb0ab6ba7265",
   "expected_source_revision_id": "xhs-note:67c5b1c9000000002901410b:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 2,
+        "excerpt": "问题：（今天的数据量上涨到 2 亿，你怎么做到不停间的扩容）（怎么解决数据倾斜问题）（两张有关联关系的表怎么更新）（在进行分库分表后，怎么保证数据一致性）"
+      },
+      {
+        "line_number": 3,
+        "excerpt": "part2: 八股（root 浮点运算符，它在运算的时候需要注意什么）（一个核心线程数，最大线程数的实际计算）（Java中Hashmap扩容过程，扩容会对性能有影响吗）（B+数叶子节点满了会做什么操作）（一个例子怎么建索引）（spring 里面 AOP 底层使用的核心技术有哪些）（Spring两个Bean循环依赖怎么解决）（熟悉的设计模式有哪些）（单例模式怎么保证线程安全）（设计模式里的六大设计原则）（Full GC和Young GC什么时候出现）"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67c5b1c9000000002901410b.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "5ea48b57bfb496359968b56ed1a3d14c3f1ef0f0",
-    "locator": "issue-body-copy:lines-108-116",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> part1: 介绍一个亮点的项目（业务背景，技术架构，负责的模块，面临的挑战，怎么解决的）\n> 问题：（今天的数据量上涨到 2 亿，你怎么做到不停间的扩容）（怎么解决数据倾斜问题）（两张有关联关系的表怎么更新）（在进行分库分表后，怎么保证数据一致性）\n> part2: 八股（root 浮点运算符，它在运算的时候需要注意什么）（一个核心线程数，最大线程数的实际计算）（Java中Hashmap扩容过程，扩容会对性能有影响吗）（B+数叶子节点满了会做什么操作）（一个例子怎么建索引）（spring 里面 AOP 底层使用的核心技术有哪些）（Spring两个Bean循环依赖怎么解决）（熟悉的设计模式有哪些）（单例模式怎么保证线程安全）（设计模式里的六大设计原则）（Full GC和Young GC什么时候出现）\n> 还问了一些最近在学什么等，没有让写代码，可能是KPI面吧[叹气R]\n> 去年也面过这个部门，不过岗位不一样，当时一点都没准备，不知道是不是留下了差面评导致这样的[哭惹R][哭惹R]\n> #互联网大厂[话题]# #校招[话题]##阿里[话题]##闲鱼[话题]##Java[话题]# #春招[话题]#\n>",
+    "byte_size": 1248,
+    "sha256": "213946ec81b494a3bc65f4b9235b2e145a64bfc44efdcff95e1448250e22f7fe",
+    "locator": "note_desc:1-6",
+    "excerpt": "part1: 介绍一个亮点的项目（业务背景，技术架构，负责的模块，面临的挑战，怎么解决的）\n问题：（今天的数据量上涨到 2 亿，你怎么做到不停间的扩容）（怎么解决数据倾斜问题）（两张有关联关系的表怎么更新）（在进行分库分表后，怎么保证数据一致性）\npart2: 八股（root 浮点运算符，它在运算的时候需要注意什么）（一个核心线程数，最大线程数的实际计算）（Java中Hashmap扩容过程，扩容会对性能有影响吗）（B+数叶子节点满了会做什么操作）（一个例子怎么建索引）（spring 里面 AOP 底层使用的核心技术有哪些）（Spring两个Bean循环依赖怎么解决）（熟悉的设计模式有哪些）（单例模式怎么保证线程安全）（设计模式里的六大设计原则）（Full GC和Young GC什么时候出现）\n还问了一些最近在学什么等，没有让写代码，可能是KPI面吧[叹气R]\n去年也面过这个部门，不过岗位不一样，当时一点都没准备，不知道是不是留下了差面评导致这样的[哭惹R][哭惹R]\n#互联网大厂[话题]# #校招[话题]##阿里[话题]##闲鱼[话题]##Java[话题]# #春招[话题]#",
+    "text": "part1: 介绍一个亮点的项目（业务背景，技术架构，负责的模块，面临的挑战，怎么解决的）\n问题：（今天的数据量上涨到 2 亿，你怎么做到不停间的扩容）（怎么解决数据倾斜问题）（两张有关联关系的表怎么更新）（在进行分库分表后，怎么保证数据一致性）\npart2: 八股（root 浮点运算符，它在运算的时候需要注意什么）（一个核心线程数，最大线程数的实际计算）（Java中Hashmap扩容过程，扩容会对性能有影响吗）（B+数叶子节点满了会做什么操作）（一个例子怎么建索引）（spring 里面 AOP 底层使用的核心技术有哪些）（Spring两个Bean循环依赖怎么解决）（熟悉的设计模式有哪些）（单例模式怎么保证线程安全）（设计模式里的六大设计原则）（Full GC和Young GC什么时候出现）\n还问了一些最近在学什么等，没有让写代码，可能是KPI面吧[叹气R]\n去年也面过这个部门，不过岗位不一样，当时一点都没准备，不知道是不是留下了差面评导致这样的[哭惹R][哭惹R]\n#互联网大厂[话题]# #校招[话题]##阿里[话题]##闲鱼[话题]##Java[话题]# #春招[话题]#\n",
+    "line_count": 7,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:67c5b1c9000000002901410b.txt",
+      "byte_size": 1248,
+      "git_blob_sha": "5ea48b57bfb496359968b56ed1a3d14c3f1ef0f0"
     }
   },
   "checks": [
@@ -37,13 +58,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +78,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

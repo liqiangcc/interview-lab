@@ -9,19 +9,48 @@
   "expected_body_sha256": "eead838db64dea85b047b36da8027713594b97cde4b98e15c568e2a2583512fa",
   "expected_source_revision_id": "xhs-note:6801f5fb000000001d02ead7:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 1,
+        "excerpt": "国内面试这个八股吟唱真不行吧，家人们。虽然今天问的都是很基础的，但还是一段时间不看讲的时候就大脑空空[捂脸R]"
+      },
+      {
+        "line_number": 5,
+        "excerpt": "用户注册、登录验证是怎么做的，密码是怎么存的，加盐哈希怎么做的（这么简单的问题真over think想太多了）"
+      },
+      {
+        "line_number": 7,
+        "excerpt": "八股："
+      },
+      {
+        "line_number": 14,
+        "excerpt": "今天面之前根据简历项目内容只重点看了数据库，redis，并发，计算机网络。\u0014被提问的时候心路历程就是：啊，react，前端八股，没看。Java，一面问了他们用的go，没看。机器学习，算法八股，也没看。精准识别出了每一道八股，但都在前几周看的、荒芜的记忆深处。"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/6801f5fb000000001d02ead7.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "50e2e50211d1a427f3f7744924e3cf0348492b64",
-    "locator": "issue-body-copy:lines-103-123",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 国内面试这个八股吟唱真不行吧，家人们。虽然今天问的都是很基础的，但还是一段时间不看讲的时候就大脑空空[捂脸R]\n> 项目：\n> 项目整体框架怎么设计的\n> 数据库里关于某个业务的几个表、字段怎么设计的、状态转移是什么样的、整体业务流程是什么样的\n> 用户注册、登录验证是怎么做的，密码是怎么存的，加盐哈希怎么做的（这么简单的问题真over think想太多了）\n> \t\n> 八股：\n> react相比于直接写JavaScript的优势，组件是个什么概念\n> java的单例模式，线程池的几种创建方法\n> 根据你的理解说一下什么是机器学习，梯度下降和梯度上升是什么\n> \t\n> 算法题：最长回文序列。就只剩leetcode刷的还行了，直接秒了。（话说为什么国内面试官都喜欢直接开写，不让我讲思路呢。好不容易到我能讲出来的环节了好想说话啊[叹气R]）习惯了上来先写了O(n^2)，写完想讲优化的时候意识到我是不是该直接写最优解。面试官让第二种讲思路就行就又讲了一下马拉车算法。\n> \t\n> 今天面之前根据简历项目内容只重点看了数据库，redis，并发，计算机网络。^T被提问的时候心路历程就是：啊，react，前端八股，没看。Java，一面问了他们用的go，没看。机器学习，算法八股，也没看。精准识别出了每一道八股，但都在前几周看的、荒芜的记忆深处。\n> 面试官发现没得可问了，都开始问我机器学习了。作为一个 4年的AI狗，被面试官质疑AI背景的时候真是红温了，急了，给他一通乱说。\n> \t\n> 哥们这个面试紧张的症状，遇到没太准备的题就没有抓手不知道从何说起，半天倒不出东西来，再面多少场才能像兄弟们一样能说会道、张口就来呢[失望R]我太想进步了\n> #面经[话题]# #春招[话题]# #找实习[话题]# #大厂[话题]# #面试问题[话题]# #互联网大厂[话题]#\n>",
+    "byte_size": 1998,
+    "sha256": "bced45110ad148c374d96e4bd247d30b141ce9ed4b69d55ff8f106872b4e2992",
+    "locator": "note_desc:1-9",
+    "excerpt": "国内面试这个八股吟唱真不行吧，家人们。虽然今天问的都是很基础的，但还是一段时间不看讲的时候就大脑空空[捂脸R]\n项目：\n项目整体框架怎么设计的\n数据库里关于某个业务的几个表、字段怎么设计的、状态转移是什么样的、整体业务流程是什么样的\n用户注册、登录验证是怎么做的，密码是怎么存的，加盐哈希怎么做的（这么简单的问题真over think想太多了）\n八股：\nreact相比于直接写JavaScript的优势，组件是个什么概念\njava的单例模式，线程池的几种创建方法",
+    "text": "国内面试这个八股吟唱真不行吧，家人们。虽然今天问的都是很基础的，但还是一段时间不看讲的时候就大脑空空[捂脸R]\n项目：\n项目整体框架怎么设计的\n数据库里关于某个业务的几个表、字段怎么设计的、状态转移是什么样的、整体业务流程是什么样的\n用户注册、登录验证是怎么做的，密码是怎么存的，加盐哈希怎么做的（这么简单的问题真over think想太多了）\n\t\n八股：\nreact相比于直接写JavaScript的优势，组件是个什么概念\njava的单例模式，线程池的几种创建方法\n根据你的理解说一下什么是机器学习，梯度下降和梯度上升是什么\n\t\n算法题：最长回文序列。就只剩leetcode刷的还行了，直接秒了。（话说为什么国内面试官都喜欢直接开写，不让我讲思路呢。好不容易到我能讲出来的环节了好想说话啊[叹气R]）习惯了上来先写了O(n^2)，写完想讲优化的时候意识到我是不是该直接写最优解。面试官让第二种讲思路就行就又讲了一下马拉车算法。\n\t\n今天面之前根据简历项目内容只重点看了数据库，redis，并发，计算机网络。\u0014被提问的时候心路历程就是：啊，react，前端八股，没看。Java，一面问了他们用的go，没看。机器学习，算法八股，也没看。精准识别出了每一道八股，但都在前几周看的、荒芜的记忆深处。\n面试官发现没得可问了，都开始问我机器学习了。作为一个 4年的AI狗，被面试官质疑AI背景的时候真是红温了，急了，给他一通乱说。\n\t\n哥们这个面试紧张的症状，遇到没太准备的题就没有抓手不知道从何说起，半天倒不出东西来，再面多少场才能像兄弟们一样能说会道、张口就来呢[失望R]我太想进步了\n#面经[话题]# #春招[话题]# #找实习[话题]# #大厂[话题]# #面试问题[话题]# #互联网大厂[话题]#\n",
+    "line_count": 19,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:6801f5fb000000001d02ead7.txt",
+      "byte_size": 1998,
+      "git_blob_sha": "50e2e50211d1a427f3f7744924e3cf0348492b64"
     }
   },
   "checks": [
@@ -37,13 +66,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +86,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

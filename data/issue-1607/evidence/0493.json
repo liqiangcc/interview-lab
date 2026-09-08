@@ -9,19 +9,48 @@
   "expected_body_sha256": "b870857e468d30efa29477fc1c45e69b214806237655e2d2a88c24a3915e7b53",
   "expected_source_revision_id": "xhs-note:67a4c574000000001701da4d:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 2,
+        "excerpt": "其实网上讲如何准备算法的人很多。这是一个有点大众化的问题，但这次我会站在一个面试官的角度去讲一下。算法准备的重要性和如何去准备呢？首先，我们来看看在什么情况下会考算法题。"
+      },
+      {
+        "line_number": 6,
+        "excerpt": "此外，很多公司（尤其是外企和国内的一些互联网公司）在制度上有要求，必须考察算法。面试官也有一定的考核压力，如果候选人通过了面试但算法部分表现不佳，这会对面试官的考核产生影响。除了这种公司规章制度上的要求之外，剩下的基本上取决于面试官的个人风格。我的风格一般是：如果你工作5年之内，没有什么突出的项目亮点，我可能会问一些八股文、数据结构和算法相关的问题。但如果系统设计聊得很好，面试时间大约一个小时，可能就不会再问算法了。并不是说不考察数据结构和算法，而是可能会口头问一些相关问题，比如在系统设计层面会涉及到一些数据结构。"
+      },
+      {
+        "line_number": 9,
+        "excerpt": "首先，不要盲目追求题目的数量，题目的质量比数量更重要。像我之前的同事去面试时只刷了三四十道题，但他们挑了一些重点标签的题目反复刷，把每一种算法都搞清楚了。所以在刷题时可以按标签进行选择，在LeetCode或其他平台上都可以支持标签筛选。标签筛选后，你可以按照提交频率找到高频题，比较有代表性的题目。"
+      },
+      {
+        "line_number": 10,
+        "excerpt": "建议你按章节来刷题，比如这两天刷字符串，下周刷树。每个章节都覆盖之后，再去刷Hot100之类的高频题或参加周赛。很多经典题目值得反复刷，保持手感很重要。每隔一两天刷一道题，保持状态。"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67a4c574000000001701da4d.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "7287095e0f5096d101cd432bba0ecf78aa6e1acb",
-    "locator": "issue-body-copy:lines-108-122",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 先自我介绍一下，我是在大厂工作10年以上的JAVA程序员，希望我的文章可以分享一些经验帮助到你。\n> 其实网上讲如何准备算法的人很多。这是一个有点大众化的问题，但这次我会站在一个面试官的角度去讲一下。算法准备的重要性和如何去准备呢？首先，我们来看看在什么情况下会考算法题。\n> 在校招面试中，有两个主要原因会让你被问到算法题：\n> 1. 学生通常没有很好的项目，所以面试官对项目的期望值本来就不高。\n> 2. 考察学生的潜力：作为学生，面试官更关注你的基础知识。对于编程岗位，数据结构和算法是基础中的基础 😊\n> 此外，很多公司（尤其是外企和国内的一些互联网公司）在制度上有要求，必须考察算法。面试官也有一定的考核压力，如果候选人通过了面试但算法部分表现不佳，这会对面试官的考核产生影响。除了这种公司规章制度上的要求之外，剩下的基本上取决于面试官的个人风格。我的风格一般是：如果你工作5年之内，没有什么突出的项目亮点，我可能会问一些八股文、数据结构和算法相关的问题。但如果系统设计聊得很好，面试时间大约一个小时，可能就不会再问算法了。并不是说不考察数据结构和算法，而是可能会口头问一些相关问题，比如在系统设计层面会涉及到一些数据结构。\n> 这里想强调的是，为什么说是5年之内？因为5年内还是有一定的潜力可挖的。但如果超过5年还没有拿得出手的项目，我认为也没有必要浪费大家的时间了，虽然有点残酷，但这的确是我真实的想法 😔\n> 如何准备算法???\n> 首先，不要盲目追求题目的数量，题目的质量比数量更重要。像我之前的同事去面试时只刷了三四十道题，但他们挑了一些重点标签的题目反复刷，把每一种算法都搞清楚了。所以在刷题时可以按标签进行选择，在LeetCode或其他平台上都可以支持标签筛选。标签筛选后，你可以按照提交频率找到高频题，比较有代表性的题目。\n> 建议你按章节来刷题，比如这两天刷字符串，下周刷树。每个章节都覆盖之后，再去刷Hot100之类的高频题或参加周赛。很多经典题目值得反复刷，保持手感很重要。每隔一两天刷一道题，保持状态。\n> 希望大家都能找到心仪的工作！如果有任何问题，也可以私聊我哦 🍀\n> #JAVA春招[话题]# #java[话题]#\n>",
+    "byte_size": 2594,
+    "sha256": "bf91b275175e32d8dd833a3f08a63e1a3afdd2af74294d79b75d4a7b5f275b79",
+    "locator": "note_desc:1-8",
+    "excerpt": "先自我介绍一下，我是在大厂工作10年以上的JAVA程序员，希望我的文章可以分享一些经验帮助到你。\n其实网上讲如何准备算法的人很多。这是一个有点大众化的问题，但这次我会站在一个面试官的角度去讲一下。算法准备的重要性和如何去准备呢？首先，我们来看看在什么情况下会考算法题。\n在校招面试中，有两个主要原因会让你被问到算法题：\n1. 学生通常没有很好的项目，所以面试官对项目的期望值本来就不高。\n2. 考察学生的潜力：作为学生，面试官更关注你的基础知识。对于编程岗位，数据结构和算法是基础中的基础 😊\n此外，很多公司（尤其是外企和国内的一些互联网公司）在制度上有要求，必须考察算法。面试官也有一定的考核压力，如果候选人通过了面试但算法部分表现不佳，这会对面试官的考核产生影响。除了这种公司规章制度上的要求之外，剩下的基本上取决于面试官的个人风格。我的风格一般是：如果你工作5年之内，没有什么突出的项目亮点，我可能会问一些八股文、数据结构和算法相关的问题。但如果系统设计聊得很好，面试时间大约一个小时，可能就不会再问算法了。并不是说不考察数据结构和算法，而是可能会口头问一些相关问题，比如在系统设计层面会涉及到一些数据结构。\n这里想强调的是，为什么说是5年之内？因为5年内还是有一定的潜力可挖的。但如果超过5年还没有拿得出手的项目，我认为也没有必要浪费大家的时间了，虽然有点残酷，但这的确是我真实的想法 😔\n如何准备算法???",
+    "text": "先自我介绍一下，我是在大厂工作10年以上的JAVA程序员，希望我的文章可以分享一些经验帮助到你。\n其实网上讲如何准备算法的人很多。这是一个有点大众化的问题，但这次我会站在一个面试官的角度去讲一下。算法准备的重要性和如何去准备呢？首先，我们来看看在什么情况下会考算法题。\n在校招面试中，有两个主要原因会让你被问到算法题：\n1. 学生通常没有很好的项目，所以面试官对项目的期望值本来就不高。\n2. 考察学生的潜力：作为学生，面试官更关注你的基础知识。对于编程岗位，数据结构和算法是基础中的基础 😊\n此外，很多公司（尤其是外企和国内的一些互联网公司）在制度上有要求，必须考察算法。面试官也有一定的考核压力，如果候选人通过了面试但算法部分表现不佳，这会对面试官的考核产生影响。除了这种公司规章制度上的要求之外，剩下的基本上取决于面试官的个人风格。我的风格一般是：如果你工作5年之内，没有什么突出的项目亮点，我可能会问一些八股文、数据结构和算法相关的问题。但如果系统设计聊得很好，面试时间大约一个小时，可能就不会再问算法了。并不是说不考察数据结构和算法，而是可能会口头问一些相关问题，比如在系统设计层面会涉及到一些数据结构。\n这里想强调的是，为什么说是5年之内？因为5年内还是有一定的潜力可挖的。但如果超过5年还没有拿得出手的项目，我认为也没有必要浪费大家的时间了，虽然有点残酷，但这的确是我真实的想法 😔\n如何准备算法???\n首先，不要盲目追求题目的数量，题目的质量比数量更重要。像我之前的同事去面试时只刷了三四十道题，但他们挑了一些重点标签的题目反复刷，把每一种算法都搞清楚了。所以在刷题时可以按标签进行选择，在LeetCode或其他平台上都可以支持标签筛选。标签筛选后，你可以按照提交频率找到高频题，比较有代表性的题目。\n建议你按章节来刷题，比如这两天刷字符串，下周刷树。每个章节都覆盖之后，再去刷Hot100之类的高频题或参加周赛。很多经典题目值得反复刷，保持手感很重要。每隔一两天刷一道题，保持状态。\n希望大家都能找到心仪的工作！如果有任何问题，也可以私聊我哦 🍀\n#JAVA春招[话题]# #java[话题]#\n",
+    "line_count": 13,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:67a4c574000000001701da4d.txt",
+      "byte_size": 2594,
+      "git_blob_sha": "7287095e0f5096d101cd432bba0ecf78aa6e1acb"
     }
   },
   "checks": [
@@ -37,13 +66,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +86,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

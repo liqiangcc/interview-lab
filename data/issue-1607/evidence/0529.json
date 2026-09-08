@@ -9,19 +9,44 @@
   "expected_body_sha256": "6dc8ff4795610e8707744dbd7fe8bae3cef5d40e27d686e0659d3bd9a3cd3fd4",
   "expected_source_revision_id": "xhs-note:67baf2f1000000002802b6f3:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 17,
+        "excerpt": "13.两次握手行不行，为什么不行，会有什么问题"
+      },
+      {
+        "line_number": 21,
+        "excerpt": "17.一致性哈希有什么问题？怎么解决？"
+      },
+      {
+        "line_number": 36,
+        "excerpt": "只能想到这些了，当时没有录音，八股感觉还问了一些问题但是忘记了，顺序也不一定对"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67baf2f1000000002802b6f3.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "d32f258ee8c1de787fb8122d9baaf9c073197d6b",
-    "locator": "issue-body-copy:lines-108-147",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 美团：\n> 笔试凌晨做的，题不难全A了\n> 泡了一阵子后被捞了，两点多收到约面电话，当时睡午觉睡得懵懵的，以为我外卖到了，电话说他是美团的我让他外卖放门口打脸\n> 一面，92mins ：\n> 1.死锁 死锁的必要条件 如何预防\n> 2.LinkedHashMap底层数据结构\n> 3.进程通信的方式\n> 4.int有没有缓存\n> 5.如果有一个任务 他最大也就100个元素 放在hashmap里 要设置多大的初值才能不让他扩容\n> 6.MySQL联合索引\n> 7.事务的四大特性\n> 8.持久性怎么做\n> 9说一下MySQL日志\n> 10.有一个线程池执行一个接口，接口运行时间在20-50ms，每秒大概1000个任务，你设计一个线程池，怎么设计参数\n> 11.如何确认核心线程数？如果我是io密集型怎么做\n> 12.tcp三次握手\n> 13.两次握手行不行，为什么不行，会有什么问题\n> 14.redis用过吗，里面的布隆过滤器说一说\n> 15.判重我直接在redis里面查不就好了？为什么要用布隆过滤器呢？\n> 16.后来提到了短链接项目用了布隆过滤器，还提到了分库分表，然后面试官问你知道一致性哈希吗？\n> 17.一致性哈希有什么问题？怎么解决？\n> 18.来说说你的实习项目吧，你实习那段给你印象最深的经历是什么\n> 19.那你们遇到的最大的困难是什么？\n> 20.那你们怎么解决的？\n> 21.技术上的难题呢？怎么解决的\n> 22.看到你用到了很多中间件，他们是用来做什么的？es的增量同步怎么做\n> 23.倒排索引说一下\n> 24.为什么实习项目考虑要用es\n> 25.你们实习的时候es是怎么考虑设置es节点数量的\n> 手撕代码：\n> 26.1 算法题1：leetcode21.合并两个有序链表\n> 26.2 算法题2：leetcode20.有效的括号：一个字符串有三种括号，如果括号能匹配返回true 否则false\n> 26.3 算法题3：leetcode112路径总和：一棵树从根节点到叶子节点，如果能找到路径和为target，返回true\n> 26.4 算法题4：leetcode23.合并k个升序链表。前面的代码你可以复制。前面合并了两个链表，如果合并k个链表呢？\n> 手撕出了3题简单1题困难，挺友好的。\n> 只能想到这些了，当时没有录音，八股感觉还问了一些问题但是忘记了，顺序也不一定对\n> #互联网大厂[话题]# #Java面试[话题]# #面经[话题]# #美团[话题]#\n>",
+    "byte_size": 2343,
+    "sha256": "75f9083835df038c116a3f595eeb609a914c5ca842b84f5a50c7a800da408bc1",
+    "locator": "note_desc:1-8",
+    "excerpt": "美团：\n笔试凌晨做的，题不难全A了\n泡了一阵子后被捞了，两点多收到约面电话，当时睡午觉睡得懵懵的，以为我外卖到了，电话说他是美团的我让他外卖放门口打脸\n一面，92mins ：\n1.死锁 死锁的必要条件 如何预防\n2.LinkedHashMap底层数据结构\n3.进程通信的方式\n4.int有没有缓存",
+    "text": "美团：\n笔试凌晨做的，题不难全A了\n泡了一阵子后被捞了，两点多收到约面电话，当时睡午觉睡得懵懵的，以为我外卖到了，电话说他是美团的我让他外卖放门口打脸\n一面，92mins ：\n1.死锁 死锁的必要条件 如何预防\n2.LinkedHashMap底层数据结构\n3.进程通信的方式\n4.int有没有缓存\n5.如果有一个任务 他最大也就100个元素 放在hashmap里 要设置多大的初值才能不让他扩容\n6.MySQL联合索引\n7.事务的四大特性\n8.持久性怎么做\n9说一下MySQL日志\n10.有一个线程池执行一个接口，接口运行时间在20-50ms，每秒大概1000个任务，你设计一个线程池，怎么设计参数\n11.如何确认核心线程数？如果我是io密集型怎么做\n12.tcp三次握手\n13.两次握手行不行，为什么不行，会有什么问题\n14.redis用过吗，里面的布隆过滤器说一说\n15.判重我直接在redis里面查不就好了？为什么要用布隆过滤器呢？\n16.后来提到了短链接项目用了布隆过滤器，还提到了分库分表，然后面试官问你知道一致性哈希吗？\n17.一致性哈希有什么问题？怎么解决？\n18.来说说你的实习项目吧，你实习那段给你印象最深的经历是什么\n19.那你们遇到的最大的困难是什么？\n20.那你们怎么解决的？\n21.技术上的难题呢？怎么解决的\n22.看到你用到了很多中间件，他们是用来做什么的？es的增量同步怎么做\n23.倒排索引说一下\n24.为什么实习项目考虑要用es\n25.你们实习的时候es是怎么考虑设置es节点数量的\n手撕代码：\n26.1 算法题1：leetcode21.合并两个有序链表\n26.2 算法题2：leetcode20.有效的括号：一个字符串有三种括号，如果括号能匹配返回true 否则false\n26.3 算法题3：leetcode112路径总和：一棵树从根节点到叶子节点，如果能找到路径和为target，返回true\n26.4 算法题4：leetcode23.合并k个升序链表。前面的代码你可以复制。前面合并了两个链表，如果合并k个链表呢？\n手撕出了3题简单1题困难，挺友好的。\n只能想到这些了，当时没有录音，八股感觉还问了一些问题但是忘记了，顺序也不一定对\n#互联网大厂[话题]# #Java面试[话题]# #面经[话题]# #美团[话题]#\n",
+    "line_count": 38,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:67baf2f1000000002802b6f3.txt",
+      "byte_size": 2343,
+      "git_blob_sha": "d32f258ee8c1de787fb8122d9baaf9c073197d6b"
     }
   },
   "checks": [
@@ -37,13 +62,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +82,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

@@ -9,19 +9,31 @@
   "expected_body_sha256": "c59a9b678ddcfa03f2122e85a4dec32f6ba7ad70f6d951c200a3c26401d70530",
   "expected_source_revision_id": "xhs-note:67491af90000000008006113:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67491af90000000008006113.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "30b550e8805b8a72d88405d61dc1bf400f1d9fc1",
-    "locator": "issue-body-copy:lines-108-112",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 贝壳怎么样\n> 可以进吗，有人在上班吗，推荐还是避雷#万能的小红书[话题]# #深圳找工作好难[话题]# #贝壳[话题]# #房地产[话题]##\n>",
+    "byte_size": 169,
+    "sha256": "f53e5ee18bfe1b92d5d11592f60c1407557670fcc30375b8d5fb2ead2a671c3f",
+    "locator": "note_desc:1-2",
+    "excerpt": "贝壳怎么样\n可以进吗，有人在上班吗，推荐还是避雷#万能的小红书[话题]# #深圳找工作好难[话题]# #贝壳[话题]# #房地产[话题]##",
+    "text": "贝壳怎么样\n可以进吗，有人在上班吗，推荐还是避雷#万能的小红书[话题]# #深圳找工作好难[话题]# #贝壳[话题]# #房地产[话题]##\n",
+    "line_count": 3,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:67491af90000000008006113.txt",
+      "byte_size": 169,
+      "git_blob_sha": "30b550e8805b8a72d88405d61dc1bf400f1d9fc1"
     }
   },
   "checks": [
@@ -37,13 +49,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +69,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

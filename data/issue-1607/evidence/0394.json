@@ -9,19 +9,40 @@
   "expected_body_sha256": "37cd0ad97eb3d50919b706e275cbf5808c3443a888a87fb122af817eb042fadd",
   "expected_source_revision_id": "xhs-note:672b14670000000019014c54:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 19,
+        "excerpt": "- RC和RR分别解决了什么问题？"
+      },
+      {
+        "line_number": 27,
+        "excerpt": "﻿#后端面试[话题]#﻿ ﻿#java面试八股文[话题]#﻿ ﻿#快手秋招[话题]#﻿"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/672b14670000000019014c54.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "94d93fb8bb42d5b1ad0adb1242cb647c3f8f0eb6",
-    "locator": "issue-body-copy:lines-117-146",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> - 自我介绍\n> - JWT原理\n> - 做项目有遇到什么困难吗\n> - Java内存区域\n> - 本地方法栈和虚拟机栈存什么\n> - 方法区存啥\n> - 常量存在哪里？\n> - char数组存在哪里？\n> - 堆里面都存啥？\n> - 什么情况下回OOM\n> - 什么情况下会堆溢出？\n> - 对并发的理解，什么时候需要并发？\n> - synchronized和volatile区别\n> - 线程池核心参数，7个，一个个说，以及执行任务的流程\n> - Redis的持久化机制\n> - RDB和AOF原理\n> - MySQL的MVCC，根据什么实现的？视图的作用？undo log作用？\n> - RR和RC下MVCC的区别？\n> - RC和RR分别解决了什么问题？\n> - String事务失效场景。\n> - 手撕 单例模式 归并排序\n> - 重排链表就发了一句话，没看懂，给我换了一道，最长公共子序列\n> 反问：\n> - 部门业务\n> - 一共几轮面试\n> - 面试结果多久出\n> ﻿#后端面试[话题]#﻿ ﻿#java面试八股文[话题]#﻿ ﻿#快手秋招[话题]#﻿\n>",
+    "byte_size": 943,
+    "sha256": "6c65c9211a22000de82eb6d76d6f6eba1cf6e563c26b02c0d3dd6ea66eb76d63",
+    "locator": "note_desc:1-8",
+    "excerpt": "- 自我介绍\n- JWT原理\n- 做项目有遇到什么困难吗\n- Java内存区域\n- 本地方法栈和虚拟机栈存什么\n- 方法区存啥\n- 常量存在哪里？\n- char数组存在哪里？",
+    "text": "- 自我介绍\n- JWT原理\n- 做项目有遇到什么困难吗\n- Java内存区域\n- 本地方法栈和虚拟机栈存什么\n- 方法区存啥\n- 常量存在哪里？\n- char数组存在哪里？\n- 堆里面都存啥？\n- 什么情况下回OOM\n- 什么情况下会堆溢出？\n- 对并发的理解，什么时候需要并发？\n- synchronized和volatile区别\n- 线程池核心参数，7个，一个个说，以及执行任务的流程\n- Redis的持久化机制\n- RDB和AOF原理\n- MySQL的MVCC，根据什么实现的？视图的作用？undo log作用？\n- RR和RC下MVCC的区别？\n- RC和RR分别解决了什么问题？\n- String事务失效场景。\n- 手撕 单例模式 归并排序\n- 重排链表就发了一句话，没看懂，给我换了一道，最长公共子序列\n反问：\n- 部门业务\n- 一共几轮面试\n- 面试结果多久出\n﻿#后端面试[话题]#﻿ ﻿#java面试八股文[话题]#﻿ ﻿#快手秋招[话题]#﻿\n",
+    "line_count": 28,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:672b14670000000019014c54.txt",
+      "byte_size": 943,
+      "git_blob_sha": "94d93fb8bb42d5b1ad0adb1242cb647c3f8f0eb6"
     }
   },
   "checks": [
@@ -37,13 +58,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +78,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

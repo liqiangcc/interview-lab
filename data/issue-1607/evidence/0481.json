@@ -9,19 +9,48 @@
   "expected_body_sha256": "a0249eafccdab004e09a2addb5568eb956d27f1b14fb134df3030fc0c7972043",
   "expected_source_revision_id": "xhs-note:677e722b0000000018013824:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "proposal-only",
+    "proposed_decision": "single-interview",
+    "basis": "first-person experienced process fact plus question evidence; no appointment/advice marker",
+    "basis_lines": [
+      {
+        "line_number": 3,
+        "excerpt": "面试流程："
+      },
+      {
+        "line_number": 7,
+        "excerpt": "问题非常多且难（可能本人比较菜）"
+      },
+      {
+        "line_number": 8,
+        "excerpt": "英文部分：自我介绍➕项目介绍➕项目困难点➕一些基本技术问题"
+      },
+      {
+        "line_number": 10,
+        "excerpt": "隔了两个月仍然对一个问题比较深刻：Node.js 除了用来连接数据库你还用来做过什么？SSR之类的？（没有这方面经验不好意思）"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/677e722b0000000018013824.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "f39dd7095e7e960176691fdeb4c0ec89b9b47a99",
-    "locator": "issue-body-copy:lines-108-125",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 岗位在51jobs可以投递\n> 我之前是朋友内推进去面试\n> 面试流程：\n> hr电话沟通10分钟，英文自我介绍，然后推进第一轮面试\n> 隔了几天后，大连hr约线上面试\n> 线上是Teams面试，但两位面试官均无开摄像头（后向朋友了解是没有权限）\n> 问题非常多且难（可能本人比较菜）\n> 英文部分：自我介绍➕项目介绍➕项目困难点➕一些基本技术问题\n> 粤语部分：涉及React框架➕Vue框架➕Java基础➕Mysql的当场练习一题\n> 隔了两个月仍然对一个问题比较深刻：Node.js 除了用来连接数据库你还用来做过什么？SSR之类的？（没有这方面经验不好意思）\n> \t\n> 在面完这场面试后，其实加深了我对面试的恐惧，技术涉及面广，自己没有很牢固的知识。\n> 隔了三周后发邮件询问hr，一面挂\n> 记录一下自己的面试经历，也或许对一些应聘该岗位的uu有帮助\n> #java[话题]# #计算机专业[话题]# #就业[话题]# #埃森哲[话题]# #埃森哲校招[话题]# #秋招[话题]# #面试[话题]#\n>",
+    "byte_size": 1078,
+    "sha256": "f8fa842b61c8b9c505a6fd0540b04fbeafcff8178bb3c3b4a7118a364358e356",
+    "locator": "note_desc:1-8",
+    "excerpt": "岗位在51jobs可以投递\n我之前是朋友内推进去面试\n面试流程：\nhr电话沟通10分钟，英文自我介绍，然后推进第一轮面试\n隔了几天后，大连hr约线上面试\n线上是Teams面试，但两位面试官均无开摄像头（后向朋友了解是没有权限）\n问题非常多且难（可能本人比较菜）\n英文部分：自我介绍➕项目介绍➕项目困难点➕一些基本技术问题",
+    "text": "岗位在51jobs可以投递\n我之前是朋友内推进去面试\n面试流程：\nhr电话沟通10分钟，英文自我介绍，然后推进第一轮面试\n隔了几天后，大连hr约线上面试\n线上是Teams面试，但两位面试官均无开摄像头（后向朋友了解是没有权限）\n问题非常多且难（可能本人比较菜）\n英文部分：自我介绍➕项目介绍➕项目困难点➕一些基本技术问题\n粤语部分：涉及React框架➕Vue框架➕Java基础➕Mysql的当场练习一题\n隔了两个月仍然对一个问题比较深刻：Node.js 除了用来连接数据库你还用来做过什么？SSR之类的？（没有这方面经验不好意思）\n\t\n在面完这场面试后，其实加深了我对面试的恐惧，技术涉及面广，自己没有很牢固的知识。\n隔了三周后发邮件询问hr，一面挂\n记录一下自己的面试经历，也或许对一些应聘该岗位的uu有帮助\n#java[话题]# #计算机专业[话题]# #就业[话题]# #埃森哲[话题]# #埃森哲校招[话题]# #秋招[话题]# #面试[话题]#\n",
+    "line_count": 16,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:677e722b0000000018013824.txt",
+      "byte_size": 1078,
+      "git_blob_sha": "f39dd7095e7e960176691fdeb4c0ec89b9b47a99"
     }
   },
   "checks": [
@@ -37,13 +66,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +86,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

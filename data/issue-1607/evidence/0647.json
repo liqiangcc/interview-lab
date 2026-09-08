@@ -9,19 +9,44 @@
   "expected_body_sha256": "844c4da42ec1f9bd2afc540e959ab5665d22b3b45aaf864f17cb79ad37ee5634",
   "expected_source_revision_id": "xhs-note:67e55f22000000001c01e146:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 23,
+        "excerpt": "14. mysql事务的几大问题，在什么隔离性下解决？"
+      },
+      {
+        "line_number": 41,
+        "excerpt": "问kmp会写吗？我说可以试试，就写了，结果最后运行死循环了，和面试官检查10分钟没检查出来哪有问题[笑哭R]"
+      },
+      {
+        "line_number": 42,
+        "excerpt": "面试官说整体上写出来了，就是有点小问题，然后结束。"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67e55f22000000001c01e146.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "e241c1c25e1d3a8445fb64184df0b1f61459dcaf",
-    "locator": "issue-body-copy:lines-103-148",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 1. collection接口下有哪几个大类，有什么集合\n> 2. arraylist和linkedlist除了底层结构，还有啥不同\n> 答：随机访问、性能、扩容这些\n> 3. 那这两个占用空间呢？\n> 答：单节点linkedlist占用空间大，因为存指针，整体看arraylist可能会预先分配不必要的内存\n> 4. arraylist扩容倍率？\n> 答：1.5倍\n> 5. 是否线程安全？\n> 答：都不是\n> 6. concurrenthashmap底层？\n> 答：开背\n> 7. 各自怎么保证线程安全，什么锁？\n> 答：1.7 reentrantlock，1.8 cas ➕synchronized\n> 8. 1.7的segment数组大小有上限吗？最多支持多少线程并发？\n> 答：16个，所以支持16个线程并发\n> 9. 什么时候链表进化成红黑树，为什么是红黑树\n> 10. 红黑树插入和删除各自最多需要多少次旋转染色能完成维护？\n> 答：这个没答出来，猜都是3次，告诉我说插入2次，删除3次\n> 11. 线程池创建有哪几种方式？\n> 答：自己创，或者用那四个\n> 12. 线程池的7个参数，以及添加任务时怎么和参数交互\n> 13. 4个拒绝策略\n> 14. mysql事务的几大问题，在什么隔离性下解决？\n> 15.上一题回答提了一嘴可重复读能部分解决幻读，于是追问哪一部分的幻读能解决，哪一部分的不能解决[doge]\n> 答：给自己挖坑了，记得在小林coding上看到过，但是记不清了，胡答了一波\n> 16. 又追问那没解决的那一部分可以怎么解决？\n> 答：next key锁 间隙锁（这个记得[笑哭R]）\n> 17. redis持久化手段？\n> 答：RDB AOF这些\n> 18. RDB怎么配置建快照时机，阻塞和非阻塞保存方法\n> 答：save 时长 次数；save bgsave\n> 18. AOF一直追加写，文件太大了，怎么解决的？\n> 答：重写那一套\n> 19. redis4.0引入了什么持久化新特性？\n> 答：混合持久化，重写时建快照，AOF追加写入\n> 20. rabbitmq和kafka区别，使用场景，以及对推拉模式的支持\n> 后续拷打项目\n> 最后做题，子串匹配\n> 问思路，说了爆搜或者kmp\n> 问爆搜能优化吗？说了提前剪枝，后面不足k个就不搜了\n> 问kmp会写吗？我说可以试试，就写了，结果最后运行死循环了，和面试官检查10分钟没检查出来哪有问题[笑哭R]\n> 面试官说整体上写出来了，就是有点小问题，然后结束。\n> 当天下午电话约了二面～\n>",
+    "byte_size": 2324,
+    "sha256": "ec7a7688af156c75e7604367514632d0fd7073b4ee401cd38bdad065cd427f09",
+    "locator": "note_desc:1-8",
+    "excerpt": "1. collection接口下有哪几个大类，有什么集合\n2. arraylist和linkedlist除了底层结构，还有啥不同\n答：随机访问、性能、扩容这些\n3. 那这两个占用空间呢？\n答：单节点linkedlist占用空间大，因为存指针，整体看arraylist可能会预先分配不必要的内存\n4. arraylist扩容倍率？\n答：1.5倍\n5. 是否线程安全？",
+    "text": "1. collection接口下有哪几个大类，有什么集合\n2. arraylist和linkedlist除了底层结构，还有啥不同\n答：随机访问、性能、扩容这些\n3. 那这两个占用空间呢？\n答：单节点linkedlist占用空间大，因为存指针，整体看arraylist可能会预先分配不必要的内存\n4. arraylist扩容倍率？\n答：1.5倍\n5. 是否线程安全？\n答：都不是\n6. concurrenthashmap底层？\n答：开背\n7. 各自怎么保证线程安全，什么锁？\n答：1.7 reentrantlock，1.8 cas ➕synchronized\n8. 1.7的segment数组大小有上限吗？最多支持多少线程并发？\n答：16个，所以支持16个线程并发\n9. 什么时候链表进化成红黑树，为什么是红黑树\n10. 红黑树插入和删除各自最多需要多少次旋转染色能完成维护？\n答：这个没答出来，猜都是3次，告诉我说插入2次，删除3次\n11. 线程池创建有哪几种方式？\n答：自己创，或者用那四个\n12. 线程池的7个参数，以及添加任务时怎么和参数交互\n13. 4个拒绝策略\n14. mysql事务的几大问题，在什么隔离性下解决？\n15.上一题回答提了一嘴可重复读能部分解决幻读，于是追问哪一部分的幻读能解决，哪一部分的不能解决[doge]\n答：给自己挖坑了，记得在小林coding上看到过，但是记不清了，胡答了一波\n16. 又追问那没解决的那一部分可以怎么解决？\n答：next key锁 间隙锁（这个记得[笑哭R]）\n17. redis持久化手段？\n答：RDB AOF这些\n18. RDB怎么配置建快照时机，阻塞和非阻塞保存方法\n答：save 时长 次数；save bgsave\n18. AOF一直追加写，文件太大了，怎么解决的？\n答：重写那一套\n19. redis4.0引入了什么持久化新特性？\n答：混合持久化，重写时建快照，AOF追加写入\n20. rabbitmq和kafka区别，使用场景，以及对推拉模式的支持\n后续拷打项目\n最后做题，子串匹配\n问思路，说了爆搜或者kmp\n问爆搜能优化吗？说了提前剪枝，后面不足k个就不搜了\n问kmp会写吗？我说可以试试，就写了，结果最后运行死循环了，和面试官检查10分钟没检查出来哪有问题[笑哭R]\n面试官说整体上写出来了，就是有点小问题，然后结束。\n当天下午电话约了二面～\n",
+    "line_count": 44,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:67e55f22000000001c01e146.txt",
+      "byte_size": 2324,
+      "git_blob_sha": "e241c1c25e1d3a8445fb64184df0b1f61459dcaf"
     }
   },
   "checks": [
@@ -37,13 +62,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +82,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

@@ -9,19 +9,40 @@
   "expected_body_sha256": "cd8787ab4034f4ecd8af8cda9516c000f96fba6df202455346af26ce08ff681e",
   "expected_source_revision_id": "xhs-note:676a4cc6000000000b02025b:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "proposal-only",
+    "proposed_decision": "single-interview",
+    "basis": "first-person experienced process fact plus question evidence; no appointment/advice marker",
+    "basis_lines": [
+      {
+        "line_number": 3,
+        "excerpt": "面完的唯一体感就是问的很细，具体到举出例题、场景等考验知识的应用能力。uu们看面经题目就可以发现问了很多代码设计的原因、代码性能以及如何解决性能开销的问题。"
+      },
+      {
+        "line_number": 6,
+        "excerpt": "最后两张图附上了其中一个小问题的整理答案。个人认为是问的最细的一次举例题回答的问题。其余整理的答案大家可以私聊我要在线文档链接，目前整理了小红书上两篇面经的部分题答案。"
+      }
+    ]
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/676a4cc6000000000b02025b.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "a15e08777b346b30da45db513cc821c4aaeb42ed",
-    "locator": "issue-body-copy:lines-153-162",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 第二篇面经分享是百度后端岗位一面，面试官是整个秋招过程中唯二遇到的女面试官。\n> \t\n> 面完的唯一体感就是问的很细，具体到举出例题、场景等考验知识的应用能力。uu们看面经题目就可以发现问了很多代码设计的原因、代码性能以及如何解决性能开销的问题。\n> 虽然一面凉凉，但是确实补充了很多知识点和面试技巧，明确感受到在之后的面试更游刃有余。\n> \t\n> 最后两张图附上了其中一个小问题的整理答案。个人认为是问的最细的一次举例题回答的问题。其余整理的答案大家可以私聊我要在线文档链接，目前整理了小红书上两篇面经的部分题答案。\n> ﻿#面经[话题]#﻿ ﻿#校招[话题]#﻿ ﻿#百度实习[话题]#﻿ ﻿#百度正式批[话题]#﻿\n>",
+    "byte_size": 837,
+    "sha256": "673347e35a51c77eba4836311cc41606c2646a12971e981f4136ff009a5f32f6",
+    "locator": "note_desc:1-7",
+    "excerpt": "第二篇面经分享是百度后端岗位一面，面试官是整个秋招过程中唯二遇到的女面试官。\n面完的唯一体感就是问的很细，具体到举出例题、场景等考验知识的应用能力。uu们看面经题目就可以发现问了很多代码设计的原因、代码性能以及如何解决性能开销的问题。\n虽然一面凉凉，但是确实补充了很多知识点和面试技巧，明确感受到在之后的面试更游刃有余。\n最后两张图附上了其中一个小问题的整理答案。个人认为是问的最细的一次举例题回答的问题。其余整理的答案大家可以私聊我要在线文档链接，目前整理了小红书上两篇面经的部分题答案。\n﻿#面经[话题]#﻿ ﻿#校招[话题]#﻿ ﻿#百度实习[话题]#﻿ ﻿#百度正式批[话题]#﻿",
+    "text": "第二篇面经分享是百度后端岗位一面，面试官是整个秋招过程中唯二遇到的女面试官。\n\t\n面完的唯一体感就是问的很细，具体到举出例题、场景等考验知识的应用能力。uu们看面经题目就可以发现问了很多代码设计的原因、代码性能以及如何解决性能开销的问题。\n虽然一面凉凉，但是确实补充了很多知识点和面试技巧，明确感受到在之后的面试更游刃有余。\n\t\n最后两张图附上了其中一个小问题的整理答案。个人认为是问的最细的一次举例题回答的问题。其余整理的答案大家可以私聊我要在线文档链接，目前整理了小红书上两篇面经的部分题答案。\n﻿#面经[话题]#﻿ ﻿#校招[话题]#﻿ ﻿#百度实习[话题]#﻿ ﻿#百度正式批[话题]#﻿\n",
+    "line_count": 8,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:676a4cc6000000000b02025b.txt",
+      "byte_size": 837,
+      "git_blob_sha": "a15e08777b346b30da45db513cc821c4aaeb42ed"
     }
   },
   "checks": [
@@ -37,13 +58,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +78,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

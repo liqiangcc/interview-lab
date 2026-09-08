@@ -9,19 +9,31 @@
   "expected_body_sha256": "dd5b8bf47afbbbae2cc770e4ba3e17b1776114cf02a6f33f9b3e34694ec9bffe",
   "expected_source_revision_id": "xhs-note:67d3a6a600000000090385de:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
+  "evidence_status": "review-required",
   "decision": "pending",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": []
+  },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67d3a6a600000000090385de.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
     "provenance": "source_projection",
     "git_blob_sha": "89d6de9b9490403b7770f68f679f8fb04e0f21d2",
-    "locator": "issue-body-copy:lines-103-112",
-    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 上午刚投递的直接打电话过来了，一脸懵逼就开始面试了   答得不好有什么影响吗\n> 上来先问C++11的东西，然后设置场景\n> 死锁 场景\n> 具体的业务场景 balabala\n> 面完说看到简历了，先电话面一下锁定，刷小红书没刷到的操作呢，有点儿懵逼\n> \t\n> #转码[话题]# #互联网大厂实习[话题]# #实习[话题]# #找实习[话题]# #互联网大厂[话题]# #腾讯[话题]#\n>",
+    "byte_size": 439,
+    "sha256": "b4bb111b38216277f6d56107e9aea9a4e53c368e2c4164a864b66641cc6601a0",
+    "locator": "note_desc:1-7",
+    "excerpt": "上午刚投递的直接打电话过来了，一脸懵逼就开始面试了   答得不好有什么影响吗\n上来先问C++11的东西，然后设置场景\n死锁 场景\n具体的业务场景 balabala\n面完说看到简历了，先电话面一下锁定，刷小红书没刷到的操作呢，有点儿懵逼\n#转码[话题]# #互联网大厂实习[话题]# #实习[话题]# #找实习[话题]# #互联网大厂[话题]# #腾讯[话题]#",
+    "text": "上午刚投递的直接打电话过来了，一脸懵逼就开始面试了   答得不好有什么影响吗\n上来先问C++11的东西，然后设置场景\n死锁 场景\n具体的业务场景 balabala\n面完说看到简历了，先电话面一下锁定，刷小红书没刷到的操作呢，有点儿懵逼\n\t\n#转码[话题]# #互联网大厂实习[话题]# #实习[话题]# #找实习[话题]# #互联网大厂[话题]# #腾讯[话题]#\n",
+    "line_count": 8,
     "verification": {
-      "status": "blocked",
-      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+      "status": "verified",
+      "fetch": "cache:67d3a6a600000000090385de.txt",
+      "byte_size": 439,
+      "git_blob_sha": "89d6de9b9490403b7770f68f679f8fb04e0f21d2"
     }
   },
   "checks": [
@@ -37,13 +49,13 @@
     },
     {
       "check_id": "source_content_coverage",
-      "result": "blocked",
-      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -57,7 +69,7 @@
     }
   ],
   "limitations": [
-    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]
