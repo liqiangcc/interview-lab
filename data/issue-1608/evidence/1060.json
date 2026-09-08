@@ -1,0 +1,65 @@
+{
+  "schema_version": "issue-1608-boundary-evidence.v1",
+  "issue_number": 1060,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/1060",
+  "source_note_id": "xhs-note:688cb2fc0000000003025b2f",
+  "source_revision_id": "xhs-note:688cb2fc0000000003025b2f:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "sufficient-for-controller-review",
+  "decision": "single-interview",
+  "rationale": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。",
+  "artifact": {
+    "ref": "liqiangcc/xhs:note_desc/688cb2fc0000000003025b2f.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "c1d0e16058d04bcbb3b8a9bfdb271eb885c0e80f",
+    "byte_size": 501,
+    "content_sha256": "2fe0906e17047af31ecb5f76668260caf7dcde17ae8c38497f5aca3fe8874e98"
+  },
+  "excerpts": [
+    {
+      "line": 1,
+      "locator": "source-projection:artifact-line:1",
+      "excerpt": "百度这边是从提前批开始投的，当时java只有上海的岗，并且岗位很少，但是还是直接冲了。目前和三面面试官加了微信，说后续谈薪应该在11月，需要等后续意向确认才谈薪。"
+    }
+  ],
+  "case_keys": [],
+  "case_evidence": [],
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    }
+  ],
+  "limitations": [
+    "This local evidence is not a GitHub review comment; no live evidence comment was created by this run.",
+    "Boundary Review only determines 0/1/N and does not create InterviewNote Issues or source-ready/learning labels."
+  ]
+}

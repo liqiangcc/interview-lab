@@ -1,0 +1,107 @@
+{
+  "schema_version": "issue-1608-boundary-evidence.v1",
+  "issue_number": 865,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/865",
+  "source_note_id": "xhs-note:682f2001000000002202458d",
+  "source_revision_id": "xhs-note:682f2001000000002202458d:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "sufficient-for-controller-review",
+  "decision": "multi-interview",
+  "rationale": "固定 Source projection 明确记录多个相互独立的公司/流程；按稳定 case key 分离，未把同一流程的多轮机械拆开。",
+  "artifact": {
+    "ref": "liqiangcc/xhs:note_desc/682f2001000000002202458d.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "ab58b2b2e571b8ad3a7c7e0b1cbe0e6c81ac27f4",
+    "byte_size": 1972,
+    "content_sha256": "1fb35b6bd1865bed0f1a479bc381419bc0a959e15e2eea209bf635fe1bb4eb1f"
+  },
+  "excerpts": [
+    {
+      "line": 1,
+      "locator": "source-projection:artifact-line:1",
+      "excerpt": "鄙人在找java后端开发的实习，投了不少厂子，其中给面的大厂有四个吧，感觉这四次大厂面试就是各种各样的💩。我也感觉该给面的都差不多了，总结一下这四种💩吧。"
+    }
+  ],
+  "case_keys": [
+    "baidu",
+    "jd",
+    "meituan",
+    "ant"
+  ],
+  "case_evidence": [
+    {
+      "case_key": "baidu",
+      "anchor": "百度",
+      "evidence": {
+        "line": 2,
+        "locator": "source-projection:artifact-line:2",
+        "excerpt": "首先第一个是百度，第一次面试就是大厂还挺激动，也没有笔试，直接投了简历就约面试了。刚上来就直接手撕，虽然方法不是最优解，也算是暴力出来了，后面答的问题也都不是特难，多少都说了一些。第一次还算是一个正常的答辩吧[鄙视R]。"
+      }
+    },
+    {
+      "case_key": "jd",
+      "anchor": "京东",
+      "evidence": {
+        "line": 3,
+        "locator": "source-projection:artifact-line:3",
+        "excerpt": "第二个是京东，面试官先问了一些简单的问题，然后就对我的项目拷打，鄙人跟着黑马做的项目 ，没有过多深入的思考，对着一个问题疯狂输出，怎么也答不过去。最后直接给了我两点建议，连反问的流程都没有就挂掉了。第二次的答辩太便秘了，怎么答也答不上来[石化R][石化R][石化R]。"
+      }
+    },
+    {
+      "case_key": "meituan",
+      "anchor": "美团",
+      "evidence": {
+        "line": 4,
+        "locator": "source-projection:artifact-line:4",
+        "excerpt": "第三个是美团，这次答辩算是较美好的一次，都是比较基础的八股，那答的一个爽呀，我听着面试官一直说不错不错，感觉顺畅无比。既然是答辩，终究还是卡了壳。可惜好久没做算法了，给了两道算法题，都没做出来，便秘，又是便秘[失望R][失望R][失望R]。"
+      }
+    },
+    {
+      "case_key": "ant",
+      "anchor": "蚂蚁",
+      "evidence": {
+        "line": 5,
+        "locator": "source-projection:artifact-line:5",
+        "excerpt": "第四次是今天晚上的蚂蚁，这次和以往都不一样，直接省去了自我介绍的环节。照着我的简历挨个找问题问。问题是一个接一个呀，既有项目的问题，也有八股的问题。答的是一个不会一个会的。面试官也是经验十足，见我有不会的就等我画面静止十来秒问下一个了[捂脸R]。也没有手撕，光问了三四十分钟就结束了。这次答辩虽然顺畅但是窜完了，对于每一个不会的问题卡在摄像头前，恨不得立刻点击离开会议[哭惹R][哭惹R][哭惹R]。"
+      }
+    }
+  ],
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "固定 Source projection 明确记录多个相互独立的公司/流程；按稳定 case key 分离，未把同一流程的多轮机械拆开。"
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    }
+  ],
+  "limitations": [
+    "This local evidence is not a GitHub review comment; no live evidence comment was created by this run.",
+    "Boundary Review only determines 0/1/N and does not create InterviewNote Issues or source-ready/learning labels."
+  ]
+}
