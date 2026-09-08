@@ -19,14 +19,19 @@ function classifyProjection(projectionText) {
   const text = String(projectionText || '').replace(/\\n/g, '\n');
   const lines = text.split(/\r?\n/);
   const lineEvidence = (patterns) => lines.map((line, index) => ({ line, number: index + 1 })).filter(({ line }) => patterns.some((pattern) => pattern.test(line))).slice(0, 4).map(({ line, number }) => ({ line_number: number, excerpt: line }));
-  const firstPerson = /(?:我|本人|自己|亲身)/.test(text);
-  const processFact = /(?:参加过?面试|面试了|面完|被问|面试官问|面试流程|一面问|二面问|三面问|问了我|收到.*结果|拿到.*offer|面试挂|面试通过)/.test(text);
-  const questionEvidence = /(?:问了|问题|面试题|题目|Q\s*\d+|怎么|为什么|如何|介绍一下)/.test(text);
-  const declined = /(?:没面|未面|没有面|不面|放弃面试|拒绝面试)/.test(text);
-  const appointmentOrAdvice = /(?:邀约|邀请|预约|约面|面试安排|据说|有没有.*情况|推荐去|准备面试|面试有所帮助|场景题|八股|资料|经验分享|求职招聘|岗位|职位|招聘|工作内容|薪资|base|外包|明天|后天|下周|几点|时间)/i.test(text);
-  if (declined && !processFact) return { status: 'proposal-only', proposed_decision: 'not-interview', basis: 'explicit refusal/non-interview fact without an experienced interview process', basis_lines: lineEvidence([/(没面|未面|没有面|不面|放弃面试|拒绝面试)/]) };
-  if (firstPerson && processFact && questionEvidence && !appointmentOrAdvice) return { status: 'proposal-only', proposed_decision: 'single-interview', basis: 'first-person experienced process fact plus question evidence; no appointment/advice marker', basis_lines: lineEvidence([/(参加过?面试|面试了|面完|被问|面试官问|面试流程|一面问|二面问|三面问|问了我)/, /(?:问了|问题|面试题|题目|Q\s*\d+|怎么|为什么|如何|介绍一下)/]) };
-  return { status: 'review-required', proposed_decision: 'pending', basis: 'interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content', basis_lines: lineEvidence([/(邀约|邀请|预约|据说|准备面试|场景题|八股|资料|经验分享|求职招聘|问题|面试题|题目)/]) };
+  // Marketing calls to action such as “关注我不迷路” are not first-person
+  // experience. Remove only that known CTA before testing event ownership.
+  const semanticText = text.replace(/关注我不迷路/g, '');
+  const firstPerson = /(?:我|本人|自己|亲身)/.test(semanticText);
+  const processFact = /(?:实际面(?:了|试)?|参加(?:过|了)?[^\n]{0,12}面试|面过|面完|被问|面试流程|面试感受|面试经历|第?[一二三]面|一面问|二面问|三面问|问了我|收到.*结果|拿到.*offer|面试挂|面试通过)/.test(text);
+  const questionEvidence = /(?:问了|问题|面试题|题目|算法题|八股|反问|Q\s*\d+|怎么|为什么|如何|介绍一下|(?:^|\n)\s*\d+[.、)]|(?:^|\n)\s*⭕)/m.test(text);
+  const declined = /(?:我|本人|自己)\s*(?:也|就|直接)?\s*(?:拒绝|拒了|不面|没去面|没参加|未参加|没有参加|放弃面试)/.test(text);
+  const marketingOrRepost = /(?:通关秘籍|标准答案|帮助\s*\d+\s*位|关注我不迷路|点赞收藏|建议反复背诵|整理给各位|广告|课程推广|营销|转载)/i.test(text);
+  const experiencedEvent = firstPerson && processFact;
+  if (declined && !experiencedEvent) return { status: 'proposal-only', proposed_decision: 'not-interview', basis: 'explicit first-person refusal/non-attendance fact', basis_lines: lineEvidence([/(我|本人|自己).*(拒绝|拒了|不面|没去面|没参加|未参加|没有参加|放弃面试)/]) };
+  if (marketingOrRepost) return { status: 'proposal-only', proposed_decision: 'not-interview', basis: 'explicit marketing/repost or answer-key language takes precedence over interview-like wording', basis_lines: lineEvidence([/(通关秘籍|标准答案|帮助\s*\d+\s*位|关注我不迷路|点赞收藏|建议反复背诵|整理给各位|广告|课程推广|营销|转载)/i]) };
+  if (experiencedEvent && questionEvidence) return { status: 'proposal-only', proposed_decision: 'single-interview', basis: 'first-person experienced interview process plus structured question evidence; generic advice/job context does not override the experienced event', basis_lines: lineEvidence([/(实际面(?:了|试)?|参加.*面试|面试了|面过|面完|被问|面试官|面试感受|面试经历|第?[一二三]面|一面问|二面问|三面问|问了我)/, /(?:问了|问题|面试题|题目|算法题|八股|反问|Q\s*\d+|怎么|为什么|如何|介绍一下|^\s*\d+[.、)]|^\s*⭕)/]) };
+  return { status: 'review-required', proposed_decision: 'pending', basis: 'interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content', basis_lines: lineEvidence([/(邀约|邀请|预约|据说|准备面试|场景题|八股|资料|经验分享|求职招聘|问题|面试题|题目|通关秘籍|标准答案)/]) };
 }
 
 function evidenceFor(item) {
