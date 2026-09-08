@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/liqiangcc/interview-lab/schemas/issue-1607-boundary-selection.schema.json",
+  "title": "Issue 1607 Boundary B selection",
+  "type": "object",
+  "required": ["schema_version", "repository", "parent_issue", "child_issue", "scope", "source_snapshot", "source_fetch", "frozen_at", "source_verification", "excluded", "items"],
+  "properties": {
+    "schema_version": { "const": "issue-1607-boundary-b-selection.v1" },
+    "repository": { "const": "liqiangcc/interview-lab" },
+    "parent_issue": { "const": 1605 },
+    "child_issue": { "const": 1607 },
+    "scope": { "type": "object", "required": ["first_issue", "last_issue", "expected_count"], "properties": { "first_issue": { "const": 393 }, "last_issue": { "const": 765 }, "expected_count": { "const": 367 } } },
+    "source_snapshot": { "type": "object", "required": ["repository", "ref"], "properties": { "repository": { "const": "liqiangcc/xhs" }, "ref": { "const": "95b77bb261048059846273688e4b90a2e108b437" } } },
+    "source_fetch": { "type": "object", "required": ["transport", "concurrency", "retries_per_item", "cache_validation"], "properties": { "transport": { "const": "controlled-raw-get" }, "concurrency": { "const": 1 }, "retries_per_item": { "const": 3 }, "cache_validation": { "const": ["byte_size", "git_blob_sha"] } } },
+    "frozen_at": { "type": "string", "format": "date-time" },
+    "source_verification": { "enum": ["verified", "partial", "blocked"] },
+    "excluded": { "type": "array" },
+    "items": { "type": "array", "minItems": 367, "maxItems": 367, "items": { "$ref": "#/$defs/item" } }
+  },
+  "$defs": {
+    "item": {
+      "type": "object",
+      "required": ["issue_number", "issue_url", "body_sha256", "source_note_id", "source_revision_id", "source_repository", "source_repository_ref", "source_projection", "status"],
+      "properties": {
+        "issue_number": { "type": "integer", "minimum": 393, "maximum": 765 },
+        "body_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "source_note_id": { "type": "string", "pattern": "^xhs-note:" },
+        "source_repository": { "const": "liqiangcc/xhs" },
+        "source_repository_ref": { "const": "95b77bb261048059846273688e4b90a2e108b437" },
+        "status": { "enum": ["verified", "blocked"] },
+        "source_projection": { "type": "object", "required": ["artifact", "locator", "excerpt", "text", "line_count"] }
+      }
+    }
+  }
+}

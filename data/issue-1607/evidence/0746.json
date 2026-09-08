@@ -1,0 +1,81 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0746-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 746,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/746",
+  "source_note_id": "xhs-note:68005695000000001d014f13",
+  "expected_body_sha256": "1ab07f1c9b1f6653a4d81e4bb336382663e0cd08bcd62da1312aeaf7521191a6",
+  "expected_source_revision_id": "xhs-note:68005695000000001d014f13:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 2,
+        "excerpt": "看了两个项目，八股看了MySQL和redis，还没开始刷leetcode，刚开始投没想到会约面[哭惹R]有什么速通的方法吗[皱眉R][皱眉R][皱眉R]"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68005695000000001d014f13.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "0da5176d34832edd7c86c0e1dc86ad20c547eafb",
+    "byte_size": 358,
+    "sha256": "bef6d89245b7c42541704d63d89f4b4335c84862d032c4793d051ad0bca4a244",
+    "locator": "note_desc:1-3",
+    "excerpt": "一个星期怎么速通Java后端面试！！！急急急[抓狂R][抓狂R]\n看了两个项目，八股看了MySQL和redis，还没开始刷leetcode，刚开始投没想到会约面[哭惹R]有什么速通的方法吗[皱眉R][皱眉R][皱眉R]\n#java[话题]# #后端开发[话题]# #面试[话题]# #计算机[话题]# #实习[话题]# #程序员[话题]#",
+    "text": "一个星期怎么速通Java后端面试！！！急急急[抓狂R][抓狂R]\n看了两个项目，八股看了MySQL和redis，还没开始刷leetcode，刚开始投没想到会约面[哭惹R]有什么速通的方法吗[皱眉R][皱眉R][皱眉R]\n#java[话题]# #后端开发[话题]# #面试[话题]# #计算机[话题]# #实习[话题]# #程序员[话题]#\n",
+    "line_count": 4,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:68005695000000001d014f13.txt",
+      "byte_size": 358,
+      "git_blob_sha": "0da5176d34832edd7c86c0e1dc86ad20c547eafb"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

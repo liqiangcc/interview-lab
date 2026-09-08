@@ -1,0 +1,85 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0413-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 413,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/413",
+  "source_note_id": "xhs-note:673b255f0000000006017fc6",
+  "expected_body_sha256": "9788c92a900570360cc66766f743280d833d6a9c285a726fb58f12767759b796",
+  "expected_source_revision_id": "xhs-note:673b255f0000000006017fc6:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 4,
+        "excerpt": "4.五个线程对一个变量进行100次+1操作，问预计这个值最后是多少?(分析了会产生并发问题，小于500。)为什么会产生这个问题，哪个硬件设备?(答了cpu里面栈在这个过程的执行，基本乱说了)，什么场景下不用任务保护措施下，他一定等于五百。(不太清楚，面试官引导说单cpu，单cpu一定等于五百(感觉也有并发问题))"
+      },
+      {
+        "line_number": 15,
+        "excerpt": "评价(基础还可以，就是回答问题可以简洁点。)"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/673b255f0000000006017fc6.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "75ac85ab4b589e352de27ab1c9a6a2a177589417",
+    "byte_size": 2215,
+    "sha256": "597867c6136349ff5cc7f1fe994c607dfa60a44ff59c46d0816bb8a0ccc4bc20",
+    "locator": "note_desc:1-8",
+    "excerpt": "1.介绍一下TCP，(回答了握手挥手拥塞控制)，追问:还有什么机制，TCP故障后有什么机制?(听都没听说过)\n2.介绍-下IO模型(回答了NIO，AIO，BIO，io多路复用)\n3.ArrayList怎么删除中间的连续元素?讲了subList，stream流，然后他问底层原理是什么?(没看过)\n4.五个线程对一个变量进行100次+1操作，问预计这个值最后是多少?(分析了会产生并发问题，小于500。)为什么会产生这个问题，哪个硬件设备?(答了cpu里面栈在这个过程的执行，基本乱说了)，什么场景下不用任务保护措施下，他一定等于五百。(不太清楚，面试官引导说单cpu，单cpu一定等于五百(感觉也有并发问题))\n5.spring的ioc和AOP，springboot对所有请求打日志和鉴权(答了AOP和拦截器)，前后端不分离，前端静态资源拦截器还起效嘛?(不起效，要通过mvc才起效)，那要拦截请求怎么办(不会)\n6.高并发数据库根据name查id，怎么优化。(答了sql优化，索引覆盖。redis缓存，spring本地缓存)，如果redis没有这个数据怎么办?(说了些什么预热机制，就一些缓存三件套的解决方案)，如果redis崩了呢(多级缓存)怎么设置多级缓存?(答了mybatis缓存，面试官不满意，引导下用本地内存通过spring配置类在启动时就往concurrentHashMap<>()注入值)\n7.springCloud，客户端怎么获取nacos注册中心的信息(拉取存在本地)，本地缓存更新的时机(答了通过配置多少秒拉去一次)，更新时机不敢太了解。\n8.redis为什么性能好(内存，内部实现多线程，io多路复用，事务派发，存储的数据结构)",
+    "text": "1.介绍一下TCP，(回答了握手挥手拥塞控制)，追问:还有什么机制，TCP故障后有什么机制?(听都没听说过)\n2.介绍-下IO模型(回答了NIO，AIO，BIO，io多路复用)\n3.ArrayList怎么删除中间的连续元素?讲了subList，stream流，然后他问底层原理是什么?(没看过)\n4.五个线程对一个变量进行100次+1操作，问预计这个值最后是多少?(分析了会产生并发问题，小于500。)为什么会产生这个问题，哪个硬件设备?(答了cpu里面栈在这个过程的执行，基本乱说了)，什么场景下不用任务保护措施下，他一定等于五百。(不太清楚，面试官引导说单cpu，单cpu一定等于五百(感觉也有并发问题))\n5.spring的ioc和AOP，springboot对所有请求打日志和鉴权(答了AOP和拦截器)，前后端不分离，前端静态资源拦截器还起效嘛?(不起效，要通过mvc才起效)，那要拦截请求怎么办(不会)\n6.高并发数据库根据name查id，怎么优化。(答了sql优化，索引覆盖。redis缓存，spring本地缓存)，如果redis没有这个数据怎么办?(说了些什么预热机制，就一些缓存三件套的解决方案)，如果redis崩了呢(多级缓存)怎么设置多级缓存?(答了mybatis缓存，面试官不满意，引导下用本地内存通过spring配置类在启动时就往concurrentHashMap<>()注入值)\n7.springCloud，客户端怎么获取nacos注册中心的信息(拉取存在本地)，本地缓存更新的时机(答了通过配置多少秒拉去一次)，更新时机不敢太了解。\n8.redis为什么性能好(内存，内部实现多线程，io多路复用，事务派发，存储的数据结构)\n9.springboot处理请求是单线程还是多线程?(多线程)\n算法:大数加法，但是有符号。\"-123\"+\"22\"=“-101\"\n20分钟没写出来，太菜了\n反问:部门在哪(深圳)，\n用什么技术(java)，\n一共几面(五面?????!!!!五面??)，\n评价(基础还可以，就是回答问题可以简洁点。)\n什么时候出结果(尽快)。\n凉透了。\n#找实习[话题]# #计算机求职攻略[话题]# #研究生日常[话题]# #计算机求职攻略[话题]# #后端开发[话题]# #腾讯实习[话题]#\n",
+    "line_count": 19,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:673b255f0000000006017fc6.txt",
+      "byte_size": 2215,
+      "git_blob_sha": "75ac85ab4b589e352de27ab1c9a6a2a177589417"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

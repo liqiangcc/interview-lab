@@ -1,0 +1,81 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0651-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 651,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/651",
+  "source_note_id": "xhs-note:67e6936d000000001c01162f",
+  "expected_body_sha256": "248c47a4e4bbbb4e84c7b9c7b58b8800cfac132709a9a5e1171853f9e23c577d",
+  "expected_source_revision_id": "xhs-note:67e6936d000000001c01162f:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 3,
+        "excerpt": "结合项目问八股，穿插考察代码阅读，最后手撕。面试官会引导着提问，有疏漏会帮我指出，还会教我呢，面试体验超级好！已约二面 ٩(๑^o^๑)۶"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67e6936d000000001c01162f.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "ec5af210aa34c575828d5b8cfaf6a3f08457625b",
+    "byte_size": 1136,
+    "sha256": "f1152db14b2cfe66751284b9c52c3030937be252c3257c50e5b53164dbc35799",
+    "locator": "note_desc:1-10",
+    "excerpt": "2025 年 3 月 26 日\n结合项目问八股，穿插考察代码阅读，最后手撕。面试官会引导着提问，有疏漏会帮我指出，还会教我呢，面试体验超级好！已约二面 ٩(๑^o^๑)۶\njwt与session的区别呢\njwt怎么实现过期的呢\nthreadlocal 原理\nthreadlocal内存泄漏\n雪花算法保证全局唯一性\n分布式环境怎么设计保证id唯一的呢",
+    "text": "2025 年 3 月 26 日\n\t\n结合项目问八股，穿插考察代码阅读，最后手撕。面试官会引导着提问，有疏漏会帮我指出，还会教我呢，面试体验超级好！已约二面 ٩(๑^o^๑)۶\n\t\njwt与session的区别呢\njwt怎么实现过期的呢\nthreadlocal 原理\nthreadlocal内存泄漏\n雪花算法保证全局唯一性\n分布式环境怎么设计保证id唯一的呢\nredis缓存三剑客\n缓存击穿的互次锁的实现\n\t\n中间出了一道关于threadlocal 的代码题，阅读代码判断输出是什么，为什么是那样的输出？\n这道代码题如何改可以实现父子进程传递消息\n\t\n项目中服务健康度评分模型如何设计的？\nMySQL 索引\n\t\n阅读 sql 代码题，判断那个执行快，为什么？其中一个用索引，另一个部分用到了索引，但会触发回表\n\t\n阅读代码题，判断输出是什么？考察的是深拷贝和浅拷贝\n\t\nHashmap 原理\nAOP 如何实现的，原理是什么\n动态代理\n\t\n最后手撕 leetcode 岛屿数量，acm 模式\n#Java[话题]# #后端开发[话题]##面经[话题]##百度面经[话题]##暑期实习[话题]#\n",
+    "line_count": 30,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:67e6936d000000001c01162f.txt",
+      "byte_size": 1136,
+      "git_blob_sha": "ec5af210aa34c575828d5b8cfaf6a3f08457625b"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

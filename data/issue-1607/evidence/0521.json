@@ -1,0 +1,76 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0521-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 521,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/521",
+  "source_note_id": "xhs-note:67b71e55000000000900de4f",
+  "expected_body_sha256": "18c86140132c7f62b3d8b410b17b49a05cde23da96765ad93856f633b1525e0e",
+  "expected_source_revision_id": "xhs-note:67b71e55000000000900de4f:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": []
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67b71e55000000000900de4f.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "53a17ea2613d1e43b3168e32f2b9455353f3ed83",
+    "byte_size": 929,
+    "sha256": "26e3d2fd1875a706f9736102168808ea4d00ecfc9071a97c1101032d99b74555",
+    "locator": "note_desc:1-8",
+    "excerpt": "快手-商品审核。请避雷\n快手不愧是互联网行业垫底的存在。招聘上面也开始变花样刷KPI了。\n三十个人，2个人进二面，几个有offer？初筛都乱找！  别人京东觉得不行都是线上婉拒，快手HR真的***。\n招聘上面写的商品审核，实际面试是直播超管。宣讲岗位的工作时间也可以标错\n那我问你，你用了这么多次的PPT怎么这点都不完善。\n面试效率也不行。说好十分钟一个。就五个人面试\n14点面试，我15点半才出来\n整个现场都在招人，跟电销公司一样。果然软件被罚过钱，说明公司也不行。",
+    "text": "快手-商品审核。请避雷\n快手不愧是互联网行业垫底的存在。招聘上面也开始变花样刷KPI了。\n三十个人，2个人进二面，几个有offer？初筛都乱找！  别人京东觉得不行都是线上婉拒，快手HR真的***。\n招聘上面写的商品审核，实际面试是直播超管。宣讲岗位的工作时间也可以标错\n那我问你，你用了这么多次的PPT怎么这点都不完善。\n面试效率也不行。说好十分钟一个。就五个人面试\n14点面试，我15点半才出来\n整个现场都在招人，跟电销公司一样。果然软件被罚过钱，说明公司也不行。\n当然，发这个只是表达情绪，还是希望大家看过这个帖子有面试经验收获，不要走别人的老路。\nBy the way，成都审核岗真的已经很少了，基本都在二三线城市了。\n\t\n平台要封我帖子的话，看看我已经准备给你的申诉理由\n",
+    "line_count": 13,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:67b71e55000000000900de4f.txt",
+      "byte_size": 929,
+      "git_blob_sha": "53a17ea2613d1e43b3168e32f2b9455353f3ed83"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

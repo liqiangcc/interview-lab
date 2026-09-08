@@ -1,0 +1,89 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0643-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 643,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/643",
+  "source_note_id": "xhs-note:67e4e85c000000001c004198",
+  "expected_body_sha256": "2cb857a6c4687957355229fadfbd8c97b8d67df2e233913a2f2492c3dcc4494a",
+  "expected_source_revision_id": "xhs-note:67e4e85c000000001c004198:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 24,
+        "excerpt": "5、项目中遇到的问题，自己咋解决的等等。"
+      },
+      {
+        "line_number": 56,
+        "excerpt": "13、你还有什么问题要问我的吗?"
+      },
+      {
+        "line_number": 57,
+        "excerpt": "#面经[话题]# #面试题[话题]# #百度面试题[话题]# #java[话题]# #程序员[话题]# #互联网大厂[话题]# #面试求职[话题]# #经验分享[话题]#"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67e4e85c000000001c004198.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "8be31f1e8c9f93b20f24b876a9e989abc3d0c2c4",
+    "byte_size": 2785,
+    "sha256": "d8e9611ea25f4f9773690f00b6f6b3e504626cbb72ef7ab623ed06e14c0f77ec",
+    "locator": "note_desc:1-8",
+    "excerpt": "百度Java岗一面:\n1、给一个函数，返回0和1，概率为p和 1-p，请你实现一个函数，使得返回0、1概率一样。\n2、10 亿个 url，每个url大小小于56B，要求去重，内存4G。\n3、把一个 bst 转化成一个双向链表。\n4、http和 https 区别，https 在请求时额外的过程，https是如何保证数据安全的;\n5、IP 地址子网划分;\n6、POST和 GET 区别;\n7、DNS 解析过程;",
+    "text": "百度Java岗一面:\n1、给一个函数，返回0和1，概率为p和 1-p，请你实现一个函数，使得返回0、1概率一样。\n2、10 亿个 url，每个url大小小于56B，要求去重，内存4G。\n3、把一个 bst 转化成一个双向链表。\n4、http和 https 区别，https 在请求时额外的过程，https是如何保证数据安全的;\n5、IP 地址子网划分;\n6、POST和 GET 区别;\n7、DNS 解析过程;\n8、硬链接和软连接区别:\n9、kill 用法，某个进程杀不掉的原因(进入内核态，忽略 kill 信号);\n10、linux 用过的命令;\n11、系统管理命令(如查看内存使用、网络情况)\n12、管道的使用;\n13、grep 的使用;\n14、shell 脚本;\n15、find 命令;\n16.awk 使用\n百度Java岗二面:\n对照着简历问了些东西。\n1、Linux 下的一些指令，?(上一条命令退出时状态)，怎么查看进程，按照内存大小，CPU占用排序等等。(大写M和大写 P)\n2、http 的 get 和 post 方法。\n3、介绍下你所了解的 epoll。\n4、数据库 sql的了解程度。\n5、项目中遇到的问题，自己咋解决的等等。\n6、手写一个全排列:\n7、B树和 B+树。\n8、介绍一下hash，怎么解决冲突。\n9、进程间的通信，共享内存方式的优缺点。百度Java岗三面:\n1、说下你平时看的一些技术博客，书籍;\n2、linux 下的一些指令;\n3、工作中你觉得最不爽的事情是什么;\n4、说下你的优缺点;\n6、有没有想过去创业公司;\n7、写个 strcpy 函数;\n8、说说你自己的性格\n9、给你一个系统(面试官好像是无人车部门的)，后台的逻辑已经实现了，但是前端加载很慢，怎么检测;\n10、以后可能要学习很多新技术，你怎么看;\n11、项目中遇到的困难(提前想好，并且把实现或者优化方法说清楚);\n12、系统的量级、pv、uv等;\n13、应对高并发的解决办法(分布式):\n14、在项目中主要负责了哪些工作。\n15、nginx 的负载均衡;\n16、分布式缓存的一致性，服务器如何扩容(哈希环)\n百度Java岗四面(HR面):\n1、自我介绍\n2、最近读了那些书\n3、你的职业规划是什么样的\n4、你为什会选择这座城市\n5、你的优点是什么\n6、你的缺点是什么\n7、在你过往的项目经历中，你遇到的难点是什么? 怎么解决的?在这个过程中你学到了什么?\n8、你的期望薪资是多少?\n9、你为什么选择我们公司?10、你手上有哪些offer?\n11、你在大学参加了那些社团?\n12、过往的学习经历中遇到过那些坑?怎么解决的?\n13、你还有什么问题要问我的吗?\n#面经[话题]# #面试题[话题]# #百度面试题[话题]# #java[话题]# #程序员[话题]# #互联网大厂[话题]# #面试求职[话题]# #经验分享[话题]#\n",
+    "line_count": 58,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:67e4e85c000000001c004198.txt",
+      "byte_size": 2785,
+      "git_blob_sha": "8be31f1e8c9f93b20f24b876a9e989abc3d0c2c4"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

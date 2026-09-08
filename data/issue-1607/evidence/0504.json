@@ -1,0 +1,85 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0504-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 504,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/504",
+  "source_note_id": "xhs-note:67aae3a3000000001800585b",
+  "expected_body_sha256": "4d7542ddfbe9a70c8fd2cd70a6c3162ccc763697fbd2b528c87eb7e18a939816",
+  "expected_source_revision_id": "xhs-note:67aae3a3000000001800585b:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 17,
+        "excerpt": "* 场景题：用户怎么获取附近的网约车位置，"
+      },
+      {
+        "line_number": 18,
+        "excerpt": "* 最后是给过了，但是体验不是很好，感觉个人经历和岗位不是很match，写了两段科研经历完全没有被问到。。。最后不知道问什么就问了很多八股，但是面试官人很nice，全程是一种聊天或者交流的氛围"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67aae3a3000000001800585b.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "8ec2003ce0a21ac4740a46de500bc0ad159b9ba3",
+    "byte_size": 1104,
+    "sha256": "8722cc4324858cc9c7d1c6145c90051c03b523b4c7da699d9f7f63b899a524cc",
+    "locator": "note_desc:1-8",
+    "excerpt": "✅一面（2月1日已发过）\n✅二面\n开始是在聊实习，主要还是在围绕性能优化在聊，因为部门主要是做性能优化的，而且实习也有很多工作是性能优化相关\n* 介绍一下实习工作\n* 为什么从c++切到rust\n* rust为什么内存安全\n* 优化工作中涉及到了锁，锁的实际开销是夺少\n* 都有哪几种锁",
+    "text": "✅一面（2月1日已发过）\n✅二面\n开始是在聊实习，主要还是在围绕性能优化在聊，因为部门主要是做性能优化的，而且实习也有很多工作是性能优化相关\n* 介绍一下实习工作\n* 为什么从c++切到rust\n* rust为什么内存安全\n* 优化工作中涉及到了锁，锁的实际开销是夺少\n* 都有哪几种锁\n* 锁和原子变量的区别\n* 进程间通信方法\n* Sql中Join的意义是什么\n* 说一下MySQL的B+树\n* 网络模型\n* 熟悉的数据结构和算法\n* C++ weak_ptr\n* 题是两个栈模拟队列\n* 场景题：用户怎么获取附近的网约车位置，\n* 最后是给过了，但是体验不是很好，感觉个人经历和岗位不是很match，写了两段科研经历完全没有被问到。。。最后不知道问什么就问了很多八股，但是面试官人很nice，全程是一种聊天或者交流的氛围\n#互联网大厂[话题]# #计算机专业[话题]# #字节跳动[话题]# #字节面试[话题]# #面经[话题]# #大厂[话题]# #春招[话题]# #后端开发[话题]# #Java[话题]# #tiktok[话题]#\n",
+    "line_count": 20,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:67aae3a3000000001800585b.txt",
+      "byte_size": 1104,
+      "git_blob_sha": "8ec2003ce0a21ac4740a46de500bc0ad159b9ba3"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

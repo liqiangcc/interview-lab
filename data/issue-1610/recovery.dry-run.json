@@ -1,0 +1,734 @@
+{
+  "schema_version": "issue-1610-recovery-dry-run.v1",
+  "scope": "issue-1610-fixed-2",
+  "repository": "liqiangcc/interview-lab",
+  "controller_issue_number": 1605,
+  "scope_issue_number": 1610,
+  "source_snapshot": {
+    "repository": "liqiangcc/xhs",
+    "ref": "95b77bb261048059846273688e4b90a2e108b437"
+  },
+  "selection": {
+    "path": "data/issue-1610/recovery-selection.json",
+    "selection_sha256": "066b44006e2d3047073b702c22e531a6edcf4735ae32027fc181fb7546cc73a7",
+    "controller_body_sha256": "71e8bb8423a81e15c217c9377a522e018d38e3df55e2129f9fdbbd28e44b9ef7",
+    "scope_body_sha256": "4af575a842616b1a814b687f44248b265172e544050a7629293075971dece53d",
+    "fixed_issue_numbers": [
+      1,
+      2
+    ],
+    "source_note_issue_numbers": [
+      903,
+      904
+    ],
+    "overlap_or_extra_items": []
+  },
+  "pinned_artifact_manifest": {
+    "path": "data/issue-1610/pinned-artifact-manifest.json",
+    "sha256": "77cbbff0b093e1407aa62ccf71d4760c78bfe583610797b7f69f12b8cf7d72a5",
+    "verified": true,
+    "item_count": 2
+  },
+  "observed_at": "2026-09-08T02:10:18.065Z",
+  "summary": {
+    "total": 2,
+    "blocked": 2,
+    "candidate_source_ready": 0,
+    "independent_evidence_candidate_count": 2,
+    "live_independent_evidence_count": 0,
+    "recovered_image_count": 0
+  },
+  "items": [
+    {
+      "issue_number": 1,
+      "interview_note_id": "xhs:630e2e22000000001103c490",
+      "source_note_issue_number": 903,
+      "source_note_id": "xhs-note:630e2e22000000001103c490",
+      "expected_interview_body_sha256": "ce1b031f3ca37f2eab50702fe6445d3a6ce296fe36d449e319fe1bcccff44c52",
+      "expected_source_note_body_sha256": "f93ac831ca3ffb15b158a4f8fe0f2195d17de1b1ae36e5514d56c891ef1355e6",
+      "source_revision_id": "xhs-note:630e2e22000000001103c490:snapshot-95b77bb26104",
+      "interview_source_revision_id": "xhs:630e2e22000000001103c490:legacy-r1",
+      "current_status": "blocked",
+      "current_labels": [
+        "quality:image-missing",
+        "source:xhs",
+        "status:blocked",
+        "task:source-recovery",
+        "type:interview-note"
+      ],
+      "source_note_boundary_status": "pending",
+      "recovery_attempts": [
+        {
+          "sequence": 1,
+          "method": "GET",
+          "url": "http://sns-webpic-qc.xhscdn.com/202512212244/fb7e3ba06a2e1b670c5e91af45563c46/01028u01kiyga0ty6e8011ejnow09he9o5!nd_dft_wlteh_webp_3",
+          "requested_at": "2026-09-08T02:09:56.853Z",
+          "completed_at": "2026-09-08T02:09:57.488Z",
+          "curl_exit": 0,
+          "http_code": 403,
+          "content_type": null,
+          "effective_url": "http://sns-webpic-qc.xhscdn.com/202512212244/fb7e3ba06a2e1b670c5e91af45563c46/01028u01kiyga0ty6e8011ejnow09he9o5!nd_dft_wlteh_webp_3",
+          "time_total_seconds": 0.625335,
+          "response_headers": {
+            "content-length": "0",
+            "content-type": null,
+            "date": "Tue, 08 Sep 2026 02:09:57 GMT",
+            "server": "Lego Server"
+          },
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr": null,
+          "accepted_artifact": false
+        },
+        {
+          "sequence": 2,
+          "method": "GET",
+          "url": "http://sns-webpic-qc.xhscdn.com/202512212244/76b89b3e69820f206559f2fcd9220397/01028u01kiyga0ty6e8011ejnow14fctme!nd_dft_wlteh_webp_3",
+          "requested_at": "2026-09-08T02:09:57.490Z",
+          "completed_at": "2026-09-08T02:09:57.863Z",
+          "curl_exit": 0,
+          "http_code": 403,
+          "content_type": null,
+          "effective_url": "http://sns-webpic-qc.xhscdn.com/202512212244/76b89b3e69820f206559f2fcd9220397/01028u01kiyga0ty6e8011ejnow14fctme!nd_dft_wlteh_webp_3",
+          "time_total_seconds": 0.365413,
+          "response_headers": {
+            "content-length": "0",
+            "content-type": null,
+            "date": "Tue, 08 Sep 2026 02:09:57 GMT",
+            "server": "Lego Server"
+          },
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr": null,
+          "accepted_artifact": false
+        }
+      ],
+      "recovery_summary": {
+        "total": 2,
+        "successful": 0,
+        "blocked": 2,
+        "all_nonempty_200_image_responses": false
+      },
+      "checks": [
+        {
+          "check_id": "source_identity",
+          "result": "pass",
+          "note": "Both live records bind the frozen external source identity."
+        },
+        {
+          "check_id": "source_revision_binding",
+          "result": "fail",
+          "note": "InterviewNote uses xhs:630e2e22000000001103c490:legacy-r1; pinned SourceNote uses xhs-note:630e2e22000000001103c490:snapshot-95b77bb26104."
+        },
+        {
+          "check_id": "artifact_reference_integrity",
+          "result": "fail",
+          "note": "InterviewNote artifact refs are legacy/unpinned or do not exactly match the pinned SourceNote artifact set."
+        },
+        {
+          "check_id": "raw_projection_traceability",
+          "result": "fail",
+          "note": "Source projections have no explicit derived_from Raw lineage; Raw is not upgraded."
+        },
+        {
+          "check_id": "source_artifact_provenance",
+          "result": "pass",
+          "note": "Every frozen artifact path/blob was verified against the pinned commit tree."
+        },
+        {
+          "check_id": "known_limitations_recorded",
+          "result": "fail",
+          "note": "InterviewNote does not retain every SourceNote limitation verbatim."
+        },
+        {
+          "check_id": "duplicate_ownership",
+          "result": "pass",
+          "note": "Exact ownership search found only the fixed InterviewNote owner."
+        },
+        {
+          "check_id": "no_fabrication",
+          "result": "pass",
+          "note": "No new source fact was inferred by this dry-run."
+        },
+        {
+          "check_id": "boundary_disposition",
+          "result": "fail",
+          "note": "SourceNote boundary status is pending, not single-interview."
+        },
+        {
+          "check_id": "image_recovery",
+          "result": "fail",
+          "note": "No verified non-empty image artifact was recovered from the recorded URLs."
+        }
+      ],
+      "failed_check_ids": [
+        "source_revision_binding",
+        "artifact_reference_integrity",
+        "raw_projection_traceability",
+        "known_limitations_recorded",
+        "boundary_disposition",
+        "image_recovery"
+      ],
+      "live_independent_evidence_comment_ids": [],
+      "independent_evidence": {
+        "schema_version": "issue-1610-recovery-evidence.v1",
+        "scope": "issue-1610-fixed-2",
+        "repository": "liqiangcc/interview-lab",
+        "controller_issue_number": 1605,
+        "scope_issue_number": 1610,
+        "issue_number": 1,
+        "interview_note_id": "xhs:630e2e22000000001103c490",
+        "source_note_issue_number": 903,
+        "source_note_id": "xhs-note:630e2e22000000001103c490",
+        "expected_interview_body_sha256": "ce1b031f3ca37f2eab50702fe6445d3a6ce296fe36d449e319fe1bcccff44c52",
+        "expected_source_note_body_sha256": "f93ac831ca3ffb15b158a4f8fe0f2195d17de1b1ae36e5514d56c891ef1355e6",
+        "source_revision_id": "xhs-note:630e2e22000000001103c490:snapshot-95b77bb26104",
+        "interview_source_revision_id": "xhs:630e2e22000000001103c490:legacy-r1",
+        "source_snapshot": {
+          "repository": "liqiangcc/xhs",
+          "ref": "95b77bb261048059846273688e4b90a2e108b437"
+        },
+        "pinned_artifact_manifest_sha256": "77cbbff0b093e1407aa62ccf71d4760c78bfe583610797b7f69f12b8cf7d72a5",
+        "recovery_attempts_sha256": "4b2e3c88e89243a8a2406c8a195983bf4362ccf1a1e736d1dbd7c2149dcfe4ff",
+        "checks": [
+          {
+            "check_id": "source_identity",
+            "result": "pass",
+            "note": "Both live records bind the frozen external source identity."
+          },
+          {
+            "check_id": "source_revision_binding",
+            "result": "fail",
+            "note": "InterviewNote uses xhs:630e2e22000000001103c490:legacy-r1; pinned SourceNote uses xhs-note:630e2e22000000001103c490:snapshot-95b77bb26104."
+          },
+          {
+            "check_id": "artifact_reference_integrity",
+            "result": "fail",
+            "note": "InterviewNote artifact refs are legacy/unpinned or do not exactly match the pinned SourceNote artifact set."
+          },
+          {
+            "check_id": "raw_projection_traceability",
+            "result": "fail",
+            "note": "Source projections have no explicit derived_from Raw lineage; Raw is not upgraded."
+          },
+          {
+            "check_id": "source_artifact_provenance",
+            "result": "pass",
+            "note": "Every frozen artifact path/blob was verified against the pinned commit tree."
+          },
+          {
+            "check_id": "known_limitations_recorded",
+            "result": "fail",
+            "note": "InterviewNote does not retain every SourceNote limitation verbatim."
+          },
+          {
+            "check_id": "duplicate_ownership",
+            "result": "pass",
+            "note": "Exact ownership search found only the fixed InterviewNote owner."
+          },
+          {
+            "check_id": "no_fabrication",
+            "result": "pass",
+            "note": "No new source fact was inferred by this dry-run."
+          },
+          {
+            "check_id": "boundary_disposition",
+            "result": "fail",
+            "note": "SourceNote boundary status is pending, not single-interview."
+          },
+          {
+            "check_id": "image_recovery",
+            "result": "fail",
+            "note": "No verified non-empty image artifact was recovered from the recorded URLs."
+          }
+        ],
+        "failed_check_ids": [
+          "source_revision_binding",
+          "artifact_reference_integrity",
+          "raw_projection_traceability",
+          "known_limitations_recorded",
+          "boundary_disposition",
+          "image_recovery"
+        ],
+        "decision": "blocked",
+        "final_status": "blocked",
+        "independent_review": {
+          "status": "candidate-only-unposted",
+          "live_comment_id": null,
+          "boundary_review_evidence_reused": false
+        },
+        "ownership": {
+          "exact_owner_issue_numbers": [
+            1
+          ],
+          "expected_exact_owner_count": 1
+        },
+        "no_raw_overwrite": true,
+        "mutation_performed": false,
+        "evidence_subject_sha256": "11af8386a1310feaa8fcdfb9c329c093a2374ff655241cf1edc2246257c4e61f"
+      },
+      "decision": "blocked",
+      "transition": {
+        "legal": false,
+        "reason": "Current evidence does not satisfy the Source Review gate; no transition request or live mutation is emitted.",
+        "requested_initial_status": "blocked",
+        "requested_decision": "blocked"
+      },
+      "mutation_performed": false,
+      "raw_overwrite_performed": false,
+      "source_issue_body_sha256": "f93ac831ca3ffb15b158a4f8fe0f2195d17de1b1ae36e5514d56c891ef1355e6",
+      "interview_issue_body_sha256": "ce1b031f3ca37f2eab50702fe6445d3a6ce296fe36d449e319fe1bcccff44c52"
+    },
+    {
+      "issue_number": 2,
+      "interview_note_id": "xhs:63ecd286000000001303fd16",
+      "source_note_issue_number": 904,
+      "source_note_id": "xhs-note:63ecd286000000001303fd16",
+      "expected_interview_body_sha256": "4f3efc9abb4c4a945ad36ec578d6279bf024df3a35716d8e5929f56e6c653829",
+      "expected_source_note_body_sha256": "7f01c5bd753c6a3938d8da2a501fcdb9503d9ae767d5966112e28e0c70925755",
+      "source_revision_id": "xhs-note:63ecd286000000001303fd16:snapshot-95b77bb26104",
+      "interview_source_revision_id": "xhs:63ecd286000000001303fd16:legacy-r1",
+      "current_status": "blocked",
+      "current_labels": [
+        "quality:image-missing",
+        "source:xhs",
+        "status:blocked",
+        "task:source-recovery",
+        "type:interview-note"
+      ],
+      "source_note_boundary_status": "pending",
+      "recovery_attempts": [
+        {
+          "sequence": 1,
+          "method": "GET",
+          "url": "http://sns-webpic-qc.xhscdn.com/202512212244/1e6cb014e3998c5fdb86fc1bf060d203/1000g008223roo9ofo0005oth48s9gjj86umackg!nd_dft_wlteh_webp_3",
+          "requested_at": "2026-09-08T02:10:17.748Z",
+          "completed_at": "2026-09-08T02:10:17.927Z",
+          "curl_exit": 0,
+          "http_code": 403,
+          "content_type": null,
+          "effective_url": "http://sns-webpic-qc.xhscdn.com/202512212244/1e6cb014e3998c5fdb86fc1bf060d203/1000g008223roo9ofo0005oth48s9gjj86umackg!nd_dft_wlteh_webp_3",
+          "time_total_seconds": 0.166644,
+          "response_headers": {
+            "content-length": "0",
+            "content-type": null,
+            "date": "Tue, 08 Sep 2026 02:10:17 GMT",
+            "server": "Lego Server"
+          },
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr": null,
+          "accepted_artifact": false
+        },
+        {
+          "sequence": 2,
+          "method": "GET",
+          "url": "http://sns-webpic-qc.xhscdn.com/202512212244/71c5e2c1a2cd73f1d41382427fc36aee/1000g008223roo9ofo00g5oth48s9gjj8vk0njs8!nd_dft_wlteh_webp_3",
+          "requested_at": "2026-09-08T02:10:17.928Z",
+          "completed_at": "2026-09-08T02:10:18.062Z",
+          "curl_exit": 0,
+          "http_code": 403,
+          "content_type": null,
+          "effective_url": "http://sns-webpic-qc.xhscdn.com/202512212244/71c5e2c1a2cd73f1d41382427fc36aee/1000g008223roo9ofo00g5oth48s9gjj8vk0njs8!nd_dft_wlteh_webp_3",
+          "time_total_seconds": 0.124188,
+          "response_headers": {
+            "content-length": "0",
+            "content-type": null,
+            "date": "Tue, 08 Sep 2026 02:10:18 GMT",
+            "server": "Lego Server"
+          },
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr": null,
+          "accepted_artifact": false
+        }
+      ],
+      "recovery_summary": {
+        "total": 2,
+        "successful": 0,
+        "blocked": 2,
+        "all_nonempty_200_image_responses": false
+      },
+      "checks": [
+        {
+          "check_id": "source_identity",
+          "result": "pass",
+          "note": "Both live records bind the frozen external source identity."
+        },
+        {
+          "check_id": "source_revision_binding",
+          "result": "fail",
+          "note": "InterviewNote uses xhs:63ecd286000000001303fd16:legacy-r1; pinned SourceNote uses xhs-note:63ecd286000000001303fd16:snapshot-95b77bb26104."
+        },
+        {
+          "check_id": "artifact_reference_integrity",
+          "result": "fail",
+          "note": "InterviewNote artifact refs are legacy/unpinned or do not exactly match the pinned SourceNote artifact set."
+        },
+        {
+          "check_id": "raw_projection_traceability",
+          "result": "fail",
+          "note": "Source projections have no explicit derived_from Raw lineage; Raw is not upgraded."
+        },
+        {
+          "check_id": "source_artifact_provenance",
+          "result": "pass",
+          "note": "Every frozen artifact path/blob was verified against the pinned commit tree."
+        },
+        {
+          "check_id": "known_limitations_recorded",
+          "result": "fail",
+          "note": "InterviewNote does not retain every SourceNote limitation verbatim."
+        },
+        {
+          "check_id": "duplicate_ownership",
+          "result": "pass",
+          "note": "Exact ownership search found only the fixed InterviewNote owner."
+        },
+        {
+          "check_id": "no_fabrication",
+          "result": "pass",
+          "note": "No new source fact was inferred by this dry-run."
+        },
+        {
+          "check_id": "boundary_disposition",
+          "result": "fail",
+          "note": "SourceNote boundary status is pending, not single-interview."
+        },
+        {
+          "check_id": "image_recovery",
+          "result": "fail",
+          "note": "No verified non-empty image artifact was recovered from the recorded URLs."
+        }
+      ],
+      "failed_check_ids": [
+        "source_revision_binding",
+        "artifact_reference_integrity",
+        "raw_projection_traceability",
+        "known_limitations_recorded",
+        "boundary_disposition",
+        "image_recovery"
+      ],
+      "live_independent_evidence_comment_ids": [],
+      "independent_evidence": {
+        "schema_version": "issue-1610-recovery-evidence.v1",
+        "scope": "issue-1610-fixed-2",
+        "repository": "liqiangcc/interview-lab",
+        "controller_issue_number": 1605,
+        "scope_issue_number": 1610,
+        "issue_number": 2,
+        "interview_note_id": "xhs:63ecd286000000001303fd16",
+        "source_note_issue_number": 904,
+        "source_note_id": "xhs-note:63ecd286000000001303fd16",
+        "expected_interview_body_sha256": "4f3efc9abb4c4a945ad36ec578d6279bf024df3a35716d8e5929f56e6c653829",
+        "expected_source_note_body_sha256": "7f01c5bd753c6a3938d8da2a501fcdb9503d9ae767d5966112e28e0c70925755",
+        "source_revision_id": "xhs-note:63ecd286000000001303fd16:snapshot-95b77bb26104",
+        "interview_source_revision_id": "xhs:63ecd286000000001303fd16:legacy-r1",
+        "source_snapshot": {
+          "repository": "liqiangcc/xhs",
+          "ref": "95b77bb261048059846273688e4b90a2e108b437"
+        },
+        "pinned_artifact_manifest_sha256": "77cbbff0b093e1407aa62ccf71d4760c78bfe583610797b7f69f12b8cf7d72a5",
+        "recovery_attempts_sha256": "7d65cc471f4d609e60f947e501decc19cc0eba7fc802e5fe7b1776f47c1392ca",
+        "checks": [
+          {
+            "check_id": "source_identity",
+            "result": "pass",
+            "note": "Both live records bind the frozen external source identity."
+          },
+          {
+            "check_id": "source_revision_binding",
+            "result": "fail",
+            "note": "InterviewNote uses xhs:63ecd286000000001303fd16:legacy-r1; pinned SourceNote uses xhs-note:63ecd286000000001303fd16:snapshot-95b77bb26104."
+          },
+          {
+            "check_id": "artifact_reference_integrity",
+            "result": "fail",
+            "note": "InterviewNote artifact refs are legacy/unpinned or do not exactly match the pinned SourceNote artifact set."
+          },
+          {
+            "check_id": "raw_projection_traceability",
+            "result": "fail",
+            "note": "Source projections have no explicit derived_from Raw lineage; Raw is not upgraded."
+          },
+          {
+            "check_id": "source_artifact_provenance",
+            "result": "pass",
+            "note": "Every frozen artifact path/blob was verified against the pinned commit tree."
+          },
+          {
+            "check_id": "known_limitations_recorded",
+            "result": "fail",
+            "note": "InterviewNote does not retain every SourceNote limitation verbatim."
+          },
+          {
+            "check_id": "duplicate_ownership",
+            "result": "pass",
+            "note": "Exact ownership search found only the fixed InterviewNote owner."
+          },
+          {
+            "check_id": "no_fabrication",
+            "result": "pass",
+            "note": "No new source fact was inferred by this dry-run."
+          },
+          {
+            "check_id": "boundary_disposition",
+            "result": "fail",
+            "note": "SourceNote boundary status is pending, not single-interview."
+          },
+          {
+            "check_id": "image_recovery",
+            "result": "fail",
+            "note": "No verified non-empty image artifact was recovered from the recorded URLs."
+          }
+        ],
+        "failed_check_ids": [
+          "source_revision_binding",
+          "artifact_reference_integrity",
+          "raw_projection_traceability",
+          "known_limitations_recorded",
+          "boundary_disposition",
+          "image_recovery"
+        ],
+        "decision": "blocked",
+        "final_status": "blocked",
+        "independent_review": {
+          "status": "candidate-only-unposted",
+          "live_comment_id": null,
+          "boundary_review_evidence_reused": false
+        },
+        "ownership": {
+          "exact_owner_issue_numbers": [
+            2
+          ],
+          "expected_exact_owner_count": 1
+        },
+        "no_raw_overwrite": true,
+        "mutation_performed": false,
+        "evidence_subject_sha256": "8cbc901047e554080fecff05f6a3e1092b5b808c4f21a06d2ef4ab1e4ba10c83"
+      },
+      "decision": "blocked",
+      "transition": {
+        "legal": false,
+        "reason": "Current evidence does not satisfy the Source Review gate; no transition request or live mutation is emitted.",
+        "requested_initial_status": "blocked",
+        "requested_decision": "blocked"
+      },
+      "mutation_performed": false,
+      "raw_overwrite_performed": false,
+      "source_issue_body_sha256": "7f01c5bd753c6a3938d8da2a501fcdb9503d9ae767d5966112e28e0c70925755",
+      "interview_issue_body_sha256": "4f3efc9abb4c4a945ad36ec578d6279bf024df3a35716d8e5929f56e6c653829"
+    }
+  ],
+  "digest_input": {
+    "schema_version": "issue-1610-recovery-dry-run.v1",
+    "scope": "issue-1610-fixed-2",
+    "repository": "liqiangcc/interview-lab",
+    "source_snapshot": {
+      "repository": "liqiangcc/xhs",
+      "ref": "95b77bb261048059846273688e4b90a2e108b437"
+    },
+    "selection_sha256": "066b44006e2d3047073b702c22e531a6edcf4735ae32027fc181fb7546cc73a7",
+    "pinned_artifact_manifest_sha256": "77cbbff0b093e1407aa62ccf71d4760c78bfe583610797b7f69f12b8cf7d72a5",
+    "items": [
+      {
+        "issue_number": 1,
+        "source_note_issue_number": 903,
+        "interview_note_id": "xhs:630e2e22000000001103c490",
+        "expected_interview_body_sha256": "ce1b031f3ca37f2eab50702fe6445d3a6ce296fe36d449e319fe1bcccff44c52",
+        "expected_source_note_body_sha256": "f93ac831ca3ffb15b158a4f8fe0f2195d17de1b1ae36e5514d56c891ef1355e6",
+        "source_revision_id": "xhs-note:630e2e22000000001103c490:snapshot-95b77bb26104",
+        "interview_source_revision_id": "xhs:630e2e22000000001103c490:legacy-r1",
+        "current_status": "blocked",
+        "source_note_boundary_status": "pending",
+        "recovery_attempts": [
+          {
+            "sequence": 1,
+            "url": "http://sns-webpic-qc.xhscdn.com/202512212244/fb7e3ba06a2e1b670c5e91af45563c46/01028u01kiyga0ty6e8011ejnow09he9o5!nd_dft_wlteh_webp_3",
+            "method": "GET",
+            "http_code": 403,
+            "curl_exit": 0,
+            "content_type": null,
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "accepted_artifact": false
+          },
+          {
+            "sequence": 2,
+            "url": "http://sns-webpic-qc.xhscdn.com/202512212244/76b89b3e69820f206559f2fcd9220397/01028u01kiyga0ty6e8011ejnow14fctme!nd_dft_wlteh_webp_3",
+            "method": "GET",
+            "http_code": 403,
+            "curl_exit": 0,
+            "content_type": null,
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "accepted_artifact": false
+          }
+        ],
+        "checks": [
+          {
+            "check_id": "source_identity",
+            "result": "pass",
+            "note": "Both live records bind the frozen external source identity."
+          },
+          {
+            "check_id": "source_revision_binding",
+            "result": "fail",
+            "note": "InterviewNote uses xhs:630e2e22000000001103c490:legacy-r1; pinned SourceNote uses xhs-note:630e2e22000000001103c490:snapshot-95b77bb26104."
+          },
+          {
+            "check_id": "artifact_reference_integrity",
+            "result": "fail",
+            "note": "InterviewNote artifact refs are legacy/unpinned or do not exactly match the pinned SourceNote artifact set."
+          },
+          {
+            "check_id": "raw_projection_traceability",
+            "result": "fail",
+            "note": "Source projections have no explicit derived_from Raw lineage; Raw is not upgraded."
+          },
+          {
+            "check_id": "source_artifact_provenance",
+            "result": "pass",
+            "note": "Every frozen artifact path/blob was verified against the pinned commit tree."
+          },
+          {
+            "check_id": "known_limitations_recorded",
+            "result": "fail",
+            "note": "InterviewNote does not retain every SourceNote limitation verbatim."
+          },
+          {
+            "check_id": "duplicate_ownership",
+            "result": "pass",
+            "note": "Exact ownership search found only the fixed InterviewNote owner."
+          },
+          {
+            "check_id": "no_fabrication",
+            "result": "pass",
+            "note": "No new source fact was inferred by this dry-run."
+          },
+          {
+            "check_id": "boundary_disposition",
+            "result": "fail",
+            "note": "SourceNote boundary status is pending, not single-interview."
+          },
+          {
+            "check_id": "image_recovery",
+            "result": "fail",
+            "note": "No verified non-empty image artifact was recovered from the recorded URLs."
+          }
+        ],
+        "evidence_subject_sha256": "11af8386a1310feaa8fcdfb9c329c093a2374ff655241cf1edc2246257c4e61f",
+        "live_independent_evidence_comment_ids": [],
+        "decision": "blocked",
+        "mutation_performed": false
+      },
+      {
+        "issue_number": 2,
+        "source_note_issue_number": 904,
+        "interview_note_id": "xhs:63ecd286000000001303fd16",
+        "expected_interview_body_sha256": "4f3efc9abb4c4a945ad36ec578d6279bf024df3a35716d8e5929f56e6c653829",
+        "expected_source_note_body_sha256": "7f01c5bd753c6a3938d8da2a501fcdb9503d9ae767d5966112e28e0c70925755",
+        "source_revision_id": "xhs-note:63ecd286000000001303fd16:snapshot-95b77bb26104",
+        "interview_source_revision_id": "xhs:63ecd286000000001303fd16:legacy-r1",
+        "current_status": "blocked",
+        "source_note_boundary_status": "pending",
+        "recovery_attempts": [
+          {
+            "sequence": 1,
+            "url": "http://sns-webpic-qc.xhscdn.com/202512212244/1e6cb014e3998c5fdb86fc1bf060d203/1000g008223roo9ofo0005oth48s9gjj86umackg!nd_dft_wlteh_webp_3",
+            "method": "GET",
+            "http_code": 403,
+            "curl_exit": 0,
+            "content_type": null,
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "accepted_artifact": false
+          },
+          {
+            "sequence": 2,
+            "url": "http://sns-webpic-qc.xhscdn.com/202512212244/71c5e2c1a2cd73f1d41382427fc36aee/1000g008223roo9ofo00g5oth48s9gjj8vk0njs8!nd_dft_wlteh_webp_3",
+            "method": "GET",
+            "http_code": 403,
+            "curl_exit": 0,
+            "content_type": null,
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "accepted_artifact": false
+          }
+        ],
+        "checks": [
+          {
+            "check_id": "source_identity",
+            "result": "pass",
+            "note": "Both live records bind the frozen external source identity."
+          },
+          {
+            "check_id": "source_revision_binding",
+            "result": "fail",
+            "note": "InterviewNote uses xhs:63ecd286000000001303fd16:legacy-r1; pinned SourceNote uses xhs-note:63ecd286000000001303fd16:snapshot-95b77bb26104."
+          },
+          {
+            "check_id": "artifact_reference_integrity",
+            "result": "fail",
+            "note": "InterviewNote artifact refs are legacy/unpinned or do not exactly match the pinned SourceNote artifact set."
+          },
+          {
+            "check_id": "raw_projection_traceability",
+            "result": "fail",
+            "note": "Source projections have no explicit derived_from Raw lineage; Raw is not upgraded."
+          },
+          {
+            "check_id": "source_artifact_provenance",
+            "result": "pass",
+            "note": "Every frozen artifact path/blob was verified against the pinned commit tree."
+          },
+          {
+            "check_id": "known_limitations_recorded",
+            "result": "fail",
+            "note": "InterviewNote does not retain every SourceNote limitation verbatim."
+          },
+          {
+            "check_id": "duplicate_ownership",
+            "result": "pass",
+            "note": "Exact ownership search found only the fixed InterviewNote owner."
+          },
+          {
+            "check_id": "no_fabrication",
+            "result": "pass",
+            "note": "No new source fact was inferred by this dry-run."
+          },
+          {
+            "check_id": "boundary_disposition",
+            "result": "fail",
+            "note": "SourceNote boundary status is pending, not single-interview."
+          },
+          {
+            "check_id": "image_recovery",
+            "result": "fail",
+            "note": "No verified non-empty image artifact was recovered from the recorded URLs."
+          }
+        ],
+        "evidence_subject_sha256": "8cbc901047e554080fecff05f6a3e1092b5b808c4f21a06d2ef4ab1e4ba10c83",
+        "live_independent_evidence_comment_ids": [],
+        "decision": "blocked",
+        "mutation_performed": false
+      }
+    ],
+    "mutation_performed": false,
+    "raw_overwrite_performed": false
+  },
+  "plan_sha256": "e29e1dce3f3232e0dbae8bc34cf31cdc5dd80ce4bb05883bc45b6be84a2e0041",
+  "journal_sha256": "adc97adf4e3144f3654c3649df11132f6370ddcbe3d614483402723b5baf65c9",
+  "ready_for_authorization": false,
+  "mutation_performed": false,
+  "safety": {
+    "apply_entrypoint": "none",
+    "github_post_count": 0,
+    "github_patch_count": 0,
+    "live_comment_or_label_write": false,
+    "raw_overwrite_performed": false,
+    "no_learning_labels_or_context_generated": true,
+    "boundary_review_evidence_reused": false,
+    "fail_closed_on_drift_or_network_error": true
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0616-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 616,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/616",
+  "source_note_id": "xhs-note:67de17c2000000001a005fa3",
+  "expected_body_sha256": "decd93337c1a86ed5f35b1f3096347452e10f8bf6e54fd511943d21c4e1a22c1",
+  "expected_source_revision_id": "xhs-note:67de17c2000000001a005fa3:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 7,
+        "excerpt": "玩了好几个月发现得找份实习攒一下工作经验，0实习+玩具项目+刚开始八股不知道背什么乱看，还头铁。第一家就投了鹅厂，理所当然挂得很惨，两次挂二面(后台开发)一次挂一面(客户端开发)，感谢面试官愿意花时间面我，反问环节请教了哪里要查缺补漏，得出的结论是姐得女娲补天🚬八股和算法题还好，技术练太少，接下来主打的一个狂做项目了。"
+      },
+      {
+        "line_number": 12,
+        "excerpt": "最后是前阵子发起了女性接力互助项目，感谢大家的信任!有在抽时间陆陆续续回复一些姐妹~如果没有回复的大概率是超出我的能力范围(比如是否要读研转码or辅导自动化测试)或者本人精力有限，特此在信任、愿意向我描述问题却没有收到回复的👭道歉。本人最近实在太忙，接下来会努力逐一答复🥺"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67de17c2000000001a005fa3.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "6ef543c7b5e47cb55fb648e0690eeef1eeec5bc8",
+    "byte_size": 2882,
+    "sha256": "1878ac81d87a5f3a339879517c2cea4f605525710ec4c161b56e40987506d2fc",
+    "locator": "note_desc:1-10",
+    "excerpt": "0⃣️老规矩先上干货：\n①算法题：最长上升子序列(经典模型)；求子树节点平均值的最大值(dfs一遍统计以u为根节点的子树节点和，以及子树大小，求出均值后取最大)；合并k个有序链表(lc原题，用堆维护)；折返链表(快慢指针求中间节点，反转前一半链表和后一半链表再拼起来)；树上两个节点的lca(dfs一遍维护p/q是否在左子树/右子树内)；求三个有序数组的中位数且空间复杂度为O(1)(相当于合并三个有序链表，已合并的数为总长度一半时记录一下即可)；交换字符串，任意交换两个字符求使其有序的最小操作次数(排完序求有多少字符没排好，(数目+1)/2就是答案)。\n②技术：\nIO多路复用；epoll、poll、select区别；进程线程区别；分布式系统了解吗；tcp三次握手讲一下；https和http有什么区别；你这个cppserver的核心思想是什么，事件驱动啊，讲一下怎么事件驱动的；多态怎么实现的；虚函数的指针放在哪里；析构函数和构造函数可以是虚函数吗；struct和class有什么区别；索引了解吗；你对事务的理解；MySQL的事务机制怎么实现的；Redis的主从备份怎么实现的；如果主节点其实没有宕机，但哨兵又投票出了新的主节点，现在有两个主节点产生混乱怎么办；分布式锁了解吗；软件工程学过吧，类之间的关系除了继承和组合外还有什么；如果有1亿个int要怎么快速求前k大；解析JSON时数据有1G读不进内存怎么办；你对计算机这个行业的理解是什么。\n1⃣️复盘\n玩了好几个月发现得找份实习攒一下工作经验，0实习+玩具项目+刚开始八股不知道背什么乱看，还头铁。第一家就投了鹅厂，理所当然挂得很惨，两次挂二面(后台开发)一次挂一面(客户端开发)，感谢面试官愿意花时间面我，反问环节请教了哪里要查缺补漏，得出的结论是姐得女娲补天🚬八股和算法题还好，技术练太少，接下来主打的一个狂做项目了。\n2⃣️Bonus and Apologize\n除了上面提到的以外自己整了份面经，方向是cpp开发，当然也包括计网/操作系统/中间件/数据库，有需要的朋友私聊我。也欢迎一起求职的朋友交流心得。",
+    "text": "0⃣️老规矩先上干货：\n①算法题：最长上升子序列(经典模型)；求子树节点平均值的最大值(dfs一遍统计以u为根节点的子树节点和，以及子树大小，求出均值后取最大)；合并k个有序链表(lc原题，用堆维护)；折返链表(快慢指针求中间节点，反转前一半链表和后一半链表再拼起来)；树上两个节点的lca(dfs一遍维护p/q是否在左子树/右子树内)；求三个有序数组的中位数且空间复杂度为O(1)(相当于合并三个有序链表，已合并的数为总长度一半时记录一下即可)；交换字符串，任意交换两个字符求使其有序的最小操作次数(排完序求有多少字符没排好，(数目+1)/2就是答案)。\n②技术：\nIO多路复用；epoll、poll、select区别；进程线程区别；分布式系统了解吗；tcp三次握手讲一下；https和http有什么区别；你这个cppserver的核心思想是什么，事件驱动啊，讲一下怎么事件驱动的；多态怎么实现的；虚函数的指针放在哪里；析构函数和构造函数可以是虚函数吗；struct和class有什么区别；索引了解吗；你对事务的理解；MySQL的事务机制怎么实现的；Redis的主从备份怎么实现的；如果主节点其实没有宕机，但哨兵又投票出了新的主节点，现在有两个主节点产生混乱怎么办；分布式锁了解吗；软件工程学过吧，类之间的关系除了继承和组合外还有什么；如果有1亿个int要怎么快速求前k大；解析JSON时数据有1G读不进内存怎么办；你对计算机这个行业的理解是什么。\n\t\n1⃣️复盘\n玩了好几个月发现得找份实习攒一下工作经验，0实习+玩具项目+刚开始八股不知道背什么乱看，还头铁。第一家就投了鹅厂，理所当然挂得很惨，两次挂二面(后台开发)一次挂一面(客户端开发)，感谢面试官愿意花时间面我，反问环节请教了哪里要查缺补漏，得出的结论是姐得女娲补天🚬八股和算法题还好，技术练太少，接下来主打的一个狂做项目了。\n2⃣️Bonus and Apologize\n\t\n除了上面提到的以外自己整了份面经，方向是cpp开发，当然也包括计网/操作系统/中间件/数据库，有需要的朋友私聊我。也欢迎一起求职的朋友交流心得。\n\t\n最后是前阵子发起了女性接力互助项目，感谢大家的信任!有在抽时间陆陆续续回复一些姐妹~如果没有回复的大概率是超出我的能力范围(比如是否要读研转码or辅导自动化测试)或者本人精力有限，特此在信任、愿意向我描述问题却没有收到回复的👭道歉。本人最近实在太忙，接下来会努力逐一答复🥺\n\t\n#后端开发[话题]# #面经[话题]# #计算机[话题]# #实习[话题]# #腾讯[话题]# #girlspower[话题]#\n",
+    "line_count": 15,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:67de17c2000000001a005fa3.txt",
+      "byte_size": 2882,
+      "git_blob_sha": "6ef543c7b5e47cb55fb648e0690eeef1eeec5bc8"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

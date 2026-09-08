@@ -1,0 +1,89 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0640-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 640,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/640",
+  "source_note_id": "xhs-note:67e4e039000000000603c6d0",
+  "expected_body_sha256": "7596cc3f08953c7705cf3aceab4f2d037d941281821388f4cfebe22a442279de",
+  "expected_source_revision_id": "xhs-note:67e4e039000000000603c6d0:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 4,
+        "excerpt": "京东Me会议软件，我这边呲呲啦啦听不见，全是电流声，只看到面试官嘴巴一张一合，疯狂道歉和不断调试的同时，表明自己之前调过是好的（委婉地希望面试官能想一下会不会是这个软件的问题或者网络的问题），然后问：“您能打字告诉我我现在需要做什么吗”，然后面试官给我就打电话啦，再次道歉，他很平静地说“没事儿”，用的笔记本摄像头。"
+      },
+      {
+        "line_number": 9,
+        "excerpt": "（1）docker容器的一些问题，为什么用到docker，前端需要做什么等等（引出整个项目运行流程）？"
+      },
+      {
+        "line_number": 11,
+        "excerpt": "（3）异步队列的解决后端并发受限的问题是指什么？引申：你现在只是运行一个测试程序，如果说我这个CPU资源能支持运行10个程序呢，这时候可以怎么优化？（用栈应该可以吧，巴拉巴拉）有没有想过不用docker？（上级让用docker，没有想过）有没有了解过管理docker的容器？（没有，但尝试过别的解决方案，巴拉巴拉）你可以了解一下docker的管理工具，k8s等来解决这种问题。"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67e4e039000000000603c6d0.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "a9e39b2a630f051c6f9dce64710b6469a85261c9",
+    "byte_size": 2737,
+    "sha256": "c6a8c858b64a64d3aaceca4ad3039fdb26620601671d4a3776c0356d7e5d6675",
+    "locator": "note_desc:1-10",
+    "excerpt": "20250326 17：00-17：40京东第一次面试\n开头插曲：\n京东Me会议软件，我这边呲呲啦啦听不见，全是电流声，只看到面试官嘴巴一张一合，疯狂道歉和不断调试的同时，表明自己之前调过是好的（委婉地希望面试官能想一下会不会是这个软件的问题或者网络的问题），然后问：“您能打字告诉我我现在需要做什么吗”，然后面试官给我就打电话啦，再次道歉，他很平静地说“没事儿”，用的笔记本摄像头。\n（面试官介绍了自己的部门做什么的，巴拉巴拉）差不多面试30分钟，自我介绍一下吧。\n0、自我介绍\n1、项目\n（1）docker容器的一些问题，为什么用到docker，前端需要做什么等等（引出整个项目运行流程）？\n（2）简历上写的数据优化体现在哪里？",
+    "text": "20250326 17：00-17：40京东第一次面试\n\t\n开头插曲：\n京东Me会议软件，我这边呲呲啦啦听不见，全是电流声，只看到面试官嘴巴一张一合，疯狂道歉和不断调试的同时，表明自己之前调过是好的（委婉地希望面试官能想一下会不会是这个软件的问题或者网络的问题），然后问：“您能打字告诉我我现在需要做什么吗”，然后面试官给我就打电话啦，再次道歉，他很平静地说“没事儿”，用的笔记本摄像头。\n（面试官介绍了自己的部门做什么的，巴拉巴拉）差不多面试30分钟，自我介绍一下吧。\n\t\n0、自我介绍\n1、项目\n（1）docker容器的一些问题，为什么用到docker，前端需要做什么等等（引出整个项目运行流程）？\n（2）简历上写的数据优化体现在哪里？\n（3）异步队列的解决后端并发受限的问题是指什么？引申：你现在只是运行一个测试程序，如果说我这个CPU资源能支持运行10个程序呢，这时候可以怎么优化？（用栈应该可以吧，巴拉巴拉）有没有想过不用docker？（上级让用docker，没有想过）有没有了解过管理docker的容器？（没有，但尝试过别的解决方案，巴拉巴拉）你可以了解一下docker的管理工具，k8s等来解决这种问题。\n（4）简历上vue动态路由鉴权是指？（...）那你这个用户信息存储在哪里呢？服务器端？浏览器端？js变量？（没听清js变量，选了一个，本地json文件里面）那这个用户的信息不太安全（那放在localStorage里面？）用户也能获取到呀（那加密一下？）前端加密前端解密还是能获取。（...token？）end.（我应该说后端加密的）\n（5）我看你说了解一些webpack？了解吗？（了解点）那如果js不能加载png图片，webpack里该怎么处理呢？（使用个loader吧，然后改成能加载的，比如把png改成jpg，我平时遇到格式不兼容的，都直接改后缀名就行了（非常坦然））jpg也不能加载（那改成base64？）沉默...也行，还有呢？（沉默...改成网络资源？）你有一部分说的没错，确实通过loader，你听过url-loader吗，他就是通过改成网络资源实现的。\n\t\n基础知识部分的追问放不下啦，看我上传的图片吧~\n我觉得京东面试和之前记录的美团面试是完全两种不同的风格，面试官人都很会引导！\n顺带说一句，学校的樱花开始开啦，好看！\n﻿#前端[话题]#﻿ ﻿#实习[话题]#﻿ ﻿#暑期实习[话题]#﻿ ﻿#京东[话题]#﻿ ﻿#人生第二次[话题]#﻿ ﻿#找工作[话题]#﻿ ﻿#面试技巧[话题]#﻿\n",
+    "line_count": 19,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:67e4e039000000000603c6d0.txt",
+      "byte_size": 2737,
+      "git_blob_sha": "a9e39b2a630f051c6f9dce64710b6469a85261c9"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

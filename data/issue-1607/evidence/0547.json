@@ -1,0 +1,89 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0547-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 547,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/547",
+  "source_note_id": "xhs-note:67c47750000000001203d0a9",
+  "expected_body_sha256": "b2f7868181549e53a18a4b8382a0a587ef891b1cf45a38f8ac4fed79eeddad6c",
+  "expected_source_revision_id": "xhs-note:67c47750000000001203d0a9:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 21,
+        "excerpt": "* redis分布式锁的时钟问题（理解错了，说成过期时间了。后来说可能和服务器时间有关系，服务器时间不准导致提前失效等）"
+      },
+      {
+        "line_number": 22,
+        "excerpt": "* 怎么解决时钟问题呢（不清楚，其实可以使用时间戳等）"
+      },
+      {
+        "line_number": 31,
+        "excerpt": "* https是不是数据安全的（我说是，但是应该还有一些问题解决不了的伪造证书等，但是忘记说了）"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67c47750000000001203d0a9.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "15ef9a75f79b65bbf96cded11f2eaa2538d56f66",
+    "byte_size": 2794,
+    "sha256": "6029f1c7bedff338e8da334f7cb45c48d9638bb76dc7bd2c646fc0a43e83edcd",
+    "locator": "note_desc:1-8",
+    "excerpt": "✅自我介绍\n* 最长无重复子串（秒嘞）\n* sychronized和ReentrantLock的区别\n* 平时多线程怎么使用的\n* 线程池怎么设置参数\n* 线程安全的单例模式怎么考虑\n* JVM介绍一下\n* 有没有进行过JVM调优（说了xms、xmx和xx）",
+    "text": "✅自我介绍\n* 最长无重复子串（秒嘞）\n* sychronized和ReentrantLock的区别\n* 平时多线程怎么使用的\n* 线程池怎么设置参数\n* 线程安全的单例模式怎么考虑\n* JVM介绍一下\n* 有没有进行过JVM调优（说了xms、xmx和xx）\n* 还有其他的呢（说了其他的但是具体参数忘记了没说）\n* k8s和docker了解呢（说了一下基础概念，具体忘记了就没说）\n* map都是用什么样的map\n* hashtable怎么保证线程安全的，concurrentHashmap呢，怎么去选择呢，底层都是怎么实现的呢\n* 索引失效遇见过呢\n* 怎么对于慢查询进行优化呢\n* 优化之后还是会慢怎么做（分库分表和提升服务器性能）\n* 怎么分库分表呢（水平垂直，这个场景可能说的不好他一直瞪我还翻白眼）\n* 行锁和表锁的概念，分别适用于什么样的场景\n* 乐观锁和悲观锁怎么实现\n* redis怎么使用的呢（缓存、发布订阅、排行榜、注册中心...）\n* 为什么用redis不用其他的作为注册中心呢\n* redis分布式锁的时钟问题（理解错了，说成过期时间了。后来说可能和服务器时间有关系，服务器时间不准导致提前失效等）\n* 怎么解决时钟问题呢（不清楚，其实可以使用时间戳等）\n* redis的持久化方案\n* 进程通信有哪些方式（消息队列、共享内存其他管道、信号量忘记了）\n* 什么是RPC，用过什么RPC框架\n* openfeign的工作原理是什么（AOP+http但是听录音发现把AOP说错AOF了，但是他说你有没有真正的研究过，可能说错了，但是上午快手面试完我特意搜的是这个呢）\n* 同步调用和异步调用\n* linux命令都了解什么（说了一堆）\n* 如果我的命令不知道，什么命令可以查询（help和man）\n* Http和Https区别\n* https是不是数据安全的（我说是，但是应该还有一些问题解决不了的伪造证书等，但是忘记说了）\n* 如果当前服务调用别的服务使用的是https你是怎么调用方法（没想到，感觉之前也没进行额外处理啊！！！）\n* 消息队列使用过哪些\n* 怎么保证消息不丢失和消息顺序性\n* 一致性哈希算法（不了解）\n* redis和mysql怎么保证一致性\n* 本地缓存和redis缓存怎么协调使用\n* 怎么保证本地缓存和redis中的缓存一致的\n* 最近在学习什么\n* 怎么保证技术的敏感度\n* 有没有参与过开源项目（没有...）\n* 介绍一下你的项目\n* 为什么现在又找实习了，不在百度待着\n* 无反问\n#计算机专业[话题]# #计算机[话题]# #后端开发[话题]# #大厂[话题]# #java[话题]# #腾讯面经[话题]# #Java开发[话题]# #互联网大厂[话题]# #互联网大厂实习[话题]# #开发[话题]#\n",
+    "line_count": 46,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:67c47750000000001203d0a9.txt",
+      "byte_size": 2794,
+      "git_blob_sha": "15ef9a75f79b65bbf96cded11f2eaa2538d56f66"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

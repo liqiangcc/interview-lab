@@ -1,0 +1,76 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0499-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 499,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/499",
+  "source_note_id": "xhs-note:67a98ff5000000002901d2c8",
+  "expected_body_sha256": "86985bda52aec30e4fd77d35990a10bccc6109c040d15a506bc8d818fe4a7fe1",
+  "expected_source_revision_id": "xhs-note:67a98ff5000000002901d2c8:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": []
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67a98ff5000000002901d2c8.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "a8dd92154132880d3394bb30e85dc9bf018e7da3",
+    "byte_size": 990,
+    "sha256": "d03b192a9333c9062ae5d95ee7726f94bfec1c051ab7f4bf6531db2354878d0f",
+    "locator": "note_desc:1-8",
+    "excerpt": "1.自我介绍\n2.离职原因和空窗期\n3.怎么学习新技术的\n4.hashMap的原理\n5.hashMap和hashTable的区别\n6.hashtable和concurrentHashMap的区别\n7.nginx用过吗\n8.java动态代理",
+    "text": "1.自我介绍\n2.离职原因和空窗期\n3.怎么学习新技术的\n4.hashMap的原理\n5.hashMap和hashTable的区别\n6.hashtable和concurrentHashMap的区别\n7.nginx用过吗\n8.java动态代理\n9.反射的原理\n10.做过哪些SQL优化\n11.联合索引的原理\n12.数据库是怎么进行备份的\n13.对springcloud微服务的理解\n14.openFeign进行服务调用的原理\n15.openFeign进行服务调用是否走网关\n16.创建线程的方式\n17.线程池是怎么用的\n18.rabbitMQ和activeMQ的区别\n19.使用completableFuture的好处\n20.countdownLatch怎么用的\n21.项目是怎么部署的，用的docker吗？\n22.Jekins使用流程\n23.linux命令查看日志用哪些命令\n24.查看前十行内容用什么命令\n25.编辑文本的命令\n26.使用vim编辑文本时进行查找用什么命令\n27.top命令需要关注的指标有哪些\n也是一家外包公司，问得都比较浅，算是比较简单的一次面试\n#程序员[话题]# #java[话题]# #面试经验[话题]#\n",
+    "line_count": 30,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:67a98ff5000000002901d2c8.txt",
+      "byte_size": 990,
+      "git_blob_sha": "a8dd92154132880d3394bb30e85dc9bf018e7da3"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

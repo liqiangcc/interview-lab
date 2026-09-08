@@ -1,0 +1,81 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0460-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 460,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/460",
+  "source_note_id": "xhs-note:676384ac0000000013001da3",
+  "expected_body_sha256": "f934b0bb559e938c480f620566fdf423a49555183b06e240b456f26729f60880",
+  "expected_source_revision_id": "xhs-note:676384ac0000000013001da3:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 8,
+        "excerpt": "7.Mysql数据库并发时问题有哪些？解决手段？"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/676384ac0000000013001da3.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "4145ec3042ef4ebf4bb1dd38f627186b4bffc288",
+    "byte_size": 1993,
+    "sha256": "4e5297c740252482f3d632accb043542861fe1067bd8c4613df9c58d63bf14b4",
+    "locator": "note_desc:1-8",
+    "excerpt": "京东一面12.4\n1.实习时对于项目的最大的贡献？\n2.幂等键和redis过期时间，消费中如果保证有序性怎么做？除了partiton分区路由hash的那种业务中的手段？\n3.多线程消费，是kafka框架还是业务代码？为什么使用new thread不用线程池来管理异步线程\n4.对线程池有了解嘛 怎么样创建线程池 7个参数？常用的拒绝策略 什么情况下会触发\n5.Hashmap 和concurrenthashmap的区别，后者如何保证线程安全，能用long做key吗？为什么\n6.Reentrylock和synchronized使用的区别\n7.Mysql数据库并发时问题有哪些？解决手段？",
+    "text": "京东一面12.4\n1.实习时对于项目的最大的贡献？\n2.幂等键和redis过期时间，消费中如果保证有序性怎么做？除了partiton分区路由hash的那种业务中的手段？\n3.多线程消费，是kafka框架还是业务代码？为什么使用new thread不用线程池来管理异步线程\n4.对线程池有了解嘛 怎么样创建线程池 7个参数？常用的拒绝策略 什么情况下会触发\n5.Hashmap 和concurrenthashmap的区别，后者如何保证线程安全，能用long做key吗？为什么\n6.Reentrylock和synchronized使用的区别\n7.Mysql数据库并发时问题有哪些？解决手段？\n8.数据库sql优化的经验\n9.分布式事务用的什么方式，实现原理，你都了解什么分布式事务的解决方式？Saga知道吗?tcc?\n10.对分布式锁实现的话用什么方式实现的 实现分布式锁有哪些手段\n11.Java中异常和错误的处理？\n12.在高并发接口性能高可用有哪些技术\n京东二面\n1.介绍项目、kafka有没有可能会造成消息丢失？选型时的一些考虑，你了解其他的消息队列的差异吗\n2.Kafka为什么适合大数据量的场景\n3.Redis的原理\n4.Io多路复用核心组件、底层实现 不懂\n5.前前一段实习的难点\n6.分布式这块主要的体现时哪些场景\n7.分布式id你说的都是尽量避免一些极端情况，有没有能根治这些情况发生的方案\n8.限流算法有几种，每个场景适合用那种？\n9.数据库联合索引 where a=** order by b 、where a=** group by b 能不能走到联合索引\n10.类加载时 如果自己写了一个java.Util.String能改吗\n11.在职业选择时的倾向、看重点\n#学习[话题]# #金融科技岗[话题]# #银行面试真题[话题]# #面试技巧[话题]# #应届生[话题]# #应届生找工作[话题]# #应届生求职[话题]# #银行招聘[话题]# #国企工作[话题]# #国企招聘[话题]# #java学习[话题]# #java[话题]# #java面试[话题]# #java项目[话题]#\n",
+    "line_count": 27,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:676384ac0000000013001da3.txt",
+      "byte_size": 1993,
+      "git_blob_sha": "4145ec3042ef4ebf4bb1dd38f627186b4bffc288"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

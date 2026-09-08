@@ -4,6 +4,9 @@
   "private": true,
   "type": "commonjs",
   "scripts": {
+    "freeze:issue-1606-selection": "node scripts/issue-1606-boundary-batch.js --mode freeze --output data/issue-1606/selection-manifest.json",
+    "inventory:issue-1606-source": "node scripts/issue-1606-boundary-batch.js --mode source-inventory --selection data/issue-1606/selection-manifest.json --output data/issue-1606/source-inventory.json",
+    "plan:issue-1606-boundary": "node scripts/plan-issue-1606-boundary-batch.js --selection data/issue-1606/selection-manifest.json --inventory data/issue-1606/source-inventory.json --output data/issue-1606/boundary.dry-run.json --request-dir data/issue-1606/requests --journal data/issue-1606/apply-journal.json --digest data/issue-1606/canonical-digest.json --reviewed-at 2026-09-08T02:05:50Z",
     "test": "node --test",
     "validate:source-note-fixture": "node scripts/validate-source-note-issue.js test/fixtures/source-note-issue.valid.md --label type:source-note --label source:xhs --label status:captured --label boundary:pending --label task:boundary-review --label migration:xhs-bulk --label source-year:2022",
     "validate:issue-fixture": "node scripts/validate-interview-note-issue.js test/fixtures/interview-note-issue.valid.md",
@@ -17,6 +20,8 @@
     "validate:review-transition-fixture": "node scripts/plan-source-sequence-review-transition.js test/fixtures/source-sequence-review-transition.valid.md",
     "plan:boundary-review-batch": "node scripts/plan-source-note-boundary-review-batch.js",
     "plan:issue-1609-boundary": "node scripts/issue-1609-boundary-batch.js --mode plan --selection data/issue-1609/selection-manifest.json --source-inventory data/issue-1609/dry-run-plan.json --output data/issue-1609/dry-run-plan.json",
+    "prepare:issue-1607-live": "node scripts/prepare-issue-1607-boundary-batch.js --fetch-live --cache data/issue-1607/live-issues.json",
+    "prepare:issue-1607-boundary": "node scripts/prepare-issue-1607-boundary-batch.js --prepare --allow-unverified-source --cache data/issue-1607/live-issues.json --output-dir data/issue-1607 && node scripts/generate-issue-1607-boundary-evidence.js --selection data/issue-1607/selection.json --output-dir data/issue-1607",
     "validate:exploration-fixture": "node scripts/validate-exploration-session-checkpoint.js test/fixtures/exploration-session-checkpoint.valid.md",
     "validate:exploration-v2-fixture": "node scripts/validate-exploration-session-checkpoint.js test/fixtures/exploration-session-checkpoint-v2.valid.md",
     "validate:exploration-v3-fixture": "node scripts/validate-exploration-session-checkpoint.js test/fixtures/exploration-session-checkpoint-v3.valid.md",

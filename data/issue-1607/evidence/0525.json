@@ -1,0 +1,81 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0525-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 525,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/525",
+  "source_note_id": "xhs-note:67b89672000000002503e401",
+  "expected_body_sha256": "6f7dd36de3f2c852720bf05dcc014e7481e6ae8179982090940463db74f1f865",
+  "expected_source_revision_id": "xhs-note:67b89672000000002503e401:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 9,
+        "excerpt": "3、基础八股"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67b89672000000002503e401.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "2090ba56cad2ef71841c7b9824ff535169f99d53",
+    "byte_size": 502,
+    "sha256": "b3036cfa11d2f64f5f8819a5685da7744c8a96d45802136c9ffbedd8d59e03bf",
+    "locator": "note_desc:1-9",
+    "excerpt": "阿里java面经#互联网大厂[话题]##面试求职[话题]#\n1、主要项目介绍，选一块比较难的介绍，问细节点\n2、算法题：\n给你一个整数delay，表示每个人会在发现秘密后delay天之后，每天给一个新人分享秘密\n给一个整数forget，表示每个人会在发现秘密后forget天之后，忘记这个秘密\n给一个整数，返回n天后知道秘密的人数\n动态规划dp i-delay天知道秘密的 -  i-forget天忘记秘密的\n3、基础八股",
+    "text": "阿里java面经#互联网大厂[话题]##面试求职[话题]#\n1、主要项目介绍，选一块比较难的介绍，问细节点\n2、算法题：\n给你一个整数delay，表示每个人会在发现秘密后delay天之后，每天给一个新人分享秘密\n给一个整数forget，表示每个人会在发现秘密后forget天之后，忘记这个秘密\n给一个整数，返回n天后知道秘密的人数\n动态规划dp i-delay天知道秘密的 -  i-forget天忘记秘密的\n\t\n3、基础八股\n",
+    "line_count": 10,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:67b89672000000002503e401.txt",
+      "byte_size": 502,
+      "git_blob_sha": "2090ba56cad2ef71841c7b9824ff535169f99d53"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

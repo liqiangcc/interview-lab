@@ -1,0 +1,85 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0513-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 513,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/513",
+  "source_note_id": "xhs-note:67b3d98b000000000603f738",
+  "expected_body_sha256": "97e441c41c7f9b2b65289801130bf7cc7b8827274446a89a3e1f05177bd0d2d2",
+  "expected_source_revision_id": "xhs-note:67b3d98b000000000603f738:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 1,
+        "excerpt": "不得不说 AI的智能化让面试官都可以减少一定的工作量了，deepseek出的题还挺复合之前面试过的大厂的场景题水平的"
+      },
+      {
+        "line_number": 2,
+        "excerpt": "#java[话题]# #后端开发[话题]# #后端面试题[话题]# #面试[话题]# #deepseek[话题]# #大模型[话题]# #编程[话题]# #社招[话题]# #校招[话题]#"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67b3d98b000000000603f738.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "f2530f5da7b233190631f81e7ab4fab128170bb6",
+    "byte_size": 324,
+    "sha256": "0cc0f628842a7863157312e55862fcdb87c9aee86b159c1cb63d0595377e0e0e",
+    "locator": "note_desc:1-2",
+    "excerpt": "不得不说 AI的智能化让面试官都可以减少一定的工作量了，deepseek出的题还挺复合之前面试过的大厂的场景题水平的\n#java[话题]# #后端开发[话题]# #后端面试题[话题]# #面试[话题]# #deepseek[话题]# #大模型[话题]# #编程[话题]# #社招[话题]# #校招[话题]#",
+    "text": "不得不说 AI的智能化让面试官都可以减少一定的工作量了，deepseek出的题还挺复合之前面试过的大厂的场景题水平的\n#java[话题]# #后端开发[话题]# #后端面试题[话题]# #面试[话题]# #deepseek[话题]# #大模型[话题]# #编程[话题]# #社招[话题]# #校招[话题]#\n",
+    "line_count": 3,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:67b3d98b000000000603f738.txt",
+      "byte_size": 324,
+      "git_blob_sha": "f2530f5da7b233190631f81e7ab4fab128170bb6"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

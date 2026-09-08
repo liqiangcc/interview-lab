@@ -1,0 +1,71 @@
+{
+  "schema_version": "issue-1606-boundary-review-request.v1",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "child_issue": 1606,
+  "issue_number": 289,
+  "source_note_id": "xhs-note:66baf657000000001e01c4c6",
+  "source_id": "xhs:66baf657000000001e01c4c6",
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/289",
+  "expected_body_sha256": "088346dd40a1127bd6d48aadf4deb859b21e5d0b7a3849fb4aa0e10dc02a771d",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:66baf657000000001e01c4c6:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "transition_id": "issue-1606-289-boundary-review-1",
+  "reviewed_at": "2026-09-08T02:05:50Z",
+  "reviewer_kind": "ai-assisted",
+  "disposition": "blocked",
+  "decision": null,
+  "evidence": {
+    "artifact_ref": "liqiangcc/xhs:note_desc/66baf657000000001e01c4c6.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "artifact_provenance": "source_projection",
+    "kind": "text_projection",
+    "git_blob_sha": "28169de98806f9c82f8fe4ab552141ea16626dca",
+    "byte_size": 811,
+    "excerpts": [
+      {
+        "excerpt": "8月8号上星期四和贝壳某工作人员确认好面试 8月12日和13日又陆续确认了两次 一共三次 然后下午到达后发现前台根本没有我的信息 再问就是确认 甚至让我混上去",
+        "line": 1,
+        "locator": "artifact-line:1"
+      }
+    ]
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:1"
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:1"
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:1"
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "Source projection does not provide enough direct event-boundary evidence; retain boundary:pending rather than infer from title or hashtags."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:1"
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:1"
+    }
+  ],
+  "limitations": [
+    "Boundary Review only determines whether 0/1/N InterviewNote case identity may be materialized; it does not write source-ready, InterviewContext, learning labels, or InterviewNote Issues.",
+    "No live evidence comment or transition mutation is authorized by this artifact; any later apply must create/bind durable per-issue evidence and recheck body/state/source CAS.",
+    "Source projection does not provide enough direct event-boundary evidence; retain boundary:pending rather than infer from title or hashtags."
+  ]
+}

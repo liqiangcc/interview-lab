@@ -1,0 +1,89 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0693-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 693,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/693",
+  "source_note_id": "xhs-note:67f4c463000000001c03f2e6",
+  "expected_body_sha256": "e63879affe0964c40512be3601c9da9a7532490efe731c9d03104075acc8196d",
+  "expected_source_revision_id": "xhs-note:67f4c463000000001c03f2e6:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 2,
+        "excerpt": "面试问题："
+      },
+      {
+        "line_number": 7,
+        "excerpt": "Java八股"
+      },
+      {
+        "line_number": 12,
+        "excerpt": "5.场景题，如果有一个很复杂的大项目交给你重构你会怎么做（没了解过，直接就面试结束了）#面经[话题]# #找实习[话题]# #后端开发[话题]#"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67f4c463000000001c03f2e6.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "bd593a940d9178e19ec5a19b04f32d67bed9d115",
+    "byte_size": 542,
+    "sha256": "2809205342cdfedfc28d492037cb2a7f844f2e644088bbaafd8d697f889e5c28",
+    "locator": "note_desc:1-8",
+    "excerpt": "定好的11.30面试，11.40才来人。才面了10分钟左右直接就结束了。\n面试问题：\n自我介绍\n学校成绩，英语四级，日语情况\n职业规划\n介绍项目\nJava八股\n1.==和eaquals的区别",
+    "text": "定好的11.30面试，11.40才来人。才面了10分钟左右直接就结束了。\n面试问题：\n自我介绍\n学校成绩，英语四级，日语情况\n职业规划\n介绍项目\nJava八股\n1.==和eaquals的区别\n2.深拷贝和浅拷贝\n3.讲一下集合，ArryList，LinkedList，HashMap的使用情景\n4.有没有多线程开发经验（没答好）\n5.场景题，如果有一个很复杂的大项目交给你重构你会怎么做（没了解过，直接就面试结束了）#面经[话题]# #找实习[话题]# #后端开发[话题]#\n",
+    "line_count": 13,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:67f4c463000000001c03f2e6.txt",
+      "byte_size": 542,
+      "git_blob_sha": "bd593a940d9178e19ec5a19b04f32d67bed9d115"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

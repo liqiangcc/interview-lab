@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/liqiangcc/interview-lab/schemas/issue-1606-boundary-review-request.schema.json",
+  "title": "Issue #1606 boundary review evidence/request v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "repository", "parent_issue", "child_issue", "issue_number",
+    "source_note_id", "source_id", "live_url", "expected_body_sha256",
+    "expected_boundary_status", "expected_source_revision_id", "expected_source_repository",
+    "expected_source_repository_ref", "transition_id", "reviewed_at", "reviewer_kind",
+    "disposition", "decision", "evidence", "checks", "limitations"
+  ],
+  "properties": {
+    "schema_version": {"const": "issue-1606-boundary-review-request.v1"},
+    "repository": {"const": "liqiangcc/interview-lab"},
+    "parent_issue": {"const": 1605},
+    "child_issue": {"const": 1606},
+    "issue_number": {"type": "integer", "minimum": 20, "maximum": 392},
+    "source_note_id": {"type": "string", "pattern": "^xhs-note:.+$"},
+    "source_id": {"type": "string", "pattern": "^xhs:.+$"},
+    "live_url": {"type": "string", "format": "uri"},
+    "expected_body_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "expected_boundary_status": {"const": "pending"},
+    "expected_source_revision_id": {"type": "string", "minLength": 1},
+    "expected_source_repository": {"const": "liqiangcc/xhs"},
+    "expected_source_repository_ref": {"const": "95b77bb261048059846273688e4b90a2e108b437"},
+    "transition_id": {"type": "string", "minLength": 1},
+    "reviewed_at": {"type": "string", "format": "date-time"},
+    "reviewer_kind": {"const": "ai-assisted"},
+    "disposition": {"enum": ["ready", "blocked"]},
+    "decision": {"type": ["string", "null"], "enum": ["not-interview", "single-interview", "multi-interview", null]},
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["artifact_ref", "artifact_provenance", "kind", "git_blob_sha", "byte_size", "excerpts"],
+      "properties": {
+        "artifact_ref": {"type": ["string", "null"]},
+        "artifact_provenance": {"const": "source_projection"},
+        "kind": {"type": ["string", "null"]},
+        "git_blob_sha": {"type": ["string", "null"], "pattern": "^[0-9a-f]{40}$"},
+        "byte_size": {"type": ["integer", "null"], "minimum": 0},
+        "excerpts": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["excerpt", "line", "locator"], "properties": {"excerpt": {"type": "string"}, "line": {"type": "integer", "minimum": 1}, "locator": {"type": "string", "minLength": 1}}}}
+      }
+    },
+    "checks": {"type": "array", "minItems": 6, "items": {"type": "object", "additionalProperties": false, "required": ["check_id", "result", "note"], "properties": {"check_id": {"type": "string"}, "result": {"enum": ["pass", "fail"]}, "note": {"type": "string"}}}},
+    "limitations": {"type": "array", "items": {"type": "string"}}
+  }
+}
