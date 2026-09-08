@@ -66,6 +66,15 @@ function writeJson(file, value) {
   fs.renameSync(temporary, target);
 }
 
+function writeRequest(file, request) {
+  const target = path.resolve(file);
+  fs.mkdirSync(path.dirname(target), { recursive: true });
+  const temporary = `${target}.tmp-${process.pid}`;
+  const body = `<!-- source-note-boundary-review-transition\n${JSON.stringify(request, null, 2)}\n-->\n`;
+  fs.writeFileSync(temporary, body, 'utf8');
+  fs.renameSync(temporary, target);
+}
+
 function labelsOf(issue) {
   const raw = Array.isArray(issue.labels) ? issue.labels : (issue.labels?.nodes || []);
   return raw
@@ -408,8 +417,53 @@ function runEvidence(args, plan) {
     for (const item of plan.items) {
       if (attempted >= args.maxMutations) break;
       const previous = byNumber.get(item.issue_number) || { issue_number: item.issue_number, transition_id: item.transition_id, status: 'pending', comment_id: null };
-      if (previous.status === 'posted') continue;
-      const live = readLiveIssue(item.issue_number);
+      if (previous.status === 'posted') {
+        const requestFile = path.join(args.requestDir, `${pad(item.issue_number)}.json`);
+        if (previous.request && (!fs.existsSync(requestFile) || !fs.readFileSync(requestFile, 'utf8').includes('<!-- source-note-boundary-review-transition'))) {
+          writeRequest(requestFile, previous.request);
+        }
+        continue;
+      }
+      if (previous.status === 'uncertain') {
+        // A transport failure may have happened after GitHub accepted the
+        // POST.  Reconcile before ever issuing another POST; zero matches is
+        // safe to return to pending, one is converged, and anything else is
+        // an unrecoverable duplicate/unknown state.
+        let matches;
+        try { matches = findMarkerComments(item.issue_number, item.transition_id); }
+        catch (error) { throw new Error(`#${item.issue_number} remains uncertain; marker reconciliation failed: ${error.message}`); }
+        if (matches.length > 1) throw new Error(`#${item.issue_number} has multiple evidence markers after uncertain POST; refusing retry`);
+        if (matches.length === 1) {
+          previous.status = 'posted'; previous.comment_id = Number(matches[0].id); previous.possibly_posted = false;
+          previous.reviewed_at = previous.reviewed_at || new Date().toISOString();
+          previous.request = formalRequest(item, previous.comment_id, previous.reviewed_at);
+          byNumber.set(item.issue_number, previous);
+          journal.items = [...byNumber.values()].sort((a, b) => a.issue_number - b.issue_number);
+          writeJson(journalFile, journal);
+          writeRequest(path.join(args.requestDir, `${pad(item.issue_number)}.json`), previous.request);
+          continue;
+        }
+        previous.status = 'pending'; previous.possibly_posted = false; previous.error = null;
+        byNumber.set(item.issue_number, previous);
+        journal.items = [...byNumber.values()].sort((a, b) => a.issue_number - b.issue_number);
+        writeJson(journalFile, journal);
+      }
+      let live;
+      try {
+        live = readLiveIssue(item.issue_number);
+      } catch (error) {
+        // A failed precondition read is non-mutating.  Record it and move to
+        // the next candidate so a transient GitHub outage cannot strand the
+        // whole bounded batch; the item remains unposted for a later retry.
+        previous.status = 'read-failed';
+        previous.error = error.message;
+        previous.possibly_posted = false;
+        byNumber.set(item.issue_number, previous);
+        journal.items = [...byNumber.values()].sort((a, b) => a.issue_number - b.issue_number);
+        journal.last_error = `#${item.issue_number}: ${error.message}`;
+        writeJson(journalFile, journal);
+        continue;
+      }
       const liveLabels = labelsOf(live);
       if (String(live.state).toLowerCase() !== 'open' || !liveLabels.includes('boundary:pending')) throw new Error(`#${item.issue_number} live SourceNote is not open+boundary:pending`);
       const liveSha = sha256(live.body || '');
@@ -420,9 +474,22 @@ function runEvidence(args, plan) {
       try {
         response = ghJson(['api', '--method', 'POST', `${issueEndpoint(item.issue_number)}/comments`, '--input', '-'], { body });
       } catch (error) {
-        const matches = findMarkerComments(item.issue_number, item.transition_id);
+        let matches;
+        try {
+          matches = findMarkerComments(item.issue_number, item.transition_id);
+        } catch (reconcileError) {
+          previous.status = 'uncertain';
+          previous.error = `${error.message}; marker reconciliation failed: ${reconcileError.message}`;
+          previous.possibly_posted = true;
+          byNumber.set(item.issue_number, previous);
+          journal.items = [...byNumber.values()].sort((a, b) => a.issue_number - b.issue_number);
+          journal.status = 'uncertain';
+          writeJson(journalFile, journal);
+          throw new Error(`#${item.issue_number} evidence POST response unknown and marker reconciliation failed: ${reconcileError.message}`);
+        }
         if (matches.length !== 1) {
           previous.status = 'uncertain'; previous.error = error.message; previous.possibly_posted = true;
+          byNumber.set(item.issue_number, previous);
           journal.items = [...byNumber.values()]; journal.status = 'uncertain'; writeJson(journalFile, journal);
           throw new Error(`#${item.issue_number} evidence POST response unknown; marker reconciliation found ${matches.length} matches`);
         }
@@ -432,10 +499,13 @@ function runEvidence(args, plan) {
       previous.status = 'posted'; previous.comment_id = Number(response.id); previous.reviewed_at = reviewedAt; previous.possibly_posted = false;
       previous.request = formalRequest(item, Number(response.id), reviewedAt);
       byNumber.set(item.issue_number, previous); journal.items = [...byNumber.values()].sort((a, b) => a.issue_number - b.issue_number); journal.attempted = (journal.attempted || 0) + 1; journal.posted = journal.items.filter((entry) => entry.status === 'posted').length; writeJson(journalFile, journal);
-      writeJson(path.join(args.requestDir, `${pad(item.issue_number)}.json`), previous.request);
+      writeRequest(path.join(args.requestDir, `${pad(item.issue_number)}.json`), previous.request);
       attempted += 1; sleep(args.pauseMs);
     }
-    journal.status = journal.items.filter((entry) => entry.status === 'posted').length === plan.items.length ? 'complete' : journal.status === 'uncertain' ? 'uncertain' : 'partial';
+    const hasUncertain = journal.items.some((entry) => entry.status === 'uncertain');
+    journal.status = journal.items.filter((entry) => entry.status === 'posted').length === plan.items.length
+      ? 'complete'
+      : hasUncertain ? 'uncertain' : 'partial';
     journal.canonical_digest = sha256(canonical(journal)); writeJson(journalFile, journal);
     const posted = journal.items.filter((entry) => entry.status === 'posted');
     const manifest = { schema_version: 'source-note-boundary-review-batch.v1', repository: REPOSITORY, parent_issue: PARENT_ISSUE, source_snapshot: { repository: SOURCE_REPOSITORY, ref: SOURCE_REF }, plan_digest: plan.canonical_digest, items: posted.map((entry) => ({ issue_number: entry.issue_number, transition_id: entry.transition_id, request_file: path.relative(path.dirname(args.output), path.join(args.requestDir, `${pad(entry.issue_number)}.json`)) })) };
