@@ -26,11 +26,15 @@ function stripHashtags(text) {
 }
 
 const SCHEDULED_RE = /(约面|约.{0,12}面试|预约.{0,12}面试|待面试|面试安排|安排.{0,12}面试|面试时间)/i;
-const COMPLETED_RE = /(?:(?:周|上周|昨天|今天|当天|当日|刚才|刚刚|此前|之前).{0,8}面的|面[了过完]|面试(?:完|结束|通过)|参加.{0,8}面试|完成.{0,8}面试|经历.{0,8}面试)/i;
+const COMPLETED_RE = /(?:(?:周|上周|昨天|今天|当天|当日|刚才|刚刚|此前|之前).{0,8}面的|面[了完]|面试(?:完|结束|通过)|参加.{0,8}面试|完成.{0,8}面试|经历.{0,8}面试)/i;
 const QUESTION_RE = /(面试题|面试问题|面试官提问|问了什么|被问到|题目|算法题|手撕|在线IDE)/i;
-const OUTCOME_RE = /(等通知|挂了|收到.{0,12}offer|感谢信|流程结束|oc|offer)/i;
-const AGGREGATE_RE = /(多家公司|几家公司|多场面试|几场面试|这几天的面试|面试了30\+|面试了[一二三四五六七八九十]+家|30\+公司|不同公司|累计|分别.{0,10}面试)/i;
+const OUTCOME_RE = /(等通知|挂了|拒信|通过了|面试通过|收到.{0,12}offer|感谢信|流程结束|谈薪资|结果|求助|靠谱吗|oc|offer)/i;
+const AGGREGATE_RE = /(多家公司|几家公司|多场面试|几场面试|这几天的面试|面试了30\+|面试了[一二三四五六七八九十]+家|30\+公司|不同公司|累计|分别.{0,10}面试|面完.{0,12}所有大厂|所有大厂|两个(?:公司|组)|两家(?:公司|公司流程)|多个公司|前后面了两个组|美团.{0,100}百度|百度.{0,100}美团|字节.{0,100}(?:TT|TikTok)|(?:TT|TikTok).{0,100}字节)/i;
 const NON_EVENT_RE = /(模拟面试|模拟一下|题库|刷题|每日积累|代面试|面试诈骗|培训机构|提醒.{0,20}面试|面试辅导|有人知道这个是面试什么|帮公司面试|招聘要求|最新内部信息|面试题合集|面试题大全)/i;
+const CURATED_RE = /(投稿|自己带的同学|同学投稿|资料|知识合集|面试真题|面经一致吗|有没有面过.{0,20}说说|参考下面|供大家参考)/i;
+const RECRUITING_RE = /(宣讲|内推|岗位|秋招|社招|筛完|快投|日程|内推码|招聘会|招聘信息|招聘公告|在招|面试时间：)/i;
+const PROCESS_CONTEXT_RE = /(面试官|项目|自我介绍|算法|数据库|问题|问了|面试过程|面试流程|面经|聊了|简历|手撕|现场|小时|分钟|电话|视频|反问|邮箱|流程)/i;
+const CANDIDATE_AUTHOR_RE = /(我|本人|自己|我的)/i;
 
 function firstEvidenceLine(inventoryItem, regex) {
   const lines = (inventoryItem && inventoryItem.lines) || [];
@@ -46,10 +50,15 @@ function classifyBoundary(inventoryItem) {
   const normalized = stripHashtags(text);
   const hasAggregate = AGGREGATE_RE.test(normalized);
   const hasNonEvent = NON_EVENT_RE.test(normalized);
+  const hasCurated = CURATED_RE.test(normalized);
+  const hasRecruiting = RECRUITING_RE.test(normalized);
   const hasScheduled = SCHEDULED_RE.test(normalized);
   const hasCompleted = COMPLETED_RE.test(normalized);
   const hasQuestion = QUESTION_RE.test(normalized);
   const hasOutcome = OUTCOME_RE.test(normalized);
+  const hasProcessContext = PROCESS_CONTEXT_RE.test(normalized);
+  const hasTemporalCompleted = /(?:周|上周|昨天|今天|当天|当日|刚才|刚刚|此前|之前).{0,8}面的/i.test(normalized);
+  const hasCandidateAuthor = CANDIDATE_AUTHOR_RE.test(normalized);
 
   if (hasAggregate) {
     return {
@@ -59,20 +68,28 @@ function classifyBoundary(inventoryItem) {
       evidence_line: firstEvidenceLine(inventoryItem, AGGREGATE_RE),
     };
   }
-  if (hasNonEvent) {
+  if (hasNonEvent || hasCurated) {
     return {
       status: 'ready',
       decision: 'not-interview',
-      rationale: 'Source projection explicitly identifies a simulation, question-bank, repost, warning, recruiting, or other non-candidate-interview context.',
-      evidence_line: firstEvidenceLine(inventoryItem, NON_EVENT_RE),
+      rationale: 'Source projection explicitly identifies a simulation, curated or third-party submission, knowledge/advice, repost, warning, or other non-candidate-interview context.',
+      evidence_line: firstEvidenceLine(inventoryItem, hasNonEvent ? NON_EVENT_RE : CURATED_RE),
     };
   }
-  if (hasCompleted) {
+  if (hasCompleted && (!hasOutcome || hasProcessContext || hasTemporalCompleted) && (!hasRecruiting || hasCandidateAuthor)) {
     return {
       status: 'ready',
       decision: 'single-interview',
       rationale: 'Source projection explicitly records a completed candidate interview event; no independent multi-event boundary is evidenced in the reviewed projection. Same-process rounds remain one case.',
       evidence_line: firstEvidenceLine(inventoryItem, COMPLETED_RE),
+    };
+  }
+  if (hasRecruiting) {
+    return {
+      status: 'ready',
+      decision: 'not-interview',
+      rationale: 'Source projection is a recruiting, event-calendar, job-posting, or interview-scheduling announcement without completed candidate-interview evidence.',
+      evidence_line: firstEvidenceLine(inventoryItem, RECRUITING_RE),
     };
   }
   if (hasScheduled) {
@@ -83,7 +100,7 @@ function classifyBoundary(inventoryItem) {
       evidence_line: firstEvidenceLine(inventoryItem, SCHEDULED_RE),
     };
   }
-  if (hasQuestion || hasOutcome) {
+  if (hasQuestion || hasOutcome || hasCompleted) {
     return {
       status: 'blocked',
       decision: null,

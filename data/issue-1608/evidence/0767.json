@@ -1,0 +1,71 @@
+{
+  "schema_version": "issue-1608-boundary-evidence.v1",
+  "issue_number": 767,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/767",
+  "source_note_id": "xhs-note:68075d56000000000d017fd3",
+  "source_revision_id": "xhs-note:68075d56000000000d017fd3:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "source_retrieval": {
+    "method": "frozen-source-snapshot",
+    "path": "/tmp/issue-1608-source-texts.json",
+    "byte_size": 499,
+    "git_blob_sha": "74a0d4a08d9de018b5d6bc371e60dc3371e43b53"
+  },
+  "evidence_status": "insufficient-blocked",
+  "decision": null,
+  "rationale": "固定 Source projection 的首个可读 artifact 行仅是弱效率描述；拒绝用其他未绑定行包装为 single-interview。",
+  "artifact": {
+    "ref": "liqiangcc/xhs:note_desc/68075d56000000000d017fd3.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "74a0d4a08d9de018b5d6bc371e60dc3371e43b53",
+    "byte_size": 499,
+    "content_sha256": "a06854c088019676db98a23da76e2a88dcd18d2835d51a749f3e4b008323726e"
+  },
+  "excerpts": [
+    {
+      "line": 1,
+      "locator": "source-projection:artifact-line:1",
+      "excerpt": "字节的效率真的很高"
+    }
+  ],
+  "case_keys": [],
+  "case_evidence": [],
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "固定 Source projection 的首个可读 artifact 行仅是弱效率描述；拒绝用其他未绑定行包装为 single-interview。"
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    }
+  ],
+  "limitations": [
+    "Evidence is insufficient for a boundary transition; no body/label mutation is proposed.",
+    "Title, labels, OCR/Derived data, and image existence are not used to fill the missing boundary proof."
+  ]
+}

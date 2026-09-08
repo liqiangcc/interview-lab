@@ -1,0 +1,71 @@
+{
+  "schema_version": "issue-1608-boundary-evidence.v1",
+  "issue_number": 1084,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/1084",
+  "source_note_id": "xhs-note:689457ee00000000030329cf",
+  "source_revision_id": "xhs-note:689457ee00000000030329cf:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "source_retrieval": {
+    "method": "frozen-source-snapshot",
+    "path": "/tmp/issue-1608-source-texts.json",
+    "byte_size": 724,
+    "git_blob_sha": "d52f6799549f2ef3e017f40d2c11b819d79e3138"
+  },
+  "evidence_status": "insufficient-blocked",
+  "decision": null,
+  "rationale": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。",
+  "artifact": {
+    "ref": "liqiangcc/xhs:note_desc/689457ee00000000030329cf.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "d52f6799549f2ef3e017f40d2c11b819d79e3138",
+    "byte_size": 724,
+    "content_sha256": "b702c1db42234af168e12b0e3e9f6146cd4c2dbb72227e2f1844433849536278"
+  },
+  "excerpts": [
+    {
+      "line": 1,
+      "locator": "source-projection:artifact-line:1",
+      "excerpt": "这场面试相当的不常规"
+    }
+  ],
+  "case_keys": [],
+  "case_evidence": [],
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    }
+  ],
+  "limitations": [
+    "Evidence is insufficient for a boundary transition; no body/label mutation is proposed.",
+    "Title, labels, OCR/Derived data, and image existence are not used to fill the missing boundary proof."
+  ]
+}

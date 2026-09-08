@@ -1,0 +1,1066 @@
+{
+  "schema_version": "issue-1608-boundary-audit.v1",
+  "repository": "liqiangcc/interview-lab",
+  "issue": 1608,
+  "selection_sha256": "a3e52cd8f7233c06a5be95889a00a0aeae4d82fde7b9f51ec406c68d24e0c69e",
+  "source_snapshot": {
+    "repository": "liqiangcc/xhs",
+    "ref": "95b77bb261048059846273688e4b90a2e108b437"
+  },
+  "parent_dependency": {
+    "schema_version": "issue-1605-global-pending-inventory-dependency.v1",
+    "parent_issue": 1605,
+    "source_repository": "liqiangcc/xhs",
+    "source_ref": "95b77bb261048059846273688e4b90a2e108b437",
+    "snapshot_commit": "62aa7258d9931e6453329af2586b9a1390e8e3c5",
+    "snapshot_path": "data/pilot/issue-1605/pending-inventory.snapshot.json",
+    "snapshot_canonical_digest": "5bbf8de3dc61ed382ee31e0d0286c3e7374efec243f60b245c76ee2e0b553dfd",
+    "ownership_path": "data/pilot/issue-1605/pending-inventory.ownership.json",
+    "ownership_canonical_digest": "86550c7f11ed133be4d48873d47fe2118d8ade305acb40ff3040e904815f38fb",
+    "pending_count": 1397,
+    "partitions": [
+      {
+        "child_issue": 1606,
+        "first_issue": 20,
+        "last_issue": 392,
+        "pending_count": 327
+      },
+      {
+        "child_issue": 1607,
+        "first_issue": 393,
+        "last_issue": 765,
+        "pending_count": 367
+      },
+      {
+        "child_issue": 1608,
+        "first_issue": 766,
+        "last_issue": 1138,
+        "pending_count": 337
+      },
+      {
+        "child_issue": 1609,
+        "first_issue": 1139,
+        "last_issue": 1508,
+        "pending_count": 366
+      }
+    ],
+    "union": {
+      "count": 1397,
+      "pairwise_disjoint": true,
+      "equals_parent_inventory": true
+    },
+    "status": "read-only-parent-controller-dependency"
+  },
+  "scope": {
+    "first_issue": 766,
+    "last_issue": 1138
+  },
+  "checks": {
+    "exact_interval_enumerated": true,
+    "pending_selection_count": true,
+    "all_selected_labels_match": true,
+    "all_selected_source_refs_match": true,
+    "source_note_ids_unique": true,
+    "body_sha256_present": true,
+    "source_projection_sha_present": true,
+    "no_mutations": true,
+    "no_live_evidence_comments": true
+  },
+  "blocked_items": [
+    {
+      "issue_number": 767,
+      "reason": "固定 Source projection 的首个可读 artifact 行仅是弱效率描述；拒绝用其他未绑定行包装为 single-interview。"
+    },
+    {
+      "issue_number": 768,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 769,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 770,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 771,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 772,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 773,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 774,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 775,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 777,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 778,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 779,
+      "reason": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
+    },
+    {
+      "issue_number": 780,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 781,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 782,
+      "reason": "固定 Source projection 提到多个流程，但每个 case 没有独立、非 hashtag 的 artifact locator 与流程细节；保留 pending，不 materialize。"
+    },
+    {
+      "issue_number": 784,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 785,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 787,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 788,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 789,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 790,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 791,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 792,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 793,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 794,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 795,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 797,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 798,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 800,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 801,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 802,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 803,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 804,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 805,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 806,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 807,
+      "reason": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
+    },
+    {
+      "issue_number": 809,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 810,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 811,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 813,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 814,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 815,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 817,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 818,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 819,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 820,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 823,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 825,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 828,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 829,
+      "reason": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
+    },
+    {
+      "issue_number": 830,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 831,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 832,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 833,
+      "reason": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
+    },
+    {
+      "issue_number": 834,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 835,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 836,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 837,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 838,
+      "reason": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
+    },
+    {
+      "issue_number": 839,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 840,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 841,
+      "reason": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
+    },
+    {
+      "issue_number": 842,
+      "reason": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
+    },
+    {
+      "issue_number": 844,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 847,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 849,
+      "reason": "固定 Source projection 提到多个流程，但每个 case 没有独立、非 hashtag 的 artifact locator 与流程细节；保留 pending，不 materialize。"
+    },
+    {
+      "issue_number": 850,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 851,
+      "reason": "固定 Source projection 只有预约/投递/面试时间或排期信号，没有已完成面试事件事实；保留 pending，不 materialize。"
+    },
+    {
+      "issue_number": 852,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 854,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 855,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 857,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 858,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 859,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 861,
+      "reason": "固定 Source projection 只有预约/投递/面试时间或排期信号，没有已完成面试事件事实；保留 pending，不 materialize。"
+    },
+    {
+      "issue_number": 862,
+      "reason": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
+    },
+    {
+      "issue_number": 863,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 864,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 866,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 868,
+      "reason": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
+    },
+    {
+      "issue_number": 869,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 870,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 871,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 872,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 873,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 875,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 876,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 877,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 879,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 880,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 881,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 882,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 883,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 884,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 885,
+      "reason": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
+    },
+    {
+      "issue_number": 888,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 891,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 894,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 895,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 898,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 903,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 906,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 934,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 938,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 939,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 943,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 944,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 948,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 949,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 951,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 954,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 956,
+      "reason": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
+    },
+    {
+      "issue_number": 957,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 959,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 960,
+      "reason": "固定 Source projection 只有预约/投递/面试时间或排期信号，没有已完成面试事件事实；保留 pending，不 materialize。"
+    },
+    {
+      "issue_number": 961,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 962,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 963,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 964,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 966,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 967,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 968,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 969,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 970,
+      "reason": "固定 Source projection 只有预约/投递/面试时间或排期信号，没有已完成面试事件事实；保留 pending，不 materialize。"
+    },
+    {
+      "issue_number": 972,
+      "reason": "固定 Source projection 提到多个流程，但每个 case 没有独立、非 hashtag 的 artifact locator 与流程细节；保留 pending，不 materialize。"
+    },
+    {
+      "issue_number": 973,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 974,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 976,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 977,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 980,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 981,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 983,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 984,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 985,
+      "reason": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
+    },
+    {
+      "issue_number": 986,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 988,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 989,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 990,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 992,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 993,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 994,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 995,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 996,
+      "reason": "固定 Source projection 只有预约/投递/面试时间或排期信号，没有已完成面试事件事实；保留 pending，不 materialize。"
+    },
+    {
+      "issue_number": 997,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 998,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 999,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 1000,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 1001,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 1002,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 1003,
+      "reason": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
+    },
+    {
+      "issue_number": 1004,
+      "reason": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
+    },
+    {
+      "issue_number": 1005,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 1006,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 1008,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 1010,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 1013,
+      "reason": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
+    },
+    {
+      "issue_number": 1014,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 1015,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 1017,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 1018,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 1019,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 1020,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 1021,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 1022,
+      "reason": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
+    },
+    {
+      "issue_number": 1023,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 1024,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 1025,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 1026,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 1027,
+      "reason": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
+    },
+    {
+      "issue_number": 1032,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 1033,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 1034,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 1035,
+      "reason": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
+    },
+    {
+      "issue_number": 1036,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 1037,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 1038,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 1039,
+      "reason": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
+    },
+    {
+      "issue_number": 1040,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 1041,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 1042,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 1043,
+      "reason": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
+    },
+    {
+      "issue_number": 1044,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 1046,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 1047,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 1048,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 1049,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 1051,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 1052,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 1054,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 1057,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 1059,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 1060,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 1061,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 1062,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 1064,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 1066,
+      "reason": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
+    },
+    {
+      "issue_number": 1069,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 1072,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 1074,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 1075,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 1076,
+      "reason": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
+    },
+    {
+      "issue_number": 1078,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 1079,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 1080,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 1082,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 1083,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 1084,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 1086,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 1087,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 1088,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 1089,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 1090,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 1092,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 1093,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 1094,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 1096,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 1097,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 1099,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 1100,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 1101,
+      "reason": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
+    },
+    {
+      "issue_number": 1103,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 1104,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 1105,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 1106,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 1107,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 1108,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 1109,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 1110,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 1112,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 1113,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 1115,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 1118,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 1119,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 1120,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 1122,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 1124,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 1125,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 1126,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 1127,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 1128,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 1129,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 1130,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "issue_number": 1132,
+      "reason": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
+    },
+    {
+      "issue_number": 1133,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 1134,
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "issue_number": 1135,
+      "reason": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
+    },
+    {
+      "issue_number": 1137,
+      "reason": "固定 Source projection 只有预约/投递/面试时间或排期信号，没有已完成面试事件事实；保留 pending，不 materialize。"
+    },
+    {
+      "issue_number": 1138,
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    }
+  ],
+  "out_of_scope_issue_numbers_read": [],
+  "duplicate_ownership_check": "deferred to controller-owned materialization phase; no InterviewNote identity is created here",
+  "audit_sha256": "f88149e1d2dcc07e59c2f8e15440a6846108b4abc695ab399eaffa9c9522d71e"
+}

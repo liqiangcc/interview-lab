@@ -1,0 +1,71 @@
+{
+  "schema_version": "issue-1608-boundary-evidence.v1",
+  "issue_number": 782,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/782",
+  "source_note_id": "xhs-note:680a3a20000000001c03319f",
+  "source_revision_id": "xhs-note:680a3a20000000001c03319f:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "source_retrieval": {
+    "method": "frozen-source-snapshot",
+    "path": "/tmp/issue-1608-source-texts.json",
+    "byte_size": 1319,
+    "git_blob_sha": "8bec71d32eda6e78f799876b50c6315edf10fa81"
+  },
+  "evidence_status": "insufficient-blocked",
+  "decision": null,
+  "rationale": "固定 Source projection 提到多个流程，但每个 case 没有独立、非 hashtag 的 artifact locator 与流程细节；保留 pending，不 materialize。",
+  "artifact": {
+    "ref": "liqiangcc/xhs:note_desc/680a3a20000000001c03319f.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "8bec71d32eda6e78f799876b50c6315edf10fa81",
+    "byte_size": 1319,
+    "content_sha256": "70315ca71e6a7f53781a674703fe214a517420b5409b5038ac66d52daf02f90f"
+  },
+  "excerpts": [
+    {
+      "line": 1,
+      "locator": "source-projection:artifact-line:1",
+      "excerpt": "4月1日一面"
+    }
+  ],
+  "case_keys": [],
+  "case_evidence": [],
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "固定 Source projection 提到多个流程，但每个 case 没有独立、非 hashtag 的 artifact locator 与流程细节；保留 pending，不 materialize。"
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    }
+  ],
+  "limitations": [
+    "Evidence is insufficient for a boundary transition; no body/label mutation is proposed.",
+    "Title, labels, OCR/Derived data, and image existence are not used to fill the missing boundary proof."
+  ]
+}

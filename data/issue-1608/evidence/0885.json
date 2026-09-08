@@ -1,0 +1,65 @@
+{
+  "schema_version": "issue-1608-boundary-evidence.v1",
+  "issue_number": 885,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/885",
+  "source_note_id": "xhs-note:68370ad0000000002101ac18",
+  "source_revision_id": "xhs-note:68370ad0000000002101ac18:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "source_retrieval": {
+    "method": "frozen-source-snapshot",
+    "path": "/tmp/issue-1608-source-texts.json",
+    "byte_size": 266,
+    "git_blob_sha": "79c37f10b4a20474e3d4dbb4316273ffe11af6a5"
+  },
+  "evidence_status": "insufficient-blocked",
+  "decision": null,
+  "rationale": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。",
+  "artifact": {
+    "ref": "liqiangcc/xhs:note_desc/68370ad0000000002101ac18.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "79c37f10b4a20474e3d4dbb4316273ffe11af6a5",
+    "byte_size": 266,
+    "content_sha256": "c882263338795bb5466482712e62efada05d44983e67fc048f566a986a775b4a"
+  },
+  "excerpts": [],
+  "case_keys": [],
+  "case_evidence": [],
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    }
+  ],
+  "limitations": [
+    "Evidence is insufficient for a boundary transition; no body/label mutation is proposed.",
+    "Title, labels, OCR/Derived data, and image existence are not used to fill the missing boundary proof."
+  ]
+}

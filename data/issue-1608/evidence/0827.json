@@ -1,0 +1,81 @@
+{
+  "schema_version": "issue-1608-boundary-evidence.v1",
+  "issue_number": 827,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/827",
+  "source_note_id": "xhs-note:681ff6b900000000230017db",
+  "source_revision_id": "xhs-note:681ff6b900000000230017db:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "source_retrieval": {
+    "method": "frozen-source-snapshot",
+    "path": "/tmp/issue-1608-source-texts.json",
+    "byte_size": 2671,
+    "git_blob_sha": "036d2e3f667127b7ca91491802a6388623e50cfd"
+  },
+  "evidence_status": "sufficient-for-controller-review",
+  "decision": "single-interview",
+  "rationale": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。",
+  "artifact": {
+    "ref": "liqiangcc/xhs:note_desc/681ff6b900000000230017db.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "036d2e3f667127b7ca91491802a6388623e50cfd",
+    "byte_size": 2671,
+    "content_sha256": "679f584b9e0d1b864ff7a4e74d9e1e5f594121c3dac3123cb6e97887424df30c"
+  },
+  "excerpts": [
+    {
+      "line": 2,
+      "locator": "source-projection:artifact-line:2",
+      "excerpt": "然后二面就死的很惨[失望R][笑哭R]面完爆哭一小时觉得自己差劲得要死，话不多说直接上面经（这次不在问题后面标注哪些没答出来了，因为基本上都没有给出让面试官满意的答案）"
+    },
+    {
+      "line": 1,
+      "locator": "source-projection:artifact-line:1",
+      "excerpt": "没想到上次腾讯音乐的一面居然过了！发现过了可高兴了[抠鼻R]心里还想着第三次面试就过了一面 姐什么实力不必多说，广东最强大脑（别管我了）"
+    },
+    {
+      "line": 7,
+      "locator": "source-projection:artifact-line:7",
+      "excerpt": "秒杀活动中如何评估数据库支持的最大并发量？"
+    }
+  ],
+  "case_keys": [],
+  "case_evidence": [],
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    }
+  ],
+  "limitations": [
+    "This local evidence is not a GitHub review comment; no live evidence comment was created by this run.",
+    "Boundary Review only determines 0/1/N and does not create InterviewNote Issues or source-ready/learning labels."
+  ]
+}

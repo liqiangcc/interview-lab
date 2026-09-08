@@ -1,0 +1,71 @@
+{
+  "schema_version": "issue-1608-boundary-evidence.v1",
+  "issue_number": 1090,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/1090",
+  "source_note_id": "xhs-note:689572340000000002002047",
+  "source_revision_id": "xhs-note:689572340000000002002047:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "source_retrieval": {
+    "method": "frozen-source-snapshot",
+    "path": "/tmp/issue-1608-source-texts.json",
+    "byte_size": 418,
+    "git_blob_sha": "5a5a2d32c1bd1e892d7e11a3af6e17c9c40e2594"
+  },
+  "evidence_status": "insufficient-blocked",
+  "decision": null,
+  "rationale": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。",
+  "artifact": {
+    "ref": "liqiangcc/xhs:note_desc/689572340000000002002047.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "5a5a2d32c1bd1e892d7e11a3af6e17c9c40e2594",
+    "byte_size": 418,
+    "content_sha256": "dbdb37e868e927c6cc3d9dbfed3b18f00dadbf3477692de503d26b41dbed8d8e"
+  },
+  "excerpts": [
+    {
+      "line": 1,
+      "locator": "source-projection:artifact-line:1",
+      "excerpt": "自我介绍"
+    }
+  ],
+  "case_keys": [],
+  "case_evidence": [],
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    }
+  ],
+  "limitations": [
+    "Evidence is insufficient for a boundary transition; no body/label mutation is proposed.",
+    "Title, labels, OCR/Derived data, and image existence are not used to fill the missing boundary proof."
+  ]
+}

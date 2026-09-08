@@ -1,0 +1,71 @@
+{
+  "schema_version": "issue-1608-boundary-evidence.v1",
+  "issue_number": 970,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/970",
+  "source_note_id": "xhs-note:6853661b0000000022031243",
+  "source_revision_id": "xhs-note:6853661b0000000022031243:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "source_retrieval": {
+    "method": "frozen-source-snapshot",
+    "path": "/tmp/issue-1608-source-texts.json",
+    "byte_size": 256,
+    "git_blob_sha": "f6aecd75f5602f44e719f1c552627e6d5a1c9b54"
+  },
+  "evidence_status": "insufficient-blocked",
+  "decision": null,
+  "rationale": "固定 Source projection 只有预约/投递/面试时间或排期信号，没有已完成面试事件事实；保留 pending，不 materialize。",
+  "artifact": {
+    "ref": "liqiangcc/xhs:note_desc/6853661b0000000022031243.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "f6aecd75f5602f44e719f1c552627e6d5a1c9b54",
+    "byte_size": 256,
+    "content_sha256": "8678e016f5d3900f814420a88bcf66c11ba43180342d0b769d6e75c6e7529489"
+  },
+  "excerpts": [
+    {
+      "line": 1,
+      "locator": "source-projection:artifact-line:1",
+      "excerpt": "我快手日常实习的简历是又被锁了吗[捂脸R]上一周我看就是面试状态了，但是一直没来约面试[哭惹R]这回找实习一次快手电话没接过#后端开发[话题]# #快手招聘[话题]##日常实习[话题]##java[话题]#"
+    }
+  ],
+  "case_keys": [],
+  "case_evidence": [],
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "固定 Source projection 只有预约/投递/面试时间或排期信号，没有已完成面试事件事实；保留 pending，不 materialize。"
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    }
+  ],
+  "limitations": [
+    "Evidence is insufficient for a boundary transition; no body/label mutation is proposed.",
+    "Title, labels, OCR/Derived data, and image existence are not used to fill the missing boundary proof."
+  ]
+}

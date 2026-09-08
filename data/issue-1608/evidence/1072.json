@@ -1,0 +1,71 @@
+{
+  "schema_version": "issue-1608-boundary-evidence.v1",
+  "issue_number": 1072,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/1072",
+  "source_note_id": "xhs-note:6891ae300000000023035e6e",
+  "source_revision_id": "xhs-note:6891ae300000000023035e6e:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "source_retrieval": {
+    "method": "frozen-source-snapshot",
+    "path": "/tmp/issue-1608-source-texts.json",
+    "byte_size": 565,
+    "git_blob_sha": "953cc9e3cefbc7278766f0b4955986973c3700ec"
+  },
+  "evidence_status": "insufficient-blocked",
+  "decision": null,
+  "rationale": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。",
+  "artifact": {
+    "ref": "liqiangcc/xhs:note_desc/6891ae300000000023035e6e.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "953cc9e3cefbc7278766f0b4955986973c3700ec",
+    "byte_size": 565,
+    "content_sha256": "1c84e6ec7f8684c720e00a1b44d4ffc92e2bfeede4d20982c419482019aef425"
+  },
+  "excerpts": [
+    {
+      "line": 1,
+      "locator": "source-projection:artifact-line:1",
+      "excerpt": "不敢裸辞，加薪也不敢提，调休了三天，上午睡觉，下午面试，看看有没有好点的Java开发岗位和机会，反正现在有真的工作经验了也不虚，昨天下午有个面试官还当我面去csdn搜面试题面我，我直接应付下就走了。（有合适的岗位也可以内推，只要不加班太晚 都可接受。主要是薪资方面[黄金薯R]）"
+    }
+  ],
+  "case_keys": [],
+  "case_evidence": [],
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    }
+  ],
+  "limitations": [
+    "Evidence is insufficient for a boundary transition; no body/label mutation is proposed.",
+    "Title, labels, OCR/Derived data, and image existence are not used to fill the missing boundary proof."
+  ]
+}
