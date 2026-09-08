@@ -11,8 +11,10 @@ function validateManifest(manifest) {
   if (manifest.schema_version !== SCHEMA_VERSION) errors.push(`schema_version must be ${SCHEMA_VERSION}`);
   if (typeof manifest.repository !== 'string' || !/^[^/]+\/[^/]+$/.test(manifest.repository)) errors.push('repository must use owner/repo');
   if (!manifest.source_snapshot || typeof manifest.source_snapshot.repository !== 'string' || !/^[0-9a-f]{40}$/.test(String(manifest.source_snapshot.ref || ''))) errors.push('source_snapshot must pin a 40-char commit');
-  const expectedItemCount = manifest.scope === 'issue-1577-fixed-17' ? 17 : 30;
-  if (manifest.scope != null && manifest.scope !== 'issue-1577-fixed-17') errors.push('unsupported pinned artifact manifest scope');
+  const expectedItemCount = manifest.scope === 'issue-1577-fixed-17'
+    ? 17
+    : manifest.scope === 'issue-1610-fixed-2' ? 2 : 30;
+  if (manifest.scope != null && !['issue-1577-fixed-17', 'issue-1610-fixed-2'].includes(manifest.scope)) errors.push('unsupported pinned artifact manifest scope');
   if (!Array.isArray(manifest.items) || manifest.items.length !== expectedItemCount) errors.push(`items must contain exactly ${expectedItemCount} items for this pinned artifact manifest scope`);
   if (manifest.verified !== true) errors.push('verified must be true');
   if (!Array.isArray(manifest.errors) || manifest.errors.length !== 0) errors.push('errors must be an empty array on a verified manifest');
