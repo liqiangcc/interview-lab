@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1429",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1429,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1429",
+  "source_note_id": "xhs-note:68dfd5470000000003020b68",
+  "expected_body_sha256": "639fd3b8527cb1873201757a3fb73498322948cbda91b5fdf152b54d84bfdaae",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68dfd5470000000003020b68:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1429.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_json/68dfd5470000000003020b68.json@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "251e777376db9a6f4efa439fde3e394d90be7526",
+    "kind": "json",
+    "provenance": "source_projection",
+    "byte_size": 22632,
+    "content_sha256": "ce82bd97e2e7bf709794d41a82f9ec841e4f96aa9a1563c0c0d8e91075e14c1e",
+    "excerpt": {
+      "excerpt": "\"global\": {",
+      "line": 2,
+      "locator": "artifact-line:2",
+      "semantic_excerpt": "Time：8/29（19:30-21:00） [向右R]面感：体验很好，面试官很会问，而且有耐心引导，即使回答不上来，面试官没开摄像头，反问时候得知是做C端的，问我知不知道面的是什么部门，感觉不像是统一招聘。 [向右R]流程：手撕->八股->挖实习->项目拷打 [向右R]涉及内容：Java基础、数据库、redis（主要是sql和redis拷打得比较深入）。面试官从手撕题引入开始问Java基础，之后结合sql语句优化问了一堆数据库八股和一些场景题。 [向右R]手撕：共两题，分别是手撕装饰器模式和一段sql语句优化（全表查找） ———————————详细版—————————— [红书R]当时我装饰器用了一个map来写，后面面试官就根据哈希表展开，问了底层的构造那些其中包括结构、初始化、红黑树转换那些，后面看到我写的是普通哈希表，就开始问我高并发下要怎么做其中包括hashtable、concurrenthashmap这些，也问了concurrenthashmap实现机制； [红书R]接着看到我数据库语句优化，问我关于慢查询、全表扫描、最左匹配原则、锁那些，以及什么情况下会导致全表扫描等； [红书R]因为我简历上写了redis和rpc，接着就开始拷打redis，包括主从同步、持久化机制、集群同步、主从容灾、高并发高可用实现等等；接着又问了一些rpc的东西，内容包括序列化机制、负载均衡、dubbo、thrift等"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "abee578db49e71ed99533bad4c57fc062ad4a25dd0d64dc8acff381351605d3a",
+  "request_sha256": "8baef8f92cb735f22a31af86a6f77dd5aa31a23d8f6f40b384953f73d3d287b6"
+}

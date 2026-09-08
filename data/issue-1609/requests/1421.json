@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1421",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1421,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1421",
+  "source_note_id": "xhs-note:68dca9910000000004012adc",
+  "expected_body_sha256": "32c606d12d9c108d58ed366aac61ed7cddf216118d393f0c95508535d0d35a61",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68dca9910000000004012adc:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1421.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_json/68dca9910000000004012adc.json@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "4094e424b68aa296a9f3a7637989bc7bf29192ae",
+    "kind": "json",
+    "provenance": "source_projection",
+    "byte_size": 24138,
+    "content_sha256": "8914ee340f245e7db841bffd6a38a6fbf4f22495a1e73f3ae9c130e72a8dda73",
+    "excerpt": {
+      "excerpt": "\"desc\": \"📍背景：学员刚面完美团Java外包岗，两轮技术面高强度轰炸！全程狂飙八股文深度+手撕算法细节，面试官尤其爱问底层实现和边界case，整理高频真题+避坑指南\\n\\t\\n📌 第一轮技术面（50分钟）\\n\\t\\n1. Java八股文暴击\\n\\t\\n- HashMap：\\n- 扩容机制？为什么容量必须是2的幂次？\\n- JDK7和JDK8的区别？（头插法vs尾插法、红黑树优化）\\n- ConcurrentHashMap：\\n- JDK8如何保证线程安全？（CAS+synchronized分段锁）\\n- size()方法如何实现？（基础计数+分段累加优化）\\n- JVM：\\n- G1垃圾回收器的工作流程？（Young GC/Mixed GC）\\n- 内存泄漏常见场景？（ThreadLocal未清理、静态集合持有对象）\\n- 多线程：\\n- 线程池的拒绝策略有哪些？（CallerRunsPolicy、AbortPolicy区别）\\n- Synchronized和ReentrantLock的区别？（公平锁/非公平锁实现）\\n\\t\\n2. 数据库&缓存\\n\\t\\n- MySQL：\\n- 索引失效的10个场景？（最左前缀、函数计算、类型转换）\\n- 事务隔离级别和MVCC原理？（ReadView版本链机制）\\n- Redis：\\n- 缓存穿透/雪崩/击穿解决方案？（布隆过滤器、随机过期时间、互斥锁）\\n- 持久化方式选型？（RDB快照 vs AOF重写）\\n\\t\\n📌 第二轮技术面（40分钟）\\n\\t\\n1. 手撕算法题\\n\\t\\n- 题目1：合并两个有序链表（LeetCode 21）\\n- 要求：递归+迭代双解法，分析时间/空间复杂度。\\n- 题目2：有效的括号（LeetCode 20）\\n- 考察：栈结构应用，注意空栈和顺序匹配边界case。\\n\\t\\n2. 场景+实战\\n\\t\\n- 问题：线上OOM如何快速定位？\\n- 答案：\\n-\\n\\\"jmap -heap\\\"查看堆内存分布\\n-\\n\\\"jstack\\\"分析线程栈，结合MAT工具追踪GC Roots\\n- 问题：秒杀系统如何防超卖？\\n- 方案：Redis Lua脚本原子扣减库存+MQ异步落库补偿\\n\\t\\n💡 面试官挖坑点\\n\\t\\n1. 源码细节：\\n- “HashMap头插法具体怎么导致死循环",
+      "line": 511,
+      "locator": "artifact-line:511",
+      "semantic_excerpt": "📍背景：学员刚面完美团Java外包岗，两轮技术面高强度轰炸！全程狂飙八股文深度+手撕算法细节，面试官尤其爱问底层实现和边界case，整理高频真题+避坑指南 📌 第一轮技术面（50分钟） 1. Java八股文暴击 - HashMap： - 扩容机制？为什么容量必须是2的幂次？ - JDK7和JDK8的区别？（头插法vs尾插法、红黑树优化） - ConcurrentHashMap： - JDK8如何保证线程安全？（CAS+synchronized分段锁） - size()方法如何实现？（基础计数+分段累加优化） - JVM： - G1垃圾回收器的工作流程？（Young GC/Mixed GC） - 内存泄漏常见场景？（ThreadLocal未清理、静态集合持有对象） - 多线程： - 线程池的拒绝策略有哪些？（CallerRunsPolicy、AbortPolicy区别） - Synchronized和ReentrantLock的区别？（公平锁/非公平锁实现） 2. 数据库&缓存 - MySQL： - 索引失效的10个场景？（最左前缀、函数计算、类型转换） - 事务隔离级别和MVCC原理？（ReadView版本链机制） - Redis： - 缓存穿透/雪崩/击穿解决方案？（布隆过滤器、随机过期时间、互斥锁） - 持久化方式选型？（RDB快照 vs AOF重写） 📌 第二轮技术面（40分钟） 1. 手撕算法题 - 题目1：合并两个有序链表（LeetCode 21） - 要求：递归+迭代双解法，分析时间/空间复杂度。 - 题目2：有效的括号（LeetCode 20） - 考察：栈结构应用，注意空栈和顺序匹配边界case。 2. 场景+实战 - 问题：线上OOM如何快速定位？ - 答案： - \"jmap -heap\"查看堆内存分布 - \"jstack\"分析线程栈，结合MAT工具追踪GC Roots - 问题：秒杀系统如何防超卖？ - 方案：Redis Lua脚本原子扣减库存+MQ异步落库补偿 💡 面试官挖坑点 1. 源码细节： - “HashMap头插法具体怎么导致死循环？”（JDK7扩容链表反转过程） 2. 算法边界： - “LRU缓存处理并发访问怎么办？”（加锁或Collections.synchronizedMap包装） 3. 实战陷阱： - “Redis持久化"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "6e414da87bf0680db0e72fae0e8fbca6a915a1495f6a8c828cb5554671c2e74d",
+  "request_sha256": "5ba0b3f5997037d3aece104291f6f7264529d675b1e55fff5984ebd22091032a"
+}

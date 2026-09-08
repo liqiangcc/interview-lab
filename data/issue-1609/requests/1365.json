@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1365",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1365,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1365",
+  "source_note_id": "xhs-note:68cf766c000000001301dc1b",
+  "expected_body_sha256": "4072ca9b41c4a7850002ae188283127c6f530480824268b2d479cb69b5a4d483",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68cf766c000000001301dc1b:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1365.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_json/68cf766c000000001301dc1b.json@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "36586226ce40e2263e7d65c52ac158b1d6cce42e",
+    "kind": "json",
+    "provenance": "source_projection",
+    "byte_size": 23286,
+    "content_sha256": "b0565ffd18553238655d040ea0be070134eb420d81dc99ba89022eeae86a4588",
+    "excerpt": {
+      "excerpt": "\"global\": {",
+      "line": 2,
+      "locator": "artifact-line:2",
+      "semantic_excerpt": "一面： 1、自我介绍 2、对于未来工作的 base 地是怎么考虑的？ 3、谈谈项目 1 做了什么事，自己负责了什么工作（5 min） 4、手撕做题：一个字符串 s 和一个整数 k，找出 s 中的最长子串，要求该子串中的每一个字符出现次数都不少于 k，返回这个子串的长度。比如 s = \"ababbc\", k = 2，则输出结果为 5。因为最长子串为 \"ababb\"，其中 a 出现 2 次，b 出现 3 次，均不少于 k 5、谈谈当前写法的时间复杂度是多少？ 6、思考一下基于滑动窗口能否实现？代码怎么写？ 7、手撕做题：写一个线程安全的单例模式 8、谈谈饿汉式单例和懒汉式单例的区别、饿汉式为什么是线程安全的、懒汉式单例为什么要有双重检查的写法 9、volatile 关键字的作用是什么？ 10、谈谈 synchronized 关键字的机制 11、还了解 Java 的哪些锁？ 12、Java 创建线程有哪些方式？ 13、线程池的参数具体有哪些？ 14、线程池的消费策略是怎样的？ 15、假设有 5 台机器，每台配置：1 CPU，512 M 内存，1 T 硬盘，1 GB 网卡。如何设计一个高效稳定的系统，从 100 亿个数中选出最大的 1000 个 16、算法层面可以采用负载均衡、数据分块并结合堆来实现，那么如何从工程的角度来保证这个系统的稳定性？ 17、一个机器处理某个数据块时宕机了，如何不让其从头开始处理数据，而是找到上一次处理数据的位置继续处理？怎么做持久化？怎么做数据恢复？怎么实现数据处理进度的标记？ 18、反问"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "103403b5b84ba7585e2b88ab1f69ee534cdf2fca0fa6fc3266716c73a5360737",
+  "request_sha256": "db50f200305d8aac0a27b6c88a566dee0716df413dcbd6f9a3667929b649231a"
+}

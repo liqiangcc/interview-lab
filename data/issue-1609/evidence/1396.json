@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1396,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1396",
+  "source_note_id": "xhs-note:68d50725000000001101db27",
+  "source_revision_id": "xhs-note:68d50725000000001101db27:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "ddfe9e71381bab505dc3f820df7c5c82517a3f28770e06cd6bd69056f9e4aa48",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_json/68d50725000000001101db27.json@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "fdf3d54fa0cc136a06e397ef557d3a84292ce67f",
+    "kind": "json",
+    "provenance": "source_projection",
+    "byte_size": 20393,
+    "content_sha256": "b7988de7b02cbe0eb933882ce4ac5e3f50ef6dcb0d5d7f1070cf55e60fec1394",
+    "excerpt": {
+      "excerpt": "\"desc\": \"全程50min，感觉快手的面试官更侧重技术广度，面试问题操作系统，网络，java八股，数据库，消息队列全方面覆盖。\\n大部分是一些比较常规八股，挑两个印象深刻的问题说一下。\\n1.tcp最大连接数怎么确认（答的半连接队列存在上限和socket存在上限，但面试官期望我从四元组方面回答）\\n2.jmm底层（从cpu角度考虑）\\n算法：\\n1.二叉树层序遍历（输入case要自己建树，有点麻烦）\\n2.买卖股票最大收益2\\n总体面试官人很和蔼，面试涉及到技术面很广，面试体验不错。\\n//\\n后续：半小时hr打电话约二面，约到10.9了，漫长的等待[泪崩R]\",",
+      "line": 523,
+      "locator": "artifact-line:523",
+      "semantic_excerpt": "全程50min，感觉快手的面试官更侧重技术广度，面试问题操作系统，网络，java八股，数据库，消息队列全方面覆盖。 大部分是一些比较常规八股，挑两个印象深刻的问题说一下。 1.tcp最大连接数怎么确认（答的半连接队列存在上限和socket存在上限，但面试官期望我从四元组方面回答） 2.jmm底层（从cpu角度考虑） 算法： 1.二叉树层序遍历（输入case要自己建树，有点麻烦） 2.买卖股票最大收益2 总体面试官人很和蔼，面试涉及到技术面很广，面试体验不错。 // 后续：半小时hr打电话约二面，约到10.9了，漫长的等待[泪崩R]"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "evidence_sha256": "2627c573d860dfd85ec678c42507217d5a8d3cb4664be1b4c0c0a6f5f021b34f"
+}

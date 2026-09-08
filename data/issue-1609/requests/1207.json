@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1207",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1207,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1207",
+  "source_note_id": "xhs-note:68b154a8000000001c032fa1",
+  "expected_body_sha256": "d431ba7c51480289dbc150a8f5231c4316beb3443dcfcbe3715a89f96b874666",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68b154a8000000001c032fa1:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1207.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68b154a8000000001c032fa1.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "55866e114b42e33210e9fe9d816ec1a56cfc609a",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 1306,
+    "content_sha256": "2f471cafe0093cdb988fad90fb9cceb7eb9b9b7c49bb530eafd62d8e883d8b1f",
+    "excerpt": {
+      "excerpt": "timeline-",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "timeline- 8.20BOSS投递 8.20约面 8.26一面 ----------------------------------------------- 1.自我介绍 2.对测开有什么认识，为什么选择测开 3.介绍腾讯云实习中负责的一个项目，架构如何，有多少人参与，你主要做哪个部分 4.介绍一下腾讯自研QTA自动化框架和流水线 5.简历上一个自动化产出的用例数、成功率、执行频率 6.实习期间面临的最大挑战 7.sql题，找出成绩表中排名第二的学生姓名 8.操作系统中线程和进程的区别 9.cookie和session的区别 10.Java中基本数据类型和引用数据类型的区别 11.jvm的基本组成结构 12.Linux命令，批量终止名字包含abc的进程 13.讲讲什么是python装饰器 14.手撕，从行升序列升序的二维数组中判断target数是否存在 15.用例设计，微信聊天发送图片 16.个人优缺点 ----------------------------------------------- 复盘一下-已挂 太久没刷sql题忘干净了 Linux基本命令也忘干净了[哭惹R] python八股没关注，后续有精力的话争取扩展一下这块"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "d76f7628ea7a98621dbb7c1216c3713721149f83dbc7789d05dcaab3fa392218",
+  "request_sha256": "4dfd17fef4fb6e0d03ebd3a367b30fc07403ac0a579aaab128da4e26d912b0c1"
+}

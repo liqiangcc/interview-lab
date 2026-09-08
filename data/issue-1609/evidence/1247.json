@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1247,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1247",
+  "source_note_id": "xhs-note:68b81a39000000001c034f47",
+  "source_revision_id": "xhs-note:68b81a39000000001c034f47:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "6f70e705cd99cdd4757471bab4f2f1af3a2ddcef5281ef634dc7d866bccf8bc5",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68b81a39000000001c034f47.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "fc5b5479aded2e2600205effe8f283befea993af",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 2525,
+    "content_sha256": "f7e28e5f20ea6d1286d50fa7ad0fd3616adeca5c78ae4d11e0b7d570e87ffebb",
+    "excerpt": {
+      "excerpt": "一面：",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "一面： 1、自我介绍 2、请你花 5min 左右介绍一下项目一的背景和你做的工作 3、你们的缓存和 DB 用的什么一致性策略？是强一致的吗？ 4、目前两级存储都是做的单机部署，你的这个策略能否应用到分布式的场景？如果应用到分布式场景下，需要考虑哪些问题？ 5、浅谈实习（6min） 6、项目中用到了 ES，请你谈谈 ES 和 Lucene 的关系 7、ES 是怎么实现高效检索的？ 8、ES 的数据查询是放在内存中还是磁盘中？ 9、MySQL 会存在深分页查询，ES会存在吗？ 10、MySQL 中我如果执行一条 select 语句，limit 100,100; 那么实际在数据库中检索了多少行数据？ 11、处理 MySQL 深分页查询的手段有哪些？ 12、你觉得现在的大型商业产品是如何去处理深分页问题的？比如 Google 或者百度，怎么处理深分页的？ 13、项目中用到了 AI 扩图，简单讲讲 14、平时有去了解过 AI 相关的一些技术原理或者说相关知识吗？ 15、谈谈你如何理解大模型这三个字？ 16、回到大模型的使用场景，你和它聊天，它是具有上下文的记忆功能的，你觉得这个记忆的功能是大模型提供的能力吗？大模型是有状态的吗？ 17、大模型是如何去驱动一些任务的执行的？比如订机票，打开网页等操作，为什么大模型能够去订机票？为什么它能够打开网页？ 18、给你提一个需求：假如一个城市，有 100 万个菜鸟的包裹柜，一个城市一天可能会有 1 亿 哥包裹的存取。现在给你这 1 亿个包裹的存入和取出时间，用一个数组来存储。假设这些包裹都是在一天内进行存入并取出的。现在的问题是：如何找出这一天中的哪个时间段包裹没有被取出来的数目是最多的？以及它们所在的时间段是多长的时间？你的方案的时间和空间复杂度是多少？ 19、项目中使用了分布式锁，谈谈基于 Redis 如何实现分布式锁？ 20、除了 Redis 实现分布式锁以外，还有其它哪些方案？ 21、分布式环境下，对于 MySQL 数据库而言，可以用什么手段来保证数据的唯一性？ 22、数据库的唯一索引对 null 支持吗？可以支持两个 null 数据吗？它是唯一的还是不唯一的？ 23、反问"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "evidence_sha256": "e616da62a5ef2366433f10e8cc73b253ce60be36e61a39e4f2546e95aab9c320"
+}

@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1414",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1414,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1414",
+  "source_note_id": "xhs-note:68da317a000000001300deb5",
+  "expected_body_sha256": "51c51418203f1913d7820210797540e81c2ccccac897d5874d4b969fbad46b15",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68da317a000000001300deb5:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1414.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_json/68da317a000000001300deb5.json@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "e2025fe7bd5c1bb03260dcfe6dd1925459faae39",
+    "kind": "json",
+    "provenance": "source_projection",
+    "byte_size": 21983,
+    "content_sha256": "74c76ff8222bbfa4f8aa10865e163c2d4fbef9cdbd159947e0fb472f0e96ede6",
+    "excerpt": {
+      "excerpt": "\"global\": {",
+      "line": 2,
+      "locator": "artifact-line:2",
+      "semantic_excerpt": "美团Java后端开发一面面经 项目相关问题，这里不多说。 12. rocketMQ在项目起到的作用 13. rocketMQ消息丢失了的处理？ 14. 有没有考虑别的实现。比如中间件，项目的实现方案优势在哪里。 15. 用到过的注解有哪些？ 16. 项目中有用到@configuration注解吗，@configuration注解用和不用的区别在哪，一定要用吗。 17. 假如我现在在项目要创建一个对象，比如说来自一个第三方库，那你在spring框架里应该使用什么注解 18. 讲讲aop？你是怎么用的？ 19. 项目里面有用过设计模式吗，讲讲设计模式 20. 说说hashMap？ 21. 了解ConcurrentHashMap吗，说说ConcurrentHashMap 22. volatile关键字怎么保证数据的可见性 23. 既然ConcurrentHashMap 用到了Synchronized关键字＋cas了，为什么还要加上volatile关键字呢，非加不可吗 24. volatile关键字是用在concurrentHashMap的哪里呢，修饰了什么变量 25. Volatile关键字除了保持可见性，还有什么作用吗 26. Volatile能保证原子性吗 27. 说说你在项目中用到的垃圾回收器，以及你是怎么配置的。 28. G1垃圾回收器用到的垃圾标记算法是什么 29. 说说这个标记算法的流程？ 30. 你有做过jvm的调优吗，说说你调过哪些参数。 31. 有没有看过垃圾回收日志什么的，根据这个调参（乖乖认错答没有） 32. 你在项目中用到的索引有哪些，能说说吗 33. 这句语句要不要加索引，怎么加？select * from table where a=1 and b>2 order by c,d,f 34. 项目里的分页分表具体是怎么分页的呢？ 35. 这个项目里面的表都有什么，怎么设计的 36. mybatis-plus在项目里是做什么的 手撕：二叉树展开成链表，要求10分钟内 手撕完问了最后几个开放问题： 1、 假如突然给到了一个很紧急的业务，时间非常紧凑，你会怎么完成这个业务工作？ 2、 这一年你是怎么学习专业技能的？ 3、 你刚刚提到了ai，那你平时做项目或者说开发的时候是怎么用ai的呢？ 4、 假如项目经理给到的需求一直在发生变化，导致一直在不断修改工"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "863302bfc9663f83d32d6bc2825daafb2ea3747f606e9b3dbf02672ddf5981fe",
+  "request_sha256": "1e51be8aa6cfda716d40d5e29724645b78454d25542620fdb54c833da23a99e5"
+}

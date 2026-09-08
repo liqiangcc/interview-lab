@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1342",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1342,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1342",
+  "source_note_id": "xhs-note:68caef63000000000b03c3bf",
+  "expected_body_sha256": "8afa11af3d87b596e15270ba32a07d19f5cd8473c720699f35eaa0147ea15f0a",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68caef63000000000b03c3bf:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1342.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68caef63000000000b03c3bf.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "4525e17030e125c3fd3b40d3c558e314f6564534",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 508,
+    "content_sha256": "e834123ca2c5e6be719ed239110f44cb6a3b18ab1be0056d975dbfa5134d5452",
+    "excerpt": {
+      "excerpt": "9.17Java面试复盘",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "9.17Java面试复盘 今天面了某安包，凉了，总结了一下，项目问题和一些场景问题回答自认还可以，但八股文久不看了，有近4.5个没回答上来，以下是没回答上问题。 1.kafka消息保证顺序性问题 ? 2.spring中bean的生命周期，创建与销毁?spring事务的执行原理? 3.存储过程?怎么使用? 4.springboot中的启动原理?如果要自己实现一个stater要怎么实现? 5.api指定使用某个索引?"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "1d2447da7620d46c1e73e4ff99e0a768f9072b8778972ac682ef06599f1529c6",
+  "request_sha256": "5b1eaf6e8e1fb618f0e250068ea98b6e76ba1938d49d63dbc4a744796d9a02ad"
+}

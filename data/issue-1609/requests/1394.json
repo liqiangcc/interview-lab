@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1394",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1394,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1394",
+  "source_note_id": "xhs-note:68d4ea880000000013008932",
+  "expected_body_sha256": "8ac8e531390d7fe3f2675972b78ae9b107e7e8ed12beec87064caa8e6ba6b869",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68d4ea880000000013008932:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1394.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_json/68d4ea880000000013008932.json@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "231c35bc6064c458dec620de74a80e018bb9dc52",
+    "kind": "json",
+    "provenance": "source_projection",
+    "byte_size": 20415,
+    "content_sha256": "6b1604e48645f0649229fe483517404891a75dc8eb3be6e3333eb2748a19ba18",
+    "excerpt": {
+      "excerpt": "\"global\": {",
+      "line": 2,
+      "locator": "artifact-line:2",
+      "semantic_excerpt": "菜鸟 JAVA一面 社招 1、聊聊集合，ArrayList、LinkedList、HashMap 2、多线程，线程池、什么情况下会扩容、核心线程数量是怎么设定的 3、ConcurrentHashMap怎么保证线程安全，volatile可见性 4、Java中的锁，synchronized，Lock 5、Spring，IOC和AOP，AOP哪些场景有用到，bean的生命周期 6、Spring事务失效 7、项目中有没有遇到redis缓存穿透、缓存击穿的情况（没有） 8、项目中遇到问题是怎么解决的，有没有遇到哪些困难 9、反问 全程45-50min左右 好像大概是这些，顺序可能有点乱，很多问题往深挖一点就不会了。 面试官超好，给了我很多建议"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "2cf653bc33f0773b273a94c9f692a133da03f2ccaede1b33761ef5c6a758091f",
+  "request_sha256": "d9dfb83d97683022bee6474cd33d539b9db09bbec31e0e9924ad407e2725a09d"
+}

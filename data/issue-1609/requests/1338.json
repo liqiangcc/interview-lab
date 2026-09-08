@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1338",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1338,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1338",
+  "source_note_id": "xhs-note:68ca2ddb0000000013011bbb",
+  "expected_body_sha256": "37a373aaedcba5e67921eb0f90f9b9d2928ce6237a7f5d9d23f8b58f7b93f923",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68ca2ddb0000000013011bbb:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1338.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68ca2ddb0000000013011bbb.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "823e1b6ad213b73b9883fd15981c70db7d74a672",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 726,
+    "content_sha256": "2c44010c0ae8b571be7d1aefaf3fdd015f0f132f89bfa8d65cfea87edcbf75d9",
+    "excerpt": {
+      "excerpt": "腾讯技术面经",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "腾讯技术面经 1、自我介绍 3min 2、讲讲Java、Python、Go三者区别 3、Python比Java快吗，比Go快吗 4、讲讲解释型语言和编译型语言的区别 5、GMP模型 6、Redis ： 一台机器256GB，很多台机器，一共有1T数据，怎么存 7、Redis： 原来访问量1000w QPS，已经最高，现在2000w，怎么优化 8、除了读写分离呢？（可以加资源） 9、数组和链表的区别，体现在内存读取和cpu计算上 算法：大数相乘"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "41db77cbe90c65ba0a1d2f4335bd32163cb6ae9618d8c1e00bb761c96f91cac3",
+  "request_sha256": "d612b3ce71f0fcba17576be8f812d8f9062ab2958ee41e99b386ecfef99dcf03"
+}

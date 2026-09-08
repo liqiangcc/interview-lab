@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1453",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1453,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1453",
+  "source_note_id": "xhs-note:68e8d2ed0000000007000373",
+  "expected_body_sha256": "b9cf1d2d2dded0cf0f8bdf77afc5d8133752fd54aa4ba922f85109b0562fd741",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68e8d2ed0000000007000373:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1453.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_json/68e8d2ed0000000007000373.json@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "caf20f06e0e31990d9c7fbe92fd12c29ef8e4874",
+    "kind": "json",
+    "provenance": "source_projection",
+    "byte_size": 20330,
+    "content_sha256": "ddaa931a4985bd9ad4e60cef370209c3458fc199ccaba331e925d0a5ebe4591b",
+    "excerpt": {
+      "excerpt": "\"global\": {",
+      "line": 2,
+      "locator": "artifact-line:2",
+      "semantic_excerpt": "招银网络Java一面，全程25分钟。 1.自我介绍，1分钟 2.项目相关问题，主要是自己来讲，介绍项目，项目中的难点，怎么解决的。6分钟 3.final，finally，finalize有什么区别 4.jvm的结构 5.慢查询及如何优化，可能我说的比较多，到第15分钟了面试官说开始做题吧。 6.非hot100，给一个字符串，判断是否可以由cm随机插入组成，比如ccmm可以是先插入一个cm再在中间插入一个cm，核心代码模式，用了5分钟 7.反问，问了面试官对我有什么建议，面试官回答了又闲聊了几分钟，25分钟结束面试。"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "750de69837276804fc3c6c961bdbd24970f897535b017367ee186ecccf336eac",
+  "request_sha256": "f857530b802d6625002b6a9ed4ff5888cf4e91399886cf3afd4c5a2cf860a81f"
+}

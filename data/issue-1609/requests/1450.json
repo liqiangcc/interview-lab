@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1450",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1450,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1450",
+  "source_note_id": "xhs-note:68e8abdc0000000003012caf",
+  "expected_body_sha256": "65fe3fe65366a95651e3830104d17b9db0e2e9da341091e0609033358ee5b109",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68e8abdc0000000003012caf:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1450.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_json/68e8abdc0000000003012caf.json@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "4cc6404dd9756d68ebde9228a8b1b00400e63af4",
+    "kind": "json",
+    "provenance": "source_projection",
+    "byte_size": 20994,
+    "content_sha256": "62c6148f82c5d82d809cf7d0acf518ec2ae7b63d74ad74dd44ce8d43800b08cd",
+    "excerpt": {
+      "excerpt": "\"desc\": \"快手秋招后端两面之后就hr面了正常吗，哥们本硕双一流双非，三段后端实习，俩中厂一大厂，一面问了实习，浅问八股文，手撕原地展开二叉树秒了，二面问了三段实习，无八股，手撕十多分钟写对了，然后直接下周二hr面了，有这样情况的宝子吗[笑哭R]#互联网大厂[话题]# #秋招面试[话题]# #大厂面试[话题]##JAVA后端面试[话题]#\",",
+      "line": 563,
+      "locator": "artifact-line:563",
+      "semantic_excerpt": "快手秋招后端两面之后就hr面了正常吗，哥们本硕双一流双非，三段后端实习，俩中厂一大厂，一面问了实习，浅问八股文，手撕原地展开二叉树秒了，二面问了三段实习，无八股，手撕十多分钟写对了，然后直接下周二hr面了，有这样情况的宝子吗[笑哭R]"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "2a112490a96612f5529af0d13daf4a91a6b77a68fe2aa3f47527ef9211f74c55",
+  "request_sha256": "a002638392194b2740d6b9d5e8019dc370d2d6c4ded897a4914599dc0590095f"
+}

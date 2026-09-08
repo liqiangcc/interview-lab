@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1417,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1417",
+  "source_note_id": "xhs-note:68da354d0000000013013ed8",
+  "source_revision_id": "xhs-note:68da354d0000000013013ed8:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "1239f3728b153dac1179cab930f51c9afb82bee826b81800e9ba59875e7da89b",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_json/68da354d0000000013013ed8.json@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "5f91c65bc31a8f7565f84cded09f4d0f44e01534",
+    "kind": "json",
+    "provenance": "source_projection",
+    "byte_size": 21238,
+    "content_sha256": "4a42044cf8d2de5a0a37b336d2357d97e5f5e28f09f8244f4763a30acc2c0264",
+    "excerpt": {
+      "excerpt": "\"global\": {",
+      "line": 2,
+      "locator": "artifact-line:2",
+      "semantic_excerpt": "度小满Java开发工程师一面面经 项目相关问题，这里不多说。 7、 Redis的基本数据类型 8、 Redis的list，list的元素可以重复吗 9、 需要去重的话用什么呢 10、 那你说到这个哈希，我在日常使用的时候，我有一个哈希的对象，想把他取出来，用什么命令 11、 那么zset有序集合的数据取出来要用什么命令？ 12、 什么是跳表，做了什么优化 13、 Redis怎么加锁和解锁 14、 讲讲redis主从复制的原理 15、 Java的并发编程，假如我有这么个场景，我需要开线程，然后并发的去请求下游，然后我的主线程需要去等待开出来的线程的执行结果，然后我只能从这往下走，这个怎么实现 16、 如果我们只是简单的去实现他的等待，juc里面有什么东西可以去实现呢 17、 Semaphore的底层是怎么实现这个等待的呢 18、 这个信号是通过什么来实现的 19、 Jvm里面的堆栈的主要的区别的是什么 20、 说到了垃圾回收，那是什么样的对象会被回收 21、 说说常用的垃圾回收算法 22、 Mvcc是什么，主要通过什么来实现mvcc 23、 Mvcc是基于java的某一个事务性文件，知道是哪个文件吗 24、 出现了什么问题会用到undo log和redo log 25、 Mysql的索引是什么数据结构 26、 说说主键索引和非主键索引最主要的区别是什么 27、 这两个索引存储的数据上有什么类别，有什么区别？ 28、 反问"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "evidence_sha256": "c0fd253132e2d8f540b25b97b59690af7ac78143758a1806c2c9293c61767a24"
+}

@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1370",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1370,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1370",
+  "source_note_id": "xhs-note:68d132d00000000013037d9c",
+  "expected_body_sha256": "564edf28effb9a32ef669352fed3cfd570dd85540eb7723bef4f88a33b709768",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68d132d00000000013037d9c:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "blocked",
+  "rationale": "No non-empty readable Source/Source projection is available; title and hashtags cannot authorize a boundary.",
+  "evidence_file": "evidence/1370.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_json/68d132d00000000013037d9c.json@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "9464b529aae20175e268effb6bdc812bd359c1f0",
+    "kind": "json",
+    "provenance": "source_projection",
+    "byte_size": 24881,
+    "content_sha256": "998212c7be3f23d5abf5b59c214259aa796442d85147fbfefa143e654668ebae",
+    "excerpt": {
+      "excerpt": "\"global\": {",
+      "line": 2,
+      "locator": "artifact-line:2",
+      "semantic_excerpt": ""
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "No non-empty readable Source/Source projection is available; title and hashtags cannot authorize a boundary.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "352908e49ecf6073baa97389c31267e6fa061f192b72b84c1f8c1c727b5d34ca",
+  "request_sha256": "b12d6f7ac6b8936327079b4a07f6c6eea4186a829fe3e1bb60d89e8e4f295dd6"
+}

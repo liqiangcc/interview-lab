@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1315",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1315,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1315",
+  "source_note_id": "xhs-note:68c618c9000000001d013130",
+  "expected_body_sha256": "437b0c97df21ad892a8a4901e7f8b18748f210de0b6e3de8f5690477c42dfb6f",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68c618c9000000001d013130:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1315.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68c618c9000000001d013130.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "9a8b592a3e2f50a08082e9772235fc2bb5b61b0c",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 1579,
+    "content_sha256": "6c45f2374c82e890828a7835f96bbc20232e8bcc5e44b100e8674b4a0f64a357",
+    "excerpt": {
+      "excerpt": "8.30 一面",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "8.30 一面 1、自我介绍 2、实习相关 (15min) 3、介绍一下实验室的研究方向 4、怎么保证缓存和数据库之间的数据一致性？ 5、讲一下你对CAP原理的理解 6、为什么保证CP的情况下，A就会损失呢？讲一下这块的逻辑 7、讲一下你项目中最有技术挑战的一点 8、用binlog监听后，数据更新到ES，那你的ES在这里的作用是什么？ 9、ES面向用户提供的功能是搜索什么内容的？ 10、流量最高的时候会直接打到ES吗？ 11、ES底层的搜索数据结构了解吗？ 12、具体讲一下倒排索引的算法或者数据结构 13、手撕 最大子数组乘积（LeetCode 152） 14、手撕 二叉树的层序遍历（LeetCode 102） 15、反问 9.6 二面 1、自我介绍 2、实习相关 (30min) 3、手撕 二叉搜索树中第K大的元素（LeetCode 230） 4、复合索引（A,B）条件下，分析四条查询语句能否利用索引 5、如何处理Redis中的热点Key问题？可能引发什么问题？有哪些解决方案？ 6、热点Key的TTL失效导致请求打到数据库，如何解决？ 7、分布式ID是什么？能解决什么问题？有哪些特性？ 8、如何生成这种分布式ID？ 9、在项目或实习中是否遇到过压力大、时间紧的情况？如何应对？ 10、反问 9.13 HR面 感觉整体表现都还行，许愿一个oc[黄金薯R]"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "fb88d7c54780a6178ab87204c15b7a5b4dd23382cfa18d06fa09f529e558e62e",
+  "request_sha256": "b764ca74a2e642d033f9d8490ceabe783d66cdfb4231b692158d906893e32fe7"
+}

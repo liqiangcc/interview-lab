@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1318,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1318",
+  "source_note_id": "xhs-note:68c6d930000000001d019618",
+  "source_revision_id": "xhs-note:68c6d930000000001d019618:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "f01ecf135f8b7762b591256752ca2ed3317cc4c2bb54790f71fa3265217ec988",
+  "disposition": "blocked",
+  "rationale": "The available Source evidence does not establish a bounded interview event; retain pending.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68c6d930000000001d019618.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "903bcdb4f6a49dbafbd61798f409260ec59e98b3",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 815,
+    "content_sha256": "2b50c3df136e1bc22d638a5742c6b5c1997e99318407d06411c9d9b0f76057f2",
+    "excerpt": {
+      "excerpt": "抱歉🙇标题党了",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "抱歉🙇标题党了 主播毕业两个半月，发现新公司技术还不错能学到很多分布式相关的运用，还有链路追踪，染色日志这些微服知识。 但是目前鼠鼠能写的还是一些很简单的活。 项目经历都是自己私底下研究组长写的项目和知识星球自学的项目。 想知道日常除了八股，应该怎么提升技术？或者说哪一部分技术比较值钱？ 目前鼠鼠的自学方向是把星球的项目搭建部署完之后，自己运营，魔改和搭建监控体系，进行压测搞一些真实点的数据写到上去。 等监控体系搭建好之后，再搞一些线上解决OOM，消息挤压的线上问题解决场景出来，然后写成逐字稿面试的时候用。"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "The available Source evidence does not establish a bounded interview event; retain pending.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "evidence_sha256": "9eaf4584a8407afcd90fb622b899c982629d27e660ba6ca38a658ed5a87ea5cc"
+}

@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1452,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1452",
+  "source_note_id": "xhs-note:68e8c504000000000300e7f2",
+  "source_revision_id": "xhs-note:68e8c504000000000300e7f2:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "dfd12c0dae6cf60375d66616db9ac3cd2e9f48b666d675abd02b8e10f716a5a9",
+  "disposition": "blocked",
+  "rationale": "The available Source evidence does not establish a bounded interview event; retain pending.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_json/68e8c504000000000300e7f2.json@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "9139490cf4f0d96e80592c664282e46bdf9872d9",
+    "kind": "json",
+    "provenance": "source_projection",
+    "byte_size": 20083,
+    "content_sha256": "9b471f13811b0a08a0d6c609cbe37426b0f7c4e2a29c05e1f179ad52f5786b97",
+    "excerpt": {
+      "excerpt": "\"global\": {",
+      "line": 2,
+      "locator": "artifact-line:2",
+      "semantic_excerpt": "oppo 模型加速 对简历的提问 对业务的介绍 得物 聊项目 哈希分桶 问多路召回 fass搜索 问模型调优和尝试 代码题：合并有序链表 贝壳找房 场景题：给用户和一块新地，构建机器学习框架去预测用户是否有兴趣 回归任务，逻辑回归介绍 介绍一个树模型 讲一下序列建模"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "The available Source evidence does not establish a bounded interview event; retain pending.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "evidence_sha256": "709f2fd062048249a6ec599bcfee796440cdbfe1cf5a99ece7dafb7788d505cf"
+}

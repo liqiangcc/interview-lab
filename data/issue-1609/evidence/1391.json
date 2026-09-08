@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1391,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1391",
+  "source_note_id": "xhs-note:68d3d23c000000001101d0a5",
+  "source_revision_id": "xhs-note:68d3d23c000000001101d0a5:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "3ca3d94b47865293bb4d669e2a6b96b0e5677f0be979cc4e3cb998e9503b1c1a",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_json/68d3d23c000000001101d0a5.json@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "961b0865f92ee34f14f2117824a1272ce08b7c2c",
+    "kind": "json",
+    "provenance": "source_projection",
+    "byte_size": 20686,
+    "content_sha256": "d7be7d6d294ef7fdc5281ff72d58ffc9ca9737d38c5f143b73b6966a199eb295",
+    "excerpt": {
+      "excerpt": "\"desc\": \"好几个没答上来 算法也是一坨哈哈哈 ，只不过也是找到了自己不足的一些地方。以为挂了，结果差不多一个小时后打电话约了二面。投的是实习岗，不知道能不能转正#26秋招[话题]# #java[话题]##实习[话题]#\",",
+      "line": 552,
+      "locator": "artifact-line:552",
+      "semantic_excerpt": "好几个没答上来 算法也是一坨哈哈哈 ，只不过也是找到了自己不足的一些地方。以为挂了，结果差不多一个小时后打电话约了二面。投的是实习岗，不知道能不能转正"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "evidence_sha256": "21312510fa5455e72b61714bbc97ce7864d3f3a26483c477873d157e32aaee72"
+}

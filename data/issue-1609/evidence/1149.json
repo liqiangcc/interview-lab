@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1149,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1149",
+  "source_note_id": "xhs-note:68a6e154000000001b032175",
+  "source_revision_id": "xhs-note:68a6e154000000001b032175:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "3c7e5d8de4b27e22992218624bcd29f0e67c2dc6d8a2f65dd66334a66fcb8175",
+  "disposition": "blocked",
+  "rationale": "The available Source evidence does not establish a bounded interview event; retain pending.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68a6e154000000001b032175.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "94ea59d124056de7e85357d4a6f7fa0da6649677",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 228,
+    "content_sha256": "393a36624ffe625d207f68101cbcef7c873721d7899f4a76cba070e9ad607c13",
+    "excerpt": {
+      "excerpt": "感觉第一次被+3面[失望R]，面得不咋地，感觉还是要和校招的一起排序了。",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "感觉第一次被+3面[失望R]，面得不咋地，感觉还是要和校招的一起排序了。"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "The available Source evidence does not establish a bounded interview event; retain pending.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "evidence_sha256": "2da5e38ac8d5f0b7609f23ee7249d4c8610edd1c27653bcf9636472f9b9047ec"
+}

@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1312,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1312",
+  "source_note_id": "xhs-note:68c51b4d000000001d026648",
+  "source_revision_id": "xhs-note:68c51b4d000000001d026648:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "6acb5ab7fd536049a0177a9d90ef623da547871b9727fc7f776132fc4af9447f",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68c51b4d000000001d026648.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "c15fb667454c27fca4e88d63341d1a993ff139fe",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 726,
+    "content_sha256": "cdd1c29403d1490eaa76cf733068621bfad0f1e712fcfbd16d1d8b3d1ae55ab5",
+    "excerpt": {
+      "excerpt": "* java和python有什么区别",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "* java和python有什么区别 * java为什么性能好 * stringBuilder和stringBuffer和String有什么区别 * java反射？应用场景？代理类和被代理类 * tcp三次握手？服务端如果没有开启一个端口监听怎么办 * tcp怎么判断网络阻塞 * 协程是什么 * MVCC怎么保证的？readView是什么，怎么实现的不同版本 * 索引a>=某个数可以走索引吗 * 怎么判断是否会走索引 🍀总结： 一面整体比较偏八股文，问的不是很深入但是会偶尔来个深入的点，答不上来会比较减分，不会硬编会非常减分。私企相对于国企更偏向于单点技术深挖。"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "evidence_sha256": "5e5d426ceb78707c9bc97b6b844a9a3438755c06c501ab02b792a0eb2347b48c"
+}

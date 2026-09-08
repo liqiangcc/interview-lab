@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1151",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1151,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1151",
+  "source_note_id": "xhs-note:68a70c22000000001d02cff5",
+  "expected_body_sha256": "81d95b95b0b4d2d6af545fbc4e6d97014f80086b71ed83ce140d7a17a73775fe",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68a70c22000000001d02cff5:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "blocked",
+  "rationale": "The available Source evidence does not establish a bounded interview event; retain pending.",
+  "evidence_file": "evidence/1151.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68a70c22000000001d02cff5.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "cc515ba9f139a008ddfc0feec110540432a090ee",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 1308,
+    "content_sha256": "1f6d134a03368007a9b2387201848aeb7b552ca68245c530b6eedebb4a570079",
+    "excerpt": {
+      "excerpt": "攒人品了",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "攒人品了 26min问答+12min算法 JAVA 1、反射的原理，应用场景，哪些场景不能使用反射？自定义一个注解需要定义哪些方面的信息 2、线程的生命周期，各个状态之间的转变通过哪些语句？保证线程安全的方式及优缺点？ThreadLocal会导致什么问题？ 3、JAVA中的锁有几种方式？同步锁原理及申请流程、可重入锁原理及申请流程 4、MYSQL事务的隔离级别，分别会导致什么问题？如何在MYSQL中查询隔离级别 5、MYSQL主从同步机制 6、Redis持久化机制、AOF文件重写、Redis宕机重启后，什么机制保证其快速恢复？ SPRING 1、IOC、AOP、bean的实例化流程。IOC中如何解决循环依赖 项目 1、使用过什么消息队列？怎么确保一个消息发送成功？ 2、介绍实习项目的背景、技术架构、负责的内容。使用了哪些中间件？ 3、怎么使用分布式锁？怎么设置锁的key，拿锁成功和拿锁失败对于下游业务的影响，怎么保证幂等性 4、怎么设置限流参数，阈值等？ 5、在项目中做了什么优化手段，最终拿到了什么结果？ 算法题目 二叉搜索树中第K小的数字"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "The available Source evidence does not establish a bounded interview event; retain pending.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "d0030edd12b24e3bf0aded41f92156c84a029fd5a4cb823c78f81d44878e9508",
+  "request_sha256": "fc6300aca40f69d22a339361f0170c128fbd3153298a31a02656d0f1ea93a156"
+}

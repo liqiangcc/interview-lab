@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1235",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1235,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1235",
+  "source_note_id": "xhs-note:68b55dcc000000001d02760e",
+  "expected_body_sha256": "c2e76b5544568a1e0f806f534607f2c05d5d35e852af2f5bd8a2a46afe748d02",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68b55dcc000000001d02760e:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1235.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68b55dcc000000001d02760e.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "10f5d3099bacfd7b10961596496eaa0dd3d81fae",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 940,
+    "content_sha256": "5d46a3c293190f705c652e9dc9b0387ac4ea4ecae76862a3c88985250042afcc",
+    "excerpt": {
+      "excerpt": "美团后端一面",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "美团后端一面 1.为什么会出现缓存穿透的问题？ 2.缓存和数据库的一致性 3.修改数据库后，为什么不直接update缓存，而是删除缓存 4.拷打强一致性和最终一致性 5.缓存击穿 6.你的意思是重建业务不复杂的key是没有缓存击穿的风险是吗？ 7.热点key的含义 8.雪花算法 9.雪花算法生成ID的逻辑 10.倒排索引 11.全文索引 12.和聚簇索引有什么区别 13.算法：爬楼梯 14.算法：编辑距离 15.算法：两个有序链表合并 16.简单SQL 17.MVCC 18.JVM内存模型 19.Integer a = new Integer(100); a在哪 20.Integer b = new Integer(100); a==b？ 21.integer c = 100; a==c? 22.线程池核心线程数和最大线程数的区别"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "71ef3aa64204171f4111c007061d12df9b1bcfdd0076de36fb1c9a320331eeac",
+  "request_sha256": "74d481f1578800a48c15c17cad68795de95578b6de3cbebebba9f0e3066289cf"
+}

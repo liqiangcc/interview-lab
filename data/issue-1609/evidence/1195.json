@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1195,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1195",
+  "source_note_id": "xhs-note:68b00074000000001d02aaf6",
+  "source_revision_id": "xhs-note:68b00074000000001d02aaf6:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "b58e4d4f9d74060c5778259dfdf003fd2013739fb118ac75a2364f65e812c1ee",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68b00074000000001d02aaf6.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "234b9ab9e5fc54ed2fe2c85cf0f61d44e800640a",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 787,
+    "content_sha256": "1525cc93966db41748bab3478b82674253248224d4fe09e546b861d4c491f189",
+    "excerpt": {
+      "excerpt": "ps：脖猪是后端零基础投的客户端 所以大部分的东西肯定是跟java相关的",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "ps：脖猪是后端零基础投的客户端 所以大部分的东西肯定是跟java相关的 1.java是一个多继承还是单继承语言 他们之间的优缺点在哪 2.jvm内存结构 3.如何去在jvm里去进行一个内存的管理（我回答的是分代回收算法那块） 4.synchronized和reentrantlock的区别 5.https怎么保证安全问题 6.https握手过程 7.项目拷打 8.手撕1 用一个单向队列实现一个栈（面试官想看到只有一个子操作的时间复杂度是O（n）） 9.手撕2 一个数组nums，一个数k 若存在子数组和是0或k的倍数 则为好的数组 实现一个算法识别这个数组是不是好数组（用了前缀和但用了暴力解法 面试官提示了用空间换时间我都没写出来 八成凉凉） 10.反问"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "evidence_sha256": "0eade4c379a32a95f4836d67e513b5f6f4d4693ba6101d97998c4df73ae0669a"
+}

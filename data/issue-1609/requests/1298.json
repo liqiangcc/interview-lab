@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1298",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1298,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1298",
+  "source_note_id": "xhs-note:68c2c62e000000001b01d168",
+  "expected_body_sha256": "55a3a47d3d6f06d3ac4a5428f407b471c33505c3d11a53305505b3134e000e07",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68c2c62e000000001b01d168:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1298.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68c2c62e000000001b01d168.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "9ee68b523836e8bff9bb9c1cdb5552ac869bbac7",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 497,
+    "content_sha256": "962e1987f425eba1857c1d1f9ab9693c7987c0497cfb8d5a74f6d36805a5fc4b",
+    "excerpt": {
+      "excerpt": "1.自我介绍",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "1.自我介绍 2.项目拷打 2.1 项目里遇到什么困难，怎么解决的 3.八股 3.1 redis多级缓存一致性 3.2 本地缓存如何删除 3.3 雪崩、缓存穿透、缓存击穿 3.4redis过期策略 3.5消息队列如何保证可靠性 3.6mysql如何解决幻读问题 3.7 g1和cms区别 4.场景题 4.1大量数据的接口优化 4.2亿万级数据库的分库策略 5.反问 6.手撕两道题 6.1模式匹配 6.2topk高频词"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "e5e6e403bcb1fa192a367b04110fb113a9e2f16a0308bfab6c3dcbc04d88d967",
+  "request_sha256": "36d7951506eade691a799c2fdb4b50234b942a9e69c552bf4acfb99e6040dc8f"
+}

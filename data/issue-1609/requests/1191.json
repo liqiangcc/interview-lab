@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1191",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1191,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1191",
+  "source_note_id": "xhs-note:68aed790000000001b037ec1",
+  "expected_body_sha256": "5938797541ae095a23e7bec87988834c10cf0ab4094aa7138defa7ba7306e1b3",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68aed790000000001b037ec1:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1191.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68aed790000000001b037ec1.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "78e7f87e65fac3575e15b72fef657f15c47b4a50",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 300,
+    "content_sha256": "1379aa73f2bb4163a0066e12ce611fad499811b99ca7914084a60fae4bda4b98",
+    "excerpt": {
+      "excerpt": "面试官看着挺年轻，会引导我的思路，感觉比较考察线上排查问题和解决问题的能力，还有实际的代码能力.",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "面试官看着挺年轻，会引导我的思路，感觉比较考察线上排查问题和解决问题的能力，还有实际的代码能力. 反问为什么没有手撕[失望R] 面试官最后一句：谢谢你的时间[失望R]"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "ba5b65bcc88d3fd2058c0f8ca6eb19639c3159995952e6bb98c1b60a0663f875",
+  "request_sha256": "c48f0f8cf8360aa237abc2d8c7b91def842c2c4779a5e2c7bf622314d1b82c65"
+}

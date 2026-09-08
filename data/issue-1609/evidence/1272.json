@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1272,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1272",
+  "source_note_id": "xhs-note:68bc0218000000001d02a145",
+  "source_revision_id": "xhs-note:68bc0218000000001d02a145:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "388458c5a7235e29d86456022ec4cdb594c039419f27c60266879a10567e2ba7",
+  "disposition": "blocked",
+  "rationale": "The available Source evidence does not establish a bounded interview event; retain pending.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68bc0218000000001d02a145.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "931007dd28e2330d7914847c0fac319745a3ed29",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 930,
+    "content_sha256": "31cd1fdff35617da2ad1121aaff0133b9abc71140c92096004d3edc79185347f",
+    "excerpt": {
+      "excerpt": "该面试来自粉丝真实经历，聚焦电商高并发业务场景，全程围绕 “技术落地细节 + 数据支撑 + 边界处理” 追问：从 Redis Hash 缓存商品的阻塞规避、缓存击穿的互斥锁设计，到 Spring 事务失效原因与源码逻辑，再到订单分表方案与 ES 数据同步，均要求结合实际业务数据（如接口 RT 从 1.2 秒降至 150ms）。",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "该面试来自粉丝真实经历，聚焦电商高并发业务场景，全程围绕 “技术落地细节 + 数据支撑 + 边界处理” 追问：从 Redis Hash 缓存商品的阻塞规避、缓存击穿的互斥锁设计，到 Spring 事务失效原因与源码逻辑，再到订单分表方案与 ES 数据同步，均要求结合实际业务数据（如接口 RT 从 1.2 秒降至 150ms）。 算法题侧重业务场景（购物车合并），同时考察空值处理等细节；收尾直击短板，强调淘天对 “技术落地精准度” 的高要求 —— 仅懂理论、缺乏业务结合与数据支撑，易暴露不足。整体凸显淘天面试 “业务驱动技术，细节决定成败” 的特点。"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "The available Source evidence does not establish a bounded interview event; retain pending.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "evidence_sha256": "906068edba07fcb8407efb0afabb3a843cbf8c85207f0877206474cf124d1d87"
+}

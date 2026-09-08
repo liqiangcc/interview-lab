@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1323",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1323,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1323",
+  "source_note_id": "xhs-note:68c8b9bc000000001c0062de",
+  "expected_body_sha256": "b6163fea9fb5984c4fd0987ba8b8fd7ec4e3b991bf34fca38d78e0df26760454",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68c8b9bc000000001c0062de:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "blocked",
+  "rationale": "The available Source evidence does not establish a bounded interview event; retain pending.",
+  "evidence_file": "evidence/1323.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68c8b9bc000000001c0062de.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "da26ba891f05f17fa7a7f754dae0c3696f647c56",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 266,
+    "content_sha256": "3fc4f9e45491a3fc3685e18924560e5fde07b7c8a678213eba8a6c1395ca10d7",
+    "excerpt": {
+      "excerpt": "小米 本组招收java开发实习继任，有意的发我邮箱2738180350@qq.com#互联网大厂实习[话题]##小米实习[话题]##实习继任[话题]##Java实习[话题]#",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "小米 本组招收java开发实习继任，有意的发我邮箱2738180350@qq.com 要求： 1.两段及以上实习，其中有一段大厂实习 2.能快速融入团队"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "The available Source evidence does not establish a bounded interview event; retain pending.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "fff987dbb867652d559b7b8e9b6722c45d54eb24b28551f461b2771e75bc3fc3",
+  "request_sha256": "83c98a5496ea75346b384c05df65187998dca670f6816fe090e70220afefaa50"
+}

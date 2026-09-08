@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1196,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1196",
+  "source_note_id": "xhs-note:68b00080000000001c0073ff",
+  "source_revision_id": "xhs-note:68b00080000000001c0073ff:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "840f8290456c029ca71e698709a8219cac3a688db33b39866dec9538f978c1d8",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68b00080000000001c0073ff.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "22058a4726c70376c292ec453e591565ccb020e2",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 2751,
+    "content_sha256": "dbc0f903fe44a85f70e1bdc84a3e5f0ba187035081c5c87ac56caa763b078543",
+    "excerpt": {
+      "excerpt": "2min",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "2min 自我介绍 50min [一R] 慢查询怎么排查 [中等肤色R] 慢查询日志 -> explain分析执行计划关注type(All、index、range、ref、eq_ref)、key使用的索引、 extra(需要排序时看看怎么排序的) [二R] 聚簇索引原理 [中等肤色R] 索引与数据物理存储绑定，聚簇索引的叶子节点直接存储完整数据行 [三R] mysql有哪些索引 [中等肤色R] 聚簇索引、非聚簇索引、唯一索引、联合索引 [四R] mysql为什么用B+树做索引 [中等肤色R] 尽可能少的磁盘IO操作完成查询，且支持范围查询 [五R] 悲观锁和乐观锁区别 [中等肤色R] 悲观锁和乐观锁，区别于在进入共享资源区之前是否允许其他请求修改共享资源 [六R] Redis分布式锁是怎么避免拿锁的竞争的 [中等肤色R] Redis单线程串行执行原子化拿锁指令set NX PX [七R] RocketMq怎么避免消息不丢失的 [中等肤色R] 发送确认和重试、broker持久化并副本备份、消费确认和重试机制 [八R] broker持久化是怎么做的 [中等肤色R] 写日志然后日志刷盘，刷盘有同步和异步。 [九R] mq的broker持久化失败怎么办 [中等肤色R] 故障转移用broker副本提供服务，broker重启时通过加载持久化存储的日志文件恢复 [一R] TCP/IP五层和OSI七层网络模型 [中等肤色R] 应用层、表示层、会话层、传输层、网络层、数据链路层、物理层。TCP/IP将前三层合并为应用层。 [二R] rpc协议了解吗 [中等肤色R] 远程过程调用，能像调用本地方法一样调用远程服务器上的方法。 [三R] rpc框架 [中等肤色R] Thrift、Dubbo [一R] golang和java的区别 [中等肤色R] golang高效并发且语法简洁；java一次编写到处运行，语法相对繁琐但生态成熟 [二R] java和golang哪个更复杂一点 [中等肤色R] java复杂一点，更规范一些。 [三R] 你在什么场景用java的线程，或者线程池 [中等肤色R] 任务之间不存在强依赖，可以多线程提高整体效率时。 [四R] springboot的factorybean和beanfactory区别 [中等肤色R] Beanfactory：核心容器接口，管理 Bean "
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "evidence_sha256": "0a1c45e807fab71fb1a332a300bf221bb277f679a2a4e881795da9e2039a86f2"
+}

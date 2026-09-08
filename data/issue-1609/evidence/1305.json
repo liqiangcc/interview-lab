@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1305,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1305",
+  "source_note_id": "xhs-note:68c3db97000000001c00da0c",
+  "source_revision_id": "xhs-note:68c3db97000000001c00da0c:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "55530ea25a66cdb7c2c1b8e31c2f4ea4edc3e548f25dd5e28a06c980c5ae29a2",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68c3db97000000001c00da0c.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "871c0d37948d6351279ff20f2b512d22806b463b",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 2424,
+    "content_sha256": "b68ace5f7ba9fa6e8aa8974284d79d5a9f97d920a6df5de3e385a79b34e0358b",
+    "excerpt": {
+      "excerpt": "二面：",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "二面： 1、手撕做题：力扣 15.三数之和 2、浅谈实习 3、熟悉 SpringCloud 的哪些组件？ 4、项目中用到的是 Seata 的哪种分布式事务模式？底层原理是怎样的？ 5、项目中的限流操作是把什么作为限流的资源？ 6、代码中一个接口的限流代码是怎么去实现的？ 7、假设现在我的服务上有成百上千个接口，现在都需要去做限流熔断的操作，如何基于 Sentinel 去实现？ 8、谈谈自定义一个组件集成到 SpringBoot 中，应该做哪些操作？ 9、使用过 Java 的哪些 JUC 工具？ 10、假设有一个线程 a 和一个线程 b，它们分别有自己的任务 A 和任务 B 需要完成，但是 b 线程需要等待 a 线程执行完任务 A 后才可以执行任务 B，请问有哪些实现方式，越多越好 11、volatile 保证变量可见性的原理？ 12、用 synchronized 加锁能否保证可见性？ 13、一般业务中通过什么来创建线程池？线程池有哪些核心参数？ 14、假设一个场景，项目中用到了线程池，在服务上线前，我依据自己的经验预设了一些线程池的参数，服务真正上线后，面对 C 端的流量我无法保证我预设的参数是最合适的，就需要去动态的调整这些参数，如何去设计一个具备动态性能的线程池？ 15、针对问题 14 我提出把核心参数的设置交给配置中心，创建线程池时读取参数就走配置中心读，这样修改后可以实现无感的切换。但是面试官提到，这种方式能实现无感的切换，但是没有办法实现自适应的线程池核心参数调整，还是需要手动的去调整参数。面试官引导说第一时间想的不应该是去修改，而是如何观测这些参数的变化，然后让先设计一下如何观测线程池核心参数的变化 16、如果要做观测，谁来观测？怎么观测？整个设计的流程是怎样的？ 17、Redis 的哈希数据结构有哪些实现方式？ 18、针对 Redis 哈希数据结构出现的大 Key 问题，如何去解决？ 19、对 Redis Cluster 了解吗？为什么需要把主从模式升级为集群模式？ 20、怎么看待产品设计和服务过程中把用户放在第一位？ 21、反问"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "evidence_sha256": "0e8c9bbfa1be1d828049d7f27ac87b51589945943896491392c4e8d55a848548"
+}

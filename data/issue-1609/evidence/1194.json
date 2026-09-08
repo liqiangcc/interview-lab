@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1194,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1194",
+  "source_note_id": "xhs-note:68afac2a000000001d026e35",
+  "source_revision_id": "xhs-note:68afac2a000000001d026e35:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "90c998d5c2863551417362c89f91b381feb633d3583abe289bc9a6994a861cab",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68afac2a000000001d026e35.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "1b458196d2e9fae7b485ce4c8b0fd1f27aa65918",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 916,
+    "content_sha256": "6df90a659f9ad16d87ba3fd3b69e7821000d66b286ab7e366ebd5cc7784bd7db",
+    "excerpt": {
+      "excerpt": "自我介绍+项目学习渠道",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "自我介绍+项目学习渠道 1. 讲讲你对Spring、SpringBoot、SpringMVC的理解 2. SpringBoot常用的注解 3. @ComponentScan注解怎么扫描主包之外的Bean，有哪些方法 4. SpringBoot是如何把各种jar包内的bean识别并加载的 5. 讲讲List、Map、Set的用法、区别 6.延伸问题：有一个List<User>，将他转成Map，其中key为userId有哪些方法？ 7. 创建线程的方式有哪些 8. mybatis的 $区别 9. mybatis的常用标签 10. sql语句 11. mp使用的流程 延伸问题：数据库的记录读取出来变成对象的背后实现 12. mp的主键生成策略了解过吗 13. 设计的表字段如果和数据库字段关键字冲突怎么处理 14. git常用命令 15. maven中的clean、install、deploy用途、区别 16. Linux常用命令知道哪些 17. 如何部署一个SpringBoot项目"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "evidence_sha256": "a7767c0ec8e8176b052740d647db774291ee5fea6fb594aa86082da31495e549"
+}

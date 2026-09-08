@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1334",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1334,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1334",
+  "source_note_id": "xhs-note:68c93611000000001202d364",
+  "expected_body_sha256": "494b6232e56b0b7fa3213237cbd6cf069323d47a515f5a385c18d67be048b5fa",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68c93611000000001202d364:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1334.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68c93611000000001202d364.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "6cbf6bce97d536598877cd001484f7c40c8e4652",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 845,
+    "content_sha256": "2abb9b789e3fdb2d9b9c805baddd7db5e37c752199b7f09688c298f033b770a4",
+    "excerpt": {
+      "excerpt": "字节客户端开发一面凉经",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "字节客户端开发一面凉经 拷打的很深入 问论文，transformer 问擅长哪个科目，答计网，开始深入拷打 tcp udp区别 tcp每个消息是否都需要一个确认 tcp怎么确认每个消息都收到，怎么知道某个消息未收到 设计一个协议判断哪些消息缺失了 设计一个安全的方法，能够防止黑客抓到包通过加密算法攻破 https是怎样实现的，如何保障安全，有哪些算法 java关键字，访问修饰符 手撕多线程打印1-10 最后问了下实习有没有什么亮点 总结 问得很深入，会一直追问细节，面试官也会相应做出补充。大厂面试强度还是很大的"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "2a0c5c052925d91a602898605ed572bd151f25524341cf68602762774622b23d",
+  "request_sha256": "efe1bbbd5efca525f1d097ef357ab6d3ddbd4f23a73058ea521ebc08bfd3206e"
+}

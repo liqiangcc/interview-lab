@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1329",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1329,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1329",
+  "source_note_id": "xhs-note:68c90e4f000000001203e8fe",
+  "expected_body_sha256": "8141c38e6bac88aab1e48a42062e11df8d686cbd5255d5cc5b461d5b8ab4c32b",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68c90e4f000000001203e8fe:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1329.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68c90e4f000000001203e8fe.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "98246717fbfba65c51002ab5d5caaf500d47ab47",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 1661,
+    "content_sha256": "c0accbc238099d3e1c4b22989b524820bdd947780a6b40f6c57a6e7ae4e6a125",
+    "excerpt": {
+      "excerpt": "只记录我没答上或者答得不太好的问题。",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "只记录我没答上或者答得不太好的问题。 类似黑马点评项目，用了caffeine做本地缓存，问：你知道本地缓存可以用那个谷歌的guava cache吧，这二者有什么区别，为什么用caffeine，它解决了guava的什么问题？ 本地缓存的缓存一致性保证？删本地缓存失败了怎么办？（为什么不问我redis。。。） 用了kafka消息队列，如何保证顺序消费和消息不丢失？ 数据库里的几张表怎么建的索引？ 缓存穿透解决方案，你说了可以防止一个用户频繁发送恶意请求，那你说说这个咋实现，怎么记录判断这个用户ip。 另一个项目做了rag相关。问：如果公司的大模型要和spring ai适配，应该做些什么，来让别人能通过spirng ai框架调用？ spirng ai的chat memory的逻辑上的数据结构？chat memory怎么实现的？除了数据库存储之外，还有哪些持久化方式？ 文档处理有图片表格怎么办？ 工具调用是用注解实现的吧，这个注解的底层原理？ embedding模型多少维的？你用到的大模型的参数量是多少？为什么不用别的模型？为什么用spring ai框架？ 怎么判断rag效果的？ 八股：分布式锁的实现方式？你说除了redis之外用zookeeper也能实现分布式锁是吧，那你说说zookeeper咋实现的。 synchronize锁静态方法和非静态方法的时候，锁对象的不同？ elastic search用过没？transformer原理了解不？ 手撕倒是挺简单的。"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "07cb2ea1bf185e280029e72f75fdc38c6da07f2beda72333e4fab0fdf2b7053b",
+  "request_sha256": "d62e1839d44d13a17e1fff49b051c0a51c8ec17b6050a70b7390b074313a62b4"
+}

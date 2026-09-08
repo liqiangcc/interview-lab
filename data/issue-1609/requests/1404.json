@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1404",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1404,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1404",
+  "source_note_id": "xhs-note:68d8ab3a000000001301d7a5",
+  "expected_body_sha256": "0f39de089e38c0629acc192f063ef1111411792749230ddb24aa6782b1e55d70",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68d8ab3a000000001301d7a5:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1404.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_json/68d8ab3a000000001301d7a5.json@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "2e5cfd5d84e6d89d565ed9426ae81b8aeba20560",
+    "kind": "json",
+    "provenance": "source_projection",
+    "byte_size": 25620,
+    "content_sha256": "d66f0df9d9d4f8097a99959bab59cdccb967ed9db2b9a650595f091167be4919",
+    "excerpt": {
+      "excerpt": "\"global\": {",
+      "line": 2,
+      "locator": "artifact-line:2",
+      "semantic_excerpt": "1.自我介绍 2.你觉得就是从技术角度以及你个人的角度，你跟这个岗位的匹配性是怎样的 实习过程最大的收获是什么呢？ 3.像这种互联网的大厂，可能你的工作内容只聚焦在那一个很小的领域，那你觉得就是从长远自身的发展或者是技术能力的提升上来讲，这样的话会不会给你带来一些不好的影响？或者是你未来的话会怎么提升自己的技术能力？ 4.你未来的话就是比如说工作地点这边你是怎么考虑的呀？ 5.就是长期来看的话 对小米的认识多吗？或者是你有没有经常用一些小米的产品，或者是关注一些小米的一些发布会等等嗯 6.你觉得就是作为一个后端的工程师来讲，你觉得最重要的一些基本素质是什么？ 7.作为研发来讲，其实日常对接最多一个就是业务嗯，就是你在你过往的实际经历当中，就是你跟产品和业务的沟通当中有没有遇到什么困难？然后是怎么解决的？ 8.你在实习当中有没有遇到就是项目资源很紧张，就是排期时间也很紧张的这种情况？ 9.你大三的时候就确定了就是毕业之后就工作嘛，那你当时是怎么考虑的？因为现在很多人其实都是考研的概率比较大你当时是怎么考虑的？ 10.其实作为一个工程师来讲，它的未来的职业发展基本上就两条道路，一个就是走管理方向，一个就是走专家方向。那你觉得你自己比较适合哪个方向 11.说出你的三个优点与缺点 12.反问环节"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "292591eaf297f9721f6f4fe51fbd663a02b1a9abbb8f90c34c8ae89d653ce913",
+  "request_sha256": "eab44ecd27ff753618aa8843cfa6bf6f8e258056ec2a9fb665c85b60c65640ad"
+}

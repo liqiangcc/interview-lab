@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1187",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1187,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1187",
+  "source_note_id": "xhs-note:68add8c5000000001d03a343",
+  "expected_body_sha256": "47b8c9fc3699706bd12542cd7ad0cd5b3e4d7a0d669b1b05537620de0a49f9c4",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68add8c5000000001d03a343:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1187.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68add8c5000000001d03a343.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "772fcb6ba9d8dabb66189a81e843672e096e4167",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 1866,
+    "content_sha256": "4e81d19f8daa29357b4d5c57a2ca811c25da17c8bb49f2c00e00999cba5d8c12",
+    "excerpt": {
+      "excerpt": "最近结束了滴滴的面试，三轮技术面问得超细致❗️",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "最近结束了滴滴的面试，三轮技术面问得超细致❗️ 整理了完整面经和思路分享给大家👇 —————— 🧩一面 60min •RocketMQ vs Kafka 区别（设计理念/吞吐/延迟） •Redis性能核心：内存+I/O多路复用原理 •Redis数据结构选型场景实战 •MySQL与Redis一致性方案（旁路缓存策略） •协程原理剖析：Goroutine底层调度模型 •Lua脚本实现原子库存扣减 •MySQL索引优化与B+树优势 •防超卖方案：分布式锁+库存校验 •算法：搜索旋转排序数组（二分变形） —————— 🧩二面 60min •List遍历删除的坑（迭代器失效问题） •MySQL索引弊端：写放大与空间代价 •最左前缀原则与索引失效场景解析 •联合索引底层树结构 •SQL实战：SELECT orderid FROM order WHERE userid=1 ORDER BY amount DESC LIMIT 1 •MQ堆积对用户体验的影响（延迟/超时） •Redis过期策略：定期+惰性删除组合拳 •算法：最长回文子串（中心扩散/DP） —————— 🧩三面 60min •职业规划与项目深度拷问 •数据不一致带来的业务风险（脏读/资损） •模板方法模式在业务系统中的落地 •Java对象创建流程：类加载→分配内存→初始化 •手写HashMap with TTL（数组+链表+过期清理） —————— 💡准备建议： 1.深度复习Redis/MySQL/MQ核心机制 2.算法重点：二分/字符串/数据结构设计 3.项目难点准备+技术选型对比思考 4.底层原理结合代码实现（如协程调度）"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "b0857d8bbed2098ac00fe08dd9c685ebe90ffe2a6e65e010ba0d8ce26d7e1403",
+  "request_sha256": "7a7c4dea9dc6b97bf92351ee169fae37fbe7fee3f0417b9d33f84a22c085d6e8"
+}

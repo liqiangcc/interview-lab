@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1236",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1236,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1236",
+  "source_note_id": "xhs-note:68b57545000000001c00e521",
+  "expected_body_sha256": "690c6f0486e219845011d985d1aa2d4d9a92e0c0261ebde1b0e9834b251b6cb8",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68b57545000000001c00e521:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1236.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68b57545000000001c00e521.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "a7fcc247584dfba1b5ee272e177fe5262426d587",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 769,
+    "content_sha256": "d76f0f44bc3aab9c344570be4cf615a6c092902cbda6c5ca75365fa70048ce34",
+    "excerpt": {
+      "excerpt": "我当时面试的话客服岗位有在线、电话（一线）和仲裁、客诉（二线），分一些汽车、家电、酒水之类的项目，可以根据自己意向自由选择",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "我当时面试的话客服岗位有在线、电话（一线）和仲裁、客诉（二线），分一些汽车、家电、酒水之类的项目，可以根据自己意向自由选择 面试是多对一，会考打字速度 面试问题有： 1.自我介绍 2.对于一线客服、二线客服的了解（主要做什么，有什么区别） 3.为什么想做客服 4.你的职业规划 5.讲讲自己之前工作中最大的成就/收获 6.对于稳定性的理解 7.对于加班的看法 8.抗压能力（主要在对接客户方面） 京东客服主要看稳定性（能不能长久做）、抗压能力（加班和客户刁难）、沟通表达能力（客服经验，或者相关经验），讲的时候尽可能往上靠"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "5268a81d44823941cc8cdb182522e8aea1d37cabb25e83eb912fff01ecbb8888",
+  "request_sha256": "ec586d9c55349f824e398faab11200ec9ee6aabac0846f73f77ca1ca0e96391f"
+}

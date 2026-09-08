@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1446",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1446,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1446",
+  "source_note_id": "xhs-note:68e7806c0000000005030b35",
+  "expected_body_sha256": "21246c3d856aa4704c0ab3de9912c5c0e2217c3d83754cc07ad5906ea8a49276",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68e7806c0000000005030b35:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1446.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_json/68e7806c0000000005030b35.json@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "c97404464804c887873a31ad5a65575973a7e935",
+    "kind": "json",
+    "provenance": "source_projection",
+    "byte_size": 32667,
+    "content_sha256": "f71f7319d4d4c9c52902c322c654448534bdcee21e4159ddc08b7143f2ade85d",
+    "excerpt": {
+      "excerpt": "\"desc\": \"粉丝双非本科面 B 站 Java 后端，三轮技术面全围绕业务场景展开，分享下过程：\\n\\t\\n一面先深挖项目里的分布式事务实现，追问本地消息表如何处理消息丢失，接着聚焦视频投稿场景，要求设计 “文件存储 + 投稿记录” 的最终一致性方案，我提到定时补偿后，被追问重试次数和失败兜底策略，卡了半分钟才想到人工介入。\\n\\t\\n二面主攻高并发设计，给了拜年祭弹幕突增场景：如何设计限流降级。我答了网关 + 服务端两级限流，面试官立刻追问 Redis 队列的消费速度控制，以及延迟展示时如何保证高赞弹幕优先，不得不补充优先级队列和轮询策略才过关。\\n\\t\\n三面直接上实际业务题：优化首页推荐接口性能。从多级缓存设计到异步并行加载，每步都被追问细节：缓存失效时如何避免雪崩？用户画像数据怎么实时同步？最后聊到弹幕实时计数，还被要求解释 Redis 分布式计数器的实现原理。\\n\\t\\n整体感觉 B 站看重技术落地细节，场景题一定要结合业务讲清方案优缺点，光背理论完全扛不住，提前刷场景题真的很重要。\\n面试经验和答案可以分享#爱上工作的瞬间[话题]# #java面试[话题]# #后端开发[话题]# #互联网大厂[话题]# #求职[话题]# #java[话题]# #计算机[话题]# #编程[话题]# #面试[话题]# #b站[话题]# #blibli[话题]# #java面试题[话题]#\",",
+      "line": 499,
+      "locator": "artifact-line:499",
+      "semantic_excerpt": "粉丝双非本科面 B 站 Java 后端，三轮技术面全围绕业务场景展开，分享下过程： 一面先深挖项目里的分布式事务实现，追问本地消息表如何处理消息丢失，接着聚焦视频投稿场景，要求设计 “文件存储 + 投稿记录” 的最终一致性方案，我提到定时补偿后，被追问重试次数和失败兜底策略，卡了半分钟才想到人工介入。 二面主攻高并发设计，给了拜年祭弹幕突增场景：如何设计限流降级。我答了网关 + 服务端两级限流，面试官立刻追问 Redis 队列的消费速度控制，以及延迟展示时如何保证高赞弹幕优先，不得不补充优先级队列和轮询策略才过关。 三面直接上实际业务题：优化首页推荐接口性能。从多级缓存设计到异步并行加载，每步都被追问细节：缓存失效时如何避免雪崩？用户画像数据怎么实时同步？最后聊到弹幕实时计数，还被要求解释 Redis 分布式计数器的实现原理。 整体感觉 B 站看重技术落地细节，场景题一定要结合业务讲清方案优缺点，光背理论完全扛不住，提前刷场景题真的很重要。 面试经验和答案可以分享"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "8119c83d57f6f6ed95778662c5505268669cf61186fddf73d74fbfa2729e89a8",
+  "request_sha256": "7ce535887cbaba07198a21944fdca4259c4e6dfa3bfdf630092031f1cae6e684"
+}

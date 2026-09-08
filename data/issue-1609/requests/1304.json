@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1304",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1304,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1304",
+  "source_note_id": "xhs-note:68c3747b000000001c0112fd",
+  "expected_body_sha256": "cba780dc5b0e41904e416fe180faddb44a5cfd1a70e54ad7245b322ef85caa75",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68c3747b000000001c0112fd:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1304.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68c3747b000000001c0112fd.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "3584703df265520d9e4634e419c59289b3b7b94b",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 660,
+    "content_sha256": "25a07076f2a6177cd36261bc07671fa3bf528c1959b5f89acc8f493c98598255",
+    "excerpt": {
+      "excerpt": "百度C++一二面",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "百度C++一二面 一面 你了解你的岗位吗 问项目 智能指针，协程 rtos和linux调度的区别 tcp/ip协议，socket是处于什么层 手撕lru缓存 对百度处境的看法 用过什么百度产品 二面 自我介绍之后 一直手撕 1.strcpy函数，不知道数组大小n 2.不使用递归遍历二叉树 3.二叉树的层数 4.二叉树节点存储代价，到达叶子节点的最大代价 追问：可以这样迭代的算底层假设是什么（先计算上一层，再计算下层） ——- 想到再补充"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "8a7d9557f739bf99ac9df3e252ee636207238978cd63ce458d703df825056e93",
+  "request_sha256": "c274be9d244225f5dc0b8ddc152d0ffcd3f1415036b8b04c8816283856f834bb"
+}

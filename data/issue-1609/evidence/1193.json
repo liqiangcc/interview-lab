@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1193,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1193",
+  "source_note_id": "xhs-note:68af2e09000000001c0349cf",
+  "source_revision_id": "xhs-note:68af2e09000000001c0349cf:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "9067e5cb5b76d5a201be8bbdef855d6f772d3afeeb556fb3842b1af6ccdf750f",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68af2e09000000001c0349cf.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "733a44587d0243869b39677092a8ec8e1909a0d4",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 840,
+    "content_sha256": "db0adc080c6ac88f1667a7ee72a8c9a872a9c009681ef0a677b4879d25aef40d",
+    "excerpt": {
+      "excerpt": "挺有意思的一次面试",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "挺有意思的一次面试 感觉和面试官八字不合 1、实习项目中怎么保证一致性 答了领域事件驱动保障最终一致性，继续追问这种思想和分布式事务底层逻辑的相通之处 2、常见分布式事务的实现 3、tcp三次握手和四次挥手 追问这个思想和分布式事务的共同点 3、volatile和synchronized 要求有底层思考 4、延迟队列怎么做？rabbitmq的死信交换机怎么实现延迟队列？从算法层面来说 5、CAS 手撕：单例模式，用递归的方式实现两个排序列表的合并 还有一些忘了，整场感受不是很好，一直在强调思考，也确实是很长时间没背过八股了，中途说漏嘴了，被面试官教育，他觉得这些不是八股[笑哭R]"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "evidence_sha256": "02214bd1c2f57bcec863dd504280e21f02e31f02da3a8b394768538d343a855a"
+}

@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1368,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1368",
+  "source_note_id": "xhs-note:68d11d4c00000000070292d2",
+  "source_revision_id": "xhs-note:68d11d4c00000000070292d2:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "1361dce5bc3128d665509ad0a39d779538d83ef23300c09d9a49ef7b6c127a1b",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_json/68d11d4c00000000070292d2.json@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "46cbc3cdc474d325a18f92dd901c4b4747e5bc34",
+    "kind": "json",
+    "provenance": "source_projection",
+    "byte_size": 27035,
+    "content_sha256": "90e6cbfaed7f8d7169bf6b20c130add7aa94d7a7976532b6fb1efef59ad0527e",
+    "excerpt": {
+      "excerpt": "\"global\": {",
+      "line": 2,
+      "locator": "artifact-line:2",
+      "semantic_excerpt": "今天接到第一个实习offer也是第一段日常实习 暑假7月上旬开始准备 代码： 听了javase javaweb 7月上旬到八月初 敲了一遍苍穹外卖 25天 八股： 七月看了网络的八股，完全没用到 java八股10天速成 javaguide和小林 手撕： 一天8道题左右，做了十几天写了82道hot100 九月开始写简历 简历在其他帖子自取 9.5投递 9.11一面 9.16二面 9.22hr面并offer"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "evidence_sha256": "b31adea8846bce860e0d2edb77ea2ed22cb04f850fe93a3252b76ae81bdd25ce"
+}

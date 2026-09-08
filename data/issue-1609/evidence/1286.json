@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1286,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1286",
+  "source_note_id": "xhs-note:68c13cab000000001c03fcde",
+  "source_revision_id": "xhs-note:68c13cab000000001c03fcde:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "87f08efa732ff799afb16ee7413b91c541a2c0d846e88cb3146027a818edc0fe",
+  "disposition": "blocked",
+  "rationale": "The available Source evidence does not establish a bounded interview event; retain pending.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68c13cab000000001c03fcde.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "2487aae3d08b0340ad2fe95cd0a05e33163a2a59",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 23,
+    "content_sha256": "9f04c82a085f6ad9f0d8e683a5170a5ff308ebcb3baa91a3b877270e7faaa44d",
+    "excerpt": {
+      "excerpt": "秋招#面经[话题]#",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "秋招"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "The available Source evidence does not establish a bounded interview event; retain pending.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "evidence_sha256": "6cb88c6be990f87699528950345535794a179e739d0beb76504122b284945d1b"
+}

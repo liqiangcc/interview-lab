@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1355,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1355",
+  "source_note_id": "xhs-note:68cd062a000000001202e912",
+  "source_revision_id": "xhs-note:68cd062a000000001202e912:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "280cbd9aa82bd93147abc6ccb0a5299fac9c0b05f8776782828317ff6f98a1f4",
+  "disposition": "not-interview",
+  "rationale": "Exact Source projection is a generic resource/recruitment/advice record and does not record one candidate interview event.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_json/68cd062a000000001202e912.json@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "4383f7c5085cb6f0c02c4f0f00325b3eaad6a4c1",
+    "kind": "json",
+    "provenance": "source_projection",
+    "byte_size": 20656,
+    "content_sha256": "0219b66b83dd30616c6a1b298015c6de7efdde812b058d61bd0c122bfec800ec",
+    "excerpt": {
+      "excerpt": "\"global\": {",
+      "line": 2,
+      "locator": "artifact-line:2",
+      "semantic_excerpt": "武汉小米后端开发急招，要求实习六个月 可以先投 然后发简历看下帮忙推进 内推码: GGSGZH4 投递链接https://xiaomi.jobs.f.mioffice.cn/s/4uvEbE1ATkw"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source projection is a generic resource/recruitment/advice record and does not record one candidate interview event.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "evidence_sha256": "df5fd501b8ee60e029bc3ea1c5d36f7f66e0e932f4ea30ae37815abd3ef4adfe"
+}

@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1376,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1376",
+  "source_note_id": "xhs-note:68d16a7d000000000e031041",
+  "source_revision_id": "xhs-note:68d16a7d000000000e031041:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "6b4dc2ca5f4b6d51015a2661ca8fd3610331d036eeaf1c9f95fa272d4c41c808",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_json/68d16a7d000000000e031041.json@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "bebfff3a3c43a15908059932b46e2e914ad0a3c4",
+    "kind": "json",
+    "provenance": "source_projection",
+    "byte_size": 23365,
+    "content_sha256": "944ff31666e757ced2890aee9ee7eefb5951c7ddd6aa9178b8256613caac8e8d",
+    "excerpt": {
+      "excerpt": "\"global\": {",
+      "line": 2,
+      "locator": "artifact-line:2",
+      "semantic_excerpt": "岗位：研发工程师C/C++ 1、自我介绍 2、介绍基于c++的即时通信项目 3、消息发送的协议是自定义的还是用了什么 4、用画板做了一个思考题：两个矩形，长宽分别平行于xy坐标轴，计算两个矩形的重叠面积 5、手撕：写一个myString，实现构造，析构，拷贝构造，移动构造 6、const可以用来修饰哪些东西，如果修饰成员函数表示什么 7、引用和指针的区别 8、如何避免野指针、内存泄漏的问题（答了智能指针，还问有其他方法吗，没想出来） 9、智能指针有哪些 10、unique_ptr如何转移所有权 11、线程和进程的区别 12、线程间和进程间分别是怎么通信 13、线程间有哪些锁 14、条件变量怎么去通知另一个线程？唤醒之后就能获得锁吗？ 15、mmap如何实现通信呢，另一个进程怎么知道这个进程写入了东西呢？ 16、tcp和udp的区别 17、tcp的接收端应用层是否可能收到乱序的数据，在哪里实现排序的，tcp的缓存区是在哪 18、tcp的拥塞控制 19、对比http1.1、http2.0、http3.0 20、http3.0如何实现0RTT 21、说一下常用的数据结构 22、常用的设计模式 23、手写单例模式，你的实现是安全的吗，为什么 24、反问"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "evidence_sha256": "9f0e365e887abe7b8e4f676268da67596fad92dff65d2a68dfb64b701c653eed"
+}

@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1276",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1276,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1276",
+  "source_note_id": "xhs-note:68be8049000000001c03cc9a",
+  "expected_body_sha256": "73a4432da8ffc37e2b16372ddef758bdbcb29543fb05f8026a4b88a464d3c209",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68be8049000000001c03cc9a:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1276.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68be8049000000001c03cc9a.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "78d7ce5c4d83fc811254c2c7fe215d8fbc891cde",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 831,
+    "content_sha256": "b9deed2ad30e442b08342cb166803896cc10c2d8a82c00c6858b07b9c42a9924",
+    "excerpt": {
+      "excerpt": "项目拷打（挖的很深，挖到实现细节，有没有更好的实现思路）",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "项目拷打（挖的很深，挖到实现细节，有没有更好的实现思路） 八股 1.url到页面显示的过程 2.dom树和cssom树具体怎么合成成渲染树的 3.知道闭包吗，他底层原理是什么（词法作用域） 4.tcp和udp，直播会议用的是什么，为什么要用udp，除了建立连接耗时之外还有哪些好处 5.讲解一下美团内部使用框架的底层原理 6.虚拟列表怎么实现的，我要快速滚动怎么让他不卡顿呢 7.知道虚拟dom吗，具体讲解一下原理 8.知道数据库索引吗，讲解一下他的底层实现（B+树） 算法题 每日温度 已约下周hr面，希望能过[害羞R]"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "7db003efab26cd9d20a8aa234095a2b1298b35eea31ed98bdd5738ad55b81a97",
+  "request_sha256": "9f3179c7c1942d87eafe9ce9135df4af82a9dccc0ba24f0aa8b6967181231f02"
+}

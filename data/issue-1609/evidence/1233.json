@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1233,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1233",
+  "source_note_id": "xhs-note:68b5353f000000001b03d29d",
+  "source_revision_id": "xhs-note:68b5353f000000001b03d29d:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "89e2acac6acfd0409206e2e2bf6e439890c76e84b3a6e27cbcef2244adae516d",
+  "disposition": "blocked",
+  "rationale": "No non-empty readable Source/Source projection is available; title and hashtags cannot authorize a boundary.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68b5353f000000001b03d29d.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "c295e4ba83cd550a7eee5fcf829d8bbe1e67c6e0",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 58,
+    "content_sha256": "ae87ea01f1dd0e6a2a8b24b4b1381853c5853db152b7eca515dedeedb6494a5d",
+    "excerpt": {
+      "excerpt": "#java[话题]# #程序员[话题]# #后端开发[话题]#",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": ""
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "No non-empty readable Source/Source projection is available; title and hashtags cannot authorize a boundary.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "evidence_sha256": "268230c9cf25bca6a4cef01d2108441f08c21312358becf1d5bc94d1c621223d"
+}

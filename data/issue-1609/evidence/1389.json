@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1389,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1389",
+  "source_note_id": "xhs-note:68d3cf87000000001300c0ac",
+  "source_revision_id": "xhs-note:68d3cf87000000001300c0ac:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "7216b7d1b082a4385cee515c6eb608e9463040fef8f042ba225276e3c55c7fcd",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_json/68d3cf87000000001300c0ac.json@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "a5b49999c8536892f969c67060abdb7bdec13696",
+    "kind": "json",
+    "provenance": "source_projection",
+    "byte_size": 22422,
+    "content_sha256": "15fe60bd2a3c7d8bcc9de7148255b802fe89d6dac88c2f86b52840e49e025213",
+    "excerpt": {
+      "excerpt": "\"global\": {",
+      "line": 2,
+      "locator": "artifact-line:2",
+      "semantic_excerpt": "一面 1. 讲了下实习的业务，没深挖技术 2. 为什么要面测开 3. 你实习中有遇到过什么困难，怎么解决的 4. 计网问了一点简单的八股，太久了忘了 5. docker是什么？原理是什么？ 6. docker和虚拟机有什么区别 7. 使用docker部署一个应用的步骤是怎么样的 8. k8s是什么，为什么要用k8s 9. 谈谈你对pod的理解 10. k8s常用的命令有哪些 11. mysql的数据结构，为什么用这个 12. mysql中having和wher的区别 13. 查一个学生表成绩前十名的sql怎么写 14. 问我平时是不是写sql比较少（是的，都用插件） 15. 怎么做索引优化 16. 怎么知道是慢查询 17. java创建线程的方式有哪些 18. 电梯测试应该怎么设计（我说这个好经典的问题，她说那我们测洗衣机吧） 19. 手撕：一个数组输出峰值的下标，返回一个就行（比如：{1,3,2,5,4},输出1或者3都行） 20. 手撕太简单了，撕完又在问我八股 21. 你常用的linux命令有哪些 22. 查看一个端口是否被进程占用的命令 23. linux怎么在两台服务器上拷贝数据 24. 反问 总结：时间有点久了，可能不全。总结就是基本上根据你简历上写的，什么都在问，然后什么都问的不深，然后会让你设计一个测试题"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "evidence_sha256": "532fed38d55d37f2826c90336fbc2c7305b73fee6c98914d289f00893a9e84c3"
+}

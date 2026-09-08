@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1152",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1152,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1152",
+  "source_note_id": "xhs-note:68a71089000000001b021798",
+  "expected_body_sha256": "5c990a1aa07a2e68c789d40818659d3e3b8201b721bc483cb0ec93a50974eebc",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68a71089000000001b021798:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1152.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68a71089000000001b021798.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "a5b112660f0764d54bf76f0fc6fa726a230fc3b8",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 1821,
+    "content_sha256": "e90d3f2a4c40f02dc3cd3fd88b1a59a4d45b034e1229ab0d925169974cab42b7",
+    "excerpt": {
+      "excerpt": "2min",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "2min 自我介绍 15min [一R] Redis分布式锁和乐观锁概念 悲观锁和乐观锁，区别于在进入共享资源区之前是否允许其他请求修改共享资源 [二R]Toc上亿流量的分布式锁相比Tob场景需要额外考虑什么问题 分段加锁 [三R]怎么把Redis的热点Key分布到不同节点上承压 热点key拆分+哈希到不同节点上；只读场景可以直接复制副本到不同节点 [四R] Redis cluster集群分片+主从复制介绍 哈希槽+gossip+主从节点读写分离 [五R]Redis的慢查询可能是由什么原因导致的 网络波动、Redis大Key [六R]怎么判断是网络波动问题还是key设置不合理问题 通过ping检测，同时看Redis的慢查询日志 15min [一R]消息队列容器或者消费者宕机，通过什么机制保证数据的一致性 容器宕机有持久化机制，消费者宕机考虑消息堆积、消息消费幂等性、消息丢失 [二R]缓存穿透和布隆过滤器 请求直接访问数据库，哈希函数+bitmap [三R]介绍几个你知道的设计模式和应用场景 单例模式（全局配置类），责任链模式（用户登录过滤） [四R]spring中经典的设计模式介绍一下 工厂模式，代理模式 [五R]代理模式怎么工作的 不修改目标对象基础上新增额外功能 [六R]浏览器输入url，执行过程是什么 http, dns, tcp, ip, arp, 数据帧传输 [七R]你的技术学习路径是什么 视频，博客，源码，实践 12min 已知每个员工的位置和每个食堂的位置，求出每个员工到食堂最近距离之和。 双指针题 上一个字节流程已经g了，表现太差了，新开一个岗位面试"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "3e752a5e1136623ae7cd3ac05b24962e83eedbca70c83d62e35540c317bbc236",
+  "request_sha256": "7e2d1667cd55d7187152d424338f6dd00c7c2048a8497025a179c1b88ec17f4f"
+}

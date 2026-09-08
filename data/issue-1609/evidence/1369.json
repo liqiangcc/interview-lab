@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1369,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1369",
+  "source_note_id": "xhs-note:68cebd3f000000001301510b",
+  "source_revision_id": "xhs-note:68cebd3f000000001301510b:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "9e2931ca5e999481f0794ced73637b87a62c06b417a7ee6d1f78029da38ec897",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_json/68cebd3f000000001301510b.json@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "90705e057cbc197d45d2b62f7c1c3fbe66db43a8",
+    "kind": "json",
+    "provenance": "source_projection",
+    "byte_size": 22305,
+    "content_sha256": "cbf8b0a64302d079854f5945b8c1e058b55f8661cc3d326354f0c59305489690",
+    "excerpt": {
+      "excerpt": "\"global\": {",
+      "line": 2,
+      "locator": "artifact-line:2",
+      "semantic_excerpt": "1、自我介绍 2、介绍实习经历，项目中DDD是怎么落地的？ 3、DDD中聚合根和实体的概念 4、高并发场景下，给一个人投票怎么维护其高可用 5、怎么保证缓存一致性 6、Redis中的槽位为什么是1024？ 7、MySQL中B+树为什么只有2-3层 8、sql题：找出下单数top5的用户 9、算法：锯齿形层次遍历树 10、反问"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "evidence_sha256": "a25efb1484ccbc93412b6e35581ce0342f08f32da5a6e41c98213cab3a115ad7"
+}

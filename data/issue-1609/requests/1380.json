@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1380",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1380,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1380",
+  "source_note_id": "xhs-note:68d25947000000000b03ea1e",
+  "expected_body_sha256": "1f4ea3811ea5df7a340212a14c8e2d0a72a136ada231eeb1474f82b7550fa293",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68d25947000000000b03ea1e:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1380.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_json/68d25947000000000b03ea1e.json@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "e9f39140fd97168c6acf2d35ff4cc6df8917742e",
+    "kind": "json",
+    "provenance": "source_projection",
+    "byte_size": 22629,
+    "content_sha256": "9fb0be1c172a6ed8ed3552e1b130a402cbae47aa3674c08bf5f329c89983518a",
+    "excerpt": {
+      "excerpt": "\"global\": {",
+      "line": 2,
+      "locator": "artifact-line:2",
+      "semantic_excerpt": "岗位：C++/PHP/GO研发工程师（做百家号的部门） 1、自我介绍 2、静态多态和动态多态 3、介绍智能指针 4、介绍DDD，怎么划分领域，思想是什么（面了这么多场，还是说不明白） 5、介绍实习的项目 6、即时通讯项目：网络模型如何工作的，需要处理什么样的并发场景 7、io_context在单线程和多线程下分别是怎么工作的 8、你的项目有没有数据共享情况的处理，是怎么控制并发中的锁的 9、tcp的三次握手和四次挥手，过程是什么，为什么要三次和四次 10、聚簇索引和非聚簇索引的区别 11、手撕1：爬楼梯（力扣70） 12、手撕2：括号生成（力扣22）（在本地共享屏幕写的） 13、反问 不想要人真的可以不面的，何必互相折磨[哭惹R][哭惹R]"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "dab69423a4c94405ae0f98bc4851feb9eec8703b9c952a3c8fd9076cf3ec6b28",
+  "request_sha256": "bb80e49ca76949f5cfbf1e87704d43714120d45a6f84f49a5a5644d06ac22b9d"
+}

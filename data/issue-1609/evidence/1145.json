@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1145,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1145",
+  "source_note_id": "xhs-note:68a696c7000000001b033c7f",
+  "source_revision_id": "xhs-note:68a696c7000000001b033c7f:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "df4283736addf1019f1e17005e19f5686ff7ef164e1d7edb1dcae07d0e2f6f7e",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68a696c7000000001b033c7f.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "cc9b1bb7ea6f37918b9819890c5a3fb8402ba7a0",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 819,
+    "content_sha256": "dc7ea7fb27f1166f81cf6b175eef96ebf296c1da0663c9b1763e03a9f573d277",
+    "excerpt": {
+      "excerpt": "1. 介绍项目",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "1. 介绍项目 2. 限流算法，令牌桶的实现，令牌桶的不足 3. Redission分布式锁，为什么用分布式锁，分布式锁会有什么问题，小项目引入redis有什么问题 4. 分布式事务了解吗（我说我用过消息队列做半提交，然后就不问了） 5. 日常中什么场景使用ai，使用ai中会遇到什么问题，你在应用中怎么避免ai幻觉问题 6. JVM内存模型 7. OOM情况 8. 项目难点 手撕： 层序遍历变种 AI编程（输了几次prompt之后只会输出react的js代码，面试官：你是第一批用这个的，我也不太清楚咋回事[笑哭R]） 反问业务：SaaS餐饮平台，主要做链路中的数据存储，用java，新业务有ai相关的。"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "evidence_sha256": "beb21c9644c01f67aa17b568a8b2eed4fc71e4dadc5d1489e057fd8d99c1a32b"
+}

@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1256",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1256,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1256",
+  "source_note_id": "xhs-note:68b9178c000000001b02060a",
+  "expected_body_sha256": "5fdd64eabaf2acc83e91c93fa89544d51f5c7045fcf4c8b1a37fe7cbbebdcbe5",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68b9178c000000001b02060a:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1256.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68b9178c000000001b02060a.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "3d14a1dfc482c6cbadfb8617b98f8a4e5ade8422",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 699,
+    "content_sha256": "2d94b48967d367f1c6fdf8ed9a2db6ddee44dad7b9b06aa6df7fbc0887510a97",
+    "excerpt": {
+      "excerpt": "自我介绍",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "自我介绍 问项目15分钟左右 然后都是简单八股 1. HashMap和LinkedHashMap 2. java虚拟机的内存分区？哪些是线程私有的 哪些是共享的? 3. java虚拟机内存回收策略 4. synchornized和 votaile区别？synchronized实现原理 5. java线程池，运行原理 6. 进程和线程区别,进程之间通信方式 TCP UDP区别，TCP为什么要三次握手 四次挥手?不能少一次吗? 7. HTTP和HTTPS区别？http get post put 区别？ 8. 快速排序思想，时间复杂度，最坏多少？什么情况最坏?稳定吗? 手撕：实现字符串中第一个只出现一次的字符。"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "514789416ebfe73d861aceb5f47ab48e30ca2b9c1eee2b2975bf61d98be8d87b",
+  "request_sha256": "f7d07ceba26e09dee9a320db093de49bab6ae4191ebfd8d4167b18f888b57a2f"
+}

@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1407,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1407",
+  "source_note_id": "xhs-note:68d7f9a9000000001201c0c6",
+  "source_revision_id": "xhs-note:68d7f9a9000000001201c0c6:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "9c94c810e5348caf15fcf7af373e40d86ac2a8bf06f40c87f10044ef0d6d963b",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_json/68d7f9a9000000001201c0c6.json@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "5429b4989d4826e5610fd48a029332d57f53774c",
+    "kind": "json",
+    "provenance": "source_projection",
+    "byte_size": 22353,
+    "content_sha256": "01347d83c98aaa47681658a1c2d9854171a451d02fbf8691cc3854d146676d67",
+    "excerpt": {
+      "excerpt": "\"global\": {",
+      "line": 2,
+      "locator": "artifact-line:2",
+      "semantic_excerpt": "1、自我介绍，学校课程 2、redis中缓存读的是MySQL中的从数据库，怎么感知数据发生修改 3、印象中做过的最有难度的事情 4、实习经历的项目介绍下 5、redis中ttl的实现原理 6、算法题：手写一个简易版线程池 7、算法题：二叉树的z字型遍历"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "evidence_sha256": "601ab398605e6fd323d3a96b1476468ed7368769ffabd382995a0fec1cb06515"
+}

@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1288",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1288,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1288",
+  "source_note_id": "xhs-note:68c15805000000001c00cb28",
+  "expected_body_sha256": "fa5559daf1e645e9cd82a502026372f67200d018c3c913bbe7f869f3a6f16bdb",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68c15805000000001c00cb28:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "blocked",
+  "rationale": "The available Source evidence does not establish a bounded interview event; retain pending.",
+  "evidence_file": "evidence/1288.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68c15805000000001c00cb28.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "e95b53538513c332948d38d5e73a9efdfa581e11",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 335,
+    "content_sha256": "e467de94f9c01433b560d321af2abe0f3472f671aa4abe2d33150fa8e069120a",
+    "excerpt": {
+      "excerpt": "面试消息是直接发到邮箱的，没有hr电话联系",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "面试消息是直接发到邮箱的，没有hr电话联系 在约定时间准时上线后对方是不在线的 十分钟还不见人打算按照邮箱的联系方式打电话问问 是座机电话，输入转拨号码后是忙音的 知道秋招环境不好你们不缺人，但也不至于溜人玩吧 [生气R]不缺人可以不面"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "The available Source evidence does not establish a bounded interview event; retain pending.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "0cfd70bd289706109205f214cdebc14f656f4304c5f23fb38e97853b9007f3fa",
+  "request_sha256": "74124d71513da9e99d27fc7af550d99a91ef8af80cc6146371eda04044fe9eda"
+}

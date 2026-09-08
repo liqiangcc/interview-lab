@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1400",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1400,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1400",
+  "source_note_id": "xhs-note:68d653ae000000001203025b",
+  "expected_body_sha256": "54eb494f102be9f09f04ed3f645e992e1c7be606fb054101bab891664d25266c",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68d653ae000000001203025b:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1400.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_json/68d653ae000000001203025b.json@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "387047bac6dfef40765d9a476a63aebd9be3cbd6",
+    "kind": "json",
+    "provenance": "source_projection",
+    "byte_size": 20578,
+    "content_sha256": "ef9d3f2c48d6c91b2f3497d4053142c14b280c5ee9424021c872c0b316f0e566",
+    "excerpt": {
+      "excerpt": "\"global\": {",
+      "line": 2,
+      "locator": "artifact-line:2",
+      "semantic_excerpt": "字节 Java一面，手撕没撕出来直接寄了 1.自我介绍 2.开始问项目，项目问的挺深，项目至少得问二三十分钟 3.操作系统进程和线程的区别，及进程间的通信方式 4.数据库三大范式，要用具体实例讲解怎么使用三大范式 5.MySQL事务隔离级别 6.MySQL mvcc 7.讲一下线程安全是什么意思，怎么实现线程安全 8.synchronized和reentranlock的区别 9.AQS是什么，具体是什么数据结构 10.AQS有哪些成员，state是什么类型的 11.手撕题，m个苹果分给n个人，每个人可以分0-m个苹果，求出所有分配方案。不是hot100上的回溯题，动态规划题我是真没辙，用回溯做了二十几分钟没做出来，最后面试官也没有反问环节，直接说拜拜了[失望R][哭惹R][哭惹R]"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "cdcdbeb66d670022f03c4f23779d99baefc12c6db499d6715253cf6a381bd1a0",
+  "request_sha256": "c67bfc3199ba41fe0235b1a186a52befbdc825f902202211d53428a9dd4e53a9"
+}

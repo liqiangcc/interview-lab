@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1430",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1430,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1430",
+  "source_note_id": "xhs-note:68e0e8ea0000000004014c82",
+  "expected_body_sha256": "27039401b6780c2f81b7133925a222d784f11d16ea0b8119fe13d235b92f4475",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68e0e8ea0000000004014c82:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "blocked",
+  "rationale": "The available Source evidence does not establish a bounded interview event; retain pending.",
+  "evidence_file": "evidence/1430.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_json/68e0e8ea0000000004014c82.json@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "f662dcc3e7e51085b3ddb1ed432f3ed0e2657e77",
+    "kind": "json",
+    "provenance": "source_projection",
+    "byte_size": 26123,
+    "content_sha256": "6f84fe9307bf872d749e5597dc2585f8912df132e35725b4cfd33d2dcba030db",
+    "excerpt": {
+      "excerpt": "\"desc\": \"分片相比于一致性hash有什么优势#java面试[话题]# #后端开发[话题]# #互联网大厂[话题]# #java[话题]# #求职[话题]# #计算机[话题]# #编程[话题]# #面试[话题]# #java面试题[话题]# #程序员[话题]# #Redis[话题]# #爱上工作的瞬间[话题]#\",",
+      "line": 666,
+      "locator": "artifact-line:666",
+      "semantic_excerpt": "分片相比于一致性hash有什么优势"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "The available Source evidence does not establish a bounded interview event; retain pending.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "43946c176c5fb1624f5d9224c3a3eacba45846caf6767635cc221f54ef4ab340",
+  "request_sha256": "42cef4819a243898d8c22a6293af0b22860953c18b80b34c0f3f96cdce3d4bdd"
+}

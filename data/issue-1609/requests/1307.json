@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1307",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1307,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1307",
+  "source_note_id": "xhs-note:68c3ee94000000001c00a772",
+  "expected_body_sha256": "a07628f2636d636ac920b50fde3760e006ec577d2cf24b7eee7386b6d658c22f",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68c3ee94000000001c00a772:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1307.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68c3ee94000000001c00a772.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "13d9d7f61923f32cb731fe3a1367b6217671ddca",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 646,
+    "content_sha256": "908c5f707ffc54b626a703a3bc90ca60f2a1e0d350c7278a7c3d32d64b7161e2",
+    "excerpt": {
+      "excerpt": "面试30分钟 自我介绍👉拷打项目👉八股👉算法",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "面试30分钟 自我介绍👉拷打项目👉八股👉算法 面试前30分钟接到导师电话布置任务 完全没心情面试 面的也一塌糊涂了就是说 1. 项目拷打20分钟左右 难点是什么 如何解决的 数据库的设计理念是什么 对其中ai的理解 2. 对大模型的理解 说了一下attention 3. 为什么使用redis存储缓存数据 4. mysql和redis mongodb分别的使用场景是什么 5. 算法 写一个单例模式的简单应用 就算法问了些单例的使用 面经"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "69197502fc0242016c9e29032d219f392a041917ad1d07b00ba738227fb0ecc6",
+  "request_sha256": "d799b83f22b793a8a97a205c0a5dc4d57906cb97627fc5e9e14e7e50198a2f39"
+}

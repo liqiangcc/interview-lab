@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1274",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1274,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1274",
+  "source_note_id": "xhs-note:68bd7051000000001d03439e",
+  "expected_body_sha256": "0aa30e658f49829a616ccf50097df764cec502d42541052dfe70b0820e038ae3",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68bd7051000000001d03439e:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1274.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68bd7051000000001d03439e.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "7473b6149175a703b37a8291f874457366ecf1cf",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 187,
+    "content_sha256": "59666671e275915f00d5491c6f2e8e24496850b7126915d454eeaea3d8ff25e1",
+    "excerpt": {
+      "excerpt": "和二面leader聊的还不错，实习经历感觉也挺匹配，结束前跟我说三面是一轮交叉面。明天晚上就三面了，感觉心里好没底[石化R][石化R][石化R]",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "和二面leader聊的还不错，实习经历感觉也挺匹配，结束前跟我说三面是一轮交叉面。明天晚上就三面了，感觉心里好没底[石化R][石化R][石化R]"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "300de29a63d9b1fde5db950f7263aae354555e295c28959942c058d472177740",
+  "request_sha256": "2e9ff400d548618cd1f20081bdd35f01807469372c49d4540a8cff0b6eeb5e79"
+}

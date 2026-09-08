@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1143",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1143,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1143",
+  "source_note_id": "xhs-note:68a5c073000000001c03d1f1",
+  "expected_body_sha256": "be2f0098c9e13bce2d3f84f4acdfc35db2c63cc1458158620a4a6307bd31a5ea",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68a5c073000000001c03d1f1:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1143.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68a5c073000000001c03d1f1.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "7b51f90d3e094d15720e19cc1f60b9acd78ef555",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 675,
+    "content_sha256": "ab789d1156f7b36153422032741c1e06e8548767a44cdd06fde97ff4e8e30b3f",
+    "excerpt": {
+      "excerpt": "作为曾经最忠实小米粉丝",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "作为曾经最忠实小米粉丝 必须得写一篇小米的面经 视频面试，一名面试官 面试官人其实很好，没有给压力，问问题也会引导 奈何太久没面试过了 有点懈怠了，八股都忘的差不多了😥 主要其实还是围绕项目所涉及到的技术进行提问 包括电源、通信协议、阻抗匹配、信号完整性的一些基本的知识，只是主包都忘了😥 面了40分钟，大概率是凉了，也算是敲响警钟，该重新拾掇拾掇准备起来了 夸张哦，秋招正当时还能忘八股的"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "297c305174332245c8385e9fbb976cb4895ed5a8b2741e0beb4b3da6a42c5fe1",
+  "request_sha256": "8369a144f0fc3c62dedac2b01f5eb4a5354efe01dac820fe49e54d0f594c4d02"
+}

@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1200",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1200,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1200",
+  "source_note_id": "xhs-note:68b045a6000000001c0105e6",
+  "expected_body_sha256": "2ab6971e938ad6faf9bb17b148b72c99ea6b8ac51580aa664ff5a6ac38d2b4d1",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68b045a6000000001c0105e6:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "not-interview",
+  "rationale": "Exact Source projection is a generic resource/recruitment/advice record and does not record one candidate interview event.",
+  "evidence_file": "evidence/1200.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68b045a6000000001c0105e6.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "2c7cb2774489e42c1513fffe89e6bb9b793586ed",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 89,
+    "content_sha256": "58ee71ca9bbff5cf151980b06944b9245351eb6cc08927d548806749040f591e",
+    "excerpt": {
+      "excerpt": "2026届字节跳动客户端-抖⾳岗位, 开发⼯程师⼀⾯（ 60min, base北京）",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "2026届字节跳动客户端-抖⾳岗位, 开发⼯程师⼀⾯（ 60min, base北京）"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source projection is a generic resource/recruitment/advice record and does not record one candidate interview event.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "3b6dc79bf928345373d0adf5c4ef76724e28a0cf116f34b84b7237d81472e0d8",
+  "request_sha256": "bb276241b12bc19015abbf2b8a7ad161067c533f4b41389f4c57c37186f8abbf"
+}

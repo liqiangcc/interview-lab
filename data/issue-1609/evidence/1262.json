@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1262,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1262",
+  "source_note_id": "xhs-note:68b97f96000000001b03659e",
+  "source_revision_id": "xhs-note:68b97f96000000001b03659e:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "ea97ac038b19ad5ecfa5cb7dfe3cd8f92b9321a3a801335e2f230c777821858c",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68b97f96000000001b03659e.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "a1b71a69284c9cf92b7afff8f668d8cd84e0900d",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 972,
+    "content_sha256": "bd4b63ef3b39c3046d96bb50465810cefa2e60f7f5046977ff14dadeafd0c5c9",
+    "excerpt": {
+      "excerpt": "1.自我介绍",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "1.自我介绍 2.项目拷打 3.项目难点衍生出的数据库原子性问题 3.1 除了for update 锁，，用锁有什么问题？还有什么能够实现数据库更新的原子性 3.2 答AtomicInteger，问是怎么实现原子性的，答CAS 3.3 CAS原理、ABA问题 3.4 怎么用CAS来实现数据库更新的原子性 4.线程池参数有哪些, 5.多线程在项目中有应用吗，说了@Scheduled用到了定时任务线程池 6.类加载器有哪些？ 6.1双亲委派机制怎么破坏 6.2反射知道吗？性能问题怎么优化？ 7.讲一下CMS？ 8.bean作用域，完全没答对 9.cookie和seesion，没咋用过，答得很不好 10.OOM怎么排查？有哪些工具？ 11.mysql慢查询如何排查？ 12.分库分页怎么实现ID的唯一、说了uuid和hash 13.消息队列怎么解决重复消费和消息的顺序性 14.ai学过吗？ai用过吗？ 15.ai在开发里怎么用的，展开说，简单讲了例子，说细度不够 16.反问"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "evidence_sha256": "5ffe7055a021e792d12b71c0a01a5d2c3cb8ca4e4afe20598803fba052d008bf"
+}

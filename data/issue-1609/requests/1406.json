@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1406",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1406,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1406",
+  "source_note_id": "xhs-note:68d9021d000000000e032bea",
+  "expected_body_sha256": "3900c41dc4096dba8826c3ce71076665073937072f96eb6292e2e46e1153db81",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68d9021d000000000e032bea:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1406.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_json/68d9021d000000000e032bea.json@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "4884f86a9c7094095a3ecd8867d2be3259a22e28",
+    "kind": "json",
+    "provenance": "source_projection",
+    "byte_size": 23426,
+    "content_sha256": "c6a7b750ba90aae1e920ab4bc29f401de424a644e5da4ffad133e82cd52006aa",
+    "excerpt": {
+      "excerpt": "\"global\": {",
+      "line": 2,
+      "locator": "artifact-line:2",
+      "semantic_excerpt": "岗位：C++/PHP/GO研发工程师 1、自我介绍 2、介绍实习项目 3、为什么做ai agent这个项目（说了一下spring ai云云） 4、怎么理解mcp的，和直接调api有什么区别 5、你觉得agent这个东西有什么缺点吗，因为目前人们普遍觉得agent好像也没有做出什么特别亮眼的产品或者功能（进行一番不知天地为何物的市场现状分析） 6、如果让你设计一个agent的产品或者功能，你会考虑什么方向的功能 7、手撕：力扣93，复原IP地址 8、用Linux命令实现功能：在一个日志文件中，每条日志中都有一个client_ip字段记录一个ip，找出该日志中出现最多次的ip 9、epoll和select的优缺点，怎么理解异步非阻塞 10、项目中MySQL做了什么 11、用SQL语句实现功能：一个数据库表中存储三个字段：username、key、value，一个用户会有多条不同的字段记录，越活跃的用户对应字段越多，找出最活跃的10个用户，例： username key value zhangsan sex 1 lisi sex 0 zhangsan name zhangsan 上面表中zhangsan比lisi活跃，因为他对应两个属性，lisi只有一个 12、项目中用redis做了什么 13、用redis去存微信朋友圈，你会怎么设计（时间不够了，没让我再想） 14、redis中，zset用什么命令实现根据分值倒序排列 15、反问"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "87790edf780e66d54a8ae54c5e1e64cabad64d1efdd71e574e64f5af0b2d3b17",
+  "request_sha256": "f7f4aa3a8a41002e9c385ef30234b0c9e28805cdcf2979e259c7c5c1bc970a2a"
+}

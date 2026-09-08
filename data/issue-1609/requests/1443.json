@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1443",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1443,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1443",
+  "source_note_id": "xhs-note:68d9ef4c000000001300ff92",
+  "expected_body_sha256": "9276cd65ada8f647d80307e4ac63453fdd512cde46de102c610f36f91f77f393",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68d9ef4c000000001300ff92:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1443.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_json/68d9ef4c000000001300ff92.json@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "ee27c0e68cf54a2eaf6c6ebea4e3bd75e7ccca13",
+    "kind": "json",
+    "provenance": "source_projection",
+    "byte_size": 23598,
+    "content_sha256": "3071efb3cda03b561fd843ed7d0d3f0f6e927af9cb52e766f0213ddf67c8466b",
+    "excerpt": {
+      "excerpt": "\"global\": {",
+      "line": 2,
+      "locator": "artifact-line:2",
+      "semantic_excerpt": "1、自我介绍 2、讲实习的项目，要求把设计思路和技术调研的步骤都讲清楚 3、讲本科毕设，然后又聊到ai上了（我每次面java最后都会聊到ai上，可能是因为之前有ai背景？…）聊了聊平时怎么学的ai，看过什么论文，模型训练的一些内容 4、聊了聊之前做的rocketmq的开源 5、rocketmq的幂等性如何实现 6、唯一性id算法（uuid+雪花算法，还聊了一下美团的leaf） 7、项目的难点（讲了分布式一致性，用的本地消息表+定时任务实现） 8、反问业务+转正 无手撕"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "983727c5d1543cfc8c6e4d5c779004716b0a828d6ae5039e2b94e2ad97fca94a",
+  "request_sha256": "ace98086da7e7841fbcd5e8d721ad8f5754bafb012ea3843e363d38360919c47"
+}

@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1398,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1398",
+  "source_note_id": "xhs-note:68d50c6c000000000e0315e3",
+  "source_revision_id": "xhs-note:68d50c6c000000000e0315e3:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "d3f66d4c42540157cab16f1b58b586ffa60a70e6e62ad7d36fadd9bf7b160daf",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_json/68d50c6c000000000e0315e3.json@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "8b2ad2f3e803851486ee9df9ad815a1083288021",
+    "kind": "json",
+    "provenance": "source_projection",
+    "byte_size": 33689,
+    "content_sha256": "85957ac34c26104851cb4099b6a0db251d700a8c0123416298e0642b375cdc63",
+    "excerpt": {
+      "excerpt": "\"desc\": \"粉丝投稿，面的小米汽车后端方向，3 轮技术面共 2.5 小时，全贴业务场景。一面深挖项目里车载传感器数据处理，我讲用 Kafka+Flink 架构，被追问 “50 万条 / 秒数据堆积怎么扩容”，补充分区调整和 TaskManager 动态加实例才过关。\\n二面给电池健康预测场景，要设计数据存储与模型落地，我说 InfluxDB 存时序数据 + XGBoost 建模，又被问 “极端温度下误差超 15% 怎么优化”，答按温度分区训练子模型才过。\\n三面直接上 OTA 升级包分发设计，从 P2P 分片到 CDN fallback 抠细节，最后考 JVM 调优，让解释 G1 处理老年代碎片的参数逻辑，纯理论完全扛不住，靠项目实战经验撑到最后。\\n面试经验和答案可以分享#爱上工作的瞬间[话题]# #java面试[话题]# #后端开发[话题]# #互联网大厂[话题]# #java[话题]# #求职[话题]# #计算机[话题]# #编程[话题]# #面试[话题]# #小米[话题]# #java面试题[话题]# #车企[话题]#\",",
+      "line": 507,
+      "locator": "artifact-line:507",
+      "semantic_excerpt": "粉丝投稿，面的小米汽车后端方向，3 轮技术面共 2.5 小时，全贴业务场景。一面深挖项目里车载传感器数据处理，我讲用 Kafka+Flink 架构，被追问 “50 万条 / 秒数据堆积怎么扩容”，补充分区调整和 TaskManager 动态加实例才过关。 二面给电池健康预测场景，要设计数据存储与模型落地，我说 InfluxDB 存时序数据 + XGBoost 建模，又被问 “极端温度下误差超 15% 怎么优化”，答按温度分区训练子模型才过。 三面直接上 OTA 升级包分发设计，从 P2P 分片到 CDN fallback 抠细节，最后考 JVM 调优，让解释 G1 处理老年代碎片的参数逻辑，纯理论完全扛不住，靠项目实战经验撑到最后。 面试经验和答案可以分享"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "evidence_sha256": "6735bd8ecfc1fdfcc6f9287e4f8d4e530de534b9e076c3f2d05d684e6b9126fa"
+}

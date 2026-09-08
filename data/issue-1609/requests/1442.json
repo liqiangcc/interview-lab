@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1442",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1442,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1442",
+  "source_note_id": "xhs-note:68e62e93000000000402a061",
+  "expected_body_sha256": "254172a6afa737ca4eeac9ef564e6f64d5322e71aec375fa0f044ae65e8bd323",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68e62e93000000000402a061:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1442.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_json/68e62e93000000000402a061.json@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "8ba92b09b2c50fb67482bc778fb5d4854e55e7a6",
+    "kind": "json",
+    "provenance": "source_projection",
+    "byte_size": 31881,
+    "content_sha256": "1b17cfa875f9dcda9b9a8d8ee76a0e3119abdc14a862a122a57e79824bb10218",
+    "excerpt": {
+      "excerpt": "\"desc\": \"粉丝投稿，面的外卖订单系统方向，2 轮技术面共 2 小时，全是业务落地题。一面先问项目里的分布式库存同步，我提 Redis 预占 + MySQL 异步扣减，面试官追问 “预占后订单取消怎么释放库存”，补充定时任务兜底才过关。\\n二面聚焦高并发，让设计 618 大促下单接口，从网关限流讲到 MQ 削峰，又被问 “消息积压怎么处理”，答了扩容消费者 + 批量消费。最后考慢 SQL 优化，针对商家订单查询，我说联合索引 + 分页，面试官还让手写分库分表路由逻辑，纯八股几乎没有，全是美团实际场景。\\n面试经验和答案可以分享#爱上工作的瞬间[话题]# #java面试[话题]# #后端开发[话题]# #互联网大厂[话题]# #java[话题]# #求职[话题]# #计算机[话题]# #编程[话题]# #面试[话题]# #美团[话题]# #java面试题[话题]#\",",
+      "line": 567,
+      "locator": "artifact-line:567",
+      "semantic_excerpt": "粉丝投稿，面的外卖订单系统方向，2 轮技术面共 2 小时，全是业务落地题。一面先问项目里的分布式库存同步，我提 Redis 预占 + MySQL 异步扣减，面试官追问 “预占后订单取消怎么释放库存”，补充定时任务兜底才过关。 二面聚焦高并发，让设计 618 大促下单接口，从网关限流讲到 MQ 削峰，又被问 “消息积压怎么处理”，答了扩容消费者 + 批量消费。最后考慢 SQL 优化，针对商家订单查询，我说联合索引 + 分页，面试官还让手写分库分表路由逻辑，纯八股几乎没有，全是美团实际场景。 面试经验和答案可以分享"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "7d32504dc96923881920409dc4e2cedf9d2989c211728ed599a1ad9c8d811d28",
+  "request_sha256": "97f8d18d3b99370d340c9cc7da1870c7eca630406e5564afee447a9a44d5b6ef"
+}

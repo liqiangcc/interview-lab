@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1459,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1459",
+  "source_note_id": "xhs-note:68ea23b5000000000700e3d3",
+  "source_revision_id": "xhs-note:68ea23b5000000000700e3d3:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "42f2a6e78a551757c1efe7ee5f8909bb2888d6aa552d1f3b04a34101ccdf76d3",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_json/68ea23b5000000000700e3d3.json@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "4adf8f26d1818f32188cb75b6538979bd76ae85f",
+    "kind": "json",
+    "provenance": "source_projection",
+    "byte_size": 21211,
+    "content_sha256": "2a78311ab89593a69a526157a7723171118f4bacac367618006c427f8f5e09fb",
+    "excerpt": {
+      "excerpt": "\"global\": {",
+      "line": 2,
+      "locator": "artifact-line:2",
+      "semantic_excerpt": "美团 后端开发二面 面试官还是很友好的 刚开始自我介绍 上来就是一道手撕题，第k大数 也是比较熟悉了，背诵默写，然后面试官问了问思路 后面就让讲一下自己印象最深的项目 我就讲了实验室乙方项目，一把辛酸一把泪 然后问了问offer情况，职业规划 开始八股拷打 Java垃圾回收器，MySQL事务是怎么实现的等等 Redis内存满了会触发什么 订单超时功能怎么做 微信抢红包怎么设计 什么是模型蒸馏，什么是ai幻觉，大模型优化算法 什么是分布式事务 国庆放假回来，感觉自己脑子像是被洗过一样，面试直接卡壳了，很多背过的都没想起来，寄"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "evidence_sha256": "c60b31cb9fafe45831cdc76e5497b3eb0ac10cf389ca38a10871fa97b8fc53e2"
+}

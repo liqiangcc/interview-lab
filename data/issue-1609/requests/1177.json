@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1177",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1177,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1177",
+  "source_note_id": "xhs-note:68ac7d53000000001d02baf5",
+  "expected_body_sha256": "1f2539f78e8e8edd84d9a5dbea30d03182c5455e52c87ce0c6b43e2b3c395c69",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68ac7d53000000001d02baf5:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1177.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68ac7d53000000001d02baf5.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "03361d577a01ebf464b6d2474687dc18b7b7b73a",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 2096,
+    "content_sha256": "5478d7aa2c7f145000db49f8487a3a93be4eaf9efed146a1952aa7f315a99aab",
+    "excerpt": {
+      "excerpt": "一面：",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "一面： 1、自我介绍 2、项目一拷打（10min） 3、Java中线程池任务提交的流程是怎样的？ 4、线程池的拒绝策略有哪些？ 5、提交到任务队列的任务，它的消费策略是怎样的？ 6、如果是无界队列，还需要非核心线程吗？ 7、无界队列存在什么问题？一般在什么场景下使用无界队列？ 8、谈谈 Java 里面锁消除和锁升级 9、synchronized 可重入吗？能保证可见性吗？ 10、某个服务 CPU 利用率到 100% 了，如何排查？ 11、如果是 OOM 了怎么排查？ 12、自己有用过 jmap 和一些工具去排查过错误吗？ 13、MySQL 有几种事务隔离级别？从低到高说 14、什么是幻读？ 15、MySQL 是怎么去解决幻读问题的？ 16、谈谈 Kafka 17、为什么项目中技术选型用的是 RabbitMQ？ 18、RabbitMQ 的数据持久化是怎么做的？ 19、线程和进程的区别？ 20、线程的安全怎么保证？ 21、进程通信的方式有哪些？ 22、进程间通信，它的数据传输大概是怎样的流程？怎么能让数据从一个进程传递到另一个进程去？ 23、Redis 常用的数据结构有哪些？ 24、谈谈 ZSet 的具体实现？为什么数据规模大的时候采用跳表而不是压缩列表？ 25、查一个有序集合里面元素的个数，复杂度是多少？命令是什么？ 26、取有序集合某个元素的分数，命令是什么？复杂度是多少？ 27、做题：给你一个有序的且含有重复元素的数组，找出某个元素出现的次数。例如 nums = [1, 2, 2, 3, 3, 3, 4, 4, 4, 4]，再给定一个 target，如果目标值为 1，则返回 1，因为 1 只出现了 1 次；如果目标值为 2，则返回 2，因为 2 出现了 2 次；以此类推。（利用有序的条件，通过二分查找去找 target 值的左右边界，然后右边界减去左边界的值即可） 28、反问"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "3eb6a53aeb17f5fd3d4c622eea1581e21b444b0e95186b0de9dfe10023cd9a84",
+  "request_sha256": "9b75a74ce1191b85b003378667a1ae39c6751ba93491c54f027e9aa28a013a9f"
+}

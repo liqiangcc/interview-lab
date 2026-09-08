@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1158",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1158,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1158",
+  "source_note_id": "xhs-note:68a7d1ed000000001b0214a7",
+  "expected_body_sha256": "7d481c7e210c744c03bd4795f3fb2cb25372a9bd821baac433a6bd036ab39e3b",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68a7d1ed000000001b0214a7:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1158.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68a7d1ed000000001b0214a7.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "710a1eb7d6ab2c7357d5cebaf42a5ad319f1a6ff",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 601,
+    "content_sha256": "97e5ed2eef87ede39490f6e86078e054c446057bcb915c07b06090142431b540",
+    "excerpt": {
+      "excerpt": "1.介绍业务",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "1.介绍业务 2.数据如何从kafka到Hive 3.kafka是什么 4.如果出现数据漂移怎么办 5.Hive中SQL语句执行流程（回答抽象语法树->逻辑计划->优化器->物理计划...） 6.SQL语句如何解析成抽象语法树 7.Hadoop了解多少 8.sql和redis区别 9.sql有哪些索引 10.mysql的存储引擎是什么 11.主键索引为什么能够加快查询速度 12.什么是二叉树有什么应用场景，前中后序是什么 手撕简单sql题 手撕类似于力扣在排序数组中查找元素的第一个和最后一个位置 面试忘记很多[哭惹R]继续沉淀学习"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "21161c4ece81d144291f6e25adf60c4222d46897028b940c93bca5b4fbd01534",
+  "request_sha256": "cda1ccb07a76f82346d8ca423438f736bdcf72c9b924fe86f8afb3ea6bd0ea82"
+}

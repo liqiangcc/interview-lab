@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1360",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1360,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1360",
+  "source_note_id": "xhs-note:68cd5e57000000000702b76d",
+  "expected_body_sha256": "240d663e35938674b2ec2a616fb320f2ad52285e3181b37efb8c0343863d3682",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68cd5e57000000000702b76d:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1360.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_json/68cd5e57000000000702b76d.json@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "b674471149e3f7f8f7dea2b46b39e026364f136c",
+    "kind": "json",
+    "provenance": "source_projection",
+    "byte_size": 21622,
+    "content_sha256": "0aa33167d8121e5b29a17ae79f3ac1aa6fcf5f97cdd6a58d42832e2c847bdb84",
+    "excerpt": {
+      "excerpt": "\"global\": {",
+      "line": 2,
+      "locator": "artifact-line:2",
+      "semantic_excerpt": "总时长70分钟 1、自我介绍 2、实习项目相关提问 hystrix底层的实现方式，状态转移 多级缓存怎么做的 查的信息数据库里没有怎么办 限流算法有哪些，利用已有的基本的中间件和原理实现一个分布式限流你怎么实现 介绍一下项目微服务拆了多少个，怎么分布的，不同服务的定位调用关系 3、值类型和包装类型区别 4、我有一个类A 两个字段是int long，有一个类B,两个字段是Integer，Long，分别初始化这两个对象，各个字段赋值然后这个时候这两个分别都生成几个对象 5、泛型了解吗，一个list存的integer，另一个list存的string，他们的底层有区别吗，编译的代码有区别吗 6、反射在哪些场景使用过 7、aop底层怎么实现的 8、有一个复杂的对象，比如说嵌套的一个结构可能有map，list这些，我们用这个对象的时候用他们其中的很多字段拼出想要的结果，整个对象的操作要保证原子性，在这个场景下，我们有多线程高并发的情况下去读，单线程更新，有哪几种方法可以做到线程安全 9、算法： 二叉搜索树转小顶堆； 给一个生成随机布尔值的生成器，以此实现一个函数可以返回int范围内的随机数，要求足够均匀； 扩展：在此基础上要求函数返回int值不超过max；max很小的情况下怎么优化"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "c64936abd411b315c1feda6076a84140a8ef5e981c96978d43d5dc3d6b2f83ea",
+  "request_sha256": "dcf38d34ac513844e4deafe7c07b52ea420477dc504e69a08f73fc9f502bb785"
+}

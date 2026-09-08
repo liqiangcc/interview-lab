@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1383",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1383,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1383",
+  "source_note_id": "xhs-note:68d160110000000012015a97",
+  "expected_body_sha256": "c3725b6b67df8915eff80d29f0f0f709f1689db387c4b08851477d56ff31887e",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68d160110000000012015a97:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1383.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_json/68d160110000000012015a97.json@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "96662ba95780f6d9253101df72c67167b308c014",
+    "kind": "json",
+    "provenance": "source_projection",
+    "byte_size": 22746,
+    "content_sha256": "df9d528f118c5875f1c0ee5f395281d3b798d2097d1259690371331ee94b433c",
+    "excerpt": {
+      "excerpt": "\"global\": {",
+      "line": 2,
+      "locator": "artifact-line:2",
+      "semantic_excerpt": "1、自我介绍 2、实习经历 3、怎么解决Spring循环依赖问题，@Lazy注解的作用 3、EasyExcel和POI框架的区别 4、导出优化怎么做的？ 5、volatile关键字的作用 6、equals和hashcode方法 7、hash冲突的解决方法（线性探测法、链地址法、再哈希法等） 8、AQS框架介绍下 9、双亲委派模型是什么，解决了什么问题？ 10、什么是IO多路复用 11、什么是中断，中断的处理流程 12、操作系统被中断是怎么处理的？ 13、TCP的四次挥手，在发送ack和fin状态变化过程是怎么样的？ 14、SQL的执行过程 15、算法题：力扣463 岛屿的周长 16、反问"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "c969a706c876774d5dd1284c1f1d558f6e55bbf6a9a11e36efc1af830294b68d",
+  "request_sha256": "9b70913a3884b8442495faeea7bee392a8b75d6479b49d50491c55a676eadde3"
+}

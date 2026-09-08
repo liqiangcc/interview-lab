@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1433,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1433",
+  "source_note_id": "xhs-note:68e125580000000003020b09",
+  "source_revision_id": "xhs-note:68e125580000000003020b09:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "3e716ad0c88d1cdf0c74bed36dca565ff3d55fb9730125e92cd67ff1bbd34c16",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_json/68e125580000000003020b09.json@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "1adcda247365e7ba47d37014f602c8fba6829444",
+    "kind": "json",
+    "provenance": "source_projection",
+    "byte_size": 22466,
+    "content_sha256": "a540258295a5fdc75316516b4f0d9b5619bc6b5ee76e02a41b79aca6c0fa81f9",
+    "excerpt": {
+      "excerpt": "\"global\": {",
+      "line": 2,
+      "locator": "artifact-line:2",
+      "semantic_excerpt": "[向右R]Time：9/2 [向右R]部门：TEG [向右R]面感：面试官有开摄像头，面感比其他公司都要好 [向右R]流程：部门介绍->实习->基础八股->手撕->反问 [向右R]涉及内容：os、cpp基础、网络等等 [向右R]手撕：多数元素（摩尔投票） ———————————详细版—————————— 基础八股： [红书R]进程、线程和协程的理解？ [红书R]为什么三者从前到后的切换速度越来越快？ [红书R]进程有哪些通信方式？ [红书R]不同场景下要怎么使用这些通信方式？ [红书R]共享内存是怎么实现的？需要锁？用什么锁？ [红书R]管道平常是怎么使用的？ [红书R]socket通信一般怎么使用？ [红书R]TCP四次挥手的状态变化？ [红书R]如果TIME_WAIT状态堆满了，要怎么排查出来？ CPP基础： [红书R]智能指针有哪些？shared_ptr的用法和实现原理？ [红书R]如果两个shared<int>ptr指向两个int类型的对象，怎么知道指向的资源应不应该+1？ [红书R]shared_from_this出现的原因？"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "evidence_sha256": "dfc4458770cb5f270fb64784a55d3494ca9cc075a434a691d714659bf67ac4a8"
+}

@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1211",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1211,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1211",
+  "source_note_id": "xhs-note:68b18d94000000001c032b08",
+  "expected_body_sha256": "0376853c630b87d3a198ffdef4851ed2c1e0e9e3bcf48f5ee1cd9d12c9a64f9b",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68b18d94000000001c032b08:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1211.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68b18d94000000001c032b08.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "bd4c27c68c12470938bcff732fb21fa1d6a8e6d5",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 1173,
+    "content_sha256": "d05b5665d1de5e634076b1425683978fd55c895716743c094e086d38aaaab7d6",
+    "excerpt": {
+      "excerpt": "问项目",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "问项目 1. 三方授权登录怎么做的（感谢百度问了，不然讲不清楚），Oauth2对比传统的账号密码登录有什么优势 2. AOP+Redis 实现限流怎么做的，滑动窗口和令牌痛限流是怎么样的，如果突然有一波大流量进来那种限流方法最好 3. 还问了些实习的小点，但是没深挖 4. 对k8s了解怎么样 5. redis的常见数据类型，zset是怎么样的，持久化的机制（问了些项目相关的拓展） 6. 消息队列主要解决什么问题，消息队列怎么保证消息的有序和幂等 7. http和https的区别，SSL/TLS保证安全的流程，非对称加密这么安全为什么不全使用非对称加密，加密算法了解吗 8. http2.0有哪些升级，多路复用怎么实现的，头部压缩怎么实现的 算法： 1. topk出现次数（最小堆，然后让我手撕最小堆的实现，不会换了一题） 2. 先序中序构建二叉树（最后看了半天没找到哪有问题，面试官提醒了循环条件少了等于号） 体验很好，说对了都会点头，说的不全面的也会讲解一下 已二面"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "9b9d2a977d094dd49a22332ce904889a09441f50294e0b9eef064d64a51acae8",
+  "request_sha256": "8cefda94f421bb01c2cc1a951990ed6e77703220232ab8aed5f36c999d1abed7"
+}

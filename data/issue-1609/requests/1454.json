@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1454",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1454,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1454",
+  "source_note_id": "xhs-note:68e7d470000000000700d609",
+  "expected_body_sha256": "7ffaa93ddbb847d8b1931a38c1991ee51eee9cb266f6d2cb9a5df4489aec9a5b",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68e7d470000000000700d609:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1454.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_json/68e7d470000000000700d609.json@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "7888f1ce7ffc46852d69ddc3955f81cab39fd201",
+    "kind": "json",
+    "provenance": "source_projection",
+    "byte_size": 22142,
+    "content_sha256": "73c6c0f8025bfcf742b17292f4e8adaf4246db6db5929d69ff1bedc4a778d786",
+    "excerpt": {
+      "excerpt": "\"global\": {",
+      "line": 2,
+      "locator": "artifact-line:2",
+      "semantic_excerpt": "1、自我介绍 2、实习经历 3、redis的淘汰策略 4、怎么处理redis中的大key 5、http和https的区别 6、浏览器输入网址的全过程 7、TCP协议的连接和断开过程 8、分布式锁的使用场景，怎么实现分布式锁？ 9、MySQL的锁机制 10、询问base地意向 11、反问"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "d1df2f5ed9e74e7d28bb8923c0bbe0bbd465ae7527d330bb815654e87373862d",
+  "request_sha256": "8910d10ead83f1bcf08082f6d2bc40ad56516c46ccd3f6c9b5f4280f66f831e4"
+}

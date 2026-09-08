@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1296,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1296",
+  "source_note_id": "xhs-note:68c2a688000000001b03edbd",
+  "source_revision_id": "xhs-note:68c2a688000000001b03edbd:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "c71115797b13cf82f65c7b201b58ba5408fcd0d7d250408dd736529ce58fd30a",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68c2a688000000001b03edbd.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "00434ef2ea2d1b7df20052c0d7bbf40e65098389",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 454,
+    "content_sha256": "8e549f5cb9aa2e42e0added62ae62d10631c8186ba3569cd6517f5c29110ed82",
+    "excerpt": {
+      "excerpt": "面试官没开摄像头，问的比较少",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "面试官没开摄像头，问的比较少 1. 共识算法讲一下有哪些，raft原理 2. zookeeper原理 3. java集合那些是线程安全的 4. ConcurrenthashMap如何实现线程安全 5. synchronize关键字原理 6. 项目背景，碰到哪些问题，怎么解决 7. 手撕1、删除链表倒数第n个节点 2、最长公共子序列，返回两个字符串的最长公共子序列的长度"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "evidence_sha256": "4e194af9d3745684ed2bfa04b150f884e9f887c4b00e746b43fde3060d401f37"
+}

@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1340",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1340,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1340",
+  "source_note_id": "xhs-note:68ca70d2000000000e00f5bb",
+  "expected_body_sha256": "9314ffdb58d2df53cea1fc9579ac139f3c59f52485efffefebd80b0e9d55f6bc",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68ca70d2000000000e00f5bb:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1340.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68ca70d2000000000e00f5bb.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "be852b8ec446a61801bc39d8b57bb4b34e8d2277",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 1840,
+    "content_sha256": "bc0d9618cdaeabe0b5c11a5c006490d77f2770671a7f107e2e1009091c77ef94",
+    "excerpt": {
+      "excerpt": "字节挂过一次后一直没消息，这周才被捞起来面",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "字节挂过一次后一直没消息，这周才被捞起来面 1个小时，45分钟在做题，熟悉的感觉 自我介绍 (可以介绍项目和亮点)。 你在长列表优化中做了哪些具体的事情？ 时间分片是指什么？ 虚拟列表是什么，为什么需要它，原理是什么？ 解释一下 useEffect 的作用。 你了解 useCallback 吗？它有什么作用？ 事件委托是什么？它主要用来解决什么问题？ 对定时器(setTimeout)有了解吗？如何用它实现一个每秒执行一次的任务？ 如何让定时器的时间尽可能精确？ 代码题和上面的问题是结合起来的，问了一两句项目后就开始做题了 手写一个自定义 Hook：useFetch。(.then .catch) 在 useFetch 基础上，增加新需求：当请求参数 (params) 变化时，自动重新请求。（useEffect） 手写一个自定义 Hook：usePrevious (用于记录state上一次的值) 在 usePrevious 基础上，增加新需求：让其值的改变也能触发UI更新。 写一个算法题：找出字符串中出现次数最多的字母，并对前面的数字求和。（mid） 反问，问业务问AI问作息 体验 熟悉的字节熟悉的做题，平时不写怎么准备手写题都没用，必须fake it until make it！ 相比暑期的豆包这次时间还算短的了 体验还不错，面试官人也挺好的，看着挺年轻 最后说了经典感谢你的时间，不知道能不能给过（全A10分，8分应该是有的我觉得），随缘了[微笑R][微笑R][微笑R][微笑R] 前端的宝子、秋招的宝子，加油！[飞吻R][飞吻R][飞吻R]"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "0cff20def12e0eb9daf19510678285d4a40abc982e3fa01467a8e9b36e9f4261",
+  "request_sha256": "1c623e256f64109b6d565161eb80ac6d69e2ed2798eaa9605fa477ecba92e760"
+}

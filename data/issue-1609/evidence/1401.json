@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1401,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1401",
+  "source_note_id": "xhs-note:68d682d00000000011014a18",
+  "source_revision_id": "xhs-note:68d682d00000000011014a18:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "c2cac39e5a814ac1669eb073bbad4146bc0084aca2603be65de4a05db3a2f0c2",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_json/68d682d00000000011014a18.json@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "45d960d888ac16fc506537ad0117a03f408fa78f",
+    "kind": "json",
+    "provenance": "source_projection",
+    "byte_size": 23198,
+    "content_sha256": "69507637d7ada240f7e8d3f0e09ef2197ea26f0b72ac6023a3a3f2ecfbc79b70",
+    "excerpt": {
+      "excerpt": "\"global\": {",
+      "line": 2,
+      "locator": "artifact-line:2",
+      "semantic_excerpt": "岗位：后端研发工程师（出行方向-北京） 1、自我介绍 2、手撕：力扣138. 随机链表的复制 3、spring的IOC原理是什么 4、MySQL的联合索引是什么，和单独建几个索引有什么区别 5、三个SQL语句，分别判断会不会用索引，联合索引a、b、c - b=1 and a=2 - c=1 - a=1 and b>3 and c=4 6、你刚刚说第一个不会用索引，所以我们在写语句的时候还需要专门去关注他的顺序吗（不用，会优化） 7、在实际场景中，什么时候用abc的联合索引，什么时候单独建3个索引 8、除了redis缓存，还有哪些缓存方式 9、什么情况下会用到redis缓存 10、如何保证缓存和数据库的数据一致性 11、讲实习项目，接到任务后如何分析需求的 12、有没有对比过其他的日志库 13、有关注过比较新的日志方案吗，和自己写日志库对比，有什么优劣，用新的日志方案替换当前的，成本是怎么样的 14、介绍另一个实习项目，如果服务重启了，你的定时巡检任务是不是就丢了？如何解决呢？ 15、反问 面的一般，感觉不会有后续了[扶墙R]"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "evidence_sha256": "68b7b8cb8da27f1641f4d42fd0244ec6134bcb7a0a6f1e1cd60a59c68afbab37"
+}

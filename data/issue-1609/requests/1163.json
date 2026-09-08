@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1163",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1163,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1163",
+  "source_note_id": "xhs-note:68a8849a000000001d02d368",
+  "expected_body_sha256": "78fa3fe32b0536e6dd027db1b9957427cd110dc3f1522060c154c78c0e7dde44",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68a8849a000000001d02d368:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1163.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68a8849a000000001d02d368.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "af554dec2882c7f8a0f2fde1c9419eb8f9ab97b2",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 226,
+    "content_sha256": "8fa82fdece8b31deab54391b094df2a434c1550bda38ffa415ab23cee247d828",
+    "excerpt": {
+      "excerpt": "基本全程八股吟唱，没怎么问项目，手撕没撕出来感觉凉了，面试官人还挺好的，让我加强算法和场景题的应对[失望R][失望R][失望R]#后端开发[话题]# #美团后端面试[话题]#",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "基本全程八股吟唱，没怎么问项目，手撕没撕出来感觉凉了，面试官人还挺好的，让我加强算法和场景题的应对[失望R][失望R][失望R]"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "ec52ef6d9c8cfb8490d892c4085697fb2117bac76b947958df7da026808a8208",
+  "request_sha256": "12fbcd2229d1e26efde2dd648c830c9ad13bbe8c8a850dfbce1d70d77a78b4f1"
+}

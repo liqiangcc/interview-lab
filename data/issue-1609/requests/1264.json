@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1264",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1264,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1264",
+  "source_note_id": "xhs-note:68b99bc0000000001b033966",
+  "expected_body_sha256": "b076470413e7e5fbe597466f2fb441eb99c4d250d7c179ff6fa7be188c860a6c",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68b99bc0000000001b033966:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1264.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68b99bc0000000001b033966.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "c06e89d8fcafbb6252796758e3088e9941f60a9e",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 348,
+    "content_sha256": "927f9a5dffd9ce789cdff65774c7c71f2ea776ab8d06a01a56a496d9c8671ad0",
+    "excerpt": {
+      "excerpt": "面试官问我为什么在酒店hhhh[笑哭R]",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "面试官问我为什么在酒店hhhh[笑哭R] 三阶段提交没详细看过，没答出来。全双工半双工那个也不会[失望R]。"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "6c58fa3f563c87bddd062c78334c805d8b0e1957d64e1b219a016370fc8bf04a",
+  "request_sha256": "8784d3e850466539b06909a0817e4c02e62dc953b909fd15eb82904213dee1c3"
+}

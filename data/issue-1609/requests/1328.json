@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1328",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1328,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1328",
+  "source_note_id": "xhs-note:68c90d5b00000000120307d0",
+  "expected_body_sha256": "fea86222449d52ed52d4c4be3d84e655b854e18aabcd950927f05cffb5201bd9",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68c90d5b00000000120307d0:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1328.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68c90d5b00000000120307d0.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "07fe21791c25f73713edae9ed17dee9317bd70e7",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 2293,
+    "content_sha256": "6904c7fe03407f414b5f158fce2507ab9c1e5e5e54654250c552dcbc28811806",
+    "excerpt": {
+      "excerpt": "1.自我介绍",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "1.自我介绍 2.这个系统是从0做了一整套监控系统是吧，那你怎么做顶层设计？你怎么划分模块？怎么决定数据流是怎么走的？ 3.双机房部署这里那你们做的是主动-主动还是主备？如果某个机房挂了，是怎么切流量的 4.1000w 数据点 / 10s 采集，那你们的数据链路压力是很大的，尤其在传输这一段，怎么做高可用 5.时序数据库你们用了VictoriaMetrics，对比 Prometheus具体满足了哪些你们原来做不到的需求 6. 你们这套系统是不是完全照 Prometheus 做的？那 AlertManager那套为啥没用？是不是有些场景不太适配？ 7. 支持双机房是吧，那你们AB是active-active吗？还是有优先？有做流量切换的能力吧 8.整个链路这么复杂，自己有没有做监控？要是这套监控系统自己挂了你们咋办？ 9.你刚说GC压力很大，你是怎么发现的 10.之前是批处理写入，但有锁竞争问题，是怎么定位的？后来换成啥方案了？ 11.刚刚提到维度高基数问题，用的是布隆 + HLL，那对误判这块呢是怎么容忍的？说一下你们这个组合用在哪？ 12.熔断规则怎么配置的？是慢调用？异常率？熔断后是怎么恢复的？ 13Kafka主要用在哪？是在传输链路上吗？你们是直接写入Kafka 的？ 14.消费侧有没有遇到堆积？是怎么排查的？如果Partition分配不均怎么处理呢 15.你说你们做了属性补齐和指标派生，那这个操作是在Kafka消费端做的吗？怎么保证不影响延迟？ 16.Kafka它是怎么存数据的？Segment是怎么切换的？你知道LogCompaction 吗 17.Kafka broker 挂了怎么办，生产能不能写？它是怎么做高可用容错的 18.你说你们有自愈中台，这套东西是你们监控体系内嵌的？还是独立出来的？ 19.你这个自愈策略支持几个阶段来着 20.你们的执行动作是脚本，那脚本失败了怎么办 21.你提到有事件驱动也有指标触发，这两个共存会不会冲突有优先级么，咋设定的 22.比如说你发现某个节点异常了，你们怎么感知、判断、决策、执行？可以具体说一个流程吗？ 23.手撕：链表删除倒数第 N 个节点 链表有环，怎么判断有环？"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "4183a7652378ed20f86808d0149d366a3a4571b2ac3aa7f48676d0335c49f6e4",
+  "request_sha256": "c9c67a8855c9fb181aa2a4e6903f244e560a44122f517d5e68caf8af7a3133d1"
+}

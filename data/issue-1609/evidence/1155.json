@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1155,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1155",
+  "source_note_id": "xhs-note:68a7307a000000001d00e20c",
+  "source_revision_id": "xhs-note:68a7307a000000001d00e20c:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "1d3507ea2dafb260c9a85c7ce218fe325ef7482032da98b6af67949b99c92235",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68a7307a000000001d00e20c.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "4a0ae23ca1106b63b7be337da2ad4fc9d3a9b6f7",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 647,
+    "content_sha256": "9f71a5dea515791743f0924bc7329f114731d2d3c39264f4473f28b49477fff8",
+    "excerpt": {
+      "excerpt": "面试官首先让我等了七八分钟，然后过来直接和我说，自我介绍，问我能不能干一年，之前带实习生干太少了，然后就直接做算法题",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "面试官首先让我等了七八分钟，然后过来直接和我说，自我介绍，问我能不能干一年，之前带实习生干太少了，然后就直接做算法题 算法题：二叉树的锯齿遍历 sql题 ：寻找大于3的学生的学院输出 项目拷打： redis锁怎么实现的，万一都来争这个锁怎么看，到底怎么实现解决超卖问题，怎么查看哪个线程拿到了锁，怎么释放这个锁，可重入怎么实现的 八股： aof重写方式，redis分布式锁原理，慢查询怎么优化，mvcc在不同事务隔离阶段的表现，垃圾回收机制（我没听清楚他说的什么名词）"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "evidence_sha256": "5844c0f756f017b6c6c574d5d83fd4aaed96bfbb4ac9ee43dbbda4341d534620"
+}

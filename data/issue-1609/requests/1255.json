@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1255",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1255,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1255",
+  "source_note_id": "xhs-note:68b914e9000000001d026076",
+  "expected_body_sha256": "fbb0e4d210b7e4d249925b502b5eb33e5c8c7602682f96368b12ef5c59306b04",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68b914e9000000001d026076:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1255.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68b914e9000000001d026076.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "6dcaa5221c3c97507353648e499272715f3009b0",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 689,
+    "content_sha256": "f5a4464fd4fe781a5e88e92fccbc61a4cfc91c408d0ac4838bc90eb19320e1c4",
+    "excerpt": {
+      "excerpt": "快手客户端面筋",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "快手客户端面筋 本来只是抱着试一试的态度，没想到过了一面。 一面面经：i++和++i的区别，智能指针，以及一些常见的cpp网络操作系统八股，后面做了树的公共祖先，接下来是对项目的场景提问，最后就是反问环节，总时长40多min 二面面经：拷打之前的实习，问了一点简单的cpp八股，以及如何去设计一个webserver，写题顺时针打印数组，简单题直接秒了，后续和面试官讨论了职业的选择，体验感很好的一次面试，面试官超级nice。 三面面经（有点久了已经遗忘哈哈哈哈哈） 总体流程都走完了，下面就是泡池子[哭惹R]"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "694562b93cd6632accd39453bb34a03735a70a4ed389fa4cf5e46f8f9d2ec5f7",
+  "request_sha256": "63ddb595c0e69c97ef706ebd0519835e397fe746e96ad0c95ad41eb83281e1b8"
+}

@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1413,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1413",
+  "source_note_id": "xhs-note:68da2e90000000000e02330a",
+  "source_revision_id": "xhs-note:68da2e90000000000e02330a:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "229e39aff362bef14dcdce4d8287cfcff59bd82e39e7a5deb1c93e7f4610bb23",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_json/68da2e90000000000e02330a.json@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "fe8b2bb4121b9efe668a4557a24b18ef3af5499d",
+    "kind": "json",
+    "provenance": "source_projection",
+    "byte_size": 22877,
+    "content_sha256": "46fafaf2460192d25969dff41c49275ac04f5a38025423c5be8820aa2ef6be5b",
+    "excerpt": {
+      "excerpt": "\"global\": {",
+      "line": 2,
+      "locator": "artifact-line:2",
+      "semantic_excerpt": "岗位：软件开发工程师-影像方向 1、自我介绍 2、介绍组里的科研方向 3、讲硕士课题 4、讲实习的内容（讲大组的产品，讲自己的工作） 5、讲自己做的项目 （以上都没有深挖，我单方面输出） 6、细讲了两个科研的方向，问了一些细节（图像相关的） 7、讲单应矩阵的原理 8、多态的原理（问了一下，c里面两个函数名相同，传入参数数量不同，能编译通过吗） 9、纯虚类 10、二叉平衡树 11、深度优先搜索和广度优先搜索，分别是什么，用在什么场景 12、线程安全的处理 13、要问内核，我不会，遂放弃 14、反问 感觉面试官很着急，迟到十分钟，还一直打断我说话，没有思考时间，两秒钟答不上来就下一个，有点害怕[扶墙R]"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "evidence_sha256": "ce3f7b7511f666f55d9095a2ad053132379ca85e67e4abd15c3aa7f06d07d810"
+}

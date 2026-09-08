@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1217,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1217",
+  "source_note_id": "xhs-note:68b2a592000000001b03e355",
+  "source_revision_id": "xhs-note:68b2a592000000001b03e355:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "9025c6c0b2d96879cca8394f608e6928d665315dd1910cb737a9df22fb3c531c",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68b2a592000000001b03e355.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "103b22d1b6d23565046d2b8223104a4f39c51a10",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 813,
+    "content_sha256": "96589241507c504283c1dfbdbb0cc153fbade1ca3906f1b4096f418519dd9703",
+    "excerpt": {
+      "excerpt": "五年经验，这次被迫离职，记录一下面经过程",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "五年经验，这次被迫离职，记录一下面经过程 自我介绍+项目介绍 项目中有过安全问题解决吗，是否做过数据加密 mq消息丢失如何处理 mq如何保证消息防重复消费 redis缓存穿透和雪崩 说一下redis分布式锁 redis过期策略 mysql如何优化性能 mysql分库分表方案 mysql缓存失效场景 谈一下Java中的集合 arraylist和linkedlist区别？使用场景？ 你在项目中如何使用集合的？ hashmap如何解决hash冲突的 spring bean的生命周期 springmvc执行流程 mvc中一个接口过来之后会经过哪些程序 spring循环依赖问题，如何解决 说一下spring三级缓存 spring bean的注入方式 介绍一下beanfactory 说一下es倒排索引 反问环节"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "evidence_sha256": "dc5a61f83143567a707af739ea2b47fd3a6950e5c44e9a55fb7fe373e3c76ed8"
+}

@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1341,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1341",
+  "source_note_id": "xhs-note:68caa7b0000000000e02205d",
+  "source_revision_id": "xhs-note:68caa7b0000000000e02205d:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "8b5d993160104a5c8fe057669088c2fa33650bab77aa34cc7ccdd678e367006b",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68caa7b0000000000e02205d.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "37bccbb2dea6e0df7ca7ffa0d6343f5999edf57e",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 1099,
+    "content_sha256": "83dbd6d0eae0587fa6f70caa6c5980db22949a733b91928cd8ab4d624be601b4",
+    "excerpt": {
+      "excerpt": "岗位：研发工程师JAVA",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "岗位：研发工程师JAVA 1、自我介绍 2、介绍实习项目解决的具体问题是什么 3、日志按等级输出的话，如何区分日志分别属于info、warning、debug哪个等级呢 4、你这个项目的功能（日志器）需要开发吗，Linux里面可以直接用shell实现这些功能吧？ 5、如何理解mcp的，他主要解决什么问题，他这个协议的发展现状有什么问题吗，哪些地方可以优化呢 6、mcp的api和普通大模型的api有什么区别呢 7、sse是什么呢，如何实现的呢，在调用过程中他具体做了什么 8、一个普通的api，如何把他mcp化 9、手撕：有一个长度为m的环形小球序列，这些小球一共有n种颜色，找到最小的连续小球序列，使得序列中的小球包含全部n中颜色（用双指针） 10、反问 面试官没有开摄像头，本来就不会，更答的没底气了[捂脸R][捂脸R]"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "evidence_sha256": "0a63c8eec972e7dbe6aab991d8c585e5ec7e6c45970a445af7a825da299fc86c"
+}

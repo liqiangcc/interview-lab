@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1302",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1302,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1302",
+  "source_note_id": "xhs-note:68c380f8000000001d007261",
+  "expected_body_sha256": "4cf199c048a8f9c7171097d93bb2c1b862014a0825f00f0d8f6e2368c83e196a",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68c380f8000000001d007261:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "blocked",
+  "rationale": "The available Source evidence does not establish a bounded interview event; retain pending.",
+  "evidence_file": "evidence/1302.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68c380f8000000001d007261.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "d6eb9f941cf8479e2d7b8269be957476f3e3512c",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 192,
+    "content_sha256": "ad145b987569ca159dca4ed998d7c302eb45aa46814fb1026b126e3ed3d65f3a",
+    "excerpt": {
+      "excerpt": "##校招[话题]# #互联网大厂[话题]# #内推码[话题]# #秋招[话题]# #java[话题]# #后端[话题]# #前端[话题]# #offer[话题]# #贝壳找房内推[话题]# #百度[话题]#",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "#"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "The available Source evidence does not establish a bounded interview event; retain pending.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "5187b9f3acc6959b44ccbbcb8838306988019bf75fc06bdc9bfd8a10ef9b3e28",
+  "request_sha256": "7570eb1eba32b3cee7c946cc3e7c8cbb22214f6ceba35d055d31c2d8208b4855"
+}

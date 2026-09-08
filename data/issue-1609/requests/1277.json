@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1277",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1277,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1277",
+  "source_note_id": "xhs-note:68be9985000000001b036fc9",
+  "expected_body_sha256": "119a1d8aef10e220662ef014743b9ad37a56ec424c8b11b652798e310f6bacef",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68be9985000000001b036fc9:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1277.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68be9985000000001b036fc9.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "d57e2d96c39c8fb18129a9d6b53074e4ce8e4fcc",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 445,
+    "content_sha256": "733b7481a204b062760482af36505dee498a7f4b1c75d9aa658381346ea08582",
+    "excerpt": {
+      "excerpt": "小米C++一面有手撕",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "小米C++一面有手撕 主要流程 面试官人很好 会引导你回答问题 好评！ tcp udp http 1.1 http2.0 http3.0有啥区别 redis 切片 集群 数据类型 MySQL存储相关知识 epoll编程相关知识 C++ 虚函数 虚表存放位置 为啥构造函数不能设置为虚函数 析构函数最好设置 手撕：acm模式 动态规划 很简单 一个矩阵从左上角走到右下角 中间有一些障碍"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "e55d00d47671bfe0e2066869d66c166288bdbf3292580211e6c58b37d84a2005",
+  "request_sha256": "d0c1ecfe637a4b5e7c4a139f5f76a3ec9ca94a1009bb1d900dc3235bbe4cb0e4"
+}

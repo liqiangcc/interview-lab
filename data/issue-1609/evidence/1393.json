@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1393,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1393",
+  "source_note_id": "xhs-note:68d49596000000000e025108",
+  "source_revision_id": "xhs-note:68d49596000000000e025108:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "f119593ada3ca004da826fedd2057ad556d34e2f20bfd572762226f25e5836d1",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_json/68d49596000000000e025108.json@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "e0a7faa81b15880ad1e6b3e8015fec0c40df81a0",
+    "kind": "json",
+    "provenance": "source_projection",
+    "byte_size": 22433,
+    "content_sha256": "83a44c4c68de26b97f9e8dfaba4dd2c45850e3e0dcad5e4232609ab9af7cc538",
+    "excerpt": {
+      "excerpt": "\"global\": {",
+      "line": 2,
+      "locator": "artifact-line:2",
+      "semantic_excerpt": "字节客户端三面、HR面面经 📍面试公司：字节 🕐面试时间：2025-09 💻面试岗位：客户端 ❓面试问题： 三面： 1.自我介绍 2.问项目，有很多项目衍生问题，答得不算好，需要对项目很熟悉的同时做一些情景假设 3.手写消费者-生产者模式，可能是前面答得太差了，面试官让我先做题了 4.面试官想问数据库，我直接说不会（确实不会 5.TCP和UDP的区别 6.http3是基于什么协议做的 7.http1.1和http2有甚区别 8.http2的多路复用 9.http2的ip帧可以乱序吗，接收方怎么处理 9.TLS是什么 10.https怎么完成加密的 11.加密算法都有哪些 12.手撕 有N阶楼梯，一只猴子一次可以跳1或3阶，有多少种方法爬完楼梯 13.const关键字作用 14.函数重载怎么做的，编译器怎么做的 15.C++内存分区都有哪些，全局变量和常量存放在哪 16.什么情况下会栈溢出 17.什么时候会内存不够用 18.怎么查内存泄漏 19.分析内存泄漏的工具有哪些 20.智能指针有哪些 21.反问 HR面： 1.自我介绍 2.询问校园经历 3.项目或科研中与他人合作的经历 4.再写一遍技术面的代码题能写出来吗 5.家庭情况 6.反问 🙌面试感想： 技术面每次都有手撕，HR面时间很短，强度个人感觉挺大的，会问一些场景题，并且追问。三面后补了一个笔试才进的HR面。目前没有收到后续通知 2025-09-30更新：HR电话沟通转岗"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "evidence_sha256": "a6d59f6ce5c5035b40adf11c7265e372ebbf4344fe0de2c70f8d4748df0dc959"
+}

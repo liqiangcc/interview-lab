@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1439",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1439,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1439",
+  "source_note_id": "xhs-note:68e4733d0000000004020439",
+  "expected_body_sha256": "9c0e2f7a247cfd78f65b8faafae0fe037c761084ed9a7b9c16108f89a6f00a00",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68e4733d0000000004020439:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1439.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_json/68e4733d0000000004020439.json@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "27b0905e1d7036b2ff169463d201732dc835ee86",
+    "kind": "json",
+    "provenance": "source_projection",
+    "byte_size": 22086,
+    "content_sha256": "b62c0017214702c6ac2bc4569e8ad8c288faa969ee6e00aa69d39d47bef70db6",
+    "excerpt": {
+      "excerpt": "\"global\": {",
+      "line": 2,
+      "locator": "artifact-line:2",
+      "semantic_excerpt": "一面（30min） 自我介绍 项目难点 八股文： 1.TCP三次握手、四次挥手 2.Java基础数据类型 3.泛化 4.反射及其应用 5.HashMap 6.HashMap是否线程安全 7.JVM运行时空间 8.JVM运行时空间 9.JVM类加载机制 10.MySQL索引like什么时候失效 11.MySQL事务的特性 12.MySQL事务的隔离级别 13.Redis数据类型 14.Redis缓存击穿、缓存穿透、缓存雪崩 15.设计模式 16.Spring常用注解 17.自动注入 18.了解分布式问题吗？ 19.了解MySQL分页吗？ 反问 二面（40min） 拷打项目细节（10min） 场景题： 1.生产者、消费者的一致性，具体代码实现 2.设计一个秒杀系统，要考虑哪些问题，用那些技术栈 3.银行转账，两个账号和一个转正金额，一条行记录相当于一个账号，具体代码实现 反问"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "d5ac5792829398ee2e5947ff86f53e97c1f76f45b2280d6cf6fb36e987acfa2b",
+  "request_sha256": "2747b17f7b11fa5c9cfb8b375aa795dee40bd99803f858ad4eefaf8b1aafa778"
+}

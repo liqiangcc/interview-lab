@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1147",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1147,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1147",
+  "source_note_id": "xhs-note:68a6c3ff000000001c008d95",
+  "expected_body_sha256": "839f9d31228cf6de8c88d9e8181abd2f526619e74e310608dbe8016532e309d6",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68a6c3ff000000001c008d95:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1147.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68a6c3ff000000001c008d95.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "924a4a72958ededf3b2593bc36f1af816cfd0d4a",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 484,
+    "content_sha256": "c2e039198853dec5495747f6eeb2abcb0eb28e876c857582ad33abe90e592509",
+    "excerpt": {
+      "excerpt": "秋招-快手后端-二面",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "秋招-快手后端-二面 1.自我介绍 2.反复考打我的项目（实习没东西可说） 3.看你简历上写了熟悉这些东西，选一个你熟悉的知识 4.我选的redis，然后考点redis相关知识 5.算法题，hot100的一道动态规划（会写不会说，纯背的） 6.反问 面试官自己也表明了不喜欢考八股 太难了，我这辣鸡项目哟 快手秋招总共是三轮技术面+一轮hr"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "088786a3ac15be7d6253a228f098abe994d9f7d7dc9e3f49657bfa0c0fb98ef6",
+  "request_sha256": "5c891e92160798ee3d43663084e54329b7c71c47e1fc2c2b073ce1f76a1f2b36"
+}

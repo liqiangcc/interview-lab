@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1258,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1258",
+  "source_note_id": "xhs-note:68b939f0000000001d029aba",
+  "source_revision_id": "xhs-note:68b939f0000000001d029aba:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "3e7e7f0d8ec4d8d2f72781c4009a9b7ab0c8329c82c3373ec4af1b3546a1b8f1",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68b939f0000000001d029aba.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "78ba412a0aff7ebb01c7b9773e819a0e136f564f",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 523,
+    "content_sha256": "6dae4ca54b6e22c0a85155864ce63ef9cbc46d13f8bfe2dcfb1faea38bf757d8",
+    "excerpt": {
+      "excerpt": "面试官没开摄像头，声音比较甜的小姐姐(难得[萌萌哒R])，45min",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "面试官没开摄像头，声音比较甜的小姐姐(难得[萌萌哒R])，45min 上来不用自我介绍，直接让挑最有挑战的问题讲 问熟悉啥问啥[捂脸R] redis底层数据结构 跳表，与其他区别 redis单线程模型 mysql数据库 联合索引 手撕: 要用kmp优化，不过忘了，讲时间复杂度 反问:base北京，上海少，后端用的是go，业务是百度地图，几面 八股乱答，铁g[失望R]"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "evidence_sha256": "603fdc5873a66d33e805025ac1865231b6fc1ce87750712400b01ace456c6c9c"
+}

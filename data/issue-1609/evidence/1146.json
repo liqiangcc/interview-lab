@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1146,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1146",
+  "source_note_id": "xhs-note:68a69c46000000001c00fb1f",
+  "source_revision_id": "xhs-note:68a69c46000000001c00fb1f:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "55d0de315c2a2c13e0e1e4d325289c00b7c332afe7e14f26e698846b5ca3147a",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68a69c46000000001c00fb1f.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "b87b36437594580b25af0c6e5d5f1f8e7f22bddf",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 911,
+    "content_sha256": "3b20aa9e695b61bd75a152ba4e90b8b2df38477a421748df68ad3c022567512b",
+    "excerpt": {
+      "excerpt": "没开摄像头，但是中午12.的面试就原谅他了",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "没开摄像头，但是中午12.的面试就原谅他了 1. java线程池的参数，线程池的执行过程 2. 建立mysql索引的时候需要考虑什么，使用mysql数据库的时候可能要关注哪些数值 3. redis持久化 4. 对AI的了解，对 Milvus的了解（这两块我讲了一大堆，但是基本没追问，可能是因为都是理论知识没啥实操） 5. JVM垃圾回收的算法，CMS和G1的区别 6. 为什么要用分布式锁，什么场景会用到分布式锁 7. 项目中解决问题的过程 8. 学习新东西的方法 手撕：一个很简单的HashMap字符串拆分+数值统计+排序 反问业务：内部的AI工具搭建 结果要等测评笔试做了才知道（？？？本来想着一面挂了就不做笔试了） 后续：已挂，不用做笔试了[笑哭R]"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "evidence_sha256": "2af46a1e85d228a39aaaace65eb69522ab6e3a27bcf0cc7835602cb6a4c257da"
+}

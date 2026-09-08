@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1199",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1199,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1199",
+  "source_note_id": "xhs-note:68b01c1a000000001c00f2d2",
+  "expected_body_sha256": "99c2ae67090bc1e828e0fadb8dbfa58d4ec2089a4086213af22045a893fbd5f2",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68b01c1a000000001c00f2d2:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "blocked",
+  "rationale": "The available Source evidence does not establish a bounded interview event; retain pending.",
+  "evidence_file": "evidence/1199.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68b01c1a000000001c00f2d2.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "5f04e618ba59c66940289a21ee370a8ee4254fb0",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 442,
+    "content_sha256": "acd0ba9479638c91ddb0428ad4742a0b3f6b06213001c3eb8fb1dbd114dbf57f",
+    "excerpt": {
+      "excerpt": "在日本找Java工作，面试问题很多，而且有些问题非常容易答错。我今天整理下在日Java工程师面试中最常见的坑，以及实用回答。",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "在日本找Java工作，面试问题很多，而且有些问题非常容易答错。我今天整理下在日Java工程师面试中最常见的坑，以及实用回答。 大家自行收藏取用，编辑不宜，如果大家还有其他问题都可以问，希望问前能点个关注，谢谢。"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "The available Source evidence does not establish a bounded interview event; retain pending.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "56c038608e8becafadc8be6c3f92e19687b2c0c10407496737f6ea681eb68b07",
+  "request_sha256": "9d14765619aa54588cff8842c01fa8fe706a571ce9039b1d60c53913e47a733c"
+}

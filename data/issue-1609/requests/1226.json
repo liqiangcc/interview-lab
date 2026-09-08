@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1226",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1226,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1226",
+  "source_note_id": "xhs-note:68b416e9000000001d01dcac",
+  "expected_body_sha256": "5a8a0c208fb985818b8b7ce3a6574bd27d71de9167bbd9dedbbd820a94782ce5",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68b416e9000000001d01dcac:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "blocked",
+  "rationale": "The available Source evidence does not establish a bounded interview event; retain pending.",
+  "evidence_file": "evidence/1226.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68b416e9000000001d01dcac.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "ed9f3cd5bd7f652a06723754584c4f02f479a3d0",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 583,
+    "content_sha256": "a5e544af50ec6105f863bcacf2eef80cedbc9ead7ec28c5096a2a941afafad91",
+    "excerpt": {
+      "excerpt": "该面试来自实战场景，聚焦分布式核心痛点：追问 CAP 权衡、TCC 重试与兜底、Redis 缓存一致性等细节，还考 Kafka 消息可靠性、服务容错策略，更要求设计高 QPS 架构并补全漏洞。",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "该面试来自实战场景，聚焦分布式核心痛点：追问 CAP 权衡、TCC 重试与兜底、Redis 缓存一致性等细节，还考 Kafka 消息可靠性、服务容错策略，更要求设计高 QPS 架构并补全漏洞。 当下面试不缺中间件名词，需能讲清方案原理、量化性能损耗、应对极端故障，否则易因细节漏洞失分。"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "The available Source evidence does not establish a bounded interview event; retain pending.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "52ce5654f3a39ed825e789ae175aee5f51a40d81293ff98a9d201b464bc2c6a8",
+  "request_sha256": "b5745d56fd2eea400af23ab30d10076bc62b05d07674ff299dcca4dd41f4266c"
+}

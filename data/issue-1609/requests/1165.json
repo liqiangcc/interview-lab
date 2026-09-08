@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1165",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1165,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1165",
+  "source_note_id": "xhs-note:68a8a709000000001c00744b",
+  "expected_body_sha256": "e5e1faedb8a034752ebf777b54da34326b57930a8509573771239848b5718fcb",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68a8a709000000001c00744b:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1165.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68a8a709000000001c00744b.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "e31de34b0952635333ad527c443190f76684eb7d",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 2795,
+    "content_sha256": "2a297ea239d9fbd48009b92fd61db70a6f7173c78cb53c5000a412c50406e3df",
+    "excerpt": {
+      "excerpt": "2min",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "2min 自我介绍 15min [一R] 实习业务介绍及问答 [二R] RAG和embedding了解吗，是什么有什么作用 [中等肤色R] RAG检索增强生成，可以拓展模型上下文，缓解模型幻觉和时效问题。 [中等肤色R] embedding可以将非结构化数据（文本图片视频）转化为结构化数值向量，向量每个数值代表某个维度上的特征，以此让机器也能理解分类和检索数据。 [三R] 你是怎么学习大模型的 [中等肤色R] 论文、博客 [四R] 大模型你觉得有哪些可以落地应用的地方 [中等肤色R] AI coding、豆包形式AI应用、行业定制agent和传统互联网业务赋能。 10min [一R] 悲观锁和乐观锁概念 [中等肤色R] 是否强制加锁，区别于在进入共享资源区之前是否允许其他请求修改共享资源。 [二R] 消息队列的作用 [中等肤色R] 削峰填谷、异步化、服务解耦。 [三R] RocketMq跟Kafka区别，底层实现有什么不同 [中等肤色R] 架构相似，功能RocketMq更丰富，吞吐量KafKa更大，底层零拷贝策略不同。 [四R] kafka消息消费比RocketMq快吗，为什么 [中等肤色R] Kafka sendfile零拷贝(没有用户态和内核态之间的拷贝)，RocketMq mmap零拷贝(比sendfile多一次拷贝)。 [中等肤色R] Kafka 分区消息顺序写磁盘且可以通过分区偏移量直接从日志文件中读到数据，RocketMq队列消息都存在全局CommitLog中，只是同一队列消息有序，但在磁盘上位置可能分散，且定位消息位置需要两次寻址。 [四R] 顺序消费要注意什么 [中等肤色R] 生产者生产的消息要发送到同一个队列，指定单个消费者单线程或多线程加锁消费该队列。 15min [一R] 布隆过滤器使用场景及原理 [中等肤色R] 缓存穿透+ 哈希函数 + bitMap。 [二R] mysql的索引原理，作用 [中等肤色R] 多叉自平衡树B+树，将数据按索引字段顺序编排，查询效率更高。 [三R] B+树跟B树的区别 [中等肤色R] B+树仅叶子节点存储数据，树高度更低减少磁盘IO且查询效率稳定，叶子节点双向连接方便范围查询。 [四R] mysql的隔离性有哪些，怎么实现的 [中等肤色R] 读未提交、读已提交、可重复读和串行化，其中读已提交和可重复读通过MVCC和"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "64c0f41ebc2e82160a4c1c0890aecee643a8ddaa0b31be22123c2b7322978b48",
+  "request_sha256": "2d58d95003e7a4cbec557f05c7d3019e184b32314b63801e50737df54082f0b9"
+}

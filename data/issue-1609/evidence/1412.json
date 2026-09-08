@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1412,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1412",
+  "source_note_id": "xhs-note:68da266d000000001101db29",
+  "source_revision_id": "xhs-note:68da266d000000001101db29:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "db684c9c70944704e562a05f2af19c74e8e1485f713c9d53689682329d2be8bb",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_json/68da266d000000001101db29.json@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "a1edb3e3293f5c4abe878b2840a03a16e1f10261",
+    "kind": "json",
+    "provenance": "source_projection",
+    "byte_size": 20182,
+    "content_sha256": "a09812431afbc75441fb668ca0707e2686b138d699d543cdcf84f37f0cabcc9d",
+    "excerpt": {
+      "excerpt": "\"global\": {",
+      "line": 2,
+      "locator": "artifact-line:2",
+      "semantic_excerpt": "除了实习之外问的都是比较基础的八股，面试时间半小时左右，2轮技术，一轮线下hr 一面有手撕，二面无手撕，总结了三个有价值的问题其余都是实习和基础八股： 1. rpc框架下，负载均衡是客户端做的还是注册中心做的 2. rpc框架下，当服务端收到任务后，是一个个任务完成的还是哪种模式完成的 3. 线程池死锁如果没有对应的日志该怎么排查？"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "evidence_sha256": "ddfcca66595cfbf38e2cd7632ee2dfe5727578b3e172a4d17790ffac8f0710ae"
+}

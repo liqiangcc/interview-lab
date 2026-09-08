@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1269",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1269,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1269",
+  "source_note_id": "xhs-note:68bb06b2000000001c035764",
+  "expected_body_sha256": "efcd57ca0f535a7282606b1c15eebb71dfe2fe67d29bf6ef2384c323e2d8e851",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68bb06b2000000001c035764:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1269.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68bb06b2000000001c035764.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "8fe68c533777f260cdc22c44b9105b2e235ae756",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 1786,
+    "content_sha256": "c3cb30b0239b749dae315a19319150cdc4df80e60979a054cd51d3fd7f5b9be7",
+    "excerpt": {
+      "excerpt": "一面：",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "一面： 1、自我介绍 2、Java 的 AOP 是什么？作用是什么？主要解决什么问题？好处是什么？ 3、WebSocket 是怎样的一个协议？ 4、WebSocket 建立连接的过程采用的是什么协议？ 5、项目中如何解决多人协作过程中出现的冲突问题？ 6、协作过程中的锁逻辑是怎么实现的？ 7、HTTP 的请求信息里面有哪些内容？ 8、请求行里面有哪些具体的内容？ 9、谈谈 HTTP 请求过程中的传参方式是怎样的 10、项目中 Redis 存储了什么样的数据？用的什么数据结构？Redis 除了字符串还有哪些数据结构？ 11、缓存的 key，value 是怎么设计的？和数据库中数据的对应关系是怎样的？ 12、谈谈项目中多级缓存的设计逻辑，为什么要用多级缓存，缓存的更新逻辑是怎样的 13、谈谈什么是缓存雪崩、缓存击穿、缓存穿透以及这三种问题对应的解决方案 14、为什么 Redis 的性能会比 MySQL 高这么多？是基于什么去设计的？ 15、谈谈项目中用 MQ 来处理什么问题 16、MQ 中的消息被消费者接收了之后，如何保证消息一定会被完整处理？ 17、项目中对于消费者而言，消费逻辑的代码是怎么实现的？ 18、使用 MQ 过程中的幂等性是怎么保证的？ 19、除了项目中使用 MQ 的场景以外，MQ 还有哪些使用场景？ 20、做题：有一个单链表，反转链表中位置 left 到位置 right 的链表节点，返回反转后的链表。比如 {1, 2, 3, 4, 5}, left = 2, right = 4, 则返回链表为 {1, 4, 3, 2, 5} 21、反问"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "fb60e9357208ed91375ecc9041db294970e20c2746ea81582d1aac850451b76b",
+  "request_sha256": "247e38889c820d5f15a7af7ac562aebb1ab91fa31a4db786af37fe392af054ec"
+}

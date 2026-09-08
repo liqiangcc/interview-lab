@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1278,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1278",
+  "source_note_id": "xhs-note:68beeb59000000001d0174b0",
+  "source_revision_id": "xhs-note:68beeb59000000001d0174b0:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "55060de0ffeb9c70e6c6ba8aa225f6df442568cfd2dbc70d5d19e49e37b54ffe",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68beeb59000000001d0174b0.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "37615b2b71eec734aac6ef9951998e9a928db110",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 567,
+    "content_sha256": "69175189781b843e643b30ba78805aff5de4a00627a39fd95858500c71676777",
+    "excerpt": {
+      "excerpt": "1. 自我介绍",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "1. 自我介绍 2. 为什么考虑考虑测试开发而没有考虑开发岗位 3. 项目主要功能和设计的测试用例，基于此开始拷打项目，主要关注使用了哪些工具、哪些指标进行测试 4. 热key问题 5. java内存结构 6. 垃圾回收 7. 怎么测试自动售卖机 8. 在日志文件找到包含某个字段位置的linux命令， 实时显示怎么做呢 9. 一道简单的sql题：查找不合格的课程，从大到小排序 10. 笔试：不含有重复字符的最长字串 ， 也要设计测试用例 后续：已约2面"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "evidence_sha256": "0d3f258c6659c4d0936c3a2105491b8215802f9c6402adbdfffab1d34e8604de"
+}

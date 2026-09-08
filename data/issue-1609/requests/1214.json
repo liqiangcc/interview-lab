@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1214",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1214,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1214",
+  "source_note_id": "xhs-note:68b25819000000001d01de50",
+  "expected_body_sha256": "da4be96c667ae6a83edc481410948ff59b7c8da783e5413558ee8730ebea3d5d",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68b25819000000001d01de50:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1214.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68b25819000000001d01de50.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "fd956e6adbaa6d561c0dbb393cfb7066a3e73101",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 978,
+    "content_sha256": "1e98c2905c89dc94b0661dd0c097560a5bb45f95720d973a6557bbfba0084374",
+    "excerpt": {
+      "excerpt": "二面：",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "二面： 1、自我介绍 2、谈谈操作系统的线程和 Java 线程的关系 3、谈谈协程 4、谈谈 WebSocket 网络层面是怎么做到的？有没有用过 Netty 这种更底层的框架包？谈谈它跟网络库 Socket，WebSocket 有什么关系？ 5、谈谈什么是分布式事务 6、谈谈分布式事务有哪些范式？ 7、谈谈有哪些常见的限流算法？ 8、滑动窗口相对于固定窗口而言，为什么要滑动？主要解决什么问题？ 9、谈谈 Java 的 synchronized 关键字，它是什么含义，什么场景使用，有什么特点？ 10、synchronized 和 CAS 的区别？ 11、浅谈实习做的工作 12、做题：将两个有序的链表合成一个升序的链表，写两个函数，分别实现递归和非递归的方法 13、反问"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "b9d88f38c65fac7aed1ec2cc439fefc50d6a2c48ebe07b6027cff24ca129b3db",
+  "request_sha256": "ed0756faf34740b65b4fc37794684712d93696d0426ad157a93775f6cc85b64e"
+}

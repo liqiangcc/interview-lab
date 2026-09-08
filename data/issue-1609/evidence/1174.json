@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1174,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1174",
+  "source_note_id": "xhs-note:68ac1ae1000000001b03d139",
+  "source_revision_id": "xhs-note:68ac1ae1000000001b03d139:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "a0a2962563c9838f9c83faa35129741bb9785ad7c67726770899320b83bb9df1",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68ac1ae1000000001b03d139.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "c104c5443cdcff919989d5adcb6a4066d75c3fda",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 755,
+    "content_sha256": "db63eb09c78220b7e02069e8a40b4d4f6448e47fc09859e1271a6683773f802a",
+    "excerpt": {
+      "excerpt": "滴滴国际化一面",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "滴滴国际化一面 自我介绍 项目拷打 Redis数据结构 Redis单线程与为什么升级成了多线程 redis大key解决方法 场景题：线上环境下怎么实现无感知的将redis的数据结构切换 redis数据一致性问题 MySQL数据结构 回表与索引覆盖 MySQL几个日志和作用 怎么保证消息顺序一致性 kafka怎么解决消息堆积 MySQL事务超时怎么解决 slice底层原理，拷贝方法 操作数据库与第三方系统两者的数据一致性如何保证 linux查看端口的命令 算法lru 面试体验很好，但是给的压力很大，经常时不时提一些场景或者实际业务遇到的问题[失望R]，然后回答不上来，虽然面试官说没关系但是感觉还是悬了[失望R]"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "evidence_sha256": "ff1f6af543a6513c82d7b12faaa6bb944b2ddc1f8e7a060e43d033224802c08a"
+}

@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1330",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1330,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1330",
+  "source_note_id": "xhs-note:68c926620000000013029638",
+  "expected_body_sha256": "9d14dd1da048b5a88cca203066281d1922f4a6bce4b21e2c82042b30bffdf43e",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68c926620000000013029638:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1330.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68c926620000000013029638.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "4ab4add2ca056736a78c7b2ef44f437ddae80a43",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 835,
+    "content_sha256": "3b11167af8dca7fcd93a3a8daabf149d4fbaf526dd99c04ec7ed879482193321",
+    "excerpt": {
+      "excerpt": "1. java常见的集合，以及底层实现",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "1. java常见的集合，以及底层实现 2. HashMap的扩容过程 3. 讲一下JVM的垃圾回收机制 4. 介绍TreadLocal类，什么场景需要使用TreadLocal类？ 5. 介绍volatile关键字 6. 指定重排序的话什么场景会出现问题？ 7. 什么场景需要使用volatile关键字？ 8. 讲一下MySQL的索引 9. 怎么建索引，是怎么考虑的呢？ 10. 加联合索引的时候有什么需要注意的呢？ 11. 手撕：螺旋矩阵II 20min 反问： 1. 部门业务 2. 对我的表现有什么建议"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "bea8f9034577317ce04a7a2fb6a9c28f975eda429f78e918dee12ce726b31ec7",
+  "request_sha256": "4c963108a59662c21adbc821cf552c5ebf95b911104bd9aee6379811dc5e4c2f"
+}

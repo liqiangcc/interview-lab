@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1142,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1142",
+  "source_note_id": "xhs-note:68a5bb7f000000001c035371",
+  "source_revision_id": "xhs-note:68a5bb7f000000001c035371:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "03b35dc12381efeadd9024f7dc3b7e4001cebc211d95ceb885f17fb9c16eff9b",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68a5bb7f000000001c035371.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "17912939a69970df8a6b1a6c0f776c34d413eaeb",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 196,
+    "content_sha256": "3f95661f0348c3cee4683c638bc137cb34c173d4ead599d7b2d8559dc7e5dae7",
+    "excerpt": {
+      "excerpt": "百度整体感受挺好的，虽然背的八股不够多，导致肯定挂了，但是面试官人很好，背过的八股也感受到确实记住了，也许可以就这样慢慢好起来吧。",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "百度整体感受挺好的，虽然背的八股不够多，导致肯定挂了，但是面试官人很好，背过的八股也感受到确实记住了，也许可以就这样慢慢好起来吧。"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "evidence_sha256": "166018c195fe8e8fa9e79005ffb799302c32cc5a1c544f1dbb44d0a8bd58a58b"
+}

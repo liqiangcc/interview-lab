@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1222,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1222",
+  "source_note_id": "xhs-note:68b2c9d0000000001d03b977",
+  "source_revision_id": "xhs-note:68b2c9d0000000001d03b977:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "f1b0fa86445e8610c98a94f3d3274aa17297c44bd3620d1fc0e210d3097dd1ec",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68b2c9d0000000001d03b977.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "e1e2e37da480e25a1101de9acf37dd4a7e95ef72",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 844,
+    "content_sha256": "756225f8376048e8476f4103199244ac53a0048b42afb3c4b661ffce5d6f67ae",
+    "excerpt": {
+      "excerpt": "1.深挖项目，秒杀场景、存储一致性、异常处理。",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "1.深挖项目，秒杀场景、存储一致性、异常处理。 2.线程池种类和参数。 3.什么场景下会创建非核心线程。 4.使用过什么集合。 5.ArrayList初始容量、扩容条件、扩容倍数。 6.MySQL的锁。 7.RocketMQ和Kafka选型，底层原理：容错和高可用机制、推拉模式、零拷贝等。 8.redis缓存键值设置。 9.红黑树和AVL树区别、优缺点。 10.MySQL的ACID如何实现、日志都有什么作用、如果insert语句执行时宕机了会有几种可能发生的情况。 11.Zset设计一个销量排行榜、延伸排行榜大key问题、延伸大数据量下top100如何实现。 总计50分钟，无手撕，大部分问项目八股较少。"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "evidence_sha256": "408c19b407eef570d77a76b7a2a2d65a4da922b3d378c0a97b36071ff5fe98cd"
+}

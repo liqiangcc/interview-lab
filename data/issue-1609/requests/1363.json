@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1363",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1363,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1363",
+  "source_note_id": "xhs-note:68ced1a80000000011015ae0",
+  "expected_body_sha256": "f99f291c7d00749812fb0dcbb1d4a97af551add3b390228364cc91768862a7f3",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68ced1a80000000011015ae0:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1363.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_json/68ced1a80000000011015ae0.json@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "1b51cccecac108687ac47dcca3d437d638c15897",
+    "kind": "json",
+    "provenance": "source_projection",
+    "byte_size": 23665,
+    "content_sha256": "9eaed5d3919aa72ae5b1078a238e009fe542c46739a0b6615194f3e433d11e6c",
+    "excerpt": {
+      "excerpt": "\"global\": {",
+      "line": 2,
+      "locator": "artifact-line:2",
+      "semantic_excerpt": "1.图文上传流程 2.如何解决图片上传的负载 3.不同文件预览的挑战 4.讲一下自定义hook 5.讲一下Vue2 和vue3 的差异 6.vue3解决了vue2的什么问题 7.react对比vue的差异 8.了解性能优化，在网络层面讲一下优化 9.301 和 302区别 10.浏览器缓存的策略 11.具体是怎么触发缓存 12.css的动画中，给一个元素写一个动画，又给它绑定了js点击事件，会生效吗 13.反过来，js的代码会不会影响css 14.盒子模型，width:100 padding:100 宽度是多少 手撕： 对于一个数组（长度>=3）进行乱序排序，要求每个元素不会落到原来位置，且落到其他位置的概率相同： function derangementShuffle(arr) { const n = arr.length; // 复制数组，防止修改原数组 const shuffledArr = [...arr]; // 1. 使用 Fisher-Yates 洗牌算法进行初步打乱 for (let i = n - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [shuffledArr[i], shuffledArr[j]] = [shuffledArr[j], shuffledArr[i]]; } // 2. 检查并纠正还在原位的元素 for (let i = 0; i < n; i++) { // 如果当前元素还在原位，需要进行交换 if (shuffledArr[i] === arr[i]) { let j = (i + 1) % n; // 从下一个位置开始找 // 找到一个可以交换的元素 while (shuffledArr[j] === arr[j] && j !== i) { j = (j + 1) % n; } // 进行交换 [shuffledArr[i], shuffledArr[j]] = [shuffledArr[j], shuffledArr[i]]; } } return shuffledArr; } // 示例 const originalArr = [1, 2, 3, 4, 5]; const derangedArr = derangementShuff"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "bafaff9a73fdb7a03019e320556180f5f2a736d21161ea0d9753f7945e70234e",
+  "request_sha256": "3ec56145fac4f24fb647b031a129f073dd91dca64260973a4ca166eb8bc4f191"
+}

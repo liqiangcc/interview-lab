@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1229",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1229,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1229",
+  "source_note_id": "xhs-note:68b504e6000000001d014514",
+  "expected_body_sha256": "0968da62d29d24035cc084ed8f0368deda73f2961c3e13d7183cd6a98bc99f48",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68b504e6000000001d014514:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "blocked",
+  "rationale": "The available Source evidence does not establish a bounded interview event; retain pending.",
+  "evidence_file": "evidence/1229.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68b504e6000000001d014514.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "341c4b884a6ca4a3671ffeda3eea6ef9a088d104",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 383,
+    "content_sha256": "5b6dd250c979c3900eab35ba1e20c0035165daa20e5c7a5f35a9e0d0dd5d8d64",
+    "excerpt": {
+      "excerpt": "第一次Java正式面试。",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "第一次Java正式面试。 问了： 1有没有用linux部署。 2，SQL关联查询语句，我知道怎么查，但是都是用到的时候去查语句，所以这次面试挂了。 3，怎么回滚MySQL 4，怎么操作MySQL 接下来手搓SQL语句，刻在DNA里😀继续加油"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "The available Source evidence does not establish a bounded interview event; retain pending.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "de03a484494936608a7515f1727bbb12ca970d04ff9279c00c79d1fd34d77335",
+  "request_sha256": "558e8c51303e9a9a9f2645b02d0aa6df23f56d038fa561ad230eeb543aa78646"
+}

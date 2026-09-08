@@ -1,0 +1,69 @@
+{
+  "schema_version": "issue-1609-boundary-review-request.v1",
+  "request_id": "issue-1609-boundary-1337",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "issue_number": 1337,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1337",
+  "source_note_id": "xhs-note:68c957a4000000000e026ec4",
+  "expected_body_sha256": "39549123438bc53a374483c4bd2f4cccb33c91a50c4cad73de0f94068d090893",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:68c957a4000000000e026ec4:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "evidence_file": "evidence/1337.json",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68c957a4000000000e026ec4.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "2054d9591f30703df7da1587a20b81b2a010a5fa",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 1092,
+    "content_sha256": "9759e4c1d22a8dfff30550087a36e3df3767c6dc9d854cd6e8e30a3e42f9ef42",
+    "excerpt": {
+      "excerpt": "滴滴一面",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "滴滴一面 1.自我介绍 2.场景提问 3.介绍实习项目，具体干的啥 4.实习项目中遇到bug你怎么排查的怎么测试的 5.用没用过自动化测试工具，请你说一下他们的具体作用和使用场景 6.为什么选择测开你有什么优势 7.如果遇到一个bug你和后端沟通他不认为这是个bug怎么办 8.白和黑盒测试 9.介绍一下白盒测试的具体怎么设计测试用例请你举例 10.滴滴现在有一个业务比如乘客发送订单司机接单后司机取消订单了 给乘客一个反馈这个场景怎么设计测试用例。 11.代码题手撕 给定正整数数组nums和整数k请返回数组第k个最大的元素 12.反问题如何评价和自我提升，多看一些自动化相关的测试和应用场景比如幂等和高并发。 全是场景题没有八股 中间有些忘了"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Candidate only: no live evidence comment, body PATCH, label write, or InterviewNote materialization was performed."
+  ],
+  "evidence_sha256": "413b5b4307d6be5721ca64347ba228c22d536ba8129ecaf118efb0ac533faa9a",
+  "request_sha256": "3eeb47462b6f8350ea5b2637bef29066a9ae06563e85631e4a89361bc4165a18"
+}

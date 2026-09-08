@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1300,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1300",
+  "source_note_id": "xhs-note:68c2f9a8000000001d02803d",
+  "source_revision_id": "xhs-note:68c2f9a8000000001d02803d:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "fa461a7ee225c50d5190a12b524361da5c0ced9c1071bc1e38b7c7b618f672b0",
+  "disposition": "single-interview",
+  "rationale": "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68c2f9a8000000001d02803d.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "44a8cbea4a4e0c4fb31cd5c99e141a776fa76a96",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 990,
+    "content_sha256": "2f4d0e83b6c457bf92332f85066b68aa1efd7755358547ea4c94398df33dca8e",
+    "excerpt": {
+      "excerpt": "csig，一个小时后已过，大概率聊了二十几分钟，主要围绕做过的东西",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "csig，一个小时后已过，大概率聊了二十几分钟，主要围绕做过的东西 1.介绍项目 2.echarts和three.js的实现原理是什么？实现echarts之类的数据可视化功能，除了canvas还有什么？ 3.项目中大模型相关的SSE是怎么做的？ 4.Websocket中1xx相关的状态码代表什么意思 5.tailwind和其他样式方案的区别 6.缓存和懒加载是怎么实现的？不使用lazy这个属性来实现懒加载，怎么做？控制缓存的http头有哪些 7.事件循环机制，nodejs和浏览器环境的有什么区别 8.路由的实现有什么方案，react router是如何实现的？history方案是基于哪些api，hash方案的监听是基于哪个api 9.手撕：节流，分割银行卡号；判断是否为对称二叉树"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source evidence records one bounded interview report; multiple rounds in the same process remain one case.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "evidence_sha256": "170de46266100a1aecf132874ef4ea660bc7295b25e97574fe3d7ac4dcd0678c"
+}
