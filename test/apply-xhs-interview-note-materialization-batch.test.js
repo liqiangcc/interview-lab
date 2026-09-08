@@ -8,6 +8,7 @@ const assert = require('node:assert/strict');
 const {
   requestSha256,
   sha256Text,
+  canonicalJson,
   buildInterviewProjection,
 } = require('../scripts/lib/source-note-interview-materialization');
 const { parseSourceNoteIssue } = require('../scripts/lib/source-note-issue');
@@ -45,7 +46,7 @@ function report() {
     counts: { 'would-materialize': 1 },
     results: [{ action: 'would-materialize', request: { materialization_id: 'm-1' } }],
   };
-  return { ...value, dry_run_sha256: sha256Text(JSON.stringify(value)) };
+  return { ...value, dry_run_sha256: sha256Text(canonicalJson(value)) };
 }
 
 test('authorization preflight requires exact digest, ready flag, and row/count agreement', () => {
@@ -57,7 +58,7 @@ test('authorization preflight requires exact digest, ready flag, and row/count a
   assert.throws(() => readAuthorizedReport(file, '0'.repeat(64)), /authorization digest/);
   const notReady = { ...value, ready_for_apply: false };
   const { dry_run_sha256: ignored, ...withoutDigest } = notReady;
-  const changed = { ...notReady, dry_run_sha256: sha256Text(JSON.stringify(withoutDigest)) };
+  const changed = { ...notReady, dry_run_sha256: sha256Text(canonicalJson(withoutDigest)) };
   fs.writeFileSync(file, JSON.stringify(changed));
   assert.throws(() => readAuthorizedReport(file, changed.dry_run_sha256), /ready_for_apply/);
 });

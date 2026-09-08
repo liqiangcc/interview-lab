@@ -10,7 +10,7 @@ const {
 } = require('./lib/interview-note-materialization-batch');
 const { parseMaterializationReceipts, findOwnershipMatches } = require('./lib/source-note-interview-materialization');
 const { exactOwnershipCandidates, ownershipSearchEndpoint, createSearchThrottle } = require('./lib/interview-note-ownership-search');
-const { sha256Text } = require('./lib/source-note-interview-materialization');
+const { sha256Text, canonicalJson } = require('./lib/source-note-interview-materialization');
 
 function ghItems(endpoint) {
   let lastError;
@@ -275,7 +275,7 @@ function main(argv = process.argv.slice(2)) {
       ready_for_apply: offline ? false : report.ready_for_apply,
       mutation_performed: false,
     };
-    const safeReport = { ...reportWithoutDigest, dry_run_sha256: sha256Text(JSON.stringify(reportWithoutDigest)) };
+    const safeReport = { ...reportWithoutDigest, dry_run_sha256: sha256Text(canonicalJson(reportWithoutDigest)) };
     if (args.report) atomicWrite(args.report, safeReport);
     if (progressFile) atomicWrite(progressFile, { schema_version: 'source-note-interview-materialization-dry-run-progress.v1', status: 'complete', stage: 'complete', identity: null, repository: args.repository, report: args.report, search_pause_ms: args.searchPauseMs, completed_identities: JSON.parse(fs.readFileSync(progressFile, 'utf8')).completed_identities, dry_run_sha256: safeReport.dry_run_sha256, updated_at: new Date().toISOString() });
     process.stdout.write(`${JSON.stringify(safeReport, null, 2)}\n`);
