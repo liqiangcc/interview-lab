@@ -11,6 +11,8 @@ const {
   canonicalJson,
   sha256Text,
   planIssue1605Materialization,
+  validateBoundaryManifest,
+  validateLiveBoundaryEvidenceComment,
 } = require('../scripts/lib/issue-1605-materialization-plan');
 const { parseArgs } = require('../scripts/plan-issue-1605-interview-note-materialization');
 
@@ -83,6 +85,7 @@ function plan(reports, sourceIssues, ownershipIssues = [], options = {}) {
     ownershipIssues,
     ownershipErrors: options.ownershipErrors || new Map(),
     receiptsBySourceIssue: options.receiptsBySourceIssue || new Map(),
+    requireCompleteScope: options.requireCompleteScope ?? false,
     sourceSnapshot: { mode: 'test', count: sourceIssues.length },
     ownershipSnapshot: { mode: 'test' },
   });
@@ -183,4 +186,79 @@ test('fails closed on a tampered boundary report digest and identity claim', () 
 
 test('CLI rejects apply-shaped arguments before any input read', () => {
   assert.throws(() => parseArgs(['--boundary-report', 'fixture.json', '--apply']), /plan-only and never PATCHes or POSTs/);
+});
+
+test('complete boundary scope is mandatory for the production planner', () => {
+  const source = makeSourceIssue(918, 'pending');
+  const report = makeReport([item(source, 'blocked', 'not-applied', [])]);
+  const output = planIssue1605Materialization({
+    boundaryReports: [report],
+    sourceIssues: [source],
+    requireCompleteScope: true,
+  });
+  assert.equal(output.ok, false);
+  assert.ok(output.errors.some((error) => /complete 419-row boundary authorization manifest is required/.test(error)));
+  assert.equal(output.results[0].action, 'blocked');
+  assert.equal(output.results[0].reason_code, 'planner-input-invalid');
+  assert.equal(output.mutation_performed, false);
+});
+
+test('partial or retargeted boundary manifest fails closed', () => {
+  const manifest = {
+    schema_version: 'source-note-boundary-review-batch.v1',
+    repository: 'liqiangcc/interview-lab',
+    parent_issue: 1605,
+    source_snapshot: { repository: 'liqiangcc/xhs', ref: '95b77bb261048059846273688e4b90a2e108b437' },
+    plan_digest: '0'.repeat(64),
+    items: [{ issue_number: 918, transition_id: 'wrong-transition', request_file: 'request.json' }],
+    canonical_digest: '0'.repeat(64),
+  };
+  const validation = validateBoundaryManifest(manifest);
+  assert.equal(validation.ok, false);
+  assert.ok(validation.errors.some((error) => /exactly 419 candidate rows/.test(error)));
+  assert.ok(validation.errors.some((error) => /plan_digest/.test(error)));
+  assert.ok(validation.errors.some((error) => /canonical_digest/.test(error)));
+});
+
+test('transition-applied candidates require an exact, live-bound evidence comment', () => {
+  const source = makeSourceIssue(919, 'single-interview');
+  const parsed = parseSourceNoteIssue(source.body).record;
+  const expected = {
+    source_note_issue_number: source.number,
+    source_note_id: parsed.source_note_id,
+    source_note_body_sha256: sha256Text(source.body),
+    source_revision_id: parsed.source_revision.id,
+    decision: 'single-interview',
+    transition_id: 'fixture-transition-919',
+    evidence_comment_id: 5579991919,
+  };
+  const payload = {
+    schema_version: 'source-note-boundary-review-evidence.v1',
+    transition_id: expected.transition_id,
+    repository: 'liqiangcc/interview-lab',
+    parent_issue: 1605,
+    issue_number: source.number,
+    source_note_id: expected.source_note_id,
+    expected_body_sha256: expected.source_note_body_sha256,
+    expected_source_revision_id: expected.source_revision_id,
+    expected_source_repository_ref: '95b77bb261048059846273688e4b90a2e108b437',
+    decision: expected.decision,
+    checks: ['source_identity', 'source_revision_binding', 'source_content_coverage', 'event_boundary', 'no_cross_source_mixing', 'no_fabrication'].map((check_id) => ({ check_id, result: 'pass' })),
+  };
+  const comment = {
+    id: expected.evidence_comment_id,
+    issue_url: `https://api.github.com/repos/liqiangcc/interview-lab/issues/${source.number}`,
+    body: `<!-- source-note-boundary-review-evidence\n${JSON.stringify(payload)}\n-->`,
+  };
+  assert.equal(validateLiveBoundaryEvidenceComment(comment, expected, source).ok, true);
+  for (const mutate of [
+    (value) => ({ ...value, id: value.id + 1 }),
+    (value) => ({ ...value, issue_url: 'https://api.github.com/repos/other/repo/issues/919' }),
+    (value) => ({ ...value, body: value.body.replace('source-note-boundary-review-evidence', 'source-note-boundary-review-transition') }),
+  ]) {
+    assert.equal(validateLiveBoundaryEvidenceComment(mutate(comment), expected, source).ok, false);
+  }
+  const wrongPayload = { ...payload, decision: 'not-interview' };
+  const wrongComment = { ...comment, body: `<!-- source-note-boundary-review-evidence\n${JSON.stringify(wrongPayload)}\n-->` };
+  assert.equal(validateLiveBoundaryEvidenceComment(wrongComment, expected, source).ok, false);
 });

@@ -70,6 +70,8 @@ function parseArgs(argv = process.argv.slice(2)) {
   const args = {
     repository: process.env.GITHUB_REPOSITORY || DEFAULT_REPOSITORY,
     boundaryReports: [],
+    boundaryManifest: null,
+    boundaryEvidenceFile: null,
     sourceNotesFile: null,
     ownershipFile: null,
     receiptsFile: null,
@@ -79,6 +81,8 @@ function parseArgs(argv = process.argv.slice(2)) {
   for (let index = 0; index < argv.length; index += 1) {
     const arg = argv[index];
     if (arg === '--boundary-report') args.boundaryReports.push(argv[++index]);
+    else if (arg === '--boundary-manifest') args.boundaryManifest = argv[++index];
+    else if (arg === '--boundary-evidence-file') args.boundaryEvidenceFile = argv[++index];
     else if (arg === '--source-notes-file') args.sourceNotesFile = argv[++index];
     else if (arg === '--ownership-file') args.ownershipFile = argv[++index];
     else if (arg === '--receipts-file') args.receiptsFile = argv[++index];
@@ -91,9 +95,52 @@ function parseArgs(argv = process.argv.slice(2)) {
   }
   if (!/^[^/]+\/[^/]+$/.test(String(args.repository || ''))) throw new Error('--repository must be owner/repo');
   if (!args.boundaryReports.length) throw new Error('at least one --boundary-report is required');
+  if (!args.boundaryManifest) throw new Error('--boundary-manifest is required: materialization cannot run from a partial boundary report');
   if (args.boundaryReports.some((file) => !file)) throw new Error('--boundary-report requires a file path');
   if (!Number.isInteger(args.searchPauseMs) || args.searchPauseMs < 2100) throw new Error('--search-pause-ms must be an integer >= 2100');
   return args;
+}
+
+function commentsByIssue(comments) {
+  const result = new Map();
+  for (const comment of comments || []) {
+    const urlNumber = String(comment && comment.issue_url || '').match(/\/issues\/(\d+)$/);
+    const number = Number(comment && (comment.issue_number || comment.source_note_issue_number || urlNumber && urlNumber[1]));
+    if (!Number.isInteger(number) || number < 1) continue;
+    if (!result.has(number)) result.set(number, []);
+    result.get(number).push(comment);
+  }
+  return result;
+}
+
+function loadBoundaryEvidenceFile(file, repository) {
+  const value = readJson(file);
+  if (Array.isArray(value)) return { comments: commentsByIssue(value), snapshot: { mode: 'controlled-offline-live-evidence-snapshot', file: path.resolve(file), count: value.length } };
+  if (!value || typeof value !== 'object' || Array.isArray(value.comments) === false) throw new Error(`${file} must contain comments[]`);
+  if (value.repository && value.repository !== repository) throw new Error(`${file} repository does not match ${repository}`);
+  return { comments: commentsByIssue(value.comments), snapshot: { mode: 'controlled-offline-live-evidence-snapshot', file: path.resolve(file), count: value.comments.length, digest: value.comments_sha256 || null } };
+}
+
+function ghPagedComments(repository, number) {
+  const comments = [];
+  for (let page = 1; page <= 100; page += 1) {
+    const batch = ghJson(['api', `repos/${repository}/issues/${number}/comments?per_page=100&page=${page}`]);
+    if (!Array.isArray(batch)) throw new Error(`GitHub comments endpoint returned a non-array page for Issue #${number}`);
+    comments.push(...batch);
+    if (batch.length < 100) return comments;
+  }
+  throw new Error(`GitHub comments pagination exceeded 100 pages for Issue #${number}`);
+}
+
+function loadLiveBoundaryEvidence(repository, reports) {
+  const result = new Map();
+  const numbers = new Set();
+  for (const report of reports || []) for (const item of report.items || []) {
+    const status = item.transition_status || item.status || item.receipt_state;
+    if (['already_applied', 'applied'].includes(status)) numbers.add(Number(item.source_note_issue_number || item.issue_number));
+  }
+  for (const number of [...numbers].sort((a, b) => a - b)) result.set(number, ghPagedComments(repository, number));
+  return { comments: result, snapshot: { mode: 'github-live-read', candidate_issue_count: numbers.size, comments_loaded: [...result.values()].reduce((total, comments) => total + comments.length, 0) } };
 }
 
 function loadSourceIssues(repository, file) {
@@ -184,6 +231,7 @@ function atomicWrite(file, value) {
 function main(argv = process.argv.slice(2)) {
   const args = parseArgs(argv);
   const boundaryReports = args.boundaryReports.map(readJson);
+  const boundaryManifest = readJson(args.boundaryManifest);
   const source = loadSourceIssues(args.repository, args.sourceNotesFile);
   const ownershipOffline = loadOwnershipFile(args.ownershipFile, args.repository);
   const identities = plannedIdentities(boundaryReports, source.issues);
@@ -191,9 +239,15 @@ function main(argv = process.argv.slice(2)) {
     ? { issues: ownershipOffline.issues, errors: new Map(), proof: ownershipOffline.proof }
     : loadLiveOwnership(args.repository, identities, args.searchPauseMs);
   const receipts = loadReceipts(args.receiptsFile);
+  const evidenceOffline = args.boundaryEvidenceFile ? loadBoundaryEvidenceFile(args.boundaryEvidenceFile, args.repository) : null;
+  const evidence = evidenceOffline || loadLiveBoundaryEvidence(args.repository, boundaryReports);
   const report = planIssue1605Materialization({
     repository: args.repository,
     boundaryReports,
+    boundaryManifest,
+    boundaryEvidenceComments: evidence.comments,
+    boundaryEvidenceSnapshot: evidence.snapshot,
+    requireCompleteScope: true,
     sourceIssues: source.issues,
     ownershipIssues: ownership.issues,
     receiptsBySourceIssue: receipts,

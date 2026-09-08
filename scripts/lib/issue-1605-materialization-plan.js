@@ -18,6 +18,7 @@ const {
 
 const SCHEMA_VERSION = 'issue-1605-interview-note-materialization-plan.v1';
 const BOUNDARY_REPORT_SCHEMA = 'issue-1605-boundary-transition-report.v1';
+const BOUNDARY_MANIFEST_SCHEMA = 'source-note-boundary-review-batch.v1';
 const SUPPORTED_BOUNDARY_REPORT_SCHEMAS = new Set([
   BOUNDARY_REPORT_SCHEMA,
   'source-note-boundary-review-batch.v1',
@@ -28,6 +29,10 @@ const SUPPORTED_BOUNDARY_REPORT_SCHEMAS = new Set([
 ]);
 const SOURCE_REPOSITORY = 'liqiangcc/xhs';
 const SOURCE_REF = '95b77bb261048059846273688e4b90a2e108b437';
+const BOUNDARY_MANIFEST_PLAN_DIGEST = 'ad3e3974c21415e2371b8fe77a2ae54b65dd7783516ed6a68ef61bb070877781';
+const BOUNDARY_MANIFEST_CANONICAL_DIGEST = '40fd63cccea624a567778f5c679a9e0e77b0784181de4d54cacad9873ae6c97a';
+const BOUNDARY_MANIFEST_CANDIDATE_COUNT = 419;
+const BOUNDARY_EVIDENCE_MARKER = 'source-note-boundary-review-evidence';
 const HEX64 = /^[0-9a-f]{64}$/;
 
 function nonEmpty(value) {
@@ -57,6 +62,100 @@ function reportDigest(report) {
   return { ok: true, field, expected: report[field], actual: sha256Text(canonicalJson(copy)) };
 }
 
+function boundaryManifestDigest(manifest) {
+  const copy = { ...manifest };
+  delete copy.canonical_digest;
+  return sha256Text(canonicalJson(copy));
+}
+
+function validateBoundaryManifest(manifest) {
+  const errors = [];
+  if (!manifest || typeof manifest !== 'object' || Array.isArray(manifest)) return { ok: false, errors: ['complete boundary authorization manifest is required'] };
+  if (manifest.schema_version !== BOUNDARY_MANIFEST_SCHEMA) errors.push(`boundary authorization manifest schema must be ${BOUNDARY_MANIFEST_SCHEMA}`);
+  if (manifest.repository !== 'liqiangcc/interview-lab') errors.push('boundary authorization manifest repository must be liqiangcc/interview-lab');
+  if (manifest.parent_issue !== 1605) errors.push('boundary authorization manifest parent_issue must be 1605');
+  if (manifest.source_snapshot?.repository !== SOURCE_REPOSITORY || manifest.source_snapshot?.ref !== SOURCE_REF) errors.push('boundary authorization manifest source snapshot is not pinned to the fixed source');
+  if (manifest.plan_digest !== BOUNDARY_MANIFEST_PLAN_DIGEST) errors.push(`boundary authorization manifest plan_digest must be ${BOUNDARY_MANIFEST_PLAN_DIGEST}`);
+  if (!Array.isArray(manifest.items) || manifest.items.length !== BOUNDARY_MANIFEST_CANDIDATE_COUNT) errors.push(`boundary authorization manifest must contain exactly ${BOUNDARY_MANIFEST_CANDIDATE_COUNT} candidate rows`);
+  if (manifest.canonical_digest !== BOUNDARY_MANIFEST_CANONICAL_DIGEST) errors.push(`boundary authorization manifest canonical_digest must be ${BOUNDARY_MANIFEST_CANONICAL_DIGEST}`);
+  else if (boundaryManifestDigest(manifest) !== manifest.canonical_digest) errors.push('boundary authorization manifest canonical_digest does not match canonical content');
+  const issues = new Set();
+  const transitions = new Set();
+  for (const [index, item] of (manifest.items || []).entries()) {
+    const issue = Number(item && item.issue_number);
+    if (!Number.isSafeInteger(issue) || issue < 1) errors.push(`boundary authorization manifest item ${index} has invalid issue_number`);
+    if (issues.has(issue)) errors.push(`boundary authorization manifest contains duplicate Issue #${issue}`);
+    issues.add(issue);
+    if (!nonEmpty(item && item.transition_id)) errors.push(`boundary authorization manifest item ${index} has no transition_id`);
+    if (transitions.has(item && item.transition_id)) errors.push(`boundary authorization manifest contains duplicate transition_id ${item.transition_id}`);
+    transitions.add(item && item.transition_id);
+    if (!nonEmpty(item && item.request_file)) errors.push(`boundary authorization manifest item ${index} has no request_file`);
+  }
+  return { ok: errors.length === 0, errors, issues, transitions, digest: manifest && manifest.canonical_digest || null };
+}
+
+function validateCompleteReportScope(reportItems, manifest) {
+  const errors = [];
+  const expected = new Map((manifest.items || []).map((item) => [Number(item.issue_number), item.transition_id]));
+  const seen = new Set();
+  for (const item of reportItems) {
+    const issue = Number(item.source_note_issue_number);
+    if (seen.has(issue)) continue;
+    seen.add(issue);
+    if (!expected.has(issue)) errors.push(`boundary transition report contains Issue #${issue} outside the authorized 419-row manifest`);
+    else if (expected.get(issue) !== item.transition_id) errors.push(`Issue #${issue} transition_id is not the authorized manifest transition`);
+  }
+  for (const [issue, transition] of expected.entries()) {
+    const item = reportItems.find((candidate) => Number(candidate.source_note_issue_number) === issue);
+    if (!item) errors.push(`boundary transition report is partial: authorized Issue #${issue} (${transition}) is missing`);
+  }
+  if (reportItems.length !== BOUNDARY_MANIFEST_CANDIDATE_COUNT) errors.push(`boundary transition report must contain exactly ${BOUNDARY_MANIFEST_CANDIDATE_COUNT} authorized candidate rows`);
+  return { ok: errors.length === 0, errors };
+}
+
+function evidenceMarkerValues(body) {
+  const matches = [...String(body || '').matchAll(new RegExp(`<!-- ${BOUNDARY_EVIDENCE_MARKER}\\n([\\s\\S]*?)\\n-->`, 'g'))];
+  const errors = [];
+  if (matches.length !== 1) return { values: [], errors: [`comment must contain exactly one exact ${BOUNDARY_EVIDENCE_MARKER} machine marker`] };
+  try { return { values: [JSON.parse(matches[0][1])], errors }; }
+  catch (error) { return { values: [], errors: [`${BOUNDARY_EVIDENCE_MARKER} marker must contain valid JSON: ${error.message}`] }; }
+}
+
+function validateLiveBoundaryEvidenceComment(comment, expected, sourceIssue) {
+  const errors = [];
+  const issueNumber = Number(expected && expected.source_note_issue_number);
+  const expectedCommentId = Number(expected && expected.evidence_comment_id);
+  if (!Number.isSafeInteger(expectedCommentId) || expectedCommentId < 1) errors.push(`SourceNote #${issueNumber} transition-applied candidate has no evidence comment id`);
+  if (Number(comment && (comment.id || comment.comment_id)) !== expectedCommentId) errors.push(`SourceNote #${issueNumber} live evidence comment id is not ${expectedCommentId}`);
+  const expectedApiUrl = `https://api.github.com/repos/liqiangcc/interview-lab/issues/${issueNumber}`;
+  if (comment && comment.issue_url !== expectedApiUrl) errors.push(`SourceNote #${issueNumber} evidence comment issue_url is not bound to the exact repository/issue`);
+  const marker = evidenceMarkerValues(comment && comment.body);
+  errors.push(...marker.errors);
+  const value = marker.values[0];
+  if (!value) return { ok: false, errors, value: null };
+  const equal = (field, actual, wanted) => { if (actual !== wanted) errors.push(`SourceNote #${issueNumber} evidence ${field} binding mismatch`); };
+  equal('schema_version', value.schema_version, 'source-note-boundary-review-evidence.v1');
+  equal('repository', value.repository, 'liqiangcc/interview-lab');
+  equal('parent_issue', value.parent_issue, 1605);
+  equal('issue_number', value.issue_number, issueNumber);
+  equal('transition_id', value.transition_id, expected.transition_id);
+  equal('source_note_id', value.source_note_id, expected.source_note_id);
+  const liveParsed = issueSourceRecord(sourceIssue).parsed;
+  const liveRevision = liveParsed && liveParsed.source_revision && liveParsed.source_revision.id;
+  equal('expected_body_sha256', value.expected_body_sha256, expected.evidence_body_sha256 || expected.source_note_body_sha256);
+  equal('expected_source_revision_id', value.expected_source_revision_id, liveRevision);
+  equal('expected_source_revision_id/report', value.expected_source_revision_id, expected.source_revision_id);
+  equal('expected_source_repository_ref', value.expected_source_repository_ref, SOURCE_REF);
+  equal('decision', value.decision, expected.decision);
+  if (liveParsed && liveParsed.boundary_review) equal('decision/live', value.decision, liveParsed.boundary_review.status);
+  if (!Array.isArray(value.checks) || value.checks.length === 0) errors.push(`SourceNote #${issueNumber} evidence checks are missing`);
+  else for (const checkId of ['source_identity', 'source_revision_binding', 'source_content_coverage', 'event_boundary', 'no_cross_source_mixing', 'no_fabrication']) {
+    const check = value.checks.find((candidate) => candidate && candidate.check_id === checkId);
+    if (!check || check.result !== 'pass') errors.push(`SourceNote #${issueNumber} evidence check ${checkId} is not pass`);
+  }
+  return { ok: errors.length === 0, errors, value };
+}
+
 function normalizeBoundaryReport(report, sourceRef = SOURCE_REF) {
   const errors = [];
   if (!report || typeof report !== 'object' || Array.isArray(report)) return { ok: false, errors: ['boundary transition report must be an object'], items: [] };
@@ -79,10 +178,13 @@ function normalizeBoundaryReport(report, sourceRef = SOURCE_REF) {
       source_note_issue_number: number,
       source_note_id: raw && (raw.source_note_id || raw.source_identity) || null,
       source_note_body_sha256: raw && (raw.source_note_body_sha256 || raw.current_body_sha256 || raw.body_sha256 || raw.expected_body_sha256 || raw.next_body_sha256) || null,
+      evidence_body_sha256: raw && (raw.evidence_body_sha256 || raw.expected_body_sha256 || raw.previous_body_sha256 || raw.source_note_body_sha256 || raw.body_sha256) || null,
+      live_source_note_body_sha256: raw && (raw.live_source_note_body_sha256 || raw.new_body_sha256 || raw.next_body_sha256 || raw.current_body_sha256 || raw.body_sha256 || raw.source_note_body_sha256 || raw.expected_body_sha256) || null,
       source_revision_id: raw && (raw.source_revision_id || raw.expected_source_revision_id) || null,
       decision: raw && (raw.decision || (raw.disposition === 'ready' ? 'single-interview' : raw.disposition)) || null,
       transition_id: raw && (raw.transition_id || raw.boundary_transition_id) || null,
       transition_status: raw && (raw.transition_status || raw.status || raw.receipt_state) || null,
+      evidence_comment_id: raw && (raw.evidence_comment_id || raw.review_evidence_comment_id || raw.review_evidence && raw.review_evidence.comment_id) || null,
       interview_note_ids: Array.isArray(raw && raw.interview_note_ids) ? [...raw.interview_note_ids] : [],
       interview_note_cases: Array.isArray(raw && raw.interview_note_cases) ? raw.interview_note_cases : [],
     };
@@ -152,6 +254,7 @@ function resultBase(reportItem) {
     source_note_issue_number: reportItem.source_note_issue_number,
     source_note_id: reportItem.source_note_id,
     transition_id: reportItem.transition_id,
+    evidence_comment_id: reportItem.evidence_comment_id,
     boundary_decision: reportItem.decision,
     boundary_transition_status: reportItem.transition_status,
   };
@@ -187,17 +290,31 @@ function planIssue1605Materialization({
   ownershipErrors = new Map(),
   sourceSnapshot = null,
   ownershipSnapshot = null,
+  boundaryManifest = null,
+  boundaryEvidenceComments = new Map(),
+  boundaryEvidenceSnapshot = null,
+  requireCompleteScope = true,
 } = {}) {
   const errors = [];
+  const verifyLiveEvidence = requireCompleteScope || Boolean(boundaryManifest);
   if (repository !== 'liqiangcc/interview-lab') errors.push('repository must be liqiangcc/interview-lab');
   if (!Array.isArray(boundaryReports) || boundaryReports.length === 0) errors.push('at least one boundary transition report is required');
   const normalizedReports = [];
   const reportItems = [];
+  let scopeInputInvalid = false;
   for (const report of boundaryReports || []) {
     const normalized = normalizeBoundaryReport(report);
     normalizedReports.push({ schema_version: report && report.schema_version, digest: normalized.digest || null, ok: normalized.ok, errors: normalized.errors });
     errors.push(...normalized.errors);
     for (const item of normalized.items) reportItems.push(item);
+  }
+  const manifestValidation = boundaryManifest ? validateBoundaryManifest(boundaryManifest) : { ok: !requireCompleteScope, errors: requireCompleteScope ? ['complete 419-row boundary authorization manifest is required'] : [] };
+  errors.push(...manifestValidation.errors);
+  if (!manifestValidation.ok) scopeInputInvalid = true;
+  if (boundaryManifest && manifestValidation.ok) {
+    const scope = validateCompleteReportScope(reportItems, boundaryManifest);
+    errors.push(...scope.errors);
+    if (!scope.ok) scopeInputInvalid = true;
   }
   const sources = sourceIssueMap(sourceIssues);
   errors.push(...sources.errors);
@@ -229,7 +346,7 @@ function planIssue1605Materialization({
   for (const [identity, ownerError] of ownershipErrors.entries()) if (plannedClaims.has(identity)) errors.push(`ownership search for ${identity} failed: ${ownerError}`);
 
   const results = [];
-  const invalidInput = normalizedReports.some((report) => !report.ok) || sources.errors.length > 0 || errors.some((error) => error === 'repository must be liqiangcc/interview-lab');
+  const invalidInput = scopeInputInvalid || normalizedReports.some((report) => !report.ok) || sources.errors.length > 0 || errors.some((error) => error === 'repository must be liqiangcc/interview-lab');
   for (const item of reportItems.sort((left, right) => left.source_note_issue_number - right.source_note_issue_number)) {
     const base = resultBase(item);
     if (invalidInput) {
@@ -255,7 +372,7 @@ function planIssue1605Materialization({
       continue;
     }
     const actualBodySha = sha256Text(sourceIssue.body);
-    if (actualBodySha !== item.source_note_body_sha256) {
+    if (actualBodySha !== item.live_source_note_body_sha256) {
       results.push(blockedResult(item, 'stale-live-source-note', ['live SourceNote body SHA-256 differs from the boundary transition report'], { live_source_note_body_sha256: actualBodySha }));
       continue;
     }
@@ -291,6 +408,21 @@ function planIssue1605Materialization({
     if (seenSourceIds.get(parsed.source_note_id).length > 1) {
       results.push(blockedResult(item, 'duplicate-source-note-identity', ['the live SourceNote identity is owned by more than one SourceNote Issue']));
       continue;
+    }
+    if (verifyLiveEvidence && transitionApplied(item)) {
+      const comments = boundaryEvidenceComments instanceof Map
+        ? boundaryEvidenceComments.get(item.source_note_issue_number) || []
+        : boundaryEvidenceComments[item.source_note_issue_number] || [];
+      const exact = comments.filter((comment) => Number(comment && (comment.id || comment.comment_id)) === Number(item.evidence_comment_id));
+      if (exact.length !== 1) {
+        results.push(blockedResult(item, 'boundary-evidence-missing-or-ambiguous', [`live boundary evidence must contain exactly one comment with id ${item.evidence_comment_id || 'missing'}`]));
+        continue;
+      }
+      const evidence = validateLiveBoundaryEvidenceComment(exact[0], item, sourceIssue);
+      if (!evidence.ok) {
+        results.push(blockedResult(item, 'boundary-evidence-binding-failed', evidence.errors, { evidence_comment_id: Number(item.evidence_comment_id) || null }));
+        continue;
+      }
     }
     if (item.decision === 'not-interview') {
       const identity = derived.cases[0].interview_note_id;
@@ -361,6 +493,15 @@ function planIssue1605Materialization({
     mutation_performed: false,
     write_operations: { patch: 0, post: 0, create: 0 },
     boundary_reports: normalizedReports,
+    boundary_manifest: boundaryManifest ? {
+      schema_version: boundaryManifest.schema_version,
+      parent_issue: boundaryManifest.parent_issue,
+      plan_digest: boundaryManifest.plan_digest,
+      canonical_digest: boundaryManifest.canonical_digest,
+      candidate_count: Array.isArray(boundaryManifest.items) ? boundaryManifest.items.length : 0,
+      complete: manifestValidation.ok && errors.every((error) => !error.includes('partial') && !error.includes('authorized Issue')),
+    } : null,
+    boundary_evidence: boundaryEvidenceSnapshot || { mode: 'not-supplied', candidate_issue_count: 0, comments_loaded: 0 },
     source_snapshot: sourceSnapshot,
     ownership: {
       identity_count: plannedClaims.size,
@@ -379,12 +520,22 @@ function planIssue1605Materialization({
 module.exports = {
   SCHEMA_VERSION,
   BOUNDARY_REPORT_SCHEMA,
+  BOUNDARY_MANIFEST_SCHEMA,
   SOURCE_REPOSITORY,
   SOURCE_REF,
+  BOUNDARY_MANIFEST_PLAN_DIGEST,
+  BOUNDARY_MANIFEST_CANONICAL_DIGEST,
+  BOUNDARY_MANIFEST_CANDIDATE_COUNT,
+  BOUNDARY_EVIDENCE_MARKER,
   canonicalJson,
   sha256Text,
   transitionApplied,
   reportDigest,
+  boundaryManifestDigest,
+  validateBoundaryManifest,
+  validateCompleteReportScope,
+  evidenceMarkerValues,
+  validateLiveBoundaryEvidenceComment,
   normalizeBoundaryReport,
   sourceIssueMap,
   planIssue1605Materialization,
