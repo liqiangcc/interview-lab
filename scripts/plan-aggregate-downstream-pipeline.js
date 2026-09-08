@@ -56,14 +56,18 @@ function loadInputs(manifest, manifestFile) {
   const read = (file) => readJson(resolveFile(base, file));
   const boundaryReports = {};
   for (const batch of manifest.boundary_batches || []) boundaryReports[batch.issue_number] = read(batch.report);
+  const boundaryTransitionReport = manifest.boundary_transition_report ? read(manifest.boundary_transition_report) : null;
   const pendingInventorySnapshot = manifest.pending_inventory_snapshot ? read(manifest.pending_inventory_snapshot) : null;
   const pendingInventoryOwnership = manifest.pending_inventory_ownership ? read(manifest.pending_inventory_ownership) : null;
   const interviewNoteOwnershipInventory = manifest.interview_note_ownership_inventory ? read(manifest.interview_note_ownership_inventory) : null;
+  const materializationPlan = manifest.materialization_plan ? read(manifest.materialization_plan) : null;
   return {
     manifest,
     boundaryReports,
+    boundaryTransitionReport,
     recoveryReport: read(manifest.recovery_report),
     materializationReports: (manifest.materialization_reports || []).map(read),
+    materializationPlan,
     sourceReviewReceipts: (() => {
       const value = read(manifest.source_review_receipts);
       return Array.isArray(value) ? value : value.receipts || value.items || value;
