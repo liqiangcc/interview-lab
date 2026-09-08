@@ -31,10 +31,10 @@ const REMAINING_SCOPE_DIGEST = '6ef4fa26e838fe8c30d571c08807c09d5a3280eb40aa4af5
 const REMAINING_MANIFEST_DIGEST = 'fea78669500c0986eff96b67b7e2d35afdf46355bc7caa9b862116eca40b4ba9';
 const COMPLETED_MANIFEST = 'data/pilot/issue-1605/full-boundary-manifest.json';
 const COMPLETED_MANIFEST_DIGEST = '40fd63cccea624a567778f5c679a9e0e77b0784181de4d54cacad9873ae6c97a';
-const DEFAULT_OUTPUT = 'data/pilot/issue-1605/full-boundary-evidence-plan.json';
-const DEFAULT_JOURNAL = 'data/pilot/issue-1605/full-boundary-evidence-progress.json';
-const DEFAULT_LOCK = 'data/pilot/issue-1605/full-boundary-evidence-progress.lock';
-const DEFAULT_REQUEST_DIR = 'data/pilot/issue-1605/full-boundary-requests';
+const DEFAULT_OUTPUT = 'data/pilot/issue-1605/remaining-boundary-evidence-plan.json';
+const DEFAULT_JOURNAL = 'data/pilot/issue-1605/remaining-boundary-evidence-progress.json';
+const DEFAULT_LOCK = 'data/pilot/issue-1605/remaining-boundary-evidence-progress.lock';
+const DEFAULT_REQUEST_DIR = 'data/pilot/issue-1605/remaining-boundary-evidence-requests';
 const SNAPSHOT_CACHE = '/tmp/interview-lab-cache/source-notes.json';
 const TRANSITION_SCHEMA = 'source-note-boundary-review-transition.v1';
 const MULTI_TRANSITION_SCHEMA = 'source-note-boundary-review-transition.v2';
@@ -256,6 +256,13 @@ function deriveBoundaryBCases(evidence) {
   for (const [lineIndex, line] of lines.entries()) {
     const value = String(line || '').trim();
     if (!value) continue;
+    // A recap can repeat already-recorded round headings (for example, a
+    // summary that says “一面很顺利，约二面”).  Once the source has at
+    // least two concrete anchors, ignore such recap lines so they cannot
+    // duplicate InterviewNote cases.  A recap is still eligible when it is
+    // the only available source for an otherwise unstructured multi-event
+    // note.
+    if (anchors.length >= 2 && /^(?:总结|总结：|总结:)/.test(value)) continue;
     const eventMatches = [...value.matchAll(/(?:第)?([一二三四五六七八九十]+)家/g)];
     for (const match of eventMatches) {
       const ordinal = { 一: 1, 二: 2, 三: 3, 四: 4, 五: 5, 六: 6, 七: 7, 八: 8, 九: 9, 十: 10 }[match[1]];
@@ -277,7 +284,10 @@ function deriveBoundaryBCases(evidence) {
       directThreeRoundsAdded = true;
       for (let number = 1; number <= 3; number += 1) add(`round-${number}`, sourceRef, `${sourceLocator}:line-${lineIndex + 1}:direct-${number}`);
     }
-    if (/(?:两个|两家|两场|两次|两个小公司|两个自研)/.test(value)) {
+    // Only finite phrases that explicitly name separate interview/company
+    // events may synthesize segment anchors.  Question content such as
+    // “两个栈模拟队列” or “两个 ack” must never become another InterviewNote.
+    if (/(?:两个(?:小公司|自研(?:线下)?面试|公司(?:现场)?面试)|两家(?:小公司|公司)?(?:现场)?面试|两场面试|两次面试|面了两家|面了多家)/.test(value)) {
       for (let number = 1; number <= 2; number += 1) add(`event-${number}`, sourceRef, `${sourceLocator}:line-${lineIndex + 1}:segment-${number}`);
     }
   }
@@ -512,7 +522,10 @@ function buildPlan(options = {}) {
     if (!sourceIssue) errors.push(`#${row.issue_number} is absent from SourceNote cache`);
     const labels = labelsOf(sourceIssue || {});
     if (!labels.includes('boundary:pending')) errors.push(`#${row.issue_number} is not pending in the frozen SourceNote snapshot`);
-    const bodySha = sha256(sourceIssue?.body || '');
+    // A live GitHub cache carries `body`; a persisted read-only fixture may
+    // carry only its already-verified body_sha256.  Both are bound to the
+    // child artifact digest before a row can enter the plan.
+    const bodySha = sourceIssue?.body_sha256 || sha256(sourceIssue?.body || '');
     if (sourceIssue && bodySha !== row.expected_body_sha256) errors.push(`#${row.issue_number} cached body SHA differs from child artifact`);
     const excerpts = (row.excerpts || []).map(normalizeExcerpt).filter(Boolean);
     const cases = normalizedCases(row);
@@ -872,8 +885,10 @@ function runEvidence(args, plan) {
     journal.canonical_digest = sha256(canonical(journal)); lock.assertHeld(); writeJson(journalFile, journal);
     const posted = journal.items.filter((entry) => entry.status === 'posted');
     const manifest = { schema_version: 'source-note-boundary-review-batch.v1', repository: REPOSITORY, parent_issue: PARENT_ISSUE, source_snapshot: { repository: SOURCE_REPOSITORY, ref: SOURCE_REF }, plan_digest: plan.canonical_digest, items: posted.map((entry) => ({ issue_number: entry.issue_number, transition_id: entry.transition_id, request_file: path.relative(path.dirname(args.output), path.join(args.requestDir, `${pad(entry.issue_number)}.json`)) })) };
-    manifest.canonical_digest = sha256(canonical(manifest)); writeJson(path.join(path.dirname(args.output), 'full-boundary-manifest.json'), manifest);
-    process.stdout.write(`${JSON.stringify({ status: journal.status, posted: posted.length, attempted: journal.attempted, manifest: path.join(path.dirname(args.output), 'full-boundary-manifest.json') }, null, 2)}\n`);
+    manifest.canonical_digest = sha256(canonical(manifest));
+    const manifestFile = path.join(path.dirname(args.output), 'remaining-boundary-evidence-manifest.json');
+    writeJson(manifestFile, manifest);
+    process.stdout.write(`${JSON.stringify({ status: journal.status, posted: posted.length, attempted: journal.attempted, manifest: manifestFile }, null, 2)}\n`);
   } finally { lock.release(); }
 }
 

@@ -1,14 +1,29 @@
 'use strict';
 
 const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const os = require('node:os');
+const path = require('node:path');
 const test = require('node:test');
 const completedManifest = require('../data/pilot/issue-1605/full-boundary-manifest.json');
+const frozenSnapshot = require('../data/pilot/issue-1605/pending-inventory.snapshot.json');
+const boundaryBEvidence = require('../data/issue-1607/evidence-ledger.json');
 const {
-  buildPlan, deriveBoundaryBCases, pendingInventory, remainingInventory,
+  buildPlan, deriveBoundaryBCases, pendingInventory, remainingInventory, parseArgs,
 } = require('../scripts/issue-1605-full-boundary-coordinator');
 
 test('full boundary coordinator excludes the completed manifest and covers every remaining audit', () => {
-  const plan = buildPlan();
+  // CI intentionally has no live GitHub cache.  Use the frozen inventory's
+  // already-verified body digests and labels as a read-only cache fixture;
+  // production runs still read the full GitHub body cache.
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'issue-1605-coordinator-'));
+  const cacheFile = path.join(directory, 'source-notes.json');
+  fs.writeFileSync(cacheFile, JSON.stringify(frozenSnapshot.items.map((item) => ({
+    number: item.issue_number,
+    body_sha256: item.body_sha256,
+    labels: item.labels,
+  }))));
+  const plan = buildPlan({ cache: cacheFile });
   assert.equal(plan.frozen_inventory.count, 1397);
   assert.equal(plan.pending_inventory.count, 978);
   assert.equal(plan.completed_exclusion.count, 419);
@@ -53,4 +68,22 @@ test('boundary B case derivation keeps exact source refs and unique locators', (
   assert.deepEqual(cases.map((item) => item.case_key), ['round-1', 'round-2']);
   assert.equal(new Set(cases.flatMap((item) => item.evidence.map((ref) => ref.locator))).size, 2);
   assert.ok(cases.every((item) => item.evidence[0].ref === evidence.source_evidence.ref));
+});
+
+test('boundary B ignores question-count wording and summary recaps', () => {
+  for (const issueNumber of [504, 578]) {
+    const evidence = boundaryBEvidence.items.find((item) => item.issue_number === issueNumber);
+    assert.ok(evidence, `missing Boundary B evidence for #${issueNumber}`);
+    const cases = deriveBoundaryBCases(evidence);
+    assert.equal(cases.length, 2, `#${issueNumber} should have exactly two interview cases`);
+    assert.equal(new Set(cases.map((item) => item.case_key)).size, 2);
+    assert.equal(new Set(cases.flatMap((item) => item.evidence.map((ref) => ref.locator))).size, 2);
+  }
+});
+
+test('remaining coordinator defaults never target the completed 419-row artifacts', () => {
+  const args = parseArgs([]);
+  assert.match(args.output, /remaining-boundary-evidence-plan\.json$/);
+  assert.match(args.journal, /remaining-boundary-evidence-progress\.json$/);
+  assert.match(args.requestDir, /remaining-boundary-evidence-requests$/);
 });
