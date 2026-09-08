@@ -1,0 +1,98 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1279,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1279",
+  "source_note_id": "xhs-note:68bf8e69000000001d024a16",
+  "source_revision_id": "xhs-note:68bf8e69000000001d024a16:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "e57de87cb8c3e79a2133c3c1ac324f663616bc8748e4556860ca0a278d31b773",
+  "disposition": "single-interview",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [],
+    "questions": 0,
+    "has_first_person_event": true,
+    "has_explicit_candidate_event": true,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "has_completed_event_evidence": true,
+    "has_structured_candidate_event": true,
+    "generic_advice_or_aggregated": false,
+    "scheduled_only": false,
+    "question_only": false,
+    "outcome_signal": true,
+    "resource_signal": true,
+    "aggregated_text": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": [
+      {
+        "case_key": "alibaba-process",
+        "anchor": "阿里",
+        "line": 10,
+        "locator": "artifact-line:10#offset:2-4",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:阿里"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68bf8e69000000001d024a16.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "2991a783c77d5332cc3e5d74ff2ad504d63cdab1",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 2205,
+    "content_sha256": "bd2ec6a46048a84f1d798f3513f6280c8f9e543310c12b6dca0fde7f95c24e84",
+    "excerpt": {
+      "excerpt": "后续：9.26约业务二面，拒绝面试",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "后续：9.26约业务二面，拒绝面试\n只能选晚上面试…emmmm大概知道了什么作息hhhh\n一面：\n学springboot的过程中，你主要是了解哪一块内容？\nSpringboot与springmvc相比，解决了哪些问题？\n你说自动配置可以简化springmvc的配置，那这一块你看过他的源码吗？是什么逻辑？\n在使用springboot的过程中，会引用第三方的一些starter，这块主要用过哪些一些比较常见的依赖？\n如果让你手写一个日志log的starter，你会是什么思路？\nAOP你了解吗？\n你在阿里实习，用过arthas吗？\n项目排查你会通过什么方式?\nJVM学过吗，报错怎么去排查？\n怎么定位线程阻塞问题？\n介绍一下常用的垃圾回收器，在不同的jdk版本\nSpringcloud是通过什么组件可以实现服务发现？\n你了解feign吗？\n为什么企业里面选用rpc而不是http呢？\n你实习的部分关于支付链路比较复杂，你是怎么去设计他的一个熔断和限流的呢？\n现在一个整体的支付响应链路变慢，你会怎么去排查？怎么定位到哪个环节出问题？\n（这里我只记得通过云图能看出来哪一个系统模块超时响应）\n有没有了解过一些熔断降级的方案？\n在这段实习中，对你成长最大帮助的是什么？\n在实习的时候你应该接触过一些内部分享的资料，主要关注过哪些方面的一些分享？\nLLM有了解吗？\nRAG你了解吗？与传统ES有什么区别？\n什么是模型训练和推理的过程？\n你还用过哪些编程语言？\n你了解云原生和Docker吗？\n全程30分钟左右，🈚️手撕，面试官很和蔼\n反问环节，说是做llm开发平台的，但是简历一面面完之后还回到大池子里然后别的部门捞二面，所以也确定不了最后做什么，面试结果大概1-2天就出[失望R]整体感觉没有特别难，但是LLM对于我一个非科班来说有点为难了😅\n主包最近面试比较多，随缘出面经，科大讯飞是老家的企业，不管咋样也得面一下[doge]"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "aa196b6d6da133c88382e9ee4ae9e8f50708bac23884733ea58096b01c55dcf9"
+}

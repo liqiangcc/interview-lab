@@ -1,0 +1,93 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0650-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 650,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/650",
+  "source_note_id": "xhs-note:67e658a3000000001c003f7d",
+  "expected_body_sha256": "c668128db7f640f1d9229af0fbbb5147b3eff6197f98b1f29095b45871165646",
+  "expected_source_revision_id": "xhs-note:67e658a3000000001c003f7d:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "proposal-only",
+    "proposed_decision": "single-interview",
+    "basis": "first-person experienced interview process plus structured question evidence; generic advice/job context does not override the experienced event",
+    "basis_lines": [
+      {
+        "line_number": 3,
+        "excerpt": "然后直接先做一道算法题"
+      },
+      {
+        "line_number": 7,
+        "excerpt": "做项目的时候最难的问题（新技术的学习到使用）"
+      },
+      {
+        "line_number": 9,
+        "excerpt": "介绍一下MySQL有哪些锁"
+      },
+      {
+        "line_number": 12,
+        "excerpt": "volatile和sycronized做出来了，让介绍一下volatile和sycronized的底层原理（问的很深，这个记不太清了答得一般般）"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67e658a3000000001c003f7d.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "24a789b739ffd9f298f4eb509d0bb3cc7540733a",
+    "byte_size": 1437,
+    "sha256": "39f0c2a6c56b8693ce450534d176a6afb5dcf5a71b0dfb1a498285e862eaacb4",
+    "locator": "note_desc:1-11",
+    "excerpt": "先自我介绍\n然后直接先做一道算法题\n求将n（2≤n≤53）拆成k（k≥2，k可以是任意值）个正整数后k个正整数乘积的最大值\n动态规划秒了\n做项目的时候最难的问题（新技术的学习到使用）\n单体架构相对于微服务架构有优点吗\n介绍一下MySQL有哪些锁\n然后又做了一道题，单例模式",
+    "text": "先自我介绍\n\t\n然后直接先做一道算法题\n求将n（2≤n≤53）拆成k（k≥2，k可以是任意值）个正整数后k个正整数乘积的最大值\n动态规划秒了\n\t\n做项目的时候最难的问题（新技术的学习到使用）\n单体架构相对于微服务架构有优点吗\n介绍一下MySQL有哪些锁\n\t\n然后又做了一道题，单例模式\nvolatile和sycronized做出来了，让介绍一下volatile和sycronized的底层原理（问的很深，这个记不太清了答得一般般）\n\t\n垃圾回收器都了解哪些（serial，parnew，g1，cms），但是他问了我另一个z开头（这个没咋看），我说不太了解，就没问了\n然后问我垃圾回收这一块主要是在哪里看的（答的开源社区加b站等视频平台）\n\t\n你笔试分数还不错（能讲讲怎么学的嘛）\n稍微聊了一下（ps：笔试分数不错➕北邮本，美团第一志愿第二志愿全简历挂[石化R]）\n然后就结束了\n\t\n反问了一下业务\n中间向我介绍的时候打断了一下，问我本科生能实习多久，什么时候到岗\n\t\n如果能过，还有几轮\n如果能过，还有一轮技术面，一轮HR面\n最后回答这个问题，反复强调了一下如果能过，感觉要凉[石化R]\n#后端开发[话题]# #面经[话题]# #java[话题]# #大厂[话题]# #每日复盘[话题]# #面试日常[话题]# #暑期实习[话题]##找实习[话题]##大厂offer[话题]#\n",
+    "line_count": 28,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:67e658a3000000001c003f7d.txt",
+      "byte_size": 1437,
+      "git_blob_sha": "24a789b739ffd9f298f4eb509d0bb3cc7540733a"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

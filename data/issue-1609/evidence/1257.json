@@ -1,0 +1,94 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1257,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1257",
+  "source_note_id": "xhs-note:68b91ba2000000001c00e8bf",
+  "source_revision_id": "xhs-note:68b91ba2000000001c00e8bf:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "d99779e54ab15ddfe7f3cbd789212f79843eb1ed3ca2d14207a621baa61c74b7",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event",
+      "question-only",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 17,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "has_completed_event_evidence": true,
+    "has_structured_candidate_event": false,
+    "generic_advice_or_aggregated": false,
+    "scheduled_only": false,
+    "question_only": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "aggregated_text": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68b91ba2000000001c00e8bf.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "22de433ca4e85bd875a364ae74a2ebe3e07b2d5e",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 553,
+    "content_sha256": "b8ca41a097fd7413207c39ecf2f56915046f9121cbe2d9433cd1761911560c55",
+    "excerpt": {
+      "excerpt": "1.对称二叉树",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "1.对称二叉树\n2.写一个排序算法\n3.项目拷打\n4.kafka和rabbitmq区别，为什么大家都使用kafka（不会rabbitmq）\n5.解释什么是kafka\n6.他的优势是什么？（数据不丢失balabala，副本，offset）打断了说的不对\n7.sql优化\n8.hdfs和Hive的区别\n9.spark和hive的区别\n10.hive中存储格式\n11.Application、job、stage、task区别\n12.宽依赖窄依赖\n13.scala里object和class方法的区别\n14.dateframe和dataset的区别\n15.TCPIp\n16.OSI七层\n17.java垃圾回收机制"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "da5893e43e761a455d040c5897cefbe47146ea6be979360e9506b901e77b3771"
+}

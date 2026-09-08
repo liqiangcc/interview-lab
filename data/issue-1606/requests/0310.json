@@ -1,0 +1,71 @@
+{
+  "schema_version": "issue-1606-boundary-review-request.v1",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "child_issue": 1606,
+  "issue_number": 310,
+  "source_note_id": "xhs-note:66d1bb3d000000001d038af9",
+  "source_id": "xhs:66d1bb3d000000001d038af9",
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/310",
+  "expected_body_sha256": "b46989f02b22251f5ac3221a3ad2e0586483261d68127209d8f2c037322fb025",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:66d1bb3d000000001d038af9:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "transition_id": "issue-1606-310-boundary-review-1",
+  "reviewed_at": "2026-09-08T02:05:50Z",
+  "reviewer_kind": "ai-assisted",
+  "disposition": "blocked",
+  "decision": null,
+  "evidence": {
+    "artifact_ref": "liqiangcc/xhs:note_desc/66d1bb3d000000001d038af9.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "artifact_provenance": "source_projection",
+    "kind": "text_projection",
+    "git_blob_sha": "2fed2e87aca293c1f3a7471f210b81815be799e7",
+    "byte_size": 182,
+    "excerpts": [
+      {
+        "excerpt": "手撕太紧张了，其实不难，但写完最后有bug运行不了，而且不方便调试[哭惹R][哭惹R]也忘了有递归可以用了",
+        "line": 1,
+        "locator": "artifact-line:1"
+      }
+    ]
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:1"
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:1"
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:1"
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "Source projection contains isolated interview questions or outcome language without explicit completed candidate-interview context; retain boundary:pending."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:1"
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:1"
+    }
+  ],
+  "limitations": [
+    "Boundary Review only determines whether 0/1/N InterviewNote case identity may be materialized; it does not write source-ready, InterviewContext, learning labels, or InterviewNote Issues.",
+    "No live evidence comment or transition mutation is authorized by this artifact; any later apply must create/bind durable per-issue evidence and recheck body/state/source CAS.",
+    "Source projection contains isolated interview questions or outcome language without explicit completed candidate-interview context; retain boundary:pending."
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0748-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 748,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/748",
+  "source_note_id": "xhs-note:6800bb4f000000000b015aca",
+  "expected_body_sha256": "c55004609054112eddf41571cec8ad658e20f3ce76ea27bae9a399077f5125c2",
+  "expected_source_revision_id": "xhs-note:6800bb4f000000000b015aca:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": []
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/6800bb4f000000000b015aca.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "93b00b654d7ed027fa92062dc690b075fa5fda3f",
+    "byte_size": 883,
+    "sha256": "6089ba8dcbf57f0b6668789dad05fa2724a79a8b1f677f807a2cce2136c4764a",
+    "locator": "note_desc:1-8",
+    "excerpt": "1大模型经历微调推理，做过什么任务。\n2jvm内存模型介绍\n3元空间永久代方法区三者都用来做什么\n4线程池调度的过程，线程池拒绝策略。\n5线程有多少种状态\n6线程池核心线程数怎么确定\n7AQS是什么\n8为什么clh队列是双向的",
+    "text": "1大模型经历微调推理，做过什么任务。\n2jvm内存模型介绍\n3元空间永久代方法区三者都用来做什么\n4线程池调度的过程，线程池拒绝策略。\n5线程有多少种状态\n6线程池核心线程数怎么确定\n7AQS是什么\n8为什么clh队列是双向的\n9全局唯一id设计思路，除了雪花算法还能怎么设计\n10簇聚索引和非簇聚索引区别\n11innodb底层数据结构\n12b+树与b树的区别\n13innodb的所有锁\n14当前读查询涉及的所有锁，分情况讨论。\n15你常用的垃圾回收器，为什么用g1\n16cms和g1回收器的区别\n手撕题：合并k个 升序链表。写的分治法，说可以用最小堆优化\n有些地方挖的很深真的不会\ntimeline\n投递：4.5\n一面：4.14\n二面：4.17\n录用评估中：4.18\n挂：4.24\n#互联网大厂[话题]# #互联网大厂实习[话题]# #面经[话题]#\n",
+    "line_count": 26,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:6800bb4f000000000b015aca.txt",
+      "byte_size": 883,
+      "git_blob_sha": "93b00b654d7ed027fa92062dc690b075fa5fda3f"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

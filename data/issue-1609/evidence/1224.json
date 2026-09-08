@@ -1,0 +1,94 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1224,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1224",
+  "source_note_id": "xhs-note:68b3c286000000001c006096",
+  "source_revision_id": "xhs-note:68b3c286000000001c006096:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "991af67f61f82d29ccae34c3bbb4f3c90e407cc02f8b5da588f17722ffc8f925",
+  "disposition": "blocked",
+  "rationale": "Exact Source is generic advice or aggregated/summarized material without a bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event",
+      "generic-question-bank-or-job-ad",
+      "generic-advice-or-aggregated",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 0,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": false,
+    "has_detailed_event": false,
+    "has_completed_event_evidence": false,
+    "has_structured_candidate_event": false,
+    "generic_advice_or_aggregated": true,
+    "scheduled_only": false,
+    "question_only": false,
+    "outcome_signal": false,
+    "resource_signal": true,
+    "aggregated_text": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68b3c286000000001c006096.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "15b3f8701a0afef41305fc0fad81029393f90071",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 511,
+    "content_sha256": "38507a3bd1902e85a2a01ca29fbabb6821b897f0c0569e354ea39cfa973c9eb5",
+    "excerpt": {
+      "excerpt": "还在找工作的Java后端们上点心吧，现在的面试主要都是问场景题，近期面试过的都应该深有体会吧，准备金九银十的小伙伴要抓紧了！",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "还在找工作的Java后端们上点心吧，现在的面试主要都是问场景题，近期面试过的都应该深有体会吧，准备金九银十的小伙伴要抓紧了！\n整理了一份高频的场景题库放在后面了，有面试计划的小伙伴都可以看看，不要再迷茫了！"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is generic advice or aggregated/summarized material without a bounded candidate interview event; retain pending."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source is generic advice or aggregated/summarized material without a bounded candidate interview event; retain pending.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "1193a8d05e420368c1cc152fe3009919937f7b979a0a6dd7c38f126b71cbbc48"
+}

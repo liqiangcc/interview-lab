@@ -1,0 +1,81 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0623-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 623,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/623",
+  "source_note_id": "xhs-note:67e12cfa000000001d02777a",
+  "expected_body_sha256": "b9f75072efe42ee296e4ca4f8d25357d3e3974a91bae57578900ca5e7048f656",
+  "expected_source_revision_id": "xhs-note:67e12cfa000000001d02777a:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 2,
+        "excerpt": "但这个题目怎么和我预想的完全不一样啊 救sos"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67e12cfa000000001d02777a.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "9f5390bcbbeec85d6f5f006235716651391ab9b4",
+    "byte_size": 564,
+    "sha256": "4a038edf59190b1221639de7c25233835ff13a250e42699b2054e203229c087d",
+    "locator": "note_desc:1-8",
+    "excerpt": "美团面试官一如既往的很“慈祥”\n但这个题目怎么和我预想的完全不一样啊 救sos\n问项目（只问实际项目 自学的不问）\n数据库sql操作 出了两个题\n问依赖冲突如何解决\nshell熟不熟悉\nlinux查看日志的命令\n说一下spring ioc",
+    "text": "美团面试官一如既往的很“慈祥”\n但这个题目怎么和我预想的完全不一样啊 救sos\n问项目（只问实际项目 自学的不问）\n数据库sql操作 出了两个题\n问依赖冲突如何解决\nshell熟不熟悉\nlinux查看日志的命令\n说一下spring ioc\n@resource和@autowired的区别\nbean的生命周期\nsychronized说一下\n出了一个sychronized的多线程的题 问你他俩能不能同时访问之类的\n创建线程池的参数有哪些\n一道智力题\n手撕：删除链表所有重复数字（不允许用map或者set）\n",
+    "line_count": 16,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:67e12cfa000000001d02777a.txt",
+      "byte_size": 564,
+      "git_blob_sha": "9f5390bcbbeec85d6f5f006235716651391ab9b4"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

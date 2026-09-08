@@ -1,0 +1,97 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1321,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1321",
+  "source_note_id": "xhs-note:68c80995000000001d022d8d",
+  "source_revision_id": "xhs-note:68c80995000000001d022d8d:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "d8c0c52712b24f523bb9d28626d73270353fe1dbc27c8f4fbe9099a4d6bd9f99",
+  "disposition": "blocked",
+  "rationale": "Exact Source is generic advice or aggregated/summarized material without a bounded candidate interview event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event",
+      "generic-question-bank-or-job-ad",
+      "generic-advice-or-aggregated",
+      "question-only",
+      "no-candidate-event-evidence",
+      "non-interview-format"
+    ],
+    "questions": 13,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": false,
+    "has_detailed_event": false,
+    "has_completed_event_evidence": false,
+    "has_structured_candidate_event": false,
+    "generic_advice_or_aggregated": true,
+    "scheduled_only": false,
+    "question_only": true,
+    "outcome_signal": false,
+    "resource_signal": true,
+    "aggregated_text": false,
+    "job_or_title_only": false,
+    "non_interview_format": true,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68c80995000000001d022d8d.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "9a2ad4276016fc06f2f4ee766772539c181ef93f",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 570,
+    "content_sha256": "ed6da7ecb1a7123f6d219bafe4dbaeaa049e8159df64c261b5be8220975c690c",
+    "excerpt": {
+      "excerpt": "1. TCP 三次握手",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "1. TCP 三次握手\na. 能否改成两次、会有什么问题？\n2. TCP 四次挥手\na. TIME_WAIT 状态有什么用？\n3. TCP 如何保证可靠传输\n4. MySQL 索引数据结构\n5. 什么是最左前缀匹配？\n6. B+树结构相比 B 树有哪些优点？相比平衡树、跳表呢？\n7. 想过 Mysql 的 B+树索引有哪些可优化的地方吗？\n8. 讲一下隔离级别？\n9. 可重复读如何解决？MVCC 能解决吗？\n10. Java 的 HashMap 讲一下\n11. Java 的线程池\n笔试题目：\n1. 一道原创题\n2. 最长无重复字符字串"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is generic advice or aggregated/summarized material without a bounded candidate interview event; retain pending."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source is generic advice or aggregated/summarized material without a bounded candidate interview event; retain pending.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "30052a7075cfd689f6880a16e9eb50c8da9235073b643c706e6c295b831ed8c0"
+}

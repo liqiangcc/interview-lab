@@ -1,0 +1,93 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0717-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 717,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/717",
+  "source_note_id": "xhs-note:67f92936000000001d00b92e",
+  "expected_body_sha256": "98d225ba819ccba00474ff50da9df39a8fb0453b3f295e0acb93d86853e13c32",
+  "expected_source_revision_id": "xhs-note:67f92936000000001d00b92e:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "proposal-only",
+    "proposed_decision": "single-interview",
+    "basis": "first-person experienced interview process plus structured question evidence; generic advice/job context does not override the experienced event",
+    "basis_lines": [
+      {
+        "line_number": 1,
+        "excerpt": "1、介绍实习内容"
+      },
+      {
+        "line_number": 2,
+        "excerpt": "2、mysql，redsi，es区别是什么以及适合什么场景"
+      },
+      {
+        "line_number": 3,
+        "excerpt": "3、数据库的事务实现原理了解么？（ACID然后做个介绍，原子性undolog，持久性redolog，隔离性MVCC，一致性上面3种）"
+      },
+      {
+        "line_number": 4,
+        "excerpt": "4、问了实习用redis做什么？（我把项目包装了一下，其实实习项目没用到redis，我简历写了用了，然后就追问我没必要用redis，数据量又不大，让我解释为什么要用，这不是纯加复杂度么，还要保存缓存一致性，没必要啊！！！汗流浃背了，说了下自己想法混过去了）"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67f92936000000001d00b92e.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "b5a2b91ce8e9ca7afe1546f84cfc636264018816",
+    "byte_size": 1721,
+    "sha256": "4e40e0e1bb2682dbc9b19ca205a08e849aff6e2685b19460ffd61dbfd19cd4b9",
+    "locator": "note_desc:1-8",
+    "excerpt": "1、介绍实习内容\n2、mysql，redsi，es区别是什么以及适合什么场景\n3、数据库的事务实现原理了解么？（ACID然后做个介绍，原子性undolog，持久性redolog，隔离性MVCC，一致性上面3种）\n4、问了实习用redis做什么？（我把项目包装了一下，其实实习项目没用到redis，我简历写了用了，然后就追问我没必要用redis，数据量又不大，让我解释为什么要用，这不是纯加复杂度么，还要保存缓存一致性，没必要啊！！！汗流浃背了，说了下自己想法混过去了）\n5、你项目springboot用的版本是什么？你知道springboot3基于jdk什么版本实现的？（有点逆天这问题）问了我常用jdk是多少\n6、有看过java的jdk源码么？（hashmap+ConcurrentHashMap+String的源码看过）\n7、介绍下hashmap的数据结构？为什么hashmap不直接用红黑树而是先链表后转红黑树？hashmap的初始化长度是多少（16）\n8、为什么hashmap的初始化长度是16？（有点逆天这问题，和我之前看的面经一样，为什么负载因子是0.75，这不是经过大量实验验证的最优值么，有啥好解释的）",
+    "text": "1、介绍实习内容\n2、mysql，redsi，es区别是什么以及适合什么场景\n3、数据库的事务实现原理了解么？（ACID然后做个介绍，原子性undolog，持久性redolog，隔离性MVCC，一致性上面3种）\n4、问了实习用redis做什么？（我把项目包装了一下，其实实习项目没用到redis，我简历写了用了，然后就追问我没必要用redis，数据量又不大，让我解释为什么要用，这不是纯加复杂度么，还要保存缓存一致性，没必要啊！！！汗流浃背了，说了下自己想法混过去了）\n5、你项目springboot用的版本是什么？你知道springboot3基于jdk什么版本实现的？（有点逆天这问题）问了我常用jdk是多少\n6、有看过java的jdk源码么？（hashmap+ConcurrentHashMap+String的源码看过）\n7、介绍下hashmap的数据结构？为什么hashmap不直接用红黑树而是先链表后转红黑树？hashmap的初始化长度是多少（16）\n8、为什么hashmap的初始化长度是16？（有点逆天这问题，和我之前看的面经一样，为什么负载因子是0.75，这不是经过大量实验验证的最优值么，有啥好解释的）\n9、hashmap是线程安全的么（不安全，说了为什么以及出现不安全的场景）\n10、从计算机原理上讲下put为什么不是原子性操作？（从没加锁层面说，谈到ConcurrentHashMap）\n11、ConcurrentHashMap用什么原理和方案实现锁的机制？（吟唱）\n12、你平时从技术上面学习是什么方式？平时有看源码习惯么\n反问：表现不好的地方在哪？答：没什么不好，喜欢爱钻研底层和研究源码的同学。#面经[话题]# #找实习[话题]#\n",
+    "line_count": 14,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:67f92936000000001d00b92e.txt",
+      "byte_size": 1721,
+      "git_blob_sha": "b5a2b91ce8e9ca7afe1546f84cfc636264018816"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

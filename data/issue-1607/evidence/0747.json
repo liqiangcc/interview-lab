@@ -1,0 +1,93 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0747-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 747,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/747",
+  "source_note_id": "xhs-note:68008a7b000000001d038fcf",
+  "expected_body_sha256": "a2dff80bb1984252ab96ee47036ed6fbf06d3b8d75071a3bc8e88c69626d9f10",
+  "expected_source_revision_id": "xhs-note:68008a7b000000001d038fcf:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "proposal-only",
+    "proposed_decision": "single-interview",
+    "basis": "first-person experienced interview process plus structured question evidence; generic advice/job context does not override the experienced event",
+    "basis_lines": [
+      {
+        "line_number": 4,
+        "excerpt": "结果一面一个不吱声  合二为一了[捂脸R][捂脸R][捂脸R]"
+      },
+      {
+        "line_number": 7,
+        "excerpt": "2、填表"
+      },
+      {
+        "line_number": 8,
+        "excerpt": "3、面试：35分钟左右 是员工面的，主管不在。"
+      },
+      {
+        "line_number": 9,
+        "excerpt": "自我介绍，问问题，都是一些面试常用的问题"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68008a7b000000001d038fcf.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "effba8ed3fcb67b417d0055e22ea0cab2cf9b902",
+    "byte_size": 1313,
+    "sha256": "74e76d93764fa9efe6146cceddf033d86f5ecb07da288d79bd68c6f6378e77ad",
+    "locator": "note_desc:1-8",
+    "excerpt": "所有的运营都是电销-美团\n客服、销售这两大最不想干的岗位\n努力说服自己接受客服了\n结果一面一个不吱声  合二为一了[捂脸R][捂脸R][捂脸R]\n地点：双楠岛\n过程：1、约好14:30面试，14:20就到了，一直被拒在门外，有门禁要主管来接，比我早到的晚到的面试的人都被接走了，我等了四十多分钟，快15:00的时候来接我了，说面试的主管在述职，一个其他组的员工来接我面试。\n2、填表\n3、面试：35分钟左右 是员工面的，主管不在。",
+    "text": "所有的运营都是电销-美团\n客服、销售这两大最不想干的岗位\n努力说服自己接受客服了\n结果一面一个不吱声  合二为一了[捂脸R][捂脸R][捂脸R]\n地点：双楠岛\n过程：1、约好14:30面试，14:20就到了，一直被拒在门外，有门禁要主管来接，比我早到的晚到的面试的人都被接走了，我等了四十多分钟，快15:00的时候来接我了，说面试的主管在述职，一个其他组的员工来接我面试。\n2、填表\n3、面试：35分钟左右 是员工面的，主管不在。\n自我介绍，问问题，都是一些面试常用的问题\n然后又带我回工位，又等了十多分钟，说主管还要忙几个小时，叫我回去等消息，要做一个测试题，要认真做，一面是过了的。\n4、测试题：一共三套，第一套是偏语文的病句、咬文嚼字类的；第二套便小学生奥数，逻辑思维强；（以上都有时间限制）第三套157道题：人格测试，选是不是。\n5、问卷调查表\n然后说等通知，就没消息了。[捂脸R]\n关于待遇：到手6-7k，但是面试过了要无薪试岗2天，我面试无后续，不知道试岗情况。还有就是听说加班特别严重。#成都[话题]# #成都找工作避雷[话题]# #成都找工作好难[话题]#\n",
+    "line_count": 15,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:68008a7b000000001d038fcf.txt",
+      "byte_size": 1313,
+      "git_blob_sha": "effba8ed3fcb67b417d0055e22ea0cab2cf9b902"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

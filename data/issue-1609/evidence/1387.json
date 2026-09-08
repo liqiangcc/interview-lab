@@ -1,0 +1,91 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1387,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1387",
+  "source_note_id": "xhs-note:68d39bac0000000012016b9e",
+  "source_revision_id": "xhs-note:68d39bac0000000012016b9e:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "7f6bc4f6265209f057372dfca08d2102b91d7f42adebd2bc81fb4ac3e73a90a0",
+  "disposition": "single-interview",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event"
+    ],
+    "questions": 0,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "has_completed_event_evidence": true,
+    "has_structured_candidate_event": true,
+    "generic_advice_or_aggregated": false,
+    "scheduled_only": false,
+    "question_only": false,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "aggregated_text": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_json/68d39bac0000000012016b9e.json@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "70d581dacd52a78e7a1a719ebcd09bcf1dd5c78f",
+    "kind": "json",
+    "provenance": "source_projection",
+    "byte_size": 21378,
+    "content_sha256": "3ded809546a040e01955d5d613ec86189b084505ef4166c17d4ac652a653091b",
+    "excerpt": {
+      "excerpt": "\"global\": {",
+      "line": 2,
+      "locator": "artifact-line:2",
+      "semantic_excerpt": "从实习入手，说一下你做的具体的业务\nsql查询的参数是写死的吗，怎么注入到sql语句的\nlua脚本用过吗，B指令报错了，A会回滚吗\n异步的协程如果报错了怎么办，怎么处理这种问题\n如果进程内存占满了，怎么在代码层面追踪，怎么在linux查看\n进程端口号被占用了，怎么查看\nkafka幂等性\nredis连续执行多个set和get会有什么问题\nredis批处理\ngo代码判断问题，断言和slice方面的\n什么时候会触发panic，应对panic的机制\nmysql查询语句时间很长怎么办\nbinlog是什么，及binlog的延时问题\n手撕LRU缓存\n就想到这些暂时，攒人品"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "c2b0f1ac48cbc77bea62aaeba07c7dc5b7b13aacbc504684401d5ae5e6c30042"
+}

@@ -1,0 +1,76 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0644-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 644,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/644",
+  "source_note_id": "xhs-note:67e53be1000000001c02f9d7",
+  "expected_body_sha256": "cb9ca9e4a95cb7754905b7c885eb4ad6aa13bec6e87d3588ab02c0e4b82e540d",
+  "expected_source_revision_id": "xhs-note:67e53be1000000001c02f9d7:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": []
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67e53be1000000001c02f9d7.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "05104549f13204765e77a811cecfbd7979f3d38b",
+    "byte_size": 912,
+    "sha256": "6196c4fb89f17fdbfacb4eb45949bd3666a89906949aae4ff9f695107ec4e1a5",
+    "locator": "note_desc:1-8",
+    "excerpt": "1、为什么转正了还要面？\n2、实习中挑一个需求，难点？\n3、索引失效的原因？\n4、 数字类型的索引，若是等于字符串，那么会走索引么？\n5、 写sql：一张订单表order，字段有订单id：orderId，用户id：userId，时间：time，查出所有用户的最新的一个订单信息？\n6、 项目中出现了网络异常，如何排查和解决？比如 connection cancel？\n7、http整个流程，说细致一点？\n8、tcp什么情况会出现timewait？",
+    "text": "1、为什么转正了还要面？\n2、实习中挑一个需求，难点？\n3、索引失效的原因？\n4、 数字类型的索引，若是等于字符串，那么会走索引么？\n5、 写sql：一张订单表order，字段有订单id：orderId，用户id：userId，时间：time，查出所有用户的最新的一个订单信息？\n6、 项目中出现了网络异常，如何排查和解决？比如 connection cancel？\n7、http整个流程，说细致一点？\n8、tcp什么情况会出现timewait？\n9、Linux 常见指令，awk使用过么？\n10.1、 设计一个订单模块，在并发量大的情况下，如何做到服务稳定性和订单不超卖 ？\n10.2、 若是第三方组件（mq，redis缓存，分布式锁）失效了？怎么办？降级操作，如何保证订单不超卖？\n11、 算法：漏桶的限流算法，LRU 算法\n#滴滴[话题]# #后端面试[话题]# #面经[话题]#\n",
+    "line_count": 14,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:67e53be1000000001c02f9d7.txt",
+      "byte_size": 912,
+      "git_blob_sha": "05104549f13204765e77a811cecfbd7979f3d38b"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

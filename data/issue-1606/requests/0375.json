@@ -1,0 +1,70 @@
+{
+  "schema_version": "issue-1606-boundary-review-request.v1",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "child_issue": 1606,
+  "issue_number": 375,
+  "source_note_id": "xhs-note:671a14bc0000000024019cc4",
+  "source_id": "xhs:671a14bc0000000024019cc4",
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/375",
+  "expected_body_sha256": "445f865f6969b9f2a6d092b59788a1f48796b660fd5356276111f85347a25e58",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:671a14bc0000000024019cc4:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "transition_id": "issue-1606-375-boundary-review-1",
+  "reviewed_at": "2026-09-08T02:05:50Z",
+  "reviewer_kind": "ai-assisted",
+  "disposition": "ready",
+  "decision": "not-interview",
+  "evidence": {
+    "artifact_ref": "liqiangcc/xhs:note_desc/671a14bc0000000024019cc4.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "artifact_provenance": "source_projection",
+    "kind": "text_projection",
+    "git_blob_sha": "e1094cd3cff421b3c7cf9f7c893ad65917095fe3",
+    "byte_size": 209,
+    "excerpts": [
+      {
+        "excerpt": "联通社招面经#求职季[话题]# #国企面试[话题]# #秋招[话题]# #面试[话题]# #秋招[话题]# #25应届[话题]# #应届生[话题]# #银行面试[话题]# #国企央企秋招面试[话题]#",
+        "line": 1,
+        "locator": "artifact-line:1"
+      }
+    ]
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:1"
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:1"
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:1"
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "Source projection is a recruiting, event-calendar, job-posting, or interview-scheduling announcement without completed candidate-interview evidence."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:1"
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:1"
+    }
+  ],
+  "limitations": [
+    "Boundary Review only determines whether 0/1/N InterviewNote case identity may be materialized; it does not write source-ready, InterviewContext, learning labels, or InterviewNote Issues.",
+    "No live evidence comment or transition mutation is authorized by this artifact; any later apply must create/bind durable per-issue evidence and recheck body/state/source CAS."
+  ]
+}

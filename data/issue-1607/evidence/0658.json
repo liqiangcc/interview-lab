@@ -1,0 +1,85 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0658-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 658,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/658",
+  "source_note_id": "xhs-note:67e91cb4000000000900eae5",
+  "expected_body_sha256": "8c88b52fba69829ce1bf9f3e41d1f014535084160a06a6d409f82aa6471de946",
+  "expected_source_revision_id": "xhs-note:67e91cb4000000000900eae5:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 1,
+        "excerpt": "p1是今天的面试题，后面是搜集的可能的题库。"
+      },
+      {
+        "line_number": 2,
+        "excerpt": "规则: 前面八股有三到五秒思考时间，后面场景有十六秒左右思考时间，回答时间是两三分钟可以提前结束回答，有两次换题机会。"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67e91cb4000000000900eae5.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "a55b8935961be8ef9d5233d4bb651317edb584da",
+    "byte_size": 832,
+    "sha256": "7fd97d6cf747e706661e863b966e330af97e6f8f75e79fe3498f8ff0bc7cba5e",
+    "locator": "note_desc:1-8",
+    "excerpt": "p1是今天的面试题，后面是搜集的可能的题库。\n规则: 前面八股有三到五秒思考时间，后面场景有十六秒左右思考时间，回答时间是两三分钟可以提前结束回答，有两次换题机会。\n注意事项:\n1. 后面项目场景会根据你的回答追问，千万不要说自己不会的埋雷，可以引导它问你比较擅长的部分。\n2. 尽量在截止时间前一个半小时开始，注意总时间是一个小时，没注意时间最后一题就剩十几秒回答了[捂脸R][捂脸R]\n3. 可以准备水杯在旁边，答到后面感觉口干舌燥了[猪头R][猪头R]\n4. 最后大家注意手机号不要开骚扰电话拦截，可能会接不到面试电话[失望R]\n5. 大家一起加油！不要太有压力，每次面试都会是提升自己的机会！[赞R][派对R]",
+    "text": "p1是今天的面试题，后面是搜集的可能的题库。\n规则: 前面八股有三到五秒思考时间，后面场景有十六秒左右思考时间，回答时间是两三分钟可以提前结束回答，有两次换题机会。\n注意事项:\n1. 后面项目场景会根据你的回答追问，千万不要说自己不会的埋雷，可以引导它问你比较擅长的部分。\n2. 尽量在截止时间前一个半小时开始，注意总时间是一个小时，没注意时间最后一题就剩十几秒回答了[捂脸R][捂脸R]\n3. 可以准备水杯在旁边，答到后面感觉口干舌燥了[猪头R][猪头R]\n4. 最后大家注意手机号不要开骚扰电话拦截，可能会接不到面试电话[失望R]\n5. 大家一起加油！不要太有压力，每次面试都会是提升自己的机会！[赞R][派对R]\n",
+    "line_count": 9,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:67e91cb4000000000900eae5.txt",
+      "byte_size": 832,
+      "git_blob_sha": "a55b8935961be8ef9d5233d4bb651317edb584da"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

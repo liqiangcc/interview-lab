@@ -1,0 +1,85 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0496-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 496,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/496",
+  "source_note_id": "xhs-note:67a5ecf4000000002903386f",
+  "expected_body_sha256": "bfed824424e1c6f2be564311c82d991adf6825e80c0682835f94e1a0f60b406b",
+  "expected_source_revision_id": "xhs-note:67a5ecf4000000002903386f:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "proposal-only",
+    "proposed_decision": "single-interview",
+    "basis": "first-person experienced interview process plus structured question evidence; generic advice/job context does not override the experienced event",
+    "basis_lines": [
+      {
+        "line_number": 1,
+        "excerpt": "总体来说面的很基础，面试官人很好，但是答的不好，感觉准备的方向搞错了。有些问题之前看到了但是没有仔细去看，可惜。"
+      },
+      {
+        "line_number": 3,
+        "excerpt": "明天小红书JAVA一面😡"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67a5ecf4000000002903386f.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "58c1d797a7b4ba6a44da8fb6b3ea1a8aa756ff57",
+    "byte_size": 459,
+    "sha256": "572678e4d29daeaca3bb74b8602f3e0d789e4267601eee7f04a7f2bfed273972",
+    "locator": "note_desc:1-4",
+    "excerpt": "总体来说面的很基础，面试官人很好，但是答的不好，感觉准备的方向搞错了。有些问题之前看到了但是没有仔细去看，可惜。\n感恩快手给我面试机会，第一次面试有点紧张😭😭，手子等我成为爪瓦糕手我再来找你😭，感觉基础还是不牢。\n明天小红书JAVA一面😡\n#面经[话题]# #找实习[话题]# #后端开发[话题]# #java[话题]# #大厂[话题]# #快手[话题]#",
+    "text": "总体来说面的很基础，面试官人很好，但是答的不好，感觉准备的方向搞错了。有些问题之前看到了但是没有仔细去看，可惜。\n感恩快手给我面试机会，第一次面试有点紧张😭😭，手子等我成为爪瓦糕手我再来找你😭，感觉基础还是不牢。\n明天小红书JAVA一面😡\n#面经[话题]# #找实习[话题]# #后端开发[话题]# #java[话题]# #大厂[话题]# #快手[话题]#\n",
+    "line_count": 5,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:67a5ecf4000000002903386f.txt",
+      "byte_size": 459,
+      "git_blob_sha": "58c1d797a7b4ba6a44da8fb6b3ea1a8aa756ff57"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

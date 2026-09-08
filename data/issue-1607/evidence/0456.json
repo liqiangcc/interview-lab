@@ -1,0 +1,89 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0456-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 456,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/456",
+  "source_note_id": "xhs-note:6760e511000000001300dc50",
+  "expected_body_sha256": "fdc5c34a3b5bb9955c24a3e235184bf5ef1662744ef89c3e96e7e99cd812b44e",
+  "expected_source_revision_id": "xhs-note:6760e511000000001300dc50:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 10,
+        "excerpt": "第二阶段：基础八股文"
+      },
+      {
+        "line_number": 16,
+        "excerpt": "Java1.8有用过哪些新特性，nabuda表达式底层是怎么实现的有了解吗？还有其他特性吗？ 1.7里HashMap链表有环的问题展开说说"
+      },
+      {
+        "line_number": 18,
+        "excerpt": "线上遇到问题，有用过阿里开源的Arthas吗"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/6760e511000000001300dc50.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "14918f642591c982346ff83482794f503ca822fb",
+    "byte_size": 2195,
+    "sha256": "f5ae1ebb5f915d61c311b3cd33e5b0f241441f4d63b4824cbf91df7a72065c99",
+    "locator": "note_desc:1-8",
+    "excerpt": "面试平台是快手的，会检测是否停留在当前页面\n聊项目，可共享屏幕说\n项目发散提问：AOI数据更新的场景和频率是怎么样的（天级更新+实时更新）\n现在是三种降级方案并存的，数据一致性是怎么保障的\n你们这个项目使用到的业务场景说下，以饿了么下单的用户场景说下，是怎么用的（还是业务场景）\n介绍下点判定在AOI内的底层逻辑是什么样的，底层原理\n项目里的点判定查询过程，耗时是多少，\n内存数据有考虑增量更新吗，是什么原因不能热更新内存数据的？",
+    "text": "面试平台是快手的，会检测是否停留在当前页面\n聊项目，可共享屏幕说\n项目发散提问：AOI数据更新的场景和频率是怎么样的（天级更新+实时更新）\n现在是三种降级方案并存的，数据一致性是怎么保障的\n你们这个项目使用到的业务场景说下，以饿了么下单的用户场景说下，是怎么用的（还是业务场景）\n介绍下点判定在AOI内的底层逻辑是什么样的，底层原理\n项目里的点判定查询过程，耗时是多少，\n内存数据有考虑增量更新吗，是什么原因不能热更新内存数据的？\n实时更新这块是怎么做的，内部热修工具，修完这条是把数据整个覆盖掉还是增量的更新？Redis里面增量更新RTree是怎么做的\n第二阶段：基础八股文\n多线程并发，线程池的工作原理，使用线程池有什么坑需要避开的？为什么最大线程数设置为核心线程数的2倍？\nJava里的协程有了解吗？\n有用到异步编程？\nFutureTask是怎么用的？\n数据都是存在DB里的，介绍一下线上SQL优化的经验？？？了解过MySQL在执行语句的时候是怎么选索引的，怎么选个最合适的索引？或者你怎么让MySQL使用你指定的索引，怎么强制走索引的\nJava1.8有用过哪些新特性，nabuda表达式底层是怎么实现的有了解吗？还有其他特性吗？ 1.7里HashMap链表有环的问题展开说说\n垃圾收集器说说，为什么你的项目里用的是CMS收集器，说下G1和CMS收集器的区别，有尝试过JVM的调优吗\n线上遇到问题，有用过阿里开源的Arthas吗\n用Redis，用过哪些数据结构，有了解过Redis持久化机制吗，RDB和AOF，什么情况下用RDB，AOF？\n第三阶段：算法题\n字符串相乘，Leetcode43\n反问：业务，团队规模60多人，项目开发流程？\n#学习[话题]# #金融科技岗[话题]# #银行面试真题[话题]# #面试技巧[话题]# #应届生[话题]# #应届生找工作[话题]# #应届生求职[话题]# #银行招聘[话题]# #国企工作[话题]# #国企招聘[话题]# #java学习[话题]# #java[话题]# #java面试[话题]# #java项目[话题]#\n",
+    "line_count": 24,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:6760e511000000001300dc50.txt",
+      "byte_size": 2195,
+      "git_blob_sha": "14918f642591c982346ff83482794f503ca822fb"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

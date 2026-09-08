@@ -1,0 +1,103 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1292,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1292",
+  "source_note_id": "xhs-note:68c2572e000000001d00cffa",
+  "source_revision_id": "xhs-note:68c2572e000000001d00cffa:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "c0adca47128d4ed16d2fb0a92a74f850e8327621162906ce091fca21fec874a8",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event",
+      "question-only",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 21,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "has_completed_event_evidence": true,
+    "has_structured_candidate_event": false,
+    "generic_advice_or_aggregated": false,
+    "scheduled_only": false,
+    "question_only": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "aggregated_text": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": [
+      {
+        "case_key": "meituan-process",
+        "anchor": "美团",
+        "line": 21,
+        "locator": "artifact-line:22#offset:5-7",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:美团"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68c2572e000000001d00cffa.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "0d0a045b8c3bb34f5e3249027f8af4a78b01dfb8",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 1289,
+    "content_sha256": "129229f2733799a460227ec40d0aa78d4712dd487278b70a2e724bf95ac88be9",
+    "excerpt": {
+      "excerpt": "写在前面：又被狠狠拷打…面麻了最近",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "写在前面：又被狠狠拷打…面麻了最近\n \n1.部门介绍+自我介绍\n2.项目中用什么jdk？jdk8和jdk17的新特性？\n3.stream流有哪些用法？注意事项？\n4.项目中用的什么垃圾回收器？G1、CMS的基本原理？参数调优呢？\n5.我们会把最大堆、最小堆参数设置成一样的？知道为什么吗？\n6.接触过线程池吗？基本参数/工作原理？使用场景？你用线程池是为了干什么？\n7.java中的锁机制介绍一下吧？乐观锁呢？\n8.知道你们项目用的什么web容器吗？\n9.说说tomcat的IO模式吧\n10.其他的IO模式呢？也简单说说\n11.有哪些中间件使用到了NIO这种模式的\n12.netty了解吗？rpc框架呢？说说底层原理\n13.springboot的启动过程\n14.项目里redis用来干嘛的？使用场景？\n15.说说redis的持久化机制？\n16.mysql性能调优接触过吗？说说你的理解\n17.大数据相关技术了解吗\n18.AI相关的调优呢？比如RAG优化、Prompt提示词优化等\n19.手撕：K个一组反转链表\n20.一些美团价值观问题（类似HR面）\n21.反问：部门用C++多还是java多？对我今后的提升有什么建议吗？"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "01c1e17d3ba5dce321e90fe7171672c134a345ed4caf003b156555e259a1c4dc"
+}

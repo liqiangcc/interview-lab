@@ -1,0 +1,93 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1260,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1260",
+  "source_note_id": "xhs-note:68b97c90000000001d001f09",
+  "source_revision_id": "xhs-note:68b97c90000000001d001f09:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "77a27d08fdc1dad6317e1d30f2679e0eadc6f3693ee175e5fd9b858446568541",
+  "disposition": "blocked",
+  "rationale": "Exact Source records only a scheduled, invited, or arranged interview and no completed candidate interview process; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event",
+      "scheduled-only",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 0,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "has_completed_event_evidence": false,
+    "has_structured_candidate_event": false,
+    "generic_advice_or_aggregated": false,
+    "scheduled_only": true,
+    "question_only": false,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "aggregated_text": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68b97c90000000001d001f09.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "57a7e83ecad3ce96fe5331726393cebdbff03a35",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 286,
+    "content_sha256": "c9a558297655f470a72263f6c950d88887c0821bcd17385ca19b7d538ea0d762",
+    "excerpt": {
+      "excerpt": "官网状态没变，也没发面邀邮件",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "官网状态没变，也没发面邀邮件\n就光打了两个电话约面试时间说是电话面\n这是什么情况啊…好奇怪 不会是刷kpi吧[黑薯问号R]"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records only a scheduled, invited, or arranged interview and no completed candidate interview process; retain pending."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source records only a scheduled, invited, or arranged interview and no completed candidate interview process; retain pending.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "3ebc68a2648da5c9b814d54ef6f4124089df4244f55ff68035c7ee44f3ecb2b6"
+}

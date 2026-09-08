@@ -1,0 +1,70 @@
+{
+  "schema_version": "issue-1606-boundary-review-request.v1",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "child_issue": 1606,
+  "issue_number": 367,
+  "source_note_id": "xhs-note:670fc29b000000001b03df07",
+  "source_id": "xhs:670fc29b000000001b03df07",
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/367",
+  "expected_body_sha256": "46e9c36f3d59825839389916306f020d364c4f4c303cfe267e8a994bb480f7dc",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:670fc29b000000001b03df07:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "transition_id": "issue-1606-367-boundary-review-1",
+  "reviewed_at": "2026-09-08T02:05:50Z",
+  "reviewer_kind": "ai-assisted",
+  "disposition": "ready",
+  "decision": "single-interview",
+  "evidence": {
+    "artifact_ref": "liqiangcc/xhs:note_desc/670fc29b000000001b03df07.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "artifact_provenance": "source_projection",
+    "kind": "text_projection",
+    "git_blob_sha": "221d82d247e93dbceba003e6f4f3ce5f19c5da14",
+    "byte_size": 509,
+    "excerpts": [
+      {
+        "excerpt": "我就说笔试全A了咋不给我面，过了大半个月终于面上了，面了40min，项目拷打，简历上的所有项目和实习都拷打了一遍，部分会问的比较细，无手撕无八股，结束反问一下强度，引起了面试官的警觉，直接问我能接受的范围，历经秋招面试拷打的我直接说早九晚九都不算啥，果然她说一般就是早上9点上班，晚上干到9点左右[失望R]（不如考公）",
+        "line": 2,
+        "locator": "artifact-line:2"
+      }
+    ]
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:2"
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:2"
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:2"
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "Source projection explicitly records a completed candidate interview event; no independent multi-event boundary is evidenced in the reviewed projection. Same-process rounds remain one case."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:2"
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:2"
+    }
+  ],
+  "limitations": [
+    "Boundary Review only determines whether 0/1/N InterviewNote case identity may be materialized; it does not write source-ready, InterviewContext, learning labels, or InterviewNote Issues.",
+    "No live evidence comment or transition mutation is authorized by this artifact; any later apply must create/bind durable per-issue evidence and recheck body/state/source CAS."
+  ]
+}

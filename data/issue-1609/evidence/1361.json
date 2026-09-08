@@ -1,0 +1,93 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1361,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1361",
+  "source_note_id": "xhs-note:68cd8f5f000000001300bb2b",
+  "source_revision_id": "xhs-note:68cd8f5f000000001300bb2b:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "305c3507d8a3411955f21e1b82138a321b4907ffbb1349064c4150155b65321d",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "question-only",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 15,
+    "has_first_person_event": true,
+    "has_explicit_candidate_event": true,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "has_completed_event_evidence": true,
+    "has_structured_candidate_event": false,
+    "generic_advice_or_aggregated": false,
+    "scheduled_only": false,
+    "question_only": true,
+    "outcome_signal": true,
+    "resource_signal": false,
+    "aggregated_text": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_json/68cd8f5f000000001300bb2b.json@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "cd053255309935d473b76b7f4df92ef4a12e778c",
+    "kind": "json",
+    "provenance": "source_projection",
+    "byte_size": 22166,
+    "content_sha256": "7f6559ce39ad9f0aa826a6345a812f0a0483b054ae9571d254e49180bcb0b588",
+    "excerpt": {
+      "excerpt": "\"global\": {",
+      "line": 2,
+      "locator": "artifact-line:2",
+      "semantic_excerpt": "自我介绍\n \n项目：\n1、介绍一下最值得讲的一个项目\n2、你在这个项目中承担什么样的角色\n3、你项目中使用到的NLP和CV算法具体是什么，用的什么技术（模型）\n4、你在构造专用数据集的时候得注意哪些问题\n5、你了解当前一些模型（GPT，BERT）的底层架构么\n \n八股：\n1、讲一下你对TCP四次挥手的理解\n2、currentHashMap中，同时对同一个key进行put和get，会发生什么\n3、你如何理解为什么要同时重写hashcode和equals方法，如果不同时重写会发生什么\n4、Java的NIO你了解多少，什么场景下使用\n5、如何查看进程的ID，知道进程名字如何知道PID\n6、对于大规模并发连接请求，你应该使用什么技术\nJava线程对于变量的操作是怎么样的（JMM内存模型），怎样每次都获取主内存数据呢\n6、有一个推荐算法，客户端调用A接口获取推荐的视频，A使用多线程调用N个同步接口去获取视频流，但是需要再200ms内返回结果，代码层面上你该如何实现\n7、你说使用线程池提交任务，并获取N个任务feature，在.get里面限制200ms，那么从这N个feature里获取结果是同步的么，意思是get一个feature会阻塞其他feature么\n8、springboot开发里，我们构造一个配置类，就可以直接读取数据库了，这是怎么实现的\n9、如果配置类里的配置是加密的，该怎么办呢，你知道bean加载流程是怎样的么，能否在中间某一步进行操作\n \n手撕：\n滑动窗口最大值\n（好像是150里面的，先让我说思路，我说维护一个单调递减的双端队列，存储数据的下标，滑动过程中维护递减队列，队头下标对应元素就是最大值，但是面试官似乎想的不是这样的解法，一个劲问我假设一开始元素有XX，然后加入XX会怎么样…我解释了半天，最后他说：你这种解法应该是可以的。然后代码都没让我写，我就好奇了，这不是官方最优解么，这面试官装糊涂还是）\n \n总结：\n八股全是场景提，并不是完全按照简历上的东西进行简单的提问，以上记录的大部分都是场景提中间提问的问题（或者说是我没回答上来时候给的提示），强度比一二面大多了，一二面是项目和纯八股题。"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "dfa9d70a58d50c9844e32e670c4375f297fab7c4a6360f92eeac3669dbe5c7f5"
+}

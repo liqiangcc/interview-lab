@@ -1,0 +1,94 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1259,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1259",
+  "source_note_id": "xhs-note:68b85518000000001d026c52",
+  "source_revision_id": "xhs-note:68b85518000000001d026c52:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "3d59a141090305f6cdd9f6c0e627e6003c18fb2cab4e5404dcb35da749a1f62f",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event",
+      "question-only",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 11,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": false,
+    "has_detailed_event": true,
+    "has_completed_event_evidence": true,
+    "has_structured_candidate_event": false,
+    "generic_advice_or_aggregated": false,
+    "scheduled_only": false,
+    "question_only": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "aggregated_text": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68b85518000000001d026c52.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "690e33626a7dcd71fb268cbe0e4792df8d3bdc9e",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 832,
+    "content_sha256": "a27197e2c9486274913a7b2df781a325ed26da8e120f65a189708a967cfe2e47",
+    "excerpt": {
+      "excerpt": "开头聊了一会儿部门业务 有了初步了解 知道我有一段美团实习 就开始猛猛追问美团实习 然后延伸拓展一些场景题 八股也有不少",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "开头聊了一会儿部门业务 有了初步了解 知道我有一段美团实习 就开始猛猛追问美团实习 然后延伸拓展一些场景题 八股也有不少\n1.实习问了二十分钟\n2.cow机制 以及应用场景 设计的数据结构\n3.redis哨兵模式的leader选举\n4.两阶段提交了解么 mysql的\n5.redis网络模型 以及EL TL\n6.concurrent hashmap 如何保证并发安全\n7.mysql主从复制实现原理\n8.还有一些八股记不住了 有点多……\n9.一道sql题 一道索引分析题\n10.算法 滑动窗口的最大值\n11.怎么学习一门新技术 以及沉淀知识？"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "560a9457d0a4fc0ad63b74d69416c0885a1bf859f99baa20adfd0cd15db2e408"
+}

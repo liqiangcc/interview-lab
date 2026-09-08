@@ -1,0 +1,100 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1277,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1277",
+  "source_note_id": "xhs-note:68be9985000000001b036fc9",
+  "source_revision_id": "xhs-note:68be9985000000001b036fc9:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "119a1d8aef10e220662ef014743b9ad37a56ec424c8b11b652798e310f6bacef",
+  "disposition": "single-interview",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event"
+    ],
+    "questions": 1,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": true,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "has_completed_event_evidence": true,
+    "has_structured_candidate_event": true,
+    "generic_advice_or_aggregated": false,
+    "scheduled_only": false,
+    "question_only": false,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "aggregated_text": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": [
+      {
+        "case_key": "xiaomi-process",
+        "anchor": "小米",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-2",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:小米"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68be9985000000001b036fc9.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "d57e2d96c39c8fb18129a9d6b53074e4ce8e4fcc",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 445,
+    "content_sha256": "733b7481a204b062760482af36505dee498a7f4b1c75d9aa658381346ea08582",
+    "excerpt": {
+      "excerpt": "小米C++一面有手撕",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "小米C++一面有手撕\n主要流程 面试官人很好 会引导你回答问题 好评！\ntcp udp\nhttp 1.1 http2.0 http3.0有啥区别\nredis 切片 集群 数据类型\nMySQL存储相关知识\nepoll编程相关知识\nC++ 虚函数 虚表存放位置\n为啥构造函数不能设置为虚函数 析构函数最好设置\n手撕：acm模式 动态规划 很简单 一个矩阵从左上角走到右下角 中间有一些障碍"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "50d4e50fbf6e4a9996406e1a6e4516382d04c4fa4b47a99f9f262ce122721f7c"
+}

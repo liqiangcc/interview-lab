@@ -1,0 +1,94 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1383,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1383",
+  "source_note_id": "xhs-note:68d160110000000012015a97",
+  "source_revision_id": "xhs-note:68d160110000000012015a97:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "c3725b6b67df8915eff80d29f0f0f709f1689db387c4b08851477d56ff31887e",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event",
+      "question-only",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 17,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "has_completed_event_evidence": true,
+    "has_structured_candidate_event": false,
+    "generic_advice_or_aggregated": false,
+    "scheduled_only": false,
+    "question_only": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "aggregated_text": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_json/68d160110000000012015a97.json@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "96662ba95780f6d9253101df72c67167b308c014",
+    "kind": "json",
+    "provenance": "source_projection",
+    "byte_size": 22746,
+    "content_sha256": "df9d528f118c5875f1c0ee5f395281d3b798d2097d1259690371331ee94b433c",
+    "excerpt": {
+      "excerpt": "\"global\": {",
+      "line": 2,
+      "locator": "artifact-line:2",
+      "semantic_excerpt": "1、自我介绍\n2、实习经历\n3、怎么解决Spring循环依赖问题，@Lazy注解的作用\n3、EasyExcel和POI框架的区别\n4、导出优化怎么做的？\n5、volatile关键字的作用\n6、equals和hashcode方法\n7、hash冲突的解决方法（线性探测法、链地址法、再哈希法等）\n8、AQS框架介绍下\n9、双亲委派模型是什么，解决了什么问题？\n10、什么是IO多路复用\n11、什么是中断，中断的处理流程\n12、操作系统被中断是怎么处理的？\n13、TCP的四次挥手，在发送ack和fin状态变化过程是怎么样的？\n14、SQL的执行过程\n15、算法题：力扣463 岛屿的周长\n16、反问"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "434609c6ed29d689dc26cfc328f53cbd19a6bafe9f5948bf27cd15771f33b795"
+}

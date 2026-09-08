@@ -1,0 +1,92 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1282,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1282",
+  "source_note_id": "xhs-note:68c0d118000000001c012521",
+  "source_revision_id": "xhs-note:68c0d118000000001c012521:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "2e916594daaa2e33af0e7225cd4ff833f26cb7a1616df68fabe0dd80198f2d6a",
+  "disposition": "blocked",
+  "rationale": "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 0,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": false,
+    "has_detailed_event": false,
+    "has_completed_event_evidence": false,
+    "has_structured_candidate_event": false,
+    "generic_advice_or_aggregated": false,
+    "scheduled_only": false,
+    "question_only": false,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "aggregated_text": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68c0d118000000001c012521.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "b9d00cc30763c18a091b9a0be36bc4b43ee44748",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 1046,
+    "content_sha256": "fae39a3423f0d010ece059e5a05922e525b82b310975fcb615b16324a8a46a83",
+    "excerpt": {
+      "excerpt": "体验很不错，60min，中途设备故障调试了五六分钟",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "体验很不错，60min，中途设备故障调试了五六分钟\n具体是简历深挖，每一个简历部分都有发散以及具体的八股深挖。\n目前有印象的有：\nmapreduce执行流程\nhdfs如何保证数据一致性\nflink和kafka如何保证数据的一致性\nflink的checkpoint里的barrier对齐和非对齐分别如何实现exactly-once；非对齐实现需要怎么做？\nkafka如何保证数据一致性\nspark和mr的shuffle有哪些区别\nspark的内存参数一般怎么调整；一般集群的spark内存参数会在什么样的一个级别？\n数仓分层，每一层有什么作用？具体的全链路流程是什么样的？\n维表应该如何进行设计？\n用户画像如何搭建？\n然后是一些数据结构的考察。\n \n答得蛮顺的，考的很细，然后是两道sparksql题，不难。其中一个是考察数据构造，需要对sparksql有较深的使用了解。\n \n总体来说问题比较多和深入。"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "f36a2ac8bc9f9b9225a6ab6014f4129f773f2f38d47793ab119b7f9e1f3245da"
+}

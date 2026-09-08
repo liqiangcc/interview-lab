@@ -1,0 +1,85 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0474-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 474,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/474",
+  "source_note_id": "xhs-note:67768075000000001300ea4b",
+  "expected_body_sha256": "09400d4c864ba218966aa38b2fc00a9b1772bb44c18e18dd29e271961287cad0",
+  "expected_source_revision_id": "xhs-note:67768075000000001300ea4b:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 3,
+        "excerpt": "2.根据简历项目经验问相关问题"
+      },
+      {
+        "line_number": 5,
+        "excerpt": "4.数据库三大范式，以及相关问题"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67768075000000001300ea4b.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "dfe00e3e497d2c65ea6ffa43cba2c2b4a26807c3",
+    "byte_size": 205,
+    "sha256": "3ad4998279b9edffff52ffe0f14dc6291c1f575e61241a7c4b0a70f3113331f1",
+    "locator": "note_desc:1-7",
+    "excerpt": "小米安卓开发面试：\n1.自我介绍\n2.根据简历项目经验问相关问题\n3.android四大组件\n4.数据库三大范式，以及相关问题\n5.http报文格式\n6.手撕代码：java单例模式",
+    "text": "小米安卓开发面试：\n1.自我介绍\n2.根据简历项目经验问相关问题\n3.android四大组件\n4.数据库三大范式，以及相关问题\n5.http报文格式\n6.手撕代码：java单例模式\n",
+    "line_count": 8,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:67768075000000001300ea4b.txt",
+      "byte_size": 205,
+      "git_blob_sha": "dfe00e3e497d2c65ea6ffa43cba2c2b4a26807c3"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

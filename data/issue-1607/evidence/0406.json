@@ -1,0 +1,81 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0406-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 406,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/406",
+  "source_note_id": "xhs-note:6732fa5e000000001b02ed03",
+  "expected_body_sha256": "94b8243c3935758e65cd5bfa8ef75fd7eb73abebe3531780b24def81a323cab3",
+  "expected_source_revision_id": "xhs-note:6732fa5e000000001b02ed03:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 1,
+        "excerpt": "项目部分就不说了，只写一点八股，上来先画uml图时序图泳道图。"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/6732fa5e000000001b02ed03.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "5d11cee573fd5eea566cf16ded41887f7ced04ef",
+    "byte_size": 555,
+    "sha256": "670594fc9e1a6ebaa94bb88114a6e06ef94727f9abd62fb3ff55a0b021b9dc3c",
+    "locator": "note_desc:1-6",
+    "excerpt": "项目部分就不说了，只写一点八股，上来先画uml图时序图泳道图。\n面完5分钟收到电话，说晚上约时间补一下算法。\n更新：晚上那个面试官说是二面，手撕两道题\n1、给定三个字符串s1、s2、s3，判断s3是否可以由s1和s2的字符交替组成，如：s1 = abc s2 = fdg s3 = abfdcg res = true\n2、给定一个链表和一个树，判断树中是否包含从上到下的序列=链表内容。\n﻿#腾讯[话题]#﻿ ﻿#秋招[话题]#﻿ ﻿#秋招信息差[话题]#﻿ ﻿#面试[话题]#﻿",
+    "text": "项目部分就不说了，只写一点八股，上来先画uml图时序图泳道图。\n面完5分钟收到电话，说晚上约时间补一下算法。\n更新：晚上那个面试官说是二面，手撕两道题\n1、给定三个字符串s1、s2、s3，判断s3是否可以由s1和s2的字符交替组成，如：s1 = abc s2 = fdg s3 = abfdcg res = true\n2、给定一个链表和一个树，判断树中是否包含从上到下的序列=链表内容。\n﻿#腾讯[话题]#﻿ ﻿#秋招[话题]#﻿ ﻿#秋招信息差[话题]#﻿ ﻿#面试[话题]#﻿\n",
+    "line_count": 7,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:6732fa5e000000001b02ed03.txt",
+      "byte_size": 555,
+      "git_blob_sha": "5d11cee573fd5eea566cf16ded41887f7ced04ef"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

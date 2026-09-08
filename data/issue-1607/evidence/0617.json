@@ -1,0 +1,76 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0617-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 617,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/617",
+  "source_note_id": "xhs-note:67de6420000000001b03d1ed",
+  "expected_body_sha256": "eec216bf4d330057433b309baefb04a003fda67a9a56a386923ae8a087ec84b9",
+  "expected_source_revision_id": "xhs-note:67de6420000000001b03d1ed:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": []
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67de6420000000001b03d1ed.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "0f2a5366b9ca43ed378f088e44070df1a59012a1",
+    "byte_size": 168,
+    "sha256": "1980397e33ca01ba8d07faf5f5fbfa087e5b433edc7727b88d715d0f8734095f",
+    "locator": "note_desc:1-1",
+    "excerpt": "后面会给大家分享一些秋招时的面试录音，希望对大家能有所帮助，有的答不对的地方还请大家指出来一起学习#Java面经[话题]#",
+    "text": "后面会给大家分享一些秋招时的面试录音，希望对大家能有所帮助，有的答不对的地方还请大家指出来一起学习#Java面经[话题]#\n",
+    "line_count": 2,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:67de6420000000001b03d1ed.txt",
+      "byte_size": 168,
+      "git_blob_sha": "0f2a5366b9ca43ed378f088e44070df1a59012a1"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

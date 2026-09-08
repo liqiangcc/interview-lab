@@ -1,0 +1,93 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0664-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 664,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/664",
+  "source_note_id": "xhs-note:67ea06e9000000001d02633d",
+  "expected_body_sha256": "26bdd0e78b9b844fc45aeb2503e2c4203eacb97808396ae64910c4cdee4b7553",
+  "expected_source_revision_id": "xhs-note:67ea06e9000000001d02633d:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "proposal-only",
+    "proposed_decision": "single-interview",
+    "basis": "first-person experienced interview process plus structured question evidence; generic advice/job context does not override the experienced event",
+    "basis_lines": [
+      {
+        "line_number": 1,
+        "excerpt": "研发一面"
+      },
+      {
+        "line_number": 5,
+        "excerpt": "比如再有一个共享变量，如何保证线程安全说说ThreadLocal，底层如何实现 hashmap实现原理"
+      },
+      {
+        "line_number": 6,
+        "excerpt": "volatile关键字，解决了什么问题类加载机制"
+      },
+      {
+        "line_number": 7,
+        "excerpt": "JVM内存分布/内存结构?栈和堆的区别?堆的结构?为什么两个survivor区?对象在堆内存创建的生命周期 Spring的原理?AOP的实现?面向对象的设计原则?OCP?分布式系统如何保证数据一致性"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67ea06e9000000001d02633d.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "2d539ffd473213f0ad989004dbea17d63609e329",
+    "byte_size": 2491,
+    "sha256": "919c91a928881d01fdccb56444ac4965f44306972c252b484ed3a44cb2aca4f4",
+    "locator": "note_desc:1-8",
+    "excerpt": "研发一面\n(电话面，30分钟左右)\n自我介绍，讲下最有难度的项目对线程安全的理解\n比如有一个局部变量i=1，两个线程同时执行，是否线程安全\n比如再有一个共享变量，如何保证线程安全说说ThreadLocal，底层如何实现 hashmap实现原理\nvolatile关键字，解决了什么问题类加载机制\nJVM内存分布/内存结构?栈和堆的区别?堆的结构?为什么两个survivor区?对象在堆内存创建的生命周期 Spring的原理?AOP的实现?面向对象的设计原则?OCP?分布式系统如何保证数据一致性\n有一个方法接收一个消息类型数据，通过if-else处理，如何优化",
+    "text": "研发一面\n(电话面，30分钟左右)\n自我介绍，讲下最有难度的项目对线程安全的理解\n比如有一个局部变量i=1，两个线程同时执行，是否线程安全\n比如再有一个共享变量，如何保证线程安全说说ThreadLocal，底层如何实现 hashmap实现原理\nvolatile关键字，解决了什么问题类加载机制\nJVM内存分布/内存结构?栈和堆的区别?堆的结构?为什么两个survivor区?对象在堆内存创建的生命周期 Spring的原理?AOP的实现?面向对象的设计原则?OCP?分布式系统如何保证数据一致性\n有一个方法接收一个消息类型数据，通过if-else处理，如何优化\n设计一个秒杀系统?考虑哪些问题?有什么问题想问\n面试官没有问得很深入，就是对于线程安全高并发比较看重是真的，整个面试过程还是聊得挺愉快，收获很大，蚂蚁的面试官还是很nice，很有耐心，引导性地提问。研发二面\n(现场面，30分钟左右)\n从http请求发出到响应的整个流程\n追问如何http请求发送过来之后如何拦截，怎样配置拦截，具体怎样拦截(只知道tomcat拦截，在web.xml中配置，感觉是在问tomcat底层)\n说说类加载机制，可以自定义类加载器吗，为什么要自定义类加载器\n了解什么分布式数据一致性算法，具体说说 MySQL事务隔离级别以及MVCC机制 Redis缓存雪崩、缓存穿透以及如何解决?再次问了设计秒杀系统\n说说同步和异步，什么时候用同步，什么时候用异步\n在linux上面用过什么调优工具，用过什么监控工具，怎样监控自己应用资源消耗情况\n如果CPU占用资源很高有可能是什么问题，CPU占用资源低但是系统响应速度很慢可能是什么问题\njvm怎样调优，堆内存栈空间设置多少合适...研发三面\n(现场面，40分钟左右)\n如果让你实现一个MQ，怎么样保证消息不丢失?\n硬盘io速度会变慢，有什么解决办法吗?\nmysql的innodb索引数据结构为什么是b+树，用 hash来实现可以吗?分布式事务的实现?\n如何解决redis和mysql数据一致性?\n常见的MySQL主从同步方案有哪些?优劣势比较过?\n这次问的是秒杀如何防止超卖?最近有没有学习过新技术?有什么想问我的?\n三年到五年的职业规划?\n#面经[话题]# #面试真题[话题]# #蚂蚁面试题[话题]# #java[话题]# #程序员[话题]# #互联网大厂[话题]# #经验分享[话题]#\n",
+    "line_count": 29,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:67ea06e9000000001d02633d.txt",
+      "byte_size": 2491,
+      "git_blob_sha": "2d539ffd473213f0ad989004dbea17d63609e329"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

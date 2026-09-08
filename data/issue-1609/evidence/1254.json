@@ -1,0 +1,94 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1254,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1254",
+  "source_note_id": "xhs-note:68b912d5000000001d02565b",
+  "source_revision_id": "xhs-note:68b912d5000000001d02565b:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "7a16f588a2a0c4c6eeea9f1c9c606193211aa541fac86bd5c1c5bfa927284e09",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event",
+      "question-only",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 13,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": true,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "has_completed_event_evidence": true,
+    "has_structured_candidate_event": false,
+    "generic_advice_or_aggregated": false,
+    "scheduled_only": false,
+    "question_only": true,
+    "outcome_signal": true,
+    "resource_signal": false,
+    "aggregated_text": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68b912d5000000001d02565b.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "07b248062049bc2ecd2836d42298e577d3c3a9c8",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 1298,
+    "content_sha256": "383a0908ced4d1d81236ec346c5c705f2585e916b3ccacf31d793bb7470ef79d",
+    "excerpt": {
+      "excerpt": "（bg双非 9硕 不是佬，玻璃心求请大家嘴下留情）",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "（bg双非 9硕 不是佬，玻璃心求请大家嘴下留情）\n \n1.自我介绍\n \n实习：\n2.实习拷打（介绍你负责的业务模块，平台特色的点，技术突出的点）\n \n项目\n3.项目拷打（介绍一个特出的技术点）\n4.秒杀里你的redis是怎么做到抗住高并发写的能力\n5.reids+lua脚本性能达不到十几万的高并发，有没有考虑过\n6.那你为什么要用redis+lua脚本\n7.除了rabbitmq，还了解过kafka和rocketmq吗\n \n八股\n8.hashmap里的put方法的流程\n9.hashmap什么时候触发扩容，扩容的过程\n10.二叉树核心的优点\n11.MVCC\n12.mysql主从延迟和解决方案\n13.mysql间隙锁概念，什么情况下会产生间隙锁\n \n手撕：反转链表（反转的函数写出来了，但是自定义输入输出没写出来，[哭惹R][哭惹R] 力扣做多了的坏处，最后只讲了思路）\n \n反问环节\n \n总结：面试官人很好，不会的问题就说没事问过一个，手撕输入输出不会他就说你自己构造输入，结果还是没写出来，奈何自己编程太菜了[汗颜R]，其他八股答的七七八八，还是需要继续熟练，加油吧[皱眉R]\n \n上午12点面完，下午看就流程结束了[汗颜R]"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "803b6e631cce5bf9c5ddcc3247994ad6208d5e95bf93d9022ade556be78880ae"
+}

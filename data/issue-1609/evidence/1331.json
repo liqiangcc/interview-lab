@@ -1,0 +1,93 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1331,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1331",
+  "source_note_id": "xhs-note:68c92c6c0000000012022847",
+  "source_revision_id": "xhs-note:68c92c6c0000000012022847:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "7d0006dde6c80b1005e3aff6646cd60f21d278f0a2a2136569f09d70c41c2207",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "question-only",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 11,
+    "has_first_person_event": true,
+    "has_explicit_candidate_event": true,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "has_completed_event_evidence": true,
+    "has_structured_candidate_event": false,
+    "generic_advice_or_aggregated": false,
+    "scheduled_only": false,
+    "question_only": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "aggregated_text": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68c92c6c0000000012022847.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "ce89ca7f9f1961087c53e15b9b0d80eea50faa95",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 928,
+    "content_sha256": "cc91c620795c229a7f841455a00be9d432bd534bae13ed089ec4b118c437bdb5",
+    "excerpt": {
+      "excerpt": "写在前面：在官网投递快一个月没人理我，幸好学校有部门直通渠道，这次就是某部门的直通面试，感觉比较简单，没网上的那么难…",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "写在前面：在官网投递快一个月没人理我，幸好学校有部门直通渠道，这次就是某部门的直通面试，感觉比较简单，没网上的那么难…\n \n1.自我介绍\n2.concurrentHashMap的底层原理\n3.ThreadLocal底层原理\n4.讲讲自己熟悉的一个垃圾回收器，回收思想和具体工作流程\n5.聚簇索引、覆盖索引？\n6.mysql的MVCC和两阶段提交怎么实现的\n7.java中的字节输入流和字节输出流用了什么设计模式？你对这种设计模式如何理解？\n8.讲讲spring的Bean的生命周期\n9.项目中为什么用两种消息队列？（rabbitMq和Kafka）出于什么样的考虑？\n10.布隆过滤器的底层数据结构是什么？主要用来解决什么问题？\n11.手撕：删除一个链表中的重复节点"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "0380068fa141baa56ca3c38a8902b1d63dbfd2b131f48b7ce1400529fe71bd63"
+}

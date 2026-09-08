@@ -1,0 +1,94 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1251,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1251",
+  "source_note_id": "xhs-note:68b83bdb000000001d02e1fa",
+  "source_revision_id": "xhs-note:68b83bdb000000001d02e1fa:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "b9b0c707e1d0d1bb38a6ac465abee6e23f310814e88a97efef9b39edf1c22f98",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event",
+      "question-only",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 10,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": false,
+    "has_completed_event_evidence": true,
+    "has_structured_candidate_event": false,
+    "generic_advice_or_aggregated": false,
+    "scheduled_only": false,
+    "question_only": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "aggregated_text": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68b83bdb000000001d02e1fa.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "c951aa91f617a13ef96ab36a931e027b8b8febef",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 1009,
+    "content_sha256": "6d611f86166919f3190a7e15fe14a9f4b16a375ce3ef7c7a7e02c9c447704778",
+    "excerpt": {
+      "excerpt": "1、一道算法题，给了一个场景，然后需要完成这道题，不是力扣上面的，这里怕被开盒，我就不说了。（写了差不多一小时，有点难）",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "1、一道算法题，给了一个场景，然后需要完成这道题，不是力扣上面的，这里怕被开盒，我就不说了。（写了差不多一小时，有点难）\n2、实习方面最大的收获是什么\n3、对于MQ，为什么写吞吐比较高，可以做削峰填谷\n4、RocketMQ怎么保证数据不丢失，主从一致怎么保证的\n5、RocketMQ的同步复制和异步复制，异步复制的作用\n6、RocketMQ和Kafka的区别，RocketMQ为什么更加轻量级\n7、RocketMQ怎么保证节点一致性的，前端怎么知道访问哪个节点的\n8、如果Server宕机怎么办，怎么选用哪个Server呢\n9、Java的JNI有了解吗、它里面是做了什么功能吗\n10、设计模式了解吗，平时会用到设计模式吗，开放封闭原则了解吗\n好难，压力很大，三面 每面都是一个半小时，顶不住了！"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "10840e637c28847c2f48d962094f5d48d3256dba477224a541c9c34d9012b8c2"
+}

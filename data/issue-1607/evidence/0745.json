@@ -1,0 +1,93 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0745-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 745,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/745",
+  "source_note_id": "xhs-note:68004e24000000001d019c1c",
+  "expected_body_sha256": "6d0d9a810bf4e66d289886759e36cbdf4047704213d0c685d47ad38c6744934f",
+  "expected_source_revision_id": "xhs-note:68004e24000000001d019c1c:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "proposal-only",
+    "proposed_decision": "single-interview",
+    "basis": "first-person experienced interview process plus structured question evidence; generic advice/job context does not override the experienced event",
+    "basis_lines": [
+      {
+        "line_number": 2,
+        "excerpt": "1、自我介绍"
+      },
+      {
+        "line_number": 3,
+        "excerpt": "2、针对项目经历，请描述一下，项目背景，个人承担责任，项目难点，如何解决的？"
+      },
+      {
+        "line_number": 4,
+        "excerpt": "3、针对工作经历，问到如何组织系统联调，并推进项目如期上线交付的？"
+      },
+      {
+        "line_number": 5,
+        "excerpt": "4、手撕代码——二叉树的遍历展示"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68004e24000000001d019c1c.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "be796b312a0eb8a30d8e39972030c75e4aa77387",
+    "byte_size": 1607,
+    "sha256": "c894cdc2c09f2a6b1c4dddb3be75e67df6eb39d49f75851b0121932f1d1e8c95",
+    "locator": "note_desc:1-8",
+    "excerpt": "面试流程：\n1、自我介绍\n2、针对项目经历，请描述一下，项目背景，个人承担责任，项目难点，如何解决的？\n3、针对工作经历，问到如何组织系统联调，并推进项目如期上线交付的？\n4、手撕代码——二叉树的遍历展示\n5、针对java、mysql问一些基础知识（jvm比较重要）\n6、问了一些其他问题  现场给一个场景，让回答思路\n例如:",
+    "text": "面试流程：\n1、自我介绍\n2、针对项目经历，请描述一下，项目背景，个人承担责任，项目难点，如何解决的？\n3、针对工作经历，问到如何组织系统联调，并推进项目如期上线交付的？\n4、手撕代码——二叉树的遍历展示\n5、针对java、mysql问一些基础知识（jvm比较重要）\n6、问了一些其他问题  现场给一个场景，让回答思路\n例如:\n如何自己设计一个类似hashmap这样点插值的方法？\n7、反问:有什么想问面试官的？\n\t\n面试反思:\n1、自己的简历得熟悉，尤其项目经历，最好组织一个框架进行陈述，条理清晰，挖掘难点（个人认为是一次引导面试官继续追问的机会，增加互动。可以往自己侧重熟悉的地方引导）\n2、手撕代码环节，拼的就是积累，社招人如果积累不够，那就抽时间刷题吧，可以用手机版的leetcode 随时随地刷～[向右R]如果有其他好用的方法，大家也可以在评论区留言推荐[萌萌哒R]\n3、java技术岗，对基础知识的考察还是最重要的，在工作过程中，对工具的使用，可能只是知道怎么使用，但不知其深层次的原理。要知其然，还要知其所以然。\n\t\n总结：\n从预感的结果来看，无疑这次面试是不通过的，主要在于在工作过程中，忽略了技术基础与深层原理的探索与学习，以及面试前还是要花点时间看看八股文 刷刷题的#社招[话题]# #春招[话题]# #面试问题[话题]# #互联网大厂[话题]# #面试技巧[话题]# #java[话题]#\n",
+    "line_count": 19,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:68004e24000000001d019c1c.txt",
+      "byte_size": 1607,
+      "git_blob_sha": "be796b312a0eb8a30d8e39972030c75e4aa77387"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

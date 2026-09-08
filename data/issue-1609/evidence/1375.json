@@ -1,0 +1,94 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1375,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1375",
+  "source_note_id": "xhs-note:68d16a2d000000001101fea1",
+  "source_revision_id": "xhs-note:68d16a2d000000001101fea1:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "ad59a483555d3197b63e1440fcb38c5120997396f5ce3b752a529d13335bbd40",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event",
+      "question-only",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 14,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "has_completed_event_evidence": true,
+    "has_structured_candidate_event": false,
+    "generic_advice_or_aggregated": false,
+    "scheduled_only": false,
+    "question_only": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "aggregated_text": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_json/68d16a2d000000001101fea1.json@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "de93648ef913b612aa887cac98a774642634ba2c",
+    "kind": "json",
+    "provenance": "source_projection",
+    "byte_size": 22897,
+    "content_sha256": "b7853831e453a3a52f527d7dc0a85e47cc132bc1ae2964688b8be18963c5730d",
+    "excerpt": {
+      "excerpt": "\"global\": {",
+      "line": 2,
+      "locator": "artifact-line:2",
+      "semantic_excerpt": "岗位：基础平台研发工程师-Java（电话面）\n1、自我介绍\n2、问了一些个人情况（岗位选择、计算机相关课程、竞赛和保研）\n3、讲实习\n4、主机突然断电了，日志会丢失吗\n5、如何保证日志按时被清理了\n6、你在重构时，如何考虑和原有的代码兼容\n7、死锁是什么\n8、什么是线程安全，Java如何实现线程安全\n9、数据库中如果对一个数据有读有写的话，要加锁吗\n10、事务的隔离级别\n11、事务中的一致性和分布式系统中的一致性是一样的吗\n12、手撕1：非严格递增序列，原地去掉重复的数字，返回不同数字的个数，例子[1，1，2，3，3，3，4，4]，返回k=4，且原数组需变为[1，2，3，4，_，_，_，_]的形式\n13、手撕2：顺时针螺旋输出矩阵（hot100原题）\n14、反问"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "67dd70ba67d4a56f6f78ea90436902130a911fa7f29d3dc0b5e999a663a8bde2"
+}

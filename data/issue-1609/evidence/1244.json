@@ -1,0 +1,95 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1244,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1244",
+  "source_note_id": "xhs-note:68b6b1c9000000001c00edfa",
+  "source_revision_id": "xhs-note:68b6b1c9000000001c00edfa:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "5885ca91e359c981e0b933e09899771ef2da766400d37422daa86ef958f99809",
+  "disposition": "blocked",
+  "rationale": "Exact Source provides only an interview outcome, offer, rejection, or result without a bounded candidate event; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "outcome-or-offer-only",
+      "no-first-person-event",
+      "question-only",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 5,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": false,
+    "has_detailed_event": false,
+    "has_completed_event_evidence": true,
+    "has_structured_candidate_event": false,
+    "generic_advice_or_aggregated": false,
+    "scheduled_only": false,
+    "question_only": true,
+    "outcome_signal": true,
+    "resource_signal": false,
+    "aggregated_text": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": true,
+    "multi_signal": false,
+    "case_segments": []
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68b6b1c9000000001c00edfa.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "6ee5f36d38ddf67700caf157ff7c7ead52273cdc",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 868,
+    "content_sha256": "d53b23185041fa15f54b2657f9b51e6951ed8c52aec5e08bcece5b19604a97fe",
+    "excerpt": {
+      "excerpt": "1. 假设你需要开发快手直播的弹幕系统，如何设计高并发的后端架构？",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "1. 假设你需要开发快手直播的弹幕系统，如何设计高并发的后端架构？\n◦ 追问 1：你会使用哪些中间件（如 Redis、Kafka）？\n◦ 追问 2：如何防止弹幕刷屏和敏感内容？\n2. 描述一次使用 Spring Boot 开发微服务的经历，遇到过哪些服务调用问题？\n3. 解释 Java 内存模型，如何避免并发编程中的可见性和有序性问题？\n4. 在设计数据库表结构时，如何优化查询性能？\n◦ 追问 1：你会如何设计索引？\n◦ 追问 2：如何处理分库分表？\n5. 分享一次通过代码重构提升系统可维护性的经历，关键改进是什么？"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source provides only an interview outcome, offer, rejection, or result without a bounded candidate event; retain pending."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source provides only an interview outcome, offer, rejection, or result without a bounded candidate event; retain pending.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "15a4634e44a3ebfc479f597736f47e9df0d6fa163703fb0c9a0ac1d1987dd544"
+}

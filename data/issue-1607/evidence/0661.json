@@ -1,0 +1,93 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0661-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 661,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/661",
+  "source_note_id": "xhs-note:67ea2389000000001c02bf17",
+  "expected_body_sha256": "b254742ae590dcbf22acb6a60c4857944d92a62e873889827b9aa452a9279309",
+  "expected_source_revision_id": "xhs-note:67ea2389000000001c02bf17:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "proposal-only",
+    "proposed_decision": "single-interview",
+    "basis": "first-person experienced interview process plus structured question evidence; generic advice/job context does not override the experienced event",
+    "basis_lines": [
+      {
+        "line_number": 1,
+        "excerpt": "Java项目经历这样写，面完5家被4家捞回来二面！"
+      },
+      {
+        "line_number": 2,
+        "excerpt": "前天深夜有个兄弟找我哭诉：面美团被问\"你这个ERP系统有什么技术含量\"，当场大脑宕机。这年头写项目经历=技术自首现场，我给你看个真实改造案例："
+      },
+      {
+        "line_number": 7,
+        "excerpt": "- 用Redis+Lua实现分布式扣减，解决超卖问题（压测QPS 1.8w+）"
+      },
+      {
+        "line_number": 11,
+        "excerpt": "1. 别把项目写成流水账（HR眼里的扣分项）"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67ea2389000000001c02bf17.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "cfbe0e292a7ff86a5e1a8ac3ce842edd6011d22d",
+    "byte_size": 2193,
+    "sha256": "b1e636efd1068481f289d157e45ec81a1797980bf76ceabeec08e9835eadf055",
+    "locator": "note_desc:1-8",
+    "excerpt": "Java项目经历这样写，面完5家被4家捞回来二面！\n前天深夜有个兄弟找我哭诉：面美团被问\"你这个ERP系统有什么技术含量\"，当场大脑宕机。这年头写项目经历=技术自首现场，我给你看个真实改造案例：\n原版（自杀式写法）：\n\"开发商品管理模块，使用SpringBoot+MyBatis，完成增删改查功能\"\n改造后（收割机版本）：\n\"从0到1设计高并发库存系统（日均100w+交易量）\n- 用Redis+Lua实现分布式扣减，解决超卖问题（压测QPS 1.8w+）\n- 设计三级库存缓存策略，降低DB查询压力75%",
+    "text": "Java项目经历这样写，面完5家被4家捞回来二面！\n前天深夜有个兄弟找我哭诉：面美团被问\"你这个ERP系统有什么技术含量\"，当场大脑宕机。这年头写项目经历=技术自首现场，我给你看个真实改造案例：\n原版（自杀式写法）：\n\"开发商品管理模块，使用SpringBoot+MyBatis，完成增删改查功能\"\n改造后（收割机版本）：\n\"从0到1设计高并发库存系统（日均100w+交易量）\n- 用Redis+Lua实现分布式扣减，解决超卖问题（压测QPS 1.8w+）\n- 设计三级库存缓存策略，降低DB查询压力75%\n- 自研库存对账工具，每周减少人工核验12人/小时\"\n看到区别没？教你三个让项目经历起死回生的狠招：\n1. 别把项目写成流水账（HR眼里的扣分项）\n错误姿势：\n\"负责登录模块开发，使用JWT做认证\"\n正确打开方式：\n\"重构鉴权体系，OAuth2.0+JWT方案使单点登录响应时间降低40%\"\n\"防御XSS攻击，拦截恶意请求日均1.2w次\"\n核心公式：用STAR法则替代功能罗列（背景+任务+动作+结果）\n2. 技术选型别当堆料狂魔\n菜鸟操作：\n\"项目采用SpringCloud+Redis+RocketMQ+ES\"\n老司机写法：\n\"网关层用Sentinel熔断突发流量（峰值拦截3w/s请求）\nRocketMQ解耦订单履约流程，吞吐量提升5倍\nES聚合日志分析，故障定位效率提升70%\"\n划重点：技术组合拳要带攻击路径\n3. 项目难点别写\"优化性能\"\n自杀式描述：\n\"解决了系统卡顿问题\"\n复活指南：\n\"定位N+1查询问题（SQL执行从12s→0.8s）\n重构线程池配置（错误率从15%→0.2%）\n设计分级补偿策略（资损率降低97%）\"\n必杀技：用CAR模型（挑战+行动+结果）替代模糊描述\n上周帮人改了个真实案例：\n原项目描述：\"参与电商系统开发\"\n改造后：\"设计秒杀系统防崩溃方案：\n- 漏斗限流削峰承压8倍流量\n- 库存预热+本地缓存降低Redis压力\n- 动态二维码防机器人刷单（拦截率99%）\"\n改完第二天，直接收到滴滴和快手的面试邀约\n最后灵魂拷问：你现在写的项目经历，在面试官眼里是不是像\"CRUD工具人实录\"？\n",
+    "line_count": 42,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:67ea2389000000001c02bf17.txt",
+      "byte_size": 2193,
+      "git_blob_sha": "cfbe0e292a7ff86a5e1a8ac3ce842edd6011d22d"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

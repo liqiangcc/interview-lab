@@ -1,0 +1,81 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0676-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 676,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/676",
+  "source_note_id": "xhs-note:67ed5649000000001d02cbac",
+  "expected_body_sha256": "409749551454c227953e528f11ee580f257375b34df724d61289a3cbfec6d4c4",
+  "expected_source_revision_id": "xhs-note:67ed5649000000001d02cbac:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 36,
+        "excerpt": "总的来说，感觉问的内容很多很广很杂，和Java对应八股差挺多，前面也不是每个都答的很好，感觉很可能寄了[失望R]"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67ed5649000000001d02cbac.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "8c110e630c2ffb0f06f870700ca5800e7d900e51",
+    "byte_size": 2136,
+    "sha256": "45a43bb3c58a137445bc8f36e665ec91c861b9b4dee1f023f4679098e4d325e7",
+    "locator": "note_desc:1-8",
+    "excerpt": "感觉这个部门用Java不多（字节估计是go了），问的很多和Java无关\n先让自我介绍\n然后问我操作系统虚拟内存怎么映射（印象里好像块和页？这个没复习过操作系统，学习的有点久了记不清了）\n进程间通信方式（消息队列，信号，信号量，套接字，共享内存，管道）\n进程间同步方法，只记起来读写锁和互斥锁\n操作系统答得一般般[捂脸R]\n然后说问问数据结构\n先问我设计一个文件存储系统数据库怎么设计，会用哪些数据结构",
+    "text": "感觉这个部门用Java不多（字节估计是go了），问的很多和Java无关\n先让自我介绍\n然后问我操作系统虚拟内存怎么映射（印象里好像块和页？这个没复习过操作系统，学习的有点久了记不清了）\n进程间通信方式（消息队列，信号，信号量，套接字，共享内存，管道）\n进程间同步方法，只记起来读写锁和互斥锁\n操作系统答得一般般[捂脸R]\n然后说问问数据结构\n先问我设计一个文件存储系统数据库怎么设计，会用哪些数据结构\n然后判断磁盘使用率用啥结构\n文件存储系统，快速查询文件用哪些数据结构\n设计一个高并发请求的hashmap要考虑哪些因素\n网络编程里多路复用的使用了解吗\n\t\n问了一个c/c++里面的内容（这是因为我有说到我选修过这两门课，然后和他说我主要还是深入学习的Java）\n然后问我Java中内存管理机制\n介绍一下垃圾回收分析和算法，为什么新生代一般是标记清除，老生代标记复制\n项目拷打了一下，让我简单介绍一下两个项目，和在项目中觉得做的好的地方\n项目部署上线了吗（没）\n那你觉得和你在本地开发项目比，做一个真实部署的项目会有哪些不同\n算法题：\n链表，每三个结点逆转顺序\n例如\n1 2 3 4 5 6 7 8  → 7 8 4 5 6 1 2 3\n\t\n我最后写出来的代码还有点小bug，不过我和面试官说了一下应该咋解决\n\t\ngo和另一个（没太听说过的）的语言了解吗\n如果招你进去干边角料工作能接受吗（这还能答不接受吗）\n\t\n反问：\n如果能过这轮，还会有面试吗\n不确定，有可能还有\n具体可能会做一些什么任务\n不能长期实习的话，可能主要是一些边边角角任务，如果能长期实习可能会有一些中小型任务可供解决\n\t\n总的来说，感觉问的内容很多很广很杂，和Java对应八股差挺多，前面也不是每个都答的很好，感觉很可能寄了[失望R]\n#互联网大厂[话题]# #后端开发[话题]# #面经[话题]# #java[话题]# #校招[话题]# #大厂[话题]#\n",
+    "line_count": 38,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:67ed5649000000001d02cbac.txt",
+      "byte_size": 2136,
+      "git_blob_sha": "8c110e630c2ffb0f06f870700ca5800e7d900e51"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

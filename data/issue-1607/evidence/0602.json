@@ -1,0 +1,93 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0602-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 602,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/602",
+  "source_note_id": "xhs-note:67da22f7000000001203f968",
+  "expected_body_sha256": "47759822aef3b6b1390c2f383c70b4eaa1c1c23a0cd918537423805b3c78e504",
+  "expected_source_revision_id": "xhs-note:67da22f7000000001203f968:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "proposal-only",
+    "proposed_decision": "single-interview",
+    "basis": "first-person experienced interview process plus structured question evidence; generic advice/job context does not override the experienced event",
+    "basis_lines": [
+      {
+        "line_number": 2,
+        "excerpt": "第一天投递，第二天电话约一面，一面结束几个小时就约了二面[太阳R][派对R]"
+      },
+      {
+        "line_number": 4,
+        "excerpt": "面试节奏很快，一个问题接着一个问题，大概二十分钟[哇R]"
+      },
+      {
+        "line_number": 6,
+        "excerpt": "1.自我介绍"
+      },
+      {
+        "line_number": 7,
+        "excerpt": "2.分别详细说一下实习经历的具体内容"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67da22f7000000001203f968.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "be7afa82daa69b6ad810e54d061db2f38ba40866",
+    "byte_size": 857,
+    "sha256": "4af40983913857c97d7c36324baca5ef8223e26d94375e2212896a6f92a947a0",
+    "locator": "note_desc:1-10",
+    "excerpt": "快手流程推的超快，效率🆙，不用一直担心焦虑自己过没过[派对R][派对R]\n第一天投递，第二天电话约一面，一面结束几个小时就约了二面[太阳R][派对R]\n面试节奏很快，一个问题接着一个问题，大概二十分钟[哇R]\n1.自我介绍\n2.分别详细说一下实习经历的具体内容\n3.在实习中有没有遇到困难，如何解决\n4.你学这个专业为什么想来面这个岗\n5.谈谈你对这个岗位的认识",
+    "text": "快手流程推的超快，效率🆙，不用一直担心焦虑自己过没过[派对R][派对R]\n第一天投递，第二天电话约一面，一面结束几个小时就约了二面[太阳R][派对R]\n\t\n面试节奏很快，一个问题接着一个问题，大概二十分钟[哇R]\n\t\n1.自我介绍\n2.分别详细说一下实习经历的具体内容\n3.在实习中有没有遇到困难，如何解决\n4.你学这个专业为什么想来面这个岗\n5.谈谈你对这个岗位的认识\n6.你认识应该具备什么样的能力，你有吗，举例\n7.如果你通过面试，你将会怎样做准备\n8.入职后，你将怎么处理同事关系，学习工作\n9.如何平衡学习和工作\n10.对快手了解\n#互联网大厂实习[话题]# #面经[话题]# #面试[话题]# #实习[话题]# #快手实习[话题]# #面试技巧[话题]# #大学生[话题]#\n",
+    "line_count": 17,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:67da22f7000000001203f968.txt",
+      "byte_size": 857,
+      "git_blob_sha": "be7afa82daa69b6ad810e54d061db2f38ba40866"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

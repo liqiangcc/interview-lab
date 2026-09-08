@@ -5,6 +5,7 @@ const fs = require('fs');
 const { execFileSync } = require('child_process');
 const {
   sha256Text,
+  canonicalJson,
   requestSha256,
   parseMaterializationReceipts,
   planMaterialization,
@@ -83,7 +84,7 @@ function parseArgs(argv = process.argv.slice(2)) {
 function readAuthorizedReport(file, digest) {
   const report = JSON.parse(fs.readFileSync(file, 'utf8'));
   const { dry_run_sha256: actual, ...withoutDigest } = report;
-  const expected = sha256Text(JSON.stringify(withoutDigest));
+  const expected = sha256Text(canonicalJson(withoutDigest));
   if (!actual || actual !== expected) throw new Error(`dry-run report digest is invalid: expected ${expected}, got ${actual || 'missing'}`);
   if (digest !== actual) throw new Error(`authorization digest does not match dry-run report: ${digest || 'missing'} != ${actual}`);
   if (report.mutation_performed !== false) throw new Error('only a mutation-free dry-run report may authorize apply');

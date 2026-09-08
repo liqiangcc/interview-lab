@@ -1,0 +1,100 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1343,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1343",
+  "source_note_id": "xhs-note:68cb6f5d000000000e0320ca",
+  "source_revision_id": "xhs-note:68cb6f5d000000000e0320ca:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "7b19c323d726839ca3f6f5efd931d077b58555d0292b0e7f88a28515e431206f",
+  "disposition": "single-interview",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event"
+    ],
+    "questions": 27,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "has_completed_event_evidence": true,
+    "has_structured_candidate_event": true,
+    "generic_advice_or_aggregated": false,
+    "scheduled_only": false,
+    "question_only": false,
+    "outcome_signal": true,
+    "resource_signal": false,
+    "aggregated_text": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": [
+      {
+        "case_key": "alibaba-process",
+        "anchor": "阿里",
+        "line": 1,
+        "locator": "artifact-line:1#offset:7-9",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:阿里"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68cb6f5d000000000e0320ca.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "68dcadf470e71f6f448f21130d41950fcb284c70",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 2693,
+    "content_sha256": "b125e5f5a7ab92f05f4281c6085d725294592619155c3c9acd45d3b8ac1d610f",
+    "excerpt": {
+      "excerpt": "📍面试公司：阿里控股",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "📍面试公司：阿里控股\n🕐面试时间：一面 9.4 二面 9.10 三面9.18\n💻面试岗位：后端开发\n❓面试问题：\n1.自我介绍\n2.实习拷打20min\n3. Java异常类型的整个继承的体系你了解吗？\n4. 我们在日常应用中对于这些异常，是怎么样去处理这些异常？\n5. 你在处理异常的时候，你有什么样的一些原则？就比如说对于一个服务接口来说，你会先做什么异常，然后针对这异常做什么样的处理？你异常分为几类？分别是应对什么场景？这个你自己有总结过。\n6. 那像这种 throwable 的异常，它不是有一些 error 嘛？你觉得 error 是什么时候会产生的？\n7. 你对于 Java 里面的这种数据的容器，像 hashmap、tree、map 这种都了解的。好像比如说 hashmap 对应 key 为 null 的，它会怎么处理？它的哈希key是怎么算的？\n8. concurrentHashmap，那个它能允许存储null吗？为什么不能？\n9. 那你了解 concurrentHashmap，它跟哈希表有什么区别吗？\n10. 你觉得Hashmap线程不安全，那你能举一个例子说，比如说我多线程对它操作，它会出现什么情况？有什么样？它的线程不安全体现在哪里？\n11. 你这边对一些分布式的框架都用过哪一些？\n12. 那消息队列你用过什么呢？卡夫卡，它大概的一个工作过程是什么样的？\n13. 那它是怎么样来保证我的消息不会被重复消费呢？\n14. 那什么样的情况下就会产生重复消费？\n15. 什么样的情况下offset没有被正确记录。\n16. 一个 broker 里面某一个 topic 的 partition，我可以被多台机器消费吗。\n17. 什么样的场景下它可以支持多机器去消费？\n18. 假设就同一个分区，我就是要被多台机器消费，通过什么方法可以实现。\n19. 你是怎么理解？就是在项目里面为什么要用这种像消息队列这种东西？\n20. 你在实习期间你的任务就是说别人给你一个明确的任务吗？还是说给你一个方向，让你自己去弄。\n21. 诶，那你能举一个例子吗？\n22. 你觉得你在实习里面你自己的成长是哪一点。\n23. 那你觉得就是企业里面的工作方式，你自己有什么样的一些总结？就体验，就是里面你在实习的时候工作是怎么开始？\n24. 那你觉得工作里面什么样的一些方面对你来说是有比较大的一些挑"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "787fef892f5b93dc8ff5d275883344ae98d4617ab8728e14fbc9cece03859672"
+}

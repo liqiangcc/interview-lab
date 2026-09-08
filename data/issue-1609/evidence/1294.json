@@ -1,0 +1,94 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1294,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1294",
+  "source_note_id": "xhs-note:68c281cd000000001c00434e",
+  "source_revision_id": "xhs-note:68c281cd000000001c00434e:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "d22c1cf9deede51f8e5cbbc44b463e9727ca7616b13d7296c1b25ff830d3fc3c",
+  "disposition": "blocked",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event",
+      "question-only",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 8,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "has_completed_event_evidence": true,
+    "has_structured_candidate_event": false,
+    "generic_advice_or_aggregated": false,
+    "scheduled_only": false,
+    "question_only": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "aggregated_text": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68c281cd000000001c00434e.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "0354865db5b6ad0aaaa0ac550df34f99775195a6",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 1041,
+    "content_sha256": "b80365119e5b518842a0d41631faff5d351ca291beac076858fadaca79787c8b",
+    "excerpt": {
+      "excerpt": "自我介绍 5 min",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "自我介绍 5 min\n项目+java 20min\n1.项目里面遇到的困难有什么，怎么解决的\n2.jwt令牌用来干什么\n3.threadlocal了解吗，干什么的，是怎么实现的\n4.nginx是自己部署的吗？说一下nginx\n5.项目中涉及一个tcp上应用层设计的问题\n6.java多线程安全性，类中静态变量，类的成员变量，方法中的局部变量是否线程安全\n7.一个final成员变量是一个类，类里面的变量是否线程安全\n8.假设我有一个父线程，父线程中new子线程，把父线程的局部变量传入子线程，是否会有线程安全问题\n手撕：一个二叉树的平均高度（dfs） 10min\n手撕：一个升序数组不重复，经过了循环左移k次。给你左移后的数组，问左移了几次（二分），如果数组中有重复元素呢？ 10min\n什么时候能来实习\n反问\n后续\n3小时后约二面"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "e7bb240ca6e11080a5fa9f913379b4fdc90b431c3c64b19f73dbde03c4ab23f6"
+}

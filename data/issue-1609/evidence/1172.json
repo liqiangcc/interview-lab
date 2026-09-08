@@ -1,0 +1,95 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1172,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1172",
+  "source_note_id": "xhs-note:68ab42b1000000001d01626e",
+  "source_revision_id": "xhs-note:68ab42b1000000001d01626e:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "609c057018f8f8bebc1debe756569e3fbdd0387fb48a6043c7aaeb07b9475611",
+  "disposition": "blocked",
+  "rationale": "Exact Source records only a scheduled, invited, or arranged interview and no completed candidate interview process; retain pending.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "question-list-only",
+      "no-first-person-event",
+      "scheduled-only",
+      "question-only",
+      "no-candidate-event-evidence"
+    ],
+    "questions": 13,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "has_completed_event_evidence": true,
+    "has_structured_candidate_event": false,
+    "generic_advice_or_aggregated": false,
+    "scheduled_only": true,
+    "question_only": true,
+    "outcome_signal": false,
+    "resource_signal": false,
+    "aggregated_text": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": true,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68ab42b1000000001d01626e.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "04bb8413a8f2f47504c8c3f734588a191475c8cc",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 853,
+    "content_sha256": "3f76a48b136ca6f104693ce36f5759f42f1b3878290cc6b6ac380e62be4c3898",
+    "excerpt": {
+      "excerpt": "1、redis 的主从复制中，主节点数据同步到从节点的底层原理 2、MQ 消息的可靠性机制（回答了消息确认机制，持久化机制等，面试官说不行） 3、MySQL 一张表最多存储多少行数据（拿出计算器演示） 4、Sentinel的全局限流和局部限流如何实现，底层的限流算法是否了解（项目中有使用，但回答的不好） 5、RPC 调用的底层原理，需要具体到网络协议那里（不会） 6、Linux 中用户态和内核态的切换 7、进程和协程的区别 8、手撕：leetcode005-最长回文子串的变体 找到字符串中第二长的回文子串，第二长的回文子串不能是最长回文子串的子串 9、反问  时间线： 8.10 投递 8.11 约面 - 8.13 一面  8.13 晚约二面-8.19 二面 第二天流程终止",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "1、redis 的主从复制中，主节点数据同步到从节点的底层原理 2、MQ 消息的可靠性机制（回答了消息确认机制，持久化机制等，面试官说不行） 3、MySQL 一张表最多存储多少行数据（拿出计算器演示） 4、Sentinel的全局限流和局部限流如何实现，底层的限流算法是否了解（项目中有使用，但回答的不好） 5、RPC 调用的底层原理，需要具体到网络协议那里（不会） 6、Linux 中用户态和内核态的切换 7、进程和协程的区别 8、手撕：leetcode005-最长回文子串的变体 找到字符串中第二长的回文子串，第二长的回文子串不能是最长回文子串的子串 9、反问  时间线： 8.10 投递 8.11 约面 - 8.13 一面  8.13 晚约二面-8.19 二面 第二天流程终止"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records only a scheduled, invited, or arranged interview and no completed candidate interview process; retain pending."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source records only a scheduled, invited, or arranged interview and no completed candidate interview process; retain pending.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "4c3834e2e24ba5ca2c7b0ce9624287cd64ef1abb59d12172df01b21962156a10"
+}

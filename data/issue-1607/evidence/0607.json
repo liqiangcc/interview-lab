@@ -1,0 +1,89 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0607-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 607,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/607",
+  "source_note_id": "xhs-note:67dad78b000000000603df78",
+  "expected_body_sha256": "5bb4723acb8e7ba1103ab12f8c6efd32a23e33a51454247cb152a874f20c5ff8",
+  "expected_source_revision_id": "xhs-note:67dad78b000000000603df78:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "proposal-only",
+    "proposed_decision": "single-interview",
+    "basis": "first-person experienced interview process plus structured question evidence; generic advice/job context does not override the experienced event",
+    "basis_lines": [
+      {
+        "line_number": 1,
+        "excerpt": "一面面试官很好，主要问八股，不是特别清楚的地方会引导你，30min。"
+      },
+      {
+        "line_number": 2,
+        "excerpt": "几小时后邮件通知二面。"
+      },
+      {
+        "line_number": 3,
+        "excerpt": "二面面试官感觉像kpi➕压力。不开摄像头，先问实习经历，两段实习，说没什么技术难点。？？？问了一些八股，最有成就经历。快到时间反问，表现如何，说时间不够，不是很了解。马上30min，我还有下个面试，然后就下了。[石化R][石化R]"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67dad78b000000000603df78.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "e4128c089c047ed603089a8ab4ef213d5c5ab764",
+    "byte_size": 476,
+    "sha256": "c3e6da43fd17227621b98a1a34396e33070b61b9230e7b2e47b87b15192511b1",
+    "locator": "note_desc:1-4",
+    "excerpt": "一面面试官很好，主要问八股，不是特别清楚的地方会引导你，30min。\n几小时后邮件通知二面。\n二面面试官感觉像kpi➕压力。不开摄像头，先问实习经历，两段实习，说没什么技术难点。？？？问了一些八股，最有成就经历。快到时间反问，表现如何，说时间不够，不是很了解。马上30min，我还有下个面试，然后就下了。[石化R][石化R]\n#jdy[话题]# #面经[话题]#",
+    "text": "一面面试官很好，主要问八股，不是特别清楚的地方会引导你，30min。\n几小时后邮件通知二面。\n二面面试官感觉像kpi➕压力。不开摄像头，先问实习经历，两段实习，说没什么技术难点。？？？问了一些八股，最有成就经历。快到时间反问，表现如何，说时间不够，不是很了解。马上30min，我还有下个面试，然后就下了。[石化R][石化R]\n#jdy[话题]# #面经[话题]#\n",
+    "line_count": 5,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:67dad78b000000000603df78.txt",
+      "byte_size": 476,
+      "git_blob_sha": "e4128c089c047ed603089a8ab4ef213d5c5ab764"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "schema_version": "issue-1609-boundary-evidence.v1",
+  "issue_number": 1281,
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/1281",
+  "source_note_id": "xhs-note:68c031c7000000001d023c28",
+  "source_revision_id": "xhs-note:68c031c7000000001d023c28:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "body_sha256": "dc0362253552a7048e4994c1f85ae1de28468c0a3d0012f2b9d21a6a46da5a3a",
+  "disposition": "single-interview",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+  "interview_cases": [],
+  "ambiguity_audit": {
+    "flags": [
+      "no-first-person-event"
+    ],
+    "questions": 29,
+    "has_first_person_event": false,
+    "has_explicit_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "has_completed_event_evidence": true,
+    "has_structured_candidate_event": true,
+    "generic_advice_or_aggregated": false,
+    "scheduled_only": false,
+    "question_only": false,
+    "outcome_signal": true,
+    "resource_signal": false,
+    "aggregated_text": false,
+    "job_or_title_only": false,
+    "non_interview_format": false,
+    "only_question_list": false,
+    "only_outcome": false,
+    "multi_signal": false,
+    "case_segments": []
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/68c031c7000000001d023c28.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "git_blob_sha": "e2c5538741801f483b6af94816bc7f6e585dbe33",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "byte_size": 2453,
+    "content_sha256": "8dca713dcb5f9cf93430d480c9f7ff12a4390662af71fdfd5d68a69cab348199",
+    "excerpt": {
+      "excerpt": "一面：",
+      "line": 1,
+      "locator": "artifact-line:1",
+      "semantic_excerpt": "一面：\n1、自我介绍\n2、项目 1 拷打\n3、实习拷打\n4、WebSocket 在 Spring 框架中涉及到的一些类或者注解有哪些？\n5、你认为使用 WebSocket 进行客户端与服务端的通信时，需要在业务侧写代码来做消息的确认吗？\n6、一个微服务系统会涉及到哪些组件？项目中用到了哪些？\n7、项目中 ES 的叶子查询是如何实现的？\n8、MySQL 中有哪些存储引擎？InnoDB 和 MyISAM 的区别？\n9、为什么 InnoDB 选择 B+ 树作为索引？\n10、数据库的第三范式？数据库的设计为什么要遵循三范式？\n11、Spring 中处理一个请求，会经过 Spring 的哪些模块去处理？\n12、Spring 中的类在它启动之后，会执行哪些方法或者用到哪些注解？\n13、静态代码块和构造方法，哪个先执行？\n14、构造方法和 Autowried 哪个先执行？\n15、了解过 @PostContrust 注解吗？这个注解和实现 InitializingBean 接口重写它的 init 方法，哪个先执行？\n16、Java 中 HashMap 和 ConcurrentHashMap 有什么区别？\n17、什么是一致性哈希？和正常的哈希有什么区别？\n18、用过哪些设计模式？\n19、线程的创建方式有哪些？\n20、实现 Runable 接口创建线程和实现 Callable 接口创建线程有什么区别？哪一种接口可以拿到执行的结果？\n21、一般线程池通过什么方式来创建？线程池有哪些核心参数？\n22、谈谈线程池工作的流程\n23、核心线程是一开始就创建了还是任务来了才创建？\n24、假设一个场景，分别部署了 A 和 B 两个服务，A 服务需要调用 B服务，B 服务的执行时间比较长。B 服务执行完毕后，需要把结果返回给 A 服务，请你设计解决方法，如何让 A 和 B进行一个交互？（三种方案）\n25、假如你有两个很大的集合，每个集合本身的数据是不重复的，但是两个集合之间的数据是存在重复的。集合很大，加载到内存中会出现问题，请你从数据结构和算法的角度来考虑，怎么样去找到两个大集合的重复元素？\n26、假如在实际生产中，有一个接口的请求响应时间比较慢，如何去排查？\n27、手撕：(1)力扣 20.有效的括号；(2)手写单例模式\n28、反问"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "SourceNote identity matches the live machine record."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision and source repository ref match the frozen snapshot."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "The cited Raw or source_projection artifact is exact and hash-verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This item cites only evidence belonging to this SourceNote."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No Raw, Derived, or InterviewNote content is invented or overwritten."
+    }
+  ],
+  "limitations": [
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+    "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
+  ],
+  "source_ready_claimed": false,
+  "live_evidence_comment_created": false,
+  "mutation_count": 0,
+  "evidence_sha256": "9d8c0888fb563fb17415459f5b029d475ef295191e9b13129b1bffd01a22a9f9"
+}

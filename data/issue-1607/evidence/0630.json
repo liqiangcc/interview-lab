@@ -1,0 +1,93 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0630-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 630,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/630",
+  "source_note_id": "xhs-note:67e28319000000001b03bf43",
+  "expected_body_sha256": "be0705da3847d80adb696dac2cf94a3ef95bdb11a368054abcd67af7f8971713",
+  "expected_source_revision_id": "xhs-note:67e28319000000001b03bf43:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "proposal-only",
+    "proposed_decision": "single-interview",
+    "basis": "first-person experienced interview process plus structured question evidence; generic advice/job context does not override the experienced event",
+    "basis_lines": [
+      {
+        "line_number": 1,
+        "excerpt": "⭕一面："
+      },
+      {
+        "line_number": 2,
+        "excerpt": "1.并发安全指的是什么"
+      },
+      {
+        "line_number": 3,
+        "excerpt": "2.如何解决并发安全"
+      },
+      {
+        "line_number": 4,
+        "excerpt": "3.乐观锁介绍"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67e28319000000001b03bf43.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "0c0a77ec5d39f0657d609c282f83664ca69e84a9",
+    "byte_size": 1054,
+    "sha256": "1ee9710339b081cc64fd1647d115d595e03115fcb6169bd569230bb1140252eb",
+    "locator": "note_desc:1-8",
+    "excerpt": "⭕一面：\n1.并发安全指的是什么\n2.如何解决并发安全\n3.乐观锁介绍\n4.violate可见性和有序性原理\n5.说说原子类和原理（X）\n6.项目（hmdp）中怎么使用线程池的\n7.项目中的订单的创建和库存扣减如何保证它们的一致性（这个要求就在原项目的基础上修改，不使用消息队列）",
+    "text": "⭕一面：\n1.并发安全指的是什么\n2.如何解决并发安全\n3.乐观锁介绍\n4.violate可见性和有序性原理\n5.说说原子类和原理（X）\n6.项目（hmdp）中怎么使用线程池的\n7.项目中的订单的创建和库存扣减如何保证它们的一致性（这个要求就在原项目的基础上修改，不使用消息队列）\n8.现在将一个项目分为多个项目，比如将创建订单和库存扣减分为两个项目，如何去保证它们的一致性（我说的消息队列）\n......\n\t\n问了整整一个小时，零手撕。场景题很拷打，一直在胡说八道。但是也没有秒挂，前三次都是面试完点进官网一看就挂了，这次没有秒挂已经是大大的胜利了。许愿二面。\n\t\n隔了一天挂，比起前三次已经是大大的胜利了\n\t\n.\n内容来自牛友：癫疯召唤师1\n来源：牛客\n\t\n#蚂蚁国际[话题]# #java[话题]# #求职[话题]# #暑期实习[话题]# #牛客社区[话题]# #牛客app[话题]# #面试笔试抄作业[话题]# #互联网大厂[话题]#\n",
+    "line_count": 21,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:67e28319000000001b03bf43.txt",
+      "byte_size": 1054,
+      "git_blob_sha": "0c0a77ec5d39f0657d609c282f83664ca69e84a9"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

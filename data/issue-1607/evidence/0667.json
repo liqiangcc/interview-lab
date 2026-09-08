@@ -1,0 +1,89 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0667-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 667,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/667",
+  "source_note_id": "xhs-note:67eb383d000000001c01d8fc",
+  "expected_body_sha256": "174417adebb44f47549e1aabe18c08b07da971c18e2d7e31c504bb3cf1bd3658",
+  "expected_source_revision_id": "xhs-note:67eb383d000000001c01d8fc:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 1,
+        "excerpt": "1.面试官先自我介绍，然后酷酷夸我，给我整不会了。然后问我有啥问题。我问了base说应该北京。"
+      },
+      {
+        "line_number": 8,
+        "excerpt": "4.八股"
+      },
+      {
+        "line_number": 19,
+        "excerpt": "#面试题[话题]# #面经[话题]# #面试求职[话题]# #大厂[话题]#"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67eb383d000000001c01d8fc.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "6d3a47a9a8d589c42c14821dc1e4c55d30ca3e6d",
+    "byte_size": 832,
+    "sha256": "128c91671d8f5d22cdd1d765629b586280d836c36f46a6734d49649ba48e6c61",
+    "locator": "note_desc:1-11",
+    "excerpt": "1.面试官先自我介绍，然后酷酷夸我，给我整不会了。然后问我有啥问题。我问了base说应该北京。\n2.自我介绍（3min）\n3.项目（15min）\n基本上我说他听，问的比较少。\n4.八股\n计网：三次握手和四次挥手\n操作系统：（忘了，问了一题比较简单的\nc++：（好像是堆栈啥的吧，反正也常规，不太记得了",
+    "text": "1.面试官先自我介绍，然后酷酷夸我，给我整不会了。然后问我有啥问题。我问了base说应该北京。\n\t\n2.自我介绍（3min）\n\t\n3.项目（15min）\n基本上我说他听，问的比较少。\n\t\n4.八股\n计网：三次握手和四次挥手\n操作系统：（忘了，问了一题比较简单的\nc++：（好像是堆栈啥的吧，反正也常规，不太记得了\n\t\n5.手撕\n很简单的去重链表重复元素。（双指针）\n\t\n6.反问。\n\t\n总结：面试官态度和情绪价值很好，一直夸我笔试啊，简历啊，做题快啊啥的，给我整不会了[笑哭R]，最后还问我能不能接受base成都，我说可以。反正体验很好很好。不知道最后会不会像其他厂一样挂了，害。\n#面试题[话题]# #面经[话题]# #面试求职[话题]# #大厂[话题]#\n",
+    "line_count": 20,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:67eb383d000000001c01d8fc.txt",
+      "byte_size": 832,
+      "git_blob_sha": "6d3a47a9a8d589c42c14821dc1e4c55d30ca3e6d"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

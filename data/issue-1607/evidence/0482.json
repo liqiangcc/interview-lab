@@ -1,0 +1,93 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0482-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 482,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/482",
+  "source_note_id": "xhs-note:6783d73d000000000203cb38",
+  "expected_body_sha256": "22ea57738ae30f2a7e8fef15d45dce907a84592e59a6487bc0b47d48f1a9899b",
+  "expected_source_revision_id": "xhs-note:6783d73d000000000203cb38:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "proposal-only",
+    "proposed_decision": "single-interview",
+    "basis": "first-person experienced interview process plus structured question evidence; generic advice/job context does not override the experienced event",
+    "basis_lines": [
+      {
+        "line_number": 1,
+        "excerpt": "快手-效率工程-一面 9.29"
+      },
+      {
+        "line_number": 7,
+        "excerpt": "MySQL是如何实现可重复读的？"
+      },
+      {
+        "line_number": 8,
+        "excerpt": "Redis的几种部署架构，都分别解决了什么问题"
+      },
+      {
+        "line_number": 9,
+        "excerpt": "Redis获取数据的时间复杂度？为什么能这么快"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/6783d73d000000000203cb38.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "fc2fe284d66c79f73bc88fbeb7cea87b8e836fcd",
+    "byte_size": 2338,
+    "sha256": "2391f4c3139f1255c400df59436a75e2f617a573b61f3c30d2f64bd967c818cb",
+    "locator": "note_desc:1-8",
+    "excerpt": "快手-效率工程-一面 9.29\n常规自我介绍3 mins、项目介绍10 mins\n聊一聊Java的锁\nJava中synchronized和Lock的区别\nJVM的GC阶段都会有那些动作，聊一下CMS的操作\nMySQL的各种索引？B+树和B树\nMySQL是如何实现可重复读的？\nRedis的几种部署架构，都分别解决了什么问题",
+    "text": "快手-效率工程-一面 9.29\n常规自我介绍3 mins、项目介绍10 mins\n聊一聊Java的锁\nJava中synchronized和Lock的区别\nJVM的GC阶段都会有那些动作，聊一下CMS的操作\nMySQL的各种索引？B+树和B树\nMySQL是如何实现可重复读的？\nRedis的几种部署架构，都分别解决了什么问题\nRedis获取数据的时间复杂度？为什么能这么快\n聊一聊RPC框架，对Dubbo是否有了解？\nKafka和RocketMQ的对比\n了解雪花算法么，请你设计一个订单系统，要求如下：订单ID长为32位；每天的增量为1千万；订单号中要包含商品属性、时间属性、国家等因素\n\t\n快手-流量业务-一面 12.09（通过）\n常规自我介绍 2 mins，项目介绍20 mins\nMySQL是如何实现事务的\n分库分表的具体实现？\nMySQL主从同步的具体流程\nbinlog 的格式，都有什么类型\nbinlog的写入时机\nMySQL的锁都有哪些？插入意向锁是怎么用的\nMySQL全表更新\nRedo Log、Undo Log、Binlog\n死锁的四个特性？\nRedisson的实现机理？\nRedis Lua脚本的劣势？\nRedis的原生集群模式可能会有什么问题？\n\t\n快手-流量业务-二面 12.11（通过）\n常规自我介绍 2 mins，项目介绍15 mins\n聊一下ES的分布式架构\nRedis的哨兵机制和持久化机制\nRedis的分布式锁Redisson\nJava synchronized实现原理？锁升级的过程？\n场景题：实现一个分库分表，采用灰度的方式，在新的库中会按照新的映射方式\n分布式事务的实现手段\nThreadLocal的内存泄漏问题和扩容机制\nJava的volatile和CAS\n\t\n快手-流量业务-三面 12.12（通过）\n项目介绍（25 mins）：\n健康度模块的架构设计以及对于整个系统的收益\n重构时期的新老数据迁移是怎么做的\n系统的可用性保障措施？Flink任务的保障措施？\n聊一聊做过的慢SQL优化，提了两点：\njoin连接替换子查询\n小表join大表 -》延伸问题：如果是大表join大表有什么优化手段\n算法题：算出一棵树里面叶子节点之间距离小于指定距离distance的pair数\n\t\n快手-流量业务-HR面 12.16\n工作亮点\n为什么离职？\n过去的绩效如何？晋升原因和时间？\n你在上一份工作的工作沉淀？\n期望薪酬\n。。。\n\t\n#java后端#2年经验#大厂背景#java面试#经验分享\n",
+    "line_count": 59,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:6783d73d000000000203cb38.txt",
+      "byte_size": 2338,
+      "git_blob_sha": "fc2fe284d66c79f73bc88fbeb7cea87b8e836fcd"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

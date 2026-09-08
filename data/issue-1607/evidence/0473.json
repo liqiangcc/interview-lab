@@ -1,0 +1,85 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0473-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 473,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/473",
+  "source_note_id": "xhs-note:677632b5000000000b016b05",
+  "expected_body_sha256": "68306e2a04fcc738d175a7825f8a06a7fd232900c027558effe61db0ecbe27ad",
+  "expected_source_revision_id": "xhs-note:677632b5000000000b016b05:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 21,
+        "excerpt": "- 那静态的呢，就没有新数据进来，怎么保证同步的数据一致性，你是觉得一定不会出问题吗？"
+      },
+      {
+        "line_number": 23,
+        "excerpt": "- 说一下 MySQL 隔离级别，默认是哪个？可重复读解决了什么问题？"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/677632b5000000000b016b05.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "3736b2f95f6a1dffd960452cca29edd8fdcfedf2",
+    "byte_size": 2793,
+    "sha256": "024d3f694cd982aef78e4a79b715a3ff5eabdf173ee9b2bc6afed96b3aeab6fe",
+    "locator": "note_desc:1-9",
+    "excerpt": "bg：末流211本，base北京\n1️⃣面\n* 自我介绍\n* 介绍实习\n- 实习做的新功能中的数据模型和表结构怎么设计的？\n- ES 怎么实现的地理查询？除了 ES 还有别的实现方法吗？\n- 实习中说的新的数据过滤方式是怎么做的？\n- 介绍一下 MySQL 索引，底层结构，“性别”能不能当索引？",
+    "text": "bg：末流211本，base北京\n\t\n1️⃣面\n* 自我介绍\n* 介绍实习\n- 实习做的新功能中的数据模型和表结构怎么设计的？\n- ES 怎么实现的地理查询？除了 ES 还有别的实现方法吗？\n- 实习中说的新的数据过滤方式是怎么做的？\n- 介绍一下 MySQL 索引，底层结构，“性别”能不能当索引？\n- 说一下 Java 的基本数据类型，集合类型，ArrayList 和 LinkedList 的区别和应用，ArrayList 扩容机制？\n- 说一下 Java 垃圾回收，判断对象是否可回收的方法，内存模型，程序计数器是干嘛用的？\n* 手撕：63. 不同路径 II\n2️⃣面\n* 自我介绍\n* 介绍实习\n- 实习中说的新的数据过滤方式是怎么做的？\n- 你的自定义注解为什么能标识需要过滤的方法？就你这拦截请求的原理是怎么实现的，介绍一下 AOP？\n- cglib 动态生成的代理类是如何加载进 JVM 的？介绍一下类加载机制？\n- 你用 DATAX 实现数据同步，那介绍一下 DATAX，还知道别的数据同步方案吗？\n- 那现在如果让你在正在运营的生产环境里实现动态的数据同步，你怎么做？\n- 那静态的呢，就没有新数据进来，怎么保证同步的数据一致性，你是觉得一定不会出问题吗？\n- 实习写的垂直分表怎么做的？\n- 说一下 MySQL 隔离级别，默认是哪个？可重复读解决了什么问题？\n- 现在有个表，一列 id，一列 name，说一下幻读是怎么发生的？\n- 你提到了锁，那你写个加锁的 sql 解决你刚刚说的幻读？加的什么锁？\n- for share 和 for update 有什么区别？\n- where id > 10 会加锁吗？什么锁？id > 20 的记录会不会被锁？\n- where name > \"test1\" 会加锁吗？为什么？\n* 手撕：1490. 克隆 N 叉树\n3️⃣面\n* 自我介绍\n- Java 线程模型？一个 32 位操作系统，4G 内存能开多少线程？一个线程占用内存的数量级觉得应该是多少？\n- Java 线程池的底层结构？如果没有空闲线程，任务怎么办？等待的任务会占用 CPU 吗？\n- Java 有哪些并发工具类？介绍一下你提到的 synchronized 和 ReentrantLock？该怎么选用？\n* 手撕：三线程交替输出斐波那契数列\n- Redis 的 zset 类型查询单个数据的时间复杂度？能优化成O(1)吗？插入的复杂度呢？\n- 还有哪些结构插入和查询复杂度是O的？MySQL 索引用的什么结构？为什么要用 B+ 树？\n- MySQL 一张表能创建几个 B+ 树？什么情况会回表？\n- 现在线上有一个接口延迟高，你怎么优化和排查？\n- 那要是我在测试环境延迟正常，但在生产环境延迟高，你觉得什么原因？\n- 那现在下游服务接口延迟高但是暂时没法优化，怎么办？\n",
+    "line_count": 42,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:677632b5000000000b016b05.txt",
+      "byte_size": 2793,
+      "git_blob_sha": "3736b2f95f6a1dffd960452cca29edd8fdcfedf2"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}
