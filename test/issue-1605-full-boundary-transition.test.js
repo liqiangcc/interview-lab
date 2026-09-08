@@ -346,6 +346,41 @@ test('target-already-applied without a receipt can repair and validate its recei
   assert.equal(resumed.items[0].status, 'already-applied');
 });
 
+test('resuming from the frozen plan ignores REST label ordering without changing its digest', () => {
+  const value = planFixture();
+  const frozen = JSON.parse(JSON.stringify(value.plan));
+  value.issue.body = frozen.items[0].next_body;
+  value.issue.labels = [...frozen.items[0].next_labels].reverse();
+  const resumed = buildPlan({
+    manifest: value.manifest,
+    manifestFile: path.join(value.directory, 'full-boundary-manifest.json'),
+    records: value.records,
+    priorPlan: frozen,
+    liveLoader: () => ({ issue: value.issue, comments: value.comments }),
+  });
+  assert.equal(resumed.ok, true, resumed.errors.join('; '));
+  assert.equal(resumed.items[0].status, 'receipt-needed');
+  assert.deepEqual(resumed.items[0].next_labels, frozen.items[0].next_labels);
+  assert.equal(resumed.canonical_digest, frozen.canonical_digest);
+});
+
+test('a mismatched prior frozen row fails closed for an already-applied target', () => {
+  const value = planFixture();
+  const frozen = JSON.parse(JSON.stringify(value.plan));
+  value.issue.body = frozen.items[0].next_body;
+  value.issue.labels = [...frozen.items[0].next_labels].reverse();
+  frozen.items[0].transition_id = 'tampered-transition';
+  const resumed = buildPlan({
+    manifest: value.manifest,
+    manifestFile: path.join(value.directory, 'full-boundary-manifest.json'),
+    records: value.records,
+    priorPlan: frozen,
+    liveLoader: () => ({ issue: value.issue, comments: value.comments }),
+  });
+  assert.equal(resumed.ok, false);
+  assert.match(resumed.errors.join('\n'), /matching prior frozen plan row/);
+});
+
 test('complete resume performs read-only target/receipt verification before skipping', () => {
   const value = planFixture();
   const harness = journalHarness(value);
@@ -367,6 +402,25 @@ test('complete resume performs read-only target/receipt verification before skip
   assert.equal(reads, 1);
   assert.equal(patches, 1);
   assert.equal(posts, 1);
+});
+
+test('complete resume treats REST-reordered labels as the same target set', () => {
+  const value = planFixture();
+  const harness = journalHarness(value);
+  applyBatch({
+    plan: value.plan, records: value.records, liveLoader: () => ({ issue: value.issue, comments: value.comments }),
+    patchIssue(_number, payload) { value.issue.body = payload.body; value.issue.labels = payload.labels; return {}; },
+    postReceipt(_number, body) { const comment = { id: 553, body }; value.comments.push(comment); return comment; },
+    readComments: () => value.comments, maxMutations: 2, reconcileAttempts: 1,
+    now: () => '2026-09-08T00:01:00.000Z', ...harness,
+  });
+  const reordered = { ...value.issue, labels: [...value.issue.labels].reverse() };
+  const resumed = applyBatch({
+    plan: value.plan, records: value.records, liveLoader: () => ({ issue: reordered, comments: value.comments }),
+    patchIssue() { throw new Error('complete resume must not PATCH'); }, postReceipt() { throw new Error('complete resume must not POST'); },
+    readComments: () => value.comments, maxMutations: 2, reconcileAttempts: 1, ...harness,
+  });
+  assert.equal(resumed.ok, true);
 });
 
 test('journal counters, types, sum, and max ceiling are fail-closed before mutation', () => {

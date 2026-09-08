@@ -22,6 +22,7 @@ function parseArgs(argv = process.argv.slice(2)) {
   const args = {
     manifest: DEFAULT_MANIFEST, output: DEFAULT_OUTPUT, journal: DEFAULT_JOURNAL,
     lock: DEFAULT_LOCK, authorization: null, confirmPlan: null, maxMutations: null,
+    priorPlan: null,
     apply: false, reconcileAttempts: 3, pauseMs: 1000,
   };
   for (let index = 0; index < argv.length; index += 1) {
@@ -34,6 +35,7 @@ function parseArgs(argv = process.argv.slice(2)) {
     else if (arg === '--authorization-proof') args.authorization = next();
     else if (arg === '--confirm-plan') args.confirmPlan = next();
     else if (arg === '--max-mutations') args.maxMutations = Number(next());
+    else if (arg === '--prior-plan') args.priorPlan = next();
     else if (arg === '--reconcile-attempts') args.reconcileAttempts = Number(next());
     else if (arg === '--pause-ms') args.pauseMs = Number(next());
     else if (arg === '--apply') args.apply = true;
@@ -125,7 +127,7 @@ function assertMutationCeiling(maxMutations, proof) {
 function main(argv = process.argv.slice(2), injected = {}) {
   const args = parseArgs(argv);
   if (args.help) {
-    process.stdout.write('Usage: node scripts/apply-issue-1605-full-boundary-transition.js [--manifest <file>] [--output <file>] [--apply --confirm-plan <sha256> --authorization-proof <file> --max-mutations <N>]\n');
+    process.stdout.write('Usage: node scripts/apply-issue-1605-full-boundary-transition.js [--manifest <file>] [--output <file>] [--prior-plan <file>] [--apply --confirm-plan <sha256> --authorization-proof <file> --max-mutations <N>]\n');
     return 0;
   }
   const manifest = injected.manifest || readJson(args.manifest);
@@ -136,7 +138,13 @@ function main(argv = process.argv.slice(2), injected = {}) {
   const read = injected.ghJson || ghJson;
   const liveLoader = injected.liveLoader || buildLiveLoader(read);
   const records = files.records.map((record) => ({ ...record, manifest_digest: manifest.canonical_digest }));
-  const plan = makePlan({ manifest, manifestFile: args.manifest, records, liveLoader });
+  const priorPlan = args.priorPlan ? readJson(args.priorPlan) : null;
+  if (priorPlan) {
+    if (priorPlan.schema_version !== PLAN_SCHEMA || priorPlan.repository !== REPOSITORY || priorPlan.parent_issue !== PARENT_ISSUE) throw new Error('--prior-plan is not an Issue #1605 transition plan');
+    if (priorPlan.manifest?.digest !== manifest.canonical_digest) throw new Error('--prior-plan manifest digest does not match the current manifest');
+    if (args.apply && priorPlan.canonical_digest !== args.confirmPlan) throw new Error('--prior-plan canonical digest must equal --confirm-plan during apply');
+  }
+  const plan = makePlan({ manifest, manifestFile: args.manifest, records, liveLoader, priorPlan });
   atomicWriteJson(args.output, plan);
   if (!args.apply) {
     process.stdout.write(`${JSON.stringify({ status: plan.ok ? 'plan-ready' : 'blocked', schema_version: PLAN_SCHEMA, plan_digest: plan.canonical_digest, manifest_digest: manifest.canonical_digest, source_ref: SOURCE_REF, items: plan.items.length, errors: plan.errors.slice(0, 20) }, null, 2)}\n`);

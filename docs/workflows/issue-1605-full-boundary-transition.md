@@ -44,6 +44,7 @@ node scripts/apply-issue-1605-full-boundary-transition.js \
   --output data/pilot/issue-1605/full-boundary-transition.plan.json \
   --journal data/pilot/issue-1605/full-boundary-transition.journal.json \
   --lock data/pilot/issue-1605/full-boundary-transition.lock \
+  --prior-plan data/pilot/issue-1605/full-boundary-transition.plan.json \
   --apply \
   --confirm-plan <plan.canonical_digest> \
   --authorization-proof <parent-1605-transition-authorization.json> \
@@ -75,6 +76,12 @@ expected SourceRevision id/ref 和唯一 transition；同一 transition 出现�
 会 fail closed。journal 带 canonical digest；exclusive lock 持有并持续校验 lock file 的
 device/inode，并在创建、释放时 fsync parent directory。journal/plan 的 atomic JSON rename
 之后也会 fsync parent directory，确保崩溃后目录项持久化。预算不足时在下一笔 mutation 前停止。
+
+当 journal 已有成功 mutation、需要从冻结计划恢复时，`--prior-plan` 应指向最初获授权的
+plan 文件。GitHub REST API 可能以不同顺序返回同一组 labels；runner 会先验证 live label
+集合与 prior plan 完全相同，再保留 prior plan 的逐项 label 表示，从而不因 REST 排序改变
+canonical plan digest。集合发生变化仍会 fail closed；不能用一个未经授权的 prior plan 绕过
+`--confirm-plan` 或 parent authorization。
 
 本变更不执行 live mutation。取得主控 transition authorization、reviewer 评审和明确 apply
 窗口前，不应提供 `--apply`。

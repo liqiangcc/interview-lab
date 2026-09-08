@@ -42,6 +42,12 @@ function without(value, key) {
   return copy;
 }
 function labelsOf(issue) { return normalizeLabels(issue && issue.labels || []).sort(); }
+// GitHub's REST API does not preserve label ordering.  Keep the requested
+// order for the frozen plan, but use a canonical set comparison when a live
+// target is already applied and we need to resume from that plan.
+function sameLabelSet(left, right) {
+  return same(normalizeLabels(left || []).sort(), normalizeLabels(right || []).sort());
+}
 function bodySha256(issue) { return sha256Text(issue && issue.body || ''); }
 function same(a, b) { return canonical(a) === canonical(b); }
 
@@ -296,9 +302,11 @@ function appendBlockedItemErrors(errors, item) {
   if (item.errors.length) errors.push(`#${item.issue_number}: ${item.errors.join('; ')}`);
 }
 
-function buildPlan({ manifest, manifestFile, records, liveLoader }) {
+function buildPlan({ manifest, manifestFile, records, liveLoader, priorPlan = null }) {
   const errors = [];
   const items = [];
+  const priorItems = new Map((priorPlan && Array.isArray(priorPlan.items) ? priorPlan.items : [])
+    .map((item) => [Number(item.issue_number), item]));
   for (const record of records) {
     let live;
     try { live = liveLoader(record.request); }
@@ -313,6 +321,42 @@ function buildPlan({ manifest, manifestFile, records, liveLoader }) {
     // applied receipt during the first planning pass; that check happens once
     // this function has computed planDigestValue below.
     const planned = planItem({ ...record, manifest_digest: manifest.canonical_digest, plan_digest: null }, live);
+    const prior = priorItems.get(Number(record.issue_number));
+    if (planned.already_applied && priorPlan) {
+      const priorIdentityMatches = prior
+        && prior.transition_id === record.transition_id
+        && prior.source_note_id === record.request.source_note_id
+        && prior.decision === record.request.decision
+        && prior.expected_body_sha256 === record.request.expected_body_sha256
+        && prior.next_body_sha256 === planned.next_body_sha256
+        && Array.isArray(prior.next_labels)
+        && prior.item_digest === itemDigest({
+          issue_number: prior.issue_number,
+          transition_id: prior.transition_id,
+          source_note_id: prior.source_note_id,
+          decision: prior.decision,
+          request_marker_sha256: prior.request_marker_sha256,
+          expected_body_sha256: prior.expected_body_sha256,
+          expected_source_revision_id: prior.expected_source_revision_id,
+          next_body_sha256: prior.next_body_sha256,
+          next_labels: prior.next_labels,
+          interview_note_ids: prior.interview_note_ids || [],
+        });
+      if (!priorIdentityMatches) {
+        planned.errors = [...(planned.errors || []), 'already-applied item is not bound to the matching prior frozen plan row'];
+      }
+    }
+    if (planned.already_applied && prior && Array.isArray(prior.next_labels) && Array.isArray(planned.next_labels)) {
+      // A resumed plan must retain the exact per-item label representation
+      // that was authorized originally, while proving that the live label
+      // *set* is unchanged.  This keeps the existing authorization/receipt
+      // digest valid without treating REST ordering as semantic drift.
+      if (!sameLabelSet(planned.next_labels, prior.next_labels)) {
+        planned.errors = [...(planned.errors || []), 'already-applied target label set differs from the prior frozen plan'];
+      } else {
+        planned.next_labels = [...prior.next_labels];
+      }
+    }
     const item = {
       issue_number: Number(record.issue_number), transition_id: record.transition_id,
       source_note_id: record.request.source_note_id, decision: record.request.decision,
@@ -502,7 +546,7 @@ function applyBatch({ plan, records, liveLoader, patchIssue, postReceipt, readCo
       try {
         const live = liveLoader(record.request);
         const post = planItem({ ...record, manifest_digest: plan.manifest.digest, plan_digest: plan.canonical_digest }, live);
-        if (post.ok && post.already_applied && post.current_body_sha256 === expected.next_body_sha256 && same(post.next_labels, expected.next_labels)) return { live, planned: post };
+        if (post.ok && post.already_applied && post.current_body_sha256 === expected.next_body_sha256 && sameLabelSet(post.next_labels, expected.next_labels)) return { live, planned: post };
         lastError = new Error(`target did not converge to planned boundary state for #${record.issue_number}`);
       } catch (error) { lastError = error; }
       if (attempt < reconcileAttempts) sleep(attempt);
@@ -530,7 +574,7 @@ function applyBatch({ plan, records, liveLoader, patchIssue, postReceipt, readCo
     if (state.phase === 'complete') {
       lock.assertHeld();
       const resumed = planItem({ ...record, manifest_digest: plan.manifest.digest, plan_digest: plan.canonical_digest }, liveLoader(record.request));
-      if (!resumed.ok || resumed.status !== 'already-applied' || resumed.current_body_sha256 !== item.next_body_sha256 || !same(resumed.next_labels, item.next_labels)) throw new Error(`#${item.issue_number}: complete journal item failed read-only target/receipt verification`);
+      if (!resumed.ok || resumed.status !== 'already-applied' || resumed.current_body_sha256 !== item.next_body_sha256 || !sameLabelSet(resumed.next_labels, item.next_labels)) throw new Error(`#${item.issue_number}: complete journal item failed read-only target/receipt verification`);
       continue;
     }
     if (state.phase === 'uncertain') throw new Error(`#${item.issue_number}: journal is uncertain; refusing blind retry`);
@@ -544,8 +588,8 @@ function applyBatch({ plan, records, liveLoader, patchIssue, postReceipt, readCo
       || (item.status === 'ready' && ['receipt-needed', 'already-applied'].includes(fresh.status))
       || (item.status === 'receipt-needed' && fresh.status === 'already-applied');
     if (!compatibleStatus) throw new Error(`#${item.issue_number}: live status drifted from confirmed plan`);
-    if (fresh.next_body_sha256 !== item.next_body_sha256 || !same(fresh.next_labels, item.next_labels)) throw new Error(`#${item.issue_number}: live target body/label drifted from confirmed plan`);
-    if (fresh.status === 'ready' && (fresh.current_body_sha256 !== item.current_body_sha256 || !same(fresh.current_labels, item.current_labels))) throw new Error(`#${item.issue_number}: live precondition body/label CAS drifted from confirmed plan`);
+    if (fresh.next_body_sha256 !== item.next_body_sha256 || !sameLabelSet(fresh.next_labels, item.next_labels)) throw new Error(`#${item.issue_number}: live target body/label drifted from confirmed plan`);
+    if (fresh.status === 'ready' && (fresh.current_body_sha256 !== item.current_body_sha256 || !sameLabelSet(fresh.current_labels, item.current_labels))) throw new Error(`#${item.issue_number}: live precondition body/label CAS drifted from confirmed plan`);
     const needsPatch = fresh.status === 'ready';
     const needsReceipt = needsPatch || fresh.status === 'receipt-needed';
     const required = (needsPatch ? 1 : 0) + (needsReceipt ? 1 : 0);
