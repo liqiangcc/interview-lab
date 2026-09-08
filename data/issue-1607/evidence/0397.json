@@ -1,0 +1,81 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0397-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 397,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/397",
+  "source_note_id": "xhs-note:672b6580000000001a01c791",
+  "expected_body_sha256": "950210c3759247a3fdf70727ba903d5dd5dbf1467dd8f5b6f284e7d1d9b97fc3",
+  "expected_source_revision_id": "xhs-note:672b6580000000001a01c791:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 20,
+        "excerpt": "17.你怎么防止超卖问题？"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/672b6580000000001a01c791.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "28436ee9fbecc165259ecd0f8b33ffb71b90bb71",
+    "byte_size": 2866,
+    "sha256": "66972cd6e6446a0d2baab4d302fc1cdd7507a019c28b81a5be98379d26bf6ac5",
+    "locator": "note_desc:1-8",
+    "excerpt": "字数限制，详见图片！！\n上周四完成的二面，现在还没有后续消息，但是我也已经决定去开水团了，就算有后续应该也不会去了，所以就直接发出来了:)\n（还是很感谢百度给的面试机会！！等我修炼一波，下次再战~）\n1.介绍一下项目的核心业务\n2.介绍一下登录模块的具体流程\n3.双层拦截器的作用？\n4.JWT组成成分？为什么不用JWT？JWT的缺点？\n5.黑名单功能是怎么实现的？",
+    "text": "字数限制，详见图片！！\n上周四完成的二面，现在还没有后续消息，但是我也已经决定去开水团了，就算有后续应该也不会去了，所以就直接发出来了:)\n（还是很感谢百度给的面试机会！！等我修炼一波，下次再战~）\n1.介绍一下项目的核心业务\n2.介绍一下登录模块的具体流程\n3.双层拦截器的作用？\n4.JWT组成成分？为什么不用JWT？JWT的缺点？\n5.黑名单功能是怎么实现的？\n6.如何区分普通用户和黑名单用户？\n7.项目安全性方面是怎么保障的？\n8.用户的敏感数据是怎么处理的？\n9.如果某个恶意用户拿到另一个用户的用户名，一直重复不断的输入密码尝试破解，你怎么办？\n10.项目有考虑过缓存击穿的应对方案吗？\n11.如果说现在某个热key过期了，但是仍然有大量的请求，或者是某个恶意用户持续不断的访问Redis里的某个key，你怎么办？\n12.项目上线过吗？做过压测吗？\n13.讲一下秒杀的业务流程\n14.分布式锁在这里有什么用？\n15.你测试过这个分布式锁吗？他在高并发的情况下可以保证线程安全吗？\n16.Redis里跟秒杀有关的键值对\n17.你怎么防止超卖问题？\n18.这个乐观锁是单机的乐观锁，你在高并发的环境下测试过吗？\n19.我现在有一张MySQL的数据库表，怎样才可以尽量避免锁的冲突？\n20.如果你碰到一个慢查询sql语句，你怎么去排查？怎么去优化？\n21.MySQL可以没有主键吗？\n22.如果我使用Mybatis或者是JDBC一次性查询大量的数据，发现查找速度很慢，应该怎么办？\n23.当你输入网址按下回车以后发生了什么？\n24.我指的是，怎么从目标主机里面拿到我想要的资源？\n25.为什么要使用RabbitMQ？如果秒杀过程中RabbitMQ突然挂了怎么办？\n26.为什么需要有序列化？序列化是用来做什么的？\n27.Java里已经有三种类加载器了，为什么还要有那么多自定义类加载器？\n28.如何在业务代码层面防止MySQL里发生锁冲突？\n29.如果同时有大量的请求打在数据库上导致查询缓慢，你怎么办？\n30.mysql事务的四大特点是ACID，有没有考虑过为什么会有隔离性这个特性？\n31.有没有考虑过，什么场景下使用哪种事务隔离级别合适？比如你的秒杀业务\n32.秒杀业务中，在哪些情况下可能造成数据的丢失？\n33.如果RabbitMQ里的信息丢失了怎么办\n34.反转链表，用的自己的IDEA，啥也没有需要自己造数据，相当于ACM模式\n35.反问\n这次二面收获很大，第一次见识到大厂二面的深度和广度，这还只是日常实习，要学的东西还有很多！\n#计算机[话题]# #互联网大厂实习[话题]# #java[话题]# #互联网[话题]# #日常实习[话题]#\n",
+    "line_count": 41,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:672b6580000000001a01c791.txt",
+      "byte_size": 2866,
+      "git_blob_sha": "28436ee9fbecc165259ecd0f8b33ffb71b90bb71"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0533-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 533,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/533",
+  "source_note_id": "xhs-note:67bc5933000000002901f943",
+  "expected_body_sha256": "e0b431a9db5b1b63f4ce55dffbf796f4f7362ef435717d626c42615e8a830e34",
+  "expected_source_revision_id": "xhs-note:67bc5933000000002901f943:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 3,
+        "excerpt": "预定七点开始结果人六点五十就到了。上来自我介绍完之后就问我实验室网络层相关的内容和项目，感觉根本不搭边。然后就问了一些课程相关的经历以及对linux和c++等的了解。没出题也没问Java八股相关的，这正常吗？"
+      },
+      {
+        "line_number": 5,
+        "excerpt": "#互联网大厂实习[话题]# #互联网大厂[话题]# #找实习[话题]# #面经[话题]# #面试问题[话题]# #校招[话题]# #大厂[话题]#"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67bc5933000000002901f943.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "242315a7af3d41836b642bc58ceaf72ae38760aa",
+    "byte_size": 537,
+    "sha256": "875202c0fd100f14572f66ba95382439241dc5c679eb07eec083c7fa91122fc1",
+    "locator": "note_desc:1-5",
+    "excerpt": "腾讯实习一面\n天美工作室群部门。\n预定七点开始结果人六点五十就到了。上来自我介绍完之后就问我实验室网络层相关的内容和项目，感觉根本不搭边。然后就问了一些课程相关的经历以及对linux和c++等的了解。没出题也没问Java八股相关的，这正常吗？\n感觉像kpi面随便拉了个人出来面试。\n#互联网大厂实习[话题]# #互联网大厂[话题]# #找实习[话题]# #面经[话题]# #面试问题[话题]# #校招[话题]# #大厂[话题]#",
+    "text": "腾讯实习一面\n天美工作室群部门。\n预定七点开始结果人六点五十就到了。上来自我介绍完之后就问我实验室网络层相关的内容和项目，感觉根本不搭边。然后就问了一些课程相关的经历以及对linux和c++等的了解。没出题也没问Java八股相关的，这正常吗？\n感觉像kpi面随便拉了个人出来面试。\n#互联网大厂实习[话题]# #互联网大厂[话题]# #找实习[话题]# #面经[话题]# #面试问题[话题]# #校招[话题]# #大厂[话题]#\n",
+    "line_count": 6,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:67bc5933000000002901f943.txt",
+      "byte_size": 537,
+      "git_blob_sha": "242315a7af3d41836b642bc58ceaf72ae38760aa"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/liqiangcc/interview-lab/schemas/issue-1607-boundary-classification.schema.json",
+  "title": "Issue 1607 Boundary B classification ledger",
+  "type": "object",
+  "required": ["schema_version", "repository", "child_issue", "source_ref", "status", "counts", "total", "items"],
+  "properties": {
+    "schema_version": { "const": "issue-1607-boundary-classification-ledger.v1" },
+    "repository": { "const": "liqiangcc/interview-lab" },
+    "child_issue": { "const": 1607 },
+    "source_ref": { "const": "95b77bb261048059846273688e4b90a2e108b437" },
+    "status": { "const": "proposal-only" },
+    "total": { "const": 367 },
+    "items": { "type": "array", "minItems": 367, "maxItems": 367, "items": { "type": "object", "required": ["issue_number", "source_note_id", "source_projection_ref", "locator", "excerpt", "full_projection_sha256", "basis_lines", "status", "proposed_decision", "basis"] } }
+  }
+}

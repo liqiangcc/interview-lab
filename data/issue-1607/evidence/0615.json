@@ -1,0 +1,76 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0615-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 615,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/615",
+  "source_note_id": "xhs-note:67dd5c0c000000001c003844",
+  "expected_body_sha256": "fa2c2d583ec7c9063f3102867e4530af4aac81544a2957c9e0c5dfaff06c249f",
+  "expected_source_revision_id": "xhs-note:67dd5c0c000000001c003844:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": []
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67dd5c0c000000001c003844.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "7777b5b6ea84b5848d74b9cc65affd182f6ba3ce",
+    "byte_size": 989,
+    "sha256": "6bceeaef07f9acb85b3030ccd6a46f0485bd51ebe510679d8a5c5b4a1b43fbc1",
+    "locator": "note_desc:1-10",
+    "excerpt": "问的太多了 脑子已经懵了 记不住了 以下是为数不多能记下来的\n拷打项目（没问实际的 就一直问你觉得什么能证明你的技术之类的）\njvm内存区域\ntcp四次握手\n有哪些垃圾回收算法\njava用的哪个 那你仔细说一下g1\n索引优化有哪些\n主从同步如何实现的 具体细节怎么复制的",
+    "text": "问的太多了 脑子已经懵了 记不住了 以下是为数不多能记下来的\n拷打项目（没问实际的 就一直问你觉得什么能证明你的技术之类的）\n\t\njvm内存区域\n\t\ntcp四次握手\n有哪些垃圾回收算法\njava用的哪个 那你仔细说一下g1\n索引优化有哪些\n主从同步如何实现的 具体细节怎么复制的\n怎么理解的aop\n\t\n有哪些设计模式 你用到了哪些 每个模式都说一下有什么用\n单例怎么实现的 两种分别适用于哪些场景\n\t\ndocker和虚拟机的区别\ndocker写时复制了解吗\n\t\nk8s了解吗 （我说不了解）：给你5min看一下 一会我问\nk8s的核心模块构成\n选一个说一下具体的\n知道kafka吗 那你说一下rocketmq的具体细节\n如何保证消息不重复读\n还问了一下我写的专利\n\t\n手撕：不是hot100 没见过 类似于数据结构的题\n你觉得你这个边缘case有哪些 你能不能不用priorityqueue给我写一个（没写出来 寄中寄）\n",
+    "line_count": 28,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:67dd5c0c000000001c003844.txt",
+      "byte_size": 989,
+      "git_blob_sha": "7777b5b6ea84b5848d74b9cc65affd182f6ba3ce"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

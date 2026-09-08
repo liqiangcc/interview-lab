@@ -1,0 +1,81 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0665-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 665,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/665",
+  "source_note_id": "xhs-note:67ea79ff000000001b03c94a",
+  "expected_body_sha256": "85cfcbb84c2b4389edbac5858e56582377c6fcba8f3842685db84e1002a3b971",
+  "expected_source_revision_id": "xhs-note:67ea79ff000000001b03c94a:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 9,
+        "excerpt": "8. threadlocal键如果使用强引用怎么解决内存泄漏的问题？"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67ea79ff000000001b03c94a.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "c6a7ea994537fc0eda148bb1a7be7d37b921b088",
+    "byte_size": 838,
+    "sha256": "0d1503704b4b7ed1968ab47a6cfa91e52ae2b327825d7866d563d5d29644859c",
+    "locator": "note_desc:1-8",
+    "excerpt": "腾讯云智一面\n1. 你这里实现了一个多端数据同步用到了redis和rabbitmq，具体实现流程，redis和rabbitmq分别用在哪里？\n2. netty底层用到了java中的NIO吗\n3. java中你比较熟悉的技术是哪些\n4. 说一下你了解的垃圾回收的方法流程，优势在哪里（stop world）\n5. 进程间通信方式#后端开发[话题]# #java[话题]# #大厂[话题]#\n6. 信号量应用场景\n7. 介绍一下弱引用，java中有哪些应用场景",
+    "text": "腾讯云智一面\n1. 你这里实现了一个多端数据同步用到了redis和rabbitmq，具体实现流程，redis和rabbitmq分别用在哪里？\n2. netty底层用到了java中的NIO吗\n3. java中你比较熟悉的技术是哪些\n4. 说一下你了解的垃圾回收的方法流程，优势在哪里（stop world）\n5. 进程间通信方式#后端开发[话题]# #java[话题]# #大厂[话题]#\n6. 信号量应用场景\n7. 介绍一下弱引用，java中有哪些应用场景\n8. threadlocal键如果使用强引用怎么解决内存泄漏的问题？\n9. 红黑树的特征优势？描述一下插入节点的流程\n10. netty底层为什么能支持一个高并发\n11. 具体怎么实现IO多路复用的\n12. 解决hash冲突的方式\n13. 项目中用到的聚类方法\n14. 数据切片以及提取\n15. 手撕：二维数组找target\n",
+    "line_count": 17,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:67ea79ff000000001b03c94a.txt",
+      "byte_size": 838,
+      "git_blob_sha": "c6a7ea994537fc0eda148bb1a7be7d37b921b088"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

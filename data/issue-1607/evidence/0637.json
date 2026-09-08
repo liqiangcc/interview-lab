@@ -1,0 +1,76 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0637-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 637,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/637",
+  "source_note_id": "xhs-note:67e40930000000001d02020d",
+  "expected_body_sha256": "d9a2da9b3a0441cd10f7185514341f8709383ad4cd8c1f1965bf8b38626cf4c0",
+  "expected_source_revision_id": "xhs-note:67e40930000000001d02020d:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": []
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67e40930000000001d02020d.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "8cd098bf46a036ff6a452ec8ccc39dabe78266e3",
+    "byte_size": 2098,
+    "sha256": "ef99e3739bfea130345beab7ffbb84dd9e3c97eff6c8780e32e0b92baab2203c",
+    "locator": "note_desc:1-9",
+    "excerpt": "项目相关\n1、你简历上列了两个项目，你主要做的是哪一个呢？\n2、详细介绍一下你重点负责的这个项目，项目中哪部分是亮点和难点呢？\n3、你在项目里使用线程池来运行模型，为什么要这么做呢？当时的应用背景是什么情况？\n4、关于线程池，你是如何设置的，那些核心参数你是怎么确定的？\n5、线程池的阻塞队列你是怎么设置的，拒绝策略又是什么呢？实际过程中有没有抛异常？\n6、回顾整个项目，你觉得项目的难点体现在哪里？\n7、假如让你重新做这个项目，你认为哪些地方可以进行改进？",
+    "text": "项目相关\n\t\n1、你简历上列了两个项目，你主要做的是哪一个呢？\n2、详细介绍一下你重点负责的这个项目，项目中哪部分是亮点和难点呢？\n3、你在项目里使用线程池来运行模型，为什么要这么做呢？当时的应用背景是什么情况？\n4、关于线程池，你是如何设置的，那些核心参数你是怎么确定的？\n5、线程池的阻塞队列你是怎么设置的，拒绝策略又是什么呢？实际过程中有没有抛异常？\n6、回顾整个项目，你觉得项目的难点体现在哪里？\n7、假如让你重新做这个项目，你认为哪些地方可以进行改进？\n8、你提到想把项目改成微服务架构，为什么要这么改，微服务有哪些好处？\nRedis 与分布式锁相关\n\t\n1、你在项目中使用了 Redisson，为什么会选择它呢，当时的使用背景是什么？\n2、在你的项目场景里，Redisson 加锁的流程是怎样的，具体是对什么进行加锁操作？\n3、要是在加锁过程中遇到网络波动，导致获取订单失败，这种情况你怎么处理？\n4、你使用了分布式锁，那你为什么选择分布式锁，有没有对比过其他实现方案的优缺点？\n5、Redisson 的看门狗底层原理是怎么实现的，它是如何进行续期的，又是怎么知道主线程是否崩溃的？\nSQL 优化相关\n\t\n1、现在有一个表，包含很多字段，并且有一百万条数据，对于这种情况的深度分页，你有什么优化方法？\n其他\n\t\n1、你对自己未来的职业发展方向有怎样的规划和想法？\n2、你对我们部门所负责的业务内容了解多少？\n3、如果后续有实习机会需要你到岗，一般从接到通知起，你多久能到岗？\n\t\n面经合集里还有别的面经，大家可以多看看[皱眉R]\n\t\n#后端开发[话题]#﻿ ﻿#java[话题]#﻿ ﻿#计算机[话题]#﻿ ﻿#面试求职[话题]#﻿ ﻿#校招[话题]#﻿ ﻿#面经[话题]#﻿ ﻿#面试[话题]#﻿ ﻿#面试真题[话题]#﻿ ﻿#暑期实习[话题]#﻿ ﻿#大厂[话题]#﻿\n",
+    "line_count": 30,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:67e40930000000001d02020d.txt",
+      "byte_size": 2098,
+      "git_blob_sha": "8cd098bf46a036ff6a452ec8ccc39dabe78266e3"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

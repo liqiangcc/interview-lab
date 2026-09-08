@@ -1,0 +1,93 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0659-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 659,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/659",
+  "source_note_id": "xhs-note:67e9712a000000000b02c3fb",
+  "expected_body_sha256": "5dfbf5f713d9d126cd3d7ee5954b937e49a601b60b38b3c82d6226786f64be16",
+  "expected_source_revision_id": "xhs-note:67e9712a000000000b02c3fb:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "proposal-only",
+    "proposed_decision": "single-interview",
+    "basis": "first-person experienced process fact plus question evidence; no appointment/advice marker",
+    "basis_lines": [
+      {
+        "line_number": 1,
+        "excerpt": "视频底下有进度条大家可以看看，煮波觉得这场面试还是有很多没发挥好的地方[微笑R][微笑R]但是面完我就觉得通过概率蛮大的，因为面试期间煮波把面试官逗笑了好几次[黄金薯R][黄金薯R]这怎么不算聊得开心呢[飞吻R]"
+      },
+      {
+        "line_number": 8,
+        "excerpt": "1.自我介绍、结合介绍问题、项目"
+      },
+      {
+        "line_number": 9,
+        "excerpt": "2.8G内存怎么加载100G软件"
+      },
+      {
+        "line_number": 13,
+        "excerpt": "6.i=0，两个线程同时执行i++，最终得到的i值可能是多少，为什么"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67e9712a000000000b02c3fb.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "7f25f02f22d72832b454233213beb68748d20636",
+    "byte_size": 993,
+    "sha256": "55c0977b96079ecbee78441b7539232f08623b18cdf81ba02d33fd4789334610",
+    "locator": "note_desc:1-8",
+    "excerpt": "视频底下有进度条大家可以看看，煮波觉得这场面试还是有很多没发挥好的地方[微笑R][微笑R]但是面完我就觉得通过概率蛮大的，因为面试期间煮波把面试官逗笑了好几次[黄金薯R][黄金薯R]这怎么不算聊得开心呢[飞吻R]\n完整timeline（去年秋招）：\n0903一面，0905约二面\n0906二面，下午约三面\n0910三面，下午约四面\n0911hr面，0918发意向书\n一面面经：\n1.自我介绍、结合介绍问题、项目",
+    "text": "视频底下有进度条大家可以看看，煮波觉得这场面试还是有很多没发挥好的地方[微笑R][微笑R]但是面完我就觉得通过概率蛮大的，因为面试期间煮波把面试官逗笑了好几次[黄金薯R][黄金薯R]这怎么不算聊得开心呢[飞吻R]\n完整timeline（去年秋招）：\n0903一面，0905约二面\n0906二面，下午约三面\n0910三面，下午约四面\n0911hr面，0918发意向书\n一面面经：\n1.自我介绍、结合介绍问题、项目\n2.8G内存怎么加载100G软件\n3.虚拟内存其他的作用\n4.用C语言判断当前系统是32位还是64位\n5.内存概念里堆和栈的区别\n6.i=0，两个线程同时执行i++，最终得到的i值可能是多少，为什么\n7.http和https的区别，为什么https更安全\n8.为什么tcp握手是三次，挥手是四次\n9.数组和链表的区别、特点\n10.设计一个数据结构结合两者的优点\n11.手撕代码\n#互联网大厂[话题]# #面经[话题]# #开发[话题]#\n",
+    "line_count": 20,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:67e9712a000000000b02c3fb.txt",
+      "byte_size": 993,
+      "git_blob_sha": "7f25f02f22d72832b454233213beb68748d20636"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

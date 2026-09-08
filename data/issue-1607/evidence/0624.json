@@ -1,0 +1,85 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0624-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 624,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/624",
+  "source_note_id": "xhs-note:67dd34b2000000001d021316",
+  "expected_body_sha256": "e309448c9b56d421e46796f3002b805e3ed687011efbfa3bc0e562331d2af4ca",
+  "expected_source_revision_id": "xhs-note:67dd34b2000000001d021316:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 5,
+        "excerpt": "说说线程池的阻塞队列有什么用，为什么用阻塞队列不用普通队列，在并发情况下，往队列中加任务不会有线程安全问题吗。"
+      },
+      {
+        "line_number": 6,
+        "excerpt": "3. 说说AQS，有什么用。ReentrantLock怎么实现公平和非公平，如果多个线程同时lock怎么处理线程安全问题。"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67dd34b2000000001d021316.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "7996a901d988f7f61e1930ed838f3f5b841be6dc",
+    "byte_size": 1450,
+    "sha256": "b94346cdb7813964a791f58e8441e1b9fb708a8caab087eee4880e466a436d20",
+    "locator": "note_desc:1-8",
+    "excerpt": "⭕一面 35min：\n自我介绍\n1. java中的锁，说说synchronized底层原理。\n2. 线程池参数，过期时间的意义，超出核心线程数的会被回收吗，非核心线程会被回收吗？怎么判断他要不要回收，怎么知道他过期了的。那我创建十个线程，1~10,核心数8个，9和10还在执行任务，1~8不执行了，这时候会怎么做。\n说说线程池的阻塞队列有什么用，为什么用阻塞队列不用普通队列，在并发情况下，往队列中加任务不会有线程安全问题吗。\n3. 说说AQS，有什么用。ReentrantLock怎么实现公平和非公平，如果多个线程同时lock怎么处理线程安全问题。\n4. 说说CAS，旧值存储在哪里？\n5. 对哪个框架比较熟悉。说说MyBatis的xml文件到mapper最后查到内容的过程。",
+    "text": "⭕一面 35min：\n自我介绍\n1. java中的锁，说说synchronized底层原理。\n2. 线程池参数，过期时间的意义，超出核心线程数的会被回收吗，非核心线程会被回收吗？怎么判断他要不要回收，怎么知道他过期了的。那我创建十个线程，1~10,核心数8个，9和10还在执行任务，1~8不执行了，这时候会怎么做。\n说说线程池的阻塞队列有什么用，为什么用阻塞队列不用普通队列，在并发情况下，往队列中加任务不会有线程安全问题吗。\n3. 说说AQS，有什么用。ReentrantLock怎么实现公平和非公平，如果多个线程同时lock怎么处理线程安全问题。\n4. 说说CAS，旧值存储在哪里？\n5. 对哪个框架比较熟悉。说说MyBatis的xml文件到mapper最后查到内容的过程。\n6. redis的过期淘汰策略，内存不足淘汰策略，redis的LRU是怎么做的\n7. 说说双亲委派机制，以及为什么。\n8. 实习相关\n9. 项目相关。\n10 算法lc49，用的哈希表，问还有什么其他方法（不会）\n11. 反问\n\t\n最后还谢谢我的面试，感觉寄\n\t\n补充：\n1.封装和多态\n2. linux中如何查找日志中指定字符串在哪一行\n\t\n.\n内容来自牛友：全都一面挂\n来源：牛客\n\t\n#网易云音乐[话题]# #java[话题]# #求职[话题]# #实习[话题]# #牛客社区[话题]# #牛客app[话题]# #面试笔试抄作业[话题]# #互联网大厂[话题]#\n",
+    "line_count": 27,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:67dd34b2000000001d021316.txt",
+      "byte_size": 1450,
+      "git_blob_sha": "7996a901d988f7f61e1930ed838f3f5b841be6dc"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

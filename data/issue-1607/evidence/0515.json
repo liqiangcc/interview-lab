@@ -1,0 +1,85 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0515-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 515,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/515",
+  "source_note_id": "xhs-note:67b4403c000000001201c581",
+  "expected_body_sha256": "b0a397ecd27f9abb1eab368176f0b48d24d893b24c8c76b727d1f1847e42aaf9",
+  "expected_source_revision_id": "xhs-note:67b4403c000000001201c581:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 4,
+        "excerpt": "● 题目：(()→2，)()()(→4"
+      },
+      {
+        "line_number": 40,
+        "excerpt": "写在最后：八股是门票，项目和算法是王炸！二面冲鸭！🔥"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67b4403c000000001201c581.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "fb991164ac22bb2c91b1af48551c7cf70b3dedab",
+    "byte_size": 2189,
+    "sha256": "db04a048fc4d80fe5c9d03bb5ee4a43eddef34ab95e7bf085c243f4278ff30f5",
+    "locator": "note_desc:1-8",
+    "excerpt": "面试风格：重基础+场景设计，算法必须最优解！\n🧠 高频考题+考察点拆解\n🔨 算法题：最长有效括号\n● 题目：(()→2，)()()(→4\n● 难点：\na. 需讨论栈实现 vs 动态规划（时间复杂度O(n)）；\nb. 边界值如)()()右括号开头情况；\n📊 SQL题：统计重复数据",
+    "text": "面试风格：重基础+场景设计，算法必须最优解！\n🧠 高频考题+考察点拆解\n🔨 算法题：最长有效括号\n● 题目：(()→2，)()()(→4\n● 难点：\na. 需讨论栈实现 vs 动态规划（时间复杂度O(n)）；\nb. 边界值如)()()右括号开头情况；\n📊 SQL题：统计重复数据\n● 答案：GROUP BY字段 HAVING COUNT(*)>1\n● 追问：\n○ WHERE过滤行，HAVING过滤组；\n○ 索引对HAVING性能的影响。\n☕ Java基础暴击\n1. 接口vs抽象类：\n○ 接口无构造方法，抽象类可以有；\n○ Java8后接口支持default方法（但本质还是规范）。\n2. 能否new接口/抽象类：\n○ 不能直接实例化，需匿名类或Lambda（接口）。\n💾 MySQL连环问\n1. 聚簇索引：数据与索引绑定（如主键），回表查非聚簇字段需二次检索；\n2. 预防回表：覆盖索引（查询字段全在索引中）；\n3. 索引碎片化：定期OPTIMIZE TABLE或重建索引。\n🔐 Redis高可用\n● 方案：主从+哨兵 or Cluster分片；（Redis的集群模式一定一定要记住，我已经被问到无数遍了）\n● 内存不足：LRU淘汰策略、分片扩容、冷热数据分离；\n● 实战坑：哨兵至少3节点防脑裂（自己搭过可加分！）。\n🔒 HTTPS灵魂拷问\n1. 单向验证：客户端验服务端证书；\n2. 双向验证：客户端也提供证书（如银行系统）；\n3. 证书交换流程：ClientHello→Server证书→密钥协商。\n💥 项目拷打+大模型场景\n● 有接触到大模型的工具吗\n● 使用大模型的场景\n● 怎么甄别大模型给的信息是否正确\n✅ 一面通过关键点\n1. 算法优化能力：能讨论多种解法并主动优化；\n2. 场景化回答：结合业务（如Redis内存不足→电商大促预案）；\n3. 项目亮点：突出技术选型逻辑（为什么用A而不是B）。\n标签：#腾讯面试[话题]# #Java后端[话题]# #实习面经[话题]# #互联网大厂实习[话题]# #后端开发[话题]# #java[话题]# #面经[话题]#\n写在最后：八股是门票，项目和算法是王炸！二面冲鸭！🔥\n需要补充细节可留言~ 关注我，会发二面面经！🎉\n",
+    "line_count": 42,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:67b4403c000000001201c581.txt",
+      "byte_size": 2189,
+      "git_blob_sha": "fb991164ac22bb2c91b1af48551c7cf70b3dedab"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

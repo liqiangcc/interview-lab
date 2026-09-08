@@ -1,0 +1,76 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0642-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 642,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/642",
+  "source_note_id": "xhs-note:67e4f9bd000000001c00418b",
+  "expected_body_sha256": "6fbc297f50a2d343029c511daf0866c07404632b55edd36c3d870ff67b2ef255",
+  "expected_source_revision_id": "xhs-note:67e4f9bd000000001c00418b:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": []
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67e4f9bd000000001c00418b.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "bcbe45c3385dfb8fed57c7073ca818652ade2312",
+    "byte_size": 1318,
+    "sha256": "f73ff77d1688680200478706bf97ff039309add15c912e8984646b87d944f02c",
+    "locator": "note_desc:1-9",
+    "excerpt": "快手java日常实习电商部门一/二面凉经\n一面面经：\n自我介绍\n介绍一下你参与过比较有挑战性或者有兴趣的一些项目\n项目是自己做的还是几个人一起做的\nredis控制一个用户在一个小时内只能发表五个评论\n可以用过期时间实现吗\nredis的过期机制在海量数据情况下需要注意什么",
+    "text": "快手java日常实习电商部门一/二面凉经\n\t\n一面面经：\n自我介绍\n介绍一下你参与过比较有挑战性或者有兴趣的一些项目\n项目是自己做的还是几个人一起做的\nredis控制一个用户在一个小时内只能发表五个评论\n可以用过期时间实现吗\nredis的过期机制在海量数据情况下需要注意什么\nredis的哈希字段是怎么实现扩容的\n如何保证redis和DB数据的一致性\nselect *from table where  A=8(table有一个字段A=8),如果已经对A字段单独建立了一个索引，那你觉得这个SQL有没有可能走全表扫描\nString不加‘’为什么会索引失效\n有一条SQL，里面有ABCD四个字段，A>某个值andB=某个值 or C = 等于 orderby D,如何为ABCD创建索引，怎么组合？\n如果不知道当前事务的隔离级别，你觉得最少需要多少条命令可以测试出来\n什么场景下会用到策略模式？\n什么场景下会用到工厂模式？\n手撕你觉得安全的单例模式\n手撕第K个缺失的正整数\n反问：\n一面的表现\n如果有机会进去，需要学习什么\n\t\n二面面经:\n自我介绍\n拷打项目\n给出sql创建索引\n手撕具体的sql加锁语句\n手撕并发死锁代码\n手撕版本号\n#互联网大厂实习[话题]# #快手[话题]# #计算机专业[话题]#\n",
+    "line_count": 32,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:67e4f9bd000000001c00418b.txt",
+      "byte_size": 1318,
+      "git_blob_sha": "bcbe45c3385dfb8fed57c7073ca818652ade2312"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

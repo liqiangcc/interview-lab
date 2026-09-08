@@ -1,0 +1,81 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0708-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 708,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/708",
+  "source_note_id": "xhs-note:67f7997f000000001d003df4",
+  "expected_body_sha256": "dd7a9b2645f94371e3fad968a458eac1ca5e970117c5d69ec93dfc860de1a9d4",
+  "expected_source_revision_id": "xhs-note:67f7997f000000001d003df4:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 1,
+        "excerpt": "📝二面主要三个环节，自我介绍+项目介绍，算法手撕，八股拷打，面试时长一小时，面试官很温柔，算是部门的另一个base小组的带教之一，不是我入职后的mentor，项目结合场景问的很多，会简单引导，体验非常好，入职后发现部门氛围也不错[萌萌哒R]"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67f7997f000000001d003df4.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "367a029811ac91a3fb0e7596e2c2a71416c9ed0c",
+    "byte_size": 1885,
+    "sha256": "7659a3c44c043402724821ef455858b5f743e8612b990fb0b7549a64af8ebc70",
+    "locator": "note_desc:1-10",
+    "excerpt": "📝二面主要三个环节，自我介绍+项目介绍，算法手撕，八股拷打，面试时长一小时，面试官很温柔，算是部门的另一个base小组的带教之一，不是我入职后的mentor，项目结合场景问的很多，会简单引导，体验非常好，入职后发现部门氛围也不错[萌萌哒R]\n💡算法手撕\nlru，问了值传递/引用传递等细节\n💡计网\n1️⃣https怎么保证安全\n2️⃣对称加密非对称加密对比，为什么要这样设计\n💡数据库\nmysql一张表2000w性能差为什么",
+    "text": "📝二面主要三个环节，自我介绍+项目介绍，算法手撕，八股拷打，面试时长一小时，面试官很温柔，算是部门的另一个base小组的带教之一，不是我入职后的mentor，项目结合场景问的很多，会简单引导，体验非常好，入职后发现部门氛围也不错[萌萌哒R]\n💡算法手撕\nlru，问了值传递/引用传递等细节\n\t\n💡计网\n1️⃣https怎么保证安全\n2️⃣对称加密非对称加密对比，为什么要这样设计\n\t\n💡数据库\nmysql一张表2000w性能差为什么\n\t\n💡jvm\n1️⃣jvm并发编程sync锁升级机制？\n2️⃣轻量级锁有队列吗\n3️⃣有一个对象被线程占用了，bcd争夺这个，用什么锁\n\t\n💡spring生态\n1️⃣springboot mvc和spring的区别？\n2️⃣springboot能用springmvc吗，如何引入？\n3️⃣springmvc和dubbo的区别\n\t\n💡项目+场景\n1️⃣dubbo内部有zookeeper吗\n2️⃣简要回答：dubbo里面调用服务提供者怎么找ip？\n3️⃣dubbo负载均衡策略？\n4️⃣dubbo客户端到服务端网络通信底层怎么实现的？\n5️⃣netty和socket编程的区别？\n6️⃣分布式事务seata怎么实现的\n7️⃣elasticsearch倒排索引指的什么？elastic search 将mysql数据表如何同步到es中？\n8️⃣不用全表同步，有没有高性能的？数据库中有1，2，3条记录，第二条数据delete掉，这时候elastic search怎么意识到这个delete？\n9️⃣rbac权限管控和acl的区别？rbac怎么设计角色新增这张表\n1️⃣0️⃣每次和网关请求判断权限的时候，每次都需要查数据库吗？一个人一开始是A角色，后来被调到B角色，这个缓存和数据库的更新怎么设计？\n1️⃣1️⃣oauth2的结构和原理？#oc[话题]# #java[话题]# #后端开发[话题]# #转码[话题]# #互联网大厂[话题]# #计算机[话题]#\n",
+    "line_count": 34,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:67f7997f000000001d003df4.txt",
+      "byte_size": 1885,
+      "git_blob_sha": "367a029811ac91a3fb0e7596e2c2a71416c9ed0c"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0691-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 691,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/691",
+  "source_note_id": "xhs-note:67f3ec0f000000001200ddfa",
+  "expected_body_sha256": "d9628650ba07a0284ad4ef9b4570baa0346ddffb0af72535a33d52716ae9258f",
+  "expected_source_revision_id": "xhs-note:67f3ec0f000000001200ddfa:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 1,
+        "excerpt": "总时长45mins，无手撕，面试官人非常好，上来先介绍部门业务，接着自我介绍，然后是项目，最后是基础八股，场景题大轰炸。"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67f3ec0f000000001200ddfa.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "8095fe5acd15779b64268b8a6d48f9d3536974ff",
+    "byte_size": 766,
+    "sha256": "3c65bdd549e2e2b02686e3cd1b9b2f55b0c687e09a343da0df86a34ebe0ec7ba",
+    "locator": "note_desc:1-8",
+    "excerpt": "总时长45mins，无手撕，面试官人非常好，上来先介绍部门业务，接着自我介绍，然后是项目，最后是基础八股，场景题大轰炸。\n1. zset怎么实现一个二维的排序，在点赞数相同的情况下还需要考虑用户年龄段\n2. redis中key过期策略，实际应用情况\n3. 乐观所解决超卖的具体实现，高并发情况下怎么优化中心节点的性能瓶颈（分桶）\n4. 异步扣库存失败时如何保证数据一致性？怎样才能不脏线程中的其他数据\n5. 双亲委派的原理，实际场景中打破该机制的具体实例\n6. 静态代理和动态代理的区别\n7. 单例模式的实现",
+    "text": "总时长45mins，无手撕，面试官人非常好，上来先介绍部门业务，接着自我介绍，然后是项目，最后是基础八股，场景题大轰炸。\n1. zset怎么实现一个二维的排序，在点赞数相同的情况下还需要考虑用户年龄段\n2. redis中key过期策略，实际应用情况\n3. 乐观所解决超卖的具体实现，高并发情况下怎么优化中心节点的性能瓶颈（分桶）\n4. 异步扣库存失败时如何保证数据一致性？怎样才能不脏线程中的其他数据\n5. 双亲委派的原理，实际场景中打破该机制的具体实例\n6. 静态代理和动态代理的区别\n7. 单例模式的实现\n8. bean循环依赖的解决\n9. http请求中get和post的请求（可能要多了解一些）\n",
+    "line_count": 11,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:67f3ec0f000000001200ddfa.txt",
+      "byte_size": 766,
+      "git_blob_sha": "8095fe5acd15779b64268b8a6d48f9d3536974ff"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

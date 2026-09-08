@@ -1,0 +1,89 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0636-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 636,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/636",
+  "source_note_id": "xhs-note:67e3ed07000000001c006e2a",
+  "expected_body_sha256": "f705674f7502ed9e1a00b9e92080ea4661dfda7224e6ae8341f65e9797136175",
+  "expected_source_revision_id": "xhs-note:67e3ed07000000001c006e2a:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 2,
+        "excerpt": "主要就是问项目上用的中间件底层的原理，和每个中间件可能发生的问题"
+      },
+      {
+        "line_number": 6,
+        "excerpt": "rabbitmq消息队列可能产生的各种问题"
+      },
+      {
+        "line_number": 23,
+        "excerpt": "索引过多会有什么问题"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67e3ed07000000001c006e2a.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "ac22447728386ef18e66fc5b4e6551381c410f02",
+    "byte_size": 1659,
+    "sha256": "98a5d66ce20520c77002c62efa5742adb6c6825cc50be03ed12b27ae2a865f44",
+    "locator": "note_desc:1-8",
+    "excerpt": "全程被拷打简历[捂脸R]\n主要就是问项目上用的中间件底层的原理，和每个中间件可能发生的问题\n微服务远程调用原理\n具体拆分了哪些微服务，依据是什么\nnacos服务注册服务发现的一些细节\nrabbitmq消息队列可能产生的各种问题\n分布式事务管理seata为什么用at模式\nsentinel底层原理了解吗",
+    "text": "全程被拷打简历[捂脸R]\n主要就是问项目上用的中间件底层的原理，和每个中间件可能发生的问题\n微服务远程调用原理\n具体拆分了哪些微服务，依据是什么\nnacos服务注册服务发现的一些细节\nrabbitmq消息队列可能产生的各种问题\n分布式事务管理seata为什么用at模式\nsentinel底层原理了解吗\n问了spring aop的一些原理\n如果ab是两个方法都有用aop拦截输出日志，外部方法调用a，\nvoid a｛this.b（）；｝，请问输出几条日志（这个一条，有学过，aop底层动态代理，this会跳过这个机制）\n\t\n下面这样b能完成依赖注入吗（这个完全不清楚）\n@service\nclass A｛｝\n\t\nclass B｛\n@autowerid\nprivate A a；\n｝\n\t\n有过数据库表的设计，索引的建立吗\n索引过多会有什么问题\n联合索引数据什么时候失效，为什么\nMySQL底层的数据结构\n为什么要用b+树\nacid指什么\nRedis怎么保证缓存数据库一致性\nRedis如果删除缓存失败？\nRedis如果大量key同时过期？\n算法题：\n判断回文链表\n这个用数组我秒杀了，然后和面试官介绍了一下，还能用快慢指针找中点，反转后续链表来做，可以降低空间复杂度到o（1）\n\t\n项目拷打太深了，可以说是我最近几次面试里最难的几次了，前面估计有一部分没答好，后面数据库和Redis倒是重点准备过，很简单，感觉要凉凉[捂脸R][捂脸R][捂脸R]\n#后端开发[话题]# #java[话题]# #互联网大厂[话题]# #程序员[话题]# #大厂[话题]# #春招分享[话题]# #暑期实习[话题]# #面经[话题]# #校招[话题]#\n",
+    "line_count": 37,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:67e3ed07000000001c006e2a.txt",
+      "byte_size": 1659,
+      "git_blob_sha": "ac22447728386ef18e66fc5b4e6551381c410f02"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

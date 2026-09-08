@@ -1,0 +1,93 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0489-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 489,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/489",
+  "source_note_id": "xhs-note:679303a1000000002901a70f",
+  "expected_body_sha256": "d69c825e7cfd25445dc509fc7c6ec88e1d15095be4781105c4d4ae1f0ec79b87",
+  "expected_source_revision_id": "xhs-note:679303a1000000002901a70f:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 5,
+        "excerpt": "5.canal怎么保证数据的一致性问题呢"
+      },
+      {
+        "line_number": 16,
+        "excerpt": "16.可重复读导致的问题"
+      },
+      {
+        "line_number": 38,
+        "excerpt": "一家外包公司的面试题，比较简单。面试官人还挺好，有些回答不完整的地方还会给我进行补充。面试通过了，不过谈薪失败，最终也没有去这家公司"
+      },
+      {
+        "line_number": 39,
+        "excerpt": "#Java面试[话题]# #经验分享[话题]# #后端找工作[话题]#"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/679303a1000000002901a70f.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "738dd8cc70f81b140c25db67b2edbef22955039e",
+    "byte_size": 1916,
+    "sha256": "c0a5f0d5167a46a1055ff2d97ee1b44b326074bc0eb9342030eb669dcfb8ae73",
+    "locator": "note_desc:1-8",
+    "excerpt": "1.比较熟悉的项目，讲一下做了哪些功能\n2.ES和MySQL的查询有什么不一样\n3.搜索如果要实现热词功能，要怎么设计\n4.canal是如何进行数据同步的\n5.canal怎么保证数据的一致性问题呢\n6.POI和EasyExcel的区别，EasyExcel做了什么改进\n7.如果有超过10万条数据要进行导出，如何进行处理\n8.父子表如何进行关联",
+    "text": "1.比较熟悉的项目，讲一下做了哪些功能\n2.ES和MySQL的查询有什么不一样\n3.搜索如果要实现热词功能，要怎么设计\n4.canal是如何进行数据同步的\n5.canal怎么保证数据的一致性问题呢\n6.POI和EasyExcel的区别，EasyExcel做了什么改进\n7.如果有超过10万条数据要进行导出，如何进行处理\n8.父子表如何进行关联\n9.一对多如何进行查询\n10.删除外键需要注意什么\n11.MySQL的索引用过哪些\n12.如果一张表没有设置主键，是否还会有主键索引\n13.B+树和B树的区别\n14.MySQL的索引引擎\n15.事务隔离级别\n16.可重复读导致的问题\n17.如何进行SQL优化\n18.Mysql和Oracle有什么区别\n19.Oracle有limit关键字吗\n20.Spring的事务\n21.事务失效场景\n22.一个事务方法调用另一个事务方法，事务还会生效吗\n23.事务机制使用的什么设计模式\n24.spring两个核心\n25.是否使用过AOP，使用的什么通知方式\n26.Springboot的核心注解，由哪些注解组成\n27.自动装配原理\n28.怎么初始化一个springboot项目\n29.如果要创建一个web项目，需要引用哪些依赖\n30.目前springboot3.XX的版本可以使用脚手架搭建，如果是jdk1.8，只能支持2.XX的版本，需要怎么搭建\n31.maven用的什么版本，是否出现过不兼容的情况\n32.git用的多吗？写代码是切了属于自己的分支吗\n33.是否出现过代码冲突，怎么解决\n34.怎么进行版本回退？已经push的情况下\n35.springcloud微服务架构和单体架构的区别\n36.nacos除了做注册与发现，还可以用来干什么\n37.#和[话题]#$符号的区别\n一家外包公司的面试题，比较简单。面试官人还挺好，有些回答不完整的地方还会给我进行补充。面试通过了，不过谈薪失败，最终也没有去这家公司\n#Java面试[话题]# #经验分享[话题]# #后端找工作[话题]#\n",
+    "line_count": 40,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:679303a1000000002901a70f.txt",
+      "byte_size": 1916,
+      "git_blob_sha": "738dd8cc70f81b140c25db67b2edbef22955039e"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

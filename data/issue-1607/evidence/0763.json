@@ -1,0 +1,89 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0763-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 763,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/763",
+  "source_note_id": "xhs-note:680629b5000000000d014f4d",
+  "expected_body_sha256": "85a3945f2a2bd53b6de196f1d5648b2c595e01bee29c943a7b256ef062cfbd89",
+  "expected_source_revision_id": "xhs-note:680629b5000000000d014f4d:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 3,
+        "excerpt": "开始问八股就是二战转折点[哭惹R]"
+      },
+      {
+        "line_number": 4,
+        "excerpt": "零零碎碎的八股都不说了(JWT，kafka和MQ，缓存雪崩等，布隆过滤器的坏处等等等等）就记一下不会的[失望R]"
+      },
+      {
+        "line_number": 9,
+        "excerpt": "--换了MySQL，问了一个最左匹配原则的问题，记漏了前面是范围查询，后面就会索引失效。"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/680629b5000000000d014f4d.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "57b055b89ec6708f56a60e403cbd77d8d1d4f14d",
+    "byte_size": 2836,
+    "sha256": "f9b9b8cb8d1821fb844040aaea9dfe96e64c1d7a62938b3f1e97ef566e8bdb31",
+    "locator": "note_desc:1-8",
+    "excerpt": "面试官自我介绍是酒店什么部门的，感觉这次答得一般，球球团子给我一个机会[哭惹R][哭惹R]我真诚的祈求上苍，真的祈求上苍[哭惹R]\n先问了三个主观题，AI 啊，处理事情的方式啊之类的，当时觉得很妙。\n开始问八股就是二战转折点[哭惹R]\n零零碎碎的八股都不说了(JWT，kafka和MQ，缓存雪崩等，布隆过滤器的坏处等等等等）就记一下不会的[失望R]\n--如果不用零拷贝，复制过程是怎样的，经历几次复制，用了以后变成几次（让我下来仔细想想）\n--setNX在分布式锁上的优缺点，想了半天想不起来缺点是啥了（死脑子啊啊啊啊啊）\n--concurrenthashmap可以自定义红黑树和链表转换的阈值吗\nJDK有没有别的地方用到红黑树（提示用了hashmap的地方就用红黑树，还是不知道）",
+    "text": "面试官自我介绍是酒店什么部门的，感觉这次答得一般，球球团子给我一个机会[哭惹R][哭惹R]我真诚的祈求上苍，真的祈求上苍[哭惹R]\n先问了三个主观题，AI 啊，处理事情的方式啊之类的，当时觉得很妙。\n开始问八股就是二战转折点[哭惹R]\n零零碎碎的八股都不说了(JWT，kafka和MQ，缓存雪崩等，布隆过滤器的坏处等等等等）就记一下不会的[失望R]\n--如果不用零拷贝，复制过程是怎样的，经历几次复制，用了以后变成几次（让我下来仔细想想）\n--setNX在分布式锁上的优缺点，想了半天想不起来缺点是啥了（死脑子啊啊啊啊啊）\n--concurrenthashmap可以自定义红黑树和链表转换的阈值吗\nJDK有没有别的地方用到红黑树（提示用了hashmap的地方就用红黑树，还是不知道）\n--换了MySQL，问了一个最左匹配原则的问题，记漏了前面是范围查询，后面就会索引失效。\n--spring的AoP里如果ab方法在同一个类，b调用AoP加强的a，AoP是不是生效（回答不生效因为this绕过代理对象，反问如果想生效怎么办，没答出来）\n--包装类，如果Integer是null，转为int，会输出什么（答会报错，因为int没有null，追问会报什么错，表示不记得具体）\n--追问JVM的内存，回答之后问内存溢出oom是error还是exception 回答error，栈除了无限递归还有什么情况是oom（不知道）\n--问JVM的参数，比如堆大小，（只知道CMS和G1）讲讲G1（答上了）\n--问怎么设置线程池的参数，抖机灵说了个公式，结果被问不知道平均等待和平均计算怎么办\n--怎么查看CPU参数，要用Linux指令\n--怎么查看错误日志，说我就在文件里查看，追问什么文件\n--有什么语言是先扩线程池再放入任务队列\n老天奶，感觉问到最后脑子已经不转了，现在好多都想不起来了[失望R]感觉还是太菜了，需要多练[哭惹R]\n最后手撕如下：一次遍历，找到a+b＝m的数。提示下标不一样就算不一样的，开始写的时候没想到是要排列组合。最后提醒我要用C去算可能性，因为只能遍历一次。让我下来想想。\n最后反问可以补充什么部分的遗漏，回答美团不看实习和项目，只考察知识点（感觉心凉了）\n然后问什么时候出结果，说一周内，如果没出就看看别的机会。\n球球了，真的不想再面了，感觉人要崩溃了，能不能给一个offer[哭惹R][哭惹R]面试官人很好，感觉技术也很强[哭惹R]什么时候我能这么强，能不能给个机会，我就是团孝女，我能从五月一直干到入职[哭惹R]\n#互联网大厂[话题]# #后端开发[话题]# #暑期实习[话题]# #大厂[话题]# #美团[话题]#\n",
+    "line_count": 24,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:680629b5000000000d014f4d.txt",
+      "byte_size": 2836,
+      "git_blob_sha": "57b055b89ec6708f56a60e403cbd77d8d1d4f14d"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

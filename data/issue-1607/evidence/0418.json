@@ -1,0 +1,89 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0418-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 418,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/418",
+  "source_note_id": "xhs-note:6744571d00000000060179e9",
+  "expected_body_sha256": "f898767c8dd1104e57e26baad1c8b0106172edc95cd0f9c6194d1f587bd7013f",
+  "expected_source_revision_id": "xhs-note:6744571d00000000060179e9:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 16,
+        "excerpt": "6.  mysql自增id问题"
+      },
+      {
+        "line_number": 18,
+        "excerpt": "8.  微服务问题排查流程"
+      },
+      {
+        "line_number": 19,
+        "excerpt": "9.  线上问题定位"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/6744571d00000000060179e9.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "261c32d1c7bcd15db99ab2f6624f5f778317bd07",
+    "byte_size": 1198,
+    "sha256": "f59fa46237046a42b5a961547938ad277a078dffb86346796a6916b95fad735b",
+    "locator": "note_desc:1-10",
+    "excerpt": "⭕字节飞书（转go）\n抖音挂了被隔壁飞书捞起来了，又来一轮拷打，麻了\n⚜️一面 50min\n1.  项目相关\n2.  项目重新设计的话可以有哪些优化\n场景：海外规避隐私合规获取用户数据\n算法：智能水龙头\n⚜️二面 1h",
+    "text": "⭕字节飞书（转go）\n抖音挂了被隔壁飞书捞起来了，又来一轮拷打，麻了\n\t\n⚜️一面 50min\n1.  项目相关\n2.  项目重新设计的话可以有哪些优化\n场景：海外规避隐私合规获取用户数据\n算法：智能水龙头\n\t\n⚜️二面 1h\n1.  项目相关\n2.  varchar、char、text区别\n3.  索引覆盖\n4.  长文本如何建立索引\n5.  分库分表\n6.  mysql自增id问题\n7.  缓存一致性\n8.  微服务问题排查流程\n9.  线上问题定位\n系统设计：短链服务\n算法：打印数组中所有比前面小比后面大的数字\n\t\n---\n⭕美团\n面试难度比字节简单，但二面的系统设计没答好给挂了，有点可惜\n⚜️一面 50min\n⚜️二面 1h\n\t\n---\n⭕招银\n面试感觉很水，尤其二面感觉啥也没问，最后还给挂了，问了下在招银的同学感觉应该是给不起薪资。。。\n⚜️一面 40min\n⚜️二面 30min\n.\n内容来自牛友：青柠味的柚子\n来源：牛客\n\t\n#美团[话题]# #招银[话题]# #抖音[话题]# #java[话题]# #面试笔试抄作业[话题]# #社招[话题]# #求职[话题]# #找工作[话题]# #面试[话题]# #牛客[话题]# #牛客app[话题]#\n",
+    "line_count": 39,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:6744571d00000000060179e9.txt",
+      "byte_size": 1198,
+      "git_blob_sha": "261c32d1c7bcd15db99ab2f6624f5f778317bd07"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

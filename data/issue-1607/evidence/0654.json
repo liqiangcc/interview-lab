@@ -1,0 +1,81 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0654-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 654,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/654",
+  "source_note_id": "xhs-note:67e7b562000000000b02d451",
+  "expected_body_sha256": "c30f230c5790d77ee10d20bdea8f3bc4279cf9c443b493e08e8d42812789dcf8",
+  "expected_source_revision_id": "xhs-note:67e7b562000000000b02d451:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 1,
+        "excerpt": "面试还是以考察场景题为主，其实问得题目都大差不差，只要针对一些常考题目，结合项目知识进行拆解背记，面试真的不算难！我面试用的题库放在后面了，大家可以看看参考一下。#爱上工作的瞬间[话题]# #java[话题]# #java面试[话题]# #计算机[话题]# #互联网大厂[话题]# #编程[话题]# #后端开发[话题]# #求职[话题]# #面试[话题]# #Java场景题[话题]#"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67e7b562000000000b02d451.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "e0e7c52cc47c2fddd511e51225f40b71cb33a7f0",
+    "byte_size": 455,
+    "sha256": "395f28e7c4046ba2f05f8ddba82507999a0a320b065536133699bf1d98f7de0f",
+    "locator": "note_desc:1-1",
+    "excerpt": "面试还是以考察场景题为主，其实问得题目都大差不差，只要针对一些常考题目，结合项目知识进行拆解背记，面试真的不算难！我面试用的题库放在后面了，大家可以看看参考一下。#爱上工作的瞬间[话题]# #java[话题]# #java面试[话题]# #计算机[话题]# #互联网大厂[话题]# #编程[话题]# #后端开发[话题]# #求职[话题]# #面试[话题]# #Java场景题[话题]#",
+    "text": "面试还是以考察场景题为主，其实问得题目都大差不差，只要针对一些常考题目，结合项目知识进行拆解背记，面试真的不算难！我面试用的题库放在后面了，大家可以看看参考一下。#爱上工作的瞬间[话题]# #java[话题]# #java面试[话题]# #计算机[话题]# #互联网大厂[话题]# #编程[话题]# #后端开发[话题]# #求职[话题]# #面试[话题]# #Java场景题[话题]#\n",
+    "line_count": 2,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:67e7b562000000000b02d451.txt",
+      "byte_size": 455,
+      "git_blob_sha": "e0e7c52cc47c2fddd511e51225f40b71cb33a7f0"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

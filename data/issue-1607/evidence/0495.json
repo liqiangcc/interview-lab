@@ -1,0 +1,81 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0495-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 495,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/495",
+  "source_note_id": "xhs-note:67a5caaf000000002903731d",
+  "expected_body_sha256": "1a1cc954afa34c93328adcb4a92ca4e5ac69db3b41ba5540dc0f108532662b73",
+  "expected_source_revision_id": "xhs-note:67a5caaf000000002903731d:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": [
+      {
+        "line_number": 3,
+        "excerpt": "八股:"
+      }
+    ]
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67a5caaf000000002903731d.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "c998170774631e72242cc5e3ebf49592deae0d92",
+    "byte_size": 1522,
+    "sha256": "9f261e16250bba53408e7b92c53411c89d1bd665300aef9681f2eeb8cd90c95f",
+    "locator": "note_desc:1-8",
+    "excerpt": "项目:\n简单问了一下项目\n八股:\n1.简单讲一下线程池\n2.线程池的拒绝策略大概有几种?\n3.线程池的池化思想还被用在哪里?\n4.spring最核心的是什么?\n5.简单讲一下你对IOC的理解?",
+    "text": "项目:\n简单问了一下项目\n八股:\n1.简单讲一下线程池\n2.线程池的拒绝策略大概有几种?\n3.线程池的池化思想还被用在哪里?\n4.spring最核心的是什么?\n5.简单讲一下你对IOC的理解?\n6.spring生成的bean和直接new的对象有什么区别?\n7.spring的bean是线程安全的吗?(面试官引导了很久,硬控3min,其实就是看bean是不是有状态的)\n8.讲一下springMVC最核心的是什么?\n9.是怎么解析url的?\n10.实现springMVC最核心的几个类是什么?\n11.mysql的在innodb存储引擎下数据是怎么组织的?\n12.索引和数据是放在一起的吗?\n13.讲一下b+树\n14.b+树在非叶子结点不存储数据相比于b树有什么优势?\n15.为什么加索引能提升查询速度?\n16.b+树o(lg n)是怎么得出来的?底数是多少?\n17.b+树的k叉树这个k最大是多少?\n18.mysql的数据写经历了哪些过程?\n19.mysql中有哪几种log?简单答一下各自的作用?\n20.了解mysql的MVCC吗?核心的是什么?\n21.jvm的内存结构?\n22.哪些是线程私有的?\n23.代码文件(.java文件)是放在哪里的?\n24.如何理解\"尽量将递归转为迭代\",结合jvm讲一下?\n手撕:\n写个题吧:力扣56.合并区间\n.#学习[话题]# #金融科技岗[话题]# #银行面试真题[话题]# #面试技巧[话题]# #应届生[话题]# #应届生找工作[话题]# #应届生求职[话题]# #银行招聘[话题]# #国企工作[话题]# #国企招聘[话题]# #java学习[话题]# #java[话题]# #java面试[话题]# #java项目[话题]#\n",
+    "line_count": 31,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:67a5caaf000000002903731d.txt",
+      "byte_size": 1522,
+      "git_blob_sha": "c998170774631e72242cc5e3ebf49592deae0d92"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

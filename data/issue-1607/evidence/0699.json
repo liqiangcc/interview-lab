@@ -1,0 +1,76 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0699-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 699,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/699",
+  "source_note_id": "xhs-note:67f51ab2000000001d01f89e",
+  "expected_body_sha256": "170eb5307bc0818fc8cc45742dbfdc08c051eee0b9e4d302197bb1cc7950a294",
+  "expected_source_revision_id": "xhs-note:67f51ab2000000001d01f89e:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "review-required",
+  "decision": "pending",
+  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "classification": {
+    "status": "review-required",
+    "proposed_decision": "pending",
+    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "basis_lines": []
+  },
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67f51ab2000000001d01f89e.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "3c213120ce5e9d5d87176927127a0252a653839f",
+    "byte_size": 1528,
+    "sha256": "ad49cf8fc8f6d192e10de0fa4b7adfe4b594ffd667a56db711b08f4cb27514f2",
+    "locator": "note_desc:1-8",
+    "excerpt": "1自我介绍\n2介绍一下项目，对一个项目进行了展开，是一个分布式算法的项目\n3对商城秒杀系统进行提问，用了redis吗，用了mysql吗\n4redis持久化，回答的aof和rdb，\n有什么不同？\n一个是命令追加一个是做快照\n用哪个好？\nrdb是全照数据但是开销大",
+    "text": "1自我介绍\n2介绍一下项目，对一个项目进行了展开，是一个分布式算法的项目\n3对商城秒杀系统进行提问，用了redis吗，用了mysql吗\n4redis持久化，回答的aof和rdb，\n有什么不同？\n一个是命令追加一个是做快照\n用哪个好？\nrdb是全照数据但是开销大\naof开销少但是可能会丢失数据\n5缓存雪崩，击穿，渗透是什么，如何应对。\n提到可以用布隆过滤器，那么使用布隆过滤器会带来什么后果。\n6提问mysql，了解索引吗，索引类型有哪些。\n7索引失效场景，如何知道索引是否生效\n8b+树有什么优势\n手撕sql。计算收入总额，筛选出收入＞1000的用户和月份\n反问\n公司业务，什么时候出结果1自我介绍\n2介绍一下项目，对一个项目进行了展开，是一个分布式算法的项目\n3对商城秒杀系统进行提问，用了redis吗，用了mysql吗\n4redis持久化，回答的aof和rdb，\n有什么不同？\n一个是命令追加一个是做快照\n用哪个好？\nrdb是全照数据#但是开销大\naof开销少但是可能会丢失数据\n5缓存雪崩，击穿，渗透是什么，如何应对。\n#golang[话题]#提到可以用布隆过滤器，那么使用布隆过滤器会带来什么后果。\n6提问mysql，了解索引吗，索引类型有哪些。\n7索引失效场景，如何知道索引是否生效\n8b+树有什么优势\n手撕sql。计算收入总额，筛选出收入＞1000的用户和月份\n反问\n公司业务，什么时候出结果\n",
+    "line_count": 34,
+    "verification": {
+      "status": "verified",
+      "fetch": "cache:67f51ab2000000001d01f89e.txt",
+      "byte_size": 1528,
+      "git_blob_sha": "3c213120ce5e9d5d87176927127a0252a653839f"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "review-required",
+      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}
