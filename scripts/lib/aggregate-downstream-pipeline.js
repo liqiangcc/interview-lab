@@ -8,6 +8,10 @@ const { validateSnapshot } = require('./issue-1605-pending-inventory');
 const SCHEMA_VERSION = 'aggregate-downstream-pipeline.v1';
 const PLAN_SCHEMA_VERSION = 'aggregate-downstream-pipeline-plan.v1';
 const SOURCE_REF = '95b77bb261048059846273688e4b90a2e108b437';
+const BOUNDARY_TRANSITION_REPORT_SCHEMA = 'issue-1605-boundary-transition-report.v1';
+const MATERIALIZATION_PLAN_SCHEMA = 'issue-1605-interview-note-materialization-plan.v1';
+const BOUNDARY_TRANSITION_ITEM_COUNT = 419;
+const MATERIALIZATION_CANDIDATE_COUNT = 350;
 const BOUNDARY_BATCHES = Object.freeze([
   { issue_number: 1606, first: 20, last: 392, expected_count: 327 },
   { issue_number: 1607, first: 393, last: 765, expected_count: 367 },
@@ -30,6 +34,8 @@ const UPSTREAM_DIGEST_RULES = Object.freeze({
   'issue-1607-boundary-dry-run-plan.v1': Object.freeze({ field: 'dry_run_sha256', input: (report) => without(report, 'dry_run_sha256') }),
   'issue-1608-boundary-dry-run.v1': Object.freeze({ field: 'dry_run_sha256', input: (report) => without(report, 'dry_run_sha256') }),
   'issue-1608-boundary-batch.v1': Object.freeze({ field: 'dry_run_sha256', input: (report) => without(report, 'dry_run_sha256') }),
+  [BOUNDARY_TRANSITION_REPORT_SCHEMA]: Object.freeze({ field: 'report_sha256', input: (report) => without(report, 'report_sha256') }),
+  [MATERIALIZATION_PLAN_SCHEMA]: Object.freeze({ field: 'dry_run_sha256', input: (report) => without(report, 'dry_run_sha256') }),
   'issue-1610-source-recovery.v1': Object.freeze({ field: 'report_sha256', input: (report) => without(report, 'report_sha256') }),
   'issue-1610-recovery-dry-run.v1': Object.freeze({ field: 'plan_sha256', input: (report) => report.digest_input }),
   'issue-1539-recovery-dry-run.v1': Object.freeze({ field: 'dry_run_sha256', input: (report) => without(report, 'dry_run_sha256') }),
@@ -78,6 +84,8 @@ function validateManifest(manifest) {
     'live_issue_snapshot', 'expected_dependency_body_sha256', 'pending_inventory_snapshot',
     'pending_inventory_ownership', 'expected_pending_inventory_digest', 'expected_pending_ownership_digest',
     'interview_note_ownership_inventory', 'expected_interview_note_ownership_digest',
+    'boundary_transition_report', 'materialization_plan', 'expected_materialization_plan_digest',
+    'expected_materialization_candidate_count',
   ]);
   for (const key of Object.keys(manifest)) if (!allowed.has(key)) errors.push(`unsupported manifest field: ${key}`);
   if (manifest.schema_version !== SCHEMA_VERSION) errors.push(`schema_version must be ${SCHEMA_VERSION}`);
@@ -100,7 +108,13 @@ function validateManifest(manifest) {
     }
   }
   if (!nonEmpty(manifest.recovery_report)) errors.push('recovery_report is required');
-  if (!Array.isArray(manifest.materialization_reports) || manifest.materialization_reports.length === 0 || manifest.materialization_reports.some((file) => !nonEmpty(file))) errors.push('materialization_reports must be a non-empty list of report paths');
+  const hasMaterializationPlan = nonEmpty(manifest.materialization_plan);
+  if (!Array.isArray(manifest.materialization_reports) || manifest.materialization_reports.some((file) => !nonEmpty(file)) || (!hasMaterializationPlan && manifest.materialization_reports.length === 0)) errors.push('materialization_reports must be a non-empty list unless a materialization_plan is pinned');
+  if (hasMaterializationPlan) {
+    if (!HEX64.test(manifest.expected_materialization_plan_digest || '')) errors.push('expected_materialization_plan_digest must be a lowercase SHA-256 when materialization_plan is pinned');
+    if (manifest.expected_materialization_candidate_count !== MATERIALIZATION_CANDIDATE_COUNT) errors.push(`expected_materialization_candidate_count must be ${MATERIALIZATION_CANDIDATE_COUNT}`);
+    if (!nonEmpty(manifest.boundary_transition_report)) errors.push('boundary_transition_report is required when materialization_plan is pinned');
+  }
   if (!nonEmpty(manifest.source_review_receipts)) errors.push('source_review_receipts is required');
   if (!Array.isArray(manifest.context_reports) || manifest.context_reports.length === 0 || manifest.context_reports.some((file) => !nonEmpty(file))) errors.push('context_reports must be a non-empty list of report paths');
   if (!Array.isArray(manifest.existing_context_reports) || manifest.existing_context_reports.length === 0 || manifest.existing_context_reports.some((file) => !nonEmpty(file))) errors.push('existing_context_reports must be a non-empty list of audited Context report paths');
@@ -141,6 +155,94 @@ function validateUpstreamReport(report, label, expectedSchema) {
   if (!digest.ok) errors.push(...digest.errors.map((error) => `${label}: ${error}`));
   else if (digest.expected !== digest.actual) errors.push(`${label}.${digest.field} does not match its declared canonical digest input`);
   return { ok: errors.length === 0, errors };
+}
+
+function validateBoundaryTransitionReport(report, manifest, expectedCandidateCount = MATERIALIZATION_CANDIDATE_COUNT) {
+  const errors = [];
+  const validation = validateUpstreamReport(report, 'Issue #1605 boundary transition report', BOUNDARY_TRANSITION_REPORT_SCHEMA);
+  errors.push(...validation.errors);
+  if (!report || typeof report !== 'object' || Array.isArray(report)) return { ok: false, errors, items: [], candidate_ids: new Set() };
+  if (report.repository !== manifest.repository) errors.push('Issue #1605 boundary transition report repository drifted');
+  if (report.parent_issue !== 1605) errors.push('Issue #1605 boundary transition report parent_issue must be 1605');
+  if (report.source_repository !== manifest.source_repository || report.source_ref !== manifest.source_ref) errors.push('Issue #1605 boundary transition report source snapshot drifted');
+  if (!Array.isArray(report.items) || report.items.length !== BOUNDARY_TRANSITION_ITEM_COUNT) errors.push(`Issue #1605 boundary transition report must contain exactly ${BOUNDARY_TRANSITION_ITEM_COUNT} rows`);
+  const items = [];
+  const seenSources = new Set();
+  const candidateIds = new Set();
+  for (const raw of report.items || []) {
+    const number = Number(raw && raw.source_note_issue_number);
+    const decision = raw && raw.decision;
+    const status = raw && raw.transition_status;
+    const bodySha = raw && raw.live_source_note_body_sha256;
+    const sourceId = raw && raw.source_note_id;
+    const revision = raw && raw.source_revision_id;
+    const ids = Array.isArray(raw && raw.interview_note_ids) ? [...raw.interview_note_ids] : [];
+    if (!Number.isInteger(number) || number < 20 || number > 1508) errors.push(`Issue #1605 boundary transition row has an out-of-scope SourceNote #${raw && raw.source_note_issue_number}`);
+    if (seenSources.has(number)) errors.push(`Issue #1605 boundary transition report repeats SourceNote #${number}`);
+    seenSources.add(number);
+    if (status !== 'applied') errors.push(`Issue #1605 boundary transition SourceNote #${number} is not applied`);
+    if (!['not-interview', 'single-interview', 'multi-interview'].includes(decision)) errors.push(`Issue #1605 boundary transition SourceNote #${number} has no explicit decision`);
+    if (!HEX64.test(bodySha || '')) errors.push(`Issue #1605 boundary transition SourceNote #${number} has no live body SHA`);
+    if (!nonEmpty(sourceId) || !nonEmpty(revision)) errors.push(`Issue #1605 boundary transition SourceNote #${number} has incomplete source identity`);
+    if (decision === 'not-interview' && ids.length !== 0) errors.push(`not-interview SourceNote #${number} declares InterviewNote identities`);
+    if (decision !== 'not-interview' && ids.length === 0) errors.push(`Interview SourceNote #${number} declares no InterviewNote identity`);
+    for (const id of ids) {
+      if (!nonEmpty(id)) errors.push(`Issue #1605 boundary transition SourceNote #${number} has an invalid InterviewNote identity`);
+      if (candidateIds.has(id)) errors.push(`Issue #1605 boundary transition report duplicates InterviewNote identity ${id}`);
+      candidateIds.add(id);
+    }
+    items.push({ ...raw, issue_number: number, current_body_sha256: bodySha, source_note_id: sourceId, source_revision_id: revision, interview_note_ids: ids, status: 'already_applied' });
+  }
+  if (candidateIds.size !== expectedCandidateCount) errors.push(`Issue #1605 boundary transition report must cover exactly ${expectedCandidateCount} InterviewNote candidates (got ${candidateIds.size})`);
+  return { ok: errors.length === 0, errors, items, candidate_ids: candidateIds };
+}
+
+function validateIssue1605MaterializationPlan(report, manifest, boundary) {
+  const errors = [];
+  const validation = validateUpstreamReport(report, 'Issue #1605 materialization plan', MATERIALIZATION_PLAN_SCHEMA);
+  errors.push(...validation.errors);
+  if (!report || typeof report !== 'object' || Array.isArray(report)) return { ok: false, errors, rows: [], candidate_ids: new Set() };
+  if (report.repository !== manifest.repository || report.parent_issue !== 1605 || report.source_repository !== manifest.source_repository || report.source_ref !== manifest.source_ref) errors.push('Issue #1605 materialization plan dependency scope drifted');
+  if (report.mode !== 'plan-only' || report.mutation_performed !== false) errors.push('Issue #1605 materialization plan must be plan-only with no mutation performed');
+  if (JSON.stringify(report.write_operations || {}) !== JSON.stringify({ patch: 0, post: 0, create: 0 })) errors.push('Issue #1605 materialization plan has non-zero write operations');
+  const results = Array.isArray(report.results) ? report.results : [];
+  const rows = [];
+  const seen = new Set();
+  for (const result of results) {
+    const id = result && result.derived_interview_note_id;
+    if (!id || result.boundary_decision === 'not-interview') continue;
+    const number = Number(result.source_note_issue_number);
+    if (!boundary.candidate_ids.has(id)) errors.push(`Issue #1605 materialization plan identity ${id} is not declared by the boundary transition report`);
+    if (seen.has(id)) errors.push(`Issue #1605 materialization plan repeats InterviewNote candidate ${id}`);
+    seen.add(id);
+    if (!Number.isInteger(number) || !boundary.items.some((item) => item.issue_number === number)) errors.push(`Issue #1605 materialization plan candidate ${id} has no boundary SourceNote`);
+    const boundaryItem = boundary.items.find((item) => item.issue_number === number);
+    const action = result.action;
+    if (!['blocked', 'would-materialize', 'would-repair-receipt', 'already-materialized'].includes(action)) errors.push(`Issue #1605 materialization plan candidate ${id} has unsupported action ${action || 'missing'}`);
+    const request = result.request || {};
+    const bodySha = boundaryItem && boundaryItem.current_body_sha256;
+    if (bodySha && request.expected_source_note_body_sha256 && request.expected_source_note_body_sha256 !== bodySha) errors.push(`Issue #1605 materialization plan candidate ${id} SourceNote body SHA drifted`);
+    if (boundaryItem && result.source_note_id !== boundaryItem.source_note_id) errors.push(`Issue #1605 materialization plan candidate ${id} SourceNote identity drifted`);
+    const existingIssue = Number(result.materialization && result.materialization.existing_issue_number);
+    rows.push({
+      kind: action === 'already-materialized' ? 'materialized-from-issue-1605-plan' : 'materialization-pending',
+      materialization_status: action,
+      source_note_issue_number: number,
+      source_note_id: result.source_note_id || boundaryItem && boundaryItem.source_note_id || null,
+      source_note_body_sha256: bodySha || request.expected_source_note_body_sha256 || null,
+      source_revision_id: request.expected_source_revision_id || boundaryItem && boundaryItem.source_revision_id || null,
+      source_ref: manifest.source_ref,
+      boundary_status: result.boundary_decision || boundaryItem && boundaryItem.decision || null,
+      case_key: result.case_key == null ? null : result.case_key,
+      interview_note_id: id,
+      interview_issue_number: Number.isInteger(existingIssue) && existingIssue > 0 ? existingIssue : null,
+      projected_body_sha256: result.projection && result.projection.projected_body_sha256 || null,
+      materialization_id: request.materialization_id || null,
+    });
+  }
+  if (seen.size !== MATERIALIZATION_CANDIDATE_COUNT) errors.push(`Issue #1605 materialization plan must cover exactly ${MATERIALIZATION_CANDIDATE_COUNT} InterviewNote candidates (got ${seen.size})`);
+  if (seen.size !== boundary.candidate_ids.size || [...boundary.candidate_ids].some((id) => !seen.has(id))) errors.push('Issue #1605 materialization plan candidate union does not equal boundary candidate identity union');
+  return { ok: errors.length === 0, errors, rows, candidate_ids: seen };
 }
 
 function validateInterviewNoteOwnershipInventory(inventory, manifest) {
@@ -189,6 +291,24 @@ function validateGlobalOwnership(rows, existingContexts, inventory, errors) {
   for (const row of rows) register('materialization', row.interview_note_id, row.interview_issue_number);
   for (const item of existingContexts.values()) register('existing source-ready', item.context && item.context.interview_note_id, item.issue_number);
   return { count: inventory.count, canonical_digest: inventory.canonical_digest, materialization_count: rows.length, existing_count: existingContexts.size };
+}
+
+function validatePendingOwnership(rows, existingContexts, inventory, errors) {
+  const existingIds = new Set([...existingContexts.values()].map((item) => item.context && item.context.interview_note_id).filter(nonEmpty));
+  const seen = new Set();
+  for (const row of rows) {
+    if (seen.has(row.interview_note_id)) errors.push(`pending materialization duplicates InterviewNote ${row.interview_note_id}`);
+    seen.add(row.interview_note_id);
+    const owner = inventory.byInterview.get(row.interview_note_id);
+    const action = row.materialization_status;
+    if (action === 'already-materialized') {
+      if (!Number.isInteger(row.interview_issue_number) || !owner || Number(owner.issue_number) !== row.interview_issue_number) errors.push(`materialization plan already-materialized ${row.interview_note_id} lacks an exact full-inventory owner`);
+      if (existingIds.has(row.interview_note_id)) errors.push(`pending materialization ${row.interview_note_id} duplicates an existing source-ready Context owner`);
+    } else if (owner) {
+      errors.push(`materialization plan ${row.interview_note_id} claims a new owner but full InterviewNote inventory already owns Issue #${owner.issue_number}`);
+    }
+  }
+  return { count: rows.length, canonical_digest: inventory.canonical_digest };
 }
 
 function validateBoundaryReports(manifest, reports, frozenIssueNumbers = null) {
@@ -414,7 +534,7 @@ function validateContextReports(reports, rows, liveIssues, errors) {
   return contexts;
 }
 
-function planAggregate({ manifest, boundaryReports, recoveryReport, materializationReports, sourceReviewReceipts, contextReports, existingContextReports, liveIssues = new Map(), pendingInventorySnapshot = null, pendingInventoryOwnership = null, interviewNoteOwnershipInventory = null } = {}) {
+function planAggregate({ manifest, boundaryReports, boundaryTransitionReport = null, recoveryReport, materializationReports, materializationPlan = null, sourceReviewReceipts, contextReports, existingContextReports, liveIssues = new Map(), pendingInventorySnapshot = null, pendingInventoryOwnership = null, interviewNoteOwnershipInventory = null } = {}) {
   const errors = [];
   const manifestValidation = validateManifest(manifest);
   errors.push(...manifestValidation.errors);
@@ -434,14 +554,27 @@ function planAggregate({ manifest, boundaryReports, recoveryReport, materializat
   const frozenIssueNumbers = pendingInventorySnapshot && Array.isArray(pendingInventorySnapshot.items)
     ? pendingInventorySnapshot.items.map((item) => Number(item.issue_number)).filter(Number.isInteger)
     : null;
-  const boundary = validateBoundaryReports(manifest, boundaryReports || {}, frozenIssueNumbers);
+  const boundary = manifest.boundary_transition_report
+    ? validateBoundaryTransitionReport(boundaryTransitionReport, manifest, manifest.expected_materialization_candidate_count || MATERIALIZATION_CANDIDATE_COUNT)
+    : validateBoundaryReports(manifest, boundaryReports || {}, frozenIssueNumbers);
   errors.push(...boundary.errors);
-  const rows = materializationRows(materializationReports || [], manifest, errors);
+  const planInput = manifest.materialization_plan
+    ? validateIssue1605MaterializationPlan(materializationPlan, manifest, boundary)
+    : { ok: true, errors: [], rows: [], candidate_ids: new Set() };
+  errors.push(...planInput.errors);
+  if (manifest.materialization_plan && materializationPlan && materializationPlan.dry_run_sha256 !== manifest.expected_materialization_plan_digest) errors.push('Issue #1605 materialization plan digest differs from manifest pin');
+  const plannedRows = planInput.rows.filter((row) => row.kind === 'materialization-pending');
+  const rows = materializationRows(materializationReports || [], manifest, errors).concat(planInput.rows.filter((row) => row.kind === 'materialized-from-issue-1605-plan'));
   const recovery = validateRecovery(recoveryReport, manifest, errors);
   const boundaryBySourceIssue = new Map(boundary.items.map((item) => [Number(item.issue_number), item]));
   const boundaryIds = new Set(boundary.items.flatMap((item) => item.interview_note_ids || []));
   const materializedIds = new Set(rows.map((row) => row.interview_note_id));
-  for (const id of boundaryIds) if (!materializedIds.has(id)) errors.push(`boundary-declared InterviewNote ${id} has no converged materialization row`);
+  if (!manifest.materialization_plan) for (const id of boundaryIds) if (!materializedIds.has(id)) errors.push(`boundary-declared InterviewNote ${id} has no converged materialization row`);
+  if (manifest.materialization_plan) {
+    const covered = new Set([...materializedIds, ...planInput.rows.map((row) => row.interview_note_id)]);
+    for (const id of boundaryIds) if (!covered.has(id)) errors.push(`boundary-declared InterviewNote ${id} has no materialization-plan coverage`);
+    if (plannedRows.length) errors.push(`${plannedRows.length} InterviewNote candidates remain pending materialization; Source Review and learning projections are blocked`);
+  }
   for (const row of rows) {
     const boundaryItem = boundaryBySourceIssue.get(row.source_note_issue_number);
     if (row.source_note_issue_number >= 20 && row.source_note_issue_number <= 1508 && !boundaryItem) errors.push(`materialized SourceNote #${row.source_note_issue_number} is absent from the frozen boundary selection`);
@@ -454,6 +587,7 @@ function planAggregate({ manifest, boundaryReports, recoveryReport, materializat
   const contexts = validateContextReports(contextReports, rows, liveIssues, errors);
   const existingContexts = validateContextReports(existingContextReports || [], [], liveIssues, errors);
   const globalOwnership = validateGlobalOwnership(rows, existingContexts, ownership, errors);
+  const pendingOwnership = validatePendingOwnership(plannedRows, existingContexts, ownership, errors);
   const expectedExisting = manifest.existing_source_ready_issue_numbers;
   const actualExisting = [...existingContexts.keys()].sort((a, b) => a - b);
   if (JSON.stringify(actualExisting) !== JSON.stringify([...expectedExisting].sort((a, b) => a - b))) errors.push('audited existing source-ready Context inventory does not equal the frozen 50-item inventory');
@@ -464,12 +598,18 @@ function planAggregate({ manifest, boundaryReports, recoveryReport, materializat
   const sourceReady = rows.filter((row) => review.byInterview.get(row.interview_note_id)?.final_status === 'source-ready');
   const blocked = rows.filter((row) => review.byInterview.get(row.interview_note_id)?.final_status === 'blocked');
   for (const row of sourceReady) if (!contexts.has(row.interview_issue_number)) errors.push(`source-ready InterviewNote #${row.interview_issue_number} has no reviewed Context projection`);
-  const selection = rows.map((row) => ({
+  const selection = plannedRows.map((row) => ({
+    ...row,
+    readiness: 'pending-materialization',
+    source_review: null,
+    context: null,
+    raw_body_mutation: false,
+  })).concat(rows.map((row) => ({
     ...row,
     source_review: review.byInterview.get(row.interview_note_id) || null,
     context: contexts.get(row.interview_issue_number) || null,
     raw_body_mutation: false,
-  })).concat([...existingContexts.values()].map((item) => ({
+  }))).concat([...existingContexts.values()].map((item) => ({
     kind: 'existing-source-ready-audit',
     interview_issue_number: Number(item.issue_number),
     interview_note_id: item.context && item.context.interview_note_id,
@@ -492,6 +632,7 @@ function planAggregate({ manifest, boundaryReports, recoveryReport, materializat
     errors,
     summary: {
       materialized: rows.length,
+      materialization_pending: plannedRows.length,
       source_ready: sourceReady.length + existingContexts.size,
       source_review_blocked: blocked.length,
       source_review_pending: review.evidence_requests.length,
@@ -503,6 +644,7 @@ function planAggregate({ manifest, boundaryReports, recoveryReport, materializat
         ownership_digest: pendingInventoryOwnership && pendingInventoryOwnership.canonical_digest || null,
       } : null,
       interview_note_ownership: globalOwnership,
+      pending_materialization_ownership: pendingOwnership,
     },
     selection,
     independent_source_review_evidence_requests: review.evidence_requests,
@@ -564,8 +706,9 @@ function applyPlan(plan, options = {}) {
 
 module.exports = {
   SCHEMA_VERSION, PLAN_SCHEMA_VERSION, SOURCE_REF, BOUNDARY_BATCHES, REQUIRED_DEPENDENCIES, EXISTING_SOURCE_READY_ISSUES, OWNERSHIP_INVENTORY_SCHEMA,
+  BOUNDARY_TRANSITION_REPORT_SCHEMA, MATERIALIZATION_PLAN_SCHEMA, BOUNDARY_TRANSITION_ITEM_COUNT, MATERIALIZATION_CANDIDATE_COUNT,
   RECEIPT_SCHEMA_VERSION, UPSTREAM_DIGEST_RULES, sha256Text, canonicalize, canonicalDigest, upstreamDigest, jsonDigest, without,
-  validateManifest, validateUpstreamReport, validateBoundaryReports, materializationRows, validateInterviewNoteOwnershipInventory, validateGlobalOwnership,
+  validateManifest, validateUpstreamReport, validateBoundaryTransitionReport, validateIssue1605MaterializationPlan, validateBoundaryReports, materializationRows, validateInterviewNoteOwnershipInventory, validateGlobalOwnership,
   validateRecovery, independentEvidenceRequest, validateSourceReviewReceipts,
   validateContextReports, planAggregate, validateAuthorization, applyPlan,
 };

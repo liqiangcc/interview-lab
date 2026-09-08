@@ -12,11 +12,24 @@ source        = liqiangcc/xhs
 source ref    = 95b77bb261048059846273688e4b90a2e108b437
 ```
 
-固定 boundary 范围为 `#20–#392`、`#393–#765`、`#766–#1138`、`#1139–#1508`。manifest 必须逐批记录 report 路径、每条 SourceNote number、SourceNote identity 和 live body SHA；范围缺失、重叠、越界或 source ref 漂移都会 fail closed。
+固定 boundary 范围为 `#20–#392`、`#393–#765`、`#766–#1138`、`#1139–#1508`。旧四批输入必须逐批记录 report 路径、每条 SourceNote number、SourceNote identity 和 live body SHA；范围缺失、重叠、越界或 source ref 漂移都会 fail closed。基于最新 #1605 的 aggregate manifest 可以改用完整 `issue-1605-boundary-transition-report.v1` adapter；它必须覆盖完整 419 条已应用 transition，并由 boundary decision 派生出恰好 350 个 InterviewNote candidate。
 
 manifest 还必须 pin 一个完整的 `aggregate-interview-note-ownership-inventory.v1`。该 inventory 覆盖仓库全库 InterviewNote Issue owner，以 `interview_note_id` 和 Issue number 双索引并带 canonical digest；父级 pending SourceNote ownership 只用于 SourceNote inventory，不能替代这个全库 owner inventory。
 
 ## 输入门禁
+
+最新 #1605 materialization 规划使用 `issue-1605-interview-note-materialization-plan.v1` adapter。该产物必须以 canonical JSON（递归 key sort）重算 `dry_run_sha256`，明确 `plan-only`、`mutation_performed=false` 和 `{patch:0,post:0,create:0}`。350 个 candidate 的 union 必须与 boundary transition report 的 350 个 identity 完全相等；`would-materialize` / `would-repair-receipt` / blocked 行只进入 `pending-materialization` selection，不能冒充已 materialized、`source-ready`、reviewed Context 或 learning-ready。
+
+`type:interview-note` owner inventory 是独立的全库分页 GET 快照，必须观察 `<100` 的短终止页、逐条验证 machine identity，并以 `aggregate-interview-note-ownership-inventory.v1` canonical digest 固定。pending SourceNote ownership 不能替代它。若 GitHub inventory GET 超时、返回非数组、分页达到上限仍无短页，inventory 和 aggregate 都 fail closed。
+
+只读生成命令：
+
+```bash
+npm run inventory:issue-1611-interview-note-ownership -- \
+  --output data/pilot/issue-1611/interview-note-ownership.inventory.json
+```
+
+该命令只使用 GitHub GET，不包含 apply 参数；输出必须作为 manifest 的 pinned ownership dependency，不能用即时 label 查询结果绕过 digest 或分页完整性。
 
 四个 boundary report 按各批最终契约校验：A/D 仍可使用 `source-note-boundary-review-batch.v1` / `issue-1609-boundary-dry-run.v1`，B 使用实际的 `issue-1607-boundary-dry-run-plan.v1`，C 使用带完整报告 `dry_run_sha256` 的 `issue-1608-boundary-dry-run.v1`。这些 report 的 `dry_run_sha256` 必须按项目 canonical JSON（递归 key sort）对完整报告（去除 digest 字段）可重算，且每条输入已经是 `already_applied`。C 的 `issue-1608-boundary-batch.v1` 只有 selection/request 元数据、没有 report digest，不能作为 aggregate 输入；缺少 digest 的报告 fail closed，不会被当作已验证。若未来要消费该 schema，必须先生成包含完整 report 与 `dry_run_sha256` 的固定 adapter 产物并单独校验。Materialization report 必须是 `source-note-interview-materialization-batch.v1`，其 `dry_run_sha256` 使用同一 canonical 算法；Recovery 则按其 schema 的明确规则校验（例如 `issue-1610-recovery-dry-run.v1` 的 `plan_sha256` 覆盖 `digest_input`）。每个实际 child 必须已经是 `already-materialized`，并绑定：
 

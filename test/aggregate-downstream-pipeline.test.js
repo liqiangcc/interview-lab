@@ -17,9 +17,13 @@ const {
   validateAuthorization,
   applyPlan,
   EXISTING_SOURCE_READY_ISSUES,
+  validateBoundaryTransitionReport,
+  validateIssue1605MaterializationPlan,
+  MATERIALIZATION_CANDIDATE_COUNT,
 } = require('../scripts/lib/aggregate-downstream-pipeline');
 const { applyLive, acquireWriterLock } = require('../scripts/plan-aggregate-downstream-pipeline');
 const { parseInterviewNoteIssue } = require('../scripts/lib/interview-note-issue');
+const { paginateInterviewNotes, buildInventory } = require('../scripts/generate-issue-1611-interview-note-ownership-inventory');
 
 const repository = 'liqiangcc/interview-lab';
 const body = fs.readFileSync('test/fixtures/interview-note-issue.valid.md', 'utf8');
@@ -35,6 +39,7 @@ const issue1607PlanFixture = JSON.parse(fs.readFileSync(path.join(__dirname, 'fi
 const issue1608PlanFixture = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures/aggregate-upstream/issue-1608-boundary-dry-run-plan.json'), 'utf8'));
 const issue1608BatchMissingDigestFixture = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures/aggregate-upstream/issue-1608-boundary-batch-missing-digest.json'), 'utf8'));
 const ownershipInventoryFixture = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures/aggregate-upstream/interview-note-ownership-inventory.json'), 'utf8'));
+const issue1605BoundaryTransitionFixture = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data/pilot/issue-1605/boundary-transition-report.json'), 'utf8'));
 
 function boundaryReport(batch, includeCandidate = batch.issue_number === 1606) {
   const items = [];
@@ -156,6 +161,73 @@ function validInputs() {
   return { manifest: manifest(), boundaryReports: reports, recoveryReport: recovery, materializationReports: [materializationReport()], sourceReviewReceipts: review, contextReports: [{ items: [contextProjection()] }], existingContextReports: [{ items: existingItems }], liveIssues, interviewNoteOwnershipInventory: ownershipInventoryFixture };
 }
 
+function issue1605MaterializationPlanFixture(boundary = issue1605BoundaryTransitionFixture) {
+  const results = [];
+  for (const item of boundary.items) {
+    for (const interviewNoteId of item.interview_note_ids || []) {
+      const caseEntry = (item.interview_note_cases || []).find((entry) => entry.interview_note_id === interviewNoteId);
+      results.push({
+        source_note_issue_number: item.source_note_issue_number,
+        source_note_id: item.source_note_id,
+        boundary_decision: item.decision,
+        boundary_transition_status: item.transition_status,
+        case_key: caseEntry ? caseEntry.case_key : null,
+        derived_interview_note_id: interviewNoteId,
+        action: 'would-materialize',
+        request: {
+          expected_source_note_body_sha256: item.live_source_note_body_sha256,
+          expected_source_revision_id: item.source_revision_id,
+          expected_source_repository_ref: SOURCE_REF,
+          materialization_id: `fixture-${interviewNoteId}`,
+        },
+        ownership: { count: 0, issue_numbers: [] },
+        mutation_performed: false,
+      });
+    }
+  }
+  assert.equal(results.length, MATERIALIZATION_CANDIDATE_COUNT);
+  const digestInput = {
+    schema_version: 'issue-1605-interview-note-materialization-plan.v1',
+    repository,
+    parent_issue: 1605,
+    source_repository: 'liqiangcc/xhs',
+    source_ref: SOURCE_REF,
+    mode: 'plan-only',
+    mutation_performed: false,
+    write_operations: { patch: 0, post: 0, create: 0 },
+    boundary_reports: [{ schema_version: boundary.schema_version, digest: boundary.report_sha256, ok: true, errors: [] }],
+    boundary_manifest: { schema_version: 'source-note-boundary-review-batch.v1', parent_issue: 1605, plan_digest: boundary.transition_plan_digest, canonical_digest: boundary.boundary_manifest_digest, candidate_count: 419, complete: true },
+    boundary_evidence: { mode: 'controlled-fixture', candidate_issue_count: 419, comments_loaded: 419 },
+    source_snapshot: { mode: 'controlled-fixture', count: 419 },
+    ownership: { identity_count: results.length, ownership_search_errors: [], mode: 'controlled-fixture' },
+    counts: { 'would-materialize': results.length },
+    blocked_reasons: {},
+    results,
+    errors: [],
+    ok: true,
+  };
+  return { ...digestInput, dry_run_sha256: canonicalDigest(digestInput) };
+}
+
+function latestMainAggregateInputs() {
+  const input = validInputs();
+  input.manifest = {
+    ...input.manifest,
+    boundary_transition_report: '../issue-1605/boundary-transition-report.json',
+    materialization_reports: [],
+    materialization_plan: '../issue-1605/materialization.dry-run.json',
+    expected_materialization_plan_digest: issue1605MaterializationPlanFixture().dry_run_sha256,
+    expected_materialization_candidate_count: MATERIALIZATION_CANDIDATE_COUNT,
+  };
+  input.boundaryReports = {};
+  input.boundaryTransitionReport = issue1605BoundaryTransitionFixture;
+  input.materializationReports = [];
+  input.materializationPlan = issue1605MaterializationPlanFixture();
+  input.sourceReviewReceipts = [];
+  input.contextReports = [{ items: [] }];
+  return input;
+}
+
 test('aggregate fails closed when dependency receipts are absent', () => {
   const input = validInputs();
   input.boundaryReports[1606] = null;
@@ -164,6 +236,68 @@ test('aggregate fails closed when dependency receipts are absent', () => {
   assert.equal(result.plan.mutation_performed, false);
   assert.equal(result.plan.summary.mutation_count, 0);
   assert.match(result.errors.join('\n'), /boundary #1606/);
+});
+
+test('latest #1605 boundary/materialization adapters cover 350 candidates but never promote boundary completion to Source Review or learning readiness', () => {
+  const input = latestMainAggregateInputs();
+  const boundary = validateBoundaryTransitionReport(input.boundaryTransitionReport, input.manifest);
+  assert.equal(boundary.ok, true, boundary.errors.join('\n'));
+  assert.equal(boundary.candidate_ids.size, 350);
+  const materialization = validateIssue1605MaterializationPlan(input.materializationPlan, input.manifest, boundary);
+  assert.equal(materialization.ok, true, materialization.errors.join('\n'));
+  assert.equal(materialization.rows.length, 350);
+
+  const result = planAggregate(input);
+  assert.equal(result.ok, false);
+  assert.equal(result.plan.blocked, true);
+  assert.equal(result.plan.summary.materialization_pending, 350);
+  assert.equal(result.plan.summary.source_ready, 50);
+  assert.equal(result.plan.summary.mutation_count, 0);
+  const pending = result.plan.selection.filter((item) => item.readiness === 'pending-materialization');
+  assert.equal(pending.length, 350);
+  assert.equal(pending.every((item) => item.source_review === null && item.context === null && item.raw_body_mutation === false), true);
+  assert.match(result.errors.join('\n'), /350 InterviewNote candidates remain pending materialization/);
+});
+
+test('latest #1605 materialization adapter rejects a duplicate candidate and plan digest drift', () => {
+  const input = latestMainAggregateInputs();
+  const duplicatePlan = issue1605MaterializationPlanFixture();
+  duplicatePlan.results[1] = { ...duplicatePlan.results[1], derived_interview_note_id: duplicatePlan.results[0].derived_interview_note_id };
+  const { dry_run_sha256: ignored, ...digestInput } = duplicatePlan;
+  input.materializationPlan = { ...digestInput, dry_run_sha256: canonicalDigest(digestInput) };
+  const boundary = validateBoundaryTransitionReport(input.boundaryTransitionReport, input.manifest);
+  const validation = validateIssue1605MaterializationPlan(input.materializationPlan, input.manifest, boundary);
+  assert.equal(validation.ok, false);
+  assert.match(validation.errors.join('\n'), /repeats InterviewNote candidate|cover exactly 350/);
+
+  const drifted = latestMainAggregateInputs();
+  drifted.manifest.expected_materialization_plan_digest = '0'.repeat(64);
+  const result = planAggregate(drifted);
+  assert.equal(result.ok, false);
+  assert.equal(result.plan.summary.mutation_count, 0);
+  assert.match(result.errors.join('\n'), /materialization plan digest differs/);
+});
+
+test('pending materialization cannot bypass the complete InterviewNote owner inventory', () => {
+  const input = latestMainAggregateInputs();
+  const candidate = input.materializationPlan.results[0].derived_interview_note_id;
+  const entries = [...ownershipInventoryFixture.entries, { interview_note_id: candidate, issue_number: 3000 }];
+  const inventoryInput = { ...ownershipInventoryFixture, count: entries.length, entries };
+  input.interviewNoteOwnershipInventory = { ...inventoryInput, canonical_digest: canonicalDigest(inventoryInput) };
+  const result = planAggregate(input);
+  assert.equal(result.ok, false);
+  assert.match(result.errors.join('\n'), /claims a new owner but full InterviewNote inventory already owns Issue #3000/);
+  assert.equal(result.plan.summary.mutation_count, 0);
+});
+
+test('full InterviewNote ownership inventory pagination requires a short terminal page and exact type label', () => {
+  const pages = [Array.from({ length: 100 }, (_, index) => ({ number: index + 1, body, labels: ['type:interview-note'] })), [{ number: 101, body, labels: ['type:interview-note'] }]];
+  assert.equal(paginateInterviewNotes(repository, (page) => pages[page - 1], 2).length, 101);
+  assert.throws(() => paginateInterviewNotes(repository, () => pages[0], 2), /short terminal page/);
+  assert.throws(() => paginateInterviewNotes(repository, () => [{ number: 1, body, labels: ['type:source-note'] }], 1), /without type:interview-note/);
+  const inventory = buildInventory([{ number: issueNumber, body, state: 'open', labels: ['type:interview-note'] }]);
+  assert.equal(inventory.count, 1);
+  assert.match(inventory.canonical_digest, /^[0-9a-f]{64}$/);
 });
 
 test('real #1609 dry-run report shape validates with recursive canonical JSON', () => {
