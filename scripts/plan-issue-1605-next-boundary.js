@@ -53,7 +53,7 @@ function main(argv = process.argv.slice(2)) {
     process.stdout.write('Usage: node scripts/plan-issue-1605-next-boundary.js [--pending <snapshot>] [--completed-manifest <419 manifest>] [--output <manifest>] [--artifact-dir <dir>] [--journal <journal>] [--lock <lock>]\n');
     return 0;
   }
-  const scope = buildRemainingScope({ frozenSnapshot: readJson(args.pending), completedManifest: readJson(args.completed), completedManifestPath: path.resolve(args.completed) });
+  const scope = buildRemainingScope({ frozenSnapshot: readJson(args.pending), completedManifest: readJson(args.completed), completedManifestPath: args.completed });
   if (!scope.ok) throw new Error(`next boundary scope failed closed: ${scope.errors.join('; ')}`);
   const lock = acquireReadLock(args.lock);
   try {
