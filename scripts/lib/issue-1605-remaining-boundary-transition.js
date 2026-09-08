@@ -211,6 +211,23 @@ function itemDigest(item) {
   return sha256Text(canonical({ issue_number: item.issue_number, transition_id: item.transition_id, source_note_id: item.source_note_id, decision: item.decision, request_marker_sha256: item.request_marker_sha256, expected_body_sha256: item.expected_body_sha256, expected_source_revision_id: item.expected_source_revision_id, next_body_sha256: item.next_body_sha256, next_labels: item.next_labels, interview_note_ids: item.interview_note_ids, interview_note_cases: item.interview_note_cases }));
 }
 
+// A transition plan is an authorization input, not a snapshot of the current
+// live state.  In particular, a successful apply changes an item from
+// `ready` to `already-applied` and adds a receipt.  Those observations must
+// not change the digest used to resume the same authorized plan.
+function stablePlanDigestContent(content) {
+  const counts = { ...content.counts };
+  delete counts.transition_ready;
+  const items = (content.items || []).map((item) => {
+    const {
+      status, current_body_sha256, existing_receipt, errors,
+      mutation_count, possibly_performed, ...stable
+    } = item;
+    return stable;
+  });
+  return { ...content, counts, errors: [], items };
+}
+
 function buildTransitionPlan({ evidencePlan, evidencePlanPath = null, manifest, manifestPath = null, snapshot, snapshotPath = null, requestDir, liveLoader = null }) {
   const errors = [];
   const manifestCheck = validateRemainingManifest(manifest);
@@ -264,8 +281,7 @@ function buildTransitionPlan({ evidencePlan, evidencePlanPath = null, manifest, 
   const actionableItems = items.filter((item) => item.scope_status === 'actionable');
   const actionableReady = actionableItems.every((item) => ['ready', 'already-applied'].includes(item.status));
   const content = { schema_version: PLAN_SCHEMA, repository: REPOSITORY, parent_issue: PARENT_ISSUE, source_snapshot: { repository: SOURCE_REPOSITORY, ref: SOURCE_REF }, frozen_snapshot: { path: snapshotPath, digest: snapshot.canonical_digest, count: FROZEN_COUNT }, remaining_manifest: { path: manifestPath, digest: manifest.canonical_digest, scope_digest: manifest.scope_digest, count: REMAINING_COUNT }, evidence_plan: { path: evidencePlanPath, digest: evidencePlan.canonical_digest }, request_input: { directory: path.resolve(requestDir), digest: requestDigest, bound_count: requests.records.size }, counts: { scope_total: REMAINING_COUNT, actionable_total: ACTIONABLE_COUNT, blocked_total: BLOCKED_COUNT, request_bound: requests.records.size, transition_ready: items.filter((item) => item.status === 'ready').length }, blocked_errors: blockedErrors, mutation_count: 0, possibly_performed: false, errors, items };
-  const digestContent = { ...content, errors: [], items: items.map((item) => ({ ...item, existing_receipt: undefined, current_body_sha256: undefined })) };
-  const digest = sha256Text(canonical(digestContent));
+  const digest = sha256Text(canonical(stablePlanDigestContent(content)));
   const recordByIssue = requests.records;
   for (const item of items) {
     if (!item.existing_receipt || item.status === 'blocked') continue;
@@ -381,10 +397,9 @@ function postWriteValidate({ record, liveLoader, expected, planDigestValue, requ
 }
 
 /*
- * Apply-shaped implementation retained for a future separately authorized
- * release.  It is not reachable from the CLI in this PR.  Every writer is
- * called at most once; an exception records possibly_performed and only then
- * invokes the read-only reconciler.  No mutation retry is hidden here.
+ * Every writer is called at most once; an exception records
+ * possibly_performed and only then invokes the read-only reconciler.  No
+ * mutation retry is hidden here.
  */
 function applyBatch({ plan, records, liveLoader, patchIssue, postReceipt, lock, journal, journalFile, maxMutations, authorization, apply = false, confirmPlan, writeJournal, sleep = () => {}, now = () => new Date().toISOString() }) {
   if (!plan || !plan.ok || plan.ready_for_apply !== true) throw new Error('remaining transition plan is not ready; actionable rows remain fail-closed');
@@ -434,9 +449,25 @@ function applyBatch({ plan, records, liveLoader, patchIssue, postReceipt, lock, 
       entry.possibly_performed = true; entry.error = `PATCH response unknown: ${error.message}`; persist();
       try { reconcileUnknownResponse({ kind: 'patch', record, liveLoader, expected: fresh, planDigestValue: plan.canonical_digest, sleep }); }
       catch (reconcileError) { entry.phase = 'uncertain'; entry.error += `; reconcile failed: ${reconcileError.message}`; persist(); throw reconcileError; }
-      entry.possibly_performed = false;
+      entry.possibly_performed = false; entry.error = null; persist();
     }
-    const checked = postWriteValidate({ record, liveLoader, expected: fresh, planDigestValue: plan.canonical_digest });
+    let checked;
+    try {
+      checked = postWriteValidate({ record, liveLoader, expected: fresh, planDigestValue: plan.canonical_digest });
+    } catch (error) {
+      entry.possibly_performed = true;
+      entry.error = `PATCH post-write validation unknown: ${error.message}`;
+      persist();
+      try {
+        checked = reconcileUnknownResponse({ kind: 'patch', record, liveLoader, expected: fresh, planDigestValue: plan.canonical_digest, sleep });
+      } catch (reconcileError) {
+        entry.phase = 'uncertain';
+        entry.error += `; reconcile failed: ${reconcileError.message}`;
+        persist();
+        throw reconcileError;
+      }
+      entry.possibly_performed = false; entry.error = null; persist();
+    }
     entry.phase = 'receipt-pending'; persist();
     const receipt = buildAppliedRemainingReceipt(record.request, checked, plan);
     count += 1; entry.mutation_count += 1;
@@ -448,7 +479,7 @@ function applyBatch({ plan, records, liveLoader, patchIssue, postReceipt, lock, 
       try { reconcileUnknownResponse({ kind: 'receipt', record, liveLoader, expected: checked, planDigestValue: plan.canonical_digest, sleep }); }
       catch (reconcileError) { entry.phase = 'uncertain'; entry.error += `; reconcile failed: ${reconcileError.message}`; persist(); throw reconcileError; }
       receiptReconciled = true;
-      entry.possibly_performed = false;
+      entry.possibly_performed = false; entry.error = null; persist();
     }
     if (!receiptReconciled && (!response || !Number.isSafeInteger(Number(response.id)))) {
       entry.possibly_performed = true;
@@ -457,9 +488,24 @@ function applyBatch({ plan, records, liveLoader, patchIssue, postReceipt, lock, 
       try { reconcileUnknownResponse({ kind: 'receipt', record, liveLoader, expected: checked, planDigestValue: plan.canonical_digest, sleep }); }
       catch (reconcileError) { entry.phase = 'uncertain'; entry.error += `; reconcile failed: ${reconcileError.message}`; persist(); throw reconcileError; }
       receiptReconciled = true;
-      entry.possibly_performed = false;
+      entry.possibly_performed = false; entry.error = null; persist();
     }
-    postWriteValidate({ record, liveLoader, expected: checked, planDigestValue: plan.canonical_digest, requireReceipt: true });
+    try {
+      postWriteValidate({ record, liveLoader, expected: checked, planDigestValue: plan.canonical_digest, requireReceipt: true });
+    } catch (error) {
+      entry.possibly_performed = true;
+      entry.error = `POST post-write validation unknown: ${error.message}`;
+      persist();
+      try {
+        reconcileUnknownResponse({ kind: 'receipt', record, liveLoader, expected: checked, planDigestValue: plan.canonical_digest, sleep });
+      } catch (reconcileError) {
+        entry.phase = 'uncertain';
+        entry.error += `; reconcile failed: ${reconcileError.message}`;
+        persist();
+        throw reconcileError;
+      }
+      entry.possibly_performed = false; entry.error = null; persist();
+    }
     entry.phase = 'complete'; entry.possibly_performed = false; entry.error = null; persist();
   }
   state.status = 'complete'; persist();
@@ -471,6 +517,7 @@ module.exports = {
   REMAINING_COUNT, ACTIONABLE_COUNT, BLOCKED_COUNT, FROZEN_COUNT, REMAINING_SCOPE_DIGEST, REMAINING_MANIFEST_DIGEST, FROZEN_SNAPSHOT_DIGEST,
   canonical, sha256Text, readRegularJson, validateFrozenSnapshot, validateRemainingManifest, validateEvidencePlan,
   readRequest, validateRequestBinding, parseRequestSet, transitionItem, itemDigest, buildTransitionPlan,
+  stablePlanDigestContent,
   initialJournal, validateJournal, persistJournal, validateAuthorization, assertApplyGuards,
   buildAppliedRemainingReceipt, renderAppliedReceiptComment, mutationWritersDisabled,
   reconcileUnknownResponse, postWriteValidate, applyBatch,
