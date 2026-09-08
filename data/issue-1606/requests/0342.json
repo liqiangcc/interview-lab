@@ -1,0 +1,70 @@
+{
+  "schema_version": "issue-1606-boundary-review-request.v1",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1605,
+  "child_issue": 1606,
+  "issue_number": 342,
+  "source_note_id": "xhs-note:66f410cc000000001b0224e1",
+  "source_id": "xhs:66f410cc000000001b0224e1",
+  "live_url": "https://github.com/liqiangcc/interview-lab/issues/342",
+  "expected_body_sha256": "3666298f3c762f14c44bbbb3c2a6d36f529ba6ea30380ece3e56225f430d217e",
+  "expected_boundary_status": "pending",
+  "expected_source_revision_id": "xhs-note:66f410cc000000001b0224e1:snapshot-95b77bb26104",
+  "expected_source_repository": "liqiangcc/xhs",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "transition_id": "issue-1606-342-boundary-review-1",
+  "reviewed_at": "2026-09-08T02:05:50Z",
+  "reviewer_kind": "ai-assisted",
+  "disposition": "ready",
+  "decision": "single-interview",
+  "evidence": {
+    "artifact_ref": "liqiangcc/xhs:note_desc/66f410cc000000001b0224e1.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "artifact_provenance": "source_projection",
+    "kind": "text_projection",
+    "git_blob_sha": "29fbebf4f2c919b1b70e1f1d9c8cb275bc383f35",
+    "byte_size": 1037,
+    "excerpts": [
+      {
+        "excerpt": "手撕-判断一个数是否是2的n次方（面完才知道能有二进制里的与运算，好巧妙）",
+        "line": 11,
+        "locator": "artifact-line:11"
+      }
+    ]
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:11"
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:11"
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:11"
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "Source projection explicitly records a completed candidate interview event; no independent multi-event boundary is evidenced in the reviewed projection. Same-process rounds remain one case."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:11"
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:11"
+    }
+  ],
+  "limitations": [
+    "Boundary Review only determines whether 0/1/N InterviewNote case identity may be materialized; it does not write source-ready, InterviewContext, learning labels, or InterviewNote Issues.",
+    "No live evidence comment or transition mutation is authorized by this artifact; any later apply must create/bind durable per-issue evidence and recheck body/state/source CAS."
+  ]
+}
