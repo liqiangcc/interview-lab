@@ -8,7 +8,11 @@ const {
   sha256Text,
   validateBoundaryManifest,
 } = require('./lib/issue-1605-materialization-plan');
-const { parseSourceNoteBoundaryReviewTransition } = require('./lib/source-note-boundary-review-transition');
+const {
+  requestFiles,
+  validateJournal,
+  itemDigest,
+} = require('./lib/issue-1605-full-boundary-transition');
 
 const REPOSITORY = 'liqiangcc/interview-lab';
 const SOURCE_REPOSITORY = 'liqiangcc/xhs';
@@ -42,13 +46,6 @@ function parseArgs(argv = process.argv.slice(2)) {
   return args;
 }
 
-function requestFromManifestItem(manifestFile, item) {
-  const requestFile = path.resolve(path.dirname(manifestFile), item.request_file);
-  const parsed = parseSourceNoteBoundaryReviewTransition(fs.readFileSync(requestFile, 'utf8'));
-  if (!parsed.request) throw new Error(`${item.request_file}: ${parsed.errors.join('; ')}`);
-  return parsed.request;
-}
-
 function atomicWrite(file, value) {
   const absolute = path.resolve(file);
   fs.mkdirSync(path.dirname(absolute), { recursive: true });
@@ -67,8 +64,37 @@ function main(argv = process.argv.slice(2)) {
   if (plan.schema_version !== 'issue-1605-full-boundary-transition-plan.v1'
       || plan.repository !== REPOSITORY || plan.parent_issue !== PARENT_ISSUE
       || plan.canonical_digest !== EXPECTED_PLAN_DIGEST
-      || plan.manifest?.digest !== manifest.canonical_digest) {
+      || plan.manifest?.digest !== manifest.canonical_digest
+      || plan.manifest?.item_count !== EXPECTED_COUNT
+      || !Array.isArray(plan.items) || plan.items.length !== EXPECTED_COUNT
+      || !Array.isArray(plan.errors) || plan.errors.length !== 0) {
     throw new Error('transition plan is not the approved complete #1605 frozen plan');
+  }
+  const planDigestInput = {
+    schema_version: plan.schema_version,
+    repository: plan.repository,
+    parent_issue: plan.parent_issue,
+    source_snapshot: plan.source_snapshot,
+    manifest: plan.manifest,
+    mutation_count: plan.mutation_count,
+    errors: [],
+    items: plan.items.map((item) => ({
+      issue_number: item.issue_number,
+      transition_id: item.transition_id,
+      source_note_id: item.source_note_id,
+      decision: item.decision,
+      expected_body_sha256: item.expected_body_sha256,
+      expected_source_revision_id: item.expected_source_revision_id,
+      request_marker_sha256: item.request_marker_sha256,
+      next_body_sha256: item.next_body_sha256,
+      next_labels: item.next_labels,
+      interview_note_ids: item.interview_note_ids,
+      interview_note_cases: item.interview_note_cases,
+    })),
+  };
+  if (sha256Text(canonicalJson(planDigestInput)) !== plan.canonical_digest
+      || plan.items.some((item) => item.item_digest !== itemDigest(item))) {
+    throw new Error('transition plan canonical or item digest is invalid');
   }
   const journal = readJson(args.journal);
   if (journal.schema_version !== 'issue-1605-full-boundary-transition-journal.v1'
@@ -81,20 +107,51 @@ function main(argv = process.argv.slice(2)) {
       || journal.items.some((item) => item.phase !== 'complete' || item.possibly_performed)) {
     throw new Error('transition journal is not a complete, uncertainty-free #1605 run');
   }
+  const journalValidation = validateJournal(journal, plan, journal.mutation_count);
+  if (!journalValidation.ok) throw new Error(`transition journal validation failed: ${journalValidation.errors.join('; ')}`);
+  const journalIssues = new Set();
+  const receiptIds = new Set();
+  for (const journalItem of journal.items) {
+    const issueNumber = Number(journalItem.issue_number);
+    if (journalIssues.has(issueNumber)) throw new Error(`#${issueNumber}: transition journal repeats an issue`);
+    journalIssues.add(issueNumber);
+    const receiptCommentId = Number(journalItem.receipt_comment_id);
+    if (!Number.isSafeInteger(receiptCommentId) || receiptCommentId < 1) throw new Error(`#${issueNumber}: transition journal receipt comment id is missing`);
+    if (receiptIds.has(receiptCommentId)) throw new Error(`#${issueNumber}: transition journal reuses receipt comment id ${receiptCommentId}`);
+    receiptIds.add(receiptCommentId);
+  }
+  if (journalIssues.size !== EXPECTED_COUNT || receiptIds.size !== EXPECTED_COUNT) {
+    throw new Error('transition journal does not contain one unique receipt identity per authorized row');
+  }
+  const recordsResult = requestFiles(manifest, manifestFile);
+  if (recordsResult.errors.length) throw new Error(`formal transition request validation failed: ${recordsResult.errors.join('; ')}`);
+  const records = new Map(recordsResult.records.map((record) => [Number(record.issue_number), record]));
   const planItems = new Map((plan.items || []).map((item) => [Number(item.issue_number), item]));
   const journalItems = new Map(journal.items.map((item) => [Number(item.issue_number), item]));
   const items = manifest.items.map((manifestItem) => {
     const issueNumber = Number(manifestItem.issue_number);
-    const request = requestFromManifestItem(manifestFile, manifestItem);
+    const record = records.get(issueNumber);
+    const request = record && record.request;
     const planned = planItems.get(issueNumber);
     const journalItem = journalItems.get(issueNumber);
-    if (!planned || !journalItem || planned.transition_id !== request.transition_id || journalItem.transition_id !== request.transition_id) {
+    if (!record || !request || !planned || !journalItem
+        || planned.transition_id !== request.transition_id
+        || journalItem.transition_id !== request.transition_id
+        || record.request_marker_sha256 !== planned.request_marker_sha256
+        || planned.source_note_id !== request.source_note_id
+        || planned.expected_body_sha256 !== request.expected_body_sha256
+        || planned.expected_source_revision_id !== request.expected_source_revision_id
+        || planned.decision !== request.decision
+        || Number(request.review_evidence && request.review_evidence.comment_id) < 1) {
       throw new Error(`#${issueNumber}: plan/journal/request transition binding is inconsistent`);
     }
     const liveBodySha = planned.next_body_sha256 || planned.current_body_sha256;
     if (!/^[0-9a-f]{64}$/.test(String(liveBodySha || ''))) throw new Error(`#${issueNumber}: transition target body SHA is missing`);
-    const receiptCommentId = Number(journalItem.receipt_comment_id || planned.existing_receipt?.comment_id);
+    const receiptCommentId = Number(journalItem.receipt_comment_id);
     if (!Number.isSafeInteger(receiptCommentId) || receiptCommentId < 1) throw new Error(`#${issueNumber}: applied receipt comment id is missing`);
+    if (planned.existing_receipt && Number(planned.existing_receipt.comment_id) !== receiptCommentId) {
+      throw new Error(`#${issueNumber}: journal receipt identity differs from the frozen plan receipt`);
+    }
     return {
       source_note_issue_number: issueNumber,
       source_note_id: request.source_note_id,
