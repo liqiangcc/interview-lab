@@ -459,7 +459,11 @@ function acquireExclusiveLock(file) {
 
 function buildReceipt(request, planned, manifestDigestValue, planDigestValue, now = new Date().toISOString()) {
   return {
-    ...buildAppliedReceipt(request, planned, now), parent_issue: PARENT_ISSUE,
+    ...buildAppliedReceipt(request, {
+      ...planned,
+      current_body_sha256: planned.already_applied ? request.expected_body_sha256 : planned.current_body_sha256,
+      next_body_sha256: planned.already_applied ? planned.current_body_sha256 : planned.next_body_sha256,
+    }, now), parent_issue: PARENT_ISSUE,
     manifest_digest: manifestDigestValue, plan_digest: planDigestValue,
     expected_source_revision_id: request.expected_source_revision_id,
     expected_source_repository_ref: request.expected_source_repository_ref,

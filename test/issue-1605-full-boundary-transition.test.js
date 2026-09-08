@@ -11,7 +11,7 @@ const {
   REPOSITORY, SOURCE_REF, PARENT_ISSUE, AUTHORIZATION_MARKER,
   canonical, sha256Text, manifestDigest, validateManifest, requestFiles,
   validateAuthorization, assertBoundaryOnly, buildPlan, applyBatch, buildReceipt,
-  validateReceipt, planItem, acquireExclusiveLock, initialJournal, validateJournal, atomicWriteJson,
+  renderAppliedReceiptComment, validateReceipt, planItem, acquireExclusiveLock, initialJournal, validateJournal, atomicWriteJson,
 } = require('../scripts/lib/issue-1605-full-boundary-transition');
 const { parseSourceNoteIssue } = require('../scripts/lib/source-note-issue');
 
@@ -313,6 +313,37 @@ test('rebuilding the plan after the first apply validates the receipt with the t
   assert.equal(replanned.ok, true, replanned.errors.join('; '));
   assert.equal(replanned.items[0].status, 'already-applied');
   assert.equal(replanned.canonical_digest, value.plan.canonical_digest);
+});
+
+test('target-already-applied without a receipt can repair and validate its receipt CAS', () => {
+  const value = planFixture();
+  const plannedTarget = value.plan.items[0];
+  value.issue.body = plannedTarget.next_body;
+  value.issue.labels = plannedTarget.next_labels;
+  const replanned = buildPlan({
+    manifest: value.manifest,
+    manifestFile: path.join(value.directory, 'full-boundary-manifest.json'),
+    records: value.records,
+    liveLoader: () => ({ issue: value.issue, comments: value.comments }),
+  });
+  assert.equal(replanned.ok, true, replanned.errors.join('; '));
+  assert.equal(replanned.items[0].status, 'receipt-needed');
+  const targetPlan = planItem({ ...value.records[0], manifest_digest: value.manifest.canonical_digest, plan_digest: replanned.canonical_digest }, { issue: value.issue, comments: value.comments });
+  assert.equal(targetPlan.ok, true, targetPlan.errors.join('; '));
+  assert.equal(targetPlan.already_applied, true);
+  const receipt = buildReceipt(value.request, targetPlan, value.manifest.canonical_digest, replanned.canonical_digest, '2026-09-08T00:01:00.000Z');
+  assert.equal(receipt.previous_body_sha256, value.request.expected_body_sha256);
+  assert.equal(receipt.new_body_sha256, targetPlan.current_body_sha256);
+  assert.equal(validateReceipt(receipt, value.request, targetPlan, value.manifest.canonical_digest, replanned.canonical_digest).ok, true);
+  value.comments.push({ id: 552, body: renderAppliedReceiptComment(receipt) });
+  const resumed = buildPlan({
+    manifest: value.manifest,
+    manifestFile: path.join(value.directory, 'full-boundary-manifest.json'),
+    records: value.records,
+    liveLoader: () => ({ issue: value.issue, comments: value.comments }),
+  });
+  assert.equal(resumed.ok, true, resumed.errors.join('; '));
+  assert.equal(resumed.items[0].status, 'already-applied');
 });
 
 test('complete resume performs read-only target/receipt verification before skipping', () => {
