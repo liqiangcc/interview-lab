@@ -51,10 +51,29 @@ test('source inventory binds all selected items to verified Source projection ev
 });
 
 test('same-process rounds are single boundary, aggregate events remain blocked', () => {
-  assert.equal(classifyBoundary(projection('百度一面、二面、三面均为同一招聘流程')).decision, 'single-interview');
+  assert.equal(classifyBoundary(projection('百度一面、二面、三面均已面完，属于同一招聘流程')).decision, 'single-interview');
   assert.equal(classifyBoundary(projection('这几天面了几家公司，分别记录如下')).status, 'blocked');
   assert.equal(classifyBoundary(projection('这是一份模拟面试题库')).decision, 'not-interview');
   assert.equal(classifyBoundary(projection('#Java面试题[话题]# #求职[话题]#')).status, 'blocked');
+});
+
+test('adversarial boundary cases require completed-event evidence', () => {
+  assert.equal(classifyBoundary(projection('刷新简历当天约面\n下面整理可能会问的问题')).status, 'blocked');
+  assert.equal(classifyBoundary(projection('7.29约面\n8.5面试\n问的内容如下')).status, 'blocked');
+  assert.equal(classifyBoundary(projection('电话约面')).status, 'blocked');
+  assert.equal(classifyBoundary(projection('面试题：HashMap 如何扩容？')).status, 'blocked');
+  assert.equal(classifyBoundary(projection('有看过STL里面的sort吗')).status, 'blocked');
+  assert.equal(classifyBoundary(projection('最后挂了，等通知')).status, 'blocked');
+  assert.equal(classifyBoundary(projection('周五面的，每天早上看邮箱，生怕挂了')).decision, 'single-interview');
+  assert.equal(classifyBoundary(projection('参加面试并完成现场沟通，随后等待结果')).decision, 'single-interview');
+});
+
+test('P1 spot checks use completed evidence and block appointment/question-only notes', () => {
+  assert.equal(classifyBoundary(inventory.items.find((item) => item.issue_number === 103)).decision, 'single-interview');
+  assert.match(classifyBoundary(inventory.items.find((item) => item.issue_number === 103)).evidence_line.text, /面的/);
+  for (const issueNumber of [143, 285, 305]) assert.equal(classifyBoundary(inventory.items.find((item) => item.issue_number === issueNumber)).status, 'blocked', `#${issueNumber} must remain pending`);
+  assert.equal(classifyBoundary(inventory.items.find((item) => item.issue_number === 389)).decision, 'single-interview');
+  assert.match(classifyBoundary(inventory.items.find((item) => item.issue_number === 389)).evidence_line.text, /面完/);
 });
 
 test('every selected item has an independent validated request and dry-run has zero mutations', () => {

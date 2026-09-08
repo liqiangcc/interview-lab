@@ -25,7 +25,10 @@ function stripHashtags(text) {
   return String(text || '').replace(/#[^\s#]+\[话题\]#/g, ' ').replace(/#[^\s#]+/g, ' ');
 }
 
-const EVENT_RE = /(面了|面试官|面试时长|收到.{0,12}面试|约.{0,12}面|一面|二面|三面|hr面|技术面|电话面试|视频面试|面完|等通知|挂了|收到.{0,12}offer|感谢信|面试体验|面试流程|面试前|面试后|面试中|被.{0,10}拷打|过了几天)/i;
+const SCHEDULED_RE = /(约面|约.{0,12}面试|预约.{0,12}面试|待面试|面试安排|安排.{0,12}面试|面试时间)/i;
+const COMPLETED_RE = /(?:(?:周|上周|昨天|今天|当天|当日|刚才|刚刚|此前|之前).{0,8}面的|面[了过完]|面试(?:完|结束|通过)|参加.{0,8}面试|完成.{0,8}面试|经历.{0,8}面试)/i;
+const QUESTION_RE = /(面试题|面试问题|面试官提问|问了什么|被问到|题目|算法题|手撕|在线IDE)/i;
+const OUTCOME_RE = /(等通知|挂了|收到.{0,12}offer|感谢信|流程结束|oc|offer)/i;
 const AGGREGATE_RE = /(多家公司|几家公司|多场面试|几场面试|这几天的面试|面试了30\+|面试了[一二三四五六七八九十]+家|30\+公司|不同公司|累计|分别.{0,10}面试)/i;
 const NON_EVENT_RE = /(模拟面试|模拟一下|题库|刷题|每日积累|代面试|面试诈骗|培训机构|提醒.{0,20}面试|面试辅导|有人知道这个是面试什么|帮公司面试|招聘要求|最新内部信息|面试题合集|面试题大全)/i;
 
@@ -41,9 +44,12 @@ function classifyBoundary(inventoryItem) {
   }
   const text = inventoryItem.lines.map((line) => line.text).join('\n');
   const normalized = stripHashtags(text);
-  const hasEvent = EVENT_RE.test(normalized);
   const hasAggregate = AGGREGATE_RE.test(normalized);
   const hasNonEvent = NON_EVENT_RE.test(normalized);
+  const hasScheduled = SCHEDULED_RE.test(normalized);
+  const hasCompleted = COMPLETED_RE.test(normalized);
+  const hasQuestion = QUESTION_RE.test(normalized);
+  const hasOutcome = OUTCOME_RE.test(normalized);
 
   if (hasAggregate) {
     return {
@@ -53,20 +59,36 @@ function classifyBoundary(inventoryItem) {
       evidence_line: firstEvidenceLine(inventoryItem, AGGREGATE_RE),
     };
   }
-  if (hasEvent) {
-    return {
-      status: 'ready',
-      decision: 'single-interview',
-      rationale: 'Source projection explicitly records one candidate interview activity; no independent multi-event boundary is evidenced in the reviewed projection. Same-process rounds remain one case.',
-      evidence_line: firstEvidenceLine(inventoryItem, EVENT_RE),
-    };
-  }
   if (hasNonEvent) {
     return {
       status: 'ready',
       decision: 'not-interview',
       rationale: 'Source projection explicitly identifies a simulation, question-bank, repost, warning, recruiting, or other non-candidate-interview context.',
       evidence_line: firstEvidenceLine(inventoryItem, NON_EVENT_RE),
+    };
+  }
+  if (hasCompleted) {
+    return {
+      status: 'ready',
+      decision: 'single-interview',
+      rationale: 'Source projection explicitly records a completed candidate interview event; no independent multi-event boundary is evidenced in the reviewed projection. Same-process rounds remain one case.',
+      evidence_line: firstEvidenceLine(inventoryItem, COMPLETED_RE),
+    };
+  }
+  if (hasScheduled) {
+    return {
+      status: 'blocked',
+      decision: null,
+      block_reason: 'Source projection records only a scheduled or contacted interview; no completed candidate interview event is evidenced.',
+      evidence_line: firstEvidenceLine(inventoryItem, SCHEDULED_RE),
+    };
+  }
+  if (hasQuestion || hasOutcome) {
+    return {
+      status: 'blocked',
+      decision: null,
+      block_reason: 'Source projection contains isolated interview questions or outcome language without explicit completed candidate-interview context; retain boundary:pending.',
+      evidence_line: firstEvidenceLine(inventoryItem, hasQuestion ? QUESTION_RE : OUTCOME_RE),
     };
   }
   return {

@@ -15,8 +15,8 @@
   "transition_id": "issue-1606-333-boundary-review-1",
   "reviewed_at": "2026-09-08T02:05:50Z",
   "reviewer_kind": "ai-assisted",
-  "disposition": "ready",
-  "decision": "single-interview",
+  "disposition": "blocked",
+  "decision": null,
   "evidence": {
     "artifact_ref": "liqiangcc/xhs:note_desc/66ea6791000000001e01bf52.txt@95b77bb261048059846273688e4b90a2e108b437",
     "artifact_provenance": "source_projection",
@@ -25,9 +25,9 @@
     "byte_size": 558,
     "excerpts": [
       {
-        "excerpt": "最后没写出来，面试官说思路差不多了",
-        "line": 6,
-        "locator": "artifact-line:6"
+        "excerpt": "然后手撕一个动态规划（上楼梯，区分左右脚，左脚只能一步右脚可以1-2步，左脚迈完只能右脚）",
+        "line": 5,
+        "locator": "artifact-line:5"
       }
     ]
   },
@@ -35,36 +35,37 @@
     {
       "check_id": "source_identity",
       "result": "pass",
-      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:6"
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:5"
     },
     {
       "check_id": "source_revision_binding",
       "result": "pass",
-      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:6"
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:5"
     },
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:6"
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:5"
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "Source projection explicitly records one candidate interview activity; no independent multi-event boundary is evidenced in the reviewed projection. Same-process rounds remain one case."
+      "result": "fail",
+      "note": "Source projection contains isolated interview questions or outcome language without explicit completed candidate-interview context; retain boundary:pending."
     },
     {
       "check_id": "no_cross_source_mixing",
       "result": "pass",
-      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:6"
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:5"
     },
     {
       "check_id": "no_fabrication",
       "result": "pass",
-      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:6"
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:5"
     }
   ],
   "limitations": [
     "Boundary Review only determines whether 0/1/N InterviewNote case identity may be materialized; it does not write source-ready, InterviewContext, learning labels, or InterviewNote Issues.",
-    "No live evidence comment or transition mutation is authorized by this artifact; any later apply must create/bind durable per-issue evidence and recheck body/state/source CAS."
+    "No live evidence comment or transition mutation is authorized by this artifact; any later apply must create/bind durable per-issue evidence and recheck body/state/source CAS.",
+    "Source projection contains isolated interview questions or outcome language without explicit completed candidate-interview context; retain boundary:pending."
   ]
 }
