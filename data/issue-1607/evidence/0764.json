@@ -9,32 +9,64 @@
   "expected_body_sha256": "561be91906a3ec72fc52be9e6914055e3a834b259352725b1cc9d2c5e3c395df",
   "expected_source_revision_id": "xhs-note:6806423800000000070358de:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
     "basis_lines": [
       {
-        "line_number": 3,
-        "excerpt": "📖面试问题："
+        "line_number": 4,
+        "excerpt": "一上来感觉面试官面相非常好，很有礼貌。"
       },
       {
-        "line_number": 11,
-        "excerpt": "4。又回到刚刚那个问题，再思考一下?"
+        "line_number": 6,
+        "excerpt": "首先做一些限流操作，比如验证码，防止用户一直点击。同时采取redis进行缓存库存。结合mysql和redis一致性回答。"
       },
       {
-        "line_number": 19,
-        "excerpt": "8。我看其中有个问题，每个用户操作时会做一个校验，判断该用户在哪个区域，这一块如果访问量激增，有没有什么优化的地方?"
+        "line_number": 28,
+        "excerpt": "常规回答。"
       },
       {
-        "line_number": 23,
-        "excerpt": "10。了解大模型的幻觉问题吗？以及如何解决?"
+        "line_number": 30,
+        "excerpt": "没回答上来。"
+      },
+      {
+        "line_number": 32,
+        "excerpt": "没回答上来。"
+      },
+      {
+        "line_number": 34,
+        "excerpt": "没回答上来。"
+      }
+    ],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/6806423800000000070358de.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/6806423800000000070358de/note/title",
+        "excerpt": "阿里国际一面"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/6806423800000000070358de.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/6806423800000000070358de/note/desc",
+        "excerpt": "📍面试公司：阿里国际\n👜面试岗位：研发工程师\n📖面试问题：\n一上来感觉面试官面相非常好，很有礼貌。\n1。双十一的时候，并发量非常高，你如何设计来抗住并发量?\n首先做一些限流操作，比如验证码，防止用户一直点击。同时采取redis进行缓存库存。结合mysql和redis一致性回答。\n2。你的mysql和redis数据表如何设计?\nmysql就商品+库存，redis采用key,value，存储商品+库存。\n3。redis分布式锁了解吗以及实现方式。\nsetnx方法。\n4。又回到刚刚那个问题，再思考一下?\n我说可以结合分布式锁以及消息队列，消息队列保证数据顺序性，分布式锁确保线程安全。\n5。这么高的并发量，数据库抗的住吗？\n我又说可以结合数据库的读写分离操作。\n6。你刚刚说加锁，那每个用户执行完了再执行其他用户，这样用户体验好吗？\n那确实，然后这我就没有好的解决办法了。\n7。看你的项目使用了redis，redis主要有什么作用？\n我就说存储历史数据。\n8。我看其中有个问题，每个用户操作时会做一个校验，判断该用户在哪个区域，这一块如果访问量激增，有没有什么优化的地方?\n可以采用策略模型替换if else语句，同时在用户登录时就把经纬度存入，防止操作时并发数量激增。\n9。对于大模型有没有什么了解?\n了解大模型的解答过程，以及Token。\n10。了解大模型的幻觉问题吗？以及如何解决?\n了解，输入的语句要准确一些，同时尽量使用侧重点不同的大模型。\n11。那我问你一点transform，他的优势在哪？\ngg，这块直接不会了。\n12。了解left join  ，right join 以及inner join吗？\n常规回答。\n13。如果A表有100万数据，B表有1000万数据，如何进行优化来提高查询效率?\n没回答上来。\n14。linux如何查看自己的内存瓶颈?\n没回答上来。\n15。问一个mysql ,如果mysql数据库存储在不同的地方，如何实现这个?\n没回答上来。\n16。看你笔试不错，第三个问题有印象吗？后面有没有尝试去优化?\n我的方法时间复杂度有点高，后面就没有去看了，只过了25%。\n17。你的横向项目的背景，以及遇到了什么问题，和这段时间是如何完成这个项目的?\n巴拉巴拉一大堆。\n18。看你自我介绍写的抗压能力强?可以举个例说明一下吗？\n巴拉巴拉。\n🙌面试体验\n面试体验感非常好，面试官会引导我，同时非常有礼貌，学到了很多东西。"
       }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/6806423800000000070358de.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/6806423800000000070358de/note/title",
+      "excerpt": "阿里国际一面"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/6806423800000000070358de.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/6806423800000000070358de/note/desc",
+      "excerpt": "📍面试公司：阿里国际\n👜面试岗位：研发工程师\n📖面试问题：\n一上来感觉面试官面相非常好，很有礼貌。\n1。双十一的时候，并发量非常高，你如何设计来抗住并发量?\n首先做一些限流操作，比如验证码，防止用户一直点击。同时采取redis进行缓存库存。结合mysql和redis一致性回答。\n2。你的mysql和redis数据表如何设计?\nmysql就商品+库存，redis采用key,value，存储商品+库存。\n3。redis分布式锁了解吗以及实现方式。\nsetnx方法。\n4。又回到刚刚那个问题，再思考一下?\n我说可以结合分布式锁以及消息队列，消息队列保证数据顺序性，分布式锁确保线程安全。\n5。这么高的并发量，数据库抗的住吗？\n我又说可以结合数据库的读写分离操作。\n6。你刚刚说加锁，那每个用户执行完了再执行其他用户，这样用户体验好吗？\n那确实，然后这我就没有好的解决办法了。\n7。看你的项目使用了redis，redis主要有什么作用？\n我就说存储历史数据。\n8。我看其中有个问题，每个用户操作时会做一个校验，判断该用户在哪个区域，这一块如果访问量激增，有没有什么优化的地方?\n可以采用策略模型替换if else语句，同时在用户登录时就把经纬度存入，防止操作时并发数量激增。\n9。对于大模型有没有什么了解?\n了解大模型的解答过程，以及Token。\n10。了解大模型的幻觉问题吗？以及如何解决?\n了解，输入的语句要准确一些，同时尽量使用侧重点不同的大模型。\n11。那我问你一点transform，他的优势在哪？\ngg，这块直接不会了。\n12。了解left join  ，right join 以及inner join吗？\n常规回答。\n13。如果A表有100万数据，B表有1000万数据，如何进行优化来提高查询效率?\n没回答上来。\n14。linux如何查看自己的内存瓶颈?\n没回答上来。\n15。问一个mysql ,如果mysql数据库存储在不同的地方，如何实现这个?\n没回答上来。\n16。看你笔试不错，第三个问题有印象吗？后面有没有尝试去优化?\n我的方法时间复杂度有点高，后面就没有去看了，只过了25%。\n17。你的横向项目的背景，以及遇到了什么问题，和这段时间是如何完成这个项目的?\n巴拉巴拉一大堆。\n18。看你自我介绍写的抗压能力强?可以举个例说明一下吗？\n巴拉巴拉。\n🙌面试体验\n面试体验感非常好，面试官会引导我，同时非常有礼貌，学到了很多东西。"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/6806423800000000070358de.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -53,6 +85,53 @@
       "git_blob_sha": "92c1b5780de42c8bba85f403ef59619af5456f1e"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/6806423800000000070358de.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "阿里国际一面 - 小红书",
+      "byte_size": 391905,
+      "git_blob_sha": "c69ac796ddd98cf9af39e6868f0f650f725709d1",
+      "sha256": "5bec0f51fd7a6bd715ef27bfafd4a5c584e9e71266466d5fa0d8c4d7939b7460",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:6806423800000000070358de.html",
+        "byte_size": 391905,
+        "git_blob_sha": "c69ac796ddd98cf9af39e6868f0f650f725709d1"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/6806423800000000070358de.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/6806423800000000070358de/note/title",
+      "excerpt": "阿里国际一面",
+      "byte_size": 22277,
+      "git_blob_sha": "6802a873a2b18fabd75f88628050e13bf4295b65",
+      "sha256": "24112d8b96d2942cf3270354c153e9d821ef91276de92a86a39d5694dbf66187",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:6806423800000000070358de.json",
+        "byte_size": 22277,
+        "git_blob_sha": "6802a873a2b18fabd75f88628050e13bf4295b65"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/6806423800000000070358de.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "📍面试公司：阿里国际\n👜面试岗位：研发工程师\n📖面试问题：\n一上来感觉面试官面相非常好，很有礼貌。\n1。双十一的时候，并发量非常高，你如何设计来抗住并发量?\n首先做一些限流操作，比如验证码，防止用户一直点击。同时采取redis进行缓存库存。结合mysql和redis一致性回答。\n2。你的mysql和redis数据表如何设计?\nmysql就商品+库存，redis采用key,value，存储商品+库存。",
+      "byte_size": 2611,
+      "git_blob_sha": "92c1b5780de42c8bba85f403ef59619af5456f1e",
+      "sha256": "053dab0a71b3844cb456c6bac6a48edac913b6c64940c669d8e39434a86adbce",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:6806423800000000070358de.txt",
+        "byte_size": 2611,
+        "git_blob_sha": "92c1b5780de42c8bba85f403ef59619af5456f1e"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -67,12 +146,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -86,7 +165,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

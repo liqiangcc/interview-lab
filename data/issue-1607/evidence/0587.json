@@ -9,15 +9,44 @@
   "expected_body_sha256": "e00610d68f758c42d77ae44c11dae338d1eb9e628ad85bc499129d9b948184f1",
   "expected_source_revision_id": "xhs-note:67d3dbe1000000001b024087:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": []
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "basis_lines": [
+      {
+        "line_number": 1,
+        "excerpt": "很快的面试体验，岗位确实和我也不符合，自我介绍后面试官就让写sql，写完问了一些redis内容，比如redis什么命令不建议使用，然后就让写代码题，写完读了一下我的简历，然后就结束了，看出来确实不感兴趣[失望R]"
+      }
+    ],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67d3dbe1000000001b024087.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67d3dbe1000000001b024087/note/title",
+        "excerpt": "滴滴一面"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67d3dbe1000000001b024087.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67d3dbe1000000001b024087/note/desc",
+        "excerpt": "很快的面试体验，岗位确实和我也不符合，自我介绍后面试官就让写sql，写完问了一些redis内容，比如redis什么命令不建议使用，然后就让写代码题，写完读了一下我的简历，然后就结束了，看出来确实不感兴趣[失望R]"
+      }
+    ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67d3dbe1000000001b024087.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67d3dbe1000000001b024087/note/title",
+      "excerpt": "滴滴一面"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67d3dbe1000000001b024087.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67d3dbe1000000001b024087/note/desc",
+      "excerpt": "很快的面试体验，岗位确实和我也不符合，自我介绍后面试官就让写sql，写完问了一些redis内容，比如redis什么命令不建议使用，然后就让写代码题，写完读了一下我的简历，然后就结束了，看出来确实不感兴趣[失望R]"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67d3dbe1000000001b024087.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -36,6 +65,53 @@
       "git_blob_sha": "93f00401167bbecc5bff1e8a51f4a98fa5274cba"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67d3dbe1000000001b024087.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "滴滴一面 - 小红书",
+      "byte_size": 385042,
+      "git_blob_sha": "0d7ea8a9e88d1f8c601f4f1c53373e284241b0a8",
+      "sha256": "8e001dbe10f3b52be845f5a6d3802238c2089a4317ad8638a7a535f72dd3fe74",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67d3dbe1000000001b024087.html",
+        "byte_size": 385042,
+        "git_blob_sha": "0d7ea8a9e88d1f8c601f4f1c53373e284241b0a8"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67d3dbe1000000001b024087.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67d3dbe1000000001b024087/note/title",
+      "excerpt": "滴滴一面",
+      "byte_size": 19969,
+      "git_blob_sha": "92d86a063cc9e49cbc221d4ee0149b2d4f71715f",
+      "sha256": "d9ff760cba2c76fa30e209ff4f78dd033865163897ad5e1aaf17d123b72ca1b6",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67d3dbe1000000001b024087.json",
+        "byte_size": 19969,
+        "git_blob_sha": "92d86a063cc9e49cbc221d4ee0149b2d4f71715f"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67d3dbe1000000001b024087.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "很快的面试体验，岗位确实和我也不符合，自我介绍后面试官就让写sql，写完问了一些redis内容，比如redis什么命令不建议使用，然后就让写代码题，写完读了一下我的简历，然后就结束了，看出来确实不感兴趣[失望R]",
+      "byte_size": 287,
+      "git_blob_sha": "93f00401167bbecc5bff1e8a51f4a98fa5274cba",
+      "sha256": "a2199705d16b7ed3b597e93345630f04b7d89f2d89be3379a8ffc9bedb97c8a8",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67d3dbe1000000001b024087.txt",
+        "byte_size": 287,
+        "git_blob_sha": "93f00401167bbecc5bff1e8a51f4a98fa5274cba"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -50,12 +126,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -69,7 +145,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

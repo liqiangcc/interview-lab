@@ -9,20 +9,44 @@
   "expected_body_sha256": "e93089daeb379b4db1eb99d7d60bfcce933306be8a697456b197bee292b57e83",
   "expected_source_revision_id": "xhs-note:67dbe338000000001c001bc7:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
     "basis_lines": [
       {
         "line_number": 1,
         "excerpt": "面试官会根据问题一步步问细节，不过也会引导你说答案。基本上所有问题都遇到过，能大致说出来，但是问到细节的地方自己就不确定了，还是掌握的不够牢固。像单例模式，代码虽然很简单记住了，但是至于细节为什么这么实现却没有记清楚。#日常实习[话题]# #后端开发[话题]# #互联网大厂实习[话题]# #面经[话题]# #java[话题]# #小米[话题]#"
       }
+    ],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67dbe338000000001c001bc7.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67dbe338000000001c001bc7/note/title",
+        "excerpt": "【南京小米】后端Java日常实习生一面"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67dbe338000000001c001bc7.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67dbe338000000001c001bc7/note/desc",
+        "excerpt": "面试官会根据问题一步步问细节，不过也会引导你说答案。基本上所有问题都遇到过，能大致说出来，但是问到细节的地方自己就不确定了，还是掌握的不够牢固。像单例模式，代码虽然很简单记住了，但是至于细节为什么这么实现却没有记清楚。#日常实习[话题]# #后端开发[话题]# #互联网大厂实习[话题]# #面经[话题]# #java[话题]# #小米[话题]#"
+      }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67dbe338000000001c001bc7.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67dbe338000000001c001bc7/note/title",
+      "excerpt": "【南京小米】后端Java日常实习生一面"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67dbe338000000001c001bc7.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67dbe338000000001c001bc7/note/desc",
+      "excerpt": "面试官会根据问题一步步问细节，不过也会引导你说答案。基本上所有问题都遇到过，能大致说出来，但是问到细节的地方自己就不确定了，还是掌握的不够牢固。像单例模式，代码虽然很简单记住了，但是至于细节为什么这么实现却没有记清楚。#日常实习[话题]# #后端开发[话题]# #互联网大厂实习[话题]# #面经[话题]# #java[话题]# #小米[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67dbe338000000001c001bc7.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -41,6 +65,53 @@
       "git_blob_sha": "44fb439b4ee94dce96ee6ea688b3a55b0abd9957"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67dbe338000000001c001bc7.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "【南京小米】后端Java日常实习生一面 - 小红书",
+      "byte_size": 389673,
+      "git_blob_sha": "acf150a0afc9911de4261ad448352553c0e05c41",
+      "sha256": "b1f4eb8e2cfa91f8d746dc00acc6f34804699faac5f3f67914d32c8e493c1fdd",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67dbe338000000001c001bc7.html",
+        "byte_size": 389673,
+        "git_blob_sha": "acf150a0afc9911de4261ad448352553c0e05c41"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67dbe338000000001c001bc7.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67dbe338000000001c001bc7/note/title",
+      "excerpt": "【南京小米】后端Java日常实习生一面",
+      "byte_size": 22799,
+      "git_blob_sha": "743a1eef51a608a58c3200f9d18d54e326c25fee",
+      "sha256": "58613d2040b9915535a65027c6736a6c6716bc5be231b658f46575414d4ad5d8",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67dbe338000000001c001bc7.json",
+        "byte_size": 22799,
+        "git_blob_sha": "743a1eef51a608a58c3200f9d18d54e326c25fee"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67dbe338000000001c001bc7.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "面试官会根据问题一步步问细节，不过也会引导你说答案。基本上所有问题都遇到过，能大致说出来，但是问到细节的地方自己就不确定了，还是掌握的不够牢固。像单例模式，代码虽然很简单记住了，但是至于细节为什么这么实现却没有记清楚。#日常实习[话题]# #后端开发[话题]# #互联网大厂实习[话题]# #面经[话题]# #java[话题]# #小米[话题]#",
+      "byte_size": 454,
+      "git_blob_sha": "44fb439b4ee94dce96ee6ea688b3a55b0abd9957",
+      "sha256": "14764c109a7ab1e8b3c5f6dfeafe813a32e47788f99f735b25ec8f218e5a5b85",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67dbe338000000001c001bc7.txt",
+        "byte_size": 454,
+        "git_blob_sha": "44fb439b4ee94dce96ee6ea688b3a55b0abd9957"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -55,12 +126,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -74,7 +145,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

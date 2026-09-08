@@ -9,15 +9,39 @@
   "expected_body_sha256": "644189e0df5388bc3beebd49e6a31ae66a4a4629b6f3c265878f8d17fe8d626a",
   "expected_source_revision_id": "xhs-note:675bd01000000000020360ce:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "blocked",
+  "decision": "blocked",
+  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified for this item.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": []
+    "status": "blocked",
+    "proposed_decision": "blocked",
+    "basis": "full Source artifacts are present but do not establish whether this is a candidate interview event or a non-event",
+    "basis_lines": [],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/675bd01000000000020360ce.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/675bd01000000000020360ce/note/title",
+        "excerpt": "北京 启动！百度 启动！"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/675bd01000000000020360ce.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/675bd01000000000020360ce/note/desc",
+        "excerpt": "后端实习，发offer啦！\n#转码[话题]# #秋招[话题]# #实习[话题]# #百度[话题]# #互联网大厂实习[话题]# #互联网[话题]# #后端[话题]# #java[话题]# #go[话题]#"
+      }
+    ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/675bd01000000000020360ce.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/675bd01000000000020360ce/note/title",
+      "excerpt": "北京 启动！百度 启动！"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/675bd01000000000020360ce.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/675bd01000000000020360ce/note/desc",
+      "excerpt": "后端实习，发offer啦！\n#转码[话题]# #秋招[话题]# #实习[话题]# #百度[话题]# #互联网大厂实习[话题]# #互联网[话题]# #后端[话题]# #java[话题]# #go[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/675bd01000000000020360ce.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -36,6 +60,53 @@
       "git_blob_sha": "01eec9fa2b76cfe4d047a0381970f862c68f19db"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/675bd01000000000020360ce.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "北京 启动！百度 启动！ - 小红书",
+      "byte_size": 389703,
+      "git_blob_sha": "e7553cd29f7045ce8438a6d6bae3a7a93fce97cb",
+      "sha256": "04d14c3120e0a28e0635546f7b393b5873aa6638073f04dcf4bbabb4e61e5a38",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:675bd01000000000020360ce.html",
+        "byte_size": 389703,
+        "git_blob_sha": "e7553cd29f7045ce8438a6d6bae3a7a93fce97cb"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/675bd01000000000020360ce.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/675bd01000000000020360ce/note/title",
+      "excerpt": "北京 启动！百度 启动！",
+      "byte_size": 23138,
+      "git_blob_sha": "6994d11d6505b4de48a01307a6b4b6a315bb5eb9",
+      "sha256": "4ddf35562de2e8330751acb95633bb104f0e2cc9d079ceb58b19b3f03223f2e4",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:675bd01000000000020360ce.json",
+        "byte_size": 23138,
+        "git_blob_sha": "6994d11d6505b4de48a01307a6b4b6a315bb5eb9"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/675bd01000000000020360ce.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "后端实习，发offer啦！\n#转码[话题]# #秋招[话题]# #实习[话题]# #百度[话题]# #互联网大厂实习[话题]# #互联网[话题]# #后端[话题]# #java[话题]# #go[话题]#",
+      "byte_size": 195,
+      "git_blob_sha": "01eec9fa2b76cfe4d047a0381970f862c68f19db",
+      "sha256": "b347a11719e82a06c65db9850303c70127743ff5b14e6016d0c4525fc180560c",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:675bd01000000000020360ce.txt",
+        "byte_size": 195,
+        "git_blob_sha": "01eec9fa2b76cfe4d047a0381970f862c68f19db"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -50,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "blocked",
+      "note": "Full Source material remains semantically insufficient to decide the boundary."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -69,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Complete pinned artifacts were read, but their semantics do not establish a 0/1/N boundary decision.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

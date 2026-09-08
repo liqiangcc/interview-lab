@@ -9,20 +9,44 @@
   "expected_body_sha256": "5a761d781ced3f2722955c4259983b66dd49f27d9e47a56b8ea354d68e11bcba",
   "expected_source_revision_id": "xhs-note:67d6ef13000000001e00a5b6:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
     "basis_lines": [
       {
-        "line_number": 2,
-        "excerpt": "技术栈写的很全，问的都是相关八股文，平常👀八股倒是不觉得，讲出来和理解真是两回事，还会讲混淆，想学两个实际应用这些技术栈的项目，项目有的问就结合项目来，也不会是干巴巴的八股了，一问真实使用场景就噶掉，还得练[捂脸R]"
+        "line_number": 1,
+        "excerpt": "简历项目没什么亮点，面试官没什么问的"
+      }
+    ],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67d6ef13000000001e00a5b6.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67d6ef13000000001e00a5b6/note/title",
+        "excerpt": "记第一次Java社招面试！"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67d6ef13000000001e00a5b6.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67d6ef13000000001e00a5b6/note/desc",
+        "excerpt": "简历项目没什么亮点，面试官没什么问的\n技术栈写的很全，问的都是相关八股文，平常👀八股倒是不觉得，讲出来和理解真是两回事，还会讲混淆，想学两个实际应用这些技术栈的项目，项目有的问就结合项目来，也不会是干巴巴的八股了，一问真实使用场景就噶掉，还得练[捂脸R]\n\t\n#面试[话题]##Java面试[话题]# #凉经[话题]# #记录感想[话题]#"
       }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67d6ef13000000001e00a5b6.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67d6ef13000000001e00a5b6/note/title",
+      "excerpt": "记第一次Java社招面试！"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67d6ef13000000001e00a5b6.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67d6ef13000000001e00a5b6/note/desc",
+      "excerpt": "简历项目没什么亮点，面试官没什么问的\n技术栈写的很全，问的都是相关八股文，平常👀八股倒是不觉得，讲出来和理解真是两回事，还会讲混淆，想学两个实际应用这些技术栈的项目，项目有的问就结合项目来，也不会是干巴巴的八股了，一问真实使用场景就噶掉，还得练[捂脸R]\n\t\n#面试[话题]##Java面试[话题]# #凉经[话题]# #记录感想[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67d6ef13000000001e00a5b6.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -41,6 +65,53 @@
       "git_blob_sha": "aad00005cb47314f3a04f42b036570dc8af5f3d7"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67d6ef13000000001e00a5b6.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "记第一次Java社招面试！ - 小红书",
+      "byte_size": 386708,
+      "git_blob_sha": "e449263c513bbd8f70ec4a01bbaddd37ea761f64",
+      "sha256": "8bd81f07f97f7706837c6bd0ae0966a3d035496c0497aa7eb1a8c420886ed4f8",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67d6ef13000000001e00a5b6.html",
+        "byte_size": 386708,
+        "git_blob_sha": "e449263c513bbd8f70ec4a01bbaddd37ea761f64"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67d6ef13000000001e00a5b6.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67d6ef13000000001e00a5b6/note/title",
+      "excerpt": "记第一次Java社招面试！",
+      "byte_size": 20936,
+      "git_blob_sha": "306133556b6e949c334db17d1ad686fe97c0f23e",
+      "sha256": "57a9f4834085a28596d9847607643a9964b27c588e81d5d2f279e34e29821df0",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67d6ef13000000001e00a5b6.json",
+        "byte_size": 20936,
+        "git_blob_sha": "306133556b6e949c334db17d1ad686fe97c0f23e"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67d6ef13000000001e00a5b6.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "简历项目没什么亮点，面试官没什么问的\n技术栈写的很全，问的都是相关八股文，平常👀八股倒是不觉得，讲出来和理解真是两回事，还会讲混淆，想学两个实际应用这些技术栈的项目，项目有的问就结合项目来，也不会是干巴巴的八股了，一问真实使用场景就噶掉，还得练[捂脸R]\n#面试[话题]##Java面试[话题]# #凉经[话题]# #记录感想[话题]#",
+      "byte_size": 454,
+      "git_blob_sha": "aad00005cb47314f3a04f42b036570dc8af5f3d7",
+      "sha256": "0c74bfd87aaef17b709f66b74229535c015a1cd4908052f0115f25bba4396422",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67d6ef13000000001e00a5b6.txt",
+        "byte_size": 454,
+        "git_blob_sha": "aad00005cb47314f3a04f42b036570dc8af5f3d7"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -55,12 +126,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -74,7 +145,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

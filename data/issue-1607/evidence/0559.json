@@ -9,15 +9,44 @@
   "expected_body_sha256": "6b4ea6301daed0650109c7e147f5716a2d804db3c8d3ed21e09aaeb3367cf2a9",
   "expected_source_revision_id": "xhs-note:67ca5b09000000001203c4b2:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": []
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "basis_lines": [
+      {
+        "line_number": 1,
+        "excerpt": "北京JAVA，双非普本，找工作的第三天！今天面了京东零售，有一说一京东面试还是挺难的[捂脸R][捂脸R]一面凉经分享[太阳R][太阳R] #互联网大厂[话题]#  #后端开发[话题]# #面经[话题]# #java[话题]# #程序员[话题]#"
+      }
+    ],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67ca5b09000000001203c4b2.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67ca5b09000000001203c4b2/note/title",
+        "excerpt": "北京JAVA，双非普本，找工作的第三天！今天面了京东零售，有一说一京东面试还是挺难的一面凉经分享 #互联网大厂  #后端开发 #面经 #java #程序员 - 小红书"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67ca5b09000000001203c4b2.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67ca5b09000000001203c4b2/note/desc",
+        "excerpt": "北京JAVA，双非普本，找工作的第三天！今天面了京东零售，有一说一京东面试还是挺难的[捂脸R][捂脸R]一面凉经分享[太阳R][太阳R] #互联网大厂[话题]#  #后端开发[话题]# #面经[话题]# #java[话题]# #程序员[话题]#"
+      }
+    ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67ca5b09000000001203c4b2.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67ca5b09000000001203c4b2/note/title",
+      "excerpt": "北京JAVA，双非普本，找工作的第三天！今天面了京东零售，有一说一京东面试还是挺难的一面凉经分享 #互联网大厂  #后端开发 #面经 #java #程序员 - 小红书"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67ca5b09000000001203c4b2.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67ca5b09000000001203c4b2/note/desc",
+      "excerpt": "北京JAVA，双非普本，找工作的第三天！今天面了京东零售，有一说一京东面试还是挺难的[捂脸R][捂脸R]一面凉经分享[太阳R][太阳R] #互联网大厂[话题]#  #后端开发[话题]# #面经[话题]# #java[话题]# #程序员[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67ca5b09000000001203c4b2.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -36,6 +65,53 @@
       "git_blob_sha": "30201d391c5b89bfff1c377f9472dfde7acd11c0"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67ca5b09000000001203c4b2.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "北京JAVA，双非普本，找工作的第三天！今天面了京东零售，有一说一京东面试还是挺难的一面凉经分享 #互联网大厂  #后端开发 #面经 #java #程序员 - 小红书",
+      "byte_size": 389231,
+      "git_blob_sha": "7871f09855e095a7aec14e46d5f96479e4c739de",
+      "sha256": "8564a3c42e57a0868603a36c72a472ccb9fffe5eecdc0b4554d0d47673f001c1",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67ca5b09000000001203c4b2.html",
+        "byte_size": 389231,
+        "git_blob_sha": "7871f09855e095a7aec14e46d5f96479e4c739de"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67ca5b09000000001203c4b2.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67ca5b09000000001203c4b2/note/title",
+      "excerpt": null,
+      "byte_size": 22381,
+      "git_blob_sha": "9b1306c7185b9f9a1b5af50c743cdc8f6f1aa82a",
+      "sha256": "e83241cb9206bfb1a6cb1a7d2d8855e3f4bb448955c036d8ac147caf0e959163",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67ca5b09000000001203c4b2.json",
+        "byte_size": 22381,
+        "git_blob_sha": "9b1306c7185b9f9a1b5af50c743cdc8f6f1aa82a"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67ca5b09000000001203c4b2.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "北京JAVA，双非普本，找工作的第三天！今天面了京东零售，有一说一京东面试还是挺难的[捂脸R][捂脸R]一面凉经分享[太阳R][太阳R] #互联网大厂[话题]#  #后端开发[话题]# #面经[话题]# #java[话题]# #程序员[话题]#",
+      "byte_size": 275,
+      "git_blob_sha": "30201d391c5b89bfff1c377f9472dfde7acd11c0",
+      "sha256": "ffd1ef394b1ecac6703ab420224fd60107c67dbb3566d89a2fab181321e53cec",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67ca5b09000000001203c4b2.txt",
+        "byte_size": 275,
+        "git_blob_sha": "30201d391c5b89bfff1c377f9472dfde7acd11c0"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -50,12 +126,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -69,7 +145,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

@@ -9,15 +9,39 @@
   "expected_body_sha256": "a3986666a6f61b3fe4b86952b4d6606dbcd2a3b80c3f62f3fa90d8a83638d57d",
   "expected_source_revision_id": "xhs-note:67df9871000000001e0043b1:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": []
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "basis_lines": [],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67df9871000000001e0043b1.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67df9871000000001e0043b1/note/title",
+        "excerpt": "美团后端一面"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67df9871000000001e0043b1.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67df9871000000001e0043b1/note/desc",
+        "excerpt": "不按顺序，基本都是简历中的点，建议对个人简历中写到的技术点要掌握\n1.Threadlocal的了解，底层实现\n2.Volite底层实现？mesi 缓存一致性和内存屏障\n3.Redis穿透，布隆过滤器的原理\n4.Redis常用数据结构\n5.消息队列的一些使用场景\n6.一些常见的设计模式，可以结合项目举例说明\n7.Mysql事务有哪些，怎么实现的，因为说了mvcc，让结合mvcc和读已提交，可重复读进行说明原理\n8.索引底层结构，b+树，\n9.覆盖索引，举了例子说索引是否失效，回表查询是怎样的\n10. A=new Object(); A.name=”123”;\nVoid change(object b){b=new Object(); b.name=”456”;  }\n问 change(A),A的name值会不会变?  不会\nA b的关系？  在栈中，指向堆中的引用。\n11.死锁，以及如何避免\n12.线程池的参数，执行流程， i/o密集型有哪些操作\n13.Bean的生命周期，四个\n14.Aop的实现/原理\n15.GC算法，说了CMS,G1以及各自用到的垃圾回收算法，以及对应的优略\n16.https建立连接的过程，涉及 证书，私钥密钥这些\n17.问了一下对ai发展的看法？\n18.算法题，核心代码模式，不用写 输入输出 ， 树的层序遍历#美团面试[话题]# #后端开发[话题]#"
+      }
+    ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67df9871000000001e0043b1.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67df9871000000001e0043b1/note/title",
+      "excerpt": "美团后端一面"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67df9871000000001e0043b1.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67df9871000000001e0043b1/note/desc",
+      "excerpt": "不按顺序，基本都是简历中的点，建议对个人简历中写到的技术点要掌握\n1.Threadlocal的了解，底层实现\n2.Volite底层实现？mesi 缓存一致性和内存屏障\n3.Redis穿透，布隆过滤器的原理\n4.Redis常用数据结构\n5.消息队列的一些使用场景\n6.一些常见的设计模式，可以结合项目举例说明\n7.Mysql事务有哪些，怎么实现的，因为说了mvcc，让结合mvcc和读已提交，可重复读进行说明原理\n8.索引底层结构，b+树，\n9.覆盖索引，举了例子说索引是否失效，回表查询是怎样的\n10. A=new Object(); A.name=”123”;\nVoid change(object b){b=new Object(); b.name=”456”;  }\n问 change(A),A的name值会不会变?  不会\nA b的关系？  在栈中，指向堆中的引用。\n11.死锁，以及如何避免\n12.线程池的参数，执行流程， i/o密集型有哪些操作\n13.Bean的生命周期，四个\n14.Aop的实现/原理\n15.GC算法，说了CMS,G1以及各自用到的垃圾回收算法，以及对应的优略\n16.https建立连接的过程，涉及 证书，私钥密钥这些\n17.问了一下对ai发展的看法？\n18.算法题，核心代码模式，不用写 输入输出 ， 树的层序遍历#美团面试[话题]# #后端开发[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67df9871000000001e0043b1.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -36,6 +60,53 @@
       "git_blob_sha": "06918a392f8ecaaa08bde426720124d3e1803d00"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67df9871000000001e0043b1.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "美团后端一面 - 小红书",
+      "byte_size": 388528,
+      "git_blob_sha": "1cdf290e4c1e9d32d5494a91fd78bbe3a6cfe423",
+      "sha256": "4216fc27732ab3ced9bd6ac75af89acfb1bb4da82cfe4923194a8272126b350f",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67df9871000000001e0043b1.html",
+        "byte_size": 388528,
+        "git_blob_sha": "1cdf290e4c1e9d32d5494a91fd78bbe3a6cfe423"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67df9871000000001e0043b1.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67df9871000000001e0043b1/note/title",
+      "excerpt": "美团后端一面",
+      "byte_size": 21356,
+      "git_blob_sha": "cd295d043d740d81f2ce5be5ba32cd8af6afbe02",
+      "sha256": "e88a287506d1d7ebefe8c7a53722e119b5b52d6d22b6645d596ce286225d57a2",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67df9871000000001e0043b1.json",
+        "byte_size": 21356,
+        "git_blob_sha": "cd295d043d740d81f2ce5be5ba32cd8af6afbe02"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67df9871000000001e0043b1.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "不按顺序，基本都是简历中的点，建议对个人简历中写到的技术点要掌握\n1.Threadlocal的了解，底层实现\n2.Volite底层实现？mesi 缓存一致性和内存屏障\n3.Redis穿透，布隆过滤器的原理\n4.Redis常用数据结构\n5.消息队列的一些使用场景\n6.一些常见的设计模式，可以结合项目举例说明\n7.Mysql事务有哪些，怎么实现的，因为说了mvcc，让结合mvcc和读已提交，可重复读进行说明原理",
+      "byte_size": 1269,
+      "git_blob_sha": "06918a392f8ecaaa08bde426720124d3e1803d00",
+      "sha256": "24fb1e781bb6b80c6724573b81efdfae351518c1784ce088fd5810030c62ef98",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67df9871000000001e0043b1.txt",
+        "byte_size": 1269,
+        "git_blob_sha": "06918a392f8ecaaa08bde426720124d3e1803d00"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -50,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -69,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

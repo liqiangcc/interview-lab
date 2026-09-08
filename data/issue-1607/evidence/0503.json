@@ -9,20 +9,39 @@
   "expected_body_sha256": "13ffff7592e375c102ec9f8d3544583e5ad31eee49ddf7cc284cee775356c271",
   "expected_source_revision_id": "xhs-note:67aa057c00000000180180a2:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": [
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "basis_lines": [],
+    "semantic_evidence": [
       {
-        "line_number": 1,
+        "ref": "liqiangcc/xhs:note_json/67aa057c00000000180180a2.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67aa057c00000000180180a2/note/title",
+        "excerpt": "Java二面"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67aa057c00000000180180a2.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67aa057c00000000180180a2/note/desc",
         "excerpt": "今天没怎么问面试题，就问了项目 个人职业规划，说自己是新项目组，接不接受加班等，在带点画饼的内容之类的，看着刚开始招人，我担心的是公司会不会做不长，要中途失业错过好的面试季节，一闲置可能就几个月。#java面试[话题]#"
       }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67aa057c00000000180180a2.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67aa057c00000000180180a2/note/title",
+      "excerpt": "Java二面"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67aa057c00000000180180a2.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67aa057c00000000180180a2/note/desc",
+      "excerpt": "今天没怎么问面试题，就问了项目 个人职业规划，说自己是新项目组，接不接受加班等，在带点画饼的内容之类的，看着刚开始招人，我担心的是公司会不会做不长，要中途失业错过好的面试季节，一闲置可能就几个月。#java面试[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67aa057c00000000180180a2.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -41,6 +60,53 @@
       "git_blob_sha": "5f9918a25548738e6ad30483c0f7ec81a63af0c1"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67aa057c00000000180180a2.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "Java二面 - 小红书",
+      "byte_size": 387472,
+      "git_blob_sha": "4ff49b5052e579e469e4ac4de728dec6977e06bd",
+      "sha256": "654f1cb3ad256aa32c7b4920364d99dacac6185d23ba3798e0a42c9547b631e0",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67aa057c00000000180180a2.html",
+        "byte_size": 387472,
+        "git_blob_sha": "4ff49b5052e579e469e4ac4de728dec6977e06bd"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67aa057c00000000180180a2.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67aa057c00000000180180a2/note/title",
+      "excerpt": "Java二面",
+      "byte_size": 21573,
+      "git_blob_sha": "317608665c148960e361b8a81a56852b66a7d5bd",
+      "sha256": "14e84d5547077d4ed9cd3d799f96701ff1d5229cc00ce718e7349653d357a3db",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67aa057c00000000180180a2.json",
+        "byte_size": 21573,
+        "git_blob_sha": "317608665c148960e361b8a81a56852b66a7d5bd"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67aa057c00000000180180a2.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "今天没怎么问面试题，就问了项目 个人职业规划，说自己是新项目组，接不接受加班等，在带点画饼的内容之类的，看着刚开始招人，我担心的是公司会不会做不长，要中途失业错过好的面试季节，一闲置可能就几个月。#java面试[话题]#",
+      "byte_size": 313,
+      "git_blob_sha": "5f9918a25548738e6ad30483c0f7ec81a63af0c1",
+      "sha256": "2b552f915458bdfede948db603e0bbafdc10db551e6d1b6f8282368dda4d3463",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67aa057c00000000180180a2.txt",
+        "byte_size": 313,
+        "git_blob_sha": "5f9918a25548738e6ad30483c0f7ec81a63af0c1"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -55,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -74,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

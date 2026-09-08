@@ -9,24 +9,44 @@
   "expected_body_sha256": "1a76e3b3186bcaad1aa21d7c8cbcbbae0c3068a8e6c44e59d0a07970e58409a9",
   "expected_source_revision_id": "xhs-note:67653219000000000800e928:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "not-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "status": "reviewed",
+    "proposed_decision": "not-interview",
+    "basis": "explicit invitation, job/advice, or question-bank content lacks a candidate event",
     "basis_lines": [
       {
-        "line_number": 3,
-        "excerpt": "答：Inode是Linux文件系统的内部表示，每个文件或目录都有一个对应的inode。它存储了文件的元数据（如权限、所有者、时间戳等），但不包含文件名或其内容。当遇到无法写入文件的问题时，可以检查磁盘空间是否已满（使用`df h`）、文件系统是否有只读挂载（使用`mount`命令查看）或者该文件的inode是否已经被删除但仍被进程占用（使用`lsof`命令查找）。"
+        "line_number": 6,
+        "excerpt": "答：TCP三次握手的过程包括：客户端发送SYN包请求连接，服务器回应ACK+SYN确认收到并请求建立连接，最后客户端再次发送ACK确认连接建立。这确保了双方都准备好接收和发送数据，并同意通信。"
+      }
+    ],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67653219000000000800e928.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67653219000000000800e928/note/title",
+        "excerpt": "阿里云技术支持面试题分享"
       },
       {
-        "line_number": 8,
-        "excerpt": "答：对于客户报告的互联网访问问题，首先检查客户的本地网络设置（例如IP配置、DNS设置）。然后通过ping命令测试基本连通性，使用traceroute来定位可能的网络路径上的问题点，同时检查防火墙规则和路由器配置。"
+        "ref": "liqiangcc/xhs:note_json/67653219000000000800e928.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67653219000000000800e928/note/desc",
+        "excerpt": "1  Linux 系统管理\n问：请解释一下什么是inode，并说明它的作用。\n答：Inode是Linux文件系统的内部表示，每个文件或目录都有一个对应的inode。它存储了文件的元数据（如权限、所有者、时间戳等），但不包含文件名或其内容。当遇到无法写入文件的问题时，可以检查磁盘空间是否已满（使用`df h`）、文件系统是否有只读挂载（使用`mount`命令查看）或者该文件的inode是否已经被删除但仍被进程占用（使用`lsof`命令查找）。\n2. 网络基础\n问：请描述TCP三次握手的过程，并说明其重要性。\n答：TCP三次握手的过程包括：客户端发送SYN包请求连接，服务器回应ACK+SYN确认收到并请求建立连接，最后客户端再次发送ACK确认连接建立。这确保了双方都准备好接收和发送数据，并同意通信。\n问：当客户报告他们无法访问互联网时，你会采取哪些步骤进行诊断？\n答：对于客户报告的互联网访问问题，首先检查客户的本地网络设置（例如IP配置、DNS设置）。然后通过ping命令测试基本连通性，使用traceroute来定位可能的网络路径上的问题点，同时检查防火墙规则和路由器配置。\n3. 数据库操作\n问：在MySQL中，你如何处理一个非常大的表的数据迁移？\n答：在MySQL中处理大数据表的数据迁移，可以采用分批导出导入的方法，即每次只迁移一部分数据，以减少对生产环境的影响。还可以利用阿里云提供的DTS（Data Transmission Service）服务，实现平滑的数据同步。\n问：解释一下SQL注入攻击是什么，并给出一些防止这种攻击的方法。\n答：SQL注入是一种攻击手段，攻击者通过在SQL查询语句中插入恶意代码来操控数据库。防止措施包括使用预编译语句和参数化查询、严格验证用户输入、限制数据库用户的权限以及应用最新的安全补丁。\n4. 云计算与虚拟化\n问：阿里云的ECS（弹性计算服务）有哪些主要特点？在实际运维中如何使用它们？\n答：ECS提供按需扩展的计算能力，支持多种实例类型，具备快速部署、高可用性和安全性等特点。运维中可以通过创建快照、自动伸缩组、负载均衡等方式保障服务稳定。\n#云计算运维[话题]# #云计算培训[话题]# #简历辅导和优化[话题]#"
       }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67653219000000000800e928.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67653219000000000800e928/note/title",
+      "excerpt": "阿里云技术支持面试题分享"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67653219000000000800e928.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67653219000000000800e928/note/desc",
+      "excerpt": "1  Linux 系统管理\n问：请解释一下什么是inode，并说明它的作用。\n答：Inode是Linux文件系统的内部表示，每个文件或目录都有一个对应的inode。它存储了文件的元数据（如权限、所有者、时间戳等），但不包含文件名或其内容。当遇到无法写入文件的问题时，可以检查磁盘空间是否已满（使用`df h`）、文件系统是否有只读挂载（使用`mount`命令查看）或者该文件的inode是否已经被删除但仍被进程占用（使用`lsof`命令查找）。\n2. 网络基础\n问：请描述TCP三次握手的过程，并说明其重要性。\n答：TCP三次握手的过程包括：客户端发送SYN包请求连接，服务器回应ACK+SYN确认收到并请求建立连接，最后客户端再次发送ACK确认连接建立。这确保了双方都准备好接收和发送数据，并同意通信。\n问：当客户报告他们无法访问互联网时，你会采取哪些步骤进行诊断？\n答：对于客户报告的互联网访问问题，首先检查客户的本地网络设置（例如IP配置、DNS设置）。然后通过ping命令测试基本连通性，使用traceroute来定位可能的网络路径上的问题点，同时检查防火墙规则和路由器配置。\n3. 数据库操作\n问：在MySQL中，你如何处理一个非常大的表的数据迁移？\n答：在MySQL中处理大数据表的数据迁移，可以采用分批导出导入的方法，即每次只迁移一部分数据，以减少对生产环境的影响。还可以利用阿里云提供的DTS（Data Transmission Service）服务，实现平滑的数据同步。\n问：解释一下SQL注入攻击是什么，并给出一些防止这种攻击的方法。\n答：SQL注入是一种攻击手段，攻击者通过在SQL查询语句中插入恶意代码来操控数据库。防止措施包括使用预编译语句和参数化查询、严格验证用户输入、限制数据库用户的权限以及应用最新的安全补丁。\n4. 云计算与虚拟化\n问：阿里云的ECS（弹性计算服务）有哪些主要特点？在实际运维中如何使用它们？\n答：ECS提供按需扩展的计算能力，支持多种实例类型，具备快速部署、高可用性和安全性等特点。运维中可以通过创建快照、自动伸缩组、负载均衡等方式保障服务稳定。\n#云计算运维[话题]# #云计算培训[话题]# #简历辅导和优化[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67653219000000000800e928.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -45,6 +65,53 @@
       "git_blob_sha": "a68a7ca398e2db6a6d1ac4cc366213930365e4a8"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67653219000000000800e928.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "阿里云技术支持面试题分享 - 小红书",
+      "byte_size": 392669,
+      "git_blob_sha": "483372ee16bbbbae1d197a29ff1a57929e279213",
+      "sha256": "465f1d3e6ed023042549f446b159074aac5bcf2c1b846b3f318629803d89b146",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67653219000000000800e928.html",
+        "byte_size": 392669,
+        "git_blob_sha": "483372ee16bbbbae1d197a29ff1a57929e279213"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67653219000000000800e928.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67653219000000000800e928/note/title",
+      "excerpt": "阿里云技术支持面试题分享",
+      "byte_size": 22787,
+      "git_blob_sha": "663842f7fecd6e80f55976f02caf807873d4bd80",
+      "sha256": "88c0b376f67181708344d8e4a04e825932de22d4c1245174f5ba4ef2eb0e9a6f",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67653219000000000800e928.json",
+        "byte_size": 22787,
+        "git_blob_sha": "663842f7fecd6e80f55976f02caf807873d4bd80"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67653219000000000800e928.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "1  Linux 系统管理\n问：请解释一下什么是inode，并说明它的作用。\n答：Inode是Linux文件系统的内部表示，每个文件或目录都有一个对应的inode。它存储了文件的元数据（如权限、所有者、时间戳等），但不包含文件名或其内容。当遇到无法写入文件的问题时，可以检查磁盘空间是否已满（使用`df h`）、文件系统是否有只读挂载（使用`mount`命令查看）或者该文件的inode是否已经被删除但仍被进程占用（使用`lsof`命令查找）。\n2. 网络基础\n问：请描述TCP三次握手的过程，并说明其重要性。\n答：TCP三次握手的过程包括：客户端发送SYN包请求连接，服务器回应ACK+SYN确认收到并请求建立连接，最后客户端再次发送ACK确认连接建立。这确保了双方都准备好接收和发送数据，并同意通信。\n问：当客户报告他们无法访问互联网时，你会采取哪些步骤进行诊断？\n答：对于客户报告的互联网访问问题，首先检查客户的本地网络设置（例如IP配置、DNS设置）。然后通过ping命令测试基本连通性，使用traceroute来定位可能的网络路径上的问题点，同时检查防火墙规则和路由器配置。",
+      "byte_size": 2446,
+      "git_blob_sha": "a68a7ca398e2db6a6d1ac4cc366213930365e4a8",
+      "sha256": "f9c760bf3ff54a17ffa5ca7b16ae5779d5d2740111fb7920c0893188a9b9f258",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67653219000000000800e928.txt",
+        "byte_size": 2446,
+        "git_blob_sha": "a68a7ca398e2db6a6d1ac4cc366213930365e4a8"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -59,12 +126,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is not-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -78,7 +145,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

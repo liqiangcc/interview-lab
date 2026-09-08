@@ -9,20 +9,39 @@
   "expected_body_sha256": "b310a8871620122f461921e5b0c6efea823fc93cf176af919212e0fd109000fb",
   "expected_source_revision_id": "xhs-note:67d96692000000001c0019bd:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": [
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "basis_lines": [],
+    "semantic_evidence": [
       {
-        "line_number": 1,
-        "excerpt": "1. 八股文"
+        "ref": "liqiangcc/xhs:note_json/67d96692000000001c0019bd.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67d96692000000001c0019bd/note/title",
+        "excerpt": "小米汽车数据研发面经 | 附答案"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67d96692000000001c0019bd.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67d96692000000001c0019bd/note/desc",
+        "excerpt": "1. 八股文\n2. 项目\n3. 刷题\n#互联网大厂[话题]# #大数据开发[话题]# #面试记录[话题]#"
       }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67d96692000000001c0019bd.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67d96692000000001c0019bd/note/title",
+      "excerpt": "小米汽车数据研发面经 | 附答案"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67d96692000000001c0019bd.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67d96692000000001c0019bd/note/desc",
+      "excerpt": "1. 八股文\n2. 项目\n3. 刷题\n#互联网大厂[话题]# #大数据开发[话题]# #面试记录[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67d96692000000001c0019bd.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -41,6 +60,53 @@
       "git_blob_sha": "5c0217bdd4bc1dff45ee70409a7a6db7230cee6f"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67d96692000000001c0019bd.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "小米汽车数据研发面经 | 附答案 - 小红书",
+      "byte_size": 392688,
+      "git_blob_sha": "8b1a58cbe866a1202201c09fad4c1c716cf3f59c",
+      "sha256": "e8bf0c417e80dc291068183d9902c3e0051324d9188a81b2d084f98973fda598",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67d96692000000001c0019bd.html",
+        "byte_size": 392688,
+        "git_blob_sha": "8b1a58cbe866a1202201c09fad4c1c716cf3f59c"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67d96692000000001c0019bd.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67d96692000000001c0019bd/note/title",
+      "excerpt": "小米汽车数据研发面经 | 附答案",
+      "byte_size": 27509,
+      "git_blob_sha": "f73a773d847d5043008cf05f2e407ec0c437c484",
+      "sha256": "739465f014e9e6e7760d93108d4110798157fdc8809f2a79bee37190440f210a",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67d96692000000001c0019bd.json",
+        "byte_size": 27509,
+        "git_blob_sha": "f73a773d847d5043008cf05f2e407ec0c437c484"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67d96692000000001c0019bd.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "1. 八股文\n2. 项目\n3. 刷题\n#互联网大厂[话题]# #大数据开发[话题]# #面试记录[话题]#",
+      "byte_size": 108,
+      "git_blob_sha": "5c0217bdd4bc1dff45ee70409a7a6db7230cee6f",
+      "sha256": "26f02751d2908d90d1ae1af5212703ff46103200686c0be220d977903dbaf14e",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67d96692000000001c0019bd.txt",
+        "byte_size": 108,
+        "git_blob_sha": "5c0217bdd4bc1dff45ee70409a7a6db7230cee6f"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -55,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -74,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

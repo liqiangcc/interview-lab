@@ -9,28 +9,52 @@
   "expected_body_sha256": "b03bb921770ca3295585ee5b182c7216acc7aca697f8222525a0a5ab3dcf9875",
   "expected_source_revision_id": "xhs-note:67e23693000000001201cdf8:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
     "basis_lines": [
       {
-        "line_number": 2,
-        "excerpt": "1.场景题：你在你的项目中是如何实现前后端的交互的？从前端发送请求到后端产生响应再返回给前端的过程讲一讲"
+        "line_number": 11,
+        "excerpt": "10.链表和数组的底层数据结构？（这里回答的很乱，他还问了链表和数组两者分别怎么找到某个元素？）"
       },
       {
-        "line_number": 3,
-        "excerpt": "2.调用后端服务，遇到跨域的问题，该如何解决？"
+        "line_number": 14,
+        "excerpt": "13.你对你的项目中最熟悉的技术栈是什么？（我这里回答的是Mysql和Redis）"
       },
       {
-        "line_number": 4,
-        "excerpt": "3.跨域本质是为了解决什么问题？"
+        "line_number": 18,
+        "excerpt": "17.除了mysql和redis，还有什么其他结构的数据库，分别用于什么场景？（这里回答MongoDB）"
+      }
+    ],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67e23693000000001201cdf8.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67e23693000000001201cdf8/note/title",
+        "excerpt": "美团后端开发一面"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67e23693000000001201cdf8.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67e23693000000001201cdf8/note/desc",
+        "excerpt": "手撕算法：143重排链表  问了两种思路（1.线性表 2.寻找链表中点+链表逆序+合并链表）\n1.场景题：你在你的项目中是如何实现前后端的交互的？从前端发送请求到后端产生响应再返回给前端的过程讲一讲\n2.调用后端服务，遇到跨域的问题，该如何解决？\n3.跨域本质是为了解决什么问题？\n4.你应该知道很多的响应码，504代表什么？（在 HTTP 状态码中，504 表示 “网关超时”）\n5.如果是504错误，该怎么排查？\n6.你的项目中前后端的数据传输是否用到了网关？了解网关吗，介绍一下？\n7.HTTP通信的协议特点，结构，跟UDP直接的差别？\n8.TCP为了保证安全传输有什么机制？\n9.Java里面有哪些数据结构，分别使用在哪些场景？\n10.链表和数组的底层数据结构？（这里回答的很乱，他还问了链表和数组两者分别怎么找到某个元素？）\n11.new一个arraylist的时候，为什么指定类型？\n12.堆的应用场景和特点？\n13.你对你的项目中最熟悉的技术栈是什么？（我这里回答的是Mysql和Redis）\n14.mysql事务的四大特性？\n15.MySQL 中，隔离性所涉及的锁机制讲一下？锁在底层作用在什么位置？\n16.InnoDB 存储引擎下，一张表在底层存储时主要涉及以下几种文件？\n17.除了mysql和redis，还有什么其他结构的数据库，分别用于什么场景？（这里回答MongoDB）\n18.Redis为什么快？\n19.Redis对String的改造知道吗？"
       }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67e23693000000001201cdf8.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67e23693000000001201cdf8/note/title",
+      "excerpt": "美团后端开发一面"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67e23693000000001201cdf8.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67e23693000000001201cdf8/note/desc",
+      "excerpt": "手撕算法：143重排链表  问了两种思路（1.线性表 2.寻找链表中点+链表逆序+合并链表）\n1.场景题：你在你的项目中是如何实现前后端的交互的？从前端发送请求到后端产生响应再返回给前端的过程讲一讲\n2.调用后端服务，遇到跨域的问题，该如何解决？\n3.跨域本质是为了解决什么问题？\n4.你应该知道很多的响应码，504代表什么？（在 HTTP 状态码中，504 表示 “网关超时”）\n5.如果是504错误，该怎么排查？\n6.你的项目中前后端的数据传输是否用到了网关？了解网关吗，介绍一下？\n7.HTTP通信的协议特点，结构，跟UDP直接的差别？\n8.TCP为了保证安全传输有什么机制？\n9.Java里面有哪些数据结构，分别使用在哪些场景？\n10.链表和数组的底层数据结构？（这里回答的很乱，他还问了链表和数组两者分别怎么找到某个元素？）\n11.new一个arraylist的时候，为什么指定类型？\n12.堆的应用场景和特点？\n13.你对你的项目中最熟悉的技术栈是什么？（我这里回答的是Mysql和Redis）\n14.mysql事务的四大特性？\n15.MySQL 中，隔离性所涉及的锁机制讲一下？锁在底层作用在什么位置？\n16.InnoDB 存储引擎下，一张表在底层存储时主要涉及以下几种文件？\n17.除了mysql和redis，还有什么其他结构的数据库，分别用于什么场景？（这里回答MongoDB）\n18.Redis为什么快？\n19.Redis对String的改造知道吗？"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67e23693000000001201cdf8.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -49,6 +73,53 @@
       "git_blob_sha": "87abbf36b59c6fa9169e718ce2c53175d9f7618f"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67e23693000000001201cdf8.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "美团后端开发一面 - 小红书",
+      "byte_size": 388714,
+      "git_blob_sha": "b3e65ce0aa792f37c1c51331bac69f4a8ae9da2e",
+      "sha256": "1854a5608a38942a5ff5b09ffc2f94f62cbe1c244313d96ef5ecdfd379c19c70",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67e23693000000001201cdf8.html",
+        "byte_size": 388714,
+        "git_blob_sha": "b3e65ce0aa792f37c1c51331bac69f4a8ae9da2e"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67e23693000000001201cdf8.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67e23693000000001201cdf8/note/title",
+      "excerpt": "美团后端开发一面",
+      "byte_size": 21198,
+      "git_blob_sha": "3d0adacaa691b1a5dc77bbe34520f48439bb7653",
+      "sha256": "8653d229c9f906dddb172f1a39485622dd22a9753fba41bddd5b1403309855c0",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67e23693000000001201cdf8.json",
+        "byte_size": 21198,
+        "git_blob_sha": "3d0adacaa691b1a5dc77bbe34520f48439bb7653"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67e23693000000001201cdf8.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "手撕算法：143重排链表  问了两种思路（1.线性表 2.寻找链表中点+链表逆序+合并链表）\n1.场景题：你在你的项目中是如何实现前后端的交互的？从前端发送请求到后端产生响应再返回给前端的过程讲一讲\n2.调用后端服务，遇到跨域的问题，该如何解决？\n3.跨域本质是为了解决什么问题？\n4.你应该知道很多的响应码，504代表什么？（在 HTTP 状态码中，504 表示 “网关超时”）\n5.如果是504错误，该怎么排查？\n6.你的项目中前后端的数据传输是否用到了网关？了解网关吗，介绍一下？\n7.HTTP通信的协议特点，结构，跟UDP直接的差别？",
+      "byte_size": 1540,
+      "git_blob_sha": "87abbf36b59c6fa9169e718ce2c53175d9f7618f",
+      "sha256": "41671e7eaca2a7a60430866c62a246a756ca20a4469f948777bcf4c6bf9b8c31",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67e23693000000001201cdf8.txt",
+        "byte_size": 1540,
+        "git_blob_sha": "87abbf36b59c6fa9169e718ce2c53175d9f7618f"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -63,12 +134,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -82,7 +153,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

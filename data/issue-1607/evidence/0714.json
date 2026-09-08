@@ -9,15 +9,39 @@
   "expected_body_sha256": "c4d2483f359196162ae6e72f420c7706f783af507f6224cf87c7f37dad133685",
   "expected_source_revision_id": "xhs-note:67f901f0000000001202eb4b:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": []
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "basis_lines": [],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67f901f0000000001202eb4b.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67f901f0000000001202eb4b/note/title",
+        "excerpt": "京东java面经"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67f901f0000000001202eb4b.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67f901f0000000001202eb4b/note/desc",
+        "excerpt": "金融-信用卡支付\n1.自我介绍\n2.讲讲以前从0开始上手一个新东西的过程\n3.新东西遇到的困难如何解决\n4.hashmapget一个元素的过程\n5.java的内存分配和回收过程\n6.你如何创建一个线程池\n7.对aop的了解程度\n8.详细讲讲java agent\n9.http和https区别\n10.为什么握手要三次\n11.10w顾客抢购一个只有10个库存的商品如何设计\n12.之前遇到最挫折的事情#java[话题]# #面试辅导[话题]# #简历修改[话题]# #互联网大厂[话题]# #后端开发[话题]# #面经[话题]# #大厂[话题]#"
+      }
+    ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67f901f0000000001202eb4b.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67f901f0000000001202eb4b/note/title",
+      "excerpt": "京东java面经"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67f901f0000000001202eb4b.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67f901f0000000001202eb4b/note/desc",
+      "excerpt": "金融-信用卡支付\n1.自我介绍\n2.讲讲以前从0开始上手一个新东西的过程\n3.新东西遇到的困难如何解决\n4.hashmapget一个元素的过程\n5.java的内存分配和回收过程\n6.你如何创建一个线程池\n7.对aop的了解程度\n8.详细讲讲java agent\n9.http和https区别\n10.为什么握手要三次\n11.10w顾客抢购一个只有10个库存的商品如何设计\n12.之前遇到最挫折的事情#java[话题]# #面试辅导[话题]# #简历修改[话题]# #互联网大厂[话题]# #后端开发[话题]# #面经[话题]# #大厂[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67f901f0000000001202eb4b.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -36,6 +60,53 @@
       "git_blob_sha": "086b872cb0130abeede7738251f364a5fa3bfdf5"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67f901f0000000001202eb4b.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "京东java面经 - 小红书",
+      "byte_size": 388007,
+      "git_blob_sha": "4f3aecaff43b362000ebd04868e921e8a9580c86",
+      "sha256": "0be459d7117ed42b6bb1d98794ee14055ffc60cb61dd457a1869a83b19b6b21b",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67f901f0000000001202eb4b.html",
+        "byte_size": 388007,
+        "git_blob_sha": "4f3aecaff43b362000ebd04868e921e8a9580c86"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67f901f0000000001202eb4b.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67f901f0000000001202eb4b/note/title",
+      "excerpt": "京东java面经",
+      "byte_size": 21698,
+      "git_blob_sha": "8c5f7c7dc4c11f39340bfbea3613c39a40a5879e",
+      "sha256": "cbb0ae554b0d1c4d0b157ecf749235b7a7b99265feaaf02e5422873497ba3ddf",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67f901f0000000001202eb4b.json",
+        "byte_size": 21698,
+        "git_blob_sha": "8c5f7c7dc4c11f39340bfbea3613c39a40a5879e"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67f901f0000000001202eb4b.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "金融-信用卡支付\n1.自我介绍\n2.讲讲以前从0开始上手一个新东西的过程\n3.新东西遇到的困难如何解决\n4.hashmapget一个元素的过程\n5.java的内存分配和回收过程\n6.你如何创建一个线程池\n7.对aop的了解程度",
+      "byte_size": 574,
+      "git_blob_sha": "086b872cb0130abeede7738251f364a5fa3bfdf5",
+      "sha256": "2b30533e9d149373f01772009fb4c87c38331138a6c64f9ba039886ff6db8786",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67f901f0000000001202eb4b.txt",
+        "byte_size": 574,
+        "git_blob_sha": "086b872cb0130abeede7738251f364a5fa3bfdf5"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -50,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -69,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

@@ -9,15 +9,39 @@
   "expected_body_sha256": "5bc1eeb813fb0c33aa4e40cd030fc2f219c52a936d09d6364226cac04b51d702",
   "expected_source_revision_id": "xhs-note:6732bcdb0000000019016c7e:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": []
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "basis_lines": [],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/6732bcdb0000000019016c7e.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/6732bcdb0000000019016c7e/note/title",
+        "excerpt": "复习java30天之成为米孝子"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/6732bcdb0000000019016c7e.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/6732bcdb0000000019016c7e/note/desc",
+        "excerpt": "米子面试体验还不错，主要是效率很高，面试效率行政效率都很高。昨天从通知面试到面试到ld，hr全流程走完[笑哭R]感觉现在实习hc不是很多，本来准备奋战一两周，结果米子给了个大惊喜，去米子尽孝了[派对R]\n#小米[话题]# #java[话题]# #后端实习[话题]#"
+      }
+    ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/6732bcdb0000000019016c7e.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/6732bcdb0000000019016c7e/note/title",
+      "excerpt": "复习java30天之成为米孝子"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/6732bcdb0000000019016c7e.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/6732bcdb0000000019016c7e/note/desc",
+      "excerpt": "米子面试体验还不错，主要是效率很高，面试效率行政效率都很高。昨天从通知面试到面试到ld，hr全流程走完[笑哭R]感觉现在实习hc不是很多，本来准备奋战一两周，结果米子给了个大惊喜，去米子尽孝了[派对R]\n#小米[话题]# #java[话题]# #后端实习[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/6732bcdb0000000019016c7e.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -36,6 +60,53 @@
       "git_blob_sha": "599f6e12a37aa85f7bf10c9b966fddb8e3a31e15"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/6732bcdb0000000019016c7e.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "复习java30天之成为米孝子 - 小红书",
+      "byte_size": 386248,
+      "git_blob_sha": "dfff6465d561545666a4053669264d7c612dccb0",
+      "sha256": "278aa6131f4cfe22b81747e3a4da766372be8ca4c47dcb5f1f652ceae481aa01",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:6732bcdb0000000019016c7e.html",
+        "byte_size": 386248,
+        "git_blob_sha": "dfff6465d561545666a4053669264d7c612dccb0"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/6732bcdb0000000019016c7e.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/6732bcdb0000000019016c7e/note/title",
+      "excerpt": "复习java30天之成为米孝子",
+      "byte_size": 20632,
+      "git_blob_sha": "50ec46422834d19165a54d9c2f733ed9904bff0e",
+      "sha256": "33f680d6b7adca767ca4519019b0cbb34ecd2f5bc880632db97cc1b75e8a151d",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:6732bcdb0000000019016c7e.json",
+        "byte_size": 20632,
+        "git_blob_sha": "50ec46422834d19165a54d9c2f733ed9904bff0e"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/6732bcdb0000000019016c7e.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "米子面试体验还不错，主要是效率很高，面试效率行政效率都很高。昨天从通知面试到面试到ld，hr全流程走完[笑哭R]感觉现在实习hc不是很多，本来准备奋战一两周，结果米子给了个大惊喜，去米子尽孝了[派对R]\n#小米[话题]# #java[话题]# #后端实习[话题]#",
+      "byte_size": 335,
+      "git_blob_sha": "599f6e12a37aa85f7bf10c9b966fddb8e3a31e15",
+      "sha256": "d18003233ba087961a87c4954abc25d513c23de420bde46eaeb8236ccc63401f",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:6732bcdb0000000019016c7e.txt",
+        "byte_size": 335,
+        "git_blob_sha": "599f6e12a37aa85f7bf10c9b966fddb8e3a31e15"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -50,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -69,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

@@ -9,15 +9,39 @@
   "expected_body_sha256": "fa2c2d583ec7c9063f3102867e4530af4aac81544a2957c9e0c5dfaff06c249f",
   "expected_source_revision_id": "xhs-note:67dd5c0c000000001c003844:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": []
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "basis_lines": [],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67dd5c0c000000001c003844.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67dd5c0c000000001c003844/note/title",
+        "excerpt": "腾讯java一面面经（大概率凉经）"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67dd5c0c000000001c003844.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67dd5c0c000000001c003844/note/desc",
+        "excerpt": "问的太多了 脑子已经懵了 记不住了 以下是为数不多能记下来的\n拷打项目（没问实际的 就一直问你觉得什么能证明你的技术之类的）\n\t\njvm内存区域\n\t\ntcp四次握手\n有哪些垃圾回收算法\njava用的哪个 那你仔细说一下g1\n索引优化有哪些\n主从同步如何实现的 具体细节怎么复制的\n怎么理解的aop\n\t\n有哪些设计模式 你用到了哪些 每个模式都说一下有什么用\n单例怎么实现的 两种分别适用于哪些场景\n\t\ndocker和虚拟机的区别\ndocker写时复制了解吗\n\t\nk8s了解吗 （我说不了解）：给你5min看一下 一会我问\nk8s的核心模块构成\n选一个说一下具体的\n知道kafka吗 那你说一下rocketmq的具体细节\n如何保证消息不重复读\n还问了一下我写的专利\n\t\n手撕：不是hot100 没见过 类似于数据结构的题\n你觉得你这个边缘case有哪些 你能不能不用priorityqueue给我写一个（没写出来 寄中寄）"
+      }
+    ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67dd5c0c000000001c003844.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67dd5c0c000000001c003844/note/title",
+      "excerpt": "腾讯java一面面经（大概率凉经）"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67dd5c0c000000001c003844.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67dd5c0c000000001c003844/note/desc",
+      "excerpt": "问的太多了 脑子已经懵了 记不住了 以下是为数不多能记下来的\n拷打项目（没问实际的 就一直问你觉得什么能证明你的技术之类的）\n\t\njvm内存区域\n\t\ntcp四次握手\n有哪些垃圾回收算法\njava用的哪个 那你仔细说一下g1\n索引优化有哪些\n主从同步如何实现的 具体细节怎么复制的\n怎么理解的aop\n\t\n有哪些设计模式 你用到了哪些 每个模式都说一下有什么用\n单例怎么实现的 两种分别适用于哪些场景\n\t\ndocker和虚拟机的区别\ndocker写时复制了解吗\n\t\nk8s了解吗 （我说不了解）：给你5min看一下 一会我问\nk8s的核心模块构成\n选一个说一下具体的\n知道kafka吗 那你说一下rocketmq的具体细节\n如何保证消息不重复读\n还问了一下我写的专利\n\t\n手撕：不是hot100 没见过 类似于数据结构的题\n你觉得你这个边缘case有哪些 你能不能不用priorityqueue给我写一个（没写出来 寄中寄）"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67dd5c0c000000001c003844.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -36,6 +60,53 @@
       "git_blob_sha": "7777b5b6ea84b5848d74b9cc65affd182f6ba3ce"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67dd5c0c000000001c003844.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "腾讯java一面面经（大概率凉经） - 小红书",
+      "byte_size": 387185,
+      "git_blob_sha": "d58b1b03a7b2c81a1f6751f9321fbc2c62caced0",
+      "sha256": "63c8effcd2c57d8a6d86f748ce98b60135ab32dbfdfb988c4d7252f8a985a5e2",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67dd5c0c000000001c003844.html",
+        "byte_size": 387185,
+        "git_blob_sha": "d58b1b03a7b2c81a1f6751f9321fbc2c62caced0"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67dd5c0c000000001c003844.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67dd5c0c000000001c003844/note/title",
+      "excerpt": "腾讯java一面面经（大概率凉经）",
+      "byte_size": 20686,
+      "git_blob_sha": "29ef23db8e365314c0e3d7c199ba8c0fcfd951e7",
+      "sha256": "3bf365fc896fdb52fd8b5b2673991eac6518fe92fd7d78c496ae58de555c9bc6",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67dd5c0c000000001c003844.json",
+        "byte_size": 20686,
+        "git_blob_sha": "29ef23db8e365314c0e3d7c199ba8c0fcfd951e7"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67dd5c0c000000001c003844.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "问的太多了 脑子已经懵了 记不住了 以下是为数不多能记下来的\n拷打项目（没问实际的 就一直问你觉得什么能证明你的技术之类的）\njvm内存区域\ntcp四次握手\n有哪些垃圾回收算法\njava用的哪个 那你仔细说一下g1\n索引优化有哪些\n主从同步如何实现的 具体细节怎么复制的",
+      "byte_size": 989,
+      "git_blob_sha": "7777b5b6ea84b5848d74b9cc65affd182f6ba3ce",
+      "sha256": "6bceeaef07f9acb85b3030ccd6a46f0485bd51ebe510679d8a5c5b4a1b43fbc1",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67dd5c0c000000001c003844.txt",
+        "byte_size": 989,
+        "git_blob_sha": "7777b5b6ea84b5848d74b9cc65affd182f6ba3ce"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -50,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -69,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

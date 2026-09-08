@@ -9,28 +9,39 @@
   "expected_body_sha256": "6d91cfeab3572315d94198846b91029e1ad26e04cbe85fb552a56b5df2242b60",
   "expected_source_revision_id": "xhs-note:67a72095000000002901bb9b:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": [
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "basis_lines": [],
+    "semantic_evidence": [
       {
-        "line_number": 5,
-        "excerpt": "5、ThreadLocal会产生什么问题吗？"
+        "ref": "liqiangcc/xhs:note_json/67a72095000000002901bb9b.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67a72095000000002901bb9b/note/title",
+        "excerpt": "快手java日常实习一面"
       },
       {
-        "line_number": 8,
-        "excerpt": "8、使用空对象解决了缓存穿透问题，如果此时再数据库中新增了该空对象，也就是说他现在不是一个空对象了，这个时候怎么办。"
-      },
-      {
-        "line_number": 20,
-        "excerpt": "手撕：迷宫问题，给一个二维数组内容为0和1，1代表墙壁，0代表通道。求从左上角开始到右下角的最短路劲。（力扣：490 mid）"
+        "ref": "liqiangcc/xhs:note_json/67a72095000000002901bb9b.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67a72095000000002901bb9b/note/desc",
+        "excerpt": "1、自我介绍\n2、仿大众点评中登录注册功能，介绍一下。\n3、双层拦截有哪些作用，或者说能防止哪些攻击？\n4、ThreadLocal使用的场景和ThreadLocal的原理。\n5、ThreadLocal会产生什么问题吗？\n6、子进程能访问父进程ThreadLocal的值吗？为什么？\n7、介绍一下缓存穿透、缓存雪崩、缓存击穿和你的解决方案。\n8、使用空对象解决了缓存穿透问题，如果此时再数据库中新增了该空对象，也就是说他现在不是一个空对象了，这个时候怎么办。\n9、缓存雪崩除了使用随机TTL还有没有其他的解决方案。（分为事前事中事后）\n10、redis的i/o复用有了解吗？使用哪种机制来避免（epoll）。\n11、Java基本数据类型有哪些？\n12、Java的三大特性？多态是怎么体现的？\n13、介绍一下HashMap。（扩容机制、寻址、为什么扩容是二倍）。\n14、HashMap中怎样解决hash冲突。\n15、HashMap中默认的负载因子（加载因子）\n16、JVM的结构\n17、栈和堆的区别（空间大小、存储的内容、怎么存储（高向低还是低向高））\n18、B+树和B树的区别\n19、从树高的层面来看，B树和B+树那个树更高。\n手撕：迷宫问题，给一个二维数组内容为0和1，1代表墙壁，0代表通道。求从左上角开始到右下角的最短路劲。（力扣：490 mid）\n#学习[话题]# #金融科技岗[话题]# #银行面试真题[话题]# #面试技巧[话题]# #应届生[话题]# #应届生找工作[话题]# #应届生求职[话题]# #银行招聘[话题]# #国企工作[话题]# #国企招聘[话题]# #java学习[话题]# #java[话题]# #java面试[话题]# #java项目[话题]#"
       }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67a72095000000002901bb9b.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67a72095000000002901bb9b/note/title",
+      "excerpt": "快手java日常实习一面"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67a72095000000002901bb9b.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67a72095000000002901bb9b/note/desc",
+      "excerpt": "1、自我介绍\n2、仿大众点评中登录注册功能，介绍一下。\n3、双层拦截有哪些作用，或者说能防止哪些攻击？\n4、ThreadLocal使用的场景和ThreadLocal的原理。\n5、ThreadLocal会产生什么问题吗？\n6、子进程能访问父进程ThreadLocal的值吗？为什么？\n7、介绍一下缓存穿透、缓存雪崩、缓存击穿和你的解决方案。\n8、使用空对象解决了缓存穿透问题，如果此时再数据库中新增了该空对象，也就是说他现在不是一个空对象了，这个时候怎么办。\n9、缓存雪崩除了使用随机TTL还有没有其他的解决方案。（分为事前事中事后）\n10、redis的i/o复用有了解吗？使用哪种机制来避免（epoll）。\n11、Java基本数据类型有哪些？\n12、Java的三大特性？多态是怎么体现的？\n13、介绍一下HashMap。（扩容机制、寻址、为什么扩容是二倍）。\n14、HashMap中怎样解决hash冲突。\n15、HashMap中默认的负载因子（加载因子）\n16、JVM的结构\n17、栈和堆的区别（空间大小、存储的内容、怎么存储（高向低还是低向高））\n18、B+树和B树的区别\n19、从树高的层面来看，B树和B+树那个树更高。\n手撕：迷宫问题，给一个二维数组内容为0和1，1代表墙壁，0代表通道。求从左上角开始到右下角的最短路劲。（力扣：490 mid）\n#学习[话题]# #金融科技岗[话题]# #银行面试真题[话题]# #面试技巧[话题]# #应届生[话题]# #应届生找工作[话题]# #应届生求职[话题]# #银行招聘[话题]# #国企工作[话题]# #国企招聘[话题]# #java学习[话题]# #java[话题]# #java面试[话题]# #java项目[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67a72095000000002901bb9b.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -49,6 +60,53 @@
       "git_blob_sha": "1a9cd4cc4e2daabd11d527ee729fd630891fbbc4"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67a72095000000002901bb9b.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "快手java日常实习一面 - 小红书",
+      "byte_size": 397445,
+      "git_blob_sha": "f303230d0b3008b9588db1e54e67309295ee0b4f",
+      "sha256": "8c685195bbc05adb1f33fa8eb82a97cc050ba165553b658ed34ca0c307c7ac67",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67a72095000000002901bb9b.html",
+        "byte_size": 397445,
+        "git_blob_sha": "f303230d0b3008b9588db1e54e67309295ee0b4f"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67a72095000000002901bb9b.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67a72095000000002901bb9b/note/title",
+      "excerpt": "快手java日常实习一面",
+      "byte_size": 27183,
+      "git_blob_sha": "ac58bad7f919beb2515c26061147be7325dc050c",
+      "sha256": "dc81aee4414507e2843db33144e64615a646dafb65f03913c65c1f2a1ff00a26",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67a72095000000002901bb9b.json",
+        "byte_size": 27183,
+        "git_blob_sha": "ac58bad7f919beb2515c26061147be7325dc050c"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67a72095000000002901bb9b.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "1、自我介绍\n2、仿大众点评中登录注册功能，介绍一下。\n3、双层拦截有哪些作用，或者说能防止哪些攻击？\n4、ThreadLocal使用的场景和ThreadLocal的原理。\n5、ThreadLocal会产生什么问题吗？\n6、子进程能访问父进程ThreadLocal的值吗？为什么？\n7、介绍一下缓存穿透、缓存雪崩、缓存击穿和你的解决方案。\n8、使用空对象解决了缓存穿透问题，如果此时再数据库中新增了该空对象，也就是说他现在不是一个空对象了，这个时候怎么办。",
+      "byte_size": 1724,
+      "git_blob_sha": "1a9cd4cc4e2daabd11d527ee729fd630891fbbc4",
+      "sha256": "648ba8515296fffcbd3663086425389b54de19fb376747720da7a4f9ec4e1c18",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67a72095000000002901bb9b.txt",
+        "byte_size": 1724,
+        "git_blob_sha": "1a9cd4cc4e2daabd11d527ee729fd630891fbbc4"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -63,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -82,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

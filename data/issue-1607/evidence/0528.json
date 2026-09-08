@@ -9,15 +9,44 @@
   "expected_body_sha256": "6a69dbd4197fe0bc8b02e262b87d1fc56a5713e3ba931421111c81d4b4f1feaf",
   "expected_source_revision_id": "xhs-note:67bac5ff000000000901655d:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "not-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": []
+    "status": "reviewed",
+    "proposed_decision": "not-interview",
+    "basis": "explicit invitation, job/advice, or question-bank content lacks a candidate event",
+    "basis_lines": [
+      {
+        "line_number": 1,
+        "excerpt": "岗位：大数据开发实习生，JDY计划"
+      }
+    ],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67bac5ff000000000901655d.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67bac5ff000000000901655d/note/title",
+        "excerpt": "京东实习面经"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67bac5ff000000000901655d.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67bac5ff000000000901655d/note/desc",
+        "excerpt": "岗位：大数据开发实习生，JDY计划\n#面经[话题]# #互联网大厂[话题]# #京东[话题]#"
+      }
+    ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67bac5ff000000000901655d.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67bac5ff000000000901655d/note/title",
+      "excerpt": "京东实习面经"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67bac5ff000000000901655d.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67bac5ff000000000901655d/note/desc",
+      "excerpt": "岗位：大数据开发实习生，JDY计划\n#面经[话题]# #互联网大厂[话题]# #京东[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67bac5ff000000000901655d.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -36,6 +65,53 @@
       "git_blob_sha": "c88fa51eaf44731a44b54f763d3d018a9db37f88"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67bac5ff000000000901655d.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "京东实习面经 - 小红书",
+      "byte_size": 387573,
+      "git_blob_sha": "e64bd64861c86568eba92659919204ca72d54619",
+      "sha256": "361e25eba4339bf02cb14da5c832ed8571e19e046617908102a9e2bad07982d1",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67bac5ff000000000901655d.html",
+        "byte_size": 387573,
+        "git_blob_sha": "e64bd64861c86568eba92659919204ca72d54619"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67bac5ff000000000901655d.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67bac5ff000000000901655d/note/title",
+      "excerpt": "京东实习面经",
+      "byte_size": 21802,
+      "git_blob_sha": "0e6eec3ed0db0dd1400b85d019ca418d29b16e43",
+      "sha256": "a5e41a3ce86c29eb51f023ba25149815102531bca493c73930567cfe7b1de960",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67bac5ff000000000901655d.json",
+        "byte_size": 21802,
+        "git_blob_sha": "0e6eec3ed0db0dd1400b85d019ca418d29b16e43"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67bac5ff000000000901655d.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "岗位：大数据开发实习生，JDY计划\n#面经[话题]# #互联网大厂[话题]# #京东[话题]#",
+      "byte_size": 106,
+      "git_blob_sha": "c88fa51eaf44731a44b54f763d3d018a9db37f88",
+      "sha256": "5c4c678b4120670ab68af80fd120174e03433b5a87ea46b1c2eecd91fd2364fc",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67bac5ff000000000901655d.txt",
+        "byte_size": 106,
+        "git_blob_sha": "c88fa51eaf44731a44b54f763d3d018a9db37f88"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -50,12 +126,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is not-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -69,7 +145,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

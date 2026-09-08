@@ -9,24 +9,44 @@
   "expected_body_sha256": "d221c0afbcd6aac1bfb10e0c488296c252bac5a3b348cce66bef28002f600639",
   "expected_source_revision_id": "xhs-note:67f50f4b000000000f032e63:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
     "basis_lines": [
-      {
-        "line_number": 1,
-        "excerpt": "p1 2面试问题，时长一个小时多，手撕失败凉凉的[哭惹R][哭惹R]"
-      },
       {
         "line_number": 3,
         "excerpt": "面试官说我回答问题太快，还没理解重点就回答，因为我是检索型非推理型🥲，记过的就咔咔一通说，不记得就大眼瞪小眼😵"
       }
+    ],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67f50f4b000000000f032e63.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67f50f4b000000000f032e63/note/title",
+        "excerpt": "美团java后端一面（凉）"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67f50f4b000000000f032e63.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67f50f4b000000000f032e63/note/desc",
+        "excerpt": "p1 2面试问题，时长一个小时多，手撕失败凉凉的[哭惹R][哭惹R]\np4-p6收集整理的面经分享\n面试官说我回答问题太快，还没理解重点就回答，因为我是检索型非推理型🥲，记过的就咔咔一通说，不记得就大眼瞪小眼😵\n明天面淘天，希望不要表现太差[失望R]\n继续加油！！不能放弃！！"
+      }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67f50f4b000000000f032e63.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67f50f4b000000000f032e63/note/title",
+      "excerpt": "美团java后端一面（凉）"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67f50f4b000000000f032e63.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67f50f4b000000000f032e63/note/desc",
+      "excerpt": "p1 2面试问题，时长一个小时多，手撕失败凉凉的[哭惹R][哭惹R]\np4-p6收集整理的面经分享\n面试官说我回答问题太快，还没理解重点就回答，因为我是检索型非推理型🥲，记过的就咔咔一通说，不记得就大眼瞪小眼😵\n明天面淘天，希望不要表现太差[失望R]\n继续加油！！不能放弃！！"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67f50f4b000000000f032e63.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -45,6 +65,53 @@
       "git_blob_sha": "278caa236d3149ea2bdde6db9e3056c20ac6e043"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67f50f4b000000000f032e63.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "美团java后端一面（凉） - 小红书",
+      "byte_size": 393175,
+      "git_blob_sha": "bb1ee6409347298b1496a69560bf1f73a870b11d",
+      "sha256": "14007493511471eaaccaa78d94a80353a4dbdcca067eb9168c41973c34326905",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67f50f4b000000000f032e63.html",
+        "byte_size": 393175,
+        "git_blob_sha": "bb1ee6409347298b1496a69560bf1f73a870b11d"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67f50f4b000000000f032e63.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67f50f4b000000000f032e63/note/title",
+      "excerpt": "美团java后端一面（凉）",
+      "byte_size": 27441,
+      "git_blob_sha": "704defead6737f4445a19ca880df96ae1a8fddef",
+      "sha256": "2cae2a8fdcb97c9cfea8c1a53b2a299cf9e271022eb45b4b5acf751ddfae7e20",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67f50f4b000000000f032e63.json",
+        "byte_size": 27441,
+        "git_blob_sha": "704defead6737f4445a19ca880df96ae1a8fddef"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67f50f4b000000000f032e63.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "p1 2面试问题，时长一个小时多，手撕失败凉凉的[哭惹R][哭惹R]\np4-p6收集整理的面经分享\n面试官说我回答问题太快，还没理解重点就回答，因为我是检索型非推理型🥲，记过的就咔咔一通说，不记得就大眼瞪小眼😵\n明天面淘天，希望不要表现太差[失望R]\n继续加油！！不能放弃！！",
+      "byte_size": 373,
+      "git_blob_sha": "278caa236d3149ea2bdde6db9e3056c20ac6e043",
+      "sha256": "42989635921ea6b7b5ec75b1b7115aca6722463b403668014a8053719878336c",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67f50f4b000000000f032e63.txt",
+        "byte_size": 373,
+        "git_blob_sha": "278caa236d3149ea2bdde6db9e3056c20ac6e043"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -59,12 +126,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -78,7 +145,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

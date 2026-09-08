@@ -9,20 +9,48 @@
   "expected_body_sha256": "fcaf325103cc17044e36091d94b1d717effb05e834a9f5f6c548261418ed361c",
   "expected_source_revision_id": "xhs-note:67a38a1a0000000029024a49:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "multi-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "status": "reviewed",
+    "proposed_decision": "multi-interview",
+    "basis": "complete candidate interview evidence names multiple distinct interview events/rounds",
     "basis_lines": [
       {
-        "line_number": 8,
-        "excerpt": "#面经[话题]# #找实习[话题]# #后端开发[话题]# #面试求职[话题]# #面试问题[话题]# #后台开发面经[话题]# #校招[话题]# #春招[话题]# #java[话题]# #腾讯[话题]#"
+        "line_number": 3,
+        "excerpt": "5.10 一面"
+      },
+      {
+        "line_number": 4,
+        "excerpt": "5.15 二面"
+      }
+    ],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67a38a1a0000000029024a49.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67a38a1a0000000029024a49/note/title",
+        "excerpt": "腾讯 ieg 后台开发日常实习面经"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67a38a1a0000000029024a49.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67a38a1a0000000029024a49/note/desc",
+        "excerpt": "这个是去年面的，现在整理下发上来，腾讯时间线一般比较长\n时间线\n5.10 一面\n5.15 二面\n5.20 hr面+云证\n5.23 录用评估\n5.28 oc\n#面经[话题]# #找实习[话题]# #后端开发[话题]# #面试求职[话题]# #面试问题[话题]# #后台开发面经[话题]# #校招[话题]# #春招[话题]# #java[话题]# #腾讯[话题]#"
       }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67a38a1a0000000029024a49.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67a38a1a0000000029024a49/note/title",
+      "excerpt": "腾讯 ieg 后台开发日常实习面经"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67a38a1a0000000029024a49.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67a38a1a0000000029024a49/note/desc",
+      "excerpt": "这个是去年面的，现在整理下发上来，腾讯时间线一般比较长\n时间线\n5.10 一面\n5.15 二面\n5.20 hr面+云证\n5.23 录用评估\n5.28 oc\n#面经[话题]# #找实习[话题]# #后端开发[话题]# #面试求职[话题]# #面试问题[话题]# #后台开发面经[话题]# #校招[话题]# #春招[话题]# #java[话题]# #腾讯[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67a38a1a0000000029024a49.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -41,6 +69,53 @@
       "git_blob_sha": "e1e379b31e3dd1f33f8d57ae2e4e8f34b04e4039"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67a38a1a0000000029024a49.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "腾讯 ieg 后台开发日常实习面经 - 小红书",
+      "byte_size": 390684,
+      "git_blob_sha": "a60466a391b226b60c82e4f5064bc6834c8aa1b5",
+      "sha256": "b0e1502cd0cd0892367da5d1483dbc3e27e6788c8e73d7d960a4a5e1d84576fc",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67a38a1a0000000029024a49.html",
+        "byte_size": 390684,
+        "git_blob_sha": "a60466a391b226b60c82e4f5064bc6834c8aa1b5"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67a38a1a0000000029024a49.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67a38a1a0000000029024a49/note/title",
+      "excerpt": "腾讯 ieg 后台开发日常实习面经",
+      "byte_size": 23541,
+      "git_blob_sha": "85aa32bc1cae07145cb800c0b2d2735862fc6eba",
+      "sha256": "3d71b385faad63fb5eeb79e4d5036aa999e73e52fd61c2ddeee6d9e6346cba8f",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67a38a1a0000000029024a49.json",
+        "byte_size": 23541,
+        "git_blob_sha": "85aa32bc1cae07145cb800c0b2d2735862fc6eba"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67a38a1a0000000029024a49.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "这个是去年面的，现在整理下发上来，腾讯时间线一般比较长\n时间线\n5.10 一面\n5.15 二面\n5.20 hr面+云证\n5.23 录用评估\n5.28 oc\n#面经[话题]# #找实习[话题]# #后端开发[话题]# #面试求职[话题]# #面试问题[话题]# #后台开发面经[话题]# #校招[话题]# #春招[话题]# #java[话题]# #腾讯[话题]#",
+      "byte_size": 361,
+      "git_blob_sha": "e1e379b31e3dd1f33f8d57ae2e4e8f34b04e4039",
+      "sha256": "80c7838b240e7b2ce248c29309fbc84410344e9e312a1e8d40bf52d2f628732e",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67a38a1a0000000029024a49.txt",
+        "byte_size": 361,
+        "git_blob_sha": "e1e379b31e3dd1f33f8d57ae2e4e8f34b04e4039"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -55,12 +130,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is multi-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -74,7 +149,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

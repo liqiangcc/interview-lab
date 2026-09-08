@@ -9,20 +9,48 @@
   "expected_body_sha256": "dfc15e1f2fc8338242acf1d7bd83a2b3c3145cb15578c493468b29141dfb37ec",
   "expected_source_revision_id": "xhs-note:67f3beae000000001c0141ae:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
     "basis_lines": [
       {
-        "line_number": 15,
-        "excerpt": "还有其他 但是我记不起来了 感觉问的特别奇怪 有的问题让我不知道怎么答"
+        "line_number": 1,
+        "excerpt": "感觉面试官好累啊 但是还是很友好 不过对我的项目似乎没有什么兴趣"
+      },
+      {
+        "line_number": 3,
+        "excerpt": "2.都有什么锁 我只回答了乐观锁和悲观锁"
+      }
+    ],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67f3beae000000001c0141ae.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67f3beae000000001c0141ae/note/title",
+        "excerpt": "阿里云一面面经"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67f3beae000000001c0141ae.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67f3beae000000001c0141ae/note/desc",
+        "excerpt": "感觉面试官好累啊 但是还是很友好 不过对我的项目似乎没有什么兴趣\n1.解释了一下项目 redis的作用\n2.都有什么锁 我只回答了乐观锁和悲观锁\n3.知道逃逸分析吗\n4.解释死锁\n5.Java 中变量的存储位置\n6.进程线程协程\n7.三次握手四次挥手\n8.数组和链表\n9.在实践中怎么保证稳定性和可靠性？\n10.垃圾回收算法\n11.Hashmap：底层数据结构是什么，如何扩容，和C++和GO有什么区别（i dont know\n12.es知不知道 不知道\n13.mysql底层数据结构 索引种类\n还有其他 但是我记不起来了 感觉问的特别奇怪 有的问题让我不知道怎么答\n别秒挂我就行了\n手撕无重复字符最长子串\n﻿#后端开发[话题]#﻿ ﻿#阿里云[话题]#﻿"
       }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67f3beae000000001c0141ae.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67f3beae000000001c0141ae/note/title",
+      "excerpt": "阿里云一面面经"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67f3beae000000001c0141ae.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67f3beae000000001c0141ae/note/desc",
+      "excerpt": "感觉面试官好累啊 但是还是很友好 不过对我的项目似乎没有什么兴趣\n1.解释了一下项目 redis的作用\n2.都有什么锁 我只回答了乐观锁和悲观锁\n3.知道逃逸分析吗\n4.解释死锁\n5.Java 中变量的存储位置\n6.进程线程协程\n7.三次握手四次挥手\n8.数组和链表\n9.在实践中怎么保证稳定性和可靠性？\n10.垃圾回收算法\n11.Hashmap：底层数据结构是什么，如何扩容，和C++和GO有什么区别（i dont know\n12.es知不知道 不知道\n13.mysql底层数据结构 索引种类\n还有其他 但是我记不起来了 感觉问的特别奇怪 有的问题让我不知道怎么答\n别秒挂我就行了\n手撕无重复字符最长子串\n﻿#后端开发[话题]#﻿ ﻿#阿里云[话题]#﻿"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67f3beae000000001c0141ae.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -41,6 +69,53 @@
       "git_blob_sha": "f42ac70b42ace0123b808e2d3ca6183c4ac9d672"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67f3beae000000001c0141ae.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "阿里云一面面经 - 小红书",
+      "byte_size": 387153,
+      "git_blob_sha": "37dc0599fba9621c8c581d48e1d8c967f7318e49",
+      "sha256": "aad6aac51c27c0747b66fc446c63731fb0e449e8033ec01805ffc4a89a0b0bce",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67f3beae000000001c0141ae.html",
+        "byte_size": 387153,
+        "git_blob_sha": "37dc0599fba9621c8c581d48e1d8c967f7318e49"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67f3beae000000001c0141ae.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67f3beae000000001c0141ae/note/title",
+      "excerpt": "阿里云一面面经",
+      "byte_size": 20898,
+      "git_blob_sha": "6d435aee9577eb6de651cda3172bb8013a7397e8",
+      "sha256": "3a96d998a0ded2e6faa9e231849abf70f5f8696f109955d80a3d7606a7331586",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67f3beae000000001c0141ae.json",
+        "byte_size": 20898,
+        "git_blob_sha": "6d435aee9577eb6de651cda3172bb8013a7397e8"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67f3beae000000001c0141ae.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "感觉面试官好累啊 但是还是很友好 不过对我的项目似乎没有什么兴趣\n1.解释了一下项目 redis的作用\n2.都有什么锁 我只回答了乐观锁和悲观锁\n3.知道逃逸分析吗\n4.解释死锁\n5.Java 中变量的存储位置\n6.进程线程协程\n7.三次握手四次挥手",
+      "byte_size": 775,
+      "git_blob_sha": "f42ac70b42ace0123b808e2d3ca6183c4ac9d672",
+      "sha256": "ccfadab7aca51c700d990eb0845e0b7ee20c45197cd4b7ba84b1ca68b3fe9e0b",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67f3beae000000001c0141ae.txt",
+        "byte_size": 775,
+        "git_blob_sha": "f42ac70b42ace0123b808e2d3ca6183c4ac9d672"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -55,12 +130,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -74,7 +149,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

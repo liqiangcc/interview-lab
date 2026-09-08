@@ -9,20 +9,44 @@
   "expected_body_sha256": "ea2363d86133d78114431eaeeaa01ef7a01240c13ff8433eabd9380c152f4b96",
   "expected_source_revision_id": "xhs-note:67f7bda3000000000b0178c4:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
     "basis_lines": [
       {
-        "line_number": 2,
-        "excerpt": "前半个小时挑了一些项目和八股，问的比较简单，感觉比较偏考察思考和理解。[赞R][赞R]"
+        "line_number": 3,
+        "excerpt": "面试官人很好，会肯定和鼓励你的回答，这几天面试感觉面试官懂得真的很多，有时候我说的乱七八糟胡言乱语，他们往往能用精简准确的话总结出来[皱眉R]"
+      }
+    ],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67f7bda3000000000b0178c4.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67f7bda3000000000b0178c4/note/title",
+        "excerpt": "阿里云java后端电话一面（凉）"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67f7bda3000000000b0178c4.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67f7bda3000000000b0178c4/note/desc",
+        "excerpt": "p1面经  p234整理的阿里云面经\n前半个小时挑了一些项目和八股，问的比较简单，感觉比较偏考察思考和理解。[赞R][赞R]\n面试官人很好，会肯定和鼓励你的回答，这几天面试感觉面试官懂得真的很多，有时候我说的乱七八糟胡言乱语，他们往往能用精简准确的话总结出来[皱眉R]\n后面半个小时发了个邮件让做了一个代码题😳，真没想到电话面也有代码[捂脸R][捂脸R]，让讲了一下思路也不用运行。\n晚上吃完饭发现已经挂在简历评估阶段了，俩志愿都没走起来，不会是kpi面吧[哭惹R][哭惹R]\n继续加油！！"
       }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67f7bda3000000000b0178c4.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67f7bda3000000000b0178c4/note/title",
+      "excerpt": "阿里云java后端电话一面（凉）"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67f7bda3000000000b0178c4.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67f7bda3000000000b0178c4/note/desc",
+      "excerpt": "p1面经  p234整理的阿里云面经\n前半个小时挑了一些项目和八股，问的比较简单，感觉比较偏考察思考和理解。[赞R][赞R]\n面试官人很好，会肯定和鼓励你的回答，这几天面试感觉面试官懂得真的很多，有时候我说的乱七八糟胡言乱语，他们往往能用精简准确的话总结出来[皱眉R]\n后面半个小时发了个邮件让做了一个代码题😳，真没想到电话面也有代码[捂脸R][捂脸R]，让讲了一下思路也不用运行。\n晚上吃完饭发现已经挂在简历评估阶段了，俩志愿都没走起来，不会是kpi面吧[哭惹R][哭惹R]\n继续加油！！"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67f7bda3000000000b0178c4.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -41,6 +65,53 @@
       "git_blob_sha": "f9e03afd10f0872075547e81d664156a2704fb7b"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67f7bda3000000000b0178c4.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "阿里云java后端电话一面（凉） - 小红书",
+      "byte_size": 391246,
+      "git_blob_sha": "503cc8ab29aa3faf62f2c2f9e432f71f7cbdb79b",
+      "sha256": "c4c3d75ecf60f11c7b5bc7bfcf72eb8c74813d5bc2b3d35b49cf90f602867554",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67f7bda3000000000b0178c4.html",
+        "byte_size": 391246,
+        "git_blob_sha": "503cc8ab29aa3faf62f2c2f9e432f71f7cbdb79b"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67f7bda3000000000b0178c4.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67f7bda3000000000b0178c4/note/title",
+      "excerpt": "阿里云java后端电话一面（凉）",
+      "byte_size": 24556,
+      "git_blob_sha": "ca06160c7768520e09327265b1ffc9974891851f",
+      "sha256": "af31c569d23c2083816f686f8f21046b7b15b4185ee867001c5ee55a39609b06",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67f7bda3000000000b0178c4.json",
+        "byte_size": 24556,
+        "git_blob_sha": "ca06160c7768520e09327265b1ffc9974891851f"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67f7bda3000000000b0178c4.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "p1面经  p234整理的阿里云面经\n前半个小时挑了一些项目和八股，问的比较简单，感觉比较偏考察思考和理解。[赞R][赞R]\n面试官人很好，会肯定和鼓励你的回答，这几天面试感觉面试官懂得真的很多，有时候我说的乱七八糟胡言乱语，他们往往能用精简准确的话总结出来[皱眉R]\n后面半个小时发了个邮件让做了一个代码题😳，真没想到电话面也有代码[捂脸R][捂脸R]，让讲了一下思路也不用运行。\n晚上吃完饭发现已经挂在简历评估阶段了，俩志愿都没走起来，不会是kpi面吧[哭惹R][哭惹R]\n继续加油！！",
+      "byte_size": 663,
+      "git_blob_sha": "f9e03afd10f0872075547e81d664156a2704fb7b",
+      "sha256": "31b39ea5da67b456ddea13b04649ebdd2635d7ce0c6d25339f70fbed2698a907",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67f7bda3000000000b0178c4.txt",
+        "byte_size": 663,
+        "git_blob_sha": "f9e03afd10f0872075547e81d664156a2704fb7b"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -55,12 +126,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -74,7 +145,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

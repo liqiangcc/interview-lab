@@ -9,20 +9,39 @@
   "expected_body_sha256": "028d784cef531550845a1a151afdf88e0d73e30ceed3c9fe420de193ae3e788a",
   "expected_source_revision_id": "xhs-note:680139670000000009015053:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": [
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "basis_lines": [],
+    "semantic_evidence": [
       {
-        "line_number": 2,
-        "excerpt": "问的八股偏向具体应用和理解，面完就凉啦，最后点了说项目没啥微服务架构太单薄了[猪头R]"
+        "ref": "liqiangcc/xhs:note_json/680139670000000009015053.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/680139670000000009015053/note/title",
+        "excerpt": "淘天-阿里妈妈-Java一面（凉）"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/680139670000000009015053.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/680139670000000009015053/note/desc",
+        "excerpt": "电话面大概五十分钟，开头上来又问了二十分钟科研[微笑R]\n问的八股偏向具体应用和理解，面完就凉啦，最后点了说项目没啥微服务架构太单薄了[猪头R]\n分外平静了就是说[吧唧R][吧唧R]"
       }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/680139670000000009015053.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/680139670000000009015053/note/title",
+      "excerpt": "淘天-阿里妈妈-Java一面（凉）"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/680139670000000009015053.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/680139670000000009015053/note/desc",
+      "excerpt": "电话面大概五十分钟，开头上来又问了二十分钟科研[微笑R]\n问的八股偏向具体应用和理解，面完就凉啦，最后点了说项目没啥微服务架构太单薄了[猪头R]\n分外平静了就是说[吧唧R][吧唧R]"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/680139670000000009015053.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -41,6 +60,53 @@
       "git_blob_sha": "500467008eb906f44dc7257c0f475a4078730f13"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/680139670000000009015053.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "淘天-阿里妈妈-Java一面（凉） - 小红书",
+      "byte_size": 387532,
+      "git_blob_sha": "5f20861c90c99cb52b17b03e6b45d169cae475cd",
+      "sha256": "adf02dbc3cce5261f31987fa4ddcae3a3ffba8d1cb62efd3108f2683086104e4",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:680139670000000009015053.html",
+        "byte_size": 387532,
+        "git_blob_sha": "5f20861c90c99cb52b17b03e6b45d169cae475cd"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/680139670000000009015053.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/680139670000000009015053/note/title",
+      "excerpt": "淘天-阿里妈妈-Java一面（凉）",
+      "byte_size": 21435,
+      "git_blob_sha": "3b2773fa08684fd9b76f891a01312fc3b464263a",
+      "sha256": "407ac891b6a9c3ddf0b7d79b59a1aa225245ed974575839cb96393f9bbf8ccdb",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:680139670000000009015053.json",
+        "byte_size": 21435,
+        "git_blob_sha": "3b2773fa08684fd9b76f891a01312fc3b464263a"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/680139670000000009015053.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "电话面大概五十分钟，开头上来又问了二十分钟科研[微笑R]\n问的八股偏向具体应用和理解，面完就凉啦，最后点了说项目没啥微服务架构太单薄了[猪头R]\n分外平静了就是说[吧唧R][吧唧R]",
+      "byte_size": 246,
+      "git_blob_sha": "500467008eb906f44dc7257c0f475a4078730f13",
+      "sha256": "6703589c0952a4a6cac71a283ba8acc19e6f156eddd73807a4752dbcd0e1ca93",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:680139670000000009015053.txt",
+        "byte_size": 246,
+        "git_blob_sha": "500467008eb906f44dc7257c0f475a4078730f13"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -55,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -74,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

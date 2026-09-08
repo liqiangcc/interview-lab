@@ -9,32 +9,48 @@
   "expected_body_sha256": "edff97999cb320e61c7064066dbd0cdaffbeb436ab73fbfd0c44f4815bc75f60",
   "expected_source_revision_id": "xhs-note:67de724c000000001c0015c0:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "not-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "status": "reviewed",
+    "proposed_decision": "not-interview",
+    "basis": "explicit invitation, job/advice, or question-bank content lacks a candidate event",
     "basis_lines": [
       {
-        "line_number": 3,
-        "excerpt": "AI面试问题："
-      },
-      {
-        "line_number": 4,
-        "excerpt": "项目遇到了什么问题？如何解决？"
-      },
-      {
-        "line_number": 7,
-        "excerpt": "在项目中遇到新问题时，该如何考虑采用新技术？"
+        "line_number": 1,
+        "excerpt": "岗位：JAVA开发工程师"
       },
       {
         "line_number": 9,
         "excerpt": "无八股！！！无专业知识问题！！！"
       }
+    ],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67de724c000000001c0015c0.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67de724c000000001c0015c0/note/title",
+        "excerpt": "美的 开发岗位 AI面试"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67de724c000000001c0015c0.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67de724c000000001c0015c0/note/desc",
+        "excerpt": "岗位：JAVA开发工程师\n美的AI面试之后，一直在评估中，怎么这么慢[哭惹R][哭惹R][哭惹R]#面试求职[话题]# #面经[话题]# #面试[话题]# #美的[话题]# .#java[话题]#\nAI面试问题：\n项目遇到了什么问题？如何解决？\n项目过程中最有成就感的是？\n项目采用了什么新技术？为什么采用新技术？\n在项目中遇到新问题时，该如何考虑采用新技术？\n有两道英文问答：未来三年规划\n无八股！！！无专业知识问题！！！\n后面是一些数学找规律的题，或者是计算题"
+      }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67de724c000000001c0015c0.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67de724c000000001c0015c0/note/title",
+      "excerpt": "美的 开发岗位 AI面试"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67de724c000000001c0015c0.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67de724c000000001c0015c0/note/desc",
+      "excerpt": "岗位：JAVA开发工程师\n美的AI面试之后，一直在评估中，怎么这么慢[哭惹R][哭惹R][哭惹R]#面试求职[话题]# #面经[话题]# #面试[话题]# #美的[话题]# .#java[话题]#\nAI面试问题：\n项目遇到了什么问题？如何解决？\n项目过程中最有成就感的是？\n项目采用了什么新技术？为什么采用新技术？\n在项目中遇到新问题时，该如何考虑采用新技术？\n有两道英文问答：未来三年规划\n无八股！！！无专业知识问题！！！\n后面是一些数学找规律的题，或者是计算题"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67de724c000000001c0015c0.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -53,6 +69,53 @@
       "git_blob_sha": "6fa9d69dd97f4f3af00166a6a733b8c21e81d7e0"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67de724c000000001c0015c0.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "美的 开发岗位 AI面试 - 小红书",
+      "byte_size": 387471,
+      "git_blob_sha": "7b05a85bb91c631654c49a0d2a685812ad02f5d7",
+      "sha256": "56881a37a569a7c4f2c7cf29ea0d9f3af5b3cf64081451a74ec7d3fc0ca00bfc",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67de724c000000001c0015c0.html",
+        "byte_size": 387471,
+        "git_blob_sha": "7b05a85bb91c631654c49a0d2a685812ad02f5d7"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67de724c000000001c0015c0.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67de724c000000001c0015c0/note/title",
+      "excerpt": "美的 开发岗位 AI面试",
+      "byte_size": 21279,
+      "git_blob_sha": "544c4096276af776b71565725def297f1ff92700",
+      "sha256": "92fadd21139f3b886d6fd874db706a3e2119593e09c3b9d507a7bbeb8001b555",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67de724c000000001c0015c0.json",
+        "byte_size": 21279,
+        "git_blob_sha": "544c4096276af776b71565725def297f1ff92700"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67de724c000000001c0015c0.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "岗位：JAVA开发工程师\n美的AI面试之后，一直在评估中，怎么这么慢[哭惹R][哭惹R][哭惹R]#面试求职[话题]# #面经[话题]# #面试[话题]# #美的[话题]# .#java[话题]#\nAI面试问题：\n项目遇到了什么问题？如何解决？\n项目过程中最有成就感的是？\n项目采用了什么新技术？为什么采用新技术？\n在项目中遇到新问题时，该如何考虑采用新技术？\n有两道英文问答：未来三年规划",
+      "byte_size": 587,
+      "git_blob_sha": "6fa9d69dd97f4f3af00166a6a733b8c21e81d7e0",
+      "sha256": "5e448e3c0ec38e30f036c4941b8f45dede75eed280bea401df5c079bb8f14926",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67de724c000000001c0015c0.txt",
+        "byte_size": 587,
+        "git_blob_sha": "6fa9d69dd97f4f3af00166a6a733b8c21e81d7e0"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -67,12 +130,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is not-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -86,7 +149,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

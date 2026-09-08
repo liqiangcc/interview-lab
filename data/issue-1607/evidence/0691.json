@@ -9,20 +9,44 @@
   "expected_body_sha256": "d9628650ba07a0284ad4ef9b4570baa0346ddffb0af72535a33d52716ae9258f",
   "expected_source_revision_id": "xhs-note:67f3ec0f000000001200ddfa:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
     "basis_lines": [
       {
         "line_number": 1,
         "excerpt": "总时长45mins，无手撕，面试官人非常好，上来先介绍部门业务，接着自我介绍，然后是项目，最后是基础八股，场景题大轰炸。"
       }
+    ],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67f3ec0f000000001200ddfa.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67f3ec0f000000001200ddfa/note/title",
+        "excerpt": "淘天 java 一面"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67f3ec0f000000001200ddfa.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67f3ec0f000000001200ddfa/note/desc",
+        "excerpt": "总时长45mins，无手撕，面试官人非常好，上来先介绍部门业务，接着自我介绍，然后是项目，最后是基础八股，场景题大轰炸。\n1. zset怎么实现一个二维的排序，在点赞数相同的情况下还需要考虑用户年龄段\n2. redis中key过期策略，实际应用情况\n3. 乐观所解决超卖的具体实现，高并发情况下怎么优化中心节点的性能瓶颈（分桶）\n4. 异步扣库存失败时如何保证数据一致性？怎样才能不脏线程中的其他数据\n5. 双亲委派的原理，实际场景中打破该机制的具体实例\n6. 静态代理和动态代理的区别\n7. 单例模式的实现\n8. bean循环依赖的解决\n9. http请求中get和post的请求（可能要多了解一些）"
+      }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67f3ec0f000000001200ddfa.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67f3ec0f000000001200ddfa/note/title",
+      "excerpt": "淘天 java 一面"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67f3ec0f000000001200ddfa.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67f3ec0f000000001200ddfa/note/desc",
+      "excerpt": "总时长45mins，无手撕，面试官人非常好，上来先介绍部门业务，接着自我介绍，然后是项目，最后是基础八股，场景题大轰炸。\n1. zset怎么实现一个二维的排序，在点赞数相同的情况下还需要考虑用户年龄段\n2. redis中key过期策略，实际应用情况\n3. 乐观所解决超卖的具体实现，高并发情况下怎么优化中心节点的性能瓶颈（分桶）\n4. 异步扣库存失败时如何保证数据一致性？怎样才能不脏线程中的其他数据\n5. 双亲委派的原理，实际场景中打破该机制的具体实例\n6. 静态代理和动态代理的区别\n7. 单例模式的实现\n8. bean循环依赖的解决\n9. http请求中get和post的请求（可能要多了解一些）"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67f3ec0f000000001200ddfa.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -41,6 +65,53 @@
       "git_blob_sha": "8095fe5acd15779b64268b8a6d48f9d3536974ff"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67f3ec0f000000001200ddfa.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "淘天 java 一面 - 小红书",
+      "byte_size": 386383,
+      "git_blob_sha": "a0bc13334cfc82cf80c2dd28019878d2e2a4df2c",
+      "sha256": "5c4b13aaa1822316f8e17f8e51d2f37d7a0e938a8af7c016c0a5063abeacfc38",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67f3ec0f000000001200ddfa.html",
+        "byte_size": 386383,
+        "git_blob_sha": "a0bc13334cfc82cf80c2dd28019878d2e2a4df2c"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67f3ec0f000000001200ddfa.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67f3ec0f000000001200ddfa/note/title",
+      "excerpt": "淘天 java 一面",
+      "byte_size": 20415,
+      "git_blob_sha": "daf8105a42547c6c496b6a6d3954abccc67c85c7",
+      "sha256": "792edb5fbf11c8051d0cd11010e04fb7cd0ad9ef85e41f4a938104c619b25670",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67f3ec0f000000001200ddfa.json",
+        "byte_size": 20415,
+        "git_blob_sha": "daf8105a42547c6c496b6a6d3954abccc67c85c7"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67f3ec0f000000001200ddfa.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "总时长45mins，无手撕，面试官人非常好，上来先介绍部门业务，接着自我介绍，然后是项目，最后是基础八股，场景题大轰炸。\n1. zset怎么实现一个二维的排序，在点赞数相同的情况下还需要考虑用户年龄段\n2. redis中key过期策略，实际应用情况\n3. 乐观所解决超卖的具体实现，高并发情况下怎么优化中心节点的性能瓶颈（分桶）\n4. 异步扣库存失败时如何保证数据一致性？怎样才能不脏线程中的其他数据\n5. 双亲委派的原理，实际场景中打破该机制的具体实例\n6. 静态代理和动态代理的区别\n7. 单例模式的实现",
+      "byte_size": 766,
+      "git_blob_sha": "8095fe5acd15779b64268b8a6d48f9d3536974ff",
+      "sha256": "3c65bdd549e2e2b02686e3cd1b9b2f55b0c687e09a343da0df86a34ebe0ec7ba",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67f3ec0f000000001200ddfa.txt",
+        "byte_size": 766,
+        "git_blob_sha": "8095fe5acd15779b64268b8a6d48f9d3536974ff"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -55,12 +126,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -74,7 +145,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

@@ -9,15 +9,39 @@
   "expected_body_sha256": "698a5a411760c2aea1c04f8bdd8d3233166b1acd447b88e9ee6795ec7288ec6a",
   "expected_source_revision_id": "xhs-note:67488fd80000000006014281:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "not-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": []
+    "status": "reviewed",
+    "proposed_decision": "not-interview",
+    "basis": "explicit invitation, job/advice, or question-bank content lacks a candidate event",
+    "basis_lines": [],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67488fd80000000006014281.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67488fd80000000006014281/note/title",
+        "excerpt": "快手Java实习面试题"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67488fd80000000006014281.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67488fd80000000006014281/note/desc",
+        "excerpt": ""
+      }
+    ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67488fd80000000006014281.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67488fd80000000006014281/note/title",
+      "excerpt": "快手Java实习面试题"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67488fd80000000006014281.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67488fd80000000006014281/note/desc",
+      "excerpt": ""
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67488fd80000000006014281.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -36,6 +60,53 @@
       "git_blob_sha": "8b137891791fe96927ad78e64b0aad7bded08bdc"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67488fd80000000006014281.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "快手Java实习面试题 - 小红书",
+      "byte_size": 386431,
+      "git_blob_sha": "a4eb47b95f1071cd78e3757e67c0150ec39895f4",
+      "sha256": "214242b7f15c939453ae7a666189e57f82c22260fc17ad789405c44e5c7e235b",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67488fd80000000006014281.html",
+        "byte_size": 386431,
+        "git_blob_sha": "a4eb47b95f1071cd78e3757e67c0150ec39895f4"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67488fd80000000006014281.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67488fd80000000006014281/note/title",
+      "excerpt": "快手Java实习面试题",
+      "byte_size": 21117,
+      "git_blob_sha": "1c0de61772693ac702c7c83367e0f4043656b71b",
+      "sha256": "b480f6710bbe41cdbc358d086a81db54041c57c1994fd34c3a48fcfcedd9606a",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67488fd80000000006014281.json",
+        "byte_size": 21117,
+        "git_blob_sha": "1c0de61772693ac702c7c83367e0f4043656b71b"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67488fd80000000006014281.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": null,
+      "byte_size": 1,
+      "git_blob_sha": "8b137891791fe96927ad78e64b0aad7bded08bdc",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67488fd80000000006014281.txt",
+        "byte_size": 1,
+        "git_blob_sha": "8b137891791fe96927ad78e64b0aad7bded08bdc"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -50,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is not-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -69,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

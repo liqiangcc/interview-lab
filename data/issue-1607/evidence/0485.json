@@ -9,15 +9,39 @@
   "expected_body_sha256": "fb5555aa43f3876db860ee37e9309c62e3c2b745656cb7f4e2c6da54597df8d9",
   "expected_source_revision_id": "xhs-note:678f60c5000000001701eb84:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": []
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "basis_lines": [],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/678f60c5000000001701eb84.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/678f60c5000000001701eb84/note/title",
+        "excerpt": "京东Java后端岗面试，7天刷完就差不多了"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/678f60c5000000001701eb84.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/678f60c5000000001701eb84/note/desc",
+        "excerpt": "面试好容易紧张，一紧张什么都忘了，一定要提前做好准备！不然面试的时候冷场很尴尬，给大家整理了能面过2025后端岗的面试真题，篇幅过多就不一一展示了。#爱上工作的瞬间[话题]# #互联网大厂[话题]# #计算机[话题]# #java面试[话题]# #java[话题]# #求职[话题]# #编程[话题]# #程序员[话题]# #后端开发[话题]# #面试[话题]#"
+      }
+    ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/678f60c5000000001701eb84.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/678f60c5000000001701eb84/note/title",
+      "excerpt": "京东Java后端岗面试，7天刷完就差不多了"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/678f60c5000000001701eb84.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/678f60c5000000001701eb84/note/desc",
+      "excerpt": "面试好容易紧张，一紧张什么都忘了，一定要提前做好准备！不然面试的时候冷场很尴尬，给大家整理了能面过2025后端岗的面试真题，篇幅过多就不一一展示了。#爱上工作的瞬间[话题]# #互联网大厂[话题]# #计算机[话题]# #java面试[话题]# #java[话题]# #求职[话题]# #编程[话题]# #程序员[话题]# #后端开发[话题]# #面试[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/678f60c5000000001701eb84.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -36,6 +60,53 @@
       "git_blob_sha": "f1f6d6e533b60db12dde867537d030731aa92c8c"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/678f60c5000000001701eb84.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "京东Java后端岗面试，7天刷完就差不多了 - 小红书",
+      "byte_size": 399628,
+      "git_blob_sha": "1ff053d6557fa96756ce2a1de0c28db94af59b8d",
+      "sha256": "ffbcd9137b953aa634c4cc85a3a01ad8fbdd970dc97e4a1d20d72eb43ac58f50",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:678f60c5000000001701eb84.html",
+        "byte_size": 399628,
+        "git_blob_sha": "1ff053d6557fa96756ce2a1de0c28db94af59b8d"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/678f60c5000000001701eb84.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/678f60c5000000001701eb84/note/title",
+      "excerpt": "京东Java后端岗面试，7天刷完就差不多了",
+      "byte_size": 33519,
+      "git_blob_sha": "f73ee67549989063527ce67272b64524f63144cd",
+      "sha256": "e34222e299ee3d56920fc5c627aba8c07c1718324492b186cf024096136e81d2",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:678f60c5000000001701eb84.json",
+        "byte_size": 33519,
+        "git_blob_sha": "f73ee67549989063527ce67272b64524f63144cd"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/678f60c5000000001701eb84.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "面试好容易紧张，一紧张什么都忘了，一定要提前做好准备！不然面试的时候冷场很尴尬，给大家整理了能面过2025后端岗的面试真题，篇幅过多就不一一展示了。#爱上工作的瞬间[话题]# #互联网大厂[话题]# #计算机[话题]# #java面试[话题]# #java[话题]# #求职[话题]# #编程[话题]# #程序员[话题]# #后端开发[话题]# #面试[话题]#",
+      "byte_size": 422,
+      "git_blob_sha": "f1f6d6e533b60db12dde867537d030731aa92c8c",
+      "sha256": "a5238749f5db3970e745cd55f747b66a64ba89ad3f1141c290f162bd02d7a145",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:678f60c5000000001701eb84.txt",
+        "byte_size": 422,
+        "git_blob_sha": "f1f6d6e533b60db12dde867537d030731aa92c8c"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -50,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -69,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

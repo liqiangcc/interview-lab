@@ -9,32 +9,39 @@
   "expected_body_sha256": "07248afe5ecaaddb2a81b784d8c2eaba2eabcbc8c1c19bc6ca47a162da7fa0f2",
   "expected_source_revision_id": "xhs-note:67c417f20000000029037b85:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": [
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "basis_lines": [],
+    "semantic_evidence": [
       {
-        "line_number": 3,
-        "excerpt": "3.设计缓存时，考虑热点key，数据一致性问题。除了用redis，还能用本地缓存，这个分布式缓存应该怎么设计"
+        "ref": "liqiangcc/xhs:note_json/67c417f20000000029037b85.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67c417f20000000029037b85/note/title",
+        "excerpt": "得物社招java一面"
       },
       {
-        "line_number": 4,
-        "excerpt": "4.怎么解决缓存穿透、雪崩这些问题的？"
-      },
-      {
-        "line_number": 5,
-        "excerpt": "5.Dataworks有多少了解，有用过一些复杂的SQL吗，就多张表数据处理，比如左连接，用的时候有什么需要注意的问题，细节？"
-      },
-      {
-        "line_number": 8,
-        "excerpt": "8.八股文问题："
+        "ref": "liqiangcc/xhs:note_json/67c417f20000000029037b85.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67c417f20000000029037b85/note/desc",
+        "excerpt": "1.前2家工作时间不长的原因\n2.项目介绍\n3.设计缓存时，考虑热点key，数据一致性问题。除了用redis，还能用本地缓存，这个分布式缓存应该怎么设计\n4.怎么解决缓存穿透、雪崩这些问题的？\n5.Dataworks有多少了解，有用过一些复杂的SQL吗，就多张表数据处理，比如左连接，用的时候有什么需要注意的问题，细节？\n6.有了解过电商相关的背景知识吗？无\n7.现在让你搞电商这块的话，有什么想法能快速转变，快速适应电商的开发吗？说下你的思路\n8.八股文问题：\n9.常用的MySQL的优化策略，查询（避免索引失效，，，）\n10.现在有个场景：Dataworks同步场景，MySQL数据同步到Dataworks，几百万数据，单条数据字段比较多，同步时速度很慢，有什么方法解决？（全量同步+增量同步）\n11.分库分表的场景和解决方案说一下，你了解的\n12.分库分表的原理有去了解吗，怎么分的，基于哈希的分库分表的方案有什么缺点呢，出现热点，就是数据集中在几张表上，怎么解决呢？\n13.哈希分表后，比如256张表，扩容到512张表，扩容的方案说一下，新表和旧表之间切换时怎么保证数据一致性的？\n14.分表，有些ID过段时间就不用了，有什么好的解决方案（根据日期分表？）\n15.分为热点数据、不常用的数据这样呢？\n16.分库之后，如何保证数据一致性的，分页查询时怎么保证性能和数据准确性的\n17.写了很多博客，最近有了解什么前沿技术吗？有用大模型来解决工作上的问题吗？\n18.没接触过电商行业？\n19.之前项目中和各个省公司对接的，说说怎么沟通对接的，遇到过什么问题\n20.国企里怎么协调开发进度的？\n21.未来的职业发展的目标是什么？\n22.反问：做的业务，商品供给的\n23.最后说岗位需要有一定的电商经验。。。\n#学习[话题]# #金融科技岗[话题]# #银行面试真题[话题]# #面试技巧[话题]# #应届生[话题]# #应届生找工作[话题]# #应届生求职[话题]# #银行招聘[话题]# #国企工作[话题]# #国企招聘[话题]# #java学习[话题]# #java[话题]# #java面试[话题]# #java项目[话题]#"
       }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67c417f20000000029037b85.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67c417f20000000029037b85/note/title",
+      "excerpt": "得物社招java一面"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67c417f20000000029037b85.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67c417f20000000029037b85/note/desc",
+      "excerpt": "1.前2家工作时间不长的原因\n2.项目介绍\n3.设计缓存时，考虑热点key，数据一致性问题。除了用redis，还能用本地缓存，这个分布式缓存应该怎么设计\n4.怎么解决缓存穿透、雪崩这些问题的？\n5.Dataworks有多少了解，有用过一些复杂的SQL吗，就多张表数据处理，比如左连接，用的时候有什么需要注意的问题，细节？\n6.有了解过电商相关的背景知识吗？无\n7.现在让你搞电商这块的话，有什么想法能快速转变，快速适应电商的开发吗？说下你的思路\n8.八股文问题：\n9.常用的MySQL的优化策略，查询（避免索引失效，，，）\n10.现在有个场景：Dataworks同步场景，MySQL数据同步到Dataworks，几百万数据，单条数据字段比较多，同步时速度很慢，有什么方法解决？（全量同步+增量同步）\n11.分库分表的场景和解决方案说一下，你了解的\n12.分库分表的原理有去了解吗，怎么分的，基于哈希的分库分表的方案有什么缺点呢，出现热点，就是数据集中在几张表上，怎么解决呢？\n13.哈希分表后，比如256张表，扩容到512张表，扩容的方案说一下，新表和旧表之间切换时怎么保证数据一致性的？\n14.分表，有些ID过段时间就不用了，有什么好的解决方案（根据日期分表？）\n15.分为热点数据、不常用的数据这样呢？\n16.分库之后，如何保证数据一致性的，分页查询时怎么保证性能和数据准确性的\n17.写了很多博客，最近有了解什么前沿技术吗？有用大模型来解决工作上的问题吗？\n18.没接触过电商行业？\n19.之前项目中和各个省公司对接的，说说怎么沟通对接的，遇到过什么问题\n20.国企里怎么协调开发进度的？\n21.未来的职业发展的目标是什么？\n22.反问：做的业务，商品供给的\n23.最后说岗位需要有一定的电商经验。。。\n#学习[话题]# #金融科技岗[话题]# #银行面试真题[话题]# #面试技巧[话题]# #应届生[话题]# #应届生找工作[话题]# #应届生求职[话题]# #银行招聘[话题]# #国企工作[话题]# #国企招聘[话题]# #java学习[话题]# #java[话题]# #java面试[话题]# #java项目[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67c417f20000000029037b85.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -53,6 +60,53 @@
       "git_blob_sha": "d37e4d60593fe8b97529fb815a13f844128bfb49"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67c417f20000000029037b85.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "得物社招java一面 - 小红书",
+      "byte_size": 401626,
+      "git_blob_sha": "bb2085ddb615690f64ee9cd289660ff670c7b664",
+      "sha256": "c2ce7fdc268385132801730d5e23aac6486184a425c822867af732e28cb990aa",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67c417f20000000029037b85.html",
+        "byte_size": 401626,
+        "git_blob_sha": "bb2085ddb615690f64ee9cd289660ff670c7b664"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67c417f20000000029037b85.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67c417f20000000029037b85/note/title",
+      "excerpt": "得物社招java一面",
+      "byte_size": 30586,
+      "git_blob_sha": "3cfe2e410d13884c1dc65c66cd072c5e6b7a45df",
+      "sha256": "cd57a424ded1154942b21a6e645dea3bfaa9ae2718d522d23e688901d646230a",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67c417f20000000029037b85.json",
+        "byte_size": 30586,
+        "git_blob_sha": "3cfe2e410d13884c1dc65c66cd072c5e6b7a45df"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67c417f20000000029037b85.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "1.前2家工作时间不长的原因\n2.项目介绍\n3.设计缓存时，考虑热点key，数据一致性问题。除了用redis，还能用本地缓存，这个分布式缓存应该怎么设计\n4.怎么解决缓存穿透、雪崩这些问题的？\n5.Dataworks有多少了解，有用过一些复杂的SQL吗，就多张表数据处理，比如左连接，用的时候有什么需要注意的问题，细节？\n6.有了解过电商相关的背景知识吗？无\n7.现在让你搞电商这块的话，有什么想法能快速转变，快速适应电商的开发吗？说下你的思路\n8.八股文问题：",
+      "byte_size": 2300,
+      "git_blob_sha": "d37e4d60593fe8b97529fb815a13f844128bfb49",
+      "sha256": "3180c0e1477ed3f3f2c05e70e93b744d6f5743f8e2c547e58729a2de933c7bea",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67c417f20000000029037b85.txt",
+        "byte_size": 2300,
+        "git_blob_sha": "d37e4d60593fe8b97529fb815a13f844128bfb49"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -67,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -86,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

@@ -1,52 +1,61 @@
 # Issue #1607 Boundary B preparation
 
-本目录对应主控 #1605 的 Boundary B 子任务，只覆盖 SourceNote Issue #393–#765 中 live labels 同时满足：
+本目录对应主控 #1605 的 Boundary B 子任务，只读取 #393–#765 的 live Issue labels/body snapshot，并选择同时具有：
 
 ```text
 type:source-note + source:xhs + status:captured + boundary:pending + task:boundary-review
 ```
 
-固定 Source snapshot 为 `liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437`。编号区间本身不是选择集；区间内已经完成 boundary review 的 SourceNote、历史 Issue/PR 等排除项必须保留在 `selection.json` 的 `excluded` 中。
+固定 Source snapshot 为 `liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437`。本次冻结选择集为 257 条（当前最小 #394、最大 #765）；不读取 #392 以下或 #766，不把父级 419-row authorization 当作本批授权。
 
 ## 只读生成
 
-先获取 live Issue inventory：
+live inventory 必须使用 scope-clean GraphQL：
 
 ```sh
 node scripts/prepare-issue-1607-boundary-batch.js \
-  --fetch-live \
-  --scope-clean \
-  --cache data/issue-1607/live-issues.json
+  --fetch-live --scope-clean --cache data/issue-1607/live-issues.json
 ```
 
-默认 `--prepare` 会读取并校验每个 pinned `note_desc` projection 的 byte size 与 Git object SHA。读取顺序是主控提供的非空缓存、再到单线程受控 Raw GET；每项独立重试，失败只阻塞该项，不把网络抖动升级为全批失败：
+full-source prepare 复用 `/tmp/xhs-note-desc-cache`，并从 `/tmp/issue-1607-source-artifacts` 复用已验证的 `note_detail` HTML 与 `note_json`；每项校验 byte size 与 Git blob SHA：
 
 ```sh
 node scripts/prepare-issue-1607-boundary-batch.js \
-  --prepare --scope-clean --allow-unverified-source \
+  --prepare --full-source --scope-clean --allow-unverified-source \
   --cache data/issue-1607/live-issues.json \
   --source-cache-dir /tmp/xhs-note-desc-cache \
+  --source-artifact-cache-dir /tmp/issue-1607-source-artifacts \
   --output-dir data/issue-1607
-```
-
-`--body-only` 仅保留为明确的离线诊断模式；它会把每项标记为 blocked，不能替代 pinned Source bytes。本次 B 运行复用了主控缓存，并完成 367/367 条 projection 的独立 SHA/长度校验；例如 #394 为 943 bytes，Git blob SHA 为 `94d93fb8bb42d5b1ad0adb1242cb647c3f8f0eb6`。
-
-然后生成每条 evidence、不可执行 request template、dry-run plan、digest 和零 mutation journal：
-
-```sh
 node scripts/generate-issue-1607-boundary-evidence.js \
-  --selection data/issue-1607/selection.json \
-  --output-dir data/issue-1607
+  --selection data/issue-1607/selection.json --output-dir data/issue-1607
 ```
+
+最终三类 pinned Source artifact 覆盖为 257/257，source material 全部 `verified`。生成器逐条写出 classification/evidence/request，并生成 `source-artifact-ledger.json`、`dry-run.plan.json`、`apply.journal.json` 与 `canonical-digest.json`；逐条目录恰为当前 257 条，无陈旧选择项。
 
 ## 当前审计结论
 
-当前产物中的 367 条都保持 `decision=pending`、`evidence_status=review-required`；Source bytes 全部已独立验证，但分类仅是基于完整 projection 文本的 deterministic proposal，不是 durable human review。proposal 统计为 `single-interview=105`、`not-interview=5`、`pending=257`，详见 `classification-ledger.json`。每条 evidence 绑定完整 projection 文本、SHA/长度与分类依据行号；`dry-run.plan.json` 的 `mutation_count` 与 `apply.journal.json` 的 `mutation_count` 均为 0，ready=0。
+```text
+single-interview: 178
+multi-interview: 19
+not-interview: 50
+blocked: 10
+semantic_ready: 197
+ready: 0
+executable: false
+mutation_count: 0
+```
 
-分类规则要求第一人称、明确已发生的过程事实和问题证据同时出现；邀约、据说、求助、经验建议、面试官分享、题库/题目列表保持 pending，明确拒面才提出 not-interview。分类仍只是 proposal，不能改变 pending 或授权 transition。
+标题/正文中有明确已发生的候选人面试过程、面试官问答、候选人回答或结果才可提出 single；同帖明确多场/多轮才提出 multi。题库/题目列表、求职建议、预约/邀约、岗位咨询、面试官分享、营销转载和明确拒面/未参加均不提出 interview decision；完整材料仍无法建立边界的条目保留 blocked。每个非 blocked decision 都包含 exact artifact ref、locator、excerpt、完整 `note_desc` projection 与 line basis。`Raw` Source 未被 Derived 结果覆盖。
 
-本次 rerun 为 scope-clean：fresh live snapshot 只读取 #393–#765，`scope_compliance=pass`、`out_of_scope_reads=0`、`out_of_scope_mutations=0`；历史准备运行的 #766 只读 incident 不属于本次 rerun。
+scope audit：`selection.scope_compliance=pass`、`plan.scope_compliance=pass`、`scope_regression=pass`、`out_of_scope_reads=0`、`out_of_scope_mutations=0`；明确禁止 #392/#766。`apply.journal.json` 为 `not-started` 且 mutation count=0。未经主控在 issue/会话中明确授权，不得 POST/PATCH 或 apply；这些 request template 不是可执行 transition request。
 
-这些 request template 不是 `source-note-boundary-review-transition.v1/v2` 的可执行请求：它们没有伪造 comment id/review timestamp。后续必须由独立 reviewer 完成 Source evidence 复核、生成 durable evidence comment，再依据最新 live body/labels 重新 plan；未经主控明确授权不得 POST/PATCH。
+最终 canonical digest 位于 `data/issue-1607/canonical-digest.json`：
 
-Evidence ledger 只引用 SourceNote 自己的 canonical `note_desc` artifact；不读取或升级 `note_img_txt`、`note_structured`、`note_tagged` 等 Derived projection，也不创建 InterviewNote、Source Review、InterviewContext 或学习标签。
+```text
+selection_sha256: 20b9deb520f8c111cc969b749a45d0e56308126ae5f228ac9e1251ea92d8f7be
+evidence_ledger_sha256: b13bdd74996a00495347203da5bc6b303b2a60ca5ab17088a3848aaa53dacfa6
+request_set_sha256: 26f1a4f4845d6cea13ad3733040f6019fd255e63212c668414c9980fb7c390cc
+classification_ledger_sha256: 1e6add76aa5c7d99d5c81bef22156db92020d7cefa52252861b0597dfca5b6f8
+dry_run_sha256: e3cb87b342b0bd87804cb5ae956bf645ee73e3a1541d264e6f71f71cd0bf6623
+journal_sha256: 1dbb767d8239c81028690c8219f7b0d05b3a0b419e1fdddae040a0d6228b7cb7
+```

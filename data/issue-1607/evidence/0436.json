@@ -9,20 +9,39 @@
   "expected_body_sha256": "b514de8b9ca5751edb47208e3b54d39e0fdeb41f53dbf1a4a5f07742dfc7c001",
   "expected_source_revision_id": "xhs-note:674f27d6000000000202aa71:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": [
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "basis_lines": [],
+    "semantic_evidence": [
       {
-        "line_number": 2,
-        "excerpt": "问的问题以八股为主。#互联网大厂[话题]# #java[话题]# #25秋招[话题]#"
+        "ref": "liqiangcc/xhs:note_json/674f27d6000000000202aa71.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/674f27d6000000000202aa71/note/title",
+        "excerpt": "阿里菜鸟 java开发 一面"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/674f27d6000000000202aa71.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/674f27d6000000000202aa71/note/desc",
+        "excerpt": "直接打电话来问有没有时间，现场开面。都十二月了，还在捞人。\n问的问题以八股为主。#互联网大厂[话题]# #java[话题]# #25秋招[话题]#"
       }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/674f27d6000000000202aa71.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/674f27d6000000000202aa71/note/title",
+      "excerpt": "阿里菜鸟 java开发 一面"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/674f27d6000000000202aa71.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/674f27d6000000000202aa71/note/desc",
+      "excerpt": "直接打电话来问有没有时间，现场开面。都十二月了，还在捞人。\n问的问题以八股为主。#互联网大厂[话题]# #java[话题]# #25秋招[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/674f27d6000000000202aa71.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -41,6 +60,53 @@
       "git_blob_sha": "70273726e25ad94aefb27138ecaadf77ee115e19"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/674f27d6000000000202aa71.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "阿里菜鸟 java开发 一面 - 小红书",
+      "byte_size": 387826,
+      "git_blob_sha": "fa9121a53f3ccf04ba0109185aec5ae220f1c268",
+      "sha256": "1751cfc079132b01ec2893c79d68b411dbf47a54586cd8bd0f5d637d2ac3a426",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:674f27d6000000000202aa71.html",
+        "byte_size": 387826,
+        "git_blob_sha": "fa9121a53f3ccf04ba0109185aec5ae220f1c268"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/674f27d6000000000202aa71.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/674f27d6000000000202aa71/note/title",
+      "excerpt": "阿里菜鸟 java开发 一面",
+      "byte_size": 21891,
+      "git_blob_sha": "3f1fc421825ac9611cecc95afbd7de785b4bd00d",
+      "sha256": "76421116568b41e6a0a18cd0395eb66f19d9e85b3203452e4fcb13ba7f7bf85d",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:674f27d6000000000202aa71.json",
+        "byte_size": 21891,
+        "git_blob_sha": "3f1fc421825ac9611cecc95afbd7de785b4bd00d"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/674f27d6000000000202aa71.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "直接打电话来问有没有时间，现场开面。都十二月了，还在捞人。\n问的问题以八股为主。#互联网大厂[话题]# #java[话题]# #25秋招[话题]#",
+      "byte_size": 178,
+      "git_blob_sha": "70273726e25ad94aefb27138ecaadf77ee115e19",
+      "sha256": "08a170ec6ded5e54a0f26b74d7322dc3b220db71e9aa71ff6a26c0bc7a3cb35d",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:674f27d6000000000202aa71.txt",
+        "byte_size": 178,
+        "git_blob_sha": "70273726e25ad94aefb27138ecaadf77ee115e19"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -55,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -74,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

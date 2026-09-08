@@ -9,15 +9,44 @@
   "expected_body_sha256": "7902e9db39bdfe0236b6fe3ae233ae72b7e3eeb4a50ed35e4a20a5ddd4a7ba4a",
   "expected_source_revision_id": "xhs-note:67f4e175000000001200eff1:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": []
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "basis_lines": [
+      {
+        "line_number": 1,
+        "excerpt": "腾讯后端暑期实习三面 中午十一点半面试 会不会是kpi面啊 饭点总不能问一个多小时吧 感觉半小时就能结束了[失望R]#大厂[话题]# #java[话题]# #后端开发[话题]# #互联网大厂实习[话题]# #互联网大厂[话题]#"
+      }
+    ],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67f4e175000000001200eff1.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67f4e175000000001200eff1/note/title",
+        "excerpt": "腾讯后端三面！这个面试时间点怪怪的！"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67f4e175000000001200eff1.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67f4e175000000001200eff1/note/desc",
+        "excerpt": "腾讯后端暑期实习三面 中午十一点半面试 会不会是kpi面啊 饭点总不能问一个多小时吧 感觉半小时就能结束了[失望R]#大厂[话题]# #java[话题]# #后端开发[话题]# #互联网大厂实习[话题]# #互联网大厂[话题]#"
+      }
+    ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67f4e175000000001200eff1.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67f4e175000000001200eff1/note/title",
+      "excerpt": "腾讯后端三面！这个面试时间点怪怪的！"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67f4e175000000001200eff1.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67f4e175000000001200eff1/note/desc",
+      "excerpt": "腾讯后端暑期实习三面 中午十一点半面试 会不会是kpi面啊 饭点总不能问一个多小时吧 感觉半小时就能结束了[失望R]#大厂[话题]# #java[话题]# #后端开发[话题]# #互联网大厂实习[话题]# #互联网大厂[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67f4e175000000001200eff1.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -36,6 +65,53 @@
       "git_blob_sha": "672e11ad04d7b0ad07a71b907c9535f419f4e652"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67f4e175000000001200eff1.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "腾讯后端三面！这个面试时间点怪怪的！ - 小红书",
+      "byte_size": 386802,
+      "git_blob_sha": "edbc37925f71a1cae12f8f3a5be943e52d6bf3a8",
+      "sha256": "c467d269a3e4da27fd22e63670872c2e0fa4b18cc00e8083db7d8fe5c773e35d",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67f4e175000000001200eff1.html",
+        "byte_size": 386802,
+        "git_blob_sha": "edbc37925f71a1cae12f8f3a5be943e52d6bf3a8"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67f4e175000000001200eff1.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67f4e175000000001200eff1/note/title",
+      "excerpt": "腾讯后端三面！这个面试时间点怪怪的！",
+      "byte_size": 21067,
+      "git_blob_sha": "f9aab100518df3d1b7ecaa22fc489568f93b790f",
+      "sha256": "3f362f9bc6a2e554ec978e031879f5b2ff129b2417c96e9bffd4e651f8c4c29b",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67f4e175000000001200eff1.json",
+        "byte_size": 21067,
+        "git_blob_sha": "f9aab100518df3d1b7ecaa22fc489568f93b790f"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67f4e175000000001200eff1.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "腾讯后端暑期实习三面 中午十一点半面试 会不会是kpi面啊 饭点总不能问一个多小时吧 感觉半小时就能结束了[失望R]#大厂[话题]# #java[话题]# #后端开发[话题]# #互联网大厂实习[话题]# #互联网大厂[话题]#",
+      "byte_size": 267,
+      "git_blob_sha": "672e11ad04d7b0ad07a71b907c9535f419f4e652",
+      "sha256": "7e1a2af91d7ce4283e031abef002b0f7d0cf25ca170d80d67e8436b8484dd439",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67f4e175000000001200eff1.txt",
+        "byte_size": 267,
+        "git_blob_sha": "672e11ad04d7b0ad07a71b907c9535f419f4e652"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -50,12 +126,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -69,7 +145,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

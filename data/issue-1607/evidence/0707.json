@@ -9,20 +9,39 @@
   "expected_body_sha256": "26c627325e982130abd855c3f7ea50d4f850c6e55cef3a342768307d53f12f4f",
   "expected_source_revision_id": "xhs-note:67f78432000000001d01de81:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": [
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "basis_lines": [],
+    "semantic_evidence": [
       {
-        "line_number": 1,
+        "ref": "liqiangcc/xhs:note_json/67f78432000000001d01de81.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67f78432000000001d01de81/note/title",
+        "excerpt": "java后端面试，根本面不过来"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67f78432000000001d01de81.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67f78432000000001d01de81/note/desc",
         "excerpt": "本人双非学院本，签了一个上海外包，报销吃住让我来试用5天，而我刚下火车就接了5个面试邀约，都是中厂级别，其中三个上海线下，两个是线上，我应该如何跟这家包我吃住的公司解释，或者偷偷去面试呢。#java[话题]# #求职[话题]#"
       }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67f78432000000001d01de81.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67f78432000000001d01de81/note/title",
+      "excerpt": "java后端面试，根本面不过来"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67f78432000000001d01de81.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67f78432000000001d01de81/note/desc",
+      "excerpt": "本人双非学院本，签了一个上海外包，报销吃住让我来试用5天，而我刚下火车就接了5个面试邀约，都是中厂级别，其中三个上海线下，两个是线上，我应该如何跟这家包我吃住的公司解释，或者偷偷去面试呢。#java[话题]# #求职[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67f78432000000001d01de81.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -41,6 +60,53 @@
       "git_blob_sha": "67cc6cbfd9bfccf8b96b1304eabb001d47f89d52"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67f78432000000001d01de81.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "java后端面试，根本面不过来 - 小红书",
+      "byte_size": 388011,
+      "git_blob_sha": "0616e243adefe60a2b0b048d4138420e24f7a2a7",
+      "sha256": "b9d8614989cef7d98abc4ad1d346fce658ead8e41f13ca49bb64d289d14d5d3b",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67f78432000000001d01de81.html",
+        "byte_size": 388011,
+        "git_blob_sha": "0616e243adefe60a2b0b048d4138420e24f7a2a7"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67f78432000000001d01de81.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67f78432000000001d01de81/note/title",
+      "excerpt": "java后端面试，根本面不过来",
+      "byte_size": 21917,
+      "git_blob_sha": "ddd1ccfefdd5560cd33ded461c504ab7da749ebe",
+      "sha256": "d6a78c42765739b897db8216e376a9976abe2a88b69e0b86ce39f1cb42739198",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67f78432000000001d01de81.json",
+        "byte_size": 21917,
+        "git_blob_sha": "ddd1ccfefdd5560cd33ded461c504ab7da749ebe"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67f78432000000001d01de81.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "本人双非学院本，签了一个上海外包，报销吃住让我来试用5天，而我刚下火车就接了5个面试邀约，都是中厂级别，其中三个上海线下，两个是线上，我应该如何跟这家包我吃住的公司解释，或者偷偷去面试呢。#java[话题]# #求职[话题]#",
+      "byte_size": 310,
+      "git_blob_sha": "67cc6cbfd9bfccf8b96b1304eabb001d47f89d52",
+      "sha256": "6bc734fb0c6810e0dd4af1be4e9ed9e06cf260db0036ae2b8fa055b8f580d9ce",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67f78432000000001d01de81.txt",
+        "byte_size": 310,
+        "git_blob_sha": "67cc6cbfd9bfccf8b96b1304eabb001d47f89d52"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -55,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -74,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

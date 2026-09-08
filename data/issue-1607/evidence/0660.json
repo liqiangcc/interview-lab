@@ -9,28 +9,44 @@
   "expected_body_sha256": "a59b87f0b93e684cf405fcbaaa75a7e1378c44fe4c77b26574a617a5f2c38744",
   "expected_source_revision_id": "xhs-note:67ea2225000000001e004c43:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
     "basis_lines": [
-      {
-        "line_number": 1,
-        "excerpt": "第一次遇到这种完全不问项目，全部八股的。"
-      },
-      {
-        "line_number": 7,
-        "excerpt": "5.ThreadLocal是什么，怎么实现的，内存泄露问题是怎么回事。"
-      },
       {
         "line_number": 16,
         "excerpt": "总体评价：八股盛宴，但面试官人比较友善，在背不出来八股时没给太大压力。"
       }
+    ],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67ea2225000000001e004c43.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67ea2225000000001e004c43/note/title",
+        "excerpt": "搜狐 Java开发工程师 智能媒体研发中心"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67ea2225000000001e004c43.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67ea2225000000001e004c43/note/desc",
+        "excerpt": "第一次遇到这种完全不问项目，全部八股的。\n\t\n1.介绍线程池设置的核心参数。\n2.追问：任务等待队列都有哪几种类型，cachedThreadPool 和 fixedthreadpool的区别。\n3.Java锁系列：讲讲CountDownLatch, Semephone, CyclicBarrier的功能，你知道这些锁是怎么通过AQS实现的吗？\n4.Java原子类是什么，怎么实现的，和锁的区别是啥。\n5.ThreadLocal是什么，怎么实现的，内存泄露问题是怎么回事。\n6.JVM系列：对象创建的过程什么?知道什么垃圾回收器?G1的特性是什么?我能够随意设置最大停顿时间吗？\n7.Redis系列：怎么用Redis实现分布式锁；实现的时候需要注意哪些事项；如何防止一个线程拿到锁以后宕机导致锁没被释放；key值的过期时间设置多少合适。\n8.杂项：平时都怎么使用ai的，布隆过滤器的原理。\n\t\n算法：给定一系列的区别，合并有重合的区间，返回结果。\n\t\n闲聊时给的建议：项目没亮点，建议跟AI结合。\n\t\n总体评价：八股盛宴，但面试官人比较友善，在背不出来八股时没给太大压力。"
+      }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67ea2225000000001e004c43.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67ea2225000000001e004c43/note/title",
+      "excerpt": "搜狐 Java开发工程师 智能媒体研发中心"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67ea2225000000001e004c43.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67ea2225000000001e004c43/note/desc",
+      "excerpt": "第一次遇到这种完全不问项目，全部八股的。\n\t\n1.介绍线程池设置的核心参数。\n2.追问：任务等待队列都有哪几种类型，cachedThreadPool 和 fixedthreadpool的区别。\n3.Java锁系列：讲讲CountDownLatch, Semephone, CyclicBarrier的功能，你知道这些锁是怎么通过AQS实现的吗？\n4.Java原子类是什么，怎么实现的，和锁的区别是啥。\n5.ThreadLocal是什么，怎么实现的，内存泄露问题是怎么回事。\n6.JVM系列：对象创建的过程什么?知道什么垃圾回收器?G1的特性是什么?我能够随意设置最大停顿时间吗？\n7.Redis系列：怎么用Redis实现分布式锁；实现的时候需要注意哪些事项；如何防止一个线程拿到锁以后宕机导致锁没被释放；key值的过期时间设置多少合适。\n8.杂项：平时都怎么使用ai的，布隆过滤器的原理。\n\t\n算法：给定一系列的区别，合并有重合的区间，返回结果。\n\t\n闲聊时给的建议：项目没亮点，建议跟AI结合。\n\t\n总体评价：八股盛宴，但面试官人比较友善，在背不出来八股时没给太大压力。"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67ea2225000000001e004c43.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -49,6 +65,53 @@
       "git_blob_sha": "97c7595795c3e66e1db0c73db62a90436885d892"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67ea2225000000001e004c43.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "搜狐 Java开发工程师 智能媒体研发中心 - 小红书",
+      "byte_size": 387663,
+      "git_blob_sha": "7cdd281e85dbf54048bdde93066de59116e4ff60",
+      "sha256": "b138c65077563b74f2f58afe75a53a7db8292618f68f92085d7e903838b20c12",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67ea2225000000001e004c43.html",
+        "byte_size": 387663,
+        "git_blob_sha": "7cdd281e85dbf54048bdde93066de59116e4ff60"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67ea2225000000001e004c43.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67ea2225000000001e004c43/note/title",
+      "excerpt": "搜狐 Java开发工程师 智能媒体研发中心",
+      "byte_size": 20838,
+      "git_blob_sha": "5c22cc7743a5f6c6ac2de1913d11cd5140ba0aeb",
+      "sha256": "c938666da5c33d2869549adeaac9b90c023831650ca71febd8c0d8b935cf8632",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67ea2225000000001e004c43.json",
+        "byte_size": 20838,
+        "git_blob_sha": "5c22cc7743a5f6c6ac2de1913d11cd5140ba0aeb"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67ea2225000000001e004c43.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "第一次遇到这种完全不问项目，全部八股的。\n1.介绍线程池设置的核心参数。\n2.追问：任务等待队列都有哪几种类型，cachedThreadPool 和 fixedthreadpool的区别。\n3.Java锁系列：讲讲CountDownLatch, Semephone, CyclicBarrier的功能，你知道这些锁是怎么通过AQS实现的吗？\n4.Java原子类是什么，怎么实现的，和锁的区别是啥。\n5.ThreadLocal是什么，怎么实现的，内存泄露问题是怎么回事。\n6.JVM系列：对象创建的过程什么?知道什么垃圾回收器?G1的特性是什么?我能够随意设置最大停顿时间吗？\n7.Redis系列：怎么用Redis实现分布式锁；实现的时候需要注意哪些事项；如何防止一个线程拿到锁以后宕机导致锁没被释放；key值的过期时间设置多少合适。",
+      "byte_size": 1149,
+      "git_blob_sha": "97c7595795c3e66e1db0c73db62a90436885d892",
+      "sha256": "a7b048c1c595ee9c10ce64b31f51676c1edd7fc0bade0bb7c49e8ef283c2903e",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67ea2225000000001e004c43.txt",
+        "byte_size": 1149,
+        "git_blob_sha": "97c7595795c3e66e1db0c73db62a90436885d892"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -63,12 +126,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -82,7 +145,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

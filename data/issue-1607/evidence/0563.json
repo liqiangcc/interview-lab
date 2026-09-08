@@ -9,20 +9,44 @@
   "expected_body_sha256": "4b1b579131ed95685c885640706f09754065862ae6b1888134effb3e7b5affc2",
   "expected_source_revision_id": "xhs-note:67cd511d000000001201ede2:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "not-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "status": "reviewed",
+    "proposed_decision": "not-interview",
+    "basis": "explicit invitation, job/advice, or question-bank content lacks a candidate event",
     "basis_lines": [
       {
-        "line_number": 2,
-        "excerpt": "亚信科技的数据库开发岗，HR会问哪些问题"
+        "line_number": 1,
+        "excerpt": "UU们，第一次去面试，该怎么准备呀"
+      }
+    ],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67cd511d000000001201ede2.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67cd511d000000001201ede2/note/title",
+        "excerpt": "亚信科技实习"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67cd511d000000001201ede2.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67cd511d000000001201ede2/note/desc",
+        "excerpt": "UU们，第一次去面试，该怎么准备呀\n亚信科技的数据库开发岗，HR会问哪些问题"
       }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67cd511d000000001201ede2.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67cd511d000000001201ede2/note/title",
+      "excerpt": "亚信科技实习"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67cd511d000000001201ede2.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67cd511d000000001201ede2/note/desc",
+      "excerpt": "UU们，第一次去面试，该怎么准备呀\n亚信科技的数据库开发岗，HR会问哪些问题"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67cd511d000000001201ede2.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -41,6 +65,53 @@
       "git_blob_sha": "d8e6a8e5a5c025a80985a954b2836e93559a778e"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67cd511d000000001201ede2.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "亚信科技实习 - 小红书",
+      "byte_size": 384436,
+      "git_blob_sha": "d8dff4ecda0814cb9a5b63ebf0ec5932c9020f2c",
+      "sha256": "71734f43436e2f163652d59368ec858bc37383dfc8e7ae6e324e952737eadf5e",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67cd511d000000001201ede2.html",
+        "byte_size": 384436,
+        "git_blob_sha": "d8dff4ecda0814cb9a5b63ebf0ec5932c9020f2c"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67cd511d000000001201ede2.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67cd511d000000001201ede2/note/title",
+      "excerpt": "亚信科技实习",
+      "byte_size": 19734,
+      "git_blob_sha": "1d15347aba9e7fed4a3b6cd0726e711c8965a5bf",
+      "sha256": "f699160c7db72769a62b067197891e708d838df7ac5e39cccad6f053a89e14ac",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67cd511d000000001201ede2.json",
+        "byte_size": 19734,
+        "git_blob_sha": "1d15347aba9e7fed4a3b6cd0726e711c8965a5bf"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67cd511d000000001201ede2.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "UU们，第一次去面试，该怎么准备呀\n亚信科技的数据库开发岗，HR会问哪些问题",
+      "byte_size": 105,
+      "git_blob_sha": "d8e6a8e5a5c025a80985a954b2836e93559a778e",
+      "sha256": "d5d479b7c52f001fd1f44581bdd75b315191c9931f044632057e5d21bb54d938",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67cd511d000000001201ede2.txt",
+        "byte_size": 105,
+        "git_blob_sha": "d8e6a8e5a5c025a80985a954b2836e93559a778e"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -55,12 +126,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is not-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -74,7 +145,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

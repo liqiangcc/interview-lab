@@ -9,24 +9,44 @@
   "expected_body_sha256": "ec58291fd27772f58e062a9a1b24bd56f4a5acf43073976732c7f021dc2dc687",
   "expected_source_revision_id": "xhs-note:67d2cf38000000000602b6f7:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
     "basis_lines": [
-      {
-        "line_number": 6,
-        "excerpt": "💻八股暴击："
-      },
       {
         "line_number": 19,
         "excerpt": "• 面试官引导性问题要抓住"
       }
+    ],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67d2cf38000000000602b6f7.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67d2cf38000000000602b6f7/note/title",
+        "excerpt": "百度Java后端实习一面面经"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67d2cf38000000000602b6f7.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67d2cf38000000000602b6f7/note/desc",
+        "excerpt": "📌项目深挖：\n线程池核心参数+工厂模式实现\n令牌桶限流 vs 固定窗口\n布隆过滤器实战：穿透/击穿场景解决\nQPS预估技巧\n💻八股暴击：\n✔ ThreadLocal底层原理\n✔ volatile+synchronized组合拳\n✔ 死锁四条件→预防策略\n✔ HashMap底层结构连环问\n✔ GC机制→MySQL索引→三次挥手→进程通信\n✔ SpringAOP实现+@Aspect注解原理\n🧠算法考验：\n合并两链表（注意static陷阱！）\nK链表升级版→PriorityQueue最优解\n💡经验总结：\n• 项目难点要准备多种解决方案\n• 手撕代码注意类修饰符！\n• 面试官引导性问题要抓住\n虽然被疯狂追问，但保持思考过程展示就能加分！稳住别慌，实习更看重基础扎实度~\n\t\n#后端开发[话题]# #大厂[话题]# #面经[话题]# #java[话题]# #算法[话题]# #百度面经[话题]#"
+      }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67d2cf38000000000602b6f7.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67d2cf38000000000602b6f7/note/title",
+      "excerpt": "百度Java后端实习一面面经"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67d2cf38000000000602b6f7.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67d2cf38000000000602b6f7/note/desc",
+      "excerpt": "📌项目深挖：\n线程池核心参数+工厂模式实现\n令牌桶限流 vs 固定窗口\n布隆过滤器实战：穿透/击穿场景解决\nQPS预估技巧\n💻八股暴击：\n✔ ThreadLocal底层原理\n✔ volatile+synchronized组合拳\n✔ 死锁四条件→预防策略\n✔ HashMap底层结构连环问\n✔ GC机制→MySQL索引→三次挥手→进程通信\n✔ SpringAOP实现+@Aspect注解原理\n🧠算法考验：\n合并两链表（注意static陷阱！）\nK链表升级版→PriorityQueue最优解\n💡经验总结：\n• 项目难点要准备多种解决方案\n• 手撕代码注意类修饰符！\n• 面试官引导性问题要抓住\n虽然被疯狂追问，但保持思考过程展示就能加分！稳住别慌，实习更看重基础扎实度~\n\t\n#后端开发[话题]# #大厂[话题]# #面经[话题]# #java[话题]# #算法[话题]# #百度面经[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67d2cf38000000000602b6f7.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -45,6 +65,53 @@
       "git_blob_sha": "deab92659ae103e39d13f64c30c9e4b9395b73db"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67d2cf38000000000602b6f7.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "百度Java后端实习一面面经 - 小红书",
+      "byte_size": 388597,
+      "git_blob_sha": "d290d0b336cc4e4a1295962e4153042883a381d8",
+      "sha256": "5d79f6468201de8649deabed28da904db2fb5146af85ff733abe667dc8b8b9f0",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67d2cf38000000000602b6f7.html",
+        "byte_size": 388597,
+        "git_blob_sha": "d290d0b336cc4e4a1295962e4153042883a381d8"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67d2cf38000000000602b6f7.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67d2cf38000000000602b6f7/note/title",
+      "excerpt": "百度Java后端实习一面面经",
+      "byte_size": 21805,
+      "git_blob_sha": "76432dea8c697f2fc7c53bf0c31ed74822a6e138",
+      "sha256": "34430fb19ab5a2844537052e4125590fb9ea9900c2ef46cd0eb3098d5ffb4a2b",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67d2cf38000000000602b6f7.json",
+        "byte_size": 21805,
+        "git_blob_sha": "76432dea8c697f2fc7c53bf0c31ed74822a6e138"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67d2cf38000000000602b6f7.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "📌项目深挖：\n线程池核心参数+工厂模式实现\n令牌桶限流 vs 固定窗口\n布隆过滤器实战：穿透/击穿场景解决\nQPS预估技巧\n💻八股暴击：\n✔ ThreadLocal底层原理\n✔ volatile+synchronized组合拳",
+      "byte_size": 879,
+      "git_blob_sha": "deab92659ae103e39d13f64c30c9e4b9395b73db",
+      "sha256": "55a3c40c728d233e3b4a6e9d44253335c1516299970175dfe00221238717a048",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67d2cf38000000000602b6f7.txt",
+        "byte_size": 879,
+        "git_blob_sha": "deab92659ae103e39d13f64c30c9e4b9395b73db"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -59,12 +126,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -78,7 +145,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

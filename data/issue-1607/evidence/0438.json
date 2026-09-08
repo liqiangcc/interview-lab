@@ -9,15 +9,44 @@
   "expected_body_sha256": "a30834b8d1552d5b37c112026631adcdf0c3be78e5eda7f6a67a0924a2f8d94b",
   "expected_source_revision_id": "xhs-note:6751bdd200000000060178c0:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": []
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "basis_lines": [
+      {
+        "line_number": 3,
+        "excerpt": "2、2点面试一直到3点，然后赶紧打车到下一个4点的现场面试，到了现场给了电脑敲代码题。有些方法记不住，偷偷用了下豆包App询问。最后用了20分钟敲完三道题，面试官让我回去等电话复试，估计凉凉了。"
+      }
+    ],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/6751bdd200000000060178c0.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/6751bdd200000000060178c0/note/title",
+        "excerpt": "36岁Java失业第35天：面试凉凉"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/6751bdd200000000060178c0.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/6751bdd200000000060178c0/note/desc",
+        "excerpt": "【36岁Java程序员失业第35天】\n1、下午2点面试了一个联想外包，类加载过程、自己项目登录过程说的都不太好，结果待定！\n2、2点面试一直到3点，然后赶紧打车到下一个4点的现场面试，到了现场给了电脑敲代码题。有些方法记不住，偷偷用了下豆包App询问。最后用了20分钟敲完三道题，面试官让我回去等电话复试，估计凉凉了。\n3、原定另一个公司7点的面试因为地铁不能赶回去，被迫取消了！\n4、想对自己说，要冷静、要专注、要坚定！要加油！"
+      }
+    ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/6751bdd200000000060178c0.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/6751bdd200000000060178c0/note/title",
+      "excerpt": "36岁Java失业第35天：面试凉凉"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/6751bdd200000000060178c0.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/6751bdd200000000060178c0/note/desc",
+      "excerpt": "【36岁Java程序员失业第35天】\n1、下午2点面试了一个联想外包，类加载过程、自己项目登录过程说的都不太好，结果待定！\n2、2点面试一直到3点，然后赶紧打车到下一个4点的现场面试，到了现场给了电脑敲代码题。有些方法记不住，偷偷用了下豆包App询问。最后用了20分钟敲完三道题，面试官让我回去等电话复试，估计凉凉了。\n3、原定另一个公司7点的面试因为地铁不能赶回去，被迫取消了！\n4、想对自己说，要冷静、要专注、要坚定！要加油！"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/6751bdd200000000060178c0.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -36,6 +65,53 @@
       "git_blob_sha": "e273c864e4ec50d8436d98f9ee58aa4285e51d17"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/6751bdd200000000060178c0.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "36岁Java失业第35天：面试凉凉 - 小红书",
+      "byte_size": 388211,
+      "git_blob_sha": "5f9f076cc904401b702edaa9f1983d2a26ee223b",
+      "sha256": "cd1be0b0025f84546505dd5a839d21d4c1e86d40237e78070e40c1e149e7ffe9",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:6751bdd200000000060178c0.html",
+        "byte_size": 388211,
+        "git_blob_sha": "5f9f076cc904401b702edaa9f1983d2a26ee223b"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/6751bdd200000000060178c0.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/6751bdd200000000060178c0/note/title",
+      "excerpt": "36岁Java失业第35天：面试凉凉",
+      "byte_size": 21673,
+      "git_blob_sha": "b37b635ed5932deaac8ce48fa6ff30b2fb28feaf",
+      "sha256": "b418f9801c959d9737914703921723fca22c734b013f5042174ca5d1945ff3de",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:6751bdd200000000060178c0.json",
+        "byte_size": 21673,
+        "git_blob_sha": "b37b635ed5932deaac8ce48fa6ff30b2fb28feaf"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/6751bdd200000000060178c0.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "【36岁Java程序员失业第35天】\n1、下午2点面试了一个联想外包，类加载过程、自己项目登录过程说的都不太好，结果待定！\n2、2点面试一直到3点，然后赶紧打车到下一个4点的现场面试，到了现场给了电脑敲代码题。有些方法记不住，偷偷用了下豆包App询问。最后用了20分钟敲完三道题，面试官让我回去等电话复试，估计凉凉了。\n3、原定另一个公司7点的面试因为地铁不能赶回去，被迫取消了！\n4、想对自己说，要冷静、要专注、要坚定！要加油！",
+      "byte_size": 594,
+      "git_blob_sha": "e273c864e4ec50d8436d98f9ee58aa4285e51d17",
+      "sha256": "67a55e8d04e9ed19efe7979314b8181a3c9cf7f51178b3a148f88867eef02b13",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:6751bdd200000000060178c0.txt",
+        "byte_size": 594,
+        "git_blob_sha": "e273c864e4ec50d8436d98f9ee58aa4285e51d17"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -50,12 +126,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -69,7 +145,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

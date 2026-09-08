@@ -9,15 +9,39 @@
   "expected_body_sha256": "7de665d28f4d10e38b597fb80e371fbb820e4818b5fa39ead3e1e382771647ba",
   "expected_source_revision_id": "xhs-note:67ccf4d20000000029013b07:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "not-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": []
+    "status": "reviewed",
+    "proposed_decision": "not-interview",
+    "basis": "explicit invitation, job/advice, or question-bank content lacks a candidate event",
+    "basis_lines": [],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67ccf4d20000000029013b07.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67ccf4d20000000029013b07/note/title",
+        "excerpt": "美团Java后端面试真题记录，已OC"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67ccf4d20000000029013b07.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67ccf4d20000000029013b07/note/desc",
+        "excerpt": "﻿#面经[话题]#﻿ ﻿#后端开发[话题]#﻿ ﻿#大厂[话题]#﻿ ﻿#春招[话题]#﻿ ﻿#校招[话题]#﻿"
+      }
+    ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67ccf4d20000000029013b07.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67ccf4d20000000029013b07/note/title",
+      "excerpt": "美团Java后端面试真题记录，已OC"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67ccf4d20000000029013b07.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67ccf4d20000000029013b07/note/desc",
+      "excerpt": "﻿#面经[话题]#﻿ ﻿#后端开发[话题]#﻿ ﻿#大厂[话题]#﻿ ﻿#春招[话题]#﻿ ﻿#校招[话题]#﻿"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67ccf4d20000000029013b07.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -36,6 +60,53 @@
       "git_blob_sha": "6eef0d7a2498cf879f7e300a7395abd447ee3c2b"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67ccf4d20000000029013b07.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "美团Java后端面试真题记录，已OC - 小红书",
+      "byte_size": 392413,
+      "git_blob_sha": "8c0a903696cc520bbe813babdd7229ddca383961",
+      "sha256": "7dc17e8ac98f7e0649e45618df54fcbb22ab3f423367e4bd5ee0381cf5350273",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67ccf4d20000000029013b07.html",
+        "byte_size": 392413,
+        "git_blob_sha": "8c0a903696cc520bbe813babdd7229ddca383961"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67ccf4d20000000029013b07.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67ccf4d20000000029013b07/note/title",
+      "excerpt": "美团Java后端面试真题记录，已OC",
+      "byte_size": 26674,
+      "git_blob_sha": "2be3004f40e9b49683d559360adecab159b59a90",
+      "sha256": "f672e9a591e3d2c113eb3d29527dfb568cc8a8d7532bed739408b28cb9ebd08e",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67ccf4d20000000029013b07.json",
+        "byte_size": 26674,
+        "git_blob_sha": "2be3004f40e9b49683d559360adecab159b59a90"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67ccf4d20000000029013b07.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "﻿#面经[话题]#﻿ ﻿#后端开发[话题]#﻿ ﻿#大厂[话题]#﻿ ﻿#春招[话题]#﻿ ﻿#校招[话题]#﻿",
+      "byte_size": 121,
+      "git_blob_sha": "6eef0d7a2498cf879f7e300a7395abd447ee3c2b",
+      "sha256": "64120a50c453bb1f0f6a35cb25410ae55966b9cd005b3a753ad7977a745d0318",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67ccf4d20000000029013b07.txt",
+        "byte_size": 121,
+        "git_blob_sha": "6eef0d7a2498cf879f7e300a7395abd447ee3c2b"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -50,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is not-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -69,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

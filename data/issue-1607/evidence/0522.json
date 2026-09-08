@@ -9,20 +9,39 @@
   "expected_body_sha256": "b1f0d0e8efea8cea8921800b3421f90dc18cec2bfca1de73b844862e35026c75",
   "expected_source_revision_id": "xhs-note:67b732370000000009038062:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": [
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "basis_lines": [],
+    "semantic_evidence": [
       {
-        "line_number": 1,
+        "ref": "liqiangcc/xhs:note_json/67b732370000000009038062.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67b732370000000009038062/note/title",
+        "excerpt": "哈啰出行Java后端开发一二面!"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67b732370000000009038062.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67b732370000000009038062/note/desc",
         "excerpt": "﻿#java[话题]#﻿ ﻿#java后端开发[话题]#﻿ ﻿#java面试题[话题]#﻿ ﻿#编程开发[话题]#﻿ ﻿#找工作[话题]#﻿ ﻿#春招[话题]#﻿ ﻿#应届生[话题]#﻿ ﻿#计算机[话题]#﻿"
       }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67b732370000000009038062.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67b732370000000009038062/note/title",
+      "excerpt": "哈啰出行Java后端开发一二面!"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67b732370000000009038062.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67b732370000000009038062/note/desc",
+      "excerpt": "﻿#java[话题]#﻿ ﻿#java后端开发[话题]#﻿ ﻿#java面试题[话题]#﻿ ﻿#编程开发[话题]#﻿ ﻿#找工作[话题]#﻿ ﻿#春招[话题]#﻿ ﻿#应届生[话题]#﻿ ﻿#计算机[话题]#﻿"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67b732370000000009038062.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -41,6 +60,53 @@
       "git_blob_sha": "7f6dec0e8a7bdc5da88b01fd76698dbab02506e1"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67b732370000000009038062.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "哈啰出行Java后端开发一二面! - 小红书",
+      "byte_size": 389739,
+      "git_blob_sha": "e676c99deafc614d0741bfe65c46c73a54bd8cc0",
+      "sha256": "51e3db24bba080bfb1670a10b4cac10b58e6c9454181fe3497969325311dfc2b",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67b732370000000009038062.html",
+        "byte_size": 389739,
+        "git_blob_sha": "e676c99deafc614d0741bfe65c46c73a54bd8cc0"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67b732370000000009038062.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67b732370000000009038062/note/title",
+      "excerpt": "哈啰出行Java后端开发一二面!",
+      "byte_size": 23040,
+      "git_blob_sha": "2fb2edfe4178323e2155e7540bdfa4661ddfbec1",
+      "sha256": "c18a2313420d304212a1b4e809322b2072ab3dd09287110d233836a4950d3859",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67b732370000000009038062.json",
+        "byte_size": 23040,
+        "git_blob_sha": "2fb2edfe4178323e2155e7540bdfa4661ddfbec1"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67b732370000000009038062.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "﻿#java[话题]#﻿ ﻿#java后端开发[话题]#﻿ ﻿#java面试题[话题]#﻿ ﻿#编程开发[话题]#﻿ ﻿#找工作[话题]#﻿ ﻿#春招[话题]#﻿ ﻿#应届生[话题]#﻿ ﻿#计算机[话题]#﻿",
+      "byte_size": 214,
+      "git_blob_sha": "7f6dec0e8a7bdc5da88b01fd76698dbab02506e1",
+      "sha256": "91a453cf811a7e41bbbb3dcfdd92d652516ec90e607778925c08a064a3eeeb11",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67b732370000000009038062.txt",
+        "byte_size": 214,
+        "git_blob_sha": "7f6dec0e8a7bdc5da88b01fd76698dbab02506e1"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -55,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -74,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

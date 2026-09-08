@@ -9,15 +9,39 @@
   "expected_body_sha256": "ef11ab51676e3a2b91fc8d00800d5c65c5ee6a402e90ca7b70e0eb03a27e6908",
   "expected_source_revision_id": "xhs-note:6731a181000000001b02a2ae:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": []
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "basis_lines": [],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/6731a181000000001b02a2ae.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/6731a181000000001b02a2ae/note/title",
+        "excerpt": "美团到店后端一面凉经"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/6731a181000000001b02a2ae.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/6731a181000000001b02a2ae/note/desc",
+        "excerpt": "昨天晚上面的，今天早上一看就凉了，正常45分钟的面试硬面了一个半小时\n﻿#美团[话题]#﻿ ﻿#秋招信息差[话题]#﻿ ﻿#面试技巧[话题]#﻿ ﻿#java[话题]#﻿"
+      }
+    ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/6731a181000000001b02a2ae.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/6731a181000000001b02a2ae/note/title",
+      "excerpt": "美团到店后端一面凉经"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/6731a181000000001b02a2ae.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/6731a181000000001b02a2ae/note/desc",
+      "excerpt": "昨天晚上面的，今天早上一看就凉了，正常45分钟的面试硬面了一个半小时\n﻿#美团[话题]#﻿ ﻿#秋招信息差[话题]#﻿ ﻿#面试技巧[话题]#﻿ ﻿#java[话题]#﻿"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/6731a181000000001b02a2ae.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -36,6 +60,53 @@
       "git_blob_sha": "0babecd479eb534c47dd8da45f8d1bb9297500dc"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/6731a181000000001b02a2ae.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "美团到店后端一面凉经 - 小红书",
+      "byte_size": 388437,
+      "git_blob_sha": "3a8112099e5bb9db6c3015c01114db6537e59028",
+      "sha256": "b265b99239da3207aff2244453ef83bd72e4d545b535640a87cbbd96e35fd2f3",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:6731a181000000001b02a2ae.html",
+        "byte_size": 388437,
+        "git_blob_sha": "3a8112099e5bb9db6c3015c01114db6537e59028"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/6731a181000000001b02a2ae.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/6731a181000000001b02a2ae/note/title",
+      "excerpt": "美团到店后端一面凉经",
+      "byte_size": 22195,
+      "git_blob_sha": "dbd004696e7e3f3b8a13532f76a85df6da1259a8",
+      "sha256": "726776a9353f0b9f5894428f489f3773c0d791e8859f4d92036ee6efe57047ff",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:6731a181000000001b02a2ae.json",
+        "byte_size": 22195,
+        "git_blob_sha": "dbd004696e7e3f3b8a13532f76a85df6da1259a8"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/6731a181000000001b02a2ae.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "昨天晚上面的，今天早上一看就凉了，正常45分钟的面试硬面了一个半小时\n﻿#美团[话题]#﻿ ﻿#秋招信息差[话题]#﻿ ﻿#面试技巧[话题]#﻿ ﻿#java[话题]#﻿",
+      "byte_size": 204,
+      "git_blob_sha": "0babecd479eb534c47dd8da45f8d1bb9297500dc",
+      "sha256": "277adb767553169f7a21a1b44c130970b2a737a7e8df60d561d3c138e640dd1e",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:6731a181000000001b02a2ae.txt",
+        "byte_size": 204,
+        "git_blob_sha": "0babecd479eb534c47dd8da45f8d1bb9297500dc"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -50,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -69,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

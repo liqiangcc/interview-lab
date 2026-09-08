@@ -9,15 +9,39 @@
   "expected_body_sha256": "610c19010b8210e29c0bd1300899eaffa89097a4aa519d76ba49ac04ec10e978",
   "expected_source_revision_id": "xhs-note:67bc46df000000000d014ff7:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "blocked",
+  "decision": "blocked",
+  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified for this item.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": []
+    "status": "blocked",
+    "proposed_decision": "blocked",
+    "basis": "full Source artifacts are present but do not establish whether this is a candidate interview event or a non-event",
+    "basis_lines": [],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67bc46df000000000d014ff7.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67bc46df000000000d014ff7/note/title",
+        "excerpt": "快手秒挂！"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67bc46df000000000d014ff7.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67bc46df000000000d014ff7/note/desc",
+        "excerpt": "[抓狂R][抓狂R]日常实习这么难找吗[哭惹R]其他大厂的简历也一直处于筛选 好难[哭惹R][哭惹R]\n#后端开发[话题]# #实习[话题]# #大厂实习[话题]# #互联网大厂[话题]# #Java开发[话题]# #Java[话题]# #程序员[话题]#"
+      }
+    ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67bc46df000000000d014ff7.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67bc46df000000000d014ff7/note/title",
+      "excerpt": "快手秒挂！"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67bc46df000000000d014ff7.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67bc46df000000000d014ff7/note/desc",
+      "excerpt": "[抓狂R][抓狂R]日常实习这么难找吗[哭惹R]其他大厂的简历也一直处于筛选 好难[哭惹R][哭惹R]\n#后端开发[话题]# #实习[话题]# #大厂实习[话题]# #互联网大厂[话题]# #Java开发[话题]# #Java[话题]# #程序员[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67bc46df000000000d014ff7.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -36,6 +60,53 @@
       "git_blob_sha": "b3756402b891d1e4c04b7b1941ae796d388eeb23"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67bc46df000000000d014ff7.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "快手秒挂！ - 小红书",
+      "byte_size": 387368,
+      "git_blob_sha": "4d08e4a721fd24936aa19ac281a67b0843e485e7",
+      "sha256": "544215dd34c4523ae8d0b4e15307f4bfde4d548ec44f55df2a80fa88314c586e",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67bc46df000000000d014ff7.html",
+        "byte_size": 387368,
+        "git_blob_sha": "4d08e4a721fd24936aa19ac281a67b0843e485e7"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67bc46df000000000d014ff7.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67bc46df000000000d014ff7/note/title",
+      "excerpt": "快手秒挂！",
+      "byte_size": 21370,
+      "git_blob_sha": "831341be434c7971eab95b0274245afd76e16618",
+      "sha256": "322e1d1c4481f18dcd16fc9803d39b878221967a50a9b86d6f96d96641640584",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67bc46df000000000d014ff7.json",
+        "byte_size": 21370,
+        "git_blob_sha": "831341be434c7971eab95b0274245afd76e16618"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67bc46df000000000d014ff7.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "[抓狂R][抓狂R]日常实习这么难找吗[哭惹R]其他大厂的简历也一直处于筛选 好难[哭惹R][哭惹R]\n#后端开发[话题]# #实习[话题]# #大厂实习[话题]# #互联网大厂[话题]# #Java开发[话题]# #Java[话题]# #程序员[话题]#",
+      "byte_size": 267,
+      "git_blob_sha": "b3756402b891d1e4c04b7b1941ae796d388eeb23",
+      "sha256": "df4feb2c08213c2fcc7f849228e164ff98557d45ba1665817fa3e36fd7d1f570",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67bc46df000000000d014ff7.txt",
+        "byte_size": 267,
+        "git_blob_sha": "b3756402b891d1e4c04b7b1941ae796d388eeb23"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -50,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "blocked",
+      "note": "Full Source material remains semantically insufficient to decide the boundary."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -69,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Complete pinned artifacts were read, but their semantics do not establish a 0/1/N boundary decision.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

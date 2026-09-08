@@ -9,20 +9,44 @@
   "expected_body_sha256": "f6b6ac6f0a6f26b3530e6c919c2536fc0d5eeffc25dde8bcaad4dcd461c6beea",
   "expected_source_revision_id": "xhs-note:675927bf000000000700a5e7:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
     "basis_lines": [
       {
-        "line_number": 4,
-        "excerpt": "写题前还是要冷静，考虑好再开始写。八股也快忘了，要不断复习"
+        "line_number": 3,
+        "excerpt": "11/23官网投递，11/28约面， 12/2一面，12/5挂"
+      }
+    ],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/675927bf000000000700a5e7.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/675927bf000000000700a5e7/note/title",
+        "excerpt": "小米实习 一面凉经"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/675927bf000000000700a5e7.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/675927bf000000000700a5e7/note/desc",
+        "excerpt": "小米后端开发实习\ntimeline:\n11/23官网投递，11/28约面， 12/2一面，12/5挂\n写题前还是要冷静，考虑好再开始写。八股也快忘了，要不断复习\n﻿#小米[话题]#﻿ ﻿#实习[话题]#﻿ ﻿#java[话题]#﻿ ﻿#面试[话题]#﻿"
       }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/675927bf000000000700a5e7.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/675927bf000000000700a5e7/note/title",
+      "excerpt": "小米实习 一面凉经"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/675927bf000000000700a5e7.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/675927bf000000000700a5e7/note/desc",
+      "excerpt": "小米后端开发实习\ntimeline:\n11/23官网投递，11/28约面， 12/2一面，12/5挂\n写题前还是要冷静，考虑好再开始写。八股也快忘了，要不断复习\n﻿#小米[话题]#﻿ ﻿#实习[话题]#﻿ ﻿#java[话题]#﻿ ﻿#面试[话题]#﻿"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/675927bf000000000700a5e7.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -41,6 +65,53 @@
       "git_blob_sha": "acaa7ddd2eac6ecfeca1c32e8c78f94bd162ab1a"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/675927bf000000000700a5e7.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "小米实习 一面凉经 - 小红书",
+      "byte_size": 388533,
+      "git_blob_sha": "9c0079a9374e953e1c5e10f867944820d3b747ba",
+      "sha256": "02275ccff199e48a9a286d876658d0da0570d6ac55ed440af7bf8690007c95b1",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:675927bf000000000700a5e7.html",
+        "byte_size": 388533,
+        "git_blob_sha": "9c0079a9374e953e1c5e10f867944820d3b747ba"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/675927bf000000000700a5e7.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/675927bf000000000700a5e7/note/title",
+      "excerpt": "小米实习 一面凉经",
+      "byte_size": 22245,
+      "git_blob_sha": "47d2d8b4f6c109a576735fadef96df672cc7bb30",
+      "sha256": "dd5622a4870b385217faea014fbd1d04c7b5ed46267762c23cb4043ce0ceb26b",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:675927bf000000000700a5e7.json",
+        "byte_size": 22245,
+        "git_blob_sha": "47d2d8b4f6c109a576735fadef96df672cc7bb30"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/675927bf000000000700a5e7.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "小米后端开发实习\ntimeline:\n11/23官网投递，11/28约面， 12/2一面，12/5挂\n写题前还是要冷静，考虑好再开始写。八股也快忘了，要不断复习\n﻿#小米[话题]#﻿ ﻿#实习[话题]#﻿ ﻿#java[话题]#﻿ ﻿#面试[话题]#﻿",
+      "byte_size": 269,
+      "git_blob_sha": "acaa7ddd2eac6ecfeca1c32e8c78f94bd162ab1a",
+      "sha256": "4651a1162b7389e741aa9a22c17f3196a0026c25e90ad322daad31deb84355ae",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:675927bf000000000700a5e7.txt",
+        "byte_size": 269,
+        "git_blob_sha": "acaa7ddd2eac6ecfeca1c32e8c78f94bd162ab1a"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -55,12 +126,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -74,7 +145,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

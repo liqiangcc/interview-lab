@@ -9,15 +9,44 @@
   "expected_body_sha256": "3afa455a8fea439fb6dac3b45d6ca0f1b15869b1ed97c8e495a5a8eea81a884c",
   "expected_source_revision_id": "xhs-note:67d028de000000002901a8f1:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": []
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "basis_lines": [
+      {
+        "line_number": 3,
+        "excerpt": "接着问了数据库MySQL，主要关于引擎和数据结构，Java常见集合（扩容机制，linked和array区别），多线程，Linux之类的，前面的都不难基本上都回答出来了，Linux基础不太行，被狠狠拷打  有个问怎么秒杀防止超卖，脑子抽了背过只记得悲观锁乐观锁了"
+      }
+    ],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67d028de000000002901a8f1.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67d028de000000002901a8f1/note/title",
+        "excerpt": "腾讯 Java后端开发 数据库开发一面凉经"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67d028de000000002901a8f1.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67d028de000000002901a8f1/note/desc",
+        "excerpt": "先是介绍自己，未来规划\n再然后介绍项目（要求展示项目源代码），然后项目拷打，询问了项目中学到了什么，用了哪些技术\n接着问了数据库MySQL，主要关于引擎和数据结构，Java常见集合（扩容机制，linked和array区别），多线程，Linux之类的，前面的都不难基本上都回答出来了，Linux基础不太行，被狠狠拷打  有个问怎么秒杀防止超卖，脑子抽了背过只记得悲观锁乐观锁了\n最后做了算法题，力扣hot100中等难度最长递增子序列，迅速做出来了\n反问：觉得我还有什么能改进\n基础比较好，都掌握的挺好，Linux相关还需要深入学习一下，最后找了一个说我工作经验不足，项目经历主要是一些开源的学习体验项目（外卖➕微服务商场）[哭惹R]\n本人之前比较摆，想问问找实习的大家工作经验都很足嘛，实习现在要求就这么高了吗\n#后端开发[话题]# #java[话题]# #面经[话题]##数据库[话题]##程序员出路[话题]# #找暑期或者日常实习的26届选手  [投票]#"
+      }
+    ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67d028de000000002901a8f1.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67d028de000000002901a8f1/note/title",
+      "excerpt": "腾讯 Java后端开发 数据库开发一面凉经"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67d028de000000002901a8f1.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67d028de000000002901a8f1/note/desc",
+      "excerpt": "先是介绍自己，未来规划\n再然后介绍项目（要求展示项目源代码），然后项目拷打，询问了项目中学到了什么，用了哪些技术\n接着问了数据库MySQL，主要关于引擎和数据结构，Java常见集合（扩容机制，linked和array区别），多线程，Linux之类的，前面的都不难基本上都回答出来了，Linux基础不太行，被狠狠拷打  有个问怎么秒杀防止超卖，脑子抽了背过只记得悲观锁乐观锁了\n最后做了算法题，力扣hot100中等难度最长递增子序列，迅速做出来了\n反问：觉得我还有什么能改进\n基础比较好，都掌握的挺好，Linux相关还需要深入学习一下，最后找了一个说我工作经验不足，项目经历主要是一些开源的学习体验项目（外卖➕微服务商场）[哭惹R]\n本人之前比较摆，想问问找实习的大家工作经验都很足嘛，实习现在要求就这么高了吗\n#后端开发[话题]# #java[话题]# #面经[话题]##数据库[话题]##程序员出路[话题]# #找暑期或者日常实习的26届选手  [投票]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67d028de000000002901a8f1.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -36,6 +65,53 @@
       "git_blob_sha": "7f32fcf463348ea4381070898c880d924f461568"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67d028de000000002901a8f1.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "腾讯 Java后端开发 数据库开发一面凉经 - 小红书",
+      "byte_size": 389416,
+      "git_blob_sha": "9d7f204dddfd295b41fc18609e9146b9c41c1854",
+      "sha256": "4419aa3793c86a4b3227eda45f719a5c8f2452c03a0cfb8f50b8c644d57d40df",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67d028de000000002901a8f1.html",
+        "byte_size": 389416,
+        "git_blob_sha": "9d7f204dddfd295b41fc18609e9146b9c41c1854"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67d028de000000002901a8f1.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67d028de000000002901a8f1/note/title",
+      "excerpt": "腾讯 Java后端开发 数据库开发一面凉经",
+      "byte_size": 22090,
+      "git_blob_sha": "e3d89986b2db2d54df580cbf507d6ea76127730f",
+      "sha256": "9c4643db4d2d39fe12e3c9d26842d3b2048e907070410af8039588d5b4622ea5",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67d028de000000002901a8f1.json",
+        "byte_size": 22090,
+        "git_blob_sha": "e3d89986b2db2d54df580cbf507d6ea76127730f"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67d028de000000002901a8f1.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "先是介绍自己，未来规划\n再然后介绍项目（要求展示项目源代码），然后项目拷打，询问了项目中学到了什么，用了哪些技术\n接着问了数据库MySQL，主要关于引擎和数据结构，Java常见集合（扩容机制，linked和array区别），多线程，Linux之类的，前面的都不难基本上都回答出来了，Linux基础不太行，被狠狠拷打  有个问怎么秒杀防止超卖，脑子抽了背过只记得悲观锁乐观锁了\n最后做了算法题，力扣hot100中等难度最长递增子序列，迅速做出来了\n反问：觉得我还有什么能改进\n基础比较好，都掌握的挺好，Linux相关还需要深入学习一下，最后找了一个说我工作经验不足，项目经历主要是一些开源的学习体验项目（外卖➕微服务商场）[哭惹R]\n本人之前比较摆，想问问找实习的大家工作经验都很足嘛，实习现在要求就这么高了吗\n#后端开发[话题]# #java[话题]# #面经[话题]##数据库[话题]##程序员出路[话题]# #找暑期或者日常实习的26届选手  [投票]#",
+      "byte_size": 1112,
+      "git_blob_sha": "7f32fcf463348ea4381070898c880d924f461568",
+      "sha256": "1016bff1b01fc664022fcdd41396803d293c64b79b5dceb1b36e2ce83a8204f3",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67d028de000000002901a8f1.txt",
+        "byte_size": 1112,
+        "git_blob_sha": "7f32fcf463348ea4381070898c880d924f461568"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -50,12 +126,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -69,7 +145,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

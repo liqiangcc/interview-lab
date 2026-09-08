@@ -9,20 +9,39 @@
   "expected_body_sha256": "6f7dd36de3f2c852720bf05dcc014e7481e6ae8179982090940463db74f1f865",
   "expected_source_revision_id": "xhs-note:67b89672000000002503e401:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": [
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "basis_lines": [],
+    "semantic_evidence": [
       {
-        "line_number": 9,
-        "excerpt": "3、基础八股"
+        "ref": "liqiangcc/xhs:note_json/67b89672000000002503e401.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67b89672000000002503e401/note/title",
+        "excerpt": "安全部门面经"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67b89672000000002503e401.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67b89672000000002503e401/note/desc",
+        "excerpt": "阿里java面经#互联网大厂[话题]##面试求职[话题]#\n1、主要项目介绍，选一块比较难的介绍，问细节点\n2、算法题：\n给你一个整数delay，表示每个人会在发现秘密后delay天之后，每天给一个新人分享秘密\n给一个整数forget，表示每个人会在发现秘密后forget天之后，忘记这个秘密\n给一个整数，返回n天后知道秘密的人数\n动态规划dp i-delay天知道秘密的 -  i-forget天忘记秘密的\n\t\n3、基础八股"
       }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67b89672000000002503e401.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67b89672000000002503e401/note/title",
+      "excerpt": "安全部门面经"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67b89672000000002503e401.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67b89672000000002503e401/note/desc",
+      "excerpt": "阿里java面经#互联网大厂[话题]##面试求职[话题]#\n1、主要项目介绍，选一块比较难的介绍，问细节点\n2、算法题：\n给你一个整数delay，表示每个人会在发现秘密后delay天之后，每天给一个新人分享秘密\n给一个整数forget，表示每个人会在发现秘密后forget天之后，忘记这个秘密\n给一个整数，返回n天后知道秘密的人数\n动态规划dp i-delay天知道秘密的 -  i-forget天忘记秘密的\n\t\n3、基础八股"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67b89672000000002503e401.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -41,6 +60,53 @@
       "git_blob_sha": "2090ba56cad2ef71841c7b9824ff535169f99d53"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67b89672000000002503e401.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "安全部门面经 - 小红书",
+      "byte_size": 386283,
+      "git_blob_sha": "79aaff784413e01c9387c9b25e33933b1c76b52a",
+      "sha256": "927dc423979d8b3763023f0d497f7dd2eac6cf6e7ed71130e43596cc56a9fe95",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67b89672000000002503e401.html",
+        "byte_size": 386283,
+        "git_blob_sha": "79aaff784413e01c9387c9b25e33933b1c76b52a"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67b89672000000002503e401.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67b89672000000002503e401/note/title",
+      "excerpt": "安全部门面经",
+      "byte_size": 20575,
+      "git_blob_sha": "4a08e3e78925c67802f2d0acce690deee01b5484",
+      "sha256": "9af3afbcea233d9de34e3a73d4ad6e5a7da8dae9d60979dedce9cdb53160a85b",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67b89672000000002503e401.json",
+        "byte_size": 20575,
+        "git_blob_sha": "4a08e3e78925c67802f2d0acce690deee01b5484"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67b89672000000002503e401.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "阿里java面经#互联网大厂[话题]##面试求职[话题]#\n1、主要项目介绍，选一块比较难的介绍，问细节点\n2、算法题：\n给你一个整数delay，表示每个人会在发现秘密后delay天之后，每天给一个新人分享秘密\n给一个整数forget，表示每个人会在发现秘密后forget天之后，忘记这个秘密\n给一个整数，返回n天后知道秘密的人数\n动态规划dp i-delay天知道秘密的 -  i-forget天忘记秘密的\n3、基础八股",
+      "byte_size": 502,
+      "git_blob_sha": "2090ba56cad2ef71841c7b9824ff535169f99d53",
+      "sha256": "b3036cfa11d2f64f5f8819a5685da7744c8a96d45802136c9ffbedd8d59e03bf",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67b89672000000002503e401.txt",
+        "byte_size": 502,
+        "git_blob_sha": "2090ba56cad2ef71841c7b9824ff535169f99d53"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -55,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -74,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

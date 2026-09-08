@@ -9,15 +9,44 @@
   "expected_body_sha256": "4cb610494b1bb45d89c5e6332f1b344ac20f57bcaea94ea32f27a71413e36689",
   "expected_source_revision_id": "xhs-note:67ac5d95000000001801a869:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": []
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "basis_lines": [
+      {
+        "line_number": 12,
+        "excerpt": "总结:对项目不够熟悉，没有电商相关的经验，面试官人很好，但是我太菜了😢😢"
+      }
+    ],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67ac5d95000000001801a869.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67ac5d95000000001801a869/note/title",
+        "excerpt": "快手电商一面"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67ac5d95000000001801a869.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67ac5d95000000001801a869/note/desc",
+        "excerpt": "发面经攒人品\n聊了10分钟项目\n高并发秒杀方案，前后端怎么实现\n对电商相关业务的理解\n手撕\n翻转链表\njava基础\n集合\naqs\n反问\n评价和建议\n总结:对项目不够熟悉，没有电商相关的经验，面试官人很好，但是我太菜了😢😢\n#面经[话题]# #快手[话题]# #实习[话题]#"
+      }
+    ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67ac5d95000000001801a869.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67ac5d95000000001801a869/note/title",
+      "excerpt": "快手电商一面"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67ac5d95000000001801a869.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67ac5d95000000001801a869/note/desc",
+      "excerpt": "发面经攒人品\n聊了10分钟项目\n高并发秒杀方案，前后端怎么实现\n对电商相关业务的理解\n手撕\n翻转链表\njava基础\n集合\naqs\n反问\n评价和建议\n总结:对项目不够熟悉，没有电商相关的经验，面试官人很好，但是我太菜了😢😢\n#面经[话题]# #快手[话题]# #实习[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67ac5d95000000001801a869.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -36,6 +65,53 @@
       "git_blob_sha": "86da6688354028cd999534d134883d3d376cf8ab"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67ac5d95000000001801a869.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "快手电商一面 - 小红书",
+      "byte_size": 386025,
+      "git_blob_sha": "d5749ae3eeb59d68dbe668aeece1f32505053bb8",
+      "sha256": "c314292502dc9ced936d7280b5c68df22c338bd6916ecb2244482a97185b91d9",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67ac5d95000000001801a869.html",
+        "byte_size": 386025,
+        "git_blob_sha": "d5749ae3eeb59d68dbe668aeece1f32505053bb8"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67ac5d95000000001801a869.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67ac5d95000000001801a869/note/title",
+      "excerpt": "快手电商一面",
+      "byte_size": 20627,
+      "git_blob_sha": "fe58028185da9531544a0914386bf3535456d93d",
+      "sha256": "0ea42f269ec1aa43cfa108ad961223ad326a01226458e52c2427b0b3daf3ff3e",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67ac5d95000000001801a869.json",
+        "byte_size": 20627,
+        "git_blob_sha": "fe58028185da9531544a0914386bf3535456d93d"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67ac5d95000000001801a869.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "发面经攒人品\n聊了10分钟项目\n高并发秒杀方案，前后端怎么实现\n对电商相关业务的理解\n手撕\n翻转链表\njava基础\n集合",
+      "byte_size": 342,
+      "git_blob_sha": "86da6688354028cd999534d134883d3d376cf8ab",
+      "sha256": "e1c6b37589916e8bfb6607462d4dde46b72ba18f96552df1a56e5c7457fcc8e6",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67ac5d95000000001801a869.txt",
+        "byte_size": 342,
+        "git_blob_sha": "86da6688354028cd999534d134883d3d376cf8ab"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -50,12 +126,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -69,7 +145,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

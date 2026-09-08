@@ -9,20 +9,39 @@
   "expected_body_sha256": "3e64908d687af1dff80ccfbbf5a0d050c8181cdf972fd650e78fb3e2bc2f19da",
   "expected_source_revision_id": "xhs-note:67fce4ca000000000b0160f3:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "not-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": [
+    "status": "reviewed",
+    "proposed_decision": "not-interview",
+    "basis": "explicit invitation, job/advice, or question-bank content lacks a candidate event",
+    "basis_lines": [],
+    "semantic_evidence": [
       {
-        "line_number": 1,
+        "ref": "liqiangcc/xhs:note_json/67fce4ca000000000b0160f3.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67fce4ca000000000b0160f3/note/title",
+        "excerpt": "腾讯Java后端岗面试，强度拉满，差点没顶住"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67fce4ca000000000b0160f3.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67fce4ca000000000b0160f3/note/desc",
         "excerpt": "整理一下腾讯后端岗面经，后面放上自己整理的针对中大厂的《Java后端场景题面试宝典》，希望对大家有帮助#爱上工作的瞬间[话题]# #互联网大厂[话题]# #java面试[话题]# #java[话题]# #计算机[话题]# #后端开发[话题]# #编程[话题]# #求职[话题]# #面试[话题]# #Java场景题[话题]#"
       }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67fce4ca000000000b0160f3.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67fce4ca000000000b0160f3/note/title",
+      "excerpt": "腾讯Java后端岗面试，强度拉满，差点没顶住"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67fce4ca000000000b0160f3.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67fce4ca000000000b0160f3/note/desc",
+      "excerpt": "整理一下腾讯后端岗面经，后面放上自己整理的针对中大厂的《Java后端场景题面试宝典》，希望对大家有帮助#爱上工作的瞬间[话题]# #互联网大厂[话题]# #java面试[话题]# #java[话题]# #计算机[话题]# #后端开发[话题]# #编程[话题]# #求职[话题]# #面试[话题]# #Java场景题[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67fce4ca000000000b0160f3.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -41,6 +60,53 @@
       "git_blob_sha": "d6dbee048fdee8e6d69c7acfb3846809c2533548"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67fce4ca000000000b0160f3.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "腾讯Java后端岗面试，强度拉满，差点没顶住 - 小红书",
+      "byte_size": 395671,
+      "git_blob_sha": "1e88cb0f958fc9fc7955f453d4d56796f31c91f1",
+      "sha256": "9d01e815a64e56fa2a5358674de12fad05e9458b7757e3b0ddc1fac0015b8976",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67fce4ca000000000b0160f3.html",
+        "byte_size": 395671,
+        "git_blob_sha": "1e88cb0f958fc9fc7955f453d4d56796f31c91f1"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67fce4ca000000000b0160f3.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67fce4ca000000000b0160f3/note/title",
+      "excerpt": "腾讯Java后端岗面试，强度拉满，差点没顶住",
+      "byte_size": 29218,
+      "git_blob_sha": "e369697758ef04931d1128ed8c10030811241c24",
+      "sha256": "d5e1edea2fbbd36cc8cd6727c6d9997b41d59d7d7f714b8dea1984b1f94d695f",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67fce4ca000000000b0160f3.json",
+        "byte_size": 29218,
+        "git_blob_sha": "e369697758ef04931d1128ed8c10030811241c24"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67fce4ca000000000b0160f3.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "整理一下腾讯后端岗面经，后面放上自己整理的针对中大厂的《Java后端场景题面试宝典》，希望对大家有帮助#爱上工作的瞬间[话题]# #互联网大厂[话题]# #java面试[话题]# #java[话题]# #计算机[话题]# #后端开发[话题]# #编程[话题]# #求职[话题]# #面试[话题]# #Java场景题[话题]#",
+      "byte_size": 357,
+      "git_blob_sha": "d6dbee048fdee8e6d69c7acfb3846809c2533548",
+      "sha256": "f5202e2abbbd853eb41f82ce9e79d1a5ae76c21204b02321a22bd23b6d0a05f7",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67fce4ca000000000b0160f3.txt",
+        "byte_size": 357,
+        "git_blob_sha": "d6dbee048fdee8e6d69c7acfb3846809c2533548"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -55,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is not-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -74,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

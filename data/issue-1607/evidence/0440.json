@@ -9,24 +9,52 @@
   "expected_body_sha256": "675329698669c5be7ed997802878d8662749136d0283ad64d05c33cacd79be0f",
   "expected_source_revision_id": "xhs-note:67541ef40000000002014dce:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
     "basis_lines": [
       {
-        "line_number": 11,
-        "excerpt": "[火R]【面试题】"
+        "line_number": 6,
+        "excerpt": "Q2 自动化测试里有哪些结构（这道题我接口自动化 ui自动化都回答了"
       },
       {
-        "line_number": 20,
-        "excerpt": "9.为什么ui自动化要用po模式？在自动化过程中遇到什么问题"
+        "line_number": 15,
+        "excerpt": "4.根据我的回答又问了一下分页功能怎么测"
+      },
+      {
+        "line_number": 16,
+        "excerpt": "5.根据我的回答，深挖了一下pymysql怎么用的"
+      }
+    ],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67541ef40000000002014dce.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67541ef40000000002014dce/note/title",
+        "excerpt": "记录一下成都某银行外包测试笔试+面试题"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67541ef40000000002014dce.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67541ef40000000002014dce/note/desc",
+        "excerpt": "成都某银行软件测试外包笔试面试回忆录\n[星R]【笔试题】\n40多道选择题。都是测试理论相关的，还有几道java题，我不会java，所以乱蒙的。\n大题总共有5道。\nQ1 银行业务场景的用例设计题，有涉及到数据库。\nQ2 自动化测试里有哪些结构（这道题我接口自动化 ui自动化都回答了\nQ3 一道三表检查的sql（刚开始看没有思路，后面想了一下用了子查询）\nQ4 一道算法题，实在没思路，题都没读懂。乱写的\nQ5 你在完成一个测试项目后会产出哪些文档\n\t\n[火R]【面试题】\n1.自我介绍\n2.项目的业务流程\n3.项目中某个场景怎么测\n4.根据我的回答又问了一下分页功能怎么测\n5.根据我的回答，深挖了一下pymysql怎么用的\n6.深拷贝浅拷贝的区别\n7.看得懂java代码吗能看懂多少\n8.你们ui自动化怎么做的\n9.为什么ui自动化要用po模式？在自动化过程中遇到什么问题\n10.接口自动化中接口依赖怎么处理？\n11.接口加解密怎么处理\n12.你发现过最有意义的缺陷\n13.jenkins工作中怎么用的\n14.性能测试怎么做？\n15.如果一个查询接口响应时间过长，会有哪方面的原因\n16.sql优化怎么做\n17.家住哪里？加班看法？对外包的看法\n\t\n大概就是这些内容，希望对大家有帮助\n#软件测试[话题]# #外包[话题]#"
       }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67541ef40000000002014dce.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67541ef40000000002014dce/note/title",
+      "excerpt": "记录一下成都某银行外包测试笔试+面试题"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67541ef40000000002014dce.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67541ef40000000002014dce/note/desc",
+      "excerpt": "成都某银行软件测试外包笔试面试回忆录\n[星R]【笔试题】\n40多道选择题。都是测试理论相关的，还有几道java题，我不会java，所以乱蒙的。\n大题总共有5道。\nQ1 银行业务场景的用例设计题，有涉及到数据库。\nQ2 自动化测试里有哪些结构（这道题我接口自动化 ui自动化都回答了\nQ3 一道三表检查的sql（刚开始看没有思路，后面想了一下用了子查询）\nQ4 一道算法题，实在没思路，题都没读懂。乱写的\nQ5 你在完成一个测试项目后会产出哪些文档\n\t\n[火R]【面试题】\n1.自我介绍\n2.项目的业务流程\n3.项目中某个场景怎么测\n4.根据我的回答又问了一下分页功能怎么测\n5.根据我的回答，深挖了一下pymysql怎么用的\n6.深拷贝浅拷贝的区别\n7.看得懂java代码吗能看懂多少\n8.你们ui自动化怎么做的\n9.为什么ui自动化要用po模式？在自动化过程中遇到什么问题\n10.接口自动化中接口依赖怎么处理？\n11.接口加解密怎么处理\n12.你发现过最有意义的缺陷\n13.jenkins工作中怎么用的\n14.性能测试怎么做？\n15.如果一个查询接口响应时间过长，会有哪方面的原因\n16.sql优化怎么做\n17.家住哪里？加班看法？对外包的看法\n\t\n大概就是这些内容，希望对大家有帮助\n#软件测试[话题]# #外包[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67541ef40000000002014dce.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -45,6 +73,53 @@
       "git_blob_sha": "d03693737c3dbc82d34509949a6a9a493cb2fff1"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67541ef40000000002014dce.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "记录一下成都某银行外包测试笔试+面试题 - 小红书",
+      "byte_size": 389281,
+      "git_blob_sha": "7ab7ab1d1da834e83e28ae60e1af7355700eb161",
+      "sha256": "709f29113f2a712febaa58938c6add07596ad15e3dc27027e05a31ebac6e6d72",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67541ef40000000002014dce.html",
+        "byte_size": 389281,
+        "git_blob_sha": "7ab7ab1d1da834e83e28ae60e1af7355700eb161"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67541ef40000000002014dce.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67541ef40000000002014dce/note/title",
+      "excerpt": "记录一下成都某银行外包测试笔试+面试题",
+      "byte_size": 21545,
+      "git_blob_sha": "f245cd882da2e6e1970b727b9dd853f56e385ef3",
+      "sha256": "664a26e88d2bf74e7d5c56ade25b454a0173323881bf8b853ff5cedfc01dd066",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67541ef40000000002014dce.json",
+        "byte_size": 21545,
+        "git_blob_sha": "f245cd882da2e6e1970b727b9dd853f56e385ef3"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67541ef40000000002014dce.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "成都某银行软件测试外包笔试面试回忆录\n[星R]【笔试题】\n40多道选择题。都是测试理论相关的，还有几道java题，我不会java，所以乱蒙的。\n大题总共有5道。\nQ1 银行业务场景的用例设计题，有涉及到数据库。\nQ2 自动化测试里有哪些结构（这道题我接口自动化 ui自动化都回答了\nQ3 一道三表检查的sql（刚开始看没有思路，后面想了一下用了子查询）\nQ4 一道算法题，实在没思路，题都没读懂。乱写的",
+      "byte_size": 1394,
+      "git_blob_sha": "d03693737c3dbc82d34509949a6a9a493cb2fff1",
+      "sha256": "c84ff47a2197795bff00d624cf019dedf40aae397f69ceacab9be52fe9ae3709",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67541ef40000000002014dce.txt",
+        "byte_size": 1394,
+        "git_blob_sha": "d03693737c3dbc82d34509949a6a9a493cb2fff1"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -59,12 +134,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -78,7 +153,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

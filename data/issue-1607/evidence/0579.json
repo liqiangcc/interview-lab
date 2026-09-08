@@ -9,15 +9,39 @@
   "expected_body_sha256": "1a0fe4a213b79376eadd59c98bcc0cade607efe60e5b258784d7e5f398e41892",
   "expected_source_revision_id": "xhs-note:67d28198000000000602a747:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": []
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "basis_lines": [],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67d28198000000000602a747.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67d28198000000000602a747/note/title",
+        "excerpt": "腾讯音乐java一面"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67d28198000000000602a747.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67d28198000000000602a747/note/desc",
+        "excerpt": "1、Reids的机制、持久化等。\n2、TCP，三次握手，TCP/IP协议等。\n3、操作系统中断\n4、用户态，内核态，用户态如何切换成内核态。\n5、mysql的mvcc\n6、mysql锁机制。\n7、tcp如何保证消息被收到。\n8、redis删除策略\n9、进程间的资源如何隔离。\n10、项目\n11、手撕：实现set，支持insert、remove、get"
+      }
+    ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67d28198000000000602a747.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67d28198000000000602a747/note/title",
+      "excerpt": "腾讯音乐java一面"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67d28198000000000602a747.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67d28198000000000602a747/note/desc",
+      "excerpt": "1、Reids的机制、持久化等。\n2、TCP，三次握手，TCP/IP协议等。\n3、操作系统中断\n4、用户态，内核态，用户态如何切换成内核态。\n5、mysql的mvcc\n6、mysql锁机制。\n7、tcp如何保证消息被收到。\n8、redis删除策略\n9、进程间的资源如何隔离。\n10、项目\n11、手撕：实现set，支持insert、remove、get"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67d28198000000000602a747.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -36,6 +60,53 @@
       "git_blob_sha": "99d9f860d551bc80894ca8e0e64f2196802f4fa9"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67d28198000000000602a747.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "腾讯音乐java一面 - 小红书",
+      "byte_size": 385545,
+      "git_blob_sha": "03e7974e9f37f0788e484d72b4ef5c71b1ec39af",
+      "sha256": "31a2fb979c99a31cbedaa70a402b4f31af0ff3ca84619af53be0d5019d191a01",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67d28198000000000602a747.html",
+        "byte_size": 385545,
+        "git_blob_sha": "03e7974e9f37f0788e484d72b4ef5c71b1ec39af"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67d28198000000000602a747.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67d28198000000000602a747/note/title",
+      "excerpt": "腾讯音乐java一面",
+      "byte_size": 20746,
+      "git_blob_sha": "748ecedf85d60a1d706ac22542aef36aa1b58cdb",
+      "sha256": "d4ecbb2f454388525f67db6dcab6e022982dd9987b203d6a5305864e04e5009e",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67d28198000000000602a747.json",
+        "byte_size": 20746,
+        "git_blob_sha": "748ecedf85d60a1d706ac22542aef36aa1b58cdb"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67d28198000000000602a747.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "1、Reids的机制、持久化等。\n2、TCP，三次握手，TCP/IP协议等。\n3、操作系统中断\n4、用户态，内核态，用户态如何切换成内核态。\n5、mysql的mvcc\n6、mysql锁机制。\n7、tcp如何保证消息被收到。\n8、redis删除策略",
+      "byte_size": 372,
+      "git_blob_sha": "99d9f860d551bc80894ca8e0e64f2196802f4fa9",
+      "sha256": "a84a3c7dd35ae2b1ea1379590ddd5bc66e6a24dfb2d344c18c1ae1f9de302804",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67d28198000000000602a747.txt",
+        "byte_size": 372,
+        "git_blob_sha": "99d9f860d551bc80894ca8e0e64f2196802f4fa9"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -50,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -69,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

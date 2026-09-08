@@ -9,15 +9,39 @@
   "expected_body_sha256": "1091de36e80e5f93924baa0c47698681c7627f9852ce344e9d8446a3023d3953",
   "expected_source_revision_id": "xhs-note:67556e1b0000000001028f5b:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": []
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "basis_lines": [],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67556e1b0000000001028f5b.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67556e1b0000000001028f5b/note/title",
+        "excerpt": "Shein-Java开发工程师社招一面"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67556e1b0000000001028f5b.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67556e1b0000000001028f5b/note/desc",
+        "excerpt": "Java开发工程师社招面经，期望有帮助到最近面试Shein的小伙伴们。继续冲！！！！\n\t\n﻿#程序员[话题]#﻿ ﻿#web3[话题]#﻿ ﻿#java[话题]#﻿ ﻿#面试[话题]#﻿ ﻿#面试技巧[话题]#﻿ ﻿#shein[话题]#﻿ ﻿#软件开发[话题]#﻿"
+      }
+    ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67556e1b0000000001028f5b.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67556e1b0000000001028f5b/note/title",
+      "excerpt": "Shein-Java开发工程师社招一面"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67556e1b0000000001028f5b.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67556e1b0000000001028f5b/note/desc",
+      "excerpt": "Java开发工程师社招面经，期望有帮助到最近面试Shein的小伙伴们。继续冲！！！！\n\t\n﻿#程序员[话题]#﻿ ﻿#web3[话题]#﻿ ﻿#java[话题]#﻿ ﻿#面试[话题]#﻿ ﻿#面试技巧[话题]#﻿ ﻿#shein[话题]#﻿ ﻿#软件开发[话题]#﻿"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67556e1b0000000001028f5b.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -36,6 +60,53 @@
       "git_blob_sha": "88a7f615c6400b2a113763c79f522e526db205c7"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67556e1b0000000001028f5b.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "Shein-Java开发工程师社招一面 - 小红书",
+      "byte_size": 387268,
+      "git_blob_sha": "018192c998dbd11296861a30ff64a65f069f98e1",
+      "sha256": "f122e3b2ae4556a4e2bc92dd58676dee570db0a14fb3963b55bd428339786ced",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67556e1b0000000001028f5b.html",
+        "byte_size": 387268,
+        "git_blob_sha": "018192c998dbd11296861a30ff64a65f069f98e1"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67556e1b0000000001028f5b.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67556e1b0000000001028f5b/note/title",
+      "excerpt": "Shein-Java开发工程师社招一面",
+      "byte_size": 21446,
+      "git_blob_sha": "d45ef5ce1d4c90669f64345577a350605a04509a",
+      "sha256": "4113baa809b02b2e1c8aa8f538be2d1c683374b34e446dc33052bee635e91e32",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67556e1b0000000001028f5b.json",
+        "byte_size": 21446,
+        "git_blob_sha": "d45ef5ce1d4c90669f64345577a350605a04509a"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67556e1b0000000001028f5b.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "Java开发工程师社招面经，期望有帮助到最近面试Shein的小伙伴们。继续冲！！！！\n﻿#程序员[话题]#﻿ ﻿#web3[话题]#﻿ ﻿#java[话题]#﻿ ﻿#面试[话题]#﻿ ﻿#面试技巧[话题]#﻿ ﻿#shein[话题]#﻿ ﻿#软件开发[话题]#﻿",
+      "byte_size": 282,
+      "git_blob_sha": "88a7f615c6400b2a113763c79f522e526db205c7",
+      "sha256": "8ca68bf6e544e48f4d92b3bdda755858049a7a1c3949093c05a461f50d9dab1f",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67556e1b0000000001028f5b.txt",
+        "byte_size": 282,
+        "git_blob_sha": "88a7f615c6400b2a113763c79f522e526db205c7"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -50,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -69,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

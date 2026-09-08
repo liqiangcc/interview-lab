@@ -9,8 +9,8 @@
     "repository": { "const": "liqiangcc/interview-lab" },
     "child_issue": { "const": 1607 },
     "source_ref": { "const": "95b77bb261048059846273688e4b90a2e108b437" },
-    "status": { "const": "proposal-only" },
-    "total": { "const": 367 },
-    "items": { "type": "array", "minItems": 367, "maxItems": 367, "items": { "type": "object", "required": ["issue_number", "source_note_id", "source_projection_ref", "locator", "excerpt", "full_projection_sha256", "basis_lines", "status", "proposed_decision", "basis"] } }
+    "status": { "const": "semantic-review" },
+    "total": { "type": "integer", "minimum": 0 },
+    "items": { "type": "array", "items": { "type": "object", "required": ["issue_number", "source_note_id", "source_projection_ref", "locator", "excerpt", "full_projection_sha256", "basis_lines", "status", "proposed_decision", "basis"] } }
   }
 }

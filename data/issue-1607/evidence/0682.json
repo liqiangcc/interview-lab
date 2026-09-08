@@ -9,20 +9,39 @@
   "expected_body_sha256": "e8d5ff225a28afee02b2589870bdb85b90d5d308f89b5cd0ec0b993d7ad8605e",
   "expected_source_revision_id": "xhs-note:67ef1d6a000000001b03e4c0:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": [
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "basis_lines": [],
+    "semantic_evidence": [
       {
-        "line_number": 1,
-        "excerpt": ".没录音有些问题忘了"
+        "ref": "liqiangcc/xhs:note_json/67ef1d6a000000001b03e4c0.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67ef1d6a000000001b03e4c0/note/title",
+        "excerpt": "百度外包快手外包后端社招面经"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67ef1d6a000000001b03e4c0.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67ef1d6a000000001b03e4c0/note/desc",
+        "excerpt": ".没录音有些问题忘了\n\t\n百度外包\n1. 看过源码吗，讲下concurrentHashMap\n2. 分布式还是单机，微服务有几个；\n3. 微服务之间怎么调用的，用的什么rpc。\n4. 上线部署的时候参数是什么，内存多少？\n(部署参数考点是JVM调优，当时是用云服务器部署，如果做了压测就会发现没在docker指定JVM参数，会使用默认值，通常会导致OOM、频繁GC等。 )\n5.数据流转是怎么样的？\n6. redis用到哪里\n7.es语句会吗\n👿👿👿👿\n快手外包\n1. 用户量，库表怎么分的\n2. 介绍ddd领域之间的关系\n3.线程池核心参数，4种拒绝策略。\n(后面打算做个动态线程池组件)\n4. 项目中的设计模式怎么用的，手撕责任链\n\t\n自我介绍时要把技术架构说了"
       }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67ef1d6a000000001b03e4c0.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67ef1d6a000000001b03e4c0/note/title",
+      "excerpt": "百度外包快手外包后端社招面经"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67ef1d6a000000001b03e4c0.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67ef1d6a000000001b03e4c0/note/desc",
+      "excerpt": ".没录音有些问题忘了\n\t\n百度外包\n1. 看过源码吗，讲下concurrentHashMap\n2. 分布式还是单机，微服务有几个；\n3. 微服务之间怎么调用的，用的什么rpc。\n4. 上线部署的时候参数是什么，内存多少？\n(部署参数考点是JVM调优，当时是用云服务器部署，如果做了压测就会发现没在docker指定JVM参数，会使用默认值，通常会导致OOM、频繁GC等。 )\n5.数据流转是怎么样的？\n6. redis用到哪里\n7.es语句会吗\n👿👿👿👿\n快手外包\n1. 用户量，库表怎么分的\n2. 介绍ddd领域之间的关系\n3.线程池核心参数，4种拒绝策略。\n(后面打算做个动态线程池组件)\n4. 项目中的设计模式怎么用的，手撕责任链\n\t\n自我介绍时要把技术架构说了"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67ef1d6a000000001b03e4c0.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -41,6 +60,53 @@
       "git_blob_sha": "3287e12835f9b2fa5fc77ada9b17e588118248b7"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67ef1d6a000000001b03e4c0.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "百度外包快手外包后端社招面经 - 小红书",
+      "byte_size": 386646,
+      "git_blob_sha": "3285d89ab45e1b663494cf3943ce74069dd7e61b",
+      "sha256": "8698a99b8f1a3d7a3431ea38a9c1d9d1cd060c8aed076a2caf98a6d3d865adf8",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67ef1d6a000000001b03e4c0.html",
+        "byte_size": 386646,
+        "git_blob_sha": "3285d89ab45e1b663494cf3943ce74069dd7e61b"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67ef1d6a000000001b03e4c0.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67ef1d6a000000001b03e4c0/note/title",
+      "excerpt": "百度外包快手外包后端社招面经",
+      "byte_size": 20494,
+      "git_blob_sha": "da8f5c2736c5571537a29b16be175d85eb7a661f",
+      "sha256": "a37038a1eb5f3a04047a930688289e9d456958a394d1b02385962138fb8d9ae1",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67ef1d6a000000001b03e4c0.json",
+        "byte_size": 20494,
+        "git_blob_sha": "da8f5c2736c5571537a29b16be175d85eb7a661f"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67ef1d6a000000001b03e4c0.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": ".没录音有些问题忘了\n百度外包\n1. 看过源码吗，讲下concurrentHashMap\n2. 分布式还是单机，微服务有几个；\n3. 微服务之间怎么调用的，用的什么rpc。\n4. 上线部署的时候参数是什么，内存多少？\n(部署参数考点是JVM调优，当时是用云服务器部署，如果做了压测就会发现没在docker指定JVM参数，会使用默认值，通常会导致OOM、频繁GC等。 )\n5.数据流转是怎么样的？",
+      "byte_size": 794,
+      "git_blob_sha": "3287e12835f9b2fa5fc77ada9b17e588118248b7",
+      "sha256": "c6260cf7da172cfb48d26e12988c7db43885265e8a4e033901efcdd8f28f9c6f",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67ef1d6a000000001b03e4c0.txt",
+        "byte_size": 794,
+        "git_blob_sha": "3287e12835f9b2fa5fc77ada9b17e588118248b7"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -55,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -74,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

@@ -9,15 +9,39 @@
   "expected_body_sha256": "a1551f251e6c99a63db92979c6ff16647462023edd84314960605a6430784572",
   "expected_source_revision_id": "xhs-note:67e36002000000000603df46:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": []
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "basis_lines": [],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67e36002000000000603df46.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67e36002000000000603df46/note/title",
+        "excerpt": "美的一面面经"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67e36002000000000603df46.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67e36002000000000603df46/note/desc",
+        "excerpt": "项目部署在哪里 服务器配置是什么\nLinux启动服务器的命令\njdk jre jvm\n继承和多态\n序列化的作用\n反射的原理和应用场景\nredis的数据结构\nredis的字符串和普通字符串的区别\nredis怎么实现持久化\nredis哨兵的作用\nmysql索引的作用\nmysql怎么实现 ACID 4 大特性\n无手撕\n#Java面试[话题]# #面经[话题]#"
+      }
+    ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67e36002000000000603df46.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67e36002000000000603df46/note/title",
+      "excerpt": "美的一面面经"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67e36002000000000603df46.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67e36002000000000603df46/note/desc",
+      "excerpt": "项目部署在哪里 服务器配置是什么\nLinux启动服务器的命令\njdk jre jvm\n继承和多态\n序列化的作用\n反射的原理和应用场景\nredis的数据结构\nredis的字符串和普通字符串的区别\nredis怎么实现持久化\nredis哨兵的作用\nmysql索引的作用\nmysql怎么实现 ACID 4 大特性\n无手撕\n#Java面试[话题]# #面经[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67e36002000000000603df46.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -36,6 +60,53 @@
       "git_blob_sha": "82449ef4e94b9070b710090d36ef780e51188938"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67e36002000000000603df46.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "美的一面面经 - 小红书",
+      "byte_size": 387961,
+      "git_blob_sha": "763da9946425c916f6deaded894621935ed94410",
+      "sha256": "258d5989c03db0f835428cbf9131285af7e85eb408163d675959fa5ef9a1920d",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67e36002000000000603df46.html",
+        "byte_size": 387961,
+        "git_blob_sha": "763da9946425c916f6deaded894621935ed94410"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67e36002000000000603df46.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67e36002000000000603df46/note/title",
+      "excerpt": "美的一面面经",
+      "byte_size": 21866,
+      "git_blob_sha": "65f2b18ed9a70660d17913a0b0f31fdb6f4a9d89",
+      "sha256": "f623c9c3a866bda3ab2983513e248525fc582ed775a85a4878f3875ad17d0ed0",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67e36002000000000603df46.json",
+        "byte_size": 21866,
+        "git_blob_sha": "65f2b18ed9a70660d17913a0b0f31fdb6f4a9d89"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67e36002000000000603df46.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "项目部署在哪里 服务器配置是什么\nLinux启动服务器的命令\njdk jre jvm\n继承和多态\n序列化的作用\n反射的原理和应用场景\nredis的数据结构\nredis的字符串和普通字符串的区别",
+      "byte_size": 373,
+      "git_blob_sha": "82449ef4e94b9070b710090d36ef780e51188938",
+      "sha256": "4a5d0067fa6fcae3ffeb01152ad38d5ff16ae3b016bc20077264e7b13685ed8e",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67e36002000000000603df46.txt",
+        "byte_size": 373,
+        "git_blob_sha": "82449ef4e94b9070b710090d36ef780e51188938"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -50,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -69,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

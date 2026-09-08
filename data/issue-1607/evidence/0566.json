@@ -9,24 +9,39 @@
   "expected_body_sha256": "85ff4041934a262bebe17fbae89c1f8ac9a6099ecdce99facfd38e9fa8becadc",
   "expected_source_revision_id": "xhs-note:67d001c6000000002a002386:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": [
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "basis_lines": [],
+    "semantic_evidence": [
       {
-        "line_number": 2,
-        "excerpt": "1.在项目里承担的职责，遇到的问题怎么解决的，有什么收获"
+        "ref": "liqiangcc/xhs:note_json/67d001c6000000002a002386.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67d001c6000000002a002386/note/title",
+        "excerpt": "京东暑期后端一面挂"
       },
       {
-        "line_number": 10,
-        "excerpt": "9.开放性问题，很杂，觉得自己的学习能力怎么样，本科有没有奖项，和同学比有什么优势和劣势，问是保研还是考研，问排名，实习的期望，未来的规划，对工作地点什么要求"
+        "ref": "liqiangcc/xhs:note_json/67d001c6000000002a002386.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67d001c6000000002a002386/note/desc",
+        "excerpt": "hr人很好没为难人，但上午面下午官网就显示挂了\n1.在项目里承担的职责，遇到的问题怎么解决的，有什么收获\n2.数组找第k大值有哪些方法时间复杂度（排序，堆\n3.讲一下jvm怎么加载运行和内存回收（只说了内存五大组成\n4.AOP实现原理\n5.Redis数据结构，为什么互联网公司不喜欢用（这个没答\n6.SQL 索引实现原理（B＋树\n7.数据库事物的特性（ACID\n8.分布式事务？（不了解\n9.开放性问题，很杂，觉得自己的学习能力怎么样，本科有没有奖项，和同学比有什么优势和劣势，问是保研还是考研，问排名，实习的期望，未来的规划，对工作地点什么要求\n\t\n#互联网大厂实习[话题]# #互联网大厂[话题]# #面经[话题]# #校招[话题]# #后端开发[话题]# #春招[话题]# #找实习[话题]# #java[话题]#"
       }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67d001c6000000002a002386.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67d001c6000000002a002386/note/title",
+      "excerpt": "京东暑期后端一面挂"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67d001c6000000002a002386.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67d001c6000000002a002386/note/desc",
+      "excerpt": "hr人很好没为难人，但上午面下午官网就显示挂了\n1.在项目里承担的职责，遇到的问题怎么解决的，有什么收获\n2.数组找第k大值有哪些方法时间复杂度（排序，堆\n3.讲一下jvm怎么加载运行和内存回收（只说了内存五大组成\n4.AOP实现原理\n5.Redis数据结构，为什么互联网公司不喜欢用（这个没答\n6.SQL 索引实现原理（B＋树\n7.数据库事物的特性（ACID\n8.分布式事务？（不了解\n9.开放性问题，很杂，觉得自己的学习能力怎么样，本科有没有奖项，和同学比有什么优势和劣势，问是保研还是考研，问排名，实习的期望，未来的规划，对工作地点什么要求\n\t\n#互联网大厂实习[话题]# #互联网大厂[话题]# #面经[话题]# #校招[话题]# #后端开发[话题]# #春招[话题]# #找实习[话题]# #java[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67d001c6000000002a002386.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -45,6 +60,53 @@
       "git_blob_sha": "4d5acbf4eb6c369b68dc154d1fe3ba3797f0b236"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67d001c6000000002a002386.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "京东暑期后端一面挂 - 小红书",
+      "byte_size": 389513,
+      "git_blob_sha": "55292a69fd30c27fc2fe4cdfb182835006c50bde",
+      "sha256": "9b168d0815488f87325777f5649c7f85117844929b6f4c877c1896d484ef7fa1",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67d001c6000000002a002386.html",
+        "byte_size": 389513,
+        "git_blob_sha": "55292a69fd30c27fc2fe4cdfb182835006c50bde"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67d001c6000000002a002386.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67d001c6000000002a002386/note/title",
+      "excerpt": "京东暑期后端一面挂",
+      "byte_size": 22291,
+      "git_blob_sha": "faf89a641b2cee1d2a8af2e2743bd6ad177a393b",
+      "sha256": "35b7a89871a4d88eba00e4e663a49766e255fa6a4b76c7e1c69111b058463969",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67d001c6000000002a002386.json",
+        "byte_size": 22291,
+        "git_blob_sha": "faf89a641b2cee1d2a8af2e2743bd6ad177a393b"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67d001c6000000002a002386.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "hr人很好没为难人，但上午面下午官网就显示挂了\n1.在项目里承担的职责，遇到的问题怎么解决的，有什么收获\n2.数组找第k大值有哪些方法时间复杂度（排序，堆\n3.讲一下jvm怎么加载运行和内存回收（只说了内存五大组成\n4.AOP实现原理\n5.Redis数据结构，为什么互联网公司不喜欢用（这个没答\n6.SQL 索引实现原理（B＋树\n7.数据库事物的特性（ACID",
+      "byte_size": 889,
+      "git_blob_sha": "4d5acbf4eb6c369b68dc154d1fe3ba3797f0b236",
+      "sha256": "2fe54744fc16af1a20c53df4ba880cb9f914fd860bcecb23a5d92f4ca56ef57b",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67d001c6000000002a002386.txt",
+        "byte_size": 889,
+        "git_blob_sha": "4d5acbf4eb6c369b68dc154d1fe3ba3797f0b236"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -59,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -78,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

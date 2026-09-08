@@ -9,15 +9,39 @@
   "expected_body_sha256": "8a055b284ce7de735736290b046314d76015e960d65b3dccb54d3d1f42736119",
   "expected_source_revision_id": "xhs-note:67ecd109000000001c01fb86:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "not-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": []
+    "status": "reviewed",
+    "proposed_decision": "not-interview",
+    "basis": "explicit invitation, job/advice, or question-bank content lacks a candidate event",
+    "basis_lines": [],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67ecd109000000001c01fb86.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67ecd109000000001c01fb86/note/title",
+        "excerpt": "腾讯约面"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67ecd109000000001c01fb86.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67ecd109000000001c01fb86/note/desc",
+        "excerpt": "一周前投的腾讯的wxg ，今天HR打电话问我想不想试试机器学习平台的实习。 我学Java后端的，里面的业务对口吗，佬们这个部门怎么样啊，有没有知道的#互联网大厂实习[话题]# #互联网大厂[话题]# #面试[话题]# #面经[话题]#"
+      }
+    ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67ecd109000000001c01fb86.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67ecd109000000001c01fb86/note/title",
+      "excerpt": "腾讯约面"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67ecd109000000001c01fb86.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67ecd109000000001c01fb86/note/desc",
+      "excerpt": "一周前投的腾讯的wxg ，今天HR打电话问我想不想试试机器学习平台的实习。 我学Java后端的，里面的业务对口吗，佬们这个部门怎么样啊，有没有知道的#互联网大厂实习[话题]# #互联网大厂[话题]# #面试[话题]# #面经[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67ecd109000000001c01fb86.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -36,6 +60,53 @@
       "git_blob_sha": "e17a5df735b08bd34ae013f8a8e442ca17519835"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67ecd109000000001c01fb86.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "腾讯约面 - 小红书",
+      "byte_size": 386270,
+      "git_blob_sha": "0218909b4841b0be814aeeffab428b9ac9eb83df",
+      "sha256": "58081388c435fde1885edca8de4db21672e2f4aa44a85e90c28292a1dcdc6bb8",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67ecd109000000001c01fb86.html",
+        "byte_size": 386270,
+        "git_blob_sha": "0218909b4841b0be814aeeffab428b9ac9eb83df"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67ecd109000000001c01fb86.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67ecd109000000001c01fb86/note/title",
+      "excerpt": "腾讯约面",
+      "byte_size": 20789,
+      "git_blob_sha": "348bb4faaffa91ce55dc4b61ccebd50c83f427f3",
+      "sha256": "c5ae4b7a5d21bd8c2c22a49b72ddbd8939fb13517faebf2c8d3e7fe3c994b701",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67ecd109000000001c01fb86.json",
+        "byte_size": 20789,
+        "git_blob_sha": "348bb4faaffa91ce55dc4b61ccebd50c83f427f3"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67ecd109000000001c01fb86.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "一周前投的腾讯的wxg ，今天HR打电话问我想不想试试机器学习平台的实习。 我学Java后端的，里面的业务对口吗，佬们这个部门怎么样啊，有没有知道的#互联网大厂实习[话题]# #互联网大厂[话题]# #面试[话题]# #面经[话题]#",
+      "byte_size": 292,
+      "git_blob_sha": "e17a5df735b08bd34ae013f8a8e442ca17519835",
+      "sha256": "464820d17fccd895fc6773d5cdf17766f13f82b7fa7a669e1ad39b15d58a9c61",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67ecd109000000001c01fb86.txt",
+        "byte_size": 292,
+        "git_blob_sha": "e17a5df735b08bd34ae013f8a8e442ca17519835"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -50,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is not-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -69,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

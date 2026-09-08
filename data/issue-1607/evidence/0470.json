@@ -9,20 +9,39 @@
   "expected_body_sha256": "c5004317d4bc912eacafae3d5acda1a916da48f4e9c758dada5058256e513b98",
   "expected_source_revision_id": "xhs-note:6772906e000000000900d66d:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": [
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "basis_lines": [],
+    "semantic_evidence": [
       {
-        "line_number": 2,
-        "excerpt": "﻿#Java[话题]#﻿ ﻿#java[话题]#﻿ ﻿#java面试[话题]#﻿ ﻿#java面经[话题]#﻿ ﻿#java面试题[话题]#﻿ ﻿#程序员[话题]#﻿ ﻿#java程序员[话题]#﻿ ﻿#大疆[话题]#﻿ ﻿#大疆面试[话题]#﻿ ﻿#我爱官方[话题]#﻿"
+        "ref": "liqiangcc/xhs:note_json/6772906e000000000900d66d.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/6772906e000000000900d66d/note/title",
+        "excerpt": "大疆后端JAVA开发，一二面面经！"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/6772906e000000000900d66d.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/6772906e000000000900d66d/note/desc",
+        "excerpt": "此类独角兽企业用人标准，要么学历好、要么经历好、要么能力强，看看你占了哪个部分？[失望R]\n﻿#Java[话题]#﻿ ﻿#java[话题]#﻿ ﻿#java面试[话题]#﻿ ﻿#java面经[话题]#﻿ ﻿#java面试题[话题]#﻿ ﻿#程序员[话题]#﻿ ﻿#java程序员[话题]#﻿ ﻿#大疆[话题]#﻿ ﻿#大疆面试[话题]#﻿ ﻿#我爱官方[话题]#﻿"
       }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/6772906e000000000900d66d.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/6772906e000000000900d66d/note/title",
+      "excerpt": "大疆后端JAVA开发，一二面面经！"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/6772906e000000000900d66d.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/6772906e000000000900d66d/note/desc",
+      "excerpt": "此类独角兽企业用人标准，要么学历好、要么经历好、要么能力强，看看你占了哪个部分？[失望R]\n﻿#Java[话题]#﻿ ﻿#java[话题]#﻿ ﻿#java面试[话题]#﻿ ﻿#java面经[话题]#﻿ ﻿#java面试题[话题]#﻿ ﻿#程序员[话题]#﻿ ﻿#java程序员[话题]#﻿ ﻿#大疆[话题]#﻿ ﻿#大疆面试[话题]#﻿ ﻿#我爱官方[话题]#﻿"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/6772906e000000000900d66d.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -41,6 +60,53 @@
       "git_blob_sha": "b03aacd5a65a1536f112dbbc29e5dad29dd8068a"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/6772906e000000000900d66d.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "大疆后端JAVA开发，一二面面经！ - 小红书",
+      "byte_size": 401403,
+      "git_blob_sha": "b0a1035315034c1f20af6c97013759113e760bc9",
+      "sha256": "2287ab95a8498cf5d3e6fb768bf5f26bb4fcd7149da814e7df718425611c024e",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:6772906e000000000900d66d.html",
+        "byte_size": 401403,
+        "git_blob_sha": "b0a1035315034c1f20af6c97013759113e760bc9"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/6772906e000000000900d66d.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/6772906e000000000900d66d/note/title",
+      "excerpt": "大疆后端JAVA开发，一二面面经！",
+      "byte_size": 35215,
+      "git_blob_sha": "46513c8c1c04b4f5e1f1c7c86961c313a8f78f1f",
+      "sha256": "6d327a7483b194b5afca8b39fc22c1b7591f30c6c449e766ad00fbe41e73da3f",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:6772906e000000000900d66d.json",
+        "byte_size": 35215,
+        "git_blob_sha": "46513c8c1c04b4f5e1f1c7c86961c313a8f78f1f"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/6772906e000000000900d66d.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "此类独角兽企业用人标准，要么学历好、要么经历好、要么能力强，看看你占了哪个部分？[失望R]\n﻿#Java[话题]#﻿ ﻿#java[话题]#﻿ ﻿#java面试[话题]#﻿ ﻿#java面经[话题]#﻿ ﻿#java面试题[话题]#﻿ ﻿#程序员[话题]#﻿ ﻿#java程序员[话题]#﻿ ﻿#大疆[话题]#﻿ ﻿#大疆面试[话题]#﻿ ﻿#我爱官方[话题]#﻿",
+      "byte_size": 393,
+      "git_blob_sha": "b03aacd5a65a1536f112dbbc29e5dad29dd8068a",
+      "sha256": "b0112a620090301576a6b1ac129e5af5287f0793e0656616f6790e5cb3000659",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:6772906e000000000900d66d.txt",
+        "byte_size": 393,
+        "git_blob_sha": "b03aacd5a65a1536f112dbbc29e5dad29dd8068a"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -55,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -74,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

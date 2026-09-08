@@ -9,20 +9,48 @@
   "expected_body_sha256": "ccf139d086fba683ff2fd48a923dbf634fdcfbe9d353b44edb154ab0edc19e0a",
   "expected_source_revision_id": "xhs-note:67ea53ad000000001d00a6b0:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
     "basis_lines": [
       {
         "line_number": 1,
         "excerpt": "全是项目，八股还是我引导面试官问的[失望R]"
+      },
+      {
+        "line_number": 2,
+        "excerpt": "虽然感觉凉了，但是面试官人真的超级好[赞R]给一个大大大好评！文字版面经："
+      }
+    ],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67ea53ad000000001d00a6b0.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67ea53ad000000001d00a6b0/note/title",
+        "excerpt": "Java小白选手｜腾讯音乐一面面经"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67ea53ad000000001d00a6b0.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67ea53ad000000001d00a6b0/note/desc",
+        "excerpt": "全是项目，八股还是我引导面试官问的[失望R]\n虽然感觉凉了，但是面试官人真的超级好[赞R]给一个大大大好评！文字版面经：\n—————————————————————————\n1. 实验室项目聊聊\n2. 秒杀场景\n3. 项目难点\n4. 评估改写对系统性能提升\n5. 秒杀项目的QPS\n6. 高并发缓存架构设计具体怎么实现的\n7. MySQL哪部分数据需要修改\n8. 项目是分布式还是单机\n9. MySQL更新之后本地如何更新\n10. 分布式如何保证一致性\n11. 单机为什么秒杀实现比较重，有什么高效高性能的方法可以实现？\n12. 为什么不会使用redis stream实现订单异步\n13. MySQL日志\n14. MVCC\n15. 手撕滑动串口最大无重复子串"
       }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67ea53ad000000001d00a6b0.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67ea53ad000000001d00a6b0/note/title",
+      "excerpt": "Java小白选手｜腾讯音乐一面面经"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67ea53ad000000001d00a6b0.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67ea53ad000000001d00a6b0/note/desc",
+      "excerpt": "全是项目，八股还是我引导面试官问的[失望R]\n虽然感觉凉了，但是面试官人真的超级好[赞R]给一个大大大好评！文字版面经：\n—————————————————————————\n1. 实验室项目聊聊\n2. 秒杀场景\n3. 项目难点\n4. 评估改写对系统性能提升\n5. 秒杀项目的QPS\n6. 高并发缓存架构设计具体怎么实现的\n7. MySQL哪部分数据需要修改\n8. 项目是分布式还是单机\n9. MySQL更新之后本地如何更新\n10. 分布式如何保证一致性\n11. 单机为什么秒杀实现比较重，有什么高效高性能的方法可以实现？\n12. 为什么不会使用redis stream实现订单异步\n13. MySQL日志\n14. MVCC\n15. 手撕滑动串口最大无重复子串"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67ea53ad000000001d00a6b0.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -41,6 +69,53 @@
       "git_blob_sha": "680bf1a40add734bfe99b9a6b7377a6a8b324e66"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67ea53ad000000001d00a6b0.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "Java小白选手｜腾讯音乐一面面经 - 小红书",
+      "byte_size": 388905,
+      "git_blob_sha": "3dda876eedb37ab82b9bab91b18ad8a6a7c47c16",
+      "sha256": "843878d9564514ff8585df94d4400c30a97a37d374f0c1c35d98763534b617da",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67ea53ad000000001d00a6b0.html",
+        "byte_size": 388905,
+        "git_blob_sha": "3dda876eedb37ab82b9bab91b18ad8a6a7c47c16"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67ea53ad000000001d00a6b0.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67ea53ad000000001d00a6b0/note/title",
+      "excerpt": "Java小白选手｜腾讯音乐一面面经",
+      "byte_size": 21877,
+      "git_blob_sha": "cff6a02c93bec762199b7810d932b4314b48a985",
+      "sha256": "20fe16920a19792df6358795acc3dcb148b975971e5c5608359de2da8c08014c",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67ea53ad000000001d00a6b0.json",
+        "byte_size": 21877,
+        "git_blob_sha": "cff6a02c93bec762199b7810d932b4314b48a985"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67ea53ad000000001d00a6b0.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "全是项目，八股还是我引导面试官问的[失望R]\n虽然感觉凉了，但是面试官人真的超级好[赞R]给一个大大大好评！文字版面经：\n—————————————————————————\n1. 实验室项目聊聊\n2. 秒杀场景\n3. 项目难点\n4. 评估改写对系统性能提升\n5. 秒杀项目的QPS",
+      "byte_size": 772,
+      "git_blob_sha": "680bf1a40add734bfe99b9a6b7377a6a8b324e66",
+      "sha256": "d879ca08a9abac88a9ce40430f3fb5fd70ebbb8dd9c15db0b9c0074f1f9e5e47",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67ea53ad000000001d00a6b0.txt",
+        "byte_size": 772,
+        "git_blob_sha": "680bf1a40add734bfe99b9a6b7377a6a8b324e66"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -55,12 +130,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -74,7 +149,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

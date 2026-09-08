@@ -9,20 +9,44 @@
   "expected_body_sha256": "409749551454c227953e528f11ee580f257375b34df724d61289a3cbfec6d4c4",
   "expected_source_revision_id": "xhs-note:67ed5649000000001d02cbac:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
     "basis_lines": [
       {
-        "line_number": 36,
-        "excerpt": "总的来说，感觉问的内容很多很广很杂，和Java对应八股差挺多，前面也不是每个都答的很好，感觉很可能寄了[失望R]"
+        "line_number": 25,
+        "excerpt": "我最后写出来的代码还有点小bug，不过我和面试官说了一下应该咋解决"
+      }
+    ],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67ed5649000000001d02cbac.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67ed5649000000001d02cbac/note/title",
+        "excerpt": "字节二面 复盘 没啥Java？"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67ed5649000000001d02cbac.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67ed5649000000001d02cbac/note/desc",
+        "excerpt": "感觉这个部门用Java不多（字节估计是go了），问的很多和Java无关\n先让自我介绍\n然后问我操作系统虚拟内存怎么映射（印象里好像块和页？这个没复习过操作系统，学习的有点久了记不清了）\n进程间通信方式（消息队列，信号，信号量，套接字，共享内存，管道）\n进程间同步方法，只记起来读写锁和互斥锁\n操作系统答得一般般[捂脸R]\n然后说问问数据结构\n先问我设计一个文件存储系统数据库怎么设计，会用哪些数据结构\n然后判断磁盘使用率用啥结构\n文件存储系统，快速查询文件用哪些数据结构\n设计一个高并发请求的hashmap要考虑哪些因素\n网络编程里多路复用的使用了解吗\n\t\n问了一个c/c++里面的内容（这是因为我有说到我选修过这两门课，然后和他说我主要还是深入学习的Java）\n然后问我Java中内存管理机制\n介绍一下垃圾回收分析和算法，为什么新生代一般是标记清除，老生代标记复制\n项目拷打了一下，让我简单介绍一下两个项目，和在项目中觉得做的好的地方\n项目部署上线了吗（没）\n那你觉得和你在本地开发项目比，做一个真实部署的项目会有哪些不同\n算法题：\n链表，每三个结点逆转顺序\n例如\n1 2 3 4 5 6 7 8  → 7 8 4 5 6 1 2 3\n\t\n我最后写出来的代码还有点小bug，不过我和面试官说了一下应该咋解决\n\t\ngo和另一个（没太听说过的）的语言了解吗\n如果招你进去干边角料工作能接受吗（这还能答不接受吗）\n\t\n反问：\n如果能过这轮，还会有面试吗\n不确定，有可能还有\n具体可能会做一些什么任务\n不能长期实习的话，可能主要是一些边边角角任务，如果能长期实习可能会有一些中小型任务可供解决\n\t\n总的来说，感觉问的内容很多很广很杂，和Java对应八股差挺多，前面也不是每个都答的很好，感觉很可能寄了[失望R]\n#互联网大厂[话题]# #后端开发[话题]# #面经[话题]# #java[话题]# #校招[话题]# #大厂[话题]#"
       }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67ed5649000000001d02cbac.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67ed5649000000001d02cbac/note/title",
+      "excerpt": "字节二面 复盘 没啥Java？"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67ed5649000000001d02cbac.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67ed5649000000001d02cbac/note/desc",
+      "excerpt": "感觉这个部门用Java不多（字节估计是go了），问的很多和Java无关\n先让自我介绍\n然后问我操作系统虚拟内存怎么映射（印象里好像块和页？这个没复习过操作系统，学习的有点久了记不清了）\n进程间通信方式（消息队列，信号，信号量，套接字，共享内存，管道）\n进程间同步方法，只记起来读写锁和互斥锁\n操作系统答得一般般[捂脸R]\n然后说问问数据结构\n先问我设计一个文件存储系统数据库怎么设计，会用哪些数据结构\n然后判断磁盘使用率用啥结构\n文件存储系统，快速查询文件用哪些数据结构\n设计一个高并发请求的hashmap要考虑哪些因素\n网络编程里多路复用的使用了解吗\n\t\n问了一个c/c++里面的内容（这是因为我有说到我选修过这两门课，然后和他说我主要还是深入学习的Java）\n然后问我Java中内存管理机制\n介绍一下垃圾回收分析和算法，为什么新生代一般是标记清除，老生代标记复制\n项目拷打了一下，让我简单介绍一下两个项目，和在项目中觉得做的好的地方\n项目部署上线了吗（没）\n那你觉得和你在本地开发项目比，做一个真实部署的项目会有哪些不同\n算法题：\n链表，每三个结点逆转顺序\n例如\n1 2 3 4 5 6 7 8  → 7 8 4 5 6 1 2 3\n\t\n我最后写出来的代码还有点小bug，不过我和面试官说了一下应该咋解决\n\t\ngo和另一个（没太听说过的）的语言了解吗\n如果招你进去干边角料工作能接受吗（这还能答不接受吗）\n\t\n反问：\n如果能过这轮，还会有面试吗\n不确定，有可能还有\n具体可能会做一些什么任务\n不能长期实习的话，可能主要是一些边边角角任务，如果能长期实习可能会有一些中小型任务可供解决\n\t\n总的来说，感觉问的内容很多很广很杂，和Java对应八股差挺多，前面也不是每个都答的很好，感觉很可能寄了[失望R]\n#互联网大厂[话题]# #后端开发[话题]# #面经[话题]# #java[话题]# #校招[话题]# #大厂[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67ed5649000000001d02cbac.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -41,6 +65,53 @@
       "git_blob_sha": "8c110e630c2ffb0f06f870700ca5800e7d900e51"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67ed5649000000001d02cbac.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "字节二面 复盘 没啥Java？ - 小红书",
+      "byte_size": 392577,
+      "git_blob_sha": "fcd48662b32f552eab4d9f977ce2e0b8ea766c03",
+      "sha256": "753a06186f03c2bb1dc5ca7c5d4592d04a484be9ea81a12860a48ff9f3153891",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67ed5649000000001d02cbac.html",
+        "byte_size": 392577,
+        "git_blob_sha": "fcd48662b32f552eab4d9f977ce2e0b8ea766c03"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67ed5649000000001d02cbac.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67ed5649000000001d02cbac/note/title",
+      "excerpt": "字节二面 复盘 没啥Java？",
+      "byte_size": 23087,
+      "git_blob_sha": "42b6ccc29316548bda213c01023555623bc3b50c",
+      "sha256": "340b2c0fc52b546efe8a9dbf3879f4092bc26be2486690f0c1e8bcad85d768da",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67ed5649000000001d02cbac.json",
+        "byte_size": 23087,
+        "git_blob_sha": "42b6ccc29316548bda213c01023555623bc3b50c"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67ed5649000000001d02cbac.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "感觉这个部门用Java不多（字节估计是go了），问的很多和Java无关\n先让自我介绍\n然后问我操作系统虚拟内存怎么映射（印象里好像块和页？这个没复习过操作系统，学习的有点久了记不清了）\n进程间通信方式（消息队列，信号，信号量，套接字，共享内存，管道）\n进程间同步方法，只记起来读写锁和互斥锁\n操作系统答得一般般[捂脸R]\n然后说问问数据结构\n先问我设计一个文件存储系统数据库怎么设计，会用哪些数据结构",
+      "byte_size": 2136,
+      "git_blob_sha": "8c110e630c2ffb0f06f870700ca5800e7d900e51",
+      "sha256": "45a43bb3c58a137445bc8f36e665ec91c861b9b4dee1f023f4679098e4d325e7",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67ed5649000000001d02cbac.txt",
+        "byte_size": 2136,
+        "git_blob_sha": "8c110e630c2ffb0f06f870700ca5800e7d900e51"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -55,12 +126,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -74,7 +145,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

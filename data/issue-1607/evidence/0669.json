@@ -9,24 +9,48 @@
   "expected_body_sha256": "1a0ac3154191e5849d944c4477db8e60bf7589517ae43624d80d6166b885919e",
   "expected_source_revision_id": "xhs-note:67ebaa93000000000b02f1f5:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "not-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "status": "reviewed",
+    "proposed_decision": "not-interview",
+    "basis": "marketing/repost or answer-key content is explicitly non-event",
     "basis_lines": [
       {
-        "line_number": 2,
-        "excerpt": "项目开始拷打到八股 Java基础和并发八股（拷打到我不会为止差不多）"
+        "line_number": 1,
+        "excerpt": "自己选一段实习让面试官拷打，我选最近一段 蕙策掌上先机的。然后面试官对其中一个优化点感兴趣，继续追问，还有一个优化的需求也感兴趣，然后也追问。然后面试官也给了还有更好的方法（protobuf，面试官好强啊）"
       },
       {
-        "line_number": 5,
-        "excerpt": "我反问三个问题，结束"
+        "line_number": 3,
+        "excerpt": "最后两段算法题结尾（非常规算法题），ak了算是（面试官直接关闭算法题面试，面叭好像叫这个）"
+      }
+    ],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67ebaa93000000000b02f1f5.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67ebaa93000000000b02f1f5/note/title",
+        "excerpt": "26腾讯后端暑假实习Java 广告部门一面"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67ebaa93000000000b02f1f5.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67ebaa93000000000b02f1f5/note/desc",
+        "excerpt": "自己选一段实习让面试官拷打，我选最近一段 蕙策掌上先机的。然后面试官对其中一个优化点感兴趣，继续追问，还有一个优化的需求也感兴趣，然后也追问。然后面试官也给了还有更好的方法（protobuf，面试官好强啊）\n项目开始拷打到八股 Java基础和并发八股（拷打到我不会为止差不多）\n最后两段算法题结尾（非常规算法题），ak了算是（面试官直接关闭算法题面试，面叭好像叫这个）\n\t\n我反问三个问题，结束"
       }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67ebaa93000000000b02f1f5.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67ebaa93000000000b02f1f5/note/title",
+      "excerpt": "26腾讯后端暑假实习Java 广告部门一面"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67ebaa93000000000b02f1f5.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67ebaa93000000000b02f1f5/note/desc",
+      "excerpt": "自己选一段实习让面试官拷打，我选最近一段 蕙策掌上先机的。然后面试官对其中一个优化点感兴趣，继续追问，还有一个优化的需求也感兴趣，然后也追问。然后面试官也给了还有更好的方法（protobuf，面试官好强啊）\n项目开始拷打到八股 Java基础和并发八股（拷打到我不会为止差不多）\n最后两段算法题结尾（非常规算法题），ak了算是（面试官直接关闭算法题面试，面叭好像叫这个）\n\t\n我反问三个问题，结束"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67ebaa93000000000b02f1f5.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -45,6 +69,53 @@
       "git_blob_sha": "6032e00498322ecdb4b9fe9c1f2f513c5ca6fec7"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67ebaa93000000000b02f1f5.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "26腾讯后端暑假实习Java 广告部门一面 - 小红书",
+      "byte_size": 389257,
+      "git_blob_sha": "80dcf5912ab0c90e70de703a33e66a18f38c1d13",
+      "sha256": "bb84a901951843a52dd2b90b542e1c1237f9f80d9cc2a584afd306fe9ee45f3f",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67ebaa93000000000b02f1f5.html",
+        "byte_size": 389257,
+        "git_blob_sha": "80dcf5912ab0c90e70de703a33e66a18f38c1d13"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67ebaa93000000000b02f1f5.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67ebaa93000000000b02f1f5/note/title",
+      "excerpt": "26腾讯后端暑假实习Java 广告部门一面",
+      "byte_size": 23031,
+      "git_blob_sha": "7a43394743b421ec0ca13cb5715bce7549550cec",
+      "sha256": "973694ac2fc476b818e236b5396c35bbd12558d56de15d59c94929e14842fbf4",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67ebaa93000000000b02f1f5.json",
+        "byte_size": 23031,
+        "git_blob_sha": "7a43394743b421ec0ca13cb5715bce7549550cec"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67ebaa93000000000b02f1f5.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "自己选一段实习让面试官拷打，我选最近一段 蕙策掌上先机的。然后面试官对其中一个优化点感兴趣，继续追问，还有一个优化的需求也感兴趣，然后也追问。然后面试官也给了还有更好的方法（protobuf，面试官好强啊）\n项目开始拷打到八股 Java基础和并发八股（拷打到我不会为止差不多）\n最后两段算法题结尾（非常规算法题），ak了算是（面试官直接关闭算法题面试，面叭好像叫这个）\n我反问三个问题，结束",
+      "byte_size": 550,
+      "git_blob_sha": "6032e00498322ecdb4b9fe9c1f2f513c5ca6fec7",
+      "sha256": "d805d9cbd7398d16a51763188d25b0699339c098e31ff65fd26136268a7a39c5",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67ebaa93000000000b02f1f5.txt",
+        "byte_size": 550,
+        "git_blob_sha": "6032e00498322ecdb4b9fe9c1f2f513c5ca6fec7"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -59,12 +130,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is not-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -78,7 +149,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]
