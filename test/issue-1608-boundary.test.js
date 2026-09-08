@@ -43,6 +43,15 @@ test('single decision rejects weak packaging without interview facts', () => {
   assert.strictEqual(evidenceDecisionConsistent('single-interview', ['线下面试。', '时间：明天', '笔试题。三道sql题，5分钟内做完']), false);
   assert.strictEqual(evidenceDecisionConsistent('single-interview', '4月22日面试官有事推迟，12点面试完'), true);
   assert.strictEqual(classify(767, '字节的效率真的很高\n4.16投递\n4.16约面\n12点面试完').disposition, 'blocked');
+  assert.strictEqual(classify(850, '面完字节跳动Java后端开发岗\n附超详细面经文档分享').disposition, 'blocked');
+  assert.notStrictEqual(classify(999004, '这份资料放后面了，面试题和答案欢迎收藏').decision, 'single-interview');
+});
+
+test('title plus completed process and substantive Q&A can support single', () => {
+  const result = classify(999005, '面试官追问项目的缓存一致性，随后手撕滑动窗口。\n1. Redis缓存穿透怎么处理？\n2. 线程池核心参数如何设置？', '字节后端一面面经');
+  assert.strictEqual(result.disposition, 'decided');
+  assert.strictEqual(result.decision, 'single-interview');
+  assert.strictEqual(classify(999006, '预约面试，面试时间：明天\n1. Redis缓存？\n2. 算法题？', '字节后端一面').disposition, 'blocked');
 });
 
 test('complete four reviewer samples require event context plus substantive Q&A excerpts', () => {

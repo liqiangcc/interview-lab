@@ -8,13 +8,51 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "source_retrieval": {
     "method": "frozen-source-snapshot",
-    "path": "/tmp/issue-1608-source-texts.json",
+    "path": "/tmp/issue-1608-source-artifacts-v2.json",
     "byte_size": 394,
     "git_blob_sha": "60ccf72d6af333b23f5e5c1effbfe5e4fffb0efd"
   },
-  "evidence_status": "insufficient-blocked",
-  "decision": null,
-  "rationale": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。",
+  "source_artifacts": [
+    {
+      "kind": "html",
+      "ref": "liqiangcc/xhs:note_detail/685bfbdf0000000022032c37.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "b13b21c950333a2684b370215c426bc4856e2d72",
+      "byte_size": 386305,
+      "content_sha256": "9e9ea2240185877f5479ed9ce2ddb2f680d49b81fac3df66783afecd20f13b02",
+      "retrieval": {
+        "method": "fixed-ref-local-partial-clone",
+        "path": "/tmp/xhs-issue-1608-source/note_detail/685bfbdf0000000022032c37.html"
+      },
+      "complete_content_read": true
+    },
+    {
+      "kind": "json",
+      "ref": "liqiangcc/xhs:note_json/685bfbdf0000000022032c37.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "6dacf9f4059404437e4c1f57045618b75461debb",
+      "byte_size": 20550,
+      "content_sha256": "dec77b94263f512e6c4e15c9d5ec01d1f24245884b6e9e326b817061d0b9af27",
+      "retrieval": {
+        "method": "fixed-ref-local-partial-clone",
+        "path": "/tmp/xhs-issue-1608-source/note_json/685bfbdf0000000022032c37.json"
+      },
+      "complete_content_read": true
+    },
+    {
+      "kind": "text_projection",
+      "ref": "liqiangcc/xhs:note_desc/685bfbdf0000000022032c37.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "60ccf72d6af333b23f5e5c1effbfe5e4fffb0efd",
+      "byte_size": 394,
+      "content_sha256": "a1edbec67cf26b6a5998f3ba7d945a8e9da6119f89289094d8631d9b992c72bd",
+      "retrieval": {
+        "method": "github-git-blob",
+        "path": "repos/liqiangcc/xhs/git/blobs/60ccf72d6af333b23f5e5c1effbfe5e4fffb0efd"
+      },
+      "complete_content_read": true
+    }
+  ],
+  "evidence_status": "sufficient-for-controller-review",
+  "decision": "single-interview",
+  "rationale": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。",
   "artifact": {
     "ref": "liqiangcc/xhs:note_desc/685bfbdf0000000022032c37.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -25,9 +63,32 @@
   },
   "excerpts": [
     {
+      "line": null,
+      "locator": "json-pointer:/note/noteDetailMap/685bfbdf0000000022032c37/note/title",
+      "artifact_ref": "liqiangcc/xhs:note_json/685bfbdf0000000022032c37.json@95b77bb261048059846273688e4b90a2e108b437",
+      "artifact_kind": "json",
+      "excerpt": "滴滴开发岗位一面"
+    },
+    {
+      "line": 4,
+      "locator": "source-projection:artifact-line:4",
+      "excerpt": "3、一到手撕算法题，我用暴力破解[笑哭R]",
+      "artifact_ref": "liqiangcc/xhs:note_desc/685bfbdf0000000022032c37.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "artifact_kind": "text_projection"
+    },
+    {
       "line": 1,
       "locator": "source-projection:artifact-line:1",
-      "excerpt": "时长差不多一个小时，问了项目但是没有聊太多的细节[失望R]，八股文也是非常简单:"
+      "excerpt": "时长差不多一个小时，问了项目但是没有聊太多的细节[失望R]，八股文也是非常简单:",
+      "artifact_ref": "liqiangcc/xhs:note_desc/685bfbdf0000000022032c37.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "artifact_kind": "text_projection"
+    },
+    {
+      "line": 2,
+      "locator": "source-projection:artifact-line:2",
+      "excerpt": "1、Redis的zset数据结构；",
+      "artifact_ref": "liqiangcc/xhs:note_desc/685bfbdf0000000022032c37.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "artifact_kind": "text_projection"
     }
   ],
   "case_keys": [],
@@ -50,8 +111,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+      "result": "pass",
+      "note": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -65,7 +126,7 @@
     }
   ],
   "limitations": [
-    "Evidence is insufficient for a boundary transition; no body/label mutation is proposed.",
-    "Title, labels, OCR/Derived data, and image existence are not used to fill the missing boundary proof."
+    "This local evidence is not a GitHub review comment; no live evidence comment was created by this run.",
+    "Boundary Review only determines 0/1/N and does not create InterviewNote Issues or source-ready/learning labels."
   ]
 }

@@ -50,6 +50,7 @@ function validateDirectory(root = ROOT) {
   });
   assert.deepStrictEqual(selection.source_snapshot, { repository: SOURCE_REPOSITORY, ref: SOURCE_REF });
   assert(selection.live_issue_snapshot && selection.live_issue_snapshot.path && /^[0-9a-f]{64}$/.test(selection.live_issue_snapshot.sha256));
+  assert(selection.source_artifact_snapshot && selection.source_artifact_snapshot.path && /^[0-9a-f]{64}$/.test(selection.source_artifact_snapshot.sha256));
   assert.deepStrictEqual(selection.parent_dependency, PARENT_DEPENDENCY);
   assert.deepStrictEqual(selection.parent_live_progress, PARENT_LIVE_PROGRESS);
   assert.deepStrictEqual(readJson(path.join(root, 'parent-dependency.json')), PARENT_DEPENDENCY);
@@ -101,6 +102,18 @@ function validateDirectory(root = ROOT) {
     assert.strictEqual(item.artifact.kind, 'text_projection');
     assert.match(item.artifact.git_blob_sha, /^[0-9a-f]{40}$/);
     assert.match(item.artifact.content_sha256, /^[0-9a-f]{64}$/);
+    assert(Array.isArray(item.source_artifacts) && item.source_artifacts.length >= 3, `missing complete Source artifacts on #${item.issue_number}`);
+    const artifactKinds = new Set(item.source_artifacts.map((artifact) => artifact.kind));
+    for (const kind of ['html', 'json', 'text_projection']) {
+      const sourceArtifact = item.source_artifacts.find((artifact) => artifact.kind === kind);
+      assert(sourceArtifact, `missing ${kind} Source artifact on #${item.issue_number}`);
+      assert(sourceArtifact.ref.endsWith(`@${SOURCE_REF}`));
+      assert.match(sourceArtifact.git_blob_sha, /^[0-9a-f]{40}$/);
+      assert(Number.isInteger(sourceArtifact.byte_size) && sourceArtifact.byte_size > 0);
+      assert.match(sourceArtifact.content_sha256, /^[0-9a-f]{64}$/);
+      assert.strictEqual(sourceArtifact.complete_content_read, true);
+    }
+    assert.strictEqual(artifactKinds.size, 3);
 
     const evidence = readJson(path.join(root, item.evidence_file));
     assert.strictEqual(evidence.issue_number, item.issue_number);
@@ -109,6 +122,7 @@ function validateDirectory(root = ROOT) {
     assert.strictEqual(evidence.artifact.provenance, 'source_projection');
     assert.strictEqual(evidence.artifact.git_blob_sha, item.artifact.git_blob_sha);
     assert.deepStrictEqual(evidence.source_retrieval, item.source_retrieval);
+    assert.deepStrictEqual(evidence.source_artifacts, item.source_artifacts);
     assert.strictEqual(evidence.evidence_comment, undefined);
     const intent = parseIntent(path.join(root, item.request_file));
     assert.strictEqual(intent.issue_number, item.issue_number);
@@ -116,6 +130,7 @@ function validateDirectory(root = ROOT) {
     assert.strictEqual(intent.expected_boundary_status, 'pending');
     assert.strictEqual(intent.expected_source_repository_ref, SOURCE_REF);
     assert.deepStrictEqual(intent.source_retrieval, item.source_retrieval);
+    assert.deepStrictEqual(intent.source_artifacts, item.source_artifacts);
     assert.deepStrictEqual(intent.evidence_comment, { status: 'not-created', comment_id: null });
     assert.deepStrictEqual(intent.case_evidence, evidence.case_evidence || []);
     assert.match(intent.apply_authorization, /controller-only/);
@@ -137,6 +152,11 @@ function validateDirectory(root = ROOT) {
           && evidenceDecisionConsistent(item.decision, evidence.excerpts), `single evidence does not support decision on #${item.issue_number}`);
         const locators = evidence.excerpts.map((excerpt) => excerpt.locator);
         assert.strictEqual(new Set(locators).size, locators.length, `duplicate single evidence locator on #${item.issue_number}`);
+        for (const excerpt of evidence.excerpts) {
+          assert(excerpt.artifact_ref, `missing artifact ref on #${item.issue_number}`);
+          assert(item.source_artifacts.some((artifact) => artifact.ref === excerpt.artifact_ref), `excerpt artifact is not pinned on #${item.issue_number}`);
+          assert(excerpt.excerpt && excerpt.locator, `incomplete excerpt on #${item.issue_number}`);
+        }
       }
       if (item.decision === 'multi-interview') {
         assert(item.case_keys.length >= 2);
@@ -157,6 +177,7 @@ function validateDirectory(root = ROOT) {
   const batch = readJson(path.join(root, 'boundary-batch.json'));
   assert.strictEqual(batch.mutation_allowed, false);
   assert.deepStrictEqual(batch.live_issue_snapshot, selection.live_issue_snapshot);
+  assert.deepStrictEqual(batch.source_artifact_snapshot, selection.source_artifact_snapshot);
   assert.deepStrictEqual(batch.parent_dependency, PARENT_DEPENDENCY);
   assert.deepStrictEqual(batch.parent_live_progress, PARENT_LIVE_PROGRESS);
   assert.strictEqual(batch.items.length, decided);
@@ -166,6 +187,7 @@ function validateDirectory(root = ROOT) {
   validateDigest(plan, 'dry_run_sha256');
   assert.strictEqual(plan.selection_sha256, selection.selection_sha256);
   assert.deepStrictEqual(plan.live_issue_snapshot, selection.live_issue_snapshot);
+  assert.deepStrictEqual(plan.source_artifact_snapshot, selection.source_artifact_snapshot);
   assert.deepStrictEqual(plan.parent_dependency, PARENT_DEPENDENCY);
   assert.deepStrictEqual(plan.parent_live_progress, PARENT_LIVE_PROGRESS);
   assert.strictEqual(plan.mutation_allowed, false);
@@ -179,6 +201,7 @@ function validateDirectory(root = ROOT) {
   assert.strictEqual(journal.mutation_allowed, false);
   assert.deepStrictEqual(journal.parent_dependency, PARENT_DEPENDENCY);
   assert.deepStrictEqual(journal.live_issue_snapshot, selection.live_issue_snapshot);
+  assert.deepStrictEqual(journal.source_artifact_snapshot, selection.source_artifact_snapshot);
   assert.deepStrictEqual(journal.parent_live_progress, PARENT_LIVE_PROGRESS);
   assert(journal.entries.every((entry) => entry.mutation_performed === false && entry.evidence_comment_id === null));
 
@@ -187,6 +210,7 @@ function validateDirectory(root = ROOT) {
   assert.deepStrictEqual(audit.out_of_scope_issue_numbers_read, []);
   assert.deepStrictEqual(audit.parent_dependency, PARENT_DEPENDENCY);
   assert.deepStrictEqual(audit.live_issue_snapshot, selection.live_issue_snapshot);
+  assert.deepStrictEqual(audit.source_artifact_snapshot, selection.source_artifact_snapshot);
   assert.deepStrictEqual(audit.parent_live_progress, PARENT_LIVE_PROGRESS);
   assert.strictEqual(audit.checks.no_mutations, true);
   assert.strictEqual(audit.checks.no_live_evidence_comments, true);

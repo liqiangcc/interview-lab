@@ -8,13 +8,51 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "source_retrieval": {
     "method": "frozen-source-snapshot",
-    "path": "/tmp/issue-1608-source-texts.json",
+    "path": "/tmp/issue-1608-source-artifacts-v2.json",
     "byte_size": 424,
     "git_blob_sha": "320fa5585c033536c1313eb23fb4dc91e4373128"
   },
+  "source_artifacts": [
+    {
+      "kind": "html",
+      "ref": "liqiangcc/xhs:note_detail/687dd31000000000120217e6.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "7e99bf383b3d28f0e7a76a7f0a34138ac5a605df",
+      "byte_size": 386084,
+      "content_sha256": "c9606c537983e38a239e4d1c19b76ef45af4c5f35f9fb795a5d31d9d70d13960",
+      "retrieval": {
+        "method": "fixed-ref-local-partial-clone",
+        "path": "/tmp/xhs-issue-1608-source/note_detail/687dd31000000000120217e6.html"
+      },
+      "complete_content_read": true
+    },
+    {
+      "kind": "json",
+      "ref": "liqiangcc/xhs:note_json/687dd31000000000120217e6.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "ef2f85347b2bab3d47b68b25786bec655b61e7ea",
+      "byte_size": 20050,
+      "content_sha256": "9746360a7786975d1617a1b203cbfcb6d91e904a9597074cbfcf500da9108017",
+      "retrieval": {
+        "method": "fixed-ref-local-partial-clone",
+        "path": "/tmp/xhs-issue-1608-source/note_json/687dd31000000000120217e6.json"
+      },
+      "complete_content_read": true
+    },
+    {
+      "kind": "text_projection",
+      "ref": "liqiangcc/xhs:note_desc/687dd31000000000120217e6.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "320fa5585c033536c1313eb23fb4dc91e4373128",
+      "byte_size": 424,
+      "content_sha256": "317ac177dac44548e8ec64d01fef122dd3b42ed8d950d58783ba6f309a56d47c",
+      "retrieval": {
+        "method": "github-git-blob",
+        "path": "repos/liqiangcc/xhs/git/blobs/320fa5585c033536c1313eb23fb4dc91e4373128"
+      },
+      "complete_content_read": true
+    }
+  ],
   "evidence_status": "insufficient-blocked",
   "decision": null,
-  "rationale": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。",
+  "rationale": "固定 SourceNote 虽有面试标题或事件描述，但未同时提供已完成面试事件与至少两条 substantive Q&A；拒绝用预约、结果、题目列表或营销包装为 single-interview。",
   "artifact": {
     "ref": "liqiangcc/xhs:note_desc/687dd31000000000120217e6.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -27,7 +65,9 @@
     {
       "line": 1,
       "locator": "source-projection:artifact-line:1",
-      "excerpt": "吉隆坡 java 开发要去吗找工作也有几个月了，今年行情不好，也没有拿到什么满意的 offer ，前几天猎头联系我说有吉隆坡 虚拟币交易所 MGBX 的工作机会，工资发 ustd ，目前面试通过了，之前在国内薪资是27 k ，公积金是全额的，划下来差不多30 k 一个月，吉隆坡 那边给的是30 k ，5 k 出国补贴，到手35 k ，猎头说走工签。"
+      "excerpt": "吉隆坡 java 开发要去吗找工作也有几个月了，今年行情不好，也没有拿到什么满意的 offer ，前几天猎头联系我说有吉隆坡 虚拟币交易所 MGBX 的工作机会，工资发 ustd ，目前面试通过了，之前在国内薪资是27 k ，公积金是全额的，划下来差不多30 k 一个月，吉隆坡 那边给的是30 k ，5 k 出国补贴，到手35 k ，猎头说走工签。",
+      "artifact_ref": "liqiangcc/xhs:note_desc/687dd31000000000120217e6.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "artifact_kind": "text_projection"
     }
   ],
   "case_keys": [],
@@ -51,7 +91,7 @@
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+      "note": "固定 SourceNote 虽有面试标题或事件描述，但未同时提供已完成面试事件与至少两条 substantive Q&A；拒绝用预约、结果、题目列表或营销包装为 single-interview。"
     },
     {
       "check_id": "no_cross_source_mixing",

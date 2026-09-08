@@ -8,13 +8,51 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "source_retrieval": {
     "method": "frozen-source-snapshot",
-    "path": "/tmp/issue-1608-source-texts.json",
+    "path": "/tmp/issue-1608-source-artifacts-v2.json",
     "byte_size": 256,
     "git_blob_sha": "f6aecd75f5602f44e719f1c552627e6d5a1c9b54"
   },
+  "source_artifacts": [
+    {
+      "kind": "html",
+      "ref": "liqiangcc/xhs:note_detail/6853661b0000000022031243.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "36e470ca17fd0aa333855cbaca3faaf66209cf97",
+      "byte_size": 386239,
+      "content_sha256": "9d7899ff52bf7f212f2d4d051ae069e9d6cff3ba46804744aee38c6f4d1d92b1",
+      "retrieval": {
+        "method": "fixed-ref-local-partial-clone",
+        "path": "/tmp/xhs-issue-1608-source/note_detail/6853661b0000000022031243.html"
+      },
+      "complete_content_read": true
+    },
+    {
+      "kind": "json",
+      "ref": "liqiangcc/xhs:note_json/6853661b0000000022031243.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "93ec1666e099439608fa3ae129875b7abfc6e343",
+      "byte_size": 20764,
+      "content_sha256": "541b191c60974998e1e75e9b88d5bbcff5689242512e2d5d2889b4d732ea73af",
+      "retrieval": {
+        "method": "fixed-ref-local-partial-clone",
+        "path": "/tmp/xhs-issue-1608-source/note_json/6853661b0000000022031243.json"
+      },
+      "complete_content_read": true
+    },
+    {
+      "kind": "text_projection",
+      "ref": "liqiangcc/xhs:note_desc/6853661b0000000022031243.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "f6aecd75f5602f44e719f1c552627e6d5a1c9b54",
+      "byte_size": 256,
+      "content_sha256": "8678e016f5d3900f814420a88bcf66c11ba43180342d0b769d6e75c6e7529489",
+      "retrieval": {
+        "method": "github-git-blob",
+        "path": "repos/liqiangcc/xhs/git/blobs/f6aecd75f5602f44e719f1c552627e6d5a1c9b54"
+      },
+      "complete_content_read": true
+    }
+  ],
   "evidence_status": "insufficient-blocked",
   "decision": null,
-  "rationale": "固定 Source projection 只有预约/投递/面试时间或排期信号，没有已完成面试事件事实；保留 pending，不 materialize。",
+  "rationale": "固定 Source projection 只有预约/投递/面试时间或排期信号，没有候选人已完成面试事件事实；保留 pending，不 materialize。",
   "artifact": {
     "ref": "liqiangcc/xhs:note_desc/6853661b0000000022031243.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -27,7 +65,9 @@
     {
       "line": 1,
       "locator": "source-projection:artifact-line:1",
-      "excerpt": "我快手日常实习的简历是又被锁了吗[捂脸R]上一周我看就是面试状态了，但是一直没来约面试[哭惹R]这回找实习一次快手电话没接过#后端开发[话题]# #快手招聘[话题]##日常实习[话题]##java[话题]#"
+      "excerpt": "我快手日常实习的简历是又被锁了吗[捂脸R]上一周我看就是面试状态了，但是一直没来约面试[哭惹R]这回找实习一次快手电话没接过#后端开发[话题]# #快手招聘[话题]##日常实习[话题]##java[话题]#",
+      "artifact_ref": "liqiangcc/xhs:note_desc/6853661b0000000022031243.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "artifact_kind": "text_projection"
     }
   ],
   "case_keys": [],
@@ -51,7 +91,7 @@
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "固定 Source projection 只有预约/投递/面试时间或排期信号，没有已完成面试事件事实；保留 pending，不 materialize。"
+      "note": "固定 Source projection 只有预约/投递/面试时间或排期信号，没有候选人已完成面试事件事实；保留 pending，不 materialize。"
     },
     {
       "check_id": "no_cross_source_mixing",
