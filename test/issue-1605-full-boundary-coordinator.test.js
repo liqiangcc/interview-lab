@@ -11,6 +11,7 @@ const boundaryBEvidence = require('../data/issue-1607/evidence-ledger.json');
 const {
   buildPlan, deriveBoundaryBCases, pendingInventory, remainingInventory, parseArgs, sha256,
   formalRequest, parseEvidenceComment, runEvidence, isAllowedBlockedAuditError,
+  evidenceAuthorizationDigest, renderEvidenceAuthorizationMarker, validateEvidenceAuthorization,
 } = require('../scripts/issue-1605-full-boundary-coordinator');
 const { validateTransitionRequest } = require('../scripts/lib/source-note-boundary-review-transition');
 
@@ -26,6 +27,8 @@ test('full boundary coordinator excludes the completed manifest and covers every
     labels: item.labels,
   }))));
   const plan = buildPlan({ cache: cacheFile });
+  assert.equal(plan.frozen_inventory.digest, frozenSnapshot.canonical_digest);
+  assert.notEqual(path.resolve(cacheFile), path.resolve('/tmp/interview-lab-cache/source-notes.json'));
   assert.equal(plan.frozen_inventory.count, 1397);
   assert.equal(plan.pending_inventory.count, 978);
   assert.equal(plan.completed_exclusion.count, 419);
@@ -54,6 +57,24 @@ test('only the pinned #735 insufficient-case audit error is allowlisted; unexpec
   assert.equal(isAllowedBlockedAuditError('#735 multi-interview has fewer than two cases'), true);
   assert.equal(isAllowedBlockedAuditError('#735 multi-interview has one case'), false);
   assert.equal(isAllowedBlockedAuditError('#951 comments read failed'), false);
+});
+
+test('evidence mode authorization binds parent, plan, scope, manifest, marker, and mutation ceiling', () => {
+  const plan = { canonical_digest: 'a'.repeat(64) };
+  const proofWithoutDigest = {
+    schema_version: 'issue-1605-remaining-boundary-evidence-authorization.v1',
+    repository: 'liqiangcc/interview-lab', parent_issue: 1605,
+    action: 'authorize-remaining-boundary-evidence', allow_live_github: true,
+    manifest_digest: 'fea78669500c0986eff96b67b7e2d35afdf46355bc7caa9b862116eca40b4ba9',
+    scope_digest: '6ef4fa26e838fe8c30d571c08807c09d5a3280eb40aa4af57d679274f6a131a1',
+    plan_digest: plan.canonical_digest, max_mutations: 557, comment_id: 1605001, authorized_by: 'test-reviewer',
+  };
+  const proof = { ...proofWithoutDigest, proof_sha256: evidenceAuthorizationDigest(proofWithoutDigest) };
+  const comments = [{ id: proof.comment_id, body: renderEvidenceAuthorizationMarker(proof) }];
+  assert.equal(validateEvidenceAuthorization(proof, plan, comments).ok, true);
+  assert.equal(validateEvidenceAuthorization({ ...proof, max_mutations: 0 }, plan, comments).ok, false);
+  assert.equal(validateEvidenceAuthorization({ ...proof, plan_digest: 'b'.repeat(64) }, plan, comments).ok, false);
+  assert.equal(validateEvidenceAuthorization(proof, plan, [{ id: proof.comment_id, body: `${renderEvidenceAuthorizationMarker(proof)}\n${renderEvidenceAuthorizationMarker(proof)}` }]).ok, false);
 });
 
 test('remaining and frozen inventory validators reject a digest or scope drift', () => {
@@ -95,6 +116,9 @@ test('remaining coordinator defaults never target the completed 419-row artifact
   assert.match(args.output, /remaining-boundary-evidence-plan\.json$/);
   assert.match(args.journal, /remaining-boundary-evidence-progress\.json$/);
   assert.match(args.requestDir, /remaining-boundary-evidence-requests$/);
+  assert.notEqual(path.basename(args.output), 'full-boundary-transition.plan.json');
+  assert.notEqual(path.basename(args.journal), 'full-boundary-transition.journal.json');
+  assert.doesNotMatch(args.requestDir, /full-boundary-requests/);
 });
 
 test('not-interview remains actionable and multi-interview emits validator-compatible v2 requests', () => {
@@ -136,6 +160,14 @@ test('simulated evidence mode persists journal/request, reconciles exact marker,
     requestDir: path.join(directory, 'requests'), confirmPlan: plan.canonical_digest,
     maxMutations: 1, pauseMs: 0, allowUncertainRetry: false,
   };
+  const proofWithoutDigest = {
+    schema_version: 'issue-1605-remaining-boundary-evidence-authorization.v1',
+    repository: 'liqiangcc/interview-lab', parent_issue: 1605,
+    action: 'authorize-remaining-boundary-evidence', allow_live_github: true,
+    manifest_digest: sourcePlan.pending_inventory.digest, scope_digest: sourcePlan.scope.remaining_scope_digest,
+    plan_digest: plan.canonical_digest, max_mutations: 1, comment_id: 1605002, authorized_by: 'simulation-reviewer',
+  };
+  const proof = { ...proofWithoutDigest, proof_sha256: evidenceAuthorizationDigest(proofWithoutDigest) };
   const fakeFindExact = (candidate) => ({
     exact: comments.filter((comment) => parseEvidenceComment(comment, candidate).ok).map((comment) => ({
       ...comment, evidence: JSON.parse(comment.body.match(/<!--\s*source-note-boundary-review-evidence\s*([\s\S]*?)-->/)[1].trim()),
@@ -143,6 +175,8 @@ test('simulated evidence mode persists journal/request, reconciles exact marker,
     errors: [],
   });
   runEvidence(args, plan, {
+    authorization: proof,
+    parentComments: [{ id: proof.comment_id, body: renderEvidenceAuthorizationMarker(proof) }],
     readLiveIssue(number) {
       calls.get += 1;
       assert.equal(number, item.issue_number);

@@ -38,6 +38,9 @@ const DEFAULT_REQUEST_DIR = 'data/pilot/issue-1605/remaining-boundary-evidence-r
 const SNAPSHOT_CACHE = '/tmp/interview-lab-cache/source-notes.json';
 const TRANSITION_SCHEMA = 'source-note-boundary-review-transition.v1';
 const MULTI_TRANSITION_SCHEMA = 'source-note-boundary-review-transition.v2';
+const EVIDENCE_AUTHORIZATION_SCHEMA = 'issue-1605-remaining-boundary-evidence-authorization.v1';
+const EVIDENCE_AUTHORIZATION_MARKER = 'issue-1605-remaining-boundary-evidence-authorization';
+const SAFE_HEX64 = /^[0-9a-f]{64}$/;
 const REQUIRED_CHECKS = Object.freeze([
   'source_identity',
   'source_revision_binding',
@@ -511,6 +514,47 @@ function isAllowedBlockedAuditError(error) {
   return ALLOWED_BLOCKED_AUDIT_ERRORS.has(String(error));
 }
 
+function evidenceAuthorizationDigest(proof) {
+  return sha256(canonical(Object.fromEntries(Object.entries(proof).filter(([key]) => key !== 'proof_sha256'))));
+}
+
+function renderEvidenceAuthorizationMarker(proof) {
+  return `<!-- ${EVIDENCE_AUTHORIZATION_MARKER}\n${JSON.stringify(proof, null, 2)}\n-->`;
+}
+
+function validateEvidenceAuthorization(proof, plan, comments = []) {
+  const errors = [];
+  if (!proof || typeof proof !== 'object' || Array.isArray(proof)) return { ok: false, errors: ['evidence authorization proof must be an object'] };
+  if (proof.schema_version !== EVIDENCE_AUTHORIZATION_SCHEMA
+      || proof.repository !== REPOSITORY
+      || proof.parent_issue !== PARENT_ISSUE
+      || proof.action !== 'authorize-remaining-boundary-evidence') {
+    errors.push('evidence authorization schema/repository/parent/action mismatch');
+  }
+  if (proof.allow_live_github !== true) errors.push('evidence authorization must explicitly allow live GitHub comments');
+  if (proof.manifest_digest !== REMAINING_MANIFEST_DIGEST) errors.push('evidence authorization manifest digest mismatch');
+  if (proof.scope_digest !== REMAINING_SCOPE_DIGEST) errors.push('evidence authorization scope digest mismatch');
+  if (proof.plan_digest !== plan?.canonical_digest) errors.push('evidence authorization plan digest mismatch');
+  if (!Number.isSafeInteger(proof.max_mutations) || proof.max_mutations < 1) errors.push('evidence authorization max_mutations must be a positive safe integer');
+  if (!Number.isSafeInteger(proof.comment_id) || proof.comment_id < 1) errors.push('evidence authorization comment_id must be positive');
+  if (typeof proof.authorized_by !== 'string' || !proof.authorized_by.trim()) errors.push('evidence authorization authorized_by is required');
+  if (!SAFE_HEX64.test(String(proof.proof_sha256 || '')) || evidenceAuthorizationDigest(proof) !== proof.proof_sha256) errors.push('evidence authorization proof_sha256 is invalid');
+  const matches = comments.flatMap((comment) => {
+    if (Number(comment?.id) !== proof.comment_id) return [];
+    const body = String(comment.body || '');
+    const marker = new RegExp(`<!--\\s*${EVIDENCE_AUTHORIZATION_MARKER}\\s*([\\s\\S]*?)-->`, 'g');
+    return [...body.matchAll(marker)].map((match) => {
+      try { return JSON.parse(match[1].trim()); } catch (_) { return null; }
+    }).filter(Boolean);
+  });
+  if (matches.length !== 1 || !sameObject(matches[0], proof)) errors.push('parent #1605 evidence authorization marker does not exactly match local proof');
+  return { ok: errors.length === 0, errors };
+}
+
+function sameObject(left, right) {
+  return canonical(left) === canonical(right);
+}
+
 function buildPlan(options = {}) {
   const frozen = pendingInventory(options.pending || PENDING_SNAPSHOT);
   const remaining = remainingInventory(options.remaining || REMAINING_MANIFEST, frozen);
@@ -724,7 +768,7 @@ function formalRequest(item, commentId, reviewedAt) {
 }
 
 function parseArgs(argv = process.argv.slice(2)) {
-  const args = { mode: 'plan', output: DEFAULT_OUTPUT, journal: DEFAULT_JOURNAL, lock: DEFAULT_LOCK, requestDir: DEFAULT_REQUEST_DIR, cache: SNAPSHOT_CACHE, pending: PENDING_SNAPSHOT, remaining: REMAINING_MANIFEST, confirmPlan: null, maxMutations: 25, pauseMs: 1000, allowUncertainRetry: false };
+  const args = { mode: 'plan', output: DEFAULT_OUTPUT, journal: DEFAULT_JOURNAL, lock: DEFAULT_LOCK, requestDir: DEFAULT_REQUEST_DIR, cache: SNAPSHOT_CACHE, pending: PENDING_SNAPSHOT, remaining: REMAINING_MANIFEST, authorization: null, confirmPlan: null, maxMutations: 25, pauseMs: 1000, allowUncertainRetry: false };
   for (let index = 0; index < argv.length; index += 1) {
     const arg = argv[index];
     if (arg === '--mode') args.mode = argv[++index];
@@ -735,6 +779,7 @@ function parseArgs(argv = process.argv.slice(2)) {
     else if (arg === '--cache') args.cache = argv[++index];
     else if (arg === '--pending') args.pending = argv[++index];
     else if (arg === '--remaining') args.remaining = argv[++index];
+    else if (arg === '--authorization-proof') args.authorization = argv[++index];
     else if (arg === '--confirm-plan') args.confirmPlan = argv[++index];
     else if (arg === '--max-mutations') args.maxMutations = Number(argv[++index]);
     else if (arg === '--pause-ms') args.pauseMs = Number(argv[++index]);
@@ -742,8 +787,9 @@ function parseArgs(argv = process.argv.slice(2)) {
     else throw new Error(`unknown argument: ${arg}`);
   }
   if (!['plan', 'evidence'].includes(args.mode)) throw new Error('--mode must be plan or evidence');
-  if (!Number.isInteger(args.maxMutations) || args.maxMutations < 1) throw new Error('--max-mutations must be positive');
+  if (!Number.isSafeInteger(args.maxMutations) || args.maxMutations < 1) throw new Error('--max-mutations must be a positive safe integer');
   if (!Number.isInteger(args.pauseMs) || args.pauseMs < 0) throw new Error('--pause-ms must be non-negative');
+  if (args.mode === 'evidence' && !args.authorization) throw new Error('evidence mode requires --authorization-proof for parent #1605');
   return args;
 }
 
@@ -833,6 +879,11 @@ function evidencePreflight(plan, journal, byNumber, journalFile, requestDir, all
 function runEvidence(args, plan, io = {}) {
   if (plan.errors.length) throw new Error(`plan is not executable; resolve ${plan.errors.length} fail-closed errors first`);
   if (args.confirmPlan !== plan.canonical_digest) throw new Error('evidence stage requires --confirm-plan equal to the plan canonical_digest');
+  const proof = io.authorization || (args.authorization ? readJson(args.authorization) : null);
+  const parentComments = io.parentComments || findMarkerComments(PARENT_ISSUE, EVIDENCE_AUTHORIZATION_MARKER);
+  const authorization = validateEvidenceAuthorization(proof, plan, parentComments);
+  if (!authorization.ok) throw new Error(`parent #${PARENT_ISSUE} evidence authorization failed closed: ${authorization.errors.join('; ')}`);
+  if (args.maxMutations > proof.max_mutations) throw new Error(`--max-mutations ${args.maxMutations} exceeds evidence authorization ceiling ${proof.max_mutations}`);
   const lock = (io.acquireLock || acquireLock)(args.lock);
   const read = io.readJson || readJson;
   const write = io.writeJson || writeJson;
@@ -930,5 +981,6 @@ module.exports = {
   canonical, sha256, buildPlan, evidenceBody, formalRequest, normalizeExcerpt, validateRows,
   pendingInventory, remainingInventory, deriveBoundaryACases, deriveBoundaryBCases, parseArgs,
   isAllowedBlockedAuditError, parseEvidenceComment, findExactEvidenceComments,
+  evidenceAuthorizationDigest, renderEvidenceAuthorizationMarker, validateEvidenceAuthorization,
   reconcileEvidenceItem, evidencePreflight, runEvidence, acquireLock,
 };
