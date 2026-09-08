@@ -17,14 +17,14 @@ Canonical digest：
 
 ```text
 selection_sha256: 34d9796c7d60cff3a2e818143da8a2cea2ff83ea052a55911e6402a9dd392420
-evidence_ledger_sha256: 85cc2c9702cb78099d520345f8d62a7aa0664b7aea96a7b42a55d7d1eda3824a
-request_set_sha256: de96352d45603adc159bd5cb06fda6827134f017e6b2f7fa8183e160c26599fd
-classification_ledger_sha256: e8ea153fd39fbf5d8f2fabd7cf306c1da14bb2813dcd0b219f905c6832a4cc1a
-dry_run_sha256: 97953bdf702acbcd5a7e456e1edc2a41fc8ec5a5742373cc973cb16465f2e0ee
-journal_sha256: b44f8289d91f7a7d05ce97e71d6f92a28f8e011b759e5c89b4771892dc0b9567
+evidence_ledger_sha256: 018ec50ecc3769cb5312612e933f7ca8461cac5e50cd3590b095c6965af93e30
+request_set_sha256: 56f7f087504c50dd3a73b0124c9d3064afcb430da5026db1eb6196a1247c1fd4
+classification_ledger_sha256: eebac785c242cc4aea6b93ca7def9241963f4b50ae137bca231466efd5bf1215
+dry_run_sha256: 8a352f9eaa0de1005441df316d9fb2ddba165bf3d6a4aef0c12de93123ef7f50
+journal_sha256: 64f57b1f83e1937a7d57ee1996c95599f2f090bb5f25ec092f00b4ed841b1980
 ```
 
-367 条均为 `decision=pending` / `evidence_status=review-required`，Source projection 为 367/367 verified、source blocked=0；分类 proposal 为 single-interview=20、not-interview=3、pending=344。每条 evidence 独立绑定 frozen body SHA、SourceRevision、pinned `note_desc` ref/blob SHA、完整 projection 文本与依据行号；没有新增 GitHub evidence comment 或 machine marker。request set 仍为 `executable=false`，dry-run `ready=0`，mutation count=0。
+367 条均为 `decision=pending` / `evidence_status=review-required`，Source projection 为 367/367 verified、source blocked=0；分类 proposal 为 single-interview=12、not-interview=3、pending=352。每条 evidence 独立绑定 frozen body SHA、SourceRevision、pinned `note_desc` ref/blob SHA、完整 projection 文本与依据行号；没有新增 GitHub evidence comment 或 machine marker。request set 仍为 `executable=false`，dry-run `ready=0`，mutation count=0。
 
 分类 ledger 是 proposal-only：邀约、求助、建议、面试官分享、题库/题目列表均不会仅凭“面试/问题”字样提出 single；明确拒面才可提出 not-interview。主控仍需逐条复核并创建 durable evidence 后，才可生成正式 transition request。
 

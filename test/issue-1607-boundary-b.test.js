@@ -71,11 +71,21 @@ test('body-only is an explicit preparation mode', () => {
   assert.equal(parseArgs(['--prepare', '--body-only']).allowUnverifiedSource, true);
 });
 
-test('classification is conservative against appointment, advice, and question-bank adversaries', () => {
-  assert.equal(classifyProjection('想到室友拒了Java的面试\n我也直接说我不面了').proposed_decision, 'not-interview');
-  assert.equal(classifyProjection('- 自我介绍\n- JWT原理\n- 做项目有遇到什么困难吗').proposed_decision, 'pending');
-  assert.equal(classifyProjection('收到一家外包的面试邀约\n据说压力挺大，面试情况怎么样，一般考啥').proposed_decision, 'pending');
-  assert.equal(classifyProjection('我当过面试者也做过面试官，场景题准备好对面试有所帮助').proposed_decision, 'pending');
+test('classification is conservative against #393/#394/#401/#415 and scheduled/job adversaries', () => {
+  const examples = {
+    393: '想到室友拒了Java的面试\n我也直接说我不面了',
+    394: '- 自我介绍\n- JWT原理\n- 做项目有遇到什么困难吗',
+    401: '收到一家外包的面试邀约\n据说压力挺大，面试情况怎么样，一般考啥',
+    415: '我当过面试者也做过面试官，场景题准备好对面试有所帮助',
+    scheduled: '明天上午十点面试，已经约好了，面试问题一般考啥',
+    job: '岗位职责和薪资如何，招聘信息里写了面试问题和工作内容',
+    advice: '面试经验分享：准备八股和场景题，对求职有所帮助',
+    question_only: '自我介绍？项目难点？为什么选择这个岗位？',
+  };
+  assert.equal(classifyProjection(examples[393]).proposed_decision, 'not-interview');
+  for (const [label, text] of Object.entries(examples).filter(([label]) => label !== '393')) {
+    assert.notEqual(classifyProjection(text).proposed_decision, 'single-interview', `${label} must not propose single-interview`);
+  }
   assert.equal(classifyProjection('我参加了一面，面试官问了我项目难点和为什么这样设计').proposed_decision, 'single-interview');
 });
 
