@@ -2,10 +2,14 @@
   "schema_version": "issue-1608-boundary-audit.v1",
   "repository": "liqiangcc/interview-lab",
   "issue": 1608,
-  "selection_sha256": "a3e52cd8f7233c06a5be95889a00a0aeae4d82fde7b9f51ec406c68d24e0c69e",
+  "selection_sha256": "47d6c8dadb6b5af3e076b2bb7d2e7fc7dce5f70106601fba981a22bd3f76e8a1",
   "source_snapshot": {
     "repository": "liqiangcc/xhs",
     "ref": "95b77bb261048059846273688e4b90a2e108b437"
+  },
+  "live_issue_snapshot": {
+    "path": "/tmp/issue-1608-live-issues-v2.json",
+    "sha256": "4bbdd134c4417bcedabaa103be48bc1ea94c31c1c62cee46a9e6dd05b4fca0d8"
   },
   "parent_dependency": {
     "schema_version": "issue-1605-global-pending-inventory-dependency.v1",
@@ -50,6 +54,22 @@
       "equals_parent_inventory": true
     },
     "status": "read-only-parent-controller-dependency"
+  },
+  "parent_live_progress": {
+    "parent_issue": 1605,
+    "progress_comment_id": 5586456436,
+    "baseline_pending_count": 1397,
+    "completed_boundary_rows": 419,
+    "remaining_boundary_pending": 978,
+    "authorization": {
+      "manifest_digest": "40fd63cccea624a567778f5c679a9e0e77b0784181de4d54cacad9873ae6c97a",
+      "plan_digest": "75af8bc59053022d884a845b98f12229705e03daefdcaaaa7793b36a21cf4906",
+      "authorization_comment_id": 5584795249,
+      "candidate_count": 419,
+      "max_mutations": 840,
+      "live_github_allowed": true,
+      "applies_to_issue_1608_remainder": false
+    }
   },
   "scope": {
     "first_issue": 766,
@@ -1062,5 +1082,5 @@
   ],
   "out_of_scope_issue_numbers_read": [],
   "duplicate_ownership_check": "deferred to controller-owned materialization phase; no InterviewNote identity is created here",
-  "audit_sha256": "f88149e1d2dcc07e59c2f8e15440a6846108b4abc695ab399eaffa9c9522d71e"
+  "audit_sha256": "6ce15878fe111821a5c0c02349b690249eb102f08f33dd1f9300feb160051fbf"
 }

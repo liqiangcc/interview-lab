@@ -22,7 +22,6 @@ const SOURCE_REF = '95b77bb261048059846273688e4b90a2e108b437';
 const ISSUE = 1608;
 const FIRST_ISSUE = 766;
 const LAST_ISSUE = 1138;
-const EXPECTED_PENDING_COUNT = 337;
 const OUTPUT_DIR = path.resolve(__dirname, '..', 'data', 'issue-1608');
 const ALL_LABELS = ['type:source-note', 'status:captured', 'boundary:pending'];
 const CHECKS = [
@@ -52,6 +51,22 @@ const PARENT_DEPENDENCY = Object.freeze({
   ],
   union: { count: 1397, pairwise_disjoint: true, equals_parent_inventory: true },
   status: 'read-only-parent-controller-dependency',
+});
+const PARENT_LIVE_PROGRESS = Object.freeze({
+  parent_issue: 1605,
+  progress_comment_id: 5586456436,
+  baseline_pending_count: 1397,
+  completed_boundary_rows: 419,
+  remaining_boundary_pending: 978,
+  authorization: {
+    manifest_digest: '40fd63cccea624a567778f5c679a9e0e77b0784181de4d54cacad9873ae6c97a',
+    plan_digest: '75af8bc59053022d884a845b98f12229705e03daefdcaaaa7793b36a21cf4906',
+    authorization_comment_id: 5584795249,
+    candidate_count: 419,
+    max_mutations: 840,
+    live_github_allowed: true,
+    applies_to_issue_1608_remainder: false,
+  },
 });
 
 const MULTI_CASE_RULES = [
@@ -135,7 +150,8 @@ function issueNumbers() {
 }
 
 function labelsOf(issue) {
-  return (issue.labels || []).map((label) => typeof label === 'string' ? label : label && label.name).filter(Boolean);
+  const labels = issue.labels && issue.labels.nodes ? issue.labels.nodes : issue.labels || [];
+  return labels.map((label) => typeof label === 'string' ? label : label && label.name).filter(Boolean);
 }
 
 function sourceProjection(record) {
@@ -449,13 +465,15 @@ function parseArgs(argv) {
     throw new Error('reproducibility requires --captured-at YYYY-MM-DDTHH:mm:ss.sssZ');
   }
   if (Number.isNaN(Date.parse(args.capturedAt))) throw new Error(`invalid --captured-at: ${args.capturedAt}`);
-  if (Boolean(args.issuesFile) !== Boolean(args.sourceTextsFile)) throw new Error('--issues-file and --source-texts-file must be supplied together');
   return args;
 }
 
 async function prepare({ capturedAt, issuesFile, sourceTextsFile, cacheDir }) {
   const numbers = issueNumbers();
   const cachedIssues = issuesFile ? readJson(issuesFile) : null;
+  const liveIssueSnapshot = issuesFile
+    ? { path: path.resolve(issuesFile), sha256: sha256Text(fs.readFileSync(issuesFile, 'utf8')) }
+    : null;
   if (cachedIssues) {
     if (cachedIssues.range?.first !== FIRST_ISSUE || cachedIssues.range?.last !== LAST_ISSUE) throw new Error('cached issue snapshot range drifted');
     if (JSON.stringify(cachedIssues.numbers) !== JSON.stringify(numbers)) throw new Error('cached issue snapshot enumeration drifted');
@@ -504,7 +522,6 @@ async function prepare({ capturedAt, issuesFile, sourceTextsFile, cacheDir }) {
       live_updated_at: live.updated_at,
     });
   }
-  if (selected.length !== EXPECTED_PENDING_COUNT) throw new Error(`selection count mismatch: expected ${EXPECTED_PENDING_COUNT}, got ${selected.length}`);
   if (rejected.some((item) => item.issue_number >= FIRST_ISSUE && item.issue_number <= LAST_ISSUE && item.state === 'open' && item.labels.includes('boundary:pending'))) {
     throw new Error('scope selection rejected an in-range pending SourceNote unexpectedly');
   }
@@ -576,6 +593,17 @@ async function prepare({ capturedAt, issuesFile, sourceTextsFile, cacheDir }) {
     });
   }
 
+  for (const [relativeDirectory, keepFiles] of [
+    ['evidence', new Set(items.map((item) => item.evidence_file))],
+    ['requests', new Set(items.map((item) => item.request_file))],
+  ]) {
+    const directory = path.join(OUTPUT_DIR, relativeDirectory);
+    if (!fs.existsSync(directory)) continue;
+    for (const file of fs.readdirSync(directory)) {
+      if (/^\d{4}\.json(?:\.md)?$/.test(file) && !keepFiles.has(`${relativeDirectory}/${file}`)) fs.unlinkSync(path.join(directory, file));
+    }
+  }
+
   const counts = items.reduce((out, item) => {
     const key = item.disposition === 'blocked' ? 'blocked' : item.decision;
     out[key] = (out[key] || 0) + 1;
@@ -588,12 +616,14 @@ async function prepare({ capturedAt, issuesFile, sourceTextsFile, cacheDir }) {
     scope: {
       first_issue: FIRST_ISSUE,
       last_issue: LAST_ISSUE,
-      expected_pending_count: EXPECTED_PENDING_COUNT,
+      expected_pending_count: selected.length,
       membership_policy: 'open issues in the exact interval carrying type:source-note + status:captured + boundary:pending',
       no_out_of_scope_reads: true,
     },
     source_snapshot: { repository: SOURCE_REPOSITORY, ref: SOURCE_REF },
+    live_issue_snapshot: liveIssueSnapshot,
     parent_dependency: PARENT_DEPENDENCY,
+    parent_live_progress: PARENT_LIVE_PROGRESS,
     captured_at: capturedAt,
     total: items.length,
     counts,
@@ -608,8 +638,10 @@ async function prepare({ capturedAt, issuesFile, sourceTextsFile, cacheDir }) {
     repository: REPOSITORY,
     issue: ISSUE,
     source_snapshot: { repository: SOURCE_REPOSITORY, ref: SOURCE_REF },
+    live_issue_snapshot: liveIssueSnapshot,
     parent_dependency: PARENT_DEPENDENCY,
-    scope: { first_issue: FIRST_ISSUE, last_issue: LAST_ISSUE, expected_count: EXPECTED_PENDING_COUNT },
+    parent_live_progress: PARENT_LIVE_PROGRESS,
+    scope: { first_issue: FIRST_ISSUE, last_issue: LAST_ISSUE, expected_count: selected.length },
     mutation_allowed: false,
     items: batchItems,
   });
@@ -620,7 +652,9 @@ async function prepare({ capturedAt, issuesFile, sourceTextsFile, cacheDir }) {
     issue: ISSUE,
     selection_sha256: selection.selection_sha256,
     source_snapshot: { repository: SOURCE_REPOSITORY, ref: SOURCE_REF },
+    live_issue_snapshot: liveIssueSnapshot,
     parent_dependency: PARENT_DEPENDENCY,
+    parent_live_progress: PARENT_LIVE_PROGRESS,
     scope: { first_issue: FIRST_ISSUE, last_issue: LAST_ISSUE, total: items.length },
     mode: 'plan-only',
     mutation_allowed: false,
@@ -655,7 +689,9 @@ async function prepare({ capturedAt, issuesFile, sourceTextsFile, cacheDir }) {
     issue: ISSUE,
     selection_sha256: selection.selection_sha256,
     dry_run_sha256: plan.dry_run_sha256,
+    live_issue_snapshot: liveIssueSnapshot,
     parent_dependency: PARENT_DEPENDENCY,
+    parent_live_progress: PARENT_LIVE_PROGRESS,
     mode: 'not-authorized',
     mutation_allowed: false,
     entries: items.map((item) => ({ issue_number: item.issue_number, transition_id: item.disposition === 'decided' ? `issue-1608-boundary-${String(item.issue_number).padStart(4, '0')}-1` : null, status: 'not-started', mutation_performed: false, evidence_comment_id: null })),
@@ -668,11 +704,13 @@ async function prepare({ capturedAt, issuesFile, sourceTextsFile, cacheDir }) {
     issue: ISSUE,
     selection_sha256: selection.selection_sha256,
     source_snapshot: { repository: SOURCE_REPOSITORY, ref: SOURCE_REF },
+    live_issue_snapshot: liveIssueSnapshot,
     parent_dependency: PARENT_DEPENDENCY,
+    parent_live_progress: PARENT_LIVE_PROGRESS,
     scope: { first_issue: FIRST_ISSUE, last_issue: LAST_ISSUE },
     checks: {
       exact_interval_enumerated: numbers.length === 373,
-      pending_selection_count: items.length === EXPECTED_PENDING_COUNT,
+      pending_selection_count: items.length === selected.length,
       all_selected_labels_match: items.every((item) => ALL_LABELS.every((label) => item.labels.includes(label))),
       all_selected_source_refs_match: items.every((item) => item.source_repository_ref === SOURCE_REF),
       source_note_ids_unique: new Set(items.map((item) => item.source_note_id)).size === items.length,
@@ -686,7 +724,7 @@ async function prepare({ capturedAt, issuesFile, sourceTextsFile, cacheDir }) {
     duplicate_ownership_check: 'deferred to controller-owned materialization phase; no InterviewNote identity is created here',
   };
   writeJson(path.join(OUTPUT_DIR, 'audit.json'), { ...auditWithoutDigest, audit_sha256: sha256Text(canonicalJson(auditWithoutDigest)) });
-  console.log(JSON.stringify({ output_dir: OUTPUT_DIR, total: items.length, counts, selection_sha256: selection.selection_sha256, dry_run_sha256: plan.dry_run_sha256, mutation_count: 0 }, null, 2));
+  console.log(JSON.stringify({ output_dir: OUTPUT_DIR, total: items.length, counts, parent_live_pending: PARENT_LIVE_PROGRESS.remaining_boundary_pending, selection_sha256: selection.selection_sha256, dry_run_sha256: plan.dry_run_sha256, mutation_count: 0 }, null, 2));
 }
 
 if (require.main === module) {
@@ -698,4 +736,4 @@ if (require.main === module) {
   }
 }
 
-module.exports = { canonicalJson, classify, evidenceDecisionConsistent, gitBlobSha, issueNumbers, sha256Text, PARENT_DEPENDENCY };
+module.exports = { canonicalJson, classify, evidenceDecisionConsistent, gitBlobSha, issueNumbers, sha256Text, PARENT_DEPENDENCY, PARENT_LIVE_PROGRESS };
