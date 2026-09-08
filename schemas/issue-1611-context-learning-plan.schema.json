@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/liqiangcc/interview-lab/schemas/issue-1611-context-learning-plan.schema.json",
+  "title": "Issue #1611 future InterviewNote Context and learning discovery plan",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "aggregate_id", "repository", "source_repository", "source_ref", "parent_issue", "aggregate_issue", "mode", "mutation_performed", "write_operations", "candidate_count", "stage_contracts", "inputs", "ownership_inventory", "dependency_status", "summary", "blocked_prerequisites", "blocked_ledger", "errors", "candidates", "canonical_digest"],
+  "properties": {
+    "schema_version": {"const": "issue-1611-context-learning-plan.v1"},
+    "aggregate_id": {"const": "issue-1611-full-downstream-v1"},
+    "repository": {"const": "liqiangcc/interview-lab"},
+    "source_repository": {"const": "liqiangcc/xhs"},
+    "source_ref": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "parent_issue": {"const": 1605},
+    "aggregate_issue": {"const": 1611},
+    "mode": {"const": "plan-only"},
+    "mutation_performed": {"const": false},
+    "write_operations": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["patch", "post", "create"],
+      "properties": {"patch": {"const": 0}, "post": {"const": 0}, "create": {"const": 0}}
+    },
+    "candidate_count": {"const": 350},
+    "stage_contracts": {"type": "array", "minItems": 4},
+    "inputs": {"type": "object"},
+    "ownership_inventory": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["required_schema", "present", "valid", "complete", "count", "canonical_digest"],
+      "properties": {
+        "required_schema": {"const": "aggregate-interview-note-ownership-inventory.v1"},
+        "present": {"type": "boolean"},
+        "valid": {"type": "boolean"},
+        "complete": {"type": ["boolean", "null"]},
+        "count": {"type": "integer", "minimum": 0},
+        "canonical_digest": {"type": ["string", "null"]}
+      }
+    },
+    "dependency_status": {"type": "object"},
+    "summary": {"type": "object"},
+    "blocked_prerequisites": {"type": "array"},
+    "blocked_ledger": {"type": "array"},
+    "errors": {"type": "array", "items": {"type": "string"}},
+    "candidates": {
+      "type": "array",
+      "minItems": 350,
+      "maxItems": 350,
+      "items": {
+        "type": "object",
+        "required": ["source_note_issue_number", "source_note_id", "source_note_body_sha256", "source_revision_id", "source_ref", "boundary_decision", "interview_note_id", "required_sequence", "ownership", "materialization", "source_review", "context", "learning", "blocked_stages"],
+        "properties": {
+          "source_note_issue_number": {"type": "integer", "minimum": 1},
+          "source_note_id": {"type": "string", "minLength": 1},
+          "source_note_body_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "source_revision_id": {"type": "string", "minLength": 1},
+          "source_ref": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+          "boundary_decision": {"enum": ["single-interview", "multi-interview"]},
+          "case_key": {"type": ["string", "null"]},
+          "interview_note_id": {"type": "string", "minLength": 1},
+          "interview_issue_number": {"type": ["integer", "null"], "minimum": 1},
+          "required_sequence": {"const": ["materialization", "source-review", "context", "learning-discovery"]},
+          "ownership": {"type": "object"},
+          "materialization": {"type": "object"},
+          "source_review": {"type": "object"},
+          "context": {"type": "object"},
+          "learning": {"type": "object"},
+          "blocked_stages": {"type": "array"}
+        }
+      }
+    },
+    "post_apply_audit": {"type": "array"},
+    "canonical_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

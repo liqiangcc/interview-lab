@@ -90,3 +90,24 @@ node scripts/plan-aggregate-downstream-pipeline.js \
 ```
 
 apply 会先在单 writer lock 下重新读取 live InterviewNote Issues 并 fresh re-plan，要求 canonical digest 与已授权 plan 完全一致；每项 PATCH 前再做 body/title/labels CAS。journal 必须记录 mutation ceiling、`mutation_attempted`、`mutation_performed`、`possibly_performed` 及 receipt reconcile 尝试。POST 响应不确定时只允许有限次、分页且有页数上限的 GET marker reconcile；找不到唯一匹配 marker 或 GET 状态未知即停止，禁止重发。stale/损坏/被替换的 lock 一律 fail closed；释放前复核 lock token 与 inode，TOCTOU 变化时不删除当前 lock。
+
+## Future 350 Context / learning handoff
+
+The future candidate handoff is executable through:
+
+```bash
+npm run plan:issue-1611-context-learning
+```
+
+It consumes the 419-row `issue-1605-boundary-transition-report.v1` plus the required complete `aggregate-interview-note-ownership-inventory.v1` snapshot at `data/pilot/issue-1611/interview-note-ownership-inventory.json`, and emits one plan row for each of the exact 350 InterviewNote identities. The inventory must carry a recomputable `canonical_digest`, unique `interview_note_id` and `issue_number` values, and bidirectional ownership is checked before any downstream stage. Each row carries the same ordered contract:
+
+```text
+materialization
+  -> independent Source Review receipt
+  -> reviewed InterviewContext with a body-pinned live Issue
+  -> buildLearningDiscovery title and labels
+```
+
+The planner never invents an InterviewNote Issue number before materialization. It records `pending-materialization` and blocks the later three stages until a unique owner exists. For an `already-materialized` row, both `interview_note_id -> issue_number` and `issue_number -> interview_note_id` must match the full inventory; an outside or colliding Issue cannot satisfy the gate. Source Review must use `interview-note-source-review-applied.v1` with `independent=true`; Boundary Review evidence cannot be reused. Context must bind the InterviewNote identity, SourceRevision, and Raw body SHA, and must not contain `body`, `next_body`, `result`, or `outcome`. Only then may `buildLearningDiscovery` produce `company:*`, coarse `role:*`, `recruitment:*`, `round:*`, `source-year:*`, and proven `interview-year:*` labels; Unknown values produce no label and Outcome remains sealed.
+
+The output schema is `schemas/issue-1611-context-learning-plan.schema.json`. `mode=plan-only`, `mutation_performed=false`, and `{patch:0,post:0,create:0}` are mandatory. Missing, incomplete, digest-drifted, or ownership-colliding inventory; missing materialization plan, Source Review receipt, Context, or body-pinned live snapshot are explicit blocked ledger entries; they are not treated as successful no-ops.
