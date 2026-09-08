@@ -12,6 +12,7 @@ const {
   buildPlan, deriveBoundaryBCases, pendingInventory, remainingInventory, parseArgs, sha256,
   formalRequest, parseEvidenceComment, runEvidence, isAllowedBlockedAuditError,
   evidenceAuthorizationDigest, renderEvidenceAuthorizationMarker, validateEvidenceAuthorization,
+  readWithRetry, readLiveIssue, readCommentsPage,
 } = require('../scripts/issue-1605-full-boundary-coordinator');
 const { validateTransitionRequest } = require('../scripts/lib/source-note-boundary-review-transition');
 
@@ -83,6 +84,35 @@ test('evidence mode authorization binds parent, plan, scope, manifest, marker, a
   assert.equal(validateEvidenceAuthorization(proof, plan, [{ id: proof.comment_id, body: `${renderEvidenceAuthorizationMarker(proof)}\n${renderEvidenceAuthorizationMarker(proof)}` }]).ok, false);
   assert.throws(() => runEvidence({ confirmPlan: plan.canonical_digest, authorization: null, maxMutations: 1 }, plan, { parentComments: [] }), /authorization/);
   assert.throws(() => parseArgs(['--mode', 'evidence', '--confirm-plan', plan.canonical_digest]), /authorization-proof/);
+});
+
+test('read-only Issue and comments GETs retry transient TLS failures with bounded exponential backoff', () => {
+  let issueAttempts = 0;
+  const delays = [];
+  const issue = readLiveIssue(735, {
+    ghJson() {
+      issueAttempts += 1;
+      if (issueAttempts < 3) throw new Error('TLS handshake timeout');
+      return { number: 735, state: 'open' };
+    },
+    baseDelayMs: 7,
+    sleepFn: (delay) => delays.push(delay),
+  });
+  assert.equal(issue.number, 735);
+  assert.equal(issueAttempts, 3);
+  assert.deepEqual(delays, [7, 14]);
+
+  let commentAttempts = 0;
+  const comments = readCommentsPage(735, 1, {
+    ghJson() {
+      commentAttempts += 1;
+      if (commentAttempts === 1) throw new Error('network connection reset');
+      return [];
+    },
+    sleepFn() {},
+  });
+  assert.deepEqual(comments, []);
+  assert.equal(commentAttempts, 2);
 });
 
 test('remaining and frozen inventory validators reject a digest or scope drift', () => {
@@ -211,4 +241,50 @@ test('simulated evidence mode persists journal/request, reconciles exact marker,
   assert.equal(journal.items[0].possibly_posted, false);
   const request = JSON.parse(fs.readFileSync(path.join(args.requestDir, `${String(item.issue_number).padStart(4, '0')}.json`), 'utf8').match(/<!--[^\n]+\n([\s\S]*?)\n-->/)[1]);
   assert.equal(request.review_evidence.comment_id, 7001);
+});
+
+test('exhausted transient read retry blocks evidence preflight before any POST', () => {
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'issue-1605-evidence-read-blocked-'));
+  const cacheFile = path.join(directory, 'source-notes.json');
+  fs.writeFileSync(cacheFile, JSON.stringify(frozenSnapshot.items.map((item) => ({
+    number: item.issue_number, body_sha256: item.body_sha256, labels: item.labels,
+  }))));
+  const sourcePlan = buildPlan({ cache: cacheFile });
+  const sourceItem = sourcePlan.items.find((item) => item.decision === 'not-interview');
+  const item = { ...sourceItem, expected_body_sha256: sha256('synthetic pending body') };
+  const plan = { ...sourcePlan, items: [item], canonical_digest: sha256('exhausted read plan') };
+  const proofWithoutDigest = {
+    schema_version: 'issue-1605-remaining-boundary-evidence-authorization.v1',
+    repository: 'liqiangcc/interview-lab', parent_issue: 1605,
+    action: 'authorize-remaining-boundary-evidence', allow_live_github: true,
+    manifest_digest: sourcePlan.pending_inventory.digest, scope_digest: sourcePlan.scope.remaining_scope_digest,
+    frozen_snapshot_digest: sourcePlan.frozen_inventory.digest,
+    plan_digest: plan.canonical_digest, max_mutations: 1, comment_id: 1605003, authorized_by: 'simulation-reviewer',
+  };
+  const proof = { ...proofWithoutDigest, proof_sha256: evidenceAuthorizationDigest(proofWithoutDigest) };
+  let readAttempts = 0;
+  let postAttempts = 0;
+  const args = {
+    mode: 'evidence', output: path.join(directory, 'remaining-plan.json'),
+    journal: path.join(directory, 'remaining-journal.json'), lock: path.join(directory, 'remaining.lock'),
+    requestDir: path.join(directory, 'requests'), confirmPlan: plan.canonical_digest,
+    maxMutations: 1, pauseMs: 0, allowUncertainRetry: false,
+  };
+  assert.throws(() => runEvidence(args, plan, {
+    authorization: proof,
+    parentComments: [{ id: proof.comment_id, body: renderEvidenceAuthorizationMarker(proof) }],
+    findExactEvidenceComments: () => ({ exact: [], errors: [] }),
+    readLiveIssue() {
+      return readWithRetry(() => {
+        readAttempts += 1;
+        throw new Error('TLS handshake timeout');
+      }, { sleepFn() {} });
+    },
+    postEvidence() { postAttempts += 1; return { id: 1 }; },
+  }), /evidence preflight read failed/);
+  assert.equal(readAttempts, 5);
+  assert.equal(postAttempts, 0);
+  const journal = JSON.parse(fs.readFileSync(args.journal, 'utf8'));
+  assert.equal(journal.status, 'blocked');
+  assert.equal(journal.posted, 0);
 });
