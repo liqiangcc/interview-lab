@@ -15,7 +15,7 @@ const DEFAULT_MANIFEST = 'data/pilot/issue-1605/full-boundary-manifest.json';
 const DEFAULT_OUTPUT = 'data/pilot/issue-1605/full-boundary-transition.plan.json';
 const DEFAULT_JOURNAL = 'data/pilot/issue-1605/full-boundary-transition.journal.json';
 const DEFAULT_LOCK = 'data/pilot/issue-1605/full-boundary-transition.lock';
-const READ_RETRY_MAX_ATTEMPTS = 3;
+const READ_RETRY_MAX_ATTEMPTS = 5;
 const READ_RETRY_BASE_DELAY_MS = 100;
 
 function parseArgs(argv = process.argv.slice(2)) {
@@ -188,5 +188,5 @@ if (require.main === module) {
 }
 
 module.exports = {
-  parseArgs, readCommentsPaged, buildLiveLoader, buildMutationWriters, loadParentAuthorization, assertMutationCeiling, main,
+  parseArgs, readGhJson, readCommentsPaged, buildLiveLoader, buildMutationWriters, loadParentAuthorization, assertMutationCeiling, main,
 };

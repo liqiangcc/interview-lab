@@ -20,8 +20,9 @@ npm run plan:issue-1605-full-boundary-transition
 1. 读取并解析恰好一个 formal request marker；repository、parent #1605、Issue、transition
    id 与固定 XHS ref `95b77bb261048059846273688e4b90a2e108b437` 必须一致。
 2. 对该 SourceNote 做 live GET，并用显式 `page=1..N&per_page=100` 读取 comments。每个只读
-   GET（包括每一页 comments）对 EOF/TLS/timeout 等 transient exec failure 最多重试 3 次，
-   使用短指数退避；最终失败仍生成 blocked item 并进入顶层 errors。每页必须是数组，且必须
+   GET（包括每一页 comments）对 EOF/TLS/timeout 等 transient exec failure 默认且最多重试 5 次，
+   使用短指数退避；非 transient failure 立即失败，最终失败仍生成 blocked item 并进入顶层
+   errors。每页必须是数组，且必须
    观察到短终页；到达 100 页仍没有短终页即 fail closed。PATCH/POST 不使用这个 retry wrapper。
 3. 用 `parseSourceNoteBoundaryReviewTransition` 和
    `planSourceNoteBoundaryReviewTransition` 校验 evidence comment、body SHA、SourceRevision、
