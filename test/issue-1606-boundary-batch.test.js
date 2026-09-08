@@ -123,6 +123,41 @@ test('P1 spot checks use completed evidence and block appointment/question-only 
   assert.match(classifyBoundary(inventory.items.find((item) => item.issue_number === 389)).evidence_line.text, /面完/);
 });
 
+test('semantic negative spot checks never become single-interview', () => {
+  const expected = {
+    116: 'not-interview',
+    186: 'not-interview',
+    227: 'blocked',
+    234: 'blocked',
+    262: 'not-interview',
+    266: 'not-interview',
+    303: 'not-interview',
+    351: 'blocked',
+    355: 'blocked',
+    381: 'not-interview',
+    388: 'blocked',
+  };
+  for (const [issueNumber, disposition] of Object.entries(expected)) {
+    const review = classifyBoundary(inventory.items.find((item) => item.issue_number === Number(issueNumber)));
+    assert.equal(review.status, disposition === 'blocked' ? 'blocked' : 'ready', `#${issueNumber}`);
+    assert.equal(review.decision, disposition === 'not-interview' ? 'not-interview' : null, `#${issueNumber}`);
+    const planned = plan.items.find((item) => item.issue_number === Number(issueNumber));
+    assert.equal(planned.disposition, review.status, `plan #${issueNumber}`);
+    assert.equal(planned.decision, review.decision, `plan #${issueNumber}`);
+  }
+});
+
+test('semantic adversarial cases distinguish curated advice, recruiting calendars, aggregate, and isolated outcomes', () => {
+  assert.equal(classifyBoundary(projection('小孙同学投稿：网易云音乐二面')).decision, 'not-interview');
+  assert.equal(classifyBoundary(projection('面试资料整理，欢迎提问')).decision, 'not-interview');
+  assert.equal(classifyBoundary(projection('秋招宣讲日程：本周六、本周日安排面试')).decision, 'not-interview');
+  assert.equal(classifyBoundary(projection('面完国内所有大厂后的面试总结')).status, 'blocked');
+  assert.equal(classifyBoundary(projection('美团和百度两个独立流程，分别等待结果')).status, 'blocked');
+  assert.equal(classifyBoundary(projection('二面完秒拒信')).status, 'blocked');
+  assert.equal(classifyBoundary(projection('面试通过了，求助这家公司靠谱吗')).status, 'blocked');
+  assert.equal(classifyBoundary(projection('美团在招 Java，二面过后就知道能不能拿 offer')).decision, 'not-interview');
+});
+
 test('every selected item has an independent validated request and dry-run has zero mutations', () => {
   assert.equal(plan.counts.total, 327);
   assert.equal(plan.items.length, 327);

@@ -15,8 +15,8 @@
   "transition_id": "issue-1606-170-boundary-review-1",
   "reviewed_at": "2026-09-08T02:05:50Z",
   "reviewer_kind": "ai-assisted",
-  "disposition": "blocked",
-  "decision": null,
+  "disposition": "ready",
+  "decision": "not-interview",
   "evidence": {
     "artifact_ref": "liqiangcc/xhs:note_desc/6627c35a0000000001007c36.txt@95b77bb261048059846273688e4b90a2e108b437",
     "artifact_provenance": "source_projection",
@@ -25,9 +25,9 @@
     "byte_size": 2463,
     "excerpts": [
       {
-        "excerpt": "7、手撕代码：写一个双向链表的插入。",
-        "line": 15,
-        "locator": "artifact-line:15"
+        "excerpt": "回答：这几个函数，做嵌入式岗位必须要会，按照学校老师的话来讲：这道题是这次考试的必考题，15分就放在那里，爱背不背。这道题，浙江大华也考了，mtk也考了，做嵌入式对内存太敏感，必考。",
+        "line": 34,
+        "locator": "artifact-line:34"
       }
     ]
   },
@@ -35,37 +35,36 @@
     {
       "check_id": "source_identity",
       "result": "pass",
-      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:15"
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:34"
     },
     {
       "check_id": "source_revision_binding",
       "result": "pass",
-      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:15"
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:34"
     },
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:15"
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:34"
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "Source projection contains isolated interview questions or outcome language without explicit completed candidate-interview context; retain boundary:pending."
+      "result": "pass",
+      "note": "Source projection is a recruiting, event-calendar, job-posting, or interview-scheduling announcement without completed candidate-interview evidence."
     },
     {
       "check_id": "no_cross_source_mixing",
       "result": "pass",
-      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:15"
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:34"
     },
     {
       "check_id": "no_fabrication",
       "result": "pass",
-      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:15"
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:34"
     }
   ],
   "limitations": [
     "Boundary Review only determines whether 0/1/N InterviewNote case identity may be materialized; it does not write source-ready, InterviewContext, learning labels, or InterviewNote Issues.",
-    "No live evidence comment or transition mutation is authorized by this artifact; any later apply must create/bind durable per-issue evidence and recheck body/state/source CAS.",
-    "Source projection contains isolated interview questions or outcome language without explicit completed candidate-interview context; retain boundary:pending."
+    "No live evidence comment or transition mutation is authorized by this artifact; any later apply must create/bind durable per-issue evidence and recheck body/state/source CAS."
   ]
 }

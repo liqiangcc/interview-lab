@@ -12,19 +12,19 @@
   "source_inventory_sha256": "e29235ad7a6762bd651c25531c961d3bd4c9c3c663506feb12c14f3adfd6e4c8",
   "counts": {
     "total": 327,
-    "ready": 69,
-    "blocked": 258,
+    "ready": 92,
+    "blocked": 235,
     "decisions": {
-      "not-interview": 12,
-      "single-interview": 57,
+      "not-interview": 50,
+      "single-interview": 42,
       "multi-interview": 0,
-      "blocked": 258
+      "blocked": 235
     }
   },
   "mutation": {
     "planned": 0,
     "applied": 0,
-    "pending_authorization": 69
+    "pending_authorization": 92
   },
   "items": [
     {
@@ -156,7 +156,7 @@
     {
       "issue_number": 41,
       "request_file": "data/issue-1606/requests/0041.json",
-      "request_sha256": "5d4ba30d7d875087f2392668fdd5cdb1163298e11dd6034c9e2ab40299911247",
+      "request_sha256": "24f7ac69ad4076ff49b2a94f8e50279abb13af5dcf4bdff3f87c1a0c58082acd",
       "body_sha256": "6e094d361888ef836764fcd5c13362922907761b1e2a26fb20db1ca72b3e984a",
       "source_note_id": "xhs-note:642eaa910000000012033ca9",
       "source_revision_id": "xhs-note:642eaa910000000012033ca9:snapshot-95b77bb26104",
@@ -164,7 +164,7 @@
       "disposition": "blocked",
       "decision": null,
       "event_boundary": "fail",
-      "block_reason": "Source projection does not provide enough direct event-boundary evidence; retain boundary:pending rather than infer from title or hashtags.",
+      "block_reason": "Source projection contains isolated interview questions or outcome language without explicit completed candidate-interview context; retain boundary:pending.",
       "interview_note_ids": []
     },
     {
@@ -496,15 +496,15 @@
     {
       "issue_number": 78,
       "request_file": "data/issue-1606/requests/0078.json",
-      "request_sha256": "1d75c24dbf98ed82ee82619da695fc27a700c6fd17e2282caa12816a24207428",
+      "request_sha256": "7f24f2f9b0d798f64d7fec3d869f23431400790fc86085682272e5a7da12126d",
       "body_sha256": "61bac8d48443607aa3950e44d5b99f4d850e4457485f6ad99c30808e6aa880eb",
       "source_note_id": "xhs-note:655b032400000000320373c5",
       "source_revision_id": "xhs-note:655b032400000000320373c5:snapshot-95b77bb26104",
       "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-      "disposition": "blocked",
-      "decision": null,
-      "event_boundary": "fail",
-      "block_reason": "Source projection contains isolated interview questions or outcome language without explicit completed candidate-interview context; retain boundary:pending.",
+      "disposition": "ready",
+      "decision": "not-interview",
+      "event_boundary": "pass",
+      "block_reason": null,
       "interview_note_ids": []
     },
     {
@@ -566,7 +566,7 @@
     {
       "issue_number": 93,
       "request_file": "data/issue-1606/requests/0093.json",
-      "request_sha256": "b0760560c108d836069131bca6ed01832b2b41ff5c3b5741a8a5a44ec9065823",
+      "request_sha256": "e6594f5296aee2afff638470b82ae59eef7c2849b3176b36f7b40f4e9a0dacc0",
       "body_sha256": "7ebe2146ccd63ebe4f9c9b7ec0e0c9eb143e25f7e08c4eb5f3196e8b88f82c02",
       "source_note_id": "xhs-note:659a2c620000000011033b5e",
       "source_revision_id": "xhs-note:659a2c620000000011033b5e:snapshot-95b77bb26104",
@@ -668,7 +668,7 @@
     {
       "issue_number": 104,
       "request_file": "data/issue-1606/requests/0104.json",
-      "request_sha256": "31e7253a9e04959bf49bce3f81e6d4220e82541b30bef34688d3450927308b8a",
+      "request_sha256": "7f82a85920a8bb43330373e448e1f17922fe42889938c6683e35f0dab59e15de",
       "body_sha256": "509a433817a405af373791f4fa0bf733984c29e5a9fb48eee5932702846a05b4",
       "source_note_id": "xhs-note:65abc907000000002c010a10",
       "source_revision_id": "xhs-note:65abc907000000002c010a10:snapshot-95b77bb26104",
@@ -682,15 +682,15 @@
     {
       "issue_number": 108,
       "request_file": "data/issue-1606/requests/0108.json",
-      "request_sha256": "5c2eeb398640bedfe36d75fcef1cfbec4a35b48918b53625c30e2ed0959ef793",
+      "request_sha256": "0d4dd472f06e8ec6884deadc8640b61718121af33ec89ceaeb1ba35d2f5040d0",
       "body_sha256": "d8c3b8757ad83a1f005333bbff492b2d357b46c44665fefaef1ff0c61866433d",
       "source_note_id": "xhs-note:65b78d91000000002c029a49",
       "source_revision_id": "xhs-note:65b78d91000000002c029a49:snapshot-95b77bb26104",
       "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-      "disposition": "blocked",
-      "decision": null,
-      "event_boundary": "fail",
-      "block_reason": "Source projection contains isolated interview questions or outcome language without explicit completed candidate-interview context; retain boundary:pending.",
+      "disposition": "ready",
+      "decision": "not-interview",
+      "event_boundary": "pass",
+      "block_reason": null,
       "interview_note_ids": []
     },
     {
@@ -768,7 +768,7 @@
     {
       "issue_number": 115,
       "request_file": "data/issue-1606/requests/0115.json",
-      "request_sha256": "99855bc537a7b9ac9921694893601586831426d57b7839a95d72cc875f5fdfa5",
+      "request_sha256": "32c7d7325c9d3230ee1bcd07ced637b4d2265b9eb01bbe103ebcdb48b34434c5",
       "body_sha256": "e198fdf68c9075ae9974bbba2bf8458ff1bf8f3c019fde17bc70db979552afdc",
       "source_note_id": "xhs-note:65d952d3000000000b00cb10",
       "source_revision_id": "xhs-note:65d952d3000000000b00cb10:snapshot-95b77bb26104",
@@ -782,18 +782,16 @@
     {
       "issue_number": 116,
       "request_file": "data/issue-1606/requests/0116.json",
-      "request_sha256": "c3da2d7ca3dcb0bb38b805b2506d4a475a4babc3d69192088d45967f72ae0327",
+      "request_sha256": "854059fbfb9e7bbf7c4095b1ea16d3738a9183112be696f01363fe8b3600cdcb",
       "body_sha256": "cea7d411e28bbb8e4dbe1555449d9af40dfb3c896a317c9bfe0ae1c1e641111d",
       "source_note_id": "xhs-note:65ddf5ce00000000070071b8",
       "source_revision_id": "xhs-note:65ddf5ce00000000070071b8:snapshot-95b77bb26104",
       "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
       "disposition": "ready",
-      "decision": "single-interview",
+      "decision": "not-interview",
       "event_boundary": "pass",
       "block_reason": null,
-      "interview_note_ids": [
-        "xhs:65ddf5ce00000000070071b8"
-      ]
+      "interview_note_ids": []
     },
     {
       "issue_number": 117,
@@ -826,21 +824,21 @@
     {
       "issue_number": 119,
       "request_file": "data/issue-1606/requests/0119.json",
-      "request_sha256": "4d926e46f573548fea36dcd2da4761145bc39e6f3c60d3993fd7a665d4aabe98",
+      "request_sha256": "f733b37e0728189d4a12d640a76ab4502f2e7d06ec5b76db8f1a47b54f3692bd",
       "body_sha256": "28ec1f2db5c837842059f5e8e1ed1535606856e09f290cb3f49e0055e1f321fa",
       "source_note_id": "xhs-note:65e99a6c00000000030360af",
       "source_revision_id": "xhs-note:65e99a6c00000000030360af:snapshot-95b77bb26104",
       "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-      "disposition": "blocked",
-      "decision": null,
-      "event_boundary": "fail",
-      "block_reason": "Source projection contains isolated interview questions or outcome language without explicit completed candidate-interview context; retain boundary:pending.",
+      "disposition": "ready",
+      "decision": "not-interview",
+      "event_boundary": "pass",
+      "block_reason": null,
       "interview_note_ids": []
     },
     {
       "issue_number": 120,
       "request_file": "data/issue-1606/requests/0120.json",
-      "request_sha256": "4bc0db2cfef9ea474c751f9d0cc2e8c9335c26a5b894fdd2938cd4fc3d618a4f",
+      "request_sha256": "7398dde834cb7746c3605b9747fa6c2c1322a4c5a5a7fd487222de4a7e1dbfca",
       "body_sha256": "484d4010ba536ef1734a0088219cc39903b4bdb107d9a5fe8fd9eb127cf14b8b",
       "source_note_id": "xhs-note:65e9ed0c0000000004000bbc",
       "source_revision_id": "xhs-note:65e9ed0c0000000004000bbc:snapshot-95b77bb26104",
@@ -910,15 +908,15 @@
     {
       "issue_number": 125,
       "request_file": "data/issue-1606/requests/0125.json",
-      "request_sha256": "f1064a527e1c1e4f513eaa8c8fa476d04fd1083480b72df305aa4ae35de30cb6",
+      "request_sha256": "58bbbc6cd8ee227474f2abc847f4f9ece3c6434609f07e59a1a61c90e3d285f8",
       "body_sha256": "c30c533f67916299e1a113073a732b0329b2585123ac26b1e1bccffc5c4d509b",
       "source_note_id": "xhs-note:65f0549c000000001203d22e",
       "source_revision_id": "xhs-note:65f0549c000000001203d22e:snapshot-95b77bb26104",
       "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-      "disposition": "blocked",
-      "decision": null,
-      "event_boundary": "fail",
-      "block_reason": "Source projection contains isolated interview questions or outcome language without explicit completed candidate-interview context; retain boundary:pending.",
+      "disposition": "ready",
+      "decision": "not-interview",
+      "event_boundary": "pass",
+      "block_reason": null,
       "interview_note_ids": []
     },
     {
@@ -996,7 +994,7 @@
     {
       "issue_number": 131,
       "request_file": "data/issue-1606/requests/0131.json",
-      "request_sha256": "58db0ceb4b13175d661fbae6c2bb181070a76c3d392c4ad2f3557e42f40d6903",
+      "request_sha256": "41516dd022f375efbd12bf237be7b2f81f4d9cac6b97c9c8588d4f005007ba31",
       "body_sha256": "246b0cb6e4d343066530dc20ee44afb2ec2ba661388464fc5fe250058353d7f3",
       "source_note_id": "xhs-note:65f901e90000000013027ad2",
       "source_revision_id": "xhs-note:65f901e90000000013027ad2:snapshot-95b77bb26104",
@@ -1038,7 +1036,7 @@
     {
       "issue_number": 134,
       "request_file": "data/issue-1606/requests/0134.json",
-      "request_sha256": "611efe766baa9b59e183f788e4cc0c5684cef0e9294f71d2162328cb9a7a4df2",
+      "request_sha256": "ed901c3e0e5c47a6d17cd80e9fa3596dbc20d9fbc93a8772d2191aa8cc62a2e0",
       "body_sha256": "541bbcc7310b2c18fe58ba140d8ba2b3991a70b597d31e07da8c4f5e96ee35eb",
       "source_note_id": "xhs-note:65f9852e0000000012023d51",
       "source_revision_id": "xhs-note:65f9852e0000000012023d51:snapshot-95b77bb26104",
@@ -1052,7 +1050,7 @@
     {
       "issue_number": 135,
       "request_file": "data/issue-1606/requests/0135.json",
-      "request_sha256": "ddea393bce237d12343385f0a7c46ec5d6addf61f9ce00d5e4cde853418edcb0",
+      "request_sha256": "7665d302bf972b17c10a5498caab68655c2e66fef64ecb0cf0c92150b086643c",
       "body_sha256": "3d4fede6fcc5123af97cfd64c90750236013a29e033b4180f35c40adce0e2e4e",
       "source_note_id": "xhs-note:65fa7e2c0000000012022bfe",
       "source_revision_id": "xhs-note:65fa7e2c0000000012022bfe:snapshot-95b77bb26104",
@@ -1066,15 +1064,15 @@
     {
       "issue_number": 136,
       "request_file": "data/issue-1606/requests/0136.json",
-      "request_sha256": "3ebffdd8f1981d9526b66087b52c6d5602be8846ee7dbae97b5c0424edb39e6f",
+      "request_sha256": "65cc8b5e8963089221c617471ff0fcbbd44375b5b1225bb8b3e57d5fa2d9c80a",
       "body_sha256": "357df24af866260d8c140ded1022819610f028b349da2c61fb6360f2f80b9fde",
       "source_note_id": "xhs-note:65faefe900000000120219c4",
       "source_revision_id": "xhs-note:65faefe900000000120219c4:snapshot-95b77bb26104",
       "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-      "disposition": "blocked",
-      "decision": null,
-      "event_boundary": "fail",
-      "block_reason": "Source projection does not provide enough direct event-boundary evidence; retain boundary:pending rather than infer from title or hashtags.",
+      "disposition": "ready",
+      "decision": "not-interview",
+      "event_boundary": "pass",
+      "block_reason": null,
       "interview_note_ids": []
     },
     {
@@ -1364,7 +1362,7 @@
     {
       "issue_number": 157,
       "request_file": "data/issue-1606/requests/0157.json",
-      "request_sha256": "2adb689085afe747222e77874836c1903b873ce9cfc9c80e1027d2ed4dabce2c",
+      "request_sha256": "fc1fa7ae3b7192016a82bdf394db0d10e0ee98df1f2d233989c001e9ddf824e9",
       "body_sha256": "24d58e3ba3118c7c8ee3b8df9c16c7d532a18cda6ed784a6f6aeaa34d6dd85ca",
       "source_note_id": "xhs-note:66141c29000000001a00c647",
       "source_revision_id": "xhs-note:66141c29000000001a00c647:snapshot-95b77bb26104",
@@ -1408,15 +1406,15 @@
     {
       "issue_number": 161,
       "request_file": "data/issue-1606/requests/0161.json",
-      "request_sha256": "a55f1f8ab744418b9d97f223333bb962d98a9d0afa20d7b11db22847192cc151",
+      "request_sha256": "edf1abb56b58663236275ada3500b85bb0008342cca1642938da6f5a2b53a3d7",
       "body_sha256": "31c228c3d4addc8bc3e4cdd432545816e0fc73ba75e82b489802091e930598ab",
       "source_note_id": "xhs-note:661b2a98000000001a011a8f",
       "source_revision_id": "xhs-note:661b2a98000000001a011a8f:snapshot-95b77bb26104",
       "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-      "disposition": "blocked",
-      "decision": null,
-      "event_boundary": "fail",
-      "block_reason": "Source projection does not provide enough direct event-boundary evidence; retain boundary:pending rather than infer from title or hashtags.",
+      "disposition": "ready",
+      "decision": "not-interview",
+      "event_boundary": "pass",
+      "block_reason": null,
       "interview_note_ids": []
     },
     {
@@ -1466,18 +1464,16 @@
     {
       "issue_number": 165,
       "request_file": "data/issue-1606/requests/0165.json",
-      "request_sha256": "23c0dad72b69424e89ab68b4fd0ee26fc3c1de212173afc2e19840becf20bed4",
+      "request_sha256": "6cdab3c8c77fc1cedc3d24a93a2d897061cfbe835cc9a2ab2feaedafb4db23d3",
       "body_sha256": "04c550285f1d5e5fda0bf19c84153aac14620deefdba51286202597082701277",
       "source_note_id": "xhs-note:6620d3a40000000004018523",
       "source_revision_id": "xhs-note:6620d3a40000000004018523:snapshot-95b77bb26104",
       "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-      "disposition": "ready",
-      "decision": "single-interview",
-      "event_boundary": "pass",
-      "block_reason": null,
-      "interview_note_ids": [
-        "xhs:6620d3a40000000004018523"
-      ]
+      "disposition": "blocked",
+      "decision": null,
+      "event_boundary": "fail",
+      "block_reason": "Source projection contains isolated interview questions or outcome language without explicit completed candidate-interview context; retain boundary:pending.",
+      "interview_note_ids": []
     },
     {
       "issue_number": 166,
@@ -1526,29 +1522,29 @@
     {
       "issue_number": 169,
       "request_file": "data/issue-1606/requests/0169.json",
-      "request_sha256": "67b4f9a27d6a0d062aa822bad10aa67fad709d531981b4b1c88291b7d88ab91f",
+      "request_sha256": "c3a641938da91cde29a4ea6bcdaff1ee15c2c1ce380c4d559bd7332f398753aa",
       "body_sha256": "5335d7dc18017e7a2b8113d41e44e2a4b29cee72adad97f6e929bae59acd20cb",
       "source_note_id": "xhs-note:66276c0c000000000401b255",
       "source_revision_id": "xhs-note:66276c0c000000000401b255:snapshot-95b77bb26104",
       "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-      "disposition": "blocked",
-      "decision": null,
-      "event_boundary": "fail",
-      "block_reason": "Source projection does not provide enough direct event-boundary evidence; retain boundary:pending rather than infer from title or hashtags.",
+      "disposition": "ready",
+      "decision": "not-interview",
+      "event_boundary": "pass",
+      "block_reason": null,
       "interview_note_ids": []
     },
     {
       "issue_number": 170,
       "request_file": "data/issue-1606/requests/0170.json",
-      "request_sha256": "d777f8d7656630bf856f08dba68c9672462f15f307fc9dfce2bdf1375793d8c4",
+      "request_sha256": "77d55355f93a310c5987ae46f5b3d196d355a9118ff35d5d41c6c87eee7e1d61",
       "body_sha256": "73dd74cdf5161766c8d967072681855e1779cfc985aa6c3ff433707dd024c7ee",
       "source_note_id": "xhs-note:6627c35a0000000001007c36",
       "source_revision_id": "xhs-note:6627c35a0000000001007c36:snapshot-95b77bb26104",
       "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-      "disposition": "blocked",
-      "decision": null,
-      "event_boundary": "fail",
-      "block_reason": "Source projection contains isolated interview questions or outcome language without explicit completed candidate-interview context; retain boundary:pending.",
+      "disposition": "ready",
+      "decision": "not-interview",
+      "event_boundary": "pass",
+      "block_reason": null,
       "interview_note_ids": []
     },
     {
@@ -1670,18 +1666,16 @@
     {
       "issue_number": 179,
       "request_file": "data/issue-1606/requests/0179.json",
-      "request_sha256": "be1c344a7458107b73b1aa849fadc2ae651b9a9b06e7c730851aeaa38fe6b4e4",
+      "request_sha256": "c17ace340bd5fa8b211a71cf472ca76165266f831ae217eb31cd52abfae6e978",
       "body_sha256": "a6a8871684ec406f9d48af1d6b495eddd72754217d9d7fd97c09c42c2a7d7359",
       "source_note_id": "xhs-note:663b69ce000000001e02eea4",
       "source_revision_id": "xhs-note:663b69ce000000001e02eea4:snapshot-95b77bb26104",
       "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
       "disposition": "ready",
-      "decision": "single-interview",
+      "decision": "not-interview",
       "event_boundary": "pass",
       "block_reason": null,
-      "interview_note_ids": [
-        "xhs:663b69ce000000001e02eea4"
-      ]
+      "interview_note_ids": []
     },
     {
       "issue_number": 180,
@@ -1772,23 +1766,21 @@
     {
       "issue_number": 186,
       "request_file": "data/issue-1606/requests/0186.json",
-      "request_sha256": "6ad9d2297b9c0dec39f57255d35cf64c11817fb169b2967728f58b57885ecc29",
+      "request_sha256": "a49d8378cc02c0f239b22fecdc939e55c1b73e0a6e343854218d3de904505ccf",
       "body_sha256": "c6d4ca8a9f7f7b98bf02cc12e48978b87dc86a6c3c6105b025c641524f0da50d",
       "source_note_id": "xhs-note:66476552000000001303f9d9",
       "source_revision_id": "xhs-note:66476552000000001303f9d9:snapshot-95b77bb26104",
       "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
       "disposition": "ready",
-      "decision": "single-interview",
+      "decision": "not-interview",
       "event_boundary": "pass",
       "block_reason": null,
-      "interview_note_ids": [
-        "xhs:66476552000000001303f9d9"
-      ]
+      "interview_note_ids": []
     },
     {
       "issue_number": 187,
       "request_file": "data/issue-1606/requests/0187.json",
-      "request_sha256": "13c25ff47ff39a46b8717a0566f54936cbccdfc9e8281409a62dd17cd8dfff1f",
+      "request_sha256": "a6632708204c0bb9bbb5fa80a8e22190fbe1b1660c10ec2a32088db7425dbe6c",
       "body_sha256": "39def26fd9033cb901f3506e308916116c4ba121486a3d9de107646b549b6db0",
       "source_note_id": "xhs-note:6647ef0e000000001401bd6f",
       "source_revision_id": "xhs-note:6647ef0e000000001401bd6f:snapshot-95b77bb26104",
@@ -1796,7 +1788,7 @@
       "disposition": "blocked",
       "decision": null,
       "event_boundary": "fail",
-      "block_reason": "Source projection does not provide enough direct event-boundary evidence; retain boundary:pending rather than infer from title or hashtags.",
+      "block_reason": "Source projection contains isolated interview questions or outcome language without explicit completed candidate-interview context; retain boundary:pending.",
       "interview_note_ids": []
     },
     {
@@ -1930,7 +1922,7 @@
     {
       "issue_number": 197,
       "request_file": "data/issue-1606/requests/0197.json",
-      "request_sha256": "31c88b721035c65c5cf9f5f61b92873a1fe607579271b014af72bb0994e8ad6f",
+      "request_sha256": "af70fd8426b9ea2e782c74c277fddc1337000c8d3d2228e92f683df07e11b9d9",
       "body_sha256": "879c2f80422989d8115b94e8dd54cd4a14722f2c1a4a127e2380127c9cf8323b",
       "source_note_id": "xhs-note:66589f330000000016013431",
       "source_revision_id": "xhs-note:66589f330000000016013431:snapshot-95b77bb26104",
@@ -2014,21 +2006,21 @@
     {
       "issue_number": 203,
       "request_file": "data/issue-1606/requests/0203.json",
-      "request_sha256": "df23fc7e06d8df195e3419cb8d55c8858c3184f91a4a48a4cf419baa84a46e17",
+      "request_sha256": "c233d19f24ba05faa1d6680440c3775c6f0c3189ffd33590c694ee44d4923604",
       "body_sha256": "77f8b186a120b59c1982388d44b0c56bb50eac9ee222fc0a5b22a397451e4cb0",
       "source_note_id": "xhs-note:666060ec0000000006005acd",
       "source_revision_id": "xhs-note:666060ec0000000006005acd:snapshot-95b77bb26104",
       "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-      "disposition": "blocked",
-      "decision": null,
-      "event_boundary": "fail",
-      "block_reason": "Source projection contains isolated interview questions or outcome language without explicit completed candidate-interview context; retain boundary:pending.",
+      "disposition": "ready",
+      "decision": "not-interview",
+      "event_boundary": "pass",
+      "block_reason": null,
       "interview_note_ids": []
     },
     {
       "issue_number": 204,
       "request_file": "data/issue-1606/requests/0204.json",
-      "request_sha256": "f1cd56cec00aac620f4034908ee3837d36eefa19695e4670157df43883c11426",
+      "request_sha256": "b3f4b6ce292fc4419e393fa349a9ac52b2ecfa38ab9f63dff785e9a0aea29e08",
       "body_sha256": "198de86df113fd21084f9f84d79a99b6aa416b571823c9bd2f66532e3eed14e1",
       "source_note_id": "xhs-note:6661b50a0000000006006ab3",
       "source_revision_id": "xhs-note:6661b50a0000000006006ab3:snapshot-95b77bb26104",
@@ -2084,15 +2076,15 @@
     {
       "issue_number": 208,
       "request_file": "data/issue-1606/requests/0208.json",
-      "request_sha256": "614f2c178d29455dafbb3901d614a7e06b8c1b30c53ddd80f72460d5ebe391d9",
+      "request_sha256": "8873799253ede2c24073be394f54b0cea53f205e0213f2fe4f7674c74bfdc03a",
       "body_sha256": "c21e96fbd6f805b46f8e59619622dfecfcd009c39661a3d6f7df5490dc2ac0f9",
       "source_note_id": "xhs-note:66642034000000000e0304ab",
       "source_revision_id": "xhs-note:66642034000000000e0304ab:snapshot-95b77bb26104",
       "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-      "disposition": "blocked",
-      "decision": null,
-      "event_boundary": "fail",
-      "block_reason": "Source projection contains isolated interview questions or outcome language without explicit completed candidate-interview context; retain boundary:pending.",
+      "disposition": "ready",
+      "decision": "not-interview",
+      "event_boundary": "pass",
+      "block_reason": null,
       "interview_note_ids": []
     },
     {
@@ -2140,7 +2132,7 @@
     {
       "issue_number": 212,
       "request_file": "data/issue-1606/requests/0212.json",
-      "request_sha256": "a6a979b9de0580d9f132224b010a20e2aef9fa54ae3ff950bc2ac4a0bfc73b25",
+      "request_sha256": "61051272f3d34514ec295b29957bb84531fd0169297291893d28c51d7e769888",
       "body_sha256": "12cfe9d36ee5597bcb7478e225184bd424412a69a8aacd57d0aa29399444a1ad",
       "source_note_id": "xhs-note:6668516a000000000e033155",
       "source_revision_id": "xhs-note:6668516a000000000e033155:snapshot-95b77bb26104",
@@ -2224,15 +2216,15 @@
     {
       "issue_number": 218,
       "request_file": "data/issue-1606/requests/0218.json",
-      "request_sha256": "52204aeef13ef672b606c331e797763992fc8d8ea09d2da548483ad60b228035",
+      "request_sha256": "d1f2cf9219a717e12041839fdac57f621e69c4c2359e245de53da90b5c8ffcd5",
       "body_sha256": "bb1adc2929989b9e974d399372ff1f958ee7db4423dfe994cbff5567ffdfcc46",
       "source_note_id": "xhs-note:666fce1d000000000e0333ba",
       "source_revision_id": "xhs-note:666fce1d000000000e0333ba:snapshot-95b77bb26104",
       "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-      "disposition": "blocked",
-      "decision": null,
-      "event_boundary": "fail",
-      "block_reason": "Source projection contains isolated interview questions or outcome language without explicit completed candidate-interview context; retain boundary:pending.",
+      "disposition": "ready",
+      "decision": "not-interview",
+      "event_boundary": "pass",
+      "block_reason": null,
       "interview_note_ids": []
     },
     {
@@ -2252,7 +2244,7 @@
     {
       "issue_number": 220,
       "request_file": "data/issue-1606/requests/0220.json",
-      "request_sha256": "6c88d562d2867827621ed0616adcc047261f1c0957758843cf1e1a5120b08cba",
+      "request_sha256": "d18ea5efa52cd11667b62b4d9fc2f9de7ef11a6545bc16e7da27b8ed7bfcf9ae",
       "body_sha256": "06002199e834693d70a2dc9b42107db8d5a0e7135263bd0f9384a91ca7eaa766",
       "source_note_id": "xhs-note:667119c2000000000d00e437",
       "source_revision_id": "xhs-note:667119c2000000000d00e437:snapshot-95b77bb26104",
@@ -2260,7 +2252,7 @@
       "disposition": "blocked",
       "decision": null,
       "event_boundary": "fail",
-      "block_reason": "Source projection does not provide enough direct event-boundary evidence; retain boundary:pending rather than infer from title or hashtags.",
+      "block_reason": "Source projection contains isolated interview questions or outcome language without explicit completed candidate-interview context; retain boundary:pending.",
       "interview_note_ids": []
     },
     {
@@ -2308,7 +2300,7 @@
     {
       "issue_number": 224,
       "request_file": "data/issue-1606/requests/0224.json",
-      "request_sha256": "66aef83d5802fbc27d9933c68ad72aea140e65b2ee898bf25156ce62aa95bcfb",
+      "request_sha256": "80b815d12466900add666b6a62b5ff35789d5282e249cc6eb5735f0953d4cb66",
       "body_sha256": "df3eff2ca08f9b25e9f52847949144f159722990e26078f12ea9a890164ff0f6",
       "source_note_id": "xhs-note:667410d2000000001c035b73",
       "source_revision_id": "xhs-note:667410d2000000001c035b73:snapshot-95b77bb26104",
@@ -2316,7 +2308,7 @@
       "disposition": "blocked",
       "decision": null,
       "event_boundary": "fail",
-      "block_reason": "Source projection does not provide enough direct event-boundary evidence; retain boundary:pending rather than infer from title or hashtags.",
+      "block_reason": "Source projection contains isolated interview questions or outcome language without explicit completed candidate-interview context; retain boundary:pending.",
       "interview_note_ids": []
     },
     {
@@ -2350,18 +2342,16 @@
     {
       "issue_number": 227,
       "request_file": "data/issue-1606/requests/0227.json",
-      "request_sha256": "5d6dfa7c7a15ddd6b9a1324196dc4fcda432a9f32057ef40b9252bdb18dead98",
+      "request_sha256": "a216195ae29ce6c5926281a6f92bcdcaef9ec155d52bf29f885393edaedf4aee",
       "body_sha256": "090d30bf81bad065038b5d7c9e2c62a8138c8f88c03e7df618e17847db6deb07",
       "source_note_id": "xhs-note:6679515c000000001c02a8d1",
       "source_revision_id": "xhs-note:6679515c000000001c02a8d1:snapshot-95b77bb26104",
       "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-      "disposition": "ready",
-      "decision": "single-interview",
-      "event_boundary": "pass",
-      "block_reason": null,
-      "interview_note_ids": [
-        "xhs:6679515c000000001c02a8d1"
-      ]
+      "disposition": "blocked",
+      "decision": null,
+      "event_boundary": "fail",
+      "block_reason": "Source projection describes aggregate or multiple interview activity without separately bounded case evidence; retain boundary:pending.",
+      "interview_note_ids": []
     },
     {
       "issue_number": 228,
@@ -2452,18 +2442,16 @@
     {
       "issue_number": 234,
       "request_file": "data/issue-1606/requests/0234.json",
-      "request_sha256": "025ba28dbd4ce7bf65ad5ab73eb336aa42c78f2e85cfcc5047c0471a13aeea87",
+      "request_sha256": "a2511bc61fb0e1b8eec8d34b5c340c5f05c94aeb75efb7865a44f2fad1e8e4eb",
       "body_sha256": "f7ee071b19bb2b57bb3e13cc7dd29e67b1ef2f4d887dc61f89f4ddb7e0a67a32",
       "source_note_id": "xhs-note:6684e61d000000001f00703b",
       "source_revision_id": "xhs-note:6684e61d000000001f00703b:snapshot-95b77bb26104",
       "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-      "disposition": "ready",
-      "decision": "single-interview",
-      "event_boundary": "pass",
-      "block_reason": null,
-      "interview_note_ids": [
-        "xhs:6684e61d000000001f00703b"
-      ]
+      "disposition": "blocked",
+      "decision": null,
+      "event_boundary": "fail",
+      "block_reason": "Source projection describes aggregate or multiple interview activity without separately bounded case evidence; retain boundary:pending.",
+      "interview_note_ids": []
     },
     {
       "issue_number": 235,
@@ -2496,15 +2484,15 @@
     {
       "issue_number": 237,
       "request_file": "data/issue-1606/requests/0237.json",
-      "request_sha256": "77ea22c98226725f9653f51da51f1f7a6e98416520da5e2688dade5a952a2db7",
+      "request_sha256": "2eb9b828bd0795198a378f5aae04bce7f45e647cf7da4995cd4dbe86554ea6b0",
       "body_sha256": "22935c6a9a0d27f4a6ba1d952ecba4008e0dd701a5c563bb581937ab4677170d",
       "source_note_id": "xhs-note:668d37c900000000250150d0",
       "source_revision_id": "xhs-note:668d37c900000000250150d0:snapshot-95b77bb26104",
       "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-      "disposition": "blocked",
-      "decision": null,
-      "event_boundary": "fail",
-      "block_reason": "Source projection records only a scheduled or contacted interview; no completed candidate interview event is evidenced.",
+      "disposition": "ready",
+      "decision": "not-interview",
+      "event_boundary": "pass",
+      "block_reason": null,
       "interview_note_ids": []
     },
     {
@@ -2524,7 +2512,7 @@
     {
       "issue_number": 239,
       "request_file": "data/issue-1606/requests/0239.json",
-      "request_sha256": "03f1fe354ac88636a56bead9f8a82bd93f76cfec3f96fe77c516c1ab3537beb6",
+      "request_sha256": "e2878d8b844a4fc07b20909f95edbdec3075c8600a21b8a260d8a7981e4d9479",
       "body_sha256": "ad549c8f20e146ce08393b6bf8387d4798768506c8d7a6defe3d5946569cfc4c",
       "source_note_id": "xhs-note:668f39c10000000025004c33",
       "source_revision_id": "xhs-note:668f39c10000000025004c33:snapshot-95b77bb26104",
@@ -2532,35 +2520,35 @@
       "disposition": "blocked",
       "decision": null,
       "event_boundary": "fail",
-      "block_reason": "Source projection does not provide enough direct event-boundary evidence; retain boundary:pending rather than infer from title or hashtags.",
+      "block_reason": "Source projection contains isolated interview questions or outcome language without explicit completed candidate-interview context; retain boundary:pending.",
       "interview_note_ids": []
     },
     {
       "issue_number": 240,
       "request_file": "data/issue-1606/requests/0240.json",
-      "request_sha256": "352ef24d431d9438c8ec8b3c15887dac0ed0988fb1937a292e2c7b71907d9c9d",
+      "request_sha256": "56234702d3d1bf0cc8c7fa1f77850ebea68d046867865fbfee6b07b7a392f09c",
       "body_sha256": "96c55f0a41463cdd557a84ae35987907fc80d49debfb0ea2da2442cd6afb6569",
       "source_note_id": "xhs-note:668fe2cb000000002500482a",
       "source_revision_id": "xhs-note:668fe2cb000000002500482a:snapshot-95b77bb26104",
       "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-      "disposition": "blocked",
-      "decision": null,
-      "event_boundary": "fail",
-      "block_reason": "Source projection does not provide enough direct event-boundary evidence; retain boundary:pending rather than infer from title or hashtags.",
+      "disposition": "ready",
+      "decision": "not-interview",
+      "event_boundary": "pass",
+      "block_reason": null,
       "interview_note_ids": []
     },
     {
       "issue_number": 241,
       "request_file": "data/issue-1606/requests/0241.json",
-      "request_sha256": "fe8dd057672cd5ecf6a776386a950ae5413fa8726a581b133ab46027e0ed0442",
+      "request_sha256": "2aec2fb7e3497627f6b31c13057a47e6a86b626471569f3aebbedc2f1c9a70d1",
       "body_sha256": "71cac5556ec2625320416a85506e821d253a31e09338378e58e730cd6d7cdab5",
       "source_note_id": "xhs-note:668fe58400000000250163b2",
       "source_revision_id": "xhs-note:668fe58400000000250163b2:snapshot-95b77bb26104",
       "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-      "disposition": "blocked",
-      "decision": null,
-      "event_boundary": "fail",
-      "block_reason": "Source projection does not provide enough direct event-boundary evidence; retain boundary:pending rather than infer from title or hashtags.",
+      "disposition": "ready",
+      "decision": "not-interview",
+      "event_boundary": "pass",
+      "block_reason": null,
       "interview_note_ids": []
     },
     {
@@ -2608,7 +2596,7 @@
     {
       "issue_number": 245,
       "request_file": "data/issue-1606/requests/0245.json",
-      "request_sha256": "d5e0e39111643dc360ef9b3337fb9d952c54b131bf28e6c2660ca3f74783702e",
+      "request_sha256": "889bae7327f3f86fadc80b9baf30ab19cd1af372eaa3ff6476a4939dc44b0ecc",
       "body_sha256": "4344cd904197ff2c5b7a89276b706b9974174389ea58c74af9b4dba00e96f21e",
       "source_note_id": "xhs-note:6692706200000000250167ff",
       "source_revision_id": "xhs-note:6692706200000000250167ff:snapshot-95b77bb26104",
@@ -2636,7 +2624,7 @@
     {
       "issue_number": 247,
       "request_file": "data/issue-1606/requests/0247.json",
-      "request_sha256": "7b1a99c0ce6f9d0ba0be6e771ba7d3841e3df5db796eb84c39ce71826a3dd90b",
+      "request_sha256": "aeb693dda512ef04b7ec415a84c0ecf052ed120b9b54fcc94fb1bc0f2e9cba32",
       "body_sha256": "1f1ef6d07604d37e75e5fa0e8987f741a9b3dbc5ed5c455ec4aa200dcdd053f5",
       "source_note_id": "xhs-note:669638c20000000025006180",
       "source_revision_id": "xhs-note:669638c20000000025006180:snapshot-95b77bb26104",
@@ -2650,29 +2638,29 @@
     {
       "issue_number": 248,
       "request_file": "data/issue-1606/requests/0248.json",
-      "request_sha256": "2724f288b71c7377a022baa674f75c79923a26f2cf9a931ffb633f7b1e68bc6c",
+      "request_sha256": "49cad307fc983b12d08044f2bd43845e3cea0365cc3f0761367423cf25d0d2ae",
       "body_sha256": "d508b34d80480de9d57cf4944b2d3201db1c05d11c90093db1d0e8c48f19178e",
       "source_note_id": "xhs-note:66971b6e0000000025016f08",
       "source_revision_id": "xhs-note:66971b6e0000000025016f08:snapshot-95b77bb26104",
       "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-      "disposition": "blocked",
-      "decision": null,
-      "event_boundary": "fail",
-      "block_reason": "Source projection contains isolated interview questions or outcome language without explicit completed candidate-interview context; retain boundary:pending.",
+      "disposition": "ready",
+      "decision": "not-interview",
+      "event_boundary": "pass",
+      "block_reason": null,
       "interview_note_ids": []
     },
     {
       "issue_number": 249,
       "request_file": "data/issue-1606/requests/0249.json",
-      "request_sha256": "720200d6c6022f38e60a1e09b1144402153a1d0189ef5a932744393eed66ebfb",
+      "request_sha256": "850b3de5e474c42419f33ee838339a17c04c82295e1349814c950393133e821d",
       "body_sha256": "fb21ca4283d6f28b4dc74565788928e4bc29ed6c822abb7ee0a5b2e1fa622b31",
       "source_note_id": "xhs-note:66987bb40000000025002075",
       "source_revision_id": "xhs-note:66987bb40000000025002075:snapshot-95b77bb26104",
       "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-      "disposition": "blocked",
-      "decision": null,
-      "event_boundary": "fail",
-      "block_reason": "Source projection contains isolated interview questions or outcome language without explicit completed candidate-interview context; retain boundary:pending.",
+      "disposition": "ready",
+      "decision": "not-interview",
+      "event_boundary": "pass",
+      "block_reason": null,
       "interview_note_ids": []
     },
     {
@@ -2778,7 +2766,7 @@
     {
       "issue_number": 257,
       "request_file": "data/issue-1606/requests/0257.json",
-      "request_sha256": "d4ff8ac7258303aa239770cdfaf2617be4732650a897f87374bdac2f4dd6711d",
+      "request_sha256": "e8d9c9ac2ba6bb634bf2d5f9f21c36cdbc76734e826d46aecd49752566939ae6",
       "body_sha256": "5e206d529953e697ef6bf8c541d07a9a2eade0a1f93d09efd2f7e8694c5ca767",
       "source_note_id": "xhs-note:669f91d5000000002701d4d4",
       "source_revision_id": "xhs-note:669f91d5000000002701d4d4:snapshot-95b77bb26104",
@@ -2820,15 +2808,15 @@
     {
       "issue_number": 260,
       "request_file": "data/issue-1606/requests/0260.json",
-      "request_sha256": "fb386bc87eb21711c99bdb23aace4eff814861ce01f45bb2a3fca8498e0c6df9",
+      "request_sha256": "7614fab4f0eee0d266e6ec1b30ff786e22b25aee5e1348deddf12ff97111f75c",
       "body_sha256": "f4e9d0187207cfc9e805ea55a787d7598a909a6f62881c7932b0713fda423bad",
       "source_note_id": "xhs-note:66a21b13000000000a026992",
       "source_revision_id": "xhs-note:66a21b13000000000a026992:snapshot-95b77bb26104",
       "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-      "disposition": "blocked",
-      "decision": null,
-      "event_boundary": "fail",
-      "block_reason": "Source projection contains isolated interview questions or outcome language without explicit completed candidate-interview context; retain boundary:pending.",
+      "disposition": "ready",
+      "decision": "not-interview",
+      "event_boundary": "pass",
+      "block_reason": null,
       "interview_note_ids": []
     },
     {
@@ -2848,18 +2836,16 @@
     {
       "issue_number": 262,
       "request_file": "data/issue-1606/requests/0262.json",
-      "request_sha256": "15a3d621b1a1980931756f94a8f876d42180fd73ced574bb2a921461f854f94a",
+      "request_sha256": "44c8ceee156e49424d96d8d54221a93236bbd2f2b20eab715c59cc6130b8b773",
       "body_sha256": "62a9b7b67c650cdc3a4e19e61d2ae9ae6155735c7cbfa3246b2e8db6752a880b",
       "source_note_id": "xhs-note:66a49035000000002701c6f3",
       "source_revision_id": "xhs-note:66a49035000000002701c6f3:snapshot-95b77bb26104",
       "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
       "disposition": "ready",
-      "decision": "single-interview",
+      "decision": "not-interview",
       "event_boundary": "pass",
       "block_reason": null,
-      "interview_note_ids": [
-        "xhs:66a49035000000002701c6f3"
-      ]
+      "interview_note_ids": []
     },
     {
       "issue_number": 263,
@@ -2906,18 +2892,16 @@
     {
       "issue_number": 266,
       "request_file": "data/issue-1606/requests/0266.json",
-      "request_sha256": "769b58944f907ae08a0803de55eeb85101c93af938f926fbfca65ab0fc8a87cd",
+      "request_sha256": "fb3d75fa62c80ca6ec82b094893d397d6f638f99f9374102d033cbf587fab968",
       "body_sha256": "faa2abcdb7f3c063be169d177c56429319d9c0fbc2a178f2099d276da2959d1f",
       "source_note_id": "xhs-note:66a4a53e000000000600cd30",
       "source_revision_id": "xhs-note:66a4a53e000000000600cd30:snapshot-95b77bb26104",
       "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
       "disposition": "ready",
-      "decision": "single-interview",
+      "decision": "not-interview",
       "event_boundary": "pass",
       "block_reason": null,
-      "interview_note_ids": [
-        "xhs:66a4a53e000000000600cd30"
-      ]
+      "interview_note_ids": []
     },
     {
       "issue_number": 267,
@@ -3070,29 +3054,29 @@
     {
       "issue_number": 277,
       "request_file": "data/issue-1606/requests/0277.json",
-      "request_sha256": "8096e707abf83b42f86ef0b03565e591000f241603ea938986c747da08a2332e",
+      "request_sha256": "9ce2dd3c2ea7b2452feb6c059f5a5c3628f45c9f41015943de07b015fa49a15d",
       "body_sha256": "44e3772a2b23abc6285a348cab38b4ce69566c52eabf832e6df5ff61b7d1e45c",
       "source_note_id": "xhs-note:66ad04490000000009015ba6",
       "source_revision_id": "xhs-note:66ad04490000000009015ba6:snapshot-95b77bb26104",
       "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-      "disposition": "blocked",
-      "decision": null,
-      "event_boundary": "fail",
-      "block_reason": "Source projection does not provide enough direct event-boundary evidence; retain boundary:pending rather than infer from title or hashtags.",
+      "disposition": "ready",
+      "decision": "not-interview",
+      "event_boundary": "pass",
+      "block_reason": null,
       "interview_note_ids": []
     },
     {
       "issue_number": 279,
       "request_file": "data/issue-1606/requests/0279.json",
-      "request_sha256": "0047cf19b1dc9c9d5661a091ff14c7582572082b7e760a90d67fd6e3572f0abd",
+      "request_sha256": "d314aed6110515ede7dba412bc81cfd770e8f18c7694d70050de292e553a7224",
       "body_sha256": "fb8e97389a47ff137582d9ee2c38ab94c8e23b6bfb6176abd16ee0f0b0379575",
       "source_note_id": "xhs-note:66adb99a0000000009015abb",
       "source_revision_id": "xhs-note:66adb99a0000000009015abb:snapshot-95b77bb26104",
       "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-      "disposition": "blocked",
-      "decision": null,
-      "event_boundary": "fail",
-      "block_reason": "Source projection records only a scheduled or contacted interview; no completed candidate interview event is evidenced.",
+      "disposition": "ready",
+      "decision": "not-interview",
+      "event_boundary": "pass",
+      "block_reason": null,
       "interview_note_ids": []
     },
     {
@@ -3182,21 +3166,21 @@
     {
       "issue_number": 286,
       "request_file": "data/issue-1606/requests/0286.json",
-      "request_sha256": "8334c62d50a12c7616a0e5b9f5fd53efffa55a26f4cc237e1d6a76afa4dbb3e7",
+      "request_sha256": "430952c897063ad229d3edbbec83541b0d094f8e161a40853954fe1dc32e0030",
       "body_sha256": "c227bc9344897a37dbcd53716f7a1c1f74bb75c495f74839be0eccc052f1e7c3",
       "source_note_id": "xhs-note:66b5cece0000000009016201",
       "source_revision_id": "xhs-note:66b5cece0000000009016201:snapshot-95b77bb26104",
       "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-      "disposition": "blocked",
-      "decision": null,
-      "event_boundary": "fail",
-      "block_reason": "Source projection does not provide enough direct event-boundary evidence; retain boundary:pending rather than infer from title or hashtags.",
+      "disposition": "ready",
+      "decision": "not-interview",
+      "event_boundary": "pass",
+      "block_reason": null,
       "interview_note_ids": []
     },
     {
       "issue_number": 287,
       "request_file": "data/issue-1606/requests/0287.json",
-      "request_sha256": "cdc2907dadc1bb585f96f8935c63031e7dff633f2c4f038de8257b7f638a39a2",
+      "request_sha256": "363bfa7ca34c6ab3b0b7934591d676c630c6155addc7e891d69de1d9ee83f15a",
       "body_sha256": "1f4db6b9c6d1f4689daf93011409d10e01376777c2e121b6242d8e46bc7c0270",
       "source_note_id": "xhs-note:66b71ca800000000050211a3",
       "source_revision_id": "xhs-note:66b71ca800000000050211a3:snapshot-95b77bb26104",
@@ -3284,15 +3268,15 @@
     {
       "issue_number": 293,
       "request_file": "data/issue-1606/requests/0293.json",
-      "request_sha256": "c54c724d36cc24fcc0be2c18676ebcd59b6c43ae791c206c41ae745c5139880c",
+      "request_sha256": "164e51b848d2888fe46f3b8d7e0b6ef8e3b3ceb3e77a0a371f950a7f4eca2fb7",
       "body_sha256": "1b9ecc4e7f5fd97bfffd5644f55d5c67244f0b2944c80676d36cccb2317150a5",
       "source_note_id": "xhs-note:66c1f7900000000009014d32",
       "source_revision_id": "xhs-note:66c1f7900000000009014d32:snapshot-95b77bb26104",
       "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-      "disposition": "blocked",
-      "decision": null,
-      "event_boundary": "fail",
-      "block_reason": "Source projection does not provide enough direct event-boundary evidence; retain boundary:pending rather than infer from title or hashtags.",
+      "disposition": "ready",
+      "decision": "not-interview",
+      "event_boundary": "pass",
+      "block_reason": null,
       "interview_note_ids": []
     },
     {
@@ -3428,34 +3412,30 @@
     {
       "issue_number": 303,
       "request_file": "data/issue-1606/requests/0303.json",
-      "request_sha256": "956d870afef86d60ac09328b961335d24dfc52908489134cff1d1929dcaeec69",
+      "request_sha256": "abcaca00b2addae570172846eee67d4660192f80b3fb82218a61a04fa7aeea54",
       "body_sha256": "0a5188cd4acf3fe6a98b2a7c1c4a01c727c1c225207404d6ce07f24b29792b4f",
       "source_note_id": "xhs-note:66cc068b000000001d01afab",
       "source_revision_id": "xhs-note:66cc068b000000001d01afab:snapshot-95b77bb26104",
       "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
       "disposition": "ready",
-      "decision": "single-interview",
+      "decision": "not-interview",
       "event_boundary": "pass",
       "block_reason": null,
-      "interview_note_ids": [
-        "xhs:66cc068b000000001d01afab"
-      ]
+      "interview_note_ids": []
     },
     {
       "issue_number": 304,
       "request_file": "data/issue-1606/requests/0304.json",
-      "request_sha256": "61a8a6c33c4d32f1a78a5aad172bb48ef441723cc1a784e3c37a8132b4d44541",
+      "request_sha256": "fb17890a35d39329a62caa1616aabbd261f3e33042bf3044c6de46ac47350e11",
       "body_sha256": "1b4cd1ea88fdafe849f0514b1e253f4ba9284a6cd062e37c0369a32b1fddf480",
       "source_note_id": "xhs-note:66cea6f5000000001d014504",
       "source_revision_id": "xhs-note:66cea6f5000000001d014504:snapshot-95b77bb26104",
       "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
       "disposition": "ready",
-      "decision": "single-interview",
+      "decision": "not-interview",
       "event_boundary": "pass",
       "block_reason": null,
-      "interview_note_ids": [
-        "xhs:66cea6f5000000001d014504"
-      ]
+      "interview_note_ids": []
     },
     {
       "issue_number": 305,
@@ -3488,15 +3468,15 @@
     {
       "issue_number": 307,
       "request_file": "data/issue-1606/requests/0307.json",
-      "request_sha256": "18142831ec2ead71ea1bde229a5a66c01cf0c4147b41d20b3f87884a1968c657",
+      "request_sha256": "8db958ac48ae26bb7376507ed4356a7bb078548fb303788aa9deba0aaf70ecbb",
       "body_sha256": "48438bf6fabec9c9863a743500a83e7895546c871f4c5330ecd01781437004d1",
       "source_note_id": "xhs-note:66d044cb000000001d01b151",
       "source_revision_id": "xhs-note:66d044cb000000001d01b151:snapshot-95b77bb26104",
       "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-      "disposition": "blocked",
-      "decision": null,
-      "event_boundary": "fail",
-      "block_reason": "Source projection does not provide enough direct event-boundary evidence; retain boundary:pending rather than infer from title or hashtags.",
+      "disposition": "ready",
+      "decision": "not-interview",
+      "event_boundary": "pass",
+      "block_reason": null,
       "interview_note_ids": []
     },
     {
@@ -3546,15 +3526,15 @@
     {
       "issue_number": 311,
       "request_file": "data/issue-1606/requests/0311.json",
-      "request_sha256": "8f1f464f216216b84de74da09b75e30daea09773aec694469ff4047bd6dde4d8",
+      "request_sha256": "fe91dba6c83926836fffefc101d3071b3c16138dba9598b13fc6714296ad5ba2",
       "body_sha256": "14265a6fcf635114ede8e7114cb72dbcab77d32480c93d8c11ae085dd6df4d49",
       "source_note_id": "xhs-note:66d430c8000000001d03a1b5",
       "source_revision_id": "xhs-note:66d430c8000000001d03a1b5:snapshot-95b77bb26104",
       "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-      "disposition": "blocked",
-      "decision": null,
-      "event_boundary": "fail",
-      "block_reason": "Source projection does not provide enough direct event-boundary evidence; retain boundary:pending rather than infer from title or hashtags.",
+      "disposition": "ready",
+      "decision": "not-interview",
+      "event_boundary": "pass",
+      "block_reason": null,
       "interview_note_ids": []
     },
     {
@@ -3672,15 +3652,15 @@
     {
       "issue_number": 320,
       "request_file": "data/issue-1606/requests/0320.json",
-      "request_sha256": "0ade48f0593c655456e2156ef6eab8c057103c980e288219bb8e3377b0ea68ff",
+      "request_sha256": "d9c77fd1c588c9807dfddd63644a1e5757a21307def08cbf64b9c83885cc3cd9",
       "body_sha256": "3751e539824e30c678a6884e94ee20f1d09edaa78fb362c2a9766bdc9d4a136f",
       "source_note_id": "xhs-note:66dd60b2000000001e0194b8",
       "source_revision_id": "xhs-note:66dd60b2000000001e0194b8:snapshot-95b77bb26104",
       "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-      "disposition": "blocked",
-      "decision": null,
-      "event_boundary": "fail",
-      "block_reason": "Source projection does not provide enough direct event-boundary evidence; retain boundary:pending rather than infer from title or hashtags.",
+      "disposition": "ready",
+      "decision": "not-interview",
+      "event_boundary": "pass",
+      "block_reason": null,
       "interview_note_ids": []
     },
     {
@@ -3884,15 +3864,15 @@
     {
       "issue_number": 335,
       "request_file": "data/issue-1606/requests/0335.json",
-      "request_sha256": "d2956afc21143f9a72a5219c16d8cbceaba370a35d64a4079ce2b13f0c9b2b46",
+      "request_sha256": "d1a81fa5f0463052453ca61e4ae48a7d154a807dead74101730240b95b21ccdc",
       "body_sha256": "8ac38c4612598ba452bacea006f16e37a5fd0571ac667989c45089fdd1ea9d82",
       "source_note_id": "xhs-note:66eb9b0a0000000027004219",
       "source_revision_id": "xhs-note:66eb9b0a0000000027004219:snapshot-95b77bb26104",
       "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-      "disposition": "blocked",
-      "decision": null,
-      "event_boundary": "fail",
-      "block_reason": "Source projection does not provide enough direct event-boundary evidence; retain boundary:pending rather than infer from title or hashtags.",
+      "disposition": "ready",
+      "decision": "not-interview",
+      "event_boundary": "pass",
+      "block_reason": null,
       "interview_note_ids": []
     },
     {
@@ -3912,18 +3892,16 @@
     {
       "issue_number": 337,
       "request_file": "data/issue-1606/requests/0337.json",
-      "request_sha256": "e75e6e8a6312675bc30107b4346d5c59efeb5022bbb8f14326b666c1a42e1e47",
+      "request_sha256": "6dcad6acad65bdeba50f0a1ac7b127577bc8f94492266e29621d8a782f68d885",
       "body_sha256": "4bae55a11e75ce3146dfac436fe01d0baacdec0322f99fb553898d740301559c",
       "source_note_id": "xhs-note:66ed523a000000000c01a486",
       "source_revision_id": "xhs-note:66ed523a000000000c01a486:snapshot-95b77bb26104",
       "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-      "disposition": "ready",
-      "decision": "single-interview",
-      "event_boundary": "pass",
-      "block_reason": null,
-      "interview_note_ids": [
-        "xhs:66ed523a000000000c01a486"
-      ]
+      "disposition": "blocked",
+      "decision": null,
+      "event_boundary": "fail",
+      "block_reason": "Source projection contains isolated interview questions or outcome language without explicit completed candidate-interview context; retain boundary:pending.",
+      "interview_note_ids": []
     },
     {
       "issue_number": 338,
@@ -3956,21 +3934,21 @@
     {
       "issue_number": 340,
       "request_file": "data/issue-1606/requests/0340.json",
-      "request_sha256": "872c5fc9a19cabf7210cad461d7201cbd9930b377a35be9b2fa1ae553919a54f",
+      "request_sha256": "f868e1c905d8f315ba07f3017b4bf73775d952a09ae835db0468dcdf805840ac",
       "body_sha256": "d8060818736efec31db82f54ab329af2e662c65554b4eaa3c749a4640c6f4a06",
       "source_note_id": "xhs-note:66f38682000000001a020608",
       "source_revision_id": "xhs-note:66f38682000000001a020608:snapshot-95b77bb26104",
       "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-      "disposition": "blocked",
-      "decision": null,
-      "event_boundary": "fail",
-      "block_reason": "Source projection does not provide enough direct event-boundary evidence; retain boundary:pending rather than infer from title or hashtags.",
+      "disposition": "ready",
+      "decision": "not-interview",
+      "event_boundary": "pass",
+      "block_reason": null,
       "interview_note_ids": []
     },
     {
       "issue_number": 341,
       "request_file": "data/issue-1606/requests/0341.json",
-      "request_sha256": "34573ae01063f9b36ef07fca121c5230d151036b86f1396a1d5b2268f8fc0fbd",
+      "request_sha256": "d7b99c2405bad7201df37f18a8842c39bbc344727e18905dc44e43152ac35734",
       "body_sha256": "aadf93126be8956b94f902a7b25e36cebb54a8017cbf91ee8ad3515ebed7c88c",
       "source_note_id": "xhs-note:66f408bf000000001b0230db",
       "source_revision_id": "xhs-note:66f408bf000000001b0230db:snapshot-95b77bb26104",
@@ -4118,18 +4096,16 @@
     {
       "issue_number": 351,
       "request_file": "data/issue-1606/requests/0351.json",
-      "request_sha256": "a6c180400e28d415d8ef940c93074e008495c48cdd1b633168623503c3194be4",
+      "request_sha256": "3ce1b1e32979ecb14225bb3dcf7fa98d3829f6df0fff76d25e8c60a65400e113",
       "body_sha256": "ada29919da732a180113f82a0e21824d9afdc72e266c883f17c087c7a237f21e",
       "source_note_id": "xhs-note:6705ce14000000002a030b6d",
       "source_revision_id": "xhs-note:6705ce14000000002a030b6d:snapshot-95b77bb26104",
       "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-      "disposition": "ready",
-      "decision": "single-interview",
-      "event_boundary": "pass",
-      "block_reason": null,
-      "interview_note_ids": [
-        "xhs:6705ce14000000002a030b6d"
-      ]
+      "disposition": "blocked",
+      "decision": null,
+      "event_boundary": "fail",
+      "block_reason": "Source projection contains isolated interview questions or outcome language without explicit completed candidate-interview context; retain boundary:pending.",
+      "interview_note_ids": []
     },
     {
       "issue_number": 352,
@@ -4180,18 +4156,16 @@
     {
       "issue_number": 355,
       "request_file": "data/issue-1606/requests/0355.json",
-      "request_sha256": "0a10844d95c24295b585ac98a5745a3de8e0aedc4ffab99a4b79eaca7947ad43",
+      "request_sha256": "3a5457cddc6483bc14c43e5f7ad317c7bfda9ad3728f8588a5c5fef554cf34c1",
       "body_sha256": "d2d88dec07aa32ba7904b627b2ed97b136d69fcbaf3e22615ddf994bee66401b",
       "source_note_id": "xhs-note:67092e38000000002c028163",
       "source_revision_id": "xhs-note:67092e38000000002c028163:snapshot-95b77bb26104",
       "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-      "disposition": "ready",
-      "decision": "single-interview",
-      "event_boundary": "pass",
-      "block_reason": null,
-      "interview_note_ids": [
-        "xhs:67092e38000000002c028163"
-      ]
+      "disposition": "blocked",
+      "decision": null,
+      "event_boundary": "fail",
+      "block_reason": "Source projection contains isolated interview questions or outcome language without explicit completed candidate-interview context; retain boundary:pending.",
+      "interview_note_ids": []
     },
     {
       "issue_number": 356,
@@ -4226,21 +4200,21 @@
     {
       "issue_number": 358,
       "request_file": "data/issue-1606/requests/0358.json",
-      "request_sha256": "da3711bdaa94e86ee57237b753111aca59d99fd80a9f0b67e8b810b387c5f8ce",
+      "request_sha256": "2b12a87d2be25851aa7259e68aaf6ec4fc4a1b979e47d5b7494b04fbaf52270c",
       "body_sha256": "3c618064b3fe1c91939708ae33ffb8d4614ef0f0a32b5903ab974e2f3267a7ab",
       "source_note_id": "xhs-note:670b5f17000000002401862b",
       "source_revision_id": "xhs-note:670b5f17000000002401862b:snapshot-95b77bb26104",
       "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-      "disposition": "blocked",
-      "decision": null,
-      "event_boundary": "fail",
-      "block_reason": "Source projection records only a scheduled or contacted interview; no completed candidate interview event is evidenced.",
+      "disposition": "ready",
+      "decision": "not-interview",
+      "event_boundary": "pass",
+      "block_reason": null,
       "interview_note_ids": []
     },
     {
       "issue_number": 359,
       "request_file": "data/issue-1606/requests/0359.json",
-      "request_sha256": "c38dd03dd9e1ac8435876c11ed0f4bc8fb6a5e2f22f6d663b665b6fb317135f5",
+      "request_sha256": "91982d271644c78fc3a5b642482da0543b01dba5a03b13783391d95144031831",
       "body_sha256": "6983bf6e65da7102c271c2a8ca67fd70224403b610baace927f5771cc80329f2",
       "source_note_id": "xhs-note:670b6b1a000000001b03d867",
       "source_revision_id": "xhs-note:670b6b1a000000001b03d867:snapshot-95b77bb26104",
@@ -4248,7 +4222,7 @@
       "disposition": "blocked",
       "decision": null,
       "event_boundary": "fail",
-      "block_reason": "Source projection does not provide enough direct event-boundary evidence; retain boundary:pending rather than infer from title or hashtags.",
+      "block_reason": "Source projection contains isolated interview questions or outcome language without explicit completed candidate-interview context; retain boundary:pending.",
       "interview_note_ids": []
     },
     {
@@ -4454,15 +4428,15 @@
     {
       "issue_number": 375,
       "request_file": "data/issue-1606/requests/0375.json",
-      "request_sha256": "13f23818fc5d48a31c9d1fe54133898040698017f72483b8a015214ac8ffe71c",
+      "request_sha256": "e5829d00ba7a22bc3a07d9991725f9c646cde3db1af3d32a12b2163658f3e431",
       "body_sha256": "445f865f6969b9f2a6d092b59788a1f48796b660fd5356276111f85347a25e58",
       "source_note_id": "xhs-note:671a14bc0000000024019cc4",
       "source_revision_id": "xhs-note:671a14bc0000000024019cc4:snapshot-95b77bb26104",
       "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-      "disposition": "blocked",
-      "decision": null,
-      "event_boundary": "fail",
-      "block_reason": "Source projection does not provide enough direct event-boundary evidence; retain boundary:pending rather than infer from title or hashtags.",
+      "disposition": "ready",
+      "decision": "not-interview",
+      "event_boundary": "pass",
+      "block_reason": null,
       "interview_note_ids": []
     },
     {
@@ -4498,7 +4472,7 @@
     {
       "issue_number": 378,
       "request_file": "data/issue-1606/requests/0378.json",
-      "request_sha256": "8a7c583a818c8c88460a880213b1805b4dcb6f04328c0ff3adf032360b7871c9",
+      "request_sha256": "a76d477800a79b8050256857d0ab1307be9c2371130c09ed99e69d8db2971117",
       "body_sha256": "1b3b9875d3078599416c2e26b3d4cc8014db9dcdf436165300427a7ce83f52ac",
       "source_note_id": "xhs-note:671d1335000000001402d734",
       "source_revision_id": "xhs-note:671d1335000000001402d734:snapshot-95b77bb26104",
@@ -4506,13 +4480,13 @@
       "disposition": "blocked",
       "decision": null,
       "event_boundary": "fail",
-      "block_reason": "Source projection does not provide enough direct event-boundary evidence; retain boundary:pending rather than infer from title or hashtags.",
+      "block_reason": "Source projection contains isolated interview questions or outcome language without explicit completed candidate-interview context; retain boundary:pending.",
       "interview_note_ids": []
     },
     {
       "issue_number": 379,
       "request_file": "data/issue-1606/requests/0379.json",
-      "request_sha256": "5744206f4d4d5cd7cf601bd12bb551c0491a29bff62550f58cad4078472fd885",
+      "request_sha256": "52ecec252419cac58bc17434213299242996050ad1eeae82a72af3396e4ac73b",
       "body_sha256": "4e3a0ea55b18dcea33b702c138c3bbecfd482761e71f15a089f86fa7c25909de",
       "source_note_id": "xhs-note:672064ef000000001a01fbca",
       "source_revision_id": "xhs-note:672064ef000000001a01fbca:snapshot-95b77bb26104",
@@ -4520,7 +4494,7 @@
       "disposition": "blocked",
       "decision": null,
       "event_boundary": "fail",
-      "block_reason": "Source projection does not provide enough direct event-boundary evidence; retain boundary:pending rather than infer from title or hashtags.",
+      "block_reason": "Source projection contains isolated interview questions or outcome language without explicit completed candidate-interview context; retain boundary:pending.",
       "interview_note_ids": []
     },
     {
@@ -4540,18 +4514,16 @@
     {
       "issue_number": 381,
       "request_file": "data/issue-1606/requests/0381.json",
-      "request_sha256": "7a5cf3d744d08157a658c3c91d7c103c9231a496a6af9f1eccbadbec9d6c1f33",
+      "request_sha256": "8063606dda15dc565f195d5db3f642bf1cffff18ca12fba2f25320038c37dae5",
       "body_sha256": "50723ece15954e48eb621bed961eb23728cad56058aec508924f9eaaf1fad7bd",
       "source_note_id": "xhs-note:6720cfaa000000001a037383",
       "source_revision_id": "xhs-note:6720cfaa000000001a037383:snapshot-95b77bb26104",
       "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
       "disposition": "ready",
-      "decision": "single-interview",
+      "decision": "not-interview",
       "event_boundary": "pass",
       "block_reason": null,
-      "interview_note_ids": [
-        "xhs:6720cfaa000000001a037383"
-      ]
+      "interview_note_ids": []
     },
     {
       "issue_number": 382,
@@ -4634,32 +4606,30 @@
     {
       "issue_number": 387,
       "request_file": "data/issue-1606/requests/0387.json",
-      "request_sha256": "36ecd8cbb650ef1676d5578954cce9bb2410fe6a2cb11c0fefc5375d01a8f30d",
+      "request_sha256": "f3c23de0e8b292e046926ccdae9b622ba0003fc65d350824ad26f0537ce8909f",
       "body_sha256": "ffbea9bff8ffe1e57f564483f86a917d57100196fb32e409ea666c2b245a409d",
       "source_note_id": "xhs-note:67235e5c00000000190166e5",
       "source_revision_id": "xhs-note:67235e5c00000000190166e5:snapshot-95b77bb26104",
       "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-      "disposition": "blocked",
-      "decision": null,
-      "event_boundary": "fail",
-      "block_reason": "Source projection does not provide enough direct event-boundary evidence; retain boundary:pending rather than infer from title or hashtags.",
+      "disposition": "ready",
+      "decision": "not-interview",
+      "event_boundary": "pass",
+      "block_reason": null,
       "interview_note_ids": []
     },
     {
       "issue_number": 388,
       "request_file": "data/issue-1606/requests/0388.json",
-      "request_sha256": "5f779e125afb9aac7609c1400979ee0446d8b1e8f3dcfd2f0c9002f898017302",
+      "request_sha256": "8df784bc23c038df1f9e90ab7c9697823d3b4c7ebe8bd8b93118069244c44e74",
       "body_sha256": "a395994ced46905860b20e3f5d844e549d2c7942c3ffb0c6a2b87cc645c5316d",
       "source_note_id": "xhs-note:6724513b000000001a01dd85",
       "source_revision_id": "xhs-note:6724513b000000001a01dd85:snapshot-95b77bb26104",
       "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-      "disposition": "ready",
-      "decision": "single-interview",
-      "event_boundary": "pass",
-      "block_reason": null,
-      "interview_note_ids": [
-        "xhs:6724513b000000001a01dd85"
-      ]
+      "disposition": "blocked",
+      "decision": null,
+      "event_boundary": "fail",
+      "block_reason": "Source projection describes aggregate or multiple interview activity without separately bounded case evidence; retain boundary:pending.",
+      "interview_note_ids": []
     },
     {
       "issue_number": 389,
@@ -4680,15 +4650,15 @@
     {
       "issue_number": 390,
       "request_file": "data/issue-1606/requests/0390.json",
-      "request_sha256": "f72b0b7d559ae9ad53d7985530355836ab98144c8188863e15a8bd26b3f71182",
+      "request_sha256": "a2b1d27d1db89a41cecc244daef749f7be776b4b8d297a74bc5aea692287280f",
       "body_sha256": "83adf2683e0caac7bb7accba4df4fa400ecde1f5499ca5c285f0b53c05c5fa37",
       "source_note_id": "xhs-note:67275a05000000001b013441",
       "source_revision_id": "xhs-note:67275a05000000001b013441:snapshot-95b77bb26104",
       "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-      "disposition": "blocked",
-      "decision": null,
-      "event_boundary": "fail",
-      "block_reason": "Source projection does not provide enough direct event-boundary evidence; retain boundary:pending rather than infer from title or hashtags.",
+      "disposition": "ready",
+      "decision": "not-interview",
+      "event_boundary": "pass",
+      "block_reason": null,
       "interview_note_ids": []
     },
     {
@@ -4720,5 +4690,5 @@
       "interview_note_ids": []
     }
   ],
-  "plan_sha256": "4277519df1f04a2b86be8c83ff2e92cef9b9039c0e883ca1ce0db9922647d4ce"
+  "plan_sha256": "b3468c664179ec432a4b4b21524947b1ee5e20f4b85011b94e68d76762718bc1"
 }
