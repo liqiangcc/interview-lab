@@ -35,8 +35,8 @@ node scripts/generate-issue-1607-boundary-evidence.js \
 ## 当前审计结论
 
 ```text
-single-interview: 142
-multi-interview: 25
+single-interview: 147
+multi-interview: 20
 not-interview: 73
 blocked: 17
 semantic_ready: 167
@@ -46,6 +46,7 @@ mutation_count: 0
 ```
 
 标题/正文中有明确已发生的候选人面试过程、面试官问答、候选人回答或结果才可提出 single；同帖明确多场/多轮才提出 multi。题库/题目列表、求职建议、预约/邀约、岗位咨询、面试官分享、营销转载和明确拒面/未参加均不提出 interview decision；完整材料仍无法建立边界的条目保留 blocked。每个非 blocked decision 都包含 exact artifact ref、locator、excerpt、完整 `note_desc` projection 与 line basis。`Raw` Source 未被 Derived 结果覆盖。
+轮次解析将“一面/1️⃣面/1面”等归一为同一 round key；`2面试`、`p12面试`、页面引用、听说/可能/已约等 speculative 或 scheduled token 不计为新轮次。仅含模糊轮次标题与通用话题标签（如 #760 同类）不具备独立过程证据，统一 blocked；标题明确“刚面完/面完”或明确轮次结果（如 #471/#518）则可形成 single。#733 的“已约二面”按预约处理，因此仅 single。
 
 scope audit：`selection.scope_compliance=pass`、`plan.scope_compliance=pass`、`scope_regression=pass`、`out_of_scope_reads=0`、`out_of_scope_mutations=0`；明确禁止 #392/#766。`apply.journal.json` 为 `not-started` 且 mutation count=0。未经主控在 issue/会话中明确授权，不得 POST/PATCH 或 apply；这些 request template 不是可执行 transition request。
 
@@ -53,9 +54,9 @@ scope audit：`selection.scope_compliance=pass`、`plan.scope_compliance=pass`�
 
 ```text
 selection_sha256: 20b9deb520f8c111cc969b749a45d0e56308126ae5f228ac9e1251ea92d8f7be
-evidence_ledger_sha256: a620236f58b9502cde787d015a6a6d441d0a3b48f2104c99ef140430bea22bba
-request_set_sha256: 424756ee0d0c76e6072cdeff8f8b5f5ed0aca0168bbf86ea85edd75846d06d91
-classification_ledger_sha256: 24ddcdb5b9323e33ba24ae9021fc1c1e9e0bedd8bcfadac85d0ccc57a70a8002
-dry_run_sha256: abd13f26e448dfc2ef6e7f9e209274706cd0a08e27a24285335ae2d67d970a52
-journal_sha256: 1ced068734bb782c5444a1a25e2546168002cd01d1d35d91eed05a4d0b5a3215
+evidence_ledger_sha256: 7772087b360777a52327d9a6d3efdd9d4e4620e512237b898d1c041826387f7d
+request_set_sha256: c22d410b238a441ae137d0ea97c295e9c45d0ef1a3a75e81398108f3c8dddd42
+classification_ledger_sha256: 1e8b3f74109aa41256e5d026ac46847da6947bd63312cbbbb459e19a31f4087b
+dry_run_sha256: 3fbe0f07e4a8882f22638e1fc2d8aeaca0b17442ee8a06cdc28436055d50f9ca
+journal_sha256: bc8a87dead4868070ca9f1adb3553744be9cad012021b7071ebff3dba48a32e4
 ```
