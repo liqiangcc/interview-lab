@@ -16,11 +16,12 @@ const MAX_ISSUE = 392;
 const SOURCE_REF = '95b77bb261048059846273688e4b90a2e108b437';
 
 function parseArgs(argv = process.argv.slice(2)) {
-  const args = { selection: null, inventory: null, output: null, requestDir: null, journal: null, digest: null, reviewedAt: null };
+  const args = { selection: null, inventory: null, exclusion: null, output: null, requestDir: null, journal: null, digest: null, reviewedAt: null };
   for (let index = 0; index < argv.length; index += 1) {
     const arg = argv[index];
     if (arg === '--selection') args.selection = argv[++index];
     else if (arg === '--inventory') args.inventory = argv[++index];
+    else if (arg === '--exclusion') args.exclusion = argv[++index];
     else if (arg === '--output') args.output = argv[++index];
     else if (arg === '--request-dir') args.requestDir = argv[++index];
     else if (arg === '--journal') args.journal = argv[++index];
@@ -28,7 +29,7 @@ function parseArgs(argv = process.argv.slice(2)) {
     else if (arg === '--reviewed-at') args.reviewedAt = argv[++index];
     else throw new Error(`unknown argument: ${arg}`);
   }
-  for (const key of ['selection', 'inventory', 'output', 'requestDir', 'journal', 'digest', 'reviewedAt']) if (!args[key]) throw new Error(`--${key.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`)} is required`);
+  for (const key of ['selection', 'inventory', 'exclusion', 'output', 'requestDir', 'journal', 'digest', 'reviewedAt']) if (!args[key]) throw new Error(`--${key.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`)} is required`);
   if (Number.isNaN(Date.parse(args.reviewedAt))) throw new Error('--reviewed-at must be an ISO timestamp');
   return args;
 }
@@ -96,6 +97,22 @@ function validateRequestDirectory(requestDir, issueNumbers, requireAll = false) 
   return errors;
 }
 
+function validateExclusion(selection, exclusion) {
+  const errors = [];
+  if (!exclusion || exclusion.schema_version !== 'issue-1606-applied-exclusion.v1') errors.push('applied exclusion schema mismatch');
+  if (!exclusion || exclusion.exclusion_sha256 !== recomputeDigest(exclusion, 'exclusion_sha256')) errors.push('applied exclusion canonical SHA-256 does not recompute');
+  if (!exclusion || exclusion.applied_manifest?.row_count !== 419) errors.push('applied exclusion must bind the 419-row parent manifest');
+  const items = Array.isArray(exclusion && exclusion.items) ? exclusion.items : [];
+  if (items.length !== 92) errors.push('applied exclusion must contain exactly 92 A rows');
+  const numbers = items.map((item) => item.issue_number);
+  if (new Set(numbers).size !== numbers.length) errors.push('applied exclusion issue numbers are not unique');
+  if (numbers.some((number) => number < MIN_ISSUE || number > MAX_ISSUE)) errors.push('applied exclusion contains out-of-range issue');
+  const selected = new Set((selection && selection.items || []).map((item) => item.issue_number));
+  if (numbers.some((number) => selected.has(number))) errors.push('selection overlaps applied exclusion');
+  if (selection?.read_audit?.applied_exclusion_sha256 !== exclusion?.exclusion_sha256) errors.push('selection/exclusion digest mismatch');
+  return errors;
+}
+
 function validateInputs(selection, inventory) {
   const errors = [];
   const selectionItems = Array.isArray(selection.items) ? selection.items : [];
@@ -132,8 +149,10 @@ function main() {
   const args = parseArgs();
   const selection = readJson(args.selection);
   const inventory = readJson(args.inventory);
+  const exclusion = readJson(args.exclusion);
   const inputErrors = validateInputs(selection, inventory);
-  if (inputErrors.length) throw new Error(`input validation failed closed: ${inputErrors.join('; ')}`);
+  const exclusionErrors = validateExclusion(selection, exclusion);
+  if (inputErrors.length || exclusionErrors.length) throw new Error(`input validation failed closed: ${inputErrors.concat(exclusionErrors).join('; ')}`);
 
   const inventoryByNumber = new Map(inventory.items.map((item) => [item.issue_number, item]));
   const requestDir = path.resolve(args.requestDir);
@@ -212,6 +231,8 @@ function main() {
     source_repository_ref: SOURCE_REF,
     selection_sha256: selection.selection_sha256,
     source_inventory_sha256: inventory.inventory_sha256,
+    applied_exclusion_file: path.relative(process.cwd(), path.resolve(args.exclusion)),
+    applied_exclusion_sha256: exclusion.exclusion_sha256,
     review_report_file: path.relative(process.cwd(), reportPath),
     counts,
     mutation: { planned: 0, applied: 0, pending_authorization: counts.ready },
@@ -231,6 +252,7 @@ function main() {
     source_repository_ref: inventory.source_repository_ref,
     selection_sha256: selection.selection_sha256,
     source_inventory_sha256: inventory.inventory_sha256,
+    applied_exclusion_sha256: exclusion.exclusion_sha256,
     plan_sha256: plan.plan_sha256,
     counts,
     transport_policy: inventory.transport_policy,
@@ -264,6 +286,7 @@ function main() {
     live_apply_authorized: false,
     selection_sha256: selection.selection_sha256,
     source_inventory_sha256: inventory.inventory_sha256,
+    applied_exclusion_sha256: exclusion.exclusion_sha256,
     plan_sha256: plan.plan_sha256,
     report_sha256: report.report_sha256,
     mutation_count: 0,
@@ -278,6 +301,7 @@ function main() {
     issue: 1606,
     selection_sha256: selection.selection_sha256,
     source_inventory_sha256: inventory.inventory_sha256,
+    applied_exclusion_sha256: exclusion.exclusion_sha256,
     plan_sha256: plan.plan_sha256,
     journal_sha256: journal.journal_sha256,
     report_sha256: report.report_sha256,
@@ -294,4 +318,4 @@ if (require.main === module) {
   try { main(); } catch (error) { console.error(`ERROR: ${error.message}`); process.exitCode = 1; }
 }
 
-module.exports = { parseArgs, recomputeDigest, validateInputs, validateItemAnchors, validateRequestAnchors, validateRequestDirectory };
+module.exports = { parseArgs, recomputeDigest, validateInputs, validateExclusion, validateItemAnchors, validateRequestAnchors, validateRequestDirectory };

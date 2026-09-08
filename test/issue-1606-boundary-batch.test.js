@@ -10,6 +10,7 @@ const {
 } = require('../scripts/lib/issue-1606-boundary');
 const {
   recomputeDigest,
+  validateExclusion,
   validateInputs,
   validateItemAnchors,
   validateRequestAnchors,
@@ -18,6 +19,7 @@ const {
 const root = path.join(__dirname, '..');
 const selection = JSON.parse(fs.readFileSync(path.join(root, 'data/issue-1606/selection-manifest.json'), 'utf8'));
 const inventory = JSON.parse(fs.readFileSync(path.join(root, 'data/issue-1606/source-inventory.json'), 'utf8'));
+const exclusion = JSON.parse(fs.readFileSync(path.join(root, 'data/issue-1606/applied-exclusion-manifest.json'), 'utf8'));
 const plan = JSON.parse(fs.readFileSync(path.join(root, 'data/issue-1606/boundary.dry-run.json'), 'utf8'));
 const journal = JSON.parse(fs.readFileSync(path.join(root, 'data/issue-1606/apply-journal.json'), 'utf8'));
 const digest = JSON.parse(fs.readFileSync(path.join(root, 'data/issue-1606/canonical-digest.json'), 'utf8'));
@@ -31,11 +33,19 @@ function projection(text) {
 test('issue #1606 selection is exactly #20..#392 pending set and never probes outside range', () => {
   assert.equal(selection.selected_count, selection.items.length);
   assert.ok(selection.selected_count > 0);
-  assert.deepEqual(selection.read_audit.exact_issue_numbers, Array.from({ length: 373 }, (_, index) => index + 20));
+  assert.equal(selection.selected_count, 235);
+  assert.equal(selection.range.expected_count, 235);
+  assert.equal(selection.read_audit.exact_issue_numbers.length, 235);
+  assert.equal(selection.read_audit.out_of_scope_reads, 0);
   assert.deepEqual(selection.read_audit.out_of_range_issue_numbers, []);
   assert.equal(new Set(selection.items.map((item) => item.issue_number)).size, selection.selected_count);
   assert.equal(selection.items.every((item) => item.issue_number >= 20 && item.issue_number <= 392), true);
   assert.equal(selection.items.every((item) => item.source_repository_ref === '95b77bb261048059846273688e4b90a2e108b437'), true);
+  assert.equal(exclusion.items.length, 92);
+  assert.equal(exclusion.applied_manifest.row_count, 419);
+  assert.equal(exclusion.exclusion_sha256, recomputeDigest(exclusion, 'exclusion_sha256'));
+  assert.deepEqual(validateExclusion(selection, exclusion), []);
+  assert.equal(selection.items.some((item) => exclusion.items.some((applied) => applied.issue_number === item.issue_number)), false);
 });
 
 test('source inventory binds all selected items to verified Source projection evidence', () => {
@@ -65,6 +75,10 @@ test('canonical digests and per-item anchors are independently recomputable', ()
   assert.equal(digest.canonical_sha256, recomputeDigest(digest, 'canonical_sha256'));
   assert.equal(report.report_sha256, recomputeDigest(report, 'report_sha256'));
   assert.equal(report.plan_sha256, plan.plan_sha256);
+  assert.equal(plan.applied_exclusion_sha256, exclusion.exclusion_sha256);
+  assert.equal(report.applied_exclusion_sha256, exclusion.exclusion_sha256);
+  assert.equal(journal.applied_exclusion_sha256, exclusion.exclusion_sha256);
+  assert.equal(digest.applied_exclusion_sha256, exclusion.exclusion_sha256);
   assert.equal(report.items.length, selection.selected_count);
   const inventoryByNumber = new Map(inventory.items.map((item) => [item.issue_number, item]));
   for (const item of selection.items) {
@@ -108,11 +122,11 @@ test('anchor gate rejects self-reported digest tampering, substitutions, omissio
   omittedInventory.inventory_sha256 = recomputeDigest(omittedInventory, 'inventory_sha256');
   assert.match(validateInputs(selection, omittedInventory).join('\n'), /source inventory must contain exactly 327 items|inventory issue sets differ/);
 
-  const request = JSON.parse(fs.readFileSync(path.join(requestDir, '0103.json'), 'utf8'));
+  const request = JSON.parse(fs.readFileSync(path.join(requestDir, '0028.json'), 'utf8'));
   const driftedRequest = clone(request);
   driftedRequest.expected_body_sha256 = 'f'.repeat(64);
-  const item = selection.items.find((candidate) => candidate.issue_number === 103);
-  const inventoryItem = inventory.items.find((candidate) => candidate.issue_number === 103);
+  const item = selection.items.find((candidate) => candidate.issue_number === 28);
+  const inventoryItem = inventory.items.find((candidate) => candidate.issue_number === 28);
   assert.match(validateRequestAnchors(driftedRequest, item, inventoryItem).join('\n'), /expected_body_sha256 anchor mismatch/);
 
   const replacedArtifactRequest = clone(request);
@@ -139,28 +153,18 @@ test('adversarial boundary cases require completed-event evidence', () => {
 });
 
 test('P1 spot checks use completed evidence and block appointment/question-only notes', () => {
-  assert.equal(classifyBoundary(inventory.items.find((item) => item.issue_number === 103)).decision, 'single-interview');
-  assert.match(classifyBoundary(inventory.items.find((item) => item.issue_number === 103)).evidence_line.text, /面的/);
   assert.equal(classifyBoundary(inventory.items.find((item) => item.issue_number === 143)).decision, 'single-interview');
   assert.equal(classifyBoundary(inventory.items.find((item) => item.issue_number === 285)).decision, 'single-interview');
   assert.equal(classifyBoundary(inventory.items.find((item) => item.issue_number === 305)).decision, 'not-interview');
   assert.equal(classifyBoundary(projection('电话约面')).status, 'blocked');
-  assert.equal(classifyBoundary(inventory.items.find((item) => item.issue_number === 389)).decision, 'single-interview');
-  assert.match(classifyBoundary(inventory.items.find((item) => item.issue_number === 389)).evidence_line.text, /面完/);
 });
 
 test('semantic negative spot checks never become single-interview', () => {
   const expected = {
-    116: 'not-interview',
-    186: 'not-interview',
     227: 'blocked',
     234: 'multi-interview',
-    262: 'not-interview',
-    266: 'not-interview',
-    303: 'not-interview',
     351: 'blocked',
     355: 'blocked',
-    381: 'not-interview',
     388: 'multi-interview',
   };
   for (const [issueNumber, disposition] of Object.entries(expected)) {
@@ -173,6 +177,14 @@ test('semantic negative spot checks never become single-interview', () => {
   }
   assert.equal(classifyBoundary(inventory.items.find((item) => item.issue_number === 28)).decision, 'single-interview');
   assert.equal(classifyBoundary(inventory.items.find((item) => item.issue_number === 28)).evidence_line.line, 6);
+});
+
+test('applied 419-row exclusion removes the prior 92 A rows from the fresh pending set', () => {
+  const excluded = new Set(exclusion.items.map((item) => item.issue_number));
+  for (const issueNumber of [103, 116, 186, 262, 266, 303, 381]) assert.equal(excluded.has(issueNumber), true, `#${issueNumber}`);
+  assert.equal(exclusion.items.every((item) => item.issue_number >= 20 && item.issue_number <= 392), true);
+  assert.equal(selection.items.every((item) => !excluded.has(item.issue_number)), true);
+  assert.equal(inventory.items.every((item) => !excluded.has(item.issue_number)), true);
 });
 
 test('semantic adversarial cases distinguish curated advice, recruiting calendars, aggregate, and isolated outcomes', () => {

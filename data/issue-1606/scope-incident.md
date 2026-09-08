@@ -25,8 +25,10 @@ current live baseline and is still restricted to exact issue numbers
   boundaries, invariants, schemas, scripts, fixtures, and tests.
 - GitHub: parent/task metadata for `#1605`/`#1606`; boundary samples `#20`,
   `#21`, `#392`; and the out-of-scope accidental read `#393`.
-- No issues after `#393` were requested or read; the only out-of-scope read was
-  the single accidental request for `#393` described above.
+- At that time, no issues after `#393` were requested or read; the only
+  out-of-scope read then known was the single accidental request for `#393`
+  described above. A later controller correction records an additional
+  broad-list read incident below.
 
 ## Mutation audit
 
@@ -41,3 +43,20 @@ current live baseline and is still restricted to exact issue numbers
 The controller authorized continuation while retaining this audit record. The
 continuation must not probe an upper-bound issue and must not read or modify
 issues outside `#20–#392`.
+
+## 2026-09-09 controller correction
+
+Two exploratory REST list requests were started while rebuilding the live
+pending snapshot: an unbounded `state=all` list and a label-filtered list. The
+first response was an incomplete concatenated page stream; the second returned
+978 matching Issues, of which 235 were in `#20–#392` and 743 were outside the
+authorized A range. No record from either list was used in the regenerated
+selection, inventory, evidence, request, plan, journal, or digest. These reads
+are retained here as an audit incident; the overall session therefore cannot
+claim zero out-of-scope reads.
+
+The authoritative replacement snapshot uses only 235 exact per-issue REST GETs
+for the candidate numbers derived from the frozen A baseline minus the 92-row
+intersection with the parent 419-row applied manifest. Its independent audit
+records `out_of_scope_reads=0`; all subsequent artifacts are generated only
+from those exact GET files and the pinned local Source projection cache.

@@ -6,7 +6,7 @@
   "scripts": {
     "freeze:issue-1606-selection": "node scripts/issue-1606-boundary-batch.js --mode freeze --output data/issue-1606/selection-manifest.json",
     "inventory:issue-1606-source": "node scripts/issue-1606-boundary-batch.js --mode source-inventory --selection data/issue-1606/selection-manifest.json --output data/issue-1606/source-inventory.json",
-    "plan:issue-1606-boundary": "node scripts/plan-issue-1606-boundary-batch.js --selection data/issue-1606/selection-manifest.json --inventory data/issue-1606/source-inventory.json --output data/issue-1606/boundary.dry-run.json --request-dir data/issue-1606/requests --journal data/issue-1606/apply-journal.json --digest data/issue-1606/canonical-digest.json --reviewed-at 2026-09-08T02:05:50Z",
+    "plan:issue-1606-boundary": "node scripts/plan-issue-1606-boundary-batch.js --selection data/issue-1606/selection-manifest.json --inventory data/issue-1606/source-inventory.json --exclusion data/issue-1606/applied-exclusion-manifest.json --output data/issue-1606/boundary.dry-run.json --request-dir data/issue-1606/requests --journal data/issue-1606/apply-journal.json --digest data/issue-1606/canonical-digest.json --reviewed-at 2026-09-08T17:18:04Z",
     "test": "node --test",
     "validate:source-note-fixture": "node scripts/validate-source-note-issue.js test/fixtures/source-note-issue.valid.md --label type:source-note --label source:xhs --label status:captured --label boundary:pending --label task:boundary-review --label migration:xhs-bulk --label source-year:2022",
     "validate:issue-fixture": "node scripts/validate-interview-note-issue.js test/fixtures/interview-note-issue.valid.md",
