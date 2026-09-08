@@ -7,15 +7,12 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "7d481c7e210c744c03bd4795f3fb2cb25372a9bd821baac433a6bd036ab39e3b",
-  "disposition": "blocked",
-  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "disposition": "single-interview",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
-      "question-list-only",
-      "no-first-person-event",
-      "question-only",
-      "no-candidate-event-evidence"
+      "no-first-person-event"
     ],
     "questions": 12,
     "has_first_person_event": false,
@@ -23,19 +20,33 @@
     "has_bounded_event": true,
     "has_detailed_event": true,
     "has_completed_event_evidence": true,
-    "has_structured_candidate_event": false,
+    "has_structured_candidate_event": true,
     "generic_advice_or_aggregated": false,
     "scheduled_only": false,
-    "question_only": true,
-    "outcome_signal": false,
+    "question_only": false,
+    "outcome_signal": true,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
-    "only_question_list": true,
+    "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "bytedance-process",
+        "anchor": "字节",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-165;blob:a07c337d6237b792a04040e4f4a6d0900330b2b9",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:字节",
+        "source_ref": "liqiangcc/xhs:note_detail/68a7d1ed000000001b0214a7.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68a7d1ed000000001b0214a7.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -44,13 +55,108 @@
     "provenance": "source_projection",
     "byte_size": 601,
     "content_sha256": "97e5ed2eef87ede39490f6e86078e054c446057bcb915c07b06090142431b540",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "1.介绍业务",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "1.介绍业务\n2.数据如何从kafka到Hive\n3.kafka是什么\n4.如果出现数据漂移怎么办\n5.Hive中SQL语句执行流程（回答抽象语法树->逻辑计划->优化器->物理计划...）\n6.SQL语句如何解析成抽象语法树\n7.Hadoop了解多少\n8.sql和redis区别\n9.sql有哪些索引\n10.mysql的存储引擎是什么\n11.主键索引为什么能够加快查询速度\n12.什么是二叉树有什么应用场景，前中后序是什么\n手撕简单sql题\n手撕类似于力扣在排序数组中查找元素的第一个和最后一个位置\n面试忘记很多[哭惹R]继续沉淀学习"
-    }
+      "locator": "artifact-line:1#offset:0-6;blob:710a1eb7d6ab2c7357d5cebaf42a5ad319f1a6ff",
+      "semantic_excerpt": "字节大数据开发一面凉经\n1.介绍业务\n2.数据如何从kafka到Hive\n3.kafka是什么\n4.如果出现数据漂移怎么办\n5.Hive中SQL语句执行流程（回答抽象语法树->逻辑计划->优化器->物理计划...）\n6.SQL语句如何解析成抽象语法树\n7.Hadoop了解多少\n8.sql和redis区别\n9.sql有哪些索引\n10.mysql的存储引擎是什么\n11.主键索引为什么能够加快查询速度\n12.什么是二叉树有什么应用场景，前中后序是什么\n手撕简单sql题\n手撕类似于力扣在排序数组中查找元素的第一个和最后一个位置\n面试忘记很多[哭惹R]继续沉淀学习"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68a7d1ed000000001b0214a7.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "710a1eb7d6ab2c7357d5cebaf42a5ad319f1a6ff",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 601,
+        "content_sha256": "97e5ed2eef87ede39490f6e86078e054c446057bcb915c07b06090142431b540",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "1.介绍业务",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-6;blob:710a1eb7d6ab2c7357d5cebaf42a5ad319f1a6ff",
+          "semantic_excerpt": "字节大数据开发一面凉经\n1.介绍业务\n2.数据如何从kafka到Hive\n3.kafka是什么\n4.如果出现数据漂移怎么办\n5.Hive中SQL语句执行流程（回答抽象语法树->逻辑计划->优化器->物理计划...）\n6.SQL语句如何解析成抽象语法树\n7.Hadoop了解多少\n8.sql和redis区别\n9.sql有哪些索引\n10.mysql的存储引擎是什么\n11.主键索引为什么能够加快查询速度\n12.什么是二叉树有什么应用场景，前中后序是什么\n手撕简单sql题\n手撕类似于力扣在排序数组中查找元素的第一个和最后一个位置\n面试忘记很多[哭惹R]继续沉淀学习"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68a7d1ed000000001b0214a7.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "a07c337d6237b792a04040e4f4a6d0900330b2b9",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 386057,
+        "content_sha256": "ae877017455fa4ee6cf1a1f06bacfc40ef9852b31e08eb06229d099cc4ce60ec",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "字节大数据开发一面凉经 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-188;blob:a07c337d6237b792a04040e4f4a6d0900330b2b9",
+          "semantic_excerpt": "字节大数据开发一面凉经\n1.介绍业务\n2.数据如何从kafka到Hive\n3.kafka是什么\n4.如果出现数据漂移怎么办\n5.Hive中SQL语句执行流程（回答抽象语法树->逻辑计划->优化器->物理计划...）\n6.SQL语句如何解析成抽象语法树\n7.Hadoop了解多少\n8.sql和redis区别\n9.sql有哪些索引\n10.mysql的存储引擎是什么\n11.主键索引为什么能够加快查询速度\n12.什么是二叉树有什么应用场景，前中后序是什么\n手撕简单sql题\n手撕类似于力扣在排序数组中查找元素的第一个和最后一个位置\n面试忘记很多[哭惹R]继续沉淀学习"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68a7d1ed000000001b0214a7.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "49d59e7b0157092e7ab5f2d6b431e6be912a7eda",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 20268,
+        "content_sha256": "8bc038a8cd00c39f083e156e85c59aa425204783b700ce30fea973d17a41283d",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "字节大数据开发一面凉经\",",
+          "line": 532,
+          "locator": "artifact-line:532#offset:30-43;blob:49d59e7b0157092e7ab5f2d6b431e6be912a7eda",
+          "semantic_excerpt": "字节大数据开发一面凉经\n1.介绍业务\n2.数据如何从kafka到Hive\n3.kafka是什么\n4.如果出现数据漂移怎么办\n5.Hive中SQL语句执行流程（回答抽象语法树->逻辑计划->优化器->物理计划...）\n6.SQL语句如何解析成抽象语法树\n7.Hadoop了解多少\n8.sql和redis区别\n9.sql有哪些索引\n10.mysql的存储引擎是什么\n11.主键索引为什么能够加快查询速度\n12.什么是二叉树有什么应用场景，前中后序是什么\n手撕简单sql题\n手撕类似于力扣在排序数组中查找元素的第一个和最后一个位置\n面试忘记很多[哭惹R]继续沉淀学习"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68a7d1ed000000001b0214a7.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "710a1eb7d6ab2c7357d5cebaf42a5ad319f1a6ff",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 601,
+      "content_sha256": "97e5ed2eef87ede39490f6e86078e054c446057bcb915c07b06090142431b540",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "1.介绍业务",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-6;blob:710a1eb7d6ab2c7357d5cebaf42a5ad319f1a6ff",
+        "semantic_excerpt": "字节大数据开发一面凉经\n1.介绍业务\n2.数据如何从kafka到Hive\n3.kafka是什么\n4.如果出现数据漂移怎么办\n5.Hive中SQL语句执行流程（回答抽象语法树->逻辑计划->优化器->物理计划...）\n6.SQL语句如何解析成抽象语法树\n7.Hadoop了解多少\n8.sql和redis区别\n9.sql有哪些索引\n10.mysql的存储引擎是什么\n11.主键索引为什么能够加快查询速度\n12.什么是二叉树有什么应用场景，前中后序是什么\n手撕简单sql题\n手撕类似于力扣在排序数组中查找元素的第一个和最后一个位置\n面试忘记很多[哭惹R]继续沉淀学习"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68a7d1ed000000001b0214a7.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "a07c337d6237b792a04040e4f4a6d0900330b2b9",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 386057,
+      "content_sha256": "ae877017455fa4ee6cf1a1f06bacfc40ef9852b31e08eb06229d099cc4ce60ec",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "字节大数据开发一面凉经 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-188;blob:a07c337d6237b792a04040e4f4a6d0900330b2b9",
+        "semantic_excerpt": "字节大数据开发一面凉经\n1.介绍业务\n2.数据如何从kafka到Hive\n3.kafka是什么\n4.如果出现数据漂移怎么办\n5.Hive中SQL语句执行流程（回答抽象语法树->逻辑计划->优化器->物理计划...）\n6.SQL语句如何解析成抽象语法树\n7.Hadoop了解多少\n8.sql和redis区别\n9.sql有哪些索引\n10.mysql的存储引擎是什么\n11.主键索引为什么能够加快查询速度\n12.什么是二叉树有什么应用场景，前中后序是什么\n手撕简单sql题\n手撕类似于力扣在排序数组中查找元素的第一个和最后一个位置\n面试忘记很多[哭惹R]继续沉淀学习"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68a7d1ed000000001b0214a7.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "49d59e7b0157092e7ab5f2d6b431e6be912a7eda",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 20268,
+      "content_sha256": "8bc038a8cd00c39f083e156e85c59aa425204783b700ce30fea973d17a41283d",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "字节大数据开发一面凉经\",",
+        "line": 532,
+        "locator": "artifact-line:532#offset:30-43;blob:49d59e7b0157092e7ab5f2d6b431e6be912a7eda",
+        "semantic_excerpt": "字节大数据开发一面凉经\n1.介绍业务\n2.数据如何从kafka到Hive\n3.kafka是什么\n4.如果出现数据漂移怎么办\n5.Hive中SQL语句执行流程（回答抽象语法树->逻辑计划->优化器->物理计划...）\n6.SQL语句如何解析成抽象语法树\n7.Hadoop了解多少\n8.sql和redis区别\n9.sql有哪些索引\n10.mysql的存储引擎是什么\n11.主键索引为什么能够加快查询速度\n12.什么是二叉树有什么应用场景，前中后序是什么\n手撕简单sql题\n手撕类似于力扣在排序数组中查找元素的第一个和最后一个位置\n面试忘记很多[哭惹R]继续沉淀学习"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -69,8 +175,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -84,11 +190,12 @@
     }
   ],
   "limitations": [
-    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "a29eec1ba3bdd392033a63a8a4620d3cedecbd74fe647b538347b4eff6bdca86"
+  "evidence_sha256": "0d7a6cf71ed7cedda3da59db0468567fdae01794265730dc0352d76226779783"
 }

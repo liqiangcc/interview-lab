@@ -7,15 +7,12 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "55a3a47d3d6f06d3ac4a5428f407b471c33505c3d11a53305505b3134e000e07",
-  "disposition": "blocked",
-  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "disposition": "single-interview",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
-      "question-list-only",
-      "no-first-person-event",
-      "question-only",
-      "no-candidate-event-evidence"
+      "no-first-person-event"
     ],
     "questions": 18,
     "has_first_person_event": false,
@@ -23,19 +20,23 @@
     "has_bounded_event": true,
     "has_detailed_event": true,
     "has_completed_event_evidence": true,
-    "has_structured_candidate_event": false,
+    "has_structured_candidate_event": true,
     "generic_advice_or_aggregated": false,
     "scheduled_only": false,
-    "question_only": true,
+    "question_only": false,
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
-    "only_question_list": true,
+    "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68c2c62e000000001b01d168.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -44,13 +45,108 @@
     "provenance": "source_projection",
     "byte_size": 497,
     "content_sha256": "962e1987f425eba1857c1d1f9ab9693c7987c0497cfb8d5a74f6d36805a5fc4b",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "1.自我介绍",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "1.自我介绍\n2.项目拷打\n2.1 项目里遇到什么困难，怎么解决的\n3.八股\n3.1 redis多级缓存一致性\n3.2 本地缓存如何删除\n3.3 雪崩、缓存穿透、缓存击穿\n3.4redis过期策略\n3.5消息队列如何保证可靠性\n3.6mysql如何解决幻读问题\n3.7 g1和cms区别\n4.场景题\n4.1大量数据的接口优化\n4.2亿万级数据库的分库策略\n5.反问\n6.手撕两道题\n6.1模式匹配\n6.2topk高频词"
-    }
+      "locator": "artifact-line:1#offset:0-6;blob:9ee68b523836e8bff9bb9c1cdb5552ac869bbac7",
+      "semantic_excerpt": "闲鱼-java后端一面\n1.自我介绍\n2.项目拷打\n2.1 项目里遇到什么困难，怎么解决的\n3.八股\n3.1 redis多级缓存一致性\n3.2 本地缓存如何删除\n3.3 雪崩、缓存穿透、缓存击穿\n3.4redis过期策略\n3.5消息队列如何保证可靠性\n3.6mysql如何解决幻读问题\n3.7 g1和cms区别\n4.场景题\n4.1大量数据的接口优化\n4.2亿万级数据库的分库策略\n5.反问\n6.手撕两道题\n6.1模式匹配\n6.2topk高频词"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68c2c62e000000001b01d168.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "9ee68b523836e8bff9bb9c1cdb5552ac869bbac7",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 497,
+        "content_sha256": "962e1987f425eba1857c1d1f9ab9693c7987c0497cfb8d5a74f6d36805a5fc4b",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "1.自我介绍",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-6;blob:9ee68b523836e8bff9bb9c1cdb5552ac869bbac7",
+          "semantic_excerpt": "闲鱼-java后端一面\n1.自我介绍\n2.项目拷打\n2.1 项目里遇到什么困难，怎么解决的\n3.八股\n3.1 redis多级缓存一致性\n3.2 本地缓存如何删除\n3.3 雪崩、缓存穿透、缓存击穿\n3.4redis过期策略\n3.5消息队列如何保证可靠性\n3.6mysql如何解决幻读问题\n3.7 g1和cms区别\n4.场景题\n4.1大量数据的接口优化\n4.2亿万级数据库的分库策略\n5.反问\n6.手撕两道题\n6.1模式匹配\n6.2topk高频词"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68c2c62e000000001b01d168.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "269d92dfff2d5dc816e4a4e35631915c2fcaf3bf",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 386492,
+        "content_sha256": "eae65b32166e39aaf27d0ea90d9de745e23690c087c0105376d897abf6800d58",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "闲鱼-java后端一面 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-188;blob:269d92dfff2d5dc816e4a4e35631915c2fcaf3bf",
+          "semantic_excerpt": "闲鱼-java后端一面\n1.自我介绍\n2.项目拷打\n2.1 项目里遇到什么困难，怎么解决的\n3.八股\n3.1 redis多级缓存一致性\n3.2 本地缓存如何删除\n3.3 雪崩、缓存穿透、缓存击穿\n3.4redis过期策略\n3.5消息队列如何保证可靠性\n3.6mysql如何解决幻读问题\n3.7 g1和cms区别\n4.场景题\n4.1大量数据的接口优化\n4.2亿万级数据库的分库策略\n5.反问\n6.手撕两道题\n6.1模式匹配\n6.2topk高频词"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68c2c62e000000001b01d168.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "8d3ed508425106d9e589fcda5058372406764a2c",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 20796,
+        "content_sha256": "ba93e53aed843e0a760a3842daf2a0e713c1afd9262bfc192f4cdbe627c29ad8",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "闲鱼-java后端一面\",",
+          "line": 522,
+          "locator": "artifact-line:522#offset:30-43;blob:8d3ed508425106d9e589fcda5058372406764a2c",
+          "semantic_excerpt": "闲鱼-java后端一面\n1.自我介绍\n2.项目拷打\n2.1 项目里遇到什么困难，怎么解决的\n3.八股\n3.1 redis多级缓存一致性\n3.2 本地缓存如何删除\n3.3 雪崩、缓存穿透、缓存击穿\n3.4redis过期策略\n3.5消息队列如何保证可靠性\n3.6mysql如何解决幻读问题\n3.7 g1和cms区别\n4.场景题\n4.1大量数据的接口优化\n4.2亿万级数据库的分库策略\n5.反问\n6.手撕两道题\n6.1模式匹配\n6.2topk高频词"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68c2c62e000000001b01d168.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "9ee68b523836e8bff9bb9c1cdb5552ac869bbac7",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 497,
+      "content_sha256": "962e1987f425eba1857c1d1f9ab9693c7987c0497cfb8d5a74f6d36805a5fc4b",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "1.自我介绍",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-6;blob:9ee68b523836e8bff9bb9c1cdb5552ac869bbac7",
+        "semantic_excerpt": "闲鱼-java后端一面\n1.自我介绍\n2.项目拷打\n2.1 项目里遇到什么困难，怎么解决的\n3.八股\n3.1 redis多级缓存一致性\n3.2 本地缓存如何删除\n3.3 雪崩、缓存穿透、缓存击穿\n3.4redis过期策略\n3.5消息队列如何保证可靠性\n3.6mysql如何解决幻读问题\n3.7 g1和cms区别\n4.场景题\n4.1大量数据的接口优化\n4.2亿万级数据库的分库策略\n5.反问\n6.手撕两道题\n6.1模式匹配\n6.2topk高频词"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68c2c62e000000001b01d168.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "269d92dfff2d5dc816e4a4e35631915c2fcaf3bf",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 386492,
+      "content_sha256": "eae65b32166e39aaf27d0ea90d9de745e23690c087c0105376d897abf6800d58",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "闲鱼-java后端一面 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-188;blob:269d92dfff2d5dc816e4a4e35631915c2fcaf3bf",
+        "semantic_excerpt": "闲鱼-java后端一面\n1.自我介绍\n2.项目拷打\n2.1 项目里遇到什么困难，怎么解决的\n3.八股\n3.1 redis多级缓存一致性\n3.2 本地缓存如何删除\n3.3 雪崩、缓存穿透、缓存击穿\n3.4redis过期策略\n3.5消息队列如何保证可靠性\n3.6mysql如何解决幻读问题\n3.7 g1和cms区别\n4.场景题\n4.1大量数据的接口优化\n4.2亿万级数据库的分库策略\n5.反问\n6.手撕两道题\n6.1模式匹配\n6.2topk高频词"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68c2c62e000000001b01d168.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "8d3ed508425106d9e589fcda5058372406764a2c",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 20796,
+      "content_sha256": "ba93e53aed843e0a760a3842daf2a0e713c1afd9262bfc192f4cdbe627c29ad8",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "闲鱼-java后端一面\",",
+        "line": 522,
+        "locator": "artifact-line:522#offset:30-43;blob:8d3ed508425106d9e589fcda5058372406764a2c",
+        "semantic_excerpt": "闲鱼-java后端一面\n1.自我介绍\n2.项目拷打\n2.1 项目里遇到什么困难，怎么解决的\n3.八股\n3.1 redis多级缓存一致性\n3.2 本地缓存如何删除\n3.3 雪崩、缓存穿透、缓存击穿\n3.4redis过期策略\n3.5消息队列如何保证可靠性\n3.6mysql如何解决幻读问题\n3.7 g1和cms区别\n4.场景题\n4.1大量数据的接口优化\n4.2亿万级数据库的分库策略\n5.反问\n6.手撕两道题\n6.1模式匹配\n6.2topk高频词"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -69,8 +165,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -84,11 +180,12 @@
     }
   ],
   "limitations": [
-    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "75ccb0f510697c0cdbaf1f6bd28c379015ca1b962de982970419f00cea45b832"
+  "evidence_sha256": "a58b83a1a5d60df68b6f7af17b0b4a159292b54146027d9e88b58a09bbc1e657"
 }

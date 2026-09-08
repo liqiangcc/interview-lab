@@ -7,8 +7,8 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "9e5ce777ed45bdac4ada6a6643af9f720df62fd54ed1d9942c6d8c09be7917af",
-  "disposition": "blocked",
-  "rationale": "Exact Source provides only an interview outcome, offer, rejection, or result without a bounded candidate event; retain pending.",
+  "disposition": "not-interview",
+  "rationale": "Exact Source identifies a written-test/non-interview format rather than a candidate interview event.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
@@ -17,7 +17,7 @@
       "no-candidate-event-evidence",
       "non-interview-format"
     ],
-    "questions": 1,
+    "questions": 2,
     "has_first_person_event": true,
     "has_explicit_candidate_event": true,
     "has_bounded_event": false,
@@ -30,12 +30,16 @@
     "outcome_signal": true,
     "resource_signal": true,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": true,
     "only_question_list": false,
     "only_outcome": true,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [],
+    "reviewed_artifact_count": 2,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68cd1391000000001301eff4.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -44,13 +48,78 @@
     "provenance": "source_projection",
     "byte_size": 29986,
     "content_sha256": "8e97978bf5ee6e3d4f2884d92e83f321c90656bb6b648651a0378936c435c90c",
+    "cache_status": "not-applicable",
     "excerpt": {
-      "excerpt": "\"desc\": \"9.20京东笔试又来啦～简单分享一下我之前参加的一场，笔试有20道单选和5道多选，再加上两道编程题，选择题花了些时间，编程题大概十五分钟就全AC了，直接一次通过～大概就是这样\\n选择题主要考的还是那些基础八股，像动态规划、Linux 系统、数据库开发、二叉树这些常考内容，整体难度不算太大，都是比较常见的知识点\\n\\t\\n下面给大家分享一下两道编程题\\n第1题：计算让所有禾苗高度变成严格递增所需的最少操作天数。\\n思路：对于相邻的两株禾苗，需要满足在第 x 天后，有 a[i] + x * b[i] < a[i+1] + x * b[i+1]。\\n解该不等式可得 x ≥ ceil((a[i] - a[i+1]) / (b[i+1] - b[i]))，且该式仅当 b[i+1] > b[i] 时成立（即分母为正）。\\n遍历所有相邻的禾苗对，对每个满足条件的不等式计算所需的最小天数，最后取所有结果中的最大值（且不低于0），即为所求的最少操作天数。\\n\\t\\n第2题：在给定序列中找出一个字典序最小的子序列，要求该子序列包含 1 到 k 每个数字恰好一次。\\n思路：采用贪心策略，结合单调栈进行求解。遍历整个序列，同时维护一个结果栈。当当前数字小于栈顶元素，并且栈顶元素在后续还会出现时，弹出栈顶元素，以保证字典序最小。同时需确保每个数字在子序列中只出现一次。最终栈中保存的序列即为所求的字典序最小的合法子序列。\\n\\t\\n京东笔试做下来，选择部分稍微多花了点时间，不过好在选择和编程是分开计时的～编程题倒是做得飞快，样例全都一遍过，笔试就这么愉快地搞定啦\\n互联网大厂秋招可以辅助\\n擅长Python Java c++\\n实力稳定，没把握的T我\\n同时欢迎点赞收藏关注，有需求可以迅速找到我～\\n#京东笔试[话题]#  #互联网大厂[话题]#   #秋招笔试[话题]#   #算法笔试[话题]#   #小米秋招[话题]#   #互联网大厂秋招[话题]#   #互联网大厂笔试[话题]#   #笔试[话题]#   #秋招[话题]# #计算机找工[话题]#\",",
-      "line": 498,
-      "locator": "artifact-line:498",
-      "semantic_excerpt": "9.20京东笔试又来啦～简单分享一下我之前参加的一场，笔试有20道单选和5道多选，再加上两道编程题，选择题花了些时间，编程题大概十五分钟就全AC了，直接一次通过～大概就是这样\n选择题主要考的还是那些基础八股，像动态规划、Linux 系统、数据库开发、二叉树这些常考内容，整体难度不算太大，都是比较常见的知识点\n \n下面给大家分享一下两道编程题\n第1题：计算让所有禾苗高度变成严格递增所需的最少操作天数。\n思路：对于相邻的两株禾苗，需要满足在第 x 天后，有 a[i] + x * b[i] < a[i+1] + x * b[i+1]。\n解该不等式可得 x ≥ ceil((a[i] - a[i+1]) / (b[i+1] - b[i]))，且该式仅当 b[i+1] > b[i] 时成立（即分母为正）。\n遍历所有相邻的禾苗对，对每个满足条件的不等式计算所需的最小天数，最后取所有结果中的最大值（且不低于0），即为所求的最少操作天数。\n \n第2题：在给定序列中找出一个字典序最小的子序列，要求该子序列包含 1 到 k 每个数字恰好一次。\n思路：采用贪心策略，结合单调栈进行求解。遍历整个序列，同时维护一个结果栈。当当前数字小于栈顶元素，并且栈顶元素在后续还会出现时，弹出栈顶元素，以保证字典序最小。同时需确保每个数字在子序列中只出现一次。最终栈中保存的序列即为所求的字典序最小的合法子序列。\n \n京东笔试做下来，选择部分稍微多花了点时间，不过好在选择和编程是分开计时的～编程题倒是做得飞快，样例全都一遍过，笔试就这么愉快地搞定啦\n互联网大厂秋招可以辅助\n擅长Python Java c++\n实力稳定，没把握的T我\n同时欢迎点赞收藏关注，有需求可以迅速找到我～"
-    }
+      "excerpt": "9.20京东笔试又来了 两道编程15min轻松过\",",
+      "line": 681,
+      "locator": "artifact-line:681#offset:30-56;blob:7587ab7d05ecb62448fca748059835ab8ae7d3f8",
+      "semantic_excerpt": "9.20京东笔试又来了 两道编程15min轻松过\n9.20京东笔试又来啦～简单分享一下我之前参加的一场，笔试有20道单选和5道多选，再加上两道编程题，选择题花了些时间，编程题大概十五分钟就全AC了，直接一次通过～大概就是这样\n选择题主要考的还是那些基础八股，像动态规划、Linux 系统、数据库开发、二叉树这些常考内容，整体难度不算太大，都是比较常见的知识点\n \n下面给大家分享一下两道编程题\n第1题：计算让所有禾苗高度变成严格递增所需的最少操作天数。\n思路：对于相邻的两株禾苗，需要满足在第 x 天后，有 a[i] + x * b[i] < a[i+1] + x * b[i+1]。\n解该不等式可得 x ≥ ceil((a[i] - a[i+1]) / (b[i+1] - b[i]))，且该式仅当 b[i+1] > b[i] 时成立（即分母为正）。\n遍历所有相邻的禾苗对，对每个满足条件的不等式计算所需的最小天数，最后取所有结果中的最大值（且不低于0），即为所求的最少操作天数。\n \n第2题：在给定序列中找出一个字典序最小的子序列，要求该子序列包含 1 到 k 每个数字恰好一次。\n思路：采用贪心策略，结合单调栈进行求解。遍历整个序列，同时维护一个结果栈。当当前数字小于栈顶元素，并且栈顶元素在后续还会出现时，弹出栈顶元素，以保证字典序最小。同时需确保每个数字在子序列中只出现一次。最终栈中保存的序列即为所求的字典序最小的合法子序列。\n \n京东笔试做下来，选择部分稍微多花了点时间，不过好在选择和编程是分开计时的～编程题倒是做得飞快，样例全都一遍过，笔试就这么愉快地搞定啦\n互联网大厂秋招可以辅助\n擅长Python Java c++\n实力稳定，没把握的T我\n同时欢迎点赞收藏关注，有需求可以迅速找到我～"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_detail/68cd1391000000001301eff4.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "4ee6ec5455bcef58d158c3adc47651c93e70a871",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 401442,
+        "content_sha256": "b1f06d4e5ff61d38a21d59b2ed8ee47626beedf25c272b01e23f6131b8297591",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "9.20京东笔试又来了 两道编程15min轻松过 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-201;blob:4ee6ec5455bcef58d158c3adc47651c93e70a871",
+          "semantic_excerpt": "9.20京东笔试又来了 两道编程15min轻松过\n9.20京东笔试又来啦～简单分享一下我之前参加的一场，笔试有20道单选和5道多选，再加上两道编程题，选择题花了些时间，编程题大概十五分钟就全AC了，直接一次通过～大概就是这样\n选择题主要考的还是那些基础八股，像动态规划、Linux 系统、数据库开发、二叉树这些常考内容，整体难度不算太大，都是比较常见的知识点\n \n下面给大家分享一下两道编程题\n第1题：计算让所有禾苗高度变成严格递增所需的最少操作天数。\n思路：对于相邻的两株禾苗，需要满足在第 x 天后，有 a[i] + x * b[i] < a[i+1] + x * b[i+1]。\n解该不等式可得 x ≥ ceil((a[i] - a[i+1]) / (b[i+1] - b[i]))，且该式仅当 b[i+1] > b[i] 时成立（即分母为正）。\n遍历所有相邻的禾苗对，对每个满足条件的不等式计算所需的最小天数，最后取所有结果中的最大值（且不低于0），即为所求的最少操作天数。\n \n第2题：在给定序列中找出一个字典序最小的子序列，要求该子序列包含 1 到 k 每个数字恰好一次。\n思路：采用贪心策略，结合单调栈进行求解。遍历整个序列，同时维护一个结果栈。当当前数字小于栈顶元素，并且栈顶元素在后续还会出现时，弹出栈顶元素，以保证字典序最小。同时需确保每个数字在子序列中只出现一次。最终栈中保存的序列即为所求的字典序最小的合法子序列。\n \n京东笔试做下来，选择部分稍微多花了点时间，不过好在选择和编程是分开计时的～编程题倒是做得飞快，样例全都一遍过，笔试就这么愉快地搞定啦\n互联网大厂秋招可以辅助\n擅长Python Java c++\n实力稳定，没把握的T我\n同时欢迎点赞收藏关注，有需求可以迅速找到我～"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68cd1391000000001301eff4.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "7587ab7d05ecb62448fca748059835ab8ae7d3f8",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 29986,
+        "content_sha256": "8e97978bf5ee6e3d4f2884d92e83f321c90656bb6b648651a0378936c435c90c",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "9.20京东笔试又来了 两道编程15min轻松过\",",
+          "line": 681,
+          "locator": "artifact-line:681#offset:30-56;blob:7587ab7d05ecb62448fca748059835ab8ae7d3f8",
+          "semantic_excerpt": "9.20京东笔试又来了 两道编程15min轻松过\n9.20京东笔试又来啦～简单分享一下我之前参加的一场，笔试有20道单选和5道多选，再加上两道编程题，选择题花了些时间，编程题大概十五分钟就全AC了，直接一次通过～大概就是这样\n选择题主要考的还是那些基础八股，像动态规划、Linux 系统、数据库开发、二叉树这些常考内容，整体难度不算太大，都是比较常见的知识点\n \n下面给大家分享一下两道编程题\n第1题：计算让所有禾苗高度变成严格递增所需的最少操作天数。\n思路：对于相邻的两株禾苗，需要满足在第 x 天后，有 a[i] + x * b[i] < a[i+1] + x * b[i+1]。\n解该不等式可得 x ≥ ceil((a[i] - a[i+1]) / (b[i+1] - b[i]))，且该式仅当 b[i+1] > b[i] 时成立（即分母为正）。\n遍历所有相邻的禾苗对，对每个满足条件的不等式计算所需的最小天数，最后取所有结果中的最大值（且不低于0），即为所求的最少操作天数。\n \n第2题：在给定序列中找出一个字典序最小的子序列，要求该子序列包含 1 到 k 每个数字恰好一次。\n思路：采用贪心策略，结合单调栈进行求解。遍历整个序列，同时维护一个结果栈。当当前数字小于栈顶元素，并且栈顶元素在后续还会出现时，弹出栈顶元素，以保证字典序最小。同时需确保每个数字在子序列中只出现一次。最终栈中保存的序列即为所求的字典序最小的合法子序列。\n \n京东笔试做下来，选择部分稍微多花了点时间，不过好在选择和编程是分开计时的～编程题倒是做得飞快，样例全都一遍过，笔试就这么愉快地搞定啦\n互联网大厂秋招可以辅助\n擅长Python Java c++\n实力稳定，没把握的T我\n同时欢迎点赞收藏关注，有需求可以迅速找到我～"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/68cd1391000000001301eff4.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "4ee6ec5455bcef58d158c3adc47651c93e70a871",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 401442,
+      "content_sha256": "b1f06d4e5ff61d38a21d59b2ed8ee47626beedf25c272b01e23f6131b8297591",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "9.20京东笔试又来了 两道编程15min轻松过 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-201;blob:4ee6ec5455bcef58d158c3adc47651c93e70a871",
+        "semantic_excerpt": "9.20京东笔试又来了 两道编程15min轻松过\n9.20京东笔试又来啦～简单分享一下我之前参加的一场，笔试有20道单选和5道多选，再加上两道编程题，选择题花了些时间，编程题大概十五分钟就全AC了，直接一次通过～大概就是这样\n选择题主要考的还是那些基础八股，像动态规划、Linux 系统、数据库开发、二叉树这些常考内容，整体难度不算太大，都是比较常见的知识点\n \n下面给大家分享一下两道编程题\n第1题：计算让所有禾苗高度变成严格递增所需的最少操作天数。\n思路：对于相邻的两株禾苗，需要满足在第 x 天后，有 a[i] + x * b[i] < a[i+1] + x * b[i+1]。\n解该不等式可得 x ≥ ceil((a[i] - a[i+1]) / (b[i+1] - b[i]))，且该式仅当 b[i+1] > b[i] 时成立（即分母为正）。\n遍历所有相邻的禾苗对，对每个满足条件的不等式计算所需的最小天数，最后取所有结果中的最大值（且不低于0），即为所求的最少操作天数。\n \n第2题：在给定序列中找出一个字典序最小的子序列，要求该子序列包含 1 到 k 每个数字恰好一次。\n思路：采用贪心策略，结合单调栈进行求解。遍历整个序列，同时维护一个结果栈。当当前数字小于栈顶元素，并且栈顶元素在后续还会出现时，弹出栈顶元素，以保证字典序最小。同时需确保每个数字在子序列中只出现一次。最终栈中保存的序列即为所求的字典序最小的合法子序列。\n \n京东笔试做下来，选择部分稍微多花了点时间，不过好在选择和编程是分开计时的～编程题倒是做得飞快，样例全都一遍过，笔试就这么愉快地搞定啦\n互联网大厂秋招可以辅助\n擅长Python Java c++\n实力稳定，没把握的T我\n同时欢迎点赞收藏关注，有需求可以迅速找到我～"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68cd1391000000001301eff4.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "7587ab7d05ecb62448fca748059835ab8ae7d3f8",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 29986,
+      "content_sha256": "8e97978bf5ee6e3d4f2884d92e83f321c90656bb6b648651a0378936c435c90c",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "9.20京东笔试又来了 两道编程15min轻松过\",",
+        "line": 681,
+        "locator": "artifact-line:681#offset:30-56;blob:7587ab7d05ecb62448fca748059835ab8ae7d3f8",
+        "semantic_excerpt": "9.20京东笔试又来了 两道编程15min轻松过\n9.20京东笔试又来啦～简单分享一下我之前参加的一场，笔试有20道单选和5道多选，再加上两道编程题，选择题花了些时间，编程题大概十五分钟就全AC了，直接一次通过～大概就是这样\n选择题主要考的还是那些基础八股，像动态规划、Linux 系统、数据库开发、二叉树这些常考内容，整体难度不算太大，都是比较常见的知识点\n \n下面给大家分享一下两道编程题\n第1题：计算让所有禾苗高度变成严格递增所需的最少操作天数。\n思路：对于相邻的两株禾苗，需要满足在第 x 天后，有 a[i] + x * b[i] < a[i+1] + x * b[i+1]。\n解该不等式可得 x ≥ ceil((a[i] - a[i+1]) / (b[i+1] - b[i]))，且该式仅当 b[i+1] > b[i] 时成立（即分母为正）。\n遍历所有相邻的禾苗对，对每个满足条件的不等式计算所需的最小天数，最后取所有结果中的最大值（且不低于0），即为所求的最少操作天数。\n \n第2题：在给定序列中找出一个字典序最小的子序列，要求该子序列包含 1 到 k 每个数字恰好一次。\n思路：采用贪心策略，结合单调栈进行求解。遍历整个序列，同时维护一个结果栈。当当前数字小于栈顶元素，并且栈顶元素在后续还会出现时，弹出栈顶元素，以保证字典序最小。同时需确保每个数字在子序列中只出现一次。最终栈中保存的序列即为所求的字典序最小的合法子序列。\n \n京东笔试做下来，选择部分稍微多花了点时间，不过好在选择和编程是分开计时的～编程题倒是做得飞快，样例全都一遍过，笔试就这么愉快地搞定啦\n互联网大厂秋招可以辅助\n擅长Python Java c++\n实力稳定，没把握的T我\n同时欢迎点赞收藏关注，有需求可以迅速找到我～"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -69,8 +138,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source provides only an interview outcome, offer, rejection, or result without a bounded candidate event; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source identifies a written-test/non-interview format rather than a candidate interview event."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -84,11 +153,12 @@
     }
   ],
   "limitations": [
-    "Exact Source provides only an interview outcome, offer, rejection, or result without a bounded candidate event; retain pending.",
+    "Exact Source identifies a written-test/non-interview format rather than a candidate interview event.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "dd5212383bd20b38593df07796ecf89c32f25e2cdb31745d814754ef2fba365c"
+  "evidence_sha256": "942561e89d084f9a28e98323945788e7a28fced401d5677ff1a5be4734093f05"
 }

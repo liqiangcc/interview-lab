@@ -7,34 +7,44 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "df4283736addf1019f1e17005e19f5686ff7ef164e1d7edb1dcae07d0e2f6f7e",
-  "disposition": "blocked",
-  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "disposition": "single-interview",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
   "interview_cases": [],
   "ambiguity_audit": {
-    "flags": [
-      "question-list-only",
-      "question-only",
-      "no-candidate-event-evidence"
-    ],
+    "flags": [],
     "questions": 8,
     "has_first_person_event": true,
     "has_explicit_candidate_event": true,
     "has_bounded_event": true,
     "has_detailed_event": true,
     "has_completed_event_evidence": true,
-    "has_structured_candidate_event": false,
+    "has_structured_candidate_event": true,
     "generic_advice_or_aggregated": false,
     "scheduled_only": false,
-    "question_only": true,
+    "question_only": false,
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
-    "only_question_list": true,
+    "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "meituan-process",
+        "anchor": "美团",
+        "line": 1,
+        "locator": "artifact-line:15#offset:19-21;blob:cc9b1bb7ea6f37918b9819890c5a3fb8402ba7a0",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:美团",
+        "source_ref": "liqiangcc/xhs:note_desc/68a696c7000000001b033c7f.txt@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68a696c7000000001b033c7f.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -43,13 +53,108 @@
     "provenance": "source_projection",
     "byte_size": 819,
     "content_sha256": "dc7ea7fb27f1166f81cf6b175eef96ebf296c1da0663c9b1763e03a9f573d277",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "1. 介绍项目",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "1. 介绍项目\n2. 限流算法，令牌桶的实现，令牌桶的不足\n3. Redission分布式锁，为什么用分布式锁，分布式锁会有什么问题，小项目引入redis有什么问题\n4. 分布式事务了解吗（我说我用过消息队列做半提交，然后就不问了）\n5. 日常中什么场景使用ai，使用ai中会遇到什么问题，你在应用中怎么避免ai幻觉问题\n6. JVM内存模型\n7. OOM情况\n8. 项目难点\n \n手撕：\n层序遍历变种\nAI编程（输了几次prompt之后只会输出react的js代码，面试官：你是第一批用这个的，我也不太清楚咋回事[笑哭R]）\n \n反问业务：SaaS餐饮平台，主要做链路中的数据存储，用java，新业务有ai相关的。"
-    }
+      "locator": "artifact-line:1#offset:0-7;blob:cc9b1bb7ea6f37918b9819890c5a3fb8402ba7a0",
+      "semantic_excerpt": "美团一面\n1. 介绍项目\n2. 限流算法，令牌桶的实现，令牌桶的不足\n3. Redission分布式锁，为什么用分布式锁，分布式锁会有什么问题，小项目引入redis有什么问题\n4. 分布式事务了解吗（我说我用过消息队列做半提交，然后就不问了）\n5. 日常中什么场景使用ai，使用ai中会遇到什么问题，你在应用中怎么避免ai幻觉问题\n6. JVM内存模型\n7. OOM情况\n8. 项目难点\n \n手撕：\n层序遍历变种\nAI编程（输了几次prompt之后只会输出react的js代码，面试官：你是第一批用这个的，我也不太清楚咋回事[笑哭R]）\n \n反问业务：SaaS餐饮平台，主要做链路中的数据存储，用java，新业务有ai相关的。"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68a696c7000000001b033c7f.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "cc9b1bb7ea6f37918b9819890c5a3fb8402ba7a0",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 819,
+        "content_sha256": "dc7ea7fb27f1166f81cf6b175eef96ebf296c1da0663c9b1763e03a9f573d277",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "1. 介绍项目",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-7;blob:cc9b1bb7ea6f37918b9819890c5a3fb8402ba7a0",
+          "semantic_excerpt": "美团一面\n1. 介绍项目\n2. 限流算法，令牌桶的实现，令牌桶的不足\n3. Redission分布式锁，为什么用分布式锁，分布式锁会有什么问题，小项目引入redis有什么问题\n4. 分布式事务了解吗（我说我用过消息队列做半提交，然后就不问了）\n5. 日常中什么场景使用ai，使用ai中会遇到什么问题，你在应用中怎么避免ai幻觉问题\n6. JVM内存模型\n7. OOM情况\n8. 项目难点\n \n手撕：\n层序遍历变种\nAI编程（输了几次prompt之后只会输出react的js代码，面试官：你是第一批用这个的，我也不太清楚咋回事[笑哭R]）\n \n反问业务：SaaS餐饮平台，主要做链路中的数据存储，用java，新业务有ai相关的。"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68a696c7000000001b033c7f.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "a132a8e3ece8ec5388d72188976e583a7655c9a6",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 387847,
+        "content_sha256": "6efb0204907b98ed64d184eaa7707c4b8da7c163ecf1754fffb4ee7932e5865a",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "美团一面 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-181;blob:a132a8e3ece8ec5388d72188976e583a7655c9a6",
+          "semantic_excerpt": "美团一面\n1. 介绍项目\n2. 限流算法，令牌桶的实现，令牌桶的不足\n3. Redission分布式锁，为什么用分布式锁，分布式锁会有什么问题，小项目引入redis有什么问题\n4. 分布式事务了解吗（我说我用过消息队列做半提交，然后就不问了）\n5. 日常中什么场景使用ai，使用ai中会遇到什么问题，你在应用中怎么避免ai幻觉问题\n6. JVM内存模型\n7. OOM情况\n8. 项目难点\n \n手撕：\n层序遍历变种\nAI编程（输了几次prompt之后只会输出react的js代码，面试官：你是第一批用这个的，我也不太清楚咋回事[笑哭R]）\n \n反问业务：SaaS餐饮平台，主要做链路中的数据存储，用java，新业务有ai相关的。"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68a696c7000000001b033c7f.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "6bb11566ff32d3b84177e8408ffac7cc76b354a9",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 21317,
+        "content_sha256": "df7f8ec2a05c302b276cb9c9551fffe1a107aef965b8ea855c8c8332179ff630",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "美团一面\",",
+          "line": 501,
+          "locator": "artifact-line:501#offset:30-36;blob:6bb11566ff32d3b84177e8408ffac7cc76b354a9",
+          "semantic_excerpt": "美团一面\n1. 介绍项目\n2. 限流算法，令牌桶的实现，令牌桶的不足\n3. Redission分布式锁，为什么用分布式锁，分布式锁会有什么问题，小项目引入redis有什么问题\n4. 分布式事务了解吗（我说我用过消息队列做半提交，然后就不问了）\n5. 日常中什么场景使用ai，使用ai中会遇到什么问题，你在应用中怎么避免ai幻觉问题\n6. JVM内存模型\n7. OOM情况\n8. 项目难点\n \n手撕：\n层序遍历变种\nAI编程（输了几次prompt之后只会输出react的js代码，面试官：你是第一批用这个的，我也不太清楚咋回事[笑哭R]）\n \n反问业务：SaaS餐饮平台，主要做链路中的数据存储，用java，新业务有ai相关的。"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68a696c7000000001b033c7f.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "cc9b1bb7ea6f37918b9819890c5a3fb8402ba7a0",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 819,
+      "content_sha256": "dc7ea7fb27f1166f81cf6b175eef96ebf296c1da0663c9b1763e03a9f573d277",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "1. 介绍项目",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-7;blob:cc9b1bb7ea6f37918b9819890c5a3fb8402ba7a0",
+        "semantic_excerpt": "美团一面\n1. 介绍项目\n2. 限流算法，令牌桶的实现，令牌桶的不足\n3. Redission分布式锁，为什么用分布式锁，分布式锁会有什么问题，小项目引入redis有什么问题\n4. 分布式事务了解吗（我说我用过消息队列做半提交，然后就不问了）\n5. 日常中什么场景使用ai，使用ai中会遇到什么问题，你在应用中怎么避免ai幻觉问题\n6. JVM内存模型\n7. OOM情况\n8. 项目难点\n \n手撕：\n层序遍历变种\nAI编程（输了几次prompt之后只会输出react的js代码，面试官：你是第一批用这个的，我也不太清楚咋回事[笑哭R]）\n \n反问业务：SaaS餐饮平台，主要做链路中的数据存储，用java，新业务有ai相关的。"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68a696c7000000001b033c7f.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "a132a8e3ece8ec5388d72188976e583a7655c9a6",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 387847,
+      "content_sha256": "6efb0204907b98ed64d184eaa7707c4b8da7c163ecf1754fffb4ee7932e5865a",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "美团一面 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-181;blob:a132a8e3ece8ec5388d72188976e583a7655c9a6",
+        "semantic_excerpt": "美团一面\n1. 介绍项目\n2. 限流算法，令牌桶的实现，令牌桶的不足\n3. Redission分布式锁，为什么用分布式锁，分布式锁会有什么问题，小项目引入redis有什么问题\n4. 分布式事务了解吗（我说我用过消息队列做半提交，然后就不问了）\n5. 日常中什么场景使用ai，使用ai中会遇到什么问题，你在应用中怎么避免ai幻觉问题\n6. JVM内存模型\n7. OOM情况\n8. 项目难点\n \n手撕：\n层序遍历变种\nAI编程（输了几次prompt之后只会输出react的js代码，面试官：你是第一批用这个的，我也不太清楚咋回事[笑哭R]）\n \n反问业务：SaaS餐饮平台，主要做链路中的数据存储，用java，新业务有ai相关的。"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68a696c7000000001b033c7f.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "6bb11566ff32d3b84177e8408ffac7cc76b354a9",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 21317,
+      "content_sha256": "df7f8ec2a05c302b276cb9c9551fffe1a107aef965b8ea855c8c8332179ff630",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "美团一面\",",
+        "line": 501,
+        "locator": "artifact-line:501#offset:30-36;blob:6bb11566ff32d3b84177e8408ffac7cc76b354a9",
+        "semantic_excerpt": "美团一面\n1. 介绍项目\n2. 限流算法，令牌桶的实现，令牌桶的不足\n3. Redission分布式锁，为什么用分布式锁，分布式锁会有什么问题，小项目引入redis有什么问题\n4. 分布式事务了解吗（我说我用过消息队列做半提交，然后就不问了）\n5. 日常中什么场景使用ai，使用ai中会遇到什么问题，你在应用中怎么避免ai幻觉问题\n6. JVM内存模型\n7. OOM情况\n8. 项目难点\n \n手撕：\n层序遍历变种\nAI编程（输了几次prompt之后只会输出react的js代码，面试官：你是第一批用这个的，我也不太清楚咋回事[笑哭R]）\n \n反问业务：SaaS餐饮平台，主要做链路中的数据存储，用java，新业务有ai相关的。"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -68,8 +173,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -83,11 +188,12 @@
     }
   ],
   "limitations": [
-    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "256619dff1e94ca576de136ef63bc07ce462acecfe758f2f73390616ae83a35e"
+  "evidence_sha256": "2bc815ef958d331df15e088ef55f7476b37a427a1741510ddac799763388ae6d"
 }

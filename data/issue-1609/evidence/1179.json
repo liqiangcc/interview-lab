@@ -8,7 +8,7 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "231baec01a5a69763ed71b6f7b6310e58939b984295aa57b1b77119cc4d2c3d2",
   "disposition": "blocked",
-  "rationale": "No non-empty readable Source/Source projection is available; title and hashtags cannot authorize a boundary.",
+  "rationale": "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
@@ -18,7 +18,7 @@
     "questions": 0,
     "has_first_person_event": false,
     "has_explicit_candidate_event": false,
-    "has_bounded_event": false,
+    "has_bounded_event": true,
     "has_detailed_event": false,
     "has_completed_event_evidence": false,
     "has_structured_candidate_event": false,
@@ -28,12 +28,26 @@
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "kuaishou-process",
+        "anchor": "快手",
+        "line": 1,
+        "locator": "artifact-line:1#offset:33-35;blob:0442ab25fe111b86e2663b434b85860518b80a23",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:快手",
+        "source_ref": "liqiangcc/xhs:note_desc/68ad337d000000001c034dd9.txt@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68ad337d000000001c034dd9.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -42,13 +56,108 @@
     "provenance": "source_projection",
     "byte_size": 131,
     "content_sha256": "03761277236385c426d69216f0092660b11ea1810834f6ac333d82b9a21c014a",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "#大模型[话题]# #领域驱动设计[话题]# #面经[话题]# #快手[话题]# #Java[话题]# #后端[话题]##面试[话题]#",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": ""
-    }
+      "locator": "artifact-line:1#offset:0-68;blob:0442ab25fe111b86e2663b434b85860518b80a23",
+      "semantic_excerpt": "快手 Java 二面"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68ad337d000000001c034dd9.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "0442ab25fe111b86e2663b434b85860518b80a23",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 131,
+        "content_sha256": "03761277236385c426d69216f0092660b11ea1810834f6ac333d82b9a21c014a",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "#大模型[话题]# #领域驱动设计[话题]# #面经[话题]# #快手[话题]# #Java[话题]# #后端[话题]##面试[话题]#",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-68;blob:0442ab25fe111b86e2663b434b85860518b80a23",
+          "semantic_excerpt": "快手 Java 二面"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68ad337d000000001c034dd9.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "04a698492dada40d8740a3f9ccf9837f6c3861fb",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 386631,
+        "content_sha256": "61a8920c90d1959c7c9f1f7f9898ebf372f9366cc8bd30425210132127e92dc6",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "快手 Java 二面 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-187;blob:04a698492dada40d8740a3f9ccf9837f6c3861fb",
+          "semantic_excerpt": "快手 Java 二面"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68ad337d000000001c034dd9.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "ecee145e9d0067016d32d3674215c8927c63a18a",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 21294,
+        "content_sha256": "71a9309de7c51d249f72172a94b2e850078190266f8b0edeeb20a86be9406012",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "快手 Java 二面\",",
+          "line": 497,
+          "locator": "artifact-line:497#offset:30-42;blob:ecee145e9d0067016d32d3674215c8927c63a18a",
+          "semantic_excerpt": "快手 Java 二面"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68ad337d000000001c034dd9.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "0442ab25fe111b86e2663b434b85860518b80a23",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 131,
+      "content_sha256": "03761277236385c426d69216f0092660b11ea1810834f6ac333d82b9a21c014a",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "#大模型[话题]# #领域驱动设计[话题]# #面经[话题]# #快手[话题]# #Java[话题]# #后端[话题]##面试[话题]#",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-68;blob:0442ab25fe111b86e2663b434b85860518b80a23",
+        "semantic_excerpt": "快手 Java 二面"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68ad337d000000001c034dd9.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "04a698492dada40d8740a3f9ccf9837f6c3861fb",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 386631,
+      "content_sha256": "61a8920c90d1959c7c9f1f7f9898ebf372f9366cc8bd30425210132127e92dc6",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "快手 Java 二面 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-187;blob:04a698492dada40d8740a3f9ccf9837f6c3861fb",
+        "semantic_excerpt": "快手 Java 二面"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68ad337d000000001c034dd9.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "ecee145e9d0067016d32d3674215c8927c63a18a",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 21294,
+      "content_sha256": "71a9309de7c51d249f72172a94b2e850078190266f8b0edeeb20a86be9406012",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "快手 Java 二面\",",
+        "line": 497,
+        "locator": "artifact-line:497#offset:30-42;blob:ecee145e9d0067016d32d3674215c8927c63a18a",
+        "semantic_excerpt": "快手 Java 二面"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -68,7 +177,7 @@
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. No non-empty readable Source/Source projection is available; title and hashtags cannot authorize a boundary."
+      "note": "The disposition is supported by the cited source evidence. Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -82,11 +191,12 @@
     }
   ],
   "limitations": [
-    "No non-empty readable Source/Source projection is available; title and hashtags cannot authorize a boundary.",
+    "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "948d2cf3774f38baf5652a70db05fa76307eef18ea5171f431b369b81a086df6"
+  "evidence_sha256": "dee82a517d231ce21ab0ee1844575da314209e8aaa30a9cbdfdf4bb86e3c32cd"
 }

@@ -7,15 +7,12 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "042f06bbd8a9ccf2c8607d3243264e67ec29ec3e3d2449771ebf862421682598",
-  "disposition": "blocked",
-  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "disposition": "single-interview",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
-      "question-list-only",
-      "no-first-person-event",
-      "question-only",
-      "no-candidate-event-evidence"
+      "no-first-person-event"
     ],
     "questions": 23,
     "has_first_person_event": false,
@@ -23,19 +20,33 @@
     "has_bounded_event": true,
     "has_detailed_event": true,
     "has_completed_event_evidence": true,
-    "has_structured_candidate_event": false,
+    "has_structured_candidate_event": true,
     "generic_advice_or_aggregated": false,
     "scheduled_only": false,
-    "question_only": true,
+    "question_only": false,
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
-    "only_question_list": true,
+    "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "meituan-process",
+        "anchor": "美团",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-165;blob:50b011ef8f683d43d2d7afb76a98fb25034ce7db",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:美团",
+        "source_ref": "liqiangcc/xhs:note_detail/68ba5eee000000001d00f0eb.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68ba5eee000000001d00f0eb.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -44,13 +55,108 @@
     "provenance": "source_projection",
     "byte_size": 1834,
     "content_sha256": "f72b555f360251a49544c886a6bacdd4fbdab72149aa434a2563f994520df031",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "凉，虽说全问的八股，小登已汗流浃背[再见R][再见R]",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "凉，虽说全问的八股，小登已汗流浃背[再见R][再见R]\n最后还出了个hard算法题，初面心态就被团子搞崩了[捂脸R][捂脸R]\n \n1. 你对ThreadLocal的理解是什么，以及解决了什么问题\n2. 除了强引用变成弱引用之外，还有什么方法能避免内存泄漏\n3. ThreadLocal在项目中具体是怎么使用的\n4. 在多线程下用ThreadLocal来解决每个线程都有一个独立副本的问题，还有什么方法也是使用相同的get，set方法来解决相同的场景吗（这里蒙圈了好久，面试官这里应该想引出redis分布式锁）\n5. 你之前用锁解决了一个什么场景问题，怎么使用的\n6. 你知道使用的什么命令吗实现redis分布式锁，怎么去获取锁，怎么去释放锁\n7. setnx命令有哪些参数\n8. setnx命令和set命令的区别是什么\n9. 除了redis可以实现分布式锁之外，你还了解其他的中间件可以加分布式锁吗\n10. Java的内存模型有了解吗（由于JMM不了解，以下几问连续蒙圈）\n11. 你有了解JMM主内存和工作内存吗\n12. volatile解决了一个什么问题\n13. volatile可见性底层的原理\n14. volatile你知道哪些应用场景吗\n15. 写一下单例模式\n16. 平时你有看过Java的JUC包下的类吗\n17. 有了解CountDownLatch和CylicBarrier这些类吗\n18. CompeletableFuture任务编排的底层实现原理\n19. redis集群了解吗\n20. redis集群是怎么保证高可用的\n21. 分片集群redis是怎么故障检测的\n22. 在集群情况下，一个请求刚好打到了一个故障的redis，这时候怎么保证请求能拿到正确的数据\n23. 令牌桶限流算法是一个什么思路具体怎么实现\n算法题：最长有效括号（hard）"
-    }
+      "locator": "artifact-line:1#offset:0-27;blob:b355c7e15733e976468429c2c10befad4a38ec3e",
+      "semantic_excerpt": "美团日常后端一面面经\n凉，虽说全问的八股，小登已汗流浃背[再见R][再见R]\n最后还出了个hard算法题，初面心态就被团子搞崩了[捂脸R][捂脸R]\n \n1. 你对ThreadLocal的理解是什么，以及解决了什么问题\n2. 除了强引用变成弱引用之外，还有什么方法能避免内存泄漏\n3. ThreadLocal在项目中具体是怎么使用的\n4. 在多线程下用ThreadLocal来解决每个线程都有一个独立副本的问题，还有什么方法也是使用相同的get，set方法来解决相同的场景吗（这里蒙圈了好久，面试官这里应该想引出redis分布式锁）\n5. 你之前用锁解决了一个什么场景问题，怎么使用的\n6. 你知道使用的什么命令吗实现redis分布式锁，怎么去获取锁，怎么去释放锁\n7. setnx命令有哪些参数\n8. setnx命令和set命令的区别是什么\n9. 除了redis可以实现分布式锁之外，你还了解其他的中间件可以加分布式锁吗\n10. Java的内存模型有了解吗（由于JMM不了解，以下几问连续蒙圈）\n11. 你有了解JMM主内存和工作内存吗\n12. volatile解决了一个什么问题\n13. volatile可见性底层的原理\n14. volatile你知道哪些应用场景吗\n15. 写一下单例模式\n16. 平时你有看过Java的JUC包下的类吗\n17. 有了解CountDownLatch和CylicBarrier这些类吗\n18. CompeletableFuture任务编排的底层实现原理\n19. redis集群了解吗\n20. redis集群是怎么保证高可用的\n21. 分片集群redis是怎么故障检测的\n22. 在集群情况下，一个请求刚好打到了一个故障的redis，这时候怎么保证请求能拿到正确的数据\n23. 令牌桶限流算法是一个什么思路具体怎么实现\n算法题：最长有效括号（hard）"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68ba5eee000000001d00f0eb.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "b355c7e15733e976468429c2c10befad4a38ec3e",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 1834,
+        "content_sha256": "f72b555f360251a49544c886a6bacdd4fbdab72149aa434a2563f994520df031",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "凉，虽说全问的八股，小登已汗流浃背[再见R][再见R]",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-27;blob:b355c7e15733e976468429c2c10befad4a38ec3e",
+          "semantic_excerpt": "美团日常后端一面面经\n凉，虽说全问的八股，小登已汗流浃背[再见R][再见R]\n最后还出了个hard算法题，初面心态就被团子搞崩了[捂脸R][捂脸R]\n \n1. 你对ThreadLocal的理解是什么，以及解决了什么问题\n2. 除了强引用变成弱引用之外，还有什么方法能避免内存泄漏\n3. ThreadLocal在项目中具体是怎么使用的\n4. 在多线程下用ThreadLocal来解决每个线程都有一个独立副本的问题，还有什么方法也是使用相同的get，set方法来解决相同的场景吗（这里蒙圈了好久，面试官这里应该想引出redis分布式锁）\n5. 你之前用锁解决了一个什么场景问题，怎么使用的\n6. 你知道使用的什么命令吗实现redis分布式锁，怎么去获取锁，怎么去释放锁\n7. setnx命令有哪些参数\n8. setnx命令和set命令的区别是什么\n9. 除了redis可以实现分布式锁之外，你还了解其他的中间件可以加分布式锁吗\n10. Java的内存模型有了解吗（由于JMM不了解，以下几问连续蒙圈）\n11. 你有了解JMM主内存和工作内存吗\n12. volatile解决了一个什么问题\n13. volatile可见性底层的原理\n14. volatile你知道哪些应用场景吗\n15. 写一下单例模式\n16. 平时你有看过Java的JUC包下的类吗\n17. 有了解CountDownLatch和CylicBarrier这些类吗\n18. CompeletableFuture任务编排的底层实现原理\n19. redis集群了解吗\n20. redis集群是怎么保证高可用的\n21. 分片集群redis是怎么故障检测的\n22. 在集群情况下，一个请求刚好打到了一个故障的redis，这时候怎么保证请求能拿到正确的数据\n23. 令牌桶限流算法是一个什么思路具体怎么实现\n算法题：最长有效括号（hard）"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68ba5eee000000001d00f0eb.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "50b011ef8f683d43d2d7afb76a98fb25034ce7db",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 391173,
+        "content_sha256": "b84aca5955eb6bd2bae6da561f5b64188cfddb9ec80d08cd8a3465ca7f23990d",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "美团日常后端一面面经 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-187;blob:50b011ef8f683d43d2d7afb76a98fb25034ce7db",
+          "semantic_excerpt": "美团日常后端一面面经\n凉，虽说全问的八股，小登已汗流浃背[再见R][再见R]\n最后还出了个hard算法题，初面心态就被团子搞崩了[捂脸R][捂脸R]\n \n1. 你对ThreadLocal的理解是什么，以及解决了什么问题\n2. 除了强引用变成弱引用之外，还有什么方法能避免内存泄漏\n3. ThreadLocal在项目中具体是怎么使用的\n4. 在多线程下用ThreadLocal来解决每个线程都有一个独立副本的问题，还有什么方法也是使用相同的get，set方法来解决相同的场景吗（这里蒙圈了好久，面试官这里应该想引出redis分布式锁）\n5. 你之前用锁解决了一个什么场景问题，怎么使用的\n6. 你知道使用的什么命令吗实现redis分布式锁，怎么去获取锁，怎么去释放锁\n7. setnx命令有哪些参数\n8. setnx命令和set命令的区别是什么\n9. 除了redis可以实现分布式锁之外，你还了解其他的中间件可以加分布式锁吗\n10. Java的内存模型有了解吗（由于JMM不了解，以下几问连续蒙圈）\n11. 你有了解JMM主内存和工作内存吗\n12. volatile解决了一个什么问题\n13. volatile可见性底层的原理\n14. volatile你知道哪些应用场景吗\n15. 写一下单例模式\n16. 平时你有看过Java的JUC包下的类吗\n17. 有了解CountDownLatch和CylicBarrier这些类吗\n18. CompeletableFuture任务编排的底层实现原理\n19. redis集群了解吗\n20. redis集群是怎么保证高可用的\n21. 分片集群redis是怎么故障检测的\n22. 在集群情况下，一个请求刚好打到了一个故障的redis，这时候怎么保证请求能拿到正确的数据\n23. 令牌桶限流算法是一个什么思路具体怎么实现\n算法题：最长有效括号（hard）"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68ba5eee000000001d00f0eb.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "3c75454beab5764f7d529a6967c1a6f611d292e7",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 22377,
+        "content_sha256": "2f1ec8213624024987de67674b4c2e0380ec417df5c38f4e09fbe9858aa868d2",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "美团日常后端一面面经\",",
+          "line": 496,
+          "locator": "artifact-line:496#offset:30-42;blob:3c75454beab5764f7d529a6967c1a6f611d292e7",
+          "semantic_excerpt": "美团日常后端一面面经\n凉，虽说全问的八股，小登已汗流浃背[再见R][再见R]\n最后还出了个hard算法题，初面心态就被团子搞崩了[捂脸R][捂脸R]\n \n1. 你对ThreadLocal的理解是什么，以及解决了什么问题\n2. 除了强引用变成弱引用之外，还有什么方法能避免内存泄漏\n3. ThreadLocal在项目中具体是怎么使用的\n4. 在多线程下用ThreadLocal来解决每个线程都有一个独立副本的问题，还有什么方法也是使用相同的get，set方法来解决相同的场景吗（这里蒙圈了好久，面试官这里应该想引出redis分布式锁）\n5. 你之前用锁解决了一个什么场景问题，怎么使用的\n6. 你知道使用的什么命令吗实现redis分布式锁，怎么去获取锁，怎么去释放锁\n7. setnx命令有哪些参数\n8. setnx命令和set命令的区别是什么\n9. 除了redis可以实现分布式锁之外，你还了解其他的中间件可以加分布式锁吗\n10. Java的内存模型有了解吗（由于JMM不了解，以下几问连续蒙圈）\n11. 你有了解JMM主内存和工作内存吗\n12. volatile解决了一个什么问题\n13. volatile可见性底层的原理\n14. volatile你知道哪些应用场景吗\n15. 写一下单例模式\n16. 平时你有看过Java的JUC包下的类吗\n17. 有了解CountDownLatch和CylicBarrier这些类吗\n18. CompeletableFuture任务编排的底层实现原理\n19. redis集群了解吗\n20. redis集群是怎么保证高可用的\n21. 分片集群redis是怎么故障检测的\n22. 在集群情况下，一个请求刚好打到了一个故障的redis，这时候怎么保证请求能拿到正确的数据\n23. 令牌桶限流算法是一个什么思路具体怎么实现\n算法题：最长有效括号（hard）"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68ba5eee000000001d00f0eb.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "b355c7e15733e976468429c2c10befad4a38ec3e",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 1834,
+      "content_sha256": "f72b555f360251a49544c886a6bacdd4fbdab72149aa434a2563f994520df031",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "凉，虽说全问的八股，小登已汗流浃背[再见R][再见R]",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-27;blob:b355c7e15733e976468429c2c10befad4a38ec3e",
+        "semantic_excerpt": "美团日常后端一面面经\n凉，虽说全问的八股，小登已汗流浃背[再见R][再见R]\n最后还出了个hard算法题，初面心态就被团子搞崩了[捂脸R][捂脸R]\n \n1. 你对ThreadLocal的理解是什么，以及解决了什么问题\n2. 除了强引用变成弱引用之外，还有什么方法能避免内存泄漏\n3. ThreadLocal在项目中具体是怎么使用的\n4. 在多线程下用ThreadLocal来解决每个线程都有一个独立副本的问题，还有什么方法也是使用相同的get，set方法来解决相同的场景吗（这里蒙圈了好久，面试官这里应该想引出redis分布式锁）\n5. 你之前用锁解决了一个什么场景问题，怎么使用的\n6. 你知道使用的什么命令吗实现redis分布式锁，怎么去获取锁，怎么去释放锁\n7. setnx命令有哪些参数\n8. setnx命令和set命令的区别是什么\n9. 除了redis可以实现分布式锁之外，你还了解其他的中间件可以加分布式锁吗\n10. Java的内存模型有了解吗（由于JMM不了解，以下几问连续蒙圈）\n11. 你有了解JMM主内存和工作内存吗\n12. volatile解决了一个什么问题\n13. volatile可见性底层的原理\n14. volatile你知道哪些应用场景吗\n15. 写一下单例模式\n16. 平时你有看过Java的JUC包下的类吗\n17. 有了解CountDownLatch和CylicBarrier这些类吗\n18. CompeletableFuture任务编排的底层实现原理\n19. redis集群了解吗\n20. redis集群是怎么保证高可用的\n21. 分片集群redis是怎么故障检测的\n22. 在集群情况下，一个请求刚好打到了一个故障的redis，这时候怎么保证请求能拿到正确的数据\n23. 令牌桶限流算法是一个什么思路具体怎么实现\n算法题：最长有效括号（hard）"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68ba5eee000000001d00f0eb.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "50b011ef8f683d43d2d7afb76a98fb25034ce7db",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 391173,
+      "content_sha256": "b84aca5955eb6bd2bae6da561f5b64188cfddb9ec80d08cd8a3465ca7f23990d",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "美团日常后端一面面经 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-187;blob:50b011ef8f683d43d2d7afb76a98fb25034ce7db",
+        "semantic_excerpt": "美团日常后端一面面经\n凉，虽说全问的八股，小登已汗流浃背[再见R][再见R]\n最后还出了个hard算法题，初面心态就被团子搞崩了[捂脸R][捂脸R]\n \n1. 你对ThreadLocal的理解是什么，以及解决了什么问题\n2. 除了强引用变成弱引用之外，还有什么方法能避免内存泄漏\n3. ThreadLocal在项目中具体是怎么使用的\n4. 在多线程下用ThreadLocal来解决每个线程都有一个独立副本的问题，还有什么方法也是使用相同的get，set方法来解决相同的场景吗（这里蒙圈了好久，面试官这里应该想引出redis分布式锁）\n5. 你之前用锁解决了一个什么场景问题，怎么使用的\n6. 你知道使用的什么命令吗实现redis分布式锁，怎么去获取锁，怎么去释放锁\n7. setnx命令有哪些参数\n8. setnx命令和set命令的区别是什么\n9. 除了redis可以实现分布式锁之外，你还了解其他的中间件可以加分布式锁吗\n10. Java的内存模型有了解吗（由于JMM不了解，以下几问连续蒙圈）\n11. 你有了解JMM主内存和工作内存吗\n12. volatile解决了一个什么问题\n13. volatile可见性底层的原理\n14. volatile你知道哪些应用场景吗\n15. 写一下单例模式\n16. 平时你有看过Java的JUC包下的类吗\n17. 有了解CountDownLatch和CylicBarrier这些类吗\n18. CompeletableFuture任务编排的底层实现原理\n19. redis集群了解吗\n20. redis集群是怎么保证高可用的\n21. 分片集群redis是怎么故障检测的\n22. 在集群情况下，一个请求刚好打到了一个故障的redis，这时候怎么保证请求能拿到正确的数据\n23. 令牌桶限流算法是一个什么思路具体怎么实现\n算法题：最长有效括号（hard）"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68ba5eee000000001d00f0eb.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "3c75454beab5764f7d529a6967c1a6f611d292e7",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 22377,
+      "content_sha256": "2f1ec8213624024987de67674b4c2e0380ec417df5c38f4e09fbe9858aa868d2",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "美团日常后端一面面经\",",
+        "line": 496,
+        "locator": "artifact-line:496#offset:30-42;blob:3c75454beab5764f7d529a6967c1a6f611d292e7",
+        "semantic_excerpt": "美团日常后端一面面经\n凉，虽说全问的八股，小登已汗流浃背[再见R][再见R]\n最后还出了个hard算法题，初面心态就被团子搞崩了[捂脸R][捂脸R]\n \n1. 你对ThreadLocal的理解是什么，以及解决了什么问题\n2. 除了强引用变成弱引用之外，还有什么方法能避免内存泄漏\n3. ThreadLocal在项目中具体是怎么使用的\n4. 在多线程下用ThreadLocal来解决每个线程都有一个独立副本的问题，还有什么方法也是使用相同的get，set方法来解决相同的场景吗（这里蒙圈了好久，面试官这里应该想引出redis分布式锁）\n5. 你之前用锁解决了一个什么场景问题，怎么使用的\n6. 你知道使用的什么命令吗实现redis分布式锁，怎么去获取锁，怎么去释放锁\n7. setnx命令有哪些参数\n8. setnx命令和set命令的区别是什么\n9. 除了redis可以实现分布式锁之外，你还了解其他的中间件可以加分布式锁吗\n10. Java的内存模型有了解吗（由于JMM不了解，以下几问连续蒙圈）\n11. 你有了解JMM主内存和工作内存吗\n12. volatile解决了一个什么问题\n13. volatile可见性底层的原理\n14. volatile你知道哪些应用场景吗\n15. 写一下单例模式\n16. 平时你有看过Java的JUC包下的类吗\n17. 有了解CountDownLatch和CylicBarrier这些类吗\n18. CompeletableFuture任务编排的底层实现原理\n19. redis集群了解吗\n20. redis集群是怎么保证高可用的\n21. 分片集群redis是怎么故障检测的\n22. 在集群情况下，一个请求刚好打到了一个故障的redis，这时候怎么保证请求能拿到正确的数据\n23. 令牌桶限流算法是一个什么思路具体怎么实现\n算法题：最长有效括号（hard）"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -69,8 +175,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -84,11 +190,12 @@
     }
   ],
   "limitations": [
-    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "803f43e9546f62d61d6e847018c1bc080fd670d518b172f405205b201fa2c2a6"
+  "evidence_sha256": "d934506b99f751225a5f569c2e246b3e5779a435d6f0cf8fea0b5a0a00fe14fc"
 }

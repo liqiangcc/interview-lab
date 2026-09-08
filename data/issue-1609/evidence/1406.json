@@ -17,7 +17,7 @@
       "question-only",
       "no-candidate-event-evidence"
     ],
-    "questions": 15,
+    "questions": 16,
     "has_first_person_event": false,
     "has_explicit_candidate_event": false,
     "has_bounded_event": true,
@@ -30,12 +30,26 @@
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": true,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "baidu-process",
+        "anchor": "百度",
+        "line": 1,
+        "locator": "artifact-line:490#offset:168-170;blob:a38c4553f6774fb8dab8b6b4089897b53cdce643",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:百度",
+        "source_ref": "liqiangcc/xhs:note_detail/68d9021d000000000e032bea.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 2,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68d9021d000000000e032bea.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -44,13 +58,78 @@
     "provenance": "source_projection",
     "byte_size": 23426,
     "content_sha256": "c6a7b750ba90aae1e920ab4bc29f401de424a644e5da4ffad133e82cd52006aa",
+    "cache_status": "not-applicable",
     "excerpt": {
-      "excerpt": "\"global\": {",
-      "line": 2,
-      "locator": "artifact-line:2",
-      "semantic_excerpt": "岗位：C++/PHP/GO研发工程师\n1、自我介绍\n2、介绍实习项目\n3、为什么做ai agent这个项目（说了一下spring ai云云）\n4、怎么理解mcp的，和直接调api有什么区别\n5、你觉得agent这个东西有什么缺点吗，因为目前人们普遍觉得agent好像也没有做出什么特别亮眼的产品或者功能（进行一番不知天地为何物的市场现状分析）\n6、如果让你设计一个agent的产品或者功能，你会考虑什么方向的功能\n7、手撕：力扣93，复原IP地址\n8、用Linux命令实现功能：在一个日志文件中，每条日志中都有一个client_ip字段记录一个ip，找出该日志中出现最多次的ip\n9、epoll和select的优缺点，怎么理解异步非阻塞\n10、项目中MySQL做了什么\n11、用SQL语句实现功能：一个数据库表中存储三个字段：username、key、value，一个用户会有多条不同的字段记录，越活跃的用户对应字段越多，找出最活跃的10个用户，例：\nusername key value\nzhangsan sex 1\nlisi sex 0\nzhangsan name zhangsan\n上面表中zhangsan比lisi活跃，因为他对应两个属性，lisi只有一个\n12、项目中用redis做了什么\n13、用redis去存微信朋友圈，你会怎么设计（时间不够了，没让我再想）\n14、redis中，zset用什么命令实现根据分值倒序排列\n15、反问"
-    }
+      "excerpt": "9.28 百度二面\"",
+      "line": 598,
+      "locator": "artifact-line:598#offset:30-40;blob:4884f86a9c7094095a3ecd8867d2be3259a22e28",
+      "semantic_excerpt": "9.28 百度二面\n岗位：C++/PHP/GO研发工程师\n1、自我介绍\n2、介绍实习项目\n3、为什么做ai agent这个项目（说了一下spring ai云云）\n4、怎么理解mcp的，和直接调api有什么区别\n5、你觉得agent这个东西有什么缺点吗，因为目前人们普遍觉得agent好像也没有做出什么特别亮眼的产品或者功能（进行一番不知天地为何物的市场现状分析）\n6、如果让你设计一个agent的产品或者功能，你会考虑什么方向的功能\n7、手撕：力扣93，复原IP地址\n8、用Linux命令实现功能：在一个日志文件中，每条日志中都有一个client_ip字段记录一个ip，找出该日志中出现最多次的ip\n9、epoll和select的优缺点，怎么理解异步非阻塞\n10、项目中MySQL做了什么\n11、用SQL语句实现功能：一个数据库表中存储三个字段：username、key、value，一个用户会有多条不同的字段记录，越活跃的用户对应字段越多，找出最活跃的10个用户，例：\nusername key value\nzhangsan sex 1\nlisi sex 0\nzhangsan name zhangsan\n上面表中zhangsan比lisi活跃，因为他对应两个属性，lisi只有一个\n12、项目中用redis做了什么\n13、用redis去存微信朋友圈，你会怎么设计（时间不够了，没让我再想）\n14、redis中，zset用什么命令实现根据分值倒序排列\n15、反问"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_detail/68d9021d000000000e032bea.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "a38c4553f6774fb8dab8b6b4089897b53cdce643",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 392144,
+        "content_sha256": "254a0a44416e7af34865d90315bc6cb50272fe4339c310a58cf0edb9dd758a47",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "9.28 百度二面 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-186;blob:a38c4553f6774fb8dab8b6b4089897b53cdce643",
+          "semantic_excerpt": "9.28 百度二面\n岗位：C++/PHP/GO研发工程师\n1、自我介绍\n2、介绍实习项目\n3、为什么做ai agent这个项目（说了一下spring ai云云）\n4、怎么理解mcp的，和直接调api有什么区别\n5、你觉得agent这个东西有什么缺点吗，因为目前人们普遍觉得agent好像也没有做出什么特别亮眼的产品或者功能（进行一番不知天地为何物的市场现状分析）\n6、如果让你设计一个agent的产品或者功能，你会考虑什么方向的功能\n7、手撕：力扣93，复原IP地址\n8、用Linux命令实现功能：在一个日志文件中，每条日志中都有一个client_ip字段记录一个ip，找出该日志中出现最多次的ip\n9、epoll和select的优缺点，怎么理解异步非阻塞\n10、项目中MySQL做了什么\n11、用SQL语句实现功能：一个数据库表中存储三个字段：username、key、value，一个用户会有多条不同的字段记录，越活跃的用户对应字段越多，找出最活跃的10个用户，例：\nusername key value\nzhangsan sex 1\nlisi sex 0\nzhangsan name zhangsan\n上面表中zhangsan比lisi活跃，因为他对应两个属性，lisi只有一个\n12、项目中用redis做了什么\n13、用redis去存微信朋友圈，你会怎么设计（时间不够了，没让我再想）\n14、redis中，zset用什么命令实现根据分值倒序排列\n15、反问"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68d9021d000000000e032bea.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "4884f86a9c7094095a3ecd8867d2be3259a22e28",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 23426,
+        "content_sha256": "c6a7b750ba90aae1e920ab4bc29f401de424a644e5da4ffad133e82cd52006aa",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "9.28 百度二面\"",
+          "line": 598,
+          "locator": "artifact-line:598#offset:30-40;blob:4884f86a9c7094095a3ecd8867d2be3259a22e28",
+          "semantic_excerpt": "9.28 百度二面\n岗位：C++/PHP/GO研发工程师\n1、自我介绍\n2、介绍实习项目\n3、为什么做ai agent这个项目（说了一下spring ai云云）\n4、怎么理解mcp的，和直接调api有什么区别\n5、你觉得agent这个东西有什么缺点吗，因为目前人们普遍觉得agent好像也没有做出什么特别亮眼的产品或者功能（进行一番不知天地为何物的市场现状分析）\n6、如果让你设计一个agent的产品或者功能，你会考虑什么方向的功能\n7、手撕：力扣93，复原IP地址\n8、用Linux命令实现功能：在一个日志文件中，每条日志中都有一个client_ip字段记录一个ip，找出该日志中出现最多次的ip\n9、epoll和select的优缺点，怎么理解异步非阻塞\n10、项目中MySQL做了什么\n11、用SQL语句实现功能：一个数据库表中存储三个字段：username、key、value，一个用户会有多条不同的字段记录，越活跃的用户对应字段越多，找出最活跃的10个用户，例：\nusername key value\nzhangsan sex 1\nlisi sex 0\nzhangsan name zhangsan\n上面表中zhangsan比lisi活跃，因为他对应两个属性，lisi只有一个\n12、项目中用redis做了什么\n13、用redis去存微信朋友圈，你会怎么设计（时间不够了，没让我再想）\n14、redis中，zset用什么命令实现根据分值倒序排列\n15、反问"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/68d9021d000000000e032bea.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "a38c4553f6774fb8dab8b6b4089897b53cdce643",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 392144,
+      "content_sha256": "254a0a44416e7af34865d90315bc6cb50272fe4339c310a58cf0edb9dd758a47",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "9.28 百度二面 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-186;blob:a38c4553f6774fb8dab8b6b4089897b53cdce643",
+        "semantic_excerpt": "9.28 百度二面\n岗位：C++/PHP/GO研发工程师\n1、自我介绍\n2、介绍实习项目\n3、为什么做ai agent这个项目（说了一下spring ai云云）\n4、怎么理解mcp的，和直接调api有什么区别\n5、你觉得agent这个东西有什么缺点吗，因为目前人们普遍觉得agent好像也没有做出什么特别亮眼的产品或者功能（进行一番不知天地为何物的市场现状分析）\n6、如果让你设计一个agent的产品或者功能，你会考虑什么方向的功能\n7、手撕：力扣93，复原IP地址\n8、用Linux命令实现功能：在一个日志文件中，每条日志中都有一个client_ip字段记录一个ip，找出该日志中出现最多次的ip\n9、epoll和select的优缺点，怎么理解异步非阻塞\n10、项目中MySQL做了什么\n11、用SQL语句实现功能：一个数据库表中存储三个字段：username、key、value，一个用户会有多条不同的字段记录，越活跃的用户对应字段越多，找出最活跃的10个用户，例：\nusername key value\nzhangsan sex 1\nlisi sex 0\nzhangsan name zhangsan\n上面表中zhangsan比lisi活跃，因为他对应两个属性，lisi只有一个\n12、项目中用redis做了什么\n13、用redis去存微信朋友圈，你会怎么设计（时间不够了，没让我再想）\n14、redis中，zset用什么命令实现根据分值倒序排列\n15、反问"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68d9021d000000000e032bea.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "4884f86a9c7094095a3ecd8867d2be3259a22e28",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 23426,
+      "content_sha256": "c6a7b750ba90aae1e920ab4bc29f401de424a644e5da4ffad133e82cd52006aa",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "9.28 百度二面\"",
+        "line": 598,
+        "locator": "artifact-line:598#offset:30-40;blob:4884f86a9c7094095a3ecd8867d2be3259a22e28",
+        "semantic_excerpt": "9.28 百度二面\n岗位：C++/PHP/GO研发工程师\n1、自我介绍\n2、介绍实习项目\n3、为什么做ai agent这个项目（说了一下spring ai云云）\n4、怎么理解mcp的，和直接调api有什么区别\n5、你觉得agent这个东西有什么缺点吗，因为目前人们普遍觉得agent好像也没有做出什么特别亮眼的产品或者功能（进行一番不知天地为何物的市场现状分析）\n6、如果让你设计一个agent的产品或者功能，你会考虑什么方向的功能\n7、手撕：力扣93，复原IP地址\n8、用Linux命令实现功能：在一个日志文件中，每条日志中都有一个client_ip字段记录一个ip，找出该日志中出现最多次的ip\n9、epoll和select的优缺点，怎么理解异步非阻塞\n10、项目中MySQL做了什么\n11、用SQL语句实现功能：一个数据库表中存储三个字段：username、key、value，一个用户会有多条不同的字段记录，越活跃的用户对应字段越多，找出最活跃的10个用户，例：\nusername key value\nzhangsan sex 1\nlisi sex 0\nzhangsan name zhangsan\n上面表中zhangsan比lisi活跃，因为他对应两个属性，lisi只有一个\n12、项目中用redis做了什么\n13、用redis去存微信朋友圈，你会怎么设计（时间不够了，没让我再想）\n14、redis中，zset用什么命令实现根据分值倒序排列\n15、反问"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -85,10 +164,11 @@
   ],
   "limitations": [
     "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "d62ba182d746838f970cf058675ac2495741265f5acf007202bd338c143a5f8e"
+  "evidence_sha256": "75433fde8fb72b82aa7463058c28891118620b92db42bee2bec77f5aa3dda12c"
 }

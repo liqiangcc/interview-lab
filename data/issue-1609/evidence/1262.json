@@ -7,15 +7,12 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "ea97ac038b19ad5ecfa5cb7dfe3cd8f92b9321a3a801335e2f230c777821858c",
-  "disposition": "blocked",
-  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "disposition": "single-interview",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
-      "question-list-only",
-      "no-first-person-event",
-      "question-only",
-      "no-candidate-event-evidence"
+      "no-first-person-event"
     ],
     "questions": 22,
     "has_first_person_event": false,
@@ -23,19 +20,23 @@
     "has_bounded_event": true,
     "has_detailed_event": true,
     "has_completed_event_evidence": true,
-    "has_structured_candidate_event": false,
+    "has_structured_candidate_event": true,
     "generic_advice_or_aggregated": false,
     "scheduled_only": false,
-    "question_only": true,
-    "outcome_signal": false,
+    "question_only": false,
+    "outcome_signal": true,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
-    "only_question_list": true,
+    "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b97f96000000001b03659e.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -44,13 +45,108 @@
     "provenance": "source_projection",
     "byte_size": 972,
     "content_sha256": "bd4b63ef3b39c3046d96bb50465810cefa2e60f7f5046977ff14dadeafd0c5c9",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "1.自我介绍",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "1.自我介绍\n2.项目拷打\n3.项目难点衍生出的数据库原子性问题\n3.1 除了for update 锁，，用锁有什么问题？还有什么能够实现数据库更新的原子性\n3.2 答AtomicInteger，问是怎么实现原子性的，答CAS\n3.3 CAS原理、ABA问题\n3.4 怎么用CAS来实现数据库更新的原子性\n4.线程池参数有哪些,\n5.多线程在项目中有应用吗，说了@Scheduled用到了定时任务线程池\n6.类加载器有哪些？\n6.1双亲委派机制怎么破坏\n6.2反射知道吗？性能问题怎么优化？\n7.讲一下CMS？\n8.bean作用域，完全没答对\n9.cookie和seesion，没咋用过，答得很不好\n10.OOM怎么排查？有哪些工具？\n11.mysql慢查询如何排查？\n12.分库分页怎么实现ID的唯一、说了uuid和hash\n13.消息队列怎么解决重复消费和消息的顺序性\n14.ai学过吗？ai用过吗？\n15.ai在开发里怎么用的，展开说，简单讲了例子，说细度不够\n16.反问"
-    }
+      "locator": "artifact-line:1#offset:0-6;blob:a1b71a69284c9cf92b7afff8f668d8cd84e0900d",
+      "semantic_excerpt": "2025/9/4淘天 淘客技术Java 研发一面凉经\n1.自我介绍\n2.项目拷打\n3.项目难点衍生出的数据库原子性问题\n3.1 除了for update 锁，，用锁有什么问题？还有什么能够实现数据库更新的原子性\n3.2 答AtomicInteger，问是怎么实现原子性的，答CAS\n3.3 CAS原理、ABA问题\n3.4 怎么用CAS来实现数据库更新的原子性\n4.线程池参数有哪些,\n5.多线程在项目中有应用吗，说了@Scheduled用到了定时任务线程池\n6.类加载器有哪些？\n6.1双亲委派机制怎么破坏\n6.2反射知道吗？性能问题怎么优化？\n7.讲一下CMS？\n8.bean作用域，完全没答对\n9.cookie和seesion，没咋用过，答得很不好\n10.OOM怎么排查？有哪些工具？\n11.mysql慢查询如何排查？\n12.分库分页怎么实现ID的唯一、说了uuid和hash\n13.消息队列怎么解决重复消费和消息的顺序性\n14.ai学过吗？ai用过吗？\n15.ai在开发里怎么用的，展开说，简单讲了例子，说细度不够\n16.反问"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68b97f96000000001b03659e.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "a1b71a69284c9cf92b7afff8f668d8cd84e0900d",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 972,
+        "content_sha256": "bd4b63ef3b39c3046d96bb50465810cefa2e60f7f5046977ff14dadeafd0c5c9",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "1.自我介绍",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-6;blob:a1b71a69284c9cf92b7afff8f668d8cd84e0900d",
+          "semantic_excerpt": "2025/9/4淘天 淘客技术Java 研发一面凉经\n1.自我介绍\n2.项目拷打\n3.项目难点衍生出的数据库原子性问题\n3.1 除了for update 锁，，用锁有什么问题？还有什么能够实现数据库更新的原子性\n3.2 答AtomicInteger，问是怎么实现原子性的，答CAS\n3.3 CAS原理、ABA问题\n3.4 怎么用CAS来实现数据库更新的原子性\n4.线程池参数有哪些,\n5.多线程在项目中有应用吗，说了@Scheduled用到了定时任务线程池\n6.类加载器有哪些？\n6.1双亲委派机制怎么破坏\n6.2反射知道吗？性能问题怎么优化？\n7.讲一下CMS？\n8.bean作用域，完全没答对\n9.cookie和seesion，没咋用过，答得很不好\n10.OOM怎么排查？有哪些工具？\n11.mysql慢查询如何排查？\n12.分库分页怎么实现ID的唯一、说了uuid和hash\n13.消息队列怎么解决重复消费和消息的顺序性\n14.ai学过吗？ai用过吗？\n15.ai在开发里怎么用的，展开说，简单讲了例子，说细度不够\n16.反问"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68b97f96000000001b03659e.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "6e6c15eb18939835e923cce995f2c1f8e4d58965",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 387164,
+        "content_sha256": "ef9bd8faf3833dc0161c427228c647ae950dd3de3d29e793d37ad4d2281c429d",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "2025/9/4淘天 淘客技术Java 研发一面凉经 - 小红书\">",
+          "line": 514,
+          "locator": "artifact-line:514#offset:31-65;blob:6e6c15eb18939835e923cce995f2c1f8e4d58965",
+          "semantic_excerpt": "2025/9/4淘天 淘客技术Java 研发一面凉经\n1.自我介绍\n2.项目拷打\n3.项目难点衍生出的数据库原子性问题\n3.1 除了for update 锁，，用锁有什么问题？还有什么能够实现数据库更新的原子性\n3.2 答AtomicInteger，问是怎么实现原子性的，答CAS\n3.3 CAS原理、ABA问题\n3.4 怎么用CAS来实现数据库更新的原子性\n4.线程池参数有哪些,\n5.多线程在项目中有应用吗，说了@Scheduled用到了定时任务线程池\n6.类加载器有哪些？\n6.1双亲委派机制怎么破坏\n6.2反射知道吗？性能问题怎么优化？\n7.讲一下CMS？\n8.bean作用域，完全没答对\n9.cookie和seesion，没咋用过，答得很不好\n10.OOM怎么排查？有哪些工具？\n11.mysql慢查询如何排查？\n12.分库分页怎么实现ID的唯一、说了uuid和hash\n13.消息队列怎么解决重复消费和消息的顺序性\n14.ai学过吗？ai用过吗？\n15.ai在开发里怎么用的，展开说，简单讲了例子，说细度不够\n16.反问"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68b97f96000000001b03659e.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "3366e982f39c350c59b8c9dedf4e831fa50105fe",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 20664,
+        "content_sha256": "062f10f1da750ac238355eca4b0c0a3b415a0a6db995d080c5e870bad000b6f9",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "2025/9/4淘天 淘客技术Java 研发一面凉经\",",
+          "line": 518,
+          "locator": "artifact-line:518#offset:30-58;blob:3366e982f39c350c59b8c9dedf4e831fa50105fe",
+          "semantic_excerpt": "2025/9/4淘天 淘客技术Java 研发一面凉经\n1.自我介绍\n2.项目拷打\n3.项目难点衍生出的数据库原子性问题\n3.1 除了for update 锁，，用锁有什么问题？还有什么能够实现数据库更新的原子性\n3.2 答AtomicInteger，问是怎么实现原子性的，答CAS\n3.3 CAS原理、ABA问题\n3.4 怎么用CAS来实现数据库更新的原子性\n4.线程池参数有哪些,\n5.多线程在项目中有应用吗，说了@Scheduled用到了定时任务线程池\n6.类加载器有哪些？\n6.1双亲委派机制怎么破坏\n6.2反射知道吗？性能问题怎么优化？\n7.讲一下CMS？\n8.bean作用域，完全没答对\n9.cookie和seesion，没咋用过，答得很不好\n10.OOM怎么排查？有哪些工具？\n11.mysql慢查询如何排查？\n12.分库分页怎么实现ID的唯一、说了uuid和hash\n13.消息队列怎么解决重复消费和消息的顺序性\n14.ai学过吗？ai用过吗？\n15.ai在开发里怎么用的，展开说，简单讲了例子，说细度不够\n16.反问"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68b97f96000000001b03659e.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "a1b71a69284c9cf92b7afff8f668d8cd84e0900d",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 972,
+      "content_sha256": "bd4b63ef3b39c3046d96bb50465810cefa2e60f7f5046977ff14dadeafd0c5c9",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "1.自我介绍",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-6;blob:a1b71a69284c9cf92b7afff8f668d8cd84e0900d",
+        "semantic_excerpt": "2025/9/4淘天 淘客技术Java 研发一面凉经\n1.自我介绍\n2.项目拷打\n3.项目难点衍生出的数据库原子性问题\n3.1 除了for update 锁，，用锁有什么问题？还有什么能够实现数据库更新的原子性\n3.2 答AtomicInteger，问是怎么实现原子性的，答CAS\n3.3 CAS原理、ABA问题\n3.4 怎么用CAS来实现数据库更新的原子性\n4.线程池参数有哪些,\n5.多线程在项目中有应用吗，说了@Scheduled用到了定时任务线程池\n6.类加载器有哪些？\n6.1双亲委派机制怎么破坏\n6.2反射知道吗？性能问题怎么优化？\n7.讲一下CMS？\n8.bean作用域，完全没答对\n9.cookie和seesion，没咋用过，答得很不好\n10.OOM怎么排查？有哪些工具？\n11.mysql慢查询如何排查？\n12.分库分页怎么实现ID的唯一、说了uuid和hash\n13.消息队列怎么解决重复消费和消息的顺序性\n14.ai学过吗？ai用过吗？\n15.ai在开发里怎么用的，展开说，简单讲了例子，说细度不够\n16.反问"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68b97f96000000001b03659e.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "6e6c15eb18939835e923cce995f2c1f8e4d58965",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 387164,
+      "content_sha256": "ef9bd8faf3833dc0161c427228c647ae950dd3de3d29e793d37ad4d2281c429d",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "2025/9/4淘天 淘客技术Java 研发一面凉经 - 小红书\">",
+        "line": 514,
+        "locator": "artifact-line:514#offset:31-65;blob:6e6c15eb18939835e923cce995f2c1f8e4d58965",
+        "semantic_excerpt": "2025/9/4淘天 淘客技术Java 研发一面凉经\n1.自我介绍\n2.项目拷打\n3.项目难点衍生出的数据库原子性问题\n3.1 除了for update 锁，，用锁有什么问题？还有什么能够实现数据库更新的原子性\n3.2 答AtomicInteger，问是怎么实现原子性的，答CAS\n3.3 CAS原理、ABA问题\n3.4 怎么用CAS来实现数据库更新的原子性\n4.线程池参数有哪些,\n5.多线程在项目中有应用吗，说了@Scheduled用到了定时任务线程池\n6.类加载器有哪些？\n6.1双亲委派机制怎么破坏\n6.2反射知道吗？性能问题怎么优化？\n7.讲一下CMS？\n8.bean作用域，完全没答对\n9.cookie和seesion，没咋用过，答得很不好\n10.OOM怎么排查？有哪些工具？\n11.mysql慢查询如何排查？\n12.分库分页怎么实现ID的唯一、说了uuid和hash\n13.消息队列怎么解决重复消费和消息的顺序性\n14.ai学过吗？ai用过吗？\n15.ai在开发里怎么用的，展开说，简单讲了例子，说细度不够\n16.反问"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68b97f96000000001b03659e.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "3366e982f39c350c59b8c9dedf4e831fa50105fe",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 20664,
+      "content_sha256": "062f10f1da750ac238355eca4b0c0a3b415a0a6db995d080c5e870bad000b6f9",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "2025/9/4淘天 淘客技术Java 研发一面凉经\",",
+        "line": 518,
+        "locator": "artifact-line:518#offset:30-58;blob:3366e982f39c350c59b8c9dedf4e831fa50105fe",
+        "semantic_excerpt": "2025/9/4淘天 淘客技术Java 研发一面凉经\n1.自我介绍\n2.项目拷打\n3.项目难点衍生出的数据库原子性问题\n3.1 除了for update 锁，，用锁有什么问题？还有什么能够实现数据库更新的原子性\n3.2 答AtomicInteger，问是怎么实现原子性的，答CAS\n3.3 CAS原理、ABA问题\n3.4 怎么用CAS来实现数据库更新的原子性\n4.线程池参数有哪些,\n5.多线程在项目中有应用吗，说了@Scheduled用到了定时任务线程池\n6.类加载器有哪些？\n6.1双亲委派机制怎么破坏\n6.2反射知道吗？性能问题怎么优化？\n7.讲一下CMS？\n8.bean作用域，完全没答对\n9.cookie和seesion，没咋用过，答得很不好\n10.OOM怎么排查？有哪些工具？\n11.mysql慢查询如何排查？\n12.分库分页怎么实现ID的唯一、说了uuid和hash\n13.消息队列怎么解决重复消费和消息的顺序性\n14.ai学过吗？ai用过吗？\n15.ai在开发里怎么用的，展开说，简单讲了例子，说细度不够\n16.反问"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -69,8 +165,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -84,11 +180,12 @@
     }
   ],
   "limitations": [
-    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "1bc47e432a4b070af3492b039d3dfced290ff1e473492849a4704c5478bb434c"
+  "evidence_sha256": "d14e5c77492105523ad8495d67a5b71afa32bfa5ee028d0e6aa36c429ffa300b"
 }

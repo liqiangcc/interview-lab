@@ -7,8 +7,8 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "d8c0c52712b24f523bb9d28626d73270353fe1dbc27c8f4fbe9099a4d6bd9f99",
-  "disposition": "blocked",
-  "rationale": "Exact Source is generic advice or aggregated/summarized material without a bounded candidate interview event; retain pending.",
+  "disposition": "not-interview",
+  "rationale": "Exact Source is an explicit question bank or job advertisement rather than a candidate interview event.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
@@ -17,13 +17,12 @@
       "generic-question-bank-or-job-ad",
       "generic-advice-or-aggregated",
       "question-only",
-      "no-candidate-event-evidence",
-      "non-interview-format"
+      "no-candidate-event-evidence"
     ],
     "questions": 13,
     "has_first_person_event": false,
     "has_explicit_candidate_event": false,
-    "has_bounded_event": false,
+    "has_bounded_event": true,
     "has_detailed_event": false,
     "has_completed_event_evidence": false,
     "has_structured_candidate_event": false,
@@ -33,12 +32,26 @@
     "outcome_signal": false,
     "resource_signal": true,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": true,
     "job_or_title_only": false,
-    "non_interview_format": true,
+    "non_interview_format": false,
     "only_question_list": true,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "alibaba-process",
+        "anchor": "阿里",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-165;blob:7c107462c43e763ffdc462408063df12b13bf303",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:阿里",
+        "source_ref": "liqiangcc/xhs:note_detail/68c80995000000001d022d8d.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68c80995000000001d022d8d.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -47,13 +60,108 @@
     "provenance": "source_projection",
     "byte_size": 570,
     "content_sha256": "ed6da7ecb1a7123f6d219bafe4dbaeaa049e8159df64c261b5be8220975c690c",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "1. TCP 三次握手",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "1. TCP 三次握手\na. 能否改成两次、会有什么问题？\n2. TCP 四次挥手\na. TIME_WAIT 状态有什么用？\n3. TCP 如何保证可靠传输\n4. MySQL 索引数据结构\n5. 什么是最左前缀匹配？\n6. B+树结构相比 B 树有哪些优点？相比平衡树、跳表呢？\n7. 想过 Mysql 的 B+树索引有哪些可优化的地方吗？\n8. 讲一下隔离级别？\n9. 可重复读如何解决？MVCC 能解决吗？\n10. Java 的 HashMap 讲一下\n11. Java 的线程池\n笔试题目：\n1. 一道原创题\n2. 最长无重复字符字串"
-    }
+      "locator": "artifact-line:1#offset:0-11;blob:9a2ad4276016fc06f2f4ee766772539c181ef93f",
+      "semantic_excerpt": "阿里国际一面\n1. TCP 三次握手\na. 能否改成两次、会有什么问题？\n2. TCP 四次挥手\na. TIME_WAIT 状态有什么用？\n3. TCP 如何保证可靠传输\n4. MySQL 索引数据结构\n5. 什么是最左前缀匹配？\n6. B+树结构相比 B 树有哪些优点？相比平衡树、跳表呢？\n7. 想过 Mysql 的 B+树索引有哪些可优化的地方吗？\n8. 讲一下隔离级别？\n9. 可重复读如何解决？MVCC 能解决吗？\n10. Java 的 HashMap 讲一下\n11. Java 的线程池\n笔试题目：\n1. 一道原创题\n2. 最长无重复字符字串"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68c80995000000001d022d8d.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "9a2ad4276016fc06f2f4ee766772539c181ef93f",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 570,
+        "content_sha256": "ed6da7ecb1a7123f6d219bafe4dbaeaa049e8159df64c261b5be8220975c690c",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "1. TCP 三次握手",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-11;blob:9a2ad4276016fc06f2f4ee766772539c181ef93f",
+          "semantic_excerpt": "阿里国际一面\n1. TCP 三次握手\na. 能否改成两次、会有什么问题？\n2. TCP 四次挥手\na. TIME_WAIT 状态有什么用？\n3. TCP 如何保证可靠传输\n4. MySQL 索引数据结构\n5. 什么是最左前缀匹配？\n6. B+树结构相比 B 树有哪些优点？相比平衡树、跳表呢？\n7. 想过 Mysql 的 B+树索引有哪些可优化的地方吗？\n8. 讲一下隔离级别？\n9. 可重复读如何解决？MVCC 能解决吗？\n10. Java 的 HashMap 讲一下\n11. Java 的线程池\n笔试题目：\n1. 一道原创题\n2. 最长无重复字符字串"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68c80995000000001d022d8d.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "7c107462c43e763ffdc462408063df12b13bf303",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 386037,
+        "content_sha256": "53502fe62192f078d54095519fa3a20c46e87a3cf51deb6ae4b84bdcc6948265",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "阿里国际一面 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-183;blob:7c107462c43e763ffdc462408063df12b13bf303",
+          "semantic_excerpt": "阿里国际一面\n1. TCP 三次握手\na. 能否改成两次、会有什么问题？\n2. TCP 四次挥手\na. TIME_WAIT 状态有什么用？\n3. TCP 如何保证可靠传输\n4. MySQL 索引数据结构\n5. 什么是最左前缀匹配？\n6. B+树结构相比 B 树有哪些优点？相比平衡树、跳表呢？\n7. 想过 Mysql 的 B+树索引有哪些可优化的地方吗？\n8. 讲一下隔离级别？\n9. 可重复读如何解决？MVCC 能解决吗？\n10. Java 的 HashMap 讲一下\n11. Java 的线程池\n笔试题目：\n1. 一道原创题\n2. 最长无重复字符字串"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68c80995000000001d022d8d.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "93522e13e14c3799d37864e352bb44e3f7bd8a92",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 20442,
+        "content_sha256": "53c211f792dd83d02212bb25bfacf313dd2e0fe4c88e51df1820ac116227280c",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "阿里国际一面\",",
+          "line": 517,
+          "locator": "artifact-line:517#offset:30-38;blob:93522e13e14c3799d37864e352bb44e3f7bd8a92",
+          "semantic_excerpt": "阿里国际一面\n1. TCP 三次握手\na. 能否改成两次、会有什么问题？\n2. TCP 四次挥手\na. TIME_WAIT 状态有什么用？\n3. TCP 如何保证可靠传输\n4. MySQL 索引数据结构\n5. 什么是最左前缀匹配？\n6. B+树结构相比 B 树有哪些优点？相比平衡树、跳表呢？\n7. 想过 Mysql 的 B+树索引有哪些可优化的地方吗？\n8. 讲一下隔离级别？\n9. 可重复读如何解决？MVCC 能解决吗？\n10. Java 的 HashMap 讲一下\n11. Java 的线程池\n笔试题目：\n1. 一道原创题\n2. 最长无重复字符字串"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68c80995000000001d022d8d.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "9a2ad4276016fc06f2f4ee766772539c181ef93f",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 570,
+      "content_sha256": "ed6da7ecb1a7123f6d219bafe4dbaeaa049e8159df64c261b5be8220975c690c",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "1. TCP 三次握手",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-11;blob:9a2ad4276016fc06f2f4ee766772539c181ef93f",
+        "semantic_excerpt": "阿里国际一面\n1. TCP 三次握手\na. 能否改成两次、会有什么问题？\n2. TCP 四次挥手\na. TIME_WAIT 状态有什么用？\n3. TCP 如何保证可靠传输\n4. MySQL 索引数据结构\n5. 什么是最左前缀匹配？\n6. B+树结构相比 B 树有哪些优点？相比平衡树、跳表呢？\n7. 想过 Mysql 的 B+树索引有哪些可优化的地方吗？\n8. 讲一下隔离级别？\n9. 可重复读如何解决？MVCC 能解决吗？\n10. Java 的 HashMap 讲一下\n11. Java 的线程池\n笔试题目：\n1. 一道原创题\n2. 最长无重复字符字串"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68c80995000000001d022d8d.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "7c107462c43e763ffdc462408063df12b13bf303",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 386037,
+      "content_sha256": "53502fe62192f078d54095519fa3a20c46e87a3cf51deb6ae4b84bdcc6948265",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "阿里国际一面 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-183;blob:7c107462c43e763ffdc462408063df12b13bf303",
+        "semantic_excerpt": "阿里国际一面\n1. TCP 三次握手\na. 能否改成两次、会有什么问题？\n2. TCP 四次挥手\na. TIME_WAIT 状态有什么用？\n3. TCP 如何保证可靠传输\n4. MySQL 索引数据结构\n5. 什么是最左前缀匹配？\n6. B+树结构相比 B 树有哪些优点？相比平衡树、跳表呢？\n7. 想过 Mysql 的 B+树索引有哪些可优化的地方吗？\n8. 讲一下隔离级别？\n9. 可重复读如何解决？MVCC 能解决吗？\n10. Java 的 HashMap 讲一下\n11. Java 的线程池\n笔试题目：\n1. 一道原创题\n2. 最长无重复字符字串"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68c80995000000001d022d8d.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "93522e13e14c3799d37864e352bb44e3f7bd8a92",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 20442,
+      "content_sha256": "53c211f792dd83d02212bb25bfacf313dd2e0fe4c88e51df1820ac116227280c",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "阿里国际一面\",",
+        "line": 517,
+        "locator": "artifact-line:517#offset:30-38;blob:93522e13e14c3799d37864e352bb44e3f7bd8a92",
+        "semantic_excerpt": "阿里国际一面\n1. TCP 三次握手\na. 能否改成两次、会有什么问题？\n2. TCP 四次挥手\na. TIME_WAIT 状态有什么用？\n3. TCP 如何保证可靠传输\n4. MySQL 索引数据结构\n5. 什么是最左前缀匹配？\n6. B+树结构相比 B 树有哪些优点？相比平衡树、跳表呢？\n7. 想过 Mysql 的 B+树索引有哪些可优化的地方吗？\n8. 讲一下隔离级别？\n9. 可重复读如何解决？MVCC 能解决吗？\n10. Java 的 HashMap 讲一下\n11. Java 的线程池\n笔试题目：\n1. 一道原创题\n2. 最长无重复字符字串"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -72,8 +180,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source is generic advice or aggregated/summarized material without a bounded candidate interview event; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is an explicit question bank or job advertisement rather than a candidate interview event."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -87,11 +195,12 @@
     }
   ],
   "limitations": [
-    "Exact Source is generic advice or aggregated/summarized material without a bounded candidate interview event; retain pending.",
+    "Exact Source is an explicit question bank or job advertisement rather than a candidate interview event.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "30052a7075cfd689f6880a16e9eb50c8da9235073b643c706e6c295b831ed8c0"
+  "evidence_sha256": "75cfc6d76e2675bdfe9c0affba3a644e41f587f1ff5d28734ad0ffdd4eff93a8"
 }

@@ -7,35 +7,34 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "8428f4e30ae260e3662fc084f154391c46885c11763f7c46cb3e039b19ed63af",
-  "disposition": "blocked",
-  "rationale": "Exact Source records only a scheduled, invited, or arranged interview and no completed candidate interview process; retain pending.",
+  "disposition": "single-interview",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
   "interview_cases": [],
   "ambiguity_audit": {
-    "flags": [
-      "question-list-only",
-      "scheduled-only",
-      "question-only",
-      "no-candidate-event-evidence"
-    ],
+    "flags": [],
     "questions": 14,
     "has_first_person_event": true,
     "has_explicit_candidate_event": true,
     "has_bounded_event": true,
     "has_detailed_event": true,
     "has_completed_event_evidence": true,
-    "has_structured_candidate_event": false,
+    "has_structured_candidate_event": true,
     "generic_advice_or_aggregated": false,
-    "scheduled_only": true,
-    "question_only": true,
+    "scheduled_only": false,
+    "question_only": false,
     "outcome_signal": false,
     "resource_signal": true,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
-    "only_question_list": true,
+    "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [],
+    "reviewed_artifact_count": 2,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68e32a570000000005002930.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -44,13 +43,78 @@
     "provenance": "source_projection",
     "byte_size": 25883,
     "content_sha256": "a7bb677ff7aa3554fd751555d3ac6e88f15e5c78037d520e4fff601f2a856c3d",
+    "cache_status": "not-applicable",
     "excerpt": {
-      "excerpt": "\"global\": {",
-      "line": 2,
-      "locator": "artifact-line:2",
-      "semantic_excerpt": "📖背景：26应届 本硕软工 后端开发\nTimeline:\n9.15投递\n9.19收到笔试通知\n9.21笔试\n9.23面试通知\n9.25晚面试\n9.26晚收到挂\n1️⃣2025.9.21完成的笔试，两个小时的时间，回忆版题目见图\n9.23收到面试通知\n \n2️⃣2025.9.25 一面\n时长：面试约的是1h，但是实际大约是45min（可能因为我回答的不是很好吧hhh\n1. 网络\n问：TCP 连接是逻辑还是物理概念？\n追问：同一条物理链路上有多个 TCP 连接，怎么区分？\n2. 并发\n问：多线程环境下，整数加一是线程安全的吗？\n问：如何限制只有 5 个线程能访问？\n3. 数据结构 & 算法\n问：栈的应用场景？\n问：如何用栈实现队列？\n4. 数据库\n问：MYSQL的索引和索引失效的情况。LIKE %%。追问问LIKE 里面索引失效具体发生了什么，我可能回答的不够深入。\n问：MySQL ACID 的一致性是什么？\n追问：一致性和另外三个的关系？追问隔离性如何保证一致性，这个具体说说。\n问：脏读、不可重复读？\n5. 项目\n简单问了简历上写的实习项目和竞赛项目，难点和亮点是什么？\n6. 手撕：不超过 K 的最长子串\n编译器没有输入输出 要自己写。【leetcode 340，滑动窗口+hashmap】\n7. 反问\n问了业务和技术栈：银行业务用 Java，电商更多用 Go。\n问了是否会用AI，向AI转型：内部会用AI提效。\n问了对英文的要求：有要求但是要求不高会基本文书就行。\n感想就是秋招第一面随着秋天的到来一起凉了。发个面经攒人品[哭惹R]"
-    }
+      "excerpt": "秋招第一面随着秋天的到来一起凉了。发个面经攒人品[哭惹R]\\n#秋招[话题]# #面试求职[话题]# #虾皮[话题]# #shopee[话题]# #计算机找工作[话题]# #后端面试[话题]# #研究生精神状态[话题]#\",",
+      "line": 498,
+      "locator": "artifact-line:498#offset:711-823;blob:016dbfae5cb172709d078753cdef0aee7b65871d",
+      "semantic_excerpt": "秋招第一面随着秋天的到来一起凉了\n📖背景：26应届 本硕软工 后端开发\nTimeline:\n9.15投递\n9.19收到笔试通知\n9.21笔试\n9.23面试通知\n9.25晚面试\n9.26晚收到挂\n1️⃣2025.9.21完成的笔试，两个小时的时间，回忆版题目见图\n9.23收到面试通知\n \n2️⃣2025.9.25 一面\n时长：面试约的是1h，但是实际大约是45min（可能因为我回答的不是很好吧hhh\n1. 网络\n问：TCP 连接是逻辑还是物理概念？\n追问：同一条物理链路上有多个 TCP 连接，怎么区分？\n2. 并发\n问：多线程环境下，整数加一是线程安全的吗？\n问：如何限制只有 5 个线程能访问？\n3. 数据结构 & 算法\n问：栈的应用场景？\n问：如何用栈实现队列？\n4. 数据库\n问：MYSQL的索引和索引失效的情况。LIKE %%。追问问LIKE 里面索引失效具体发生了什么，我可能回答的不够深入。\n问：MySQL ACID 的一致性是什么？\n追问：一致性和另外三个的关系？追问隔离性如何保证一致性，这个具体说说。\n问：脏读、不可重复读？\n5. 项目\n简单问了简历上写的实习项目和竞赛项目，难点和亮点是什么？\n6. 手撕：不超过 K 的最长子串\n编译器没有输入输出 要自己写。【leetcode 340，滑动窗口+hashmap】\n7. 反问\n问了业务和技术栈：银行业务用 Java，电商更多用 Go。\n问了是否会用AI，向AI转型：内部会用AI提效。\n问了对英文的要求：有要求但是要求不高会基本文书就行。\n感想就是秋招第一面随着秋天的到来一起凉了。发个面经攒人品[哭惹R]"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_detail/68e32a570000000005002930.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "fbaaef5ceeb7caafe881748676d721e4a77bcbe7",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 395482,
+        "content_sha256": "0d3d74175543cb1b7bf360ec8f041e27f36390786945862a2acf2ac77a9f0cef",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "秋招第一面随着秋天的到来一起凉了 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-193;blob:fbaaef5ceeb7caafe881748676d721e4a77bcbe7",
+          "semantic_excerpt": "秋招第一面随着秋天的到来一起凉了\n📖背景：26应届 本硕软工 后端开发\nTimeline:\n9.15投递\n9.19收到笔试通知\n9.21笔试\n9.23面试通知\n9.25晚面试\n9.26晚收到挂\n1️⃣2025.9.21完成的笔试，两个小时的时间，回忆版题目见图\n9.23收到面试通知\n \n2️⃣2025.9.25 一面\n时长：面试约的是1h，但是实际大约是45min（可能因为我回答的不是很好吧hhh\n1. 网络\n问：TCP 连接是逻辑还是物理概念？\n追问：同一条物理链路上有多个 TCP 连接，怎么区分？\n2. 并发\n问：多线程环境下，整数加一是线程安全的吗？\n问：如何限制只有 5 个线程能访问？\n3. 数据结构 & 算法\n问：栈的应用场景？\n问：如何用栈实现队列？\n4. 数据库\n问：MYSQL的索引和索引失效的情况。LIKE %%。追问问LIKE 里面索引失效具体发生了什么，我可能回答的不够深入。\n问：MySQL ACID 的一致性是什么？\n追问：一致性和另外三个的关系？追问隔离性如何保证一致性，这个具体说说。\n问：脏读、不可重复读？\n5. 项目\n简单问了简历上写的实习项目和竞赛项目，难点和亮点是什么？\n6. 手撕：不超过 K 的最长子串\n编译器没有输入输出 要自己写。【leetcode 340，滑动窗口+hashmap】\n7. 反问\n问了业务和技术栈：银行业务用 Java，电商更多用 Go。\n问了是否会用AI，向AI转型：内部会用AI提效。\n问了对英文的要求：有要求但是要求不高会基本文书就行。\n感想就是秋招第一面随着秋天的到来一起凉了。发个面经攒人品[哭惹R]"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68e32a570000000005002930.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "016dbfae5cb172709d078753cdef0aee7b65871d",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 25883,
+        "content_sha256": "a7bb677ff7aa3554fd751555d3ac6e88f15e5c78037d520e4fff601f2a856c3d",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "秋招第一面随着秋天的到来一起凉了。发个面经攒人品[哭惹R]\\n#秋招[话题]# #面试求职[话题]# #虾皮[话题]# #shopee[话题]# #计算机找工作[话题]# #后端面试[话题]# #研究生精神状态[话题]#\",",
+          "line": 498,
+          "locator": "artifact-line:498#offset:711-823;blob:016dbfae5cb172709d078753cdef0aee7b65871d",
+          "semantic_excerpt": "秋招第一面随着秋天的到来一起凉了\n📖背景：26应届 本硕软工 后端开发\nTimeline:\n9.15投递\n9.19收到笔试通知\n9.21笔试\n9.23面试通知\n9.25晚面试\n9.26晚收到挂\n1️⃣2025.9.21完成的笔试，两个小时的时间，回忆版题目见图\n9.23收到面试通知\n \n2️⃣2025.9.25 一面\n时长：面试约的是1h，但是实际大约是45min（可能因为我回答的不是很好吧hhh\n1. 网络\n问：TCP 连接是逻辑还是物理概念？\n追问：同一条物理链路上有多个 TCP 连接，怎么区分？\n2. 并发\n问：多线程环境下，整数加一是线程安全的吗？\n问：如何限制只有 5 个线程能访问？\n3. 数据结构 & 算法\n问：栈的应用场景？\n问：如何用栈实现队列？\n4. 数据库\n问：MYSQL的索引和索引失效的情况。LIKE %%。追问问LIKE 里面索引失效具体发生了什么，我可能回答的不够深入。\n问：MySQL ACID 的一致性是什么？\n追问：一致性和另外三个的关系？追问隔离性如何保证一致性，这个具体说说。\n问：脏读、不可重复读？\n5. 项目\n简单问了简历上写的实习项目和竞赛项目，难点和亮点是什么？\n6. 手撕：不超过 K 的最长子串\n编译器没有输入输出 要自己写。【leetcode 340，滑动窗口+hashmap】\n7. 反问\n问了业务和技术栈：银行业务用 Java，电商更多用 Go。\n问了是否会用AI，向AI转型：内部会用AI提效。\n问了对英文的要求：有要求但是要求不高会基本文书就行。\n感想就是秋招第一面随着秋天的到来一起凉了。发个面经攒人品[哭惹R]"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/68e32a570000000005002930.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "fbaaef5ceeb7caafe881748676d721e4a77bcbe7",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 395482,
+      "content_sha256": "0d3d74175543cb1b7bf360ec8f041e27f36390786945862a2acf2ac77a9f0cef",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "秋招第一面随着秋天的到来一起凉了 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-193;blob:fbaaef5ceeb7caafe881748676d721e4a77bcbe7",
+        "semantic_excerpt": "秋招第一面随着秋天的到来一起凉了\n📖背景：26应届 本硕软工 后端开发\nTimeline:\n9.15投递\n9.19收到笔试通知\n9.21笔试\n9.23面试通知\n9.25晚面试\n9.26晚收到挂\n1️⃣2025.9.21完成的笔试，两个小时的时间，回忆版题目见图\n9.23收到面试通知\n \n2️⃣2025.9.25 一面\n时长：面试约的是1h，但是实际大约是45min（可能因为我回答的不是很好吧hhh\n1. 网络\n问：TCP 连接是逻辑还是物理概念？\n追问：同一条物理链路上有多个 TCP 连接，怎么区分？\n2. 并发\n问：多线程环境下，整数加一是线程安全的吗？\n问：如何限制只有 5 个线程能访问？\n3. 数据结构 & 算法\n问：栈的应用场景？\n问：如何用栈实现队列？\n4. 数据库\n问：MYSQL的索引和索引失效的情况。LIKE %%。追问问LIKE 里面索引失效具体发生了什么，我可能回答的不够深入。\n问：MySQL ACID 的一致性是什么？\n追问：一致性和另外三个的关系？追问隔离性如何保证一致性，这个具体说说。\n问：脏读、不可重复读？\n5. 项目\n简单问了简历上写的实习项目和竞赛项目，难点和亮点是什么？\n6. 手撕：不超过 K 的最长子串\n编译器没有输入输出 要自己写。【leetcode 340，滑动窗口+hashmap】\n7. 反问\n问了业务和技术栈：银行业务用 Java，电商更多用 Go。\n问了是否会用AI，向AI转型：内部会用AI提效。\n问了对英文的要求：有要求但是要求不高会基本文书就行。\n感想就是秋招第一面随着秋天的到来一起凉了。发个面经攒人品[哭惹R]"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68e32a570000000005002930.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "016dbfae5cb172709d078753cdef0aee7b65871d",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 25883,
+      "content_sha256": "a7bb677ff7aa3554fd751555d3ac6e88f15e5c78037d520e4fff601f2a856c3d",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "秋招第一面随着秋天的到来一起凉了。发个面经攒人品[哭惹R]\\n#秋招[话题]# #面试求职[话题]# #虾皮[话题]# #shopee[话题]# #计算机找工作[话题]# #后端面试[话题]# #研究生精神状态[话题]#\",",
+        "line": 498,
+        "locator": "artifact-line:498#offset:711-823;blob:016dbfae5cb172709d078753cdef0aee7b65871d",
+        "semantic_excerpt": "秋招第一面随着秋天的到来一起凉了\n📖背景：26应届 本硕软工 后端开发\nTimeline:\n9.15投递\n9.19收到笔试通知\n9.21笔试\n9.23面试通知\n9.25晚面试\n9.26晚收到挂\n1️⃣2025.9.21完成的笔试，两个小时的时间，回忆版题目见图\n9.23收到面试通知\n \n2️⃣2025.9.25 一面\n时长：面试约的是1h，但是实际大约是45min（可能因为我回答的不是很好吧hhh\n1. 网络\n问：TCP 连接是逻辑还是物理概念？\n追问：同一条物理链路上有多个 TCP 连接，怎么区分？\n2. 并发\n问：多线程环境下，整数加一是线程安全的吗？\n问：如何限制只有 5 个线程能访问？\n3. 数据结构 & 算法\n问：栈的应用场景？\n问：如何用栈实现队列？\n4. 数据库\n问：MYSQL的索引和索引失效的情况。LIKE %%。追问问LIKE 里面索引失效具体发生了什么，我可能回答的不够深入。\n问：MySQL ACID 的一致性是什么？\n追问：一致性和另外三个的关系？追问隔离性如何保证一致性，这个具体说说。\n问：脏读、不可重复读？\n5. 项目\n简单问了简历上写的实习项目和竞赛项目，难点和亮点是什么？\n6. 手撕：不超过 K 的最长子串\n编译器没有输入输出 要自己写。【leetcode 340，滑动窗口+hashmap】\n7. 反问\n问了业务和技术栈：银行业务用 Java，电商更多用 Go。\n问了是否会用AI，向AI转型：内部会用AI提效。\n问了对英文的要求：有要求但是要求不高会基本文书就行。\n感想就是秋招第一面随着秋天的到来一起凉了。发个面经攒人品[哭惹R]"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -69,8 +133,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source records only a scheduled, invited, or arranged interview and no completed candidate interview process; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -84,11 +148,12 @@
     }
   ],
   "limitations": [
-    "Exact Source records only a scheduled, invited, or arranged interview and no completed candidate interview process; retain pending.",
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "6583380b6b89680f6468db901fb673649956f4200aef2dff963964d7b407076c"
+  "evidence_sha256": "5702f2cd9c8aaae9d159ce0fdef4bc32c19754fa5c0d6e7c1c34c102c706153c"
 }

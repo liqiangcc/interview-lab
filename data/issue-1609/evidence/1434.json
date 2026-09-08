@@ -7,11 +7,12 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "c216d415d3e4c5629949c9a7de23433ed399d21921774b3627f6a2cd7a8f463d",
-  "disposition": "blocked",
-  "rationale": "Exact Source is generic advice or aggregated/summarized material without a bounded candidate interview event; retain pending.",
+  "disposition": "not-interview",
+  "rationale": "Exact Source is an explicit question bank or job advertisement rather than a candidate interview event.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
+      "outcome-or-offer-only",
       "no-first-person-event",
       "generic-question-bank-or-job-ad",
       "generic-advice-or-aggregated",
@@ -27,15 +28,19 @@
     "generic_advice_or_aggregated": true,
     "scheduled_only": false,
     "question_only": false,
-    "outcome_signal": false,
+    "outcome_signal": true,
     "resource_signal": true,
     "aggregated_text": true,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": false,
-    "only_outcome": false,
+    "only_outcome": true,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [],
+    "reviewed_artifact_count": 2,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68e236ca0000000003038ade.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -44,13 +49,78 @@
     "provenance": "source_projection",
     "byte_size": 29782,
     "content_sha256": "ce1f09961dc040474e6e90b6f329afdc9a9940f843285d1103b7a3487ad2e2b5",
+    "cache_status": "not-applicable",
     "excerpt": {
-      "excerpt": "\"desc\": \"粉丝投稿，面试还是以考察场景题为主，近期面试过的应该都发现其实问得题目都大差不差，只要针对一些常考题目，结合项目知识进行拆解背记，面试真的不算难！面试用的题库放在后面了，大家可以看看参考一下。#java面试[话题]# #后端开发[话题]# #互联网大厂[话题]# #java[话题]# #求职[话题]# #计算机[话题]# #编程[话题]# #面试[话题]# #京东[话题]# #爱上工作的瞬间[话题]#\",",
-      "line": 515,
-      "locator": "artifact-line:515",
-      "semantic_excerpt": "粉丝投稿，面试还是以考察场景题为主，近期面试过的应该都发现其实问得题目都大差不差，只要针对一些常考题目，结合项目知识进行拆解背记，面试真的不算难！面试用的题库放在后面了，大家可以看看参考一下。"
-    }
+      "excerpt": "京东Java后端offer下来了！说一下面试强度\",",
+      "line": 514,
+      "locator": "artifact-line:514#offset:30-56;blob:ce8805fdd6ee93aa32527a923d1c0cc588910aad",
+      "semantic_excerpt": "京东Java后端offer下来了！说一下面试强度\n粉丝投稿，面试还是以考察场景题为主，近期面试过的应该都发现其实问得题目都大差不差，只要针对一些常考题目，结合项目知识进行拆解背记，面试真的不算难！面试用的题库放在后面了，大家可以看看参考一下。"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_detail/68e236ca0000000003038ade.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "d5b997fac44cd022f25d4576eba1372dde5d69e6",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 396712,
+        "content_sha256": "7040cc82dcfcaf29b67112fae21ab48c185692228caa559c63d7e052a14c7ef3",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "京东Java后端offer下来了！说一下面试强度 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-201;blob:d5b997fac44cd022f25d4576eba1372dde5d69e6",
+          "semantic_excerpt": "京东Java后端offer下来了！说一下面试强度\n粉丝投稿，面试还是以考察场景题为主，近期面试过的应该都发现其实问得题目都大差不差，只要针对一些常考题目，结合项目知识进行拆解背记，面试真的不算难！面试用的题库放在后面了，大家可以看看参考一下。"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68e236ca0000000003038ade.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "ce8805fdd6ee93aa32527a923d1c0cc588910aad",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 29782,
+        "content_sha256": "ce1f09961dc040474e6e90b6f329afdc9a9940f843285d1103b7a3487ad2e2b5",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "京东Java后端offer下来了！说一下面试强度\",",
+          "line": 514,
+          "locator": "artifact-line:514#offset:30-56;blob:ce8805fdd6ee93aa32527a923d1c0cc588910aad",
+          "semantic_excerpt": "京东Java后端offer下来了！说一下面试强度\n粉丝投稿，面试还是以考察场景题为主，近期面试过的应该都发现其实问得题目都大差不差，只要针对一些常考题目，结合项目知识进行拆解背记，面试真的不算难！面试用的题库放在后面了，大家可以看看参考一下。"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/68e236ca0000000003038ade.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "d5b997fac44cd022f25d4576eba1372dde5d69e6",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 396712,
+      "content_sha256": "7040cc82dcfcaf29b67112fae21ab48c185692228caa559c63d7e052a14c7ef3",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "京东Java后端offer下来了！说一下面试强度 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-201;blob:d5b997fac44cd022f25d4576eba1372dde5d69e6",
+        "semantic_excerpt": "京东Java后端offer下来了！说一下面试强度\n粉丝投稿，面试还是以考察场景题为主，近期面试过的应该都发现其实问得题目都大差不差，只要针对一些常考题目，结合项目知识进行拆解背记，面试真的不算难！面试用的题库放在后面了，大家可以看看参考一下。"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68e236ca0000000003038ade.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "ce8805fdd6ee93aa32527a923d1c0cc588910aad",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 29782,
+      "content_sha256": "ce1f09961dc040474e6e90b6f329afdc9a9940f843285d1103b7a3487ad2e2b5",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "京东Java后端offer下来了！说一下面试强度\",",
+        "line": 514,
+        "locator": "artifact-line:514#offset:30-56;blob:ce8805fdd6ee93aa32527a923d1c0cc588910aad",
+        "semantic_excerpt": "京东Java后端offer下来了！说一下面试强度\n粉丝投稿，面试还是以考察场景题为主，近期面试过的应该都发现其实问得题目都大差不差，只要针对一些常考题目，结合项目知识进行拆解背记，面试真的不算难！面试用的题库放在后面了，大家可以看看参考一下。"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -69,8 +139,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source is generic advice or aggregated/summarized material without a bounded candidate interview event; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is an explicit question bank or job advertisement rather than a candidate interview event."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -84,11 +154,12 @@
     }
   ],
   "limitations": [
-    "Exact Source is generic advice or aggregated/summarized material without a bounded candidate interview event; retain pending.",
+    "Exact Source is an explicit question bank or job advertisement rather than a candidate interview event.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "3849ee826d8b4632f16029966bb72c1f60d453b2fdc43ab609fb700b31555361"
+  "evidence_sha256": "047f1689b5bb923a017dd755bd01f69a004c942efdc922f20182dd8222096fb9"
 }

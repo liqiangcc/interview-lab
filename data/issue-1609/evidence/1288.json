@@ -7,33 +7,46 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "fa5559daf1e645e9cd82a502026372f67200d018c3c913bbe7f869f3a6f16bdb",
-  "disposition": "blocked",
-  "rationale": "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+  "disposition": "single-interview",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
-      "no-first-person-event",
-      "no-candidate-event-evidence"
+      "no-first-person-event"
     ],
     "questions": 0,
     "has_first_person_event": false,
     "has_explicit_candidate_event": false,
-    "has_bounded_event": false,
-    "has_detailed_event": false,
-    "has_completed_event_evidence": false,
-    "has_structured_candidate_event": false,
+    "has_bounded_event": true,
+    "has_detailed_event": true,
+    "has_completed_event_evidence": true,
+    "has_structured_candidate_event": true,
     "generic_advice_or_aggregated": false,
     "scheduled_only": false,
     "question_only": false,
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "alibaba-process",
+        "anchor": "阿里",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-165;blob:9d17f903bae6b54db937245db1c1b2b48f98eea5",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:阿里",
+        "source_ref": "liqiangcc/xhs:note_detail/68c15805000000001c00cb28.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68c15805000000001c00cb28.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -42,13 +55,108 @@
     "provenance": "source_projection",
     "byte_size": 335,
     "content_sha256": "e467de94f9c01433b560d321af2abe0f3472f671aa4abe2d33150fa8e069120a",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "面试消息是直接发到邮箱的，没有hr电话联系",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "面试消息是直接发到邮箱的，没有hr电话联系\n在约定时间准时上线后对方是不在线的\n十分钟还不见人打算按照邮箱的联系方式打电话问问\n是座机电话，输入转拨号码后是忙音的\n知道秋招环境不好你们不缺人，但也不至于溜人玩吧\n[生气R]不缺人可以不面"
-    }
+      "locator": "artifact-line:1#offset:0-21;blob:e95b53538513c332948d38d5e73a9efdfa581e11",
+      "semantic_excerpt": "阿里面试官是不是有点太不尊重人了\n面试消息是直接发到邮箱的，没有hr电话联系\n在约定时间准时上线后对方是不在线的\n十分钟还不见人打算按照邮箱的联系方式打电话问问\n是座机电话，输入转拨号码后是忙音的\n知道秋招环境不好你们不缺人，但也不至于溜人玩吧\n[生气R]不缺人可以不面"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68c15805000000001c00cb28.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "e95b53538513c332948d38d5e73a9efdfa581e11",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 335,
+        "content_sha256": "e467de94f9c01433b560d321af2abe0f3472f671aa4abe2d33150fa8e069120a",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "面试消息是直接发到邮箱的，没有hr电话联系",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-21;blob:e95b53538513c332948d38d5e73a9efdfa581e11",
+          "semantic_excerpt": "阿里面试官是不是有点太不尊重人了\n面试消息是直接发到邮箱的，没有hr电话联系\n在约定时间准时上线后对方是不在线的\n十分钟还不见人打算按照邮箱的联系方式打电话问问\n是座机电话，输入转拨号码后是忙音的\n知道秋招环境不好你们不缺人，但也不至于溜人玩吧\n[生气R]不缺人可以不面"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68c15805000000001c00cb28.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "9d17f903bae6b54db937245db1c1b2b48f98eea5",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 385279,
+        "content_sha256": "7250230d8f1a22c93e819ec6703521984f163ac6461a394dca613c5151ea6e50",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "阿里面试官是不是有点太不尊重人了 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-193;blob:9d17f903bae6b54db937245db1c1b2b48f98eea5",
+          "semantic_excerpt": "阿里面试官是不是有点太不尊重人了\n面试消息是直接发到邮箱的，没有hr电话联系\n在约定时间准时上线后对方是不在线的\n十分钟还不见人打算按照邮箱的联系方式打电话问问\n是座机电话，输入转拨号码后是忙音的\n知道秋招环境不好你们不缺人，但也不至于溜人玩吧\n[生气R]不缺人可以不面"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68c15805000000001c00cb28.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "9841e6e4cb791646e5cbffece8838d7461502985",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 20006,
+        "content_sha256": "34dd41dd7d06aa742e633a60a8f09d63494c47802e8eaa543f5f57f6235853d5",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "阿里面试官是不是有点太不尊重人了\",",
+          "line": 543,
+          "locator": "artifact-line:543#offset:30-48;blob:9841e6e4cb791646e5cbffece8838d7461502985",
+          "semantic_excerpt": "阿里面试官是不是有点太不尊重人了\n面试消息是直接发到邮箱的，没有hr电话联系\n在约定时间准时上线后对方是不在线的\n十分钟还不见人打算按照邮箱的联系方式打电话问问\n是座机电话，输入转拨号码后是忙音的\n知道秋招环境不好你们不缺人，但也不至于溜人玩吧\n[生气R]不缺人可以不面"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68c15805000000001c00cb28.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "e95b53538513c332948d38d5e73a9efdfa581e11",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 335,
+      "content_sha256": "e467de94f9c01433b560d321af2abe0f3472f671aa4abe2d33150fa8e069120a",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "面试消息是直接发到邮箱的，没有hr电话联系",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-21;blob:e95b53538513c332948d38d5e73a9efdfa581e11",
+        "semantic_excerpt": "阿里面试官是不是有点太不尊重人了\n面试消息是直接发到邮箱的，没有hr电话联系\n在约定时间准时上线后对方是不在线的\n十分钟还不见人打算按照邮箱的联系方式打电话问问\n是座机电话，输入转拨号码后是忙音的\n知道秋招环境不好你们不缺人，但也不至于溜人玩吧\n[生气R]不缺人可以不面"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68c15805000000001c00cb28.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "9d17f903bae6b54db937245db1c1b2b48f98eea5",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 385279,
+      "content_sha256": "7250230d8f1a22c93e819ec6703521984f163ac6461a394dca613c5151ea6e50",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "阿里面试官是不是有点太不尊重人了 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-193;blob:9d17f903bae6b54db937245db1c1b2b48f98eea5",
+        "semantic_excerpt": "阿里面试官是不是有点太不尊重人了\n面试消息是直接发到邮箱的，没有hr电话联系\n在约定时间准时上线后对方是不在线的\n十分钟还不见人打算按照邮箱的联系方式打电话问问\n是座机电话，输入转拨号码后是忙音的\n知道秋招环境不好你们不缺人，但也不至于溜人玩吧\n[生气R]不缺人可以不面"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68c15805000000001c00cb28.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "9841e6e4cb791646e5cbffece8838d7461502985",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 20006,
+      "content_sha256": "34dd41dd7d06aa742e633a60a8f09d63494c47802e8eaa543f5f57f6235853d5",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "阿里面试官是不是有点太不尊重人了\",",
+        "line": 543,
+        "locator": "artifact-line:543#offset:30-48;blob:9841e6e4cb791646e5cbffece8838d7461502985",
+        "semantic_excerpt": "阿里面试官是不是有点太不尊重人了\n面试消息是直接发到邮箱的，没有hr电话联系\n在约定时间准时上线后对方是不在线的\n十分钟还不见人打算按照邮箱的联系方式打电话问问\n是座机电话，输入转拨号码后是忙音的\n知道秋招环境不好你们不缺人，但也不至于溜人玩吧\n[生气R]不缺人可以不面"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -67,8 +175,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -82,11 +190,12 @@
     }
   ],
   "limitations": [
-    "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "7ac5208528bf3cdd9067c809d2e2c7b2f461cd2f5537ac8e83cb6929fbe5ce9d"
+  "evidence_sha256": "a0cfb1b9775abe8154a975d3f8c6ab4be472430f66153a45b2ca85d0b4ba77ec"
 }

@@ -7,15 +7,12 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "a0d1032f5c7d413e07a295216db7eaddf4f158ee8ad3e3af1ac3810f4a6f6230",
-  "disposition": "blocked",
-  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "disposition": "single-interview",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
-      "question-list-only",
-      "no-first-person-event",
-      "question-only",
-      "no-candidate-event-evidence"
+      "no-first-person-event"
     ],
     "questions": 13,
     "has_first_person_event": false,
@@ -23,19 +20,33 @@
     "has_bounded_event": true,
     "has_detailed_event": true,
     "has_completed_event_evidence": true,
-    "has_structured_candidate_event": false,
+    "has_structured_candidate_event": true,
     "generic_advice_or_aggregated": false,
     "scheduled_only": false,
-    "question_only": true,
+    "question_only": false,
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
-    "only_question_list": true,
+    "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "bytedance-process",
+        "anchor": "字节",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-165;blob:8576a5372b46198b1d9c2caf3976a1f45e53b1f3",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:字节",
+        "source_ref": "liqiangcc/xhs:note_detail/68e85cc500000000030346f2.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 2,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68e85cc500000000030346f2.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -44,13 +55,78 @@
     "provenance": "source_projection",
     "byte_size": 22536,
     "content_sha256": "6875c0f5972caa01ad362d86d84cb38cb28b7cb57cd9b5f6b9f202bd84f02b85",
+    "cache_status": "not-applicable",
     "excerpt": {
-      "excerpt": "\"global\": {",
-      "line": 2,
-      "locator": "artifact-line:2",
-      "semantic_excerpt": "⏰时长：1h\n1. 自我介绍\n2. 实习经历 难点\n3. 数据倾斜\n4. CTE的执行计划\n5. spark stage怎么划分\n6. 什么算子会触发宽依赖\n7. hive内部表和外部表区别\n8. HDFS小文件过多会有什么问题\n9. 对数仓分层的理解\n10. 数仓业务域和主题域的区别\n手撕：\n1. sql：查询某段时间借书的uid\n2. sql：查询至少连续两天登录的用户\n3. 算法：有序重复数组返回n出现的次数"
-    }
+      "excerpt": "字节数开一面\",",
+      "line": 597,
+      "locator": "artifact-line:597#offset:30-38;blob:3e2c0948542c977033c50fe80939bb2c7d134d84",
+      "semantic_excerpt": "字节数开一面\n⏰时长：1h\n1. 自我介绍\n2. 实习经历 难点\n3. 数据倾斜\n4. CTE的执行计划\n5. spark stage怎么划分\n6. 什么算子会触发宽依赖\n7. hive内部表和外部表区别\n8. HDFS小文件过多会有什么问题\n9. 对数仓分层的理解\n10. 数仓业务域和主题域的区别\n手撕：\n1. sql：查询某段时间借书的uid\n2. sql：查询至少连续两天登录的用户\n3. 算法：有序重复数组返回n出现的次数"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_detail/68e85cc500000000030346f2.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "8576a5372b46198b1d9c2caf3976a1f45e53b1f3",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 389518,
+        "content_sha256": "371cc2e969e8d11d6ec9a103a324dd5badf2e864dc114d440d601338f2f78ba4",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "字节数开一面 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-183;blob:8576a5372b46198b1d9c2caf3976a1f45e53b1f3",
+          "semantic_excerpt": "字节数开一面\n⏰时长：1h\n1. 自我介绍\n2. 实习经历 难点\n3. 数据倾斜\n4. CTE的执行计划\n5. spark stage怎么划分\n6. 什么算子会触发宽依赖\n7. hive内部表和外部表区别\n8. HDFS小文件过多会有什么问题\n9. 对数仓分层的理解\n10. 数仓业务域和主题域的区别\n手撕：\n1. sql：查询某段时间借书的uid\n2. sql：查询至少连续两天登录的用户\n3. 算法：有序重复数组返回n出现的次数"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68e85cc500000000030346f2.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "3e2c0948542c977033c50fe80939bb2c7d134d84",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 22536,
+        "content_sha256": "6875c0f5972caa01ad362d86d84cb38cb28b7cb57cd9b5f6b9f202bd84f02b85",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "字节数开一面\",",
+          "line": 597,
+          "locator": "artifact-line:597#offset:30-38;blob:3e2c0948542c977033c50fe80939bb2c7d134d84",
+          "semantic_excerpt": "字节数开一面\n⏰时长：1h\n1. 自我介绍\n2. 实习经历 难点\n3. 数据倾斜\n4. CTE的执行计划\n5. spark stage怎么划分\n6. 什么算子会触发宽依赖\n7. hive内部表和外部表区别\n8. HDFS小文件过多会有什么问题\n9. 对数仓分层的理解\n10. 数仓业务域和主题域的区别\n手撕：\n1. sql：查询某段时间借书的uid\n2. sql：查询至少连续两天登录的用户\n3. 算法：有序重复数组返回n出现的次数"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/68e85cc500000000030346f2.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "8576a5372b46198b1d9c2caf3976a1f45e53b1f3",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 389518,
+      "content_sha256": "371cc2e969e8d11d6ec9a103a324dd5badf2e864dc114d440d601338f2f78ba4",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "字节数开一面 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-183;blob:8576a5372b46198b1d9c2caf3976a1f45e53b1f3",
+        "semantic_excerpt": "字节数开一面\n⏰时长：1h\n1. 自我介绍\n2. 实习经历 难点\n3. 数据倾斜\n4. CTE的执行计划\n5. spark stage怎么划分\n6. 什么算子会触发宽依赖\n7. hive内部表和外部表区别\n8. HDFS小文件过多会有什么问题\n9. 对数仓分层的理解\n10. 数仓业务域和主题域的区别\n手撕：\n1. sql：查询某段时间借书的uid\n2. sql：查询至少连续两天登录的用户\n3. 算法：有序重复数组返回n出现的次数"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68e85cc500000000030346f2.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "3e2c0948542c977033c50fe80939bb2c7d134d84",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 22536,
+      "content_sha256": "6875c0f5972caa01ad362d86d84cb38cb28b7cb57cd9b5f6b9f202bd84f02b85",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "字节数开一面\",",
+        "line": 597,
+        "locator": "artifact-line:597#offset:30-38;blob:3e2c0948542c977033c50fe80939bb2c7d134d84",
+        "semantic_excerpt": "字节数开一面\n⏰时长：1h\n1. 自我介绍\n2. 实习经历 难点\n3. 数据倾斜\n4. CTE的执行计划\n5. spark stage怎么划分\n6. 什么算子会触发宽依赖\n7. hive内部表和外部表区别\n8. HDFS小文件过多会有什么问题\n9. 对数仓分层的理解\n10. 数仓业务域和主题域的区别\n手撕：\n1. sql：查询某段时间借书的uid\n2. sql：查询至少连续两天登录的用户\n3. 算法：有序重复数组返回n出现的次数"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -69,8 +145,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -84,11 +160,12 @@
     }
   ],
   "limitations": [
-    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "aafd5a0cb67e1f6a1e42024c553168039ed71e9cca3c98ba3ba34188daba210c"
+  "evidence_sha256": "89bee7de6f66a341c8336ad6bb0660f19a89cb16626a22766b906c341952aced"
 }

@@ -1,8 +1,10 @@
 # Issue #1609 Boundary D batch
 
-本批次严格限定为当前 live baseline 中的 `#1139–#1508`：同时具备
-`type:source-note`、`status:captured`、`boundary:pending` 的 366 个
-SourceNote。固定来源为 `liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437`。
+本批次严格限定为当前 live baseline 中的 `#1139–#1508`：精确读取该区间的
+370 个编号，只将当前仍具备 `type:source-note`、`status:captured`、
+`boundary:pending` 的 238 个 SourceNote 纳入本次 selection；其余 132 个排除，
+不再进入本次 evidence/request。固定来源为
+`liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437`。
 
 ## 只读产物
 
@@ -42,10 +44,13 @@ snapshot；在线运行默认从固定 commit 的 `raw.githubusercontent.com` �
 
 若存在 `/tmp/xhs-note-desc-cache`，producer 会按同一 external_id 精确查找
 `note_desc/<external_id>.txt`；只有非空、byte length 和 Git blob SHA 都匹配
-冻结 manifest 的文件才算 cache hit。当前本批次为 7 hit、239 miss、120
+冻结 manifest 的文件才算 cache hit。当前本批次为 7 hit、161 miss、70
 not-applicable；miss/不合格缓存会回退已取得的 source snapshot 或固定 ref 网络
 读取，不会因为网络抖动直接改变 disposition。每项状态写入 ambiguity audit，
-便于复现本次读取路径。
+便于复现本次读取路径。full-artifact replay 对每个入选 SourceNote 都读取并独立
+校验了可用的 `note_desc`、`note_detail.html` 和 `note_json`（当前分别为 168、
+238、238 个文件；每个 artifact 记录 ref、blob SHA、byte length、content SHA、
+cache status 及精确 locator/excerpt）。
 
 重算完整 canonical digest：
 
@@ -62,74 +67,80 @@ node scripts/issue-1609-boundary-batch.js \
   --output data/issue-1609/canonical-digest.json
 ```
 
-冻结器按 50 个 issue 分块发出精确编号的 GraphQL 只读查询，避免单个大查询
-造成超时。当前工作会话曾对该只读重放做 90 秒超时审计；GitHub API 未返回
-结果、未生成替代清单，也未发生任何写操作。已提交的清单仍是本批次唯一冻结
-输入；若 fresh freeze 无法完整返回，必须保持 fail closed。
+冻结器按 50 个 issue 分块发出精确编号的 GraphQL 只读查询，并对 TLS/EOF/超时
+等 transient read 做最多 5 次有界重试；不合格的最终读取保持 fail closed，且
+不会把网络错误伪装成 Source 证据。此次重放有一次 TLS timeout，重试后取得完整
+区间；未发生任何写操作。selection manifest 是本批次唯一冻结输入。
 
 ## Ambiguity audit
 
-`data/issue-1609/ambiguity-audit.json` 对 366 条逐条记录以下 flags 及对应
+`data/issue-1609/ambiguity-audit.json` 对当前 238 条逐条记录以下 flags 及对应
 issue number：`multi-company-or-process`、`question-list-only`、`question-only`、
 `outcome-or-offer-only`、`no-first-person-event`、`no-candidate-event-evidence`、
 `generic-question-bank-or-job-ad`、`generic-advice-or-aggregated`、
 `scheduled-only`、`job-or-title-only` 和 `non-interview-format`。规则是：
 
-当前 flag counts 为：multi-company/process 4、question-list-only 104、
-question-only 117、outcome/offer-only 18、no-first-person-event 291、
-no-candidate-event-evidence 232、generic question-bank/job-ad 15、
-generic-advice-or-aggregated 23、scheduled-only 6、job/title-only 1（#1200）、
-non-interview-format 5。完整 issue number
-列表在 audit JSON 的 `flag_issue_numbers` 中。
+当前 flag counts 为：multi-company/process 3、question-list-only 45、
+question-only 65、outcome/offer-only 23、no-first-person-event 216、
+no-candidate-event-evidence 177、generic question-bank/job-ad 16、
+generic-advice-or-aggregated 24、scheduled-only 2、job/title-only 1（#1200）、
+non-interview-format 4。完整 issue number 列表在 audit JSON 的
+`flag_issue_numbers` 中。
 
 - 只有 Source 明确记录一个已完成的 bounded candidate event，并有结构化过程/问答
   证据，才能得到 `single-interview`；单一流程中的一面/二面/三面仍是一个 case。
 - 多个独立流程若各有可定位的详细 Source 段落，才产生稳定 `case_key` 和唯一
   locator 的 `multi-interview`；否则 `blocked`。
-- 通用建议/汇总、预约/邀请、只有题目列表、只有结果/offer、仅职位元数据、缺少
-  事件边界或候选人实际过程证据时统一保持 `blocked`；不能用 round、时长或问题
-  清单单独升级边界。
+- 通用总结/汇总、只有题目列表、只有结果/offer、缺少事件边界或候选人实际过程
+  证据时保持 `blocked`；不能用 round、时长或问题清单单独升级边界。明确的题库、
+  岗位广告、预约/邀约、笔试格式或面试官视角则为 `not-interview`，因为 Source
+  明确指向非候选人面试事件。
 - NFKC 只用于识别兼容字符，不授权事件边界；只有岗位、轮次、时长、base 等
   标题元数据的 #1200 标为 `blocked`，因为没有候选人实际经历、问答或过程。
 
 本轮重点复核结果：#1141（多公司社招总结）、#1267（多公司但仅进度/结果）、
-#1447（多家公司累计内容）均为 `blocked`；#1452 有 OPPO、得物、贝壳找房
-三个独立且各自带问题段落的 Source 区块，记录为 `multi-interview`，case keys
-分别为 `dewuu-process`、`ke-house-process`、`oppo-process`，locator 均为 exact
-artifact 上的唯一 `artifact-line:<line>#offset:<start>-<end>`。题库/岗位广告、
-建议/汇总、预约、仅题目、仅结果和无事件证据均保持 `blocked`。
+#1447（多家公司累计内容）均为 `blocked`。#1452 已不再属于当前 pending
+selection，因 live boundary 已不再是 pending 而排除；它不会被本次重新申请。
+题库/岗位广告、预约/邀约和笔试等明确非面试格式为 `not-interview`；建议/汇总、
+仅题目、仅结果和无事件证据保持 `blocked`。
 
-正式 staged request 严格通过 `validateTransitionRequest`：使用
+本次 full-artifact 复核得到 54 个 `single-interview` candidate、0 个
+`multi-interview`、13 个 `not-interview` 和 171 个 `blocked`；其中 67 条生成了
+schema-valid staged request。没有独立可定位的多公司流程达到 multi gate，故 multi
+数为 0。blocked 项不生成伪 terminal request。producer 仍以
+`validateTransitionRequest`
+校验任何未来可生成的 request，contract 使用
 `source-note-boundary-review-transition.v1/v2`、`transition_id`、固定
 `reviewed_at`、`reviewer_kind`、`review_evidence` placeholder、
 `expected_manifest_sha256=null` 和固定 source ref；v2 的每个 case 仅含
 `case_key` 与 `evidence:[{ref,locator}]`。placeholder 不是 live comment，故
 不能被 planner 的 live evidence gate 通过。`blocked` 不是现有 transition
-decision，故 238 项不生成伪 terminal request，只在逐条 evidence/audit/receipt
+decision，故当前 238 项不生成伪 terminal request，只在逐条 evidence/audit/receipt
 中保留 `transition_request_staged=false`。
 
 ## 当前结果
 
 | 项目 | 数值 |
 |---|---:|
-| frozen selection | 366 |
-| `single-interview` candidate | 127 |
-| `multi-interview` candidate | 1 (3 cases) |
-| `not-interview` candidate | 0 |
-| blocked / pending | 238 |
-| schema-valid staged requests | 128 |
+| frozen range | 370 issue numbers read |
+| current pending selection | 238 |
+| `single-interview` candidate | 54 |
+| `multi-interview` candidate | 0 |
+| `not-interview` candidate | 13 |
+| blocked / pending | 171 |
+| schema-valid staged requests | 67 |
 | mutation attempted | 0 |
 | `possibly_performed` | 0 |
 
 完整 digest 见 `data/issue-1609/canonical-digest.json`：
 
 ```text
-selection_sha256: 500bb51557ffed8898caed61faf7bceacff5b25b3d7261b1f49b3ab9f4fc3eb8
-dry_run_sha256: 2af049db37655c30f397382d1d0fe76be5f4780fed5f68970b2502d17abdf31d
-canonical_digest_sha256: dbb313ea57f03bc8bbfd6ffbf0c32c74bc4008a3c2dcf216d1c8d477dc3f2059
+selection_sha256: 240c3c83c248c83f9cb876298dab35fedabc0cec9165cc28bbdc024a990dbdea
+dry_run_sha256: 2a85d237a282cf211a75bc26a7c71174db163dfcaa6178820b22efbc0fef4dc5
+canonical_digest_sha256: e8efe9b48005a2dc14d21d11baf161b70f108ad816323077ce78d207463a489f
 ```
 
-证据不足的 238 项保持 blocked/pending；尤其是空/`null` readable projection、
+证据不足的 171 项保持 blocked/pending；尤其是空/`null` readable projection、
 只有来源标签或不能证明有界事件的内容，未因标题、hashtag、Issue number 或
 Derived 数据而升级。`source_evidence` 只引用 Raw 或 source projection，未把
 Raw 覆盖为 Derived，也未创建 InterviewNote、source-ready、InterviewContext 或

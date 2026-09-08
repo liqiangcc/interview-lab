@@ -28,12 +28,26 @@
     "outcome_signal": true,
     "resource_signal": false,
     "aggregated_text": true,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "tencent-process",
+        "anchor": "腾讯",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-165;blob:cc74414e33ee31254af16cac1f30a7d9c0a9ef35",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:腾讯",
+        "source_ref": "liqiangcc/xhs:note_detail/68e3a92f00000000040072eb.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 2,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68e3a92f00000000040072eb.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -42,13 +56,78 @@
     "provenance": "source_projection",
     "byte_size": 33657,
     "content_sha256": "3d537b901d3015c5090f8e2af781396096e0819764d2881a0aa8de436a99801b",
+    "cache_status": "not-applicable",
     "excerpt": {
-      "excerpt": "\"desc\": \"粉丝投稿，双非本科+3年电商后端经验，面微信支付方向，3轮技术面共3小时，全贴高并发场景。一面聊红包发放架构，我说Redis+Lua+Kafka，被追问“100万QPS下Redis分片怎么扩”，补一致性哈希+预分片方案才过关。\\n二面给支付交易一致性场景，要保证扣款、到账、账单原子性，我提TCC+本地消息表，又被问“Confirm阶段失败怎么重试”，答幂等设计+定时补偿才过。\\n三面深挖分布式锁实现，从Redisson原理到锁竞争优化抠细节，最后考Flink实时计算，让设计用户支付行为分析窗口，靠项目里的流处理经验撑到最后。HR面聊了职业规划，10天后收到Offer。\\n面试经验和答案可以分享#java面试[话题]# #后端开发[话题]# #互联网大厂[话题]# #java[话题]# #求职[话题]# #计算机[话题]# #编程[话题]# #面试[话题]# #java面试题[话题]# #腾讯[话题]# #程序员[话题]# #爱上工作的瞬间[话题]#\",",
-      "line": 499,
-      "locator": "artifact-line:499",
-      "semantic_excerpt": "粉丝投稿，双非本科+3年电商后端经验，面微信支付方向，3轮技术面共3小时，全贴高并发场景。一面聊红包发放架构，我说Redis+Lua+Kafka，被追问“100万QPS下Redis分片怎么扩”，补一致性哈希+预分片方案才过关。\n二面给支付交易一致性场景，要保证扣款、到账、账单原子性，我提TCC+本地消息表，又被问“Confirm阶段失败怎么重试”，答幂等设计+定时补偿才过。\n三面深挖分布式锁实现，从Redisson原理到锁竞争优化抠细节，最后考Flink实时计算，让设计用户支付行为分析窗口，靠项目里的流处理经验撑到最后。HR面聊了职业规划，10天后收到Offer。\n面试经验和答案可以分享"
-    }
+      "excerpt": "腾讯Java开发二面 28k后端面试全程记录\",",
+      "line": 569,
+      "locator": "artifact-line:569#offset:30-54;blob:d6e108fb5bc919b140e46e82ed193d8c040d83e9",
+      "semantic_excerpt": "腾讯Java开发二面 28k后端面试全程记录\n粉丝投稿，双非本科+3年电商后端经验，面微信支付方向，3轮技术面共3小时，全贴高并发场景。一面聊红包发放架构，我说Redis+Lua+Kafka，被追问“100万QPS下Redis分片怎么扩”，补一致性哈希+预分片方案才过关。\n二面给支付交易一致性场景，要保证扣款、到账、账单原子性，我提TCC+本地消息表，又被问“Confirm阶段失败怎么重试”，答幂等设计+定时补偿才过。\n三面深挖分布式锁实现，从Redisson原理到锁竞争优化抠细节，最后考Flink实时计算，让设计用户支付行为分析窗口，靠项目里的流处理经验撑到最后。HR面聊了职业规划，10天后收到Offer。\n面试经验和答案可以分享"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_detail/68e3a92f00000000040072eb.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "cc74414e33ee31254af16cac1f30a7d9c0a9ef35",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 401528,
+        "content_sha256": "883dac5618d9a65d780beb9bf1d596e7c44881abfbc18da5f87cb19fc53951a6",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "腾讯Java开发二面 28k后端面试全程记录 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-199;blob:cc74414e33ee31254af16cac1f30a7d9c0a9ef35",
+          "semantic_excerpt": "腾讯Java开发二面 28k后端面试全程记录\n粉丝投稿，双非本科+3年电商后端经验，面微信支付方向，3轮技术面共3小时，全贴高并发场景。一面聊红包发放架构，我说Redis+Lua+Kafka，被追问“100万QPS下Redis分片怎么扩”，补一致性哈希+预分片方案才过关。\n二面给支付交易一致性场景，要保证扣款、到账、账单原子性，我提TCC+本地消息表，又被问“Confirm阶段失败怎么重试”，答幂等设计+定时补偿才过。\n三面深挖分布式锁实现，从Redisson原理到锁竞争优化抠细节，最后考Flink实时计算，让设计用户支付行为分析窗口，靠项目里的流处理经验撑到最后。HR面聊了职业规划，10天后收到Offer。\n面试经验和答案可以分享"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68e3a92f00000000040072eb.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "d6e108fb5bc919b140e46e82ed193d8c040d83e9",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 33657,
+        "content_sha256": "3d537b901d3015c5090f8e2af781396096e0819764d2881a0aa8de436a99801b",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "腾讯Java开发二面 28k后端面试全程记录\",",
+          "line": 569,
+          "locator": "artifact-line:569#offset:30-54;blob:d6e108fb5bc919b140e46e82ed193d8c040d83e9",
+          "semantic_excerpt": "腾讯Java开发二面 28k后端面试全程记录\n粉丝投稿，双非本科+3年电商后端经验，面微信支付方向，3轮技术面共3小时，全贴高并发场景。一面聊红包发放架构，我说Redis+Lua+Kafka，被追问“100万QPS下Redis分片怎么扩”，补一致性哈希+预分片方案才过关。\n二面给支付交易一致性场景，要保证扣款、到账、账单原子性，我提TCC+本地消息表，又被问“Confirm阶段失败怎么重试”，答幂等设计+定时补偿才过。\n三面深挖分布式锁实现，从Redisson原理到锁竞争优化抠细节，最后考Flink实时计算，让设计用户支付行为分析窗口，靠项目里的流处理经验撑到最后。HR面聊了职业规划，10天后收到Offer。\n面试经验和答案可以分享"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/68e3a92f00000000040072eb.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "cc74414e33ee31254af16cac1f30a7d9c0a9ef35",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 401528,
+      "content_sha256": "883dac5618d9a65d780beb9bf1d596e7c44881abfbc18da5f87cb19fc53951a6",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "腾讯Java开发二面 28k后端面试全程记录 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-199;blob:cc74414e33ee31254af16cac1f30a7d9c0a9ef35",
+        "semantic_excerpt": "腾讯Java开发二面 28k后端面试全程记录\n粉丝投稿，双非本科+3年电商后端经验，面微信支付方向，3轮技术面共3小时，全贴高并发场景。一面聊红包发放架构，我说Redis+Lua+Kafka，被追问“100万QPS下Redis分片怎么扩”，补一致性哈希+预分片方案才过关。\n二面给支付交易一致性场景，要保证扣款、到账、账单原子性，我提TCC+本地消息表，又被问“Confirm阶段失败怎么重试”，答幂等设计+定时补偿才过。\n三面深挖分布式锁实现，从Redisson原理到锁竞争优化抠细节，最后考Flink实时计算，让设计用户支付行为分析窗口，靠项目里的流处理经验撑到最后。HR面聊了职业规划，10天后收到Offer。\n面试经验和答案可以分享"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68e3a92f00000000040072eb.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "d6e108fb5bc919b140e46e82ed193d8c040d83e9",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 33657,
+      "content_sha256": "3d537b901d3015c5090f8e2af781396096e0819764d2881a0aa8de436a99801b",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "腾讯Java开发二面 28k后端面试全程记录\",",
+        "line": 569,
+        "locator": "artifact-line:569#offset:30-54;blob:d6e108fb5bc919b140e46e82ed193d8c040d83e9",
+        "semantic_excerpt": "腾讯Java开发二面 28k后端面试全程记录\n粉丝投稿，双非本科+3年电商后端经验，面微信支付方向，3轮技术面共3小时，全贴高并发场景。一面聊红包发放架构，我说Redis+Lua+Kafka，被追问“100万QPS下Redis分片怎么扩”，补一致性哈希+预分片方案才过关。\n二面给支付交易一致性场景，要保证扣款、到账、账单原子性，我提TCC+本地消息表，又被问“Confirm阶段失败怎么重试”，答幂等设计+定时补偿才过。\n三面深挖分布式锁实现，从Redisson原理到锁竞争优化抠细节，最后考Flink实时计算，让设计用户支付行为分析窗口，靠项目里的流处理经验撑到最后。HR面聊了职业规划，10天后收到Offer。\n面试经验和答案可以分享"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -83,10 +162,11 @@
   ],
   "limitations": [
     "Exact Source is generic advice or aggregated/summarized material without a bounded candidate interview event; retain pending.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "acb581d14d748ac3ddde0c12005497419bff1b8e4c0a0671e0e56deef3aa38f7"
+  "evidence_sha256": "fdbd678b2938de3504ece62a2b1472b3138145f2a70a510b38553d9e3c24d632"
 }

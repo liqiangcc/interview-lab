@@ -21,7 +21,7 @@
     "questions": 12,
     "has_first_person_event": false,
     "has_explicit_candidate_event": false,
-    "has_bounded_event": false,
+    "has_bounded_event": true,
     "has_detailed_event": false,
     "has_completed_event_evidence": true,
     "has_structured_candidate_event": false,
@@ -31,12 +31,26 @@
     "outcome_signal": true,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": true,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": true,
     "only_outcome": true,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "kuaishou-process",
+        "anchor": "快手",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-165;blob:5bba5d85179f3b71bdd95681ac0665d7a021d588",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:快手",
+        "source_ref": "liqiangcc/xhs:note_detail/68a70c22000000001d02cff5.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68a70c22000000001d02cff5.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -45,13 +59,108 @@
     "provenance": "source_projection",
     "byte_size": 1308,
     "content_sha256": "1f6d134a03368007a9b2387201848aeb7b552ca68245c530b6eedebb4a570079",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "攒人品了",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "攒人品了\n26min问答+12min算法\nJAVA\n1、反射的原理，应用场景，哪些场景不能使用反射？自定义一个注解需要定义哪些方面的信息\n2、线程的生命周期，各个状态之间的转变通过哪些语句？保证线程安全的方式及优缺点？ThreadLocal会导致什么问题？\n3、JAVA中的锁有几种方式？同步锁原理及申请流程、可重入锁原理及申请流程\n4、MYSQL事务的隔离级别，分别会导致什么问题？如何在MYSQL中查询隔离级别\n5、MYSQL主从同步机制\n6、Redis持久化机制、AOF文件重写、Redis宕机重启后，什么机制保证其快速恢复？\nSPRING\n1、IOC、AOP、bean的实例化流程。IOC中如何解决循环依赖\n项目\n1、使用过什么消息队列？怎么确保一个消息发送成功？\n2、介绍实习项目的背景、技术架构、负责的内容。使用了哪些中间件？\n3、怎么使用分布式锁？怎么设置锁的key，拿锁成功和拿锁失败对于下游业务的影响，怎么保证幂等性\n4、怎么设置限流参数，阈值等？\n5、在项目中做了什么优化手段，最终拿到了什么结果？\n算法题目\n二叉搜索树中第K小的数字"
-    }
+      "locator": "artifact-line:1#offset:0-4;blob:cc515ba9f139a008ddfc0feec110540432a090ee",
+      "semantic_excerpt": "快手后端一面面经\n攒人品了\n26min问答+12min算法\nJAVA\n1、反射的原理，应用场景，哪些场景不能使用反射？自定义一个注解需要定义哪些方面的信息\n2、线程的生命周期，各个状态之间的转变通过哪些语句？保证线程安全的方式及优缺点？ThreadLocal会导致什么问题？\n3、JAVA中的锁有几种方式？同步锁原理及申请流程、可重入锁原理及申请流程\n4、MYSQL事务的隔离级别，分别会导致什么问题？如何在MYSQL中查询隔离级别\n5、MYSQL主从同步机制\n6、Redis持久化机制、AOF文件重写、Redis宕机重启后，什么机制保证其快速恢复？\nSPRING\n1、IOC、AOP、bean的实例化流程。IOC中如何解决循环依赖\n项目\n1、使用过什么消息队列？怎么确保一个消息发送成功？\n2、介绍实习项目的背景、技术架构、负责的内容。使用了哪些中间件？\n3、怎么使用分布式锁？怎么设置锁的key，拿锁成功和拿锁失败对于下游业务的影响，怎么保证幂等性\n4、怎么设置限流参数，阈值等？\n5、在项目中做了什么优化手段，最终拿到了什么结果？\n算法题目\n二叉搜索树中第K小的数字"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68a70c22000000001d02cff5.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "cc515ba9f139a008ddfc0feec110540432a090ee",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 1308,
+        "content_sha256": "1f6d134a03368007a9b2387201848aeb7b552ca68245c530b6eedebb4a570079",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "攒人品了",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-4;blob:cc515ba9f139a008ddfc0feec110540432a090ee",
+          "semantic_excerpt": "快手后端一面面经\n攒人品了\n26min问答+12min算法\nJAVA\n1、反射的原理，应用场景，哪些场景不能使用反射？自定义一个注解需要定义哪些方面的信息\n2、线程的生命周期，各个状态之间的转变通过哪些语句？保证线程安全的方式及优缺点？ThreadLocal会导致什么问题？\n3、JAVA中的锁有几种方式？同步锁原理及申请流程、可重入锁原理及申请流程\n4、MYSQL事务的隔离级别，分别会导致什么问题？如何在MYSQL中查询隔离级别\n5、MYSQL主从同步机制\n6、Redis持久化机制、AOF文件重写、Redis宕机重启后，什么机制保证其快速恢复？\nSPRING\n1、IOC、AOP、bean的实例化流程。IOC中如何解决循环依赖\n项目\n1、使用过什么消息队列？怎么确保一个消息发送成功？\n2、介绍实习项目的背景、技术架构、负责的内容。使用了哪些中间件？\n3、怎么使用分布式锁？怎么设置锁的key，拿锁成功和拿锁失败对于下游业务的影响，怎么保证幂等性\n4、怎么设置限流参数，阈值等？\n5、在项目中做了什么优化手段，最终拿到了什么结果？\n算法题目\n二叉搜索树中第K小的数字"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68a70c22000000001d02cff5.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "5bba5d85179f3b71bdd95681ac0665d7a021d588",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 389563,
+        "content_sha256": "8b89db88096eea13c73e411b00a6b8277c6b7824611810f8024eda58a854ea06",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "快手后端一面面经 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-185;blob:5bba5d85179f3b71bdd95681ac0665d7a021d588",
+          "semantic_excerpt": "快手后端一面面经\n攒人品了\n26min问答+12min算法\nJAVA\n1、反射的原理，应用场景，哪些场景不能使用反射？自定义一个注解需要定义哪些方面的信息\n2、线程的生命周期，各个状态之间的转变通过哪些语句？保证线程安全的方式及优缺点？ThreadLocal会导致什么问题？\n3、JAVA中的锁有几种方式？同步锁原理及申请流程、可重入锁原理及申请流程\n4、MYSQL事务的隔离级别，分别会导致什么问题？如何在MYSQL中查询隔离级别\n5、MYSQL主从同步机制\n6、Redis持久化机制、AOF文件重写、Redis宕机重启后，什么机制保证其快速恢复？\nSPRING\n1、IOC、AOP、bean的实例化流程。IOC中如何解决循环依赖\n项目\n1、使用过什么消息队列？怎么确保一个消息发送成功？\n2、介绍实习项目的背景、技术架构、负责的内容。使用了哪些中间件？\n3、怎么使用分布式锁？怎么设置锁的key，拿锁成功和拿锁失败对于下游业务的影响，怎么保证幂等性\n4、怎么设置限流参数，阈值等？\n5、在项目中做了什么优化手段，最终拿到了什么结果？\n算法题目\n二叉搜索树中第K小的数字"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68a70c22000000001d02cff5.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "8b872201bafaa9ce1ceed79c1979cd67399a4d3a",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 22022,
+        "content_sha256": "d87ca9bd164329a7e22e2c5d2bae8b293cc2d366a83d9968622d1c02a9c5bc0d",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "快手后端一面面经\"",
+          "line": 571,
+          "locator": "artifact-line:571#offset:30-39;blob:8b872201bafaa9ce1ceed79c1979cd67399a4d3a",
+          "semantic_excerpt": "快手后端一面面经\n攒人品了\n26min问答+12min算法\nJAVA\n1、反射的原理，应用场景，哪些场景不能使用反射？自定义一个注解需要定义哪些方面的信息\n2、线程的生命周期，各个状态之间的转变通过哪些语句？保证线程安全的方式及优缺点？ThreadLocal会导致什么问题？\n3、JAVA中的锁有几种方式？同步锁原理及申请流程、可重入锁原理及申请流程\n4、MYSQL事务的隔离级别，分别会导致什么问题？如何在MYSQL中查询隔离级别\n5、MYSQL主从同步机制\n6、Redis持久化机制、AOF文件重写、Redis宕机重启后，什么机制保证其快速恢复？\nSPRING\n1、IOC、AOP、bean的实例化流程。IOC中如何解决循环依赖\n项目\n1、使用过什么消息队列？怎么确保一个消息发送成功？\n2、介绍实习项目的背景、技术架构、负责的内容。使用了哪些中间件？\n3、怎么使用分布式锁？怎么设置锁的key，拿锁成功和拿锁失败对于下游业务的影响，怎么保证幂等性\n4、怎么设置限流参数，阈值等？\n5、在项目中做了什么优化手段，最终拿到了什么结果？\n算法题目\n二叉搜索树中第K小的数字"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68a70c22000000001d02cff5.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "cc515ba9f139a008ddfc0feec110540432a090ee",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 1308,
+      "content_sha256": "1f6d134a03368007a9b2387201848aeb7b552ca68245c530b6eedebb4a570079",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "攒人品了",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-4;blob:cc515ba9f139a008ddfc0feec110540432a090ee",
+        "semantic_excerpt": "快手后端一面面经\n攒人品了\n26min问答+12min算法\nJAVA\n1、反射的原理，应用场景，哪些场景不能使用反射？自定义一个注解需要定义哪些方面的信息\n2、线程的生命周期，各个状态之间的转变通过哪些语句？保证线程安全的方式及优缺点？ThreadLocal会导致什么问题？\n3、JAVA中的锁有几种方式？同步锁原理及申请流程、可重入锁原理及申请流程\n4、MYSQL事务的隔离级别，分别会导致什么问题？如何在MYSQL中查询隔离级别\n5、MYSQL主从同步机制\n6、Redis持久化机制、AOF文件重写、Redis宕机重启后，什么机制保证其快速恢复？\nSPRING\n1、IOC、AOP、bean的实例化流程。IOC中如何解决循环依赖\n项目\n1、使用过什么消息队列？怎么确保一个消息发送成功？\n2、介绍实习项目的背景、技术架构、负责的内容。使用了哪些中间件？\n3、怎么使用分布式锁？怎么设置锁的key，拿锁成功和拿锁失败对于下游业务的影响，怎么保证幂等性\n4、怎么设置限流参数，阈值等？\n5、在项目中做了什么优化手段，最终拿到了什么结果？\n算法题目\n二叉搜索树中第K小的数字"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68a70c22000000001d02cff5.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "5bba5d85179f3b71bdd95681ac0665d7a021d588",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 389563,
+      "content_sha256": "8b89db88096eea13c73e411b00a6b8277c6b7824611810f8024eda58a854ea06",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "快手后端一面面经 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-185;blob:5bba5d85179f3b71bdd95681ac0665d7a021d588",
+        "semantic_excerpt": "快手后端一面面经\n攒人品了\n26min问答+12min算法\nJAVA\n1、反射的原理，应用场景，哪些场景不能使用反射？自定义一个注解需要定义哪些方面的信息\n2、线程的生命周期，各个状态之间的转变通过哪些语句？保证线程安全的方式及优缺点？ThreadLocal会导致什么问题？\n3、JAVA中的锁有几种方式？同步锁原理及申请流程、可重入锁原理及申请流程\n4、MYSQL事务的隔离级别，分别会导致什么问题？如何在MYSQL中查询隔离级别\n5、MYSQL主从同步机制\n6、Redis持久化机制、AOF文件重写、Redis宕机重启后，什么机制保证其快速恢复？\nSPRING\n1、IOC、AOP、bean的实例化流程。IOC中如何解决循环依赖\n项目\n1、使用过什么消息队列？怎么确保一个消息发送成功？\n2、介绍实习项目的背景、技术架构、负责的内容。使用了哪些中间件？\n3、怎么使用分布式锁？怎么设置锁的key，拿锁成功和拿锁失败对于下游业务的影响，怎么保证幂等性\n4、怎么设置限流参数，阈值等？\n5、在项目中做了什么优化手段，最终拿到了什么结果？\n算法题目\n二叉搜索树中第K小的数字"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68a70c22000000001d02cff5.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "8b872201bafaa9ce1ceed79c1979cd67399a4d3a",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 22022,
+      "content_sha256": "d87ca9bd164329a7e22e2c5d2bae8b293cc2d366a83d9968622d1c02a9c5bc0d",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "快手后端一面面经\"",
+        "line": 571,
+        "locator": "artifact-line:571#offset:30-39;blob:8b872201bafaa9ce1ceed79c1979cd67399a4d3a",
+        "semantic_excerpt": "快手后端一面面经\n攒人品了\n26min问答+12min算法\nJAVA\n1、反射的原理，应用场景，哪些场景不能使用反射？自定义一个注解需要定义哪些方面的信息\n2、线程的生命周期，各个状态之间的转变通过哪些语句？保证线程安全的方式及优缺点？ThreadLocal会导致什么问题？\n3、JAVA中的锁有几种方式？同步锁原理及申请流程、可重入锁原理及申请流程\n4、MYSQL事务的隔离级别，分别会导致什么问题？如何在MYSQL中查询隔离级别\n5、MYSQL主从同步机制\n6、Redis持久化机制、AOF文件重写、Redis宕机重启后，什么机制保证其快速恢复？\nSPRING\n1、IOC、AOP、bean的实例化流程。IOC中如何解决循环依赖\n项目\n1、使用过什么消息队列？怎么确保一个消息发送成功？\n2、介绍实习项目的背景、技术架构、负责的内容。使用了哪些中间件？\n3、怎么使用分布式锁？怎么设置锁的key，拿锁成功和拿锁失败对于下游业务的影响，怎么保证幂等性\n4、怎么设置限流参数，阈值等？\n5、在项目中做了什么优化手段，最终拿到了什么结果？\n算法题目\n二叉搜索树中第K小的数字"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -86,10 +195,11 @@
   ],
   "limitations": [
     "Exact Source provides only an interview outcome, offer, rejection, or result without a bounded candidate event; retain pending.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "2c5775a6ea814c4cbe63f96be0f460117ea093693baaab215c7e5447679af39b"
+  "evidence_sha256": "b21ecf798a060e75a6bf86ca770dc91ffb6c100229a4c0347359e674a99ed5a7"
 }

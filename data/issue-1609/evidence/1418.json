@@ -30,12 +30,26 @@
     "outcome_signal": true,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": true,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": true,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "didi-process",
+        "anchor": "滴滴",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-165;blob:cea5ee7cb721b4b137ec2e7513baf3b0ab557d12",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:滴滴",
+        "source_ref": "liqiangcc/xhs:note_detail/68da4876000000001101eebb.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 2,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68da4876000000001101eebb.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -44,13 +58,78 @@
     "provenance": "source_projection",
     "byte_size": 22529,
     "content_sha256": "af8df9b73f185e46a9b8f1a2866396876724ec6dddb2fe3c12b9b2c05f9ed6c8",
+    "cache_status": "not-applicable",
     "excerpt": {
-      "excerpt": "\"global\": {",
-      "line": 2,
-      "locator": "artifact-line:2",
-      "semantic_excerpt": "1.项目抢单逻辑怎么实现的\n2.redis geo怎么使用\n3.mysql和mongodb区别\n4.关系型数据库为啥叫做这样\n5.事务的隔离级别\n6.解释一下啊什么是脏读幻读不可重复读\n7.可重复读具体是啥\n8.hashmap具体说一下\n9.hashmap是线程安全的吗解释一下，currenthashmap\n10.手撕给你一个 32 位的有符号整数 x ，返回将 x 中的数字部分反转后的结果。\n如果反转后整数超过 32 位的有符号整数的范围 [−2^31, 2^31 − 1] ，就返回 0。\n假设环境不允许存储 64 位整数（有符号或无符号）。示例 1：输入：x = 123输出：321示例 2：输入：x = -123输出：-321示例 3：输入：x = 120输出：21"
-    }
+      "excerpt": "滴滴后端实习一面\",",
+      "line": 499,
+      "locator": "artifact-line:499#offset:30-40;blob:76fe60341e8a3dc4da0bb7e5c55f42ddadf78d88",
+      "semantic_excerpt": "滴滴后端实习一面\n1.项目抢单逻辑怎么实现的\n2.redis geo怎么使用\n3.mysql和mongodb区别\n4.关系型数据库为啥叫做这样\n5.事务的隔离级别\n6.解释一下啊什么是脏读幻读不可重复读\n7.可重复读具体是啥\n8.hashmap具体说一下\n9.hashmap是线程安全的吗解释一下，currenthashmap\n10.手撕给你一个 32 位的有符号整数 x ，返回将 x 中的数字部分反转后的结果。\n如果反转后整数超过 32 位的有符号整数的范围 [−2^31, 2^31 − 1] ，就返回 0。\n假设环境不允许存储 64 位整数（有符号或无符号）。示例 1：输入：x = 123输出：321示例 2：输入：x = -123输出：-321示例 3：输入：x = 120输出：21"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_detail/68da4876000000001101eebb.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "cea5ee7cb721b4b137ec2e7513baf3b0ab557d12",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 389867,
+        "content_sha256": "9f64ed99cb37b1c61b530bebcdbdcd1d477e40ebb1c6143157da68ed2b122c89",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "滴滴后端实习一面 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-185;blob:cea5ee7cb721b4b137ec2e7513baf3b0ab557d12",
+          "semantic_excerpt": "滴滴后端实习一面\n1.项目抢单逻辑怎么实现的\n2.redis geo怎么使用\n3.mysql和mongodb区别\n4.关系型数据库为啥叫做这样\n5.事务的隔离级别\n6.解释一下啊什么是脏读幻读不可重复读\n7.可重复读具体是啥\n8.hashmap具体说一下\n9.hashmap是线程安全的吗解释一下，currenthashmap\n10.手撕给你一个 32 位的有符号整数 x ，返回将 x 中的数字部分反转后的结果。\n如果反转后整数超过 32 位的有符号整数的范围 [−2^31, 2^31 − 1] ，就返回 0。\n假设环境不允许存储 64 位整数（有符号或无符号）。示例 1：输入：x = 123输出：321示例 2：输入：x = -123输出：-321示例 3：输入：x = 120输出：21"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68da4876000000001101eebb.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "76fe60341e8a3dc4da0bb7e5c55f42ddadf78d88",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 22529,
+        "content_sha256": "af8df9b73f185e46a9b8f1a2866396876724ec6dddb2fe3c12b9b2c05f9ed6c8",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "滴滴后端实习一面\",",
+          "line": 499,
+          "locator": "artifact-line:499#offset:30-40;blob:76fe60341e8a3dc4da0bb7e5c55f42ddadf78d88",
+          "semantic_excerpt": "滴滴后端实习一面\n1.项目抢单逻辑怎么实现的\n2.redis geo怎么使用\n3.mysql和mongodb区别\n4.关系型数据库为啥叫做这样\n5.事务的隔离级别\n6.解释一下啊什么是脏读幻读不可重复读\n7.可重复读具体是啥\n8.hashmap具体说一下\n9.hashmap是线程安全的吗解释一下，currenthashmap\n10.手撕给你一个 32 位的有符号整数 x ，返回将 x 中的数字部分反转后的结果。\n如果反转后整数超过 32 位的有符号整数的范围 [−2^31, 2^31 − 1] ，就返回 0。\n假设环境不允许存储 64 位整数（有符号或无符号）。示例 1：输入：x = 123输出：321示例 2：输入：x = -123输出：-321示例 3：输入：x = 120输出：21"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/68da4876000000001101eebb.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "cea5ee7cb721b4b137ec2e7513baf3b0ab557d12",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 389867,
+      "content_sha256": "9f64ed99cb37b1c61b530bebcdbdcd1d477e40ebb1c6143157da68ed2b122c89",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "滴滴后端实习一面 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-185;blob:cea5ee7cb721b4b137ec2e7513baf3b0ab557d12",
+        "semantic_excerpt": "滴滴后端实习一面\n1.项目抢单逻辑怎么实现的\n2.redis geo怎么使用\n3.mysql和mongodb区别\n4.关系型数据库为啥叫做这样\n5.事务的隔离级别\n6.解释一下啊什么是脏读幻读不可重复读\n7.可重复读具体是啥\n8.hashmap具体说一下\n9.hashmap是线程安全的吗解释一下，currenthashmap\n10.手撕给你一个 32 位的有符号整数 x ，返回将 x 中的数字部分反转后的结果。\n如果反转后整数超过 32 位的有符号整数的范围 [−2^31, 2^31 − 1] ，就返回 0。\n假设环境不允许存储 64 位整数（有符号或无符号）。示例 1：输入：x = 123输出：321示例 2：输入：x = -123输出：-321示例 3：输入：x = 120输出：21"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68da4876000000001101eebb.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "76fe60341e8a3dc4da0bb7e5c55f42ddadf78d88",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 22529,
+      "content_sha256": "af8df9b73f185e46a9b8f1a2866396876724ec6dddb2fe3c12b9b2c05f9ed6c8",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "滴滴后端实习一面\",",
+        "line": 499,
+        "locator": "artifact-line:499#offset:30-40;blob:76fe60341e8a3dc4da0bb7e5c55f42ddadf78d88",
+        "semantic_excerpt": "滴滴后端实习一面\n1.项目抢单逻辑怎么实现的\n2.redis geo怎么使用\n3.mysql和mongodb区别\n4.关系型数据库为啥叫做这样\n5.事务的隔离级别\n6.解释一下啊什么是脏读幻读不可重复读\n7.可重复读具体是啥\n8.hashmap具体说一下\n9.hashmap是线程安全的吗解释一下，currenthashmap\n10.手撕给你一个 32 位的有符号整数 x ，返回将 x 中的数字部分反转后的结果。\n如果反转后整数超过 32 位的有符号整数的范围 [−2^31, 2^31 − 1] ，就返回 0。\n假设环境不允许存储 64 位整数（有符号或无符号）。示例 1：输入：x = 123输出：321示例 2：输入：x = -123输出：-321示例 3：输入：x = 120输出：21"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -85,10 +164,11 @@
   ],
   "limitations": [
     "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "c324e494c514cd28dfcd0a3bc5c5a0320bd8fb17aa9398fa7e476578e5897814"
+  "evidence_sha256": "580c4e8592d133b2baa5f2b6e701e186c2caef477cadb4d6866b3f03e00fbc74"
 }

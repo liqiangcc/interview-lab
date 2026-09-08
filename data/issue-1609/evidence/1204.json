@@ -17,10 +17,10 @@
       "question-only",
       "no-candidate-event-evidence"
     ],
-    "questions": 17,
+    "questions": 18,
     "has_first_person_event": false,
     "has_explicit_candidate_event": false,
-    "has_bounded_event": false,
+    "has_bounded_event": true,
     "has_detailed_event": false,
     "has_completed_event_evidence": true,
     "has_structured_candidate_event": false,
@@ -30,12 +30,26 @@
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": true,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "bytedance-process",
+        "anchor": "字节",
+        "line": 1,
+        "locator": "artifact-line:24#offset:10-12;blob:822766ae96c5da1870f6591ecf3bd590b89b08e1",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:字节",
+        "source_ref": "liqiangcc/xhs:note_desc/68b124e8000000001b032114.txt@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b124e8000000001b032114.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -44,13 +58,108 @@
     "provenance": "source_projection",
     "byte_size": 1585,
     "content_sha256": "df82aa148db309cc5f5f7b720f624800fd7b78282dc823eb9603ec190cdff60d",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "实习：10min，没有细问",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "实习：10min，没有细问\nJava基础:\n1. 编程语言: 确认主要技术栈是Java。\n2. Java内存模型 (JMM): 要求解释JMM。\n3. 原子性保证: 追问在JMM中，原子性是如何保证的。\n4. 锁的使用场景: 询问不同锁（如乐观锁、悲观锁、ReentrantLock）的适用场景。\n数据库 (MySQL):\n5. 事务隔离级别: 考察MySQL的事务隔离级别。\n6. 索引结构: 询问MySQL主要使用什么索引结构（B+树）。\n7. Redo Log vs. Binlog: 要求辨析Redo Log和Binlog的区别。\n8. 自增ID连续性: 提问自增ID是否一定是连续的，以及在什么情况下会不连续。\n9. 慢查询排查: 给出一个场景题，如何排查和优化慢查询SQL。\n缓存 (Redis):\n10. Redis项目应用: 询问在哪一个项目中使用过Redis，以及具体做了什么。\n11. 分布式锁问题 (SETNX): 针对分布式锁，询问使用时可能会遇到什么问题。\n12. Redis单线程性能: 提问为什么Redis单线程模型速度还很快。\n计算机网络与操作系统:\n13. I/O模型: 要求讲解几种I/O模型的区别（特别是select, poll, epoll）。\n14. TCP握手与挥手: 询问为什么TCP是三次握手和四次挥手。\n15. 滑动窗口作用: 提问TCP滑动窗口的作用是什么。\n16. 操作系统启动过程: 考察操作系统的启动流程。\n17. 进程、线程、协程: 要求辨析这三者的区别。\n算法题: 给定一个数组和滑动窗口大小K，返回每个滑动窗口的最大值。"
-    }
+      "locator": "artifact-line:1#offset:0-13;blob:822766ae96c5da1870f6591ecf3bd590b89b08e1",
+      "semantic_excerpt": "8.28字节一面 安全与风控\n实习：10min，没有细问\nJava基础:\n1. 编程语言: 确认主要技术栈是Java。\n2. Java内存模型 (JMM): 要求解释JMM。\n3. 原子性保证: 追问在JMM中，原子性是如何保证的。\n4. 锁的使用场景: 询问不同锁（如乐观锁、悲观锁、ReentrantLock）的适用场景。\n数据库 (MySQL):\n5. 事务隔离级别: 考察MySQL的事务隔离级别。\n6. 索引结构: 询问MySQL主要使用什么索引结构（B+树）。\n7. Redo Log vs. Binlog: 要求辨析Redo Log和Binlog的区别。\n8. 自增ID连续性: 提问自增ID是否一定是连续的，以及在什么情况下会不连续。\n9. 慢查询排查: 给出一个场景题，如何排查和优化慢查询SQL。\n缓存 (Redis):\n10. Redis项目应用: 询问在哪一个项目中使用过Redis，以及具体做了什么。\n11. 分布式锁问题 (SETNX): 针对分布式锁，询问使用时可能会遇到什么问题。\n12. Redis单线程性能: 提问为什么Redis单线程模型速度还很快。\n计算机网络与操作系统:\n13. I/O模型: 要求讲解几种I/O模型的区别（特别是select, poll, epoll）。\n14. TCP握手与挥手: 询问为什么TCP是三次握手和四次挥手。\n15. 滑动窗口作用: 提问TCP滑动窗口的作用是什么。\n16. 操作系统启动过程: 考察操作系统的启动流程。\n17. 进程、线程、协程: 要求辨析这三者的区别。\n算法题: 给定一个数组和滑动窗口大小K，返回每个滑动窗口的最大值。"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68b124e8000000001b032114.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "822766ae96c5da1870f6591ecf3bd590b89b08e1",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 1585,
+        "content_sha256": "df82aa148db309cc5f5f7b720f624800fd7b78282dc823eb9603ec190cdff60d",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "实习：10min，没有细问",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-13;blob:822766ae96c5da1870f6591ecf3bd590b89b08e1",
+          "semantic_excerpt": "8.28字节一面 安全与风控\n实习：10min，没有细问\nJava基础:\n1. 编程语言: 确认主要技术栈是Java。\n2. Java内存模型 (JMM): 要求解释JMM。\n3. 原子性保证: 追问在JMM中，原子性是如何保证的。\n4. 锁的使用场景: 询问不同锁（如乐观锁、悲观锁、ReentrantLock）的适用场景。\n数据库 (MySQL):\n5. 事务隔离级别: 考察MySQL的事务隔离级别。\n6. 索引结构: 询问MySQL主要使用什么索引结构（B+树）。\n7. Redo Log vs. Binlog: 要求辨析Redo Log和Binlog的区别。\n8. 自增ID连续性: 提问自增ID是否一定是连续的，以及在什么情况下会不连续。\n9. 慢查询排查: 给出一个场景题，如何排查和优化慢查询SQL。\n缓存 (Redis):\n10. Redis项目应用: 询问在哪一个项目中使用过Redis，以及具体做了什么。\n11. 分布式锁问题 (SETNX): 针对分布式锁，询问使用时可能会遇到什么问题。\n12. Redis单线程性能: 提问为什么Redis单线程模型速度还很快。\n计算机网络与操作系统:\n13. I/O模型: 要求讲解几种I/O模型的区别（特别是select, poll, epoll）。\n14. TCP握手与挥手: 询问为什么TCP是三次握手和四次挥手。\n15. 滑动窗口作用: 提问TCP滑动窗口的作用是什么。\n16. 操作系统启动过程: 考察操作系统的启动流程。\n17. 进程、线程、协程: 要求辨析这三者的区别。\n算法题: 给定一个数组和滑动窗口大小K，返回每个滑动窗口的最大值。"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68b124e8000000001b032114.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "74ce71afeb8a5235ff3663c522fd8450365e3887",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 390418,
+        "content_sha256": "30b8d883056e707184eac2dfd94f95a1a3d3f9f8f13266664faf2d5a60389b2e",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "8.28字节一面 安全与风控 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-191;blob:74ce71afeb8a5235ff3663c522fd8450365e3887",
+          "semantic_excerpt": "8.28字节一面 安全与风控\n实习：10min，没有细问\nJava基础:\n1. 编程语言: 确认主要技术栈是Java。\n2. Java内存模型 (JMM): 要求解释JMM。\n3. 原子性保证: 追问在JMM中，原子性是如何保证的。\n4. 锁的使用场景: 询问不同锁（如乐观锁、悲观锁、ReentrantLock）的适用场景。\n数据库 (MySQL):\n5. 事务隔离级别: 考察MySQL的事务隔离级别。\n6. 索引结构: 询问MySQL主要使用什么索引结构（B+树）。\n7. Redo Log vs. Binlog: 要求辨析Redo Log和Binlog的区别。\n8. 自增ID连续性: 提问自增ID是否一定是连续的，以及在什么情况下会不连续。\n9. 慢查询排查: 给出一个场景题，如何排查和优化慢查询SQL。\n缓存 (Redis):\n10. Redis项目应用: 询问在哪一个项目中使用过Redis，以及具体做了什么。\n11. 分布式锁问题 (SETNX): 针对分布式锁，询问使用时可能会遇到什么问题。\n12. Redis单线程性能: 提问为什么Redis单线程模型速度还很快。\n计算机网络与操作系统:\n13. I/O模型: 要求讲解几种I/O模型的区别（特别是select, poll, epoll）。\n14. TCP握手与挥手: 询问为什么TCP是三次握手和四次挥手。\n15. 滑动窗口作用: 提问TCP滑动窗口的作用是什么。\n16. 操作系统启动过程: 考察操作系统的启动流程。\n17. 进程、线程、协程: 要求辨析这三者的区别。\n算法题: 给定一个数组和滑动窗口大小K，返回每个滑动窗口的最大值。"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68b124e8000000001b032114.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "4656e8afb861876a30b324ae0028f824af4ff553",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 22313,
+        "content_sha256": "0a75ade6c6a1d30513d0e0b8db688999a8cbba8fcce354d93b630dface06ed56",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "8.28字节一面 安全与风控\",",
+          "line": 496,
+          "locator": "artifact-line:496#offset:30-46;blob:4656e8afb861876a30b324ae0028f824af4ff553",
+          "semantic_excerpt": "8.28字节一面 安全与风控\n实习：10min，没有细问\nJava基础:\n1. 编程语言: 确认主要技术栈是Java。\n2. Java内存模型 (JMM): 要求解释JMM。\n3. 原子性保证: 追问在JMM中，原子性是如何保证的。\n4. 锁的使用场景: 询问不同锁（如乐观锁、悲观锁、ReentrantLock）的适用场景。\n数据库 (MySQL):\n5. 事务隔离级别: 考察MySQL的事务隔离级别。\n6. 索引结构: 询问MySQL主要使用什么索引结构（B+树）。\n7. Redo Log vs. Binlog: 要求辨析Redo Log和Binlog的区别。\n8. 自增ID连续性: 提问自增ID是否一定是连续的，以及在什么情况下会不连续。\n9. 慢查询排查: 给出一个场景题，如何排查和优化慢查询SQL。\n缓存 (Redis):\n10. Redis项目应用: 询问在哪一个项目中使用过Redis，以及具体做了什么。\n11. 分布式锁问题 (SETNX): 针对分布式锁，询问使用时可能会遇到什么问题。\n12. Redis单线程性能: 提问为什么Redis单线程模型速度还很快。\n计算机网络与操作系统:\n13. I/O模型: 要求讲解几种I/O模型的区别（特别是select, poll, epoll）。\n14. TCP握手与挥手: 询问为什么TCP是三次握手和四次挥手。\n15. 滑动窗口作用: 提问TCP滑动窗口的作用是什么。\n16. 操作系统启动过程: 考察操作系统的启动流程。\n17. 进程、线程、协程: 要求辨析这三者的区别。\n算法题: 给定一个数组和滑动窗口大小K，返回每个滑动窗口的最大值。"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68b124e8000000001b032114.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "822766ae96c5da1870f6591ecf3bd590b89b08e1",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 1585,
+      "content_sha256": "df82aa148db309cc5f5f7b720f624800fd7b78282dc823eb9603ec190cdff60d",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "实习：10min，没有细问",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-13;blob:822766ae96c5da1870f6591ecf3bd590b89b08e1",
+        "semantic_excerpt": "8.28字节一面 安全与风控\n实习：10min，没有细问\nJava基础:\n1. 编程语言: 确认主要技术栈是Java。\n2. Java内存模型 (JMM): 要求解释JMM。\n3. 原子性保证: 追问在JMM中，原子性是如何保证的。\n4. 锁的使用场景: 询问不同锁（如乐观锁、悲观锁、ReentrantLock）的适用场景。\n数据库 (MySQL):\n5. 事务隔离级别: 考察MySQL的事务隔离级别。\n6. 索引结构: 询问MySQL主要使用什么索引结构（B+树）。\n7. Redo Log vs. Binlog: 要求辨析Redo Log和Binlog的区别。\n8. 自增ID连续性: 提问自增ID是否一定是连续的，以及在什么情况下会不连续。\n9. 慢查询排查: 给出一个场景题，如何排查和优化慢查询SQL。\n缓存 (Redis):\n10. Redis项目应用: 询问在哪一个项目中使用过Redis，以及具体做了什么。\n11. 分布式锁问题 (SETNX): 针对分布式锁，询问使用时可能会遇到什么问题。\n12. Redis单线程性能: 提问为什么Redis单线程模型速度还很快。\n计算机网络与操作系统:\n13. I/O模型: 要求讲解几种I/O模型的区别（特别是select, poll, epoll）。\n14. TCP握手与挥手: 询问为什么TCP是三次握手和四次挥手。\n15. 滑动窗口作用: 提问TCP滑动窗口的作用是什么。\n16. 操作系统启动过程: 考察操作系统的启动流程。\n17. 进程、线程、协程: 要求辨析这三者的区别。\n算法题: 给定一个数组和滑动窗口大小K，返回每个滑动窗口的最大值。"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68b124e8000000001b032114.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "74ce71afeb8a5235ff3663c522fd8450365e3887",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 390418,
+      "content_sha256": "30b8d883056e707184eac2dfd94f95a1a3d3f9f8f13266664faf2d5a60389b2e",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "8.28字节一面 安全与风控 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-191;blob:74ce71afeb8a5235ff3663c522fd8450365e3887",
+        "semantic_excerpt": "8.28字节一面 安全与风控\n实习：10min，没有细问\nJava基础:\n1. 编程语言: 确认主要技术栈是Java。\n2. Java内存模型 (JMM): 要求解释JMM。\n3. 原子性保证: 追问在JMM中，原子性是如何保证的。\n4. 锁的使用场景: 询问不同锁（如乐观锁、悲观锁、ReentrantLock）的适用场景。\n数据库 (MySQL):\n5. 事务隔离级别: 考察MySQL的事务隔离级别。\n6. 索引结构: 询问MySQL主要使用什么索引结构（B+树）。\n7. Redo Log vs. Binlog: 要求辨析Redo Log和Binlog的区别。\n8. 自增ID连续性: 提问自增ID是否一定是连续的，以及在什么情况下会不连续。\n9. 慢查询排查: 给出一个场景题，如何排查和优化慢查询SQL。\n缓存 (Redis):\n10. Redis项目应用: 询问在哪一个项目中使用过Redis，以及具体做了什么。\n11. 分布式锁问题 (SETNX): 针对分布式锁，询问使用时可能会遇到什么问题。\n12. Redis单线程性能: 提问为什么Redis单线程模型速度还很快。\n计算机网络与操作系统:\n13. I/O模型: 要求讲解几种I/O模型的区别（特别是select, poll, epoll）。\n14. TCP握手与挥手: 询问为什么TCP是三次握手和四次挥手。\n15. 滑动窗口作用: 提问TCP滑动窗口的作用是什么。\n16. 操作系统启动过程: 考察操作系统的启动流程。\n17. 进程、线程、协程: 要求辨析这三者的区别。\n算法题: 给定一个数组和滑动窗口大小K，返回每个滑动窗口的最大值。"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68b124e8000000001b032114.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "4656e8afb861876a30b324ae0028f824af4ff553",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 22313,
+      "content_sha256": "0a75ade6c6a1d30513d0e0b8db688999a8cbba8fcce354d93b630dface06ed56",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "8.28字节一面 安全与风控\",",
+        "line": 496,
+        "locator": "artifact-line:496#offset:30-46;blob:4656e8afb861876a30b324ae0028f824af4ff553",
+        "semantic_excerpt": "8.28字节一面 安全与风控\n实习：10min，没有细问\nJava基础:\n1. 编程语言: 确认主要技术栈是Java。\n2. Java内存模型 (JMM): 要求解释JMM。\n3. 原子性保证: 追问在JMM中，原子性是如何保证的。\n4. 锁的使用场景: 询问不同锁（如乐观锁、悲观锁、ReentrantLock）的适用场景。\n数据库 (MySQL):\n5. 事务隔离级别: 考察MySQL的事务隔离级别。\n6. 索引结构: 询问MySQL主要使用什么索引结构（B+树）。\n7. Redo Log vs. Binlog: 要求辨析Redo Log和Binlog的区别。\n8. 自增ID连续性: 提问自增ID是否一定是连续的，以及在什么情况下会不连续。\n9. 慢查询排查: 给出一个场景题，如何排查和优化慢查询SQL。\n缓存 (Redis):\n10. Redis项目应用: 询问在哪一个项目中使用过Redis，以及具体做了什么。\n11. 分布式锁问题 (SETNX): 针对分布式锁，询问使用时可能会遇到什么问题。\n12. Redis单线程性能: 提问为什么Redis单线程模型速度还很快。\n计算机网络与操作系统:\n13. I/O模型: 要求讲解几种I/O模型的区别（特别是select, poll, epoll）。\n14. TCP握手与挥手: 询问为什么TCP是三次握手和四次挥手。\n15. 滑动窗口作用: 提问TCP滑动窗口的作用是什么。\n16. 操作系统启动过程: 考察操作系统的启动流程。\n17. 进程、线程、协程: 要求辨析这三者的区别。\n算法题: 给定一个数组和滑动窗口大小K，返回每个滑动窗口的最大值。"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -85,10 +194,11 @@
   ],
   "limitations": [
     "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "584a0dd674a33c747ec1926bd053195c005cf2bbbce530168040436e655d207e"
+  "evidence_sha256": "9f8167e30082ad8cac61881f45bc391d41bce0d682d06afdd38fcc8e71f3ee6e"
 }

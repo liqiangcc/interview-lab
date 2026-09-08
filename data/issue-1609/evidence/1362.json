@@ -18,7 +18,7 @@
     "questions": 0,
     "has_first_person_event": false,
     "has_explicit_candidate_event": false,
-    "has_bounded_event": false,
+    "has_bounded_event": true,
     "has_detailed_event": false,
     "has_completed_event_evidence": false,
     "has_structured_candidate_event": false,
@@ -28,12 +28,26 @@
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "bytedance-process",
+        "anchor": "字节",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-165;blob:466fbb6dd737b36ad8e02269a5293c5502d3df85",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:字节",
+        "source_ref": "liqiangcc/xhs:note_detail/68ce9edb000000001400bea9.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 2,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68ce9edb000000001400bea9.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -42,13 +56,78 @@
     "provenance": "source_projection",
     "byte_size": 21268,
     "content_sha256": "e65bd7331c4d22d3f7fd8ee3a5194fb7e58d2c2161af183696c1e049cfbc858c",
+    "cache_status": "not-applicable",
     "excerpt": {
-      "excerpt": "\"desc\": \"误闯天家了属于[捂脸R]\",",
-      "line": 565,
-      "locator": "artifact-line:565",
-      "semantic_excerpt": "误闯天家了属于[捂脸R]"
-    }
+      "excerpt": "字节测开一面面经\",",
+      "line": 564,
+      "locator": "artifact-line:564#offset:30-40;blob:9c5452d7e9f7d57216f1430c6194ae93e13c945f",
+      "semantic_excerpt": "字节测开一面面经\n误闯天家了属于[捂脸R]"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_detail/68ce9edb000000001400bea9.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "466fbb6dd737b36ad8e02269a5293c5502d3df85",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 386674,
+        "content_sha256": "3719ba6ace6aa5ba98e3da3b5a0b817a7c4712f750447a614ba96601943a906f",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "字节测开一面面经 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-185;blob:466fbb6dd737b36ad8e02269a5293c5502d3df85",
+          "semantic_excerpt": "字节测开一面面经\n误闯天家了属于[捂脸R]"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68ce9edb000000001400bea9.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "9c5452d7e9f7d57216f1430c6194ae93e13c945f",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 21268,
+        "content_sha256": "e65bd7331c4d22d3f7fd8ee3a5194fb7e58d2c2161af183696c1e049cfbc858c",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "字节测开一面面经\",",
+          "line": 564,
+          "locator": "artifact-line:564#offset:30-40;blob:9c5452d7e9f7d57216f1430c6194ae93e13c945f",
+          "semantic_excerpt": "字节测开一面面经\n误闯天家了属于[捂脸R]"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/68ce9edb000000001400bea9.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "466fbb6dd737b36ad8e02269a5293c5502d3df85",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 386674,
+      "content_sha256": "3719ba6ace6aa5ba98e3da3b5a0b817a7c4712f750447a614ba96601943a906f",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "字节测开一面面经 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-185;blob:466fbb6dd737b36ad8e02269a5293c5502d3df85",
+        "semantic_excerpt": "字节测开一面面经\n误闯天家了属于[捂脸R]"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68ce9edb000000001400bea9.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "9c5452d7e9f7d57216f1430c6194ae93e13c945f",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 21268,
+      "content_sha256": "e65bd7331c4d22d3f7fd8ee3a5194fb7e58d2c2161af183696c1e049cfbc858c",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "字节测开一面面经\",",
+        "line": 564,
+        "locator": "artifact-line:564#offset:30-40;blob:9c5452d7e9f7d57216f1430c6194ae93e13c945f",
+        "semantic_excerpt": "字节测开一面面经\n误闯天家了属于[捂脸R]"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -83,10 +162,11 @@
   ],
   "limitations": [
     "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "b67df9e24cc4d061d844d8a1cbaecd8f26ddffbb133179dd5283926b7481a694"
+  "evidence_sha256": "6f6ae45bbbe8d0b4d3861a8187f94afa24c9f52fc316d4bc450f35f47c71aa82"
 }

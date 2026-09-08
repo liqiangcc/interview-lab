@@ -8,7 +8,7 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "b50e9073dbfde4deb97bdfc3149e3feda4c7aca0d227c1b22aa3fce874d97d78",
   "disposition": "blocked",
-  "rationale": "No non-empty readable Source/Source projection is available; title and hashtags cannot authorize a boundary.",
+  "rationale": "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
@@ -18,7 +18,7 @@
     "questions": 0,
     "has_first_person_event": false,
     "has_explicit_candidate_event": false,
-    "has_bounded_event": false,
+    "has_bounded_event": true,
     "has_detailed_event": false,
     "has_completed_event_evidence": false,
     "has_structured_candidate_event": false,
@@ -28,12 +28,26 @@
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "didi-process",
+        "anchor": "滴滴",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-165;blob:022f1becd5d6389ce3a97d3c8e312d359c473ab4",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:滴滴",
+        "source_ref": "liqiangcc/xhs:note_detail/68a718d4000000001d03a76f.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68a718d4000000001d03a76f.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -42,13 +56,108 @@
     "provenance": "source_projection",
     "byte_size": 218,
     "content_sha256": "216bb86b941791a16ef6017473867393f3708af202d5f7ff7fd79ccab6f08e1b",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "#软件测试[话题]# #面试求职[话题]# #面经[话题]# #面试技巧[话题]# #自动化测试[话题]# #秋招笔试[话题]# #大厂求职[话题]# #实习[话题]# #转码[话题]# #非科班转码[话题]#",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": ""
-    }
+      "locator": "artifact-line:1#offset:0-105;blob:5f93bc99c6027533d1df05146a042850af20c15f",
+      "semantic_excerpt": "滴滴测开一面面经分享"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68a718d4000000001d03a76f.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "5f93bc99c6027533d1df05146a042850af20c15f",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 218,
+        "content_sha256": "216bb86b941791a16ef6017473867393f3708af202d5f7ff7fd79ccab6f08e1b",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "#软件测试[话题]# #面试求职[话题]# #面经[话题]# #面试技巧[话题]# #自动化测试[话题]# #秋招笔试[话题]# #大厂求职[话题]# #实习[话题]# #转码[话题]# #非科班转码[话题]#",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-105;blob:5f93bc99c6027533d1df05146a042850af20c15f",
+          "semantic_excerpt": "滴滴测开一面面经分享"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68a718d4000000001d03a76f.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "022f1becd5d6389ce3a97d3c8e312d359c473ab4",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 395788,
+        "content_sha256": "5c585ff539e016219b62815864874e4264a381916a31f0d09656ffd0568829f8",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "滴滴测开一面面经分享 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-187;blob:022f1becd5d6389ce3a97d3c8e312d359c473ab4",
+          "semantic_excerpt": "滴滴测开一面面经分享"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68a718d4000000001d03a76f.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "1c0460edf506c798a64a6ed3958fb7b86af9c06e",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 29414,
+        "content_sha256": "c0ce41e913554d542c0de60ed081b443db1b6360d9fb5fcd102769bc07f70f2c",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "滴滴测开一面面经分享\",",
+          "line": 565,
+          "locator": "artifact-line:565#offset:30-42;blob:1c0460edf506c798a64a6ed3958fb7b86af9c06e",
+          "semantic_excerpt": "滴滴测开一面面经分享"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68a718d4000000001d03a76f.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "5f93bc99c6027533d1df05146a042850af20c15f",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 218,
+      "content_sha256": "216bb86b941791a16ef6017473867393f3708af202d5f7ff7fd79ccab6f08e1b",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "#软件测试[话题]# #面试求职[话题]# #面经[话题]# #面试技巧[话题]# #自动化测试[话题]# #秋招笔试[话题]# #大厂求职[话题]# #实习[话题]# #转码[话题]# #非科班转码[话题]#",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-105;blob:5f93bc99c6027533d1df05146a042850af20c15f",
+        "semantic_excerpt": "滴滴测开一面面经分享"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68a718d4000000001d03a76f.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "022f1becd5d6389ce3a97d3c8e312d359c473ab4",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 395788,
+      "content_sha256": "5c585ff539e016219b62815864874e4264a381916a31f0d09656ffd0568829f8",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "滴滴测开一面面经分享 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-187;blob:022f1becd5d6389ce3a97d3c8e312d359c473ab4",
+        "semantic_excerpt": "滴滴测开一面面经分享"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68a718d4000000001d03a76f.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "1c0460edf506c798a64a6ed3958fb7b86af9c06e",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 29414,
+      "content_sha256": "c0ce41e913554d542c0de60ed081b443db1b6360d9fb5fcd102769bc07f70f2c",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "滴滴测开一面面经分享\",",
+        "line": 565,
+        "locator": "artifact-line:565#offset:30-42;blob:1c0460edf506c798a64a6ed3958fb7b86af9c06e",
+        "semantic_excerpt": "滴滴测开一面面经分享"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -68,7 +177,7 @@
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. No non-empty readable Source/Source projection is available; title and hashtags cannot authorize a boundary."
+      "note": "The disposition is supported by the cited source evidence. Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -82,11 +191,12 @@
     }
   ],
   "limitations": [
-    "No non-empty readable Source/Source projection is available; title and hashtags cannot authorize a boundary.",
+    "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "fd6fcfec18ece860668d5b9b900a9bec43c500ef63e59e8df89a4256bccc1fd0"
+  "evidence_sha256": "5a6eec378420a64a5b4170445096b3ce017787a962246a7fafe71f6884fdcdc7"
 }

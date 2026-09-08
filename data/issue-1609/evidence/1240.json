@@ -7,15 +7,12 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "a194e180ca6142c76f6c8c5b6fd894cea023f116b9a87c3cd062e130768e1706",
-  "disposition": "blocked",
-  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "disposition": "single-interview",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
-      "question-list-only",
-      "no-first-person-event",
-      "question-only",
-      "no-candidate-event-evidence"
+      "no-first-person-event"
     ],
     "questions": 35,
     "has_first_person_event": false,
@@ -23,19 +20,33 @@
     "has_bounded_event": true,
     "has_detailed_event": true,
     "has_completed_event_evidence": true,
-    "has_structured_candidate_event": false,
+    "has_structured_candidate_event": true,
     "generic_advice_or_aggregated": false,
     "scheduled_only": false,
-    "question_only": true,
+    "question_only": false,
     "outcome_signal": true,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
-    "only_question_list": true,
+    "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "meituan-process",
+        "anchor": "美团",
+        "line": 1,
+        "locator": "artifact-line:37#offset:53-55;blob:3ee18df316ee19efa3fb57dd37caad68a14c513e",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:美团",
+        "source_ref": "liqiangcc/xhs:note_desc/68b5b495000000001d02fd4f.txt@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b5b495000000001d02fd4f.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -44,13 +55,108 @@
     "provenance": "source_projection",
     "byte_size": 1852,
     "content_sha256": "3298cfc5c2ee0737d0c5dacc0375870178c02db6c7f715523829c93d426c99a0",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "1.redis的提前缓存的同步链路怎么实现？",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "1.redis的提前缓存的同步链路怎么实现？\n2.rabbitMQ的幂等性怎么实现？\n3.你在开发时怎么提高接口性能？\n4.java的常用集合介绍一下？\n5.哪些集合是线程安全的哪些是线程不安全的？\n6.HashMap和concurrentHashMap的对比？\n7.ConcurrentHashMap线程安全怎么实现？\n8.java的锁机制介绍一下？\n9.ReentrantLock的实现原理介绍一下\n10.volatile关键字介绍下\n11.java创建线程池怎么实现？\n12.线程池的工作原理？\n13.拒绝策略都有什么？\n14.你项目中使用到了两个线程池，他们的拒绝策略不一致是怎么考虑的？\n15.jvm调参怎么实现？\n16.什么是GC？\n17.知道哪些垃圾回收器？\n18.jvm怎么分析线上进程线程对象的信息？\n19.性能分析工具有了解过吗？\n20.你的工具是怎么使用的？\n21.springboot的启动流程讲一下？\n22.在 Spring 启动过程中，若要在其生命周期的特定阶段执行自定义操作，怎么实现？\n23.mysql的底层索引的数据结构是什么？\n24.你都知道哪些索引？\n25.怎么分析建立的索引有没有生效？\n26.什么是索引失效？\n27.联合索引建立之后，使用了两个字段做过滤，那么有没有可能不走索引？\n28.mysql基于成本的优化考量通过什么算法来实现的？\n29.mysql怎么分库分表？什么情况下分库，什么情况下分表？\n30.redis的数据结构有什么？\n31.解释一下缓存穿透、缓存击穿和缓存雪崩？怎么解决？\n32.高并发系统中怎么保证数据一致性？\n33.加锁如何保证数据一致性？\n34.rabbitmq介绍下底层原理？\n35.当一条消息被发送到 RabbitMQ 集群后，这条消息去哪了？\n手撕：字符串相加"
-    }
+      "locator": "artifact-line:1#offset:0-22;blob:3ee18df316ee19efa3fb57dd37caad68a14c513e",
+      "semantic_excerpt": "美团秋招后端开发一面-核心本地商业\n1.redis的提前缓存的同步链路怎么实现？\n2.rabbitMQ的幂等性怎么实现？\n3.你在开发时怎么提高接口性能？\n4.java的常用集合介绍一下？\n5.哪些集合是线程安全的哪些是线程不安全的？\n6.HashMap和concurrentHashMap的对比？\n7.ConcurrentHashMap线程安全怎么实现？\n8.java的锁机制介绍一下？\n9.ReentrantLock的实现原理介绍一下\n10.volatile关键字介绍下\n11.java创建线程池怎么实现？\n12.线程池的工作原理？\n13.拒绝策略都有什么？\n14.你项目中使用到了两个线程池，他们的拒绝策略不一致是怎么考虑的？\n15.jvm调参怎么实现？\n16.什么是GC？\n17.知道哪些垃圾回收器？\n18.jvm怎么分析线上进程线程对象的信息？\n19.性能分析工具有了解过吗？\n20.你的工具是怎么使用的？\n21.springboot的启动流程讲一下？\n22.在 Spring 启动过程中，若要在其生命周期的特定阶段执行自定义操作，怎么实现？\n23.mysql的底层索引的数据结构是什么？\n24.你都知道哪些索引？\n25.怎么分析建立的索引有没有生效？\n26.什么是索引失效？\n27.联合索引建立之后，使用了两个字段做过滤，那么有没有可能不走索引？\n28.mysql基于成本的优化考量通过什么算法来实现的？\n29.mysql怎么分库分表？什么情况下分库，什么情况下分表？\n30.redis的数据结构有什么？\n31.解释一下缓存穿透、缓存击穿和缓存雪崩？怎么解决？\n32.高并发系统中怎么保证数据一致性？\n33.加锁如何保证数据一致性？\n34.rabbitmq介绍下底层原理？\n35.当一条消息被发送到 RabbitMQ 集群后，这条消息去哪了？\n手撕：字符串相加"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68b5b495000000001d02fd4f.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "3ee18df316ee19efa3fb57dd37caad68a14c513e",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 1852,
+        "content_sha256": "3298cfc5c2ee0737d0c5dacc0375870178c02db6c7f715523829c93d426c99a0",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "1.redis的提前缓存的同步链路怎么实现？",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-22;blob:3ee18df316ee19efa3fb57dd37caad68a14c513e",
+          "semantic_excerpt": "美团秋招后端开发一面-核心本地商业\n1.redis的提前缓存的同步链路怎么实现？\n2.rabbitMQ的幂等性怎么实现？\n3.你在开发时怎么提高接口性能？\n4.java的常用集合介绍一下？\n5.哪些集合是线程安全的哪些是线程不安全的？\n6.HashMap和concurrentHashMap的对比？\n7.ConcurrentHashMap线程安全怎么实现？\n8.java的锁机制介绍一下？\n9.ReentrantLock的实现原理介绍一下\n10.volatile关键字介绍下\n11.java创建线程池怎么实现？\n12.线程池的工作原理？\n13.拒绝策略都有什么？\n14.你项目中使用到了两个线程池，他们的拒绝策略不一致是怎么考虑的？\n15.jvm调参怎么实现？\n16.什么是GC？\n17.知道哪些垃圾回收器？\n18.jvm怎么分析线上进程线程对象的信息？\n19.性能分析工具有了解过吗？\n20.你的工具是怎么使用的？\n21.springboot的启动流程讲一下？\n22.在 Spring 启动过程中，若要在其生命周期的特定阶段执行自定义操作，怎么实现？\n23.mysql的底层索引的数据结构是什么？\n24.你都知道哪些索引？\n25.怎么分析建立的索引有没有生效？\n26.什么是索引失效？\n27.联合索引建立之后，使用了两个字段做过滤，那么有没有可能不走索引？\n28.mysql基于成本的优化考量通过什么算法来实现的？\n29.mysql怎么分库分表？什么情况下分库，什么情况下分表？\n30.redis的数据结构有什么？\n31.解释一下缓存穿透、缓存击穿和缓存雪崩？怎么解决？\n32.高并发系统中怎么保证数据一致性？\n33.加锁如何保证数据一致性？\n34.rabbitmq介绍下底层原理？\n35.当一条消息被发送到 RabbitMQ 集群后，这条消息去哪了？\n手撕：字符串相加"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68b5b495000000001d02fd4f.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "f18b6e95221ba096659106b76edc6baec8fa68e4",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 391578,
+        "content_sha256": "8dc45ec6585f81065856b8745e64cd8d3703a530f906daa2af4c7cdcb1d4c122",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "美团秋招后端开发一面-核心本地商业 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-194;blob:f18b6e95221ba096659106b76edc6baec8fa68e4",
+          "semantic_excerpt": "美团秋招后端开发一面-核心本地商业\n1.redis的提前缓存的同步链路怎么实现？\n2.rabbitMQ的幂等性怎么实现？\n3.你在开发时怎么提高接口性能？\n4.java的常用集合介绍一下？\n5.哪些集合是线程安全的哪些是线程不安全的？\n6.HashMap和concurrentHashMap的对比？\n7.ConcurrentHashMap线程安全怎么实现？\n8.java的锁机制介绍一下？\n9.ReentrantLock的实现原理介绍一下\n10.volatile关键字介绍下\n11.java创建线程池怎么实现？\n12.线程池的工作原理？\n13.拒绝策略都有什么？\n14.你项目中使用到了两个线程池，他们的拒绝策略不一致是怎么考虑的？\n15.jvm调参怎么实现？\n16.什么是GC？\n17.知道哪些垃圾回收器？\n18.jvm怎么分析线上进程线程对象的信息？\n19.性能分析工具有了解过吗？\n20.你的工具是怎么使用的？\n21.springboot的启动流程讲一下？\n22.在 Spring 启动过程中，若要在其生命周期的特定阶段执行自定义操作，怎么实现？\n23.mysql的底层索引的数据结构是什么？\n24.你都知道哪些索引？\n25.怎么分析建立的索引有没有生效？\n26.什么是索引失效？\n27.联合索引建立之后，使用了两个字段做过滤，那么有没有可能不走索引？\n28.mysql基于成本的优化考量通过什么算法来实现的？\n29.mysql怎么分库分表？什么情况下分库，什么情况下分表？\n30.redis的数据结构有什么？\n31.解释一下缓存穿透、缓存击穿和缓存雪崩？怎么解决？\n32.高并发系统中怎么保证数据一致性？\n33.加锁如何保证数据一致性？\n34.rabbitmq介绍下底层原理？\n35.当一条消息被发送到 RabbitMQ 集群后，这条消息去哪了？\n手撕：字符串相加"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68b5b495000000001d02fd4f.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "fff8f19a5a727e98529555e2f337535620e7c0f8",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 22811,
+        "content_sha256": "8ffb9965ffec3b3a909d7988e26b88c58211d13b6ce7d18694e45662da7ca35a",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "美团秋招后端开发一面-核心本地商业\",",
+          "line": 498,
+          "locator": "artifact-line:498#offset:30-49;blob:fff8f19a5a727e98529555e2f337535620e7c0f8",
+          "semantic_excerpt": "美团秋招后端开发一面-核心本地商业\n1.redis的提前缓存的同步链路怎么实现？\n2.rabbitMQ的幂等性怎么实现？\n3.你在开发时怎么提高接口性能？\n4.java的常用集合介绍一下？\n5.哪些集合是线程安全的哪些是线程不安全的？\n6.HashMap和concurrentHashMap的对比？\n7.ConcurrentHashMap线程安全怎么实现？\n8.java的锁机制介绍一下？\n9.ReentrantLock的实现原理介绍一下\n10.volatile关键字介绍下\n11.java创建线程池怎么实现？\n12.线程池的工作原理？\n13.拒绝策略都有什么？\n14.你项目中使用到了两个线程池，他们的拒绝策略不一致是怎么考虑的？\n15.jvm调参怎么实现？\n16.什么是GC？\n17.知道哪些垃圾回收器？\n18.jvm怎么分析线上进程线程对象的信息？\n19.性能分析工具有了解过吗？\n20.你的工具是怎么使用的？\n21.springboot的启动流程讲一下？\n22.在 Spring 启动过程中，若要在其生命周期的特定阶段执行自定义操作，怎么实现？\n23.mysql的底层索引的数据结构是什么？\n24.你都知道哪些索引？\n25.怎么分析建立的索引有没有生效？\n26.什么是索引失效？\n27.联合索引建立之后，使用了两个字段做过滤，那么有没有可能不走索引？\n28.mysql基于成本的优化考量通过什么算法来实现的？\n29.mysql怎么分库分表？什么情况下分库，什么情况下分表？\n30.redis的数据结构有什么？\n31.解释一下缓存穿透、缓存击穿和缓存雪崩？怎么解决？\n32.高并发系统中怎么保证数据一致性？\n33.加锁如何保证数据一致性？\n34.rabbitmq介绍下底层原理？\n35.当一条消息被发送到 RabbitMQ 集群后，这条消息去哪了？\n手撕：字符串相加"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68b5b495000000001d02fd4f.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "3ee18df316ee19efa3fb57dd37caad68a14c513e",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 1852,
+      "content_sha256": "3298cfc5c2ee0737d0c5dacc0375870178c02db6c7f715523829c93d426c99a0",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "1.redis的提前缓存的同步链路怎么实现？",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-22;blob:3ee18df316ee19efa3fb57dd37caad68a14c513e",
+        "semantic_excerpt": "美团秋招后端开发一面-核心本地商业\n1.redis的提前缓存的同步链路怎么实现？\n2.rabbitMQ的幂等性怎么实现？\n3.你在开发时怎么提高接口性能？\n4.java的常用集合介绍一下？\n5.哪些集合是线程安全的哪些是线程不安全的？\n6.HashMap和concurrentHashMap的对比？\n7.ConcurrentHashMap线程安全怎么实现？\n8.java的锁机制介绍一下？\n9.ReentrantLock的实现原理介绍一下\n10.volatile关键字介绍下\n11.java创建线程池怎么实现？\n12.线程池的工作原理？\n13.拒绝策略都有什么？\n14.你项目中使用到了两个线程池，他们的拒绝策略不一致是怎么考虑的？\n15.jvm调参怎么实现？\n16.什么是GC？\n17.知道哪些垃圾回收器？\n18.jvm怎么分析线上进程线程对象的信息？\n19.性能分析工具有了解过吗？\n20.你的工具是怎么使用的？\n21.springboot的启动流程讲一下？\n22.在 Spring 启动过程中，若要在其生命周期的特定阶段执行自定义操作，怎么实现？\n23.mysql的底层索引的数据结构是什么？\n24.你都知道哪些索引？\n25.怎么分析建立的索引有没有生效？\n26.什么是索引失效？\n27.联合索引建立之后，使用了两个字段做过滤，那么有没有可能不走索引？\n28.mysql基于成本的优化考量通过什么算法来实现的？\n29.mysql怎么分库分表？什么情况下分库，什么情况下分表？\n30.redis的数据结构有什么？\n31.解释一下缓存穿透、缓存击穿和缓存雪崩？怎么解决？\n32.高并发系统中怎么保证数据一致性？\n33.加锁如何保证数据一致性？\n34.rabbitmq介绍下底层原理？\n35.当一条消息被发送到 RabbitMQ 集群后，这条消息去哪了？\n手撕：字符串相加"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68b5b495000000001d02fd4f.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "f18b6e95221ba096659106b76edc6baec8fa68e4",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 391578,
+      "content_sha256": "8dc45ec6585f81065856b8745e64cd8d3703a530f906daa2af4c7cdcb1d4c122",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "美团秋招后端开发一面-核心本地商业 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-194;blob:f18b6e95221ba096659106b76edc6baec8fa68e4",
+        "semantic_excerpt": "美团秋招后端开发一面-核心本地商业\n1.redis的提前缓存的同步链路怎么实现？\n2.rabbitMQ的幂等性怎么实现？\n3.你在开发时怎么提高接口性能？\n4.java的常用集合介绍一下？\n5.哪些集合是线程安全的哪些是线程不安全的？\n6.HashMap和concurrentHashMap的对比？\n7.ConcurrentHashMap线程安全怎么实现？\n8.java的锁机制介绍一下？\n9.ReentrantLock的实现原理介绍一下\n10.volatile关键字介绍下\n11.java创建线程池怎么实现？\n12.线程池的工作原理？\n13.拒绝策略都有什么？\n14.你项目中使用到了两个线程池，他们的拒绝策略不一致是怎么考虑的？\n15.jvm调参怎么实现？\n16.什么是GC？\n17.知道哪些垃圾回收器？\n18.jvm怎么分析线上进程线程对象的信息？\n19.性能分析工具有了解过吗？\n20.你的工具是怎么使用的？\n21.springboot的启动流程讲一下？\n22.在 Spring 启动过程中，若要在其生命周期的特定阶段执行自定义操作，怎么实现？\n23.mysql的底层索引的数据结构是什么？\n24.你都知道哪些索引？\n25.怎么分析建立的索引有没有生效？\n26.什么是索引失效？\n27.联合索引建立之后，使用了两个字段做过滤，那么有没有可能不走索引？\n28.mysql基于成本的优化考量通过什么算法来实现的？\n29.mysql怎么分库分表？什么情况下分库，什么情况下分表？\n30.redis的数据结构有什么？\n31.解释一下缓存穿透、缓存击穿和缓存雪崩？怎么解决？\n32.高并发系统中怎么保证数据一致性？\n33.加锁如何保证数据一致性？\n34.rabbitmq介绍下底层原理？\n35.当一条消息被发送到 RabbitMQ 集群后，这条消息去哪了？\n手撕：字符串相加"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68b5b495000000001d02fd4f.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "fff8f19a5a727e98529555e2f337535620e7c0f8",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 22811,
+      "content_sha256": "8ffb9965ffec3b3a909d7988e26b88c58211d13b6ce7d18694e45662da7ca35a",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "美团秋招后端开发一面-核心本地商业\",",
+        "line": 498,
+        "locator": "artifact-line:498#offset:30-49;blob:fff8f19a5a727e98529555e2f337535620e7c0f8",
+        "semantic_excerpt": "美团秋招后端开发一面-核心本地商业\n1.redis的提前缓存的同步链路怎么实现？\n2.rabbitMQ的幂等性怎么实现？\n3.你在开发时怎么提高接口性能？\n4.java的常用集合介绍一下？\n5.哪些集合是线程安全的哪些是线程不安全的？\n6.HashMap和concurrentHashMap的对比？\n7.ConcurrentHashMap线程安全怎么实现？\n8.java的锁机制介绍一下？\n9.ReentrantLock的实现原理介绍一下\n10.volatile关键字介绍下\n11.java创建线程池怎么实现？\n12.线程池的工作原理？\n13.拒绝策略都有什么？\n14.你项目中使用到了两个线程池，他们的拒绝策略不一致是怎么考虑的？\n15.jvm调参怎么实现？\n16.什么是GC？\n17.知道哪些垃圾回收器？\n18.jvm怎么分析线上进程线程对象的信息？\n19.性能分析工具有了解过吗？\n20.你的工具是怎么使用的？\n21.springboot的启动流程讲一下？\n22.在 Spring 启动过程中，若要在其生命周期的特定阶段执行自定义操作，怎么实现？\n23.mysql的底层索引的数据结构是什么？\n24.你都知道哪些索引？\n25.怎么分析建立的索引有没有生效？\n26.什么是索引失效？\n27.联合索引建立之后，使用了两个字段做过滤，那么有没有可能不走索引？\n28.mysql基于成本的优化考量通过什么算法来实现的？\n29.mysql怎么分库分表？什么情况下分库，什么情况下分表？\n30.redis的数据结构有什么？\n31.解释一下缓存穿透、缓存击穿和缓存雪崩？怎么解决？\n32.高并发系统中怎么保证数据一致性？\n33.加锁如何保证数据一致性？\n34.rabbitmq介绍下底层原理？\n35.当一条消息被发送到 RabbitMQ 集群后，这条消息去哪了？\n手撕：字符串相加"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -69,8 +175,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -84,11 +190,12 @@
     }
   ],
   "limitations": [
-    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "607a795187bcb21139c6131aac54c031862bdb867ab614b5f3ac7f299c15c37d"
+  "evidence_sha256": "4a3bd4edbc9e76bf8c551d2bb7d56daf4eb4aa3094a7fe17fec7d8f8c20b16f7"
 }

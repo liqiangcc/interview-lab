@@ -12,7 +12,6 @@
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
-      "question-list-only",
       "outcome-or-offer-only",
       "no-first-person-event",
       "question-only",
@@ -21,7 +20,7 @@
     "questions": 11,
     "has_first_person_event": false,
     "has_explicit_candidate_event": false,
-    "has_bounded_event": false,
+    "has_bounded_event": true,
     "has_detailed_event": false,
     "has_completed_event_evidence": false,
     "has_structured_candidate_event": false,
@@ -31,12 +30,26 @@
     "outcome_signal": true,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
-    "only_question_list": true,
+    "only_question_list": false,
     "only_outcome": true,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "meituan-process",
+        "anchor": "美团",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-165;blob:302b7871c42b5687a4f0167b2ce8da85ba3b9a54",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:美团",
+        "source_ref": "liqiangcc/xhs:note_detail/68dfb89900000000030124a1.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 2,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68dfb89900000000030124a1.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -45,13 +58,78 @@
     "provenance": "source_projection",
     "byte_size": 23422,
     "content_sha256": "011c57c016beaefb14aebc496174e1ea69941e97a2ada9e311982bbf59a63ae4",
+    "cache_status": "not-applicable",
     "excerpt": {
-      "excerpt": "\"global\": {",
-      "line": 2,
-      "locator": "artifact-line:2",
-      "semantic_excerpt": "1.为什么从上一个实习的公司离职？\n2.说说Caffeine本地缓存的原理或者特性？\n3.有哪些缓存淘汰机制？\n4.介绍一下整个AOP的工作原理？包括 AOP 有哪几个关键的组件或者名词？或者有哪些AOP的方式？\n5.Threadlocal 的底层实现？\n6.如何基于 projectroom 实现虚拟线程改造？\n7.Caffeine本地缓存的数据怎么和MySQL中的数据保持一致？\n8.正常的服务是集群化部署的，你改 Mysql 的时候是一台机器在改，但是你的服务可能是几台、几十台、几百台。那其他的服务节点的本地缓存怎么样去更新呢？\n9.Java中线程安全的机制，你了解到的有哪些？越详细越好。\n10.如何优化一个SQL语句？越详细越好。\n11.你自己认为你自己的核心的优势在哪里？核心的竞争力是什么？\n \n结果：被默拒"
-    }
+      "excerpt": "美团后端实习一面\",",
+      "line": 515,
+      "locator": "artifact-line:515#offset:30-40;blob:9df184ee9a81f09076283fdf458d0d7be2b59f22",
+      "semantic_excerpt": "美团后端实习一面\n1.为什么从上一个实习的公司离职？\n2.说说Caffeine本地缓存的原理或者特性？\n3.有哪些缓存淘汰机制？\n4.介绍一下整个AOP的工作原理？包括 AOP 有哪几个关键的组件或者名词？或者有哪些AOP的方式？\n5.Threadlocal 的底层实现？\n6.如何基于 projectroom 实现虚拟线程改造？\n7.Caffeine本地缓存的数据怎么和MySQL中的数据保持一致？\n8.正常的服务是集群化部署的，你改 Mysql 的时候是一台机器在改，但是你的服务可能是几台、几十台、几百台。那其他的服务节点的本地缓存怎么样去更新呢？\n9.Java中线程安全的机制，你了解到的有哪些？越详细越好。\n10.如何优化一个SQL语句？越详细越好。\n11.你自己认为你自己的核心的优势在哪里？核心的竞争力是什么？\n \n结果：被默拒"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_detail/68dfb89900000000030124a1.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "302b7871c42b5687a4f0167b2ce8da85ba3b9a54",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 391337,
+        "content_sha256": "df45a28d39ab37fcd8564cdbb4abbcffa122c56e8e3e923ce46485983d05ea02",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "美团后端实习一面 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-185;blob:302b7871c42b5687a4f0167b2ce8da85ba3b9a54",
+          "semantic_excerpt": "美团后端实习一面\n1.为什么从上一个实习的公司离职？\n2.说说Caffeine本地缓存的原理或者特性？\n3.有哪些缓存淘汰机制？\n4.介绍一下整个AOP的工作原理？包括 AOP 有哪几个关键的组件或者名词？或者有哪些AOP的方式？\n5.Threadlocal 的底层实现？\n6.如何基于 projectroom 实现虚拟线程改造？\n7.Caffeine本地缓存的数据怎么和MySQL中的数据保持一致？\n8.正常的服务是集群化部署的，你改 Mysql 的时候是一台机器在改，但是你的服务可能是几台、几十台、几百台。那其他的服务节点的本地缓存怎么样去更新呢？\n9.Java中线程安全的机制，你了解到的有哪些？越详细越好。\n10.如何优化一个SQL语句？越详细越好。\n11.你自己认为你自己的核心的优势在哪里？核心的竞争力是什么？\n \n结果：被默拒"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68dfb89900000000030124a1.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "9df184ee9a81f09076283fdf458d0d7be2b59f22",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 23422,
+        "content_sha256": "011c57c016beaefb14aebc496174e1ea69941e97a2ada9e311982bbf59a63ae4",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "美团后端实习一面\",",
+          "line": 515,
+          "locator": "artifact-line:515#offset:30-40;blob:9df184ee9a81f09076283fdf458d0d7be2b59f22",
+          "semantic_excerpt": "美团后端实习一面\n1.为什么从上一个实习的公司离职？\n2.说说Caffeine本地缓存的原理或者特性？\n3.有哪些缓存淘汰机制？\n4.介绍一下整个AOP的工作原理？包括 AOP 有哪几个关键的组件或者名词？或者有哪些AOP的方式？\n5.Threadlocal 的底层实现？\n6.如何基于 projectroom 实现虚拟线程改造？\n7.Caffeine本地缓存的数据怎么和MySQL中的数据保持一致？\n8.正常的服务是集群化部署的，你改 Mysql 的时候是一台机器在改，但是你的服务可能是几台、几十台、几百台。那其他的服务节点的本地缓存怎么样去更新呢？\n9.Java中线程安全的机制，你了解到的有哪些？越详细越好。\n10.如何优化一个SQL语句？越详细越好。\n11.你自己认为你自己的核心的优势在哪里？核心的竞争力是什么？\n \n结果：被默拒"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/68dfb89900000000030124a1.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "302b7871c42b5687a4f0167b2ce8da85ba3b9a54",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 391337,
+      "content_sha256": "df45a28d39ab37fcd8564cdbb4abbcffa122c56e8e3e923ce46485983d05ea02",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "美团后端实习一面 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-185;blob:302b7871c42b5687a4f0167b2ce8da85ba3b9a54",
+        "semantic_excerpt": "美团后端实习一面\n1.为什么从上一个实习的公司离职？\n2.说说Caffeine本地缓存的原理或者特性？\n3.有哪些缓存淘汰机制？\n4.介绍一下整个AOP的工作原理？包括 AOP 有哪几个关键的组件或者名词？或者有哪些AOP的方式？\n5.Threadlocal 的底层实现？\n6.如何基于 projectroom 实现虚拟线程改造？\n7.Caffeine本地缓存的数据怎么和MySQL中的数据保持一致？\n8.正常的服务是集群化部署的，你改 Mysql 的时候是一台机器在改，但是你的服务可能是几台、几十台、几百台。那其他的服务节点的本地缓存怎么样去更新呢？\n9.Java中线程安全的机制，你了解到的有哪些？越详细越好。\n10.如何优化一个SQL语句？越详细越好。\n11.你自己认为你自己的核心的优势在哪里？核心的竞争力是什么？\n \n结果：被默拒"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68dfb89900000000030124a1.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "9df184ee9a81f09076283fdf458d0d7be2b59f22",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 23422,
+      "content_sha256": "011c57c016beaefb14aebc496174e1ea69941e97a2ada9e311982bbf59a63ae4",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "美团后端实习一面\",",
+        "line": 515,
+        "locator": "artifact-line:515#offset:30-40;blob:9df184ee9a81f09076283fdf458d0d7be2b59f22",
+        "semantic_excerpt": "美团后端实习一面\n1.为什么从上一个实习的公司离职？\n2.说说Caffeine本地缓存的原理或者特性？\n3.有哪些缓存淘汰机制？\n4.介绍一下整个AOP的工作原理？包括 AOP 有哪几个关键的组件或者名词？或者有哪些AOP的方式？\n5.Threadlocal 的底层实现？\n6.如何基于 projectroom 实现虚拟线程改造？\n7.Caffeine本地缓存的数据怎么和MySQL中的数据保持一致？\n8.正常的服务是集群化部署的，你改 Mysql 的时候是一台机器在改，但是你的服务可能是几台、几十台、几百台。那其他的服务节点的本地缓存怎么样去更新呢？\n9.Java中线程安全的机制，你了解到的有哪些？越详细越好。\n10.如何优化一个SQL语句？越详细越好。\n11.你自己认为你自己的核心的优势在哪里？核心的竞争力是什么？\n \n结果：被默拒"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -86,10 +164,11 @@
   ],
   "limitations": [
     "Exact Source provides only an interview outcome, offer, rejection, or result without a bounded candidate event; retain pending.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "f3a883a4ae67ff9cf87668e4cac376202b6dfb22bbada86fe588397497af071f"
+  "evidence_sha256": "e28b2018d893473e713f82ea3c98777484de1b0c1d27d4c9f62db3c5e51baa15"
 }

@@ -7,15 +7,12 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "4b80bca3bf5fc16da3b10dabddd19756ec4bc952ecca446328041a9eefdc2227",
-  "disposition": "blocked",
-  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "disposition": "single-interview",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
-      "question-list-only",
-      "no-first-person-event",
-      "question-only",
-      "no-candidate-event-evidence"
+      "no-first-person-event"
     ],
     "questions": 12,
     "has_first_person_event": false,
@@ -23,19 +20,33 @@
     "has_bounded_event": true,
     "has_detailed_event": true,
     "has_completed_event_evidence": true,
-    "has_structured_candidate_event": false,
+    "has_structured_candidate_event": true,
     "generic_advice_or_aggregated": false,
     "scheduled_only": false,
-    "question_only": true,
+    "question_only": false,
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
-    "only_question_list": true,
+    "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "meituan-process",
+        "anchor": "美团",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-165;blob:159fec0320d52e797c70e7a1bd314eea95014658",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:美团",
+        "source_ref": "liqiangcc/xhs:note_detail/68bdb040000000001d00a613.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68bdb040000000001d00a613.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -44,13 +55,108 @@
     "provenance": "source_projection",
     "byte_size": 677,
     "content_sha256": "e5b1ed908724f46251d5892ed03c2c436586d2af5f42917eb7bfa170980639cb",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "1、自我介绍",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "1、自我介绍\n2、实习过程中哪家公司体感好\n3、算法题：图的拓扑排序\n4、一个string数组中的所有字符串相加,用stringl以及stringbuffer的算法复杂度分别是多少?\n5、String类的实现\n6、平时怎么学习的\n7、讲一下曾经有没有一件事做得很好了，但后面发现还有改进的点的经历\n8、java为什么实现equal的同时还要实现hashcode？\n9、单例模式的缺点\n10、自己的优势在哪\n11、问了代码开发规范的一些问题\n12、事务的acid怎么保证的？"
-    }
+      "locator": "artifact-line:1#offset:0-6;blob:3ab8d42fe51d7ccc5bde378b5d843193ee8425b3",
+      "semantic_excerpt": "美团java校招二面面经（oc）\n1、自我介绍\n2、实习过程中哪家公司体感好\n3、算法题：图的拓扑排序\n4、一个string数组中的所有字符串相加,用stringl以及stringbuffer的算法复杂度分别是多少?\n5、String类的实现\n6、平时怎么学习的\n7、讲一下曾经有没有一件事做得很好了，但后面发现还有改进的点的经历\n8、java为什么实现equal的同时还要实现hashcode？\n9、单例模式的缺点\n10、自己的优势在哪\n11、问了代码开发规范的一些问题\n12、事务的acid怎么保证的？"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68bdb040000000001d00a613.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "3ab8d42fe51d7ccc5bde378b5d843193ee8425b3",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 677,
+        "content_sha256": "e5b1ed908724f46251d5892ed03c2c436586d2af5f42917eb7bfa170980639cb",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "1、自我介绍",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-6;blob:3ab8d42fe51d7ccc5bde378b5d843193ee8425b3",
+          "semantic_excerpt": "美团java校招二面面经（oc）\n1、自我介绍\n2、实习过程中哪家公司体感好\n3、算法题：图的拓扑排序\n4、一个string数组中的所有字符串相加,用stringl以及stringbuffer的算法复杂度分别是多少?\n5、String类的实现\n6、平时怎么学习的\n7、讲一下曾经有没有一件事做得很好了，但后面发现还有改进的点的经历\n8、java为什么实现equal的同时还要实现hashcode？\n9、单例模式的缺点\n10、自己的优势在哪\n11、问了代码开发规范的一些问题\n12、事务的acid怎么保证的？"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68bdb040000000001d00a613.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "159fec0320d52e797c70e7a1bd314eea95014658",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 390460,
+        "content_sha256": "b20fedb8a077dd5f84bcc09a2226e0ae02ab60571790419ff7d679f301efdf64",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "美团java校招二面面经（oc） - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-193;blob:159fec0320d52e797c70e7a1bd314eea95014658",
+          "semantic_excerpt": "美团java校招二面面经（oc）\n1、自我介绍\n2、实习过程中哪家公司体感好\n3、算法题：图的拓扑排序\n4、一个string数组中的所有字符串相加,用stringl以及stringbuffer的算法复杂度分别是多少?\n5、String类的实现\n6、平时怎么学习的\n7、讲一下曾经有没有一件事做得很好了，但后面发现还有改进的点的经历\n8、java为什么实现equal的同时还要实现hashcode？\n9、单例模式的缺点\n10、自己的优势在哪\n11、问了代码开发规范的一些问题\n12、事务的acid怎么保证的？"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68bdb040000000001d00a613.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "006fabd478d6bc556b76144df5f006d725f17d2c",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 23210,
+        "content_sha256": "8e2357de2b91200710cb7c9599513d9d0ea776678959e6dbb9079dd6f1b1b506",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "美团java校招二面面经（oc）\",",
+          "line": 584,
+          "locator": "artifact-line:584#offset:30-48;blob:006fabd478d6bc556b76144df5f006d725f17d2c",
+          "semantic_excerpt": "美团java校招二面面经（oc）\n1、自我介绍\n2、实习过程中哪家公司体感好\n3、算法题：图的拓扑排序\n4、一个string数组中的所有字符串相加,用stringl以及stringbuffer的算法复杂度分别是多少?\n5、String类的实现\n6、平时怎么学习的\n7、讲一下曾经有没有一件事做得很好了，但后面发现还有改进的点的经历\n8、java为什么实现equal的同时还要实现hashcode？\n9、单例模式的缺点\n10、自己的优势在哪\n11、问了代码开发规范的一些问题\n12、事务的acid怎么保证的？"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68bdb040000000001d00a613.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "3ab8d42fe51d7ccc5bde378b5d843193ee8425b3",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 677,
+      "content_sha256": "e5b1ed908724f46251d5892ed03c2c436586d2af5f42917eb7bfa170980639cb",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "1、自我介绍",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-6;blob:3ab8d42fe51d7ccc5bde378b5d843193ee8425b3",
+        "semantic_excerpt": "美团java校招二面面经（oc）\n1、自我介绍\n2、实习过程中哪家公司体感好\n3、算法题：图的拓扑排序\n4、一个string数组中的所有字符串相加,用stringl以及stringbuffer的算法复杂度分别是多少?\n5、String类的实现\n6、平时怎么学习的\n7、讲一下曾经有没有一件事做得很好了，但后面发现还有改进的点的经历\n8、java为什么实现equal的同时还要实现hashcode？\n9、单例模式的缺点\n10、自己的优势在哪\n11、问了代码开发规范的一些问题\n12、事务的acid怎么保证的？"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68bdb040000000001d00a613.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "159fec0320d52e797c70e7a1bd314eea95014658",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 390460,
+      "content_sha256": "b20fedb8a077dd5f84bcc09a2226e0ae02ab60571790419ff7d679f301efdf64",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "美团java校招二面面经（oc） - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-193;blob:159fec0320d52e797c70e7a1bd314eea95014658",
+        "semantic_excerpt": "美团java校招二面面经（oc）\n1、自我介绍\n2、实习过程中哪家公司体感好\n3、算法题：图的拓扑排序\n4、一个string数组中的所有字符串相加,用stringl以及stringbuffer的算法复杂度分别是多少?\n5、String类的实现\n6、平时怎么学习的\n7、讲一下曾经有没有一件事做得很好了，但后面发现还有改进的点的经历\n8、java为什么实现equal的同时还要实现hashcode？\n9、单例模式的缺点\n10、自己的优势在哪\n11、问了代码开发规范的一些问题\n12、事务的acid怎么保证的？"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68bdb040000000001d00a613.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "006fabd478d6bc556b76144df5f006d725f17d2c",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 23210,
+      "content_sha256": "8e2357de2b91200710cb7c9599513d9d0ea776678959e6dbb9079dd6f1b1b506",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "美团java校招二面面经（oc）\",",
+        "line": 584,
+        "locator": "artifact-line:584#offset:30-48;blob:006fabd478d6bc556b76144df5f006d725f17d2c",
+        "semantic_excerpt": "美团java校招二面面经（oc）\n1、自我介绍\n2、实习过程中哪家公司体感好\n3、算法题：图的拓扑排序\n4、一个string数组中的所有字符串相加,用stringl以及stringbuffer的算法复杂度分别是多少?\n5、String类的实现\n6、平时怎么学习的\n7、讲一下曾经有没有一件事做得很好了，但后面发现还有改进的点的经历\n8、java为什么实现equal的同时还要实现hashcode？\n9、单例模式的缺点\n10、自己的优势在哪\n11、问了代码开发规范的一些问题\n12、事务的acid怎么保证的？"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -69,8 +175,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -84,11 +190,12 @@
     }
   ],
   "limitations": [
-    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "9351322c9268662ca0c06dea5e60c62703e061e021dc62e7b7b8310bba6d594d"
+  "evidence_sha256": "b48b4704327c1b8810a65addd3bb04f700e47ee8161980a23c5fe1a00597a374"
 }

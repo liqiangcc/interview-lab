@@ -29,12 +29,26 @@
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "baidu-process",
+        "anchor": "百度",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-165;blob:5aecc84e19466c541821d99f578d17720c4fa1cc",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:百度",
+        "source_ref": "liqiangcc/xhs:note_detail/68b50c4b000000001c011403.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b50c4b000000001c011403.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -43,13 +57,108 @@
     "provenance": "source_projection",
     "byte_size": 2211,
     "content_sha256": "a4670ec964ee106d4f61203b16a936aaf326c968160039a7b5ec54b4dfb400f9",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "哥们燃尽啦，节奏比一面紧凑太多了，追问密集，几乎每个问题都要结合业务场景答，对于校招生来说有点过于考验工程能力和业务能力了",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "哥们燃尽啦，节奏比一面紧凑太多了，追问密集，几乎每个问题都要结合业务场景答，对于校招生来说有点过于考验工程能力和业务能力了\n \n面经去图书馆复盘了一下👇\n1. 你的 Agent 系统Prompt 是怎么设计和迭代的？有没有做过 Prompt 自动优化？当用户提出不完整的请求时，如何补全用户意图的？\n2. 构建 Agent 的时候，遇到过哪些瓶颈？LangChain 的 memory 默认机制在多用户并发中怎么做隔离？你是如何保证线程安全的？\n3. 微调 Llama2 你是怎么选择训练样本的？清洗逻辑是什么？你有没有观察到哪些训练样本质量问题对模型行为有很大影响？举例说明。\n4. DPO相比 SFT，有哪些优劣？它在 Agent 任务上效果提升明显吗？你怎么构造偏好对？构造逻辑是自动的还是人工？\n5. 你说你服务部署在 vLLM 上，为何选择它？KV-cache 如何帮助推理加速？你自己做过哪些优化？\n6. 假如需要支持 Streaming 输出，但当前服务延迟又超标，你会怎么折中设计？\n7. 多轮对话上下文状态管理是如何做的？如何在高并发场景下保证一致性？\n8. 你做的 Agent 使用了多少个外部工具，在调用链条上如何保障故障容错和超时机制？\n追问：有没有做过工具调用失败后的feedback策略设计？\n9. 训练过程中数据来自用户行为日志，你是如何从这些数据中抽取训练对话的？有没有做过归一化或事件抽象？\n10. 有没有了解过带有时间窗口/偏移限制的对话系统？模型怎么“理解时间”？\n11. 你觉得 Agent 哪些模块最容易在真实业务中出问题？你会如何监控和定位的？\n \n【反问环节】\n这个岗位未来是更偏 Agent 系统研发，还是大模型底层调优？\n能否举个业务中实际落地的例子？\n下一轮面试大概多久会安排？\n平时团队的工作节奏和沟通方式是怎样的？"
-    }
+      "locator": "artifact-line:1#offset:0-61;blob:274c06c7d5147bfa434dfb30ab02239eac2a2a4f",
+      "semantic_excerpt": "百度二面，燃尽局\n哥们燃尽啦，节奏比一面紧凑太多了，追问密集，几乎每个问题都要结合业务场景答，对于校招生来说有点过于考验工程能力和业务能力了\n \n面经去图书馆复盘了一下👇\n1. 你的 Agent 系统Prompt 是怎么设计和迭代的？有没有做过 Prompt 自动优化？当用户提出不完整的请求时，如何补全用户意图的？\n2. 构建 Agent 的时候，遇到过哪些瓶颈？LangChain 的 memory 默认机制在多用户并发中怎么做隔离？你是如何保证线程安全的？\n3. 微调 Llama2 你是怎么选择训练样本的？清洗逻辑是什么？你有没有观察到哪些训练样本质量问题对模型行为有很大影响？举例说明。\n4. DPO相比 SFT，有哪些优劣？它在 Agent 任务上效果提升明显吗？你怎么构造偏好对？构造逻辑是自动的还是人工？\n5. 你说你服务部署在 vLLM 上，为何选择它？KV-cache 如何帮助推理加速？你自己做过哪些优化？\n6. 假如需要支持 Streaming 输出，但当前服务延迟又超标，你会怎么折中设计？\n7. 多轮对话上下文状态管理是如何做的？如何在高并发场景下保证一致性？\n8. 你做的 Agent 使用了多少个外部工具，在调用链条上如何保障故障容错和超时机制？\n追问：有没有做过工具调用失败后的feedback策略设计？\n9. 训练过程中数据来自用户行为日志，你是如何从这些数据中抽取训练对话的？有没有做过归一化或事件抽象？\n10. 有没有了解过带有时间窗口/偏移限制的对话系统？模型怎么“理解时间”？\n11. 你觉得 Agent 哪些模块最容易在真实业务中出问题？你会如何监控和定位的？\n \n【反问环节】\n这个岗位未来是更偏 Agent 系统研发，还是大模型底层调优？\n能否举个业务中实际落地的例子？\n下一轮面试大概多久会安排？\n平时团队的工作节奏和沟通方式是怎样的？"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68b50c4b000000001c011403.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "274c06c7d5147bfa434dfb30ab02239eac2a2a4f",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 2211,
+        "content_sha256": "a4670ec964ee106d4f61203b16a936aaf326c968160039a7b5ec54b4dfb400f9",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "哥们燃尽啦，节奏比一面紧凑太多了，追问密集，几乎每个问题都要结合业务场景答，对于校招生来说有点过于考验工程能力和业务能力了",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-61;blob:274c06c7d5147bfa434dfb30ab02239eac2a2a4f",
+          "semantic_excerpt": "百度二面，燃尽局\n哥们燃尽啦，节奏比一面紧凑太多了，追问密集，几乎每个问题都要结合业务场景答，对于校招生来说有点过于考验工程能力和业务能力了\n \n面经去图书馆复盘了一下👇\n1. 你的 Agent 系统Prompt 是怎么设计和迭代的？有没有做过 Prompt 自动优化？当用户提出不完整的请求时，如何补全用户意图的？\n2. 构建 Agent 的时候，遇到过哪些瓶颈？LangChain 的 memory 默认机制在多用户并发中怎么做隔离？你是如何保证线程安全的？\n3. 微调 Llama2 你是怎么选择训练样本的？清洗逻辑是什么？你有没有观察到哪些训练样本质量问题对模型行为有很大影响？举例说明。\n4. DPO相比 SFT，有哪些优劣？它在 Agent 任务上效果提升明显吗？你怎么构造偏好对？构造逻辑是自动的还是人工？\n5. 你说你服务部署在 vLLM 上，为何选择它？KV-cache 如何帮助推理加速？你自己做过哪些优化？\n6. 假如需要支持 Streaming 输出，但当前服务延迟又超标，你会怎么折中设计？\n7. 多轮对话上下文状态管理是如何做的？如何在高并发场景下保证一致性？\n8. 你做的 Agent 使用了多少个外部工具，在调用链条上如何保障故障容错和超时机制？\n追问：有没有做过工具调用失败后的feedback策略设计？\n9. 训练过程中数据来自用户行为日志，你是如何从这些数据中抽取训练对话的？有没有做过归一化或事件抽象？\n10. 有没有了解过带有时间窗口/偏移限制的对话系统？模型怎么“理解时间”？\n11. 你觉得 Agent 哪些模块最容易在真实业务中出问题？你会如何监控和定位的？\n \n【反问环节】\n这个岗位未来是更偏 Agent 系统研发，还是大模型底层调优？\n能否举个业务中实际落地的例子？\n下一轮面试大概多久会安排？\n平时团队的工作节奏和沟通方式是怎样的？"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68b50c4b000000001c011403.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "5aecc84e19466c541821d99f578d17720c4fa1cc",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 396543,
+        "content_sha256": "b0a705aaeceac533902c0e2506cb2bd703eb637e584f26b4d163042426563ab0",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "百度二面，燃尽局 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-185;blob:5aecc84e19466c541821d99f578d17720c4fa1cc",
+          "semantic_excerpt": "百度二面，燃尽局\n哥们燃尽啦，节奏比一面紧凑太多了，追问密集，几乎每个问题都要结合业务场景答，对于校招生来说有点过于考验工程能力和业务能力了\n \n面经去图书馆复盘了一下👇\n1. 你的 Agent 系统Prompt 是怎么设计和迭代的？有没有做过 Prompt 自动优化？当用户提出不完整的请求时，如何补全用户意图的？\n2. 构建 Agent 的时候，遇到过哪些瓶颈？LangChain 的 memory 默认机制在多用户并发中怎么做隔离？你是如何保证线程安全的？\n3. 微调 Llama2 你是怎么选择训练样本的？清洗逻辑是什么？你有没有观察到哪些训练样本质量问题对模型行为有很大影响？举例说明。\n4. DPO相比 SFT，有哪些优劣？它在 Agent 任务上效果提升明显吗？你怎么构造偏好对？构造逻辑是自动的还是人工？\n5. 你说你服务部署在 vLLM 上，为何选择它？KV-cache 如何帮助推理加速？你自己做过哪些优化？\n6. 假如需要支持 Streaming 输出，但当前服务延迟又超标，你会怎么折中设计？\n7. 多轮对话上下文状态管理是如何做的？如何在高并发场景下保证一致性？\n8. 你做的 Agent 使用了多少个外部工具，在调用链条上如何保障故障容错和超时机制？\n追问：有没有做过工具调用失败后的feedback策略设计？\n9. 训练过程中数据来自用户行为日志，你是如何从这些数据中抽取训练对话的？有没有做过归一化或事件抽象？\n10. 有没有了解过带有时间窗口/偏移限制的对话系统？模型怎么“理解时间”？\n11. 你觉得 Agent 哪些模块最容易在真实业务中出问题？你会如何监控和定位的？\n \n【反问环节】\n这个岗位未来是更偏 Agent 系统研发，还是大模型底层调优？\n能否举个业务中实际落地的例子？\n下一轮面试大概多久会安排？\n平时团队的工作节奏和沟通方式是怎样的？"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68b50c4b000000001c011403.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "bc5a5c125de4dfe2364bee94ec13e460a1777302",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 26095,
+        "content_sha256": "00950f896112d28d61b458709bd7cb4134e3f80b66249d1edb05cfd4d1095767",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "百度二面，燃尽局\"",
+          "line": 629,
+          "locator": "artifact-line:629#offset:30-39;blob:bc5a5c125de4dfe2364bee94ec13e460a1777302",
+          "semantic_excerpt": "百度二面，燃尽局\n哥们燃尽啦，节奏比一面紧凑太多了，追问密集，几乎每个问题都要结合业务场景答，对于校招生来说有点过于考验工程能力和业务能力了\n \n面经去图书馆复盘了一下👇\n1. 你的 Agent 系统Prompt 是怎么设计和迭代的？有没有做过 Prompt 自动优化？当用户提出不完整的请求时，如何补全用户意图的？\n2. 构建 Agent 的时候，遇到过哪些瓶颈？LangChain 的 memory 默认机制在多用户并发中怎么做隔离？你是如何保证线程安全的？\n3. 微调 Llama2 你是怎么选择训练样本的？清洗逻辑是什么？你有没有观察到哪些训练样本质量问题对模型行为有很大影响？举例说明。\n4. DPO相比 SFT，有哪些优劣？它在 Agent 任务上效果提升明显吗？你怎么构造偏好对？构造逻辑是自动的还是人工？\n5. 你说你服务部署在 vLLM 上，为何选择它？KV-cache 如何帮助推理加速？你自己做过哪些优化？\n6. 假如需要支持 Streaming 输出，但当前服务延迟又超标，你会怎么折中设计？\n7. 多轮对话上下文状态管理是如何做的？如何在高并发场景下保证一致性？\n8. 你做的 Agent 使用了多少个外部工具，在调用链条上如何保障故障容错和超时机制？\n追问：有没有做过工具调用失败后的feedback策略设计？\n9. 训练过程中数据来自用户行为日志，你是如何从这些数据中抽取训练对话的？有没有做过归一化或事件抽象？\n10. 有没有了解过带有时间窗口/偏移限制的对话系统？模型怎么“理解时间”？\n11. 你觉得 Agent 哪些模块最容易在真实业务中出问题？你会如何监控和定位的？\n \n【反问环节】\n这个岗位未来是更偏 Agent 系统研发，还是大模型底层调优？\n能否举个业务中实际落地的例子？\n下一轮面试大概多久会安排？\n平时团队的工作节奏和沟通方式是怎样的？"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68b50c4b000000001c011403.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "274c06c7d5147bfa434dfb30ab02239eac2a2a4f",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 2211,
+      "content_sha256": "a4670ec964ee106d4f61203b16a936aaf326c968160039a7b5ec54b4dfb400f9",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "哥们燃尽啦，节奏比一面紧凑太多了，追问密集，几乎每个问题都要结合业务场景答，对于校招生来说有点过于考验工程能力和业务能力了",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-61;blob:274c06c7d5147bfa434dfb30ab02239eac2a2a4f",
+        "semantic_excerpt": "百度二面，燃尽局\n哥们燃尽啦，节奏比一面紧凑太多了，追问密集，几乎每个问题都要结合业务场景答，对于校招生来说有点过于考验工程能力和业务能力了\n \n面经去图书馆复盘了一下👇\n1. 你的 Agent 系统Prompt 是怎么设计和迭代的？有没有做过 Prompt 自动优化？当用户提出不完整的请求时，如何补全用户意图的？\n2. 构建 Agent 的时候，遇到过哪些瓶颈？LangChain 的 memory 默认机制在多用户并发中怎么做隔离？你是如何保证线程安全的？\n3. 微调 Llama2 你是怎么选择训练样本的？清洗逻辑是什么？你有没有观察到哪些训练样本质量问题对模型行为有很大影响？举例说明。\n4. DPO相比 SFT，有哪些优劣？它在 Agent 任务上效果提升明显吗？你怎么构造偏好对？构造逻辑是自动的还是人工？\n5. 你说你服务部署在 vLLM 上，为何选择它？KV-cache 如何帮助推理加速？你自己做过哪些优化？\n6. 假如需要支持 Streaming 输出，但当前服务延迟又超标，你会怎么折中设计？\n7. 多轮对话上下文状态管理是如何做的？如何在高并发场景下保证一致性？\n8. 你做的 Agent 使用了多少个外部工具，在调用链条上如何保障故障容错和超时机制？\n追问：有没有做过工具调用失败后的feedback策略设计？\n9. 训练过程中数据来自用户行为日志，你是如何从这些数据中抽取训练对话的？有没有做过归一化或事件抽象？\n10. 有没有了解过带有时间窗口/偏移限制的对话系统？模型怎么“理解时间”？\n11. 你觉得 Agent 哪些模块最容易在真实业务中出问题？你会如何监控和定位的？\n \n【反问环节】\n这个岗位未来是更偏 Agent 系统研发，还是大模型底层调优？\n能否举个业务中实际落地的例子？\n下一轮面试大概多久会安排？\n平时团队的工作节奏和沟通方式是怎样的？"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68b50c4b000000001c011403.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "5aecc84e19466c541821d99f578d17720c4fa1cc",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 396543,
+      "content_sha256": "b0a705aaeceac533902c0e2506cb2bd703eb637e584f26b4d163042426563ab0",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "百度二面，燃尽局 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-185;blob:5aecc84e19466c541821d99f578d17720c4fa1cc",
+        "semantic_excerpt": "百度二面，燃尽局\n哥们燃尽啦，节奏比一面紧凑太多了，追问密集，几乎每个问题都要结合业务场景答，对于校招生来说有点过于考验工程能力和业务能力了\n \n面经去图书馆复盘了一下👇\n1. 你的 Agent 系统Prompt 是怎么设计和迭代的？有没有做过 Prompt 自动优化？当用户提出不完整的请求时，如何补全用户意图的？\n2. 构建 Agent 的时候，遇到过哪些瓶颈？LangChain 的 memory 默认机制在多用户并发中怎么做隔离？你是如何保证线程安全的？\n3. 微调 Llama2 你是怎么选择训练样本的？清洗逻辑是什么？你有没有观察到哪些训练样本质量问题对模型行为有很大影响？举例说明。\n4. DPO相比 SFT，有哪些优劣？它在 Agent 任务上效果提升明显吗？你怎么构造偏好对？构造逻辑是自动的还是人工？\n5. 你说你服务部署在 vLLM 上，为何选择它？KV-cache 如何帮助推理加速？你自己做过哪些优化？\n6. 假如需要支持 Streaming 输出，但当前服务延迟又超标，你会怎么折中设计？\n7. 多轮对话上下文状态管理是如何做的？如何在高并发场景下保证一致性？\n8. 你做的 Agent 使用了多少个外部工具，在调用链条上如何保障故障容错和超时机制？\n追问：有没有做过工具调用失败后的feedback策略设计？\n9. 训练过程中数据来自用户行为日志，你是如何从这些数据中抽取训练对话的？有没有做过归一化或事件抽象？\n10. 有没有了解过带有时间窗口/偏移限制的对话系统？模型怎么“理解时间”？\n11. 你觉得 Agent 哪些模块最容易在真实业务中出问题？你会如何监控和定位的？\n \n【反问环节】\n这个岗位未来是更偏 Agent 系统研发，还是大模型底层调优？\n能否举个业务中实际落地的例子？\n下一轮面试大概多久会安排？\n平时团队的工作节奏和沟通方式是怎样的？"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68b50c4b000000001c011403.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "bc5a5c125de4dfe2364bee94ec13e460a1777302",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 26095,
+      "content_sha256": "00950f896112d28d61b458709bd7cb4134e3f80b66249d1edb05cfd4d1095767",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "百度二面，燃尽局\"",
+        "line": 629,
+        "locator": "artifact-line:629#offset:30-39;blob:bc5a5c125de4dfe2364bee94ec13e460a1777302",
+        "semantic_excerpt": "百度二面，燃尽局\n哥们燃尽啦，节奏比一面紧凑太多了，追问密集，几乎每个问题都要结合业务场景答，对于校招生来说有点过于考验工程能力和业务能力了\n \n面经去图书馆复盘了一下👇\n1. 你的 Agent 系统Prompt 是怎么设计和迭代的？有没有做过 Prompt 自动优化？当用户提出不完整的请求时，如何补全用户意图的？\n2. 构建 Agent 的时候，遇到过哪些瓶颈？LangChain 的 memory 默认机制在多用户并发中怎么做隔离？你是如何保证线程安全的？\n3. 微调 Llama2 你是怎么选择训练样本的？清洗逻辑是什么？你有没有观察到哪些训练样本质量问题对模型行为有很大影响？举例说明。\n4. DPO相比 SFT，有哪些优劣？它在 Agent 任务上效果提升明显吗？你怎么构造偏好对？构造逻辑是自动的还是人工？\n5. 你说你服务部署在 vLLM 上，为何选择它？KV-cache 如何帮助推理加速？你自己做过哪些优化？\n6. 假如需要支持 Streaming 输出，但当前服务延迟又超标，你会怎么折中设计？\n7. 多轮对话上下文状态管理是如何做的？如何在高并发场景下保证一致性？\n8. 你做的 Agent 使用了多少个外部工具，在调用链条上如何保障故障容错和超时机制？\n追问：有没有做过工具调用失败后的feedback策略设计？\n9. 训练过程中数据来自用户行为日志，你是如何从这些数据中抽取训练对话的？有没有做过归一化或事件抽象？\n10. 有没有了解过带有时间窗口/偏移限制的对话系统？模型怎么“理解时间”？\n11. 你觉得 Agent 哪些模块最容易在真实业务中出问题？你会如何监控和定位的？\n \n【反问环节】\n这个岗位未来是更偏 Agent 系统研发，还是大模型底层调优？\n能否举个业务中实际落地的例子？\n下一轮面试大概多久会安排？\n平时团队的工作节奏和沟通方式是怎样的？"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -84,10 +193,11 @@
   ],
   "limitations": [
     "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "90d5b5a669245bb5cb6d4d1afc00c2061fce6fc22eac2ce0ce57662546728856"
+  "evidence_sha256": "4caeb865b471e0c9c3795f478baa900caee15a448e01cb423c75c039f04e5995"
 }

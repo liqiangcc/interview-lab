@@ -7,8 +7,8 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "991af67f61f82d29ccae34c3bbb4f3c90e407cc02f8b5da588f17722ffc8f925",
-  "disposition": "blocked",
-  "rationale": "Exact Source is generic advice or aggregated/summarized material without a bounded candidate interview event; retain pending.",
+  "disposition": "not-interview",
+  "rationale": "Exact Source is an explicit question bank or job advertisement rather than a candidate interview event.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
@@ -30,12 +30,16 @@
     "outcome_signal": false,
     "resource_signal": true,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b3c286000000001c006096.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -44,13 +48,108 @@
     "provenance": "source_projection",
     "byte_size": 511,
     "content_sha256": "38507a3bd1902e85a2a01ca29fbabb6821b897f0c0569e354ea39cfa973c9eb5",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "还在找工作的Java后端们上点心吧，现在的面试主要都是问场景题，近期面试过的都应该深有体会吧，准备金九银十的小伙伴要抓紧了！",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "还在找工作的Java后端们上点心吧，现在的面试主要都是问场景题，近期面试过的都应该深有体会吧，准备金九银十的小伙伴要抓紧了！\n整理了一份高频的场景题库放在后面了，有面试计划的小伙伴都可以看看，不要再迷茫了！"
-    }
+      "locator": "artifact-line:1#offset:0-62;blob:15b3f8701a0afef41305fc0fad81029393f90071",
+      "semantic_excerpt": "今天面了个Java后端，问她5亿条数据放到...\n还在找工作的Java后端们上点心吧，现在的面试主要都是问场景题，近期面试过的都应该深有体会吧，准备金九银十的小伙伴要抓紧了！\n整理了一份高频的场景题库放在后面了，有面试计划的小伙伴都可以看看，不要再迷茫了！"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68b3c286000000001c006096.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "15b3f8701a0afef41305fc0fad81029393f90071",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 511,
+        "content_sha256": "38507a3bd1902e85a2a01ca29fbabb6821b897f0c0569e354ea39cfa973c9eb5",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "还在找工作的Java后端们上点心吧，现在的面试主要都是问场景题，近期面试过的都应该深有体会吧，准备金九银十的小伙伴要抓紧了！",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-62;blob:15b3f8701a0afef41305fc0fad81029393f90071",
+          "semantic_excerpt": "今天面了个Java后端，问她5亿条数据放到...\n还在找工作的Java后端们上点心吧，现在的面试主要都是问场景题，近期面试过的都应该深有体会吧，准备金九银十的小伙伴要抓紧了！\n整理了一份高频的场景题库放在后面了，有面试计划的小伙伴都可以看看，不要再迷茫了！"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68b3c286000000001c006096.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "fba48f4720f5d66e5b403014d36c4f62b53c8854",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 397856,
+        "content_sha256": "b3647eeb18466fb330a28855d0d7243c1f79570a0dafd0813c25a65ffe3a1b20",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "今天面了个Java后端，问她5亿条数据放到... - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-201;blob:fba48f4720f5d66e5b403014d36c4f62b53c8854",
+          "semantic_excerpt": "今天面了个Java后端，问她5亿条数据放到...\n还在找工作的Java后端们上点心吧，现在的面试主要都是问场景题，近期面试过的都应该深有体会吧，准备金九银十的小伙伴要抓紧了！\n整理了一份高频的场景题库放在后面了，有面试计划的小伙伴都可以看看，不要再迷茫了！"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68b3c286000000001c006096.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "09d7742706a237a15bdb96978e1580421910b385",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 31019,
+        "content_sha256": "04bc3d6ac539e07266b69e2c2b46c1828c1960d66fd78e236f136d1da9e042b9",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "今天面了个Java后端，问她5亿条数据放到...\",",
+          "line": 706,
+          "locator": "artifact-line:706#offset:30-56;blob:09d7742706a237a15bdb96978e1580421910b385",
+          "semantic_excerpt": "今天面了个Java后端，问她5亿条数据放到...\n还在找工作的Java后端们上点心吧，现在的面试主要都是问场景题，近期面试过的都应该深有体会吧，准备金九银十的小伙伴要抓紧了！\n整理了一份高频的场景题库放在后面了，有面试计划的小伙伴都可以看看，不要再迷茫了！"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68b3c286000000001c006096.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "15b3f8701a0afef41305fc0fad81029393f90071",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 511,
+      "content_sha256": "38507a3bd1902e85a2a01ca29fbabb6821b897f0c0569e354ea39cfa973c9eb5",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "还在找工作的Java后端们上点心吧，现在的面试主要都是问场景题，近期面试过的都应该深有体会吧，准备金九银十的小伙伴要抓紧了！",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-62;blob:15b3f8701a0afef41305fc0fad81029393f90071",
+        "semantic_excerpt": "今天面了个Java后端，问她5亿条数据放到...\n还在找工作的Java后端们上点心吧，现在的面试主要都是问场景题，近期面试过的都应该深有体会吧，准备金九银十的小伙伴要抓紧了！\n整理了一份高频的场景题库放在后面了，有面试计划的小伙伴都可以看看，不要再迷茫了！"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68b3c286000000001c006096.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "fba48f4720f5d66e5b403014d36c4f62b53c8854",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 397856,
+      "content_sha256": "b3647eeb18466fb330a28855d0d7243c1f79570a0dafd0813c25a65ffe3a1b20",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "今天面了个Java后端，问她5亿条数据放到... - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-201;blob:fba48f4720f5d66e5b403014d36c4f62b53c8854",
+        "semantic_excerpt": "今天面了个Java后端，问她5亿条数据放到...\n还在找工作的Java后端们上点心吧，现在的面试主要都是问场景题，近期面试过的都应该深有体会吧，准备金九银十的小伙伴要抓紧了！\n整理了一份高频的场景题库放在后面了，有面试计划的小伙伴都可以看看，不要再迷茫了！"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68b3c286000000001c006096.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "09d7742706a237a15bdb96978e1580421910b385",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 31019,
+      "content_sha256": "04bc3d6ac539e07266b69e2c2b46c1828c1960d66fd78e236f136d1da9e042b9",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "今天面了个Java后端，问她5亿条数据放到...\",",
+        "line": 706,
+        "locator": "artifact-line:706#offset:30-56;blob:09d7742706a237a15bdb96978e1580421910b385",
+        "semantic_excerpt": "今天面了个Java后端，问她5亿条数据放到...\n还在找工作的Java后端们上点心吧，现在的面试主要都是问场景题，近期面试过的都应该深有体会吧，准备金九银十的小伙伴要抓紧了！\n整理了一份高频的场景题库放在后面了，有面试计划的小伙伴都可以看看，不要再迷茫了！"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -69,8 +168,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source is generic advice or aggregated/summarized material without a bounded candidate interview event; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is an explicit question bank or job advertisement rather than a candidate interview event."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -84,11 +183,12 @@
     }
   ],
   "limitations": [
-    "Exact Source is generic advice or aggregated/summarized material without a bounded candidate interview event; retain pending.",
+    "Exact Source is an explicit question bank or job advertisement rather than a candidate interview event.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "1193a8d05e420368c1cc152fe3009919937f7b979a0a6dd7c38f126b71cbbc48"
+  "evidence_sha256": "60b86022ba92bc3b1043d2bf0adc6023b598460e670f6fc27c855ef83a6f630b"
 }

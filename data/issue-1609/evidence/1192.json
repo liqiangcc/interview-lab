@@ -7,15 +7,12 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "c3f2f1d6c78007e99535a2775f7860968fdb1272de91cd570e636f7cb80e485a",
-  "disposition": "blocked",
-  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "disposition": "single-interview",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
-      "question-list-only",
-      "no-first-person-event",
-      "question-only",
-      "no-candidate-event-evidence"
+      "no-first-person-event"
     ],
     "questions": 8,
     "has_first_person_event": false,
@@ -23,19 +20,33 @@
     "has_bounded_event": true,
     "has_detailed_event": true,
     "has_completed_event_evidence": true,
-    "has_structured_candidate_event": false,
+    "has_structured_candidate_event": true,
     "generic_advice_or_aggregated": false,
     "scheduled_only": false,
-    "question_only": true,
+    "question_only": false,
     "outcome_signal": false,
     "resource_signal": true,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
-    "only_question_list": true,
+    "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "kuaishou-process",
+        "anchor": "快手",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-165;blob:8e6cf05efa928a8d1c9b7153fe6a6930ec9807d1",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:快手",
+        "source_ref": "liqiangcc/xhs:note_detail/68af079c000000001b023f0c.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68af079c000000001b023f0c.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -44,13 +55,108 @@
     "provenance": "source_projection",
     "byte_size": 897,
     "content_sha256": "27e67864c66540fc0aa777d904f42eb00df5f9f87075814502d9553b2bcdb12c",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "自我介绍（2分钟）",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "自我介绍（2分钟）\n1、挑一个项目聊\n聊项目怎么实现的，怎么保证秒级的竞品数据回传\n一致性怎么做的，怎么考虑的，\n消费堆积怎么处理的，重复消息的处理\n线上问题怎么排查的\n2、java基础\nhashmap的put和扩容机制说一下\n3、reentrantlock的公平锁和非公平锁的实现\n4、mysql\n事物隔离级别：可重复读的幻读是怎么产生的 mvcc怎么解决的\n5、cpu负载高排查思路和线程挂起的排查思路\n6、有没有处理过慢查询，思路，线上真的处理过吗（这个我还真处理过）\n7、算法题：二叉树的层序遍历\n8、反问\n问了一下业务相关的\n不让说面评\n总结：\n面试官还挺友善的都是问一些简历上的问题，难度一般，算法题也没为难我，知道我最近没刷题，给了个简单的题目"
-    }
+      "locator": "artifact-line:1#offset:0-9;blob:cda8b0df58af3f1760fbb0389ff6a633e7c7ae3c",
+      "semantic_excerpt": "快手一面\n自我介绍（2分钟）\n1、挑一个项目聊\n聊项目怎么实现的，怎么保证秒级的竞品数据回传\n一致性怎么做的，怎么考虑的，\n消费堆积怎么处理的，重复消息的处理\n线上问题怎么排查的\n2、java基础\nhashmap的put和扩容机制说一下\n3、reentrantlock的公平锁和非公平锁的实现\n4、mysql\n事物隔离级别：可重复读的幻读是怎么产生的 mvcc怎么解决的\n5、cpu负载高排查思路和线程挂起的排查思路\n6、有没有处理过慢查询，思路，线上真的处理过吗（这个我还真处理过）\n7、算法题：二叉树的层序遍历\n8、反问\n问了一下业务相关的\n不让说面评\n总结：\n面试官还挺友善的都是问一些简历上的问题，难度一般，算法题也没为难我，知道我最近没刷题，给了个简单的题目"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68af079c000000001b023f0c.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "cda8b0df58af3f1760fbb0389ff6a633e7c7ae3c",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 897,
+        "content_sha256": "27e67864c66540fc0aa777d904f42eb00df5f9f87075814502d9553b2bcdb12c",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "自我介绍（2分钟）",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-9;blob:cda8b0df58af3f1760fbb0389ff6a633e7c7ae3c",
+          "semantic_excerpt": "快手一面\n自我介绍（2分钟）\n1、挑一个项目聊\n聊项目怎么实现的，怎么保证秒级的竞品数据回传\n一致性怎么做的，怎么考虑的，\n消费堆积怎么处理的，重复消息的处理\n线上问题怎么排查的\n2、java基础\nhashmap的put和扩容机制说一下\n3、reentrantlock的公平锁和非公平锁的实现\n4、mysql\n事物隔离级别：可重复读的幻读是怎么产生的 mvcc怎么解决的\n5、cpu负载高排查思路和线程挂起的排查思路\n6、有没有处理过慢查询，思路，线上真的处理过吗（这个我还真处理过）\n7、算法题：二叉树的层序遍历\n8、反问\n问了一下业务相关的\n不让说面评\n总结：\n面试官还挺友善的都是问一些简历上的问题，难度一般，算法题也没为难我，知道我最近没刷题，给了个简单的题目"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68af079c000000001b023f0c.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "8e6cf05efa928a8d1c9b7153fe6a6930ec9807d1",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 387399,
+        "content_sha256": "0efdc70e97b807cbb52e42455696772cc398a7245eae7c6f26a4f9bb1fd36ccd",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "快手一面 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-181;blob:8e6cf05efa928a8d1c9b7153fe6a6930ec9807d1",
+          "semantic_excerpt": "快手一面\n自我介绍（2分钟）\n1、挑一个项目聊\n聊项目怎么实现的，怎么保证秒级的竞品数据回传\n一致性怎么做的，怎么考虑的，\n消费堆积怎么处理的，重复消息的处理\n线上问题怎么排查的\n2、java基础\nhashmap的put和扩容机制说一下\n3、reentrantlock的公平锁和非公平锁的实现\n4、mysql\n事物隔离级别：可重复读的幻读是怎么产生的 mvcc怎么解决的\n5、cpu负载高排查思路和线程挂起的排查思路\n6、有没有处理过慢查询，思路，线上真的处理过吗（这个我还真处理过）\n7、算法题：二叉树的层序遍历\n8、反问\n问了一下业务相关的\n不让说面评\n总结：\n面试官还挺友善的都是问一些简历上的问题，难度一般，算法题也没为难我，知道我最近没刷题，给了个简单的题目"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68af079c000000001b023f0c.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "e602af2ec603ed1e7cb86c1e32fa5abd38c1e741",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 20987,
+        "content_sha256": "93e776735208fd28b71eb462ac2022f7fb0316bc662a671476b48d1b6ff3e98b",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "快手一面\",",
+          "line": 540,
+          "locator": "artifact-line:540#offset:30-36;blob:e602af2ec603ed1e7cb86c1e32fa5abd38c1e741",
+          "semantic_excerpt": "快手一面\n自我介绍（2分钟）\n1、挑一个项目聊\n聊项目怎么实现的，怎么保证秒级的竞品数据回传\n一致性怎么做的，怎么考虑的，\n消费堆积怎么处理的，重复消息的处理\n线上问题怎么排查的\n2、java基础\nhashmap的put和扩容机制说一下\n3、reentrantlock的公平锁和非公平锁的实现\n4、mysql\n事物隔离级别：可重复读的幻读是怎么产生的 mvcc怎么解决的\n5、cpu负载高排查思路和线程挂起的排查思路\n6、有没有处理过慢查询，思路，线上真的处理过吗（这个我还真处理过）\n7、算法题：二叉树的层序遍历\n8、反问\n问了一下业务相关的\n不让说面评\n总结：\n面试官还挺友善的都是问一些简历上的问题，难度一般，算法题也没为难我，知道我最近没刷题，给了个简单的题目"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68af079c000000001b023f0c.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "cda8b0df58af3f1760fbb0389ff6a633e7c7ae3c",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 897,
+      "content_sha256": "27e67864c66540fc0aa777d904f42eb00df5f9f87075814502d9553b2bcdb12c",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "自我介绍（2分钟）",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-9;blob:cda8b0df58af3f1760fbb0389ff6a633e7c7ae3c",
+        "semantic_excerpt": "快手一面\n自我介绍（2分钟）\n1、挑一个项目聊\n聊项目怎么实现的，怎么保证秒级的竞品数据回传\n一致性怎么做的，怎么考虑的，\n消费堆积怎么处理的，重复消息的处理\n线上问题怎么排查的\n2、java基础\nhashmap的put和扩容机制说一下\n3、reentrantlock的公平锁和非公平锁的实现\n4、mysql\n事物隔离级别：可重复读的幻读是怎么产生的 mvcc怎么解决的\n5、cpu负载高排查思路和线程挂起的排查思路\n6、有没有处理过慢查询，思路，线上真的处理过吗（这个我还真处理过）\n7、算法题：二叉树的层序遍历\n8、反问\n问了一下业务相关的\n不让说面评\n总结：\n面试官还挺友善的都是问一些简历上的问题，难度一般，算法题也没为难我，知道我最近没刷题，给了个简单的题目"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68af079c000000001b023f0c.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "8e6cf05efa928a8d1c9b7153fe6a6930ec9807d1",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 387399,
+      "content_sha256": "0efdc70e97b807cbb52e42455696772cc398a7245eae7c6f26a4f9bb1fd36ccd",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "快手一面 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-181;blob:8e6cf05efa928a8d1c9b7153fe6a6930ec9807d1",
+        "semantic_excerpt": "快手一面\n自我介绍（2分钟）\n1、挑一个项目聊\n聊项目怎么实现的，怎么保证秒级的竞品数据回传\n一致性怎么做的，怎么考虑的，\n消费堆积怎么处理的，重复消息的处理\n线上问题怎么排查的\n2、java基础\nhashmap的put和扩容机制说一下\n3、reentrantlock的公平锁和非公平锁的实现\n4、mysql\n事物隔离级别：可重复读的幻读是怎么产生的 mvcc怎么解决的\n5、cpu负载高排查思路和线程挂起的排查思路\n6、有没有处理过慢查询，思路，线上真的处理过吗（这个我还真处理过）\n7、算法题：二叉树的层序遍历\n8、反问\n问了一下业务相关的\n不让说面评\n总结：\n面试官还挺友善的都是问一些简历上的问题，难度一般，算法题也没为难我，知道我最近没刷题，给了个简单的题目"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68af079c000000001b023f0c.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "e602af2ec603ed1e7cb86c1e32fa5abd38c1e741",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 20987,
+      "content_sha256": "93e776735208fd28b71eb462ac2022f7fb0316bc662a671476b48d1b6ff3e98b",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "快手一面\",",
+        "line": 540,
+        "locator": "artifact-line:540#offset:30-36;blob:e602af2ec603ed1e7cb86c1e32fa5abd38c1e741",
+        "semantic_excerpt": "快手一面\n自我介绍（2分钟）\n1、挑一个项目聊\n聊项目怎么实现的，怎么保证秒级的竞品数据回传\n一致性怎么做的，怎么考虑的，\n消费堆积怎么处理的，重复消息的处理\n线上问题怎么排查的\n2、java基础\nhashmap的put和扩容机制说一下\n3、reentrantlock的公平锁和非公平锁的实现\n4、mysql\n事物隔离级别：可重复读的幻读是怎么产生的 mvcc怎么解决的\n5、cpu负载高排查思路和线程挂起的排查思路\n6、有没有处理过慢查询，思路，线上真的处理过吗（这个我还真处理过）\n7、算法题：二叉树的层序遍历\n8、反问\n问了一下业务相关的\n不让说面评\n总结：\n面试官还挺友善的都是问一些简历上的问题，难度一般，算法题也没为难我，知道我最近没刷题，给了个简单的题目"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -69,8 +175,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -84,11 +190,12 @@
     }
   ],
   "limitations": [
-    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "f6e352dbb57a510c63c1811353b5008efc9138d9c31c69137b09b1920ade18d2"
+  "evidence_sha256": "8ccdd13867dc397fac1535a17fd05ca641eebcdad2695efb8dfd4e3c45db820f"
 }

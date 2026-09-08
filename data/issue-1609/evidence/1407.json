@@ -7,15 +7,12 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "9c94c810e5348caf15fcf7af373e40d86ac2a8bf06f40c87f10044ef0d6d963b",
-  "disposition": "blocked",
-  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "disposition": "single-interview",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
-      "question-list-only",
-      "no-first-person-event",
-      "question-only",
-      "no-candidate-event-evidence"
+      "no-first-person-event"
     ],
     "questions": 7,
     "has_first_person_event": false,
@@ -23,19 +20,33 @@
     "has_bounded_event": true,
     "has_detailed_event": true,
     "has_completed_event_evidence": true,
-    "has_structured_candidate_event": false,
+    "has_structured_candidate_event": true,
     "generic_advice_or_aggregated": false,
     "scheduled_only": false,
-    "question_only": true,
+    "question_only": false,
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
-    "only_question_list": true,
+    "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "bytedance-process",
+        "anchor": "字节",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-165;blob:1b49723362750bdae6614fd221b0cc2fb30208fd",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:字节",
+        "source_ref": "liqiangcc/xhs:note_detail/68d7f9a9000000001201c0c6.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 2,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68d7f9a9000000001201c0c6.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -44,13 +55,78 @@
     "provenance": "source_projection",
     "byte_size": 22353,
     "content_sha256": "01347d83c98aaa47681658a1c2d9854171a451d02fbf8691cc3854d146676d67",
+    "cache_status": "not-applicable",
     "excerpt": {
-      "excerpt": "\"global\": {",
-      "line": 2,
-      "locator": "artifact-line:2",
-      "semantic_excerpt": "1、自我介绍，学校课程\n2、redis中缓存读的是MySQL中的从数据库，怎么感知数据发生修改\n3、印象中做过的最有难度的事情\n4、实习经历的项目介绍下\n5、redis中ttl的实现原理\n6、算法题：手写一个简易版线程池\n7、算法题：二叉树的z字型遍历"
-    }
+      "excerpt": "字节java校招二面面经\",",
+      "line": 498,
+      "locator": "artifact-line:498#offset:30-44;blob:5429b4989d4826e5610fd48a029332d57f53774c",
+      "semantic_excerpt": "字节java校招二面面经\n1、自我介绍，学校课程\n2、redis中缓存读的是MySQL中的从数据库，怎么感知数据发生修改\n3、印象中做过的最有难度的事情\n4、实习经历的项目介绍下\n5、redis中ttl的实现原理\n6、算法题：手写一个简易版线程池\n7、算法题：二叉树的z字型遍历"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_detail/68d7f9a9000000001201c0c6.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "1b49723362750bdae6614fd221b0cc2fb30208fd",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 388645,
+        "content_sha256": "162a6c3242ed71bcd68deaf2c9abfb12fe05761f6a954ac5e70da5b48b709c26",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "字节java校招二面面经 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-189;blob:1b49723362750bdae6614fd221b0cc2fb30208fd",
+          "semantic_excerpt": "字节java校招二面面经\n1、自我介绍，学校课程\n2、redis中缓存读的是MySQL中的从数据库，怎么感知数据发生修改\n3、印象中做过的最有难度的事情\n4、实习经历的项目介绍下\n5、redis中ttl的实现原理\n6、算法题：手写一个简易版线程池\n7、算法题：二叉树的z字型遍历"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68d7f9a9000000001201c0c6.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "5429b4989d4826e5610fd48a029332d57f53774c",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 22353,
+        "content_sha256": "01347d83c98aaa47681658a1c2d9854171a451d02fbf8691cc3854d146676d67",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "字节java校招二面面经\",",
+          "line": 498,
+          "locator": "artifact-line:498#offset:30-44;blob:5429b4989d4826e5610fd48a029332d57f53774c",
+          "semantic_excerpt": "字节java校招二面面经\n1、自我介绍，学校课程\n2、redis中缓存读的是MySQL中的从数据库，怎么感知数据发生修改\n3、印象中做过的最有难度的事情\n4、实习经历的项目介绍下\n5、redis中ttl的实现原理\n6、算法题：手写一个简易版线程池\n7、算法题：二叉树的z字型遍历"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/68d7f9a9000000001201c0c6.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "1b49723362750bdae6614fd221b0cc2fb30208fd",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 388645,
+      "content_sha256": "162a6c3242ed71bcd68deaf2c9abfb12fe05761f6a954ac5e70da5b48b709c26",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "字节java校招二面面经 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-189;blob:1b49723362750bdae6614fd221b0cc2fb30208fd",
+        "semantic_excerpt": "字节java校招二面面经\n1、自我介绍，学校课程\n2、redis中缓存读的是MySQL中的从数据库，怎么感知数据发生修改\n3、印象中做过的最有难度的事情\n4、实习经历的项目介绍下\n5、redis中ttl的实现原理\n6、算法题：手写一个简易版线程池\n7、算法题：二叉树的z字型遍历"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68d7f9a9000000001201c0c6.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "5429b4989d4826e5610fd48a029332d57f53774c",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 22353,
+      "content_sha256": "01347d83c98aaa47681658a1c2d9854171a451d02fbf8691cc3854d146676d67",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "字节java校招二面面经\",",
+        "line": 498,
+        "locator": "artifact-line:498#offset:30-44;blob:5429b4989d4826e5610fd48a029332d57f53774c",
+        "semantic_excerpt": "字节java校招二面面经\n1、自我介绍，学校课程\n2、redis中缓存读的是MySQL中的从数据库，怎么感知数据发生修改\n3、印象中做过的最有难度的事情\n4、实习经历的项目介绍下\n5、redis中ttl的实现原理\n6、算法题：手写一个简易版线程池\n7、算法题：二叉树的z字型遍历"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -69,8 +145,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -84,11 +160,12 @@
     }
   ],
   "limitations": [
-    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "0890f952d99b11043b3990d8354b37dbe2715fbd2ad3766fcc7e90394734f4d4"
+  "evidence_sha256": "745926d2b3f7efc96e1f644c0923fc1afab0c02e8bfa8bda1a535bba9f889fed"
 }

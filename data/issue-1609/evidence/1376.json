@@ -17,7 +17,7 @@
       "question-only",
       "no-candidate-event-evidence"
     ],
-    "questions": 24,
+    "questions": 25,
     "has_first_person_event": false,
     "has_explicit_candidate_event": false,
     "has_bounded_event": true,
@@ -30,12 +30,26 @@
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": true,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "alibaba-process",
+        "anchor": "阿里",
+        "line": 1,
+        "locator": "artifact-line:490#offset:168-170;blob:d0742703038e011e82640f03df8f1794385675c9",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:阿里",
+        "source_ref": "liqiangcc/xhs:note_detail/68d16a7d000000000e031041.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 2,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68d16a7d000000000e031041.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -44,13 +58,78 @@
     "provenance": "source_projection",
     "byte_size": 23365,
     "content_sha256": "944ff31666e757ced2890aee9ee7eefb5951c7ddd6aa9178b8256613caac8e8d",
+    "cache_status": "not-applicable",
     "excerpt": {
-      "excerpt": "\"global\": {",
-      "line": 2,
-      "locator": "artifact-line:2",
-      "semantic_excerpt": "岗位：研发工程师C/C++\n1、自我介绍\n2、介绍基于c++的即时通信项目\n3、消息发送的协议是自定义的还是用了什么\n4、用画板做了一个思考题：两个矩形，长宽分别平行于xy坐标轴，计算两个矩形的重叠面积\n5、手撕：写一个myString，实现构造，析构，拷贝构造，移动构造\n6、const可以用来修饰哪些东西，如果修饰成员函数表示什么\n7、引用和指针的区别\n8、如何避免野指针、内存泄漏的问题（答了智能指针，还问有其他方法吗，没想出来）\n9、智能指针有哪些\n10、unique_ptr如何转移所有权\n11、线程和进程的区别\n12、线程间和进程间分别是怎么通信\n13、线程间有哪些锁\n14、条件变量怎么去通知另一个线程？唤醒之后就能获得锁吗？\n15、mmap如何实现通信呢，另一个进程怎么知道这个进程写入了东西呢？\n16、tcp和udp的区别\n17、tcp的接收端应用层是否可能收到乱序的数据，在哪里实现排序的，tcp的缓存区是在哪\n18、tcp的拥塞控制\n19、对比http1.1、http2.0、http3.0\n20、http3.0如何实现0RTT\n21、说一下常用的数据结构\n22、常用的设计模式\n23、手写单例模式，你的实现是安全的吗，为什么\n24、反问"
-    }
+      "excerpt": "9.22 阿里智能信息部一面\",",
+      "line": 500,
+      "locator": "artifact-line:500#offset:30-46;blob:bebfff3a3c43a15908059932b46e2e914ad0a3c4",
+      "semantic_excerpt": "9.22 阿里智能信息部一面\n岗位：研发工程师C/C++\n1、自我介绍\n2、介绍基于c++的即时通信项目\n3、消息发送的协议是自定义的还是用了什么\n4、用画板做了一个思考题：两个矩形，长宽分别平行于xy坐标轴，计算两个矩形的重叠面积\n5、手撕：写一个myString，实现构造，析构，拷贝构造，移动构造\n6、const可以用来修饰哪些东西，如果修饰成员函数表示什么\n7、引用和指针的区别\n8、如何避免野指针、内存泄漏的问题（答了智能指针，还问有其他方法吗，没想出来）\n9、智能指针有哪些\n10、unique_ptr如何转移所有权\n11、线程和进程的区别\n12、线程间和进程间分别是怎么通信\n13、线程间有哪些锁\n14、条件变量怎么去通知另一个线程？唤醒之后就能获得锁吗？\n15、mmap如何实现通信呢，另一个进程怎么知道这个进程写入了东西呢？\n16、tcp和udp的区别\n17、tcp的接收端应用层是否可能收到乱序的数据，在哪里实现排序的，tcp的缓存区是在哪\n18、tcp的拥塞控制\n19、对比http1.1、http2.0、http3.0\n20、http3.0如何实现0RTT\n21、说一下常用的数据结构\n22、常用的设计模式\n23、手写单例模式，你的实现是安全的吗，为什么\n24、反问"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_detail/68d16a7d000000000e031041.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "d0742703038e011e82640f03df8f1794385675c9",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 391994,
+        "content_sha256": "fc6f02612985aa640d19682175c6ee6a4e98a66036b42ed7e95b7d3566496059",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "9.22 阿里智能信息部一面 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-191;blob:d0742703038e011e82640f03df8f1794385675c9",
+          "semantic_excerpt": "9.22 阿里智能信息部一面\n岗位：研发工程师C/C++\n1、自我介绍\n2、介绍基于c++的即时通信项目\n3、消息发送的协议是自定义的还是用了什么\n4、用画板做了一个思考题：两个矩形，长宽分别平行于xy坐标轴，计算两个矩形的重叠面积\n5、手撕：写一个myString，实现构造，析构，拷贝构造，移动构造\n6、const可以用来修饰哪些东西，如果修饰成员函数表示什么\n7、引用和指针的区别\n8、如何避免野指针、内存泄漏的问题（答了智能指针，还问有其他方法吗，没想出来）\n9、智能指针有哪些\n10、unique_ptr如何转移所有权\n11、线程和进程的区别\n12、线程间和进程间分别是怎么通信\n13、线程间有哪些锁\n14、条件变量怎么去通知另一个线程？唤醒之后就能获得锁吗？\n15、mmap如何实现通信呢，另一个进程怎么知道这个进程写入了东西呢？\n16、tcp和udp的区别\n17、tcp的接收端应用层是否可能收到乱序的数据，在哪里实现排序的，tcp的缓存区是在哪\n18、tcp的拥塞控制\n19、对比http1.1、http2.0、http3.0\n20、http3.0如何实现0RTT\n21、说一下常用的数据结构\n22、常用的设计模式\n23、手写单例模式，你的实现是安全的吗，为什么\n24、反问"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68d16a7d000000000e031041.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "bebfff3a3c43a15908059932b46e2e914ad0a3c4",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 23365,
+        "content_sha256": "944ff31666e757ced2890aee9ee7eefb5951c7ddd6aa9178b8256613caac8e8d",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "9.22 阿里智能信息部一面\",",
+          "line": 500,
+          "locator": "artifact-line:500#offset:30-46;blob:bebfff3a3c43a15908059932b46e2e914ad0a3c4",
+          "semantic_excerpt": "9.22 阿里智能信息部一面\n岗位：研发工程师C/C++\n1、自我介绍\n2、介绍基于c++的即时通信项目\n3、消息发送的协议是自定义的还是用了什么\n4、用画板做了一个思考题：两个矩形，长宽分别平行于xy坐标轴，计算两个矩形的重叠面积\n5、手撕：写一个myString，实现构造，析构，拷贝构造，移动构造\n6、const可以用来修饰哪些东西，如果修饰成员函数表示什么\n7、引用和指针的区别\n8、如何避免野指针、内存泄漏的问题（答了智能指针，还问有其他方法吗，没想出来）\n9、智能指针有哪些\n10、unique_ptr如何转移所有权\n11、线程和进程的区别\n12、线程间和进程间分别是怎么通信\n13、线程间有哪些锁\n14、条件变量怎么去通知另一个线程？唤醒之后就能获得锁吗？\n15、mmap如何实现通信呢，另一个进程怎么知道这个进程写入了东西呢？\n16、tcp和udp的区别\n17、tcp的接收端应用层是否可能收到乱序的数据，在哪里实现排序的，tcp的缓存区是在哪\n18、tcp的拥塞控制\n19、对比http1.1、http2.0、http3.0\n20、http3.0如何实现0RTT\n21、说一下常用的数据结构\n22、常用的设计模式\n23、手写单例模式，你的实现是安全的吗，为什么\n24、反问"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/68d16a7d000000000e031041.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "d0742703038e011e82640f03df8f1794385675c9",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 391994,
+      "content_sha256": "fc6f02612985aa640d19682175c6ee6a4e98a66036b42ed7e95b7d3566496059",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "9.22 阿里智能信息部一面 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-191;blob:d0742703038e011e82640f03df8f1794385675c9",
+        "semantic_excerpt": "9.22 阿里智能信息部一面\n岗位：研发工程师C/C++\n1、自我介绍\n2、介绍基于c++的即时通信项目\n3、消息发送的协议是自定义的还是用了什么\n4、用画板做了一个思考题：两个矩形，长宽分别平行于xy坐标轴，计算两个矩形的重叠面积\n5、手撕：写一个myString，实现构造，析构，拷贝构造，移动构造\n6、const可以用来修饰哪些东西，如果修饰成员函数表示什么\n7、引用和指针的区别\n8、如何避免野指针、内存泄漏的问题（答了智能指针，还问有其他方法吗，没想出来）\n9、智能指针有哪些\n10、unique_ptr如何转移所有权\n11、线程和进程的区别\n12、线程间和进程间分别是怎么通信\n13、线程间有哪些锁\n14、条件变量怎么去通知另一个线程？唤醒之后就能获得锁吗？\n15、mmap如何实现通信呢，另一个进程怎么知道这个进程写入了东西呢？\n16、tcp和udp的区别\n17、tcp的接收端应用层是否可能收到乱序的数据，在哪里实现排序的，tcp的缓存区是在哪\n18、tcp的拥塞控制\n19、对比http1.1、http2.0、http3.0\n20、http3.0如何实现0RTT\n21、说一下常用的数据结构\n22、常用的设计模式\n23、手写单例模式，你的实现是安全的吗，为什么\n24、反问"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68d16a7d000000000e031041.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "bebfff3a3c43a15908059932b46e2e914ad0a3c4",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 23365,
+      "content_sha256": "944ff31666e757ced2890aee9ee7eefb5951c7ddd6aa9178b8256613caac8e8d",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "9.22 阿里智能信息部一面\",",
+        "line": 500,
+        "locator": "artifact-line:500#offset:30-46;blob:bebfff3a3c43a15908059932b46e2e914ad0a3c4",
+        "semantic_excerpt": "9.22 阿里智能信息部一面\n岗位：研发工程师C/C++\n1、自我介绍\n2、介绍基于c++的即时通信项目\n3、消息发送的协议是自定义的还是用了什么\n4、用画板做了一个思考题：两个矩形，长宽分别平行于xy坐标轴，计算两个矩形的重叠面积\n5、手撕：写一个myString，实现构造，析构，拷贝构造，移动构造\n6、const可以用来修饰哪些东西，如果修饰成员函数表示什么\n7、引用和指针的区别\n8、如何避免野指针、内存泄漏的问题（答了智能指针，还问有其他方法吗，没想出来）\n9、智能指针有哪些\n10、unique_ptr如何转移所有权\n11、线程和进程的区别\n12、线程间和进程间分别是怎么通信\n13、线程间有哪些锁\n14、条件变量怎么去通知另一个线程？唤醒之后就能获得锁吗？\n15、mmap如何实现通信呢，另一个进程怎么知道这个进程写入了东西呢？\n16、tcp和udp的区别\n17、tcp的接收端应用层是否可能收到乱序的数据，在哪里实现排序的，tcp的缓存区是在哪\n18、tcp的拥塞控制\n19、对比http1.1、http2.0、http3.0\n20、http3.0如何实现0RTT\n21、说一下常用的数据结构\n22、常用的设计模式\n23、手写单例模式，你的实现是安全的吗，为什么\n24、反问"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -85,10 +164,11 @@
   ],
   "limitations": [
     "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "7b7d25394c55721f9a3ab1bbe98ac82aa8979289c4935420e6ebd20833e011fe"
+  "evidence_sha256": "79f4f9f1399622520a5018b3aecfe99183558cfe110ecb647ecff4adf44daef7"
 }

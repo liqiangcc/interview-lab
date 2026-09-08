@@ -18,7 +18,7 @@
     "questions": 0,
     "has_first_person_event": false,
     "has_explicit_candidate_event": false,
-    "has_bounded_event": false,
+    "has_bounded_event": true,
     "has_detailed_event": false,
     "has_completed_event_evidence": false,
     "has_structured_candidate_event": false,
@@ -28,12 +28,26 @@
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "kuaishou-process",
+        "anchor": "快手",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-165;blob:29a6e9bdebd68700e20700a1b4cd6a0a89671030",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:快手",
+        "source_ref": "liqiangcc/xhs:note_detail/68c13cab000000001c03fcde.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68c13cab000000001c03fcde.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -42,13 +56,108 @@
     "provenance": "source_projection",
     "byte_size": 23,
     "content_sha256": "9f04c82a085f6ad9f0d8e683a5170a5ff308ebcb3baa91a3b877270e7faaa44d",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "秋招#面经[话题]#",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "秋招"
-    }
+      "locator": "artifact-line:1#offset:0-10;blob:2487aae3d08b0340ad2fe95cd0a05e33163a2a59",
+      "semantic_excerpt": "快手Java二面\n秋招"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68c13cab000000001c03fcde.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "2487aae3d08b0340ad2fe95cd0a05e33163a2a59",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 23,
+        "content_sha256": "9f04c82a085f6ad9f0d8e683a5170a5ff308ebcb3baa91a3b877270e7faaa44d",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "秋招#面经[话题]#",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-10;blob:2487aae3d08b0340ad2fe95cd0a05e33163a2a59",
+          "semantic_excerpt": "快手Java二面\n秋招"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68c13cab000000001c03fcde.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "29a6e9bdebd68700e20700a1b4cd6a0a89671030",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 384507,
+        "content_sha256": "90952a16ba2896bfbb24ed0ba8260bd193f6081354a4427734694da375156362",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "快手Java二面 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-185;blob:29a6e9bdebd68700e20700a1b4cd6a0a89671030",
+          "semantic_excerpt": "快手Java二面\n秋招"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68c13cab000000001c03fcde.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "9ca1944d84a2e3245e36b79061d311908305945e",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 19929,
+        "content_sha256": "6f441125a2e2da5ef7ba6ce6224d35c468da4e14b51e912e1737c51b711cf5b7",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "快手Java二面\",",
+          "line": 536,
+          "locator": "artifact-line:536#offset:30-40;blob:9ca1944d84a2e3245e36b79061d311908305945e",
+          "semantic_excerpt": "快手Java二面\n秋招"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68c13cab000000001c03fcde.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "2487aae3d08b0340ad2fe95cd0a05e33163a2a59",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 23,
+      "content_sha256": "9f04c82a085f6ad9f0d8e683a5170a5ff308ebcb3baa91a3b877270e7faaa44d",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "秋招#面经[话题]#",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-10;blob:2487aae3d08b0340ad2fe95cd0a05e33163a2a59",
+        "semantic_excerpt": "快手Java二面\n秋招"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68c13cab000000001c03fcde.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "29a6e9bdebd68700e20700a1b4cd6a0a89671030",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 384507,
+      "content_sha256": "90952a16ba2896bfbb24ed0ba8260bd193f6081354a4427734694da375156362",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "快手Java二面 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-185;blob:29a6e9bdebd68700e20700a1b4cd6a0a89671030",
+        "semantic_excerpt": "快手Java二面\n秋招"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68c13cab000000001c03fcde.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "9ca1944d84a2e3245e36b79061d311908305945e",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 19929,
+      "content_sha256": "6f441125a2e2da5ef7ba6ce6224d35c468da4e14b51e912e1737c51b711cf5b7",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "快手Java二面\",",
+        "line": 536,
+        "locator": "artifact-line:536#offset:30-40;blob:9ca1944d84a2e3245e36b79061d311908305945e",
+        "semantic_excerpt": "快手Java二面\n秋招"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -83,10 +192,11 @@
   ],
   "limitations": [
     "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "e675908a09bdda74decd47cc5fa0467402154ec3346bccbf7ab79f5820861015"
+  "evidence_sha256": "5e655c8dd9cffd7257a9b9891a80a3b3cfa2bedb52418f146fc2967225de446f"
 }

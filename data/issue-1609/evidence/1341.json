@@ -17,7 +17,7 @@
       "question-only",
       "no-candidate-event-evidence"
     ],
-    "questions": 10,
+    "questions": 11,
     "has_first_person_event": false,
     "has_explicit_candidate_event": false,
     "has_bounded_event": true,
@@ -30,12 +30,26 @@
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": true,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "alibaba-process",
+        "anchor": "阿里",
+        "line": 1,
+        "locator": "artifact-line:490#offset:168-170;blob:e28f097dced2269de7aee533f78b88167b8cf684",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:阿里",
+        "source_ref": "liqiangcc/xhs:note_detail/68caa7b0000000000e02205d.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68caa7b0000000000e02205d.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -44,13 +58,108 @@
     "provenance": "source_projection",
     "byte_size": 1099,
     "content_sha256": "83dbd6d0eae0587fa6f70caa6c5980db22949a733b91928cd8ab4d624be601b4",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "岗位：研发工程师JAVA",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "岗位：研发工程师JAVA\n1、自我介绍\n2、介绍实习项目解决的具体问题是什么\n3、日志按等级输出的话，如何区分日志分别属于info、warning、debug哪个等级呢\n4、你这个项目的功能（日志器）需要开发吗，Linux里面可以直接用shell实现这些功能吧？\n5、如何理解mcp的，他主要解决什么问题，他这个协议的发展现状有什么问题吗，哪些地方可以优化呢\n6、mcp的api和普通大模型的api有什么区别呢\n7、sse是什么呢，如何实现的呢，在调用过程中他具体做了什么\n8、一个普通的api，如何把他mcp化\n9、手撕：有一个长度为m的环形小球序列，这些小球一共有n种颜色，找到最小的连续小球序列，使得序列中的小球包含全部n中颜色（用双指针）\n10、反问\n \n面试官没有开摄像头，本来就不会，更答的没底气了[捂脸R][捂脸R]"
-    }
+      "locator": "artifact-line:1#offset:0-12;blob:37bccbb2dea6e0df7ca7ffa0d6343f5999edf57e",
+      "semantic_excerpt": "9.17 阿里云一面\n岗位：研发工程师JAVA\n1、自我介绍\n2、介绍实习项目解决的具体问题是什么\n3、日志按等级输出的话，如何区分日志分别属于info、warning、debug哪个等级呢\n4、你这个项目的功能（日志器）需要开发吗，Linux里面可以直接用shell实现这些功能吧？\n5、如何理解mcp的，他主要解决什么问题，他这个协议的发展现状有什么问题吗，哪些地方可以优化呢\n6、mcp的api和普通大模型的api有什么区别呢\n7、sse是什么呢，如何实现的呢，在调用过程中他具体做了什么\n8、一个普通的api，如何把他mcp化\n9、手撕：有一个长度为m的环形小球序列，这些小球一共有n种颜色，找到最小的连续小球序列，使得序列中的小球包含全部n中颜色（用双指针）\n10、反问\n \n面试官没有开摄像头，本来就不会，更答的没底气了[捂脸R][捂脸R]"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68caa7b0000000000e02205d.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "37bccbb2dea6e0df7ca7ffa0d6343f5999edf57e",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 1099,
+        "content_sha256": "83dbd6d0eae0587fa6f70caa6c5980db22949a733b91928cd8ab4d624be601b4",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "岗位：研发工程师JAVA",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-12;blob:37bccbb2dea6e0df7ca7ffa0d6343f5999edf57e",
+          "semantic_excerpt": "9.17 阿里云一面\n岗位：研发工程师JAVA\n1、自我介绍\n2、介绍实习项目解决的具体问题是什么\n3、日志按等级输出的话，如何区分日志分别属于info、warning、debug哪个等级呢\n4、你这个项目的功能（日志器）需要开发吗，Linux里面可以直接用shell实现这些功能吧？\n5、如何理解mcp的，他主要解决什么问题，他这个协议的发展现状有什么问题吗，哪些地方可以优化呢\n6、mcp的api和普通大模型的api有什么区别呢\n7、sse是什么呢，如何实现的呢，在调用过程中他具体做了什么\n8、一个普通的api，如何把他mcp化\n9、手撕：有一个长度为m的环形小球序列，这些小球一共有n种颜色，找到最小的连续小球序列，使得序列中的小球包含全部n中颜色（用双指针）\n10、反问\n \n面试官没有开摄像头，本来就不会，更答的没底气了[捂脸R][捂脸R]"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68caa7b0000000000e02205d.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "e28f097dced2269de7aee533f78b88167b8cf684",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 390092,
+        "content_sha256": "d03dab424b18d0f40efb5a50ecfa593fede60fbf413c8682469313f5da9a7e24",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "9.17 阿里云一面 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-187;blob:e28f097dced2269de7aee533f78b88167b8cf684",
+          "semantic_excerpt": "9.17 阿里云一面\n岗位：研发工程师JAVA\n1、自我介绍\n2、介绍实习项目解决的具体问题是什么\n3、日志按等级输出的话，如何区分日志分别属于info、warning、debug哪个等级呢\n4、你这个项目的功能（日志器）需要开发吗，Linux里面可以直接用shell实现这些功能吧？\n5、如何理解mcp的，他主要解决什么问题，他这个协议的发展现状有什么问题吗，哪些地方可以优化呢\n6、mcp的api和普通大模型的api有什么区别呢\n7、sse是什么呢，如何实现的呢，在调用过程中他具体做了什么\n8、一个普通的api，如何把他mcp化\n9、手撕：有一个长度为m的环形小球序列，这些小球一共有n种颜色，找到最小的连续小球序列，使得序列中的小球包含全部n中颜色（用双指针）\n10、反问\n \n面试官没有开摄像头，本来就不会，更答的没底气了[捂脸R][捂脸R]"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68caa7b0000000000e02205d.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "931ff95ac756d2b68ce263f3c2c2a2a6e1fce726",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 22438,
+        "content_sha256": "ec9a99dd7777d722fdadc26fabf1d978a1c9c01e4c67f29c0c0c011f99291a3c",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "9.17 阿里云一面\",",
+          "line": 503,
+          "locator": "artifact-line:503#offset:30-42;blob:931ff95ac756d2b68ce263f3c2c2a2a6e1fce726",
+          "semantic_excerpt": "9.17 阿里云一面\n岗位：研发工程师JAVA\n1、自我介绍\n2、介绍实习项目解决的具体问题是什么\n3、日志按等级输出的话，如何区分日志分别属于info、warning、debug哪个等级呢\n4、你这个项目的功能（日志器）需要开发吗，Linux里面可以直接用shell实现这些功能吧？\n5、如何理解mcp的，他主要解决什么问题，他这个协议的发展现状有什么问题吗，哪些地方可以优化呢\n6、mcp的api和普通大模型的api有什么区别呢\n7、sse是什么呢，如何实现的呢，在调用过程中他具体做了什么\n8、一个普通的api，如何把他mcp化\n9、手撕：有一个长度为m的环形小球序列，这些小球一共有n种颜色，找到最小的连续小球序列，使得序列中的小球包含全部n中颜色（用双指针）\n10、反问\n \n面试官没有开摄像头，本来就不会，更答的没底气了[捂脸R][捂脸R]"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68caa7b0000000000e02205d.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "37bccbb2dea6e0df7ca7ffa0d6343f5999edf57e",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 1099,
+      "content_sha256": "83dbd6d0eae0587fa6f70caa6c5980db22949a733b91928cd8ab4d624be601b4",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "岗位：研发工程师JAVA",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-12;blob:37bccbb2dea6e0df7ca7ffa0d6343f5999edf57e",
+        "semantic_excerpt": "9.17 阿里云一面\n岗位：研发工程师JAVA\n1、自我介绍\n2、介绍实习项目解决的具体问题是什么\n3、日志按等级输出的话，如何区分日志分别属于info、warning、debug哪个等级呢\n4、你这个项目的功能（日志器）需要开发吗，Linux里面可以直接用shell实现这些功能吧？\n5、如何理解mcp的，他主要解决什么问题，他这个协议的发展现状有什么问题吗，哪些地方可以优化呢\n6、mcp的api和普通大模型的api有什么区别呢\n7、sse是什么呢，如何实现的呢，在调用过程中他具体做了什么\n8、一个普通的api，如何把他mcp化\n9、手撕：有一个长度为m的环形小球序列，这些小球一共有n种颜色，找到最小的连续小球序列，使得序列中的小球包含全部n中颜色（用双指针）\n10、反问\n \n面试官没有开摄像头，本来就不会，更答的没底气了[捂脸R][捂脸R]"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68caa7b0000000000e02205d.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "e28f097dced2269de7aee533f78b88167b8cf684",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 390092,
+      "content_sha256": "d03dab424b18d0f40efb5a50ecfa593fede60fbf413c8682469313f5da9a7e24",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "9.17 阿里云一面 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-187;blob:e28f097dced2269de7aee533f78b88167b8cf684",
+        "semantic_excerpt": "9.17 阿里云一面\n岗位：研发工程师JAVA\n1、自我介绍\n2、介绍实习项目解决的具体问题是什么\n3、日志按等级输出的话，如何区分日志分别属于info、warning、debug哪个等级呢\n4、你这个项目的功能（日志器）需要开发吗，Linux里面可以直接用shell实现这些功能吧？\n5、如何理解mcp的，他主要解决什么问题，他这个协议的发展现状有什么问题吗，哪些地方可以优化呢\n6、mcp的api和普通大模型的api有什么区别呢\n7、sse是什么呢，如何实现的呢，在调用过程中他具体做了什么\n8、一个普通的api，如何把他mcp化\n9、手撕：有一个长度为m的环形小球序列，这些小球一共有n种颜色，找到最小的连续小球序列，使得序列中的小球包含全部n中颜色（用双指针）\n10、反问\n \n面试官没有开摄像头，本来就不会，更答的没底气了[捂脸R][捂脸R]"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68caa7b0000000000e02205d.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "931ff95ac756d2b68ce263f3c2c2a2a6e1fce726",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 22438,
+      "content_sha256": "ec9a99dd7777d722fdadc26fabf1d978a1c9c01e4c67f29c0c0c011f99291a3c",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "9.17 阿里云一面\",",
+        "line": 503,
+        "locator": "artifact-line:503#offset:30-42;blob:931ff95ac756d2b68ce263f3c2c2a2a6e1fce726",
+        "semantic_excerpt": "9.17 阿里云一面\n岗位：研发工程师JAVA\n1、自我介绍\n2、介绍实习项目解决的具体问题是什么\n3、日志按等级输出的话，如何区分日志分别属于info、warning、debug哪个等级呢\n4、你这个项目的功能（日志器）需要开发吗，Linux里面可以直接用shell实现这些功能吧？\n5、如何理解mcp的，他主要解决什么问题，他这个协议的发展现状有什么问题吗，哪些地方可以优化呢\n6、mcp的api和普通大模型的api有什么区别呢\n7、sse是什么呢，如何实现的呢，在调用过程中他具体做了什么\n8、一个普通的api，如何把他mcp化\n9、手撕：有一个长度为m的环形小球序列，这些小球一共有n种颜色，找到最小的连续小球序列，使得序列中的小球包含全部n中颜色（用双指针）\n10、反问\n \n面试官没有开摄像头，本来就不会，更答的没底气了[捂脸R][捂脸R]"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -85,10 +194,11 @@
   ],
   "limitations": [
     "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "3c0f066badb38c8c461dc2b0dbf398235d754db1c25ab556d8c0131b5b824802"
+  "evidence_sha256": "ff1a04368775e9752d0a99660432eefc9239afccba683a0d18286fd710b1bef7"
 }

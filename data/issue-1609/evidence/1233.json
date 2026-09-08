@@ -8,7 +8,7 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "89e2acac6acfd0409206e2e2bf6e439890c76e84b3a6e27cbcef2244adae516d",
   "disposition": "blocked",
-  "rationale": "No non-empty readable Source/Source projection is available; title and hashtags cannot authorize a boundary.",
+  "rationale": "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
@@ -28,12 +28,16 @@
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b5353f000000001b03d29d.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -42,13 +46,108 @@
     "provenance": "source_projection",
     "byte_size": 58,
     "content_sha256": "ae87ea01f1dd0e6a2a8b24b4b1381853c5853db152b7eca515dedeedb6494a5d",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "#java[话题]# #程序员[话题]# #后端开发[话题]#",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": ""
-    }
+      "locator": "artifact-line:1#offset:0-31;blob:c295e4ba83cd550a7eee5fcf829d8bbe1e67c6e0",
+      "semantic_excerpt": "Java面试题-HashMap"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68b5353f000000001b03d29d.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "c295e4ba83cd550a7eee5fcf829d8bbe1e67c6e0",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 58,
+        "content_sha256": "ae87ea01f1dd0e6a2a8b24b4b1381853c5853db152b7eca515dedeedb6494a5d",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "#java[话题]# #程序员[话题]# #后端开发[话题]#",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-31;blob:c295e4ba83cd550a7eee5fcf829d8bbe1e67c6e0",
+          "semantic_excerpt": "Java面试题-HashMap"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68b5353f000000001b03d29d.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "5a5ad42169ff8d4b67c4056ca9b9d610defe3ddb",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 388731,
+        "content_sha256": "38c034a15653185f010f8362c8e7b8944e5e4168a4f3b04436dbfa9de141e9eb",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "Java面试题-HashMap - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-192;blob:5a5ad42169ff8d4b67c4056ca9b9d610defe3ddb",
+          "semantic_excerpt": "Java面试题-HashMap"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68b5353f000000001b03d29d.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "dff5f3778cb88370aea641a2241622fa557fe052",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 23266,
+        "content_sha256": "a813614dc7ead225140b6fe9a76b803f7e5651afb1e55cfa7291545c8209e82e",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "Java面试题-HashMap\",",
+          "line": 497,
+          "locator": "artifact-line:497#offset:30-47;blob:dff5f3778cb88370aea641a2241622fa557fe052",
+          "semantic_excerpt": "Java面试题-HashMap"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68b5353f000000001b03d29d.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "c295e4ba83cd550a7eee5fcf829d8bbe1e67c6e0",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 58,
+      "content_sha256": "ae87ea01f1dd0e6a2a8b24b4b1381853c5853db152b7eca515dedeedb6494a5d",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "#java[话题]# #程序员[话题]# #后端开发[话题]#",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-31;blob:c295e4ba83cd550a7eee5fcf829d8bbe1e67c6e0",
+        "semantic_excerpt": "Java面试题-HashMap"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68b5353f000000001b03d29d.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "5a5ad42169ff8d4b67c4056ca9b9d610defe3ddb",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 388731,
+      "content_sha256": "38c034a15653185f010f8362c8e7b8944e5e4168a4f3b04436dbfa9de141e9eb",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "Java面试题-HashMap - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-192;blob:5a5ad42169ff8d4b67c4056ca9b9d610defe3ddb",
+        "semantic_excerpt": "Java面试题-HashMap"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68b5353f000000001b03d29d.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "dff5f3778cb88370aea641a2241622fa557fe052",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 23266,
+      "content_sha256": "a813614dc7ead225140b6fe9a76b803f7e5651afb1e55cfa7291545c8209e82e",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "Java面试题-HashMap\",",
+        "line": 497,
+        "locator": "artifact-line:497#offset:30-47;blob:dff5f3778cb88370aea641a2241622fa557fe052",
+        "semantic_excerpt": "Java面试题-HashMap"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -68,7 +167,7 @@
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. No non-empty readable Source/Source projection is available; title and hashtags cannot authorize a boundary."
+      "note": "The disposition is supported by the cited source evidence. Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -82,11 +181,12 @@
     }
   ],
   "limitations": [
-    "No non-empty readable Source/Source projection is available; title and hashtags cannot authorize a boundary.",
+    "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "22b9a632356f1c5ac8244f00013ef91c53acfa9c0e78a97fc7c61b4c74b49498"
+  "evidence_sha256": "5d32b84384706580160a8dd2fabe096d3a8b910345dc83596b606a6bfedde6b5"
 }

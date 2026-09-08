@@ -8,10 +8,11 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "0acb70379d6815458b15664b321c2fa16fa9f2c498c7e48ac1f5a43062449383",
   "disposition": "blocked",
-  "rationale": "No non-empty readable Source/Source projection is available; title and hashtags cannot authorize a boundary.",
+  "rationale": "Exact Source provides only an interview outcome, offer, rejection, or result without a bounded candidate event; retain pending.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
+      "outcome-or-offer-only",
       "no-first-person-event",
       "no-candidate-event-evidence"
     ],
@@ -25,15 +26,19 @@
     "generic_advice_or_aggregated": false,
     "scheduled_only": false,
     "question_only": false,
-    "outcome_signal": false,
+    "outcome_signal": true,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": false,
-    "only_outcome": false,
+    "only_outcome": true,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68a58cd0000000001d02412a.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -42,13 +47,108 @@
     "provenance": "source_projection",
     "byte_size": 186,
     "content_sha256": "6267868d877be6e9f21c6e8e7378d083b8fd5a2dd999e014ed576598b8440806",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "#Java面试[话题]# #后端开发[话题]# #java[话题]# #程序员[话题]# #Java后端[话题]# #Java面试题[话题]# #Java开发[话题]# #秋招[话题]# #Java八股文[话题]#",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": ""
-    }
+      "locator": "artifact-line:1#offset:0-107;blob:f76faeaa5d89fcb75e6037161cafdd0e0a122650",
+      "semantic_excerpt": "Java后端25年秋招必问，背完通过率（95%）"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68a58cd0000000001d02412a.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "f76faeaa5d89fcb75e6037161cafdd0e0a122650",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 186,
+        "content_sha256": "6267868d877be6e9f21c6e8e7378d083b8fd5a2dd999e014ed576598b8440806",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "#Java面试[话题]# #后端开发[话题]# #java[话题]# #程序员[话题]# #Java后端[话题]# #Java面试题[话题]# #Java开发[话题]# #秋招[话题]# #Java八股文[话题]#",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-107;blob:f76faeaa5d89fcb75e6037161cafdd0e0a122650",
+          "semantic_excerpt": "Java后端25年秋招必问，背完通过率（95%）"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68a58cd0000000001d02412a.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "f9490e8806380f5994450ee1842b1a4c63b43228",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 395314,
+        "content_sha256": "f6b08f0e70dd21b7142407d2c4eba68e26d046ebbb9b736ed431796838c0ad35",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "Java后端25年秋招必问，背完通过率（95%） - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-201;blob:f9490e8806380f5994450ee1842b1a4c63b43228",
+          "semantic_excerpt": "Java后端25年秋招必问，背完通过率（95%）"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68a58cd0000000001d02412a.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "7f552c833739fc0f81b36a71a5e0e10ebb9c4fe1",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 29200,
+        "content_sha256": "4aec88182bd70e891c1d1919aec24e1d4b31814736b4b25c7ab90da4fc6fd782",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "Java后端25年秋招必问，背完通过率（95%）\",",
+          "line": 500,
+          "locator": "artifact-line:500#offset:30-56;blob:7f552c833739fc0f81b36a71a5e0e10ebb9c4fe1",
+          "semantic_excerpt": "Java后端25年秋招必问，背完通过率（95%）"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68a58cd0000000001d02412a.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "f76faeaa5d89fcb75e6037161cafdd0e0a122650",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 186,
+      "content_sha256": "6267868d877be6e9f21c6e8e7378d083b8fd5a2dd999e014ed576598b8440806",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "#Java面试[话题]# #后端开发[话题]# #java[话题]# #程序员[话题]# #Java后端[话题]# #Java面试题[话题]# #Java开发[话题]# #秋招[话题]# #Java八股文[话题]#",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-107;blob:f76faeaa5d89fcb75e6037161cafdd0e0a122650",
+        "semantic_excerpt": "Java后端25年秋招必问，背完通过率（95%）"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68a58cd0000000001d02412a.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "f9490e8806380f5994450ee1842b1a4c63b43228",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 395314,
+      "content_sha256": "f6b08f0e70dd21b7142407d2c4eba68e26d046ebbb9b736ed431796838c0ad35",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "Java后端25年秋招必问，背完通过率（95%） - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-201;blob:f9490e8806380f5994450ee1842b1a4c63b43228",
+        "semantic_excerpt": "Java后端25年秋招必问，背完通过率（95%）"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68a58cd0000000001d02412a.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "7f552c833739fc0f81b36a71a5e0e10ebb9c4fe1",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 29200,
+      "content_sha256": "4aec88182bd70e891c1d1919aec24e1d4b31814736b4b25c7ab90da4fc6fd782",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "Java后端25年秋招必问，背完通过率（95%）\",",
+        "line": 500,
+        "locator": "artifact-line:500#offset:30-56;blob:7f552c833739fc0f81b36a71a5e0e10ebb9c4fe1",
+        "semantic_excerpt": "Java后端25年秋招必问，背完通过率（95%）"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -68,7 +168,7 @@
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. No non-empty readable Source/Source projection is available; title and hashtags cannot authorize a boundary."
+      "note": "The disposition is supported by the cited source evidence. Exact Source provides only an interview outcome, offer, rejection, or result without a bounded candidate event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -82,11 +182,12 @@
     }
   ],
   "limitations": [
-    "No non-empty readable Source/Source projection is available; title and hashtags cannot authorize a boundary.",
+    "Exact Source provides only an interview outcome, offer, rejection, or result without a bounded candidate event; retain pending.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "2b0cda88ad0bdba4622fc26a04927ad54904a8a468f234d924337cc3fb7c3f9c"
+  "evidence_sha256": "7c1a88438f14f70c5a53cf7968887c658cbdaf4a59a35c4b1ac455b609d0d236"
 }

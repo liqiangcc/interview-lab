@@ -7,15 +7,12 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "c3725b6b67df8915eff80d29f0f0f709f1689db387c4b08851477d56ff31887e",
-  "disposition": "blocked",
-  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "disposition": "single-interview",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
-      "question-list-only",
-      "no-first-person-event",
-      "question-only",
-      "no-candidate-event-evidence"
+      "no-first-person-event"
     ],
     "questions": 17,
     "has_first_person_event": false,
@@ -23,19 +20,33 @@
     "has_bounded_event": true,
     "has_detailed_event": true,
     "has_completed_event_evidence": true,
-    "has_structured_candidate_event": false,
+    "has_structured_candidate_event": true,
     "generic_advice_or_aggregated": false,
     "scheduled_only": false,
-    "question_only": true,
+    "question_only": false,
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
-    "only_question_list": true,
+    "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "kuaishou-process",
+        "anchor": "快手",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-165;blob:1d42931c7c19fcb80ca1a862b2c617df82d9b502",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:快手",
+        "source_ref": "liqiangcc/xhs:note_detail/68d160110000000012015a97.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 2,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68d160110000000012015a97.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -44,13 +55,78 @@
     "provenance": "source_projection",
     "byte_size": 22746,
     "content_sha256": "df9d528f118c5875f1c0ee5f395281d3b798d2097d1259690371331ee94b433c",
+    "cache_status": "not-applicable",
     "excerpt": {
-      "excerpt": "\"global\": {",
-      "line": 2,
-      "locator": "artifact-line:2",
-      "semantic_excerpt": "1、自我介绍\n2、实习经历\n3、怎么解决Spring循环依赖问题，@Lazy注解的作用\n3、EasyExcel和POI框架的区别\n4、导出优化怎么做的？\n5、volatile关键字的作用\n6、equals和hashcode方法\n7、hash冲突的解决方法（线性探测法、链地址法、再哈希法等）\n8、AQS框架介绍下\n9、双亲委派模型是什么，解决了什么问题？\n10、什么是IO多路复用\n11、什么是中断，中断的处理流程\n12、操作系统被中断是怎么处理的？\n13、TCP的四次挥手，在发送ack和fin状态变化过程是怎么样的？\n14、SQL的执行过程\n15、算法题：力扣463 岛屿的周长\n16、反问"
-    }
+      "excerpt": "快手本地生活java二面\",",
+      "line": 512,
+      "locator": "artifact-line:512#offset:30-44;blob:96662ba95780f6d9253101df72c67167b308c014",
+      "semantic_excerpt": "快手本地生活java二面\n1、自我介绍\n2、实习经历\n3、怎么解决Spring循环依赖问题，@Lazy注解的作用\n3、EasyExcel和POI框架的区别\n4、导出优化怎么做的？\n5、volatile关键字的作用\n6、equals和hashcode方法\n7、hash冲突的解决方法（线性探测法、链地址法、再哈希法等）\n8、AQS框架介绍下\n9、双亲委派模型是什么，解决了什么问题？\n10、什么是IO多路复用\n11、什么是中断，中断的处理流程\n12、操作系统被中断是怎么处理的？\n13、TCP的四次挥手，在发送ack和fin状态变化过程是怎么样的？\n14、SQL的执行过程\n15、算法题：力扣463 岛屿的周长\n16、反问"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_detail/68d160110000000012015a97.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "1d42931c7c19fcb80ca1a862b2c617df82d9b502",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 389847,
+        "content_sha256": "0940331574994dd8aff3ceffb7c0c70d6c5d9a90d818f54701fc1633856f2511",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "快手本地生活java二面 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-189;blob:1d42931c7c19fcb80ca1a862b2c617df82d9b502",
+          "semantic_excerpt": "快手本地生活java二面\n1、自我介绍\n2、实习经历\n3、怎么解决Spring循环依赖问题，@Lazy注解的作用\n3、EasyExcel和POI框架的区别\n4、导出优化怎么做的？\n5、volatile关键字的作用\n6、equals和hashcode方法\n7、hash冲突的解决方法（线性探测法、链地址法、再哈希法等）\n8、AQS框架介绍下\n9、双亲委派模型是什么，解决了什么问题？\n10、什么是IO多路复用\n11、什么是中断，中断的处理流程\n12、操作系统被中断是怎么处理的？\n13、TCP的四次挥手，在发送ack和fin状态变化过程是怎么样的？\n14、SQL的执行过程\n15、算法题：力扣463 岛屿的周长\n16、反问"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68d160110000000012015a97.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "96662ba95780f6d9253101df72c67167b308c014",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 22746,
+        "content_sha256": "df9d528f118c5875f1c0ee5f395281d3b798d2097d1259690371331ee94b433c",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "快手本地生活java二面\",",
+          "line": 512,
+          "locator": "artifact-line:512#offset:30-44;blob:96662ba95780f6d9253101df72c67167b308c014",
+          "semantic_excerpt": "快手本地生活java二面\n1、自我介绍\n2、实习经历\n3、怎么解决Spring循环依赖问题，@Lazy注解的作用\n3、EasyExcel和POI框架的区别\n4、导出优化怎么做的？\n5、volatile关键字的作用\n6、equals和hashcode方法\n7、hash冲突的解决方法（线性探测法、链地址法、再哈希法等）\n8、AQS框架介绍下\n9、双亲委派模型是什么，解决了什么问题？\n10、什么是IO多路复用\n11、什么是中断，中断的处理流程\n12、操作系统被中断是怎么处理的？\n13、TCP的四次挥手，在发送ack和fin状态变化过程是怎么样的？\n14、SQL的执行过程\n15、算法题：力扣463 岛屿的周长\n16、反问"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/68d160110000000012015a97.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "1d42931c7c19fcb80ca1a862b2c617df82d9b502",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 389847,
+      "content_sha256": "0940331574994dd8aff3ceffb7c0c70d6c5d9a90d818f54701fc1633856f2511",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "快手本地生活java二面 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-189;blob:1d42931c7c19fcb80ca1a862b2c617df82d9b502",
+        "semantic_excerpt": "快手本地生活java二面\n1、自我介绍\n2、实习经历\n3、怎么解决Spring循环依赖问题，@Lazy注解的作用\n3、EasyExcel和POI框架的区别\n4、导出优化怎么做的？\n5、volatile关键字的作用\n6、equals和hashcode方法\n7、hash冲突的解决方法（线性探测法、链地址法、再哈希法等）\n8、AQS框架介绍下\n9、双亲委派模型是什么，解决了什么问题？\n10、什么是IO多路复用\n11、什么是中断，中断的处理流程\n12、操作系统被中断是怎么处理的？\n13、TCP的四次挥手，在发送ack和fin状态变化过程是怎么样的？\n14、SQL的执行过程\n15、算法题：力扣463 岛屿的周长\n16、反问"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68d160110000000012015a97.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "96662ba95780f6d9253101df72c67167b308c014",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 22746,
+      "content_sha256": "df9d528f118c5875f1c0ee5f395281d3b798d2097d1259690371331ee94b433c",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "快手本地生活java二面\",",
+        "line": 512,
+        "locator": "artifact-line:512#offset:30-44;blob:96662ba95780f6d9253101df72c67167b308c014",
+        "semantic_excerpt": "快手本地生活java二面\n1、自我介绍\n2、实习经历\n3、怎么解决Spring循环依赖问题，@Lazy注解的作用\n3、EasyExcel和POI框架的区别\n4、导出优化怎么做的？\n5、volatile关键字的作用\n6、equals和hashcode方法\n7、hash冲突的解决方法（线性探测法、链地址法、再哈希法等）\n8、AQS框架介绍下\n9、双亲委派模型是什么，解决了什么问题？\n10、什么是IO多路复用\n11、什么是中断，中断的处理流程\n12、操作系统被中断是怎么处理的？\n13、TCP的四次挥手，在发送ack和fin状态变化过程是怎么样的？\n14、SQL的执行过程\n15、算法题：力扣463 岛屿的周长\n16、反问"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -69,8 +145,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -84,11 +160,12 @@
     }
   ],
   "limitations": [
-    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "434609c6ed29d689dc26cfc328f53cbd19a6bafe9f5948bf27cd15771f33b795"
+  "evidence_sha256": "51269e6e47883e653f211fb053a91ebad04932daa661b5676cba774d4f6a2d27"
 }

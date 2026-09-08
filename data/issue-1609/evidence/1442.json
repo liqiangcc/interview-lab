@@ -28,12 +28,26 @@
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": true,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "meituan-process",
+        "anchor": "美团",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-165;blob:b09239f3b9f5eb624f277381064c7e9d9c5cecd6",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:美团",
+        "source_ref": "liqiangcc/xhs:note_detail/68e62e93000000000402a061.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 2,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68e62e93000000000402a061.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -42,13 +56,78 @@
     "provenance": "source_projection",
     "byte_size": 31881,
     "content_sha256": "1b17cfa875f9dcda9b9a8d8ee76a0e3119abdc14a862a122a57e79824bb10218",
+    "cache_status": "not-applicable",
     "excerpt": {
-      "excerpt": "\"desc\": \"粉丝投稿，面的外卖订单系统方向，2 轮技术面共 2 小时，全是业务落地题。一面先问项目里的分布式库存同步，我提 Redis 预占 + MySQL 异步扣减，面试官追问 “预占后订单取消怎么释放库存”，补充定时任务兜底才过关。\\n二面聚焦高并发，让设计 618 大促下单接口，从网关限流讲到 MQ 削峰，又被问 “消息积压怎么处理”，答了扩容消费者 + 批量消费。最后考慢 SQL 优化，针对商家订单查询，我说联合索引 + 分页，面试官还让手写分库分表路由逻辑，纯八股几乎没有，全是美团实际场景。\\n面试经验和答案可以分享#爱上工作的瞬间[话题]# #java面试[话题]# #后端开发[话题]# #互联网大厂[话题]# #java[话题]# #求职[话题]# #计算机[话题]# #编程[话题]# #面试[话题]# #美团[话题]# #java面试题[话题]#\",",
-      "line": 567,
-      "locator": "artifact-line:567",
-      "semantic_excerpt": "粉丝投稿，面的外卖订单系统方向，2 轮技术面共 2 小时，全是业务落地题。一面先问项目里的分布式库存同步，我提 Redis 预占 + MySQL 异步扣减，面试官追问 “预占后订单取消怎么释放库存”，补充定时任务兜底才过关。\n二面聚焦高并发，让设计 618 大促下单接口，从网关限流讲到 MQ 削峰，又被问 “消息积压怎么处理”，答了扩容消费者 + 批量消费。最后考慢 SQL 优化，针对商家订单查询，我说联合索引 + 分页，面试官还让手写分库分表路由逻辑，纯八股几乎没有，全是美团实际场景。\n面试经验和答案可以分享"
-    }
+      "excerpt": "美团Java开发二面 后端面试全程记录\",",
+      "line": 500,
+      "locator": "artifact-line:500#offset:30-51;blob:8ba92b09b2c50fb67482bc778fb5d4854e55e7a6",
+      "semantic_excerpt": "美团Java开发二面 后端面试全程记录\n粉丝投稿，面的外卖订单系统方向，2 轮技术面共 2 小时，全是业务落地题。一面先问项目里的分布式库存同步，我提 Redis 预占 + MySQL 异步扣减，面试官追问 “预占后订单取消怎么释放库存”，补充定时任务兜底才过关。\n二面聚焦高并发，让设计 618 大促下单接口，从网关限流讲到 MQ 削峰，又被问 “消息积压怎么处理”，答了扩容消费者 + 批量消费。最后考慢 SQL 优化，针对商家订单查询，我说联合索引 + 分页，面试官还让手写分库分表路由逻辑，纯八股几乎没有，全是美团实际场景。\n面试经验和答案可以分享"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_detail/68e62e93000000000402a061.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "b09239f3b9f5eb624f277381064c7e9d9c5cecd6",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 399586,
+        "content_sha256": "52429032454f8bbe83661c39f4a620eb59abb60c5554d7061917a21599daa087",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "美团Java开发二面 后端面试全程记录 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-196;blob:b09239f3b9f5eb624f277381064c7e9d9c5cecd6",
+          "semantic_excerpt": "美团Java开发二面 后端面试全程记录\n粉丝投稿，面的外卖订单系统方向，2 轮技术面共 2 小时，全是业务落地题。一面先问项目里的分布式库存同步，我提 Redis 预占 + MySQL 异步扣减，面试官追问 “预占后订单取消怎么释放库存”，补充定时任务兜底才过关。\n二面聚焦高并发，让设计 618 大促下单接口，从网关限流讲到 MQ 削峰，又被问 “消息积压怎么处理”，答了扩容消费者 + 批量消费。最后考慢 SQL 优化，针对商家订单查询，我说联合索引 + 分页，面试官还让手写分库分表路由逻辑，纯八股几乎没有，全是美团实际场景。\n面试经验和答案可以分享"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68e62e93000000000402a061.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "8ba92b09b2c50fb67482bc778fb5d4854e55e7a6",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 31881,
+        "content_sha256": "1b17cfa875f9dcda9b9a8d8ee76a0e3119abdc14a862a122a57e79824bb10218",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "美团Java开发二面 后端面试全程记录\",",
+          "line": 500,
+          "locator": "artifact-line:500#offset:30-51;blob:8ba92b09b2c50fb67482bc778fb5d4854e55e7a6",
+          "semantic_excerpt": "美团Java开发二面 后端面试全程记录\n粉丝投稿，面的外卖订单系统方向，2 轮技术面共 2 小时，全是业务落地题。一面先问项目里的分布式库存同步，我提 Redis 预占 + MySQL 异步扣减，面试官追问 “预占后订单取消怎么释放库存”，补充定时任务兜底才过关。\n二面聚焦高并发，让设计 618 大促下单接口，从网关限流讲到 MQ 削峰，又被问 “消息积压怎么处理”，答了扩容消费者 + 批量消费。最后考慢 SQL 优化，针对商家订单查询，我说联合索引 + 分页，面试官还让手写分库分表路由逻辑，纯八股几乎没有，全是美团实际场景。\n面试经验和答案可以分享"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/68e62e93000000000402a061.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "b09239f3b9f5eb624f277381064c7e9d9c5cecd6",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 399586,
+      "content_sha256": "52429032454f8bbe83661c39f4a620eb59abb60c5554d7061917a21599daa087",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "美团Java开发二面 后端面试全程记录 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-196;blob:b09239f3b9f5eb624f277381064c7e9d9c5cecd6",
+        "semantic_excerpt": "美团Java开发二面 后端面试全程记录\n粉丝投稿，面的外卖订单系统方向，2 轮技术面共 2 小时，全是业务落地题。一面先问项目里的分布式库存同步，我提 Redis 预占 + MySQL 异步扣减，面试官追问 “预占后订单取消怎么释放库存”，补充定时任务兜底才过关。\n二面聚焦高并发，让设计 618 大促下单接口，从网关限流讲到 MQ 削峰，又被问 “消息积压怎么处理”，答了扩容消费者 + 批量消费。最后考慢 SQL 优化，针对商家订单查询，我说联合索引 + 分页，面试官还让手写分库分表路由逻辑，纯八股几乎没有，全是美团实际场景。\n面试经验和答案可以分享"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68e62e93000000000402a061.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "8ba92b09b2c50fb67482bc778fb5d4854e55e7a6",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 31881,
+      "content_sha256": "1b17cfa875f9dcda9b9a8d8ee76a0e3119abdc14a862a122a57e79824bb10218",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "美团Java开发二面 后端面试全程记录\",",
+        "line": 500,
+        "locator": "artifact-line:500#offset:30-51;blob:8ba92b09b2c50fb67482bc778fb5d4854e55e7a6",
+        "semantic_excerpt": "美团Java开发二面 后端面试全程记录\n粉丝投稿，面的外卖订单系统方向，2 轮技术面共 2 小时，全是业务落地题。一面先问项目里的分布式库存同步，我提 Redis 预占 + MySQL 异步扣减，面试官追问 “预占后订单取消怎么释放库存”，补充定时任务兜底才过关。\n二面聚焦高并发，让设计 618 大促下单接口，从网关限流讲到 MQ 削峰，又被问 “消息积压怎么处理”，答了扩容消费者 + 批量消费。最后考慢 SQL 优化，针对商家订单查询，我说联合索引 + 分页，面试官还让手写分库分表路由逻辑，纯八股几乎没有，全是美团实际场景。\n面试经验和答案可以分享"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -83,10 +162,11 @@
   ],
   "limitations": [
     "Exact Source is generic advice or aggregated/summarized material without a bounded candidate interview event; retain pending.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "457b147d004c17293761e06c6c8c07241aee5c32357a6c09714d1f4b459910ea"
+  "evidence_sha256": "3e45a603680b1e16e51ece3543c2227a8aed972cf3997dc2bf50e9e6c6f689ea"
 }

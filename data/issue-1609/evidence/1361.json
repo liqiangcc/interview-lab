@@ -7,34 +7,44 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "305c3507d8a3411955f21e1b82138a321b4907ffbb1349064c4150155b65321d",
-  "disposition": "blocked",
-  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "disposition": "single-interview",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
   "interview_cases": [],
   "ambiguity_audit": {
-    "flags": [
-      "question-list-only",
-      "question-only",
-      "no-candidate-event-evidence"
-    ],
+    "flags": [],
     "questions": 15,
     "has_first_person_event": true,
     "has_explicit_candidate_event": true,
     "has_bounded_event": true,
     "has_detailed_event": true,
     "has_completed_event_evidence": true,
-    "has_structured_candidate_event": false,
+    "has_structured_candidate_event": true,
     "generic_advice_or_aggregated": false,
     "scheduled_only": false,
-    "question_only": true,
+    "question_only": false,
     "outcome_signal": true,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
-    "only_question_list": true,
+    "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "xiaomi-process",
+        "anchor": "小米",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-165;blob:efb6e1424679654168bf3b46e37c367a23780367",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:小米",
+        "source_ref": "liqiangcc/xhs:note_detail/68cd8f5f000000001300bb2b.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 2,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68cd8f5f000000001300bb2b.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -43,13 +53,78 @@
     "provenance": "source_projection",
     "byte_size": 22166,
     "content_sha256": "7f6559ce39ad9f0aa826a6345a812f0a0483b054ae9571d254e49180bcb0b588",
+    "cache_status": "not-applicable",
     "excerpt": {
-      "excerpt": "\"global\": {",
-      "line": 2,
-      "locator": "artifact-line:2",
-      "semantic_excerpt": "自我介绍\n \n项目：\n1、介绍一下最值得讲的一个项目\n2、你在这个项目中承担什么样的角色\n3、你项目中使用到的NLP和CV算法具体是什么，用的什么技术（模型）\n4、你在构造专用数据集的时候得注意哪些问题\n5、你了解当前一些模型（GPT，BERT）的底层架构么\n \n八股：\n1、讲一下你对TCP四次挥手的理解\n2、currentHashMap中，同时对同一个key进行put和get，会发生什么\n3、你如何理解为什么要同时重写hashcode和equals方法，如果不同时重写会发生什么\n4、Java的NIO你了解多少，什么场景下使用\n5、如何查看进程的ID，知道进程名字如何知道PID\n6、对于大规模并发连接请求，你应该使用什么技术\nJava线程对于变量的操作是怎么样的（JMM内存模型），怎样每次都获取主内存数据呢\n6、有一个推荐算法，客户端调用A接口获取推荐的视频，A使用多线程调用N个同步接口去获取视频流，但是需要再200ms内返回结果，代码层面上你该如何实现\n7、你说使用线程池提交任务，并获取N个任务feature，在.get里面限制200ms，那么从这N个feature里获取结果是同步的么，意思是get一个feature会阻塞其他feature么\n8、springboot开发里，我们构造一个配置类，就可以直接读取数据库了，这是怎么实现的\n9、如果配置类里的配置是加密的，该怎么办呢，你知道bean加载流程是怎样的么，能否在中间某一步进行操作\n \n手撕：\n滑动窗口最大值\n（好像是150里面的，先让我说思路，我说维护一个单调递减的双端队列，存储数据的下标，滑动过程中维护递减队列，队头下标对应元素就是最大值，但是面试官似乎想的不是这样的解法，一个劲问我假设一开始元素有XX，然后加入XX会怎么样…我解释了半天，最后他说：你这种解法应该是可以的。然后代码都没让我写，我就好奇了，这不是官方最优解么，这面试官装糊涂还是）\n \n总结：\n八股全是场景提，并不是完全按照简历上的东西进行简单的提问，以上记录的大部分都是场景提中间提问的问题（或者说是我没回答上来时候给的提示），强度比一二面大多了，一二面是项目和纯八股题。"
-    }
+      "excerpt": "小米三面挂，莫名其妙\",",
+      "line": 536,
+      "locator": "artifact-line:536#offset:30-42;blob:cd053255309935d473b76b7f4df92ef4a12e778c",
+      "semantic_excerpt": "小米三面挂，莫名其妙\n自我介绍\n \n项目：\n1、介绍一下最值得讲的一个项目\n2、你在这个项目中承担什么样的角色\n3、你项目中使用到的NLP和CV算法具体是什么，用的什么技术（模型）\n4、你在构造专用数据集的时候得注意哪些问题\n5、你了解当前一些模型（GPT，BERT）的底层架构么\n \n八股：\n1、讲一下你对TCP四次挥手的理解\n2、currentHashMap中，同时对同一个key进行put和get，会发生什么\n3、你如何理解为什么要同时重写hashcode和equals方法，如果不同时重写会发生什么\n4、Java的NIO你了解多少，什么场景下使用\n5、如何查看进程的ID，知道进程名字如何知道PID\n6、对于大规模并发连接请求，你应该使用什么技术\nJava线程对于变量的操作是怎么样的（JMM内存模型），怎样每次都获取主内存数据呢\n6、有一个推荐算法，客户端调用A接口获取推荐的视频，A使用多线程调用N个同步接口去获取视频流，但是需要再200ms内返回结果，代码层面上你该如何实现\n7、你说使用线程池提交任务，并获取N个任务feature，在.get里面限制200ms，那么从这N个feature里获取结果是同步的么，意思是get一个feature会阻塞其他feature么\n8、springboot开发里，我们构造一个配置类，就可以直接读取数据库了，这是怎么实现的\n9、如果配置类里的配置是加密的，该怎么办呢，你知道bean加载流程是怎样的么，能否在中间某一步进行操作\n \n手撕：\n滑动窗口最大值\n（好像是150里面的，先让我说思路，我说维护一个单调递减的双端队列，存储数据的下标，滑动过程中维护递减队列，队头下标对应元素就是最大值，但是面试官似乎想的不是这样的解法，一个劲问我假设一开始元素有XX，然后加入XX会怎么样…我解释了半天，最后他说：你这种解法应该是可以的。然后代码都没让我写，我就好奇了，这不是官方最优解么，这面试官装糊涂还是）\n \n总结：\n八股全是场景提，并不是完全按照简历上的东西进行简单的提问，以上记录的大部分都是场景提中间提问的问题（或者说是我没回答上来时候给的提示），强度比一二面大多了，一二面是项目和纯八股题。"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_detail/68cd8f5f000000001300bb2b.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "efb6e1424679654168bf3b46e37c367a23780367",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 391418,
+        "content_sha256": "ab617f4a184a2fd82c3e1cad1e4a00079cdb9170ad181edd231e67897ac31523",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "小米三面挂，莫名其妙 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-187;blob:efb6e1424679654168bf3b46e37c367a23780367",
+          "semantic_excerpt": "小米三面挂，莫名其妙\n自我介绍\n \n项目：\n1、介绍一下最值得讲的一个项目\n2、你在这个项目中承担什么样的角色\n3、你项目中使用到的NLP和CV算法具体是什么，用的什么技术（模型）\n4、你在构造专用数据集的时候得注意哪些问题\n5、你了解当前一些模型（GPT，BERT）的底层架构么\n \n八股：\n1、讲一下你对TCP四次挥手的理解\n2、currentHashMap中，同时对同一个key进行put和get，会发生什么\n3、你如何理解为什么要同时重写hashcode和equals方法，如果不同时重写会发生什么\n4、Java的NIO你了解多少，什么场景下使用\n5、如何查看进程的ID，知道进程名字如何知道PID\n6、对于大规模并发连接请求，你应该使用什么技术\nJava线程对于变量的操作是怎么样的（JMM内存模型），怎样每次都获取主内存数据呢\n6、有一个推荐算法，客户端调用A接口获取推荐的视频，A使用多线程调用N个同步接口去获取视频流，但是需要再200ms内返回结果，代码层面上你该如何实现\n7、你说使用线程池提交任务，并获取N个任务feature，在.get里面限制200ms，那么从这N个feature里获取结果是同步的么，意思是get一个feature会阻塞其他feature么\n8、springboot开发里，我们构造一个配置类，就可以直接读取数据库了，这是怎么实现的\n9、如果配置类里的配置是加密的，该怎么办呢，你知道bean加载流程是怎样的么，能否在中间某一步进行操作\n \n手撕：\n滑动窗口最大值\n（好像是150里面的，先让我说思路，我说维护一个单调递减的双端队列，存储数据的下标，滑动过程中维护递减队列，队头下标对应元素就是最大值，但是面试官似乎想的不是这样的解法，一个劲问我假设一开始元素有XX，然后加入XX会怎么样…我解释了半天，最后他说：你这种解法应该是可以的。然后代码都没让我写，我就好奇了，这不是官方最优解么，这面试官装糊涂还是）\n \n总结：\n八股全是场景提，并不是完全按照简历上的东西进行简单的提问，以上记录的大部分都是场景提中间提问的问题（或者说是我没回答上来时候给的提示），强度比一二面大多了，一二面是项目和纯八股题。"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68cd8f5f000000001300bb2b.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "cd053255309935d473b76b7f4df92ef4a12e778c",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 22166,
+        "content_sha256": "7f6559ce39ad9f0aa826a6345a812f0a0483b054ae9571d254e49180bcb0b588",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "小米三面挂，莫名其妙\",",
+          "line": 536,
+          "locator": "artifact-line:536#offset:30-42;blob:cd053255309935d473b76b7f4df92ef4a12e778c",
+          "semantic_excerpt": "小米三面挂，莫名其妙\n自我介绍\n \n项目：\n1、介绍一下最值得讲的一个项目\n2、你在这个项目中承担什么样的角色\n3、你项目中使用到的NLP和CV算法具体是什么，用的什么技术（模型）\n4、你在构造专用数据集的时候得注意哪些问题\n5、你了解当前一些模型（GPT，BERT）的底层架构么\n \n八股：\n1、讲一下你对TCP四次挥手的理解\n2、currentHashMap中，同时对同一个key进行put和get，会发生什么\n3、你如何理解为什么要同时重写hashcode和equals方法，如果不同时重写会发生什么\n4、Java的NIO你了解多少，什么场景下使用\n5、如何查看进程的ID，知道进程名字如何知道PID\n6、对于大规模并发连接请求，你应该使用什么技术\nJava线程对于变量的操作是怎么样的（JMM内存模型），怎样每次都获取主内存数据呢\n6、有一个推荐算法，客户端调用A接口获取推荐的视频，A使用多线程调用N个同步接口去获取视频流，但是需要再200ms内返回结果，代码层面上你该如何实现\n7、你说使用线程池提交任务，并获取N个任务feature，在.get里面限制200ms，那么从这N个feature里获取结果是同步的么，意思是get一个feature会阻塞其他feature么\n8、springboot开发里，我们构造一个配置类，就可以直接读取数据库了，这是怎么实现的\n9、如果配置类里的配置是加密的，该怎么办呢，你知道bean加载流程是怎样的么，能否在中间某一步进行操作\n \n手撕：\n滑动窗口最大值\n（好像是150里面的，先让我说思路，我说维护一个单调递减的双端队列，存储数据的下标，滑动过程中维护递减队列，队头下标对应元素就是最大值，但是面试官似乎想的不是这样的解法，一个劲问我假设一开始元素有XX，然后加入XX会怎么样…我解释了半天，最后他说：你这种解法应该是可以的。然后代码都没让我写，我就好奇了，这不是官方最优解么，这面试官装糊涂还是）\n \n总结：\n八股全是场景提，并不是完全按照简历上的东西进行简单的提问，以上记录的大部分都是场景提中间提问的问题（或者说是我没回答上来时候给的提示），强度比一二面大多了，一二面是项目和纯八股题。"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/68cd8f5f000000001300bb2b.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "efb6e1424679654168bf3b46e37c367a23780367",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 391418,
+      "content_sha256": "ab617f4a184a2fd82c3e1cad1e4a00079cdb9170ad181edd231e67897ac31523",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "小米三面挂，莫名其妙 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-187;blob:efb6e1424679654168bf3b46e37c367a23780367",
+        "semantic_excerpt": "小米三面挂，莫名其妙\n自我介绍\n \n项目：\n1、介绍一下最值得讲的一个项目\n2、你在这个项目中承担什么样的角色\n3、你项目中使用到的NLP和CV算法具体是什么，用的什么技术（模型）\n4、你在构造专用数据集的时候得注意哪些问题\n5、你了解当前一些模型（GPT，BERT）的底层架构么\n \n八股：\n1、讲一下你对TCP四次挥手的理解\n2、currentHashMap中，同时对同一个key进行put和get，会发生什么\n3、你如何理解为什么要同时重写hashcode和equals方法，如果不同时重写会发生什么\n4、Java的NIO你了解多少，什么场景下使用\n5、如何查看进程的ID，知道进程名字如何知道PID\n6、对于大规模并发连接请求，你应该使用什么技术\nJava线程对于变量的操作是怎么样的（JMM内存模型），怎样每次都获取主内存数据呢\n6、有一个推荐算法，客户端调用A接口获取推荐的视频，A使用多线程调用N个同步接口去获取视频流，但是需要再200ms内返回结果，代码层面上你该如何实现\n7、你说使用线程池提交任务，并获取N个任务feature，在.get里面限制200ms，那么从这N个feature里获取结果是同步的么，意思是get一个feature会阻塞其他feature么\n8、springboot开发里，我们构造一个配置类，就可以直接读取数据库了，这是怎么实现的\n9、如果配置类里的配置是加密的，该怎么办呢，你知道bean加载流程是怎样的么，能否在中间某一步进行操作\n \n手撕：\n滑动窗口最大值\n（好像是150里面的，先让我说思路，我说维护一个单调递减的双端队列，存储数据的下标，滑动过程中维护递减队列，队头下标对应元素就是最大值，但是面试官似乎想的不是这样的解法，一个劲问我假设一开始元素有XX，然后加入XX会怎么样…我解释了半天，最后他说：你这种解法应该是可以的。然后代码都没让我写，我就好奇了，这不是官方最优解么，这面试官装糊涂还是）\n \n总结：\n八股全是场景提，并不是完全按照简历上的东西进行简单的提问，以上记录的大部分都是场景提中间提问的问题（或者说是我没回答上来时候给的提示），强度比一二面大多了，一二面是项目和纯八股题。"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68cd8f5f000000001300bb2b.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "cd053255309935d473b76b7f4df92ef4a12e778c",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 22166,
+      "content_sha256": "7f6559ce39ad9f0aa826a6345a812f0a0483b054ae9571d254e49180bcb0b588",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "小米三面挂，莫名其妙\",",
+        "line": 536,
+        "locator": "artifact-line:536#offset:30-42;blob:cd053255309935d473b76b7f4df92ef4a12e778c",
+        "semantic_excerpt": "小米三面挂，莫名其妙\n自我介绍\n \n项目：\n1、介绍一下最值得讲的一个项目\n2、你在这个项目中承担什么样的角色\n3、你项目中使用到的NLP和CV算法具体是什么，用的什么技术（模型）\n4、你在构造专用数据集的时候得注意哪些问题\n5、你了解当前一些模型（GPT，BERT）的底层架构么\n \n八股：\n1、讲一下你对TCP四次挥手的理解\n2、currentHashMap中，同时对同一个key进行put和get，会发生什么\n3、你如何理解为什么要同时重写hashcode和equals方法，如果不同时重写会发生什么\n4、Java的NIO你了解多少，什么场景下使用\n5、如何查看进程的ID，知道进程名字如何知道PID\n6、对于大规模并发连接请求，你应该使用什么技术\nJava线程对于变量的操作是怎么样的（JMM内存模型），怎样每次都获取主内存数据呢\n6、有一个推荐算法，客户端调用A接口获取推荐的视频，A使用多线程调用N个同步接口去获取视频流，但是需要再200ms内返回结果，代码层面上你该如何实现\n7、你说使用线程池提交任务，并获取N个任务feature，在.get里面限制200ms，那么从这N个feature里获取结果是同步的么，意思是get一个feature会阻塞其他feature么\n8、springboot开发里，我们构造一个配置类，就可以直接读取数据库了，这是怎么实现的\n9、如果配置类里的配置是加密的，该怎么办呢，你知道bean加载流程是怎样的么，能否在中间某一步进行操作\n \n手撕：\n滑动窗口最大值\n（好像是150里面的，先让我说思路，我说维护一个单调递减的双端队列，存储数据的下标，滑动过程中维护递减队列，队头下标对应元素就是最大值，但是面试官似乎想的不是这样的解法，一个劲问我假设一开始元素有XX，然后加入XX会怎么样…我解释了半天，最后他说：你这种解法应该是可以的。然后代码都没让我写，我就好奇了，这不是官方最优解么，这面试官装糊涂还是）\n \n总结：\n八股全是场景提，并不是完全按照简历上的东西进行简单的提问，以上记录的大部分都是场景提中间提问的问题（或者说是我没回答上来时候给的提示），强度比一二面大多了，一二面是项目和纯八股题。"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -68,8 +143,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -83,11 +158,12 @@
     }
   ],
   "limitations": [
-    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "dfa9d70a58d50c9844e32e670c4375f297fab7c4a6360f92eeac3669dbe5c7f5"
+  "evidence_sha256": "850488f8337f3d787d9a1bcca607c5b3afd2df99bc4c4bdbce6a1f4e37c0bb42"
 }

@@ -7,8 +7,8 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "9a7b690c57c0d59aba4a536a53aa81bb34fe55e7f55902c4ef4405c43e52d6e3",
-  "disposition": "blocked",
-  "rationale": "Exact Source is generic advice or aggregated/summarized material without a bounded candidate interview event; retain pending.",
+  "disposition": "not-interview",
+  "rationale": "Exact Source identifies a written-test/non-interview format rather than a candidate interview event.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
@@ -31,12 +31,16 @@
     "outcome_signal": false,
     "resource_signal": true,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": true,
     "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68cbf62a000000000e0218a9.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -45,13 +49,108 @@
     "provenance": "source_projection",
     "byte_size": 434,
     "content_sha256": "8bf221adad1febfa0cacad29c61f611c0d669ca78c2bff95ded972f0eea7f8eb",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "进职场一年多了，代码和算法水平下降了，但是处理问题的能力提升了，其实日常需求根本用不上那些高大上的模式和规范，按照产品prd把功能写出来就行了",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "进职场一年多了，代码和算法水平下降了，但是处理问题的能力提升了，其实日常需求根本用不上那些高大上的模式和规范，按照产品prd把功能写出来就行了\n感觉java初学者最大的坎就是笔试面试，进了企业过一个月都一样"
-    }
+      "locator": "artifact-line:1#offset:0-71;blob:fd23fa4019b22725929f268cc9159b7406e1dc80",
+      "semantic_excerpt": "小米java开发日常\n进职场一年多了，代码和算法水平下降了，但是处理问题的能力提升了，其实日常需求根本用不上那些高大上的模式和规范，按照产品prd把功能写出来就行了\n感觉java初学者最大的坎就是笔试面试，进了企业过一个月都一样"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68cbf62a000000000e0218a9.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "fd23fa4019b22725929f268cc9159b7406e1dc80",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 434,
+        "content_sha256": "8bf221adad1febfa0cacad29c61f611c0d669ca78c2bff95ded972f0eea7f8eb",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "进职场一年多了，代码和算法水平下降了，但是处理问题的能力提升了，其实日常需求根本用不上那些高大上的模式和规范，按照产品prd把功能写出来就行了",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-71;blob:fd23fa4019b22725929f268cc9159b7406e1dc80",
+          "semantic_excerpt": "小米java开发日常\n进职场一年多了，代码和算法水平下降了，但是处理问题的能力提升了，其实日常需求根本用不上那些高大上的模式和规范，按照产品prd把功能写出来就行了\n感觉java初学者最大的坎就是笔试面试，进了企业过一个月都一样"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68cbf62a000000000e0218a9.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "11bfc78c48cb0b56d428ea53357717cf0cbf66e8",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 389852,
+        "content_sha256": "bfaa0a95c14519c8a890ac2f2ca69893faf47eb11f0d1ace59ae5e90362c0ffb",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "小米java开发日常 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-187;blob:11bfc78c48cb0b56d428ea53357717cf0cbf66e8",
+          "semantic_excerpt": "小米java开发日常\n进职场一年多了，代码和算法水平下降了，但是处理问题的能力提升了，其实日常需求根本用不上那些高大上的模式和规范，按照产品prd把功能写出来就行了\n感觉java初学者最大的坎就是笔试面试，进了企业过一个月都一样"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68cbf62a000000000e0218a9.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "6685e65b6c951dbaca13a6d9737c697598e65785",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 22965,
+        "content_sha256": "1bcacd66be30e0992f6eee941cea0b2c73ac29fadcf7a252b52e419966697acb",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "小米java开发日常\",",
+          "line": 558,
+          "locator": "artifact-line:558#offset:30-42;blob:6685e65b6c951dbaca13a6d9737c697598e65785",
+          "semantic_excerpt": "小米java开发日常\n进职场一年多了，代码和算法水平下降了，但是处理问题的能力提升了，其实日常需求根本用不上那些高大上的模式和规范，按照产品prd把功能写出来就行了\n感觉java初学者最大的坎就是笔试面试，进了企业过一个月都一样"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68cbf62a000000000e0218a9.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "fd23fa4019b22725929f268cc9159b7406e1dc80",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 434,
+      "content_sha256": "8bf221adad1febfa0cacad29c61f611c0d669ca78c2bff95ded972f0eea7f8eb",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "进职场一年多了，代码和算法水平下降了，但是处理问题的能力提升了，其实日常需求根本用不上那些高大上的模式和规范，按照产品prd把功能写出来就行了",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-71;blob:fd23fa4019b22725929f268cc9159b7406e1dc80",
+        "semantic_excerpt": "小米java开发日常\n进职场一年多了，代码和算法水平下降了，但是处理问题的能力提升了，其实日常需求根本用不上那些高大上的模式和规范，按照产品prd把功能写出来就行了\n感觉java初学者最大的坎就是笔试面试，进了企业过一个月都一样"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68cbf62a000000000e0218a9.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "11bfc78c48cb0b56d428ea53357717cf0cbf66e8",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 389852,
+      "content_sha256": "bfaa0a95c14519c8a890ac2f2ca69893faf47eb11f0d1ace59ae5e90362c0ffb",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "小米java开发日常 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-187;blob:11bfc78c48cb0b56d428ea53357717cf0cbf66e8",
+        "semantic_excerpt": "小米java开发日常\n进职场一年多了，代码和算法水平下降了，但是处理问题的能力提升了，其实日常需求根本用不上那些高大上的模式和规范，按照产品prd把功能写出来就行了\n感觉java初学者最大的坎就是笔试面试，进了企业过一个月都一样"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68cbf62a000000000e0218a9.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "6685e65b6c951dbaca13a6d9737c697598e65785",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 22965,
+      "content_sha256": "1bcacd66be30e0992f6eee941cea0b2c73ac29fadcf7a252b52e419966697acb",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "小米java开发日常\",",
+        "line": 558,
+        "locator": "artifact-line:558#offset:30-42;blob:6685e65b6c951dbaca13a6d9737c697598e65785",
+        "semantic_excerpt": "小米java开发日常\n进职场一年多了，代码和算法水平下降了，但是处理问题的能力提升了，其实日常需求根本用不上那些高大上的模式和规范，按照产品prd把功能写出来就行了\n感觉java初学者最大的坎就是笔试面试，进了企业过一个月都一样"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -70,8 +169,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source is generic advice or aggregated/summarized material without a bounded candidate interview event; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source identifies a written-test/non-interview format rather than a candidate interview event."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -85,11 +184,12 @@
     }
   ],
   "limitations": [
-    "Exact Source is generic advice or aggregated/summarized material without a bounded candidate interview event; retain pending.",
+    "Exact Source identifies a written-test/non-interview format rather than a candidate interview event.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "3f141867bc3c23ae7f96dd3402d27c9a44e70c01a4f8889400d7ad795b1e278b"
+  "evidence_sha256": "5d1c3ad9631d99e441747db82c08e25047b9ede08c0ce4570224ba7422009a6b"
 }

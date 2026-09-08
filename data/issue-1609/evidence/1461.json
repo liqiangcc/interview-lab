@@ -17,7 +17,7 @@
     "questions": 0,
     "has_first_person_event": true,
     "has_explicit_candidate_event": true,
-    "has_bounded_event": false,
+    "has_bounded_event": true,
     "has_detailed_event": false,
     "has_completed_event_evidence": true,
     "has_structured_candidate_event": false,
@@ -27,12 +27,26 @@
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "xiaomi-process",
+        "anchor": "小米",
+        "line": 1,
+        "locator": "artifact-line:1#offset:1-3;blob:2f904ba5fee68a473bd1ffaa25d0a0c408b09563",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:小米",
+        "source_ref": "liqiangcc/xhs:note_desc/694512cd000000001e004d1a.txt@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/694512cd000000001e004d1a.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -41,13 +55,108 @@
     "provenance": "source_projection",
     "byte_size": 527,
     "content_sha256": "36ab9a94c5f05ad427bc98eb0ac6a2df73999824eb135faea6f22c6f2b8f5635",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "在小米面试中，我分享了订单消息顺序性保障的RocketMQ实现原理，并讨论了微服务迁移中的表数据同步挑战。项目中我负责订单服务，团队技术选型和技术规划由牵头人主导。面试中还解答了链表大数求和算法题，强调时间空间复杂度。",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "在小米面试中，我分享了订单消息顺序性保障的RocketMQ实现原理，并讨论了微服务迁移中的表数据同步挑战。项目中我负责订单服务，团队技术选型和技术规划由牵头人主导。面试中还解答了链表大数求和算法题，强调时间空间复杂度。"
-    }
+      "locator": "artifact-line:1#offset:0-109;blob:2f904ba5fee68a473bd1ffaa25d0a0c408b09563",
+      "semantic_excerpt": "Java后端社招-小米二面\n在小米面试中，我分享了订单消息顺序性保障的RocketMQ实现原理，并讨论了微服务迁移中的表数据同步挑战。项目中我负责订单服务，团队技术选型和技术规划由牵头人主导。面试中还解答了链表大数求和算法题，强调时间空间复杂度。"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/694512cd000000001e004d1a.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "2f904ba5fee68a473bd1ffaa25d0a0c408b09563",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 527,
+        "content_sha256": "36ab9a94c5f05ad427bc98eb0ac6a2df73999824eb135faea6f22c6f2b8f5635",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "在小米面试中，我分享了订单消息顺序性保障的RocketMQ实现原理，并讨论了微服务迁移中的表数据同步挑战。项目中我负责订单服务，团队技术选型和技术规划由牵头人主导。面试中还解答了链表大数求和算法题，强调时间空间复杂度。",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-109;blob:2f904ba5fee68a473bd1ffaa25d0a0c408b09563",
+          "semantic_excerpt": "Java后端社招-小米二面\n在小米面试中，我分享了订单消息顺序性保障的RocketMQ实现原理，并讨论了微服务迁移中的表数据同步挑战。项目中我负责订单服务，团队技术选型和技术规划由牵头人主导。面试中还解答了链表大数求和算法题，强调时间空间复杂度。"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/694512cd000000001e004d1a.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "fdc1b2d91367af2eece8ce4b70dd2247a14c2fb4",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 398549,
+        "content_sha256": "0af9b70ffca9af253b48a38ff4d4c3ae12fd6b61f22f9dc6f3c4bb3e07fcdbd0",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "Java后端社招-小米二面 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-190;blob:fdc1b2d91367af2eece8ce4b70dd2247a14c2fb4",
+          "semantic_excerpt": "Java后端社招-小米二面\n在小米面试中，我分享了订单消息顺序性保障的RocketMQ实现原理，并讨论了微服务迁移中的表数据同步挑战。项目中我负责订单服务，团队技术选型和技术规划由牵头人主导。面试中还解答了链表大数求和算法题，强调时间空间复杂度。"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/694512cd000000001e004d1a.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "e3ee2df14d64a0a8b82883a30b9bb39d187ff808",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 24352,
+        "content_sha256": "7d53d0fa95982ddb2f324d64aa4857740a00405ee8aa7f0bbd0ceaa32c2d88eb",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "Java后端社招-小米二面\",",
+          "line": 575,
+          "locator": "artifact-line:575#offset:30-45;blob:e3ee2df14d64a0a8b82883a30b9bb39d187ff808",
+          "semantic_excerpt": "Java后端社招-小米二面\n在小米面试中，我分享了订单消息顺序性保障的RocketMQ实现原理，并讨论了微服务迁移中的表数据同步挑战。项目中我负责订单服务，团队技术选型和技术规划由牵头人主导。面试中还解答了链表大数求和算法题，强调时间空间复杂度。"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/694512cd000000001e004d1a.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "2f904ba5fee68a473bd1ffaa25d0a0c408b09563",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 527,
+      "content_sha256": "36ab9a94c5f05ad427bc98eb0ac6a2df73999824eb135faea6f22c6f2b8f5635",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "在小米面试中，我分享了订单消息顺序性保障的RocketMQ实现原理，并讨论了微服务迁移中的表数据同步挑战。项目中我负责订单服务，团队技术选型和技术规划由牵头人主导。面试中还解答了链表大数求和算法题，强调时间空间复杂度。",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-109;blob:2f904ba5fee68a473bd1ffaa25d0a0c408b09563",
+        "semantic_excerpt": "Java后端社招-小米二面\n在小米面试中，我分享了订单消息顺序性保障的RocketMQ实现原理，并讨论了微服务迁移中的表数据同步挑战。项目中我负责订单服务，团队技术选型和技术规划由牵头人主导。面试中还解答了链表大数求和算法题，强调时间空间复杂度。"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/694512cd000000001e004d1a.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "fdc1b2d91367af2eece8ce4b70dd2247a14c2fb4",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 398549,
+      "content_sha256": "0af9b70ffca9af253b48a38ff4d4c3ae12fd6b61f22f9dc6f3c4bb3e07fcdbd0",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "Java后端社招-小米二面 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-190;blob:fdc1b2d91367af2eece8ce4b70dd2247a14c2fb4",
+        "semantic_excerpt": "Java后端社招-小米二面\n在小米面试中，我分享了订单消息顺序性保障的RocketMQ实现原理，并讨论了微服务迁移中的表数据同步挑战。项目中我负责订单服务，团队技术选型和技术规划由牵头人主导。面试中还解答了链表大数求和算法题，强调时间空间复杂度。"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/694512cd000000001e004d1a.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "e3ee2df14d64a0a8b82883a30b9bb39d187ff808",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 24352,
+      "content_sha256": "7d53d0fa95982ddb2f324d64aa4857740a00405ee8aa7f0bbd0ceaa32c2d88eb",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "Java后端社招-小米二面\",",
+        "line": 575,
+        "locator": "artifact-line:575#offset:30-45;blob:e3ee2df14d64a0a8b82883a30b9bb39d187ff808",
+        "semantic_excerpt": "Java后端社招-小米二面\n在小米面试中，我分享了订单消息顺序性保障的RocketMQ实现原理，并讨论了微服务迁移中的表数据同步挑战。项目中我负责订单服务，团队技术选型和技术规划由牵头人主导。面试中还解答了链表大数求和算法题，强调时间空间复杂度。"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -82,10 +191,11 @@
   ],
   "limitations": [
     "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "cbd3b3b24fae68dc697e0164632076b24317431b03f2070d44b657731a7c81ea"
+  "evidence_sha256": "d0c04e76802fbfbe78fc4e30f63951d9680a56dd4d50b880ef4c7611f251d1e2"
 }

@@ -8,7 +8,7 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "2ab6971e938ad6faf9bb17b148b72c99ea6b8ac51580aa664ff5a6ac38d2b4d1",
   "disposition": "blocked",
-  "rationale": "Exact Source contains only a job/title, round, duration, or location descriptor; it does not record candidate experience, questions, or interview process.",
+  "rationale": "Exact Source contains only a job/title, round, duration, or location descriptor and no candidate event; retain pending.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
@@ -29,12 +29,26 @@
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": true,
     "non_interview_format": false,
     "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "bytedance-process",
+        "anchor": "字节",
+        "line": 1,
+        "locator": "artifact-line:1#offset:5-7;blob:2c7cb2774489e42c1513fffe89e6bb9b793586ed",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:字节",
+        "source_ref": "liqiangcc/xhs:note_desc/68b045a6000000001c0105e6.txt@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b045a6000000001c0105e6.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -43,13 +57,108 @@
     "provenance": "source_projection",
     "byte_size": 89,
     "content_sha256": "58ee71ca9bbff5cf151980b06944b9245351eb6cc08927d548806749040f591e",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "2026届字节跳动客户端-抖⾳岗位, 开发⼯程师⼀⾯（ 60min, base北京）",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "2026届字节跳动客户端-抖⾳岗位, 开发⼯程师⼀⾯（ 60min, base北京）"
-    }
+      "locator": "artifact-line:1#offset:0-42;blob:2c7cb2774489e42c1513fffe89e6bb9b793586ed",
+      "semantic_excerpt": "2026届字节, 客户端-抖⾳岗位, 一面\n2026届字节跳动客户端-抖⾳岗位, 开发⼯程师⼀⾯（ 60min, base北京）"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68b045a6000000001c0105e6.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "2c7cb2774489e42c1513fffe89e6bb9b793586ed",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 89,
+        "content_sha256": "58ee71ca9bbff5cf151980b06944b9245351eb6cc08927d548806749040f591e",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "2026届字节跳动客户端-抖⾳岗位, 开发⼯程师⼀⾯（ 60min, base北京）",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-42;blob:2c7cb2774489e42c1513fffe89e6bb9b793586ed",
+          "semantic_excerpt": "2026届字节, 客户端-抖⾳岗位, 一面\n2026届字节跳动客户端-抖⾳岗位, 开发⼯程师⼀⾯（ 60min, base北京）"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68b045a6000000001c0105e6.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "39fb18ad27544b727d95564a321f168e3283c210",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 401164,
+        "content_sha256": "eb751540771d86bccb1d3060e7cdf9cea5b12ef83d57f24a05ee2ebb2cfcee94",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "2026届字节, 客户端-抖⾳岗位, 一面 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-198;blob:39fb18ad27544b727d95564a321f168e3283c210",
+          "semantic_excerpt": "2026届字节, 客户端-抖⾳岗位, 一面\n2026届字节跳动客户端-抖⾳岗位, 开发⼯程师⼀⾯（ 60min, base北京）"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68b045a6000000001c0105e6.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "3c014ae268c7231dc0a50e0011a884fe4ff8d1ef",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 37186,
+        "content_sha256": "8f0d1095cbc2df2ef9f80fd245e3c44845986fef9eed6d613dcdd404e1bae5ae",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "2026届字节, 客户端-抖⾳岗位, 一面\",",
+          "line": 796,
+          "locator": "artifact-line:796#offset:30-53;blob:3c014ae268c7231dc0a50e0011a884fe4ff8d1ef",
+          "semantic_excerpt": "2026届字节, 客户端-抖⾳岗位, 一面\n2026届字节跳动客户端-抖⾳岗位, 开发⼯程师⼀⾯（ 60min, base北京）"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68b045a6000000001c0105e6.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "2c7cb2774489e42c1513fffe89e6bb9b793586ed",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 89,
+      "content_sha256": "58ee71ca9bbff5cf151980b06944b9245351eb6cc08927d548806749040f591e",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "2026届字节跳动客户端-抖⾳岗位, 开发⼯程师⼀⾯（ 60min, base北京）",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-42;blob:2c7cb2774489e42c1513fffe89e6bb9b793586ed",
+        "semantic_excerpt": "2026届字节, 客户端-抖⾳岗位, 一面\n2026届字节跳动客户端-抖⾳岗位, 开发⼯程师⼀⾯（ 60min, base北京）"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68b045a6000000001c0105e6.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "39fb18ad27544b727d95564a321f168e3283c210",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 401164,
+      "content_sha256": "eb751540771d86bccb1d3060e7cdf9cea5b12ef83d57f24a05ee2ebb2cfcee94",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "2026届字节, 客户端-抖⾳岗位, 一面 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-198;blob:39fb18ad27544b727d95564a321f168e3283c210",
+        "semantic_excerpt": "2026届字节, 客户端-抖⾳岗位, 一面\n2026届字节跳动客户端-抖⾳岗位, 开发⼯程师⼀⾯（ 60min, base北京）"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68b045a6000000001c0105e6.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "3c014ae268c7231dc0a50e0011a884fe4ff8d1ef",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 37186,
+      "content_sha256": "8f0d1095cbc2df2ef9f80fd245e3c44845986fef9eed6d613dcdd404e1bae5ae",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "2026届字节, 客户端-抖⾳岗位, 一面\",",
+        "line": 796,
+        "locator": "artifact-line:796#offset:30-53;blob:3c014ae268c7231dc0a50e0011a884fe4ff8d1ef",
+        "semantic_excerpt": "2026届字节, 客户端-抖⾳岗位, 一面\n2026届字节跳动客户端-抖⾳岗位, 开发⼯程师⼀⾯（ 60min, base北京）"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -69,7 +178,7 @@
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source contains only a job/title, round, duration, or location descriptor; it does not record candidate experience, questions, or interview process."
+      "note": "The disposition is supported by the cited source evidence. Exact Source contains only a job/title, round, duration, or location descriptor and no candidate event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -83,11 +192,12 @@
     }
   ],
   "limitations": [
-    "Exact Source contains only a job/title, round, duration, or location descriptor; it does not record candidate experience, questions, or interview process.",
+    "Exact Source contains only a job/title, round, duration, or location descriptor and no candidate event; retain pending.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "1d4a8968bbbf11cc3155402ad448c595322599284eddcc16b02490c9cd3687f7"
+  "evidence_sha256": "79f838ba24833809fe8cb4cadbd6a1fe2683ae9a5429c8eab4d92073fd333aa4"
 }

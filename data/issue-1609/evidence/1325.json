@@ -30,6 +30,8 @@
     "outcome_signal": true,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": true,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": true,
@@ -40,11 +42,14 @@
         "case_key": "bytedance-process",
         "anchor": "字节",
         "line": 1,
-        "locator": "artifact-line:1#offset:6-8",
+        "locator": "artifact-line:1#offset:6-8;blob:12b1bc808aeb7df1a97eed3e1261ad44a87b4c3c",
         "local_detail": true,
-        "semantic_locator": "semantic-anchor:字节"
+        "semantic_locator": "semantic-anchor:字节",
+        "source_ref": "liqiangcc/xhs:note_desc/68c8d776000000001d037905.txt@95b77bb261048059846273688e4b90a2e108b437"
       }
-    ]
+    ],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68c8d776000000001d037905.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -53,13 +58,108 @@
     "provenance": "source_projection",
     "byte_size": 964,
     "content_sha256": "bf539852013356184b3d17fcf6032b4c80c9d0d480b4b48a129b52f06519c7a1",
+    "cache_status": "miss",
     "excerpt": {
-      "excerpt": "9.15  字节跳动后端开发一面面经",
-      "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "9.15 字节跳动后端开发一面面经\n1、拷打短链接项目，聊项目背景意义，具体怎么做的，聊了二十多分钟\n2、拷打实习期间做的事情\n3、实习公司的数据库是怎么部署的？\n4、MySQL一主多从怎么保证数据一致性的？\n5、主节点挂了怎么办？\n6、从节点之间是怎么保证数据一致性的？\n7、为什么项目中的消息队列用kafka？\n8、kafka怎么保证消息被可靠的消费？\n9、http请求可以拼接几个参数？上限是多少？\n10、http的状态码有哪些？504状态码代表什么？\n11、Java创建一个对象的过程？\n12、分配内存是怎么分配的？\n13、Java是怎么知道创建的对象在内存的哪个地方的？\n算法题：无重复字符的最长子串（力扣第三题，区别在于力扣中输出长度，字节要求输出最长的子串本身）"
-    }
+      "excerpt": "1、拷打短链接项目，聊项目背景意义，具体怎么做的，聊了二十多分钟",
+      "line": 2,
+      "locator": "artifact-line:2#offset:0-32;blob:12b1bc808aeb7df1a97eed3e1261ad44a87b4c3c",
+      "semantic_excerpt": "字节后端开发一面面经\n9.15 字节跳动后端开发一面面经\n1、拷打短链接项目，聊项目背景意义，具体怎么做的，聊了二十多分钟\n2、拷打实习期间做的事情\n3、实习公司的数据库是怎么部署的？\n4、MySQL一主多从怎么保证数据一致性的？\n5、主节点挂了怎么办？\n6、从节点之间是怎么保证数据一致性的？\n7、为什么项目中的消息队列用kafka？\n8、kafka怎么保证消息被可靠的消费？\n9、http请求可以拼接几个参数？上限是多少？\n10、http的状态码有哪些？504状态码代表什么？\n11、Java创建一个对象的过程？\n12、分配内存是怎么分配的？\n13、Java是怎么知道创建的对象在内存的哪个地方的？\n算法题：无重复字符的最长子串（力扣第三题，区别在于力扣中输出长度，字节要求输出最长的子串本身）"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68c8d776000000001d037905.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "12b1bc808aeb7df1a97eed3e1261ad44a87b4c3c",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 964,
+        "content_sha256": "bf539852013356184b3d17fcf6032b4c80c9d0d480b4b48a129b52f06519c7a1",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "1、拷打短链接项目，聊项目背景意义，具体怎么做的，聊了二十多分钟",
+          "line": 2,
+          "locator": "artifact-line:2#offset:0-32;blob:12b1bc808aeb7df1a97eed3e1261ad44a87b4c3c",
+          "semantic_excerpt": "字节后端开发一面面经\n9.15 字节跳动后端开发一面面经\n1、拷打短链接项目，聊项目背景意义，具体怎么做的，聊了二十多分钟\n2、拷打实习期间做的事情\n3、实习公司的数据库是怎么部署的？\n4、MySQL一主多从怎么保证数据一致性的？\n5、主节点挂了怎么办？\n6、从节点之间是怎么保证数据一致性的？\n7、为什么项目中的消息队列用kafka？\n8、kafka怎么保证消息被可靠的消费？\n9、http请求可以拼接几个参数？上限是多少？\n10、http的状态码有哪些？504状态码代表什么？\n11、Java创建一个对象的过程？\n12、分配内存是怎么分配的？\n13、Java是怎么知道创建的对象在内存的哪个地方的？\n算法题：无重复字符的最长子串（力扣第三题，区别在于力扣中输出长度，字节要求输出最长的子串本身）"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68c8d776000000001d037905.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "ddc9fd66a07103d640bdbda2225628c5dd6df1f9",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 388246,
+        "content_sha256": "68a0183715066766e3f8829d42ab96999e90ee9c7da2b3eb0de4e01ac5d8c8fd",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "字节后端开发一面面经 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-187;blob:ddc9fd66a07103d640bdbda2225628c5dd6df1f9",
+          "semantic_excerpt": "字节后端开发一面面经\n9.15 字节跳动后端开发一面面经\n1、拷打短链接项目，聊项目背景意义，具体怎么做的，聊了二十多分钟\n2、拷打实习期间做的事情\n3、实习公司的数据库是怎么部署的？\n4、MySQL一主多从怎么保证数据一致性的？\n5、主节点挂了怎么办？\n6、从节点之间是怎么保证数据一致性的？\n7、为什么项目中的消息队列用kafka？\n8、kafka怎么保证消息被可靠的消费？\n9、http请求可以拼接几个参数？上限是多少？\n10、http的状态码有哪些？504状态码代表什么？\n11、Java创建一个对象的过程？\n12、分配内存是怎么分配的？\n13、Java是怎么知道创建的对象在内存的哪个地方的？\n算法题：无重复字符的最长子串（力扣第三题，区别在于力扣中输出长度，字节要求输出最长的子串本身）"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68c8d776000000001d037905.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "51302755f0a126cf7b8d9d46374732e232a73d80",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 21469,
+        "content_sha256": "531b0a2bb5f014ab04820f2a489504e51b848ad2c89e1b4f5aa2839380967f4b",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "字节后端开发一面面经\",",
+          "line": 497,
+          "locator": "artifact-line:497#offset:30-42;blob:51302755f0a126cf7b8d9d46374732e232a73d80",
+          "semantic_excerpt": "字节后端开发一面面经\n9.15 字节跳动后端开发一面面经\n1、拷打短链接项目，聊项目背景意义，具体怎么做的，聊了二十多分钟\n2、拷打实习期间做的事情\n3、实习公司的数据库是怎么部署的？\n4、MySQL一主多从怎么保证数据一致性的？\n5、主节点挂了怎么办？\n6、从节点之间是怎么保证数据一致性的？\n7、为什么项目中的消息队列用kafka？\n8、kafka怎么保证消息被可靠的消费？\n9、http请求可以拼接几个参数？上限是多少？\n10、http的状态码有哪些？504状态码代表什么？\n11、Java创建一个对象的过程？\n12、分配内存是怎么分配的？\n13、Java是怎么知道创建的对象在内存的哪个地方的？\n算法题：无重复字符的最长子串（力扣第三题，区别在于力扣中输出长度，字节要求输出最长的子串本身）"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68c8d776000000001d037905.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "12b1bc808aeb7df1a97eed3e1261ad44a87b4c3c",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 964,
+      "content_sha256": "bf539852013356184b3d17fcf6032b4c80c9d0d480b4b48a129b52f06519c7a1",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "1、拷打短链接项目，聊项目背景意义，具体怎么做的，聊了二十多分钟",
+        "line": 2,
+        "locator": "artifact-line:2#offset:0-32;blob:12b1bc808aeb7df1a97eed3e1261ad44a87b4c3c",
+        "semantic_excerpt": "字节后端开发一面面经\n9.15 字节跳动后端开发一面面经\n1、拷打短链接项目，聊项目背景意义，具体怎么做的，聊了二十多分钟\n2、拷打实习期间做的事情\n3、实习公司的数据库是怎么部署的？\n4、MySQL一主多从怎么保证数据一致性的？\n5、主节点挂了怎么办？\n6、从节点之间是怎么保证数据一致性的？\n7、为什么项目中的消息队列用kafka？\n8、kafka怎么保证消息被可靠的消费？\n9、http请求可以拼接几个参数？上限是多少？\n10、http的状态码有哪些？504状态码代表什么？\n11、Java创建一个对象的过程？\n12、分配内存是怎么分配的？\n13、Java是怎么知道创建的对象在内存的哪个地方的？\n算法题：无重复字符的最长子串（力扣第三题，区别在于力扣中输出长度，字节要求输出最长的子串本身）"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68c8d776000000001d037905.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "ddc9fd66a07103d640bdbda2225628c5dd6df1f9",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 388246,
+      "content_sha256": "68a0183715066766e3f8829d42ab96999e90ee9c7da2b3eb0de4e01ac5d8c8fd",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "字节后端开发一面面经 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-187;blob:ddc9fd66a07103d640bdbda2225628c5dd6df1f9",
+        "semantic_excerpt": "字节后端开发一面面经\n9.15 字节跳动后端开发一面面经\n1、拷打短链接项目，聊项目背景意义，具体怎么做的，聊了二十多分钟\n2、拷打实习期间做的事情\n3、实习公司的数据库是怎么部署的？\n4、MySQL一主多从怎么保证数据一致性的？\n5、主节点挂了怎么办？\n6、从节点之间是怎么保证数据一致性的？\n7、为什么项目中的消息队列用kafka？\n8、kafka怎么保证消息被可靠的消费？\n9、http请求可以拼接几个参数？上限是多少？\n10、http的状态码有哪些？504状态码代表什么？\n11、Java创建一个对象的过程？\n12、分配内存是怎么分配的？\n13、Java是怎么知道创建的对象在内存的哪个地方的？\n算法题：无重复字符的最长子串（力扣第三题，区别在于力扣中输出长度，字节要求输出最长的子串本身）"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68c8d776000000001d037905.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "51302755f0a126cf7b8d9d46374732e232a73d80",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 21469,
+      "content_sha256": "531b0a2bb5f014ab04820f2a489504e51b848ad2c89e1b4f5aa2839380967f4b",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "字节后端开发一面面经\",",
+        "line": 497,
+        "locator": "artifact-line:497#offset:30-42;blob:51302755f0a126cf7b8d9d46374732e232a73d80",
+        "semantic_excerpt": "字节后端开发一面面经\n9.15 字节跳动后端开发一面面经\n1、拷打短链接项目，聊项目背景意义，具体怎么做的，聊了二十多分钟\n2、拷打实习期间做的事情\n3、实习公司的数据库是怎么部署的？\n4、MySQL一主多从怎么保证数据一致性的？\n5、主节点挂了怎么办？\n6、从节点之间是怎么保证数据一致性的？\n7、为什么项目中的消息队列用kafka？\n8、kafka怎么保证消息被可靠的消费？\n9、http请求可以拼接几个参数？上限是多少？\n10、http的状态码有哪些？504状态码代表什么？\n11、Java创建一个对象的过程？\n12、分配内存是怎么分配的？\n13、Java是怎么知道创建的对象在内存的哪个地方的？\n算法题：无重复字符的最长子串（力扣第三题，区别在于力扣中输出长度，字节要求输出最长的子串本身）"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -94,10 +194,11 @@
   ],
   "limitations": [
     "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "91e9769f7a51deccd20d87046ab2fabf9a55410ee27bb473ab39b6d10a9341c8"
+  "evidence_sha256": "05f77c2fc1c63a7a25bfb80ce22c6218aa83a4bcf8673aedf9dfd8379f415225"
 }

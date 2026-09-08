@@ -29,12 +29,16 @@
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68bc0218000000001d02a145.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -43,13 +47,108 @@
     "provenance": "source_projection",
     "byte_size": 930,
     "content_sha256": "31cd1fdff35617da2ad1121aaff0133b9abc71140c92096004d3edc79185347f",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "该面试来自粉丝真实经历，聚焦电商高并发业务场景，全程围绕 “技术落地细节 + 数据支撑 + 边界处理” 追问：从 Redis Hash 缓存商品的阻塞规避、缓存击穿的互斥锁设计，到 Spring 事务失效原因与源码逻辑，再到订单分表方案与 ES 数据同步，均要求结合实际业务数据（如接口 RT 从 1.2 秒降至 150ms）。",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "该面试来自粉丝真实经历，聚焦电商高并发业务场景，全程围绕 “技术落地细节 + 数据支撑 + 边界处理” 追问：从 Redis Hash 缓存商品的阻塞规避、缓存击穿的互斥锁设计，到 Spring 事务失效原因与源码逻辑，再到订单分表方案与 ES 数据同步，均要求结合实际业务数据（如接口 RT 从 1.2 秒降至 150ms）。\n \n算法题侧重业务场景（购物车合并），同时考察空值处理等细节；收尾直击短板，强调淘天对 “技术落地精准度” 的高要求 —— 仅懂理论、缺乏业务结合与数据支撑，易暴露不足。整体凸显淘天面试 “业务驱动技术，细节决定成败” 的特点。"
-    }
+      "locator": "artifact-line:1#offset:0-164;blob:931007dd28e2330d7914847c0fac319745a3ed29",
+      "semantic_excerpt": "淘天集团Java后端开发面试实录（压力面）\n该面试来自粉丝真实经历，聚焦电商高并发业务场景，全程围绕 “技术落地细节 + 数据支撑 + 边界处理” 追问：从 Redis Hash 缓存商品的阻塞规避、缓存击穿的互斥锁设计，到 Spring 事务失效原因与源码逻辑，再到订单分表方案与 ES 数据同步，均要求结合实际业务数据（如接口 RT 从 1.2 秒降至 150ms）。\n \n算法题侧重业务场景（购物车合并），同时考察空值处理等细节；收尾直击短板，强调淘天对 “技术落地精准度” 的高要求 —— 仅懂理论、缺乏业务结合与数据支撑，易暴露不足。整体凸显淘天面试 “业务驱动技术，细节决定成败” 的特点。"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68bc0218000000001d02a145.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "931007dd28e2330d7914847c0fac319745a3ed29",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 930,
+        "content_sha256": "31cd1fdff35617da2ad1121aaff0133b9abc71140c92096004d3edc79185347f",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "该面试来自粉丝真实经历，聚焦电商高并发业务场景，全程围绕 “技术落地细节 + 数据支撑 + 边界处理” 追问：从 Redis Hash 缓存商品的阻塞规避、缓存击穿的互斥锁设计，到 Spring 事务失效原因与源码逻辑，再到订单分表方案与 ES 数据同步，均要求结合实际业务数据（如接口 RT 从 1.2 秒降至 150ms）。",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-164;blob:931007dd28e2330d7914847c0fac319745a3ed29",
+          "semantic_excerpt": "淘天集团Java后端开发面试实录（压力面）\n该面试来自粉丝真实经历，聚焦电商高并发业务场景，全程围绕 “技术落地细节 + 数据支撑 + 边界处理” 追问：从 Redis Hash 缓存商品的阻塞规避、缓存击穿的互斥锁设计，到 Spring 事务失效原因与源码逻辑，再到订单分表方案与 ES 数据同步，均要求结合实际业务数据（如接口 RT 从 1.2 秒降至 150ms）。\n \n算法题侧重业务场景（购物车合并），同时考察空值处理等细节；收尾直击短板，强调淘天对 “技术落地精准度” 的高要求 —— 仅懂理论、缺乏业务结合与数据支撑，易暴露不足。整体凸显淘天面试 “业务驱动技术，细节决定成败” 的特点。"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68bc0218000000001d02a145.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "d9bc8db48947c3c9beed71349e6ae2322def5cc7",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 399291,
+        "content_sha256": "6312f234969ac0649a170b506d808dc492fe2cb2a2cdd885f23c824c5a207e12",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "淘天集团Java后端开发面试实录（压力面） - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-198;blob:d9bc8db48947c3c9beed71349e6ae2322def5cc7",
+          "semantic_excerpt": "淘天集团Java后端开发面试实录（压力面）\n该面试来自粉丝真实经历，聚焦电商高并发业务场景，全程围绕 “技术落地细节 + 数据支撑 + 边界处理” 追问：从 Redis Hash 缓存商品的阻塞规避、缓存击穿的互斥锁设计，到 Spring 事务失效原因与源码逻辑，再到订单分表方案与 ES 数据同步，均要求结合实际业务数据（如接口 RT 从 1.2 秒降至 150ms）。\n \n算法题侧重业务场景（购物车合并），同时考察空值处理等细节；收尾直击短板，强调淘天对 “技术落地精准度” 的高要求 —— 仅懂理论、缺乏业务结合与数据支撑，易暴露不足。整体凸显淘天面试 “业务驱动技术，细节决定成败” 的特点。"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68bc0218000000001d02a145.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "02be1c802ead5715f1a5452fe870064294b7a7dd",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 31623,
+        "content_sha256": "6b1ac204890f764bd29672ebdef389ea977fc636081e96cdb7b0d2c620debbda",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "淘天集团Java后端开发面试实录（压力面）\",",
+          "line": 659,
+          "locator": "artifact-line:659#offset:30-53;blob:02be1c802ead5715f1a5452fe870064294b7a7dd",
+          "semantic_excerpt": "淘天集团Java后端开发面试实录（压力面）\n该面试来自粉丝真实经历，聚焦电商高并发业务场景，全程围绕 “技术落地细节 + 数据支撑 + 边界处理” 追问：从 Redis Hash 缓存商品的阻塞规避、缓存击穿的互斥锁设计，到 Spring 事务失效原因与源码逻辑，再到订单分表方案与 ES 数据同步，均要求结合实际业务数据（如接口 RT 从 1.2 秒降至 150ms）。\n \n算法题侧重业务场景（购物车合并），同时考察空值处理等细节；收尾直击短板，强调淘天对 “技术落地精准度” 的高要求 —— 仅懂理论、缺乏业务结合与数据支撑，易暴露不足。整体凸显淘天面试 “业务驱动技术，细节决定成败” 的特点。"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68bc0218000000001d02a145.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "931007dd28e2330d7914847c0fac319745a3ed29",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 930,
+      "content_sha256": "31cd1fdff35617da2ad1121aaff0133b9abc71140c92096004d3edc79185347f",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "该面试来自粉丝真实经历，聚焦电商高并发业务场景，全程围绕 “技术落地细节 + 数据支撑 + 边界处理” 追问：从 Redis Hash 缓存商品的阻塞规避、缓存击穿的互斥锁设计，到 Spring 事务失效原因与源码逻辑，再到订单分表方案与 ES 数据同步，均要求结合实际业务数据（如接口 RT 从 1.2 秒降至 150ms）。",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-164;blob:931007dd28e2330d7914847c0fac319745a3ed29",
+        "semantic_excerpt": "淘天集团Java后端开发面试实录（压力面）\n该面试来自粉丝真实经历，聚焦电商高并发业务场景，全程围绕 “技术落地细节 + 数据支撑 + 边界处理” 追问：从 Redis Hash 缓存商品的阻塞规避、缓存击穿的互斥锁设计，到 Spring 事务失效原因与源码逻辑，再到订单分表方案与 ES 数据同步，均要求结合实际业务数据（如接口 RT 从 1.2 秒降至 150ms）。\n \n算法题侧重业务场景（购物车合并），同时考察空值处理等细节；收尾直击短板，强调淘天对 “技术落地精准度” 的高要求 —— 仅懂理论、缺乏业务结合与数据支撑，易暴露不足。整体凸显淘天面试 “业务驱动技术，细节决定成败” 的特点。"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68bc0218000000001d02a145.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "d9bc8db48947c3c9beed71349e6ae2322def5cc7",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 399291,
+      "content_sha256": "6312f234969ac0649a170b506d808dc492fe2cb2a2cdd885f23c824c5a207e12",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "淘天集团Java后端开发面试实录（压力面） - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-198;blob:d9bc8db48947c3c9beed71349e6ae2322def5cc7",
+        "semantic_excerpt": "淘天集团Java后端开发面试实录（压力面）\n该面试来自粉丝真实经历，聚焦电商高并发业务场景，全程围绕 “技术落地细节 + 数据支撑 + 边界处理” 追问：从 Redis Hash 缓存商品的阻塞规避、缓存击穿的互斥锁设计，到 Spring 事务失效原因与源码逻辑，再到订单分表方案与 ES 数据同步，均要求结合实际业务数据（如接口 RT 从 1.2 秒降至 150ms）。\n \n算法题侧重业务场景（购物车合并），同时考察空值处理等细节；收尾直击短板，强调淘天对 “技术落地精准度” 的高要求 —— 仅懂理论、缺乏业务结合与数据支撑，易暴露不足。整体凸显淘天面试 “业务驱动技术，细节决定成败” 的特点。"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68bc0218000000001d02a145.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "02be1c802ead5715f1a5452fe870064294b7a7dd",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 31623,
+      "content_sha256": "6b1ac204890f764bd29672ebdef389ea977fc636081e96cdb7b0d2c620debbda",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "淘天集团Java后端开发面试实录（压力面）\",",
+        "line": 659,
+        "locator": "artifact-line:659#offset:30-53;blob:02be1c802ead5715f1a5452fe870064294b7a7dd",
+        "semantic_excerpt": "淘天集团Java后端开发面试实录（压力面）\n该面试来自粉丝真实经历，聚焦电商高并发业务场景，全程围绕 “技术落地细节 + 数据支撑 + 边界处理” 追问：从 Redis Hash 缓存商品的阻塞规避、缓存击穿的互斥锁设计，到 Spring 事务失效原因与源码逻辑，再到订单分表方案与 ES 数据同步，均要求结合实际业务数据（如接口 RT 从 1.2 秒降至 150ms）。\n \n算法题侧重业务场景（购物车合并），同时考察空值处理等细节；收尾直击短板，强调淘天对 “技术落地精准度” 的高要求 —— 仅懂理论、缺乏业务结合与数据支撑，易暴露不足。整体凸显淘天面试 “业务驱动技术，细节决定成败” 的特点。"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -84,10 +183,11 @@
   ],
   "limitations": [
     "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "f3a13071aeb5a041ed922c6a92bd611a375b47549038056b7c4d118fbc5566c7"
+  "evidence_sha256": "b2d6db1397d589b2779ac6a0ea01a3d23f6913ab434283fdc974d7ee333fbf0c"
 }

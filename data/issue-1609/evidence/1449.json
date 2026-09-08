@@ -19,7 +19,7 @@
     "questions": 0,
     "has_first_person_event": false,
     "has_explicit_candidate_event": false,
-    "has_bounded_event": false,
+    "has_bounded_event": true,
     "has_detailed_event": false,
     "has_completed_event_evidence": false,
     "has_structured_candidate_event": false,
@@ -29,12 +29,16 @@
     "outcome_signal": true,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": false,
     "only_outcome": true,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [],
+    "reviewed_artifact_count": 2,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68e885380000000005012384.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -43,13 +47,78 @@
     "provenance": "source_projection",
     "byte_size": 20788,
     "content_sha256": "64d5ed5b3626e421a077838b446f69e88abe4299ceb35b038fc2e7cdfe19f4a5",
+    "cache_status": "not-applicable",
     "excerpt": {
-      "excerpt": "\"desc\": \"[哭惹R][哭惹R][哭惹R]感觉有些问题明明可以答出来，但是没有复习到卡壳了，不知道结果怎么样，求过#社招[话题]# #java找工作[话题]# #求助offer选择[话题]# #秋招[话题]#\",",
-      "line": 523,
-      "locator": "artifact-line:523",
-      "semantic_excerpt": "[哭惹R][哭惹R][哭惹R]感觉有些问题明明可以答出来，但是没有复习到卡壳了，不知道结果怎么样，求过"
-    }
+      "excerpt": "菜鸟一面\",",
+      "line": 553,
+      "locator": "artifact-line:553#offset:30-36;blob:035ca69645766fe2eb78d18fdecf01cc91986c59",
+      "semantic_excerpt": "菜鸟一面\n[哭惹R][哭惹R][哭惹R]感觉有些问题明明可以答出来，但是没有复习到卡壳了，不知道结果怎么样，求过"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_detail/68e885380000000005012384.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "32c73bbfe0bb54dbdc7821894950a0bb0e03053c",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 386136,
+        "content_sha256": "326ff6048ae8fc7c1c9f0cdd779e1a260421ddeb2ec734e7a10dd3a50a01987c",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "菜鸟一面 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-181;blob:32c73bbfe0bb54dbdc7821894950a0bb0e03053c",
+          "semantic_excerpt": "菜鸟一面\n[哭惹R][哭惹R][哭惹R]感觉有些问题明明可以答出来，但是没有复习到卡壳了，不知道结果怎么样，求过"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68e885380000000005012384.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "035ca69645766fe2eb78d18fdecf01cc91986c59",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 20788,
+        "content_sha256": "64d5ed5b3626e421a077838b446f69e88abe4299ceb35b038fc2e7cdfe19f4a5",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "菜鸟一面\",",
+          "line": 553,
+          "locator": "artifact-line:553#offset:30-36;blob:035ca69645766fe2eb78d18fdecf01cc91986c59",
+          "semantic_excerpt": "菜鸟一面\n[哭惹R][哭惹R][哭惹R]感觉有些问题明明可以答出来，但是没有复习到卡壳了，不知道结果怎么样，求过"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/68e885380000000005012384.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "32c73bbfe0bb54dbdc7821894950a0bb0e03053c",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 386136,
+      "content_sha256": "326ff6048ae8fc7c1c9f0cdd779e1a260421ddeb2ec734e7a10dd3a50a01987c",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "菜鸟一面 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-181;blob:32c73bbfe0bb54dbdc7821894950a0bb0e03053c",
+        "semantic_excerpt": "菜鸟一面\n[哭惹R][哭惹R][哭惹R]感觉有些问题明明可以答出来，但是没有复习到卡壳了，不知道结果怎么样，求过"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68e885380000000005012384.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "035ca69645766fe2eb78d18fdecf01cc91986c59",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 20788,
+      "content_sha256": "64d5ed5b3626e421a077838b446f69e88abe4299ceb35b038fc2e7cdfe19f4a5",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "菜鸟一面\",",
+        "line": 553,
+        "locator": "artifact-line:553#offset:30-36;blob:035ca69645766fe2eb78d18fdecf01cc91986c59",
+        "semantic_excerpt": "菜鸟一面\n[哭惹R][哭惹R][哭惹R]感觉有些问题明明可以答出来，但是没有复习到卡壳了，不知道结果怎么样，求过"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -84,10 +153,11 @@
   ],
   "limitations": [
     "Exact Source provides only an interview outcome, offer, rejection, or result without a bounded candidate event; retain pending.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "6f5364e6925f266e1ea20a3f216eed61e3077fff97f97b3c83a48f3f719868a9"
+  "evidence_sha256": "f6e2ba169027f2a893a93cdce239f8b331018f1a0eb7520571e09286c8aa4ef7"
 }

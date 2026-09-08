@@ -7,15 +7,12 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "73a4432da8ffc37e2b16372ddef758bdbcb29543fb05f8026a4b88a464d3c209",
-  "disposition": "blocked",
-  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "disposition": "single-interview",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
-      "question-list-only",
-      "no-first-person-event",
-      "question-only",
-      "no-candidate-event-evidence"
+      "no-first-person-event"
     ],
     "questions": 8,
     "has_first_person_event": false,
@@ -23,28 +20,33 @@
     "has_bounded_event": true,
     "has_detailed_event": true,
     "has_completed_event_evidence": true,
-    "has_structured_candidate_event": false,
+    "has_structured_candidate_event": true,
     "generic_advice_or_aggregated": false,
     "scheduled_only": false,
-    "question_only": true,
+    "question_only": false,
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
-    "only_question_list": true,
+    "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
     "case_segments": [
       {
-        "case_key": "meituan-process",
-        "anchor": "美团",
-        "line": 7,
-        "locator": "artifact-line:7#offset:6-8",
+        "case_key": "bytedance-process",
+        "anchor": "字节",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-165;blob:6cbe687a83238428a010b0a270285e81cf49815c",
         "local_detail": true,
-        "semantic_locator": "semantic-anchor:美团"
+        "semantic_locator": "semantic-anchor:字节",
+        "source_ref": "liqiangcc/xhs:note_detail/68be8049000000001c03cc9a.html@95b77bb261048059846273688e4b90a2e108b437"
       }
-    ]
+    ],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68be8049000000001c03cc9a.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -53,13 +55,108 @@
     "provenance": "source_projection",
     "byte_size": 831,
     "content_sha256": "b9deed2ad30e442b08342cb166803896cc10c2d8a82c00c6858b07b9c42a9924",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "项目拷打（挖的很深，挖到实现细节，有没有更好的实现思路）",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "项目拷打（挖的很深，挖到实现细节，有没有更好的实现思路）\n八股\n1.url到页面显示的过程\n2.dom树和cssom树具体怎么合成成渲染树的\n3.知道闭包吗，他底层原理是什么（词法作用域）\n4.tcp和udp，直播会议用的是什么，为什么要用udp，除了建立连接耗时之外还有哪些好处\n5.讲解一下美团内部使用框架的底层原理\n6.虚拟列表怎么实现的，我要快速滚动怎么让他不卡顿呢\n7.知道虚拟dom吗，具体讲解一下原理\n8.知道数据库索引吗，讲解一下他的底层实现（B+树）\n算法题\n每日温度\n已约下周hr面，希望能过[害羞R]"
-    }
+      "locator": "artifact-line:1#offset:0-28;blob:78d7ce5c4d83fc811254c2c7fe215d8fbc891cde",
+      "semantic_excerpt": "字节tt前端三面\n项目拷打（挖的很深，挖到实现细节，有没有更好的实现思路）\n八股\n1.url到页面显示的过程\n2.dom树和cssom树具体怎么合成成渲染树的\n3.知道闭包吗，他底层原理是什么（词法作用域）\n4.tcp和udp，直播会议用的是什么，为什么要用udp，除了建立连接耗时之外还有哪些好处\n5.讲解一下美团内部使用框架的底层原理\n6.虚拟列表怎么实现的，我要快速滚动怎么让他不卡顿呢\n7.知道虚拟dom吗，具体讲解一下原理\n8.知道数据库索引吗，讲解一下他的底层实现（B+树）\n算法题\n每日温度\n已约下周hr面，希望能过[害羞R]"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68be8049000000001c03cc9a.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "78d7ce5c4d83fc811254c2c7fe215d8fbc891cde",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 831,
+        "content_sha256": "b9deed2ad30e442b08342cb166803896cc10c2d8a82c00c6858b07b9c42a9924",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "项目拷打（挖的很深，挖到实现细节，有没有更好的实现思路）",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-28;blob:78d7ce5c4d83fc811254c2c7fe215d8fbc891cde",
+          "semantic_excerpt": "字节tt前端三面\n项目拷打（挖的很深，挖到实现细节，有没有更好的实现思路）\n八股\n1.url到页面显示的过程\n2.dom树和cssom树具体怎么合成成渲染树的\n3.知道闭包吗，他底层原理是什么（词法作用域）\n4.tcp和udp，直播会议用的是什么，为什么要用udp，除了建立连接耗时之外还有哪些好处\n5.讲解一下美团内部使用框架的底层原理\n6.虚拟列表怎么实现的，我要快速滚动怎么让他不卡顿呢\n7.知道虚拟dom吗，具体讲解一下原理\n8.知道数据库索引吗，讲解一下他的底层实现（B+树）\n算法题\n每日温度\n已约下周hr面，希望能过[害羞R]"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68be8049000000001c03cc9a.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "6cbe687a83238428a010b0a270285e81cf49815c",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 389226,
+        "content_sha256": "2473327edf71844de78e8fc291fff58483d106b62c51e250dc6975fb0f05f91e",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "字节tt前端三面 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-185;blob:6cbe687a83238428a010b0a270285e81cf49815c",
+          "semantic_excerpt": "字节tt前端三面\n项目拷打（挖的很深，挖到实现细节，有没有更好的实现思路）\n八股\n1.url到页面显示的过程\n2.dom树和cssom树具体怎么合成成渲染树的\n3.知道闭包吗，他底层原理是什么（词法作用域）\n4.tcp和udp，直播会议用的是什么，为什么要用udp，除了建立连接耗时之外还有哪些好处\n5.讲解一下美团内部使用框架的底层原理\n6.虚拟列表怎么实现的，我要快速滚动怎么让他不卡顿呢\n7.知道虚拟dom吗，具体讲解一下原理\n8.知道数据库索引吗，讲解一下他的底层实现（B+树）\n算法题\n每日温度\n已约下周hr面，希望能过[害羞R]"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68be8049000000001c03cc9a.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "05a8a17ef7fb8e943754b6333210c4562246b782",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 22172,
+        "content_sha256": "3464ba41be52f21f64ce3bc0a94f2eb9c1c8939e99772402c45680c8df31e322",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "字节tt前端三面\",",
+          "line": 579,
+          "locator": "artifact-line:579#offset:30-40;blob:05a8a17ef7fb8e943754b6333210c4562246b782",
+          "semantic_excerpt": "字节tt前端三面\n项目拷打（挖的很深，挖到实现细节，有没有更好的实现思路）\n八股\n1.url到页面显示的过程\n2.dom树和cssom树具体怎么合成成渲染树的\n3.知道闭包吗，他底层原理是什么（词法作用域）\n4.tcp和udp，直播会议用的是什么，为什么要用udp，除了建立连接耗时之外还有哪些好处\n5.讲解一下美团内部使用框架的底层原理\n6.虚拟列表怎么实现的，我要快速滚动怎么让他不卡顿呢\n7.知道虚拟dom吗，具体讲解一下原理\n8.知道数据库索引吗，讲解一下他的底层实现（B+树）\n算法题\n每日温度\n已约下周hr面，希望能过[害羞R]"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68be8049000000001c03cc9a.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "78d7ce5c4d83fc811254c2c7fe215d8fbc891cde",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 831,
+      "content_sha256": "b9deed2ad30e442b08342cb166803896cc10c2d8a82c00c6858b07b9c42a9924",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "项目拷打（挖的很深，挖到实现细节，有没有更好的实现思路）",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-28;blob:78d7ce5c4d83fc811254c2c7fe215d8fbc891cde",
+        "semantic_excerpt": "字节tt前端三面\n项目拷打（挖的很深，挖到实现细节，有没有更好的实现思路）\n八股\n1.url到页面显示的过程\n2.dom树和cssom树具体怎么合成成渲染树的\n3.知道闭包吗，他底层原理是什么（词法作用域）\n4.tcp和udp，直播会议用的是什么，为什么要用udp，除了建立连接耗时之外还有哪些好处\n5.讲解一下美团内部使用框架的底层原理\n6.虚拟列表怎么实现的，我要快速滚动怎么让他不卡顿呢\n7.知道虚拟dom吗，具体讲解一下原理\n8.知道数据库索引吗，讲解一下他的底层实现（B+树）\n算法题\n每日温度\n已约下周hr面，希望能过[害羞R]"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68be8049000000001c03cc9a.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "6cbe687a83238428a010b0a270285e81cf49815c",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 389226,
+      "content_sha256": "2473327edf71844de78e8fc291fff58483d106b62c51e250dc6975fb0f05f91e",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "字节tt前端三面 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-185;blob:6cbe687a83238428a010b0a270285e81cf49815c",
+        "semantic_excerpt": "字节tt前端三面\n项目拷打（挖的很深，挖到实现细节，有没有更好的实现思路）\n八股\n1.url到页面显示的过程\n2.dom树和cssom树具体怎么合成成渲染树的\n3.知道闭包吗，他底层原理是什么（词法作用域）\n4.tcp和udp，直播会议用的是什么，为什么要用udp，除了建立连接耗时之外还有哪些好处\n5.讲解一下美团内部使用框架的底层原理\n6.虚拟列表怎么实现的，我要快速滚动怎么让他不卡顿呢\n7.知道虚拟dom吗，具体讲解一下原理\n8.知道数据库索引吗，讲解一下他的底层实现（B+树）\n算法题\n每日温度\n已约下周hr面，希望能过[害羞R]"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68be8049000000001c03cc9a.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "05a8a17ef7fb8e943754b6333210c4562246b782",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 22172,
+      "content_sha256": "3464ba41be52f21f64ce3bc0a94f2eb9c1c8939e99772402c45680c8df31e322",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "字节tt前端三面\",",
+        "line": 579,
+        "locator": "artifact-line:579#offset:30-40;blob:05a8a17ef7fb8e943754b6333210c4562246b782",
+        "semantic_excerpt": "字节tt前端三面\n项目拷打（挖的很深，挖到实现细节，有没有更好的实现思路）\n八股\n1.url到页面显示的过程\n2.dom树和cssom树具体怎么合成成渲染树的\n3.知道闭包吗，他底层原理是什么（词法作用域）\n4.tcp和udp，直播会议用的是什么，为什么要用udp，除了建立连接耗时之外还有哪些好处\n5.讲解一下美团内部使用框架的底层原理\n6.虚拟列表怎么实现的，我要快速滚动怎么让他不卡顿呢\n7.知道虚拟dom吗，具体讲解一下原理\n8.知道数据库索引吗，讲解一下他的底层实现（B+树）\n算法题\n每日温度\n已约下周hr面，希望能过[害羞R]"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -78,8 +175,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -93,11 +190,12 @@
     }
   ],
   "limitations": [
-    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "f1b2682acf0763321d1595e0cf522805680e2fbe5c65344e49ea300621f42c94"
+  "evidence_sha256": "2c99f29f1504f1e8c7bff4d3485d2cbc0c0f58701877aa061cf12f22bd67b38e"
 }

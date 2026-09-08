@@ -7,15 +7,12 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "b83a52fa539884eb2a2c2721bca827aa44873b8a3880bfdd0fb849d5a3b3599e",
-  "disposition": "blocked",
-  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "disposition": "single-interview",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
-      "question-list-only",
-      "no-first-person-event",
-      "question-only",
-      "no-candidate-event-evidence"
+      "no-first-person-event"
     ],
     "questions": 15,
     "has_first_person_event": false,
@@ -23,19 +20,33 @@
     "has_bounded_event": true,
     "has_detailed_event": true,
     "has_completed_event_evidence": true,
-    "has_structured_candidate_event": false,
+    "has_structured_candidate_event": true,
     "generic_advice_or_aggregated": false,
     "scheduled_only": false,
-    "question_only": true,
+    "question_only": false,
     "outcome_signal": true,
     "resource_signal": true,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
-    "only_question_list": true,
+    "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "bytedance-process",
+        "anchor": "字节",
+        "line": 1,
+        "locator": "artifact-line:17#offset:40-42;blob:a964bf170b4dad4fbf72d9e5138a4b4948e4fbbc",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:字节",
+        "source_ref": "liqiangcc/xhs:note_desc/68c0fde1000000001c0096ab.txt@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68c0fde1000000001c0096ab.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -44,13 +55,108 @@
     "provenance": "source_projection",
     "byte_size": 838,
     "content_sha256": "95fdf875cf0a1bf2c431aa41923e2bc4a527fdcff6ca747d665f99b95d2e021b",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "1. 自我介绍",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "1. 自我介绍\n2. 2个项目是参考网上教程实现的，还是自己独立开发的\n3. 平时是通过一些什么方式去学习的\n4. 职业规划，能不能实习，工作地的选择\n5. 投屏演示项目（我项目没上线）\n6. 看项目界面和代码直接提问项目细节（15min）\n7. HTTPS的工作原理、和HTTP的区别\n8. Linux的基础命令\n9. 大模型训练的流程\n10. 如果项目数据量特别大，如何优化数据库\n11. 常见的 Mysql 索引有哪些\n12. 手撕：二叉树的z型遍历\n13. 传统搜索需要建什么样的库？大概流程是什么\n14. 传统搜索和AI搜索的区别\n15. 反问：业务（生活服务） 技术栈（go）\n【1h左右，面试官人蛮好，会一步步引导】"
-    }
+      "locator": "artifact-line:1#offset:0-7;blob:a964bf170b4dad4fbf72d9e5138a4b4948e4fbbc",
+      "semantic_excerpt": "秋招字节(抖音)后端开发工程师一面\n1. 自我介绍\n2. 2个项目是参考网上教程实现的，还是自己独立开发的\n3. 平时是通过一些什么方式去学习的\n4. 职业规划，能不能实习，工作地的选择\n5. 投屏演示项目（我项目没上线）\n6. 看项目界面和代码直接提问项目细节（15min）\n7. HTTPS的工作原理、和HTTP的区别\n8. Linux的基础命令\n9. 大模型训练的流程\n10. 如果项目数据量特别大，如何优化数据库\n11. 常见的 Mysql 索引有哪些\n12. 手撕：二叉树的z型遍历\n13. 传统搜索需要建什么样的库？大概流程是什么\n14. 传统搜索和AI搜索的区别\n15. 反问：业务（生活服务） 技术栈（go）\n【1h左右，面试官人蛮好，会一步步引导】"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68c0fde1000000001c0096ab.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "a964bf170b4dad4fbf72d9e5138a4b4948e4fbbc",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 838,
+        "content_sha256": "95fdf875cf0a1bf2c431aa41923e2bc4a527fdcff6ca747d665f99b95d2e021b",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "1. 自我介绍",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-7;blob:a964bf170b4dad4fbf72d9e5138a4b4948e4fbbc",
+          "semantic_excerpt": "秋招字节(抖音)后端开发工程师一面\n1. 自我介绍\n2. 2个项目是参考网上教程实现的，还是自己独立开发的\n3. 平时是通过一些什么方式去学习的\n4. 职业规划，能不能实习，工作地的选择\n5. 投屏演示项目（我项目没上线）\n6. 看项目界面和代码直接提问项目细节（15min）\n7. HTTPS的工作原理、和HTTP的区别\n8. Linux的基础命令\n9. 大模型训练的流程\n10. 如果项目数据量特别大，如何优化数据库\n11. 常见的 Mysql 索引有哪些\n12. 手撕：二叉树的z型遍历\n13. 传统搜索需要建什么样的库？大概流程是什么\n14. 传统搜索和AI搜索的区别\n15. 反问：业务（生活服务） 技术栈（go）\n【1h左右，面试官人蛮好，会一步步引导】"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68c0fde1000000001c0096ab.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "13840e9e682238fc51ed8d4aae79164bbfff9155",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 388157,
+        "content_sha256": "493453cfe9825f4ac40da0e1586d052f2fd0915da9e5f8d7da39c78cfca9bf32",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "秋招字节(抖音)后端开发工程师一面 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-194;blob:13840e9e682238fc51ed8d4aae79164bbfff9155",
+          "semantic_excerpt": "秋招字节(抖音)后端开发工程师一面\n1. 自我介绍\n2. 2个项目是参考网上教程实现的，还是自己独立开发的\n3. 平时是通过一些什么方式去学习的\n4. 职业规划，能不能实习，工作地的选择\n5. 投屏演示项目（我项目没上线）\n6. 看项目界面和代码直接提问项目细节（15min）\n7. HTTPS的工作原理、和HTTP的区别\n8. Linux的基础命令\n9. 大模型训练的流程\n10. 如果项目数据量特别大，如何优化数据库\n11. 常见的 Mysql 索引有哪些\n12. 手撕：二叉树的z型遍历\n13. 传统搜索需要建什么样的库？大概流程是什么\n14. 传统搜索和AI搜索的区别\n15. 反问：业务（生活服务） 技术栈（go）\n【1h左右，面试官人蛮好，会一步步引导】"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68c0fde1000000001c0096ab.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "ae108ac16b283e884a828c94eb772055805dd826",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 21568,
+        "content_sha256": "96f75b77697c9cae46ec01e4146f35806c48aa03e2f6fa2fe51b39dfde6428b4",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "秋招字节(抖音)后端开发工程师一面\",",
+          "line": 498,
+          "locator": "artifact-line:498#offset:30-49;blob:ae108ac16b283e884a828c94eb772055805dd826",
+          "semantic_excerpt": "秋招字节(抖音)后端开发工程师一面\n1. 自我介绍\n2. 2个项目是参考网上教程实现的，还是自己独立开发的\n3. 平时是通过一些什么方式去学习的\n4. 职业规划，能不能实习，工作地的选择\n5. 投屏演示项目（我项目没上线）\n6. 看项目界面和代码直接提问项目细节（15min）\n7. HTTPS的工作原理、和HTTP的区别\n8. Linux的基础命令\n9. 大模型训练的流程\n10. 如果项目数据量特别大，如何优化数据库\n11. 常见的 Mysql 索引有哪些\n12. 手撕：二叉树的z型遍历\n13. 传统搜索需要建什么样的库？大概流程是什么\n14. 传统搜索和AI搜索的区别\n15. 反问：业务（生活服务） 技术栈（go）\n【1h左右，面试官人蛮好，会一步步引导】"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68c0fde1000000001c0096ab.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "a964bf170b4dad4fbf72d9e5138a4b4948e4fbbc",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 838,
+      "content_sha256": "95fdf875cf0a1bf2c431aa41923e2bc4a527fdcff6ca747d665f99b95d2e021b",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "1. 自我介绍",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-7;blob:a964bf170b4dad4fbf72d9e5138a4b4948e4fbbc",
+        "semantic_excerpt": "秋招字节(抖音)后端开发工程师一面\n1. 自我介绍\n2. 2个项目是参考网上教程实现的，还是自己独立开发的\n3. 平时是通过一些什么方式去学习的\n4. 职业规划，能不能实习，工作地的选择\n5. 投屏演示项目（我项目没上线）\n6. 看项目界面和代码直接提问项目细节（15min）\n7. HTTPS的工作原理、和HTTP的区别\n8. Linux的基础命令\n9. 大模型训练的流程\n10. 如果项目数据量特别大，如何优化数据库\n11. 常见的 Mysql 索引有哪些\n12. 手撕：二叉树的z型遍历\n13. 传统搜索需要建什么样的库？大概流程是什么\n14. 传统搜索和AI搜索的区别\n15. 反问：业务（生活服务） 技术栈（go）\n【1h左右，面试官人蛮好，会一步步引导】"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68c0fde1000000001c0096ab.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "13840e9e682238fc51ed8d4aae79164bbfff9155",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 388157,
+      "content_sha256": "493453cfe9825f4ac40da0e1586d052f2fd0915da9e5f8d7da39c78cfca9bf32",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "秋招字节(抖音)后端开发工程师一面 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-194;blob:13840e9e682238fc51ed8d4aae79164bbfff9155",
+        "semantic_excerpt": "秋招字节(抖音)后端开发工程师一面\n1. 自我介绍\n2. 2个项目是参考网上教程实现的，还是自己独立开发的\n3. 平时是通过一些什么方式去学习的\n4. 职业规划，能不能实习，工作地的选择\n5. 投屏演示项目（我项目没上线）\n6. 看项目界面和代码直接提问项目细节（15min）\n7. HTTPS的工作原理、和HTTP的区别\n8. Linux的基础命令\n9. 大模型训练的流程\n10. 如果项目数据量特别大，如何优化数据库\n11. 常见的 Mysql 索引有哪些\n12. 手撕：二叉树的z型遍历\n13. 传统搜索需要建什么样的库？大概流程是什么\n14. 传统搜索和AI搜索的区别\n15. 反问：业务（生活服务） 技术栈（go）\n【1h左右，面试官人蛮好，会一步步引导】"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68c0fde1000000001c0096ab.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "ae108ac16b283e884a828c94eb772055805dd826",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 21568,
+      "content_sha256": "96f75b77697c9cae46ec01e4146f35806c48aa03e2f6fa2fe51b39dfde6428b4",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "秋招字节(抖音)后端开发工程师一面\",",
+        "line": 498,
+        "locator": "artifact-line:498#offset:30-49;blob:ae108ac16b283e884a828c94eb772055805dd826",
+        "semantic_excerpt": "秋招字节(抖音)后端开发工程师一面\n1. 自我介绍\n2. 2个项目是参考网上教程实现的，还是自己独立开发的\n3. 平时是通过一些什么方式去学习的\n4. 职业规划，能不能实习，工作地的选择\n5. 投屏演示项目（我项目没上线）\n6. 看项目界面和代码直接提问项目细节（15min）\n7. HTTPS的工作原理、和HTTP的区别\n8. Linux的基础命令\n9. 大模型训练的流程\n10. 如果项目数据量特别大，如何优化数据库\n11. 常见的 Mysql 索引有哪些\n12. 手撕：二叉树的z型遍历\n13. 传统搜索需要建什么样的库？大概流程是什么\n14. 传统搜索和AI搜索的区别\n15. 反问：业务（生活服务） 技术栈（go）\n【1h左右，面试官人蛮好，会一步步引导】"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -69,8 +175,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -84,11 +190,12 @@
     }
   ],
   "limitations": [
-    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "cb8b55035c73e713607555f2089a0ce39092cc4629f65d5b3ac804c085165d63"
+  "evidence_sha256": "3a2938c4942f44a0e06702d57c7d0535312e42178de6cc36252ae823070fef46"
 }

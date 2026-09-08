@@ -8,7 +8,7 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "fd088df9ffa97dc274c53222acfe55e9894fc6f853c60502e434bef8c58dcd8b",
   "disposition": "blocked",
-  "rationale": "No non-empty readable Source/Source projection is available; title and hashtags cannot authorize a boundary.",
+  "rationale": "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
@@ -18,7 +18,7 @@
     "questions": 0,
     "has_first_person_event": false,
     "has_explicit_candidate_event": false,
-    "has_bounded_event": false,
+    "has_bounded_event": true,
     "has_detailed_event": false,
     "has_completed_event_evidence": false,
     "has_structured_candidate_event": false,
@@ -28,12 +28,26 @@
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "jd-process",
+        "anchor": "京东",
+        "line": 1,
+        "locator": "artifact-line:490#offset:177-179;blob:360e9186c04b49c72f33b66fb6f24e8683b80e02",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:京东",
+        "source_ref": "liqiangcc/xhs:note_detail/68caded3000000000b01195a.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68caded3000000000b01195a.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -42,13 +56,108 @@
     "provenance": "source_projection",
     "byte_size": 201,
     "content_sha256": "41e6033bf7e917d3989198c16a8ee4abd8bd9d81fe1ac493be5f671db75a78a6",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "#java面试[话题]# #后端开发[话题]# #java培训[话题]# #大厂[话题]# #java[话题]# #程序员[话题]# #面经[话题]# #计算机[话题]# #互联网大厂[话题]# #java学习[话题]#",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": ""
-    }
+      "locator": "artifact-line:1#offset:0-110;blob:fef806255558e352dfe9e573fa28c50bdd9add3e",
+      "semantic_excerpt": "Java面试：备战金九银十，京东二面面经解析"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68caded3000000000b01195a.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "fef806255558e352dfe9e573fa28c50bdd9add3e",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 201,
+        "content_sha256": "41e6033bf7e917d3989198c16a8ee4abd8bd9d81fe1ac493be5f671db75a78a6",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "#java面试[话题]# #后端开发[话题]# #java培训[话题]# #大厂[话题]# #java[话题]# #程序员[话题]# #面经[话题]# #计算机[话题]# #互联网大厂[话题]# #java学习[话题]#",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-110;blob:fef806255558e352dfe9e573fa28c50bdd9add3e",
+          "semantic_excerpt": "Java面试：备战金九银十，京东二面面经解析"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68caded3000000000b01195a.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "360e9186c04b49c72f33b66fb6f24e8683b80e02",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 388741,
+        "content_sha256": "c0277d3334e817532461b4af7c45b3cd45669a47f77adfa28abdac625fecc2bf",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "Java面试：备战金九银十，京东二面面经解析 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-199;blob:360e9186c04b49c72f33b66fb6f24e8683b80e02",
+          "semantic_excerpt": "Java面试：备战金九银十，京东二面面经解析"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68caded3000000000b01195a.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "dbd069bc697e3e2047f09ea370b63407778601e5",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 25483,
+        "content_sha256": "526cdcb500314dd25d0c8ef96d4669a15f4e3adec56de15c2a0d0d33d55a6a36",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "Java面试：备战金九银十，京东二面面经解析\",",
+          "line": 598,
+          "locator": "artifact-line:598#offset:30-54;blob:dbd069bc697e3e2047f09ea370b63407778601e5",
+          "semantic_excerpt": "Java面试：备战金九银十，京东二面面经解析"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68caded3000000000b01195a.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "fef806255558e352dfe9e573fa28c50bdd9add3e",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 201,
+      "content_sha256": "41e6033bf7e917d3989198c16a8ee4abd8bd9d81fe1ac493be5f671db75a78a6",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "#java面试[话题]# #后端开发[话题]# #java培训[话题]# #大厂[话题]# #java[话题]# #程序员[话题]# #面经[话题]# #计算机[话题]# #互联网大厂[话题]# #java学习[话题]#",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-110;blob:fef806255558e352dfe9e573fa28c50bdd9add3e",
+        "semantic_excerpt": "Java面试：备战金九银十，京东二面面经解析"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68caded3000000000b01195a.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "360e9186c04b49c72f33b66fb6f24e8683b80e02",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 388741,
+      "content_sha256": "c0277d3334e817532461b4af7c45b3cd45669a47f77adfa28abdac625fecc2bf",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "Java面试：备战金九银十，京东二面面经解析 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-199;blob:360e9186c04b49c72f33b66fb6f24e8683b80e02",
+        "semantic_excerpt": "Java面试：备战金九银十，京东二面面经解析"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68caded3000000000b01195a.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "dbd069bc697e3e2047f09ea370b63407778601e5",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 25483,
+      "content_sha256": "526cdcb500314dd25d0c8ef96d4669a15f4e3adec56de15c2a0d0d33d55a6a36",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "Java面试：备战金九银十，京东二面面经解析\",",
+        "line": 598,
+        "locator": "artifact-line:598#offset:30-54;blob:dbd069bc697e3e2047f09ea370b63407778601e5",
+        "semantic_excerpt": "Java面试：备战金九银十，京东二面面经解析"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -68,7 +177,7 @@
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. No non-empty readable Source/Source projection is available; title and hashtags cannot authorize a boundary."
+      "note": "The disposition is supported by the cited source evidence. Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -82,11 +191,12 @@
     }
   ],
   "limitations": [
-    "No non-empty readable Source/Source projection is available; title and hashtags cannot authorize a boundary.",
+    "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "8dcef68b425c29dcaba484116ffa9afe7917e3c8840b3be88fb206cd79d1fc81"
+  "evidence_sha256": "7acbeda485a3344c244ebf2c7758a7b53c9aaeb0577e1db0b9c48bd0b596dae2"
 }

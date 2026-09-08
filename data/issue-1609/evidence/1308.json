@@ -7,15 +7,12 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "9585622ac8452b57a775ce94fa0a842678bff44a1be1c3bba337827f18750edc",
-  "disposition": "blocked",
-  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "disposition": "single-interview",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
-      "question-list-only",
-      "no-first-person-event",
-      "question-only",
-      "no-candidate-event-evidence"
+      "no-first-person-event"
     ],
     "questions": 5,
     "has_first_person_event": false,
@@ -23,28 +20,23 @@
     "has_bounded_event": true,
     "has_detailed_event": true,
     "has_completed_event_evidence": true,
-    "has_structured_candidate_event": false,
+    "has_structured_candidate_event": true,
     "generic_advice_or_aggregated": false,
     "scheduled_only": false,
-    "question_only": true,
+    "question_only": false,
     "outcome_signal": true,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
-    "only_question_list": true,
+    "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": [
-      {
-        "case_key": "alibaba-process",
-        "anchor": "阿里",
-        "line": 1,
-        "locator": "artifact-line:1#offset:0-2",
-        "local_detail": true,
-        "semantic_locator": "semantic-anchor:阿里"
-      }
-    ]
+    "case_segments": [],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68c3fb6d000000001b0318e6.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -53,13 +45,108 @@
     "provenance": "source_projection",
     "byte_size": 774,
     "content_sha256": "7c1a5d2c7ef60c11b3819dac5efd678d853f529771e8a07640bfc911c9d3a487",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "阿里-高德",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "阿里-高德\n大模型应用开发岗 日常实习 已oc\n【项目】主要是问项目，围绕agent问的比较深，但这个没啥参考，主要看自己的项目，不写了。\n【八股】其实八股也都是围绕项目问的\n1.Kafka是如何保证消息不丢的？\n2.当有一个场景是对于你的redis有一个超大的访问量，就是热key问题，你会如何设计这个缓存系统？\n3.限流的策略有哪些？\n4.如果让你自己设计一个分布式锁，你会怎么设计？\n5.线程池的参数一般都是怎么设置的\n没考算法题，很开心～感觉这组的面试官都很peace,面完当场发的offer"
-    }
+      "locator": "artifact-line:1#offset:0-5;blob:e69035ca796f62a8824f1aa8e4c3fc88bca754ba",
+      "semantic_excerpt": "二面面经-秒过😎\n阿里-高德\n大模型应用开发岗 日常实习 已oc\n【项目】主要是问项目，围绕agent问的比较深，但这个没啥参考，主要看自己的项目，不写了。\n【八股】其实八股也都是围绕项目问的\n1.Kafka是如何保证消息不丢的？\n2.当有一个场景是对于你的redis有一个超大的访问量，就是热key问题，你会如何设计这个缓存系统？\n3.限流的策略有哪些？\n4.如果让你自己设计一个分布式锁，你会怎么设计？\n5.线程池的参数一般都是怎么设置的\n没考算法题，很开心～感觉这组的面试官都很peace,面完当场发的offer"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68c3fb6d000000001b0318e6.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "e69035ca796f62a8824f1aa8e4c3fc88bca754ba",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 774,
+        "content_sha256": "7c1a5d2c7ef60c11b3819dac5efd678d853f529771e8a07640bfc911c9d3a487",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "阿里-高德",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-5;blob:e69035ca796f62a8824f1aa8e4c3fc88bca754ba",
+          "semantic_excerpt": "二面面经-秒过😎\n阿里-高德\n大模型应用开发岗 日常实习 已oc\n【项目】主要是问项目，围绕agent问的比较深，但这个没啥参考，主要看自己的项目，不写了。\n【八股】其实八股也都是围绕项目问的\n1.Kafka是如何保证消息不丢的？\n2.当有一个场景是对于你的redis有一个超大的访问量，就是热key问题，你会如何设计这个缓存系统？\n3.限流的策略有哪些？\n4.如果让你自己设计一个分布式锁，你会怎么设计？\n5.线程池的参数一般都是怎么设置的\n没考算法题，很开心～感觉这组的面试官都很peace,面完当场发的offer"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68c3fb6d000000001b0318e6.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "0096b598109a75f71ce4ddd8159dbb8b7719892b",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 388542,
+        "content_sha256": "f95becb62762568fe25acfffa0c8870b566527f248b448f2b2a17cef73473cbf",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "二面面经-秒过😎 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-186;blob:0096b598109a75f71ce4ddd8159dbb8b7719892b",
+          "semantic_excerpt": "二面面经-秒过😎\n阿里-高德\n大模型应用开发岗 日常实习 已oc\n【项目】主要是问项目，围绕agent问的比较深，但这个没啥参考，主要看自己的项目，不写了。\n【八股】其实八股也都是围绕项目问的\n1.Kafka是如何保证消息不丢的？\n2.当有一个场景是对于你的redis有一个超大的访问量，就是热key问题，你会如何设计这个缓存系统？\n3.限流的策略有哪些？\n4.如果让你自己设计一个分布式锁，你会怎么设计？\n5.线程池的参数一般都是怎么设置的\n没考算法题，很开心～感觉这组的面试官都很peace,面完当场发的offer"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68c3fb6d000000001b0318e6.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "a9d6b8f0bedabfc47a42b431ec3ee928cd8f76f0",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 21896,
+        "content_sha256": "02da8707ddde9302b57ba9d8db90511e9bb466b15366b1d62b570d46cbc6765b",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "二面面经-秒过😎\",",
+          "line": 542,
+          "locator": "artifact-line:542#offset:30-41;blob:a9d6b8f0bedabfc47a42b431ec3ee928cd8f76f0",
+          "semantic_excerpt": "二面面经-秒过😎\n阿里-高德\n大模型应用开发岗 日常实习 已oc\n【项目】主要是问项目，围绕agent问的比较深，但这个没啥参考，主要看自己的项目，不写了。\n【八股】其实八股也都是围绕项目问的\n1.Kafka是如何保证消息不丢的？\n2.当有一个场景是对于你的redis有一个超大的访问量，就是热key问题，你会如何设计这个缓存系统？\n3.限流的策略有哪些？\n4.如果让你自己设计一个分布式锁，你会怎么设计？\n5.线程池的参数一般都是怎么设置的\n没考算法题，很开心～感觉这组的面试官都很peace,面完当场发的offer"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68c3fb6d000000001b0318e6.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "e69035ca796f62a8824f1aa8e4c3fc88bca754ba",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 774,
+      "content_sha256": "7c1a5d2c7ef60c11b3819dac5efd678d853f529771e8a07640bfc911c9d3a487",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "阿里-高德",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-5;blob:e69035ca796f62a8824f1aa8e4c3fc88bca754ba",
+        "semantic_excerpt": "二面面经-秒过😎\n阿里-高德\n大模型应用开发岗 日常实习 已oc\n【项目】主要是问项目，围绕agent问的比较深，但这个没啥参考，主要看自己的项目，不写了。\n【八股】其实八股也都是围绕项目问的\n1.Kafka是如何保证消息不丢的？\n2.当有一个场景是对于你的redis有一个超大的访问量，就是热key问题，你会如何设计这个缓存系统？\n3.限流的策略有哪些？\n4.如果让你自己设计一个分布式锁，你会怎么设计？\n5.线程池的参数一般都是怎么设置的\n没考算法题，很开心～感觉这组的面试官都很peace,面完当场发的offer"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68c3fb6d000000001b0318e6.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "0096b598109a75f71ce4ddd8159dbb8b7719892b",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 388542,
+      "content_sha256": "f95becb62762568fe25acfffa0c8870b566527f248b448f2b2a17cef73473cbf",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "二面面经-秒过😎 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-186;blob:0096b598109a75f71ce4ddd8159dbb8b7719892b",
+        "semantic_excerpt": "二面面经-秒过😎\n阿里-高德\n大模型应用开发岗 日常实习 已oc\n【项目】主要是问项目，围绕agent问的比较深，但这个没啥参考，主要看自己的项目，不写了。\n【八股】其实八股也都是围绕项目问的\n1.Kafka是如何保证消息不丢的？\n2.当有一个场景是对于你的redis有一个超大的访问量，就是热key问题，你会如何设计这个缓存系统？\n3.限流的策略有哪些？\n4.如果让你自己设计一个分布式锁，你会怎么设计？\n5.线程池的参数一般都是怎么设置的\n没考算法题，很开心～感觉这组的面试官都很peace,面完当场发的offer"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68c3fb6d000000001b0318e6.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "a9d6b8f0bedabfc47a42b431ec3ee928cd8f76f0",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 21896,
+      "content_sha256": "02da8707ddde9302b57ba9d8db90511e9bb466b15366b1d62b570d46cbc6765b",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "二面面经-秒过😎\",",
+        "line": 542,
+        "locator": "artifact-line:542#offset:30-41;blob:a9d6b8f0bedabfc47a42b431ec3ee928cd8f76f0",
+        "semantic_excerpt": "二面面经-秒过😎\n阿里-高德\n大模型应用开发岗 日常实习 已oc\n【项目】主要是问项目，围绕agent问的比较深，但这个没啥参考，主要看自己的项目，不写了。\n【八股】其实八股也都是围绕项目问的\n1.Kafka是如何保证消息不丢的？\n2.当有一个场景是对于你的redis有一个超大的访问量，就是热key问题，你会如何设计这个缓存系统？\n3.限流的策略有哪些？\n4.如果让你自己设计一个分布式锁，你会怎么设计？\n5.线程池的参数一般都是怎么设置的\n没考算法题，很开心～感觉这组的面试官都很peace,面完当场发的offer"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -78,8 +165,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -93,11 +180,12 @@
     }
   ],
   "limitations": [
-    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "765353d930ddba733b837616694d38bf50ffff62ccd524f946de5b0c40c6b010"
+  "evidence_sha256": "e0330ca7cf4cf5c6924438ec033c23d3e1e9dece00c2baa7922c74242743096b"
 }

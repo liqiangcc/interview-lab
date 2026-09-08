@@ -7,15 +7,12 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "3ab5abf7819ad596fb07bb296d3c204f923386ffa0ac3adf12a28adecd32d24c",
-  "disposition": "blocked",
-  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "disposition": "single-interview",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
-      "question-list-only",
-      "no-first-person-event",
-      "question-only",
-      "no-candidate-event-evidence"
+      "no-first-person-event"
     ],
     "questions": 14,
     "has_first_person_event": false,
@@ -23,19 +20,33 @@
     "has_bounded_event": true,
     "has_detailed_event": true,
     "has_completed_event_evidence": true,
-    "has_structured_candidate_event": false,
+    "has_structured_candidate_event": true,
     "generic_advice_or_aggregated": false,
     "scheduled_only": false,
-    "question_only": true,
+    "question_only": false,
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
-    "only_question_list": true,
+    "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "tencent-process",
+        "anchor": "腾讯",
+        "line": 1,
+        "locator": "artifact-line:15#offset:21-23;blob:9ca62ac9d458e1e7f04062ab91ce2e2aaa931a4b",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:腾讯",
+        "source_ref": "liqiangcc/xhs:note_desc/68b593ab000000001c0077c1.txt@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b593ab000000001c0077c1.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -44,13 +55,108 @@
     "provenance": "source_projection",
     "byte_size": 961,
     "content_sha256": "0c6251ce24f3b0c9da76fa4decee44fc273829e50905a8e853e2192357ad7648",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "1. 面试官介绍业务（go开发）",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "1. 面试官介绍业务（go开发）\n2. 擅长的开发语言\n3. 手撕：线程交替输出abc 和123（信号量实现的），解释代码\n4. 介绍信号量底层原理、volatile作用、代码关键字（private、static、final）加不加的区别\n5. 加 static 和不用 static 修饰的变量在内存上有什么区别，会被 GC 掉吗\n6. 介绍一下熟悉的几个GC 算法，分别适用于什么场景\n7. 为什么要把堆给分成 young 和 old 两个区域\n8. 手撕sql：查询表中每门课程得分都不低于 60 分的学生的名字\n9. 描述一下TCP 网络断开连接的过程\n10. 客户端为什么要等2MSL，此时服务端是一个什么状态，重发FIN的间隔时间\n11. MSL取值多少\n12. 介绍一下专业知识或其他技能擅长的地方\n13. 有没有面对一些压力比较大的场景\n14. 对工作时间是怎么看的"
-    }
+      "locator": "artifact-line:1#offset:0-16;blob:9ca62ac9d458e1e7f04062ab91ce2e2aaa931a4b",
+      "semantic_excerpt": "腾讯后台开发一面\n1. 面试官介绍业务（go开发）\n2. 擅长的开发语言\n3. 手撕：线程交替输出abc 和123（信号量实现的），解释代码\n4. 介绍信号量底层原理、volatile作用、代码关键字（private、static、final）加不加的区别\n5. 加 static 和不用 static 修饰的变量在内存上有什么区别，会被 GC 掉吗\n6. 介绍一下熟悉的几个GC 算法，分别适用于什么场景\n7. 为什么要把堆给分成 young 和 old 两个区域\n8. 手撕sql：查询表中每门课程得分都不低于 60 分的学生的名字\n9. 描述一下TCP 网络断开连接的过程\n10. 客户端为什么要等2MSL，此时服务端是一个什么状态，重发FIN的间隔时间\n11. MSL取值多少\n12. 介绍一下专业知识或其他技能擅长的地方\n13. 有没有面对一些压力比较大的场景\n14. 对工作时间是怎么看的"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68b593ab000000001c0077c1.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "9ca62ac9d458e1e7f04062ab91ce2e2aaa931a4b",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 961,
+        "content_sha256": "0c6251ce24f3b0c9da76fa4decee44fc273829e50905a8e853e2192357ad7648",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "1. 面试官介绍业务（go开发）",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-16;blob:9ca62ac9d458e1e7f04062ab91ce2e2aaa931a4b",
+          "semantic_excerpt": "腾讯后台开发一面\n1. 面试官介绍业务（go开发）\n2. 擅长的开发语言\n3. 手撕：线程交替输出abc 和123（信号量实现的），解释代码\n4. 介绍信号量底层原理、volatile作用、代码关键字（private、static、final）加不加的区别\n5. 加 static 和不用 static 修饰的变量在内存上有什么区别，会被 GC 掉吗\n6. 介绍一下熟悉的几个GC 算法，分别适用于什么场景\n7. 为什么要把堆给分成 young 和 old 两个区域\n8. 手撕sql：查询表中每门课程得分都不低于 60 分的学生的名字\n9. 描述一下TCP 网络断开连接的过程\n10. 客户端为什么要等2MSL，此时服务端是一个什么状态，重发FIN的间隔时间\n11. MSL取值多少\n12. 介绍一下专业知识或其他技能擅长的地方\n13. 有没有面对一些压力比较大的场景\n14. 对工作时间是怎么看的"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68b593ab000000001c0077c1.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "89cf12e25fc7a985d89525fd853b727b9ac26c46",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 388445,
+        "content_sha256": "6a16cf4530c0d92dc5a4b57d5d64a37747a8908522bb3bb107f430b747c20228",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "腾讯后台开发一面 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-185;blob:89cf12e25fc7a985d89525fd853b727b9ac26c46",
+          "semantic_excerpt": "腾讯后台开发一面\n1. 面试官介绍业务（go开发）\n2. 擅长的开发语言\n3. 手撕：线程交替输出abc 和123（信号量实现的），解释代码\n4. 介绍信号量底层原理、volatile作用、代码关键字（private、static、final）加不加的区别\n5. 加 static 和不用 static 修饰的变量在内存上有什么区别，会被 GC 掉吗\n6. 介绍一下熟悉的几个GC 算法，分别适用于什么场景\n7. 为什么要把堆给分成 young 和 old 两个区域\n8. 手撕sql：查询表中每门课程得分都不低于 60 分的学生的名字\n9. 描述一下TCP 网络断开连接的过程\n10. 客户端为什么要等2MSL，此时服务端是一个什么状态，重发FIN的间隔时间\n11. MSL取值多少\n12. 介绍一下专业知识或其他技能擅长的地方\n13. 有没有面对一些压力比较大的场景\n14. 对工作时间是怎么看的"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68b593ab000000001c0077c1.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "85904ed9bf33f32cb4aaf22b020375b3f1ee5d5c",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 21660,
+        "content_sha256": "688e200c829423b198318190e100ac4545a5a31a65c09e5838cb30ac7034a1e2",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "腾讯后台开发一面\",",
+          "line": 496,
+          "locator": "artifact-line:496#offset:30-40;blob:85904ed9bf33f32cb4aaf22b020375b3f1ee5d5c",
+          "semantic_excerpt": "腾讯后台开发一面\n1. 面试官介绍业务（go开发）\n2. 擅长的开发语言\n3. 手撕：线程交替输出abc 和123（信号量实现的），解释代码\n4. 介绍信号量底层原理、volatile作用、代码关键字（private、static、final）加不加的区别\n5. 加 static 和不用 static 修饰的变量在内存上有什么区别，会被 GC 掉吗\n6. 介绍一下熟悉的几个GC 算法，分别适用于什么场景\n7. 为什么要把堆给分成 young 和 old 两个区域\n8. 手撕sql：查询表中每门课程得分都不低于 60 分的学生的名字\n9. 描述一下TCP 网络断开连接的过程\n10. 客户端为什么要等2MSL，此时服务端是一个什么状态，重发FIN的间隔时间\n11. MSL取值多少\n12. 介绍一下专业知识或其他技能擅长的地方\n13. 有没有面对一些压力比较大的场景\n14. 对工作时间是怎么看的"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68b593ab000000001c0077c1.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "9ca62ac9d458e1e7f04062ab91ce2e2aaa931a4b",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 961,
+      "content_sha256": "0c6251ce24f3b0c9da76fa4decee44fc273829e50905a8e853e2192357ad7648",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "1. 面试官介绍业务（go开发）",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-16;blob:9ca62ac9d458e1e7f04062ab91ce2e2aaa931a4b",
+        "semantic_excerpt": "腾讯后台开发一面\n1. 面试官介绍业务（go开发）\n2. 擅长的开发语言\n3. 手撕：线程交替输出abc 和123（信号量实现的），解释代码\n4. 介绍信号量底层原理、volatile作用、代码关键字（private、static、final）加不加的区别\n5. 加 static 和不用 static 修饰的变量在内存上有什么区别，会被 GC 掉吗\n6. 介绍一下熟悉的几个GC 算法，分别适用于什么场景\n7. 为什么要把堆给分成 young 和 old 两个区域\n8. 手撕sql：查询表中每门课程得分都不低于 60 分的学生的名字\n9. 描述一下TCP 网络断开连接的过程\n10. 客户端为什么要等2MSL，此时服务端是一个什么状态，重发FIN的间隔时间\n11. MSL取值多少\n12. 介绍一下专业知识或其他技能擅长的地方\n13. 有没有面对一些压力比较大的场景\n14. 对工作时间是怎么看的"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68b593ab000000001c0077c1.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "89cf12e25fc7a985d89525fd853b727b9ac26c46",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 388445,
+      "content_sha256": "6a16cf4530c0d92dc5a4b57d5d64a37747a8908522bb3bb107f430b747c20228",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "腾讯后台开发一面 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-185;blob:89cf12e25fc7a985d89525fd853b727b9ac26c46",
+        "semantic_excerpt": "腾讯后台开发一面\n1. 面试官介绍业务（go开发）\n2. 擅长的开发语言\n3. 手撕：线程交替输出abc 和123（信号量实现的），解释代码\n4. 介绍信号量底层原理、volatile作用、代码关键字（private、static、final）加不加的区别\n5. 加 static 和不用 static 修饰的变量在内存上有什么区别，会被 GC 掉吗\n6. 介绍一下熟悉的几个GC 算法，分别适用于什么场景\n7. 为什么要把堆给分成 young 和 old 两个区域\n8. 手撕sql：查询表中每门课程得分都不低于 60 分的学生的名字\n9. 描述一下TCP 网络断开连接的过程\n10. 客户端为什么要等2MSL，此时服务端是一个什么状态，重发FIN的间隔时间\n11. MSL取值多少\n12. 介绍一下专业知识或其他技能擅长的地方\n13. 有没有面对一些压力比较大的场景\n14. 对工作时间是怎么看的"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68b593ab000000001c0077c1.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "85904ed9bf33f32cb4aaf22b020375b3f1ee5d5c",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 21660,
+      "content_sha256": "688e200c829423b198318190e100ac4545a5a31a65c09e5838cb30ac7034a1e2",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "腾讯后台开发一面\",",
+        "line": 496,
+        "locator": "artifact-line:496#offset:30-40;blob:85904ed9bf33f32cb4aaf22b020375b3f1ee5d5c",
+        "semantic_excerpt": "腾讯后台开发一面\n1. 面试官介绍业务（go开发）\n2. 擅长的开发语言\n3. 手撕：线程交替输出abc 和123（信号量实现的），解释代码\n4. 介绍信号量底层原理、volatile作用、代码关键字（private、static、final）加不加的区别\n5. 加 static 和不用 static 修饰的变量在内存上有什么区别，会被 GC 掉吗\n6. 介绍一下熟悉的几个GC 算法，分别适用于什么场景\n7. 为什么要把堆给分成 young 和 old 两个区域\n8. 手撕sql：查询表中每门课程得分都不低于 60 分的学生的名字\n9. 描述一下TCP 网络断开连接的过程\n10. 客户端为什么要等2MSL，此时服务端是一个什么状态，重发FIN的间隔时间\n11. MSL取值多少\n12. 介绍一下专业知识或其他技能擅长的地方\n13. 有没有面对一些压力比较大的场景\n14. 对工作时间是怎么看的"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -69,8 +175,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -84,11 +190,12 @@
     }
   ],
   "limitations": [
-    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "253b853d9be39f0e67484680a42f6ecbfdc724ff2ac49ea039e6a80cc9aed1ae"
+  "evidence_sha256": "43cbc9e7163e11509b5ed0b2adca6c40301f8180207d6c2b5990b6c4d7ba23df"
 }

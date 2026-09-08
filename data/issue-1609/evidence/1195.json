@@ -7,34 +7,44 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "b58e4d4f9d74060c5778259dfdf003fd2013739fb118ac75a2364f65e812c1ee",
-  "disposition": "blocked",
-  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "disposition": "single-interview",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
   "interview_cases": [],
   "ambiguity_audit": {
-    "flags": [
-      "question-list-only",
-      "question-only",
-      "no-candidate-event-evidence"
-    ],
+    "flags": [],
     "questions": 10,
     "has_first_person_event": true,
     "has_explicit_candidate_event": true,
     "has_bounded_event": true,
     "has_detailed_event": true,
     "has_completed_event_evidence": true,
-    "has_structured_candidate_event": false,
+    "has_structured_candidate_event": true,
     "generic_advice_or_aggregated": false,
     "scheduled_only": false,
-    "question_only": true,
-    "outcome_signal": false,
+    "question_only": false,
+    "outcome_signal": true,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
-    "only_question_list": true,
+    "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "bytedance-process",
+        "anchor": "字节",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-165;blob:194c1cf14256ee5434c724d9e19ae4d77ad8530b",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:字节",
+        "source_ref": "liqiangcc/xhs:note_detail/68b00074000000001d02aaf6.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b00074000000001d02aaf6.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -43,13 +53,108 @@
     "provenance": "source_projection",
     "byte_size": 787,
     "content_sha256": "1525cc93966db41748bab3478b82674253248224d4fe09e546b861d4c491f189",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "ps：脖猪是后端零基础投的客户端 所以大部分的东西肯定是跟java相关的",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "ps：脖猪是后端零基础投的客户端 所以大部分的东西肯定是跟java相关的\n1.java是一个多继承还是单继承语言 他们之间的优缺点在哪\n2.jvm内存结构\n3.如何去在jvm里去进行一个内存的管理（我回答的是分代回收算法那块）\n4.synchronized和reentrantlock的区别\n5.https怎么保证安全问题\n6.https握手过程\n7.项目拷打\n8.手撕1 用一个单向队列实现一个栈（面试官想看到只有一个子操作的时间复杂度是O（n））\n9.手撕2 一个数组nums，一个数k 若存在子数组和是0或k的倍数 则为好的数组 实现一个算法识别这个数组是不是好数组（用了前缀和但用了暴力解法 面试官提示了用空间换时间我都没写出来 八成凉凉）\n10.反问"
-    }
+      "locator": "artifact-line:1#offset:0-36;blob:234b9ab9e5fc54ed2fe2c85cf0f61d44e800640a",
+      "semantic_excerpt": "字节 本地生活 客户端 二面不凉经\nps：脖猪是后端零基础投的客户端 所以大部分的东西肯定是跟java相关的\n1.java是一个多继承还是单继承语言 他们之间的优缺点在哪\n2.jvm内存结构\n3.如何去在jvm里去进行一个内存的管理（我回答的是分代回收算法那块）\n4.synchronized和reentrantlock的区别\n5.https怎么保证安全问题\n6.https握手过程\n7.项目拷打\n8.手撕1 用一个单向队列实现一个栈（面试官想看到只有一个子操作的时间复杂度是O（n））\n9.手撕2 一个数组nums，一个数k 若存在子数组和是0或k的倍数 则为好的数组 实现一个算法识别这个数组是不是好数组（用了前缀和但用了暴力解法 面试官提示了用空间换时间我都没写出来 八成凉凉）\n10.反问"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68b00074000000001d02aaf6.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "234b9ab9e5fc54ed2fe2c85cf0f61d44e800640a",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 787,
+        "content_sha256": "1525cc93966db41748bab3478b82674253248224d4fe09e546b861d4c491f189",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "ps：脖猪是后端零基础投的客户端 所以大部分的东西肯定是跟java相关的",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-36;blob:234b9ab9e5fc54ed2fe2c85cf0f61d44e800640a",
+          "semantic_excerpt": "字节 本地生活 客户端 二面不凉经\nps：脖猪是后端零基础投的客户端 所以大部分的东西肯定是跟java相关的\n1.java是一个多继承还是单继承语言 他们之间的优缺点在哪\n2.jvm内存结构\n3.如何去在jvm里去进行一个内存的管理（我回答的是分代回收算法那块）\n4.synchronized和reentrantlock的区别\n5.https怎么保证安全问题\n6.https握手过程\n7.项目拷打\n8.手撕1 用一个单向队列实现一个栈（面试官想看到只有一个子操作的时间复杂度是O（n））\n9.手撕2 一个数组nums，一个数k 若存在子数组和是0或k的倍数 则为好的数组 实现一个算法识别这个数组是不是好数组（用了前缀和但用了暴力解法 面试官提示了用空间换时间我都没写出来 八成凉凉）\n10.反问"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68b00074000000001d02aaf6.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "194c1cf14256ee5434c724d9e19ae4d77ad8530b",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 386616,
+        "content_sha256": "3620b5ca67a197021ab5d94eca1acd0d3a0eff74e1f5a4c86a1b9bcb882083d4",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "字节 本地生活 客户端 二面不凉经 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-194;blob:194c1cf14256ee5434c724d9e19ae4d77ad8530b",
+          "semantic_excerpt": "字节 本地生活 客户端 二面不凉经\nps：脖猪是后端零基础投的客户端 所以大部分的东西肯定是跟java相关的\n1.java是一个多继承还是单继承语言 他们之间的优缺点在哪\n2.jvm内存结构\n3.如何去在jvm里去进行一个内存的管理（我回答的是分代回收算法那块）\n4.synchronized和reentrantlock的区别\n5.https怎么保证安全问题\n6.https握手过程\n7.项目拷打\n8.手撕1 用一个单向队列实现一个栈（面试官想看到只有一个子操作的时间复杂度是O（n））\n9.手撕2 一个数组nums，一个数k 若存在子数组和是0或k的倍数 则为好的数组 实现一个算法识别这个数组是不是好数组（用了前缀和但用了暴力解法 面试官提示了用空间换时间我都没写出来 八成凉凉）\n10.反问"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68b00074000000001d02aaf6.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "0527d6ba6633934482648c0bb6a58b39419f9719",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 20473,
+        "content_sha256": "d3edb08da5121e00e8ad7c7ea43e1bc33a211212c8b78e1bbb96f697b4770753",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "字节 本地生活 客户端 二面不凉经\",",
+          "line": 499,
+          "locator": "artifact-line:499#offset:30-49;blob:0527d6ba6633934482648c0bb6a58b39419f9719",
+          "semantic_excerpt": "字节 本地生活 客户端 二面不凉经\nps：脖猪是后端零基础投的客户端 所以大部分的东西肯定是跟java相关的\n1.java是一个多继承还是单继承语言 他们之间的优缺点在哪\n2.jvm内存结构\n3.如何去在jvm里去进行一个内存的管理（我回答的是分代回收算法那块）\n4.synchronized和reentrantlock的区别\n5.https怎么保证安全问题\n6.https握手过程\n7.项目拷打\n8.手撕1 用一个单向队列实现一个栈（面试官想看到只有一个子操作的时间复杂度是O（n））\n9.手撕2 一个数组nums，一个数k 若存在子数组和是0或k的倍数 则为好的数组 实现一个算法识别这个数组是不是好数组（用了前缀和但用了暴力解法 面试官提示了用空间换时间我都没写出来 八成凉凉）\n10.反问"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68b00074000000001d02aaf6.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "234b9ab9e5fc54ed2fe2c85cf0f61d44e800640a",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 787,
+      "content_sha256": "1525cc93966db41748bab3478b82674253248224d4fe09e546b861d4c491f189",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "ps：脖猪是后端零基础投的客户端 所以大部分的东西肯定是跟java相关的",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-36;blob:234b9ab9e5fc54ed2fe2c85cf0f61d44e800640a",
+        "semantic_excerpt": "字节 本地生活 客户端 二面不凉经\nps：脖猪是后端零基础投的客户端 所以大部分的东西肯定是跟java相关的\n1.java是一个多继承还是单继承语言 他们之间的优缺点在哪\n2.jvm内存结构\n3.如何去在jvm里去进行一个内存的管理（我回答的是分代回收算法那块）\n4.synchronized和reentrantlock的区别\n5.https怎么保证安全问题\n6.https握手过程\n7.项目拷打\n8.手撕1 用一个单向队列实现一个栈（面试官想看到只有一个子操作的时间复杂度是O（n））\n9.手撕2 一个数组nums，一个数k 若存在子数组和是0或k的倍数 则为好的数组 实现一个算法识别这个数组是不是好数组（用了前缀和但用了暴力解法 面试官提示了用空间换时间我都没写出来 八成凉凉）\n10.反问"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68b00074000000001d02aaf6.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "194c1cf14256ee5434c724d9e19ae4d77ad8530b",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 386616,
+      "content_sha256": "3620b5ca67a197021ab5d94eca1acd0d3a0eff74e1f5a4c86a1b9bcb882083d4",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "字节 本地生活 客户端 二面不凉经 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-194;blob:194c1cf14256ee5434c724d9e19ae4d77ad8530b",
+        "semantic_excerpt": "字节 本地生活 客户端 二面不凉经\nps：脖猪是后端零基础投的客户端 所以大部分的东西肯定是跟java相关的\n1.java是一个多继承还是单继承语言 他们之间的优缺点在哪\n2.jvm内存结构\n3.如何去在jvm里去进行一个内存的管理（我回答的是分代回收算法那块）\n4.synchronized和reentrantlock的区别\n5.https怎么保证安全问题\n6.https握手过程\n7.项目拷打\n8.手撕1 用一个单向队列实现一个栈（面试官想看到只有一个子操作的时间复杂度是O（n））\n9.手撕2 一个数组nums，一个数k 若存在子数组和是0或k的倍数 则为好的数组 实现一个算法识别这个数组是不是好数组（用了前缀和但用了暴力解法 面试官提示了用空间换时间我都没写出来 八成凉凉）\n10.反问"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68b00074000000001d02aaf6.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "0527d6ba6633934482648c0bb6a58b39419f9719",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 20473,
+      "content_sha256": "d3edb08da5121e00e8ad7c7ea43e1bc33a211212c8b78e1bbb96f697b4770753",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "字节 本地生活 客户端 二面不凉经\",",
+        "line": 499,
+        "locator": "artifact-line:499#offset:30-49;blob:0527d6ba6633934482648c0bb6a58b39419f9719",
+        "semantic_excerpt": "字节 本地生活 客户端 二面不凉经\nps：脖猪是后端零基础投的客户端 所以大部分的东西肯定是跟java相关的\n1.java是一个多继承还是单继承语言 他们之间的优缺点在哪\n2.jvm内存结构\n3.如何去在jvm里去进行一个内存的管理（我回答的是分代回收算法那块）\n4.synchronized和reentrantlock的区别\n5.https怎么保证安全问题\n6.https握手过程\n7.项目拷打\n8.手撕1 用一个单向队列实现一个栈（面试官想看到只有一个子操作的时间复杂度是O（n））\n9.手撕2 一个数组nums，一个数k 若存在子数组和是0或k的倍数 则为好的数组 实现一个算法识别这个数组是不是好数组（用了前缀和但用了暴力解法 面试官提示了用空间换时间我都没写出来 八成凉凉）\n10.反问"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -68,8 +173,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -83,11 +188,12 @@
     }
   ],
   "limitations": [
-    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "9fb03c2b1be707bd31049160a75471e23760b4e461cb21e29da934806151f3db"
+  "evidence_sha256": "71ffdb5344249e4230820d31bb8fac3cdbc1f59ce511962c7ce55a6c98826e3a"
 }

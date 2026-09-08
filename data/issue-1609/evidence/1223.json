@@ -12,7 +12,6 @@
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
-      "question-list-only",
       "no-first-person-event",
       "question-only",
       "no-candidate-event-evidence"
@@ -20,7 +19,7 @@
     "questions": 13,
     "has_first_person_event": false,
     "has_explicit_candidate_event": false,
-    "has_bounded_event": false,
+    "has_bounded_event": true,
     "has_detailed_event": false,
     "has_completed_event_evidence": true,
     "has_structured_candidate_event": false,
@@ -30,12 +29,26 @@
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
-    "only_question_list": true,
+    "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "xiaomi-process",
+        "anchor": "小米",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-165;blob:1ba00efb1ea712352f8423a682725e40185a9f38",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:小米",
+        "source_ref": "liqiangcc/xhs:note_detail/68b2c53c000000001d00e86b.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b2c53c000000001d00e86b.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -44,13 +57,108 @@
     "provenance": "source_projection",
     "byte_size": 841,
     "content_sha256": "9ee58de73723cbc2e50c98e367e56032b100ab03a69650d523f16ed00f0bc775",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "1、ArrayList和LinkedList的区别，ArrayList初始化数组容量多少",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "1、ArrayList和LinkedList的区别，ArrayList初始化数组容量多少\n2、方法的重写和重载\n3、Java常用的锁：synchronized、轻量级锁和偏向锁\n4、synchronized可以作用在哪些地方\n5、Redis数据类型有哪些，用到了redis哪些数据类型，redis分布式锁的实现\n6、Redis中的缓存穿透、缓存击穿、缓存雪崩\n7、docker命令、git命令：将某些特定的提交合并到 master 分支上，使用 git cherry-pick 命令。\n8、HashMap和ConcurrentHashMap的区别\n9、线程的创建方法，run和start\n10、索引失效的场景\n11、MySQL中的b+树，为什么不适用b树，覆盖索引\n12、MyBatis中#{}和${}的区别，表中的字段和实体类不对应怎么解决\n13、算法题：环形链表"
-    }
+      "locator": "artifact-line:1#offset:0-44;blob:33039798a3c1595754162fbf67abdc7c9415cdef",
+      "semantic_excerpt": "小米Java一面面经\n1、ArrayList和LinkedList的区别，ArrayList初始化数组容量多少\n2、方法的重写和重载\n3、Java常用的锁：synchronized、轻量级锁和偏向锁\n4、synchronized可以作用在哪些地方\n5、Redis数据类型有哪些，用到了redis哪些数据类型，redis分布式锁的实现\n6、Redis中的缓存穿透、缓存击穿、缓存雪崩\n7、docker命令、git命令：将某些特定的提交合并到 master 分支上，使用 git cherry-pick 命令。\n8、HashMap和ConcurrentHashMap的区别\n9、线程的创建方法，run和start\n10、索引失效的场景\n11、MySQL中的b+树，为什么不适用b树，覆盖索引\n12、MyBatis中#{}和${}的区别，表中的字段和实体类不对应怎么解决\n13、算法题：环形链表"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68b2c53c000000001d00e86b.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "33039798a3c1595754162fbf67abdc7c9415cdef",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 841,
+        "content_sha256": "9ee58de73723cbc2e50c98e367e56032b100ab03a69650d523f16ed00f0bc775",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "1、ArrayList和LinkedList的区别，ArrayList初始化数组容量多少",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-44;blob:33039798a3c1595754162fbf67abdc7c9415cdef",
+          "semantic_excerpt": "小米Java一面面经\n1、ArrayList和LinkedList的区别，ArrayList初始化数组容量多少\n2、方法的重写和重载\n3、Java常用的锁：synchronized、轻量级锁和偏向锁\n4、synchronized可以作用在哪些地方\n5、Redis数据类型有哪些，用到了redis哪些数据类型，redis分布式锁的实现\n6、Redis中的缓存穿透、缓存击穿、缓存雪崩\n7、docker命令、git命令：将某些特定的提交合并到 master 分支上，使用 git cherry-pick 命令。\n8、HashMap和ConcurrentHashMap的区别\n9、线程的创建方法，run和start\n10、索引失效的场景\n11、MySQL中的b+树，为什么不适用b树，覆盖索引\n12、MyBatis中#{}和${}的区别，表中的字段和实体类不对应怎么解决\n13、算法题：环形链表"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68b2c53c000000001d00e86b.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "1ba00efb1ea712352f8423a682725e40185a9f38",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 391235,
+        "content_sha256": "6695d92c0b2546d179f898ddc32e9c709e6bd2526fe4f9b9985616cefa1ccea7",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "小米Java一面面经 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-187;blob:1ba00efb1ea712352f8423a682725e40185a9f38",
+          "semantic_excerpt": "小米Java一面面经\n1、ArrayList和LinkedList的区别，ArrayList初始化数组容量多少\n2、方法的重写和重载\n3、Java常用的锁：synchronized、轻量级锁和偏向锁\n4、synchronized可以作用在哪些地方\n5、Redis数据类型有哪些，用到了redis哪些数据类型，redis分布式锁的实现\n6、Redis中的缓存穿透、缓存击穿、缓存雪崩\n7、docker命令、git命令：将某些特定的提交合并到 master 分支上，使用 git cherry-pick 命令。\n8、HashMap和ConcurrentHashMap的区别\n9、线程的创建方法，run和start\n10、索引失效的场景\n11、MySQL中的b+树，为什么不适用b树，覆盖索引\n12、MyBatis中#{}和${}的区别，表中的字段和实体类不对应怎么解决\n13、算法题：环形链表"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68b2c53c000000001d00e86b.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "d908642a2b6add7c1b6a6076d6199c2ab9ebe315",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 24166,
+        "content_sha256": "334cbc97446e13de4ac131b6aaa59c2645d47e5b1c62bba114265159465109c6",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "小米Java一面面经\",",
+          "line": 502,
+          "locator": "artifact-line:502#offset:30-42;blob:d908642a2b6add7c1b6a6076d6199c2ab9ebe315",
+          "semantic_excerpt": "小米Java一面面经\n1、ArrayList和LinkedList的区别，ArrayList初始化数组容量多少\n2、方法的重写和重载\n3、Java常用的锁：synchronized、轻量级锁和偏向锁\n4、synchronized可以作用在哪些地方\n5、Redis数据类型有哪些，用到了redis哪些数据类型，redis分布式锁的实现\n6、Redis中的缓存穿透、缓存击穿、缓存雪崩\n7、docker命令、git命令：将某些特定的提交合并到 master 分支上，使用 git cherry-pick 命令。\n8、HashMap和ConcurrentHashMap的区别\n9、线程的创建方法，run和start\n10、索引失效的场景\n11、MySQL中的b+树，为什么不适用b树，覆盖索引\n12、MyBatis中#{}和${}的区别，表中的字段和实体类不对应怎么解决\n13、算法题：环形链表"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68b2c53c000000001d00e86b.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "33039798a3c1595754162fbf67abdc7c9415cdef",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 841,
+      "content_sha256": "9ee58de73723cbc2e50c98e367e56032b100ab03a69650d523f16ed00f0bc775",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "1、ArrayList和LinkedList的区别，ArrayList初始化数组容量多少",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-44;blob:33039798a3c1595754162fbf67abdc7c9415cdef",
+        "semantic_excerpt": "小米Java一面面经\n1、ArrayList和LinkedList的区别，ArrayList初始化数组容量多少\n2、方法的重写和重载\n3、Java常用的锁：synchronized、轻量级锁和偏向锁\n4、synchronized可以作用在哪些地方\n5、Redis数据类型有哪些，用到了redis哪些数据类型，redis分布式锁的实现\n6、Redis中的缓存穿透、缓存击穿、缓存雪崩\n7、docker命令、git命令：将某些特定的提交合并到 master 分支上，使用 git cherry-pick 命令。\n8、HashMap和ConcurrentHashMap的区别\n9、线程的创建方法，run和start\n10、索引失效的场景\n11、MySQL中的b+树，为什么不适用b树，覆盖索引\n12、MyBatis中#{}和${}的区别，表中的字段和实体类不对应怎么解决\n13、算法题：环形链表"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68b2c53c000000001d00e86b.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "1ba00efb1ea712352f8423a682725e40185a9f38",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 391235,
+      "content_sha256": "6695d92c0b2546d179f898ddc32e9c709e6bd2526fe4f9b9985616cefa1ccea7",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "小米Java一面面经 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-187;blob:1ba00efb1ea712352f8423a682725e40185a9f38",
+        "semantic_excerpt": "小米Java一面面经\n1、ArrayList和LinkedList的区别，ArrayList初始化数组容量多少\n2、方法的重写和重载\n3、Java常用的锁：synchronized、轻量级锁和偏向锁\n4、synchronized可以作用在哪些地方\n5、Redis数据类型有哪些，用到了redis哪些数据类型，redis分布式锁的实现\n6、Redis中的缓存穿透、缓存击穿、缓存雪崩\n7、docker命令、git命令：将某些特定的提交合并到 master 分支上，使用 git cherry-pick 命令。\n8、HashMap和ConcurrentHashMap的区别\n9、线程的创建方法，run和start\n10、索引失效的场景\n11、MySQL中的b+树，为什么不适用b树，覆盖索引\n12、MyBatis中#{}和${}的区别，表中的字段和实体类不对应怎么解决\n13、算法题：环形链表"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68b2c53c000000001d00e86b.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "d908642a2b6add7c1b6a6076d6199c2ab9ebe315",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 24166,
+      "content_sha256": "334cbc97446e13de4ac131b6aaa59c2645d47e5b1c62bba114265159465109c6",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "小米Java一面面经\",",
+        "line": 502,
+        "locator": "artifact-line:502#offset:30-42;blob:d908642a2b6add7c1b6a6076d6199c2ab9ebe315",
+        "semantic_excerpt": "小米Java一面面经\n1、ArrayList和LinkedList的区别，ArrayList初始化数组容量多少\n2、方法的重写和重载\n3、Java常用的锁：synchronized、轻量级锁和偏向锁\n4、synchronized可以作用在哪些地方\n5、Redis数据类型有哪些，用到了redis哪些数据类型，redis分布式锁的实现\n6、Redis中的缓存穿透、缓存击穿、缓存雪崩\n7、docker命令、git命令：将某些特定的提交合并到 master 分支上，使用 git cherry-pick 命令。\n8、HashMap和ConcurrentHashMap的区别\n9、线程的创建方法，run和start\n10、索引失效的场景\n11、MySQL中的b+树，为什么不适用b树，覆盖索引\n12、MyBatis中#{}和${}的区别，表中的字段和实体类不对应怎么解决\n13、算法题：环形链表"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -85,10 +193,11 @@
   ],
   "limitations": [
     "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "19151a847e7320fe6e76b840cf096c47b392da440cdc8e753f47ebc443622f2f"
+  "evidence_sha256": "8eb93c0fd0665d02f6b1ef63d4f43ddae81deca47e4f57577d4d51b720b1ca55"
 }

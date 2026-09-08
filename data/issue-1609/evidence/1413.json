@@ -16,7 +16,7 @@
       "question-only",
       "no-candidate-event-evidence"
     ],
-    "questions": 14,
+    "questions": 15,
     "has_first_person_event": true,
     "has_explicit_candidate_event": true,
     "has_bounded_event": true,
@@ -29,12 +29,26 @@
     "outcome_signal": true,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": true,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "xiaomi-process",
+        "anchor": "小米",
+        "line": 1,
+        "locator": "artifact-line:490#offset:168-170;blob:19c5ca00f9f54632df2a1ceb99063601e8708cc1",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:小米",
+        "source_ref": "liqiangcc/xhs:note_detail/68da2e90000000000e02330a.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 2,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68da2e90000000000e02330a.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -43,13 +57,78 @@
     "provenance": "source_projection",
     "byte_size": 22877,
     "content_sha256": "46fafaf2460192d25969dff41c49275ac04f5a38025423c5be8820aa2ef6be5b",
+    "cache_status": "not-applicable",
     "excerpt": {
-      "excerpt": "\"global\": {",
-      "line": 2,
-      "locator": "artifact-line:2",
-      "semantic_excerpt": "岗位：软件开发工程师-影像方向\n1、自我介绍\n2、介绍组里的科研方向\n3、讲硕士课题\n4、讲实习的内容（讲大组的产品，讲自己的工作）\n5、讲自己做的项目\n（以上都没有深挖，我单方面输出）\n6、细讲了两个科研的方向，问了一些细节（图像相关的）\n7、讲单应矩阵的原理\n8、多态的原理（问了一下，c里面两个函数名相同，传入参数数量不同，能编译通过吗）\n9、纯虚类\n10、二叉平衡树\n11、深度优先搜索和广度优先搜索，分别是什么，用在什么场景\n12、线程安全的处理\n13、要问内核，我不会，遂放弃\n14、反问\n \n感觉面试官很着急，迟到十分钟，还一直打断我说话，没有思考时间，两秒钟答不上来就下一个，有点害怕[扶墙R]"
-    }
+      "excerpt": "9.29 小米一面\",",
+      "line": 592,
+      "locator": "artifact-line:592#offset:30-41;blob:fe8b2bb4121b9efe668a4557a24b18ef3af5499d",
+      "semantic_excerpt": "9.29 小米一面\n岗位：软件开发工程师-影像方向\n1、自我介绍\n2、介绍组里的科研方向\n3、讲硕士课题\n4、讲实习的内容（讲大组的产品，讲自己的工作）\n5、讲自己做的项目\n（以上都没有深挖，我单方面输出）\n6、细讲了两个科研的方向，问了一些细节（图像相关的）\n7、讲单应矩阵的原理\n8、多态的原理（问了一下，c里面两个函数名相同，传入参数数量不同，能编译通过吗）\n9、纯虚类\n10、二叉平衡树\n11、深度优先搜索和广度优先搜索，分别是什么，用在什么场景\n12、线程安全的处理\n13、要问内核，我不会，遂放弃\n14、反问\n \n感觉面试官很着急，迟到十分钟，还一直打断我说话，没有思考时间，两秒钟答不上来就下一个，有点害怕[扶墙R]"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_detail/68da2e90000000000e02330a.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "19c5ca00f9f54632df2a1ceb99063601e8708cc1",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 390607,
+        "content_sha256": "a0b22255f126a0580c3f2530c0726f3eaf5da4487285895371113a751f4b6b8f",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "9.29 小米一面 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-186;blob:19c5ca00f9f54632df2a1ceb99063601e8708cc1",
+          "semantic_excerpt": "9.29 小米一面\n岗位：软件开发工程师-影像方向\n1、自我介绍\n2、介绍组里的科研方向\n3、讲硕士课题\n4、讲实习的内容（讲大组的产品，讲自己的工作）\n5、讲自己做的项目\n（以上都没有深挖，我单方面输出）\n6、细讲了两个科研的方向，问了一些细节（图像相关的）\n7、讲单应矩阵的原理\n8、多态的原理（问了一下，c里面两个函数名相同，传入参数数量不同，能编译通过吗）\n9、纯虚类\n10、二叉平衡树\n11、深度优先搜索和广度优先搜索，分别是什么，用在什么场景\n12、线程安全的处理\n13、要问内核，我不会，遂放弃\n14、反问\n \n感觉面试官很着急，迟到十分钟，还一直打断我说话，没有思考时间，两秒钟答不上来就下一个，有点害怕[扶墙R]"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68da2e90000000000e02330a.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "fe8b2bb4121b9efe668a4557a24b18ef3af5499d",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 22877,
+        "content_sha256": "46fafaf2460192d25969dff41c49275ac04f5a38025423c5be8820aa2ef6be5b",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "9.29 小米一面\",",
+          "line": 592,
+          "locator": "artifact-line:592#offset:30-41;blob:fe8b2bb4121b9efe668a4557a24b18ef3af5499d",
+          "semantic_excerpt": "9.29 小米一面\n岗位：软件开发工程师-影像方向\n1、自我介绍\n2、介绍组里的科研方向\n3、讲硕士课题\n4、讲实习的内容（讲大组的产品，讲自己的工作）\n5、讲自己做的项目\n（以上都没有深挖，我单方面输出）\n6、细讲了两个科研的方向，问了一些细节（图像相关的）\n7、讲单应矩阵的原理\n8、多态的原理（问了一下，c里面两个函数名相同，传入参数数量不同，能编译通过吗）\n9、纯虚类\n10、二叉平衡树\n11、深度优先搜索和广度优先搜索，分别是什么，用在什么场景\n12、线程安全的处理\n13、要问内核，我不会，遂放弃\n14、反问\n \n感觉面试官很着急，迟到十分钟，还一直打断我说话，没有思考时间，两秒钟答不上来就下一个，有点害怕[扶墙R]"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/68da2e90000000000e02330a.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "19c5ca00f9f54632df2a1ceb99063601e8708cc1",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 390607,
+      "content_sha256": "a0b22255f126a0580c3f2530c0726f3eaf5da4487285895371113a751f4b6b8f",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "9.29 小米一面 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-186;blob:19c5ca00f9f54632df2a1ceb99063601e8708cc1",
+        "semantic_excerpt": "9.29 小米一面\n岗位：软件开发工程师-影像方向\n1、自我介绍\n2、介绍组里的科研方向\n3、讲硕士课题\n4、讲实习的内容（讲大组的产品，讲自己的工作）\n5、讲自己做的项目\n（以上都没有深挖，我单方面输出）\n6、细讲了两个科研的方向，问了一些细节（图像相关的）\n7、讲单应矩阵的原理\n8、多态的原理（问了一下，c里面两个函数名相同，传入参数数量不同，能编译通过吗）\n9、纯虚类\n10、二叉平衡树\n11、深度优先搜索和广度优先搜索，分别是什么，用在什么场景\n12、线程安全的处理\n13、要问内核，我不会，遂放弃\n14、反问\n \n感觉面试官很着急，迟到十分钟，还一直打断我说话，没有思考时间，两秒钟答不上来就下一个，有点害怕[扶墙R]"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68da2e90000000000e02330a.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "fe8b2bb4121b9efe668a4557a24b18ef3af5499d",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 22877,
+      "content_sha256": "46fafaf2460192d25969dff41c49275ac04f5a38025423c5be8820aa2ef6be5b",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "9.29 小米一面\",",
+        "line": 592,
+        "locator": "artifact-line:592#offset:30-41;blob:fe8b2bb4121b9efe668a4557a24b18ef3af5499d",
+        "semantic_excerpt": "9.29 小米一面\n岗位：软件开发工程师-影像方向\n1、自我介绍\n2、介绍组里的科研方向\n3、讲硕士课题\n4、讲实习的内容（讲大组的产品，讲自己的工作）\n5、讲自己做的项目\n（以上都没有深挖，我单方面输出）\n6、细讲了两个科研的方向，问了一些细节（图像相关的）\n7、讲单应矩阵的原理\n8、多态的原理（问了一下，c里面两个函数名相同，传入参数数量不同，能编译通过吗）\n9、纯虚类\n10、二叉平衡树\n11、深度优先搜索和广度优先搜索，分别是什么，用在什么场景\n12、线程安全的处理\n13、要问内核，我不会，遂放弃\n14、反问\n \n感觉面试官很着急，迟到十分钟，还一直打断我说话，没有思考时间，两秒钟答不上来就下一个，有点害怕[扶墙R]"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -84,10 +163,11 @@
   ],
   "limitations": [
     "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "74ed6de45550dca5db8f4cd5a1e79634c3524d18dacbcb2b898fa3bed67cecb1"
+  "evidence_sha256": "ceffe611af9a5efca784a22f6a314868d353de6adee8118a5c5ca65b7e4f9bc5"
 }

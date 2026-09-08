@@ -7,15 +7,12 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "0f39de089e38c0629acc192f063ef1111411792749230ddb24aa6782b1e55d70",
-  "disposition": "blocked",
-  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "disposition": "single-interview",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
-      "question-list-only",
-      "no-first-person-event",
-      "question-only",
-      "no-candidate-event-evidence"
+      "no-first-person-event"
     ],
     "questions": 12,
     "has_first_person_event": false,
@@ -23,19 +20,33 @@
     "has_bounded_event": true,
     "has_detailed_event": true,
     "has_completed_event_evidence": true,
-    "has_structured_candidate_event": false,
+    "has_structured_candidate_event": true,
     "generic_advice_or_aggregated": false,
     "scheduled_only": false,
-    "question_only": true,
+    "question_only": false,
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
-    "only_question_list": true,
+    "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "xiaomi-process",
+        "anchor": "小米",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-165;blob:3e0cab4d94600834428ab54f4a4cb18a4133cc4e",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:小米",
+        "source_ref": "liqiangcc/xhs:note_detail/68d8ab3a000000001301d7a5.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 2,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68d8ab3a000000001301d7a5.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -44,13 +55,78 @@
     "provenance": "source_projection",
     "byte_size": 25620,
     "content_sha256": "d66f0df9d9d4f8097a99959bab59cdccb967ed9db2b9a650595f091167be4919",
+    "cache_status": "not-applicable",
     "excerpt": {
-      "excerpt": "\"global\": {",
-      "line": 2,
-      "locator": "artifact-line:2",
-      "semantic_excerpt": "1.自我介绍\n2.你觉得就是从技术角度以及你个人的角度，你跟这个岗位的匹配性是怎样的 实习过程最大的收获是什么呢？\n3.像这种互联网的大厂，可能你的工作内容只聚焦在那一个很小的领域，那你觉得就是从长远自身的发展或者是技术能力的提升上来讲，这样的话会不会给你带来一些不好的影响？或者是你未来的话会怎么提升自己的技术能力？\n4.你未来的话就是比如说工作地点这边你是怎么考虑的呀？\n5.就是长期来看的话 对小米的认识多吗？或者是你有没有经常用一些小米的产品，或者是关注一些小米的一些发布会等等嗯\n6.你觉得就是作为一个后端的工程师来讲，你觉得最重要的一些基本素质是什么？\n7.作为研发来讲，其实日常对接最多一个就是业务嗯，就是你在你过往的实际经历当中，就是你跟产品和业务的沟通当中有没有遇到什么困难？然后是怎么解决的？\n8.你在实习当中有没有遇到就是项目资源很紧张，就是排期时间也很紧张的这种情况？\n9.你大三的时候就确定了就是毕业之后就工作嘛，那你当时是怎么考虑的？因为现在很多人其实都是考研的概率比较大你当时是怎么考虑的？ 10.其实作为一个工程师来讲，它的未来的职业发展基本上就两条道路，一个就是走管理方向，一个就是走专家方向。那你觉得你自己比较适合哪个方向\n11.说出你的三个优点与缺点\n12.反问环节"
-    }
+      "excerpt": "小米java技术HR面经\",",
+      "line": 502,
+      "locator": "artifact-line:502#offset:30-44;blob:2e5cfd5d84e6d89d565ed9426ae81b8aeba20560",
+      "semantic_excerpt": "小米java技术HR面经\n1.自我介绍\n2.你觉得就是从技术角度以及你个人的角度，你跟这个岗位的匹配性是怎样的 实习过程最大的收获是什么呢？\n3.像这种互联网的大厂，可能你的工作内容只聚焦在那一个很小的领域，那你觉得就是从长远自身的发展或者是技术能力的提升上来讲，这样的话会不会给你带来一些不好的影响？或者是你未来的话会怎么提升自己的技术能力？\n4.你未来的话就是比如说工作地点这边你是怎么考虑的呀？\n5.就是长期来看的话 对小米的认识多吗？或者是你有没有经常用一些小米的产品，或者是关注一些小米的一些发布会等等嗯\n6.你觉得就是作为一个后端的工程师来讲，你觉得最重要的一些基本素质是什么？\n7.作为研发来讲，其实日常对接最多一个就是业务嗯，就是你在你过往的实际经历当中，就是你跟产品和业务的沟通当中有没有遇到什么困难？然后是怎么解决的？\n8.你在实习当中有没有遇到就是项目资源很紧张，就是排期时间也很紧张的这种情况？\n9.你大三的时候就确定了就是毕业之后就工作嘛，那你当时是怎么考虑的？因为现在很多人其实都是考研的概率比较大你当时是怎么考虑的？ 10.其实作为一个工程师来讲，它的未来的职业发展基本上就两条道路，一个就是走管理方向，一个就是走专家方向。那你觉得你自己比较适合哪个方向\n11.说出你的三个优点与缺点\n12.反问环节"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_detail/68d8ab3a000000001301d7a5.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "3e0cab4d94600834428ab54f4a4cb18a4133cc4e",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 395895,
+        "content_sha256": "cd257e85379e650861e1247ef79f9d9fb000f717520acc6b7b11607f99e0c87b",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "小米java技术HR面经 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-189;blob:3e0cab4d94600834428ab54f4a4cb18a4133cc4e",
+          "semantic_excerpt": "小米java技术HR面经\n1.自我介绍\n2.你觉得就是从技术角度以及你个人的角度，你跟这个岗位的匹配性是怎样的 实习过程最大的收获是什么呢？\n3.像这种互联网的大厂，可能你的工作内容只聚焦在那一个很小的领域，那你觉得就是从长远自身的发展或者是技术能力的提升上来讲，这样的话会不会给你带来一些不好的影响？或者是你未来的话会怎么提升自己的技术能力？\n4.你未来的话就是比如说工作地点这边你是怎么考虑的呀？\n5.就是长期来看的话 对小米的认识多吗？或者是你有没有经常用一些小米的产品，或者是关注一些小米的一些发布会等等嗯\n6.你觉得就是作为一个后端的工程师来讲，你觉得最重要的一些基本素质是什么？\n7.作为研发来讲，其实日常对接最多一个就是业务嗯，就是你在你过往的实际经历当中，就是你跟产品和业务的沟通当中有没有遇到什么困难？然后是怎么解决的？\n8.你在实习当中有没有遇到就是项目资源很紧张，就是排期时间也很紧张的这种情况？\n9.你大三的时候就确定了就是毕业之后就工作嘛，那你当时是怎么考虑的？因为现在很多人其实都是考研的概率比较大你当时是怎么考虑的？ 10.其实作为一个工程师来讲，它的未来的职业发展基本上就两条道路，一个就是走管理方向，一个就是走专家方向。那你觉得你自己比较适合哪个方向\n11.说出你的三个优点与缺点\n12.反问环节"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68d8ab3a000000001301d7a5.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "2e5cfd5d84e6d89d565ed9426ae81b8aeba20560",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 25620,
+        "content_sha256": "d66f0df9d9d4f8097a99959bab59cdccb967ed9db2b9a650595f091167be4919",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "小米java技术HR面经\",",
+          "line": 502,
+          "locator": "artifact-line:502#offset:30-44;blob:2e5cfd5d84e6d89d565ed9426ae81b8aeba20560",
+          "semantic_excerpt": "小米java技术HR面经\n1.自我介绍\n2.你觉得就是从技术角度以及你个人的角度，你跟这个岗位的匹配性是怎样的 实习过程最大的收获是什么呢？\n3.像这种互联网的大厂，可能你的工作内容只聚焦在那一个很小的领域，那你觉得就是从长远自身的发展或者是技术能力的提升上来讲，这样的话会不会给你带来一些不好的影响？或者是你未来的话会怎么提升自己的技术能力？\n4.你未来的话就是比如说工作地点这边你是怎么考虑的呀？\n5.就是长期来看的话 对小米的认识多吗？或者是你有没有经常用一些小米的产品，或者是关注一些小米的一些发布会等等嗯\n6.你觉得就是作为一个后端的工程师来讲，你觉得最重要的一些基本素质是什么？\n7.作为研发来讲，其实日常对接最多一个就是业务嗯，就是你在你过往的实际经历当中，就是你跟产品和业务的沟通当中有没有遇到什么困难？然后是怎么解决的？\n8.你在实习当中有没有遇到就是项目资源很紧张，就是排期时间也很紧张的这种情况？\n9.你大三的时候就确定了就是毕业之后就工作嘛，那你当时是怎么考虑的？因为现在很多人其实都是考研的概率比较大你当时是怎么考虑的？ 10.其实作为一个工程师来讲，它的未来的职业发展基本上就两条道路，一个就是走管理方向，一个就是走专家方向。那你觉得你自己比较适合哪个方向\n11.说出你的三个优点与缺点\n12.反问环节"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/68d8ab3a000000001301d7a5.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "3e0cab4d94600834428ab54f4a4cb18a4133cc4e",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 395895,
+      "content_sha256": "cd257e85379e650861e1247ef79f9d9fb000f717520acc6b7b11607f99e0c87b",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "小米java技术HR面经 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-189;blob:3e0cab4d94600834428ab54f4a4cb18a4133cc4e",
+        "semantic_excerpt": "小米java技术HR面经\n1.自我介绍\n2.你觉得就是从技术角度以及你个人的角度，你跟这个岗位的匹配性是怎样的 实习过程最大的收获是什么呢？\n3.像这种互联网的大厂，可能你的工作内容只聚焦在那一个很小的领域，那你觉得就是从长远自身的发展或者是技术能力的提升上来讲，这样的话会不会给你带来一些不好的影响？或者是你未来的话会怎么提升自己的技术能力？\n4.你未来的话就是比如说工作地点这边你是怎么考虑的呀？\n5.就是长期来看的话 对小米的认识多吗？或者是你有没有经常用一些小米的产品，或者是关注一些小米的一些发布会等等嗯\n6.你觉得就是作为一个后端的工程师来讲，你觉得最重要的一些基本素质是什么？\n7.作为研发来讲，其实日常对接最多一个就是业务嗯，就是你在你过往的实际经历当中，就是你跟产品和业务的沟通当中有没有遇到什么困难？然后是怎么解决的？\n8.你在实习当中有没有遇到就是项目资源很紧张，就是排期时间也很紧张的这种情况？\n9.你大三的时候就确定了就是毕业之后就工作嘛，那你当时是怎么考虑的？因为现在很多人其实都是考研的概率比较大你当时是怎么考虑的？ 10.其实作为一个工程师来讲，它的未来的职业发展基本上就两条道路，一个就是走管理方向，一个就是走专家方向。那你觉得你自己比较适合哪个方向\n11.说出你的三个优点与缺点\n12.反问环节"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68d8ab3a000000001301d7a5.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "2e5cfd5d84e6d89d565ed9426ae81b8aeba20560",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 25620,
+      "content_sha256": "d66f0df9d9d4f8097a99959bab59cdccb967ed9db2b9a650595f091167be4919",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "小米java技术HR面经\",",
+        "line": 502,
+        "locator": "artifact-line:502#offset:30-44;blob:2e5cfd5d84e6d89d565ed9426ae81b8aeba20560",
+        "semantic_excerpt": "小米java技术HR面经\n1.自我介绍\n2.你觉得就是从技术角度以及你个人的角度，你跟这个岗位的匹配性是怎样的 实习过程最大的收获是什么呢？\n3.像这种互联网的大厂，可能你的工作内容只聚焦在那一个很小的领域，那你觉得就是从长远自身的发展或者是技术能力的提升上来讲，这样的话会不会给你带来一些不好的影响？或者是你未来的话会怎么提升自己的技术能力？\n4.你未来的话就是比如说工作地点这边你是怎么考虑的呀？\n5.就是长期来看的话 对小米的认识多吗？或者是你有没有经常用一些小米的产品，或者是关注一些小米的一些发布会等等嗯\n6.你觉得就是作为一个后端的工程师来讲，你觉得最重要的一些基本素质是什么？\n7.作为研发来讲，其实日常对接最多一个就是业务嗯，就是你在你过往的实际经历当中，就是你跟产品和业务的沟通当中有没有遇到什么困难？然后是怎么解决的？\n8.你在实习当中有没有遇到就是项目资源很紧张，就是排期时间也很紧张的这种情况？\n9.你大三的时候就确定了就是毕业之后就工作嘛，那你当时是怎么考虑的？因为现在很多人其实都是考研的概率比较大你当时是怎么考虑的？ 10.其实作为一个工程师来讲，它的未来的职业发展基本上就两条道路，一个就是走管理方向，一个就是走专家方向。那你觉得你自己比较适合哪个方向\n11.说出你的三个优点与缺点\n12.反问环节"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -69,8 +145,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -84,11 +160,12 @@
     }
   ],
   "limitations": [
-    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "fcfd0689ac9dce25a73c3e5b486a9a0ee3db158244fa4a0994c0e3d9a94b8805"
+  "evidence_sha256": "fd83c40a979e037b18267606582f7ff28a57b6ff3b117c06f2d03e2c274d8c02"
 }

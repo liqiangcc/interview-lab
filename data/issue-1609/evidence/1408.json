@@ -7,15 +7,12 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "0cc3ab5de8db73e03f479466be44b50b03cc4f6ed3256444360ffc4b98910083",
-  "disposition": "blocked",
-  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "disposition": "single-interview",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
-      "question-list-only",
-      "no-first-person-event",
-      "question-only",
-      "no-candidate-event-evidence"
+      "no-first-person-event"
     ],
     "questions": 14,
     "has_first_person_event": false,
@@ -23,28 +20,23 @@
     "has_bounded_event": true,
     "has_detailed_event": true,
     "has_completed_event_evidence": true,
-    "has_structured_candidate_event": false,
+    "has_structured_candidate_event": true,
     "generic_advice_or_aggregated": false,
     "scheduled_only": false,
-    "question_only": true,
+    "question_only": false,
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
-    "only_question_list": true,
+    "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": [
-      {
-        "case_key": "kuaishou-process",
-        "anchor": "快手",
-        "line": 11,
-        "locator": "artifact-line:501#offset:208-210",
-        "local_detail": true,
-        "semantic_locator": "semantic-anchor:快手"
-      }
-    ]
+    "case_segments": [],
+    "reviewed_artifact_count": 2,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68d931d900000000130112d0.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -53,13 +45,78 @@
     "provenance": "source_projection",
     "byte_size": 22112,
     "content_sha256": "507218c9cd699aaaa9fddc50239074a7754a9750ffc1fa2ccbb9693309500c4f",
+    "cache_status": "not-applicable",
     "excerpt": {
-      "excerpt": "\"global\": {",
-      "line": 2,
-      "locator": "artifact-line:2",
-      "semantic_excerpt": "🕰️时长：45min\n1. 自我介绍\n2. Hadoop组件有哪些\n3. mapreduce执行流程\n4. mapreduce shuffle流程\n5. Hive和Spark的区别\n6. hive shuffle和spark shuffle\n7. spark怎么划分stage\n8. 怎么理解数据仓库\n9. 数仓和数据库的区别\n10. 快手数仓分层规范\n11. 维度建模流程\n12. 你平时写不写代码（？？？？？？）\n13. 你是e人还是i人\n手撕：\n1. 二分查找"
-    }
+      "excerpt": "贝壳数开一面\",",
+      "line": 542,
+      "locator": "artifact-line:542#offset:30-38;blob:fb61626b967563050ea03b2bfa10eff555461638",
+      "semantic_excerpt": "贝壳数开一面\n🕰️时长：45min\n1. 自我介绍\n2. Hadoop组件有哪些\n3. mapreduce执行流程\n4. mapreduce shuffle流程\n5. Hive和Spark的区别\n6. hive shuffle和spark shuffle\n7. spark怎么划分stage\n8. 怎么理解数据仓库\n9. 数仓和数据库的区别\n10. 快手数仓分层规范\n11. 维度建模流程\n12. 你平时写不写代码（？？？？？？）\n13. 你是e人还是i人\n手撕：\n1. 二分查找"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_detail/68d931d900000000130112d0.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "cb5699d034ac64563394b65a9633796cfbcdfeba",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 388807,
+        "content_sha256": "bf348f6a704e29107241bdf3509f23b94612759836eb61901d6e11c071b58449",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "贝壳数开一面 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-183;blob:cb5699d034ac64563394b65a9633796cfbcdfeba",
+          "semantic_excerpt": "贝壳数开一面\n🕰️时长：45min\n1. 自我介绍\n2. Hadoop组件有哪些\n3. mapreduce执行流程\n4. mapreduce shuffle流程\n5. Hive和Spark的区别\n6. hive shuffle和spark shuffle\n7. spark怎么划分stage\n8. 怎么理解数据仓库\n9. 数仓和数据库的区别\n10. 快手数仓分层规范\n11. 维度建模流程\n12. 你平时写不写代码（？？？？？？）\n13. 你是e人还是i人\n手撕：\n1. 二分查找"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68d931d900000000130112d0.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "fb61626b967563050ea03b2bfa10eff555461638",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 22112,
+        "content_sha256": "507218c9cd699aaaa9fddc50239074a7754a9750ffc1fa2ccbb9693309500c4f",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "贝壳数开一面\",",
+          "line": 542,
+          "locator": "artifact-line:542#offset:30-38;blob:fb61626b967563050ea03b2bfa10eff555461638",
+          "semantic_excerpt": "贝壳数开一面\n🕰️时长：45min\n1. 自我介绍\n2. Hadoop组件有哪些\n3. mapreduce执行流程\n4. mapreduce shuffle流程\n5. Hive和Spark的区别\n6. hive shuffle和spark shuffle\n7. spark怎么划分stage\n8. 怎么理解数据仓库\n9. 数仓和数据库的区别\n10. 快手数仓分层规范\n11. 维度建模流程\n12. 你平时写不写代码（？？？？？？）\n13. 你是e人还是i人\n手撕：\n1. 二分查找"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/68d931d900000000130112d0.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "cb5699d034ac64563394b65a9633796cfbcdfeba",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 388807,
+      "content_sha256": "bf348f6a704e29107241bdf3509f23b94612759836eb61901d6e11c071b58449",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "贝壳数开一面 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-183;blob:cb5699d034ac64563394b65a9633796cfbcdfeba",
+        "semantic_excerpt": "贝壳数开一面\n🕰️时长：45min\n1. 自我介绍\n2. Hadoop组件有哪些\n3. mapreduce执行流程\n4. mapreduce shuffle流程\n5. Hive和Spark的区别\n6. hive shuffle和spark shuffle\n7. spark怎么划分stage\n8. 怎么理解数据仓库\n9. 数仓和数据库的区别\n10. 快手数仓分层规范\n11. 维度建模流程\n12. 你平时写不写代码（？？？？？？）\n13. 你是e人还是i人\n手撕：\n1. 二分查找"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68d931d900000000130112d0.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "fb61626b967563050ea03b2bfa10eff555461638",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 22112,
+      "content_sha256": "507218c9cd699aaaa9fddc50239074a7754a9750ffc1fa2ccbb9693309500c4f",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "贝壳数开一面\",",
+        "line": 542,
+        "locator": "artifact-line:542#offset:30-38;blob:fb61626b967563050ea03b2bfa10eff555461638",
+        "semantic_excerpt": "贝壳数开一面\n🕰️时长：45min\n1. 自我介绍\n2. Hadoop组件有哪些\n3. mapreduce执行流程\n4. mapreduce shuffle流程\n5. Hive和Spark的区别\n6. hive shuffle和spark shuffle\n7. spark怎么划分stage\n8. 怎么理解数据仓库\n9. 数仓和数据库的区别\n10. 快手数仓分层规范\n11. 维度建模流程\n12. 你平时写不写代码（？？？？？？）\n13. 你是e人还是i人\n手撕：\n1. 二分查找"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -78,8 +135,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -93,11 +150,12 @@
     }
   ],
   "limitations": [
-    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "b1a0daa34fdba93525606599884a1ac269956d161d1e444aadf6c91823c21b94"
+  "evidence_sha256": "930cee9f2872ce19e042085149c1646584346b1f1a5cd58e9d36c9d0f303028a"
 }

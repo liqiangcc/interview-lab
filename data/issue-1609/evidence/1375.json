@@ -17,7 +17,7 @@
       "question-only",
       "no-candidate-event-evidence"
     ],
-    "questions": 14,
+    "questions": 15,
     "has_first_person_event": false,
     "has_explicit_candidate_event": false,
     "has_bounded_event": true,
@@ -30,12 +30,16 @@
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": true,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [],
+    "reviewed_artifact_count": 2,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68d16a2d000000001101fea1.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -44,13 +48,78 @@
     "provenance": "source_projection",
     "byte_size": 22897,
     "content_sha256": "b7853831e453a3a52f527d7dc0a85e47cc132bc1ae2964688b8be18963c5730d",
+    "cache_status": "not-applicable",
     "excerpt": {
-      "excerpt": "\"global\": {",
-      "line": 2,
-      "locator": "artifact-line:2",
-      "semantic_excerpt": "岗位：基础平台研发工程师-Java（电话面）\n1、自我介绍\n2、问了一些个人情况（岗位选择、计算机相关课程、竞赛和保研）\n3、讲实习\n4、主机突然断电了，日志会丢失吗\n5、如何保证日志按时被清理了\n6、你在重构时，如何考虑和原有的代码兼容\n7、死锁是什么\n8、什么是线程安全，Java如何实现线程安全\n9、数据库中如果对一个数据有读有写的话，要加锁吗\n10、事务的隔离级别\n11、事务中的一致性和分布式系统中的一致性是一样的吗\n12、手撕1：非严格递增序列，原地去掉重复的数字，返回不同数字的个数，例子[1，1，2，3，3，3，4，4]，返回k=4，且原数组需变为[1，2，3，4，_，_，_，_]的形式\n13、手撕2：顺时针螺旋输出矩阵（hot100原题）\n14、反问"
-    }
+      "excerpt": "9.22 蚂蚁一面\",",
+      "line": 522,
+      "locator": "artifact-line:522#offset:30-41;blob:de93648ef913b612aa887cac98a774642634ba2c",
+      "semantic_excerpt": "9.22 蚂蚁一面\n岗位：基础平台研发工程师-Java（电话面）\n1、自我介绍\n2、问了一些个人情况（岗位选择、计算机相关课程、竞赛和保研）\n3、讲实习\n4、主机突然断电了，日志会丢失吗\n5、如何保证日志按时被清理了\n6、你在重构时，如何考虑和原有的代码兼容\n7、死锁是什么\n8、什么是线程安全，Java如何实现线程安全\n9、数据库中如果对一个数据有读有写的话，要加锁吗\n10、事务的隔离级别\n11、事务中的一致性和分布式系统中的一致性是一样的吗\n12、手撕1：非严格递增序列，原地去掉重复的数字，返回不同数字的个数，例子[1，1，2，3，3，3，4，4]，返回k=4，且原数组需变为[1，2，3，4，_，_，_，_]的形式\n13、手撕2：顺时针螺旋输出矩阵（hot100原题）\n14、反问"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_detail/68d16a2d000000001101fea1.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "e9ec314d50128c398bd4b892959e9c07f432ad95",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 390758,
+        "content_sha256": "cca436cc3169ed6ebb924447b7898aaea1bbd6f15a45d94309cb11da9de48e13",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "9.22 蚂蚁一面 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-186;blob:e9ec314d50128c398bd4b892959e9c07f432ad95",
+          "semantic_excerpt": "9.22 蚂蚁一面\n岗位：基础平台研发工程师-Java（电话面）\n1、自我介绍\n2、问了一些个人情况（岗位选择、计算机相关课程、竞赛和保研）\n3、讲实习\n4、主机突然断电了，日志会丢失吗\n5、如何保证日志按时被清理了\n6、你在重构时，如何考虑和原有的代码兼容\n7、死锁是什么\n8、什么是线程安全，Java如何实现线程安全\n9、数据库中如果对一个数据有读有写的话，要加锁吗\n10、事务的隔离级别\n11、事务中的一致性和分布式系统中的一致性是一样的吗\n12、手撕1：非严格递增序列，原地去掉重复的数字，返回不同数字的个数，例子[1，1，2，3，3，3，4，4]，返回k=4，且原数组需变为[1，2，3，4，_，_，_，_]的形式\n13、手撕2：顺时针螺旋输出矩阵（hot100原题）\n14、反问"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68d16a2d000000001101fea1.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "de93648ef913b612aa887cac98a774642634ba2c",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 22897,
+        "content_sha256": "b7853831e453a3a52f527d7dc0a85e47cc132bc1ae2964688b8be18963c5730d",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "9.22 蚂蚁一面\",",
+          "line": 522,
+          "locator": "artifact-line:522#offset:30-41;blob:de93648ef913b612aa887cac98a774642634ba2c",
+          "semantic_excerpt": "9.22 蚂蚁一面\n岗位：基础平台研发工程师-Java（电话面）\n1、自我介绍\n2、问了一些个人情况（岗位选择、计算机相关课程、竞赛和保研）\n3、讲实习\n4、主机突然断电了，日志会丢失吗\n5、如何保证日志按时被清理了\n6、你在重构时，如何考虑和原有的代码兼容\n7、死锁是什么\n8、什么是线程安全，Java如何实现线程安全\n9、数据库中如果对一个数据有读有写的话，要加锁吗\n10、事务的隔离级别\n11、事务中的一致性和分布式系统中的一致性是一样的吗\n12、手撕1：非严格递增序列，原地去掉重复的数字，返回不同数字的个数，例子[1，1，2，3，3，3，4，4]，返回k=4，且原数组需变为[1，2，3，4，_，_，_，_]的形式\n13、手撕2：顺时针螺旋输出矩阵（hot100原题）\n14、反问"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/68d16a2d000000001101fea1.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "e9ec314d50128c398bd4b892959e9c07f432ad95",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 390758,
+      "content_sha256": "cca436cc3169ed6ebb924447b7898aaea1bbd6f15a45d94309cb11da9de48e13",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "9.22 蚂蚁一面 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-186;blob:e9ec314d50128c398bd4b892959e9c07f432ad95",
+        "semantic_excerpt": "9.22 蚂蚁一面\n岗位：基础平台研发工程师-Java（电话面）\n1、自我介绍\n2、问了一些个人情况（岗位选择、计算机相关课程、竞赛和保研）\n3、讲实习\n4、主机突然断电了，日志会丢失吗\n5、如何保证日志按时被清理了\n6、你在重构时，如何考虑和原有的代码兼容\n7、死锁是什么\n8、什么是线程安全，Java如何实现线程安全\n9、数据库中如果对一个数据有读有写的话，要加锁吗\n10、事务的隔离级别\n11、事务中的一致性和分布式系统中的一致性是一样的吗\n12、手撕1：非严格递增序列，原地去掉重复的数字，返回不同数字的个数，例子[1，1，2，3，3，3，4，4]，返回k=4，且原数组需变为[1，2，3，4，_，_，_，_]的形式\n13、手撕2：顺时针螺旋输出矩阵（hot100原题）\n14、反问"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68d16a2d000000001101fea1.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "de93648ef913b612aa887cac98a774642634ba2c",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 22897,
+      "content_sha256": "b7853831e453a3a52f527d7dc0a85e47cc132bc1ae2964688b8be18963c5730d",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "9.22 蚂蚁一面\",",
+        "line": 522,
+        "locator": "artifact-line:522#offset:30-41;blob:de93648ef913b612aa887cac98a774642634ba2c",
+        "semantic_excerpt": "9.22 蚂蚁一面\n岗位：基础平台研发工程师-Java（电话面）\n1、自我介绍\n2、问了一些个人情况（岗位选择、计算机相关课程、竞赛和保研）\n3、讲实习\n4、主机突然断电了，日志会丢失吗\n5、如何保证日志按时被清理了\n6、你在重构时，如何考虑和原有的代码兼容\n7、死锁是什么\n8、什么是线程安全，Java如何实现线程安全\n9、数据库中如果对一个数据有读有写的话，要加锁吗\n10、事务的隔离级别\n11、事务中的一致性和分布式系统中的一致性是一样的吗\n12、手撕1：非严格递增序列，原地去掉重复的数字，返回不同数字的个数，例子[1，1，2，3，3，3，4，4]，返回k=4，且原数组需变为[1，2，3，4，_，_，_，_]的形式\n13、手撕2：顺时针螺旋输出矩阵（hot100原题）\n14、反问"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -85,10 +154,11 @@
   ],
   "limitations": [
     "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "67dd70ba67d4a56f6f78ea90436902130a911fa7f29d3dc0b5e999a663a8bde2"
+  "evidence_sha256": "6c0916bdc69f7043215f493b0845d00883e857a5032ce1dfd5a94866b50a6ddb"
 }

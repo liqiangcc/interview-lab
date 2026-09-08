@@ -28,12 +28,26 @@
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "tencent-process",
+        "anchor": "腾讯",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-165;blob:87a8da117de3cb082919492dacaa22e01bfabf8e",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:腾讯",
+        "source_ref": "liqiangcc/xhs:note_detail/68c51b4d000000001d026648.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68c51b4d000000001d026648.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -42,13 +56,108 @@
     "provenance": "source_projection",
     "byte_size": 726,
     "content_sha256": "cdd1c29403d1490eaa76cf733068621bfad0f1e712fcfbd16d1d8b3d1ae55ab5",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "* java和python有什么区别",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "* java和python有什么区别\n* java为什么性能好\n* stringBuilder和stringBuffer和String有什么区别\n* java反射？应用场景？代理类和被代理类\n* tcp三次握手？服务端如果没有开启一个端口监听怎么办\n* tcp怎么判断网络阻塞\n* 协程是什么\n* MVCC怎么保证的？readView是什么，怎么实现的不同版本\n* 索引a>=某个数可以走索引吗\n* 怎么判断是否会走索引\n🍀总结：\n一面整体比较偏八股文，问的不是很深入但是会偶尔来个深入的点，答不上来会比较减分，不会硬编会非常减分。私企相对于国企更偏向于单点技术深挖。"
-    }
+      "locator": "artifact-line:1#offset:0-18;blob:c15fb667454c27fca4e88d63341d1a993ff139fe",
+      "semantic_excerpt": "腾讯WXG后端一面回忆\n* java和python有什么区别\n* java为什么性能好\n* stringBuilder和stringBuffer和String有什么区别\n* java反射？应用场景？代理类和被代理类\n* tcp三次握手？服务端如果没有开启一个端口监听怎么办\n* tcp怎么判断网络阻塞\n* 协程是什么\n* MVCC怎么保证的？readView是什么，怎么实现的不同版本\n* 索引a>=某个数可以走索引吗\n* 怎么判断是否会走索引\n🍀总结：\n一面整体比较偏八股文，问的不是很深入但是会偶尔来个深入的点，答不上来会比较减分，不会硬编会非常减分。私企相对于国企更偏向于单点技术深挖。"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68c51b4d000000001d026648.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "c15fb667454c27fca4e88d63341d1a993ff139fe",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 726,
+        "content_sha256": "cdd1c29403d1490eaa76cf733068621bfad0f1e712fcfbd16d1d8b3d1ae55ab5",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "* java和python有什么区别",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-18;blob:c15fb667454c27fca4e88d63341d1a993ff139fe",
+          "semantic_excerpt": "腾讯WXG后端一面回忆\n* java和python有什么区别\n* java为什么性能好\n* stringBuilder和stringBuffer和String有什么区别\n* java反射？应用场景？代理类和被代理类\n* tcp三次握手？服务端如果没有开启一个端口监听怎么办\n* tcp怎么判断网络阻塞\n* 协程是什么\n* MVCC怎么保证的？readView是什么，怎么实现的不同版本\n* 索引a>=某个数可以走索引吗\n* 怎么判断是否会走索引\n🍀总结：\n一面整体比较偏八股文，问的不是很深入但是会偶尔来个深入的点，答不上来会比较减分，不会硬编会非常减分。私企相对于国企更偏向于单点技术深挖。"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68c51b4d000000001d026648.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "87a8da117de3cb082919492dacaa22e01bfabf8e",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 387493,
+        "content_sha256": "b3b1626ee486fee6eb0862292b7ad28b632ab4d88a3c26e4c4a9bacd909ad4b8",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "腾讯WXG后端一面回忆 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-188;blob:87a8da117de3cb082919492dacaa22e01bfabf8e",
+          "semantic_excerpt": "腾讯WXG后端一面回忆\n* java和python有什么区别\n* java为什么性能好\n* stringBuilder和stringBuffer和String有什么区别\n* java反射？应用场景？代理类和被代理类\n* tcp三次握手？服务端如果没有开启一个端口监听怎么办\n* tcp怎么判断网络阻塞\n* 协程是什么\n* MVCC怎么保证的？readView是什么，怎么实现的不同版本\n* 索引a>=某个数可以走索引吗\n* 怎么判断是否会走索引\n🍀总结：\n一面整体比较偏八股文，问的不是很深入但是会偶尔来个深入的点，答不上来会比较减分，不会硬编会非常减分。私企相对于国企更偏向于单点技术深挖。"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68c51b4d000000001d026648.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "c360af3f23a74961a7d72dca2faef4dc3e468f97",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 21226,
+        "content_sha256": "facbe51a2d40b09d96d5b9345390568fa85812c5406fa5f943ad935e9f6998c9",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "腾讯WXG后端一面回忆\",",
+          "line": 496,
+          "locator": "artifact-line:496#offset:30-43;blob:c360af3f23a74961a7d72dca2faef4dc3e468f97",
+          "semantic_excerpt": "腾讯WXG后端一面回忆\n* java和python有什么区别\n* java为什么性能好\n* stringBuilder和stringBuffer和String有什么区别\n* java反射？应用场景？代理类和被代理类\n* tcp三次握手？服务端如果没有开启一个端口监听怎么办\n* tcp怎么判断网络阻塞\n* 协程是什么\n* MVCC怎么保证的？readView是什么，怎么实现的不同版本\n* 索引a>=某个数可以走索引吗\n* 怎么判断是否会走索引\n🍀总结：\n一面整体比较偏八股文，问的不是很深入但是会偶尔来个深入的点，答不上来会比较减分，不会硬编会非常减分。私企相对于国企更偏向于单点技术深挖。"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68c51b4d000000001d026648.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "c15fb667454c27fca4e88d63341d1a993ff139fe",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 726,
+      "content_sha256": "cdd1c29403d1490eaa76cf733068621bfad0f1e712fcfbd16d1d8b3d1ae55ab5",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "* java和python有什么区别",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-18;blob:c15fb667454c27fca4e88d63341d1a993ff139fe",
+        "semantic_excerpt": "腾讯WXG后端一面回忆\n* java和python有什么区别\n* java为什么性能好\n* stringBuilder和stringBuffer和String有什么区别\n* java反射？应用场景？代理类和被代理类\n* tcp三次握手？服务端如果没有开启一个端口监听怎么办\n* tcp怎么判断网络阻塞\n* 协程是什么\n* MVCC怎么保证的？readView是什么，怎么实现的不同版本\n* 索引a>=某个数可以走索引吗\n* 怎么判断是否会走索引\n🍀总结：\n一面整体比较偏八股文，问的不是很深入但是会偶尔来个深入的点，答不上来会比较减分，不会硬编会非常减分。私企相对于国企更偏向于单点技术深挖。"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68c51b4d000000001d026648.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "87a8da117de3cb082919492dacaa22e01bfabf8e",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 387493,
+      "content_sha256": "b3b1626ee486fee6eb0862292b7ad28b632ab4d88a3c26e4c4a9bacd909ad4b8",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "腾讯WXG后端一面回忆 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-188;blob:87a8da117de3cb082919492dacaa22e01bfabf8e",
+        "semantic_excerpt": "腾讯WXG后端一面回忆\n* java和python有什么区别\n* java为什么性能好\n* stringBuilder和stringBuffer和String有什么区别\n* java反射？应用场景？代理类和被代理类\n* tcp三次握手？服务端如果没有开启一个端口监听怎么办\n* tcp怎么判断网络阻塞\n* 协程是什么\n* MVCC怎么保证的？readView是什么，怎么实现的不同版本\n* 索引a>=某个数可以走索引吗\n* 怎么判断是否会走索引\n🍀总结：\n一面整体比较偏八股文，问的不是很深入但是会偶尔来个深入的点，答不上来会比较减分，不会硬编会非常减分。私企相对于国企更偏向于单点技术深挖。"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68c51b4d000000001d026648.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "c360af3f23a74961a7d72dca2faef4dc3e468f97",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 21226,
+      "content_sha256": "facbe51a2d40b09d96d5b9345390568fa85812c5406fa5f943ad935e9f6998c9",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "腾讯WXG后端一面回忆\",",
+        "line": 496,
+        "locator": "artifact-line:496#offset:30-43;blob:c360af3f23a74961a7d72dca2faef4dc3e468f97",
+        "semantic_excerpt": "腾讯WXG后端一面回忆\n* java和python有什么区别\n* java为什么性能好\n* stringBuilder和stringBuffer和String有什么区别\n* java反射？应用场景？代理类和被代理类\n* tcp三次握手？服务端如果没有开启一个端口监听怎么办\n* tcp怎么判断网络阻塞\n* 协程是什么\n* MVCC怎么保证的？readView是什么，怎么实现的不同版本\n* 索引a>=某个数可以走索引吗\n* 怎么判断是否会走索引\n🍀总结：\n一面整体比较偏八股文，问的不是很深入但是会偶尔来个深入的点，答不上来会比较减分，不会硬编会非常减分。私企相对于国企更偏向于单点技术深挖。"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -83,10 +192,11 @@
   ],
   "limitations": [
     "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "594a4c4a22a91a15f9483d297e9ff96114f156daeebc89ecc63cce7f57202def"
+  "evidence_sha256": "30454af0043334784f3430669aceaa164c465fa3bb511a5d18ec524f26467350"
 }

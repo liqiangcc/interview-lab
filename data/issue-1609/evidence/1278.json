@@ -7,16 +7,12 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "55060de0ffeb9c70e6c6ba8aa225f6df442568cfd2dbc70d5d19e49e37b54ffe",
-  "disposition": "blocked",
-  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "disposition": "single-interview",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
-      "question-list-only",
-      "no-first-person-event",
-      "question-only",
-      "no-candidate-event-evidence",
-      "non-interview-format"
+      "no-first-person-event"
     ],
     "questions": 10,
     "has_first_person_event": false,
@@ -24,19 +20,33 @@
     "has_bounded_event": true,
     "has_detailed_event": true,
     "has_completed_event_evidence": true,
-    "has_structured_candidate_event": false,
+    "has_structured_candidate_event": true,
     "generic_advice_or_aggregated": false,
     "scheduled_only": false,
-    "question_only": true,
+    "question_only": false,
     "outcome_signal": false,
     "resource_signal": true,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
-    "non_interview_format": true,
-    "only_question_list": true,
+    "non_interview_format": false,
+    "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "baidu-process",
+        "anchor": "百度",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-165;blob:f010525885e5c79176ca9d1287dfb1d5083b0328",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:百度",
+        "source_ref": "liqiangcc/xhs:note_detail/68beeb59000000001d0174b0.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68beeb59000000001d0174b0.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -45,13 +55,108 @@
     "provenance": "source_projection",
     "byte_size": 567,
     "content_sha256": "69175189781b843e643b30ba78805aff5de4a00627a39fd95858500c71676777",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "1. 自我介绍",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "1. 自我介绍\n2. 为什么考虑考虑测试开发而没有考虑开发岗位\n3. 项目主要功能和设计的测试用例，基于此开始拷打项目，主要关注使用了哪些工具、哪些指标进行测试\n4. 热key问题\n5. java内存结构\n6. 垃圾回收\n7. 怎么测试自动售卖机\n8. 在日志文件找到包含某个字段位置的linux命令， 实时显示怎么做呢\n9. 一道简单的sql题：查找不合格的课程，从大到小排序\n10. 笔试：不含有重复字符的最长字串 ， 也要设计测试用例\n \n后续：已约2面"
-    }
+      "locator": "artifact-line:1#offset:0-7;blob:37615b2b71eec734aac6ef9951998e9a928db110",
+      "semantic_excerpt": "百度测开一面\n1. 自我介绍\n2. 为什么考虑考虑测试开发而没有考虑开发岗位\n3. 项目主要功能和设计的测试用例，基于此开始拷打项目，主要关注使用了哪些工具、哪些指标进行测试\n4. 热key问题\n5. java内存结构\n6. 垃圾回收\n7. 怎么测试自动售卖机\n8. 在日志文件找到包含某个字段位置的linux命令， 实时显示怎么做呢\n9. 一道简单的sql题：查找不合格的课程，从大到小排序\n10. 笔试：不含有重复字符的最长字串 ， 也要设计测试用例\n \n后续：已约2面"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68beeb59000000001d0174b0.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "37615b2b71eec734aac6ef9951998e9a928db110",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 567,
+        "content_sha256": "69175189781b843e643b30ba78805aff5de4a00627a39fd95858500c71676777",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "1. 自我介绍",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-7;blob:37615b2b71eec734aac6ef9951998e9a928db110",
+          "semantic_excerpt": "百度测开一面\n1. 自我介绍\n2. 为什么考虑考虑测试开发而没有考虑开发岗位\n3. 项目主要功能和设计的测试用例，基于此开始拷打项目，主要关注使用了哪些工具、哪些指标进行测试\n4. 热key问题\n5. java内存结构\n6. 垃圾回收\n7. 怎么测试自动售卖机\n8. 在日志文件找到包含某个字段位置的linux命令， 实时显示怎么做呢\n9. 一道简单的sql题：查找不合格的课程，从大到小排序\n10. 笔试：不含有重复字符的最长字串 ， 也要设计测试用例\n \n后续：已约2面"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68beeb59000000001d0174b0.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "f010525885e5c79176ca9d1287dfb1d5083b0328",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 385770,
+        "content_sha256": "a7ffe8d364343bd64887e04adf157a4495500291ec3b030e15c4a41cd6a306c4",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "百度测开一面 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-183;blob:f010525885e5c79176ca9d1287dfb1d5083b0328",
+          "semantic_excerpt": "百度测开一面\n1. 自我介绍\n2. 为什么考虑考虑测试开发而没有考虑开发岗位\n3. 项目主要功能和设计的测试用例，基于此开始拷打项目，主要关注使用了哪些工具、哪些指标进行测试\n4. 热key问题\n5. java内存结构\n6. 垃圾回收\n7. 怎么测试自动售卖机\n8. 在日志文件找到包含某个字段位置的linux命令， 实时显示怎么做呢\n9. 一道简单的sql题：查找不合格的课程，从大到小排序\n10. 笔试：不含有重复字符的最长字串 ， 也要设计测试用例\n \n后续：已约2面"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68beeb59000000001d0174b0.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "a50b7c659d1557e310a90064544c9f1d009005c8",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 20209,
+        "content_sha256": "e40205030e5bcb8e4f7a9a6c79ef8608d15dcf0ad6e6c499bee69688bc879e88",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "百度测开一面\",",
+          "line": 497,
+          "locator": "artifact-line:497#offset:30-38;blob:a50b7c659d1557e310a90064544c9f1d009005c8",
+          "semantic_excerpt": "百度测开一面\n1. 自我介绍\n2. 为什么考虑考虑测试开发而没有考虑开发岗位\n3. 项目主要功能和设计的测试用例，基于此开始拷打项目，主要关注使用了哪些工具、哪些指标进行测试\n4. 热key问题\n5. java内存结构\n6. 垃圾回收\n7. 怎么测试自动售卖机\n8. 在日志文件找到包含某个字段位置的linux命令， 实时显示怎么做呢\n9. 一道简单的sql题：查找不合格的课程，从大到小排序\n10. 笔试：不含有重复字符的最长字串 ， 也要设计测试用例\n \n后续：已约2面"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68beeb59000000001d0174b0.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "37615b2b71eec734aac6ef9951998e9a928db110",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 567,
+      "content_sha256": "69175189781b843e643b30ba78805aff5de4a00627a39fd95858500c71676777",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "1. 自我介绍",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-7;blob:37615b2b71eec734aac6ef9951998e9a928db110",
+        "semantic_excerpt": "百度测开一面\n1. 自我介绍\n2. 为什么考虑考虑测试开发而没有考虑开发岗位\n3. 项目主要功能和设计的测试用例，基于此开始拷打项目，主要关注使用了哪些工具、哪些指标进行测试\n4. 热key问题\n5. java内存结构\n6. 垃圾回收\n7. 怎么测试自动售卖机\n8. 在日志文件找到包含某个字段位置的linux命令， 实时显示怎么做呢\n9. 一道简单的sql题：查找不合格的课程，从大到小排序\n10. 笔试：不含有重复字符的最长字串 ， 也要设计测试用例\n \n后续：已约2面"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68beeb59000000001d0174b0.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "f010525885e5c79176ca9d1287dfb1d5083b0328",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 385770,
+      "content_sha256": "a7ffe8d364343bd64887e04adf157a4495500291ec3b030e15c4a41cd6a306c4",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "百度测开一面 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-183;blob:f010525885e5c79176ca9d1287dfb1d5083b0328",
+        "semantic_excerpt": "百度测开一面\n1. 自我介绍\n2. 为什么考虑考虑测试开发而没有考虑开发岗位\n3. 项目主要功能和设计的测试用例，基于此开始拷打项目，主要关注使用了哪些工具、哪些指标进行测试\n4. 热key问题\n5. java内存结构\n6. 垃圾回收\n7. 怎么测试自动售卖机\n8. 在日志文件找到包含某个字段位置的linux命令， 实时显示怎么做呢\n9. 一道简单的sql题：查找不合格的课程，从大到小排序\n10. 笔试：不含有重复字符的最长字串 ， 也要设计测试用例\n \n后续：已约2面"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68beeb59000000001d0174b0.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "a50b7c659d1557e310a90064544c9f1d009005c8",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 20209,
+      "content_sha256": "e40205030e5bcb8e4f7a9a6c79ef8608d15dcf0ad6e6c499bee69688bc879e88",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "百度测开一面\",",
+        "line": 497,
+        "locator": "artifact-line:497#offset:30-38;blob:a50b7c659d1557e310a90064544c9f1d009005c8",
+        "semantic_excerpt": "百度测开一面\n1. 自我介绍\n2. 为什么考虑考虑测试开发而没有考虑开发岗位\n3. 项目主要功能和设计的测试用例，基于此开始拷打项目，主要关注使用了哪些工具、哪些指标进行测试\n4. 热key问题\n5. java内存结构\n6. 垃圾回收\n7. 怎么测试自动售卖机\n8. 在日志文件找到包含某个字段位置的linux命令， 实时显示怎么做呢\n9. 一道简单的sql题：查找不合格的课程，从大到小排序\n10. 笔试：不含有重复字符的最长字串 ， 也要设计测试用例\n \n后续：已约2面"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -70,8 +175,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -85,11 +190,12 @@
     }
   ],
   "limitations": [
-    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "78fead0ba2d9b28e9cd6a46f766497686b25858ea0d0a1d5d3c869c6dbf5021e"
+  "evidence_sha256": "6503a6b0e22948e2bedb26e120549f25d001878ea8bb6a88ab9d7f84af5c119f"
 }
