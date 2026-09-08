@@ -364,6 +364,23 @@ test('resuming from the frozen plan ignores REST label ordering without changing
   assert.equal(resumed.canonical_digest, frozen.canonical_digest);
 });
 
+test('a mismatched prior frozen row fails closed for an already-applied target', () => {
+  const value = planFixture();
+  const frozen = JSON.parse(JSON.stringify(value.plan));
+  value.issue.body = frozen.items[0].next_body;
+  value.issue.labels = [...frozen.items[0].next_labels].reverse();
+  frozen.items[0].transition_id = 'tampered-transition';
+  const resumed = buildPlan({
+    manifest: value.manifest,
+    manifestFile: path.join(value.directory, 'full-boundary-manifest.json'),
+    records: value.records,
+    priorPlan: frozen,
+    liveLoader: () => ({ issue: value.issue, comments: value.comments }),
+  });
+  assert.equal(resumed.ok, false);
+  assert.match(resumed.errors.join('\n'), /matching prior frozen plan row/);
+});
+
 test('complete resume performs read-only target/receipt verification before skipping', () => {
   const value = planFixture();
   const harness = journalHarness(value);

@@ -322,6 +322,30 @@ function buildPlan({ manifest, manifestFile, records, liveLoader, priorPlan = nu
     // this function has computed planDigestValue below.
     const planned = planItem({ ...record, manifest_digest: manifest.canonical_digest, plan_digest: null }, live);
     const prior = priorItems.get(Number(record.issue_number));
+    if (planned.already_applied && priorPlan) {
+      const priorIdentityMatches = prior
+        && prior.transition_id === record.transition_id
+        && prior.source_note_id === record.request.source_note_id
+        && prior.decision === record.request.decision
+        && prior.expected_body_sha256 === record.request.expected_body_sha256
+        && prior.next_body_sha256 === planned.next_body_sha256
+        && Array.isArray(prior.next_labels)
+        && prior.item_digest === itemDigest({
+          issue_number: prior.issue_number,
+          transition_id: prior.transition_id,
+          source_note_id: prior.source_note_id,
+          decision: prior.decision,
+          request_marker_sha256: prior.request_marker_sha256,
+          expected_body_sha256: prior.expected_body_sha256,
+          expected_source_revision_id: prior.expected_source_revision_id,
+          next_body_sha256: prior.next_body_sha256,
+          next_labels: prior.next_labels,
+          interview_note_ids: prior.interview_note_ids || [],
+        });
+      if (!priorIdentityMatches) {
+        planned.errors = [...(planned.errors || []), 'already-applied item is not bound to the matching prior frozen plan row'];
+      }
+    }
     if (planned.already_applied && prior && Array.isArray(prior.next_labels) && Array.isArray(planned.next_labels)) {
       // A resumed plan must retain the exact per-item label representation
       // that was authorized originally, while proving that the live label

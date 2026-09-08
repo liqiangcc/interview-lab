@@ -139,6 +139,11 @@ function main(argv = process.argv.slice(2), injected = {}) {
   const liveLoader = injected.liveLoader || buildLiveLoader(read);
   const records = files.records.map((record) => ({ ...record, manifest_digest: manifest.canonical_digest }));
   const priorPlan = args.priorPlan ? readJson(args.priorPlan) : null;
+  if (priorPlan) {
+    if (priorPlan.schema_version !== PLAN_SCHEMA || priorPlan.repository !== REPOSITORY || priorPlan.parent_issue !== PARENT_ISSUE) throw new Error('--prior-plan is not an Issue #1605 transition plan');
+    if (priorPlan.manifest?.digest !== manifest.canonical_digest) throw new Error('--prior-plan manifest digest does not match the current manifest');
+    if (args.apply && priorPlan.canonical_digest !== args.confirmPlan) throw new Error('--prior-plan canonical digest must equal --confirm-plan during apply');
+  }
   const plan = makePlan({ manifest, manifestFile: args.manifest, records, liveLoader, priorPlan });
   atomicWriteJson(args.output, plan);
   if (!args.apply) {
