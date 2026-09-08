@@ -9,15 +9,39 @@
   "expected_body_sha256": "53d0d49f498a66300d035b6e3c4bf4c29659d04b0edbff6cbded9d36db3491f3",
   "expected_source_revision_id": "xhs-note:67e2d60f000000000903b2f9:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "blocked",
+  "decision": "blocked",
+  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified for this item.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": []
+    "status": "blocked",
+    "proposed_decision": "blocked",
+    "basis": "full Source artifacts are present but do not establish whether this is a candidate interview event or a non-event",
+    "basis_lines": [],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67e2d60f000000000903b2f9.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67e2d60f000000000903b2f9/note/title",
+        "excerpt": "网易研发岗社招面试记录"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67e2d60f000000000903b2f9.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67e2d60f000000000903b2f9/note/desc",
+        "excerpt": "#面经[话题]# #程序员[话题]# #社招[话题]# #java[话题]#"
+      }
+    ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67e2d60f000000000903b2f9.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67e2d60f000000000903b2f9/note/title",
+      "excerpt": "网易研发岗社招面试记录"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67e2d60f000000000903b2f9.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67e2d60f000000000903b2f9/note/desc",
+      "excerpt": "#面经[话题]# #程序员[话题]# #社招[话题]# #java[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67e2d60f000000000903b2f9.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -36,6 +60,53 @@
       "git_blob_sha": "64fcd0157c66d0039e320af0f6f4f627cbb46c3a"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67e2d60f000000000903b2f9.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "网易研发岗社招面试记录 - 小红书",
+      "byte_size": 386155,
+      "git_blob_sha": "fa23dea8d360d1e002ef3ef996f51c456309cd94",
+      "sha256": "6aa5761d2a1361dd15b0fe0537bc33893518b779aac984f5b5d6922b9f060fd1",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67e2d60f000000000903b2f9.html",
+        "byte_size": 386155,
+        "git_blob_sha": "fa23dea8d360d1e002ef3ef996f51c456309cd94"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67e2d60f000000000903b2f9.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67e2d60f000000000903b2f9/note/title",
+      "excerpt": "网易研发岗社招面试记录",
+      "byte_size": 24009,
+      "git_blob_sha": "b0b140ab0f7df05ca9137f2c4e22aa6da6006a5d",
+      "sha256": "f5dec3b6466107a89f4714fb016c7c4ab3aab03324f3b855cdf4379fc83739a1",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67e2d60f000000000903b2f9.json",
+        "byte_size": 24009,
+        "git_blob_sha": "b0b140ab0f7df05ca9137f2c4e22aa6da6006a5d"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67e2d60f000000000903b2f9.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "#面经[话题]# #程序员[话题]# #社招[话题]# #java[话题]#",
+      "byte_size": 69,
+      "git_blob_sha": "64fcd0157c66d0039e320af0f6f4f627cbb46c3a",
+      "sha256": "680a059809f47905873828e9bd5cecd7d51ba8dc8ff94e5d37cfdb51676fc852",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67e2d60f000000000903b2f9.txt",
+        "byte_size": 69,
+        "git_blob_sha": "64fcd0157c66d0039e320af0f6f4f627cbb46c3a"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -50,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "blocked",
+      "note": "Full Source material remains semantically insufficient to decide the boundary."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -69,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Complete pinned artifacts were read, but their semantics do not establish a 0/1/N boundary decision.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

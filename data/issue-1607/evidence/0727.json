@@ -9,20 +9,39 @@
   "expected_body_sha256": "e52ab05386667d0cefc0c075c69bc6d5da516b5fdd4a3ed3e94e08c770d26452",
   "expected_source_revision_id": "xhs-note:67fc6b3a000000000b02d8f2:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "not-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": [
+    "status": "reviewed",
+    "proposed_decision": "not-interview",
+    "basis": "explicit invitation, job/advice, or question-bank content lacks a candidate event",
+    "basis_lines": [],
+    "semantic_evidence": [
       {
-        "line_number": 1,
+        "ref": "liqiangcc/xhs:note_json/67fc6b3a000000000b02d8f2.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67fc6b3a000000000b02d8f2/note/title",
+        "excerpt": "百度面试真题"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67fc6b3a000000000b02d8f2.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67fc6b3a000000000b02d8f2/note/desc",
         "excerpt": "面试官问我的问题回答不上来怎么办。#前端面试题[话题]# #面试题[话题]# #前端开发[话题]# #前端培训[话题]#"
       }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67fc6b3a000000000b02d8f2.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67fc6b3a000000000b02d8f2/note/title",
+      "excerpt": "百度面试真题"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67fc6b3a000000000b02d8f2.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67fc6b3a000000000b02d8f2/note/desc",
+      "excerpt": "面试官问我的问题回答不上来怎么办。#前端面试题[话题]# #面试题[话题]# #前端开发[话题]# #前端培训[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67fc6b3a000000000b02d8f2.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -41,6 +60,53 @@
       "git_blob_sha": "f383b60bc46befba6e75755f6f0bf2ecc6abe163"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67fc6b3a000000000b02d8f2.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "百度面试真题 - 小红书",
+      "byte_size": 390509,
+      "git_blob_sha": "573ac5c3e8b4867480fa45f9295b2ae46a4e9cee",
+      "sha256": "c75da872a867fae301a818a9de572e8c3c87740337d9c73c939dc707fd570b4b",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67fc6b3a000000000b02d8f2.html",
+        "byte_size": 390509,
+        "git_blob_sha": "573ac5c3e8b4867480fa45f9295b2ae46a4e9cee"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67fc6b3a000000000b02d8f2.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67fc6b3a000000000b02d8f2/note/title",
+      "excerpt": "百度面试真题",
+      "byte_size": 24876,
+      "git_blob_sha": "950b19e7870ad42f9b824ab479f6c6ab35e3fb67",
+      "sha256": "4d70802c5d395d1341f3d168a7a219f893cadd948a49d2e44ce182704ea3325e",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67fc6b3a000000000b02d8f2.json",
+        "byte_size": 24876,
+        "git_blob_sha": "950b19e7870ad42f9b824ab479f6c6ab35e3fb67"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67fc6b3a000000000b02d8f2.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "面试官问我的问题回答不上来怎么办。#前端面试题[话题]# #面试题[话题]# #前端开发[话题]# #前端培训[话题]#",
+      "byte_size": 143,
+      "git_blob_sha": "f383b60bc46befba6e75755f6f0bf2ecc6abe163",
+      "sha256": "b67e5110d97c3132b0fe9b295243558231dee32b172e5a841883461862f48050",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67fc6b3a000000000b02d8f2.txt",
+        "byte_size": 143,
+        "git_blob_sha": "f383b60bc46befba6e75755f6f0bf2ecc6abe163"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -55,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is not-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -74,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

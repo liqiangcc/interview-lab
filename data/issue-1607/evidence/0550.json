@@ -9,24 +9,39 @@
   "expected_body_sha256": "cf3fc8e1dc13bd988d42a8498ab2ec3452960674bfa9f2367cfe11e23350670b",
   "expected_source_revision_id": "xhs-note:67c5d66700000000290306a5:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": [
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "basis_lines": [],
+    "semantic_evidence": [
       {
-        "line_number": 2,
-        "excerpt": "书接上回，本人把javaguide看了个大概，觉得自己八股知识面小厂应该差不多了，于是今天就享受了50分钟八股盛宴（一共一小时，50分钟八股+10分钟项目，人已经麻了）"
+        "ref": "liqiangcc/xhs:note_json/67c5d66700000000290306a5.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67c5d66700000000290306a5/note/title",
+        "excerpt": "Java某小厂春招面经｜被狠狠拷打50分钟版"
       },
       {
-        "line_number": 26,
-        "excerpt": "#春招[话题]# #面经[话题]# #java[话题]# #java学习[话题]# #八股文[话题]# #金融科技[话题]#"
+        "ref": "liqiangcc/xhs:note_json/67c5d66700000000290306a5.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67c5d66700000000290306a5/note/desc",
+        "excerpt": "记录一次春招被拷打。\n书接上回，本人把javaguide看了个大概，觉得自己八股知识面小厂应该差不多了，于是今天就享受了50分钟八股盛宴（一共一小时，50分钟八股+10分钟项目，人已经麻了）\njava相关：\nfinal、finally、finalize用过么（不说以为是考英文 上来就觉得不对劲）\njvm疑似有点太难了包括但不限于：\n-jvm内存结构（这个还好\n-类加载/类生命周期 类中的各种变量啥时候初始化（已经觉得不对了）\n-双亲委派的坏处/有没有见过不用双亲委派的框架，为啥这么干\n-gc狠狠拷打：cms/g1描述回收过程（真不是太清楚）cms已经够好了为啥用g1 如果新生代只有一个survival区还能用么/听说过三色标记么\njuc篇\n-hashmap和concurrentHashMap扩容比较，区别在哪\n-讲讲红黑树\n- AQS的结构/公平非公平如何实现（这个也还凑合\n\t\nSql篇：\n-索引失效场景 模糊查询放最后也会失效么\n-如何构建优化索引\n-自增id爆了会咋办\n-隔离级别\n-追问幻读脏读啥区别->讲讲mysql怎么尽量减少幻读->讲讲mvcc->讲讲除了mvcc还有啥策略减少幻读（这个时候只会呲牙傻乐疯狂看表了\n分布式基础：\n-讲讲cap\n-讲讲base\n-讲讲2pc\n全程没问中间件没问框架没问os没问计网 仅仅java+sql已经让我绝望😭\n#春招[话题]# #面经[话题]# #java[话题]# #java学习[话题]# #八股文[话题]# #金融科技[话题]#"
       }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67c5d66700000000290306a5.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67c5d66700000000290306a5/note/title",
+      "excerpt": "Java某小厂春招面经｜被狠狠拷打50分钟版"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67c5d66700000000290306a5.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67c5d66700000000290306a5/note/desc",
+      "excerpt": "记录一次春招被拷打。\n书接上回，本人把javaguide看了个大概，觉得自己八股知识面小厂应该差不多了，于是今天就享受了50分钟八股盛宴（一共一小时，50分钟八股+10分钟项目，人已经麻了）\njava相关：\nfinal、finally、finalize用过么（不说以为是考英文 上来就觉得不对劲）\njvm疑似有点太难了包括但不限于：\n-jvm内存结构（这个还好\n-类加载/类生命周期 类中的各种变量啥时候初始化（已经觉得不对了）\n-双亲委派的坏处/有没有见过不用双亲委派的框架，为啥这么干\n-gc狠狠拷打：cms/g1描述回收过程（真不是太清楚）cms已经够好了为啥用g1 如果新生代只有一个survival区还能用么/听说过三色标记么\njuc篇\n-hashmap和concurrentHashMap扩容比较，区别在哪\n-讲讲红黑树\n- AQS的结构/公平非公平如何实现（这个也还凑合\n\t\nSql篇：\n-索引失效场景 模糊查询放最后也会失效么\n-如何构建优化索引\n-自增id爆了会咋办\n-隔离级别\n-追问幻读脏读啥区别->讲讲mysql怎么尽量减少幻读->讲讲mvcc->讲讲除了mvcc还有啥策略减少幻读（这个时候只会呲牙傻乐疯狂看表了\n分布式基础：\n-讲讲cap\n-讲讲base\n-讲讲2pc\n全程没问中间件没问框架没问os没问计网 仅仅java+sql已经让我绝望😭\n#春招[话题]# #面经[话题]# #java[话题]# #java学习[话题]# #八股文[话题]# #金融科技[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67c5d66700000000290306a5.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -45,6 +60,53 @@
       "git_blob_sha": "696a89e3e362dd17ad4b872e329e32ad89dd258c"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67c5d66700000000290306a5.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "Java某小厂春招面经｜被狠狠拷打50分钟版 - 小红书",
+      "byte_size": 391097,
+      "git_blob_sha": "35545deb9224fd7e6166366fb467c01bdb8e1608",
+      "sha256": "55a720231df24b89c1ba8d838e7b6291d6c443981f1706b92ea508cafeeb76b0",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67c5d66700000000290306a5.html",
+        "byte_size": 391097,
+        "git_blob_sha": "35545deb9224fd7e6166366fb467c01bdb8e1608"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67c5d66700000000290306a5.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67c5d66700000000290306a5/note/title",
+      "excerpt": "Java某小厂春招面经｜被狠狠拷打50分钟版",
+      "byte_size": 23208,
+      "git_blob_sha": "9ba0983fbec3b11082d930b3fb44921c2e79949c",
+      "sha256": "cf51fcb890dde894f79e18ee7c74f435fff96b50a1c73b04bd5912b0c460fe7d",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67c5d66700000000290306a5.json",
+        "byte_size": 23208,
+        "git_blob_sha": "9ba0983fbec3b11082d930b3fb44921c2e79949c"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67c5d66700000000290306a5.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "记录一次春招被拷打。\n书接上回，本人把javaguide看了个大概，觉得自己八股知识面小厂应该差不多了，于是今天就享受了50分钟八股盛宴（一共一小时，50分钟八股+10分钟项目，人已经麻了）\njava相关：\nfinal、finally、finalize用过么（不说以为是考英文 上来就觉得不对劲）\njvm疑似有点太难了包括但不限于：\n-jvm内存结构（这个还好\n-类加载/类生命周期 类中的各种变量啥时候初始化（已经觉得不对了）\n-双亲委派的坏处/有没有见过不用双亲委派的框架，为啥这么干",
+      "byte_size": 1491,
+      "git_blob_sha": "696a89e3e362dd17ad4b872e329e32ad89dd258c",
+      "sha256": "e6f15a7d98b30bd1ffbd71a4fc3de94e3bacd7919e00fa14286eff3863c85b84",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67c5d66700000000290306a5.txt",
+        "byte_size": 1491,
+        "git_blob_sha": "696a89e3e362dd17ad4b872e329e32ad89dd258c"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -59,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -78,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

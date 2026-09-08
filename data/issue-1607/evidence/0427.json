@@ -9,20 +9,39 @@
   "expected_body_sha256": "35d6fdb5c9153a6ea0a345ca8d6a33e652f9403b80670d170c488fe8db83aea3",
   "expected_source_revision_id": "xhs-note:67497e1a0000000008004cd1:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": [
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "basis_lines": [],
+    "semantic_evidence": [
       {
-        "line_number": 1,
+        "ref": "liqiangcc/xhs:note_json/67497e1a0000000008004cd1.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67497e1a0000000008004cd1/note/title",
+        "excerpt": "美团Java后端二面，赢麻了"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67497e1a0000000008004cd1.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67497e1a0000000008004cd1/note/desc",
         "excerpt": "奉劝大家，面试前多背场景题，现在问场景题的占比非常之高，全程无八股#Java[话题]# #后端开发[话题]# #面试[话题]# #java场景题[话题]# #程序员[话题]#"
       }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67497e1a0000000008004cd1.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67497e1a0000000008004cd1/note/title",
+      "excerpt": "美团Java后端二面，赢麻了"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67497e1a0000000008004cd1.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67497e1a0000000008004cd1/note/desc",
+      "excerpt": "奉劝大家，面试前多背场景题，现在问场景题的占比非常之高，全程无八股#Java[话题]# #后端开发[话题]# #面试[话题]# #java场景题[话题]# #程序员[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67497e1a0000000008004cd1.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -41,6 +60,53 @@
       "git_blob_sha": "f10a5e9d5cf0845da85401f5635d4f77f70756df"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67497e1a0000000008004cd1.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "美团Java后端二面，赢麻了 - 小红书",
+      "byte_size": 392222,
+      "git_blob_sha": "05e6494908b513bb5635af801339d094ff2bb274",
+      "sha256": "e2989f8d2219a1464ee2af45c4f36ba7d860a3645576542532220d0628c3b5a1",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67497e1a0000000008004cd1.html",
+        "byte_size": 392222,
+        "git_blob_sha": "05e6494908b513bb5635af801339d094ff2bb274"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67497e1a0000000008004cd1.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67497e1a0000000008004cd1/note/title",
+      "excerpt": "美团Java后端二面，赢麻了",
+      "byte_size": 26542,
+      "git_blob_sha": "33cf2b6136a96119c0773c77a6c178bd3d198663",
+      "sha256": "869d01284e8025301a17a2800135a268df75d6561446f3e2a314fecdb6c624cf",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67497e1a0000000008004cd1.json",
+        "byte_size": 26542,
+        "git_blob_sha": "33cf2b6136a96119c0773c77a6c178bd3d198663"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67497e1a0000000008004cd1.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "奉劝大家，面试前多背场景题，现在问场景题的占比非常之高，全程无八股#Java[话题]# #后端开发[话题]# #面试[话题]# #java场景题[话题]# #程序员[话题]#",
+      "byte_size": 198,
+      "git_blob_sha": "f10a5e9d5cf0845da85401f5635d4f77f70756df",
+      "sha256": "877d883d0e7d37bf6cd894ae340fea70e3ef877463747747961ad4c65627292c",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67497e1a0000000008004cd1.txt",
+        "byte_size": 198,
+        "git_blob_sha": "f10a5e9d5cf0845da85401f5635d4f77f70756df"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -55,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -74,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

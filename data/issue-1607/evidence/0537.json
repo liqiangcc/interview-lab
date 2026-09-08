@@ -9,20 +9,39 @@
   "expected_body_sha256": "180f64309947e1a57e3c72bf06f322051b73219253a70ff7a68d9eb3a2ac4b4c",
   "expected_source_revision_id": "xhs-note:67bdb8ea000000000900d7bf:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": [
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "basis_lines": [],
+    "semantic_evidence": [
       {
-        "line_number": 1,
+        "ref": "liqiangcc/xhs:note_json/67bdb8ea000000000900d7bf.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67bdb8ea000000000900d7bf/note/title",
+        "excerpt": "刚面完热乎的百度前端面经分享，准备二面ing"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67bdb8ea000000000900d7bf.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67bdb8ea000000000900d7bf/note/desc",
         "excerpt": "#前端面试题[话题]# #五年程序媛[话题]#"
       }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67bdb8ea000000000900d7bf.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67bdb8ea000000000900d7bf/note/title",
+      "excerpt": "刚面完热乎的百度前端面经分享，准备二面ing"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67bdb8ea000000000900d7bf.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67bdb8ea000000000900d7bf/note/desc",
+      "excerpt": "#前端面试题[话题]# #五年程序媛[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67bdb8ea000000000900d7bf.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -41,6 +60,53 @@
       "git_blob_sha": "7677675789b940f6b9d67d9586d71e3e363bf202"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67bdb8ea000000000900d7bf.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "刚面完热乎的百度前端面经分享，准备二面ing - 小红书",
+      "byte_size": 385090,
+      "git_blob_sha": "f9587f1c7b28b5b16214e62475eff8e61e2e3ca7",
+      "sha256": "3f83edf15d7d9e30f739b47b1cf2af92be72d24eb725bfa09ea3ee2876ad50d6",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67bdb8ea000000000900d7bf.html",
+        "byte_size": 385090,
+        "git_blob_sha": "f9587f1c7b28b5b16214e62475eff8e61e2e3ca7"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67bdb8ea000000000900d7bf.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67bdb8ea000000000900d7bf/note/title",
+      "excerpt": "刚面完热乎的百度前端面经分享，准备二面ing",
+      "byte_size": 20178,
+      "git_blob_sha": "540111f2f0b85cbe8767fa4220c3bd769b4adce8",
+      "sha256": "5a4a0d0933aca876dc7da21574cab41142d8ffb132afe94e8e90803e3d99ff54",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67bdb8ea000000000900d7bf.json",
+        "byte_size": 20178,
+        "git_blob_sha": "540111f2f0b85cbe8767fa4220c3bd769b4adce8"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67bdb8ea000000000900d7bf.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "#前端面试题[话题]# #五年程序媛[话题]#",
+      "byte_size": 52,
+      "git_blob_sha": "7677675789b940f6b9d67d9586d71e3e363bf202",
+      "sha256": "9b97a2c198e569a75b60bc5000ba09c5646dc34cb6345f17c224f9736f2bf5ba",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67bdb8ea000000000900d7bf.txt",
+        "byte_size": 52,
+        "git_blob_sha": "7677675789b940f6b9d67d9586d71e3e363bf202"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -55,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -74,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

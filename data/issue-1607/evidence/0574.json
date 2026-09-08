@@ -9,15 +9,39 @@
   "expected_body_sha256": "54c1097cd18ec07532fba54a9e3c2412802dc2c605a25af032428970e29c156d",
   "expected_source_revision_id": "xhs-note:67d1976a000000002a001c3b:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "not-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": []
+    "status": "reviewed",
+    "proposed_decision": "not-interview",
+    "basis": "explicit invitation, job/advice, or question-bank content lacks a candidate event",
+    "basis_lines": [],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67d1976a000000002a001c3b.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67d1976a000000002a001c3b/note/title",
+        "excerpt": "成都26届java实习生小厂kpi面"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67d1976a000000002a001c3b.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67d1976a000000002a001c3b/note/desc",
+        "excerpt": "boss上找的，微鑫通，全称成都微鑫通时代科技\n有限公司。\nkpi面，进去以后有许多人在做笔试题，流程：写个人信息，做笔试；在我做题期间又来了5位左右实习生来面试，做笔试，而在我来之前已经做完笔试题的人也都说不合适走了。\n笔试题如图。"
+      }
+    ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67d1976a000000002a001c3b.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67d1976a000000002a001c3b/note/title",
+      "excerpt": "成都26届java实习生小厂kpi面"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67d1976a000000002a001c3b.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67d1976a000000002a001c3b/note/desc",
+      "excerpt": "boss上找的，微鑫通，全称成都微鑫通时代科技\n有限公司。\nkpi面，进去以后有许多人在做笔试题，流程：写个人信息，做笔试；在我做题期间又来了5位左右实习生来面试，做笔试，而在我来之前已经做完笔试题的人也都说不合适走了。\n笔试题如图。"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67d1976a000000002a001c3b.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -36,6 +60,53 @@
       "git_blob_sha": "b9f2e26f95f40b6c400004b9855710b8c145cb44"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67d1976a000000002a001c3b.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "成都26届java实习生小厂kpi面 - 小红书",
+      "byte_size": 387362,
+      "git_blob_sha": "b20ec48a7db0b4709950e92916aa040c10bc6a8c",
+      "sha256": "06107401eb2c019f356ab58a5cbf8b69cad45faeab37b592d613fdd51ffe99f0",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67d1976a000000002a001c3b.html",
+        "byte_size": 387362,
+        "git_blob_sha": "b20ec48a7db0b4709950e92916aa040c10bc6a8c"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67d1976a000000002a001c3b.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67d1976a000000002a001c3b/note/title",
+      "excerpt": "成都26届java实习生小厂kpi面",
+      "byte_size": 21392,
+      "git_blob_sha": "499e7110c9b6cd449fafe4128645146b7e48464f",
+      "sha256": "a7e875837ecc4fe2b73ce6b1fb5d36c92ca24ddf5d1436382dbe4eade8bb41ca",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67d1976a000000002a001c3b.json",
+        "byte_size": 21392,
+        "git_blob_sha": "499e7110c9b6cd449fafe4128645146b7e48464f"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67d1976a000000002a001c3b.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "boss上找的，微鑫通，全称成都微鑫通时代科技\n有限公司。\nkpi面，进去以后有许多人在做笔试题，流程：写个人信息，做笔试；在我做题期间又来了5位左右实习生来面试，做笔试，而在我来之前已经做完笔试题的人也都说不合适走了。\n笔试题如图。",
+      "byte_size": 330,
+      "git_blob_sha": "b9f2e26f95f40b6c400004b9855710b8c145cb44",
+      "sha256": "c080b5957bd5821253f36faaec04008ced3afc671019e54d02e620e789d9c4ff",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67d1976a000000002a001c3b.txt",
+        "byte_size": 330,
+        "git_blob_sha": "b9f2e26f95f40b6c400004b9855710b8c145cb44"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -50,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is not-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -69,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

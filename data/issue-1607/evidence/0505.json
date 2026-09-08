@@ -9,20 +9,39 @@
   "expected_body_sha256": "8c2f49ded9cca5ff729ae96ea426b1dff6c256576097cf5f45ca85f0a2ef3fb2",
   "expected_source_revision_id": "xhs-note:67ac2006000000002a002e36:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": [
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "basis_lines": [],
+    "semantic_evidence": [
       {
-        "line_number": 1,
-        "excerpt": "这是秋招面的，答得非常差，但是也记录了一下。因为当时没有好的项目，基本都是八股和算法。面百度的同学可以参考下。"
+        "ref": "liqiangcc/xhs:note_json/67ac2006000000002a002e36.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67ac2006000000002a002e36/note/title",
+        "excerpt": "Java面经-百度一面"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67ac2006000000002a002e36.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67ac2006000000002a002e36/note/desc",
+        "excerpt": "这是秋招面的，答得非常差，但是也记录了一下。因为当时没有好的项目，基本都是八股和算法。面百度的同学可以参考下。\n#后端开发[话题]##面经[话题]# #大厂[话题]# #java[话题]# #程序员[话题]#"
       }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67ac2006000000002a002e36.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67ac2006000000002a002e36/note/title",
+      "excerpt": "Java面经-百度一面"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67ac2006000000002a002e36.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67ac2006000000002a002e36/note/desc",
+      "excerpt": "这是秋招面的，答得非常差，但是也记录了一下。因为当时没有好的项目，基本都是八股和算法。面百度的同学可以参考下。\n#后端开发[话题]##面经[话题]# #大厂[话题]# #java[话题]# #程序员[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67ac2006000000002a002e36.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -41,6 +60,53 @@
       "git_blob_sha": "c3b6d20d6e94d75b5715b6a062cba3e4d83de163"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67ac2006000000002a002e36.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "Java面经-百度一面 - 小红书",
+      "byte_size": 386492,
+      "git_blob_sha": "763a6fb4488fdb9567cc58a7f3e15c0319531315",
+      "sha256": "43fb89ae558a7385af3de579f5668db774193c629e3db206adaa509777eed42b",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67ac2006000000002a002e36.html",
+        "byte_size": 386492,
+        "git_blob_sha": "763a6fb4488fdb9567cc58a7f3e15c0319531315"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67ac2006000000002a002e36.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67ac2006000000002a002e36/note/title",
+      "excerpt": "Java面经-百度一面",
+      "byte_size": 21001,
+      "git_blob_sha": "1bcad733194faabd496547ba60d3fcdd29ce3dcb",
+      "sha256": "eb1dc801c175eadffbc1bfc9a0547361466e1c3d1d8b203a3d223bfb8b33e2e0",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67ac2006000000002a002e36.json",
+        "byte_size": 21001,
+        "git_blob_sha": "1bcad733194faabd496547ba60d3fcdd29ce3dcb"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67ac2006000000002a002e36.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "这是秋招面的，答得非常差，但是也记录了一下。因为当时没有好的项目，基本都是八股和算法。面百度的同学可以参考下。\n#后端开发[话题]##面经[话题]# #大厂[话题]# #java[话题]# #程序员[话题]#",
+      "byte_size": 257,
+      "git_blob_sha": "c3b6d20d6e94d75b5715b6a062cba3e4d83de163",
+      "sha256": "6c34ad69400b6a6b1373af9694f36e2a9aed4005a45ec09516e6b318885962e4",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67ac2006000000002a002e36.txt",
+        "byte_size": 257,
+        "git_blob_sha": "c3b6d20d6e94d75b5715b6a062cba3e4d83de163"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -55,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -74,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

@@ -9,15 +9,39 @@
   "expected_body_sha256": "8a2e631e2821ff485ea4c3c4c5776953e2d5d72c511462041e5a471e7c89b4c8",
   "expected_source_revision_id": "xhs-note:67b6fd36000000000b0143e2:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "not-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": []
+    "status": "reviewed",
+    "proposed_decision": "not-interview",
+    "basis": "explicit invitation, job/advice, or question-bank content lacks a candidate event",
+    "basis_lines": [],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67b6fd36000000000b0143e2.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67b6fd36000000000b0143e2/note/title",
+        "excerpt": "找工作，房地产"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67b6fd36000000000b0143e2.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67b6fd36000000000b0143e2/note/desc",
+        "excerpt": "#面试[话题]# #找工作[话题]# #群面[话题]# #链家[话题]#   明天就要去链家线下参加三轮面试了，有什么注意事项吗 或者是有什么提醒的 欢迎广大网友提出"
+      }
+    ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67b6fd36000000000b0143e2.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67b6fd36000000000b0143e2/note/title",
+      "excerpt": "找工作，房地产"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67b6fd36000000000b0143e2.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67b6fd36000000000b0143e2/note/desc",
+      "excerpt": "#面试[话题]# #找工作[话题]# #群面[话题]# #链家[话题]#   明天就要去链家线下参加三轮面试了，有什么注意事项吗 或者是有什么提醒的 欢迎广大网友提出"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67b6fd36000000000b0143e2.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -36,6 +60,53 @@
       "git_blob_sha": "ccd42af24a1d04d4d36960c9eb21acd63034fbfe"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67b6fd36000000000b0143e2.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "找工作，房地产 - 小红书",
+      "byte_size": 385961,
+      "git_blob_sha": "9fc91f10508ce4d66729f56b4948e426e61e289c",
+      "sha256": "83de944dbcc831b0411e0829732cbe8959c077c48b6f78a549d038e757c6a343",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67b6fd36000000000b0143e2.html",
+        "byte_size": 385961,
+        "git_blob_sha": "9fc91f10508ce4d66729f56b4948e426e61e289c"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67b6fd36000000000b0143e2.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67b6fd36000000000b0143e2/note/title",
+      "excerpt": "找工作，房地产",
+      "byte_size": 20693,
+      "git_blob_sha": "6b212c164b0075186767f9563e71e4084f8b476d",
+      "sha256": "f62674a76491bf4f548d5cd807ec302a23c6884cdb7669bf483638da5cd9355a",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67b6fd36000000000b0143e2.json",
+        "byte_size": 20693,
+        "git_blob_sha": "6b212c164b0075186767f9563e71e4084f8b476d"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67b6fd36000000000b0143e2.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "#面试[话题]# #找工作[话题]# #群面[话题]# #链家[话题]#   明天就要去链家线下参加三轮面试了，有什么注意事项吗 或者是有什么提醒的 欢迎广大网友提出",
+      "byte_size": 202,
+      "git_blob_sha": "ccd42af24a1d04d4d36960c9eb21acd63034fbfe",
+      "sha256": "617449ef2e35d27a847e77eb7828ecb576b48b05f7fc19a58e1b754e0b68b029",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67b6fd36000000000b0143e2.txt",
+        "byte_size": 202,
+        "git_blob_sha": "ccd42af24a1d04d4d36960c9eb21acd63034fbfe"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -50,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is not-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -69,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

@@ -9,28 +9,48 @@
   "expected_body_sha256": "174417adebb44f47549e1aabe18c08b07da971c18e2d7e31c504bb3cf1bd3658",
   "expected_source_revision_id": "xhs-note:67eb383d000000001c01d8fc:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
     "basis_lines": [
       {
         "line_number": 1,
         "excerpt": "1.面试官先自我介绍，然后酷酷夸我，给我整不会了。然后问我有啥问题。我问了base说应该北京。"
       },
       {
-        "line_number": 8,
-        "excerpt": "4.八股"
+        "line_number": 18,
+        "excerpt": "总结：面试官态度和情绪价值很好，一直夸我笔试啊，简历啊，做题快啊啥的，给我整不会了[笑哭R]，最后还问我能不能接受base成都，我说可以。反正体验很好很好。不知道最后会不会像其他厂一样挂了，害。"
+      }
+    ],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67eb383d000000001c01d8fc.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67eb383d000000001c01d8fc/note/title",
+        "excerpt": "美团一面-30min-后端"
       },
       {
-        "line_number": 19,
-        "excerpt": "#面试题[话题]# #面经[话题]# #面试求职[话题]# #大厂[话题]#"
+        "ref": "liqiangcc/xhs:note_json/67eb383d000000001c01d8fc.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67eb383d000000001c01d8fc/note/desc",
+        "excerpt": "1.面试官先自我介绍，然后酷酷夸我，给我整不会了。然后问我有啥问题。我问了base说应该北京。\n\t\n2.自我介绍（3min）\n\t\n3.项目（15min）\n基本上我说他听，问的比较少。\n\t\n4.八股\n计网：三次握手和四次挥手\n操作系统：（忘了，问了一题比较简单的\nc++：（好像是堆栈啥的吧，反正也常规，不太记得了\n\t\n5.手撕\n很简单的去重链表重复元素。（双指针）\n\t\n6.反问。\n\t\n总结：面试官态度和情绪价值很好，一直夸我笔试啊，简历啊，做题快啊啥的，给我整不会了[笑哭R]，最后还问我能不能接受base成都，我说可以。反正体验很好很好。不知道最后会不会像其他厂一样挂了，害。\n#面试题[话题]# #面经[话题]# #面试求职[话题]# #大厂[话题]#"
       }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67eb383d000000001c01d8fc.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67eb383d000000001c01d8fc/note/title",
+      "excerpt": "美团一面-30min-后端"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67eb383d000000001c01d8fc.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67eb383d000000001c01d8fc/note/desc",
+      "excerpt": "1.面试官先自我介绍，然后酷酷夸我，给我整不会了。然后问我有啥问题。我问了base说应该北京。\n\t\n2.自我介绍（3min）\n\t\n3.项目（15min）\n基本上我说他听，问的比较少。\n\t\n4.八股\n计网：三次握手和四次挥手\n操作系统：（忘了，问了一题比较简单的\nc++：（好像是堆栈啥的吧，反正也常规，不太记得了\n\t\n5.手撕\n很简单的去重链表重复元素。（双指针）\n\t\n6.反问。\n\t\n总结：面试官态度和情绪价值很好，一直夸我笔试啊，简历啊，做题快啊啥的，给我整不会了[笑哭R]，最后还问我能不能接受base成都，我说可以。反正体验很好很好。不知道最后会不会像其他厂一样挂了，害。\n#面试题[话题]# #面经[话题]# #面试求职[话题]# #大厂[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67eb383d000000001c01d8fc.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -49,6 +69,53 @@
       "git_blob_sha": "6d3a47a9a8d589c42c14821dc1e4c55d30ca3e6d"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67eb383d000000001c01d8fc.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "美团一面-30min-后端 - 小红书",
+      "byte_size": 387903,
+      "git_blob_sha": "b275881326487853029cb689dc626b61eec2c3fc",
+      "sha256": "926d096e8babae62ecf857d52bac7616a13c8e8d170ee1a5abd895bc98c5b48a",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67eb383d000000001c01d8fc.html",
+        "byte_size": 387903,
+        "git_blob_sha": "b275881326487853029cb689dc626b61eec2c3fc"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67eb383d000000001c01d8fc.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67eb383d000000001c01d8fc/note/title",
+      "excerpt": "美团一面-30min-后端",
+      "byte_size": 21344,
+      "git_blob_sha": "b070a35b1661d8cf92197d840dc15fc192bbf09b",
+      "sha256": "c9befc61b73b69defeff130aa8dfcf2408b83d68db51a1698a189682d3106ea6",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67eb383d000000001c01d8fc.json",
+        "byte_size": 21344,
+        "git_blob_sha": "b070a35b1661d8cf92197d840dc15fc192bbf09b"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67eb383d000000001c01d8fc.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "1.面试官先自我介绍，然后酷酷夸我，给我整不会了。然后问我有啥问题。我问了base说应该北京。\n2.自我介绍（3min）\n3.项目（15min）\n基本上我说他听，问的比较少。\n4.八股\n计网：三次握手和四次挥手\n操作系统：（忘了，问了一题比较简单的\nc++：（好像是堆栈啥的吧，反正也常规，不太记得了",
+      "byte_size": 832,
+      "git_blob_sha": "6d3a47a9a8d589c42c14821dc1e4c55d30ca3e6d",
+      "sha256": "128c91671d8f5d22cdd1d765629b586280d836c36f46a6734d49649ba48e6c61",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67eb383d000000001c01d8fc.txt",
+        "byte_size": 832,
+        "git_blob_sha": "6d3a47a9a8d589c42c14821dc1e4c55d30ca3e6d"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -63,12 +130,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -82,7 +149,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

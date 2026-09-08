@@ -9,15 +9,39 @@
   "expected_body_sha256": "a9a4149376e1e8d1bc419b228ac25fab23f170fcfee6bcd110ec2f0f9d7e940d",
   "expected_source_revision_id": "xhs-note:67e1143d000000001d0387d5:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "not-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": []
+    "status": "reviewed",
+    "proposed_decision": "not-interview",
+    "basis": "explicit invitation, job/advice, or question-bank content lacks a candidate event",
+    "basis_lines": [],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67e1143d000000001d0387d5.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67e1143d000000001d0387d5/note/title",
+        "excerpt": "Samsung 三星面经"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67e1143d000000001d0387d5.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67e1143d000000001d0387d5/note/desc",
+        "excerpt": "#外企[话题]# #三星[话题]# #Samsung[话题]# #求职[话题]# #面试经验[话题]#"
+      }
+    ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67e1143d000000001d0387d5.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67e1143d000000001d0387d5/note/title",
+      "excerpt": "Samsung 三星面经"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67e1143d000000001d0387d5.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67e1143d000000001d0387d5/note/desc",
+      "excerpt": "#外企[话题]# #三星[话题]# #Samsung[话题]# #求职[话题]# #面试经验[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67e1143d000000001d0387d5.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -36,6 +60,53 @@
       "git_blob_sha": "866093a91f2cb79b69b48ead6d48c0fd45dad52a"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67e1143d000000001d0387d5.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "Samsung 三星面经 - 小红书",
+      "byte_size": 388126,
+      "git_blob_sha": "c46da03dc6536e028eb6f1e6f8352a9af73d29bc",
+      "sha256": "d1ff58b183b96ff0cf748dd8a8e9eae69bfb1e8c4cbfc97294f35bb1f4af464f",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67e1143d000000001d0387d5.html",
+        "byte_size": 388126,
+        "git_blob_sha": "c46da03dc6536e028eb6f1e6f8352a9af73d29bc"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67e1143d000000001d0387d5.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67e1143d000000001d0387d5/note/title",
+      "excerpt": "Samsung 三星面经",
+      "byte_size": 22253,
+      "git_blob_sha": "1b149233c0ccc3045e447de87060ad2addb6b817",
+      "sha256": "a363540fb4c4c8f38df8090e9e081fd0771d9fec97b920740a1ef6d2450549db",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67e1143d000000001d0387d5.json",
+        "byte_size": 22253,
+        "git_blob_sha": "1b149233c0ccc3045e447de87060ad2addb6b817"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67e1143d000000001d0387d5.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "#外企[话题]# #三星[话题]# #Samsung[话题]# #求职[话题]# #面试经验[话题]#",
+      "byte_size": 92,
+      "git_blob_sha": "866093a91f2cb79b69b48ead6d48c0fd45dad52a",
+      "sha256": "d80d624a95a13fe10ff434ecb72940f8f75acaa337416ae8abeb4fcb1e760ebf",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67e1143d000000001d0387d5.txt",
+        "byte_size": 92,
+        "git_blob_sha": "866093a91f2cb79b69b48ead6d48c0fd45dad52a"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -50,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is not-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -69,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

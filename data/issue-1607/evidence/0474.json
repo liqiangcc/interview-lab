@@ -9,24 +9,39 @@
   "expected_body_sha256": "09400d4c864ba218966aa38b2fc00a9b1772bb44c18e18dd29e271961287cad0",
   "expected_source_revision_id": "xhs-note:67768075000000001300ea4b:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "not-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": [
+    "status": "reviewed",
+    "proposed_decision": "not-interview",
+    "basis": "explicit invitation, job/advice, or question-bank content lacks a candidate event",
+    "basis_lines": [],
+    "semantic_evidence": [
       {
-        "line_number": 3,
-        "excerpt": "2.根据简历项目经验问相关问题"
+        "ref": "liqiangcc/xhs:note_json/67768075000000001300ea4b.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67768075000000001300ea4b/note/title",
+        "excerpt": "小米安卓开发面试： 1.自我介绍 2.根据简历项目经验问相关问题 3.android四大组件 4.数据库三大范式，以及相关问题 5.http报文格式 6.手撕代码：java单例模式 - 小红书"
       },
       {
-        "line_number": 5,
-        "excerpt": "4.数据库三大范式，以及相关问题"
+        "ref": "liqiangcc/xhs:note_json/67768075000000001300ea4b.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67768075000000001300ea4b/note/desc",
+        "excerpt": "小米安卓开发面试：\n1.自我介绍\n2.根据简历项目经验问相关问题\n3.android四大组件\n4.数据库三大范式，以及相关问题\n5.http报文格式\n6.手撕代码：java单例模式"
       }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67768075000000001300ea4b.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67768075000000001300ea4b/note/title",
+      "excerpt": "小米安卓开发面试： 1.自我介绍 2.根据简历项目经验问相关问题 3.android四大组件 4.数据库三大范式，以及相关问题 5.http报文格式 6.手撕代码：java单例模式 - 小红书"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67768075000000001300ea4b.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67768075000000001300ea4b/note/desc",
+      "excerpt": "小米安卓开发面试：\n1.自我介绍\n2.根据简历项目经验问相关问题\n3.android四大组件\n4.数据库三大范式，以及相关问题\n5.http报文格式\n6.手撕代码：java单例模式"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67768075000000001300ea4b.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -45,6 +60,53 @@
       "git_blob_sha": "dfe00e3e497d2c65ea6ffa43cba2c2b4a26807c3"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67768075000000001300ea4b.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "小米安卓开发面试： 1.自我介绍 2.根据简历项目经验问相关问题 3.android四大组件 4.数据库三大范式，以及相关问题 5.http报文格式 6.手撕代码：java单例模式 - 小红书",
+      "byte_size": 385036,
+      "git_blob_sha": "3ab7874650da44007e41ffc456352f65c09dbe3d",
+      "sha256": "db854ad70b83dde004202e42cb2e93ed73c4b6f5db04b70b6ec00aca18d79d1c",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67768075000000001300ea4b.html",
+        "byte_size": 385036,
+        "git_blob_sha": "3ab7874650da44007e41ffc456352f65c09dbe3d"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67768075000000001300ea4b.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67768075000000001300ea4b/note/title",
+      "excerpt": null,
+      "byte_size": 19833,
+      "git_blob_sha": "5e2c4be6565641eb0e9ba30422ad445593ed0971",
+      "sha256": "e5b57e43da9b1107a679542d5ec7af6a1f9e86b1f8821486cc2a14a6c87c7cca",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67768075000000001300ea4b.json",
+        "byte_size": 19833,
+        "git_blob_sha": "5e2c4be6565641eb0e9ba30422ad445593ed0971"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67768075000000001300ea4b.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "小米安卓开发面试：\n1.自我介绍\n2.根据简历项目经验问相关问题\n3.android四大组件\n4.数据库三大范式，以及相关问题\n5.http报文格式\n6.手撕代码：java单例模式",
+      "byte_size": 205,
+      "git_blob_sha": "dfe00e3e497d2c65ea6ffa43cba2c2b4a26807c3",
+      "sha256": "3ad4998279b9edffff52ffe0f14dc6291c1f575e61241a7c4b0a70f3113331f1",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67768075000000001300ea4b.txt",
+        "byte_size": 205,
+        "git_blob_sha": "dfe00e3e497d2c65ea6ffa43cba2c2b4a26807c3"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -59,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is not-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -78,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

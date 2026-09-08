@@ -34,12 +34,90 @@ function classifyProjection(projectionText) {
   return { status: 'review-required', proposed_decision: 'pending', basis: 'interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content', basis_lines: lineEvidence([/(邀约|邀请|预约|据说|准备面试|场景题|八股|资料|经验分享|求职招聘|问题|面试题|题目|通关秘籍|标准答案)/]) };
 }
 
+function semanticEvidence(item, kind, locator, excerpt) {
+  const artifact = item.source_artifacts.find((candidate) => candidate.kind === kind);
+  return artifact ? { ref: artifact.ref, locator, excerpt: String(excerpt || '').slice(0, 1200) } : null;
+}
+
+function classifyFullSource(item) {
+  const jsonArtifact = item.source_artifacts.find((artifact) => artifact.kind === 'json');
+  const htmlArtifact = item.source_artifacts.find((artifact) => artifact.kind === 'html');
+  const title = jsonArtifact?.semantic?.title?.excerpt || htmlArtifact?.semantic?.title?.excerpt || '';
+  const body = item.source_projection.text || '';
+  const text = `${title}\n${body}`.replace(/\\n/g, '\n');
+  const titleEvidence = semanticEvidence(item, 'json', jsonArtifact?.semantic?.title?.locator || 'json:/note/title', title)
+    || semanticEvidence(item, 'html', htmlArtifact?.semantic?.title?.locator || 'html:head/title', title);
+  const bodyEvidence = semanticEvidence(item, 'json', jsonArtifact?.semantic?.body?.locator || 'json:/note/desc', jsonArtifact?.semantic?.body?.excerpt)
+    || { ref: item.source_projection.artifact.ref, locator: item.source_projection.locator, excerpt: item.source_projection.excerpt };
+  const evidence = [titleEvidence, bodyEvidence].filter(Boolean);
+  const lines = item.source_projection.text.split(/\r?\n/);
+  const lineBasis = (patterns) => lines.map((line, index) => ({ line, number: index + 1 })).filter(({ line }) => patterns.some((pattern) => pattern.test(line))).slice(0, 6).map(({ line, number }) => ({ line_number: number, excerpt: line }));
+  // Do not treat the “我” in the stock phrase “自我介绍” as first-person
+  // ownership of an interview event.
+  const firstPerson = /(?<!自)我|本人|自己|亲身/.test(text);
+  const refusal = /(?:我|本人|自己)\s*(?:也|就|直接)?\s*(?:明确)?\s*(?:拒绝|拒了|不面|没去面|没参加|未参加|没有参加|放弃面试)/.test(text);
+  const marketing = /(?:通关秘籍|标准答案|帮助\s*\d+\s*位|关注我不迷路|点赞收藏|建议反复背诵|整理给各位|课程推广|营销|转载|广告|上岸秘籍)/i.test(text);
+  const interviewerShare = /(?:作为面试官|当过面试官|做过面试官|面试者也做过面试官|面试官(?:分享|视角|经验|总结|建议)|面试官面的|给面试官|面试官说)/.test(text) && !/(?:候选人|我本人).*(?:参加|面了|面过|面完|被问|回答)/.test(text);
+  const invitationOrAdvice = /(?:面试邀约|面试邀请|收到.*邀约|预约面试|明天.*面试|后天.*面试|岗位职责|招聘信息|薪资待遇|求职建议|准备面试|如何准备|建议.*面试|经验分享|面试攻略|面试技巧|面试资料)/.test(text);
+  const titleExperience = /(?:面经|面试复盘|面试记录|面试体验|面试官问答|面试结果|面试流程)/.test(title);
+  const questionOnly = /(?:面试题|题库|高频题|八股|题目列表|自我介绍|算法题|怎么|为什么|如何|介绍一下)/.test(text) && !firstPerson;
+  const roundMatches = [...text.matchAll(/(?:一面|二面|三面|四面|五面|初面|终面|第[一二三四五]面|第[一二三四五]轮|第一轮|第二轮|第三轮)/g)].map((match) => match[0]);
+  const distinctRounds = [...new Set(roundMatches)];
+  const bodyRoundMatches = [...body.matchAll(/(?:一面|二面|三面|四面|五面|初面|终面|第[一二三四五]面|第[一二三四五]轮|第一轮|第二轮|第三轮)/g)].map((match) => match[0]);
+  const repeatedRoundInBody = new Set(bodyRoundMatches).size < bodyRoundMatches.length;
+  // The same round is repeated in title, JSON, and projection; only distinct
+  // round names or explicit multi-event wording count as multiple events.
+  const explicitMulti = distinctRounds.length >= 2
+    || (repeatedRoundInBody && /(?:timeline|投简历|约面|流程|官网流程|\d{1,2}[./-]\d{1,2})/i.test(body))
+    || /(?:两场|多场|两次面试|多次面试|面了两家|面了多家|连续面了|两个小公司)/.test(text);
+  const titleRound = /(?:一面|二面|三面|四面|五面|初面|终面|第[一二三四五]面|第[一二三四五]轮)/.test(title);
+  const timelineEvidence = /(?:timeline|投简历|约面|流程|官网流程|\d{1,2}[./-]\d{1,2})/i.test(body);
+  const actualResult = /(?:我|本人|自己).{0,28}(?:拿到|收到.*结果|面试通过|面试挂|挂了|凉了|过了|拒了|offer)/s.test(text)
+    || /(?:面完|面过|面了|实际面|(?:今天|昨天|刚刚).{0,30}面试|面试.*(?:结束|结果|通过|挂)|面试官问了我|候选人回答)/.test(text)
+    || ((titleExperience || titleRound) && /(?:挂|凉|offer|oc|面试结果)/i.test(text));
+  const explicitQuestionBank = /(?:面试八股|八股文|题库|高频题|常问问题汇总|技术栈攻略|一图流攻略|面试题分享|面试真题|必问的高频题|标准答案|及格答案)/.test(text);
+  const questionOnlyAdvice = /(?:怎么办|怎么回答|一般考啥|求助|有没有知道|推荐去|如何准备)/.test(text) && !titleRound && !titleExperience;
+  const eventContext = /(?:面试流程|面试体验|面试记录|面经|面试|一面|二面|三面|四面|初试|终面)/.test(title) || /(?:面试流程|面试体验|面试记录|面经|面试官|候选人|一面|二面|三面|四面|初试|终面)/.test(body);
+  const narratedEvent = /(?:记录一次|第一次遇到|本人|今天|昨天|上个月|面试官.*(?:问了|问我(?:什么|哪些)|说|让)|被拷打|秒挂|凉经|挂了|面完|面过|面了|实际面)/.test(body);
+  const adviceOnly = /(?:怎么办|怎么回答|一般考啥|求助|有没有知道|推荐去|如何准备)/.test(text)
+    && !titleRound
+    && !titleExperience
+    && !actualResult
+    && !narratedEvent
+    && !/(?:参加(?:过|了)?面试|收到.*结果|拿到.*offer)/.test(text);
+  const questionEvidence = /(?:问了|问题|问(?:项目|系统|基础|什么)|讲讲|面试题|题目|算法题|八股|反问|Q\s*\d+|怎么|为什么|如何|介绍一下|候选人回答|被问)/.test(text);
+  const candidateEvent = !adviceOnly && (actualResult || (eventContext && (
+    narratedEvent
+    || (firstPerson && /(?:\d+[.、)]|自我介绍|问题|提问|面试官|回答|反问|项目|算法题|八股)/.test(body))
+    || ((titleExperience || titleRound) && (questionEvidence || /(?:挂|凉|offer|oc|结果)/i.test(body) || roundMatches.length > 0))
+    || (timelineEvidence && (roundMatches.length > 0 || /(?:挂|凉|offer|oc|结果)/i.test(body)))
+  )));
+  const assessmentOnly = /(?:笔试题|笔试|刷题|题库)/.test(body) && !/(?:面试官|候选人回答|面试问题|实际面|面试结果)/.test(body);
+  const experienced = !questionOnlyAdvice && !adviceOnly && !assessmentOnly && ((candidateEvent && (questionEvidence || actualResult || roundMatches.length > 0)) || (titleRound && questionEvidence));
+
+  if (refusal || marketing || interviewerShare) {
+    return { status: 'reviewed', proposed_decision: 'not-interview', basis: refusal ? 'explicit first-person refusal/non-attendance is non-event' : marketing ? 'marketing/repost or answer-key content is explicitly non-event' : 'interviewer-perspective sharing is not a candidate interview event', basis_lines: lineBasis([/(通关秘籍|标准答案|转载|营销|面试官|拒绝|不面|未参加)/]), semantic_evidence: evidence };
+  }
+  if (experienced && explicitMulti) {
+    return { status: 'reviewed', proposed_decision: 'multi-interview', basis: 'complete candidate interview evidence names multiple distinct interview events/rounds', basis_lines: lineBasis([/(一面|二面|三面|四面|多场|多次|两家|两轮)/]), semantic_evidence: evidence };
+  }
+  if (experienced) {
+    return { status: 'reviewed', proposed_decision: 'single-interview', basis: 'title/body and full Source material establish one candidate interview event with process/question/answer/result evidence', basis_lines: lineBasis([/(一面|二面|三面|面试官|候选人|回答|被问|面试结果|实际面)/]), semantic_evidence: evidence };
+  }
+  if (invitationOrAdvice || questionOnly || explicitQuestionBank || assessmentOnly || /(?:题库|题目列表|求职|岗位|招聘|整理收集|实习一个月体验|刚入职|求助|可以去么|能进么|推荐去|外包|部门怎么样|想不想试试)/.test(text)) {
+    return { status: 'reviewed', proposed_decision: 'not-interview', basis: 'explicit invitation, job/advice, or question-bank content lacks a candidate event', basis_lines: lineBasis([/(邀约|预约|岗位|招聘|建议|题库|题目|八股|准备)/]), semantic_evidence: evidence };
+  }
+  return { status: 'blocked', proposed_decision: 'blocked', basis: 'full Source artifacts are present but do not establish whether this is a candidate interview event or a non-event', basis_lines: lineBasis([/(面试|问题|分享|经历|结果)/]), semantic_evidence: evidence };
+}
+
 function evidenceFor(item) {
   const transitionId = `issue-1607-boundary-${String(item.issue_number).padStart(4, '0')}-review-1`;
   const sourceVerified = item.status === 'verified' && item.source_verification?.status === 'verified';
-  const classification = sourceVerified
-    ? classifyProjection(item.source_projection.text || item.source_projection.excerpt)
-    : { status: 'blocked', proposed_decision: 'pending', basis: 'pinned Source projection is blocked; no classification is proposed' };
+  const fullSourceVerified = sourceVerified && item.source_material_verification?.status === 'verified';
+  const classification = fullSourceVerified
+    ? classifyFullSource(item)
+    : { status: 'blocked', proposed_decision: 'blocked', basis: 'one or more required pinned Source artifacts are blocked; no semantic decision is proposed', semantic_evidence: [] };
+  const decision = classification.proposed_decision;
   return {
     schema_version: 'issue-1607-boundary-evidence.v1',
     transition_id: transitionId,
@@ -51,12 +129,13 @@ function evidenceFor(item) {
     expected_body_sha256: item.body_sha256,
     expected_source_revision_id: item.source_revision_id,
     expected_source_repository_ref: SOURCE_REF,
-    evidence_status: sourceVerified ? 'review-required' : 'blocked',
-    decision: 'pending',
-    decision_basis: sourceVerified
-      ? 'Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.'
+    evidence_status: fullSourceVerified && decision !== 'blocked' ? 'reviewed' : 'blocked',
+    decision,
+    decision_basis: fullSourceVerified && decision !== 'blocked'
+      ? 'Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.'
       : 'Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified for this item.',
     classification,
+    semantic_evidence: classification.semantic_evidence || [],
     source_evidence: {
       ref: item.source_projection.artifact.ref,
       kind: item.source_projection.artifact.kind,
@@ -70,17 +149,27 @@ function evidenceFor(item) {
       line_count: item.source_projection.line_count,
       verification: item.source_projection.verification || item.source_verification,
     },
+    artifact_evidence: (item.source_artifacts || []).map((artifact) => ({
+      ref: artifact.ref,
+      kind: artifact.kind,
+      locator: artifact.semantic?.title?.locator || (artifact.kind === 'text_projection' ? 'note_desc:full-file' : `${artifact.kind}:full-file`),
+      excerpt: artifact.semantic?.title?.excerpt || artifact.excerpt || null,
+      byte_size: artifact.byte_size,
+      git_blob_sha: artifact.git_blob_sha,
+      sha256: artifact.sha256,
+      verification: artifact.verification,
+    })),
     checks: [
       { check_id: 'source_identity', result: 'pass', note: 'Issue body machine record and SourceNote identity are frozen and internally consistent.' },
       { check_id: 'source_revision_binding', result: 'pass', note: `SourceRevision is bound to ${SOURCE_REF} in the frozen Issue body.` },
-      { check_id: 'source_content_coverage', result: sourceVerified ? 'pass' : 'blocked', note: sourceVerified ? 'Raw bytes at the fixed ref matched the frozen Git blob SHA.' : 'Exact pinned Source projection bytes and Git blob content were not independently verified.' },
-      { check_id: 'event_boundary', result: 'review-required', note: 'Classification is proposal-only; no 0/1/N decision is authorized by this artifact.' },
+      { check_id: 'source_content_coverage', result: fullSourceVerified ? 'pass' : 'blocked', note: fullSourceVerified ? 'Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size.' : 'All required pinned Source artifacts were not independently verified.' },
+      { check_id: 'event_boundary', result: decision === 'blocked' ? 'blocked' : 'pass', note: decision === 'blocked' ? 'Full Source material remains semantically insufficient to decide the boundary.' : `Semantic boundary result is ${decision}; no live transition is authorized by this artifact.` },
       { check_id: 'no_cross_source_mixing', result: 'pass', note: 'This ledger item references only its own SourceNote and its canonical note_desc artifact.' },
       { check_id: 'no_fabrication', result: 'pass', note: 'No InterviewNote identity, company, role, round, outcome, or derived content is created.' },
     ],
     limitations: [
-      ...(sourceVerified ? [] : ['The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.']),
-      'The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.',
+      ...(fullSourceVerified ? [] : ['One or more required pinned Source artifacts are unavailable or unverified; this item is blocked.']),
+      ...(decision === 'blocked' ? ['Complete pinned artifacts were read, but their semantics do not establish a 0/1/N boundary decision.'] : ['The semantic decision is review-ready but is not durable controller authorization.']),
       'Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.',
       'Raw Source and Derived interpretations remain separate; no Raw artifact is modified.',
     ],
@@ -98,12 +187,13 @@ function requestFor(item, evidence) {
     expected_boundary_status: 'pending',
     expected_source_revision_id: item.source_revision_id,
     expected_source_repository_ref: SOURCE_REF,
-    decision: 'pending',
+    decision: evidence.decision,
+    semantic_ready: ['single-interview', 'multi-interview'].includes(evidence.decision),
     review_evidence: null,
     reviewed_at: null,
     evidence_file: `../evidence/${String(item.issue_number).padStart(4, '0')}.json`,
     executable: false,
-    block_reason: `${item.status === 'verified' ? 'Durable review evidence and controller review are absent' : 'Pinned Source bytes are unverified'}; controller must independently review and bind a valid transition request before any apply authorization.`,
+    block_reason: `${evidence.decision === 'blocked' ? 'Full pinned Source material is semantically insufficient or unverified' : 'Live transition authorization and durable controller evidence are absent'}; controller must independently review and bind a valid transition request before any apply authorization.`,
   };
 }
 
@@ -117,6 +207,16 @@ function main(argv = process.argv.slice(2)) {
   if (selection.source_snapshot?.ref !== SOURCE_REF) throw new Error('selection source ref is not the fixed ref');
   const evidenceItems = selection.items.map(evidenceFor);
   const requestItems = selection.items.map((item, index) => requestFor(item, evidenceItems[index]));
+  const sourceArtifactLedger = {
+    schema_version: 'issue-1607-boundary-source-artifact-ledger.v1',
+    repository: REPOSITORY,
+    child_issue: 1607,
+    source_ref: SOURCE_REF,
+    total: selection.items.length,
+    required_kinds: ['html', 'json', 'text_projection'],
+    items: selection.items.map((item) => ({ issue_number: item.issue_number, source_note_id: item.source_note_id, artifacts: item.source_artifacts || [], source_material_verification: item.source_material_verification || { status: 'blocked' } })),
+  };
+  const sourceArtifactLedgerSha256 = sha256Text(canonicalJson(sourceArtifactLedger));
   const classificationItems = evidenceItems.map((item) => ({
     issue_number: item.issue_number,
     source_note_id: item.source_note_id,
@@ -125,6 +225,7 @@ function main(argv = process.argv.slice(2)) {
     excerpt: item.source_evidence.excerpt,
     full_projection_sha256: item.source_evidence.sha256,
     basis_lines: item.classification.basis_lines || [],
+    semantic_evidence: item.classification.semantic_evidence || [],
     status: item.classification.status,
     proposed_decision: item.classification.proposed_decision,
     basis: item.classification.basis,
@@ -138,20 +239,27 @@ function main(argv = process.argv.slice(2)) {
     repository: REPOSITORY,
     child_issue: 1607,
     source_ref: SOURCE_REF,
-    status: 'proposal-only',
+    status: 'semantic-review',
+    source_artifact_ledger_sha256: sourceArtifactLedgerSha256,
     counts: classificationCounts,
     total: classificationItems.length,
     items: classificationItems,
   };
   const sourceVerifiedCount = selection.items.filter((item) => item.status === 'verified').length;
   const sourceBlockedCount = selection.items.filter((item) => item.status === 'blocked').length;
+  const blockedCount = evidenceItems.filter((item) => item.decision === 'blocked').length;
+  const singleCount = evidenceItems.filter((item) => item.decision === 'single-interview').length;
+  const multiCount = evidenceItems.filter((item) => item.decision === 'multi-interview').length;
+  const notInterviewCount = evidenceItems.filter((item) => item.decision === 'not-interview').length;
+  const semanticReadyCount = singleCount + multiCount;
   const evidenceLedger = {
     schema_version: 'issue-1607-boundary-evidence-ledger.v1',
     repository: REPOSITORY,
     child_issue: 1607,
     selection_sha256: sha256Text(canonicalJson(selection)),
+    source_artifact_ledger_sha256: sourceArtifactLedgerSha256,
     total: evidenceItems.length,
-    counts: { pending: evidenceItems.length, blocked: sourceBlockedCount, review_required: sourceVerifiedCount, authorized: 0 },
+    counts: { single_interview: singleCount, multi_interview: multiCount, not_interview: notInterviewCount, blocked: blockedCount, review_required: evidenceItems.length - blockedCount, authorized: 0 },
     items: evidenceItems,
   };
   const requestSet = {
@@ -172,6 +280,7 @@ function main(argv = process.argv.slice(2)) {
     child_issue: 1607,
     scope: selection.scope,
     source_snapshot: selection.source_snapshot,
+    source_artifact_ledger_sha256: sourceArtifactLedgerSha256,
     scope_compliance: selection.scope_compliance || { status: 'blocked', reason: 'Selection has no scope-clean audit record.', out_of_scope_mutations: 0 },
     scope_regression: {
       status: selection.scope_compliance?.status === 'pass' ? 'pass' : 'blocked',
@@ -182,14 +291,15 @@ function main(argv = process.argv.slice(2)) {
       assertion: 'No live read is permitted outside the frozen inclusive range #393..#765.',
     },
     selection_sha256: evidenceLedger.selection_sha256,
+    source_artifact_ledger_sha256: sourceArtifactLedgerSha256,
     evidence_ledger_sha256: sha256Text(canonicalJson(evidenceLedger)),
     request_set_sha256: sha256Text(canonicalJson(requestSet)),
     mode: 'dry-run',
     fail_closed: true,
-    counts: { total: expectedCount, pending: expectedCount, blocked: sourceBlockedCount, review_required: sourceVerifiedCount, ready: 0, already_applied: 0, mutation_count: 0 },
+    counts: { total: expectedCount, pending: 0, single_interview: singleCount, multi_interview: multiCount, not_interview: notInterviewCount, blocked: blockedCount, review_required: evidenceItems.length - blockedCount, semantic_ready: semanticReadyCount, ready: 0, already_applied: 0, mutation_count: 0 },
     blocked_reasons: [
-      ...(sourceBlockedCount ? ['one or more pinned Source projection items remain independently unverified'] : []),
-      'classification output is proposal-only and requires controller review',
+      ...(blockedCount ? [`${blockedCount} item(s) remain semantically or materially blocked`] : []),
+      'semantic boundary decisions are review-ready but are not durable controller authorization',
       'durable review evidence comments have not been created or bound',
       'main controller has not granted live apply authorization',
     ],
@@ -198,7 +308,7 @@ function main(argv = process.argv.slice(2)) {
       transition_id: item.transition_id,
       source_note_id: item.source_note_id,
       decision: item.decision,
-      status: item.evidence_status === 'blocked' ? 'blocked' : 'review-required',
+      status: item.evidence_status === 'blocked' ? 'blocked' : (['single-interview', 'multi-interview'].includes(item.decision) ? 'semantic-ready' : 'not-interview'),
       expected_body_sha256: item.expected_body_sha256,
       expected_source_revision_id: item.expected_source_revision_id,
       source_projection_ref: item.source_evidence.ref,
@@ -234,6 +344,7 @@ function main(argv = process.argv.slice(2)) {
     journal_sha256: sha256Text(canonicalJson(journal)),
   };
   writeJson(path.join(outputDir, 'evidence-ledger.json'), evidenceLedger);
+  writeJson(path.join(outputDir, 'source-artifact-ledger.json'), sourceArtifactLedger);
   writeJson(path.join(outputDir, 'request-set.json'), requestSet);
   writeJson(path.join(outputDir, 'classification-ledger.json'), classificationLedger);
   writeJson(path.join(outputDir, 'dry-run.plan.json'), plan);
@@ -241,6 +352,13 @@ function main(argv = process.argv.slice(2)) {
   writeJson(path.join(outputDir, 'canonical-digest.json'), digest);
   fs.mkdirSync(path.join(outputDir, 'evidence'), { recursive: true });
   fs.mkdirSync(path.join(outputDir, 'requests'), { recursive: true });
+  const selectedFiles = new Set(selection.items.map((item) => `${String(item.issue_number).padStart(4, '0')}.json`));
+  for (const subdirectory of ['evidence', 'requests']) {
+    const directory = path.join(outputDir, subdirectory);
+    for (const filename of fs.readdirSync(directory)) {
+      if (/^\d{4}\.json$/.test(filename) && !selectedFiles.has(filename)) fs.unlinkSync(path.join(directory, filename));
+    }
+  }
   evidenceItems.forEach((item) => writeJson(path.join(outputDir, 'evidence', `${String(item.issue_number).padStart(4, '0')}.json`), item));
   requestItems.forEach((item) => writeJson(path.join(outputDir, 'requests', `${String(item.issue_number).padStart(4, '0')}.json`), item));
   process.stdout.write(`${JSON.stringify({ total: expectedCount, source_verified: sourceVerifiedCount, source_blocked: sourceBlockedCount, mutation_count: 0, dry_run_sha256: plan.dry_run_sha256 }, null, 2)}\n`);
@@ -250,4 +368,4 @@ if (require.main === module) {
   try { main(); } catch (error) { console.error(`ERROR: ${error.message}`); process.exitCode = 1; }
 }
 
-module.exports = { classifyProjection, evidenceFor, requestFor, sha256Text };
+module.exports = { classifyProjection, classifyFullSource, evidenceFor, requestFor, sha256Text };

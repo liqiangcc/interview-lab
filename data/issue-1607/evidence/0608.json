@@ -9,15 +9,39 @@
   "expected_body_sha256": "4705e9edad40b8e55b75e72125f4715fabdea9e862dcaecc4617ee2326f80987",
   "expected_source_revision_id": "xhs-note:67db7bff000000000603b6c2:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": []
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "basis_lines": [],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67db7bff000000000603b6c2.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67db7bff000000000603b6c2/note/title",
+        "excerpt": "京东-Java开发工程师-一面"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67db7bff000000000603b6c2.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67db7bff000000000603b6c2/note/desc",
+        "excerpt": "京东待遇也是提起来了，对外都是喊20薪的。京东的大佬们，真的能拿到20薪吗？\n\t\n﻿#京东[话题]#﻿ ﻿#程序员[话题]#﻿ ﻿#java[话题]#﻿ ﻿#面试[话题]#﻿ ﻿#面试技巧[话题]#﻿ ﻿#薪资[话题]#﻿"
+      }
+    ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67db7bff000000000603b6c2.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67db7bff000000000603b6c2/note/title",
+      "excerpt": "京东-Java开发工程师-一面"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67db7bff000000000603b6c2.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67db7bff000000000603b6c2/note/desc",
+      "excerpt": "京东待遇也是提起来了，对外都是喊20薪的。京东的大佬们，真的能拿到20薪吗？\n\t\n﻿#京东[话题]#﻿ ﻿#程序员[话题]#﻿ ﻿#java[话题]#﻿ ﻿#面试[话题]#﻿ ﻿#面试技巧[话题]#﻿ ﻿#薪资[话题]#﻿"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67db7bff000000000603b6c2.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -36,6 +60,53 @@
       "git_blob_sha": "7b5d7afc46642bafd320b0d58bc3bac9eac40289"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67db7bff000000000603b6c2.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "京东-Java开发工程师-一面 - 小红书",
+      "byte_size": 386844,
+      "git_blob_sha": "f9ca9f618f8c44bab0abf04e7e5243c3b963ae60",
+      "sha256": "2f9eaf11d3813a99afb63571f5e114eed595342f2279eb212c1017cf2c17cd33",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67db7bff000000000603b6c2.html",
+        "byte_size": 386844,
+        "git_blob_sha": "f9ca9f618f8c44bab0abf04e7e5243c3b963ae60"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67db7bff000000000603b6c2.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67db7bff000000000603b6c2/note/title",
+      "excerpt": "京东-Java开发工程师-一面",
+      "byte_size": 21208,
+      "git_blob_sha": "045a9f032f27767325019ca049c84cd80b91df61",
+      "sha256": "8bdddb0af9edc2f79c3e5d4d4cfedbb0668e7099309f3d649c3688b9df190e1e",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67db7bff000000000603b6c2.json",
+        "byte_size": 21208,
+        "git_blob_sha": "045a9f032f27767325019ca049c84cd80b91df61"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67db7bff000000000603b6c2.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "京东待遇也是提起来了，对外都是喊20薪的。京东的大佬们，真的能拿到20薪吗？\n﻿#京东[话题]#﻿ ﻿#程序员[话题]#﻿ ﻿#java[话题]#﻿ ﻿#面试[话题]#﻿ ﻿#面试技巧[话题]#﻿ ﻿#薪资[话题]#﻿",
+      "byte_size": 254,
+      "git_blob_sha": "7b5d7afc46642bafd320b0d58bc3bac9eac40289",
+      "sha256": "cb5097d79361d150552afc51f8000e9288702c9675b8247e5b3a0f822a19e285",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67db7bff000000000603b6c2.txt",
+        "byte_size": 254,
+        "git_blob_sha": "7b5d7afc46642bafd320b0d58bc3bac9eac40289"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -50,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -69,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

@@ -9,15 +9,44 @@
   "expected_body_sha256": "5ac49758d4e3c54c0418ac0f1cbec7030e963ff2406090dbd543a823a23c7da6",
   "expected_source_revision_id": "xhs-note:67ed4784000000001c014461:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": []
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "basis_lines": [
+      {
+        "line_number": 4,
+        "excerpt": "反问字节大多是go语言，为什么问那么多java？问部门业务，面试官认真的说了十分钟，说是搞java和大数据相关技术栈，负责财经什么的"
+      }
+    ],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67ed4784000000001c014461.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67ed4784000000001c014461/note/title",
+        "excerpt": "4.2字节一面-1h30min 项目+八股 是外包？"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67ed4784000000001c014461.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67ed4784000000001c014461/note/desc",
+        "excerpt": "问的都还算基础，答得挺好的。\n反问了流程3轮技术面➕hr面。\n反问他可以开实体背景吗，不给开。\n反问字节大多是go语言，为什么问那么多java？问部门业务，面试官认真的说了十分钟，说是搞java和大数据相关技术栈，负责财经什么的\n这是我在boss上找的，没走官网流程，面试链接也是字节的链接，会议也是飞书，懂的uu麻烦请教一下，能是外包吗？\n#互联网大厂实习[话题]# #面经[话题]# #找实习[话题]# #春招[话题]#"
+      }
+    ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67ed4784000000001c014461.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67ed4784000000001c014461/note/title",
+      "excerpt": "4.2字节一面-1h30min 项目+八股 是外包？"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67ed4784000000001c014461.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67ed4784000000001c014461/note/desc",
+      "excerpt": "问的都还算基础，答得挺好的。\n反问了流程3轮技术面➕hr面。\n反问他可以开实体背景吗，不给开。\n反问字节大多是go语言，为什么问那么多java？问部门业务，面试官认真的说了十分钟，说是搞java和大数据相关技术栈，负责财经什么的\n这是我在boss上找的，没走官网流程，面试链接也是字节的链接，会议也是飞书，懂的uu麻烦请教一下，能是外包吗？\n#互联网大厂实习[话题]# #面经[话题]# #找实习[话题]# #春招[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67ed4784000000001c014461.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -36,6 +65,53 @@
       "git_blob_sha": "ab2720ae58c6b964f51774d14cd30d9fe9c3d609"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67ed4784000000001c014461.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "4.2字节一面-1h30min 项目+八股 是外包？ - 小红书",
+      "byte_size": 389338,
+      "git_blob_sha": "1e351f6e19eacd2d085ce5003be96c87be03f59d",
+      "sha256": "4d744a9c0758ee2257215b3575da4b2cfc87ce7685ea8c936da166e8f8a67922",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67ed4784000000001c014461.html",
+        "byte_size": 389338,
+        "git_blob_sha": "1e351f6e19eacd2d085ce5003be96c87be03f59d"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67ed4784000000001c014461.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67ed4784000000001c014461/note/title",
+      "excerpt": "4.2字节一面-1h30min 项目+八股 是外包？",
+      "byte_size": 22495,
+      "git_blob_sha": "1f62b48379d881d4b59cc282b1a86f0d01ef918f",
+      "sha256": "c017b36197877dd587474b7ab335ff849f8b92ebd38acadb4030e9d85ce417c2",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67ed4784000000001c014461.json",
+        "byte_size": 22495,
+        "git_blob_sha": "1f62b48379d881d4b59cc282b1a86f0d01ef918f"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67ed4784000000001c014461.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "问的都还算基础，答得挺好的。\n反问了流程3轮技术面➕hr面。\n反问他可以开实体背景吗，不给开。\n反问字节大多是go语言，为什么问那么多java？问部门业务，面试官认真的说了十分钟，说是搞java和大数据相关技术栈，负责财经什么的\n这是我在boss上找的，没走官网流程，面试链接也是字节的链接，会议也是飞书，懂的uu麻烦请教一下，能是外包吗？\n#互联网大厂实习[话题]# #面经[话题]# #找实习[话题]# #春招[话题]#",
+      "byte_size": 551,
+      "git_blob_sha": "ab2720ae58c6b964f51774d14cd30d9fe9c3d609",
+      "sha256": "657ba7421d1cb63c2e2ea6a91e88ec29a1caab5214171d2720d7ddb7f98c066b",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67ed4784000000001c014461.txt",
+        "byte_size": 551,
+        "git_blob_sha": "ab2720ae58c6b964f51774d14cd30d9fe9c3d609"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -50,12 +126,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -69,7 +145,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

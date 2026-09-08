@@ -9,15 +9,48 @@
   "expected_body_sha256": "efbe2d148e69dedaa41a7e2e05c79876f019da893dfbe34a60b68cad7ed1aef0",
   "expected_source_revision_id": "xhs-note:6747060b0000000006015b7e:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "multi-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": []
+    "status": "reviewed",
+    "proposed_decision": "multi-interview",
+    "basis": "complete candidate interview evidence names multiple distinct interview events/rounds",
+    "basis_lines": [
+      {
+        "line_number": 1,
+        "excerpt": "日历timeline：8.27投递➡️9.5约面➡️9.8三面直通➡️9.25oc➡️10.25offer"
+      },
+      {
+        "line_number": 3,
+        "excerpt": "周日下午三小时直通三面，面试官都很温和专业（除了面试间排队超久以外没毛病[睡觉R]"
+      }
+    ],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/6747060b0000000006015b7e.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/6747060b0000000006015b7e/note/title",
+        "excerpt": "秋招复盘4️⃣ | 贝壳找房（已拒offer"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/6747060b0000000006015b7e.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/6747060b0000000006015b7e/note/desc",
+        "excerpt": "日历timeline：8.27投递➡️9.5约面➡️9.8三面直通➡️9.25oc➡️10.25offer\n\t\n周日下午三小时直通三面，面试官都很温和专业（除了面试间排队超久以外没毛病[睡觉R]\n感觉贝壳的校招文化还不错，传说中的1075和wlb也很吸引人，只可惜面试发挥太一般拿了个超级大白菜[哭惹R]\n先接啦，不管怎样还是感谢贝壳为我送来秋招的第一封offer[大笑R]\n\t\n（另外主页还有网易、pdd和字节的秋招面经，后续还会持续更新我的秋招面经复盘，欢迎感兴趣的uu自取[喝奶茶R]\n#面经[话题]# #校招[话题]# #互联网校招[话题]# #贝壳找房[话题]# #秋招offer[话题]# #校招offer[话题]# #秋招人的精神状态[话题]# #秋招好累[话题]# #大厂实习[话题]# #大厂女孩[话题]#"
+      }
+    ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/6747060b0000000006015b7e.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/6747060b0000000006015b7e/note/title",
+      "excerpt": "秋招复盘4️⃣ | 贝壳找房（已拒offer"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/6747060b0000000006015b7e.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/6747060b0000000006015b7e/note/desc",
+      "excerpt": "日历timeline：8.27投递➡️9.5约面➡️9.8三面直通➡️9.25oc➡️10.25offer\n\t\n周日下午三小时直通三面，面试官都很温和专业（除了面试间排队超久以外没毛病[睡觉R]\n感觉贝壳的校招文化还不错，传说中的1075和wlb也很吸引人，只可惜面试发挥太一般拿了个超级大白菜[哭惹R]\n先接啦，不管怎样还是感谢贝壳为我送来秋招的第一封offer[大笑R]\n\t\n（另外主页还有网易、pdd和字节的秋招面经，后续还会持续更新我的秋招面经复盘，欢迎感兴趣的uu自取[喝奶茶R]\n#面经[话题]# #校招[话题]# #互联网校招[话题]# #贝壳找房[话题]# #秋招offer[话题]# #校招offer[话题]# #秋招人的精神状态[话题]# #秋招好累[话题]# #大厂实习[话题]# #大厂女孩[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/6747060b0000000006015b7e.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -36,6 +69,53 @@
       "git_blob_sha": "b989e3e600620dfa3e947ba498b1931c93e134a0"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/6747060b0000000006015b7e.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "秋招复盘4️⃣ | 贝壳找房（已拒offer - 小红书",
+      "byte_size": 395158,
+      "git_blob_sha": "cdd18145aa318118ea981f07a2e2efc4b3941083",
+      "sha256": "6d56e7078bab14d714ba172dbfb542581c54f81ee59df49aa2014b5019c6585c",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:6747060b0000000006015b7e.html",
+        "byte_size": 395158,
+        "git_blob_sha": "cdd18145aa318118ea981f07a2e2efc4b3941083"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/6747060b0000000006015b7e.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/6747060b0000000006015b7e/note/title",
+      "excerpt": "秋招复盘4️⃣ | 贝壳找房（已拒offer",
+      "byte_size": 26894,
+      "git_blob_sha": "9073a1e2937f8e70b0b89c3b5475b8d4dc41ad3b",
+      "sha256": "be91fed157d5454c96f8e7b5f92e8747d0111f582ac08027feb7d2f65fb651e3",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:6747060b0000000006015b7e.json",
+        "byte_size": 26894,
+        "git_blob_sha": "9073a1e2937f8e70b0b89c3b5475b8d4dc41ad3b"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/6747060b0000000006015b7e.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "日历timeline：8.27投递➡️9.5约面➡️9.8三面直通➡️9.25oc➡️10.25offer\n周日下午三小时直通三面，面试官都很温和专业（除了面试间排队超久以外没毛病[睡觉R]\n感觉贝壳的校招文化还不错，传说中的1075和wlb也很吸引人，只可惜面试发挥太一般拿了个超级大白菜[哭惹R]\n先接啦，不管怎样还是感谢贝壳为我送来秋招的第一封offer[大笑R]\n（另外主页还有网易、pdd和字节的秋招面经，后续还会持续更新我的秋招面经复盘，欢迎感兴趣的uu自取[喝奶茶R]\n#面经[话题]# #校招[话题]# #互联网校招[话题]# #贝壳找房[话题]# #秋招offer[话题]# #校招offer[话题]# #秋招人的精神状态[话题]# #秋招好累[话题]# #大厂实习[话题]# #大厂女孩[话题]#",
+      "byte_size": 825,
+      "git_blob_sha": "b989e3e600620dfa3e947ba498b1931c93e134a0",
+      "sha256": "73a162f83ea28fc05297a8c594d1253288f6abebdaf830780356cfc202f6506b",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:6747060b0000000006015b7e.txt",
+        "byte_size": 825,
+        "git_blob_sha": "b989e3e600620dfa3e947ba498b1931c93e134a0"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -50,12 +130,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is multi-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -69,7 +149,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

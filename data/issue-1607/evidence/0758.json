@@ -9,24 +9,52 @@
   "expected_body_sha256": "d59eeb1bf04831761c60ad89a0f78b76e6cef65f8efcf34ecd0376072add2d4b",
   "expected_source_revision_id": "xhs-note:6803483d000000001d019393:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "multi-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "status": "reviewed",
+    "proposed_decision": "multi-interview",
+    "basis": "complete candidate interview evidence names multiple distinct interview events/rounds",
     "basis_lines": [
       {
         "line_number": 1,
         "excerpt": "一面问的问题都是根据项目来的"
       },
       {
+        "line_number": 2,
+        "excerpt": "二面总体在聊天，只问了基础东西"
+      },
+      {
         "line_number": 3,
         "excerpt": "三面hrbp 常规问题..."
       }
+    ],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/6803483d000000001d019393.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/6803483d000000001d019393/note/title",
+        "excerpt": "京东面经，希望对大家有帮助"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/6803483d000000001d019393.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/6803483d000000001d019393/note/desc",
+        "excerpt": "一面问的问题都是根据项目来的\n二面总体在聊天，只问了基础东西\n三面hrbp 常规问题...\n希望大家早日拿到offer!!!\n#前端面试[话题]# #面经[话题]#"
+      }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/6803483d000000001d019393.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/6803483d000000001d019393/note/title",
+      "excerpt": "京东面经，希望对大家有帮助"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/6803483d000000001d019393.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/6803483d000000001d019393/note/desc",
+      "excerpt": "一面问的问题都是根据项目来的\n二面总体在聊天，只问了基础东西\n三面hrbp 常规问题...\n希望大家早日拿到offer!!!\n#前端面试[话题]# #面经[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/6803483d000000001d019393.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -45,6 +73,53 @@
       "git_blob_sha": "bcf3d499376fe6082cb09a9f452a71f229c74bba"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/6803483d000000001d019393.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "京东面经，希望对大家有帮助 - 小红书",
+      "byte_size": 387533,
+      "git_blob_sha": "a35c5be6fd46f41b9c5ce9d9f71e7cbc5dd7c6d7",
+      "sha256": "60329d5b5a007d2060047af2a2bb4cbd00c7542686340ac5a7ae73dc8c78a95b",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:6803483d000000001d019393.html",
+        "byte_size": 387533,
+        "git_blob_sha": "a35c5be6fd46f41b9c5ce9d9f71e7cbc5dd7c6d7"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/6803483d000000001d019393.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/6803483d000000001d019393/note/title",
+      "excerpt": "京东面经，希望对大家有帮助",
+      "byte_size": 21701,
+      "git_blob_sha": "3d4787a3b6d6c3cf4d73c3620f516e87dde28a18",
+      "sha256": "37fecc1289971021e86adba2f4e454e02e3b080a74c09546261681ab4a57069d",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:6803483d000000001d019393.json",
+        "byte_size": 21701,
+        "git_blob_sha": "3d4787a3b6d6c3cf4d73c3620f516e87dde28a18"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/6803483d000000001d019393.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "一面问的问题都是根据项目来的\n二面总体在聊天，只问了基础东西\n三面hrbp 常规问题...\n希望大家早日拿到offer!!!\n#前端面试[话题]# #面经[话题]#",
+      "byte_size": 189,
+      "git_blob_sha": "bcf3d499376fe6082cb09a9f452a71f229c74bba",
+      "sha256": "b44abe984a5edc0c0d102f468c8b9a13b576e97e909764fcd29b37a628225974",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:6803483d000000001d019393.txt",
+        "byte_size": 189,
+        "git_blob_sha": "bcf3d499376fe6082cb09a9f452a71f229c74bba"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -59,12 +134,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is multi-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -78,7 +153,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

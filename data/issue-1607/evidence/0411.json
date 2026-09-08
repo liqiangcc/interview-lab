@@ -9,20 +9,39 @@
   "expected_body_sha256": "3f32dac210fd3035bed6a822bf1b05bc20bcfd5f515e554d519c2a33a3380514",
   "expected_source_revision_id": "xhs-note:67355338000000001a01d8d5:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": [
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "basis_lines": [],
+    "semantic_evidence": [
       {
-        "line_number": 6,
-        "excerpt": "1. java线程池核心线程为0，阻塞队列为无界队列，最大线程数为4，存活时间为5s，拒绝策略为直接丢弃，此时来了一堆任务，会有什么问题"
+        "ref": "liqiangcc/xhs:note_json/67355338000000001a01d8d5.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67355338000000001a01d8d5/note/title",
+        "excerpt": "淘天-风控-一面 面经分享"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67355338000000001a01d8d5.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67355338000000001a01d8d5/note/desc",
+        "excerpt": "📅日期：2024 年 9 月 06 日\n⏱️时间：15:00-15:40\n⏳时长：40min\n🏷️结果：Success\n\t\n1. java线程池核心线程为0，阻塞队列为无界队列，最大线程数为4，存活时间为5s，拒绝策略为直接丢弃，此时来了一堆任务，会有什么问题\n2. 线程池为什么要在核心线程和最大线程之间使用一个阻塞队列\n3. 有一个txt文件，每行是一条记录，五个字符，utf-8编码，一共两千万行，占用多大\n4. 如果需要对这些记录的出现次数进行排序，取出排序前十的记录，内存大小为1G，怎么做\n5. java读写锁适用于哪些场景，原理是什么\n6. jvm的CMS回收器适用于什么场景，他有什么特点\n7. 常见JVM参数有哪些\n8. 算法题：复原 IP 地址、反转链表2\n\t\n[飞吻R][飞吻R]点点关注主页更多面经分享\n\t\n#面经[话题]#  #秋招面试[话题]#  #秋招面经[话题]#  #阿里[话题]#  #阿里面试[话题]#  #阿里秋招[话题]#  #java[话题]#  #后端开发[话题]#  #后端面试[话题]#  #淘天招聘[话题]#"
       }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67355338000000001a01d8d5.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67355338000000001a01d8d5/note/title",
+      "excerpt": "淘天-风控-一面 面经分享"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67355338000000001a01d8d5.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67355338000000001a01d8d5/note/desc",
+      "excerpt": "📅日期：2024 年 9 月 06 日\n⏱️时间：15:00-15:40\n⏳时长：40min\n🏷️结果：Success\n\t\n1. java线程池核心线程为0，阻塞队列为无界队列，最大线程数为4，存活时间为5s，拒绝策略为直接丢弃，此时来了一堆任务，会有什么问题\n2. 线程池为什么要在核心线程和最大线程之间使用一个阻塞队列\n3. 有一个txt文件，每行是一条记录，五个字符，utf-8编码，一共两千万行，占用多大\n4. 如果需要对这些记录的出现次数进行排序，取出排序前十的记录，内存大小为1G，怎么做\n5. java读写锁适用于哪些场景，原理是什么\n6. jvm的CMS回收器适用于什么场景，他有什么特点\n7. 常见JVM参数有哪些\n8. 算法题：复原 IP 地址、反转链表2\n\t\n[飞吻R][飞吻R]点点关注主页更多面经分享\n\t\n#面经[话题]#  #秋招面试[话题]#  #秋招面经[话题]#  #阿里[话题]#  #阿里面试[话题]#  #阿里秋招[话题]#  #java[话题]#  #后端开发[话题]#  #后端面试[话题]#  #淘天招聘[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67355338000000001a01d8d5.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -41,6 +60,53 @@
       "git_blob_sha": "79373c9eb10b54f6ff7a95287b06f7e4401cba1b"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67355338000000001a01d8d5.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "淘天-风控-一面 面经分享 - 小红书",
+      "byte_size": 394514,
+      "git_blob_sha": "960831c3dc72584358b3d0af7edd5b7648e3786f",
+      "sha256": "6c056009261136665693b86ff339f02866e1c74009f6f2325cab23fde03b7981",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67355338000000001a01d8d5.html",
+        "byte_size": 394514,
+        "git_blob_sha": "960831c3dc72584358b3d0af7edd5b7648e3786f"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67355338000000001a01d8d5.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67355338000000001a01d8d5/note/title",
+      "excerpt": "淘天-风控-一面 面经分享",
+      "byte_size": 25816,
+      "git_blob_sha": "bb0d4366a817b67918ca605e4cd48a1e3d07dbbf",
+      "sha256": "6ad212981cd1f19fae3b94c1887dcaae90fa058c755ede0fd127b97fa9007fdc",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67355338000000001a01d8d5.json",
+        "byte_size": 25816,
+        "git_blob_sha": "bb0d4366a817b67918ca605e4cd48a1e3d07dbbf"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67355338000000001a01d8d5.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "📅日期：2024 年 9 月 06 日\n⏱️时间：15:00-15:40\n⏳时长：40min\n🏷️结果：Success\n1. java线程池核心线程为0，阻塞队列为无界队列，最大线程数为4，存活时间为5s，拒绝策略为直接丢弃，此时来了一堆任务，会有什么问题\n2. 线程池为什么要在核心线程和最大线程之间使用一个阻塞队列\n3. 有一个txt文件，每行是一条记录，五个字符，utf-8编码，一共两千万行，占用多大\n4. 如果需要对这些记录的出现次数进行排序，取出排序前十的记录，内存大小为1G，怎么做",
+      "byte_size": 1097,
+      "git_blob_sha": "79373c9eb10b54f6ff7a95287b06f7e4401cba1b",
+      "sha256": "53786378241e922caad4f4fa9b30206b168dcf253f1432ae7d68553100e9097b",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67355338000000001a01d8d5.txt",
+        "byte_size": 1097,
+        "git_blob_sha": "79373c9eb10b54f6ff7a95287b06f7e4401cba1b"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -55,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -74,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

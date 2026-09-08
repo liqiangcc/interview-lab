@@ -9,24 +9,39 @@
   "expected_body_sha256": "97e441c41c7f9b2b65289801130bf7cc7b8827274446a89a3e1f05177bd0d2d2",
   "expected_source_revision_id": "xhs-note:67b3d98b000000000603f738:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "not-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": [
+    "status": "reviewed",
+    "proposed_decision": "not-interview",
+    "basis": "explicit invitation, job/advice, or question-bank content lacks a candidate event",
+    "basis_lines": [],
+    "semantic_evidence": [
       {
-        "line_number": 1,
-        "excerpt": "不得不说 AI的智能化让面试官都可以减少一定的工作量了，deepseek出的题还挺复合之前面试过的大厂的场景题水平的"
+        "ref": "liqiangcc/xhs:note_json/67b3d98b000000000603f738.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67b3d98b000000000603f738/note/title",
+        "excerpt": "Deepseek生成Java面试题"
       },
       {
-        "line_number": 2,
-        "excerpt": "#java[话题]# #后端开发[话题]# #后端面试题[话题]# #面试[话题]# #deepseek[话题]# #大模型[话题]# #编程[话题]# #社招[话题]# #校招[话题]#"
+        "ref": "liqiangcc/xhs:note_json/67b3d98b000000000603f738.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67b3d98b000000000603f738/note/desc",
+        "excerpt": "不得不说 AI的智能化让面试官都可以减少一定的工作量了，deepseek出的题还挺复合之前面试过的大厂的场景题水平的\n#java[话题]# #后端开发[话题]# #后端面试题[话题]# #面试[话题]# #deepseek[话题]# #大模型[话题]# #编程[话题]# #社招[话题]# #校招[话题]#"
       }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67b3d98b000000000603f738.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67b3d98b000000000603f738/note/title",
+      "excerpt": "Deepseek生成Java面试题"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67b3d98b000000000603f738.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67b3d98b000000000603f738/note/desc",
+      "excerpt": "不得不说 AI的智能化让面试官都可以减少一定的工作量了，deepseek出的题还挺复合之前面试过的大厂的场景题水平的\n#java[话题]# #后端开发[话题]# #后端面试题[话题]# #面试[话题]# #deepseek[话题]# #大模型[话题]# #编程[话题]# #社招[话题]# #校招[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67b3d98b000000000603f738.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -45,6 +60,53 @@
       "git_blob_sha": "f2530f5da7b233190631f81e7ab4fab128170bb6"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67b3d98b000000000603f738.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "Deepseek生成Java面试题 - 小红书",
+      "byte_size": 396285,
+      "git_blob_sha": "3ab379fc4694c103d1b1969dd64af31a13bf52d3",
+      "sha256": "ffa3af93f3071b021504d0c42f29731240c24f558fbfdd10be4ba96851403e71",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67b3d98b000000000603f738.html",
+        "byte_size": 396285,
+        "git_blob_sha": "3ab379fc4694c103d1b1969dd64af31a13bf52d3"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67b3d98b000000000603f738.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67b3d98b000000000603f738/note/title",
+      "excerpt": "Deepseek生成Java面试题",
+      "byte_size": 30339,
+      "git_blob_sha": "aa3a44b2b39b47ad6a0579c3fca71702168895c4",
+      "sha256": "1453340dbd5e42ff35839729ae91179ed5945b75530fd5acd5009764f2325eeb",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67b3d98b000000000603f738.json",
+        "byte_size": 30339,
+        "git_blob_sha": "aa3a44b2b39b47ad6a0579c3fca71702168895c4"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67b3d98b000000000603f738.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "不得不说 AI的智能化让面试官都可以减少一定的工作量了，deepseek出的题还挺复合之前面试过的大厂的场景题水平的\n#java[话题]# #后端开发[话题]# #后端面试题[话题]# #面试[话题]# #deepseek[话题]# #大模型[话题]# #编程[话题]# #社招[话题]# #校招[话题]#",
+      "byte_size": 324,
+      "git_blob_sha": "f2530f5da7b233190631f81e7ab4fab128170bb6",
+      "sha256": "0cc0f628842a7863157312e55862fcdb87c9aee86b159c1cb63d0595377e0e0e",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67b3d98b000000000603f738.txt",
+        "byte_size": 324,
+        "git_blob_sha": "f2530f5da7b233190631f81e7ab4fab128170bb6"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -59,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is not-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -78,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

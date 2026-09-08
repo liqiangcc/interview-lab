@@ -9,15 +9,39 @@
   "expected_body_sha256": "2e4142f02d9fadd191c37d84c518fc81bc0d001c907d0d50e11f2b1ea77848b0",
   "expected_source_revision_id": "xhs-note:67bf2b54000000000603b2ca:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": []
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "basis_lines": [],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67bf2b54000000000603b2ca.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67bf2b54000000000603b2ca/note/title",
+        "excerpt": "2.26小米Java一面"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67bf2b54000000000603b2ca.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67bf2b54000000000603b2ca/note/desc",
+        "excerpt": "1.问项目，业务场景和优化\n2.mysql索引的数据结构\n3.B树和B+树的区别\n4.介绍jvm的垃圾回收器，有什么区别，一直问，没抗住\n5.介绍juc中的各种锁，一直问，没抗住\n手撕时忘了string怎么转化为int，没写完\n#java[话题]# #后端开发[话题]# #面经[话题]#"
+      }
+    ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67bf2b54000000000603b2ca.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67bf2b54000000000603b2ca/note/title",
+      "excerpt": "2.26小米Java一面"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67bf2b54000000000603b2ca.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67bf2b54000000000603b2ca/note/desc",
+      "excerpt": "1.问项目，业务场景和优化\n2.mysql索引的数据结构\n3.B树和B+树的区别\n4.介绍jvm的垃圾回收器，有什么区别，一直问，没抗住\n5.介绍juc中的各种锁，一直问，没抗住\n手撕时忘了string怎么转化为int，没写完\n#java[话题]# #后端开发[话题]# #面经[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67bf2b54000000000603b2ca.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -36,6 +60,53 @@
       "git_blob_sha": "e7698d129ce16b96d58f2a1ed89eb52e3a015748"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67bf2b54000000000603b2ca.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "2.26小米Java一面 - 小红书",
+      "byte_size": 385969,
+      "git_blob_sha": "caea6cc2d13138f10d3852ae35375ba140af522e",
+      "sha256": "866a443610f4c59126f392a4a8d1a50b3e32ea033cce05a30a3d395334f0daa9",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67bf2b54000000000603b2ca.html",
+        "byte_size": 385969,
+        "git_blob_sha": "caea6cc2d13138f10d3852ae35375ba140af522e"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67bf2b54000000000603b2ca.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67bf2b54000000000603b2ca/note/title",
+      "excerpt": "2.26小米Java一面",
+      "byte_size": 20608,
+      "git_blob_sha": "466dc97b1d3363cdfd164c9ecf4136d2a2d1bcf7",
+      "sha256": "95d8ec53d7b204358927f162c92bb8846ae555d30e78be81f4bdc2b9ed4e1ba6",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67bf2b54000000000603b2ca.json",
+        "byte_size": 20608,
+        "git_blob_sha": "466dc97b1d3363cdfd164c9ecf4136d2a2d1bcf7"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67bf2b54000000000603b2ca.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "1.问项目，业务场景和优化\n2.mysql索引的数据结构\n3.B树和B+树的区别\n4.介绍jvm的垃圾回收器，有什么区别，一直问，没抗住\n5.介绍juc中的各种锁，一直问，没抗住\n手撕时忘了string怎么转化为int，没写完\n#java[话题]# #后端开发[话题]# #面经[话题]#",
+      "byte_size": 319,
+      "git_blob_sha": "e7698d129ce16b96d58f2a1ed89eb52e3a015748",
+      "sha256": "b1fe0b1b383424540fe6092f623e1a6bbd5f04a7776977af4d0273bb3ddb3b29",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67bf2b54000000000603b2ca.txt",
+        "byte_size": 319,
+        "git_blob_sha": "e7698d129ce16b96d58f2a1ed89eb52e3a015748"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -50,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -69,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

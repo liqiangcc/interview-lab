@@ -9,15 +9,39 @@
   "expected_body_sha256": "eec216bf4d330057433b309baefb04a003fda67a9a56a386923ae8a087ec84b9",
   "expected_source_revision_id": "xhs-note:67de6420000000001b03d1ed:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": []
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "basis_lines": [],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67de6420000000001b03d1ed.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67de6420000000001b03d1ed/note/title",
+        "excerpt": "小米 Java 一面（一）"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67de6420000000001b03d1ed.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67de6420000000001b03d1ed/note/desc",
+        "excerpt": "后面会给大家分享一些秋招时的面试录音，希望对大家能有所帮助，有的答不对的地方还请大家指出来一起学习#Java面经[话题]#"
+      }
+    ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67de6420000000001b03d1ed.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67de6420000000001b03d1ed/note/title",
+      "excerpt": "小米 Java 一面（一）"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67de6420000000001b03d1ed.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67de6420000000001b03d1ed/note/desc",
+      "excerpt": "后面会给大家分享一些秋招时的面试录音，希望对大家能有所帮助，有的答不对的地方还请大家指出来一起学习#Java面经[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67de6420000000001b03d1ed.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -36,6 +60,53 @@
       "git_blob_sha": "0f2a5366b9ca43ed378f088e44070df1a59012a1"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67de6420000000001b03d1ed.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "小米 Java 一面（一） - 小红书",
+      "byte_size": 385623,
+      "git_blob_sha": "1a0b31fb3dc0edc553c927a0979867b7b7e263cf",
+      "sha256": "1c41dd3326cc6a43058703a9e9419426c955935b91b3ee056fb1f3694aaa9f4b",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67de6420000000001b03d1ed.html",
+        "byte_size": 385623,
+        "git_blob_sha": "1a0b31fb3dc0edc553c927a0979867b7b7e263cf"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67de6420000000001b03d1ed.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67de6420000000001b03d1ed/note/title",
+      "excerpt": "小米 Java 一面（一）",
+      "byte_size": 23504,
+      "git_blob_sha": "6ab7142a8c8f409e878b3bfff025ba39b61979e1",
+      "sha256": "af754b2eb4c06cfbd991d9db1ce11fc2ab85c0b1c23f99fa53849231809dfc73",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67de6420000000001b03d1ed.json",
+        "byte_size": 23504,
+        "git_blob_sha": "6ab7142a8c8f409e878b3bfff025ba39b61979e1"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67de6420000000001b03d1ed.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "后面会给大家分享一些秋招时的面试录音，希望对大家能有所帮助，有的答不对的地方还请大家指出来一起学习#Java面经[话题]#",
+      "byte_size": 168,
+      "git_blob_sha": "0f2a5366b9ca43ed378f088e44070df1a59012a1",
+      "sha256": "1980397e33ca01ba8d07faf5f5fbfa087e5b433edc7727b88d715d0f8734095f",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67de6420000000001b03d1ed.txt",
+        "byte_size": 168,
+        "git_blob_sha": "0f2a5366b9ca43ed378f088e44070df1a59012a1"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -50,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -69,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

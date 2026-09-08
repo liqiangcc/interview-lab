@@ -9,15 +9,39 @@
   "expected_body_sha256": "99154044356c8bc377b1c7724ebd1d1335ad378554ba3d92dc8e370f5c896192",
   "expected_source_revision_id": "xhs-note:67eea5c2000000000e0060a2:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": []
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "basis_lines": [],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67eea5c2000000000e0060a2.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67eea5c2000000000e0060a2/note/title",
+        "excerpt": "腾讯视频java面经（凉）"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67eea5c2000000000e0060a2.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67eea5c2000000000e0060a2/note/desc",
+        "excerpt": "p1 腾讯视频面经，p23找的腾讯面经:\n投了几天没动静，今天上午刷新提交了一下简历，没一会就来电话了[微笑R]，直接约了下午面试，投的wxg，被pcg约的。\n没开摄像头，时长一小时多一点，总体体验感还好，但是好多记不清楚了，还是得面试输出[赞R]\n后面反问阶段说他们主语言是go[失望R]，有无改进的地方，说需要了解的更深入一点[猪头R]\n晚上再看，如我预料已挂，准备明天吃点好的再战[睡觉R]\n#一个泡泡[话题]#🫧#两个泡泡[话题]#🫧#找呀找呀找实习[话题]##晚宀[话题]#"
+      }
+    ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67eea5c2000000000e0060a2.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67eea5c2000000000e0060a2/note/title",
+      "excerpt": "腾讯视频java面经（凉）"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67eea5c2000000000e0060a2.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67eea5c2000000000e0060a2/note/desc",
+      "excerpt": "p1 腾讯视频面经，p23找的腾讯面经:\n投了几天没动静，今天上午刷新提交了一下简历，没一会就来电话了[微笑R]，直接约了下午面试，投的wxg，被pcg约的。\n没开摄像头，时长一小时多一点，总体体验感还好，但是好多记不清楚了，还是得面试输出[赞R]\n后面反问阶段说他们主语言是go[失望R]，有无改进的地方，说需要了解的更深入一点[猪头R]\n晚上再看，如我预料已挂，准备明天吃点好的再战[睡觉R]\n#一个泡泡[话题]#🫧#两个泡泡[话题]#🫧#找呀找呀找实习[话题]##晚宀[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67eea5c2000000000e0060a2.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -36,6 +60,53 @@
       "git_blob_sha": "9abfd878fa105cb4747f3679aa9e53e530c8fcba"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67eea5c2000000000e0060a2.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "腾讯视频java面经（凉） - 小红书",
+      "byte_size": 391136,
+      "git_blob_sha": "ae7cf7648c90776c0111f25955b616d42c980880",
+      "sha256": "3c9f7e0d9e5b6f1be4fa4cb85da5c834247331fef99fe4c94be369f9ee9cdd70",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67eea5c2000000000e0060a2.html",
+        "byte_size": 391136,
+        "git_blob_sha": "ae7cf7648c90776c0111f25955b616d42c980880"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67eea5c2000000000e0060a2.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67eea5c2000000000e0060a2/note/title",
+      "excerpt": "腾讯视频java面经（凉）",
+      "byte_size": 23966,
+      "git_blob_sha": "6623d99e3e7b849e08f12d2b5b1cebfe83f28289",
+      "sha256": "f3d1d7383422e2ed5aa986befafcc4bfa2cb65111ab0a70a7461d1079791a5b6",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67eea5c2000000000e0060a2.json",
+        "byte_size": 23966,
+        "git_blob_sha": "6623d99e3e7b849e08f12d2b5b1cebfe83f28289"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67eea5c2000000000e0060a2.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "p1 腾讯视频面经，p23找的腾讯面经:\n投了几天没动静，今天上午刷新提交了一下简历，没一会就来电话了[微笑R]，直接约了下午面试，投的wxg，被pcg约的。\n没开摄像头，时长一小时多一点，总体体验感还好，但是好多记不清楚了，还是得面试输出[赞R]\n后面反问阶段说他们主语言是go[失望R]，有无改进的地方，说需要了解的更深入一点[猪头R]\n晚上再看，如我预料已挂，准备明天吃点好的再战[睡觉R]\n#一个泡泡[话题]#🫧#两个泡泡[话题]#🫧#找呀找呀找实习[话题]##晚宀[话题]#",
+      "byte_size": 627,
+      "git_blob_sha": "9abfd878fa105cb4747f3679aa9e53e530c8fcba",
+      "sha256": "a9d8c3d271f360b016bab4e6d5cf06acc62d24c2ad83fa0accce56c19df799a5",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67eea5c2000000000e0060a2.txt",
+        "byte_size": 627,
+        "git_blob_sha": "9abfd878fa105cb4747f3679aa9e53e530c8fcba"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -50,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -69,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

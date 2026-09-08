@@ -9,15 +9,39 @@
   "expected_body_sha256": "bc2d80207bbbf0d850b533266b80d11cfac4a4ae2e5a48fcf54751143b5cebaa",
   "expected_source_revision_id": "xhs-note:677d11ea0000000020027cab:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": []
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "basis_lines": [],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/677d11ea0000000020027cab.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/677d11ea0000000020027cab/note/title",
+        "excerpt": "快手后端日常实习一面面经"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/677d11ea0000000020027cab.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/677d11ea0000000020027cab/note/desc",
+        "excerpt": "1、自我介绍和项目难点介绍\n2、HashMap的结构和特点\n3、java的三大特性怎么理解\n4、mysql事务四大特性及实现原理\n5、mysql索引为什么使用B+树\n6、进程和线程的区别\n7、spring的ioc、aop\n8、动态代理了解过吗，jdk动态代理和cglib动态代理\n9、redis的缓存击穿、穿透、雪崩是什么，怎么解决\n10、了解哪些设计模式\n11、如何在10亿个数中取最大的100个数\n算法：二叉树的最大路径和\n#快手[话题]# #转码[话题]# #java[话题]# #面经[话题]##实习[话题]# #互联网大厂[话题]# #互联网大厂实习[话题]#"
+      }
+    ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/677d11ea0000000020027cab.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/677d11ea0000000020027cab/note/title",
+      "excerpt": "快手后端日常实习一面面经"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/677d11ea0000000020027cab.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/677d11ea0000000020027cab/note/desc",
+      "excerpt": "1、自我介绍和项目难点介绍\n2、HashMap的结构和特点\n3、java的三大特性怎么理解\n4、mysql事务四大特性及实现原理\n5、mysql索引为什么使用B+树\n6、进程和线程的区别\n7、spring的ioc、aop\n8、动态代理了解过吗，jdk动态代理和cglib动态代理\n9、redis的缓存击穿、穿透、雪崩是什么，怎么解决\n10、了解哪些设计模式\n11、如何在10亿个数中取最大的100个数\n算法：二叉树的最大路径和\n#快手[话题]# #转码[话题]# #java[话题]# #面经[话题]##实习[话题]# #互联网大厂[话题]# #互联网大厂实习[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/677d11ea0000000020027cab.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -36,6 +60,53 @@
       "git_blob_sha": "ef3070fafb86f49599b83f339c7f36cddf840774"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/677d11ea0000000020027cab.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "快手后端日常实习一面面经 - 小红书",
+      "byte_size": 388242,
+      "git_blob_sha": "f12d75efe1f380c19057e125df5c361c5072858b",
+      "sha256": "5730e317a200e740e6ef333821644e88d5e88259768a20a4bc6cc835f2a7794b",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:677d11ea0000000020027cab.html",
+        "byte_size": 388242,
+        "git_blob_sha": "f12d75efe1f380c19057e125df5c361c5072858b"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/677d11ea0000000020027cab.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/677d11ea0000000020027cab/note/title",
+      "excerpt": "快手后端日常实习一面面经",
+      "byte_size": 21768,
+      "git_blob_sha": "50b9e3cf87f57c8ee568014e1c78718f9654e967",
+      "sha256": "cf64055c0c5ac5020d4e29a13a68508648991c902f6e4ae8d6573e368fc62ea9",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:677d11ea0000000020027cab.json",
+        "byte_size": 21768,
+        "git_blob_sha": "50b9e3cf87f57c8ee568014e1c78718f9654e967"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/677d11ea0000000020027cab.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "1、自我介绍和项目难点介绍\n2、HashMap的结构和特点\n3、java的三大特性怎么理解\n4、mysql事务四大特性及实现原理\n5、mysql索引为什么使用B+树\n6、进程和线程的区别\n7、spring的ioc、aop\n8、动态代理了解过吗，jdk动态代理和cglib动态代理",
+      "byte_size": 626,
+      "git_blob_sha": "ef3070fafb86f49599b83f339c7f36cddf840774",
+      "sha256": "b58d88e0d806d715882d68e60c1d4fa123984e3c3e880b84b2635dabaafa87ca",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:677d11ea0000000020027cab.txt",
+        "byte_size": 626,
+        "git_blob_sha": "ef3070fafb86f49599b83f339c7f36cddf840774"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -50,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -69,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

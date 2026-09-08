@@ -9,20 +9,39 @@
   "expected_body_sha256": "414a770172f22f7f4754171686fe65859ae4958e1dfd540332d2a66fdb2b6bcf",
   "expected_source_revision_id": "xhs-note:67aed426000000002a00e040:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": [
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "basis_lines": [],
+    "semantic_evidence": [
       {
-        "line_number": 21,
-        "excerpt": "#面经[话题]# #面试问题[话题]# #面试日常[话题]# #后端面试[话题]# #后端开发[话题]# #java[话题]# #社招[话题]# #哈啰[话题]# #哈啰面试[话题]#"
+        "ref": "liqiangcc/xhs:note_json/67aed426000000002a00e040.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67aed426000000002a00e040/note/title",
+        "excerpt": "面经之哈啰（一面挂）"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67aed426000000002a00e040.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67aed426000000002a00e040/note/desc",
+        "excerpt": "✔简单聊了下项目\n✔承担的角色是什么\n✔上线灰度方案要考虑哪些东西\n✔对账机制\n✔重点说了状态机怎么玩的\n✔数据快照和回退 事务一致性怎么保证的\n✔核心接口qps\n✔集群情况\n✔redis架构是怎样的，主从数据同步，符合cap哪两个\n✔spring事务默认隔离级别\n✔string可以被继承吗\n✔泛型擦除\n✔es去重查询\n✔jvm虚拟机栈是什么\n✔什么会导致虚拟机栈内存泄漏\n✔g1是怎么存大对象的\n✔kafaka复制？怎么多个消费者消费同一个主题的？同一个消费组的多个消费着能消费同一个消息吗\n✔rabbitmq的exchange有几种\n✔消息顺序消费怎么做\n✔算法：两两交换链表中的节点\n#面经[话题]# #面试问题[话题]# #面试日常[话题]# #后端面试[话题]# #后端开发[话题]# #java[话题]# #社招[话题]# #哈啰[话题]# #哈啰面试[话题]#"
       }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67aed426000000002a00e040.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67aed426000000002a00e040/note/title",
+      "excerpt": "面经之哈啰（一面挂）"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67aed426000000002a00e040.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67aed426000000002a00e040/note/desc",
+      "excerpt": "✔简单聊了下项目\n✔承担的角色是什么\n✔上线灰度方案要考虑哪些东西\n✔对账机制\n✔重点说了状态机怎么玩的\n✔数据快照和回退 事务一致性怎么保证的\n✔核心接口qps\n✔集群情况\n✔redis架构是怎样的，主从数据同步，符合cap哪两个\n✔spring事务默认隔离级别\n✔string可以被继承吗\n✔泛型擦除\n✔es去重查询\n✔jvm虚拟机栈是什么\n✔什么会导致虚拟机栈内存泄漏\n✔g1是怎么存大对象的\n✔kafaka复制？怎么多个消费者消费同一个主题的？同一个消费组的多个消费着能消费同一个消息吗\n✔rabbitmq的exchange有几种\n✔消息顺序消费怎么做\n✔算法：两两交换链表中的节点\n#面经[话题]# #面试问题[话题]# #面试日常[话题]# #后端面试[话题]# #后端开发[话题]# #java[话题]# #社招[话题]# #哈啰[话题]# #哈啰面试[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67aed426000000002a00e040.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -41,6 +60,53 @@
       "git_blob_sha": "4f1448c6bc9744fdb26cadb1fbc54cfbe12f13b1"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67aed426000000002a00e040.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "面经之哈啰（一面挂） - 小红书",
+      "byte_size": 389790,
+      "git_blob_sha": "e07f361884763df5a96f222a0872dddfff7f83f7",
+      "sha256": "1806afa79f3cca9e561cb2fa20dfe90a45f29838f9b37850227cd2ffe26a04e8",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67aed426000000002a00e040.html",
+        "byte_size": 389790,
+        "git_blob_sha": "e07f361884763df5a96f222a0872dddfff7f83f7"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67aed426000000002a00e040.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67aed426000000002a00e040/note/title",
+      "excerpt": "面经之哈啰（一面挂）",
+      "byte_size": 22478,
+      "git_blob_sha": "c3e73dcac6c45c78febf4834607b4f32b3af9f94",
+      "sha256": "fab607c4080b298f7dc79402e772e577e9bf4c5a79fc5390c135cb4fc060e0d6",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67aed426000000002a00e040.json",
+        "byte_size": 22478,
+        "git_blob_sha": "c3e73dcac6c45c78febf4834607b4f32b3af9f94"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67aed426000000002a00e040.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "✔简单聊了下项目\n✔承担的角色是什么\n✔上线灰度方案要考虑哪些东西\n✔对账机制\n✔重点说了状态机怎么玩的\n✔数据快照和回退 事务一致性怎么保证的\n✔核心接口qps\n✔集群情况",
+      "byte_size": 923,
+      "git_blob_sha": "4f1448c6bc9744fdb26cadb1fbc54cfbe12f13b1",
+      "sha256": "d7d94eff6df796e32d6866a8f8a3a7b902b49f81df5dfa777081580bd62b96d8",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67aed426000000002a00e040.txt",
+        "byte_size": 923,
+        "git_blob_sha": "4f1448c6bc9744fdb26cadb1fbc54cfbe12f13b1"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -55,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -74,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

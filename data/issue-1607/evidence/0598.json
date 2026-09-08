@@ -9,20 +9,39 @@
   "expected_body_sha256": "6b97bcfa0a0e3ab93a38e8427f1248201ae81333f501350e6cd2646ab27b8674",
   "expected_source_revision_id": "xhs-note:67d8d9fc00000000090144c3:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": [
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "basis_lines": [],
+    "semantic_evidence": [
       {
-        "line_number": 1,
+        "ref": "liqiangcc/xhs:note_json/67d8d9fc00000000090144c3.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67d8d9fc00000000090144c3/note/title",
+        "excerpt": "3.13百度前端面经来啦"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67d8d9fc00000000090144c3.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67d8d9fc00000000090144c3/note/desc",
         "excerpt": "#前端面试[话题]# #面试题[话题]# #前端[话题]# #前端入门[话题]# #前端找工作[话题]# #前端知识[话题]# #大厂前端[话题]# #前端面试题[话题]# #前端开发[话题]# #前端开发工程师[话题]#"
       }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67d8d9fc00000000090144c3.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67d8d9fc00000000090144c3/note/title",
+      "excerpt": "3.13百度前端面经来啦"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67d8d9fc00000000090144c3.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67d8d9fc00000000090144c3/note/desc",
+      "excerpt": "#前端面试[话题]# #面试题[话题]# #前端[话题]# #前端入门[话题]# #前端找工作[话题]# #前端知识[话题]# #大厂前端[话题]# #前端面试题[话题]# #前端开发[话题]# #前端开发工程师[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67d8d9fc00000000090144c3.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -41,6 +60,53 @@
       "git_blob_sha": "095af748ab771b3d43dc863c916df756dce7872e"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67d8d9fc00000000090144c3.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "3.13百度前端面经来啦 - 小红书",
+      "byte_size": 409047,
+      "git_blob_sha": "e5b3d54008fe9d689ba073ac6d45a05d485847b6",
+      "sha256": "5ce1f5ce3aa80f14883cd707413a09dd6034380033ac05222bb0cef0aaac7475",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67d8d9fc00000000090144c3.html",
+        "byte_size": 409047,
+        "git_blob_sha": "e5b3d54008fe9d689ba073ac6d45a05d485847b6"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67d8d9fc00000000090144c3.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67d8d9fc00000000090144c3/note/title",
+      "excerpt": "3.13百度前端面经来啦",
+      "byte_size": 44659,
+      "git_blob_sha": "a1b9e43d58744fb9d9c230c64c8f6cced2518145",
+      "sha256": "e3665d8441477e4029a800c108f4cf18977368c40f61794c8502b3d3270789a4",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67d8d9fc00000000090144c3.json",
+        "byte_size": 44659,
+        "git_blob_sha": "a1b9e43d58744fb9d9c230c64c8f6cced2518145"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67d8d9fc00000000090144c3.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "#前端面试[话题]# #面试题[话题]# #前端[话题]# #前端入门[话题]# #前端找工作[话题]# #前端知识[话题]# #大厂前端[话题]# #前端面试题[话题]# #前端开发[话题]# #前端开发工程师[话题]#",
+      "byte_size": 236,
+      "git_blob_sha": "095af748ab771b3d43dc863c916df756dce7872e",
+      "sha256": "b5d5c85e6faeb2cea00bb1b67a4282535f5b1e822aba185f689c6b6f7964832e",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67d8d9fc00000000090144c3.txt",
+        "byte_size": 236,
+        "git_blob_sha": "095af748ab771b3d43dc863c916df756dce7872e"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -55,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -74,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

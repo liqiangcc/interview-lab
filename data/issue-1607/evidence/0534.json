@@ -9,15 +9,39 @@
   "expected_body_sha256": "cb85367146f86454c56da2536c6a122923154b4b9cc2feaf57aed1bbaa3b4924",
   "expected_source_revision_id": "xhs-note:67bc650c000000000900c4a0:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": []
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "basis_lines": [],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67bc650c000000000900c4a0.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67bc650c000000000900c4a0/note/title",
+        "excerpt": "2.24好未来Java一面面经"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67bc650c000000000900c4a0.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67bc650c000000000900c4a0/note/desc",
+        "excerpt": "1.项目中有难度的点\n2.介绍一下责任链模型\n3.用xxl-job扫表做定时任务不太好，可能有更好的方案\n4.消息幂等怎么实现的\n5.Java基本数据类型\n6.string，stringbuilder，stringbuffer\n7.stringbuilder和stringbuffer怎么完成字符串拼接的，怎么完成扩容的\n8.tcp和udp区别，tcp为什么是安全的\n9.介绍常见的集合和实现类\n10.arraylist和linkedlist有什么区别\n11.arraylist的扩容机制\n12.arraylist为什么能实现随机查找\n13.redis的数据类型和使用场景\n14.介绍一下Java的锁\n15.synchronized和lock有什么区别\n16.非聚簇索引和聚簇索引的区别\n17.非主键索引的查询过程\n18.线程池运行流程\n合并两个有序数组，并去重，要求O(m+n)\n#java[话题]# #后端开发[话题]# #面经[话题]#"
+      }
+    ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67bc650c000000000900c4a0.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67bc650c000000000900c4a0/note/title",
+      "excerpt": "2.24好未来Java一面面经"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67bc650c000000000900c4a0.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67bc650c000000000900c4a0/note/desc",
+      "excerpt": "1.项目中有难度的点\n2.介绍一下责任链模型\n3.用xxl-job扫表做定时任务不太好，可能有更好的方案\n4.消息幂等怎么实现的\n5.Java基本数据类型\n6.string，stringbuilder，stringbuffer\n7.stringbuilder和stringbuffer怎么完成字符串拼接的，怎么完成扩容的\n8.tcp和udp区别，tcp为什么是安全的\n9.介绍常见的集合和实现类\n10.arraylist和linkedlist有什么区别\n11.arraylist的扩容机制\n12.arraylist为什么能实现随机查找\n13.redis的数据类型和使用场景\n14.介绍一下Java的锁\n15.synchronized和lock有什么区别\n16.非聚簇索引和聚簇索引的区别\n17.非主键索引的查询过程\n18.线程池运行流程\n合并两个有序数组，并去重，要求O(m+n)\n#java[话题]# #后端开发[话题]# #面经[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67bc650c000000000900c4a0.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -36,6 +60,53 @@
       "git_blob_sha": "4e3c5ec868d400e13746d745ef0d25c79c4848fe"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67bc650c000000000900c4a0.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "2.24好未来Java一面面经 - 小红书",
+      "byte_size": 387514,
+      "git_blob_sha": "15687e7eb20f97540104c01cd998ac6e918946c3",
+      "sha256": "db778799c0a26b4ded6170a5f53b41a393941dcbe269baa8557b6bc5df23dba8",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67bc650c000000000900c4a0.html",
+        "byte_size": 387514,
+        "git_blob_sha": "15687e7eb20f97540104c01cd998ac6e918946c3"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67bc650c000000000900c4a0.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67bc650c000000000900c4a0/note/title",
+      "excerpt": "2.24好未来Java一面面经",
+      "byte_size": 21123,
+      "git_blob_sha": "11660674d7eaa72658a1c9ba768a7f2848a6a67f",
+      "sha256": "dc12c5105a288aced492615c7fcafe143e0b557c0e50bfebb303bfab90c30f7b",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67bc650c000000000900c4a0.json",
+        "byte_size": 21123,
+        "git_blob_sha": "11660674d7eaa72658a1c9ba768a7f2848a6a67f"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67bc650c000000000900c4a0.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "1.项目中有难度的点\n2.介绍一下责任链模型\n3.用xxl-job扫表做定时任务不太好，可能有更好的方案\n4.消息幂等怎么实现的\n5.Java基本数据类型\n6.string，stringbuilder，stringbuffer\n7.stringbuilder和stringbuffer怎么完成字符串拼接的，怎么完成扩容的\n8.tcp和udp区别，tcp为什么是安全的",
+      "byte_size": 812,
+      "git_blob_sha": "4e3c5ec868d400e13746d745ef0d25c79c4848fe",
+      "sha256": "f17e9ff02d57b3e7534792dcdea6e994bcdee23cae2628bd254c591f426d967d",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67bc650c000000000900c4a0.txt",
+        "byte_size": 812,
+        "git_blob_sha": "4e3c5ec868d400e13746d745ef0d25c79c4848fe"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -50,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -69,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

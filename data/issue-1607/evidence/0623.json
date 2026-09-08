@@ -9,20 +9,44 @@
   "expected_body_sha256": "b9f75072efe42ee296e4ca4f8d25357d3e3974a91bae57578900ca5e7048f656",
   "expected_source_revision_id": "xhs-note:67e12cfa000000001d02777a:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
     "basis_lines": [
       {
-        "line_number": 2,
-        "excerpt": "但这个题目怎么和我预想的完全不一样啊 救sos"
+        "line_number": 1,
+        "excerpt": "美团面试官一如既往的很“慈祥”"
+      }
+    ],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67e12cfa000000001d02777a.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67e12cfa000000001d02777a/note/title",
+        "excerpt": "美团java二面面经（感觉要挂版）"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67e12cfa000000001d02777a.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67e12cfa000000001d02777a/note/desc",
+        "excerpt": "美团面试官一如既往的很“慈祥”\n但这个题目怎么和我预想的完全不一样啊 救sos\n问项目（只问实际项目 自学的不问）\n数据库sql操作 出了两个题\n问依赖冲突如何解决\nshell熟不熟悉\nlinux查看日志的命令\n说一下spring ioc\n@resource和@autowired的区别\nbean的生命周期\nsychronized说一下\n出了一个sychronized的多线程的题 问你他俩能不能同时访问之类的\n创建线程池的参数有哪些\n一道智力题\n手撕：删除链表所有重复数字（不允许用map或者set）"
       }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67e12cfa000000001d02777a.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67e12cfa000000001d02777a/note/title",
+      "excerpt": "美团java二面面经（感觉要挂版）"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67e12cfa000000001d02777a.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67e12cfa000000001d02777a/note/desc",
+      "excerpt": "美团面试官一如既往的很“慈祥”\n但这个题目怎么和我预想的完全不一样啊 救sos\n问项目（只问实际项目 自学的不问）\n数据库sql操作 出了两个题\n问依赖冲突如何解决\nshell熟不熟悉\nlinux查看日志的命令\n说一下spring ioc\n@resource和@autowired的区别\nbean的生命周期\nsychronized说一下\n出了一个sychronized的多线程的题 问你他俩能不能同时访问之类的\n创建线程池的参数有哪些\n一道智力题\n手撕：删除链表所有重复数字（不允许用map或者set）"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67e12cfa000000001d02777a.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -41,6 +65,53 @@
       "git_blob_sha": "9f5390bcbbeec85d6f5f006235716651391ab9b4"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67e12cfa000000001d02777a.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "美团java二面面经（感觉要挂版） - 小红书",
+      "byte_size": 385885,
+      "git_blob_sha": "1468d385232bbb6d2acc3412fee17912cfdfd9c8",
+      "sha256": "57793dcf7f876fb8a51f8fd900a144829c60ed3c9385d0bb54650d3272ee4964",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67e12cfa000000001d02777a.html",
+        "byte_size": 385885,
+        "git_blob_sha": "1468d385232bbb6d2acc3412fee17912cfdfd9c8"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67e12cfa000000001d02777a.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67e12cfa000000001d02777a/note/title",
+      "excerpt": "美团java二面面经（感觉要挂版）",
+      "byte_size": 20245,
+      "git_blob_sha": "ed844e3f8743c9e85a723fb6b5241c45f5fcd775",
+      "sha256": "b0a2924c3e0df9e0e04c1095983f565270a42874c332fdd150bc81ee88243c28",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67e12cfa000000001d02777a.json",
+        "byte_size": 20245,
+        "git_blob_sha": "ed844e3f8743c9e85a723fb6b5241c45f5fcd775"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67e12cfa000000001d02777a.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "美团面试官一如既往的很“慈祥”\n但这个题目怎么和我预想的完全不一样啊 救sos\n问项目（只问实际项目 自学的不问）\n数据库sql操作 出了两个题\n问依赖冲突如何解决\nshell熟不熟悉\nlinux查看日志的命令\n说一下spring ioc",
+      "byte_size": 564,
+      "git_blob_sha": "9f5390bcbbeec85d6f5f006235716651391ab9b4",
+      "sha256": "4a038edf59190b1221639de7c25233835ff13a250e42699b2054e203229c087d",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67e12cfa000000001d02777a.txt",
+        "byte_size": 564,
+        "git_blob_sha": "9f5390bcbbeec85d6f5f006235716651391ab9b4"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -55,12 +126,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -74,7 +145,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

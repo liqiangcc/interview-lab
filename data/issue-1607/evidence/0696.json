@@ -9,15 +9,44 @@
   "expected_body_sha256": "bbbf74f564b0b86db18a24136c93faf8d68b87dd23e4558f5563ebb2b6931470",
   "expected_source_revision_id": "xhs-note:67f4e1af000000000900d038:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "blocked",
+  "decision": "blocked",
+  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified for this item.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": []
+    "status": "blocked",
+    "proposed_decision": "blocked",
+    "basis": "full Source artifacts are present but do not establish whether this is a candidate interview event or a non-event",
+    "basis_lines": [
+      {
+        "line_number": 1,
+        "excerpt": "整体感觉就是快手的面试流程很快，不会出现等好久才通知的情况"
+      }
+    ],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67f4e1af000000000900d038.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67f4e1af000000000900d038/note/title",
+        "excerpt": "快手后端开发面经"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67f4e1af000000000900d038.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67f4e1af000000000900d038/note/desc",
+        "excerpt": "整体感觉就是快手的面试流程很快，不会出现等好久才通知的情况\n﻿#后端开发[话题]#﻿ ﻿#快手[话题]#﻿ ﻿#大厂[话题]#﻿ ﻿#开发实习[话题]#﻿ ﻿#日常实习[话题]#﻿ ﻿#java[话题]#﻿ ﻿#程序员[话题]#﻿ ﻿#面经[话题]#﻿"
+      }
+    ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67f4e1af000000000900d038.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67f4e1af000000000900d038/note/title",
+      "excerpt": "快手后端开发面经"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67f4e1af000000000900d038.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67f4e1af000000000900d038/note/desc",
+      "excerpt": "整体感觉就是快手的面试流程很快，不会出现等好久才通知的情况\n﻿#后端开发[话题]#﻿ ﻿#快手[话题]#﻿ ﻿#大厂[话题]#﻿ ﻿#开发实习[话题]#﻿ ﻿#日常实习[话题]#﻿ ﻿#java[话题]#﻿ ﻿#程序员[话题]#﻿ ﻿#面经[话题]#﻿"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67f4e1af000000000900d038.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -36,6 +65,53 @@
       "git_blob_sha": "4006c3b836569094edd7719ea99131f9b27029b5"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67f4e1af000000000900d038.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "快手后端开发面经 - 小红书",
+      "byte_size": 391135,
+      "git_blob_sha": "c6b4c976539b6e12a31280b35275c5141dd5120b",
+      "sha256": "41abd31e6b119e6d4facd09dee96a1b1b6d33d0ef3fb8d0c308add98498fe489",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67f4e1af000000000900d038.html",
+        "byte_size": 391135,
+        "git_blob_sha": "c6b4c976539b6e12a31280b35275c5141dd5120b"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67f4e1af000000000900d038.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67f4e1af000000000900d038/note/title",
+      "excerpt": "快手后端开发面经",
+      "byte_size": 24547,
+      "git_blob_sha": "5935ae085fa8d9bc361875a958550705a18804eb",
+      "sha256": "0d6fd5b4399ab0dbe3cc1aa1592ab84c1744ecdd0ab63da2beaec45c5840f528",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67f4e1af000000000900d038.json",
+        "byte_size": 24547,
+        "git_blob_sha": "5935ae085fa8d9bc361875a958550705a18804eb"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67f4e1af000000000900d038.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "整体感觉就是快手的面试流程很快，不会出现等好久才通知的情况\n﻿#后端开发[话题]#﻿ ﻿#快手[话题]#﻿ ﻿#大厂[话题]#﻿ ﻿#开发实习[话题]#﻿ ﻿#日常实习[话题]#﻿ ﻿#java[话题]#﻿ ﻿#程序员[话题]#﻿ ﻿#面经[话题]#﻿",
+      "byte_size": 291,
+      "git_blob_sha": "4006c3b836569094edd7719ea99131f9b27029b5",
+      "sha256": "92d5448411ac0e6f839a3a2f5fc27decab6e94556f03449856635a6b5b54dccf",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67f4e1af000000000900d038.txt",
+        "byte_size": 291,
+        "git_blob_sha": "4006c3b836569094edd7719ea99131f9b27029b5"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -50,12 +126,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "blocked",
+      "note": "Full Source material remains semantically insufficient to decide the boundary."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -69,7 +145,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Complete pinned artifacts were read, but their semantics do not establish a 0/1/N boundary decision.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

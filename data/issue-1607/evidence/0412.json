@@ -9,15 +9,39 @@
   "expected_body_sha256": "40106d7a7fcb8768434ba96b678aa0fbb71dcd3e598ccc66feac5bca163065cb",
   "expected_source_revision_id": "xhs-note:6736ee13000000001b010447:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "blocked",
+  "decision": "blocked",
+  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified for this item.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": []
+    "status": "blocked",
+    "proposed_decision": "blocked",
+    "basis": "full Source artifacts are present but do not establish whether this is a candidate interview event or a non-event",
+    "basis_lines": [],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/6736ee13000000001b010447.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/6736ee13000000001b010447/note/title",
+        "excerpt": "阿里-橙狮体育java后端实习"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/6736ee13000000001b010447.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/6736ee13000000001b010447/note/desc",
+        "excerpt": "﻿#阿里[话题]#﻿ ﻿#java[话题]#﻿ ﻿#橙狮体育[话题]#﻿ ﻿#实习[话题]#﻿"
+      }
+    ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/6736ee13000000001b010447.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/6736ee13000000001b010447/note/title",
+      "excerpt": "阿里-橙狮体育java后端实习"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/6736ee13000000001b010447.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/6736ee13000000001b010447/note/desc",
+      "excerpt": "﻿#阿里[话题]#﻿ ﻿#java[话题]#﻿ ﻿#橙狮体育[话题]#﻿ ﻿#实习[话题]#﻿"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/6736ee13000000001b010447.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -36,6 +60,53 @@
       "git_blob_sha": "46803491886bb65dd0c0fb425c3237273f85eb8d"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/6736ee13000000001b010447.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "阿里-橙狮体育java后端实习 - 小红书",
+      "byte_size": 385791,
+      "git_blob_sha": "773b6510e91c1dcc8534514bd7622cec35fd7aa1",
+      "sha256": "6d69b8b1bcf232b3f2f3a543e575f99122dd2ee99d20179a9a0ba22305e95772",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:6736ee13000000001b010447.html",
+        "byte_size": 385791,
+        "git_blob_sha": "773b6510e91c1dcc8534514bd7622cec35fd7aa1"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/6736ee13000000001b010447.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/6736ee13000000001b010447/note/title",
+      "excerpt": "阿里-橙狮体育java后端实习",
+      "byte_size": 20627,
+      "git_blob_sha": "e2535636cbf1d601e7276b0f64771cc876921e47",
+      "sha256": "5091212e44c894cd9b55297decf5a65fdb0da67560d80a10f4846a087e8fe9aa",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:6736ee13000000001b010447.json",
+        "byte_size": 20627,
+        "git_blob_sha": "e2535636cbf1d601e7276b0f64771cc876921e47"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/6736ee13000000001b010447.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "﻿#阿里[话题]#﻿ ﻿#java[话题]#﻿ ﻿#橙狮体育[话题]#﻿ ﻿#实习[话题]#﻿",
+      "byte_size": 96,
+      "git_blob_sha": "46803491886bb65dd0c0fb425c3237273f85eb8d",
+      "sha256": "9c50963e8a5e1bf8db34920cfd1f7d54e0a4b3185a8d4db8ac1404b41692e174",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:6736ee13000000001b010447.txt",
+        "byte_size": 96,
+        "git_blob_sha": "46803491886bb65dd0c0fb425c3237273f85eb8d"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -50,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "blocked",
+      "note": "Full Source material remains semantically insufficient to decide the boundary."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -69,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "Complete pinned artifacts were read, but their semantics do not establish a 0/1/N boundary decision.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

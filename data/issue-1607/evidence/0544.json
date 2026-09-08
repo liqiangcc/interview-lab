@@ -9,20 +9,39 @@
   "expected_body_sha256": "e7ecc76c53e1b683f8c054a4157349debf80c57a69613a05c72d5b488beb3681",
   "expected_source_revision_id": "xhs-note:67bfe01d000000002902c3fc:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "not-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": [
+    "status": "reviewed",
+    "proposed_decision": "not-interview",
+    "basis": "marketing/repost or answer-key content is explicitly non-event",
+    "basis_lines": [],
+    "semantic_evidence": [
       {
-        "line_number": 1,
+        "ref": "liqiangcc/xhs:note_json/67bfe01d000000002902c3fc.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67bfe01d000000002902c3fc/note/title",
+        "excerpt": "【面试通关秘籍】滴滴Java后端秋招必赢指南"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67bfe01d000000002902c3fc.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67bfe01d000000002902c3fc/note/desc",
         "excerpt": "今天给大家分享一位同学上岸滴滴Java后端的面试经验。这位同学背景是双非院校本硕+三段（小中大）公司实习经历。 这里包含了实习阶段的工作以及实习内容，Java的基本数据及其封装类，什么情况下可能会导致Redis阻塞 ，分布幂等性如何设计，等一些资料。在这里篇幅有限，完整版给大家放链接了，需要的自取。   ﻿#秋招[话题]#﻿    ﻿#java[话题]#﻿       ﻿#后端开发[话题]#﻿      ﻿#算法[话题]#﻿       ﻿#程序员[话题]#﻿    ﻿#新手小白[话题]#﻿    ﻿#人工智能[话题]#﻿    ﻿#Java开发[话题]#﻿   ﻿#滴滴[话题]#﻿﻿"
       }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67bfe01d000000002902c3fc.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67bfe01d000000002902c3fc/note/title",
+      "excerpt": "【面试通关秘籍】滴滴Java后端秋招必赢指南"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67bfe01d000000002902c3fc.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67bfe01d000000002902c3fc/note/desc",
+      "excerpt": "今天给大家分享一位同学上岸滴滴Java后端的面试经验。这位同学背景是双非院校本硕+三段（小中大）公司实习经历。 这里包含了实习阶段的工作以及实习内容，Java的基本数据及其封装类，什么情况下可能会导致Redis阻塞 ，分布幂等性如何设计，等一些资料。在这里篇幅有限，完整版给大家放链接了，需要的自取。   ﻿#秋招[话题]#﻿    ﻿#java[话题]#﻿       ﻿#后端开发[话题]#﻿      ﻿#算法[话题]#﻿       ﻿#程序员[话题]#﻿    ﻿#新手小白[话题]#﻿    ﻿#人工智能[话题]#﻿    ﻿#Java开发[话题]#﻿   ﻿#滴滴[话题]#﻿﻿"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67bfe01d000000002902c3fc.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -41,6 +60,53 @@
       "git_blob_sha": "7b0c4571fb54568472db996f360ac80ba3468ace"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67bfe01d000000002902c3fc.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "【面试通关秘籍】滴滴Java后端秋招必赢指南 - 小红书",
+      "byte_size": 399464,
+      "git_blob_sha": "3009395f591fcaf3223388e2542656a0c25adb89",
+      "sha256": "3291cacf8adf749ec75f2ab14b805b1e005b3aa6c04609bde82bd8ed4b00a56f",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67bfe01d000000002902c3fc.html",
+        "byte_size": 399464,
+        "git_blob_sha": "3009395f591fcaf3223388e2542656a0c25adb89"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67bfe01d000000002902c3fc.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67bfe01d000000002902c3fc/note/title",
+      "excerpt": "【面试通关秘籍】滴滴Java后端秋招必赢指南",
+      "byte_size": 32468,
+      "git_blob_sha": "98b0d46ea2a6d15bbdab605e6862aa3cf21fff07",
+      "sha256": "1be94d48cf82bf16de40ad595bc1cadb3a8ef003179f45a85efaf07ebc01471a",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67bfe01d000000002902c3fc.json",
+        "byte_size": 32468,
+        "git_blob_sha": "98b0d46ea2a6d15bbdab605e6862aa3cf21fff07"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67bfe01d000000002902c3fc.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "今天给大家分享一位同学上岸滴滴Java后端的面试经验。这位同学背景是双非院校本硕+三段（小中大）公司实习经历。 这里包含了实习阶段的工作以及实习内容，Java的基本数据及其封装类，什么情况下可能会导致Redis阻塞 ，分布幂等性如何设计，等一些资料。在这里篇幅有限，完整版给大家放链接了，需要的自取。   ﻿#秋招[话题]#﻿    ﻿#java[话题]#﻿       ﻿#后端开发[话题]#﻿      ﻿#算法[话题]#﻿       ﻿#程序员[话题]#﻿    ﻿#新手小白[话题]#﻿    ﻿#人工智能[话题]#﻿    ﻿#Java开发[话题]#﻿   ﻿#滴滴[话题]#﻿﻿",
+      "byte_size": 727,
+      "git_blob_sha": "7b0c4571fb54568472db996f360ac80ba3468ace",
+      "sha256": "4f48f8ae6b9ee24aca742926959ad49396b1e27fae8abd047a6f6dc79e934a79",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67bfe01d000000002902c3fc.txt",
+        "byte_size": 727,
+        "git_blob_sha": "7b0c4571fb54568472db996f360ac80ba3468ace"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -55,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is not-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -74,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

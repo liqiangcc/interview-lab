@@ -9,20 +9,39 @@
   "expected_body_sha256": "c6140b6c0d6f69c324fb2c768ffac2eb2b496c1dfd67185af5a51613ad673b0c",
   "expected_source_revision_id": "xhs-note:673352c3000000001901b2f3:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": [
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "basis_lines": [],
+    "semantic_evidence": [
       {
-        "line_number": 1,
-        "excerpt": "问得人太多了发出来供大家参考，整体基础八股居多[萌萌哒R]"
+        "ref": "liqiangcc/xhs:note_json/673352c3000000001901b2f3.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/673352c3000000001901b2f3/note/title",
+        "excerpt": "小米java日常实习面经（已oc）"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/673352c3000000001901b2f3.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/673352c3000000001901b2f3/note/desc",
+        "excerpt": "问得人太多了发出来供大家参考，整体基础八股居多[萌萌哒R]\n#面经[话题]# #java[话题]# #小米实习[话题]# #后端实习[话题]#"
       }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/673352c3000000001901b2f3.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/673352c3000000001901b2f3/note/title",
+      "excerpt": "小米java日常实习面经（已oc）"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/673352c3000000001901b2f3.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/673352c3000000001901b2f3/note/desc",
+      "excerpt": "问得人太多了发出来供大家参考，整体基础八股居多[萌萌哒R]\n#面经[话题]# #java[话题]# #小米实习[话题]# #后端实习[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/673352c3000000001901b2f3.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -41,6 +60,53 @@
       "git_blob_sha": "a9ef3e7dea5084dac6a58543dbfb72ca2e458ea0"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/673352c3000000001901b2f3.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "小米java日常实习面经（已oc） - 小红书",
+      "byte_size": 388211,
+      "git_blob_sha": "7de2832b9fa2356cf51dba6047b022ce1fec94c3",
+      "sha256": "ba6d9a03ff94e3375400c3637e80b9b8948cbc791355429fade88d19cc7b6f24",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:673352c3000000001901b2f3.html",
+        "byte_size": 388211,
+        "git_blob_sha": "7de2832b9fa2356cf51dba6047b022ce1fec94c3"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/673352c3000000001901b2f3.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/673352c3000000001901b2f3/note/title",
+      "excerpt": "小米java日常实习面经（已oc）",
+      "byte_size": 22089,
+      "git_blob_sha": "8808302bdf5f5c84c9749d16be1a39837e7ab79f",
+      "sha256": "d285abfd54b46af4f4a3dd345a73a067ea56b325c5819160a950395f65f78d0b",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:673352c3000000001901b2f3.json",
+        "byte_size": 22089,
+        "git_blob_sha": "8808302bdf5f5c84c9749d16be1a39837e7ab79f"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/673352c3000000001901b2f3.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "问得人太多了发出来供大家参考，整体基础八股居多[萌萌哒R]\n#面经[话题]# #java[话题]# #小米实习[话题]# #后端实习[话题]#",
+      "byte_size": 160,
+      "git_blob_sha": "a9ef3e7dea5084dac6a58543dbfb72ca2e458ea0",
+      "sha256": "8e28bea85654dc17ddfacb1f759fafc9103252d05dfbb009a00890e42bd9b133",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:673352c3000000001901b2f3.txt",
+        "byte_size": 160,
+        "git_blob_sha": "a9ef3e7dea5084dac6a58543dbfb72ca2e458ea0"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -55,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -74,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

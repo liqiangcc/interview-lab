@@ -9,32 +9,44 @@
   "expected_body_sha256": "59f007b6dff3bc4518cb8e968194c5251c29602cfadcaa4b6da8c88e07dc3846",
   "expected_source_revision_id": "xhs-note:67cc07a0000000002503cbb9:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "not-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "status": "reviewed",
+    "proposed_decision": "not-interview",
+    "basis": "explicit invitation, job/advice, or question-bank content lacks a candidate event",
     "basis_lines": [
       {
         "line_number": 2,
         "excerpt": "然后正常问一些计算机网络，操作系统，Linux和Java的一些八股"
+      }
+    ],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67cc07a0000000002503cbb9.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67cc07a0000000002503cbb9/note/title",
+        "excerpt": "Java后端开发 实习 美团ai面复盘"
       },
       {
-        "line_number": 5,
-        "excerpt": "项目中有没有什么需要迅速学习新技术解决问题的地方"
-      },
-      {
-        "line_number": 6,
-        "excerpt": "遇到最难的问题是如何解决的"
-      },
-      {
-        "line_number": 8,
-        "excerpt": "然后问了一下未来三年的规划啥啥的非技术问题"
+        "ref": "liqiangcc/xhs:note_json/67cc07a0000000002503cbb9.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67cc07a0000000002503cbb9/note/desc",
+        "excerpt": "上来可以选擅长的语言\n然后正常问一些计算机网络，操作系统，Linux和Java的一些八股\n每个题都有两次更换机会，不会的话直接换就行\n然后拷打项目\n项目中有没有什么需要迅速学习新技术解决问题的地方\n遇到最难的问题是如何解决的\n中间根据你的回答它会追问\n然后问了一下未来三年的规划啥啥的非技术问题\n#后端开发[话题]# #面经[话题]# #java[话题]# #找实习[话题]# #程序员[话题]#"
       }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67cc07a0000000002503cbb9.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67cc07a0000000002503cbb9/note/title",
+      "excerpt": "Java后端开发 实习 美团ai面复盘"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67cc07a0000000002503cbb9.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67cc07a0000000002503cbb9/note/desc",
+      "excerpt": "上来可以选擅长的语言\n然后正常问一些计算机网络，操作系统，Linux和Java的一些八股\n每个题都有两次更换机会，不会的话直接换就行\n然后拷打项目\n项目中有没有什么需要迅速学习新技术解决问题的地方\n遇到最难的问题是如何解决的\n中间根据你的回答它会追问\n然后问了一下未来三年的规划啥啥的非技术问题\n#后端开发[话题]# #面经[话题]# #java[话题]# #找实习[话题]# #程序员[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67cc07a0000000002503cbb9.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -53,6 +65,53 @@
       "git_blob_sha": "307136277bfce34d85ae69dd9e6ee9844ebeb9fb"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67cc07a0000000002503cbb9.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "Java后端开发 实习 美团ai面复盘 - 小红书",
+      "byte_size": 387236,
+      "git_blob_sha": "fd11ee1afe903039c4dc5a8f310e2ba79404be02",
+      "sha256": "8fba6a4636a37bf5833698d5f90fa5025aa9a6e7ec3a57ee611f9eb2ae2e0346",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67cc07a0000000002503cbb9.html",
+        "byte_size": 387236,
+        "git_blob_sha": "fd11ee1afe903039c4dc5a8f310e2ba79404be02"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67cc07a0000000002503cbb9.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67cc07a0000000002503cbb9/note/title",
+      "excerpt": "Java后端开发 实习 美团ai面复盘",
+      "byte_size": 21223,
+      "git_blob_sha": "26cca0764acd8bdb09e54242468f250e9528e325",
+      "sha256": "50dd80c03f8b59f44c9390a9d6eb093ce1415d9334caac07a6cc53520fa818d1",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67cc07a0000000002503cbb9.json",
+        "byte_size": 21223,
+        "git_blob_sha": "26cca0764acd8bdb09e54242468f250e9528e325"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67cc07a0000000002503cbb9.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "上来可以选擅长的语言\n然后正常问一些计算机网络，操作系统，Linux和Java的一些八股\n每个题都有两次更换机会，不会的话直接换就行\n然后拷打项目\n项目中有没有什么需要迅速学习新技术解决问题的地方\n遇到最难的问题是如何解决的\n中间根据你的回答它会追问\n然后问了一下未来三年的规划啥啥的非技术问题",
+      "byte_size": 505,
+      "git_blob_sha": "307136277bfce34d85ae69dd9e6ee9844ebeb9fb",
+      "sha256": "4e12135cebcf771f78afc3722b0fb75993c4d3dcca437541b4c485706df4664e",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67cc07a0000000002503cbb9.txt",
+        "byte_size": 505,
+        "git_blob_sha": "307136277bfce34d85ae69dd9e6ee9844ebeb9fb"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -67,12 +126,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is not-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -86,7 +145,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

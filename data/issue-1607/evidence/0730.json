@@ -9,32 +9,39 @@
   "expected_body_sha256": "f567f6e2b79ba33d314fe6c4b07a56618b1b6880cfb5a3027fef52c375f2ffb4",
   "expected_source_revision_id": "xhs-note:67fcc086000000000b01e909:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": [
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "basis_lines": [],
+    "semantic_evidence": [
       {
-        "line_number": 2,
-        "excerpt": "问题一：Java基础数据类型有什么？int类型大小。"
+        "ref": "liqiangcc/xhs:note_json/67fcc086000000000b01e909.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67fcc086000000000b01e909/note/title",
+        "excerpt": "快手主站java后端开发一面"
       },
       {
-        "line_number": 3,
-        "excerpt": "问题二：synchronized，reentrantlock，cas的实现和区别"
-      },
-      {
-        "line_number": 4,
-        "excerpt": "问题三：怎么解决超卖。"
-      },
-      {
-        "line_number": 5,
-        "excerpt": "问题三：怎么解决Redis分布式集群下不一致问题"
+        "ref": "liqiangcc/xhs:note_json/67fcc086000000000b01e909.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67fcc086000000000b01e909/note/desc",
+        "excerpt": "课题组横向项目10min\n问题一：Java基础数据类型有什么？int类型大小。\n问题二：synchronized，reentrantlock，cas的实现和区别\n问题三：怎么解决超卖。\n问题三：怎么解决Redis分布式集群下不一致问题\n问题五：zset底层数据结构\n问题六：跳表的实现、查询过程\n问题七：rabbitmq与kafka的区别。为什么项目里用rabbitmq\n问题八：机器学习跟深度学习的区别与联系。\n手撕题：数组中最大的k个元素#后端开发[话题]# #面试题[话题]#"
       }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67fcc086000000000b01e909.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67fcc086000000000b01e909/note/title",
+      "excerpt": "快手主站java后端开发一面"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67fcc086000000000b01e909.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67fcc086000000000b01e909/note/desc",
+      "excerpt": "课题组横向项目10min\n问题一：Java基础数据类型有什么？int类型大小。\n问题二：synchronized，reentrantlock，cas的实现和区别\n问题三：怎么解决超卖。\n问题三：怎么解决Redis分布式集群下不一致问题\n问题五：zset底层数据结构\n问题六：跳表的实现、查询过程\n问题七：rabbitmq与kafka的区别。为什么项目里用rabbitmq\n问题八：机器学习跟深度学习的区别与联系。\n手撕题：数组中最大的k个元素#后端开发[话题]# #面试题[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67fcc086000000000b01e909.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -53,6 +60,53 @@
       "git_blob_sha": "45721b21ca0ababef2fef6c09bce04f4181efbbb"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67fcc086000000000b01e909.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "快手主站java后端开发一面 - 小红书",
+      "byte_size": 386364,
+      "git_blob_sha": "af95c401b18994ee7ae8ec535e6b4dbabfb08596",
+      "sha256": "ac75a6bf73e5fced225c9bb5ce216d6b9ad4240570c2e9a1c3013434ebc2222e",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67fcc086000000000b01e909.html",
+        "byte_size": 386364,
+        "git_blob_sha": "af95c401b18994ee7ae8ec535e6b4dbabfb08596"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67fcc086000000000b01e909.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67fcc086000000000b01e909/note/title",
+      "excerpt": "快手主站java后端开发一面",
+      "byte_size": 20627,
+      "git_blob_sha": "3cadbe552a1799715764302b3902fea02210aca3",
+      "sha256": "5e57384468cd25000b23a9c6f6f26b708ff81cd90d21612b8e31e765c17ebe47",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67fcc086000000000b01e909.json",
+        "byte_size": 20627,
+        "git_blob_sha": "3cadbe552a1799715764302b3902fea02210aca3"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67fcc086000000000b01e909.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "课题组横向项目10min\n问题一：Java基础数据类型有什么？int类型大小。\n问题二：synchronized，reentrantlock，cas的实现和区别\n问题三：怎么解决超卖。\n问题三：怎么解决Redis分布式集群下不一致问题\n问题五：zset底层数据结构\n问题六：跳表的实现、查询过程\n问题七：rabbitmq与kafka的区别。为什么项目里用rabbitmq",
+      "byte_size": 546,
+      "git_blob_sha": "45721b21ca0ababef2fef6c09bce04f4181efbbb",
+      "sha256": "90d09fc5e72c768096aa054800229d9194f00549e5f83ca92532e625596161a7",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67fcc086000000000b01e909.txt",
+        "byte_size": 546,
+        "git_blob_sha": "45721b21ca0ababef2fef6c09bce04f4181efbbb"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -67,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -86,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

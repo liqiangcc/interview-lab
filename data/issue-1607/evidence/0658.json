@@ -9,13 +9,13 @@
   "expected_body_sha256": "8c88b52fba69829ce1bf9f3e41d1f014535084160a06a6d409f82aa6471de946",
   "expected_source_revision_id": "xhs-note:67e91cb4000000000900eae5:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "not-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "status": "reviewed",
+    "proposed_decision": "not-interview",
+    "basis": "explicit invitation, job/advice, or question-bank content lacks a candidate event",
     "basis_lines": [
       {
         "line_number": 1,
@@ -24,9 +24,37 @@
       {
         "line_number": 2,
         "excerpt": "规则: 前面八股有三到五秒思考时间，后面场景有十六秒左右思考时间，回答时间是两三分钟可以提前结束回答，有两次换题机会。"
+      },
+      {
+        "line_number": 6,
+        "excerpt": "3. 可以准备水杯在旁边，答到后面感觉口干舌燥了[猪头R][猪头R]"
+      }
+    ],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67e91cb4000000000900eae5.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67e91cb4000000000900eae5/note/title",
+        "excerpt": "美团ai面 java后端暑期实习"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67e91cb4000000000900eae5.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67e91cb4000000000900eae5/note/desc",
+        "excerpt": "p1是今天的面试题，后面是搜集的可能的题库。\n规则: 前面八股有三到五秒思考时间，后面场景有十六秒左右思考时间，回答时间是两三分钟可以提前结束回答，有两次换题机会。\n注意事项:\n1. 后面项目场景会根据你的回答追问，千万不要说自己不会的埋雷，可以引导它问你比较擅长的部分。\n2. 尽量在截止时间前一个半小时开始，注意总时间是一个小时，没注意时间最后一题就剩十几秒回答了[捂脸R][捂脸R]\n3. 可以准备水杯在旁边，答到后面感觉口干舌燥了[猪头R][猪头R]\n4. 最后大家注意手机号不要开骚扰电话拦截，可能会接不到面试电话[失望R]\n5. 大家一起加油！不要太有压力，每次面试都会是提升自己的机会！[赞R][派对R]"
       }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67e91cb4000000000900eae5.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67e91cb4000000000900eae5/note/title",
+      "excerpt": "美团ai面 java后端暑期实习"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67e91cb4000000000900eae5.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67e91cb4000000000900eae5/note/desc",
+      "excerpt": "p1是今天的面试题，后面是搜集的可能的题库。\n规则: 前面八股有三到五秒思考时间，后面场景有十六秒左右思考时间，回答时间是两三分钟可以提前结束回答，有两次换题机会。\n注意事项:\n1. 后面项目场景会根据你的回答追问，千万不要说自己不会的埋雷，可以引导它问你比较擅长的部分。\n2. 尽量在截止时间前一个半小时开始，注意总时间是一个小时，没注意时间最后一题就剩十几秒回答了[捂脸R][捂脸R]\n3. 可以准备水杯在旁边，答到后面感觉口干舌燥了[猪头R][猪头R]\n4. 最后大家注意手机号不要开骚扰电话拦截，可能会接不到面试电话[失望R]\n5. 大家一起加油！不要太有压力，每次面试都会是提升自己的机会！[赞R][派对R]"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67e91cb4000000000900eae5.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -45,6 +73,53 @@
       "git_blob_sha": "a55b8935961be8ef9d5233d4bb651317edb584da"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67e91cb4000000000900eae5.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "美团ai面 java后端暑期实习 - 小红书",
+      "byte_size": 395383,
+      "git_blob_sha": "7849524b7925fcde8ffe478284ec462743553923",
+      "sha256": "60ada977c42b7ae63e5f633153ebf97faf9a782440a81fa1ab8f8bdc81d831bd",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67e91cb4000000000900eae5.html",
+        "byte_size": 395383,
+        "git_blob_sha": "7849524b7925fcde8ffe478284ec462743553923"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67e91cb4000000000900eae5.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67e91cb4000000000900eae5/note/title",
+      "excerpt": "美团ai面 java后端暑期实习",
+      "byte_size": 28957,
+      "git_blob_sha": "3c561b39e9e5ff54f6cd3e85f5696509bbea8ae4",
+      "sha256": "7ae75dbc41e0b6bddccdb138b7a8eb84dde7ecb464b6b2b5eac1a334da4a9aa2",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67e91cb4000000000900eae5.json",
+        "byte_size": 28957,
+        "git_blob_sha": "3c561b39e9e5ff54f6cd3e85f5696509bbea8ae4"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67e91cb4000000000900eae5.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "p1是今天的面试题，后面是搜集的可能的题库。\n规则: 前面八股有三到五秒思考时间，后面场景有十六秒左右思考时间，回答时间是两三分钟可以提前结束回答，有两次换题机会。\n注意事项:\n1. 后面项目场景会根据你的回答追问，千万不要说自己不会的埋雷，可以引导它问你比较擅长的部分。\n2. 尽量在截止时间前一个半小时开始，注意总时间是一个小时，没注意时间最后一题就剩十几秒回答了[捂脸R][捂脸R]\n3. 可以准备水杯在旁边，答到后面感觉口干舌燥了[猪头R][猪头R]\n4. 最后大家注意手机号不要开骚扰电话拦截，可能会接不到面试电话[失望R]\n5. 大家一起加油！不要太有压力，每次面试都会是提升自己的机会！[赞R][派对R]",
+      "byte_size": 832,
+      "git_blob_sha": "a55b8935961be8ef9d5233d4bb651317edb584da",
+      "sha256": "7fd97d6cf747e706661e863b966e330af97e6f8f75e79fe3498f8ff0bc7cba5e",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67e91cb4000000000900eae5.txt",
+        "byte_size": 832,
+        "git_blob_sha": "a55b8935961be8ef9d5233d4bb651317edb584da"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -59,12 +134,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is not-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -78,7 +153,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

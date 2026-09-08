@@ -9,24 +9,48 @@
   "expected_body_sha256": "a69dee7616d9aab5191349bbef1eb2a234162df82700b8703c6c92d0d2deccd3",
   "expected_source_revision_id": "xhs-note:67d94d05000000001c003748:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "not-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "status": "reviewed",
+    "proposed_decision": "not-interview",
+    "basis": "interviewer-perspective sharing is not a candidate interview event",
     "basis_lines": [
       {
-        "line_number": 7,
-        "excerpt": "4. 问linux排查问题常用指令"
+        "line_number": 1,
+        "excerpt": "总共面了1个小时多一点，面试官很好提问很有引导性"
       },
       {
-        "line_number": 11,
-        "excerpt": "8.后面漫长的场景题：海量日志数据，提取出某日访问美团最多的ip，但是文件比较长上亿行，无法一次读入内存应该怎么做"
+        "line_number": 14,
+        "excerpt": "（后面每句话都会追问导致感觉有一点点讲不清楚逻辑了，面试官说感觉我能说出来但是表达不清楚[捂脸R]）"
+      }
+    ],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67d94d05000000001c003748.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67d94d05000000001c003748/note/title",
+        "excerpt": "美团一面Java"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67d94d05000000001c003748.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67d94d05000000001c003748/note/desc",
+        "excerpt": "总共面了1个小时多一点，面试官很好提问很有引导性\n\t\n1.自我介绍\n2.简单计网：tcp三次握手能不能换两次握手\n\t\n3.项目+换场景（大概问了30分钟，换了一些比如说拉新用户有次数限制怎么设计uniqid这种，然后就是问具体模块以及如何保证金额流水一致性，以及深挖数据库每个表之间的关系）\n4. 问linux排查问题常用指令\n5.问top命令\n6.代码题：最大矩阵面积\n7.智力题：5L桶，3L桶，倒出4L水\n8.后面漫长的场景题：海量日志数据，提取出某日访问美团最多的ip，但是文件比较长上亿行，无法一次读入内存应该怎么做\n后面追问一个机器只能处理1万行，小文件怎么分，访问有时候早上访问有时候晚上访问如何做规定不会把某些访问的ip丢掉\n\t\n（后面每句话都会追问导致感觉有一点点讲不清楚逻辑了，面试官说感觉我能说出来但是表达不清楚[捂脸R]）"
       }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67d94d05000000001c003748.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67d94d05000000001c003748/note/title",
+      "excerpt": "美团一面Java"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67d94d05000000001c003748.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67d94d05000000001c003748/note/desc",
+      "excerpt": "总共面了1个小时多一点，面试官很好提问很有引导性\n\t\n1.自我介绍\n2.简单计网：tcp三次握手能不能换两次握手\n\t\n3.项目+换场景（大概问了30分钟，换了一些比如说拉新用户有次数限制怎么设计uniqid这种，然后就是问具体模块以及如何保证金额流水一致性，以及深挖数据库每个表之间的关系）\n4. 问linux排查问题常用指令\n5.问top命令\n6.代码题：最大矩阵面积\n7.智力题：5L桶，3L桶，倒出4L水\n8.后面漫长的场景题：海量日志数据，提取出某日访问美团最多的ip，但是文件比较长上亿行，无法一次读入内存应该怎么做\n后面追问一个机器只能处理1万行，小文件怎么分，访问有时候早上访问有时候晚上访问如何做规定不会把某些访问的ip丢掉\n\t\n（后面每句话都会追问导致感觉有一点点讲不清楚逻辑了，面试官说感觉我能说出来但是表达不清楚[捂脸R]）"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67d94d05000000001c003748.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -45,6 +69,53 @@
       "git_blob_sha": "90fc053b03b9c0f407e31c3837af7120e7c39f43"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67d94d05000000001c003748.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "美团一面Java - 小红书",
+      "byte_size": 387101,
+      "git_blob_sha": "91cd85522f80a1a3f415ee7ed4444976d30f2a4a",
+      "sha256": "6656ca6eafdc419f3ac453702b9d48dc5d2557201b87b3ba66dff938558503a3",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67d94d05000000001c003748.html",
+        "byte_size": 387101,
+        "git_blob_sha": "91cd85522f80a1a3f415ee7ed4444976d30f2a4a"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67d94d05000000001c003748.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67d94d05000000001c003748/note/title",
+      "excerpt": "美团一面Java",
+      "byte_size": 20626,
+      "git_blob_sha": "4e23ff7048eceaad7be751303fd96e11c4ba75be",
+      "sha256": "c22c3c6d5d6c52fb14a1212be24e7ec544dc8ebe14965ac66ba7144dcc1f43af",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67d94d05000000001c003748.json",
+        "byte_size": 20626,
+        "git_blob_sha": "4e23ff7048eceaad7be751303fd96e11c4ba75be"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67d94d05000000001c003748.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "总共面了1个小时多一点，面试官很好提问很有引导性\n1.自我介绍\n2.简单计网：tcp三次握手能不能换两次握手\n3.项目+换场景（大概问了30分钟，换了一些比如说拉新用户有次数限制怎么设计uniqid这种，然后就是问具体模块以及如何保证金额流水一致性，以及深挖数据库每个表之间的关系）\n4. 问linux排查问题常用指令\n5.问top命令\n6.代码题：最大矩阵面积\n7.智力题：5L桶，3L桶，倒出4L水",
+      "byte_size": 984,
+      "git_blob_sha": "90fc053b03b9c0f407e31c3837af7120e7c39f43",
+      "sha256": "624f7e9a81452d7aec462679605530d0f3e02a4f60f8e8986c1b65401a924af4",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67d94d05000000001c003748.txt",
+        "byte_size": 984,
+        "git_blob_sha": "90fc053b03b9c0f407e31c3837af7120e7c39f43"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -59,12 +130,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is not-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -78,7 +149,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

@@ -9,20 +9,44 @@
   "expected_body_sha256": "72697bcbbef2197568bbdaeb0265bf180bfdc552aff9a89160de7ea846c34285",
   "expected_source_revision_id": "xhs-note:67c96c41000000001201c4a2:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "not-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
+    "status": "reviewed",
+    "proposed_decision": "not-interview",
+    "basis": "explicit invitation, job/advice, or question-bank content lacks a candidate event",
     "basis_lines": [
       {
         "line_number": 2,
         "excerpt": "整理好了现在面试常问面试题，里面包含了大厂真题，场景题，八股文，希望对你们有所帮助！#爱上工作的瞬间[话题]# #java面试[话题]# #互联网大厂[话题]# #java[话题]# #后端开发[话题]# #计算机[话题]# #编程[话题]# #求职[话题]# #面试[话题]# #Java场景题[话题]#"
       }
+    ],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67c96c41000000001201c4a2.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67c96c41000000001201c4a2/note/title",
+        "excerpt": "京东Java后端，差点没稳住……"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67c96c41000000001201c4a2.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67c96c41000000001201c4a2/note/desc",
+        "excerpt": "211本，工作6年\n整理好了现在面试常问面试题，里面包含了大厂真题，场景题，八股文，希望对你们有所帮助！#爱上工作的瞬间[话题]# #java面试[话题]# #互联网大厂[话题]# #java[话题]# #后端开发[话题]# #计算机[话题]# #编程[话题]# #求职[话题]# #面试[话题]# #Java场景题[话题]#"
+      }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67c96c41000000001201c4a2.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67c96c41000000001201c4a2/note/title",
+      "excerpt": "京东Java后端，差点没稳住……"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67c96c41000000001201c4a2.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67c96c41000000001201c4a2/note/desc",
+      "excerpt": "211本，工作6年\n整理好了现在面试常问面试题，里面包含了大厂真题，场景题，八股文，希望对你们有所帮助！#爱上工作的瞬间[话题]# #java面试[话题]# #互联网大厂[话题]# #java[话题]# #后端开发[话题]# #计算机[话题]# #编程[话题]# #求职[话题]# #面试[话题]# #Java场景题[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67c96c41000000001201c4a2.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -41,6 +65,53 @@
       "git_blob_sha": "65cf26e1691293f8397b0a030f3043186c7ffea3"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67c96c41000000001201c4a2.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "京东Java后端，差点没稳住…… - 小红书",
+      "byte_size": 390708,
+      "git_blob_sha": "4e944066610f74b9ee5a480fb53ca19a10980892",
+      "sha256": "c954d84c622e8bfb070f86a80a4e657ad2dddd0f53a5d067158e889be5746298",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67c96c41000000001201c4a2.html",
+        "byte_size": 390708,
+        "git_blob_sha": "4e944066610f74b9ee5a480fb53ca19a10980892"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67c96c41000000001201c4a2.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67c96c41000000001201c4a2/note/title",
+      "excerpt": "京东Java后端，差点没稳住……",
+      "byte_size": 23548,
+      "git_blob_sha": "4c1c964262f9687cf028e3e29a99ee017ffa9c9e",
+      "sha256": "d180d3604819efd326940b5ffe4f639bc4220ee486590b5676c979435da1fc15",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67c96c41000000001201c4a2.json",
+        "byte_size": 23548,
+        "git_blob_sha": "4c1c964262f9687cf028e3e29a99ee017ffa9c9e"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67c96c41000000001201c4a2.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "211本，工作6年\n整理好了现在面试常问面试题，里面包含了大厂真题，场景题，八股文，希望对你们有所帮助！#爱上工作的瞬间[话题]# #java面试[话题]# #互联网大厂[话题]# #java[话题]# #后端开发[话题]# #计算机[话题]# #编程[话题]# #求职[话题]# #面试[话题]# #Java场景题[话题]#",
+      "byte_size": 358,
+      "git_blob_sha": "65cf26e1691293f8397b0a030f3043186c7ffea3",
+      "sha256": "6934d175251bdee65f5f4e9c64d90a745d34583e96447bb4b919dfcc97f38bb5",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67c96c41000000001201c4a2.txt",
+        "byte_size": 358,
+        "git_blob_sha": "65cf26e1691293f8397b0a030f3043186c7ffea3"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -55,12 +126,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is not-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -74,7 +145,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

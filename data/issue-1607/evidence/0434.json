@@ -9,15 +9,48 @@
   "expected_body_sha256": "e6df6a68ec08cc626a73bd62444420128d940c6a20b8b6d0b18ab71ec0d8fd29",
   "expected_source_revision_id": "xhs-note:674ebc6a000000000202f8ee:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "multi-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": []
+    "status": "reviewed",
+    "proposed_decision": "multi-interview",
+    "basis": "complete candidate interview evidence names multiple distinct interview events/rounds",
+    "basis_lines": [
+      {
+        "line_number": 2,
+        "excerpt": "一面 11.20 挂 [失望R]"
+      },
+      {
+        "line_number": 5,
+        "excerpt": "一面 12.02 挂 [失望R]"
+      }
+    ],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/674ebc6a000000000202f8ee.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/674ebc6a000000000202f8ee/note/title",
+        "excerpt": "字节跳动-后端开发实习-面经"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/674ebc6a000000000202f8ee.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/674ebc6a000000000202f8ee/note/desc",
+        "excerpt": "投简历 11.18 [哇R]\n一面 11.20 挂 [失望R]\n\t\n投简历 11.29 [哇R]\n一面 12.02 挂 [失望R]\n#字节跳动[话题]# #日常实习[话题]# #面经[话题]# #java[话题]# #后端开发[话题]#"
+      }
+    ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/674ebc6a000000000202f8ee.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/674ebc6a000000000202f8ee/note/title",
+      "excerpt": "字节跳动-后端开发实习-面经"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/674ebc6a000000000202f8ee.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/674ebc6a000000000202f8ee/note/desc",
+      "excerpt": "投简历 11.18 [哇R]\n一面 11.20 挂 [失望R]\n\t\n投简历 11.29 [哇R]\n一面 12.02 挂 [失望R]\n#字节跳动[话题]# #日常实习[话题]# #面经[话题]# #java[话题]# #后端开发[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/674ebc6a000000000202f8ee.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -36,6 +69,53 @@
       "git_blob_sha": "9bd068b9bf7e7a5eb3d5b67ef63b63be0b0fc780"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/674ebc6a000000000202f8ee.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "字节跳动-后端开发实习-面经 - 小红书",
+      "byte_size": 390174,
+      "git_blob_sha": "1538443f4fbdb2c2280c2bef3de126d083ce0450",
+      "sha256": "1db1b1baf2747c37b71c0618c899b48825b1b45b5eabc44a4190936dfd917c6e",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:674ebc6a000000000202f8ee.html",
+        "byte_size": 390174,
+        "git_blob_sha": "1538443f4fbdb2c2280c2bef3de126d083ce0450"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/674ebc6a000000000202f8ee.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/674ebc6a000000000202f8ee/note/title",
+      "excerpt": "字节跳动-后端开发实习-面经",
+      "byte_size": 23751,
+      "git_blob_sha": "3ebdfb5e05c940242edbe384f080cc11b3b24d90",
+      "sha256": "41c4b07a63b7dbdb0cd874659fdcb1ddceedf112d9edb4b42b5733a270be6e4a",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:674ebc6a000000000202f8ee.json",
+        "byte_size": 23751,
+        "git_blob_sha": "3ebdfb5e05c940242edbe384f080cc11b3b24d90"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/674ebc6a000000000202f8ee.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "投简历 11.18 [哇R]\n一面 11.20 挂 [失望R]\n投简历 11.29 [哇R]\n一面 12.02 挂 [失望R]\n#字节跳动[话题]# #日常实习[话题]# #面经[话题]# #java[话题]# #后端开发[话题]#",
+      "byte_size": 203,
+      "git_blob_sha": "9bd068b9bf7e7a5eb3d5b67ef63b63be0b0fc780",
+      "sha256": "eabaca14ea7f460ecf680919b5bb3d8c9ca851dbb540c96163552e577b8ca32b",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:674ebc6a000000000202f8ee.txt",
+        "byte_size": 203,
+        "git_blob_sha": "9bd068b9bf7e7a5eb3d5b67ef63b63be0b0fc780"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -50,12 +130,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is multi-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -69,7 +149,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

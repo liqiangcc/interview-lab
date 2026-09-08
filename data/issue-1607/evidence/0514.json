@@ -9,15 +9,44 @@
   "expected_body_sha256": "819267353b3ea59177fad3b662f01f5d9f83109f0548af22c2d603a15993e26a",
   "expected_source_revision_id": "xhs-note:67b40040000000002803da82:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "not-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": []
+    "status": "reviewed",
+    "proposed_decision": "not-interview",
+    "basis": "interviewer-perspective sharing is not a candidate interview event",
+    "basis_lines": [
+      {
+        "line_number": 1,
+        "excerpt": "第一次面试，总共三十分钟，问的都很基础，最后，面试官建议要注重基础。#后端开发[话题]# #计算机[话题]# #面经[话题]# #java[话题]# #腾讯[话题]#"
+      }
+    ],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67b40040000000002803da82.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67b40040000000002803da82/note/title",
+        "excerpt": "腾讯 S 线一面"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67b40040000000002803da82.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67b40040000000002803da82/note/desc",
+        "excerpt": "第一次面试，总共三十分钟，问的都很基础，最后，面试官建议要注重基础。#后端开发[话题]# #计算机[话题]# #面经[话题]# #java[话题]# #腾讯[话题]#"
+      }
+    ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67b40040000000002803da82.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67b40040000000002803da82/note/title",
+      "excerpt": "腾讯 S 线一面"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67b40040000000002803da82.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67b40040000000002803da82/note/desc",
+      "excerpt": "第一次面试，总共三十分钟，问的都很基础，最后，面试官建议要注重基础。#后端开发[话题]# #计算机[话题]# #面经[话题]# #java[话题]# #腾讯[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67b40040000000002803da82.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -36,6 +65,53 @@
       "git_blob_sha": "0bfe0af1c08403998098553f8f9508f0906f083d"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67b40040000000002803da82.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "腾讯 S 线一面 - 小红书",
+      "byte_size": 388406,
+      "git_blob_sha": "d05d119eb1475348a79ee333354ad3ecdd371101",
+      "sha256": "88ac74d6eebac085817b958c920985942b11932e7b40dc73dc591dabe035a879",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67b40040000000002803da82.html",
+        "byte_size": 388406,
+        "git_blob_sha": "d05d119eb1475348a79ee333354ad3ecdd371101"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67b40040000000002803da82.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67b40040000000002803da82/note/title",
+      "excerpt": "腾讯 S 线一面",
+      "byte_size": 22297,
+      "git_blob_sha": "b0590e12ea57ce36fe17275a247233b8d2841db9",
+      "sha256": "d191826589b0d7e236731a58d2b47951b6300a3e9fb1e9502f53a5bec0d7bbdd",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67b40040000000002803da82.json",
+        "byte_size": 22297,
+        "git_blob_sha": "b0590e12ea57ce36fe17275a247233b8d2841db9"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67b40040000000002803da82.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "第一次面试，总共三十分钟，问的都很基础，最后，面试官建议要注重基础。#后端开发[话题]# #计算机[话题]# #面经[话题]# #java[话题]# #腾讯[话题]#",
+      "byte_size": 194,
+      "git_blob_sha": "0bfe0af1c08403998098553f8f9508f0906f083d",
+      "sha256": "97a93fb5984ba64a44c7c13ac3cd19f62119fb0130adef0a5b26296e02e9696d",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67b40040000000002803da82.txt",
+        "byte_size": 194,
+        "git_blob_sha": "0bfe0af1c08403998098553f8f9508f0906f083d"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -50,12 +126,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is not-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -69,7 +145,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

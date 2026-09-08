@@ -9,32 +9,39 @@
   "expected_body_sha256": "118071b6c3e02b08578342a72e6f3b30dbca046ea57db12b2bbc4c2bcf8668bd",
   "expected_source_revision_id": "xhs-note:67e14815000000001b025250:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": [
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "basis_lines": [],
+    "semantic_evidence": [
       {
-        "line_number": 3,
-        "excerpt": "说一下项目中遇到的问题和解决方案"
+        "ref": "liqiangcc/xhs:note_json/67e14815000000001b025250.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67e14815000000001b025250/note/title",
+        "excerpt": "腾讯一面面经-后台开发1h40min"
       },
       {
-        "line_number": 5,
-        "excerpt": "2.八股30min"
-      },
-      {
-        "line_number": 15,
-        "excerpt": "读写问题怎么避免死锁"
-      },
-      {
-        "line_number": 34,
-        "excerpt": "#面经[话题]# #面试[话题]# #面试问题[话题]# #面试真题[话题]#"
+        "ref": "liqiangcc/xhs:note_json/67e14815000000001b025250.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67e14815000000001b025250/note/desc",
+        "excerpt": "（上来竟然没让我自我介绍，直接问项目。\n1.项目拷打30min\n说一下项目中遇到的问题和解决方案\n\t\n2.八股30min\n计网：\n拥塞控制\ntcp和udp的缺点\nosi七层结构\n（有些记不清了）\n\t\n操作系统：\n进程和线程的区别，知不知道协程\n线程间通信和死锁\n读写问题怎么避免死锁\n加锁之后效率太低了怎么办...\n\t\nc++\n说一下左值和右值是什么和区别\n虚函数怎么用\n多态的实现和使用\n（还有些忘了）\n\t\n其他：\nhashmap怎么更好的避免冲突\n如果已经冲突过多怎么解决\n如果要进一步扩展hash数组大小怎么避免它原本放的位置不会出错\n\t\n手撕：\n1.情景题：有无数条绳子，每条绳子密度随机，但是烧完一定花1h，问如何用这些绳子计时15min\n2.合并k个升序链表\n3.快排模板\n4.一道动态规划（忘了，有点难，没做出来）\n#面经[话题]# #面试[话题]# #面试问题[话题]# #面试真题[话题]#"
       }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67e14815000000001b025250.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67e14815000000001b025250/note/title",
+      "excerpt": "腾讯一面面经-后台开发1h40min"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67e14815000000001b025250.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67e14815000000001b025250/note/desc",
+      "excerpt": "（上来竟然没让我自我介绍，直接问项目。\n1.项目拷打30min\n说一下项目中遇到的问题和解决方案\n\t\n2.八股30min\n计网：\n拥塞控制\ntcp和udp的缺点\nosi七层结构\n（有些记不清了）\n\t\n操作系统：\n进程和线程的区别，知不知道协程\n线程间通信和死锁\n读写问题怎么避免死锁\n加锁之后效率太低了怎么办...\n\t\nc++\n说一下左值和右值是什么和区别\n虚函数怎么用\n多态的实现和使用\n（还有些忘了）\n\t\n其他：\nhashmap怎么更好的避免冲突\n如果已经冲突过多怎么解决\n如果要进一步扩展hash数组大小怎么避免它原本放的位置不会出错\n\t\n手撕：\n1.情景题：有无数条绳子，每条绳子密度随机，但是烧完一定花1h，问如何用这些绳子计时15min\n2.合并k个升序链表\n3.快排模板\n4.一道动态规划（忘了，有点难，没做出来）\n#面经[话题]# #面试[话题]# #面试问题[话题]# #面试真题[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67e14815000000001b025250.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -53,6 +60,53 @@
       "git_blob_sha": "6af23c793c51832283a5a20b0bcd978151d17f12"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67e14815000000001b025250.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "腾讯一面面经-后台开发1h40min - 小红书",
+      "byte_size": 388401,
+      "git_blob_sha": "9ac90b8839da68e715763c63af612ff332ac8969",
+      "sha256": "a100af2f628598c6a370f649f8a50b951195b2f93413bf35a46599bc4a3aa793",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67e14815000000001b025250.html",
+        "byte_size": 388401,
+        "git_blob_sha": "9ac90b8839da68e715763c63af612ff332ac8969"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67e14815000000001b025250.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67e14815000000001b025250/note/title",
+      "excerpt": "腾讯一面面经-后台开发1h40min",
+      "byte_size": 21531,
+      "git_blob_sha": "874029ad199aabd2d7c725cc0f718f2e55fc80b3",
+      "sha256": "51a75e31c3e3a8be0aebc463208d24aa8b1cce56d4939f1cb072715961fe1d1c",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67e14815000000001b025250.json",
+        "byte_size": 21531,
+        "git_blob_sha": "874029ad199aabd2d7c725cc0f718f2e55fc80b3"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67e14815000000001b025250.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "（上来竟然没让我自我介绍，直接问项目。\n1.项目拷打30min\n说一下项目中遇到的问题和解决方案\n2.八股30min\n计网：\n拥塞控制\ntcp和udp的缺点\nosi七层结构",
+      "byte_size": 987,
+      "git_blob_sha": "6af23c793c51832283a5a20b0bcd978151d17f12",
+      "sha256": "d8ffe8b406c4328ad3ac946e9a5ab35a0a9f7de3b478b6abd1a57c3f4d00bced",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67e14815000000001b025250.txt",
+        "byte_size": 987,
+        "git_blob_sha": "6af23c793c51832283a5a20b0bcd978151d17f12"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -67,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -86,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

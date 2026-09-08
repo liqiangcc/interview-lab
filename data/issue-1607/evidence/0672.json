@@ -9,28 +9,39 @@
   "expected_body_sha256": "e17dd37b2822f4809e234cac3b696a3c8629d575d65bc31fd2dc6ff23ea4ed2b",
   "expected_source_revision_id": "xhs-note:67ecedf5000000000d015887:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": [
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "basis_lines": [],
+    "semantic_evidence": [
       {
-        "line_number": 1,
-        "excerpt": "场景题："
+        "ref": "liqiangcc/xhs:note_json/67ecedf5000000000d015887.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67ecedf5000000000d015887/note/title",
+        "excerpt": "京东后端开发一面"
       },
       {
-        "line_number": 6,
-        "excerpt": "5.Spring mvc的拦截器怎么解决跨域问题？"
-      },
-      {
-        "line_number": 7,
-        "excerpt": "6.跨域问题原则上怎么处理？安全性怎么保证？"
+        "ref": "liqiangcc/xhs:note_json/67ecedf5000000000d015887.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67ecedf5000000000d015887/note/desc",
+        "excerpt": "场景题：\n1.苍穹外卖为什么选用工厂模式和策略模式？\n2.你的外卖项目中提到了可以使用微信支付、支付宝支付、银行卡支付，那么如果接入一个新的支付系统，需要注意些什么？\n3.管理模块要加入什么东西？\n4.选用工厂模式的话，新加入一个支付平台，解耦怎么保证？\n5.Spring mvc的拦截器怎么解决跨域问题？\n6.跨域问题原则上怎么处理？安全性怎么保证？\n7.跨域有两种解决方案，都是什么？\n8.WebSocket 的请求建立过程？\n9.连接成功后还是HTTP协议吗 怎么实现的？\n10.WebSocket的服务端是单个容器还是多个容器？\n11.WebSocket 连接的话，后端有多个服务器，Nginx 连接到指定服务器是怎么做的？\n12.后台几个服务之间，你怎么知道发给哪个客户端呢？\n13.Java的内存分布知道吗？用什么工具去看内存分布呢？\n14.MySQL有几种日志？都有什么用？\n15.binlog日志长什么样子？\n16.Springboot的机制是什么？为什么大厂都在用Springboot？\n17.Springboot是怎么做到自动配置的呢？\n手撕：\n1.有一个整数的数组，要去找整数数组里面没有包含的正整数。\n2.有一个二叉树，需要做一个z字形的打印，奇数排从左往右，偶数排从右往左。\n#后端开发[话题]# #找实习[话题]# #java[话题]# #oc[话题]# #面经[话题]# #互联网大厂[话题]#"
       }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67ecedf5000000000d015887.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67ecedf5000000000d015887/note/title",
+      "excerpt": "京东后端开发一面"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67ecedf5000000000d015887.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67ecedf5000000000d015887/note/desc",
+      "excerpt": "场景题：\n1.苍穹外卖为什么选用工厂模式和策略模式？\n2.你的外卖项目中提到了可以使用微信支付、支付宝支付、银行卡支付，那么如果接入一个新的支付系统，需要注意些什么？\n3.管理模块要加入什么东西？\n4.选用工厂模式的话，新加入一个支付平台，解耦怎么保证？\n5.Spring mvc的拦截器怎么解决跨域问题？\n6.跨域问题原则上怎么处理？安全性怎么保证？\n7.跨域有两种解决方案，都是什么？\n8.WebSocket 的请求建立过程？\n9.连接成功后还是HTTP协议吗 怎么实现的？\n10.WebSocket的服务端是单个容器还是多个容器？\n11.WebSocket 连接的话，后端有多个服务器，Nginx 连接到指定服务器是怎么做的？\n12.后台几个服务之间，你怎么知道发给哪个客户端呢？\n13.Java的内存分布知道吗？用什么工具去看内存分布呢？\n14.MySQL有几种日志？都有什么用？\n15.binlog日志长什么样子？\n16.Springboot的机制是什么？为什么大厂都在用Springboot？\n17.Springboot是怎么做到自动配置的呢？\n手撕：\n1.有一个整数的数组，要去找整数数组里面没有包含的正整数。\n2.有一个二叉树，需要做一个z字形的打印，奇数排从左往右，偶数排从右往左。\n#后端开发[话题]# #找实习[话题]# #java[话题]# #oc[话题]# #面经[话题]# #互联网大厂[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67ecedf5000000000d015887.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -49,6 +60,53 @@
       "git_blob_sha": "a3c43fb5058d6fbfde5a27e690e188fc18577f8a"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67ecedf5000000000d015887.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "京东后端开发一面 - 小红书",
+      "byte_size": 390686,
+      "git_blob_sha": "8ed1bdd75429af18dd2e7aa13e79635274fa4824",
+      "sha256": "44f61221775cd3a202c8e82a954d5fe0eabb1ceb6e63f1938dbb4e6e250e14c5",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67ecedf5000000000d015887.html",
+        "byte_size": 390686,
+        "git_blob_sha": "8ed1bdd75429af18dd2e7aa13e79635274fa4824"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67ecedf5000000000d015887.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67ecedf5000000000d015887/note/title",
+      "excerpt": "京东后端开发一面",
+      "byte_size": 23181,
+      "git_blob_sha": "472a602d193ece2a5934d605f9052b015ea4f74c",
+      "sha256": "2b1e511654d5207bb9f93b19b2978b03fa2e4df37e6209917ae3fe18907b442e",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67ecedf5000000000d015887.json",
+        "byte_size": 23181,
+        "git_blob_sha": "472a602d193ece2a5934d605f9052b015ea4f74c"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67ecedf5000000000d015887.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "场景题：\n1.苍穹外卖为什么选用工厂模式和策略模式？\n2.你的外卖项目中提到了可以使用微信支付、支付宝支付、银行卡支付，那么如果接入一个新的支付系统，需要注意些什么？\n3.管理模块要加入什么东西？\n4.选用工厂模式的话，新加入一个支付平台，解耦怎么保证？\n5.Spring mvc的拦截器怎么解决跨域问题？\n6.跨域问题原则上怎么处理？安全性怎么保证？\n7.跨域有两种解决方案，都是什么？",
+      "byte_size": 1441,
+      "git_blob_sha": "a3c43fb5058d6fbfde5a27e690e188fc18577f8a",
+      "sha256": "0ed41ae1cbdc2babe56f32fa83450bbcd08b112a4c95d878454276c1f688a210",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67ecedf5000000000d015887.txt",
+        "byte_size": 1441,
+        "git_blob_sha": "a3c43fb5058d6fbfde5a27e690e188fc18577f8a"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -63,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -82,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

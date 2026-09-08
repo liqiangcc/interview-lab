@@ -9,20 +9,39 @@
   "expected_body_sha256": "d83d71d326e1a733e4828a06a095ac74e7b66b64abea01821f9fad791b85bd23",
   "expected_source_revision_id": "xhs-note:67bc6b05000000001201f066:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": [
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "basis_lines": [],
+    "semantic_evidence": [
       {
-        "line_number": 8,
-        "excerpt": "#互联网大厂[话题]# #面经 #互联网[话题]# #java面试题[话题]#"
+        "ref": "liqiangcc/xhs:note_json/67bc6b05000000001201f066.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67bc6b05000000001201f066/note/title",
+        "excerpt": "阿里终面❗"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67bc6b05000000001201f066.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67bc6b05000000001201f066/note/desc",
+        "excerpt": "具体场景如下\n1. 10亿条数据，每条数据 1 Kb[吧唧R]\n2 .数据的内容是非结构化的用户访问日志，需要解析后写入到数据库[吧唧R]\n3. 数据存放在Hdfs 或 S3 分布式文件存储里[吧唧R]\n4. 10亿条数据并不是1个大文件，而是被近似切分为100个文件，后缀标记顺序[吧唧R]\n5. 要求有序导入，尽量不重复[吧唧R]\n6. 数据库是 MySQL[吧唧R]\n#互联网大厂[话题]# #面经 #互联网[话题]# #java面试题[话题]#"
       }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67bc6b05000000001201f066.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67bc6b05000000001201f066/note/title",
+      "excerpt": "阿里终面❗"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67bc6b05000000001201f066.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67bc6b05000000001201f066/note/desc",
+      "excerpt": "具体场景如下\n1. 10亿条数据，每条数据 1 Kb[吧唧R]\n2 .数据的内容是非结构化的用户访问日志，需要解析后写入到数据库[吧唧R]\n3. 数据存放在Hdfs 或 S3 分布式文件存储里[吧唧R]\n4. 10亿条数据并不是1个大文件，而是被近似切分为100个文件，后缀标记顺序[吧唧R]\n5. 要求有序导入，尽量不重复[吧唧R]\n6. 数据库是 MySQL[吧唧R]\n#互联网大厂[话题]# #面经 #互联网[话题]# #java面试题[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67bc6b05000000001201f066.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -41,6 +60,53 @@
       "git_blob_sha": "ba2c9ac7b580a9d43a33171dc9455b49b94ac5a7"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67bc6b05000000001201f066.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "阿里终面❗ - 小红书",
+      "byte_size": 386909,
+      "git_blob_sha": "bfaad9039dfb3fc9268f860fd7325648d9540019",
+      "sha256": "55b938113252368b52261caf32f7ff8a86e3681d0fd6d685df5f93ecc9677d4d",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67bc6b05000000001201f066.html",
+        "byte_size": 386909,
+        "git_blob_sha": "bfaad9039dfb3fc9268f860fd7325648d9540019"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67bc6b05000000001201f066.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67bc6b05000000001201f066/note/title",
+      "excerpt": "阿里终面❗",
+      "byte_size": 20798,
+      "git_blob_sha": "7c84e3be6116c07e2b5e520cdf478533019cd01f",
+      "sha256": "b70afa8e4273c33942e1d3f00f42e292fcafae9490392004d63a83a75555de67",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67bc6b05000000001201f066.json",
+        "byte_size": 20798,
+        "git_blob_sha": "7c84e3be6116c07e2b5e520cdf478533019cd01f"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67bc6b05000000001201f066.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "具体场景如下\n1. 10亿条数据，每条数据 1 Kb[吧唧R]\n2 .数据的内容是非结构化的用户访问日志，需要解析后写入到数据库[吧唧R]\n3. 数据存放在Hdfs 或 S3 分布式文件存储里[吧唧R]\n4. 10亿条数据并不是1个大文件，而是被近似切分为100个文件，后缀标记顺序[吧唧R]\n5. 要求有序导入，尽量不重复[吧唧R]\n6. 数据库是 MySQL[吧唧R]\n#互联网大厂[话题]# #面经 #互联网[话题]# #java面试题[话题]#",
+      "byte_size": 501,
+      "git_blob_sha": "ba2c9ac7b580a9d43a33171dc9455b49b94ac5a7",
+      "sha256": "830f99479c7c96c310a12308ccf1c36256482e3e0350d155194773835f4d94ab",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67bc6b05000000001201f066.txt",
+        "byte_size": 501,
+        "git_blob_sha": "ba2c9ac7b580a9d43a33171dc9455b49b94ac5a7"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -55,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -74,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

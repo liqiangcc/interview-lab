@@ -9,15 +9,39 @@
   "expected_body_sha256": "4156e76c33437a0e7d16ce4f99cdf8a71664bf76381493db31ffaf29476aa02c",
   "expected_source_revision_id": "xhs-note:6774ab1a000000001301a920:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": []
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "basis_lines": [],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/6774ab1a000000001301a920.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/6774ab1a000000001301a920/note/title",
+        "excerpt": "美团后端日常实习一面面经"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/6774ab1a000000001301a920.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/6774ab1a000000001301a920/note/desc",
+        "excerpt": "二凉\n#美团[话题]# #java[话题]# #转码[话题]# #后端开发[话题]#\n#互联网大厂实习[话题]# #面经[话题]# #实习[话题]#"
+      }
+    ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/6774ab1a000000001301a920.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/6774ab1a000000001301a920/note/title",
+      "excerpt": "美团后端日常实习一面面经"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/6774ab1a000000001301a920.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/6774ab1a000000001301a920/note/desc",
+      "excerpt": "二凉\n#美团[话题]# #java[话题]# #转码[话题]# #后端开发[话题]#\n#互联网大厂实习[话题]# #面经[话题]# #实习[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/6774ab1a000000001301a920.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -36,6 +60,53 @@
       "git_blob_sha": "bc5a33e87744dd1b7a3d632be6bac0e110a3a8a1"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/6774ab1a000000001301a920.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "美团后端日常实习一面面经 - 小红书",
+      "byte_size": 389009,
+      "git_blob_sha": "6ff7df3cd6717cd7be50321baa89418bffcacf37",
+      "sha256": "7100bc647bdaf694cbdf53da6a642312b37ce2869d3356d66fe967d95911ddc4",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:6774ab1a000000001301a920.html",
+        "byte_size": 389009,
+        "git_blob_sha": "6ff7df3cd6717cd7be50321baa89418bffcacf37"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/6774ab1a000000001301a920.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/6774ab1a000000001301a920/note/title",
+      "excerpt": "美团后端日常实习一面面经",
+      "byte_size": 22682,
+      "git_blob_sha": "15843d3519cfbbac5edf4a5124b1ad1390dee14d",
+      "sha256": "6d08abe912ae53924f285f944ca57678409d6c1f9a4d80ed1183ceeb0251a692",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:6774ab1a000000001301a920.json",
+        "byte_size": 22682,
+        "git_blob_sha": "15843d3519cfbbac5edf4a5124b1ad1390dee14d"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/6774ab1a000000001301a920.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "二凉\n#美团[话题]# #java[话题]# #转码[话题]# #后端开发[话题]#\n#互联网大厂实习[话题]# #面经[话题]# #实习[话题]#",
+      "byte_size": 145,
+      "git_blob_sha": "bc5a33e87744dd1b7a3d632be6bac0e110a3a8a1",
+      "sha256": "c508a704b617c354bd8ad34dcc5b405058f8d5ffea31fd6ed610ae048d1c3705",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:6774ab1a000000001301a920.txt",
+        "byte_size": 145,
+        "git_blob_sha": "bc5a33e87744dd1b7a3d632be6bac0e110a3a8a1"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -50,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -69,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

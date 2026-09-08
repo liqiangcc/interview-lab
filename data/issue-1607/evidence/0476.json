@@ -9,20 +9,39 @@
   "expected_body_sha256": "abd2b2d664443c36f19000d5e22238bb21d6313adcf600087565ee635fb39f37",
   "expected_source_revision_id": "xhs-note:6777a1b2000000000900ed67:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": [
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "basis_lines": [],
+    "semantic_evidence": [
       {
-        "line_number": 1,
+        "ref": "liqiangcc/xhs:note_json/6777a1b2000000000900ed67.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/6777a1b2000000000900ed67/note/title",
+        "excerpt": "求职必看！美团Java后端开发一二面"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/6777a1b2000000000900ed67.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/6777a1b2000000000900ed67/note/desc",
         "excerpt": "﻿#java[话题]#﻿ ﻿#java面试题[话题]#﻿ ﻿#java后端开发[话题]#﻿ ﻿#找工作[话题]#﻿ ﻿#程序员[话题]#﻿"
       }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/6777a1b2000000000900ed67.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/6777a1b2000000000900ed67/note/title",
+      "excerpt": "求职必看！美团Java后端开发一二面"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/6777a1b2000000000900ed67.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/6777a1b2000000000900ed67/note/desc",
+      "excerpt": "﻿#java[话题]#﻿ ﻿#java面试题[话题]#﻿ ﻿#java后端开发[话题]#﻿ ﻿#找工作[话题]#﻿ ﻿#程序员[话题]#﻿"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/6777a1b2000000000900ed67.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -41,6 +60,53 @@
       "git_blob_sha": "4ae0b318bcc76f05606e01d1564478280224aaca"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/6777a1b2000000000900ed67.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "求职必看！美团Java后端开发一二面 - 小红书",
+      "byte_size": 393789,
+      "git_blob_sha": "7566909bc1160ac89a784d5c45b6866e02918703",
+      "sha256": "b3aa0f11d3ce9896c5c6e158999c33a95b2cf0fb68a5e8842e274304e02bc484",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:6777a1b2000000000900ed67.html",
+        "byte_size": 393789,
+        "git_blob_sha": "7566909bc1160ac89a784d5c45b6866e02918703"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/6777a1b2000000000900ed67.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/6777a1b2000000000900ed67/note/title",
+      "excerpt": "求职必看！美团Java后端开发一二面",
+      "byte_size": 28148,
+      "git_blob_sha": "0ec8be2741eb5a95101b5780d0e35f480a7a5c40",
+      "sha256": "af5128c896eca13ce519e2e64cefa4fedc964402bc6cb160291b5e06c2c5ebc8",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:6777a1b2000000000900ed67.json",
+        "byte_size": 28148,
+        "git_blob_sha": "0ec8be2741eb5a95101b5780d0e35f480a7a5c40"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/6777a1b2000000000900ed67.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "﻿#java[话题]#﻿ ﻿#java面试题[话题]#﻿ ﻿#java后端开发[话题]#﻿ ﻿#找工作[话题]#﻿ ﻿#程序员[话题]#﻿",
+      "byte_size": 136,
+      "git_blob_sha": "4ae0b318bcc76f05606e01d1564478280224aaca",
+      "sha256": "4226b30b9db3cc1de73abaf6c055db56c63dd2f5aae3024b36d600fcb26c237b",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:6777a1b2000000000900ed67.txt",
+        "byte_size": 136,
+        "git_blob_sha": "4ae0b318bcc76f05606e01d1564478280224aaca"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -55,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -74,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

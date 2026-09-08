@@ -9,15 +9,44 @@
   "expected_body_sha256": "8e7507f9b48d7ba69ffd0145d2abf51c9e667ed708da9351974fbabeb96e34e9",
   "expected_source_revision_id": "xhs-note:67f8e58b000000001c029aac:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "not-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": []
+    "status": "reviewed",
+    "proposed_decision": "not-interview",
+    "basis": "explicit invitation, job/advice, or question-bank content lacks a candidate event",
+    "basis_lines": [
+      {
+        "line_number": 1,
+        "excerpt": "#程序员[话题]# #后端[话题]# #java[话题]# #saas[话题]# #智慧校园[话题]#成都高级java看过来。创业小伙伴招聘啦～"
+      }
+    ],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/67f8e58b000000001c029aac.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67f8e58b000000001c029aac/note/title",
+        "excerpt": "成都java ,后端开发大佬进，有坑位"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67f8e58b000000001c029aac.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67f8e58b000000001c029aac/note/desc",
+        "excerpt": "#程序员[话题]# #后端[话题]# #java[话题]# #saas[话题]# #智慧校园[话题]#成都高级java看过来。创业小伙伴招聘啦～\n公司目前急需java后端小伙伴加入哦。公司流逼自研团队小伙伴，非外包。公司氛围好。\n要求：要有丰富SAAS经验 , 工作经历4年以上。\n4、项目经历：单个项目一年以上；不要调优的/维护的；有智慧校园saas平台经验优先\n5、金融、外包、银行、财务、海康、大华、数据类的暂时不考虑；\n欢迎留言私信留言#后端开发[话题]# #java[话题]# #内推[话题]# #saas[话题]# #智慧校园[话题]#"
+      }
+    ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67f8e58b000000001c029aac.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67f8e58b000000001c029aac/note/title",
+      "excerpt": "成都java ,后端开发大佬进，有坑位"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67f8e58b000000001c029aac.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67f8e58b000000001c029aac/note/desc",
+      "excerpt": "#程序员[话题]# #后端[话题]# #java[话题]# #saas[话题]# #智慧校园[话题]#成都高级java看过来。创业小伙伴招聘啦～\n公司目前急需java后端小伙伴加入哦。公司流逼自研团队小伙伴，非外包。公司氛围好。\n要求：要有丰富SAAS经验 , 工作经历4年以上。\n4、项目经历：单个项目一年以上；不要调优的/维护的；有智慧校园saas平台经验优先\n5、金融、外包、银行、财务、海康、大华、数据类的暂时不考虑；\n欢迎留言私信留言#后端开发[话题]# #java[话题]# #内推[话题]# #saas[话题]# #智慧校园[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67f8e58b000000001c029aac.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -36,6 +65,53 @@
       "git_blob_sha": "3b1732d74e57b8ffceb44ee5ab29af12dcee7d73"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67f8e58b000000001c029aac.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "成都java ,后端开发大佬进，有坑位 - 小红书",
+      "byte_size": 391031,
+      "git_blob_sha": "f07e229518b78521d92061848527fc2fc09dc2b9",
+      "sha256": "4e0b11b6b0117e0bf6dfc1f5cb5a196398419db63a3c89422143964977548987",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67f8e58b000000001c029aac.html",
+        "byte_size": 391031,
+        "git_blob_sha": "f07e229518b78521d92061848527fc2fc09dc2b9"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67f8e58b000000001c029aac.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67f8e58b000000001c029aac/note/title",
+      "excerpt": "成都java ,后端开发大佬进，有坑位",
+      "byte_size": 23181,
+      "git_blob_sha": "4b8e81e4c11d8299618e0515caed854d90bc32a1",
+      "sha256": "a7e852913ea517d97a3517f7cf38b61d800ae05a4e25a95d5a2a6d2c81991bbf",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67f8e58b000000001c029aac.json",
+        "byte_size": 23181,
+        "git_blob_sha": "4b8e81e4c11d8299618e0515caed854d90bc32a1"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67f8e58b000000001c029aac.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "#程序员[话题]# #后端[话题]# #java[话题]# #saas[话题]# #智慧校园[话题]#成都高级java看过来。创业小伙伴招聘啦～\n公司目前急需java后端小伙伴加入哦。公司流逼自研团队小伙伴，非外包。公司氛围好。\n要求：要有丰富SAAS经验 , 工作经历4年以上。\n4、项目经历：单个项目一年以上；不要调优的/维护的；有智慧校园saas平台经验优先\n5、金融、外包、银行、财务、海康、大华、数据类的暂时不考虑；\n欢迎留言私信留言#后端开发[话题]# #java[话题]# #内推[话题]# #saas[话题]# #智慧校园[话题]#",
+      "byte_size": 639,
+      "git_blob_sha": "3b1732d74e57b8ffceb44ee5ab29af12dcee7d73",
+      "sha256": "8219f03ac11a72d93dd3ff0dc6f6e15ed80b25d879f89d3ec19e4b99820fcabe",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67f8e58b000000001c029aac.txt",
+        "byte_size": 639,
+        "git_blob_sha": "3b1732d74e57b8ffceb44ee5ab29af12dcee7d73"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -50,12 +126,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is not-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -69,7 +145,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

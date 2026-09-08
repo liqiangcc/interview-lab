@@ -9,20 +9,39 @@
   "expected_body_sha256": "2e267d0fefd556f08fe6d94adb5c396af6d1446a605e0c3964fe89352e2aa102",
   "expected_source_revision_id": "xhs-note:67f8fc63000000001200cd33:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "multi-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": [
+    "status": "reviewed",
+    "proposed_decision": "multi-interview",
+    "basis": "complete candidate interview evidence names multiple distinct interview events/rounds",
+    "basis_lines": [],
+    "semantic_evidence": [
       {
-        "line_number": 3,
-        "excerpt": "小公司比较随意，基本不问八股，感觉有希望#继续找工作[话题]# #我的找工作日记[话题]# #杭州java[话题]# #面试[话题]# #找工作[话题]# #面试日常[话题]#"
+        "ref": "liqiangcc/xhs:note_json/67f8fc63000000001200cd33.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67f8fc63000000001200cd33/note/title",
+        "excerpt": "4.11今天面试"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/67f8fc63000000001200cd33.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67f8fc63000000001200cd33/note/desc",
+        "excerpt": "5年java来杭\n今天两个小公司现场面试\n小公司比较随意，基本不问八股，感觉有希望#继续找工作[话题]# #我的找工作日记[话题]# #杭州java[话题]# #面试[话题]# #找工作[话题]# #面试日常[话题]#\n希望中一个[合十R][合十R]"
       }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67f8fc63000000001200cd33.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67f8fc63000000001200cd33/note/title",
+      "excerpt": "4.11今天面试"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67f8fc63000000001200cd33.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67f8fc63000000001200cd33/note/desc",
+      "excerpt": "5年java来杭\n今天两个小公司现场面试\n小公司比较随意，基本不问八股，感觉有希望#继续找工作[话题]# #我的找工作日记[话题]# #杭州java[话题]# #面试[话题]# #找工作[话题]# #面试日常[话题]#\n希望中一个[合十R][合十R]"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67f8fc63000000001200cd33.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -41,6 +60,53 @@
       "git_blob_sha": "4ec3d4ac26aeda9d29b3b4528034ae2de88c238c"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67f8fc63000000001200cd33.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "4.11今天面试 - 小红书",
+      "byte_size": 387057,
+      "git_blob_sha": "d534eb2d09d1d81b02cc00bca15fced714ea6a53",
+      "sha256": "6ed497b1d833bfad35f333493baab4b2b1004d1559a9aea162c48b6f932cdc48",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67f8fc63000000001200cd33.html",
+        "byte_size": 387057,
+        "git_blob_sha": "d534eb2d09d1d81b02cc00bca15fced714ea6a53"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67f8fc63000000001200cd33.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67f8fc63000000001200cd33/note/title",
+      "excerpt": "4.11今天面试",
+      "byte_size": 21215,
+      "git_blob_sha": "7dc4adc319b0af4d665f230c7bb2778467a4cedd",
+      "sha256": "14f524e9126fafaa719b6ab90112cb013608fe844f8dc16fbc474bd6d17767e7",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67f8fc63000000001200cd33.json",
+        "byte_size": 21215,
+        "git_blob_sha": "7dc4adc319b0af4d665f230c7bb2778467a4cedd"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67f8fc63000000001200cd33.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "5年java来杭\n今天两个小公司现场面试\n小公司比较随意，基本不问八股，感觉有希望#继续找工作[话题]# #我的找工作日记[话题]# #杭州java[话题]# #面试[话题]# #找工作[话题]# #面试日常[话题]#\n希望中一个[合十R][合十R]",
+      "byte_size": 282,
+      "git_blob_sha": "4ec3d4ac26aeda9d29b3b4528034ae2de88c238c",
+      "sha256": "b90145141d142db6475511aaffaea05e5cc62ece3241371dc736568b40497efd",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67f8fc63000000001200cd33.txt",
+        "byte_size": 282,
+        "git_blob_sha": "4ec3d4ac26aeda9d29b3b4528034ae2de88c238c"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -55,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is multi-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -74,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

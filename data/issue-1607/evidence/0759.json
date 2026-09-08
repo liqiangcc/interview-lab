@@ -9,15 +9,39 @@
   "expected_body_sha256": "3555ccea74df4a675bd9ebf1b03fd1b4fc8b596fa2ab4f5175d03fd79706e70a",
   "expected_source_revision_id": "xhs-note:68035804000000001b039c72:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": []
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "basis_lines": [],
+    "semantic_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_json/68035804000000001b039c72.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/68035804000000001b039c72/note/title",
+        "excerpt": "阿里飞猪旅行Java开发实习一面复盘"
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68035804000000001b039c72.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/68035804000000001b039c72/note/desc",
+        "excerpt": "项目相关\n1、简历上有两个项目，你主要参与的是哪一个呢？\n2、请详细介绍下你重点负责的项目，其亮点与难点分别是什么？\n3、你在项目里用线程池运行模型，为何这样做？当时应用背景如何？\n4、关于线程池，你是怎样设置的，核心参数又是如何确定的？\n5、线程池的阻塞队列怎样设置，拒绝策略是什么？实际有无异常抛出？\n6、回顾整个项目，难点主要体现在哪里？\n7、若重新做该项目，你觉得哪些地方可改进？\n8、你打算把项目改成微服务架构，为何要改，微服务有何优势？\nRedis 与分布式锁相关\n1、项目中用了 Redisson，为何选它，当时的使用背景是啥？\n2、在你项目场景里，Redisson 加锁流程怎样，具体给什么加锁？\n3、加锁时若遇网络波动致获取订单失败，你会如何处理？\n4、你采用分布式锁，为何选它，对比过其他方案的优缺点吗？\n5、Redisson 看门狗底层原理是啥，如何续期，怎知主线程是否崩溃？\nSQL 优化相关\n1、现有一表，字段众多且有一百万条数据，针对这种情况的深度分页，有何优化之法？\n其他\n1、你对未来职业发展有何规划与想法？\n2、你对本部门业务内容了解多少？\n3、若有实习机会让你到岗，从接到通知起多久能到？\n面经合集里还有其他面经，大家可多看看。﻿#后端开发[话题]#﻿ ﻿#java[话题]#﻿ ﻿#计算机[话题]#﻿ ﻿#面试求职[话题]#﻿ ﻿#校招[话题]#﻿ ﻿#面经[话题]#﻿ ﻿#面试[话题]#﻿ ﻿#面试真题[话题]#﻿ ﻿#暑期实习[话题]#﻿ ﻿#大厂[话题]#﻿"
+      }
+    ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/68035804000000001b039c72.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/68035804000000001b039c72/note/title",
+      "excerpt": "阿里飞猪旅行Java开发实习一面复盘"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68035804000000001b039c72.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/68035804000000001b039c72/note/desc",
+      "excerpt": "项目相关\n1、简历上有两个项目，你主要参与的是哪一个呢？\n2、请详细介绍下你重点负责的项目，其亮点与难点分别是什么？\n3、你在项目里用线程池运行模型，为何这样做？当时应用背景如何？\n4、关于线程池，你是怎样设置的，核心参数又是如何确定的？\n5、线程池的阻塞队列怎样设置，拒绝策略是什么？实际有无异常抛出？\n6、回顾整个项目，难点主要体现在哪里？\n7、若重新做该项目，你觉得哪些地方可改进？\n8、你打算把项目改成微服务架构，为何要改，微服务有何优势？\nRedis 与分布式锁相关\n1、项目中用了 Redisson，为何选它，当时的使用背景是啥？\n2、在你项目场景里，Redisson 加锁流程怎样，具体给什么加锁？\n3、加锁时若遇网络波动致获取订单失败，你会如何处理？\n4、你采用分布式锁，为何选它，对比过其他方案的优缺点吗？\n5、Redisson 看门狗底层原理是啥，如何续期，怎知主线程是否崩溃？\nSQL 优化相关\n1、现有一表，字段众多且有一百万条数据，针对这种情况的深度分页，有何优化之法？\n其他\n1、你对未来职业发展有何规划与想法？\n2、你对本部门业务内容了解多少？\n3、若有实习机会让你到岗，从接到通知起多久能到？\n面经合集里还有其他面经，大家可多看看。﻿#后端开发[话题]#﻿ ﻿#java[话题]#﻿ ﻿#计算机[话题]#﻿ ﻿#面试求职[话题]#﻿ ﻿#校招[话题]#﻿ ﻿#面经[话题]#﻿ ﻿#面试[话题]#﻿ ﻿#面试真题[话题]#﻿ ﻿#暑期实习[话题]#﻿ ﻿#大厂[话题]#﻿"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68035804000000001b039c72.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -36,6 +60,53 @@
       "git_blob_sha": "6ff369fd88fb99a5911d7b2a92787800b02078fd"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/68035804000000001b039c72.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "阿里飞猪旅行Java开发实习一面复盘 - 小红书",
+      "byte_size": 396133,
+      "git_blob_sha": "8b4c8a54a2b9e09d72742357e452a88b378347c1",
+      "sha256": "4de7d3581f318a2046aded025102e164ee8bc1b284b7eeeaaf2867b76d5f8994",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:68035804000000001b039c72.html",
+        "byte_size": 396133,
+        "git_blob_sha": "8b4c8a54a2b9e09d72742357e452a88b378347c1"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68035804000000001b039c72.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/68035804000000001b039c72/note/title",
+      "excerpt": "阿里飞猪旅行Java开发实习一面复盘",
+      "byte_size": 26419,
+      "git_blob_sha": "8f6baf59139483691509fbdf01461cf5c58da189",
+      "sha256": "9b6cd9e5df1bc88122bcd77f63048ca9b7bed6b2633572554b524f74a04cb6d2",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:68035804000000001b039c72.json",
+        "byte_size": 26419,
+        "git_blob_sha": "8f6baf59139483691509fbdf01461cf5c58da189"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/68035804000000001b039c72.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "项目相关\n1、简历上有两个项目，你主要参与的是哪一个呢？\n2、请详细介绍下你重点负责的项目，其亮点与难点分别是什么？\n3、你在项目里用线程池运行模型，为何这样做？当时应用背景如何？\n4、关于线程池，你是怎样设置的，核心参数又是如何确定的？\n5、线程池的阻塞队列怎样设置，拒绝策略是什么？实际有无异常抛出？\n6、回顾整个项目，难点主要体现在哪里？\n7、若重新做该项目，你觉得哪些地方可改进？",
+      "byte_size": 1701,
+      "git_blob_sha": "6ff369fd88fb99a5911d7b2a92787800b02078fd",
+      "sha256": "645ddca8be7efaf1eac1fcc56a2add52da29f3c02fcc1acba658091d2d48e98d",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:68035804000000001b039c72.txt",
+        "byte_size": 1701,
+        "git_blob_sha": "6ff369fd88fb99a5911d7b2a92787800b02078fd"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -50,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -69,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

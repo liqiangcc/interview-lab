@@ -9,28 +9,39 @@
   "expected_body_sha256": "905e07dd311864005f86de9fce451e16083423f24911ea7954caedba4402e1a3",
   "expected_source_revision_id": "xhs-note:67becc7d000000000903b685:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "review-required",
-  "decision": "pending",
-  "decision_basis": "Pinned Source bytes are independently verified; the deterministic classification below is proposal-only and requires controller review plus durable evidence before any transition.",
+  "evidence_status": "reviewed",
+  "decision": "single-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "review-required",
-    "proposed_decision": "pending",
-    "basis": "interview-like words are insufficient: no unambiguous first-person experienced process with questions, or the text is appointment/advice/question-bank content",
-    "basis_lines": [
+    "status": "reviewed",
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "basis_lines": [],
+    "semantic_evidence": [
       {
-        "line_number": 3,
-        "excerpt": "Java八股"
+        "ref": "liqiangcc/xhs:note_json/67becc7d000000000903b685.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67becc7d000000000903b685/note/title",
+        "excerpt": "百度后端研发实习一面面经"
       },
       {
-        "line_number": 8,
-        "excerpt": "计网八股"
-      },
-      {
-        "line_number": 11,
-        "excerpt": "MySQL八股"
+        "ref": "liqiangcc/xhs:note_json/67becc7d000000000903b685.json@95b77bb261048059846273688e4b90a2e108b437",
+        "locator": "/note/noteDetailMap/67becc7d000000000903b685/note/desc",
+        "excerpt": "自我介绍\n项目提问（大约5min）\nJava八股\nhashmap原理\n红黑树了解吗？\nJVM垃圾回收机制\nG1回收器使用场景\n计网八股\ntcp三次握手\n为什么要三次握手\nMySQL八股\n事务级别\n事务的特点\n介绍一下索引\n索引的作用\n为什么要用b➕树\n算法\n最长回文串\n三数之和\n#互联网大厂实习[话题]# #面经[话题]# #后端开发[话题]# #面试求职[话题]#"
       }
     ]
   },
+  "semantic_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_json/67becc7d000000000903b685.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67becc7d000000000903b685/note/title",
+      "excerpt": "百度后端研发实习一面面经"
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67becc7d000000000903b685.json@95b77bb261048059846273688e4b90a2e108b437",
+      "locator": "/note/noteDetailMap/67becc7d000000000903b685/note/desc",
+      "excerpt": "自我介绍\n项目提问（大约5min）\nJava八股\nhashmap原理\n红黑树了解吗？\nJVM垃圾回收机制\nG1回收器使用场景\n计网八股\ntcp三次握手\n为什么要三次握手\nMySQL八股\n事务级别\n事务的特点\n介绍一下索引\n索引的作用\n为什么要用b➕树\n算法\n最长回文串\n三数之和\n#互联网大厂实习[话题]# #面经[话题]# #后端开发[话题]# #面试求职[话题]#"
+    }
+  ],
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/67becc7d000000000903b685.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -49,6 +60,53 @@
       "git_blob_sha": "996aac6160cd1bfd4ca56d590efa576445f9441f"
     }
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/67becc7d000000000903b685.html@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "html",
+      "locator": "html:head/title",
+      "excerpt": "百度后端研发实习一面面经 - 小红书",
+      "byte_size": 386800,
+      "git_blob_sha": "32f42cbb31b19a6f64e4a2332ac63f0c3f76fd4e",
+      "sha256": "8393b5e98d98fa982ff7c637a152255129ba7aee282e206c237185bbb1b70f28",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67becc7d000000000903b685.html",
+        "byte_size": 386800,
+        "git_blob_sha": "32f42cbb31b19a6f64e4a2332ac63f0c3f76fd4e"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/67becc7d000000000903b685.json@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "json",
+      "locator": "/note/noteDetailMap/67becc7d000000000903b685/note/title",
+      "excerpt": "百度后端研发实习一面面经",
+      "byte_size": 20956,
+      "git_blob_sha": "e8aa95113176efde66cf17c8965ec7df50f4809a",
+      "sha256": "69597b5059dd3c8e57412c6a4dd742d3e6e95d515a0d2d678bec488cdff2b4e6",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67becc7d000000000903b685.json",
+        "byte_size": 20956,
+        "git_blob_sha": "e8aa95113176efde66cf17c8965ec7df50f4809a"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_desc/67becc7d000000000903b685.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "kind": "text_projection",
+      "locator": "note_desc:full-file",
+      "excerpt": "自我介绍\n项目提问（大约5min）\nJava八股\nhashmap原理\n红黑树了解吗？\nJVM垃圾回收机制\nG1回收器使用场景\n计网八股",
+      "byte_size": 419,
+      "git_blob_sha": "996aac6160cd1bfd4ca56d590efa576445f9441f",
+      "sha256": "204c55ec016a48e7efe1834b334e4be9b51e6d29aaa733169428911c4d5623b9",
+      "verification": {
+        "status": "verified",
+        "fetch": "cache:67becc7d000000000903b685.txt",
+        "byte_size": 419,
+        "git_blob_sha": "996aac6160cd1bfd4ca56d590efa576445f9441f"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -63,12 +121,12 @@
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "Raw bytes at the fixed ref matched the frozen Git blob SHA."
+      "note": "Full note_desc, note_json, and note_detail bytes at the fixed ref matched frozen Git blob SHA and byte size."
     },
     {
       "check_id": "event_boundary",
-      "result": "review-required",
-      "note": "Classification is proposal-only; no 0/1/N decision is authorized by this artifact."
+      "result": "pass",
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -82,7 +140,7 @@
     }
   ],
   "limitations": [
-    "The classification is deterministic proposal-only output from the cited projection excerpt, not durable human review evidence.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]
