@@ -68,9 +68,10 @@ function classifyFullSource(item) {
   // The same round is repeated in title, JSON, and projection; only distinct
   // round names or explicit multi-event wording count as multiple events.
   const explicitMulti = distinctRounds.length >= 2
-    || (repeatedRoundInBody && /(?:timeline|投简历|约面|流程|官网流程|\d{1,2}[./-]\d{1,2})/i.test(body))
-    || /(?:两场|多场|两次面试|多次面试|面了两家|面了多家|连续面了|两个小公司|两个自研|(?:第一家|第二家|第三家|第四家).*(?:第一家|第二家|第三家|第四家))/.test(text);
+    || (bodyRoundMatches.length > 0 && repeatedRoundInBody && /(?:timeline|投简历|约面|流程|官网流程|\d{1,2}[./-]\d{1,2})/i.test(body))
+    || /(?:两场面试|多场面试|两次面试|多次面试|面了两家|面了多家|连续面了|两个小公司|两个自研|(?:第一家|第二家|第三家|第四家).*(?:第一家|第二家|第三家|第四家))/.test(text);
   const titleRound = /(?:一面|二面|三面|四面|五面|[1-5]️⃣面|[1-5]面|初面|终面|第[一二三四五]面|第[一二三四五]轮)/.test(title);
+  const titleOutcomeNarrative = titleRound && /(?:被按在地上摩擦|摩擦|刚(?:刚)?面完|面完|实际面|面过|凉经|挂了|凉了|秒挂)/.test(title);
   const titleQuestionShare = /(?:面试题分享|面试问题分享)/.test(title);
   const compoundRoundTitle = /(?:一二面|二三面|一二三面|一二轮|二三轮)/.test(title);
   const titleRoundEvent = titleRound && !compoundRoundTitle;
@@ -85,7 +86,7 @@ function classifyFullSource(item) {
   // “后面了” in question-bank promotion copy must not satisfy a generic
   // “面了” event marker. Keep ownership/process expressions explicit.
   const narratedEvent = /(?:记录一次|第一次遇到|本人|今天|昨天|上个月|面试官.*(?:问了|问我(?:什么|哪些)|说|让)|被拷打|秒挂|凉经|挂了|面完|面过|实际面|(?:我|本人|自己)\s*面了)/.test(body);
-  const adviceOnly = /(?:怎么办|怎么回答|一般考啥|求助|有没有知道|推荐去|如何准备)/.test(text)
+  const adviceOnly = /(?:怎么办|怎么回答|一般考啥|求助|有没有知道|推荐去|如何准备|怎么准备)/.test(text)
     && !titleRound
     && !titleExperience
     && !actualResult
@@ -103,7 +104,10 @@ function classifyFullSource(item) {
     || (durationEvidence && questionEvidence)
   ));
   const assessmentOnly = /(?:笔试题|笔试|刷题|题库)/.test(body) && !candidateEvent && !/(?:面试官|候选人回答|面试问题|实际面|面试结果)/.test(body);
-  const narratedCandidateEvent = /(?:记录一次|第一次遇到|面试官.*(?:问了|问我(?:什么|哪些)|说|让)|被拷打|秒挂|凉经|挂了|面完|面过|实际面|(?:我|本人|自己)\s*面了)/.test(body);
+  // Outcome words are only event evidence when tied to an interview/round;
+  // a bare “挂了/秒挂/凉经” in promotional copy is not enough.
+  const outcomeEvent = /(?:(?:面试|一面|二面|三面|四面|五面).{0,12}(?:凉了|挂了|秒挂|凉经)|(?:凉了|挂了|秒挂|凉经).{0,12}(?:面试|面完|一面|二面|三面|四面|结果))/.test(text);
+  const narratedCandidateEvent = /(?:记录一次|第一次遇到|面试官.*(?:问了|问我(?:什么|哪些)|说|让)|被拷打|面完|实际面|(?:我|本人|自己)\s*面了)/.test(body);
   const candidateAnswerEvidence = /(?:根据我的回答|按我的回答|前一个回答|回答(?:了|的|：|:)|说了|面试官.*追问|追问)/.test(body);
   const candidateQnaEvent = /(?:自我介绍|提问|问我|让我(?:自我介绍|介绍)|面试官)/.test(body) && candidateAnswerEvidence;
   const bodyInterviewHeading = /(?:^|\n)[^\n]{0,30}面试\s*[:：]/.test(body);
@@ -123,7 +127,23 @@ function classifyFullSource(item) {
   const timelineCandidateProcess = timelineEvidence
     && /投递/.test(body)
     && /(?:约面|一面|二面|三面|四面|offer|oc)/i.test(body);
-  const actualProcess = /(?:参加(?:过|了)?\s*面试|被问|问了我|问我(?:为什么|什么|哪些)|候选人回答|面过|面完|实际面|第一次面试|面试结果|收到.*结果|拿到.*offer|(?:我|本人|自己)\s*面了|昨天(?:晚上)?面的|(?:秋招|春招)面的|答得(?:非常|很)差|答得不好|没答出来|没答好|没有答好|凉了|面的时间|面试之后|面试体验|拷打项目|项目拷打|今天.{0,20}(?:现场|线上|线下|两个|一家|自研).{0,12}面试|(?:今天|昨天|刚刚|上周|上个月).{0,24}问了(?:项目|我|基础|职业规划|问题)|(?:现场|线上|线下)开面|面试时.{0,20}(?:音频|录音|记录|追问|回答|问)|(?:第一家|第二家|第三家|第四家).{0,12}(?:线上|线下|面试)|timeline.*(?:投递|约面|一面|二面|三面|offer))/.test(text)
+  const narratedPastInterview = /(?:(?:我|本人|自己)(?:之前|曾经|已经|也)?面过|实际面过|刚(?:刚)?面过|(?:昨天|今天|上周|上个月|今年|去年).{0,6}面过|面过(?:了|某|这家|贵司|一次))/.test(text);
+  const titleRoundQuestionNarrative = titleRound && /(?:问的好多|问了|面试官.*(?:问|追问)|候选人回答|回答|追问|项目(?:中|难点|介绍|问题))/.test(body);
+  const titleRoundOutcomeNarrative = titleRound && /(?:凉了|挂了|秒挂|凉经|结果|[一二三四五]凉)/.test(body);
+  const roundQuestionBankEvent = bodyRoundMatches.length > 0 && /(?:纯八股|八股为主|八股很多)/.test(body);
+  const bodyHashtagOnly = body.replace(/#.*?\[话题\]#/g, '').replace(/[\s\uFE0F]/g, '') === '';
+  const titleNonEvent = /(?:求职|岗位|招聘|找工作|必看|攻略|八股|题库|真题|题目|外包|经验分享|技巧)/.test(title);
+  // A round-labelled title plus generic topic hashtags does not prove an
+  // actual candidate event. Keep explicit title outcomes/events eligible,
+  // but fail closed for otherwise detail-free title-only notes (#760, etc.).
+  const titleOnlyRound = titleRound && bodyHashtagOnly && !titleNonEvent && !titleOutcomeNarrative;
+  const actualProcess = /(?:参加(?:过|了)?\s*面试|被问|问了我|问我(?:为什么|什么|哪些)|候选人回答|面完|实际面|第一次[^\n]{0,8}面试|面试结果|收到.*结果|拿到.*offer|(?:我|本人|自己)\s*面了|(?:今天|昨天|刚刚|上周|上个月).{0,20}面了|昨天(?:晚上)?面的|(?:秋招|春招)面的|答得(?:非常|很)差|答得不好|没答出来|没答好|没有答好|面的时间|面试之后|面试体验|拷打项目|项目拷打|今天.{0,20}(?:现场|线上|线下|两个|一家|自研).{0,12}面试|(?:今天|昨天|刚刚|上周|上个月).{0,24}问了(?:项目|我|基础|职业规划|问题)|(?:现场|线上|线下)开面|面试时.{0,20}(?:音频|录音|记录|追问|回答|问)|(?:第一家|第二家|第三家|第四家).{0,12}(?:线上|线下|面试)|timeline.*(?:投递|约面|一面|二面|三面|offer))/.test(text)
+    || narratedPastInterview
+    || outcomeEvent
+    || titleOutcomeNarrative
+    || titleRoundQuestionNarrative
+    || titleRoundOutcomeNarrative
+    || roundQuestionBankEvent
     || narratedCandidateEvent
     || candidateQnaEvent
     || timelineCandidateProcess
@@ -157,9 +177,22 @@ function classifyFullSource(item) {
     && !(durationEvidence && questionEvidence)
     && !substantiveQuestionList
     && !(bodyInterviewHeading && substantiveQuestionList);
-  const experienced = strongCandidateEvent && (actualProcess || (!questionOnlyAdvice && !adviceOnly)) && !assessmentOnly;
+  // “第一次去面试，该怎么准备” has an interview token but describes a
+  // future/advice request. Advice suppresses a marker-only event; a
+  // substantive list or independent process evidence (e.g. #665) wins.
+  const adviceOnlySuppressed = adviceOnly
+    && !substantiveQuestionList
+    && !candidateQnaEvent
+    && !(durationEvidence && questionEvidence);
+  const experienced = strongCandidateEvent
+    && (actualProcess || (!questionOnlyAdvice && !adviceOnly))
+    && !adviceOnlySuppressed
+    && !assessmentOnly;
 
-  if (refusal || questionBankOnly || (explicitNonEvent && !clearCandidateEvent)) {
+  if (titleOnlyRound) {
+    return { status: 'blocked', proposed_decision: 'blocked', basis: 'round-labelled title with only generic topic hashtags lacks independent candidate-process or question evidence', basis_lines: lineBasis([/(一面|二面|三面|四面|五面|初面|终面)/]), semantic_evidence: evidence };
+  }
+  if (refusal || questionBankOnly || adviceOnlySuppressed || (explicitNonEvent && !clearCandidateEvent)) {
     return { status: 'reviewed', proposed_decision: 'not-interview', basis: refusal ? 'explicit first-person refusal/non-attendance is non-event' : marketing ? 'marketing/repost or answer-key content lacks a candidate event' : explicitQuestionBank ? 'question-bank or answer-key content lacks a clear candidate event' : interviewerShare ? 'interviewer-perspective sharing is not a candidate interview event' : 'explicit invitation, job/advice, or non-event content lacks a clear candidate event', basis_lines: lineBasis([/(通关秘籍|标准答案|转载|营销|题库|刷题|面试官|拒绝|不面|未参加|建议|求助)/]), semantic_evidence: evidence };
   }
   if (experienced && explicitMulti) {

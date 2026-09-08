@@ -229,6 +229,8 @@ test('real non-event samples receive exact non-event decisions', () => {
     470: 'not-interview', 475: 'not-interview', 476: 'not-interview', 494: 'not-interview',
     497: 'not-interview', 501: 'not-interview', 511: 'not-interview', 560: 'not-interview',
     569: 'not-interview', 601: 'not-interview', 654: 'not-interview', 727: 'not-interview',
+    435: 'not-interview', 485: 'not-interview', 739: 'not-interview',
+    563: 'not-interview',
     658: 'not-interview',
   };
   for (const [numberText, decision] of Object.entries(expected)) {
@@ -258,7 +260,10 @@ test('real candidate-event samples are not suppressed by question or advice voca
     656: 'single-interview', 670: 'single-interview', 672: 'single-interview',
     673: 'single-interview', 714: 'single-interview', 725: 'single-interview',
     474: 'single-interview', 503: 'single-interview', 603: 'single-interview',
-    490: 'single-interview', 491: 'single-interview',
+    490: 'single-interview', 491: 'single-interview', 408: 'single-interview',
+    471: 'single-interview', 518: 'single-interview', 537: 'single-interview',
+    703: 'single-interview', 761: 'single-interview', 559: 'single-interview',
+    594: 'single-interview',
   };
   for (const [numberText, decision] of Object.entries(expected)) {
     const number = Number(numberText);
@@ -271,7 +276,8 @@ test('real candidate-event samples are not suppressed by question or advice voca
 test('ambiguous title-only, invitation, and result-only samples retain exact fail-closed status', () => {
   const selection = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'issue-1607', 'selection.json'), 'utf8'));
   const expected = {
-    412: 'blocked', 451: 'blocked', 464: 'blocked', 471: 'blocked', 632: 'blocked',
+    412: 'blocked', 451: 'blocked', 464: 'blocked', 486: 'blocked',
+    519: 'blocked', 522: 'blocked', 580: 'blocked', 632: 'blocked', 760: 'blocked',
     449: 'not-interview', 553: 'not-interview', 695: 'not-interview',
     452: 'blocked', 531: 'blocked', 704: 'blocked', 752: 'blocked',
   };
