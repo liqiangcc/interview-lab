@@ -273,6 +273,24 @@ test('real candidate-event samples are not suppressed by question or advice voca
   }
 });
 
+test('round token normalization rejects page/speculation false multis and preserves real multi-round notes', () => {
+  const selection = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'issue-1607', 'selection.json'), 'utf8'));
+  const expectedSingle = { 417: 'single-interview', 698: 'single-interview', 702: 'single-interview', 711: 'single-interview', 733: 'single-interview' };
+  const expectedMulti = {
+    406: 'multi-interview', 418: 'multi-interview', 422: 'multi-interview', 434: 'multi-interview',
+    455: 'multi-interview', 473: 'multi-interview', 492: 'multi-interview', 504: 'multi-interview',
+    556: 'multi-interview', 572: 'multi-interview', 573: 'multi-interview', 578: 'multi-interview',
+    586: 'multi-interview', 591: 'multi-interview', 606: 'multi-interview', 710: 'multi-interview',
+    713: 'multi-interview', 735: 'multi-interview', 748: 'multi-interview', 758: 'multi-interview',
+  };
+  for (const [numberText, decision] of Object.entries({ ...expectedSingle, ...expectedMulti })) {
+    const number = Number(numberText);
+    const item = selection.items.find((candidate) => candidate.issue_number === number);
+    assert.ok(item, `#${number} must remain selected`);
+    assert.equal(classifyFullSource(item).proposed_decision, decision, `#${number} must classify exactly as ${decision}`);
+  }
+});
+
 test('ambiguous title-only, invitation, and result-only samples retain exact fail-closed status', () => {
   const selection = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'issue-1607', 'selection.json'), 'utf8'));
   const expected = {

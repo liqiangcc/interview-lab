@@ -61,16 +61,45 @@ function classifyFullSource(item) {
   const invitationOrAdvice = /(?:面试邀约|面试邀请|收到.*(?:邀约|面试)|预约面试|明天.*面试|后天.*面试|一小时后面试|即将面试|面试时间点|会不会是.*面试|岗位职责|招聘信息|薪资待遇|求职建议|准备面试|如何准备|建议.*面试|经验分享|面试攻略|面试技巧|面试资料)/.test(text);
   const titleExperience = /(?:面经|面试复盘|面试记录|面试体验|面试官问答|面试结果|面试流程)/.test(title);
   const questionOnly = /(?:面试题|题库|高频题|八股|题目列表|自我介绍|算法题|怎么|为什么|如何|介绍一下)/.test(text) && !firstPerson;
-  const roundMatches = [...text.matchAll(/(?:一面|二面|三面|四面|五面|[1-5]️⃣面|[1-5]面|初面|终面|第[一二三四五]面|第[一二三四五]轮|第一轮|第二轮|第三轮)/g)].map((match) => match[0]);
+  const roundTokenPattern = /(?:一面|二面|三面|四面|五面|[1-5]️⃣面|[1-5]面|初面|终面|第[一二三四五]面|第[一二三四五]轮|第一轮|第二轮|第三轮)/g;
+  const normalizeRound = (raw) => {
+    if (/^(?:一面|1️⃣面|1面|第一轮|第一面|第[一]面)$/.test(raw)) return 'round-1';
+    if (/^(?:二面|2️⃣面|2面|第二轮|第二面|第[二]面)$/.test(raw)) return 'round-2';
+    if (/^(?:三面|3️⃣面|3面|第三轮|第三面|第[三]面)$/.test(raw)) return 'round-3';
+    if (/^(?:四面|4️⃣面|4面|第四轮|第四面|第[四]面)$/.test(raw)) return 'round-4';
+    if (/^(?:五面|5️⃣面|5面|第五轮|第五面|第[五]面)$/.test(raw)) return 'round-5';
+    if (raw === '初面') return 'initial';
+    if (raw === '终面') return 'final';
+    return raw;
+  };
+  const extractRoundKeys = (value) => [...String(value || '').matchAll(roundTokenPattern)]
+    .filter((match) => {
+      const raw = match[0];
+      const numeric = /^[1-5](?:️⃣)?面$/.test(raw);
+      const prefix = String(value).slice(Math.max(0, match.index - 8), match.index);
+      const lineStart = String(value).lastIndexOf('\n', match.index - 1) + 1;
+      const linePrefix = String(value).slice(lineStart, match.index);
+      const suffix = String(value).slice(match.index + raw.length, match.index + raw.length + 1);
+      // “2面试问题” and “p12面试” are question/page references, not rounds.
+      if (numeric && (suffix === '试' || /[0-9]$/.test(prefix) || /[pP]$/.test(prefix))) return false;
+      // Do not turn speculative or merely scheduled rounds into completed
+      // multi-interview evidence (for example “听说有4面”, “已约二面”).
+      if (/(?:听说有|据说有|可能有|大概有|预计有|已约|约了|预约|计划|准备|即将|明天|后天|将要)\s*$/.test(prefix)) return false;
+      if (/(?:听说|据说|可能|大概|预计)/.test(linePrefix) && !/(?:实际|已经|完成|结果)/.test(linePrefix)) return false;
+      return true;
+    })
+    .map((match) => normalizeRound(match[0]));
+  const roundMatches = extractRoundKeys(text);
   const distinctRounds = [...new Set(roundMatches)];
-  const bodyRoundMatches = [...body.matchAll(/(?:一面|二面|三面|四面|五面|[1-5]️⃣面|[1-5]面|初面|终面|第[一二三四五]面|第[一二三四五]轮|第一轮|第二轮|第三轮)/g)].map((match) => match[0]);
+  const bodyRoundMatches = extractRoundKeys(body);
+  const titleRoundMatches = extractRoundKeys(title);
   const repeatedRoundInBody = new Set(bodyRoundMatches).size < bodyRoundMatches.length;
   // The same round is repeated in title, JSON, and projection; only distinct
   // round names or explicit multi-event wording count as multiple events.
   const explicitMulti = distinctRounds.length >= 2
     || (bodyRoundMatches.length > 0 && repeatedRoundInBody && /(?:timeline|投简历|约面|流程|官网流程|\d{1,2}[./-]\d{1,2})/i.test(body))
     || /(?:两场面试|多场面试|两次面试|多次面试|面了两家|面了多家|连续面了|两个小公司|两个自研|(?:第一家|第二家|第三家|第四家).*(?:第一家|第二家|第三家|第四家))/.test(text);
-  const titleRound = /(?:一面|二面|三面|四面|五面|[1-5]️⃣面|[1-5]面|初面|终面|第[一二三四五]面|第[一二三四五]轮)/.test(title);
+  const titleRound = titleRoundMatches.length > 0;
   const titleOutcomeNarrative = titleRound && /(?:被按在地上摩擦|摩擦|刚(?:刚)?面完|面完|实际面|面过|凉经|挂了|凉了|秒挂)/.test(title);
   const titleQuestionShare = /(?:面试题分享|面试问题分享)/.test(title);
   const compoundRoundTitle = /(?:一二面|二三面|一二三面|一二轮|二三轮)/.test(title);
