@@ -153,6 +153,61 @@ test('CLI defaults to plan-only and the plan path never invokes PATCH or POST', 
   assert.equal(plan.mutation_count, 0);
 });
 
+test('live read failures are complete blocked items and fail the whole plan', () => {
+  const value = fixture();
+  const record = value.records[0];
+  const plan = buildPlan({
+    manifest: value.manifest,
+    manifestFile: path.join(value.directory, 'full-boundary-manifest.json'),
+    records: [record],
+    liveLoader: () => { throw new Error('live issue GET failed'); },
+  });
+  assert.equal(plan.ok, false);
+  assert.match(plan.errors.join('\n'), /#42: live read failed: live issue GET failed/);
+  assert.equal(plan.items.length, 1);
+  assert.equal(plan.items[0].status, 'blocked');
+  assert.match(plan.items[0].errors.join('\n'), /live read failed/);
+  assert.equal(plan.items[0].decision, value.request.decision);
+  assert.equal(typeof plan.items[0].item_digest, 'string');
+});
+
+test('missing decision or blocked status cannot produce a plan-ready batch', () => {
+  const value = fixture();
+  const record = { ...value.records[0], request: { ...value.records[0].request, decision: undefined } };
+  const plan = buildPlan({
+    manifest: value.manifest,
+    manifestFile: path.join(value.directory, 'full-boundary-manifest.json'),
+    records: [record],
+    liveLoader: () => ({ issue: value.issue, comments: value.comments }),
+  });
+  assert.equal(plan.ok, false);
+  assert.match(plan.errors.join('\n'), /decision/);
+  assert.equal(plan.items[0].status, 'blocked');
+});
+
+test('default CLI reports blocked instead of plan-ready when a live read fails', () => {
+  const { main } = require('../scripts/apply-issue-1605-full-boundary-transition');
+  const value = fixture();
+  const output = path.join(value.directory, 'blocked-plan.json');
+  const originalWrite = process.stdout.write;
+  let stdout = '';
+  process.stdout.write = (chunk, ...args) => { stdout += String(chunk); return true; };
+  let exitCode;
+  try {
+    exitCode = main([
+      '--manifest', path.join(__dirname, '..', 'data/pilot/issue-1605/full-boundary-manifest.json'),
+      '--output', output,
+    ], {
+      manifest: fullManifest,
+      liveLoader: () => { throw new Error('simulated live GET failure'); },
+    });
+  } finally { process.stdout.write = originalWrite; }
+  assert.equal(exitCode, 1);
+  assert.match(stdout, /"status": "blocked"/);
+  assert.doesNotMatch(stdout, /plan-ready/);
+  assert.match(stdout, /live read failed: simulated live GET failure/);
+});
+
 test('apply patches only the boundary projection, validates it, then posts one applied receipt', () => {
   const value = planFixture();
   const harness = journalHarness(value);

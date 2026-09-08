@@ -263,13 +263,51 @@ function itemDigest(item) {
   }));
 }
 
+function blockedPlanItem(record, error) {
+  const request = record.request || {};
+  const item = {
+    issue_number: Number(record.issue_number),
+    transition_id: record.transition_id,
+    source_note_id: request.source_note_id || null,
+    decision: request.decision || null,
+    expected_body_sha256: request.expected_body_sha256 || null,
+    expected_source_revision_id: request.expected_source_revision_id || null,
+    request_marker_sha256: record.request_marker_sha256 || null,
+    current_body_sha256: null,
+    next_body_sha256: null,
+    next_body: null,
+    current_labels: [],
+    next_labels: null,
+    interview_note_ids: [],
+    interview_note_cases: [],
+    existing_receipt: null,
+    status: 'blocked',
+    errors: [error],
+  };
+  item.item_digest = itemDigest(item);
+  return item;
+}
+
+function appendBlockedItemErrors(errors, item) {
+  const before = item.errors.length;
+  if (item.status === 'blocked' && before === 0) item.errors.push('item is blocked without a reported error');
+  if (!item.decision) item.errors.push('item has no decision; refusing to plan the batch');
+  if (item.status === 'blocked' || item.errors.length > 0) item.status = 'blocked';
+  if (item.errors.length) errors.push(`#${item.issue_number}: ${item.errors.join('; ')}`);
+}
+
 function buildPlan({ manifest, manifestFile, records, liveLoader }) {
   const errors = [];
   const items = [];
   for (const record of records) {
     let live;
     try { live = liveLoader(record.request); }
-    catch (error) { items.push({ issue_number: Number(record.issue_number), transition_id: record.transition_id, status: 'blocked', errors: [`live read failed: ${error.message}`] }); continue; }
+    catch (error) {
+      const item = blockedPlanItem(record, `live read failed: ${error.message}`);
+      items.push(item);
+      appendBlockedItemErrors(errors, item);
+      continue;
+    }
     // A manifest's plan_digest is an upstream evidence-plan digest, not this
     // transition plan's canonical digest.  Never let it validate an existing
     // applied receipt during the first planning pass; that check happens once
@@ -291,8 +329,8 @@ function buildPlan({ manifest, manifestFile, records, liveLoader }) {
       existing_receipt: planned.existing_receipt || null,
       status: planned.status || 'blocked', errors: planned.errors || [],
     };
-    if (item.errors.length) errors.push(`#${item.issue_number}: ${item.errors.join('; ')}`);
     item.item_digest = itemDigest(item);
+    appendBlockedItemErrors(errors, item);
     items.push(item);
   }
   const content = {

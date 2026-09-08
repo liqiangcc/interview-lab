@@ -26,8 +26,10 @@ npm run plan:issue-1605-full-boundary-transition
    pending boundary state、labels、SourceNote validator 和 multi-interview case evidence。
 
 生成的 plan digest 绑定 manifest digest、request marker digest 和预期目标；live 的 current
-body/labels/status 仍保留在报告中作为 CAS 审计字段。任一条失败，整批 plan 为 blocked，
-mutation count 保持 0。
+body/labels/status 仍保留在报告中作为 CAS 审计字段。每条 live read failure 都会生成完整
+blocked item 并进入顶层 `errors`；任何 `status=blocked` 或缺少 `decision` 的 item 也会被汇总，
+因此任一条失败都会使整批 plan 为 blocked，CLI 返回非零且不会显示 `plan-ready`，mutation
+count 保持 0。
 
 ## Apply gate
 
