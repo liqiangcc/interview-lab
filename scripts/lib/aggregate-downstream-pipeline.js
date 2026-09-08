@@ -26,6 +26,7 @@ const UPSTREAM_DIGEST_RULES = Object.freeze({
   'issue-1609-boundary-dry-run.v1': Object.freeze({ field: 'dry_run_sha256', input: (report) => without(report, 'dry_run_sha256') }),
   'issue-1606-boundary-dry-run.v1': Object.freeze({ field: 'dry_run_sha256', input: (report) => without(report, 'dry_run_sha256') }),
   'issue-1607-boundary-dry-run.v1': Object.freeze({ field: 'dry_run_sha256', input: (report) => without(report, 'dry_run_sha256') }),
+  'issue-1607-boundary-dry-run-plan.v1': Object.freeze({ field: 'dry_run_sha256', input: (report) => without(report, 'dry_run_sha256') }),
   'issue-1608-boundary-dry-run.v1': Object.freeze({ field: 'dry_run_sha256', input: (report) => without(report, 'dry_run_sha256') }),
   'issue-1608-boundary-batch.v1': Object.freeze({ field: 'dry_run_sha256', input: (report) => without(report, 'dry_run_sha256') }),
   'issue-1610-source-recovery.v1': Object.freeze({ field: 'report_sha256', input: (report) => without(report, 'report_sha256') }),
@@ -142,7 +143,7 @@ function validateBoundaryReports(manifest, reports, frozenIssueNumbers = null) {
   const errors = [];
   const boundaryItems = [];
   const seenSourceIssues = new Set();
-  const supportedBoundarySchemas = new Set(['source-note-boundary-review-batch.v1', 'issue-1606-boundary-dry-run.v1', 'issue-1607-boundary-dry-run.v1', 'issue-1608-boundary-dry-run.v1', 'issue-1608-boundary-batch.v1', 'issue-1609-boundary-dry-run.v1']);
+  const supportedBoundarySchemas = new Set(['source-note-boundary-review-batch.v1', 'issue-1606-boundary-dry-run.v1', 'issue-1607-boundary-dry-run.v1', 'issue-1607-boundary-dry-run-plan.v1', 'issue-1608-boundary-dry-run.v1', 'issue-1608-boundary-batch.v1', 'issue-1609-boundary-dry-run.v1']);
   for (const expected of BOUNDARY_BATCHES) {
     const report = reports[expected.issue_number];
     const reportSchema = report && report.schema_version;
@@ -171,7 +172,7 @@ function validateBoundaryReports(manifest, reports, frozenIssueNumbers = null) {
       const status = item.status || item.disposition || item.final_status;
       if (!nonEmpty(status)) errors.push(`boundary #${expected.issue_number} SourceNote #${number} has no explicit status/disposition`);
       else if (status !== 'already_applied') errors.push(`boundary #${expected.issue_number} SourceNote #${number} is not already_applied (status=${status})`);
-      const currentBodySha = item.current_body_sha256 || item.body_sha256 || item.source_note_body_sha256;
+      const currentBodySha = item.current_body_sha256 || item.body_sha256 || item.expected_body_sha256 || item.source_note_body_sha256;
       const sourceNoteId = item.source_note_id || item.source_identity;
       const interviewNoteIds = item.interview_note_ids || item.interview_note_ids_disposition || [];
       if (!HEX64.test(currentBodySha || '')) errors.push(`SourceNote #${number} has no frozen current_body_sha256/body_sha256`);

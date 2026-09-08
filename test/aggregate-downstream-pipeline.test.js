@@ -31,6 +31,9 @@ const issueNumber = 2000;
 const sourceIssueNumber = 20;
 const sourceBodySha = '1'.repeat(64);
 const issue1609Fixture = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures/aggregate-upstream/issue-1609-boundary-dry-run.json'), 'utf8'));
+const issue1607PlanFixture = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures/aggregate-upstream/issue-1607-boundary-dry-run-plan.json'), 'utf8'));
+const issue1608PlanFixture = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures/aggregate-upstream/issue-1608-boundary-dry-run-plan.json'), 'utf8'));
+const issue1608BatchMissingDigestFixture = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures/aggregate-upstream/issue-1608-boundary-batch-missing-digest.json'), 'utf8'));
 
 function boundaryReport(batch, includeCandidate = batch.issue_number === 1606) {
   const items = [];
@@ -170,6 +173,20 @@ test('real #1609 dry-run report shape validates with recursive canonical JSON', 
   assert.equal(validateUpstreamReport(insertionOrderReport, 'boundary #1609', 'issue-1609-boundary-dry-run.v1').ok, false);
 });
 
+test('B and C dry-run-plan contracts use explicit canonical report digests, while C boundary-batch without one fails closed', () => {
+  const bValidation = validateUpstreamReport(issue1607PlanFixture, 'boundary #1607', 'issue-1607-boundary-dry-run-plan.v1');
+  assert.equal(bValidation.ok, true, bValidation.errors.join('\n'));
+  assert.equal(upstreamDigest(issue1607PlanFixture, 'issue-1607-boundary-dry-run-plan.v1').expected, issue1607PlanFixture.dry_run_sha256);
+
+  const cValidation = validateUpstreamReport(issue1608PlanFixture, 'boundary #1608', 'issue-1608-boundary-dry-run.v1');
+  assert.equal(cValidation.ok, true, cValidation.errors.join('\n'));
+  assert.equal(upstreamDigest(issue1608PlanFixture, 'issue-1608-boundary-dry-run.v1').expected, issue1608PlanFixture.dry_run_sha256);
+
+  const missingDigest = validateUpstreamReport(issue1608BatchMissingDigestFixture, 'boundary #1608', 'issue-1608-boundary-batch.v1');
+  assert.equal(missingDigest.ok, false);
+  assert.match(missingDigest.errors.join('\n'), /dry_run_sha256 is required/);
+});
+
 test('recovery dry-run uses its declared plan_sha256 digest input', () => {
   const digestInput = { schema_version: 'issue-1610-recovery-digest-input.v1', items: [{ issue_number: 1, status: 'blocked' }, { issue_number: 2, status: 'blocked' }] };
   const report = { schema_version: 'issue-1610-recovery-dry-run.v1', digest_input: digestInput, plan_sha256: canonicalDigest(digestInput) };
@@ -226,8 +243,8 @@ test('boundary validation adapts the current batch report field aliases without 
   const input = validInputs();
   const schemas = {
     1606: 'issue-1606-boundary-dry-run.v1',
-    1607: 'issue-1607-boundary-dry-run.v1',
-    1608: 'issue-1608-boundary-batch.v1',
+    1607: 'issue-1607-boundary-dry-run-plan.v1',
+    1608: 'issue-1608-boundary-dry-run.v1',
     1609: 'issue-1609-boundary-dry-run.v1',
   };
   const adaptedReports = {};
