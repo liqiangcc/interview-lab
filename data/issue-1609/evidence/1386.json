@@ -8,7 +8,7 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "f5e647af46f9ff72a2b921a95ad027c11697b8a874cb43a9937a4a2e36734ea9",
   "disposition": "single-interview",
-  "rationale": "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
@@ -19,8 +19,14 @@
     "has_explicit_candidate_event": true,
     "has_bounded_event": true,
     "has_detailed_event": true,
+    "has_completed_event_evidence": true,
+    "has_structured_candidate_event": true,
+    "generic_advice_or_aggregated": false,
+    "scheduled_only": false,
+    "question_only": false,
     "outcome_signal": true,
     "resource_signal": false,
+    "aggregated_text": false,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": false,
@@ -61,7 +67,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -75,11 +81,11 @@
     }
   ],
   "limitations": [
-    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "e562024666215aa9971dd7b10466a11f76c4b282265a2800923cbefc395d95a4"
+  "evidence_sha256": "6453dd5ead5aa04bd1c0dd2b435a88f284b0e4210256efb3a0299ba49aaf944b"
 }

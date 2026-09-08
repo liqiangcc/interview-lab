@@ -7,13 +7,15 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "b03069b63378e4de8c93b8984480d0ad5261b2984b29ea031aac50289a13d912",
-  "disposition": "not-interview",
-  "rationale": "Exact Source is a generic question bank, recruitment/job advertisement, tutorial, written-test, or preparation resource; it does not record one candidate interview event.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is generic advice or aggregated/summarized material without a bounded candidate interview event; retain pending.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
       "no-first-person-event",
       "generic-question-bank-or-job-ad",
+      "generic-advice-or-aggregated",
+      "scheduled-only",
       "no-candidate-event-evidence"
     ],
     "questions": 0,
@@ -21,8 +23,14 @@
     "has_explicit_candidate_event": false,
     "has_bounded_event": true,
     "has_detailed_event": true,
+    "has_completed_event_evidence": false,
+    "has_structured_candidate_event": false,
+    "generic_advice_or_aggregated": true,
+    "scheduled_only": true,
+    "question_only": false,
     "outcome_signal": false,
     "resource_signal": true,
+    "aggregated_text": false,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": false,
@@ -62,8 +70,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence. Exact Source is a generic question bank, recruitment/job advertisement, tutorial, written-test, or preparation resource; it does not record one candidate interview event."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is generic advice or aggregated/summarized material without a bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -77,11 +85,11 @@
     }
   ],
   "limitations": [
-    "Exact Source is a generic question bank, recruitment/job advertisement, tutorial, written-test, or preparation resource; it does not record one candidate interview event.",
+    "Exact Source is generic advice or aggregated/summarized material without a bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "cc092e61f281ef4b4ccccd3f93f84e60126f7e17168a3a1a6201cc18cc3ffaf4"
+  "evidence_sha256": "f1b3672745642f051ea4116d34b09336c2908fb9d0ad9dd128a7a3f1578f8580"
 }

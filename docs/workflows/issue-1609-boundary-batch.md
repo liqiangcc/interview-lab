@@ -70,32 +70,34 @@ node scripts/issue-1609-boundary-batch.js \
 ## Ambiguity audit
 
 `data/issue-1609/ambiguity-audit.json` 对 366 条逐条记录以下 flags 及对应
-issue number：`multi-company-or-process`、`question-list-only`、
+issue number：`multi-company-or-process`、`question-list-only`、`question-only`、
 `outcome-or-offer-only`、`no-first-person-event`、`no-candidate-event-evidence`、
-`generic-question-bank-or-job-ad`、`job-or-title-only` 和
-`non-interview-format`。规则是：
+`generic-question-bank-or-job-ad`、`generic-advice-or-aggregated`、
+`scheduled-only`、`job-or-title-only` 和 `non-interview-format`。规则是：
 
 当前 flag counts 为：multi-company/process 4、question-list-only 104、
-outcome/offer-only 18、no-first-person-event 291、no-candidate-event-evidence
-142、generic question-bank/job-ad 16、job/title-only 1（#1200）、
+question-only 117、outcome/offer-only 18、no-first-person-event 291、
+no-candidate-event-evidence 232、generic question-bank/job-ad 15、
+generic-advice-or-aggregated 23、scheduled-only 6、job/title-only 1（#1200）、
 non-interview-format 5。完整 issue number
 列表在 audit JSON 的 `flag_issue_numbers` 中。
 
-- 只有 Source 明确记录一个 bounded candidate event 才能得到 `single-interview`；
-  单一流程中的一面/二面/三面仍是一个 case。
+- 只有 Source 明确记录一个已完成的 bounded candidate event，并有结构化过程/问答
+  证据，才能得到 `single-interview`；单一流程中的一面/二面/三面仍是一个 case。
 - 多个独立流程若各有可定位的详细 Source 段落，才产生稳定 `case_key` 和唯一
   locator 的 `multi-interview`；否则 `blocked`。
-- 只有题目列表、只有结果/offer、缺少事件边界或缺少足够的一人称/候选人事件
-  证据时保持 `blocked`；通用题库、岗位广告、招聘/笔试资源为 `not-interview`。
+- 通用建议/汇总、预约/邀请、只有题目列表、只有结果/offer、仅职位元数据、缺少
+  事件边界或候选人实际过程证据时统一保持 `blocked`；不能用 round、时长或问题
+  清单单独升级边界。
 - NFKC 只用于识别兼容字符，不授权事件边界；只有岗位、轮次、时长、base 等
   标题元数据的 #1200 标为 `blocked`，因为没有候选人实际经历、问答或过程。
 
 本轮重点复核结果：#1141（多公司社招总结）、#1267（多公司但仅进度/结果）、
 #1447（多家公司累计内容）均为 `blocked`；#1452 有 OPPO、得物、贝壳找房
 三个独立且各自带问题段落的 Source 区块，记录为 `multi-interview`，case keys
-分别为 `dewuu-process`、`ke-house-process`、`oppo-process`，locator 为对应
-`semantic-anchor`。题库/岗位广告等 16 条为 `not-interview`，其余证据不足项
-保持 `blocked`。
+分别为 `dewuu-process`、`ke-house-process`、`oppo-process`，locator 均为 exact
+artifact 上的唯一 `artifact-line:<line>#offset:<start>-<end>`。题库/岗位广告、
+建议/汇总、预约、仅题目、仅结果和无事件证据均保持 `blocked`。
 
 正式 staged request 严格通过 `validateTransitionRequest`：使用
 `source-note-boundary-review-transition.v1/v2`、`transition_id`、固定
@@ -103,7 +105,7 @@ non-interview-format 5。完整 issue number
 `expected_manifest_sha256=null` 和固定 source ref；v2 的每个 case 仅含
 `case_key` 与 `evidence:[{ref,locator}]`。placeholder 不是 live comment，故
 不能被 planner 的 live evidence gate 通过。`blocked` 不是现有 transition
-decision，故 203 项不生成伪 terminal request，只在逐条 evidence/audit/receipt
+decision，故 238 项不生成伪 terminal request，只在逐条 evidence/audit/receipt
 中保留 `transition_request_staged=false`。
 
 ## 当前结果
@@ -111,11 +113,11 @@ decision，故 203 项不生成伪 terminal request，只在逐条 evidence/audi
 | 项目 | 数值 |
 |---|---:|
 | frozen selection | 366 |
-| `single-interview` candidate | 108 |
+| `single-interview` candidate | 127 |
 | `multi-interview` candidate | 1 (3 cases) |
-| `not-interview` candidate | 18 |
-| blocked / pending | 239 |
-| schema-valid staged requests | 127 |
+| `not-interview` candidate | 0 |
+| blocked / pending | 238 |
+| schema-valid staged requests | 128 |
 | mutation attempted | 0 |
 | `possibly_performed` | 0 |
 
@@ -123,11 +125,11 @@ decision，故 203 项不生成伪 terminal request，只在逐条 evidence/audi
 
 ```text
 selection_sha256: 500bb51557ffed8898caed61faf7bceacff5b25b3d7261b1f49b3ab9f4fc3eb8
-dry_run_sha256: 350f164cceddfe8ce41f78344b781e64f913ec2f4e276c2de6ca7b0b8ba5772b
-canonical_digest_sha256: 6586ddfbb7929e0e0ad3f8ed6787152956ebe0f21d9de76217961b05a3a1b4a4
+dry_run_sha256: 2af049db37655c30f397382d1d0fe76be5f4780fed5f68970b2502d17abdf31d
+canonical_digest_sha256: dbb313ea57f03bc8bbfd6ffbf0c32c74bc4008a3c2dcf216d1c8d477dc3f2059
 ```
 
-证据不足的 239 项保持 blocked/pending；尤其是空/`null` readable projection、
+证据不足的 238 项保持 blocked/pending；尤其是空/`null` readable projection、
 只有来源标签或不能证明有界事件的内容，未因标题、hashtag、Issue number 或
 Derived 数据而升级。`source_evidence` 只引用 Raw 或 source projection，未把
 Raw 覆盖为 Derived，也未创建 InterviewNote、source-ready、InterviewContext 或

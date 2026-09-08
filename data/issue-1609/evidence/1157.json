@@ -8,19 +8,27 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "4f88326bc2641e0098a70b86ea58c8f02eed4ee8721411ea930ce54f0ce21751",
   "disposition": "blocked",
-  "rationale": "The available Source evidence does not establish a bounded candidate interview event; retain pending.",
+  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
-      "no-first-person-event"
+      "no-first-person-event",
+      "question-only",
+      "no-candidate-event-evidence"
     ],
     "questions": 2,
     "has_first_person_event": false,
     "has_explicit_candidate_event": false,
     "has_bounded_event": false,
     "has_detailed_event": false,
+    "has_completed_event_evidence": false,
+    "has_structured_candidate_event": false,
+    "generic_advice_or_aggregated": false,
+    "scheduled_only": false,
+    "question_only": true,
     "outcome_signal": false,
     "resource_signal": false,
+    "aggregated_text": false,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": false,
@@ -61,7 +69,7 @@
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. The available Source evidence does not establish a bounded candidate interview event; retain pending."
+      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -75,11 +83,11 @@
     }
   ],
   "limitations": [
-    "The available Source evidence does not establish a bounded candidate interview event; retain pending.",
+    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "cc72c24ee80ad1d8d3cc3c474a9b45f82c97926105bcd9ce54306ce9a67629ea"
+  "evidence_sha256": "cb99bda6057842a14fdcadab410015df26d3446f64d2c65716c7e933992e51b9"
 }

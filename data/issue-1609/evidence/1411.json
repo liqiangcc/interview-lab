@@ -7,13 +7,15 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "7344ef3cff5a70b740b8568fa21749aacffeaf4fa1d7ae0cc2ae733414bfaa5b",
-  "disposition": "not-interview",
-  "rationale": "Exact Source identifies a written-test/non-interview format rather than a candidate interview event.",
+  "disposition": "blocked",
+  "rationale": "Exact Source is generic advice or aggregated/summarized material without a bounded candidate interview event; retain pending.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
       "no-first-person-event",
       "generic-question-bank-or-job-ad",
+      "generic-advice-or-aggregated",
+      "scheduled-only",
       "no-candidate-event-evidence",
       "non-interview-format"
     ],
@@ -22,8 +24,14 @@
     "has_explicit_candidate_event": false,
     "has_bounded_event": false,
     "has_detailed_event": false,
+    "has_completed_event_evidence": false,
+    "has_structured_candidate_event": false,
+    "generic_advice_or_aggregated": true,
+    "scheduled_only": true,
+    "question_only": false,
     "outcome_signal": false,
     "resource_signal": true,
+    "aggregated_text": false,
     "job_or_title_only": false,
     "non_interview_format": true,
     "only_question_list": false,
@@ -63,8 +71,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence. Exact Source identifies a written-test/non-interview format rather than a candidate interview event."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is generic advice or aggregated/summarized material without a bounded candidate interview event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -78,11 +86,11 @@
     }
   ],
   "limitations": [
-    "Exact Source identifies a written-test/non-interview format rather than a candidate interview event.",
+    "Exact Source is generic advice or aggregated/summarized material without a bounded candidate interview event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "e75d5bc51d069c7261134022a5c534692723d9375ed6e8d7bcefd976388363db"
+  "evidence_sha256": "20818983e8bf57bce1872f59f9935d6cf126da1c070d8436aeff552b0949c909"
 }

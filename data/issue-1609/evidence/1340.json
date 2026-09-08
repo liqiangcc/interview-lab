@@ -7,21 +7,26 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "9314ffdb58d2df53cea1fc9579ac139f3c59f52485efffefebd80b0e9d55f6bc",
-  "disposition": "blocked",
-  "rationale": "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+  "disposition": "single-interview",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
-      "no-first-person-event",
-      "no-candidate-event-evidence"
+      "no-first-person-event"
     ],
     "questions": 0,
     "has_first_person_event": false,
     "has_explicit_candidate_event": false,
     "has_bounded_event": true,
     "has_detailed_event": true,
+    "has_completed_event_evidence": true,
+    "has_structured_candidate_event": true,
+    "generic_advice_or_aggregated": false,
+    "scheduled_only": false,
+    "question_only": false,
     "outcome_signal": false,
     "resource_signal": false,
+    "aggregated_text": false,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": false,
@@ -70,8 +75,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -85,11 +90,11 @@
     }
   ],
   "limitations": [
-    "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "aee971f682e8135543ca43b99744754e3f78ba065bcb25efa37abd4f27dac31f"
+  "evidence_sha256": "0dfbc26f11bfd50d5b3bb9023eb0351bedf83b85078431770eceb8dcfcb1bf87"
 }

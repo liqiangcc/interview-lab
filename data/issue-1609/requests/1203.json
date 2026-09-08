@@ -1,12 +1,12 @@
 {
   "schema_version": "source-note-boundary-review-transition.v1",
-  "transition_id": "issue-1609-boundary-1232-review-1",
+  "transition_id": "issue-1609-boundary-1203-review-1",
   "repository": "liqiangcc/interview-lab",
-  "issue_number": 1232,
-  "source_note_id": "xhs-note:68b52c7a000000001b01cc78",
-  "expected_body_sha256": "b1e9fc88c83e665379aa3cae73dd78818a00d2c9f76f5477de8a015453ad5ae9",
+  "issue_number": 1203,
+  "source_note_id": "xhs-note:68b11b5f000000001b01e877",
+  "expected_body_sha256": "172a9816f859c8d30e83e72eb832afdbeba2de4910d9b778d7432ff737cd320b",
   "expected_boundary_status": "pending",
-  "expected_source_revision_id": "xhs-note:68b52c7a000000001b01cc78:snapshot-95b77bb26104",
+  "expected_source_revision_id": "xhs-note:68b11b5f000000001b01e877:snapshot-95b77bb26104",
   "expected_manifest_sha256": null,
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "decision": "single-interview",
@@ -14,8 +14,8 @@
   "reviewer_kind": "ai-assisted",
   "review_evidence": {
     "repository": "liqiangcc/interview-lab",
-    "issue_number": 1232,
-    "comment_id": 1609001232
+    "issue_number": 1203,
+    "comment_id": 1609001203
   },
   "checks": [
     {
@@ -36,7 +36,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence. Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case."
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -50,7 +50,7 @@
     }
   ],
   "limitations": [
-    "Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.",
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
     "Candidate only: review_evidence.comment_id is a deterministic placeholder; no live evidence comment was created.",
     "No body PATCH, label write, or InterviewNote materialization was performed; controller authorization is required."
   ]

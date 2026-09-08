@@ -318,44 +318,65 @@ function ambiguityAudit(semantic) {
   const outcomeSignal = /(?:offer|录用|入职|通过|挂了|挂掉|挂科|简历挂|拒绝|未通过|凉经|结果)/i.test(value);
   const resource = resourceSignal(value);
   const genericAdvice = /(?:避免.{0,12}回答|试试这样|参考答案|个人经验分享|可以这样回答|面试技巧)/i.test(value);
-  const noCandidateEventEvidence = !explicitCandidateEvent && questions === 0;
+  const aggregatedText = /(?:粉丝投稿|综合粉丝投稿|当前市场环境|朋友.{0,12}(?:总结|复盘|记录)|收到一个朋友|特地分享|核心特点可总结|纯总结|无具体候选人)/i.test(value);
   const jobOrTitleOnly = /(?:岗位|职位|招聘)/i.test(value)
-    && /(?:一面|二面|三面|四面|hr面|技术面|分钟|min|base)/i.test(value)
-    && !explicitCandidateEvent && !hasDetailedEvent && questions === 0;
+    && /(?:一面|二面|三面|四面|hr面|技术面|面试轮次|round|分钟|min|base)/i.test(value)
+    && !explicitCandidateEvent
+    && !/(?:面试官|让我|问了|被问|回答|追问|手撕|代码题|算法题|项目拷打|自我介绍|聊项目|面试过程|面试内容|面试问题)/i.test(value)
+    && questions === 0;
   const nonInterviewFormat = /笔试/.test(value) && !/(?:面试官|面试时间|面试过程|面完|面了|面感|一面|二面|三面|hr面|技术面)/i.test(value);
-  const genericResource = !explicitCandidateEvent && (genericAdvice || (resource && (/(?:题库|题合集|书籍|招聘|内推|岗位名称|岗位职责|岗位招聘|急招|投递链接|面试攻略|集中面试即将|笔试题|下载|上传|收藏|核弹库|参考答案|高频题|200页)/i.test(value) || !hasDetailedEvent)));
+  const genericResource = !explicitCandidateEvent
+    && !/(?:面完|流程[:：]|涉及内容|详细面经|面试官先|面试官.{0,20}(?:问|追问|让我)|本次面试|这次面试|最近结束)/i.test(value)
+    && (genericAdvice || (resource && (/(?:题库|题合集|书籍|招聘|内推|岗位名称|岗位职责|岗位招聘|急招|投递链接|面试攻略|集中面试即将|笔试题|下载|上传|收藏|核弹库|参考答案|高频题|200页)/i.test(value) || !hasDetailedEvent)));
   const onlyQuestionList = questions >= 3 && !/(?:面试官|让我|面试时间|面试过程|面试内容|面试问题|面完|刚.{0,8}面|一面|二面|三面|hr面|总计\s*\d+\s*(?:分钟|min)|面试.{0,8}(?:分钟|min)|我.{0,20}(?:面|参加|去)|参加.{0,10}面试|收到.{0,10}面试)/i.test(prefix);
   const onlyOutcome = outcomeSignal && !hasDetailedEvent;
+  const completedEventEvidence = /(?:面试官|面试过程|面试内容|面试问题|本次面试|这次面试|最近结束了?[^\n]{0,12}面试|面完|面试了|参加.{0,10}面试|去面试|面试结果|被问|问了|追问|回答|让我|聊项目|手撕|代码题|算法题|项目拷打|自我介绍|总计\s*\d+\s*(?:分钟|min)|面试.{0,8}(?:分钟|min))/i.test(value);
+  const structuredCandidateEvent = hasDetailedEvent && !onlyQuestionList && completedEventEvidence && !aggregatedText;
+  const scheduledOnly = /(?:预约|约面|面试通知|面试邀请|面试安排|明天面|后天面|即将面)/i.test(value) && !structuredCandidateEvent;
+  const questionOnly = questions > 0 && !structuredCandidateEvent;
+  const genericAdviceOrAggregated = genericAdvice || aggregatedText || genericResource;
+  const noCandidateEventEvidence = !structuredCandidateEvent;
   const flags = [];
   if (multiSignal || segments.length > 1) flags.push('multi-company-or-process');
   if (onlyQuestionList) flags.push('question-list-only');
   if (onlyOutcome) flags.push('outcome-or-offer-only');
   if (!hasFirstPersonEvent) flags.push('no-first-person-event');
   if (genericResource) flags.push('generic-question-bank-or-job-ad');
+  if (genericAdviceOrAggregated) flags.push('generic-advice-or-aggregated');
+  if (scheduledOnly) flags.push('scheduled-only');
+  if (questionOnly) flags.push('question-only');
   if (jobOrTitleOnly) flags.push('job-or-title-only');
   if (noCandidateEventEvidence) flags.push('no-candidate-event-evidence');
   if (nonInterviewFormat) flags.push('non-interview-format');
-  return { flags, questions, has_first_person_event: hasFirstPersonEvent, has_explicit_candidate_event: explicitCandidateEvent, has_bounded_event: hasBoundedEvent, has_detailed_event: hasDetailedEvent, outcome_signal: outcomeSignal, resource_signal: resource, job_or_title_only: jobOrTitleOnly, non_interview_format: nonInterviewFormat, only_question_list: onlyQuestionList, only_outcome: onlyOutcome, multi_signal: multiSignal, case_segments: segments };
+  return { flags, questions, has_first_person_event: hasFirstPersonEvent, has_explicit_candidate_event: explicitCandidateEvent, has_bounded_event: hasBoundedEvent, has_detailed_event: hasDetailedEvent, has_completed_event_evidence: completedEventEvidence, has_structured_candidate_event: structuredCandidateEvent, generic_advice_or_aggregated: genericAdviceOrAggregated, scheduled_only: scheduledOnly, question_only: questionOnly, outcome_signal: outcomeSignal, resource_signal: resource, aggregated_text: aggregatedText, job_or_title_only: jobOrTitleOnly, non_interview_format: nonInterviewFormat, only_question_list: onlyQuestionList, only_outcome: onlyOutcome, multi_signal: multiSignal, case_segments: segments };
 }
 
 function disposition(semantic) {
   const value = String(semantic || '').trim();
   const audit = ambiguityAudit(value);
   if (!value || value === 'null') return { disposition: 'blocked', reason: 'No non-empty readable Source/Source projection is available; title and hashtags cannot authorize a boundary.', audit };
-  if (audit.flags.includes('non-interview-format')) return { disposition: 'not-interview', reason: 'Exact Source identifies a written-test/non-interview format rather than a candidate interview event.', audit };
-  if (audit.flags.includes('job-or-title-only')) return { disposition: 'blocked', reason: 'Exact Source contains only a job/title, round, duration, or location descriptor; it does not record candidate experience, questions, or interview process.', audit };
-  if (audit.flags.includes('generic-question-bank-or-job-ad')) return { disposition: 'not-interview', reason: 'Exact Source is a generic question bank, recruitment/job advertisement, tutorial, written-test, or preparation resource; it does not record one candidate interview event.', audit };
   if (audit.flags.includes('multi-company-or-process')) {
-    if (audit.case_segments.length >= 2 && audit.has_detailed_event && !audit.only_outcome) {
+    if (audit.case_segments.length >= 2 && audit.has_structured_candidate_event && !audit.only_outcome) {
       return { disposition: 'multi-interview', reason: 'Exact Source separately identifies multiple independent interview processes, each with its own source anchor and bounded detail.', interview_cases: audit.case_segments, audit };
     }
     return { disposition: 'blocked', reason: 'Exact Source indicates multiple independent processes, but does not provide separately reviewable bounded event evidence for every process; retain pending.', audit };
   }
+  if (audit.flags.includes('non-interview-format')
+    && !audit.flags.includes('generic-question-bank-or-job-ad')
+    && !audit.flags.includes('generic-advice-or-aggregated')
+    && !audit.flags.includes('scheduled-only')
+    && !audit.flags.includes('question-only')
+    && !audit.flags.includes('no-candidate-event-evidence')) {
+    return { disposition: 'not-interview', reason: 'Exact Source identifies a written-test/non-interview format rather than a candidate interview event.', audit };
+  }
+  if (audit.flags.includes('job-or-title-only')) return { disposition: 'blocked', reason: 'Exact Source contains only a job/title, round, duration, or location descriptor; it does not record candidate experience, questions, or interview process.', audit };
   if (audit.only_outcome) return { disposition: 'blocked', reason: 'Exact Source provides only an interview outcome, offer, rejection, or result without a bounded candidate event; retain pending.', audit };
-  if (audit.only_question_list) return { disposition: 'blocked', reason: 'Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.', audit };
+  if (audit.flags.includes('generic-advice-or-aggregated')) return { disposition: 'blocked', reason: 'Exact Source is generic advice or aggregated/summarized material without a bounded candidate interview event; retain pending.', audit };
+  if (audit.flags.includes('scheduled-only')) return { disposition: 'blocked', reason: 'Exact Source records only a scheduled, invited, or arranged interview and no completed candidate interview process; retain pending.', audit };
+  if (audit.flags.includes('question-only') || audit.only_question_list) return { disposition: 'blocked', reason: 'Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.', audit };
   if (audit.flags.includes('no-candidate-event-evidence')) return { disposition: 'blocked', reason: 'Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.', audit };
   if (!audit.has_bounded_event) return { disposition: 'blocked', reason: 'The available Source evidence does not establish a bounded candidate interview event; retain pending.', audit };
-  return { disposition: 'single-interview', reason: 'Exact Source explicitly records one bounded candidate interview event; rounds within the same process remain one case.', audit };
+  return { disposition: 'single-interview', reason: 'Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.', audit };
 }
 function makeRequest(item, evidence, choice) {
   if (choice.disposition === 'blocked') return null;

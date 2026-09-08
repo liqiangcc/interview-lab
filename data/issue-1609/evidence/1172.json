@@ -8,20 +8,29 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "609c057018f8f8bebc1debe756569e3fbdd0387fb48a6043c7aaeb07b9475611",
   "disposition": "blocked",
-  "rationale": "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+  "rationale": "Exact Source records only a scheduled, invited, or arranged interview and no completed candidate interview process; retain pending.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
       "question-list-only",
-      "no-first-person-event"
+      "no-first-person-event",
+      "scheduled-only",
+      "question-only",
+      "no-candidate-event-evidence"
     ],
     "questions": 13,
     "has_first_person_event": false,
     "has_explicit_candidate_event": false,
     "has_bounded_event": true,
     "has_detailed_event": true,
+    "has_completed_event_evidence": true,
+    "has_structured_candidate_event": false,
+    "generic_advice_or_aggregated": false,
+    "scheduled_only": true,
+    "question_only": true,
     "outcome_signal": false,
     "resource_signal": false,
+    "aggregated_text": false,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": true,
@@ -62,7 +71,7 @@
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending."
+      "note": "The disposition is supported by the cited source evidence. Exact Source records only a scheduled, invited, or arranged interview and no completed candidate interview process; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -76,11 +85,11 @@
     }
   ],
   "limitations": [
-    "Exact Source is only a question list without a sufficiently explicit bounded candidate interview event; retain pending.",
+    "Exact Source records only a scheduled, invited, or arranged interview and no completed candidate interview process; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "4256ab2d26eb8d8cd089217428e6dc67f4b37120339d67c474655d2ade3e923a"
+  "evidence_sha256": "4c3834e2e24ba5ca2c7b0ce9624287cd64ef1abb59d12172df01b21962156a10"
 }

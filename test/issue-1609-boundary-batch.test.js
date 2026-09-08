@@ -16,11 +16,11 @@ test('Issue #1609 disposition is conservative and does not treat tags as evidenc
   assert.equal(disposition('').disposition, 'blocked');
   assert.equal(disposition('#面经[话题]# #后端[话题]#').disposition, 'blocked');
   assert.equal(disposition('一面：自我介绍；面试官询问项目；手撕算法题').disposition, 'single-interview');
-  assert.equal(disposition('Java 面试题库，整理常见知识点供刷题').disposition, 'not-interview');
+  assert.equal(disposition('Java 面试题库，整理常见知识点供刷题').disposition, 'blocked');
   assert.equal(disposition('三场面试：公司甲、公司乙、公司丙').disposition, 'blocked');
   assert.equal(disposition('从第一个面试到现在一个月，面完懂车帝挂了之后也不敢面字节了，面着面着感觉好累').disposition, 'blocked');
   assert.equal(disposition('oppo 模型加速\n代码题：合并有序链表\n\n得物\n聊项目\n代码题：合并有序链表\n\n贝壳找房\n场景题：介绍一个树模型').disposition, 'multi-interview');
-  assert.equal(disposition('经典的Java必备书籍JavaGuide，内容涵盖自我介绍、面试、数据库，总共424页，直接下载').disposition, 'not-interview');
+  assert.equal(disposition('经典的Java必备书籍JavaGuide，内容涵盖自我介绍、面试、数据库，总共424页，直接下载').disposition, 'blocked');
 });
 
 test('Issue #1609 adversarial boundary audit recognizes CJK compatibility but stays fail-closed', () => {
@@ -28,8 +28,15 @@ test('Issue #1609 adversarial boundary audit recognizes CJK compatibility but st
   const jobOnly = disposition('2026届字节跳动客户端-抖音岗位，开发工程师⼀⾯（60min，base北京）');
   assert.equal(jobOnly.disposition, 'blocked');
   assert.ok(jobOnly.audit.flags.includes('job-or-title-only'));
-  assert.equal(disposition('岗位名称：Java开发；岗位职责：负责后端研发；欢迎投递').disposition, 'not-interview');
-  assert.equal(disposition('Q1：被问为什么加入百度。避免只说大公司，试试这样回答：技术创新与市场结合。个人经验分享：面试前练习问题和答案。').disposition, 'not-interview');
+  assert.equal(disposition('岗位名称：Java开发；岗位职责：负责后端研发；欢迎投递').disposition, 'blocked');
+  assert.equal(disposition('Q1：被问为什么加入百度。避免只说大公司，试试这样回答：技术创新与市场结合。个人经验分享：面试前练习问题和答案。').disposition, 'blocked');
+  assert.equal(disposition('收到面试邀请，预约明天一面').disposition, 'blocked');
+  assert.equal(disposition('1. Redis 2. JVM 3. MySQL').disposition, 'blocked');
+  assert.equal(disposition('字节面试经验总结：综合粉丝投稿和市场环境，建议准备八股与项目。').disposition, 'blocked');
+  assert.equal(disposition('仅记录岗位、面试轮次、60min 和 base 北京。').disposition, 'blocked');
+  const structured = disposition('二面：面试官追问项目一致性，我回答了领域事件；随后手撕合并有序链表。');
+  assert.equal(structured.disposition, 'single-interview');
+  assert.equal(structured.audit.has_structured_candidate_event, true);
   const multiRoundup = disposition('秋招进度：1.字节三面挂；2.快手2+1到HR面；3.小红书2+1+1到主管面；4.美团一面挂');
   assert.equal(multiRoundup.disposition, 'blocked');
   assert.ok(multiRoundup.audit.flags.includes('multi-company-or-process'));
@@ -69,14 +76,14 @@ test('Issue #1609 committed artifacts cover exactly the frozen 366-item scope', 
   assert.ok(selectedNumbers.every((number) => number >= 1139 && number <= 1508));
   assert.deepEqual(selection.read_audit.exact_issue_numbers, Array.from({ length: 370 }, (_, i) => 1139 + i));
   assert.equal(plan.total, 366);
-  assert.deepEqual(plan.counts, { 'single-interview': 108, 'multi-interview': 1, 'not-interview': 18, blocked: 239 });
+  assert.deepEqual(plan.counts, { 'single-interview': 127, 'multi-interview': 1, 'not-interview': 0, blocked: 238 });
   assert.equal(plan.mutation_count, 0);
   assert.equal(journal.entries.length, 366);
   assert.equal(journal.mutation_count, 0);
   assert.equal(audit.audit_status, 'not-run');
   assert.equal(audit.mutation_count, 0);
   assert.equal(files('evidence').length, 366);
-  assert.equal(files('requests').length, 127);
+  assert.equal(files('requests').length, 128);
   assert.equal(files('receipts').length, 366);
   const ambiguity = load('ambiguity-audit.json');
   assert.equal(ambiguity.total, 366);
@@ -99,10 +106,13 @@ test('Issue #1609 committed artifacts cover exactly the frozen 366-item scope', 
   assert.ok(ambiguity.flag_issue_numbers['outcome-or-offer-only'].length > 0);
   assert.ok(ambiguity.flag_issue_numbers['no-first-person-event'].length > 0);
   assert.ok(ambiguity.flag_issue_numbers['no-candidate-event-evidence'].length > 0);
+  assert.ok(ambiguity.flag_issue_numbers['generic-advice-or-aggregated'].length > 0);
+  assert.ok(ambiguity.flag_issue_numbers['scheduled-only'].length > 0);
+  assert.ok(ambiguity.flag_issue_numbers['question-only'].length > 0);
   assert.deepEqual(ambiguity.flag_issue_numbers['generic-question-bank-or-job-ad'].filter((number) => number === 1176 || number === 1297), [1176, 1297]);
   assert.deepEqual(ambiguity.flag_issue_numbers['job-or-title-only'], [1200]);
   assert.equal(digest.evidence_count, 366);
-  assert.equal(digest.request_count, 127);
+  assert.equal(digest.request_count, 128);
   assert.equal(digest.receipt_count, 366);
 });
 

@@ -7,12 +7,14 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "9e5ce777ed45bdac4ada6a6643af9f720df62fd54ed1d9942c6d8c09be7917af",
-  "disposition": "not-interview",
-  "rationale": "Exact Source identifies a written-test/non-interview format rather than a candidate interview event.",
+  "disposition": "blocked",
+  "rationale": "Exact Source provides only an interview outcome, offer, rejection, or result without a bounded candidate event; retain pending.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
       "outcome-or-offer-only",
+      "question-only",
+      "no-candidate-event-evidence",
       "non-interview-format"
     ],
     "questions": 1,
@@ -20,8 +22,14 @@
     "has_explicit_candidate_event": true,
     "has_bounded_event": false,
     "has_detailed_event": false,
+    "has_completed_event_evidence": false,
+    "has_structured_candidate_event": false,
+    "generic_advice_or_aggregated": false,
+    "scheduled_only": false,
+    "question_only": true,
     "outcome_signal": true,
     "resource_signal": true,
+    "aggregated_text": false,
     "job_or_title_only": false,
     "non_interview_format": true,
     "only_question_list": false,
@@ -61,8 +69,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "The disposition is supported by the cited source evidence. Exact Source identifies a written-test/non-interview format rather than a candidate interview event."
+      "result": "fail",
+      "note": "The disposition is supported by the cited source evidence. Exact Source provides only an interview outcome, offer, rejection, or result without a bounded candidate event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -76,11 +84,11 @@
     }
   ],
   "limitations": [
-    "Exact Source identifies a written-test/non-interview format rather than a candidate interview event.",
+    "Exact Source provides only an interview outcome, offer, rejection, or result without a bounded candidate event; retain pending.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "e330b06aa1b9ac425ad78e0f45942ed2d90b5c8ae4658f9bda5a34ceeab4b25a"
+  "evidence_sha256": "dd5212383bd20b38593df07796ecf89c32f25e2cdb31745d814754ef2fba365c"
 }

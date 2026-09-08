@@ -9,7 +9,7 @@
   "expected_source_revision_id": "xhs-note:68e24527000000000301ebfc:snapshot-95b77bb26104",
   "expected_manifest_sha256": null,
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "decision": "not-interview",
+  "decision": "single-interview",
   "reviewed_at": "2026-09-08T00:00:00.000Z",
   "reviewer_kind": "ai-assisted",
   "review_evidence": {
@@ -36,7 +36,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "The disposition is supported by the cited source evidence. Exact Source is a generic question bank, recruitment/job advertisement, tutorial, written-test, or preparation resource; it does not record one candidate interview event."
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -50,7 +50,7 @@
     }
   ],
   "limitations": [
-    "Exact Source is a generic question bank, recruitment/job advertisement, tutorial, written-test, or preparation resource; it does not record one candidate interview event.",
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
     "Candidate only: review_evidence.comment_id is a deterministic placeholder; no live evidence comment was created.",
     "No body PATCH, label write, or InterviewNote materialization was performed; controller authorization is required."
   ]
