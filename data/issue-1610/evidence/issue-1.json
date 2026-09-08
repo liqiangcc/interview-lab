@@ -1,0 +1,97 @@
+{
+  "schema_version": "issue-1610-recovery-evidence.v1",
+  "scope": "issue-1610-fixed-2",
+  "repository": "liqiangcc/interview-lab",
+  "controller_issue_number": 1605,
+  "scope_issue_number": 1610,
+  "issue_number": 1,
+  "interview_note_id": "xhs:630e2e22000000001103c490",
+  "source_note_issue_number": 903,
+  "source_note_id": "xhs-note:630e2e22000000001103c490",
+  "expected_interview_body_sha256": "ce1b031f3ca37f2eab50702fe6445d3a6ce296fe36d449e319fe1bcccff44c52",
+  "expected_source_note_body_sha256": "f93ac831ca3ffb15b158a4f8fe0f2195d17de1b1ae36e5514d56c891ef1355e6",
+  "source_revision_id": "xhs-note:630e2e22000000001103c490:snapshot-95b77bb26104",
+  "interview_source_revision_id": "xhs:630e2e22000000001103c490:legacy-r1",
+  "source_snapshot": {
+    "repository": "liqiangcc/xhs",
+    "ref": "95b77bb261048059846273688e4b90a2e108b437"
+  },
+  "pinned_artifact_manifest_sha256": "77cbbff0b093e1407aa62ccf71d4760c78bfe583610797b7f69f12b8cf7d72a5",
+  "recovery_attempts_sha256": "4b2e3c88e89243a8a2406c8a195983bf4362ccf1a1e736d1dbd7c2149dcfe4ff",
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Both live records bind the frozen external source identity."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "fail",
+      "note": "InterviewNote uses xhs:630e2e22000000001103c490:legacy-r1; pinned SourceNote uses xhs-note:630e2e22000000001103c490:snapshot-95b77bb26104."
+    },
+    {
+      "check_id": "artifact_reference_integrity",
+      "result": "fail",
+      "note": "InterviewNote artifact refs are legacy/unpinned or do not exactly match the pinned SourceNote artifact set."
+    },
+    {
+      "check_id": "raw_projection_traceability",
+      "result": "fail",
+      "note": "Source projections have no explicit derived_from Raw lineage; Raw is not upgraded."
+    },
+    {
+      "check_id": "source_artifact_provenance",
+      "result": "pass",
+      "note": "Every frozen artifact path/blob was verified against the pinned commit tree."
+    },
+    {
+      "check_id": "known_limitations_recorded",
+      "result": "fail",
+      "note": "InterviewNote does not retain every SourceNote limitation verbatim."
+    },
+    {
+      "check_id": "duplicate_ownership",
+      "result": "pass",
+      "note": "Exact ownership search found only the fixed InterviewNote owner."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No new source fact was inferred by this dry-run."
+    },
+    {
+      "check_id": "boundary_disposition",
+      "result": "fail",
+      "note": "SourceNote boundary status is pending, not single-interview."
+    },
+    {
+      "check_id": "image_recovery",
+      "result": "fail",
+      "note": "No verified non-empty image artifact was recovered from the recorded URLs."
+    }
+  ],
+  "failed_check_ids": [
+    "source_revision_binding",
+    "artifact_reference_integrity",
+    "raw_projection_traceability",
+    "known_limitations_recorded",
+    "boundary_disposition",
+    "image_recovery"
+  ],
+  "decision": "blocked",
+  "final_status": "blocked",
+  "independent_review": {
+    "status": "candidate-only-unposted",
+    "live_comment_id": null,
+    "boundary_review_evidence_reused": false
+  },
+  "ownership": {
+    "exact_owner_issue_numbers": [
+      1
+    ],
+    "expected_exact_owner_count": 1
+  },
+  "no_raw_overwrite": true,
+  "mutation_performed": false,
+  "evidence_subject_sha256": "11af8386a1310feaa8fcdfb9c329c093a2374ff655241cf1edc2246257c4e61f"
+}
