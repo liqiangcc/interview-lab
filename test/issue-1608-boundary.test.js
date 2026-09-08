@@ -14,6 +14,12 @@ test('issue #1608 classification fails closed for empty and generic source text'
   assert.strictEqual(classify(999999, '一份面试技巧和复习资料整理').decision, 'not-interview');
 });
 
+test('multi cases without unique non-hashtag artifact locators are blocked', () => {
+  assert.strictEqual(classify(782, '京东物流 京东科技').disposition, 'blocked');
+  assert.strictEqual(classify(849, '腾讯 字节跳动').disposition, 'blocked');
+  assert.strictEqual(classify(972, '滴滴 字节 美团 快手').disposition, 'blocked');
+});
+
 test('issue #1608 frozen artifacts validate with zero mutations', () => {
   const result = validateDirectory();
   assert.strictEqual(result.total, 337);

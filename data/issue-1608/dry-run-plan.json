@@ -2,10 +2,54 @@
   "schema_version": "issue-1608-boundary-dry-run.v1",
   "repository": "liqiangcc/interview-lab",
   "issue": 1608,
-  "selection_sha256": "e20c025f3658ff34acfcf812228f2067aa6b0b347cbbc0279d2eeacc08f59310",
+  "selection_sha256": "636a76ebcd3ee31b6eb9a7bbb8c660ca58db8b953bd647eb607c9c78dee8a74f",
   "source_snapshot": {
     "repository": "liqiangcc/xhs",
     "ref": "95b77bb261048059846273688e4b90a2e108b437"
+  },
+  "parent_dependency": {
+    "schema_version": "issue-1605-global-pending-inventory-dependency.v1",
+    "parent_issue": 1605,
+    "source_repository": "liqiangcc/xhs",
+    "source_ref": "95b77bb261048059846273688e4b90a2e108b437",
+    "snapshot_commit": "62aa7258d9931e6453329af2586b9a1390e8e3c5",
+    "snapshot_path": "data/pilot/issue-1605/pending-inventory.snapshot.json",
+    "snapshot_canonical_digest": "5bbf8de3dc61ed382ee31e0d0286c3e7374efec243f60b245c76ee2e0b553dfd",
+    "ownership_path": "data/pilot/issue-1605/pending-inventory.ownership.json",
+    "ownership_canonical_digest": "86550c7f11ed133be4d48873d47fe2118d8ade305acb40ff3040e904815f38fb",
+    "pending_count": 1397,
+    "partitions": [
+      {
+        "child_issue": 1606,
+        "first_issue": 20,
+        "last_issue": 392,
+        "pending_count": 327
+      },
+      {
+        "child_issue": 1607,
+        "first_issue": 393,
+        "last_issue": 765,
+        "pending_count": 367
+      },
+      {
+        "child_issue": 1608,
+        "first_issue": 766,
+        "last_issue": 1138,
+        "pending_count": 337
+      },
+      {
+        "child_issue": 1609,
+        "first_issue": 1139,
+        "last_issue": 1508,
+        "pending_count": 366
+      }
+    ],
+    "union": {
+      "count": 1397,
+      "pairwise_disjoint": true,
+      "equals_parent_inventory": true
+    },
+    "status": "read-only-parent-controller-dependency"
   },
   "scope": {
     "first_issue": 766,
@@ -18,11 +62,11 @@
   "mutation_count": 0,
   "counts": {
     "total": 337,
-    "decided": 294,
-    "blocked": 43,
+    "decided": 291,
+    "blocked": 46,
     "not_interview": 54,
     "single_interview": 234,
-    "multi_interview": 6
+    "multi_interview": 3
   },
   "items": [
     {
@@ -189,11 +233,11 @@
       "issue_number": 782,
       "source_note_id": "xhs-note:680a3a20000000001c03319f",
       "body_sha256": "ff07be350a7acabf3f7053937b34031e20d566657108bfbfac009546a5131db9",
-      "decision": "multi-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/0782.json",
       "mutation": null,
-      "reason": "固定 Source projection 明确记录多个相互独立的公司/流程；按稳定 case key 分离，未把同一流程的多轮机械拆开。"
+      "reason": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。"
     },
     {
       "issue_number": 783,
@@ -849,11 +893,11 @@
       "issue_number": 849,
       "source_note_id": "xhs-note:68269c7b00000000120039e9",
       "body_sha256": "9a5c181cb7b4a419052c1e0b40b55ae31ee6bbfbf3aa58eef9802e9fecfd5b88",
-      "decision": "multi-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/0849.json",
       "mutation": null,
-      "reason": "固定 Source projection 明确记录多个相互独立的公司/流程；按稳定 case key 分离，未把同一流程的多轮机械拆开。"
+      "reason": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。"
     },
     {
       "issue_number": 850,
@@ -1749,11 +1793,11 @@
       "issue_number": 972,
       "source_note_id": "xhs-note:685383ac00000000170358db",
       "body_sha256": "c70711939461dd922dba8bb699aae6e162a4237ae8b13f75e33d0931c26a3d2e",
-      "decision": "multi-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/0972.json",
       "mutation": null,
-      "reason": "固定 Source projection 明确记录多个相互独立的公司/流程；按稳定 case key 分离，未把同一流程的多轮机械拆开。"
+      "reason": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。"
     },
     {
       "issue_number": 973,
@@ -3403,5 +3447,5 @@
     "any non-expected GitHub response",
     "controller has not supplied explicit apply authorization"
   ],
-  "dry_run_sha256": "c957ef495b73debd6c5e0cfe79e5c62e30e2a8f8632cf009f6b67ca5c6e098ae"
+  "dry_run_sha256": "9887e7c3c36947df45fb75551848dcef30d3b7b6fde12d57eaa14c1526be6ab0"
 }

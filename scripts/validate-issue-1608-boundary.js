@@ -4,7 +4,7 @@
 const assert = require('assert');
 const fs = require('fs');
 const path = require('path');
-const { canonicalJson, sha256Text } = require('./prepare-issue-1608-boundary');
+const { canonicalJson, sha256Text, PARENT_DEPENDENCY } = require('./prepare-issue-1608-boundary');
 
 const ROOT = path.resolve(__dirname, '..', 'data', 'issue-1608');
 const FIRST_ISSUE = 766;
@@ -48,6 +48,19 @@ function validateDirectory(root = ROOT) {
     no_out_of_scope_reads: true,
   });
   assert.deepStrictEqual(selection.source_snapshot, { repository: SOURCE_REPOSITORY, ref: SOURCE_REF });
+  assert.deepStrictEqual(selection.parent_dependency, PARENT_DEPENDENCY);
+  assert.deepStrictEqual(readJson(path.join(root, 'parent-dependency.json')), PARENT_DEPENDENCY);
+  assert.strictEqual(PARENT_DEPENDENCY.pending_count, 1397);
+  assert.strictEqual(PARENT_DEPENDENCY.union.count, 1397);
+  assert.strictEqual(PARENT_DEPENDENCY.union.pairwise_disjoint, true);
+  assert.strictEqual(PARENT_DEPENDENCY.union.equals_parent_inventory, true);
+  assert.strictEqual(PARENT_DEPENDENCY.partitions.reduce((sum, item) => sum + item.pending_count, 0), 1397);
+  for (let index = 1; index < PARENT_DEPENDENCY.partitions.length; index += 1) {
+    assert(PARENT_DEPENDENCY.partitions[index - 1].last_issue < PARENT_DEPENDENCY.partitions[index].first_issue, 'parent partitions overlap');
+  }
+  const ownPartition = PARENT_DEPENDENCY.partitions.find((item) => item.child_issue === 1608);
+  assert(ownPartition);
+  assert.strictEqual(ownPartition.pending_count, TOTAL);
   assert.strictEqual(selection.total, TOTAL);
   assert.strictEqual(selection.items.length, TOTAL);
 
@@ -93,6 +106,7 @@ function validateDirectory(root = ROOT) {
     assert.strictEqual(intent.expected_boundary_status, 'pending');
     assert.strictEqual(intent.expected_source_repository_ref, SOURCE_REF);
     assert.deepStrictEqual(intent.evidence_comment, { status: 'not-created', comment_id: null });
+    assert.deepStrictEqual(intent.case_evidence, evidence.case_evidence || []);
     assert.match(intent.apply_authorization, /controller-only/);
     if (item.disposition === 'blocked') {
       blocked += 1;
@@ -108,7 +122,12 @@ function validateDirectory(root = ROOT) {
       if (item.decision === 'multi-interview') {
         assert(item.case_keys.length >= 2);
         assert.strictEqual(evidence.case_evidence.length, item.case_keys.length);
-        for (const caseItem of evidence.case_evidence) assert(caseItem.evidence && caseItem.evidence.locator);
+        const locators = evidence.case_evidence.map((caseItem) => caseItem.evidence && caseItem.evidence.locator);
+        assert.strictEqual(new Set(locators).size, locators.length, `duplicate case locator on #${item.issue_number}`);
+        for (const caseItem of evidence.case_evidence) {
+          assert(caseItem.anchor && caseItem.evidence && caseItem.evidence.locator);
+          assert(!caseItem.evidence.excerpt.replace(/[\uFEFF\u200B-\u200D\u2060]/g, '').trim().startsWith('#'), `case evidence is hashtag-only on #${item.issue_number}`);
+        }
       }
     }
   }
@@ -116,12 +135,14 @@ function validateDirectory(root = ROOT) {
 
   const batch = readJson(path.join(root, 'boundary-batch.json'));
   assert.strictEqual(batch.mutation_allowed, false);
+  assert.deepStrictEqual(batch.parent_dependency, PARENT_DEPENDENCY);
   assert.strictEqual(batch.items.length, decided);
   assert(batch.items.every((item) => selection.items.find((selected) => selected.issue_number === item.issue_number).disposition === 'decided'));
 
   const plan = readJson(path.join(root, 'dry-run-plan.json'));
   validateDigest(plan, 'dry_run_sha256');
   assert.strictEqual(plan.selection_sha256, selection.selection_sha256);
+  assert.deepStrictEqual(plan.parent_dependency, PARENT_DEPENDENCY);
   assert.strictEqual(plan.mutation_allowed, false);
   assert.strictEqual(plan.mutation_count, 0);
   assert.strictEqual(plan.live_evidence_comments_created, 0);
@@ -131,11 +152,13 @@ function validateDirectory(root = ROOT) {
   validateDigest(journal, 'journal_sha256');
   assert.strictEqual(journal.mode, 'not-authorized');
   assert.strictEqual(journal.mutation_allowed, false);
+  assert.deepStrictEqual(journal.parent_dependency, PARENT_DEPENDENCY);
   assert(journal.entries.every((entry) => entry.mutation_performed === false && entry.evidence_comment_id === null));
 
   const audit = readJson(path.join(root, 'audit.json'));
   validateDigest(audit, 'audit_sha256');
   assert.deepStrictEqual(audit.out_of_scope_issue_numbers_read, []);
+  assert.deepStrictEqual(audit.parent_dependency, PARENT_DEPENDENCY);
   assert.strictEqual(audit.checks.no_mutations, true);
   assert.strictEqual(audit.checks.no_live_evidence_comments, true);
 

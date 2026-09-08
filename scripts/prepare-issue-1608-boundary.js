@@ -33,11 +33,31 @@ const CHECKS = [
   'no_cross_source_mixing',
   'no_fabrication',
 ];
+const PARENT_DEPENDENCY = Object.freeze({
+  schema_version: 'issue-1605-global-pending-inventory-dependency.v1',
+  parent_issue: 1605,
+  source_repository: SOURCE_REPOSITORY,
+  source_ref: SOURCE_REF,
+  snapshot_commit: '62aa7258d9931e6453329af2586b9a1390e8e3c5',
+  snapshot_path: 'data/pilot/issue-1605/pending-inventory.snapshot.json',
+  snapshot_canonical_digest: '5bbf8de3dc61ed382ee31e0d0286c3e7374efec243f60b245c76ee2e0b553dfd',
+  ownership_path: 'data/pilot/issue-1605/pending-inventory.ownership.json',
+  ownership_canonical_digest: '86550c7f11ed133be4d48873d47fe2118d8ade305acb40ff3040e904815f38fb',
+  pending_count: 1397,
+  partitions: [
+    { child_issue: 1606, first_issue: 20, last_issue: 392, pending_count: 327 },
+    { child_issue: 1607, first_issue: 393, last_issue: 765, pending_count: 367 },
+    { child_issue: 1608, first_issue: 766, last_issue: 1138, pending_count: 337 },
+    { child_issue: 1609, first_issue: 1139, last_issue: 1508, pending_count: 366 },
+  ],
+  union: { count: 1397, pairwise_disjoint: true, equals_parent_inventory: true },
+  status: 'read-only-parent-controller-dependency',
+});
 
 const OVERRIDES = Object.freeze({
   blocked: [
-    766, 779, 807, 829, 833, 838, 841, 842, 862, 868, 870, 885, 886, 956,
-    985, 998, 1003, 1004, 1013, 1022, 1027, 1035, 1036, 1039, 1043, 1052,
+    766, 779, 782, 807, 829, 833, 838, 841, 842, 849, 862, 868, 870, 885, 886, 956,
+    972, 985, 998, 1003, 1004, 1013, 1022, 1027, 1035, 1036, 1039, 1043, 1052,
     1066, 1076, 1080, 1092, 1101, 1115, 1122, 1132, 1135,
   ],
   notInterview: [
@@ -47,22 +67,16 @@ const OVERRIDES = Object.freeze({
     1087, 1089, 1093, 1099, 1112, 1113, 1120, 1127, 1130, 1136, 1138,
   ],
   multi: {
-    782: ['jd-logistics', 'jd-tech'],
-    849: ['tencent', 'bytedance'],
     853: ['jd-software', 'small-company', 'kuaishou-outsourcing'],
     865: ['baidu', 'jd', 'meituan', 'ant'],
     958: ['huawei', 'bytedance'],
-    972: ['didi', 'bytedance', 'meituan', 'kuaishou'],
   },
 });
 
 const CASE_ANCHORS = Object.freeze({
-  782: { 'jd-logistics': '物流', 'jd-tech': '京东科技' },
-  849: { tencent: '腾讯', bytedance: '字节跳动' },
   853: { 'jd-software': '京东软件开发岗', 'small-company': '100-499小厂', 'kuaishou-outsourcing': '快手外包' },
   865: { baidu: '百度', jd: '京东', meituan: '美团', ant: '蚂蚁' },
   958: { huawei: '华为', bytedance: '字节' },
-  972: { didi: '滴滴', bytedance: '字节', meituan: '美团', kuaishou: '快手' },
 });
 
 function sha256Text(value) {
@@ -134,10 +148,14 @@ function cleanText(text) {
   return String(text || '').replace(/#[^\s#]+\[话题\]#/g, '').replace(/\s+/g, ' ').trim();
 }
 
-function sourceLine(text, anchor = null, allowFallback = true) {
+function sourceLine(text, anchor = null, allowFallback = true, allowHashtag = true) {
   const lines = String(text || '').split('\n');
-  let index = anchor ? lines.findIndex((line) => line.includes(anchor)) : -1;
-  if (index < 0 && allowFallback) index = lines.findIndex((line) => line.trim() && !line.trim().startsWith('#'));
+  const usable = (line) => {
+    const normalized = line.replace(/[\uFEFF\u200B-\u200D\u2060]/g, '').trim();
+    return normalized && (allowHashtag || !normalized.startsWith('#'));
+  };
+  let index = anchor ? lines.findIndex((line) => line.includes(anchor) && usable(line)) : -1;
+  if (index < 0 && allowFallback) index = lines.findIndex(usable);
   if (index < 0) return null;
   const value = lines[index].trim();
   return {
@@ -153,7 +171,7 @@ function caseEvidence(text, classification) {
   return classification.case_keys.map((caseKey) => ({
     case_key: caseKey,
     anchor: anchors[caseKey] || null,
-    evidence: sourceLine(text, anchors[caseKey] || null, false),
+    evidence: sourceLine(text, anchors[caseKey] || null, false, false),
   }));
 }
 
@@ -185,9 +203,13 @@ function makeEvidence(item, classification, text) {
   classification.issue_number = item.issue_number;
   const line = sourceLine(text);
   const cases = caseEvidence(text, classification);
+  const caseLocators = cases.map((item) => item.evidence && item.evidence.locator).filter(Boolean);
   const sufficient = classification.disposition === 'decided'
     && Boolean(line)
-    && (classification.decision !== 'multi-interview' || cases.every((item) => item.evidence));
+    && (classification.decision !== 'multi-interview'
+      || (cases.length === classification.case_keys.length
+        && cases.every((item) => item.evidence)
+        && new Set(caseLocators).size === caseLocators.length));
   return {
     schema_version: 'issue-1608-boundary-evidence.v1',
     issue_number: item.issue_number,
@@ -405,6 +427,7 @@ async function prepare({ capturedAt, issuesFile, sourceTextsFile }) {
       no_out_of_scope_reads: true,
     },
     source_snapshot: { repository: SOURCE_REPOSITORY, ref: SOURCE_REF },
+    parent_dependency: PARENT_DEPENDENCY,
     captured_at: capturedAt,
     total: items.length,
     counts,
@@ -413,11 +436,13 @@ async function prepare({ capturedAt, issuesFile, sourceTextsFile }) {
   };
   const selection = { ...selectionWithoutDigest, selection_sha256: sha256Text(canonicalJson(selectionWithoutDigest)) };
   writeJson(path.join(OUTPUT_DIR, 'selection.json'), selection);
+  writeJson(path.join(OUTPUT_DIR, 'parent-dependency.json'), PARENT_DEPENDENCY);
   writeJson(path.join(OUTPUT_DIR, 'boundary-batch.json'), {
     schema_version: 'issue-1608-boundary-batch.v1',
     repository: REPOSITORY,
     issue: ISSUE,
     source_snapshot: { repository: SOURCE_REPOSITORY, ref: SOURCE_REF },
+    parent_dependency: PARENT_DEPENDENCY,
     scope: { first_issue: FIRST_ISSUE, last_issue: LAST_ISSUE, expected_count: EXPECTED_PENDING_COUNT },
     mutation_allowed: false,
     items: batchItems,
@@ -429,6 +454,7 @@ async function prepare({ capturedAt, issuesFile, sourceTextsFile }) {
     issue: ISSUE,
     selection_sha256: selection.selection_sha256,
     source_snapshot: { repository: SOURCE_REPOSITORY, ref: SOURCE_REF },
+    parent_dependency: PARENT_DEPENDENCY,
     scope: { first_issue: FIRST_ISSUE, last_issue: LAST_ISSUE, total: items.length },
     mode: 'plan-only',
     mutation_allowed: false,
@@ -463,6 +489,7 @@ async function prepare({ capturedAt, issuesFile, sourceTextsFile }) {
     issue: ISSUE,
     selection_sha256: selection.selection_sha256,
     dry_run_sha256: plan.dry_run_sha256,
+    parent_dependency: PARENT_DEPENDENCY,
     mode: 'not-authorized',
     mutation_allowed: false,
     entries: items.map((item) => ({ issue_number: item.issue_number, transition_id: item.disposition === 'decided' ? `issue-1608-boundary-${String(item.issue_number).padStart(4, '0')}-1` : null, status: 'not-started', mutation_performed: false, evidence_comment_id: null })),
@@ -475,6 +502,7 @@ async function prepare({ capturedAt, issuesFile, sourceTextsFile }) {
     issue: ISSUE,
     selection_sha256: selection.selection_sha256,
     source_snapshot: { repository: SOURCE_REPOSITORY, ref: SOURCE_REF },
+    parent_dependency: PARENT_DEPENDENCY,
     scope: { first_issue: FIRST_ISSUE, last_issue: LAST_ISSUE },
     checks: {
       exact_interval_enumerated: numbers.length === 373,
@@ -504,4 +532,4 @@ if (require.main === module) {
   }
 }
 
-module.exports = { canonicalJson, classify, gitBlobSha, issueNumbers, sha256Text };
+module.exports = { canonicalJson, classify, gitBlobSha, issueNumbers, sha256Text, PARENT_DEPENDENCY };

@@ -2,8 +2,52 @@
   "schema_version": "issue-1608-boundary-apply-journal.v1",
   "repository": "liqiangcc/interview-lab",
   "issue": 1608,
-  "selection_sha256": "e20c025f3658ff34acfcf812228f2067aa6b0b347cbbc0279d2eeacc08f59310",
-  "dry_run_sha256": "c957ef495b73debd6c5e0cfe79e5c62e30e2a8f8632cf009f6b67ca5c6e098ae",
+  "selection_sha256": "636a76ebcd3ee31b6eb9a7bbb8c660ca58db8b953bd647eb607c9c78dee8a74f",
+  "dry_run_sha256": "9887e7c3c36947df45fb75551848dcef30d3b7b6fde12d57eaa14c1526be6ab0",
+  "parent_dependency": {
+    "schema_version": "issue-1605-global-pending-inventory-dependency.v1",
+    "parent_issue": 1605,
+    "source_repository": "liqiangcc/xhs",
+    "source_ref": "95b77bb261048059846273688e4b90a2e108b437",
+    "snapshot_commit": "62aa7258d9931e6453329af2586b9a1390e8e3c5",
+    "snapshot_path": "data/pilot/issue-1605/pending-inventory.snapshot.json",
+    "snapshot_canonical_digest": "5bbf8de3dc61ed382ee31e0d0286c3e7374efec243f60b245c76ee2e0b553dfd",
+    "ownership_path": "data/pilot/issue-1605/pending-inventory.ownership.json",
+    "ownership_canonical_digest": "86550c7f11ed133be4d48873d47fe2118d8ade305acb40ff3040e904815f38fb",
+    "pending_count": 1397,
+    "partitions": [
+      {
+        "child_issue": 1606,
+        "first_issue": 20,
+        "last_issue": 392,
+        "pending_count": 327
+      },
+      {
+        "child_issue": 1607,
+        "first_issue": 393,
+        "last_issue": 765,
+        "pending_count": 367
+      },
+      {
+        "child_issue": 1608,
+        "first_issue": 766,
+        "last_issue": 1138,
+        "pending_count": 337
+      },
+      {
+        "child_issue": 1609,
+        "first_issue": 1139,
+        "last_issue": 1508,
+        "pending_count": 366
+      }
+    ],
+    "union": {
+      "count": 1397,
+      "pairwise_disjoint": true,
+      "equals_parent_inventory": true
+    },
+    "status": "read-only-parent-controller-dependency"
+  },
   "mode": "not-authorized",
   "mutation_allowed": false,
   "entries": [
@@ -121,7 +165,7 @@
     },
     {
       "issue_number": 782,
-      "transition_id": "issue-1608-boundary-0782-1",
+      "transition_id": null,
       "status": "not-started",
       "mutation_performed": false,
       "evidence_comment_id": null
@@ -583,7 +627,7 @@
     },
     {
       "issue_number": 849,
-      "transition_id": "issue-1608-boundary-0849-1",
+      "transition_id": null,
       "status": "not-started",
       "mutation_performed": false,
       "evidence_comment_id": null
@@ -1213,7 +1257,7 @@
     },
     {
       "issue_number": 972,
-      "transition_id": "issue-1608-boundary-0972-1",
+      "transition_id": null,
       "status": "not-started",
       "mutation_performed": false,
       "evidence_comment_id": null
@@ -2367,5 +2411,5 @@
       "evidence_comment_id": null
     }
   ],
-  "journal_sha256": "4ad3c7ece8c5561a9fc2738563c8d0fcb08264136e3cc6d345ae4fb5a1fb757a"
+  "journal_sha256": "e71be93ba5b02c20da37726365345fabbebb8e8040bb08d73a3c0ddb673eac6e"
 }

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/liqiangcc/interview-lab/schemas/issue-1608-boundary-review-intent.schema.json",
+  "title": "Issue 1608 boundary review intent",
+  "type": "object",
+  "required": ["schema_version", "transition_id", "repository", "issue_number", "expected_body_sha256", "expected_boundary_status", "expected_source_revision_id", "expected_source_repository_ref", "decision", "evidence_comment", "transition_status", "apply_authorization"],
+  "properties": {
+    "schema_version": {"const": "issue-1608-boundary-review-intent.v1"},
+    "repository": {"const": "liqiangcc/interview-lab"},
+    "issue_number": {"type": "integer", "minimum": 766, "maximum": 1138},
+    "expected_body_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "expected_boundary_status": {"const": "pending"},
+    "expected_source_repository_ref": {"const": "95b77bb261048059846273688e4b90a2e108b437"},
+    "decision": {"enum": ["not-interview", "single-interview", "multi-interview", null]},
+    "evidence_comment": {
+      "type": "object",
+      "required": ["status", "comment_id"],
+      "properties": {"status": {"const": "not-created"}, "comment_id": {"const": null}}
+    },
+    "transition_status": {"enum": ["blocked-insufficient-source-evidence", "staged-awaiting-independent-live-evidence-comment"]},
+    "apply_authorization": {"type": "string", "pattern": "controller-only"}
+  }
+}

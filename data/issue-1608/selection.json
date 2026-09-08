@@ -13,13 +13,57 @@
     "repository": "liqiangcc/xhs",
     "ref": "95b77bb261048059846273688e4b90a2e108b437"
   },
+  "parent_dependency": {
+    "schema_version": "issue-1605-global-pending-inventory-dependency.v1",
+    "parent_issue": 1605,
+    "source_repository": "liqiangcc/xhs",
+    "source_ref": "95b77bb261048059846273688e4b90a2e108b437",
+    "snapshot_commit": "62aa7258d9931e6453329af2586b9a1390e8e3c5",
+    "snapshot_path": "data/pilot/issue-1605/pending-inventory.snapshot.json",
+    "snapshot_canonical_digest": "5bbf8de3dc61ed382ee31e0d0286c3e7374efec243f60b245c76ee2e0b553dfd",
+    "ownership_path": "data/pilot/issue-1605/pending-inventory.ownership.json",
+    "ownership_canonical_digest": "86550c7f11ed133be4d48873d47fe2118d8ade305acb40ff3040e904815f38fb",
+    "pending_count": 1397,
+    "partitions": [
+      {
+        "child_issue": 1606,
+        "first_issue": 20,
+        "last_issue": 392,
+        "pending_count": 327
+      },
+      {
+        "child_issue": 1607,
+        "first_issue": 393,
+        "last_issue": 765,
+        "pending_count": 367
+      },
+      {
+        "child_issue": 1608,
+        "first_issue": 766,
+        "last_issue": 1138,
+        "pending_count": 337
+      },
+      {
+        "child_issue": 1609,
+        "first_issue": 1139,
+        "last_issue": 1508,
+        "pending_count": 366
+      }
+    ],
+    "union": {
+      "count": 1397,
+      "pairwise_disjoint": true,
+      "equals_parent_inventory": true
+    },
+    "status": "read-only-parent-controller-dependency"
+  },
   "captured_at": "2026-09-08T00:56:33.846Z",
   "total": 337,
   "counts": {
-    "blocked": 43,
+    "blocked": 46,
     "single-interview": 234,
     "not-interview": 54,
-    "multi-interview": 6
+    "multi-interview": 3
   },
   "rejected_in_range": [
     {
@@ -871,8 +915,8 @@
       "evidence_file": "evidence/0779.json",
       "request_file": "requests/0779.json.md",
       "evidence_status": "insufficient-blocked",
-      "evidence_locator": null,
-      "evidence_excerpt_sha256": null
+      "evidence_locator": "source-projection:artifact-line:1",
+      "evidence_excerpt_sha256": "4d8e0bd915fab1c7c50540f19ceb1265e115f544653784c58b75a910ac3713e3"
     },
     {
       "issue_number": 780,
@@ -992,17 +1036,14 @@
       },
       "live_state": "open",
       "live_updated_at": "2026-09-03T21:25:45Z",
-      "disposition": "decided",
-      "decision": "multi-interview",
-      "stratum": "multiple-independent-processes",
-      "rationale": "固定 Source projection 明确记录多个相互独立的公司/流程；按稳定 case key 分离，未把同一流程的多轮机械拆开。",
-      "case_keys": [
-        "jd-logistics",
-        "jd-tech"
-      ],
+      "disposition": "blocked",
+      "decision": null,
+      "stratum": "insufficient-source-evidence",
+      "rationale": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。",
+      "case_keys": [],
       "evidence_file": "evidence/0782.json",
       "request_file": "requests/0782.json.md",
-      "evidence_status": "sufficient-for-controller-review",
+      "evidence_status": "insufficient-blocked",
       "evidence_locator": "source-projection:artifact-line:1",
       "evidence_excerpt_sha256": "d17f9c9365286465da71aaaf95ef063a41186cae4b24039af689f8708fe6ccb0"
     },
@@ -2078,8 +2119,8 @@
       "evidence_file": "evidence/0807.json",
       "request_file": "requests/0807.json.md",
       "evidence_status": "insufficient-blocked",
-      "evidence_locator": null,
-      "evidence_excerpt_sha256": null
+      "evidence_locator": "source-projection:artifact-line:1",
+      "evidence_excerpt_sha256": "fe9a446247f0b5ff86bd0755f7f5e05df9554e43c272a5674b2822906cd27d6b"
     },
     {
       "issue_number": 808,
@@ -3024,8 +3065,8 @@
       "evidence_file": "evidence/0829.json",
       "request_file": "requests/0829.json.md",
       "evidence_status": "insufficient-blocked",
-      "evidence_locator": null,
-      "evidence_excerpt_sha256": null
+      "evidence_locator": "source-projection:artifact-line:1",
+      "evidence_excerpt_sha256": "03857343754e9586d0129cfccb07d6c170e220c1f45c4ad747a5850a038c0ca2"
     },
     {
       "issue_number": 830,
@@ -3067,8 +3108,8 @@
       "evidence_file": "evidence/0830.json",
       "request_file": "requests/0830.json.md",
       "evidence_status": "insufficient-blocked",
-      "evidence_locator": "source-projection:artifact-line:7",
-      "evidence_excerpt_sha256": "fe1d5d6070177091a7ef52285c834b0fdfcb9c2ae25b9f4ba50a8c060af5cad7"
+      "evidence_locator": "source-projection:artifact-line:1",
+      "evidence_excerpt_sha256": "429a53d99091ec6aa2189d19aa39bde581218fb34daa73791115e9d1363e65a2"
     },
     {
       "issue_number": 831,
@@ -3196,8 +3237,8 @@
       "evidence_file": "evidence/0833.json",
       "request_file": "requests/0833.json.md",
       "evidence_status": "insufficient-blocked",
-      "evidence_locator": null,
-      "evidence_excerpt_sha256": null
+      "evidence_locator": "source-projection:artifact-line:1",
+      "evidence_excerpt_sha256": "a0aefdb7acac32e83658fff3a97cd8aa7a53d5ffcb1ecaa9490d290282f9ff28"
     },
     {
       "issue_number": 834,
@@ -3411,8 +3452,8 @@
       "evidence_file": "evidence/0838.json",
       "request_file": "requests/0838.json.md",
       "evidence_status": "insufficient-blocked",
-      "evidence_locator": null,
-      "evidence_excerpt_sha256": null
+      "evidence_locator": "source-projection:artifact-line:1",
+      "evidence_excerpt_sha256": "7fda3e4b49bda02712bf8b4e7c30e44bec50a7fca781d7086d0ff1c4fbb370ba"
     },
     {
       "issue_number": 839,
@@ -3540,8 +3581,8 @@
       "evidence_file": "evidence/0841.json",
       "request_file": "requests/0841.json.md",
       "evidence_status": "insufficient-blocked",
-      "evidence_locator": null,
-      "evidence_excerpt_sha256": null
+      "evidence_locator": "source-projection:artifact-line:1",
+      "evidence_excerpt_sha256": "7371e4fa3a69caeddcff33dc386e0229f9af8a03f46335688ba64f0c0ccc892e"
     },
     {
       "issue_number": 842,
@@ -3583,8 +3624,8 @@
       "evidence_file": "evidence/0842.json",
       "request_file": "requests/0842.json.md",
       "evidence_status": "insufficient-blocked",
-      "evidence_locator": null,
-      "evidence_excerpt_sha256": null
+      "evidence_locator": "source-projection:artifact-line:1",
+      "evidence_excerpt_sha256": "755aa79edabd5821e110065bfdd0daae7e416970d58ef68682ef789f23672a18"
     },
     {
       "issue_number": 844,
@@ -3833,19 +3874,16 @@
       },
       "live_state": "open",
       "live_updated_at": "2026-09-04T11:09:51Z",
-      "disposition": "decided",
-      "decision": "multi-interview",
-      "stratum": "multiple-independent-processes",
-      "rationale": "固定 Source projection 明确记录多个相互独立的公司/流程；按稳定 case key 分离，未把同一流程的多轮机械拆开。",
-      "case_keys": [
-        "tencent",
-        "bytedance"
-      ],
+      "disposition": "blocked",
+      "decision": null,
+      "stratum": "insufficient-source-evidence",
+      "rationale": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。",
+      "case_keys": [],
       "evidence_file": "evidence/0849.json",
       "request_file": "requests/0849.json.md",
-      "evidence_status": "sufficient-for-controller-review",
-      "evidence_locator": "source-projection:artifact-line:2",
-      "evidence_excerpt_sha256": "887c10b4705734bef8d11c4066d542c00ecbf2f7e9ee42603a060bc4d750072b"
+      "evidence_status": "insufficient-blocked",
+      "evidence_locator": "source-projection:artifact-line:1",
+      "evidence_excerpt_sha256": "0af394a3e861ba83f175be5632c18a4c5e037355a6cda90808756603c1314814"
     },
     {
       "issue_number": 850,
@@ -4364,8 +4402,8 @@
       "evidence_file": "evidence/0862.json",
       "request_file": "requests/0862.json.md",
       "evidence_status": "insufficient-blocked",
-      "evidence_locator": null,
-      "evidence_excerpt_sha256": null
+      "evidence_locator": "source-projection:artifact-line:1",
+      "evidence_excerpt_sha256": "e5da6af41affb46d29630f6ffe02fc841e89f16d19e1453ad603287df628d097"
     },
     {
       "issue_number": 863,
@@ -4627,8 +4665,8 @@
       "evidence_file": "evidence/0868.json",
       "request_file": "requests/0868.json.md",
       "evidence_status": "insufficient-blocked",
-      "evidence_locator": null,
-      "evidence_excerpt_sha256": null
+      "evidence_locator": "source-projection:artifact-line:1",
+      "evidence_excerpt_sha256": "a3e8814f744e6bb37f57175994751f48efc367c0ad4e2bf1a6a026fd5b740cb4"
     },
     {
       "issue_number": 869,
@@ -5358,8 +5396,8 @@
       "evidence_file": "evidence/0885.json",
       "request_file": "requests/0885.json.md",
       "evidence_status": "insufficient-blocked",
-      "evidence_locator": null,
-      "evidence_excerpt_sha256": null
+      "evidence_locator": "source-projection:artifact-line:1",
+      "evidence_excerpt_sha256": "44d9925cb9201f3e3d5fd9d77bca1ff4405803653049c1884f48502f2f4b654a"
     },
     {
       "issue_number": 886,
@@ -7035,8 +7073,8 @@
       "evidence_file": "evidence/0956.json",
       "request_file": "requests/0956.json.md",
       "evidence_status": "insufficient-blocked",
-      "evidence_locator": null,
-      "evidence_excerpt_sha256": null
+      "evidence_locator": "source-projection:artifact-line:1",
+      "evidence_excerpt_sha256": "c11fda9672ef0167c652feda76e70cbb952ddd8c6bc640420565b980a77db35e"
     },
     {
       "issue_number": 957,
@@ -7718,19 +7756,14 @@
       },
       "live_state": "open",
       "live_updated_at": "2026-09-04T12:40:07Z",
-      "disposition": "decided",
-      "decision": "multi-interview",
-      "stratum": "multiple-independent-processes",
-      "rationale": "固定 Source projection 明确记录多个相互独立的公司/流程；按稳定 case key 分离，未把同一流程的多轮机械拆开。",
-      "case_keys": [
-        "didi",
-        "bytedance",
-        "meituan",
-        "kuaishou"
-      ],
+      "disposition": "blocked",
+      "decision": null,
+      "stratum": "insufficient-source-evidence",
+      "rationale": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。",
+      "case_keys": [],
       "evidence_file": "evidence/0972.json",
       "request_file": "requests/0972.json.md",
-      "evidence_status": "sufficient-for-controller-review",
+      "evidence_status": "insufficient-blocked",
       "evidence_locator": "source-projection:artifact-line:1",
       "evidence_excerpt_sha256": "ca52608eaff849321b69302a2fa7cfda4109a389194d82ea3af9148f1ad0d4b6"
     },
@@ -8290,8 +8323,8 @@
       "evidence_file": "evidence/0985.json",
       "request_file": "requests/0985.json.md",
       "evidence_status": "insufficient-blocked",
-      "evidence_locator": null,
-      "evidence_excerpt_sha256": null
+      "evidence_locator": "source-projection:artifact-line:1",
+      "evidence_excerpt_sha256": "0bc8b960643ae1d764aa843dc78bfe3853608e1df234b31537308320bebcaf82"
     },
     {
       "issue_number": 986,
@@ -9451,8 +9484,8 @@
       "evidence_file": "evidence/1013.json",
       "request_file": "requests/1013.json.md",
       "evidence_status": "insufficient-blocked",
-      "evidence_locator": null,
-      "evidence_excerpt_sha256": null
+      "evidence_locator": "source-projection:artifact-line:1",
+      "evidence_excerpt_sha256": "94957c62a34d51ca43afe86eb0ffa596fbf83a64adcbdc8f5b19b032f5d2e183"
     },
     {
       "issue_number": 1014,
@@ -9537,8 +9570,8 @@
       "evidence_file": "evidence/1015.json",
       "request_file": "requests/1015.json.md",
       "evidence_status": "sufficient-for-controller-review",
-      "evidence_locator": "source-projection:artifact-line:3",
-      "evidence_excerpt_sha256": "d0da4a6cd2971edc01ad349b45caf1b13a0c44460805835e5c04d48a0d9f5218"
+      "evidence_locator": "source-projection:artifact-line:1",
+      "evidence_excerpt_sha256": "78db6ee0ef385cd7f4eaba4c4b3bd4f8587e0599df283612da9dd7cc85ddebd1"
     },
     {
       "issue_number": 1016,
@@ -9623,8 +9656,8 @@
       "evidence_file": "evidence/1017.json",
       "request_file": "requests/1017.json.md",
       "evidence_status": "sufficient-for-controller-review",
-      "evidence_locator": "source-projection:artifact-line:2",
-      "evidence_excerpt_sha256": "354ce072472406e2aa25606e6ed9fb52a1de248d1971476fcf5a616b9f2685e1"
+      "evidence_locator": "source-projection:artifact-line:1",
+      "evidence_excerpt_sha256": "65f53f221abeb530f024e0add55096ed53883d2a9466c6e808ea1ea6a9b3bbc1"
     },
     {
       "issue_number": 1018,
@@ -9838,8 +9871,8 @@
       "evidence_file": "evidence/1022.json",
       "request_file": "requests/1022.json.md",
       "evidence_status": "insufficient-blocked",
-      "evidence_locator": null,
-      "evidence_excerpt_sha256": null
+      "evidence_locator": "source-projection:artifact-line:1",
+      "evidence_excerpt_sha256": "75773a4270a5a397a4cab9dca70ca0b301c33630f51b27d16abb878ece8eccf9"
     },
     {
       "issue_number": 1023,
@@ -9967,8 +10000,8 @@
       "evidence_file": "evidence/1025.json",
       "request_file": "requests/1025.json.md",
       "evidence_status": "sufficient-for-controller-review",
-      "evidence_locator": "source-projection:artifact-line:2",
-      "evidence_excerpt_sha256": "b1cedbab49558678ece77d04a91cd9845a83cb33fcadef2f2441f15680333eee"
+      "evidence_locator": "source-projection:artifact-line:1",
+      "evidence_excerpt_sha256": "65f53f221abeb530f024e0add55096ed53883d2a9466c6e808ea1ea6a9b3bbc1"
     },
     {
       "issue_number": 1026,
@@ -10053,8 +10086,8 @@
       "evidence_file": "evidence/1027.json",
       "request_file": "requests/1027.json.md",
       "evidence_status": "insufficient-blocked",
-      "evidence_locator": null,
-      "evidence_excerpt_sha256": null
+      "evidence_locator": "source-projection:artifact-line:1",
+      "evidence_excerpt_sha256": "605464410d798c29809c24fdb4a7f78b2e8fcad161312e4b212ef1c260c148f9"
     },
     {
       "issue_number": 1028,
@@ -10397,8 +10430,8 @@
       "evidence_file": "evidence/1035.json",
       "request_file": "requests/1035.json.md",
       "evidence_status": "insufficient-blocked",
-      "evidence_locator": null,
-      "evidence_excerpt_sha256": null
+      "evidence_locator": "source-projection:artifact-line:1",
+      "evidence_excerpt_sha256": "3a45c24109176d3b14b3965f2c0b84551cd4aec68c98e0f8f5e98b20ad381a2e"
     },
     {
       "issue_number": 1036,
@@ -10569,8 +10602,8 @@
       "evidence_file": "evidence/1039.json",
       "request_file": "requests/1039.json.md",
       "evidence_status": "insufficient-blocked",
-      "evidence_locator": null,
-      "evidence_excerpt_sha256": null
+      "evidence_locator": "source-projection:artifact-line:1",
+      "evidence_excerpt_sha256": "17de076c764513b4c618810d3d524abcb1f9f906bd32e1e9ceb1ad57f7f35105"
     },
     {
       "issue_number": 1040,
@@ -10741,8 +10774,8 @@
       "evidence_file": "evidence/1043.json",
       "request_file": "requests/1043.json.md",
       "evidence_status": "insufficient-blocked",
-      "evidence_locator": null,
-      "evidence_excerpt_sha256": null
+      "evidence_locator": "source-projection:artifact-line:1",
+      "evidence_excerpt_sha256": "ed9ea1552ca469ae44579a51e281f7c7a9e83a226750d54834679d866707b483"
     },
     {
       "issue_number": 1044,
@@ -11300,8 +11333,8 @@
       "evidence_file": "evidence/1056.json",
       "request_file": "requests/1056.json.md",
       "evidence_status": "sufficient-for-controller-review",
-      "evidence_locator": "source-projection:artifact-line:2",
-      "evidence_excerpt_sha256": "5d37f9f6c2a0a28ffd797ec98556ea5dba29ba1649b982f3b0edef3ad6e34d35"
+      "evidence_locator": "source-projection:artifact-line:1",
+      "evidence_excerpt_sha256": "65f53f221abeb530f024e0add55096ed53883d2a9466c6e808ea1ea6a9b3bbc1"
     },
     {
       "issue_number": 1057,
@@ -11386,8 +11419,8 @@
       "evidence_file": "evidence/1058.json",
       "request_file": "requests/1058.json.md",
       "evidence_status": "sufficient-for-controller-review",
-      "evidence_locator": "source-projection:artifact-line:2",
-      "evidence_excerpt_sha256": "b1c5e73e1471e806c625a929525f5fcce067a3279491ab107552d3cbe4192ba6"
+      "evidence_locator": "source-projection:artifact-line:1",
+      "evidence_excerpt_sha256": "3b78f78e1ae8345d2bdb9067ef6d908e16b1c86c97852c488f1383fa11c8d9cd"
     },
     {
       "issue_number": 1059,
@@ -11730,8 +11763,8 @@
       "evidence_file": "evidence/1066.json",
       "request_file": "requests/1066.json.md",
       "evidence_status": "insufficient-blocked",
-      "evidence_locator": null,
-      "evidence_excerpt_sha256": null
+      "evidence_locator": "source-projection:artifact-line:1",
+      "evidence_excerpt_sha256": "b3535a16fff735db93dcaa10d0199db2ea4b1b976d9fea1970767a4bbbdf065e"
     },
     {
       "issue_number": 1067,
@@ -12160,8 +12193,8 @@
       "evidence_file": "evidence/1076.json",
       "request_file": "requests/1076.json.md",
       "evidence_status": "insufficient-blocked",
-      "evidence_locator": null,
-      "evidence_excerpt_sha256": null
+      "evidence_locator": "source-projection:artifact-line:1",
+      "evidence_excerpt_sha256": "be3c5632f478e5384df2320c58cd9faf323e2ead51425609ad39c4fa67bd4c6d"
     },
     {
       "issue_number": 1077,
@@ -13235,8 +13268,8 @@
       "evidence_file": "evidence/1101.json",
       "request_file": "requests/1101.json.md",
       "evidence_status": "insufficient-blocked",
-      "evidence_locator": null,
-      "evidence_excerpt_sha256": null
+      "evidence_locator": "source-projection:artifact-line:1",
+      "evidence_excerpt_sha256": "7747b188bec35724eedb68e97e3e181930e1b94cff102742882530f1867ceb7e"
     },
     {
       "issue_number": 1102,
@@ -14525,8 +14558,8 @@
       "evidence_file": "evidence/1132.json",
       "request_file": "requests/1132.json.md",
       "evidence_status": "insufficient-blocked",
-      "evidence_locator": null,
-      "evidence_excerpt_sha256": null
+      "evidence_locator": "source-projection:artifact-line:1",
+      "evidence_excerpt_sha256": "44011644134a1d7b3e69bbc7454c5b21202852729470555e8d77c6e7099f10d8"
     },
     {
       "issue_number": 1133,
@@ -14654,8 +14687,8 @@
       "evidence_file": "evidence/1135.json",
       "request_file": "requests/1135.json.md",
       "evidence_status": "insufficient-blocked",
-      "evidence_locator": null,
-      "evidence_excerpt_sha256": null
+      "evidence_locator": "source-projection:artifact-line:1",
+      "evidence_excerpt_sha256": "95721b7ae50f6bb03a56bd2b4a429fbac977a862e37a424446170caa8d4550ea"
     },
     {
       "issue_number": 1136,
@@ -14787,5 +14820,5 @@
       "evidence_excerpt_sha256": "9f14c8f43493ddcde19c4f9124e07330c08cfa12f158bcf321b9c12f6829fdc3"
     }
   ],
-  "selection_sha256": "e20c025f3658ff34acfcf812228f2067aa6b0b347cbbc0279d2eeacc08f59310"
+  "selection_sha256": "636a76ebcd3ee31b6eb9a7bbb8c660ca58db8b953bd647eb607c9c78dee8a74f"
 }
