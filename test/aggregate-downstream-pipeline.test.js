@@ -34,6 +34,7 @@ const issue1609Fixture = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtur
 const issue1607PlanFixture = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures/aggregate-upstream/issue-1607-boundary-dry-run-plan.json'), 'utf8'));
 const issue1608PlanFixture = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures/aggregate-upstream/issue-1608-boundary-dry-run-plan.json'), 'utf8'));
 const issue1608BatchMissingDigestFixture = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures/aggregate-upstream/issue-1608-boundary-batch-missing-digest.json'), 'utf8'));
+const ownershipInventoryFixture = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures/aggregate-upstream/interview-note-ownership-inventory.json'), 'utf8'));
 
 function boundaryReport(batch, includeCandidate = batch.issue_number === 1606) {
   const items = [];
@@ -124,6 +125,8 @@ function manifest() {
     existing_context_reports: ['existing-context.json'],
     existing_source_ready_issue_numbers: [...EXISTING_SOURCE_READY_ISSUES],
     live_issue_snapshot: 'live.json',
+    interview_note_ownership_inventory: 'ownership.json',
+    expected_interview_note_ownership_digest: ownershipInventoryFixture.canonical_digest,
   };
 }
 
@@ -150,7 +153,7 @@ function validInputs() {
   });
   const liveIssues = new Map([[issueNumber, { number: issueNumber, state: 'open', body, labels: ['source:xhs', 'status:source-ready', 'type:interview-note'] }]]);
   for (const item of existingItems) liveIssues.set(item.issue_number, item.live_issue);
-  return { manifest: manifest(), boundaryReports: reports, recoveryReport: recovery, materializationReports: [materializationReport()], sourceReviewReceipts: review, contextReports: [{ items: [contextProjection()] }], existingContextReports: [{ items: existingItems }], liveIssues };
+  return { manifest: manifest(), boundaryReports: reports, recoveryReport: recovery, materializationReports: [materializationReport()], sourceReviewReceipts: review, contextReports: [{ items: [contextProjection()] }], existingContextReports: [{ items: existingItems }], liveIssues, interviewNoteOwnershipInventory: ownershipInventoryFixture };
 }
 
 test('aggregate fails closed when dependency receipts are absent', () => {
@@ -284,6 +287,31 @@ test('duplicate InterviewNote ownership and reused/non-independent evidence bloc
   assert.equal(result.ok, false);
   assert.match(result.errors.join('\n'), /duplicate materialization ownership|independent evidence/);
   assert.equal(result.plan.summary.mutation_count, 0);
+});
+
+test('full ownership inventory binds and de-duplicates existing and newly materialized InterviewNote owners globally', () => {
+  const input = validInputs();
+  const existing = input.existingContextReports[0].items[0];
+  const report = materializationReport();
+  report.results[0] = {
+    ...report.results[0],
+    materialization: {
+      ...report.results[0].materialization,
+      interview_note_id: existing.context.interview_note_id,
+      existing_issue_number: existing.issue_number,
+    },
+  };
+  const { dry_run_sha256: ignored, ...digestInput } = report;
+  input.materializationReports = [{ ...digestInput, dry_run_sha256: canonicalDigest(digestInput) }];
+  const duplicate = planAggregate(input);
+  assert.equal(duplicate.ok, false);
+  assert.match(duplicate.errors.join('\n'), /duplicates materialization/);
+
+  const missing = validInputs();
+  missing.interviewNoteOwnershipInventory = null;
+  const missingResult = planAggregate(missing);
+  assert.equal(missingResult.ok, false);
+  assert.match(missingResult.errors.join('\n'), /full InterviewNote ownership inventory/);
 });
 
 test('missing Source Review receipt emits an independent evidence request but no mutation plan', () => {
@@ -450,6 +478,25 @@ test('applyLive reconciles a lost POST response with bounded marker GET and stop
   assert.equal(unknownJournal.possibly_performed, true);
 });
 
+test('applyLive paginates bounded receipt marker reconciliation beyond page one', () => {
+  const fixture = applyFixture();
+  let postedBody = null;
+  const pages = [];
+  const result = applyLive(fixture.plan, fixture.input.manifest, fixture.args, {
+    replan() { return { ok: true, plan: fixture.plan }; },
+    readIssue() { return fixture.live; },
+    patchIssueMetadata(issueNumber, projection) { fixture.live.title = projection.title; fixture.live.labels = projection.labels; },
+    postComment(issueNumber, body) { postedBody = body; throw new Error('simulated response loss'); },
+    readComments(issueNumber, page) {
+      pages.push(page);
+      if (page === 1) return Array.from({ length: 100 }, (_, index) => ({ id: index + 1, body: 'unrelated comment' }));
+      return [{ id: 903, body: postedBody }];
+    },
+  });
+  assert.equal(result.mutation_performed, true);
+  assert.deepEqual(pages, [1, 2]);
+});
+
 test('applyLive enforces a positive mutation ceiling before any writer lock is acquired', () => {
   const fixture = applyFixture();
   fixture.args.maxMutations = 0;
@@ -462,6 +509,11 @@ test('writer lock release refuses replacement and stale acquisition fails closed
   const lockPath = path.join(directory, 'writer.lock');
   const lock = acquireWriterLock(lockPath, { staleAfterMs: 60_000 });
   assert.throws(() => acquireWriterLock(lockPath, { staleAfterMs: 60_000 }), /lock is held/);
-  lock.release();
+  fs.unlinkSync(lockPath);
+  fs.writeFileSync(lockPath, JSON.stringify({ schema_version: 'aggregate-downstream-writer-lock.v1', lock_id: 'replacement', owner: 'other', acquired_at: new Date().toISOString() }));
+  assert.throws(() => lock.release(), /inode changed|ownership changed/);
+  fs.unlinkSync(lockPath);
+  const second = acquireWriterLock(lockPath, { staleAfterMs: 60_000 });
+  second.release();
   assert.equal(fs.existsSync(lockPath), false);
 });

@@ -13,7 +13,7 @@ const {
 } = require('./lib/aggregate-downstream-pipeline');
 
 function parseArgs(argv = process.argv.slice(2)) {
-  const out = { manifest: null, output: null, apply: false, authorization: null, confirmPlanDigest: null, journal: null, lock: null, maxMutations: null, pauseMs: 1000, staleLockMs: 30 * 60 * 1000, maxReceiptReconcile: 3 };
+  const out = { manifest: null, output: null, apply: false, authorization: null, confirmPlanDigest: null, journal: null, lock: null, maxMutations: null, pauseMs: 1000, staleLockMs: 30 * 60 * 1000, maxReceiptReconcile: 3, maxReceiptCommentPages: 10 };
   for (let index = 0; index < argv.length; index += 1) {
     const arg = argv[index];
     if (arg === '--manifest') out.manifest = argv[++index];
@@ -27,6 +27,7 @@ function parseArgs(argv = process.argv.slice(2)) {
     else if (arg === '--pause-ms') out.pauseMs = Number(argv[++index]);
     else if (arg === '--stale-lock-ms') out.staleLockMs = Number(argv[++index]);
     else if (arg === '--max-receipt-reconcile') out.maxReceiptReconcile = Number(argv[++index]);
+    else if (arg === '--max-receipt-comment-pages') out.maxReceiptCommentPages = Number(argv[++index]);
     else throw new Error(`unknown argument: ${arg}`);
   }
   if (!out.manifest) throw new Error('--manifest is required');
@@ -39,6 +40,7 @@ function parseArgs(argv = process.argv.slice(2)) {
   if (!Number.isInteger(out.pauseMs) || out.pauseMs < 0) throw new Error('--pause-ms must be a non-negative integer');
   if (!Number.isInteger(out.staleLockMs) || out.staleLockMs < 1) throw new Error('--stale-lock-ms must be a positive integer');
   if (!Number.isInteger(out.maxReceiptReconcile) || out.maxReceiptReconcile < 1) throw new Error('--max-receipt-reconcile must be a positive integer');
+  if (!Number.isInteger(out.maxReceiptCommentPages) || out.maxReceiptCommentPages < 1) throw new Error('--max-receipt-comment-pages must be a positive integer');
   return out;
 }
 
@@ -56,6 +58,7 @@ function loadInputs(manifest, manifestFile) {
   for (const batch of manifest.boundary_batches || []) boundaryReports[batch.issue_number] = read(batch.report);
   const pendingInventorySnapshot = manifest.pending_inventory_snapshot ? read(manifest.pending_inventory_snapshot) : null;
   const pendingInventoryOwnership = manifest.pending_inventory_ownership ? read(manifest.pending_inventory_ownership) : null;
+  const interviewNoteOwnershipInventory = manifest.interview_note_ownership_inventory ? read(manifest.interview_note_ownership_inventory) : null;
   return {
     manifest,
     boundaryReports,
@@ -73,6 +76,7 @@ function loadInputs(manifest, manifestFile) {
     })()),
     pendingInventorySnapshot,
     pendingInventoryOwnership,
+    interviewNoteOwnershipInventory,
   };
 }
 
@@ -133,10 +137,12 @@ function acquireWriterLock(lockFile, options = {}) {
     acquired_at: new Date(now()).toISOString(),
   };
   let fd;
+  let lockStat;
   try {
     fd = fs.openSync(target, 'wx', 0o600);
     fs.writeFileSync(fd, `${JSON.stringify(lock)}\n`, 'utf8');
     fs.fsyncSync(fd);
+    lockStat = fs.fstatSync(fd);
   } catch (error) {
     if (error.code === 'EEXIST') throw new Error('aggregate writer lock appeared during acquisition; refusing to race');
     throw error;
@@ -149,10 +155,16 @@ function acquireWriterLock(lockFile, options = {}) {
       let current;
       try { current = JSON.parse(fs.readFileSync(target, 'utf8')); }
       catch (error) { throw new Error(`aggregate writer lock disappeared or became unreadable: ${error.message}`); }
+      let currentStat;
+      try { currentStat = fs.lstatSync(target); }
+      catch (error) { throw new Error(`aggregate writer lock disappeared or became unreadable: ${error.message}`); }
+      if (currentStat.dev !== lockStat.dev || currentStat.ino !== lockStat.ino) throw new Error('aggregate writer lock inode changed');
       if (current.lock_id !== lock.lock_id) throw new Error('aggregate writer lock ownership changed');
     },
     release() {
       this.assertHeld();
+      const currentStat = fs.lstatSync(target);
+      if (currentStat.dev !== lockStat.dev || currentStat.ino !== lockStat.ino) throw new Error('aggregate writer lock inode changed during release');
       fs.unlinkSync(target);
     },
   };
@@ -172,10 +184,11 @@ function applyLive(plan, manifest, args, dependencies = {}) {
   const readIssue = dependencies.readIssue || ((issueNumber) => ghJson(['api', `repos/${manifest.repository}/issues/${issueNumber}`]));
   const patchIssueMetadata = dependencies.patchIssueMetadata || ((issueNumber, projection) => ghJson(['api', '--method', 'PATCH', `repos/${manifest.repository}/issues/${issueNumber}`, '--input', '-'], projection));
   const postComment = dependencies.postComment || ((issueNumber, body) => ghJson(['api', '--method', 'POST', `repos/${manifest.repository}/issues/${issueNumber}/comments`, '--input', '-'], { body }));
-  const readComments = dependencies.readComments || ((issueNumber) => ghJson(['api', `repos/${manifest.repository}/issues/${issueNumber}/comments?per_page=100&page=1`]));
+  const readComments = dependencies.readComments || ((issueNumber, page) => ghJson(['api', `repos/${manifest.repository}/issues/${issueNumber}/comments?per_page=100&page=${page}`]));
   const sleep = dependencies.sleep || sleepMs;
   const acquireLock = dependencies.acquireLock || ((file) => acquireWriterLock(file, { staleAfterMs: args.staleLockMs }));
   const maxReceiptReconcile = Number.isInteger(args.maxReceiptReconcile) && args.maxReceiptReconcile > 0 ? args.maxReceiptReconcile : 3;
+  const maxReceiptCommentPages = Number.isInteger(args.maxReceiptCommentPages) && args.maxReceiptCommentPages > 0 ? args.maxReceiptCommentPages : 10;
   const pauseMs = Number.isInteger(args.pauseMs) && args.pauseMs >= 0 ? args.pauseMs : 1000;
   const journalFile = path.resolve(args.journal);
   const writerLock = acquireLock(args.lock);
@@ -206,6 +219,7 @@ function applyLive(plan, manifest, args, dependencies = {}) {
       possibly_performed: false,
       receipt_attempted: false,
       receipt_reconcile_max_attempts: maxReceiptReconcile,
+      receipt_reconcile_max_comment_pages: maxReceiptCommentPages,
       items: eligible.map((item) => ({ issue_number: item.interview_issue_number, state: 'pending', expected_body_sha256: item.context.expected_body_sha256, mutation_attempted: false, mutation_performed: false, possibly_performed: false, receipt_attempted: false })),
     };
     writeAtomic(journalFile, journal);
@@ -219,12 +233,16 @@ function applyLive(plan, manifest, args, dependencies = {}) {
     const refreshPossible = () => { journal.possibly_performed = journal.items.some((item) => item.possibly_performed); };
     const reconcileReceipt = (issueNumber, expectedBody) => {
       for (let attempt = 1; attempt <= maxReceiptReconcile; attempt += 1) {
-        writerLock.assertHeld();
-        let comments;
-        try { comments = readComments(issueNumber); }
-        catch (error) { throw new Error(`receipt response unknown and marker GET failed on attempt ${attempt}: ${error.message}`); }
-        if (!Array.isArray(comments)) throw new Error('receipt marker GET returned a non-array response; refusing unknown state');
-        const matches = comments.filter((comment) => typeof comment.body === 'string' && comment.body.includes(expectedBody));
+        const matches = [];
+        for (let page = 1; page <= maxReceiptCommentPages; page += 1) {
+          writerLock.assertHeld();
+          let comments;
+          try { comments = readComments(issueNumber, page); }
+          catch (error) { throw new Error(`receipt response unknown and marker GET failed on attempt ${attempt}, page ${page}: ${error.message}`); }
+          if (!Array.isArray(comments)) throw new Error('receipt marker GET returned a non-array response; refusing unknown state');
+          matches.push(...comments.filter((comment) => typeof comment.body === 'string' && comment.body.includes(expectedBody)));
+          if (comments.length < 100) break;
+        }
         if (matches.length > 1) throw new Error(`receipt marker GET found multiple matching markers for Issue #${issueNumber}; refusing unknown state`);
         const found = matches[0];
         if (found && Number.isInteger(Number(found.id)) && Number(found.id) > 0) return { id: Number(found.id), attempts: attempt };

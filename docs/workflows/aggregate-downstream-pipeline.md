@@ -14,6 +14,8 @@ source ref    = 95b77bb261048059846273688e4b90a2e108b437
 
 固定 boundary 范围为 `#20–#392`、`#393–#765`、`#766–#1138`、`#1139–#1508`。manifest 必须逐批记录 report 路径、每条 SourceNote number、SourceNote identity 和 live body SHA；范围缺失、重叠、越界或 source ref 漂移都会 fail closed。
 
+manifest 还必须 pin 一个完整的 `aggregate-interview-note-ownership-inventory.v1`。该 inventory 覆盖仓库全库 InterviewNote Issue owner，以 `interview_note_id` 和 Issue number 双索引并带 canonical digest；父级 pending SourceNote ownership 只用于 SourceNote inventory，不能替代这个全库 owner inventory。
+
 ## 输入门禁
 
 四个 boundary report 按各批最终契约校验：A/D 仍可使用 `source-note-boundary-review-batch.v1` / `issue-1609-boundary-dry-run.v1`，B 使用实际的 `issue-1607-boundary-dry-run-plan.v1`，C 使用带完整报告 `dry_run_sha256` 的 `issue-1608-boundary-dry-run.v1`。这些 report 的 `dry_run_sha256` 必须按项目 canonical JSON（递归 key sort）对完整报告（去除 digest 字段）可重算，且每条输入已经是 `already_applied`。C 的 `issue-1608-boundary-batch.v1` 只有 selection/request 元数据、没有 report digest，不能作为 aggregate 输入；缺少 digest 的报告 fail closed，不会被当作已验证。若未来要消费该 schema，必须先生成包含完整 report 与 `dry_run_sha256` 的固定 adapter 产物并单独校验。Materialization report 必须是 `source-note-interview-materialization-batch.v1`，其 `dry_run_sha256` 使用同一 canonical 算法；Recovery 则按其 schema 的明确规则校验（例如 `issue-1610-recovery-dry-run.v1` 的 `plan_sha256` 覆盖 `digest_input`）。每个实际 child 必须已经是 `already-materialized`，并绑定：
@@ -74,4 +76,4 @@ node scripts/plan-aggregate-downstream-pipeline.js \
   --journal data/pilot/issue-1611/aggregate.apply-journal.json
 ```
 
-apply 会先在单 writer lock 下重新读取 live InterviewNote Issues 并 fresh re-plan，要求 canonical digest 与已授权 plan 完全一致；每项 PATCH 前再做 body/title/labels CAS。journal 必须记录 mutation ceiling、`mutation_attempted`、`mutation_performed`、`possibly_performed` 及 receipt reconcile 尝试。POST 响应不确定时只允许有限次 GET marker reconcile；找不到唯一匹配 marker 或 GET 状态未知即停止，禁止重发。stale/损坏/被替换的 lock 一律 fail closed，不自动接管。
+apply 会先在单 writer lock 下重新读取 live InterviewNote Issues 并 fresh re-plan，要求 canonical digest 与已授权 plan 完全一致；每项 PATCH 前再做 body/title/labels CAS。journal 必须记录 mutation ceiling、`mutation_attempted`、`mutation_performed`、`possibly_performed` 及 receipt reconcile 尝试。POST 响应不确定时只允许有限次、分页且有页数上限的 GET marker reconcile；找不到唯一匹配 marker 或 GET 状态未知即停止，禁止重发。stale/损坏/被替换的 lock 一律 fail closed；释放前复核 lock token 与 inode，TOCTOU 变化时不删除当前 lock。

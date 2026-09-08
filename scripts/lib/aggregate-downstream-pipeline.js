@@ -18,6 +18,7 @@ const REQUIRED_DEPENDENCIES = [1606, 1607, 1608, 1609, 1610];
 const EXISTING_SOURCE_READY_ISSUES = Object.freeze([3, 4, 915, ...Array.from({ length: 30 }, (_, index) => 1509 + index), 1558, 1559, ...Array.from({ length: 15 }, (_, index) => 1562 + index)]);
 const RECEIPT_SCHEMA_VERSION = 'aggregate-downstream-receipt.v1';
 const SOURCE_REVIEW_RECEIPT_SCHEMA = 'interview-note-source-review-applied.v1';
+const OWNERSHIP_INVENTORY_SCHEMA = 'aggregate-interview-note-ownership-inventory.v1';
 const HEX64 = /^[0-9a-f]{64}$/;
 const UPSTREAM_DIGEST_RULES = Object.freeze({
   'source-note-boundary-review-batch.v1': Object.freeze({ field: 'dry_run_sha256', input: (report) => without(report, 'dry_run_sha256') }),
@@ -76,6 +77,7 @@ function validateManifest(manifest) {
     'context_reports', 'existing_context_reports', 'existing_source_ready_issue_numbers',
     'live_issue_snapshot', 'expected_dependency_body_sha256', 'pending_inventory_snapshot',
     'pending_inventory_ownership', 'expected_pending_inventory_digest', 'expected_pending_ownership_digest',
+    'interview_note_ownership_inventory', 'expected_interview_note_ownership_digest',
   ]);
   for (const key of Object.keys(manifest)) if (!allowed.has(key)) errors.push(`unsupported manifest field: ${key}`);
   if (manifest.schema_version !== SCHEMA_VERSION) errors.push(`schema_version must be ${SCHEMA_VERSION}`);
@@ -104,6 +106,8 @@ function validateManifest(manifest) {
   if (!Array.isArray(manifest.existing_context_reports) || manifest.existing_context_reports.length === 0 || manifest.existing_context_reports.some((file) => !nonEmpty(file))) errors.push('existing_context_reports must be a non-empty list of audited Context report paths');
   if (JSON.stringify(manifest.existing_source_ready_issue_numbers || []) !== JSON.stringify(EXISTING_SOURCE_READY_ISSUES)) errors.push('existing_source_ready_issue_numbers must equal the frozen 50-item source-ready inventory');
   if (!nonEmpty(manifest.live_issue_snapshot)) errors.push('live_issue_snapshot is required; planning without a body-pinned read snapshot is forbidden');
+  if (!nonEmpty(manifest.interview_note_ownership_inventory)) errors.push('full InterviewNote ownership inventory is required; pending SourceNote ownership is not a substitute');
+  if (!HEX64.test(manifest.expected_interview_note_ownership_digest || '')) errors.push('expected_interview_note_ownership_digest must be a lowercase SHA-256');
   const inventoryFields = ['pending_inventory_snapshot', 'pending_inventory_ownership'];
   if (inventoryFields.some((field) => manifest[field] !== undefined)) {
     for (const field of inventoryFields) if (!nonEmpty(manifest[field])) errors.push(`${field} is required when pending inventory dependency is enabled`);
@@ -137,6 +141,54 @@ function validateUpstreamReport(report, label, expectedSchema) {
   if (!digest.ok) errors.push(...digest.errors.map((error) => `${label}: ${error}`));
   else if (digest.expected !== digest.actual) errors.push(`${label}.${digest.field} does not match its declared canonical digest input`);
   return { ok: errors.length === 0, errors };
+}
+
+function validateInterviewNoteOwnershipInventory(inventory, manifest) {
+  const errors = [];
+  if (!inventory || typeof inventory !== 'object' || Array.isArray(inventory)) return { ok: false, errors: ['InterviewNote ownership inventory must be an object'], byInterview: new Map(), byIssue: new Map() };
+  if (inventory.schema_version !== OWNERSHIP_INVENTORY_SCHEMA) errors.push(`InterviewNote ownership inventory schema_version must be ${OWNERSHIP_INVENTORY_SCHEMA}`);
+  if (inventory.repository !== manifest.repository) errors.push('InterviewNote ownership inventory repository drifted');
+  if (inventory.coverage !== 'all-repository-interview-note-issues') errors.push('InterviewNote ownership inventory must declare all-repository coverage');
+  if (inventory.complete !== true) errors.push('InterviewNote ownership inventory must declare complete=true');
+  const entries = inventory.entries;
+  if (!Array.isArray(entries)) errors.push('InterviewNote ownership inventory entries must be an array');
+  if (Number(inventory.count) !== (Array.isArray(entries) ? entries.length : -1)) errors.push('InterviewNote ownership inventory count does not match entries');
+  const digest = inventory.canonical_digest;
+  if (!HEX64.test(digest || '')) errors.push('InterviewNote ownership inventory canonical_digest is required');
+  else if (canonicalDigest(without(inventory, 'canonical_digest')) !== digest) errors.push('InterviewNote ownership inventory canonical_digest does not match its canonical input');
+  const byInterview = new Map();
+  const byIssue = new Map();
+  for (const entry of entries || []) {
+    const interviewNoteId = entry && entry.interview_note_id;
+    const issueNumber = Number(entry && entry.issue_number);
+    if (!nonEmpty(interviewNoteId)) errors.push('InterviewNote ownership inventory entry has no interview_note_id');
+    if (!Number.isInteger(issueNumber) || issueNumber < 1) errors.push(`InterviewNote ownership inventory entry has invalid issue_number ${entry && entry.issue_number}`);
+    if (byInterview.has(interviewNoteId)) errors.push(`InterviewNote ownership inventory duplicates ${interviewNoteId}`);
+    if (byIssue.has(issueNumber)) errors.push(`InterviewNote ownership inventory duplicates Issue #${issueNumber}`);
+    byInterview.set(interviewNoteId, { ...entry, issue_number: issueNumber });
+    byIssue.set(issueNumber, { ...entry, issue_number: issueNumber });
+  }
+  return { ok: errors.length === 0, errors, byInterview, byIssue, count: entries ? entries.length : 0, canonical_digest: digest || null };
+}
+
+function validateGlobalOwnership(rows, existingContexts, inventory, errors) {
+  const seenInterview = new Map();
+  const seenIssue = new Map();
+  const register = (kind, interviewNoteId, issueNumber) => {
+    const number = Number(issueNumber);
+    const subject = `${kind} InterviewNote ${interviewNoteId || 'unknown'} / Issue #${number}`;
+    const owner = inventory.byInterview.get(interviewNoteId);
+    if (!owner || Number(owner.issue_number) !== number) errors.push(`${subject} is absent or mismatched in the full InterviewNote ownership inventory`);
+    const issueOwner = inventory.byIssue.get(number);
+    if (!issueOwner || issueOwner.interview_note_id !== interviewNoteId) errors.push(`${subject} has no exact full-inventory Issue owner binding`);
+    if (seenInterview.has(interviewNoteId)) errors.push(`${subject} duplicates ${seenInterview.get(interviewNoteId)}`);
+    else seenInterview.set(interviewNoteId, subject);
+    if (seenIssue.has(number)) errors.push(`${subject} duplicates ${seenIssue.get(number)}`);
+    else seenIssue.set(number, subject);
+  };
+  for (const row of rows) register('materialization', row.interview_note_id, row.interview_issue_number);
+  for (const item of existingContexts.values()) register('existing source-ready', item.context && item.context.interview_note_id, item.issue_number);
+  return { count: inventory.count, canonical_digest: inventory.canonical_digest, materialization_count: rows.length, existing_count: existingContexts.size };
 }
 
 function validateBoundaryReports(manifest, reports, frozenIssueNumbers = null) {
@@ -362,11 +414,14 @@ function validateContextReports(reports, rows, liveIssues, errors) {
   return contexts;
 }
 
-function planAggregate({ manifest, boundaryReports, recoveryReport, materializationReports, sourceReviewReceipts, contextReports, existingContextReports, liveIssues = new Map(), pendingInventorySnapshot = null, pendingInventoryOwnership = null } = {}) {
+function planAggregate({ manifest, boundaryReports, recoveryReport, materializationReports, sourceReviewReceipts, contextReports, existingContextReports, liveIssues = new Map(), pendingInventorySnapshot = null, pendingInventoryOwnership = null, interviewNoteOwnershipInventory = null } = {}) {
   const errors = [];
   const manifestValidation = validateManifest(manifest);
   errors.push(...manifestValidation.errors);
   if (!manifestValidation.ok) return blockedPlan(manifest, errors);
+  const ownership = validateInterviewNoteOwnershipInventory(interviewNoteOwnershipInventory, manifest);
+  errors.push(...ownership.errors.map((error) => `InterviewNote ownership: ${error}`));
+  if (ownership.canonical_digest && ownership.canonical_digest !== manifest.expected_interview_note_ownership_digest) errors.push('InterviewNote ownership inventory digest differs from manifest pin');
   if (manifest.pending_inventory_snapshot) {
     if (!pendingInventorySnapshot || !pendingInventoryOwnership) errors.push('parent pending inventory snapshot and ownership index are required dependencies');
     else {
@@ -398,6 +453,7 @@ function planAggregate({ manifest, boundaryReports, recoveryReport, materializat
   const review = validateSourceReviewReceipts(sourceReviewReceipts, rows, errors, liveIssues);
   const contexts = validateContextReports(contextReports, rows, liveIssues, errors);
   const existingContexts = validateContextReports(existingContextReports || [], [], liveIssues, errors);
+  const globalOwnership = validateGlobalOwnership(rows, existingContexts, ownership, errors);
   const expectedExisting = manifest.existing_source_ready_issue_numbers;
   const actualExisting = [...existingContexts.keys()].sort((a, b) => a - b);
   if (JSON.stringify(actualExisting) !== JSON.stringify([...expectedExisting].sort((a, b) => a - b))) errors.push('audited existing source-ready Context inventory does not equal the frozen 50-item inventory');
@@ -446,6 +502,7 @@ function planAggregate({ manifest, boundaryReports, recoveryReport, materializat
         canonical_digest: pendingInventorySnapshot && pendingInventorySnapshot.canonical_digest || null,
         ownership_digest: pendingInventoryOwnership && pendingInventoryOwnership.canonical_digest || null,
       } : null,
+      interview_note_ownership: globalOwnership,
     },
     selection,
     independent_source_review_evidence_requests: review.evidence_requests,
@@ -506,9 +563,9 @@ function applyPlan(plan, options = {}) {
 }
 
 module.exports = {
-  SCHEMA_VERSION, PLAN_SCHEMA_VERSION, SOURCE_REF, BOUNDARY_BATCHES, REQUIRED_DEPENDENCIES, EXISTING_SOURCE_READY_ISSUES,
+  SCHEMA_VERSION, PLAN_SCHEMA_VERSION, SOURCE_REF, BOUNDARY_BATCHES, REQUIRED_DEPENDENCIES, EXISTING_SOURCE_READY_ISSUES, OWNERSHIP_INVENTORY_SCHEMA,
   RECEIPT_SCHEMA_VERSION, UPSTREAM_DIGEST_RULES, sha256Text, canonicalize, canonicalDigest, upstreamDigest, jsonDigest, without,
-  validateManifest, validateUpstreamReport, validateBoundaryReports, materializationRows,
+  validateManifest, validateUpstreamReport, validateBoundaryReports, materializationRows, validateInterviewNoteOwnershipInventory, validateGlobalOwnership,
   validateRecovery, independentEvidenceRequest, validateSourceReviewReceipts,
   validateContextReports, planAggregate, validateAuthorization, applyPlan,
 };
