@@ -21,7 +21,7 @@ const ISSUE = 1609;
 const MIN_ISSUE = 1139;
 const MAX_ISSUE = 1508;
 const RANGE_COUNT = MAX_ISSUE - MIN_ISSUE + 1;
-const EXPECTED_COUNT = 366;
+const EXPECTED_RANGE_COUNT = 366;
 const REVIEWED_AT = '2026-09-08T00:00:00.000Z';
 const PLACEHOLDER_COMMENT_BASE = 1609000000;
 const DEFAULT_DESC_CACHE = '/tmp/xhs-note-desc-cache';
@@ -91,8 +91,21 @@ function parseArgs(argv = process.argv.slice(2)) {
   return out;
 }
 function ghJson(args) {
-  const raw = execFileSync('gh', ['api', ...args], { encoding: 'utf8', maxBuffer: 128 * 1024 * 1024 });
-  return JSON.parse(raw);
+  let lastError;
+  for (let attempt = 1; attempt <= 5; attempt += 1) {
+    try {
+      const raw = execFileSync('gh', ['api', ...args], { encoding: 'utf8', maxBuffer: 128 * 1024 * 1024, timeout: 60000 });
+      return JSON.parse(raw);
+    } catch (error) {
+      lastError = error;
+      const message = String(error && error.message || error);
+      const transient = /TLS handshake timeout|timed? ?out|EOF|temporarily unavailable|connection reset|connection refused|HTTP 429|HTTP 502|HTTP 503|HTTP 504/i.test(message);
+      if (!transient || attempt === 5) throw error;
+      const waitMs = attempt * 1000;
+      Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, waitMs);
+    }
+  }
+  throw lastError;
 }
 function fetchExactIssueRange() {
   const issues = [];
@@ -159,12 +172,12 @@ function freeze(output) {
       })),
     });
   }
-  if (items.length !== EXPECTED_COUNT) throw new Error(`selection count mismatch: expected ${EXPECTED_COUNT}, got ${items.length}`);
+  if (items.length === 0 || items.length > EXPECTED_RANGE_COUNT) throw new Error(`pending selection count is outside the frozen range: ${items.length}`);
   const manifest = {
     schema_version: 'issue-1609-boundary-selection.v1', repository: REPOSITORY, parent_issue: 1605, issue: ISSUE,
-    selection_policy: 'exact live issue numbers 1139..1508 with type:source-note + status:captured + boundary:pending; no out-of-range reads are used',
+    selection_policy: 'exact live issue numbers 1139..1508 are read; only records currently carrying type:source-note + status:captured + boundary:pending enter this pending-only selection; no out-of-range reads are used',
     captured_at: new Date().toISOString(), source_repository: SOURCE_REPOSITORY, source_repository_ref: SOURCE_REF,
-    range: { min_issue: MIN_ISSUE, max_issue: MAX_ISSUE, expected_count: EXPECTED_COUNT },
+    range: { min_issue: MIN_ISSUE, max_issue: MAX_ISSUE, expected_count: EXPECTED_RANGE_COUNT },
     read_audit: { exact_issue_numbers: liveIssues.map((item) => item.number), count: liveIssues.length, out_of_range_issue_numbers: [] },
     selected_count: items.length, excluded_count: excluded.length, excluded, items,
   };
@@ -473,7 +486,9 @@ function evidence(selection, output, evidenceDir, requestsDir, receiptsDir, jour
 }
 function plan(selection, sourceItems, output) {
   const counts = sourceItems.reduce((out, item) => { out[item.disposition] = (out[item.disposition] || 0) + 1; return out; }, {});
-  const report = { schema_version: 'issue-1609-boundary-dry-run.v1', repository: REPOSITORY, parent_issue: 1605, issue: ISSUE, selection_sha256: selection.selection_sha256, source_repository: SOURCE_REPOSITORY, source_repository_ref: SOURCE_REF, range: { min_issue: MIN_ISSUE, max_issue: MAX_ISSUE, expected_count: EXPECTED_COUNT }, total: sourceItems.length, counts: { 'single-interview': counts['single-interview'] || 0, 'multi-interview': counts['multi-interview'] || 0, 'not-interview': counts['not-interview'] || 0, blocked: counts.blocked || 0 }, mutation_authorized: false, mutation_count: 0, all_items_have_independent_evidence: sourceItems.length === EXPECTED_COUNT, items: sourceItems, fail_closed: (counts.blocked || 0) > 0 };
+  const expectedCount = Number(selection.selected_count);
+  if (!Number.isInteger(expectedCount) || expectedCount <= 0 || sourceItems.length !== expectedCount) throw new Error(`evidence count does not match current pending selection: expected ${expectedCount}, got ${sourceItems.length}`);
+  const report = { schema_version: 'issue-1609-boundary-dry-run.v1', repository: REPOSITORY, parent_issue: 1605, issue: ISSUE, selection_sha256: selection.selection_sha256, source_repository: SOURCE_REPOSITORY, source_repository_ref: SOURCE_REF, range: { min_issue: MIN_ISSUE, max_issue: MAX_ISSUE, expected_count: EXPECTED_RANGE_COUNT, pending_expected_count: expectedCount }, total: sourceItems.length, counts: { 'single-interview': counts['single-interview'] || 0, 'multi-interview': counts['multi-interview'] || 0, 'not-interview': counts['not-interview'] || 0, blocked: counts.blocked || 0 }, mutation_authorized: false, mutation_count: 0, all_items_have_independent_evidence: sourceItems.length === expectedCount, items: sourceItems, fail_closed: (counts.blocked || 0) > 0 };
   report.dry_run_sha256 = sha256(canonicalJson(report)); writeJson(output, report); return report;
 }
 function collectionDigest(directory) {
