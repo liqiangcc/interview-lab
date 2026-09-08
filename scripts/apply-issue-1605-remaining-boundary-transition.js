@@ -20,7 +20,8 @@ const {
   validateEvidencePlan, buildTransitionPlan, initialJournal, persistJournal,
   parseRequestSet, validateAuthorization, applyBatch,
 } = require('./lib/issue-1605-remaining-boundary-transition');
-const { atomicWriteJson, acquireExclusiveLock, buildMutationWriters, loadParentAuthorization } = require('./lib/issue-1605-full-boundary-transition');
+const { atomicWriteJson, acquireExclusiveLock } = require('./lib/issue-1605-full-boundary-transition');
+const { buildMutationWriters, loadParentAuthorization } = require('./apply-issue-1605-full-boundary-transition');
 
 const DEFAULT_MANIFEST = 'data/pilot/issue-1605/remaining-boundary.manifest.json';
 const DEFAULT_SNAPSHOT = 'data/pilot/issue-1605/pending-inventory.snapshot.json';
@@ -102,7 +103,8 @@ function main(argv = process.argv.slice(2), injected = {}) {
       if (requests.errors.length || requests.records.size !== plan.counts.actionable_total) throw new Error(`formal remaining request set is incomplete: ${requests.errors.slice(0, 5).join('; ')}`);
       const existingJournal = fs.existsSync(path.resolve(args.journal)) ? readRegularJson(args.journal) : initialJournal(plan);
       const writers = injected.mutationWriters || buildMutationWriters(injected.read);
-      const result = applyBatch({ plan, records: [...requests.records.values()], liveLoader, patchIssue: injected.patchIssue || writers.patchIssue, postReceipt: injected.postReceipt || writers.postReceipt, lock, journal: existingJournal, journalFile: args.journal, maxMutations: args.maxMutations, authorization: proof, apply: true, confirmPlan: args.confirmPlan, writeJournal: () => {}, sleep: injected.sleep, now: injected.now });
+      const writeJournal = injected.writeJournal || ((state) => persistJournal(args.journal, state, plan, lock, args.maxMutations));
+      const result = applyBatch({ plan, records: [...requests.records.values()], liveLoader, patchIssue: injected.patchIssue || writers.patchIssue, postReceipt: injected.postReceipt || writers.postReceipt, lock, journal: existingJournal, journalFile: args.journal, maxMutations: args.maxMutations, authorization: proof, apply: true, confirmPlan: args.confirmPlan, writeJournal, sleep: injected.sleep, now: injected.now });
       lock.assertHeld();
       atomicWriteJson(args.output, { ...plan, apply_result: { ok: result.ok, mutation_count: result.mutation_count, journal_digest: result.journal.canonical_digest } });
       process.stdout.write(`${JSON.stringify({ status: result.ok ? 'applied' : 'blocked', plan_digest: plan.canonical_digest, mutation_count: result.mutation_count, live_mutation: true }, null, 2)}\n`);

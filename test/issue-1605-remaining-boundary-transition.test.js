@@ -151,13 +151,18 @@ test('authorized applyBatch simulation calls PATCH and POST once, validates rece
   const directory = tempDir();
   const lock = acquireExclusiveLock(path.join(directory, 'lock'));
   try {
-    const result = applyBatch({ plan, records: [record], liveLoader, patchIssue, postReceipt, lock, journalFile: path.join(directory, 'journal.json'), maxMutations: 2, authorization: { max_mutations: 2 }, apply: true, confirmPlan: plan.canonical_digest, writeJournal: () => {} });
+    const journalFile = path.join(directory, 'journal.json');
+    const result = applyBatch({ plan, records: [record], liveLoader, patchIssue, postReceipt, lock, journalFile, maxMutations: 2, authorization: { max_mutations: 2 }, apply: true, confirmPlan: plan.canonical_digest, writeJournal: (state) => persistJournal(journalFile, state, plan, lock, 2) });
     assert.equal(result.ok, true);
     assert.equal(result.mutation_count, 2);
     assert.equal(calls.patch, 1);
     assert.equal(calls.post, 1);
     assert.equal(result.journal.items[0].phase, 'complete');
     assert.equal(result.journal.items[0].mutation_count, 2);
+    const persisted = readRegularJson(journalFile);
+    assert.equal(persisted.status, 'complete');
+    assert.equal(persisted.mutation_count, 2);
+    assert.equal(persisted.items[0].phase, 'complete');
   } finally { lock.release(); }
 });
 

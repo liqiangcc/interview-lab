@@ -3,8 +3,8 @@
 /*
  * Read-only coordinator for the 978 rows left after the approved 419-row
  * boundary run.  This module deliberately has no default mutation writer.
- * The apply-shaped helpers are guarded for a future, separately authorized
- * stage and are never called by the CLI in this change.
+ * The apply-shaped helpers are guarded behind explicit authorization and are
+ * exercised by simulation tests; live use remains an operator-controlled step.
  */
 
 const crypto = require('node:crypto');
@@ -397,7 +397,15 @@ function applyBatch({ plan, records, liveLoader, patchIssue, postReceipt, lock, 
   const byIssue = new Map((state.items || []).map((item) => [Number(item.issue_number), item]));
   const recordByIssue = new Map((records || []).map((record) => [Number(record.request.issue_number), record]));
   let count = state.mutation_count;
-  const persist = () => { lock.assertHeld(); state.mutation_count = count; state.canonical_digest = digestWithoutCanonical(state); persistJournal(journalFile, state, plan, lock, maxMutations); };
+  const persist = () => {
+    lock.assertHeld();
+    state.mutation_count = count;
+    state.canonical_digest = digestWithoutCanonical(state);
+    // The caller owns the durable destination.  Keeping the writer explicit
+    // makes every phase transition crash-resumable and prevents an apply
+    // caller from accidentally substituting an in-memory no-op.
+    writeJournal(state, { plan, journalFile, maxMutations, lock });
+  };
   for (const item of plan.items) {
     if (item.scope_status !== 'actionable') continue;
     const record = recordByIssue.get(item.issue_number);
