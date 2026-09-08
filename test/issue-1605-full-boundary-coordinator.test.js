@@ -60,21 +60,29 @@ test('only the pinned #735 insufficient-case audit error is allowlisted; unexpec
 });
 
 test('evidence mode authorization binds parent, plan, scope, manifest, marker, and mutation ceiling', () => {
-  const plan = { canonical_digest: 'a'.repeat(64) };
+  const plan = {
+    canonical_digest: 'a'.repeat(64),
+    frozen_inventory: { digest: '5bbf8de3dc61ed382ee31e0d0286c3e7374efec243f60b245c76ee2e0b553dfd' },
+    errors: [],
+  };
   const proofWithoutDigest = {
     schema_version: 'issue-1605-remaining-boundary-evidence-authorization.v1',
     repository: 'liqiangcc/interview-lab', parent_issue: 1605,
     action: 'authorize-remaining-boundary-evidence', allow_live_github: true,
     manifest_digest: 'fea78669500c0986eff96b67b7e2d35afdf46355bc7caa9b862116eca40b4ba9',
     scope_digest: '6ef4fa26e838fe8c30d571c08807c09d5a3280eb40aa4af57d679274f6a131a1',
+    frozen_snapshot_digest: plan.frozen_inventory.digest,
     plan_digest: plan.canonical_digest, max_mutations: 557, comment_id: 1605001, authorized_by: 'test-reviewer',
   };
   const proof = { ...proofWithoutDigest, proof_sha256: evidenceAuthorizationDigest(proofWithoutDigest) };
   const comments = [{ id: proof.comment_id, body: renderEvidenceAuthorizationMarker(proof) }];
   assert.equal(validateEvidenceAuthorization(proof, plan, comments).ok, true);
   assert.equal(validateEvidenceAuthorization({ ...proof, max_mutations: 0 }, plan, comments).ok, false);
+  assert.equal(validateEvidenceAuthorization({ ...proof, frozen_snapshot_digest: '0'.repeat(64) }, plan, comments).ok, false);
   assert.equal(validateEvidenceAuthorization({ ...proof, plan_digest: 'b'.repeat(64) }, plan, comments).ok, false);
   assert.equal(validateEvidenceAuthorization(proof, plan, [{ id: proof.comment_id, body: `${renderEvidenceAuthorizationMarker(proof)}\n${renderEvidenceAuthorizationMarker(proof)}` }]).ok, false);
+  assert.throws(() => runEvidence({ confirmPlan: plan.canonical_digest, authorization: null, maxMutations: 1 }, plan, { parentComments: [] }), /authorization/);
+  assert.throws(() => parseArgs(['--mode', 'evidence', '--confirm-plan', plan.canonical_digest]), /authorization-proof/);
 });
 
 test('remaining and frozen inventory validators reject a digest or scope drift', () => {
@@ -165,6 +173,7 @@ test('simulated evidence mode persists journal/request, reconciles exact marker,
     repository: 'liqiangcc/interview-lab', parent_issue: 1605,
     action: 'authorize-remaining-boundary-evidence', allow_live_github: true,
     manifest_digest: sourcePlan.pending_inventory.digest, scope_digest: sourcePlan.scope.remaining_scope_digest,
+    frozen_snapshot_digest: sourcePlan.frozen_inventory.digest,
     plan_digest: plan.canonical_digest, max_mutations: 1, comment_id: 1605002, authorized_by: 'simulation-reviewer',
   };
   const proof = { ...proofWithoutDigest, proof_sha256: evidenceAuthorizationDigest(proofWithoutDigest) };

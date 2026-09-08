@@ -534,6 +534,7 @@ function validateEvidenceAuthorization(proof, plan, comments = []) {
   if (proof.allow_live_github !== true) errors.push('evidence authorization must explicitly allow live GitHub comments');
   if (proof.manifest_digest !== REMAINING_MANIFEST_DIGEST) errors.push('evidence authorization manifest digest mismatch');
   if (proof.scope_digest !== REMAINING_SCOPE_DIGEST) errors.push('evidence authorization scope digest mismatch');
+  if (proof.frozen_snapshot_digest !== plan?.frozen_inventory?.digest) errors.push('evidence authorization frozen snapshot digest mismatch');
   if (proof.plan_digest !== plan?.canonical_digest) errors.push('evidence authorization plan digest mismatch');
   if (!Number.isSafeInteger(proof.max_mutations) || proof.max_mutations < 1) errors.push('evidence authorization max_mutations must be a positive safe integer');
   if (!Number.isSafeInteger(proof.comment_id) || proof.comment_id < 1) errors.push('evidence authorization comment_id must be positive');
