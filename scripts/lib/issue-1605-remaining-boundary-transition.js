@@ -498,7 +498,14 @@ function applyBatch({ plan, records, liveLoader, patchIssue, postReceipt, lock, 
     if (entry.phase === 'uncertain') throw new Error(`#${item.issue_number}: journal is uncertain; refusing blind retry`);
     if (entry.phase === 'complete') {
       // A complete resume is never trusted from the journal alone.
-      fresh = postWriteValidate({ record, liveLoader, expected: item, planDigestValue: plan.canonical_digest, requireReceipt: true });
+      try {
+        fresh = postWriteValidate({ record, liveLoader, expected: item, planDigestValue: plan.canonical_digest, requireReceipt: true });
+      } catch (error) {
+        entry.possibly_performed = true; entry.error = `complete-item verification unknown: ${error.message}`; persist();
+        try { reconcileUnknownResponse({ kind: 'receipt', record, liveLoader, expected: item, planDigestValue: plan.canonical_digest, sleep }); }
+        catch (reconcileError) { entry.phase = 'uncertain'; entry.error += `; reconcile failed: ${reconcileError.message}`; persist(); throw reconcileError; }
+        entry.possibly_performed = false; entry.error = null; persist();
+      }
       continue;
     }
     if (!receiptOnly) {
