@@ -69,7 +69,7 @@ function classifyFullSource(item) {
   // round names or explicit multi-event wording count as multiple events.
   const explicitMulti = distinctRounds.length >= 2
     || (repeatedRoundInBody && /(?:timeline|投简历|约面|流程|官网流程|\d{1,2}[./-]\d{1,2})/i.test(body))
-    || /(?:两场|多场|两次面试|多次面试|面了两家|面了多家|连续面了|两个小公司)/.test(text);
+    || /(?:两场|多场|两次面试|多次面试|面了两家|面了多家|连续面了|两个小公司|两个自研|(?:第一家|第二家|第三家|第四家).*(?:第一家|第二家|第三家|第四家))/.test(text);
   const titleRound = /(?:一面|二面|三面|四面|五面|初面|终面|第[一二三四五]面|第[一二三四五]轮)/.test(title);
   const timelineEvidence = /(?:timeline|投简历|约面|流程|官网流程|\d{1,2}[./-]\d{1,2})/i.test(body);
   const durationEvidence = /\d+\s*(?:min(?:ute)?s?|分钟)/i.test(body);
@@ -101,7 +101,13 @@ function classifyFullSource(item) {
   ));
   const assessmentOnly = /(?:笔试题|笔试|刷题|题库)/.test(body) && !candidateEvent && !/(?:面试官|候选人回答|面试问题|实际面|面试结果)/.test(body);
   const narratedCandidateEvent = /(?:记录一次|第一次遇到|面试官.*(?:问了|问我(?:什么|哪些)|说|让)|被拷打|秒挂|凉经|挂了|面完|面过|实际面|(?:我|本人|自己)\s*面了)/.test(body);
-  const actualProcess = /(?:参加(?:过|了)?\s*面试|被问|问了我|候选人回答|面过|面完|实际面|第一次面试|面试结果|收到.*结果|拿到.*offer|(?:我|本人|自己)\s*面了)/.test(text) || narratedCandidateEvent;
+  const candidateAnswerEvidence = /(?:根据我的回答|按我的回答|前一个回答|回答(?:了|的|：|:)|说了|面试官.*追问|追问)/.test(body);
+  const candidateQnaEvent = /(?:自我介绍|提问|问我|让我(?:自我介绍|介绍)|面试官)/.test(body) && candidateAnswerEvidence;
+  // Candidate ownership/process markers are deliberately specific. In
+  // particular, do not use a bare “面了”, which occurs inside “后面了”.
+  const actualProcess = /(?:参加(?:过|了)?\s*面试|被问|问了我|问我(?:为什么|什么|哪些)|候选人回答|面过|面完|实际面|第一次面试|面试结果|收到.*结果|拿到.*offer|(?:我|本人|自己)\s*面了|昨天(?:晚上)?面的|(?:秋招|春招)面的|答得(?:非常|很)差|面的时间|今天.{0,20}(?:现场|线上|线下|两个|一家|自研).{0,12}面试|(?:第一家|第二家|第三家|第四家).{0,12}(?:线上|线下|面试)|timeline.*(?:投递|约面|一面|二面|三面|offer))/.test(text)
+    || narratedCandidateEvent
+    || candidateQnaEvent;
   const candidateNarrativeDetail = /(?:面试官|候选人|回答|参加|实际|面完|被问|反问|结果|\d+\s*(?:min(?:ute)?s?|分钟)|timeline|投简历|约面)/i.test(body);
   // Title/question vocabulary is insufficient on its own. Non-event signals
   // may be overridden only by an independently strong candidate event.

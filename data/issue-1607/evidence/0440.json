@@ -10,13 +10,26 @@
   "expected_source_revision_id": "xhs-note:67541ef40000000002014dce:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "evidence_status": "reviewed",
-  "decision": "not-interview",
+  "decision": "single-interview",
   "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
     "status": "reviewed",
-    "proposed_decision": "not-interview",
-    "basis": "question-bank or answer-key content lacks a clear candidate event",
-    "basis_lines": [],
+    "proposed_decision": "single-interview",
+    "basis": "title/body and full Source material establish one candidate interview event with process/question/answer/result evidence",
+    "basis_lines": [
+      {
+        "line_number": 6,
+        "excerpt": "Q2 自动化测试里有哪些结构（这道题我接口自动化 ui自动化都回答了"
+      },
+      {
+        "line_number": 15,
+        "excerpt": "4.根据我的回答又问了一下分页功能怎么测"
+      },
+      {
+        "line_number": 16,
+        "excerpt": "5.根据我的回答，深挖了一下pymysql怎么用的"
+      }
+    ],
     "semantic_evidence": [
       {
         "ref": "liqiangcc/xhs:note_json/67541ef40000000002014dce.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -126,7 +139,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "Semantic boundary result is not-interview; no live transition is authorized by this artifact."
+      "note": "Semantic boundary result is single-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",

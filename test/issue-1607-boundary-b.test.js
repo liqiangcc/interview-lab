@@ -217,7 +217,7 @@ test('actual high-risk B samples keep candidate events ahead of advice and title
   }
   const item444 = selection.items.find((candidate) => candidate.issue_number === 444);
   assert.ok(item444, '#444 must remain selected');
-  assert.notEqual(classifyFullSource(item444).proposed_decision, 'not-interview');
+  assert.equal(classifyFullSource(item444).proposed_decision, 'single-interview');
   const repeatedTitleOnly = classifyFullSource(fullSourceItem('快手二面面经', '1. JVM内存模型\n2. 线程池拒绝策略\n3. 算法题'));
   assert.equal(repeatedTitleOnly.proposed_decision, 'not-interview', 'title plus question list is not a candidate event');
 });
@@ -232,4 +232,20 @@ test('real non-event samples receive exact non-event decisions', () => {
     assert.equal(classifyFullSource(item).proposed_decision, decision, `#${number} must classify exactly as ${decision}`);
   }
   assert.equal(classifyFullSource(fullSourceItem('Java面经', '题库放在后面了，大家可以参考。')).proposed_decision, 'not-interview');
+});
+
+test('real candidate-event samples are not suppressed by question or advice vocabulary', () => {
+  const selection = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'issue-1607', 'selection.json'), 'utf8'));
+  const expected = {
+    404: 'single-interview', 407: 'single-interview', 422: 'multi-interview',
+    440: 'single-interview', 505: 'single-interview', 547: 'single-interview',
+    557: 'single-interview', 591: 'multi-interview', 678: 'single-interview',
+    710: 'multi-interview', 713: 'multi-interview',
+  };
+  for (const [numberText, decision] of Object.entries(expected)) {
+    const number = Number(numberText);
+    const item = selection.items.find((candidate) => candidate.issue_number === number);
+    assert.ok(item, `#${number} must remain selected`);
+    assert.equal(classifyFullSource(item).proposed_decision, decision, `#${number} must classify exactly as ${decision}`);
+  }
 });

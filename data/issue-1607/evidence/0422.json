@@ -9,21 +9,21 @@
   "expected_body_sha256": "efbe2d148e69dedaa41a7e2e05c79876f019da893dfbe34a60b68cad7ed1aef0",
   "expected_source_revision_id": "xhs-note:6747060b0000000006015b7e:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
-  "decision": "blocked",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified for this item.",
+  "evidence_status": "reviewed",
+  "decision": "multi-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "blocked",
-    "proposed_decision": "blocked",
-    "basis": "full Source artifacts are present but do not establish whether this is a candidate interview event or a non-event",
+    "status": "reviewed",
+    "proposed_decision": "multi-interview",
+    "basis": "complete candidate interview evidence names multiple distinct interview events/rounds",
     "basis_lines": [
+      {
+        "line_number": 1,
+        "excerpt": "日历timeline：8.27投递➡️9.5约面➡️9.8三面直通➡️9.25oc➡️10.25offer"
+      },
       {
         "line_number": 3,
         "excerpt": "周日下午三小时直通三面，面试官都很温和专业（除了面试间排队超久以外没毛病[睡觉R]"
-      },
-      {
-        "line_number": 4,
-        "excerpt": "感觉贝壳的校招文化还不错，传说中的1075和wlb也很吸引人，只可惜面试发挥太一般拿了个超级大白菜[哭惹R]"
       }
     ],
     "semantic_evidence": [
@@ -134,8 +134,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "Full Source material remains semantically insufficient to decide the boundary."
+      "result": "pass",
+      "note": "Semantic boundary result is multi-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -149,7 +149,7 @@
     }
   ],
   "limitations": [
-    "Complete pinned artifacts were read, but their semantics do not establish a 0/1/N boundary decision.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]
