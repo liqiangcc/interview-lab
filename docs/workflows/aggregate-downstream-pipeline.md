@@ -70,7 +70,8 @@ node scripts/plan-aggregate-downstream-pipeline.js \
   --apply --authorization-file data/pilot/issue-1611/authorization.json \
   --confirm-plan-digest <canonical_digest> \
   --max-mutations <N> \
+  --lock data/pilot/issue-1611/aggregate.apply.lock \
   --journal data/pilot/issue-1611/aggregate.apply-journal.json
 ```
 
-apply journal 的顺序固定为：观察 Source Review receipt → 立即重读 body SHA → metadata-only PATCH → 重读验证 Raw body/title/labels → POST 聚合 receipt → post-apply audit。POST 响应不确定时不得盲目重发；恢复必须先观察到匹配 receipt。
+apply 会先在单 writer lock 下重新读取 live InterviewNote Issues 并 fresh re-plan，要求 canonical digest 与已授权 plan 完全一致；每项 PATCH 前再做 body/title/labels CAS。journal 必须记录 mutation ceiling、`mutation_attempted`、`mutation_performed`、`possibly_performed` 及 receipt reconcile 尝试。POST 响应不确定时只允许有限次 GET marker reconcile；找不到唯一匹配 marker 或 GET 状态未知即停止，禁止重发。stale/损坏/被替换的 lock 一律 fail closed，不自动接管。

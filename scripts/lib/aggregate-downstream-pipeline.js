@@ -24,6 +24,10 @@ const UPSTREAM_DIGEST_RULES = Object.freeze({
   'source-note-interview-materialization-batch.v1': Object.freeze({ field: 'dry_run_sha256', input: (report) => without(report, 'dry_run_sha256') }),
   'issue-1539-interview-note-materialization-batch.v1': Object.freeze({ field: 'dry_run_sha256', input: (report) => without(report, 'dry_run_sha256') }),
   'issue-1609-boundary-dry-run.v1': Object.freeze({ field: 'dry_run_sha256', input: (report) => without(report, 'dry_run_sha256') }),
+  'issue-1606-boundary-dry-run.v1': Object.freeze({ field: 'dry_run_sha256', input: (report) => without(report, 'dry_run_sha256') }),
+  'issue-1607-boundary-dry-run.v1': Object.freeze({ field: 'dry_run_sha256', input: (report) => without(report, 'dry_run_sha256') }),
+  'issue-1608-boundary-dry-run.v1': Object.freeze({ field: 'dry_run_sha256', input: (report) => without(report, 'dry_run_sha256') }),
+  'issue-1608-boundary-batch.v1': Object.freeze({ field: 'dry_run_sha256', input: (report) => without(report, 'dry_run_sha256') }),
   'issue-1610-source-recovery.v1': Object.freeze({ field: 'report_sha256', input: (report) => without(report, 'report_sha256') }),
   'issue-1610-recovery-dry-run.v1': Object.freeze({ field: 'plan_sha256', input: (report) => report.digest_input }),
   'issue-1539-recovery-dry-run.v1': Object.freeze({ field: 'dry_run_sha256', input: (report) => without(report, 'dry_run_sha256') }),
@@ -134,31 +138,56 @@ function validateUpstreamReport(report, label, expectedSchema) {
   return { ok: errors.length === 0, errors };
 }
 
-function validateBoundaryReports(manifest, reports) {
+function validateBoundaryReports(manifest, reports, frozenIssueNumbers = null) {
   const errors = [];
   const boundaryItems = [];
   const seenSourceIssues = new Set();
+  const supportedBoundarySchemas = new Set(['source-note-boundary-review-batch.v1', 'issue-1606-boundary-dry-run.v1', 'issue-1607-boundary-dry-run.v1', 'issue-1608-boundary-dry-run.v1', 'issue-1608-boundary-batch.v1', 'issue-1609-boundary-dry-run.v1']);
   for (const expected of BOUNDARY_BATCHES) {
     const report = reports[expected.issue_number];
-    const validation = validateUpstreamReport(report, `boundary #${expected.issue_number}`, 'source-note-boundary-review-batch.v1');
+    const reportSchema = report && report.schema_version;
+    const validation = validateUpstreamReport(report, `boundary #${expected.issue_number}`, supportedBoundarySchemas.has(reportSchema) ? reportSchema : 'source-note-boundary-review-batch.v1');
     errors.push(...validation.errors);
     if (!report) continue;
     if (report.repository !== manifest.repository) errors.push(`boundary #${expected.issue_number} repository drifted`);
-    if (Number(report.total) !== expected.expected_count || !Array.isArray(report.items) || report.items.length !== expected.expected_count) errors.push(`boundary #${expected.issue_number} item count is not ${expected.expected_count}`);
+    const expectedNumbers = frozenIssueNumbers
+      ? frozenIssueNumbers.filter((number) => number >= expected.first && number <= expected.last).sort((a, b) => a - b)
+      : null;
+    if (expectedNumbers && expectedNumbers.length !== expected.expected_count) errors.push(`boundary #${expected.issue_number} frozen issue set count is not ${expected.expected_count}`);
+    const reportTotal = report.total ?? (report.counts && report.counts.total) ?? (report.scope && (report.scope.expected_count ?? report.scope.total));
+    if (Number(reportTotal) !== expected.expected_count || !Array.isArray(report.items) || report.items.length !== expected.expected_count) errors.push(`boundary #${expected.issue_number} item count is not ${expected.expected_count}`);
+    const actualNumbers = (report.items || []).map((item) => Number(item && item.issue_number));
+    const actualSet = new Set(actualNumbers);
+    const expectedSet = new Set(expectedNumbers || []);
+    if (actualSet.size !== actualNumbers.length) errors.push(`boundary #${expected.issue_number} contains duplicate issue numbers`);
+    if (expectedNumbers && (actualSet.size !== expectedSet.size || [...expectedSet].some((number) => !actualSet.has(number)) || [...actualSet].some((number) => !expectedSet.has(number)))) {
+      errors.push(`boundary #${expected.issue_number} issue set does not equal the frozen selection`);
+    }
     for (const item of report.items || []) {
       const number = Number(item.issue_number);
       if (!Number.isInteger(number) || number < expected.first || number > expected.last) errors.push(`boundary #${expected.issue_number} contains out-of-range SourceNote #${item.issue_number}`);
       if (seenSourceIssues.has(number)) errors.push(`SourceNote #${number} appears in more than one boundary batch`);
       seenSourceIssues.add(number);
-      if (!HEX64.test(item.current_body_sha256 || '')) errors.push(`SourceNote #${number} has no frozen current_body_sha256`);
-      if (!nonEmpty(item.source_note_id)) errors.push(`SourceNote #${number} has no source_note_id`);
-      if (!Array.isArray(item.interview_note_ids)) errors.push(`SourceNote #${number} has no interview_note_ids disposition`);
-      if (!['already_applied'].includes(item.status) && item.status !== undefined) errors.push(`boundary #${expected.issue_number} SourceNote #${number} is not already_applied`);
-      if (item.status === 'blocked' || (item.errors && item.errors.length)) errors.push(`boundary #${expected.issue_number} contains a blocked item #${number}`);
-      boundaryItems.push({ ...item, boundary_batch_issue_number: expected.issue_number });
+      const status = item.status || item.disposition || item.final_status;
+      if (!nonEmpty(status)) errors.push(`boundary #${expected.issue_number} SourceNote #${number} has no explicit status/disposition`);
+      else if (status !== 'already_applied') errors.push(`boundary #${expected.issue_number} SourceNote #${number} is not already_applied (status=${status})`);
+      const currentBodySha = item.current_body_sha256 || item.body_sha256 || item.source_note_body_sha256;
+      const sourceNoteId = item.source_note_id || item.source_identity;
+      const interviewNoteIds = item.interview_note_ids || item.interview_note_ids_disposition || [];
+      if (!HEX64.test(currentBodySha || '')) errors.push(`SourceNote #${number} has no frozen current_body_sha256/body_sha256`);
+      if (!nonEmpty(sourceNoteId)) errors.push(`SourceNote #${number} has no source_note_id`);
+      if (!Array.isArray(interviewNoteIds)) errors.push(`SourceNote #${number} has no interview_note_ids disposition`);
+      if (item.errors && item.errors.length) errors.push(`boundary #${expected.issue_number} contains a blocked item #${number}`);
+      boundaryItems.push({ ...item, current_body_sha256: currentBodySha, source_note_id: sourceNoteId, interview_note_ids: interviewNoteIds, status, boundary_batch_issue_number: expected.issue_number });
     }
   }
-  return { ok: errors.length === 0, errors, items: boundaryItems };
+  const union = new Set(boundaryItems.map((item) => Number(item.issue_number)));
+  if (frozenIssueNumbers) {
+    const frozen = new Set(frozenIssueNumbers);
+    if (frozen.size !== frozenIssueNumbers.length) errors.push('frozen boundary issue set contains duplicate issue numbers');
+    if (union.size !== frozen.size || [...frozen].some((number) => !union.has(number)) || [...union].some((number) => !frozen.has(number))) errors.push('boundary report union does not equal the frozen issue set');
+  }
+  return { ok: errors.length === 0, errors, items: boundaryItems, union_count: union.size, union_disjoint: !errors.some((error) => error.includes('appears in more than one boundary batch')) };
 }
 
 function materializationRows(reports, manifest, errors) {
@@ -346,7 +375,10 @@ function planAggregate({ manifest, boundaryReports, recoveryReport, materializat
       if (pendingInventoryOwnership.canonical_digest !== manifest.expected_pending_ownership_digest) errors.push('pending inventory ownership digest differs from manifest pin');
     }
   }
-  const boundary = validateBoundaryReports(manifest, boundaryReports || {});
+  const frozenIssueNumbers = pendingInventorySnapshot && Array.isArray(pendingInventorySnapshot.items)
+    ? pendingInventorySnapshot.items.map((item) => Number(item.issue_number)).filter(Number.isInteger)
+    : null;
+  const boundary = validateBoundaryReports(manifest, boundaryReports || {}, frozenIssueNumbers);
   errors.push(...boundary.errors);
   const rows = materializationRows(materializationReports || [], manifest, errors);
   const recovery = validateRecovery(recoveryReport, manifest, errors);
