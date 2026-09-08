@@ -67,7 +67,8 @@ function writeJson(file, value) {
 }
 
 function labelsOf(issue) {
-  return (issue.labels || issue.labels?.nodes || [])
+  const raw = Array.isArray(issue.labels) ? issue.labels : (issue.labels?.nodes || []);
+  return raw
     .map((label) => typeof label === 'string' ? label : label && label.name)
     .filter(Boolean)
     .sort();
