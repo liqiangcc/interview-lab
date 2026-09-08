@@ -7,8 +7,8 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "9645865ccccfdaf0ea3b83cabb1411d33c39ef557c911a896ece503ce03a7daa",
-  "disposition": "blocked",
-  "rationale": "Exact Source is generic advice or aggregated/summarized material without a bounded candidate interview event; retain pending.",
+  "disposition": "not-interview",
+  "rationale": "Exact Source is an explicit question bank or job advertisement rather than a candidate interview event.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
@@ -30,12 +30,16 @@
     "outcome_signal": false,
     "resource_signal": true,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68a88fe0000000001c00f50c.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -44,13 +48,108 @@
     "provenance": "source_projection",
     "byte_size": 231,
     "content_sha256": "9df2e3637a6f3fe7bfcc5e4519588201a8a02d525b31adb0d4113a1f500e69ba",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "救命～无业3个月陆陆续续投了很多简历都没回应",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "救命～无业3个月陆陆续续投了很多简历都没回应\n珠海java真的招人吗[哭惹R][哭惹R]\n求捞@同海科技"
-    }
+      "locator": "artifact-line:1#offset:0-22;blob:bf7ff781a6a0bfff8bd6e96aa49347ce19d3a8ea",
+      "semantic_excerpt": "珠海java求内推\n救命～无业3个月陆陆续续投了很多简历都没回应\n珠海java真的招人吗[哭惹R][哭惹R]\n求捞@同海科技"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68a88fe0000000001c00f50c.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "bf7ff781a6a0bfff8bd6e96aa49347ce19d3a8ea",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 231,
+        "content_sha256": "9df2e3637a6f3fe7bfcc5e4519588201a8a02d525b31adb0d4113a1f500e69ba",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "救命～无业3个月陆陆续续投了很多简历都没回应",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-22;blob:bf7ff781a6a0bfff8bd6e96aa49347ce19d3a8ea",
+          "semantic_excerpt": "珠海java求内推\n救命～无业3个月陆陆续续投了很多简历都没回应\n珠海java真的招人吗[哭惹R][哭惹R]\n求捞@同海科技"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68a88fe0000000001c00f50c.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "30fbee19c0b7b8046c7507a3fb2be7581e5af9bd",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 389370,
+        "content_sha256": "e12066f7b09713b4c2ec67356e26563b1b185133d610377255b120a7aa576b82",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "珠海java求内推 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-186;blob:30fbee19c0b7b8046c7507a3fb2be7581e5af9bd",
+          "semantic_excerpt": "珠海java求内推\n救命～无业3个月陆陆续续投了很多简历都没回应\n珠海java真的招人吗[哭惹R][哭惹R]\n求捞@同海科技"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68a88fe0000000001c00f50c.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "e1f56c9c556da50010c789f4a20dd932b7070b93",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 22734,
+        "content_sha256": "863c0925b106cfbfb701bdc4e7009b24d6fe0575607cabb89dd711a485562f39",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "珠海java求内推\",",
+          "line": 522,
+          "locator": "artifact-line:522#offset:30-41;blob:e1f56c9c556da50010c789f4a20dd932b7070b93",
+          "semantic_excerpt": "珠海java求内推\n救命～无业3个月陆陆续续投了很多简历都没回应\n珠海java真的招人吗[哭惹R][哭惹R]\n求捞@同海科技"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68a88fe0000000001c00f50c.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "bf7ff781a6a0bfff8bd6e96aa49347ce19d3a8ea",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 231,
+      "content_sha256": "9df2e3637a6f3fe7bfcc5e4519588201a8a02d525b31adb0d4113a1f500e69ba",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "救命～无业3个月陆陆续续投了很多简历都没回应",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-22;blob:bf7ff781a6a0bfff8bd6e96aa49347ce19d3a8ea",
+        "semantic_excerpt": "珠海java求内推\n救命～无业3个月陆陆续续投了很多简历都没回应\n珠海java真的招人吗[哭惹R][哭惹R]\n求捞@同海科技"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68a88fe0000000001c00f50c.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "30fbee19c0b7b8046c7507a3fb2be7581e5af9bd",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 389370,
+      "content_sha256": "e12066f7b09713b4c2ec67356e26563b1b185133d610377255b120a7aa576b82",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "珠海java求内推 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-186;blob:30fbee19c0b7b8046c7507a3fb2be7581e5af9bd",
+        "semantic_excerpt": "珠海java求内推\n救命～无业3个月陆陆续续投了很多简历都没回应\n珠海java真的招人吗[哭惹R][哭惹R]\n求捞@同海科技"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68a88fe0000000001c00f50c.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "e1f56c9c556da50010c789f4a20dd932b7070b93",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 22734,
+      "content_sha256": "863c0925b106cfbfb701bdc4e7009b24d6fe0575607cabb89dd711a485562f39",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "珠海java求内推\",",
+        "line": 522,
+        "locator": "artifact-line:522#offset:30-41;blob:e1f56c9c556da50010c789f4a20dd932b7070b93",
+        "semantic_excerpt": "珠海java求内推\n救命～无业3个月陆陆续续投了很多简历都没回应\n珠海java真的招人吗[哭惹R][哭惹R]\n求捞@同海科技"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -69,8 +168,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source is generic advice or aggregated/summarized material without a bounded candidate interview event; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is an explicit question bank or job advertisement rather than a candidate interview event."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -84,11 +183,12 @@
     }
   ],
   "limitations": [
-    "Exact Source is generic advice or aggregated/summarized material without a bounded candidate interview event; retain pending.",
+    "Exact Source is an explicit question bank or job advertisement rather than a candidate interview event.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "05244e605ab4ef38d54e6752b890165c422418156dbf75333aa5de0924997831"
+  "evidence_sha256": "927151214ffa811de237a1d90ecee4dd2b4f830f8a9dc8bab1180192cf676e1c"
 }

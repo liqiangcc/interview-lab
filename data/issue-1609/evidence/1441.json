@@ -7,15 +7,12 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "52f79a3bed2a8f8142219143a79445a98b4f73fe610072e8e6c9636ba4ff4636",
-  "disposition": "blocked",
-  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "disposition": "single-interview",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
-      "question-list-only",
-      "no-first-person-event",
-      "question-only",
-      "no-candidate-event-evidence"
+      "no-first-person-event"
     ],
     "questions": 14,
     "has_first_person_event": false,
@@ -23,19 +20,33 @@
     "has_bounded_event": true,
     "has_detailed_event": true,
     "has_completed_event_evidence": true,
-    "has_structured_candidate_event": false,
+    "has_structured_candidate_event": true,
     "generic_advice_or_aggregated": false,
     "scheduled_only": false,
-    "question_only": true,
+    "question_only": false,
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
-    "only_question_list": true,
+    "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "tencent-process",
+        "anchor": "腾讯",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-165;blob:b9f477e8b2341751f6f32e4beec3044a56de50ad",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:腾讯",
+        "source_ref": "liqiangcc/xhs:note_detail/68e5063f0000000007035c48.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 2,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68e5063f0000000007035c48.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -44,13 +55,78 @@
     "provenance": "source_projection",
     "byte_size": 22644,
     "content_sha256": "083b31c129ba6db9bca09af565320ebbfe823a90b50386864fe0655a09a31609",
+    "cache_status": "not-applicable",
     "excerpt": {
-      "excerpt": "\"global\": {",
-      "line": 2,
-      "locator": "artifact-line:2",
-      "semantic_excerpt": "1、自我介绍\n2、挑个有挑战性的项目讲一下，其中的优化点\n3、线程池中的各个参数设置的考虑因素\n4、技术方案为什么这么选择？数据实时性是怎么保证的？\n5、Redis怎么保证一次只能获取到一个可以的？\n6、Redis的工作机制\n7、java语言的三大特性\n8、jvm内存区域分布，静态变量存储位置\n9、jvm的垃圾回收机制，垃圾回收算法详细说下\n10、Spring中的IoC和AOP\n11、线程和进程的区别\n12、MySQL的事务，怎么解决幻读问题？\n13、TCP三次握手的过程\n14、反问"
-    }
+      "excerpt": "腾讯云智java一面面经\",",
+      "line": 516,
+      "locator": "artifact-line:516#offset:30-44;blob:322d5c26efc49271c946fbc33bf79230d8fe6f28",
+      "semantic_excerpt": "腾讯云智java一面面经\n1、自我介绍\n2、挑个有挑战性的项目讲一下，其中的优化点\n3、线程池中的各个参数设置的考虑因素\n4、技术方案为什么这么选择？数据实时性是怎么保证的？\n5、Redis怎么保证一次只能获取到一个可以的？\n6、Redis的工作机制\n7、java语言的三大特性\n8、jvm内存区域分布，静态变量存储位置\n9、jvm的垃圾回收机制，垃圾回收算法详细说下\n10、Spring中的IoC和AOP\n11、线程和进程的区别\n12、MySQL的事务，怎么解决幻读问题？\n13、TCP三次握手的过程\n14、反问"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_detail/68e5063f0000000007035c48.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "b9f477e8b2341751f6f32e4beec3044a56de50ad",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 389509,
+        "content_sha256": "82a1caeb32c19ac4eff59b58fcd54b8a8bd2cf72387f61ff01542efb6e2655ac",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "腾讯云智java一面面经 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-189;blob:b9f477e8b2341751f6f32e4beec3044a56de50ad",
+          "semantic_excerpt": "腾讯云智java一面面经\n1、自我介绍\n2、挑个有挑战性的项目讲一下，其中的优化点\n3、线程池中的各个参数设置的考虑因素\n4、技术方案为什么这么选择？数据实时性是怎么保证的？\n5、Redis怎么保证一次只能获取到一个可以的？\n6、Redis的工作机制\n7、java语言的三大特性\n8、jvm内存区域分布，静态变量存储位置\n9、jvm的垃圾回收机制，垃圾回收算法详细说下\n10、Spring中的IoC和AOP\n11、线程和进程的区别\n12、MySQL的事务，怎么解决幻读问题？\n13、TCP三次握手的过程\n14、反问"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68e5063f0000000007035c48.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "322d5c26efc49271c946fbc33bf79230d8fe6f28",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 22644,
+        "content_sha256": "083b31c129ba6db9bca09af565320ebbfe823a90b50386864fe0655a09a31609",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "腾讯云智java一面面经\",",
+          "line": 516,
+          "locator": "artifact-line:516#offset:30-44;blob:322d5c26efc49271c946fbc33bf79230d8fe6f28",
+          "semantic_excerpt": "腾讯云智java一面面经\n1、自我介绍\n2、挑个有挑战性的项目讲一下，其中的优化点\n3、线程池中的各个参数设置的考虑因素\n4、技术方案为什么这么选择？数据实时性是怎么保证的？\n5、Redis怎么保证一次只能获取到一个可以的？\n6、Redis的工作机制\n7、java语言的三大特性\n8、jvm内存区域分布，静态变量存储位置\n9、jvm的垃圾回收机制，垃圾回收算法详细说下\n10、Spring中的IoC和AOP\n11、线程和进程的区别\n12、MySQL的事务，怎么解决幻读问题？\n13、TCP三次握手的过程\n14、反问"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/68e5063f0000000007035c48.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "b9f477e8b2341751f6f32e4beec3044a56de50ad",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 389509,
+      "content_sha256": "82a1caeb32c19ac4eff59b58fcd54b8a8bd2cf72387f61ff01542efb6e2655ac",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "腾讯云智java一面面经 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-189;blob:b9f477e8b2341751f6f32e4beec3044a56de50ad",
+        "semantic_excerpt": "腾讯云智java一面面经\n1、自我介绍\n2、挑个有挑战性的项目讲一下，其中的优化点\n3、线程池中的各个参数设置的考虑因素\n4、技术方案为什么这么选择？数据实时性是怎么保证的？\n5、Redis怎么保证一次只能获取到一个可以的？\n6、Redis的工作机制\n7、java语言的三大特性\n8、jvm内存区域分布，静态变量存储位置\n9、jvm的垃圾回收机制，垃圾回收算法详细说下\n10、Spring中的IoC和AOP\n11、线程和进程的区别\n12、MySQL的事务，怎么解决幻读问题？\n13、TCP三次握手的过程\n14、反问"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68e5063f0000000007035c48.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "322d5c26efc49271c946fbc33bf79230d8fe6f28",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 22644,
+      "content_sha256": "083b31c129ba6db9bca09af565320ebbfe823a90b50386864fe0655a09a31609",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "腾讯云智java一面面经\",",
+        "line": 516,
+        "locator": "artifact-line:516#offset:30-44;blob:322d5c26efc49271c946fbc33bf79230d8fe6f28",
+        "semantic_excerpt": "腾讯云智java一面面经\n1、自我介绍\n2、挑个有挑战性的项目讲一下，其中的优化点\n3、线程池中的各个参数设置的考虑因素\n4、技术方案为什么这么选择？数据实时性是怎么保证的？\n5、Redis怎么保证一次只能获取到一个可以的？\n6、Redis的工作机制\n7、java语言的三大特性\n8、jvm内存区域分布，静态变量存储位置\n9、jvm的垃圾回收机制，垃圾回收算法详细说下\n10、Spring中的IoC和AOP\n11、线程和进程的区别\n12、MySQL的事务，怎么解决幻读问题？\n13、TCP三次握手的过程\n14、反问"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -69,8 +145,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -84,11 +160,12 @@
     }
   ],
   "limitations": [
-    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "f85d2c143480e8e6f741a4ad3719b142aa8584ad1b2b668f0bc743fed1256152"
+  "evidence_sha256": "c8dd24508bf13ce76b2d2ead8d5e4b1d863645b1c7f36abca5a199f8f22ccb1d"
 }

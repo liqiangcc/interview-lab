@@ -7,15 +7,12 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "34dad79769d4d1cb550176fe553a1a31913ca5b280a421ec1ab224b38471b666",
-  "disposition": "blocked",
-  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "disposition": "single-interview",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
-      "question-list-only",
-      "no-first-person-event",
-      "question-only",
-      "no-candidate-event-evidence"
+      "no-first-person-event"
     ],
     "questions": 18,
     "has_first_person_event": false,
@@ -23,19 +20,33 @@
     "has_bounded_event": true,
     "has_detailed_event": true,
     "has_completed_event_evidence": true,
-    "has_structured_candidate_event": false,
+    "has_structured_candidate_event": true,
     "generic_advice_or_aggregated": false,
     "scheduled_only": false,
-    "question_only": true,
+    "question_only": false,
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
-    "only_question_list": true,
+    "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "xiaomi-process",
+        "anchor": "小米",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-165;blob:5057c247e34ec2a1d8d30f20824cd182d679263d",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:小米",
+        "source_ref": "liqiangcc/xhs:note_detail/68b827bf000000001d02f001.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b827bf000000001d02f001.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -44,13 +55,108 @@
     "provenance": "source_projection",
     "byte_size": 807,
     "content_sha256": "6e664d38f319b6b7282a2e3f775a46aac533a067687824821f0142ca7b0e2ed3",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "1.自我介绍",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "1.自我介绍\n2.说一下实习做的工作，技术方案是什么样的，为什么要这样设计，有其他方案吗？\n3.如何存储上一次的数据(实习相关)\n4.手撕 爬楼梯\n5.HTTP和HTTPS的区别\n6.什么是证书，证书作用在哪个阶段\n7.MySQL的事务隔离级别\n8.系统出现OOM如何进行排查\n9.说一下ThreadLocal的原理，应用场景\n10.Redis是多线程还是单线程\n11.说一下Redis的性能为什么好\n12.Redis的数据结构\n13.对比一下RabbitMQ和Kafka\n14.消费者消息处理失败怎么办，Kafka有死信队列吗\n15.线程池的核心参数，如何根据不同应用场景进行设置\n16.说一下什么是IO密集型什么是CPU密集型\n17.为什么核心线程数要按照这两种方式设置不同的数量\n18.说一下什么是倒排索引"
-    }
+      "locator": "artifact-line:1#offset:0-6;blob:9106236bff69799fc24bfec1c8c6d2c5c0bd144a",
+      "semantic_excerpt": "小米一面\n1.自我介绍\n2.说一下实习做的工作，技术方案是什么样的，为什么要这样设计，有其他方案吗？\n3.如何存储上一次的数据(实习相关)\n4.手撕 爬楼梯\n5.HTTP和HTTPS的区别\n6.什么是证书，证书作用在哪个阶段\n7.MySQL的事务隔离级别\n8.系统出现OOM如何进行排查\n9.说一下ThreadLocal的原理，应用场景\n10.Redis是多线程还是单线程\n11.说一下Redis的性能为什么好\n12.Redis的数据结构\n13.对比一下RabbitMQ和Kafka\n14.消费者消息处理失败怎么办，Kafka有死信队列吗\n15.线程池的核心参数，如何根据不同应用场景进行设置\n16.说一下什么是IO密集型什么是CPU密集型\n17.为什么核心线程数要按照这两种方式设置不同的数量\n18.说一下什么是倒排索引"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68b827bf000000001d02f001.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "9106236bff69799fc24bfec1c8c6d2c5c0bd144a",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 807,
+        "content_sha256": "6e664d38f319b6b7282a2e3f775a46aac533a067687824821f0142ca7b0e2ed3",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "1.自我介绍",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-6;blob:9106236bff69799fc24bfec1c8c6d2c5c0bd144a",
+          "semantic_excerpt": "小米一面\n1.自我介绍\n2.说一下实习做的工作，技术方案是什么样的，为什么要这样设计，有其他方案吗？\n3.如何存储上一次的数据(实习相关)\n4.手撕 爬楼梯\n5.HTTP和HTTPS的区别\n6.什么是证书，证书作用在哪个阶段\n7.MySQL的事务隔离级别\n8.系统出现OOM如何进行排查\n9.说一下ThreadLocal的原理，应用场景\n10.Redis是多线程还是单线程\n11.说一下Redis的性能为什么好\n12.Redis的数据结构\n13.对比一下RabbitMQ和Kafka\n14.消费者消息处理失败怎么办，Kafka有死信队列吗\n15.线程池的核心参数，如何根据不同应用场景进行设置\n16.说一下什么是IO密集型什么是CPU密集型\n17.为什么核心线程数要按照这两种方式设置不同的数量\n18.说一下什么是倒排索引"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68b827bf000000001d02f001.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "5057c247e34ec2a1d8d30f20824cd182d679263d",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 386453,
+        "content_sha256": "acd3cfa65ed3b52f0de518cc29c1f236f2d5cc4e8d8e02374e8a3c6997cfa17d",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "小米一面 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-181;blob:5057c247e34ec2a1d8d30f20824cd182d679263d",
+          "semantic_excerpt": "小米一面\n1.自我介绍\n2.说一下实习做的工作，技术方案是什么样的，为什么要这样设计，有其他方案吗？\n3.如何存储上一次的数据(实习相关)\n4.手撕 爬楼梯\n5.HTTP和HTTPS的区别\n6.什么是证书，证书作用在哪个阶段\n7.MySQL的事务隔离级别\n8.系统出现OOM如何进行排查\n9.说一下ThreadLocal的原理，应用场景\n10.Redis是多线程还是单线程\n11.说一下Redis的性能为什么好\n12.Redis的数据结构\n13.对比一下RabbitMQ和Kafka\n14.消费者消息处理失败怎么办，Kafka有死信队列吗\n15.线程池的核心参数，如何根据不同应用场景进行设置\n16.说一下什么是IO密集型什么是CPU密集型\n17.为什么核心线程数要按照这两种方式设置不同的数量\n18.说一下什么是倒排索引"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68b827bf000000001d02f001.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "58492fe18aa0dc20d186da8c28b97d2eccd418c8",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 20445,
+        "content_sha256": "25e40772ca879c3438801c4e4aa7bfcbd79b47c627126507cd7385ad0fe08c2e",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "小米一面\",",
+          "line": 541,
+          "locator": "artifact-line:541#offset:30-36;blob:58492fe18aa0dc20d186da8c28b97d2eccd418c8",
+          "semantic_excerpt": "小米一面\n1.自我介绍\n2.说一下实习做的工作，技术方案是什么样的，为什么要这样设计，有其他方案吗？\n3.如何存储上一次的数据(实习相关)\n4.手撕 爬楼梯\n5.HTTP和HTTPS的区别\n6.什么是证书，证书作用在哪个阶段\n7.MySQL的事务隔离级别\n8.系统出现OOM如何进行排查\n9.说一下ThreadLocal的原理，应用场景\n10.Redis是多线程还是单线程\n11.说一下Redis的性能为什么好\n12.Redis的数据结构\n13.对比一下RabbitMQ和Kafka\n14.消费者消息处理失败怎么办，Kafka有死信队列吗\n15.线程池的核心参数，如何根据不同应用场景进行设置\n16.说一下什么是IO密集型什么是CPU密集型\n17.为什么核心线程数要按照这两种方式设置不同的数量\n18.说一下什么是倒排索引"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68b827bf000000001d02f001.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "9106236bff69799fc24bfec1c8c6d2c5c0bd144a",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 807,
+      "content_sha256": "6e664d38f319b6b7282a2e3f775a46aac533a067687824821f0142ca7b0e2ed3",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "1.自我介绍",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-6;blob:9106236bff69799fc24bfec1c8c6d2c5c0bd144a",
+        "semantic_excerpt": "小米一面\n1.自我介绍\n2.说一下实习做的工作，技术方案是什么样的，为什么要这样设计，有其他方案吗？\n3.如何存储上一次的数据(实习相关)\n4.手撕 爬楼梯\n5.HTTP和HTTPS的区别\n6.什么是证书，证书作用在哪个阶段\n7.MySQL的事务隔离级别\n8.系统出现OOM如何进行排查\n9.说一下ThreadLocal的原理，应用场景\n10.Redis是多线程还是单线程\n11.说一下Redis的性能为什么好\n12.Redis的数据结构\n13.对比一下RabbitMQ和Kafka\n14.消费者消息处理失败怎么办，Kafka有死信队列吗\n15.线程池的核心参数，如何根据不同应用场景进行设置\n16.说一下什么是IO密集型什么是CPU密集型\n17.为什么核心线程数要按照这两种方式设置不同的数量\n18.说一下什么是倒排索引"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68b827bf000000001d02f001.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "5057c247e34ec2a1d8d30f20824cd182d679263d",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 386453,
+      "content_sha256": "acd3cfa65ed3b52f0de518cc29c1f236f2d5cc4e8d8e02374e8a3c6997cfa17d",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "小米一面 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-181;blob:5057c247e34ec2a1d8d30f20824cd182d679263d",
+        "semantic_excerpt": "小米一面\n1.自我介绍\n2.说一下实习做的工作，技术方案是什么样的，为什么要这样设计，有其他方案吗？\n3.如何存储上一次的数据(实习相关)\n4.手撕 爬楼梯\n5.HTTP和HTTPS的区别\n6.什么是证书，证书作用在哪个阶段\n7.MySQL的事务隔离级别\n8.系统出现OOM如何进行排查\n9.说一下ThreadLocal的原理，应用场景\n10.Redis是多线程还是单线程\n11.说一下Redis的性能为什么好\n12.Redis的数据结构\n13.对比一下RabbitMQ和Kafka\n14.消费者消息处理失败怎么办，Kafka有死信队列吗\n15.线程池的核心参数，如何根据不同应用场景进行设置\n16.说一下什么是IO密集型什么是CPU密集型\n17.为什么核心线程数要按照这两种方式设置不同的数量\n18.说一下什么是倒排索引"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68b827bf000000001d02f001.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "58492fe18aa0dc20d186da8c28b97d2eccd418c8",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 20445,
+      "content_sha256": "25e40772ca879c3438801c4e4aa7bfcbd79b47c627126507cd7385ad0fe08c2e",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "小米一面\",",
+        "line": 541,
+        "locator": "artifact-line:541#offset:30-36;blob:58492fe18aa0dc20d186da8c28b97d2eccd418c8",
+        "semantic_excerpt": "小米一面\n1.自我介绍\n2.说一下实习做的工作，技术方案是什么样的，为什么要这样设计，有其他方案吗？\n3.如何存储上一次的数据(实习相关)\n4.手撕 爬楼梯\n5.HTTP和HTTPS的区别\n6.什么是证书，证书作用在哪个阶段\n7.MySQL的事务隔离级别\n8.系统出现OOM如何进行排查\n9.说一下ThreadLocal的原理，应用场景\n10.Redis是多线程还是单线程\n11.说一下Redis的性能为什么好\n12.Redis的数据结构\n13.对比一下RabbitMQ和Kafka\n14.消费者消息处理失败怎么办，Kafka有死信队列吗\n15.线程池的核心参数，如何根据不同应用场景进行设置\n16.说一下什么是IO密集型什么是CPU密集型\n17.为什么核心线程数要按照这两种方式设置不同的数量\n18.说一下什么是倒排索引"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -69,8 +175,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -84,11 +190,12 @@
     }
   ],
   "limitations": [
-    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "e31c46a743b0338d62e147730c0e04547f1217412e8ae6a52a2d393310d46986"
+  "evidence_sha256": "3f348c89903d0c2db939c5bb1c94eeeb45d4d02d3e4ebf7759495ee85c2cb6e3"
 }

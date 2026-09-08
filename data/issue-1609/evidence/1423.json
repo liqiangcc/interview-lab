@@ -8,7 +8,7 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "d58743037c728b976444deb835971daa0e8a371ecbb9554120841e066127f4a0",
   "disposition": "blocked",
-  "rationale": "No non-empty readable Source/Source projection is available; title and hashtags cannot authorize a boundary.",
+  "rationale": "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
@@ -28,12 +28,16 @@
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [],
+    "reviewed_artifact_count": 2,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68dcfce6000000000300d936.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -42,13 +46,78 @@
     "provenance": "source_projection",
     "byte_size": 32454,
     "content_sha256": "058fd88293899a6c9683c7dd4f0df4d997c44ab62db6964a68743ea310b0dd4e",
+    "cache_status": "not-applicable",
     "excerpt": {
-      "excerpt": "\"global\": {",
-      "line": 2,
-      "locator": "artifact-line:2",
-      "semantic_excerpt": ""
-    }
+      "excerpt": "25年10月1日，送给Java后端人的忠告。\",",
+      "line": 500,
+      "locator": "artifact-line:500#offset:30-54;blob:c5688301313177668b4ef6fac8bb100a1942c50b",
+      "semantic_excerpt": "25年10月1日，送给Java后端人的忠告。"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_detail/68dcfce6000000000300d936.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "4f6058256d4bb2cc93b94253b46483ed24f93f5b",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 398489,
+        "content_sha256": "9fcafeebeb570128c0b944fa41ef39ededa0a3515eae949ece1f404c63c2bd48",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "25年10月1日，送给Java后端人的忠告。 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-199;blob:4f6058256d4bb2cc93b94253b46483ed24f93f5b",
+          "semantic_excerpt": "25年10月1日，送给Java后端人的忠告。"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68dcfce6000000000300d936.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "c5688301313177668b4ef6fac8bb100a1942c50b",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 32454,
+        "content_sha256": "058fd88293899a6c9683c7dd4f0df4d997c44ab62db6964a68743ea310b0dd4e",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "25年10月1日，送给Java后端人的忠告。\",",
+          "line": 500,
+          "locator": "artifact-line:500#offset:30-54;blob:c5688301313177668b4ef6fac8bb100a1942c50b",
+          "semantic_excerpt": "25年10月1日，送给Java后端人的忠告。"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/68dcfce6000000000300d936.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "4f6058256d4bb2cc93b94253b46483ed24f93f5b",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 398489,
+      "content_sha256": "9fcafeebeb570128c0b944fa41ef39ededa0a3515eae949ece1f404c63c2bd48",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "25年10月1日，送给Java后端人的忠告。 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-199;blob:4f6058256d4bb2cc93b94253b46483ed24f93f5b",
+        "semantic_excerpt": "25年10月1日，送给Java后端人的忠告。"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68dcfce6000000000300d936.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "c5688301313177668b4ef6fac8bb100a1942c50b",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 32454,
+      "content_sha256": "058fd88293899a6c9683c7dd4f0df4d997c44ab62db6964a68743ea310b0dd4e",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "25年10月1日，送给Java后端人的忠告。\",",
+        "line": 500,
+        "locator": "artifact-line:500#offset:30-54;blob:c5688301313177668b4ef6fac8bb100a1942c50b",
+        "semantic_excerpt": "25年10月1日，送给Java后端人的忠告。"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -68,7 +137,7 @@
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. No non-empty readable Source/Source projection is available; title and hashtags cannot authorize a boundary."
+      "note": "The disposition is supported by the cited source evidence. Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -82,11 +151,12 @@
     }
   ],
   "limitations": [
-    "No non-empty readable Source/Source projection is available; title and hashtags cannot authorize a boundary.",
+    "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "2b7db73d70c53cc15de6135d099afd55bde63491eb2b9a0df517134040949078"
+  "evidence_sha256": "9f07d976978229b64551d82c3b36e1d3e1f01cc8dc266de01eb58ff006eeb14f"
 }

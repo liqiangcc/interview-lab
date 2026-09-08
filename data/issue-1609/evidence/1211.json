@@ -7,15 +7,12 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "0376853c630b87d3a198ffdef4851ed2c1e0e9e3bcf48f5ee1cd9d12c9a64f9b",
-  "disposition": "blocked",
-  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "disposition": "single-interview",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
-      "question-list-only",
-      "no-first-person-event",
-      "question-only",
-      "no-candidate-event-evidence"
+      "no-first-person-event"
     ],
     "questions": 10,
     "has_first_person_event": false,
@@ -23,19 +20,33 @@
     "has_bounded_event": true,
     "has_detailed_event": true,
     "has_completed_event_evidence": true,
-    "has_structured_candidate_event": false,
+    "has_structured_candidate_event": true,
     "generic_advice_or_aggregated": false,
     "scheduled_only": false,
-    "question_only": true,
+    "question_only": false,
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
-    "only_question_list": true,
+    "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "tencent-process",
+        "anchor": "腾讯",
+        "line": 1,
+        "locator": "artifact-line:15#offset:19-21;blob:bd4c27c68c12470938bcff732fb21fa1d6a8e6d5",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:腾讯",
+        "source_ref": "liqiangcc/xhs:note_desc/68b18d94000000001c032b08.txt@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b18d94000000001c032b08.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -44,13 +55,108 @@
     "provenance": "source_projection",
     "byte_size": 1173,
     "content_sha256": "d05b5665d1de5e634076b1425683978fd55c895716743c094e086d38aaaab7d6",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "问项目",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "问项目\n1. 三方授权登录怎么做的（感谢百度问了，不然讲不清楚），Oauth2对比传统的账号密码登录有什么优势\n2. AOP+Redis 实现限流怎么做的，滑动窗口和令牌痛限流是怎么样的，如果突然有一波大流量进来那种限流方法最好\n3. 还问了些实习的小点，但是没深挖\n4. 对k8s了解怎么样\n5. redis的常见数据类型，zset是怎么样的，持久化的机制（问了些项目相关的拓展）\n6. 消息队列主要解决什么问题，消息队列怎么保证消息的有序和幂等\n7. http和https的区别，SSL/TLS保证安全的流程，非对称加密这么安全为什么不全使用非对称加密，加密算法了解吗\n8. http2.0有哪些升级，多路复用怎么实现的，头部压缩怎么实现的\n算法：\n1. topk出现次数（最小堆，然后让我手撕最小堆的实现，不会换了一题）\n2. 先序中序构建二叉树（最后看了半天没找到哪有问题，面试官提醒了循环条件少了等于号）\n体验很好，说对了都会点头，说的不全面的也会讲解一下\n已二面"
-    }
+      "locator": "artifact-line:1#offset:0-3;blob:bd4c27c68c12470938bcff732fb21fa1d6a8e6d5",
+      "semantic_excerpt": "腾讯后端一面\n问项目\n1. 三方授权登录怎么做的（感谢百度问了，不然讲不清楚），Oauth2对比传统的账号密码登录有什么优势\n2. AOP+Redis 实现限流怎么做的，滑动窗口和令牌痛限流是怎么样的，如果突然有一波大流量进来那种限流方法最好\n3. 还问了些实习的小点，但是没深挖\n4. 对k8s了解怎么样\n5. redis的常见数据类型，zset是怎么样的，持久化的机制（问了些项目相关的拓展）\n6. 消息队列主要解决什么问题，消息队列怎么保证消息的有序和幂等\n7. http和https的区别，SSL/TLS保证安全的流程，非对称加密这么安全为什么不全使用非对称加密，加密算法了解吗\n8. http2.0有哪些升级，多路复用怎么实现的，头部压缩怎么实现的\n算法：\n1. topk出现次数（最小堆，然后让我手撕最小堆的实现，不会换了一题）\n2. 先序中序构建二叉树（最后看了半天没找到哪有问题，面试官提醒了循环条件少了等于号）\n体验很好，说对了都会点头，说的不全面的也会讲解一下\n已二面"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68b18d94000000001c032b08.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "bd4c27c68c12470938bcff732fb21fa1d6a8e6d5",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 1173,
+        "content_sha256": "d05b5665d1de5e634076b1425683978fd55c895716743c094e086d38aaaab7d6",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "问项目",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-3;blob:bd4c27c68c12470938bcff732fb21fa1d6a8e6d5",
+          "semantic_excerpt": "腾讯后端一面\n问项目\n1. 三方授权登录怎么做的（感谢百度问了，不然讲不清楚），Oauth2对比传统的账号密码登录有什么优势\n2. AOP+Redis 实现限流怎么做的，滑动窗口和令牌痛限流是怎么样的，如果突然有一波大流量进来那种限流方法最好\n3. 还问了些实习的小点，但是没深挖\n4. 对k8s了解怎么样\n5. redis的常见数据类型，zset是怎么样的，持久化的机制（问了些项目相关的拓展）\n6. 消息队列主要解决什么问题，消息队列怎么保证消息的有序和幂等\n7. http和https的区别，SSL/TLS保证安全的流程，非对称加密这么安全为什么不全使用非对称加密，加密算法了解吗\n8. http2.0有哪些升级，多路复用怎么实现的，头部压缩怎么实现的\n算法：\n1. topk出现次数（最小堆，然后让我手撕最小堆的实现，不会换了一题）\n2. 先序中序构建二叉树（最后看了半天没找到哪有问题，面试官提醒了循环条件少了等于号）\n体验很好，说对了都会点头，说的不全面的也会讲解一下\n已二面"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68b18d94000000001c032b08.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "5a75aa33711792aa771100a462f8a08928b6d822",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 388512,
+        "content_sha256": "c5face62632d240bb3d53eceba004053d7455cc9038fe60053beb88b24cee4b4",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "腾讯后端一面 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-183;blob:5a75aa33711792aa771100a462f8a08928b6d822",
+          "semantic_excerpt": "腾讯后端一面\n问项目\n1. 三方授权登录怎么做的（感谢百度问了，不然讲不清楚），Oauth2对比传统的账号密码登录有什么优势\n2. AOP+Redis 实现限流怎么做的，滑动窗口和令牌痛限流是怎么样的，如果突然有一波大流量进来那种限流方法最好\n3. 还问了些实习的小点，但是没深挖\n4. 对k8s了解怎么样\n5. redis的常见数据类型，zset是怎么样的，持久化的机制（问了些项目相关的拓展）\n6. 消息队列主要解决什么问题，消息队列怎么保证消息的有序和幂等\n7. http和https的区别，SSL/TLS保证安全的流程，非对称加密这么安全为什么不全使用非对称加密，加密算法了解吗\n8. http2.0有哪些升级，多路复用怎么实现的，头部压缩怎么实现的\n算法：\n1. topk出现次数（最小堆，然后让我手撕最小堆的实现，不会换了一题）\n2. 先序中序构建二叉树（最后看了半天没找到哪有问题，面试官提醒了循环条件少了等于号）\n体验很好，说对了都会点头，说的不全面的也会讲解一下\n已二面"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68b18d94000000001c032b08.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "db80425a6e7d2b12da6e1d635e767d42b9068e15",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 21464,
+        "content_sha256": "d519e8c47298e6fb6d2d5a9fd1c6c95e59d975fb748c1b0210882e59be4920eb",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "腾讯后端一面\",",
+          "line": 557,
+          "locator": "artifact-line:557#offset:30-38;blob:db80425a6e7d2b12da6e1d635e767d42b9068e15",
+          "semantic_excerpt": "腾讯后端一面\n问项目\n1. 三方授权登录怎么做的（感谢百度问了，不然讲不清楚），Oauth2对比传统的账号密码登录有什么优势\n2. AOP+Redis 实现限流怎么做的，滑动窗口和令牌痛限流是怎么样的，如果突然有一波大流量进来那种限流方法最好\n3. 还问了些实习的小点，但是没深挖\n4. 对k8s了解怎么样\n5. redis的常见数据类型，zset是怎么样的，持久化的机制（问了些项目相关的拓展）\n6. 消息队列主要解决什么问题，消息队列怎么保证消息的有序和幂等\n7. http和https的区别，SSL/TLS保证安全的流程，非对称加密这么安全为什么不全使用非对称加密，加密算法了解吗\n8. http2.0有哪些升级，多路复用怎么实现的，头部压缩怎么实现的\n算法：\n1. topk出现次数（最小堆，然后让我手撕最小堆的实现，不会换了一题）\n2. 先序中序构建二叉树（最后看了半天没找到哪有问题，面试官提醒了循环条件少了等于号）\n体验很好，说对了都会点头，说的不全面的也会讲解一下\n已二面"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68b18d94000000001c032b08.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "bd4c27c68c12470938bcff732fb21fa1d6a8e6d5",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 1173,
+      "content_sha256": "d05b5665d1de5e634076b1425683978fd55c895716743c094e086d38aaaab7d6",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "问项目",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-3;blob:bd4c27c68c12470938bcff732fb21fa1d6a8e6d5",
+        "semantic_excerpt": "腾讯后端一面\n问项目\n1. 三方授权登录怎么做的（感谢百度问了，不然讲不清楚），Oauth2对比传统的账号密码登录有什么优势\n2. AOP+Redis 实现限流怎么做的，滑动窗口和令牌痛限流是怎么样的，如果突然有一波大流量进来那种限流方法最好\n3. 还问了些实习的小点，但是没深挖\n4. 对k8s了解怎么样\n5. redis的常见数据类型，zset是怎么样的，持久化的机制（问了些项目相关的拓展）\n6. 消息队列主要解决什么问题，消息队列怎么保证消息的有序和幂等\n7. http和https的区别，SSL/TLS保证安全的流程，非对称加密这么安全为什么不全使用非对称加密，加密算法了解吗\n8. http2.0有哪些升级，多路复用怎么实现的，头部压缩怎么实现的\n算法：\n1. topk出现次数（最小堆，然后让我手撕最小堆的实现，不会换了一题）\n2. 先序中序构建二叉树（最后看了半天没找到哪有问题，面试官提醒了循环条件少了等于号）\n体验很好，说对了都会点头，说的不全面的也会讲解一下\n已二面"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68b18d94000000001c032b08.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "5a75aa33711792aa771100a462f8a08928b6d822",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 388512,
+      "content_sha256": "c5face62632d240bb3d53eceba004053d7455cc9038fe60053beb88b24cee4b4",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "腾讯后端一面 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-183;blob:5a75aa33711792aa771100a462f8a08928b6d822",
+        "semantic_excerpt": "腾讯后端一面\n问项目\n1. 三方授权登录怎么做的（感谢百度问了，不然讲不清楚），Oauth2对比传统的账号密码登录有什么优势\n2. AOP+Redis 实现限流怎么做的，滑动窗口和令牌痛限流是怎么样的，如果突然有一波大流量进来那种限流方法最好\n3. 还问了些实习的小点，但是没深挖\n4. 对k8s了解怎么样\n5. redis的常见数据类型，zset是怎么样的，持久化的机制（问了些项目相关的拓展）\n6. 消息队列主要解决什么问题，消息队列怎么保证消息的有序和幂等\n7. http和https的区别，SSL/TLS保证安全的流程，非对称加密这么安全为什么不全使用非对称加密，加密算法了解吗\n8. http2.0有哪些升级，多路复用怎么实现的，头部压缩怎么实现的\n算法：\n1. topk出现次数（最小堆，然后让我手撕最小堆的实现，不会换了一题）\n2. 先序中序构建二叉树（最后看了半天没找到哪有问题，面试官提醒了循环条件少了等于号）\n体验很好，说对了都会点头，说的不全面的也会讲解一下\n已二面"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68b18d94000000001c032b08.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "db80425a6e7d2b12da6e1d635e767d42b9068e15",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 21464,
+      "content_sha256": "d519e8c47298e6fb6d2d5a9fd1c6c95e59d975fb748c1b0210882e59be4920eb",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "腾讯后端一面\",",
+        "line": 557,
+        "locator": "artifact-line:557#offset:30-38;blob:db80425a6e7d2b12da6e1d635e767d42b9068e15",
+        "semantic_excerpt": "腾讯后端一面\n问项目\n1. 三方授权登录怎么做的（感谢百度问了，不然讲不清楚），Oauth2对比传统的账号密码登录有什么优势\n2. AOP+Redis 实现限流怎么做的，滑动窗口和令牌痛限流是怎么样的，如果突然有一波大流量进来那种限流方法最好\n3. 还问了些实习的小点，但是没深挖\n4. 对k8s了解怎么样\n5. redis的常见数据类型，zset是怎么样的，持久化的机制（问了些项目相关的拓展）\n6. 消息队列主要解决什么问题，消息队列怎么保证消息的有序和幂等\n7. http和https的区别，SSL/TLS保证安全的流程，非对称加密这么安全为什么不全使用非对称加密，加密算法了解吗\n8. http2.0有哪些升级，多路复用怎么实现的，头部压缩怎么实现的\n算法：\n1. topk出现次数（最小堆，然后让我手撕最小堆的实现，不会换了一题）\n2. 先序中序构建二叉树（最后看了半天没找到哪有问题，面试官提醒了循环条件少了等于号）\n体验很好，说对了都会点头，说的不全面的也会讲解一下\n已二面"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -69,8 +175,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -84,11 +190,12 @@
     }
   ],
   "limitations": [
-    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "9ab4a0032a4caf8db382953438e87807b6199b699e0536d8d5f09ebf17aa6137"
+  "evidence_sha256": "300e66988b87256515429cdb91e2828413e17d750032244c5479bdebaa54cc63"
 }

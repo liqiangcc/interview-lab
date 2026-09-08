@@ -12,7 +12,6 @@
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
-      "question-list-only",
       "outcome-or-offer-only",
       "no-first-person-event",
       "question-only",
@@ -21,7 +20,7 @@
     "questions": 13,
     "has_first_person_event": false,
     "has_explicit_candidate_event": false,
-    "has_bounded_event": false,
+    "has_bounded_event": true,
     "has_detailed_event": false,
     "has_completed_event_evidence": false,
     "has_structured_candidate_event": false,
@@ -31,12 +30,26 @@
     "outcome_signal": true,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
-    "only_question_list": true,
+    "only_question_list": false,
     "only_outcome": true,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "alibaba-process",
+        "anchor": "阿里",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-165;blob:ed1f01772dc84a929ab89ac140cf1cd7c9a211c2",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:阿里",
+        "source_ref": "liqiangcc/xhs:note_detail/68c6a38d000000001d008f60.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68c6a38d000000001d008f60.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -45,13 +58,108 @@
     "provenance": "source_projection",
     "byte_size": 1930,
     "content_sha256": "16014bfc22c0f34d7869938bb16d6559bda2d389bf496221a3d86fe8e6b2f9fa",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "1. 如何基于LibTorch的Java绑定，结合Flink的流处理能力，构建AI模型实时推理框架？需说明如何利用Java优势提升框架稳定性。",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "1. 如何基于LibTorch的Java绑定，结合Flink的流处理能力，构建AI模型实时推理框架？需说明如何利用Java优势提升框架稳定性。\n2. 用Spring AI集成LibTorch Java绑定时，如何解决模型加载与Flink任务调度的协同问题，以加速推理响应？\n3. 基于LibTorch Java绑定开发训练框架，如何借助Java的多线程机制与Flink的分布式计算，提升模型训练效率？\n4. 如何优化LibTorch Java绑定在Flink集群中的资源占用，结合Spring AI的配置管理，实现高性能推理？\n5. 用LibTorch Java绑定做模型训练时，如何通过Flink的状态管理保证训练数据一致性，同时发挥Java的可靠性优势？\n6. 如何让Spring AI调用LibTorch Java绑定推理时，与Flink的流数据处理无缝衔接，减少数据传输延迟？\n7. 基于LibTorch Java绑定开发的框架，如何适配Flink的动态扩缩容，结合Java的兼容性确保训练/推理不中断？\n8. 用Spring AI整合LibTorch Java绑定时，如何优化模型参数传递效率，配合Flink提升高并发场景下的推理性能？\n9. 基于LibTorch Java绑定的训练框架，如何利用Java的JVM调优与Flink的内存管理，避免OOM以保障训练稳定？\n10. 如何通过LibTorch Java绑定实现模型增量训练，结合Flink的增量数据处理与Spring AI，提升训练迭代速度？\n11. 用LibTorch Java绑定做推理时，如何借助Flink的窗口函数与Java的高效计算，处理时序数据以降低推理 latency？\n12. 如何在Spring AI中封装LibTorch Java绑定的推理接口，配合Flink的Checkpoint机制，确保推理结果可回溯？\n13. 基于LibTorch Java绑定构建的训练/推理框架，如何利用Java的生态优势与Flink的容错机制，提升系统整体可用性？"
-    }
+      "locator": "artifact-line:1#offset:0-71;blob:021149a7732de8f67628b9b9905a6af80dc22e85",
+      "semantic_excerpt": "阿里巴巴AI Infra二面面试题 捅了java窝了\n1. 如何基于LibTorch的Java绑定，结合Flink的流处理能力，构建AI模型实时推理框架？需说明如何利用Java优势提升框架稳定性。\n2. 用Spring AI集成LibTorch Java绑定时，如何解决模型加载与Flink任务调度的协同问题，以加速推理响应？\n3. 基于LibTorch Java绑定开发训练框架，如何借助Java的多线程机制与Flink的分布式计算，提升模型训练效率？\n4. 如何优化LibTorch Java绑定在Flink集群中的资源占用，结合Spring AI的配置管理，实现高性能推理？\n5. 用LibTorch Java绑定做模型训练时，如何通过Flink的状态管理保证训练数据一致性，同时发挥Java的可靠性优势？\n6. 如何让Spring AI调用LibTorch Java绑定推理时，与Flink的流数据处理无缝衔接，减少数据传输延迟？\n7. 基于LibTorch Java绑定开发的框架，如何适配Flink的动态扩缩容，结合Java的兼容性确保训练/推理不中断？\n8. 用Spring AI整合LibTorch Java绑定时，如何优化模型参数传递效率，配合Flink提升高并发场景下的推理性能？\n9. 基于LibTorch Java绑定的训练框架，如何利用Java的JVM调优与Flink的内存管理，避免OOM以保障训练稳定？\n10. 如何通过LibTorch Java绑定实现模型增量训练，结合Flink的增量数据处理与Spring AI，提升训练迭代速度？\n11. 用LibTorch Java绑定做推理时，如何借助Flink的窗口函数与Java的高效计算，处理时序数据以降低推理 latency？\n12. 如何在Spring AI中封装LibTorch Java绑定的推理接口，配合Flink的Checkpoint机制，确保推理结果可回溯？\n13. 基于LibTorch Java绑定构建的训练/推理框架，如何利用Java的生态优势与Flink的容错机制，提升系统整体可用性？"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68c6a38d000000001d008f60.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "021149a7732de8f67628b9b9905a6af80dc22e85",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 1930,
+        "content_sha256": "16014bfc22c0f34d7869938bb16d6559bda2d389bf496221a3d86fe8e6b2f9fa",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "1. 如何基于LibTorch的Java绑定，结合Flink的流处理能力，构建AI模型实时推理框架？需说明如何利用Java优势提升框架稳定性。",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-71;blob:021149a7732de8f67628b9b9905a6af80dc22e85",
+          "semantic_excerpt": "阿里巴巴AI Infra二面面试题 捅了java窝了\n1. 如何基于LibTorch的Java绑定，结合Flink的流处理能力，构建AI模型实时推理框架？需说明如何利用Java优势提升框架稳定性。\n2. 用Spring AI集成LibTorch Java绑定时，如何解决模型加载与Flink任务调度的协同问题，以加速推理响应？\n3. 基于LibTorch Java绑定开发训练框架，如何借助Java的多线程机制与Flink的分布式计算，提升模型训练效率？\n4. 如何优化LibTorch Java绑定在Flink集群中的资源占用，结合Spring AI的配置管理，实现高性能推理？\n5. 用LibTorch Java绑定做模型训练时，如何通过Flink的状态管理保证训练数据一致性，同时发挥Java的可靠性优势？\n6. 如何让Spring AI调用LibTorch Java绑定推理时，与Flink的流数据处理无缝衔接，减少数据传输延迟？\n7. 基于LibTorch Java绑定开发的框架，如何适配Flink的动态扩缩容，结合Java的兼容性确保训练/推理不中断？\n8. 用Spring AI整合LibTorch Java绑定时，如何优化模型参数传递效率，配合Flink提升高并发场景下的推理性能？\n9. 基于LibTorch Java绑定的训练框架，如何利用Java的JVM调优与Flink的内存管理，避免OOM以保障训练稳定？\n10. 如何通过LibTorch Java绑定实现模型增量训练，结合Flink的增量数据处理与Spring AI，提升训练迭代速度？\n11. 用LibTorch Java绑定做推理时，如何借助Flink的窗口函数与Java的高效计算，处理时序数据以降低推理 latency？\n12. 如何在Spring AI中封装LibTorch Java绑定的推理接口，配合Flink的Checkpoint机制，确保推理结果可回溯？\n13. 基于LibTorch Java绑定构建的训练/推理框架，如何利用Java的生态优势与Flink的容错机制，提升系统整体可用性？"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68c6a38d000000001d008f60.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "ed1f01772dc84a929ab89ac140cf1cd7c9a211c2",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 391828,
+        "content_sha256": "2b9a6affbc2e453e6327dbebacdd5a3b920694bed9fbbc1c3def6d5a47a74672",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "阿里巴巴AI Infra二面面试题 捅了java窝了 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-203;blob:ed1f01772dc84a929ab89ac140cf1cd7c9a211c2",
+          "semantic_excerpt": "阿里巴巴AI Infra二面面试题 捅了java窝了\n1. 如何基于LibTorch的Java绑定，结合Flink的流处理能力，构建AI模型实时推理框架？需说明如何利用Java优势提升框架稳定性。\n2. 用Spring AI集成LibTorch Java绑定时，如何解决模型加载与Flink任务调度的协同问题，以加速推理响应？\n3. 基于LibTorch Java绑定开发训练框架，如何借助Java的多线程机制与Flink的分布式计算，提升模型训练效率？\n4. 如何优化LibTorch Java绑定在Flink集群中的资源占用，结合Spring AI的配置管理，实现高性能推理？\n5. 用LibTorch Java绑定做模型训练时，如何通过Flink的状态管理保证训练数据一致性，同时发挥Java的可靠性优势？\n6. 如何让Spring AI调用LibTorch Java绑定推理时，与Flink的流数据处理无缝衔接，减少数据传输延迟？\n7. 基于LibTorch Java绑定开发的框架，如何适配Flink的动态扩缩容，结合Java的兼容性确保训练/推理不中断？\n8. 用Spring AI整合LibTorch Java绑定时，如何优化模型参数传递效率，配合Flink提升高并发场景下的推理性能？\n9. 基于LibTorch Java绑定的训练框架，如何利用Java的JVM调优与Flink的内存管理，避免OOM以保障训练稳定？\n10. 如何通过LibTorch Java绑定实现模型增量训练，结合Flink的增量数据处理与Spring AI，提升训练迭代速度？\n11. 用LibTorch Java绑定做推理时，如何借助Flink的窗口函数与Java的高效计算，处理时序数据以降低推理 latency？\n12. 如何在Spring AI中封装LibTorch Java绑定的推理接口，配合Flink的Checkpoint机制，确保推理结果可回溯？\n13. 基于LibTorch Java绑定构建的训练/推理框架，如何利用Java的生态优势与Flink的容错机制，提升系统整体可用性？"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68c6a38d000000001d008f60.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "ad293c830a6f061afb0e6fe922b5e02a90ba2c34",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 22870,
+        "content_sha256": "8083d20cb986a3455cca47935a1a168717583ca175e62346c70cdb2cb9098f90",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "阿里巴巴AI Infra二面面试题 捅了java窝了\",",
+          "line": 567,
+          "locator": "artifact-line:567#offset:30-58;blob:ad293c830a6f061afb0e6fe922b5e02a90ba2c34",
+          "semantic_excerpt": "阿里巴巴AI Infra二面面试题 捅了java窝了\n1. 如何基于LibTorch的Java绑定，结合Flink的流处理能力，构建AI模型实时推理框架？需说明如何利用Java优势提升框架稳定性。\n2. 用Spring AI集成LibTorch Java绑定时，如何解决模型加载与Flink任务调度的协同问题，以加速推理响应？\n3. 基于LibTorch Java绑定开发训练框架，如何借助Java的多线程机制与Flink的分布式计算，提升模型训练效率？\n4. 如何优化LibTorch Java绑定在Flink集群中的资源占用，结合Spring AI的配置管理，实现高性能推理？\n5. 用LibTorch Java绑定做模型训练时，如何通过Flink的状态管理保证训练数据一致性，同时发挥Java的可靠性优势？\n6. 如何让Spring AI调用LibTorch Java绑定推理时，与Flink的流数据处理无缝衔接，减少数据传输延迟？\n7. 基于LibTorch Java绑定开发的框架，如何适配Flink的动态扩缩容，结合Java的兼容性确保训练/推理不中断？\n8. 用Spring AI整合LibTorch Java绑定时，如何优化模型参数传递效率，配合Flink提升高并发场景下的推理性能？\n9. 基于LibTorch Java绑定的训练框架，如何利用Java的JVM调优与Flink的内存管理，避免OOM以保障训练稳定？\n10. 如何通过LibTorch Java绑定实现模型增量训练，结合Flink的增量数据处理与Spring AI，提升训练迭代速度？\n11. 用LibTorch Java绑定做推理时，如何借助Flink的窗口函数与Java的高效计算，处理时序数据以降低推理 latency？\n12. 如何在Spring AI中封装LibTorch Java绑定的推理接口，配合Flink的Checkpoint机制，确保推理结果可回溯？\n13. 基于LibTorch Java绑定构建的训练/推理框架，如何利用Java的生态优势与Flink的容错机制，提升系统整体可用性？"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68c6a38d000000001d008f60.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "021149a7732de8f67628b9b9905a6af80dc22e85",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 1930,
+      "content_sha256": "16014bfc22c0f34d7869938bb16d6559bda2d389bf496221a3d86fe8e6b2f9fa",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "1. 如何基于LibTorch的Java绑定，结合Flink的流处理能力，构建AI模型实时推理框架？需说明如何利用Java优势提升框架稳定性。",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-71;blob:021149a7732de8f67628b9b9905a6af80dc22e85",
+        "semantic_excerpt": "阿里巴巴AI Infra二面面试题 捅了java窝了\n1. 如何基于LibTorch的Java绑定，结合Flink的流处理能力，构建AI模型实时推理框架？需说明如何利用Java优势提升框架稳定性。\n2. 用Spring AI集成LibTorch Java绑定时，如何解决模型加载与Flink任务调度的协同问题，以加速推理响应？\n3. 基于LibTorch Java绑定开发训练框架，如何借助Java的多线程机制与Flink的分布式计算，提升模型训练效率？\n4. 如何优化LibTorch Java绑定在Flink集群中的资源占用，结合Spring AI的配置管理，实现高性能推理？\n5. 用LibTorch Java绑定做模型训练时，如何通过Flink的状态管理保证训练数据一致性，同时发挥Java的可靠性优势？\n6. 如何让Spring AI调用LibTorch Java绑定推理时，与Flink的流数据处理无缝衔接，减少数据传输延迟？\n7. 基于LibTorch Java绑定开发的框架，如何适配Flink的动态扩缩容，结合Java的兼容性确保训练/推理不中断？\n8. 用Spring AI整合LibTorch Java绑定时，如何优化模型参数传递效率，配合Flink提升高并发场景下的推理性能？\n9. 基于LibTorch Java绑定的训练框架，如何利用Java的JVM调优与Flink的内存管理，避免OOM以保障训练稳定？\n10. 如何通过LibTorch Java绑定实现模型增量训练，结合Flink的增量数据处理与Spring AI，提升训练迭代速度？\n11. 用LibTorch Java绑定做推理时，如何借助Flink的窗口函数与Java的高效计算，处理时序数据以降低推理 latency？\n12. 如何在Spring AI中封装LibTorch Java绑定的推理接口，配合Flink的Checkpoint机制，确保推理结果可回溯？\n13. 基于LibTorch Java绑定构建的训练/推理框架，如何利用Java的生态优势与Flink的容错机制，提升系统整体可用性？"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68c6a38d000000001d008f60.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "ed1f01772dc84a929ab89ac140cf1cd7c9a211c2",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 391828,
+      "content_sha256": "2b9a6affbc2e453e6327dbebacdd5a3b920694bed9fbbc1c3def6d5a47a74672",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "阿里巴巴AI Infra二面面试题 捅了java窝了 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-203;blob:ed1f01772dc84a929ab89ac140cf1cd7c9a211c2",
+        "semantic_excerpt": "阿里巴巴AI Infra二面面试题 捅了java窝了\n1. 如何基于LibTorch的Java绑定，结合Flink的流处理能力，构建AI模型实时推理框架？需说明如何利用Java优势提升框架稳定性。\n2. 用Spring AI集成LibTorch Java绑定时，如何解决模型加载与Flink任务调度的协同问题，以加速推理响应？\n3. 基于LibTorch Java绑定开发训练框架，如何借助Java的多线程机制与Flink的分布式计算，提升模型训练效率？\n4. 如何优化LibTorch Java绑定在Flink集群中的资源占用，结合Spring AI的配置管理，实现高性能推理？\n5. 用LibTorch Java绑定做模型训练时，如何通过Flink的状态管理保证训练数据一致性，同时发挥Java的可靠性优势？\n6. 如何让Spring AI调用LibTorch Java绑定推理时，与Flink的流数据处理无缝衔接，减少数据传输延迟？\n7. 基于LibTorch Java绑定开发的框架，如何适配Flink的动态扩缩容，结合Java的兼容性确保训练/推理不中断？\n8. 用Spring AI整合LibTorch Java绑定时，如何优化模型参数传递效率，配合Flink提升高并发场景下的推理性能？\n9. 基于LibTorch Java绑定的训练框架，如何利用Java的JVM调优与Flink的内存管理，避免OOM以保障训练稳定？\n10. 如何通过LibTorch Java绑定实现模型增量训练，结合Flink的增量数据处理与Spring AI，提升训练迭代速度？\n11. 用LibTorch Java绑定做推理时，如何借助Flink的窗口函数与Java的高效计算，处理时序数据以降低推理 latency？\n12. 如何在Spring AI中封装LibTorch Java绑定的推理接口，配合Flink的Checkpoint机制，确保推理结果可回溯？\n13. 基于LibTorch Java绑定构建的训练/推理框架，如何利用Java的生态优势与Flink的容错机制，提升系统整体可用性？"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68c6a38d000000001d008f60.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "ad293c830a6f061afb0e6fe922b5e02a90ba2c34",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 22870,
+      "content_sha256": "8083d20cb986a3455cca47935a1a168717583ca175e62346c70cdb2cb9098f90",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "阿里巴巴AI Infra二面面试题 捅了java窝了\",",
+        "line": 567,
+        "locator": "artifact-line:567#offset:30-58;blob:ad293c830a6f061afb0e6fe922b5e02a90ba2c34",
+        "semantic_excerpt": "阿里巴巴AI Infra二面面试题 捅了java窝了\n1. 如何基于LibTorch的Java绑定，结合Flink的流处理能力，构建AI模型实时推理框架？需说明如何利用Java优势提升框架稳定性。\n2. 用Spring AI集成LibTorch Java绑定时，如何解决模型加载与Flink任务调度的协同问题，以加速推理响应？\n3. 基于LibTorch Java绑定开发训练框架，如何借助Java的多线程机制与Flink的分布式计算，提升模型训练效率？\n4. 如何优化LibTorch Java绑定在Flink集群中的资源占用，结合Spring AI的配置管理，实现高性能推理？\n5. 用LibTorch Java绑定做模型训练时，如何通过Flink的状态管理保证训练数据一致性，同时发挥Java的可靠性优势？\n6. 如何让Spring AI调用LibTorch Java绑定推理时，与Flink的流数据处理无缝衔接，减少数据传输延迟？\n7. 基于LibTorch Java绑定开发的框架，如何适配Flink的动态扩缩容，结合Java的兼容性确保训练/推理不中断？\n8. 用Spring AI整合LibTorch Java绑定时，如何优化模型参数传递效率，配合Flink提升高并发场景下的推理性能？\n9. 基于LibTorch Java绑定的训练框架，如何利用Java的JVM调优与Flink的内存管理，避免OOM以保障训练稳定？\n10. 如何通过LibTorch Java绑定实现模型增量训练，结合Flink的增量数据处理与Spring AI，提升训练迭代速度？\n11. 用LibTorch Java绑定做推理时，如何借助Flink的窗口函数与Java的高效计算，处理时序数据以降低推理 latency？\n12. 如何在Spring AI中封装LibTorch Java绑定的推理接口，配合Flink的Checkpoint机制，确保推理结果可回溯？\n13. 基于LibTorch Java绑定构建的训练/推理框架，如何利用Java的生态优势与Flink的容错机制，提升系统整体可用性？"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -86,10 +194,11 @@
   ],
   "limitations": [
     "Exact Source provides only an interview outcome, offer, rejection, or result without a bounded candidate event; retain pending.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "6e6786d4803682f58894972e356806d0762c7ca9cfb8023a757bc11eb0f08f3d"
+  "evidence_sha256": "61ab121bcc99e4b673c559e0037eeb151165825455c6f30d59dad6106efce602"
 }

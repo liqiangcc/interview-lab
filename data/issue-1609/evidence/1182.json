@@ -29,12 +29,16 @@
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": true,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68ad81cb000000001d018ba3.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -43,13 +47,108 @@
     "provenance": "source_projection",
     "byte_size": 1342,
     "content_sha256": "82860cccf8d76275350227e008ab3e20f13f7acabfb10f07e96491e52c8b8b11",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "近期京东3面压力感拉满，综合粉丝投稿及当前市场环境，核心特点如下：",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "近期京东3面压力感拉满，综合粉丝投稿及当前市场环境，核心特点如下：\n \n深度碾压式追问\n项目难点被持续深挖至源码/极端场景（如：“Redis宕机后本地缓存如何兜底？数据延迟怎么控？”），必须展现技术本质思考，而非简单应用。\n \n高可用设计是必考题\n商品详情页、订单交易等京东核心场景的系统设计，必须考虑多级缓存、池化容灾、分布式一致性（如RocketMQ事务消息）的真实落地细节。\n \nJava基础再升级\nHashMap扩容、ThreadLocal内存泄漏等老问题，会结合线程池/GC场景连环问，弱引用、伪共享等底层机制常成追问点。\n \n压力来自节奏与边界试探\n面试官语速快、连续质疑方案缺陷，考验抗压与思维韧性。需保持冷静，坦诚不足的同时展现迭代思路（如：“当前方案确有延迟，我会用定时补偿+事务消息改进”）。\n \n总结：当前面试更看重技术深度与高可用实战经验，准备时需重点打磨项目中的设计权衡与容灾逻辑，并训练在高压下清晰表达的能力。"
-    }
+      "locator": "artifact-line:1#offset:0-33;blob:d8e5539653ea5926518d290d4bb04efcfb52ccf8",
+      "semantic_excerpt": "京东3年Java后端开发面试实录（压力面）\n近期京东3面压力感拉满，综合粉丝投稿及当前市场环境，核心特点如下：\n \n深度碾压式追问\n项目难点被持续深挖至源码/极端场景（如：“Redis宕机后本地缓存如何兜底？数据延迟怎么控？”），必须展现技术本质思考，而非简单应用。\n \n高可用设计是必考题\n商品详情页、订单交易等京东核心场景的系统设计，必须考虑多级缓存、池化容灾、分布式一致性（如RocketMQ事务消息）的真实落地细节。\n \nJava基础再升级\nHashMap扩容、ThreadLocal内存泄漏等老问题，会结合线程池/GC场景连环问，弱引用、伪共享等底层机制常成追问点。\n \n压力来自节奏与边界试探\n面试官语速快、连续质疑方案缺陷，考验抗压与思维韧性。需保持冷静，坦诚不足的同时展现迭代思路（如：“当前方案确有延迟，我会用定时补偿+事务消息改进”）。\n \n总结：当前面试更看重技术深度与高可用实战经验，准备时需重点打磨项目中的设计权衡与容灾逻辑，并训练在高压下清晰表达的能力。"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68ad81cb000000001d018ba3.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "d8e5539653ea5926518d290d4bb04efcfb52ccf8",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 1342,
+        "content_sha256": "82860cccf8d76275350227e008ab3e20f13f7acabfb10f07e96491e52c8b8b11",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "近期京东3面压力感拉满，综合粉丝投稿及当前市场环境，核心特点如下：",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-33;blob:d8e5539653ea5926518d290d4bb04efcfb52ccf8",
+          "semantic_excerpt": "京东3年Java后端开发面试实录（压力面）\n近期京东3面压力感拉满，综合粉丝投稿及当前市场环境，核心特点如下：\n \n深度碾压式追问\n项目难点被持续深挖至源码/极端场景（如：“Redis宕机后本地缓存如何兜底？数据延迟怎么控？”），必须展现技术本质思考，而非简单应用。\n \n高可用设计是必考题\n商品详情页、订单交易等京东核心场景的系统设计，必须考虑多级缓存、池化容灾、分布式一致性（如RocketMQ事务消息）的真实落地细节。\n \nJava基础再升级\nHashMap扩容、ThreadLocal内存泄漏等老问题，会结合线程池/GC场景连环问，弱引用、伪共享等底层机制常成追问点。\n \n压力来自节奏与边界试探\n面试官语速快、连续质疑方案缺陷，考验抗压与思维韧性。需保持冷静，坦诚不足的同时展现迭代思路（如：“当前方案确有延迟，我会用定时补偿+事务消息改进”）。\n \n总结：当前面试更看重技术深度与高可用实战经验，准备时需重点打磨项目中的设计权衡与容灾逻辑，并训练在高压下清晰表达的能力。"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68ad81cb000000001d018ba3.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "038396f525f903612b3bd7cf63ea014aedc0bf09",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 401884,
+        "content_sha256": "fafcd48e235fdf6f116968984258aa3c9529ff3c725f3726bf12157403fc4890",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "京东3年Java后端开发面试实录（压力面） - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-198;blob:038396f525f903612b3bd7cf63ea014aedc0bf09",
+          "semantic_excerpt": "京东3年Java后端开发面试实录（压力面）\n近期京东3面压力感拉满，综合粉丝投稿及当前市场环境，核心特点如下：\n \n深度碾压式追问\n项目难点被持续深挖至源码/极端场景（如：“Redis宕机后本地缓存如何兜底？数据延迟怎么控？”），必须展现技术本质思考，而非简单应用。\n \n高可用设计是必考题\n商品详情页、订单交易等京东核心场景的系统设计，必须考虑多级缓存、池化容灾、分布式一致性（如RocketMQ事务消息）的真实落地细节。\n \nJava基础再升级\nHashMap扩容、ThreadLocal内存泄漏等老问题，会结合线程池/GC场景连环问，弱引用、伪共享等底层机制常成追问点。\n \n压力来自节奏与边界试探\n面试官语速快、连续质疑方案缺陷，考验抗压与思维韧性。需保持冷静，坦诚不足的同时展现迭代思路（如：“当前方案确有延迟，我会用定时补偿+事务消息改进”）。\n \n总结：当前面试更看重技术深度与高可用实战经验，准备时需重点打磨项目中的设计权衡与容灾逻辑，并训练在高压下清晰表达的能力。"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68ad81cb000000001d018ba3.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "28eff65a15effd2b0004c6cc5a6856f7ab2d25d6",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 33526,
+        "content_sha256": "5afb7b8c6478756ff25d346ede7ef7c53db7bb7d3ce2efe51134d4f2c1676147",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "京东3年Java后端开发面试实录（压力面）\",",
+          "line": 501,
+          "locator": "artifact-line:501#offset:30-53;blob:28eff65a15effd2b0004c6cc5a6856f7ab2d25d6",
+          "semantic_excerpt": "京东3年Java后端开发面试实录（压力面）\n近期京东3面压力感拉满，综合粉丝投稿及当前市场环境，核心特点如下：\n \n深度碾压式追问\n项目难点被持续深挖至源码/极端场景（如：“Redis宕机后本地缓存如何兜底？数据延迟怎么控？”），必须展现技术本质思考，而非简单应用。\n \n高可用设计是必考题\n商品详情页、订单交易等京东核心场景的系统设计，必须考虑多级缓存、池化容灾、分布式一致性（如RocketMQ事务消息）的真实落地细节。\n \nJava基础再升级\nHashMap扩容、ThreadLocal内存泄漏等老问题，会结合线程池/GC场景连环问，弱引用、伪共享等底层机制常成追问点。\n \n压力来自节奏与边界试探\n面试官语速快、连续质疑方案缺陷，考验抗压与思维韧性。需保持冷静，坦诚不足的同时展现迭代思路（如：“当前方案确有延迟，我会用定时补偿+事务消息改进”）。\n \n总结：当前面试更看重技术深度与高可用实战经验，准备时需重点打磨项目中的设计权衡与容灾逻辑，并训练在高压下清晰表达的能力。"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68ad81cb000000001d018ba3.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "d8e5539653ea5926518d290d4bb04efcfb52ccf8",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 1342,
+      "content_sha256": "82860cccf8d76275350227e008ab3e20f13f7acabfb10f07e96491e52c8b8b11",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "近期京东3面压力感拉满，综合粉丝投稿及当前市场环境，核心特点如下：",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-33;blob:d8e5539653ea5926518d290d4bb04efcfb52ccf8",
+        "semantic_excerpt": "京东3年Java后端开发面试实录（压力面）\n近期京东3面压力感拉满，综合粉丝投稿及当前市场环境，核心特点如下：\n \n深度碾压式追问\n项目难点被持续深挖至源码/极端场景（如：“Redis宕机后本地缓存如何兜底？数据延迟怎么控？”），必须展现技术本质思考，而非简单应用。\n \n高可用设计是必考题\n商品详情页、订单交易等京东核心场景的系统设计，必须考虑多级缓存、池化容灾、分布式一致性（如RocketMQ事务消息）的真实落地细节。\n \nJava基础再升级\nHashMap扩容、ThreadLocal内存泄漏等老问题，会结合线程池/GC场景连环问，弱引用、伪共享等底层机制常成追问点。\n \n压力来自节奏与边界试探\n面试官语速快、连续质疑方案缺陷，考验抗压与思维韧性。需保持冷静，坦诚不足的同时展现迭代思路（如：“当前方案确有延迟，我会用定时补偿+事务消息改进”）。\n \n总结：当前面试更看重技术深度与高可用实战经验，准备时需重点打磨项目中的设计权衡与容灾逻辑，并训练在高压下清晰表达的能力。"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68ad81cb000000001d018ba3.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "038396f525f903612b3bd7cf63ea014aedc0bf09",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 401884,
+      "content_sha256": "fafcd48e235fdf6f116968984258aa3c9529ff3c725f3726bf12157403fc4890",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "京东3年Java后端开发面试实录（压力面） - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-198;blob:038396f525f903612b3bd7cf63ea014aedc0bf09",
+        "semantic_excerpt": "京东3年Java后端开发面试实录（压力面）\n近期京东3面压力感拉满，综合粉丝投稿及当前市场环境，核心特点如下：\n \n深度碾压式追问\n项目难点被持续深挖至源码/极端场景（如：“Redis宕机后本地缓存如何兜底？数据延迟怎么控？”），必须展现技术本质思考，而非简单应用。\n \n高可用设计是必考题\n商品详情页、订单交易等京东核心场景的系统设计，必须考虑多级缓存、池化容灾、分布式一致性（如RocketMQ事务消息）的真实落地细节。\n \nJava基础再升级\nHashMap扩容、ThreadLocal内存泄漏等老问题，会结合线程池/GC场景连环问，弱引用、伪共享等底层机制常成追问点。\n \n压力来自节奏与边界试探\n面试官语速快、连续质疑方案缺陷，考验抗压与思维韧性。需保持冷静，坦诚不足的同时展现迭代思路（如：“当前方案确有延迟，我会用定时补偿+事务消息改进”）。\n \n总结：当前面试更看重技术深度与高可用实战经验，准备时需重点打磨项目中的设计权衡与容灾逻辑，并训练在高压下清晰表达的能力。"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68ad81cb000000001d018ba3.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "28eff65a15effd2b0004c6cc5a6856f7ab2d25d6",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 33526,
+      "content_sha256": "5afb7b8c6478756ff25d346ede7ef7c53db7bb7d3ce2efe51134d4f2c1676147",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "京东3年Java后端开发面试实录（压力面）\",",
+        "line": 501,
+        "locator": "artifact-line:501#offset:30-53;blob:28eff65a15effd2b0004c6cc5a6856f7ab2d25d6",
+        "semantic_excerpt": "京东3年Java后端开发面试实录（压力面）\n近期京东3面压力感拉满，综合粉丝投稿及当前市场环境，核心特点如下：\n \n深度碾压式追问\n项目难点被持续深挖至源码/极端场景（如：“Redis宕机后本地缓存如何兜底？数据延迟怎么控？”），必须展现技术本质思考，而非简单应用。\n \n高可用设计是必考题\n商品详情页、订单交易等京东核心场景的系统设计，必须考虑多级缓存、池化容灾、分布式一致性（如RocketMQ事务消息）的真实落地细节。\n \nJava基础再升级\nHashMap扩容、ThreadLocal内存泄漏等老问题，会结合线程池/GC场景连环问，弱引用、伪共享等底层机制常成追问点。\n \n压力来自节奏与边界试探\n面试官语速快、连续质疑方案缺陷，考验抗压与思维韧性。需保持冷静，坦诚不足的同时展现迭代思路（如：“当前方案确有延迟，我会用定时补偿+事务消息改进”）。\n \n总结：当前面试更看重技术深度与高可用实战经验，准备时需重点打磨项目中的设计权衡与容灾逻辑，并训练在高压下清晰表达的能力。"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -84,10 +183,11 @@
   ],
   "limitations": [
     "Exact Source is generic advice or aggregated/summarized material without a bounded candidate interview event; retain pending.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "57ee538b03a1718c892daf98e4bc9694f225791971d45336cfc0d2e3079de592"
+  "evidence_sha256": "bc0f10be293a7228cdeb41738cb34f3132cbcf99330c0d19ff2825238e18059d"
 }

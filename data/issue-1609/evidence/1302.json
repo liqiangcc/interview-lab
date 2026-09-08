@@ -8,10 +8,11 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "4cf199c048a8f9c7171097d93bb2c1b862014a0825f00f0d8f6e2368c83e196a",
   "disposition": "blocked",
-  "rationale": "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+  "rationale": "Exact Source provides only an interview outcome, offer, rejection, or result without a bounded candidate event; retain pending.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
+      "outcome-or-offer-only",
       "no-first-person-event",
       "no-candidate-event-evidence"
     ],
@@ -25,15 +26,19 @@
     "generic_advice_or_aggregated": false,
     "scheduled_only": false,
     "question_only": false,
-    "outcome_signal": false,
+    "outcome_signal": true,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": false,
-    "only_outcome": false,
+    "only_outcome": true,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68c380f8000000001d007261.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -42,13 +47,108 @@
     "provenance": "source_projection",
     "byte_size": 192,
     "content_sha256": "ad145b987569ca159dca4ed998d7c302eb45aa46814fb1026b126e3ed3d65f3a",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "##校招[话题]# #互联网大厂[话题]# #内推码[话题]# #秋招[话题]# #java[话题]# #后端[话题]# #前端[话题]# #offer[话题]# #贝壳找房内推[话题]# #百度[话题]#",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "#"
-    }
+      "locator": "artifact-line:1#offset:0-103;blob:d6eb9f941cf8479e2d7b8269be957476f3e3512c",
+      "semantic_excerpt": "秋招0offer怎么办，在线等急急急！！！\n#"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68c380f8000000001d007261.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "d6eb9f941cf8479e2d7b8269be957476f3e3512c",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 192,
+        "content_sha256": "ad145b987569ca159dca4ed998d7c302eb45aa46814fb1026b126e3ed3d65f3a",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "##校招[话题]# #互联网大厂[话题]# #内推码[话题]# #秋招[话题]# #java[话题]# #后端[话题]# #前端[话题]# #offer[话题]# #贝壳找房内推[话题]# #百度[话题]#",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-103;blob:d6eb9f941cf8479e2d7b8269be957476f3e3512c",
+          "semantic_excerpt": "秋招0offer怎么办，在线等急急急！！！\n#"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68c380f8000000001d007261.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "0f1084c7ae20f4de5d1ff85bf7749b8aea49496d",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 391261,
+        "content_sha256": "0009e7749109dd2cf3d1023a5110e392f2546a39c673f71fedf4e55532909bb8",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "秋招0offer怎么办，在线等急急急！！！ - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-198;blob:0f1084c7ae20f4de5d1ff85bf7749b8aea49496d",
+          "semantic_excerpt": "秋招0offer怎么办，在线等急急急！！！\n#"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68c380f8000000001d007261.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "c6f9fc353fd288fb519540d1cacfe3898b7792fd",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 24864,
+        "content_sha256": "28da1288da32366fdb605882d63882fc143fbb0b6dab757bee4c4cc571fd893a",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "秋招0offer怎么办，在线等急急急！！！\",",
+          "line": 569,
+          "locator": "artifact-line:569#offset:30-53;blob:c6f9fc353fd288fb519540d1cacfe3898b7792fd",
+          "semantic_excerpt": "秋招0offer怎么办，在线等急急急！！！\n#"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68c380f8000000001d007261.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "d6eb9f941cf8479e2d7b8269be957476f3e3512c",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 192,
+      "content_sha256": "ad145b987569ca159dca4ed998d7c302eb45aa46814fb1026b126e3ed3d65f3a",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "##校招[话题]# #互联网大厂[话题]# #内推码[话题]# #秋招[话题]# #java[话题]# #后端[话题]# #前端[话题]# #offer[话题]# #贝壳找房内推[话题]# #百度[话题]#",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-103;blob:d6eb9f941cf8479e2d7b8269be957476f3e3512c",
+        "semantic_excerpt": "秋招0offer怎么办，在线等急急急！！！\n#"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68c380f8000000001d007261.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "0f1084c7ae20f4de5d1ff85bf7749b8aea49496d",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 391261,
+      "content_sha256": "0009e7749109dd2cf3d1023a5110e392f2546a39c673f71fedf4e55532909bb8",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "秋招0offer怎么办，在线等急急急！！！ - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-198;blob:0f1084c7ae20f4de5d1ff85bf7749b8aea49496d",
+        "semantic_excerpt": "秋招0offer怎么办，在线等急急急！！！\n#"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68c380f8000000001d007261.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "c6f9fc353fd288fb519540d1cacfe3898b7792fd",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 24864,
+      "content_sha256": "28da1288da32366fdb605882d63882fc143fbb0b6dab757bee4c4cc571fd893a",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "秋招0offer怎么办，在线等急急急！！！\",",
+        "line": 569,
+        "locator": "artifact-line:569#offset:30-53;blob:c6f9fc353fd288fb519540d1cacfe3898b7792fd",
+        "semantic_excerpt": "秋招0offer怎么办，在线等急急急！！！\n#"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -68,7 +168,7 @@
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending."
+      "note": "The disposition is supported by the cited source evidence. Exact Source provides only an interview outcome, offer, rejection, or result without a bounded candidate event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -82,11 +182,12 @@
     }
   ],
   "limitations": [
-    "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+    "Exact Source provides only an interview outcome, offer, rejection, or result without a bounded candidate event; retain pending.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "d41ad69a39c011d958f33d5c3d8ea98002ad38c3ce5b1808f5431a92f1617146"
+  "evidence_sha256": "18fcb3a3795a95b48118fb6c77fd87c191e9ce007f0e5dd503c7aa339d6d5130"
 }

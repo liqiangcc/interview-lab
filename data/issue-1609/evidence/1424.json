@@ -8,7 +8,7 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "3253a12fff31415f00036498de9c13162c0d88b28a3292126a681dd2028d4500",
   "disposition": "blocked",
-  "rationale": "No non-empty readable Source/Source projection is available; title and hashtags cannot authorize a boundary.",
+  "rationale": "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
@@ -18,7 +18,7 @@
     "questions": 0,
     "has_first_person_event": false,
     "has_explicit_candidate_event": false,
-    "has_bounded_event": false,
+    "has_bounded_event": true,
     "has_detailed_event": false,
     "has_completed_event_evidence": false,
     "has_structured_candidate_event": false,
@@ -28,12 +28,26 @@
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "xiaomi-process",
+        "anchor": "小米",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-165;blob:4cc9e199d2e6caa11b1f007b234eeb951b6b9440",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:小米",
+        "source_ref": "liqiangcc/xhs:note_detail/68dd28b20000000007035f1f.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 2,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68dd28b20000000007035f1f.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -42,13 +56,78 @@
     "provenance": "source_projection",
     "byte_size": 21882,
     "content_sha256": "b48972233aa25ebb1318622d9cf1d4eea535e025264814a81b9d817aec09d3e9",
+    "cache_status": "not-applicable",
     "excerpt": {
-      "excerpt": "\"global\": {",
-      "line": 2,
-      "locator": "artifact-line:2",
-      "semantic_excerpt": ""
-    }
+      "excerpt": "小米一面\",",
+      "line": 556,
+      "locator": "artifact-line:556#offset:30-36;blob:1c389f9bbbc94195b91503c9588a387e56787cda",
+      "semantic_excerpt": "小米一面"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_detail/68dd28b20000000007035f1f.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "4cc9e199d2e6caa11b1f007b234eeb951b6b9440",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 387457,
+        "content_sha256": "ff984bffab970275b84b2c68959ad458aa6911a6ae1d2d03ac0833d81438b05c",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "小米一面 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-181;blob:4cc9e199d2e6caa11b1f007b234eeb951b6b9440",
+          "semantic_excerpt": "小米一面"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68dd28b20000000007035f1f.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "1c389f9bbbc94195b91503c9588a387e56787cda",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 21882,
+        "content_sha256": "b48972233aa25ebb1318622d9cf1d4eea535e025264814a81b9d817aec09d3e9",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "小米一面\",",
+          "line": 556,
+          "locator": "artifact-line:556#offset:30-36;blob:1c389f9bbbc94195b91503c9588a387e56787cda",
+          "semantic_excerpt": "小米一面"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/68dd28b20000000007035f1f.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "4cc9e199d2e6caa11b1f007b234eeb951b6b9440",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 387457,
+      "content_sha256": "ff984bffab970275b84b2c68959ad458aa6911a6ae1d2d03ac0833d81438b05c",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "小米一面 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-181;blob:4cc9e199d2e6caa11b1f007b234eeb951b6b9440",
+        "semantic_excerpt": "小米一面"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68dd28b20000000007035f1f.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "1c389f9bbbc94195b91503c9588a387e56787cda",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 21882,
+      "content_sha256": "b48972233aa25ebb1318622d9cf1d4eea535e025264814a81b9d817aec09d3e9",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "小米一面\",",
+        "line": 556,
+        "locator": "artifact-line:556#offset:30-36;blob:1c389f9bbbc94195b91503c9588a387e56787cda",
+        "semantic_excerpt": "小米一面"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -68,7 +147,7 @@
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. No non-empty readable Source/Source projection is available; title and hashtags cannot authorize a boundary."
+      "note": "The disposition is supported by the cited source evidence. Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -82,11 +161,12 @@
     }
   ],
   "limitations": [
-    "No non-empty readable Source/Source projection is available; title and hashtags cannot authorize a boundary.",
+    "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "260788913951aa57f142e9be2df8a9d9f11c948370136538f7b0bf4b116830fe"
+  "evidence_sha256": "0bc561d2ba182e0726e81f3e85314f2fb4bd35d1af665e82b90d0b5a6601e98a"
 }

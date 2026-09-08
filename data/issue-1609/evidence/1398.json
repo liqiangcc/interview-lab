@@ -30,12 +30,26 @@
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": true,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "xiaomi-process",
+        "anchor": "小米",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-165;blob:043e50f3dd21202d5f320568e7a192c040eeef14",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:小米",
+        "source_ref": "liqiangcc/xhs:note_detail/68d50c6c000000000e0315e3.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 2,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68d50c6c000000000e0315e3.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -44,13 +58,78 @@
     "provenance": "source_projection",
     "byte_size": 33689,
     "content_sha256": "85957ac34c26104851cb4099b6a0db251d700a8c0123416298e0642b375cdc63",
+    "cache_status": "not-applicable",
     "excerpt": {
-      "excerpt": "\"desc\": \"粉丝投稿，面的小米汽车后端方向，3 轮技术面共 2.5 小时，全贴业务场景。一面深挖项目里车载传感器数据处理，我讲用 Kafka+Flink 架构，被追问 “50 万条 / 秒数据堆积怎么扩容”，补充分区调整和 TaskManager 动态加实例才过关。\\n二面给电池健康预测场景，要设计数据存储与模型落地，我说 InfluxDB 存时序数据 + XGBoost 建模，又被问 “极端温度下误差超 15% 怎么优化”，答按温度分区训练子模型才过。\\n三面直接上 OTA 升级包分发设计，从 P2P 分片到 CDN fallback 抠细节，最后考 JVM 调优，让解释 G1 处理老年代碎片的参数逻辑，纯理论完全扛不住，靠项目实战经验撑到最后。\\n面试经验和答案可以分享#爱上工作的瞬间[话题]# #java面试[话题]# #后端开发[话题]# #互联网大厂[话题]# #java[话题]# #求职[话题]# #计算机[话题]# #编程[话题]# #面试[话题]# #小米[话题]# #java面试题[话题]# #车企[话题]#\",",
-      "line": 507,
-      "locator": "artifact-line:507",
-      "semantic_excerpt": "粉丝投稿，面的小米汽车后端方向，3 轮技术面共 2.5 小时，全贴业务场景。一面深挖项目里车载传感器数据处理，我讲用 Kafka+Flink 架构，被追问 “50 万条 / 秒数据堆积怎么扩容”，补充分区调整和 TaskManager 动态加实例才过关。\n二面给电池健康预测场景，要设计数据存储与模型落地，我说 InfluxDB 存时序数据 + XGBoost 建模，又被问 “极端温度下误差超 15% 怎么优化”，答按温度分区训练子模型才过。\n三面直接上 OTA 升级包分发设计，从 P2P 分片到 CDN fallback 抠细节，最后考 JVM 调优，让解释 G1 处理老年代碎片的参数逻辑，纯理论完全扛不住，靠项目实战经验撑到最后。\n面试经验和答案可以分享"
-    }
+      "excerpt": "小米汽车Java开发二面 后端面试全程记录\",",
+      "line": 753,
+      "locator": "artifact-line:753#offset:30-53;blob:8b2ad2f3e803851486ee9df9ad815a1083288021",
+      "semantic_excerpt": "小米汽车Java开发二面 后端面试全程记录\n粉丝投稿，面的小米汽车后端方向，3 轮技术面共 2.5 小时，全贴业务场景。一面深挖项目里车载传感器数据处理，我讲用 Kafka+Flink 架构，被追问 “50 万条 / 秒数据堆积怎么扩容”，补充分区调整和 TaskManager 动态加实例才过关。\n二面给电池健康预测场景，要设计数据存储与模型落地，我说 InfluxDB 存时序数据 + XGBoost 建模，又被问 “极端温度下误差超 15% 怎么优化”，答按温度分区训练子模型才过。\n三面直接上 OTA 升级包分发设计，从 P2P 分片到 CDN fallback 抠细节，最后考 JVM 调优，让解释 G1 处理老年代碎片的参数逻辑，纯理论完全扛不住，靠项目实战经验撑到最后。\n面试经验和答案可以分享"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_detail/68d50c6c000000000e0315e3.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "043e50f3dd21202d5f320568e7a192c040eeef14",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 401619,
+        "content_sha256": "a15a880f3d91cf705afe4ed123e1fce86d68668272342abd1b3c0f79bc849a98",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "小米汽车Java开发二面 后端面试全程记录 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-198;blob:043e50f3dd21202d5f320568e7a192c040eeef14",
+          "semantic_excerpt": "小米汽车Java开发二面 后端面试全程记录\n粉丝投稿，面的小米汽车后端方向，3 轮技术面共 2.5 小时，全贴业务场景。一面深挖项目里车载传感器数据处理，我讲用 Kafka+Flink 架构，被追问 “50 万条 / 秒数据堆积怎么扩容”，补充分区调整和 TaskManager 动态加实例才过关。\n二面给电池健康预测场景，要设计数据存储与模型落地，我说 InfluxDB 存时序数据 + XGBoost 建模，又被问 “极端温度下误差超 15% 怎么优化”，答按温度分区训练子模型才过。\n三面直接上 OTA 升级包分发设计，从 P2P 分片到 CDN fallback 抠细节，最后考 JVM 调优，让解释 G1 处理老年代碎片的参数逻辑，纯理论完全扛不住，靠项目实战经验撑到最后。\n面试经验和答案可以分享"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68d50c6c000000000e0315e3.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "8b2ad2f3e803851486ee9df9ad815a1083288021",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 33689,
+        "content_sha256": "85957ac34c26104851cb4099b6a0db251d700a8c0123416298e0642b375cdc63",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "小米汽车Java开发二面 后端面试全程记录\",",
+          "line": 753,
+          "locator": "artifact-line:753#offset:30-53;blob:8b2ad2f3e803851486ee9df9ad815a1083288021",
+          "semantic_excerpt": "小米汽车Java开发二面 后端面试全程记录\n粉丝投稿，面的小米汽车后端方向，3 轮技术面共 2.5 小时，全贴业务场景。一面深挖项目里车载传感器数据处理，我讲用 Kafka+Flink 架构，被追问 “50 万条 / 秒数据堆积怎么扩容”，补充分区调整和 TaskManager 动态加实例才过关。\n二面给电池健康预测场景，要设计数据存储与模型落地，我说 InfluxDB 存时序数据 + XGBoost 建模，又被问 “极端温度下误差超 15% 怎么优化”，答按温度分区训练子模型才过。\n三面直接上 OTA 升级包分发设计，从 P2P 分片到 CDN fallback 抠细节，最后考 JVM 调优，让解释 G1 处理老年代碎片的参数逻辑，纯理论完全扛不住，靠项目实战经验撑到最后。\n面试经验和答案可以分享"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/68d50c6c000000000e0315e3.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "043e50f3dd21202d5f320568e7a192c040eeef14",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 401619,
+      "content_sha256": "a15a880f3d91cf705afe4ed123e1fce86d68668272342abd1b3c0f79bc849a98",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "小米汽车Java开发二面 后端面试全程记录 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-198;blob:043e50f3dd21202d5f320568e7a192c040eeef14",
+        "semantic_excerpt": "小米汽车Java开发二面 后端面试全程记录\n粉丝投稿，面的小米汽车后端方向，3 轮技术面共 2.5 小时，全贴业务场景。一面深挖项目里车载传感器数据处理，我讲用 Kafka+Flink 架构，被追问 “50 万条 / 秒数据堆积怎么扩容”，补充分区调整和 TaskManager 动态加实例才过关。\n二面给电池健康预测场景，要设计数据存储与模型落地，我说 InfluxDB 存时序数据 + XGBoost 建模，又被问 “极端温度下误差超 15% 怎么优化”，答按温度分区训练子模型才过。\n三面直接上 OTA 升级包分发设计，从 P2P 分片到 CDN fallback 抠细节，最后考 JVM 调优，让解释 G1 处理老年代碎片的参数逻辑，纯理论完全扛不住，靠项目实战经验撑到最后。\n面试经验和答案可以分享"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68d50c6c000000000e0315e3.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "8b2ad2f3e803851486ee9df9ad815a1083288021",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 33689,
+      "content_sha256": "85957ac34c26104851cb4099b6a0db251d700a8c0123416298e0642b375cdc63",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "小米汽车Java开发二面 后端面试全程记录\",",
+        "line": 753,
+        "locator": "artifact-line:753#offset:30-53;blob:8b2ad2f3e803851486ee9df9ad815a1083288021",
+        "semantic_excerpt": "小米汽车Java开发二面 后端面试全程记录\n粉丝投稿，面的小米汽车后端方向，3 轮技术面共 2.5 小时，全贴业务场景。一面深挖项目里车载传感器数据处理，我讲用 Kafka+Flink 架构，被追问 “50 万条 / 秒数据堆积怎么扩容”，补充分区调整和 TaskManager 动态加实例才过关。\n二面给电池健康预测场景，要设计数据存储与模型落地，我说 InfluxDB 存时序数据 + XGBoost 建模，又被问 “极端温度下误差超 15% 怎么优化”，答按温度分区训练子模型才过。\n三面直接上 OTA 升级包分发设计，从 P2P 分片到 CDN fallback 抠细节，最后考 JVM 调优，让解释 G1 处理老年代碎片的参数逻辑，纯理论完全扛不住，靠项目实战经验撑到最后。\n面试经验和答案可以分享"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -85,10 +164,11 @@
   ],
   "limitations": [
     "Exact Source is generic advice or aggregated/summarized material without a bounded candidate interview event; retain pending.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "1a47d888338a4c0753f2d2adae8c3c04139e65c18cfb5dabe0934e2ce42576f7"
+  "evidence_sha256": "2b81db663c8120f852cb8d587f35fb0b498d37475f27f75f7ae3de13da806eac"
 }

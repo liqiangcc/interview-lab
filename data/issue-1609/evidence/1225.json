@@ -12,7 +12,6 @@
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
-      "question-list-only",
       "no-first-person-event",
       "question-only",
       "no-candidate-event-evidence"
@@ -20,7 +19,7 @@
     "questions": 9,
     "has_first_person_event": false,
     "has_explicit_candidate_event": false,
-    "has_bounded_event": false,
+    "has_bounded_event": true,
     "has_detailed_event": false,
     "has_completed_event_evidence": false,
     "has_structured_candidate_event": false,
@@ -30,12 +29,26 @@
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
-    "only_question_list": true,
+    "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "xiaomi-process",
+        "anchor": "小米",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-165;blob:a3e8884b8619cf84da35d66fad34f1cd89dba41e",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:小米",
+        "source_ref": "liqiangcc/xhs:note_detail/68b332ac000000001d005b69.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b332ac000000001d005b69.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -44,13 +57,108 @@
     "provenance": "source_projection",
     "byte_size": 441,
     "content_sha256": "3b1dd6a661a64ef9258371579db8059ea0fba2c714c6fd97f1f6043837093fba",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "1、实习项目介绍",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "1、实习项目介绍\n2、springboot和springcloud的区别\n3、HashMap的实现原理\n4、Spring中的AOP\n5、一张表的数据量非常大时访问速度变慢，怎么解决\n6、MySQL的隔离级别\n7、分布式锁实现的几种方式\n8、redis宕机问题怎么解决\n9、场景题：抢红包，100个人同时抢红包，但只能有20人抢到"
-    }
+      "locator": "artifact-line:1#offset:0-8;blob:ac9e003be1a2af139b06fd14629eb227ddc010bb",
+      "semantic_excerpt": "小米Java二面面经\n1、实习项目介绍\n2、springboot和springcloud的区别\n3、HashMap的实现原理\n4、Spring中的AOP\n5、一张表的数据量非常大时访问速度变慢，怎么解决\n6、MySQL的隔离级别\n7、分布式锁实现的几种方式\n8、redis宕机问题怎么解决\n9、场景题：抢红包，100个人同时抢红包，但只能有20人抢到"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68b332ac000000001d005b69.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "ac9e003be1a2af139b06fd14629eb227ddc010bb",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 441,
+        "content_sha256": "3b1dd6a661a64ef9258371579db8059ea0fba2c714c6fd97f1f6043837093fba",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "1、实习项目介绍",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-8;blob:ac9e003be1a2af139b06fd14629eb227ddc010bb",
+          "semantic_excerpt": "小米Java二面面经\n1、实习项目介绍\n2、springboot和springcloud的区别\n3、HashMap的实现原理\n4、Spring中的AOP\n5、一张表的数据量非常大时访问速度变慢，怎么解决\n6、MySQL的隔离级别\n7、分布式锁实现的几种方式\n8、redis宕机问题怎么解决\n9、场景题：抢红包，100个人同时抢红包，但只能有20人抢到"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68b332ac000000001d005b69.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "a3e8884b8619cf84da35d66fad34f1cd89dba41e",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 388872,
+        "content_sha256": "7a5bacfbd799776ca066bd9f0fac675bba9ae7a620e54cef22f209ac0ffa3860",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "小米Java二面面经 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-187;blob:a3e8884b8619cf84da35d66fad34f1cd89dba41e",
+          "semantic_excerpt": "小米Java二面面经\n1、实习项目介绍\n2、springboot和springcloud的区别\n3、HashMap的实现原理\n4、Spring中的AOP\n5、一张表的数据量非常大时访问速度变慢，怎么解决\n6、MySQL的隔离级别\n7、分布式锁实现的几种方式\n8、redis宕机问题怎么解决\n9、场景题：抢红包，100个人同时抢红包，但只能有20人抢到"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68b332ac000000001d005b69.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "4896f88d975c4495cc3f2792d018fc570f33e479",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 22356,
+        "content_sha256": "d0cb6927892fde31f3265a6cad7689aeb360a4fdebb799ea844cd9bb0f137048",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "小米Java二面面经\"",
+          "line": 587,
+          "locator": "artifact-line:587#offset:30-41;blob:4896f88d975c4495cc3f2792d018fc570f33e479",
+          "semantic_excerpt": "小米Java二面面经\n1、实习项目介绍\n2、springboot和springcloud的区别\n3、HashMap的实现原理\n4、Spring中的AOP\n5、一张表的数据量非常大时访问速度变慢，怎么解决\n6、MySQL的隔离级别\n7、分布式锁实现的几种方式\n8、redis宕机问题怎么解决\n9、场景题：抢红包，100个人同时抢红包，但只能有20人抢到"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68b332ac000000001d005b69.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "ac9e003be1a2af139b06fd14629eb227ddc010bb",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 441,
+      "content_sha256": "3b1dd6a661a64ef9258371579db8059ea0fba2c714c6fd97f1f6043837093fba",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "1、实习项目介绍",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-8;blob:ac9e003be1a2af139b06fd14629eb227ddc010bb",
+        "semantic_excerpt": "小米Java二面面经\n1、实习项目介绍\n2、springboot和springcloud的区别\n3、HashMap的实现原理\n4、Spring中的AOP\n5、一张表的数据量非常大时访问速度变慢，怎么解决\n6、MySQL的隔离级别\n7、分布式锁实现的几种方式\n8、redis宕机问题怎么解决\n9、场景题：抢红包，100个人同时抢红包，但只能有20人抢到"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68b332ac000000001d005b69.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "a3e8884b8619cf84da35d66fad34f1cd89dba41e",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 388872,
+      "content_sha256": "7a5bacfbd799776ca066bd9f0fac675bba9ae7a620e54cef22f209ac0ffa3860",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "小米Java二面面经 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-187;blob:a3e8884b8619cf84da35d66fad34f1cd89dba41e",
+        "semantic_excerpt": "小米Java二面面经\n1、实习项目介绍\n2、springboot和springcloud的区别\n3、HashMap的实现原理\n4、Spring中的AOP\n5、一张表的数据量非常大时访问速度变慢，怎么解决\n6、MySQL的隔离级别\n7、分布式锁实现的几种方式\n8、redis宕机问题怎么解决\n9、场景题：抢红包，100个人同时抢红包，但只能有20人抢到"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68b332ac000000001d005b69.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "4896f88d975c4495cc3f2792d018fc570f33e479",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 22356,
+      "content_sha256": "d0cb6927892fde31f3265a6cad7689aeb360a4fdebb799ea844cd9bb0f137048",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "小米Java二面面经\"",
+        "line": 587,
+        "locator": "artifact-line:587#offset:30-41;blob:4896f88d975c4495cc3f2792d018fc570f33e479",
+        "semantic_excerpt": "小米Java二面面经\n1、实习项目介绍\n2、springboot和springcloud的区别\n3、HashMap的实现原理\n4、Spring中的AOP\n5、一张表的数据量非常大时访问速度变慢，怎么解决\n6、MySQL的隔离级别\n7、分布式锁实现的几种方式\n8、redis宕机问题怎么解决\n9、场景题：抢红包，100个人同时抢红包，但只能有20人抢到"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -85,10 +193,11 @@
   ],
   "limitations": [
     "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "4e43cc9418648d4732461b66f433a9423cc5487bb52149c80e347eb2047e736c"
+  "evidence_sha256": "1c4480945874e591a90e7595d537a223392ac37e41d3dfd4143d0b6f253948f3"
 }

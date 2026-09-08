@@ -7,8 +7,8 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "9eebae831e703ad9f4aaf6cbe82b7617f6be3704fa36759b3d8478bd23203262",
-  "disposition": "blocked",
-  "rationale": "Exact Source is generic advice or aggregated/summarized material without a bounded candidate interview event; retain pending.",
+  "disposition": "not-interview",
+  "rationale": "Exact Source is an explicit question bank or job advertisement rather than a candidate interview event.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
@@ -30,21 +30,16 @@
     "outcome_signal": false,
     "resource_signal": true,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": [
-      {
-        "case_key": "xiaomi-process",
-        "anchor": "小米",
-        "line": 1,
-        "locator": "artifact-line:1#offset:0-2",
-        "local_detail": true,
-        "semantic_locator": "semantic-anchor:小米"
-      }
-    ]
+    "case_segments": [],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68ae8960000000001d01e3a2.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -53,13 +48,108 @@
     "provenance": "source_projection",
     "byte_size": 489,
     "content_sha256": "7bb10cbda6551f7eeab2df87cda23834b522f14498b25ac4bad13bd21736b452",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "小米研发岗内推 非外包岗位",
       "line": 1,
-      "locator": "artifact-line:1",
+      "locator": "artifact-line:1#offset:0-13;blob:5c4d1f1e7bfa004c13af2cf0d7d8d0f1e5513029",
       "semantic_excerpt": "小米研发岗内推 非外包岗位\n \n不是猎头，自己人帮忙推推小米的岗。都是正式岗位，不是外包哦。\n \n岗位还挺全的，Java、前端、大数据这些研发岗有缺，安卓、iOS、测试、运维也在招，产品、算法、嵌入式、AI相关的也有。\n \n都是同事们实际在做的岗位，信息靠谱。有兴趣的可以多留意下～"
-    }
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68ae8960000000001d01e3a2.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "5c4d1f1e7bfa004c13af2cf0d7d8d0f1e5513029",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 489,
+        "content_sha256": "7bb10cbda6551f7eeab2df87cda23834b522f14498b25ac4bad13bd21736b452",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "小米研发岗内推 非外包岗位",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-13;blob:5c4d1f1e7bfa004c13af2cf0d7d8d0f1e5513029",
+          "semantic_excerpt": "小米研发岗内推 非外包岗位\n \n不是猎头，自己人帮忙推推小米的岗。都是正式岗位，不是外包哦。\n \n岗位还挺全的，Java、前端、大数据这些研发岗有缺，安卓、iOS、测试、运维也在招，产品、算法、嵌入式、AI相关的也有。\n \n都是同事们实际在做的岗位，信息靠谱。有兴趣的可以多留意下～"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68ae8960000000001d01e3a2.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "37c6a8991436817fb7dbe328d07e48a07f45386b",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 387758,
+        "content_sha256": "5cd3fa079e4babe5bbd7cfc473bafc434c33270282a7437da6b8b722b95d274d",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "小米研发岗内推 非外包岗位 \t 不是猎头，自己人帮忙推推小米的岗。都是正式岗位，不是外包哦。 \t 岗位还挺全的，Java、前端、大数据这些研发岗有缺，安卓、iOS、测试、运维也在招，产品、算法、嵌入式、AI相关的也有。 \t 都是同事们实际在做的岗位，信息靠谱。有兴趣的可以多留意下～ \t #小米研发岗 #非外包招聘 #职场机会 #互联网求职 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-347;blob:37c6a8991436817fb7dbe328d07e48a07f45386b",
+          "semantic_excerpt": "小米研发岗内推 非外包岗位\n \n不是猎头，自己人帮忙推推小米的岗。都是正式岗位，不是外包哦。\n \n岗位还挺全的，Java、前端、大数据这些研发岗有缺，安卓、iOS、测试、运维也在招，产品、算法、嵌入式、AI相关的也有。\n \n都是同事们实际在做的岗位，信息靠谱。有兴趣的可以多留意下～"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68ae8960000000001d01e3a2.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "e0603a367d917fd3408ff39b3b9ce5d6b2446133",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 21005,
+        "content_sha256": "c085c0a43909113b80bd2bc910c10405c95c6636e33af2b43b4e3ad6c12a83db",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "小米研发岗内推 非外包岗位\\n\\t\\n不是猎头，自己人帮忙推推小米的岗。都是正式岗位，不是外包哦。\\n\\t\\n岗位还挺全的，Java、前端、大数据这些研发岗有缺，安卓、iOS、测试、运维也在招，产品、算法、嵌入式、AI相关的也有。\\n\\t\\n都是同事们实际在做的岗位，信息靠谱。有兴趣的可以多留意下～\\n\\t\\n#小米研发岗[话题]# #非外包招聘[话题]# #职场机会[话题]# #互联网求职[话题]#\",",
+          "line": 497,
+          "locator": "artifact-line:497#offset:29-233;blob:e0603a367d917fd3408ff39b3b9ce5d6b2446133",
+          "semantic_excerpt": "小米研发岗内推 非外包岗位\n \n不是猎头，自己人帮忙推推小米的岗。都是正式岗位，不是外包哦。\n \n岗位还挺全的，Java、前端、大数据这些研发岗有缺，安卓、iOS、测试、运维也在招，产品、算法、嵌入式、AI相关的也有。\n \n都是同事们实际在做的岗位，信息靠谱。有兴趣的可以多留意下～"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68ae8960000000001d01e3a2.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "5c4d1f1e7bfa004c13af2cf0d7d8d0f1e5513029",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 489,
+      "content_sha256": "7bb10cbda6551f7eeab2df87cda23834b522f14498b25ac4bad13bd21736b452",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "小米研发岗内推 非外包岗位",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-13;blob:5c4d1f1e7bfa004c13af2cf0d7d8d0f1e5513029",
+        "semantic_excerpt": "小米研发岗内推 非外包岗位\n \n不是猎头，自己人帮忙推推小米的岗。都是正式岗位，不是外包哦。\n \n岗位还挺全的，Java、前端、大数据这些研发岗有缺，安卓、iOS、测试、运维也在招，产品、算法、嵌入式、AI相关的也有。\n \n都是同事们实际在做的岗位，信息靠谱。有兴趣的可以多留意下～"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68ae8960000000001d01e3a2.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "37c6a8991436817fb7dbe328d07e48a07f45386b",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 387758,
+      "content_sha256": "5cd3fa079e4babe5bbd7cfc473bafc434c33270282a7437da6b8b722b95d274d",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "小米研发岗内推 非外包岗位 \t 不是猎头，自己人帮忙推推小米的岗。都是正式岗位，不是外包哦。 \t 岗位还挺全的，Java、前端、大数据这些研发岗有缺，安卓、iOS、测试、运维也在招，产品、算法、嵌入式、AI相关的也有。 \t 都是同事们实际在做的岗位，信息靠谱。有兴趣的可以多留意下～ \t #小米研发岗 #非外包招聘 #职场机会 #互联网求职 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-347;blob:37c6a8991436817fb7dbe328d07e48a07f45386b",
+        "semantic_excerpt": "小米研发岗内推 非外包岗位\n \n不是猎头，自己人帮忙推推小米的岗。都是正式岗位，不是外包哦。\n \n岗位还挺全的，Java、前端、大数据这些研发岗有缺，安卓、iOS、测试、运维也在招，产品、算法、嵌入式、AI相关的也有。\n \n都是同事们实际在做的岗位，信息靠谱。有兴趣的可以多留意下～"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68ae8960000000001d01e3a2.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "e0603a367d917fd3408ff39b3b9ce5d6b2446133",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 21005,
+      "content_sha256": "c085c0a43909113b80bd2bc910c10405c95c6636e33af2b43b4e3ad6c12a83db",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "小米研发岗内推 非外包岗位\\n\\t\\n不是猎头，自己人帮忙推推小米的岗。都是正式岗位，不是外包哦。\\n\\t\\n岗位还挺全的，Java、前端、大数据这些研发岗有缺，安卓、iOS、测试、运维也在招，产品、算法、嵌入式、AI相关的也有。\\n\\t\\n都是同事们实际在做的岗位，信息靠谱。有兴趣的可以多留意下～\\n\\t\\n#小米研发岗[话题]# #非外包招聘[话题]# #职场机会[话题]# #互联网求职[话题]#\",",
+        "line": 497,
+        "locator": "artifact-line:497#offset:29-233;blob:e0603a367d917fd3408ff39b3b9ce5d6b2446133",
+        "semantic_excerpt": "小米研发岗内推 非外包岗位\n \n不是猎头，自己人帮忙推推小米的岗。都是正式岗位，不是外包哦。\n \n岗位还挺全的，Java、前端、大数据这些研发岗有缺，安卓、iOS、测试、运维也在招，产品、算法、嵌入式、AI相关的也有。\n \n都是同事们实际在做的岗位，信息靠谱。有兴趣的可以多留意下～"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -78,8 +168,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source is generic advice or aggregated/summarized material without a bounded candidate interview event; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is an explicit question bank or job advertisement rather than a candidate interview event."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -93,11 +183,12 @@
     }
   ],
   "limitations": [
-    "Exact Source is generic advice or aggregated/summarized material without a bounded candidate interview event; retain pending.",
+    "Exact Source is an explicit question bank or job advertisement rather than a candidate interview event.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "fab829b01f281607732a5d3a11ee83fe9d195fdad2cbddbcae98391fe458771d"
+  "evidence_sha256": "173ae7a345624a57fa34df8df3562f3d9abb23328506dac8c24d0a1875fed093"
 }

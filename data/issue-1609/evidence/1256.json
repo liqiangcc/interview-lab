@@ -7,15 +7,12 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "5fdd64eabaf2acc83e91c93fa89544d51f5c7045fcf4c8b1a37fe7cbbebdcbe5",
-  "disposition": "blocked",
-  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "disposition": "single-interview",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
-      "question-list-only",
-      "no-first-person-event",
-      "question-only",
-      "no-candidate-event-evidence"
+      "no-first-person-event"
     ],
     "questions": 8,
     "has_first_person_event": false,
@@ -23,19 +20,33 @@
     "has_bounded_event": true,
     "has_detailed_event": true,
     "has_completed_event_evidence": true,
-    "has_structured_candidate_event": false,
+    "has_structured_candidate_event": true,
     "generic_advice_or_aggregated": false,
     "scheduled_only": false,
-    "question_only": true,
+    "question_only": false,
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
-    "only_question_list": true,
+    "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "xiaomi-process",
+        "anchor": "小米",
+        "line": 1,
+        "locator": "artifact-line:14#offset:30-32;blob:3d14a1dfc482c6cbadfb8617b98f8a4e5ade8422",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:小米",
+        "source_ref": "liqiangcc/xhs:note_desc/68b9178c000000001b02060a.txt@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b9178c000000001b02060a.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -44,13 +55,108 @@
     "provenance": "source_projection",
     "byte_size": 699,
     "content_sha256": "2d94b48967d367f1c6fdf8ed9a2db6ddee44dad7b9b06aa6df7fbc0887510a97",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "自我介绍",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "自我介绍\n问项目15分钟左右\n然后都是简单八股\n1. HashMap和LinkedHashMap\n2. java虚拟机的内存分区？哪些是线程私有的 哪些是共享的?\n3. java虚拟机内存回收策略\n4. synchornized和 votaile区别？synchronized实现原理\n5. java线程池，运行原理\n6. 进程和线程区别,进程之间通信方式\nTCP UDP区别，TCP为什么要三次握手 四次挥手?不能少一次吗?\n7. HTTP和HTTPS区别？http get post put 区别？\n8. 快速排序思想，时间复杂度，最坏多少？什么情况最坏?稳定吗?\n手撕：实现字符串中第一个只出现一次的字符。"
-    }
+      "locator": "artifact-line:1#offset:0-4;blob:3d14a1dfc482c6cbadfb8617b98f8a4e5ade8422",
+      "semantic_excerpt": "小米安卓二面\n自我介绍\n问项目15分钟左右\n然后都是简单八股\n1. HashMap和LinkedHashMap\n2. java虚拟机的内存分区？哪些是线程私有的 哪些是共享的?\n3. java虚拟机内存回收策略\n4. synchornized和 votaile区别？synchronized实现原理\n5. java线程池，运行原理\n6. 进程和线程区别,进程之间通信方式\nTCP UDP区别，TCP为什么要三次握手 四次挥手?不能少一次吗?\n7. HTTP和HTTPS区别？http get post put 区别？\n8. 快速排序思想，时间复杂度，最坏多少？什么情况最坏?稳定吗?\n手撕：实现字符串中第一个只出现一次的字符。"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68b9178c000000001b02060a.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "3d14a1dfc482c6cbadfb8617b98f8a4e5ade8422",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 699,
+        "content_sha256": "2d94b48967d367f1c6fdf8ed9a2db6ddee44dad7b9b06aa6df7fbc0887510a97",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "自我介绍",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-4;blob:3d14a1dfc482c6cbadfb8617b98f8a4e5ade8422",
+          "semantic_excerpt": "小米安卓二面\n自我介绍\n问项目15分钟左右\n然后都是简单八股\n1. HashMap和LinkedHashMap\n2. java虚拟机的内存分区？哪些是线程私有的 哪些是共享的?\n3. java虚拟机内存回收策略\n4. synchornized和 votaile区别？synchronized实现原理\n5. java线程池，运行原理\n6. 进程和线程区别,进程之间通信方式\nTCP UDP区别，TCP为什么要三次握手 四次挥手?不能少一次吗?\n7. HTTP和HTTPS区别？http get post put 区别？\n8. 快速排序思想，时间复杂度，最坏多少？什么情况最坏?稳定吗?\n手撕：实现字符串中第一个只出现一次的字符。"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68b9178c000000001b02060a.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "6fc4133e32311dd92de8547dd4364449f6fbd196",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 390849,
+        "content_sha256": "bd6a1fd2f9d399d7fa9ac4b0f3e62b0b60d59e342704e4853bc1fc497310c64d",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "小米安卓二面 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-183;blob:6fc4133e32311dd92de8547dd4364449f6fbd196",
+          "semantic_excerpt": "小米安卓二面\n自我介绍\n问项目15分钟左右\n然后都是简单八股\n1. HashMap和LinkedHashMap\n2. java虚拟机的内存分区？哪些是线程私有的 哪些是共享的?\n3. java虚拟机内存回收策略\n4. synchornized和 votaile区别？synchronized实现原理\n5. java线程池，运行原理\n6. 进程和线程区别,进程之间通信方式\nTCP UDP区别，TCP为什么要三次握手 四次挥手?不能少一次吗?\n7. HTTP和HTTPS区别？http get post put 区别？\n8. 快速排序思想，时间复杂度，最坏多少？什么情况最坏?稳定吗?\n手撕：实现字符串中第一个只出现一次的字符。"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68b9178c000000001b02060a.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "474ccecfd08f348d9eeb50b6cf750571fa06c874",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 24034,
+        "content_sha256": "50b88fac69d78c32f8aa255e38d59fd2f5c50203640e80a29bd5611db3ad97dd",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "小米安卓二面\",",
+          "line": 565,
+          "locator": "artifact-line:565#offset:30-38;blob:474ccecfd08f348d9eeb50b6cf750571fa06c874",
+          "semantic_excerpt": "小米安卓二面\n自我介绍\n问项目15分钟左右\n然后都是简单八股\n1. HashMap和LinkedHashMap\n2. java虚拟机的内存分区？哪些是线程私有的 哪些是共享的?\n3. java虚拟机内存回收策略\n4. synchornized和 votaile区别？synchronized实现原理\n5. java线程池，运行原理\n6. 进程和线程区别,进程之间通信方式\nTCP UDP区别，TCP为什么要三次握手 四次挥手?不能少一次吗?\n7. HTTP和HTTPS区别？http get post put 区别？\n8. 快速排序思想，时间复杂度，最坏多少？什么情况最坏?稳定吗?\n手撕：实现字符串中第一个只出现一次的字符。"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68b9178c000000001b02060a.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "3d14a1dfc482c6cbadfb8617b98f8a4e5ade8422",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 699,
+      "content_sha256": "2d94b48967d367f1c6fdf8ed9a2db6ddee44dad7b9b06aa6df7fbc0887510a97",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "自我介绍",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-4;blob:3d14a1dfc482c6cbadfb8617b98f8a4e5ade8422",
+        "semantic_excerpt": "小米安卓二面\n自我介绍\n问项目15分钟左右\n然后都是简单八股\n1. HashMap和LinkedHashMap\n2. java虚拟机的内存分区？哪些是线程私有的 哪些是共享的?\n3. java虚拟机内存回收策略\n4. synchornized和 votaile区别？synchronized实现原理\n5. java线程池，运行原理\n6. 进程和线程区别,进程之间通信方式\nTCP UDP区别，TCP为什么要三次握手 四次挥手?不能少一次吗?\n7. HTTP和HTTPS区别？http get post put 区别？\n8. 快速排序思想，时间复杂度，最坏多少？什么情况最坏?稳定吗?\n手撕：实现字符串中第一个只出现一次的字符。"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68b9178c000000001b02060a.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "6fc4133e32311dd92de8547dd4364449f6fbd196",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 390849,
+      "content_sha256": "bd6a1fd2f9d399d7fa9ac4b0f3e62b0b60d59e342704e4853bc1fc497310c64d",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "小米安卓二面 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-183;blob:6fc4133e32311dd92de8547dd4364449f6fbd196",
+        "semantic_excerpt": "小米安卓二面\n自我介绍\n问项目15分钟左右\n然后都是简单八股\n1. HashMap和LinkedHashMap\n2. java虚拟机的内存分区？哪些是线程私有的 哪些是共享的?\n3. java虚拟机内存回收策略\n4. synchornized和 votaile区别？synchronized实现原理\n5. java线程池，运行原理\n6. 进程和线程区别,进程之间通信方式\nTCP UDP区别，TCP为什么要三次握手 四次挥手?不能少一次吗?\n7. HTTP和HTTPS区别？http get post put 区别？\n8. 快速排序思想，时间复杂度，最坏多少？什么情况最坏?稳定吗?\n手撕：实现字符串中第一个只出现一次的字符。"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68b9178c000000001b02060a.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "474ccecfd08f348d9eeb50b6cf750571fa06c874",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 24034,
+      "content_sha256": "50b88fac69d78c32f8aa255e38d59fd2f5c50203640e80a29bd5611db3ad97dd",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "小米安卓二面\",",
+        "line": 565,
+        "locator": "artifact-line:565#offset:30-38;blob:474ccecfd08f348d9eeb50b6cf750571fa06c874",
+        "semantic_excerpt": "小米安卓二面\n自我介绍\n问项目15分钟左右\n然后都是简单八股\n1. HashMap和LinkedHashMap\n2. java虚拟机的内存分区？哪些是线程私有的 哪些是共享的?\n3. java虚拟机内存回收策略\n4. synchornized和 votaile区别？synchronized实现原理\n5. java线程池，运行原理\n6. 进程和线程区别,进程之间通信方式\nTCP UDP区别，TCP为什么要三次握手 四次挥手?不能少一次吗?\n7. HTTP和HTTPS区别？http get post put 区别？\n8. 快速排序思想，时间复杂度，最坏多少？什么情况最坏?稳定吗?\n手撕：实现字符串中第一个只出现一次的字符。"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -69,8 +175,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -84,11 +190,12 @@
     }
   ],
   "limitations": [
-    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "b99a68537b82fdde7c9be48718334e51deb9c30e0086a685983540e45880b02e"
+  "evidence_sha256": "f231d82c56a442bffc1ce55541c0fea954f761b7ed18663823fb266a80ebca31"
 }

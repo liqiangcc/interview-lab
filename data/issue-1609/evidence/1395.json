@@ -7,34 +7,44 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "4ec2741463fc07d52d4ceaa52856ab48c7a8ed12ba24911914939f465a6ca8ac",
-  "disposition": "blocked",
-  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "disposition": "single-interview",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
   "interview_cases": [],
   "ambiguity_audit": {
-    "flags": [
-      "question-list-only",
-      "question-only",
-      "no-candidate-event-evidence"
-    ],
+    "flags": [],
     "questions": 9,
     "has_first_person_event": true,
     "has_explicit_candidate_event": true,
     "has_bounded_event": true,
     "has_detailed_event": true,
     "has_completed_event_evidence": true,
-    "has_structured_candidate_event": false,
+    "has_structured_candidate_event": true,
     "generic_advice_or_aggregated": false,
     "scheduled_only": false,
-    "question_only": true,
+    "question_only": false,
     "outcome_signal": true,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
-    "only_question_list": true,
+    "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "bytedance-process",
+        "anchor": "字节",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-165;blob:2d476ca3bfc7bc78717af2fc3920f1523dd9ae77",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:字节",
+        "source_ref": "liqiangcc/xhs:note_detail/68d4edc60000000012021d0a.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 2,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68d4edc60000000012021d0a.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -43,13 +53,78 @@
     "provenance": "source_projection",
     "byte_size": 21420,
     "content_sha256": "4608b3c70052b51d3766fe6799823aabe75058670c01f8664d411a16eef6a3bb",
+    "cache_status": "not-applicable",
     "excerpt": {
-      "excerpt": "\"global\": {",
-      "line": 2,
-      "locator": "artifact-line:2",
-      "semantic_excerpt": "1.对一个项目进行提问，是一个数据库项目，夹杂问了索引的八股\n剩下全是场景\n2.一堆数字 要你找第k大的数 快排？分区快排复杂度？\n3.一个日志10G 4G内存要找出现次数最多的整数？N分片数怎么确定啊？数据分布肯定是有问题的，怎么解决？\n4.mysql里写个查询次数最多的数字sql，为啥要加索引？加不加索引有区别吗？\n5.hive用过吗\n6.抖音的历史观看记录，说一下设计思路 从内存数据库到应用层，写qps高还是读qps高？\n7.为啥要用Redis，你怎么控制redis里面数据不是一直增长？\n8.为啥要用脚本？\n9.手撕一个子序列，没撕出来 换了个打劫的，写的时候把写成dp［0］=0了，我真服了自己了😇，后面又问要输出具体房间号该怎么做？\n整体和面试官聊的很欢乐，甚至有说有笑的…就是手撕有点难崩，飞书客户端怎么感觉不全屏就是有bug我点一下面试官那边就弹一次跳出\n场景题还问了好多细节的，有的也没怎么答上来，每道最后追问不会为止\n挂了也认了，算是秋招以来第一场压力面，面试官也笑呵呵的没冷场，体验好很多"
-    }
+      "excerpt": "字节二面\",",
+      "line": 516,
+      "locator": "artifact-line:516#offset:30-36;blob:7ad5aa6ef72f2f7224ef49f8bfb2380bebb46bac",
+      "semantic_excerpt": "字节二面\n1.对一个项目进行提问，是一个数据库项目，夹杂问了索引的八股\n剩下全是场景\n2.一堆数字 要你找第k大的数 快排？分区快排复杂度？\n3.一个日志10G 4G内存要找出现次数最多的整数？N分片数怎么确定啊？数据分布肯定是有问题的，怎么解决？\n4.mysql里写个查询次数最多的数字sql，为啥要加索引？加不加索引有区别吗？\n5.hive用过吗\n6.抖音的历史观看记录，说一下设计思路 从内存数据库到应用层，写qps高还是读qps高？\n7.为啥要用Redis，你怎么控制redis里面数据不是一直增长？\n8.为啥要用脚本？\n9.手撕一个子序列，没撕出来 换了个打劫的，写的时候把写成dp［0］=0了，我真服了自己了😇，后面又问要输出具体房间号该怎么做？\n整体和面试官聊的很欢乐，甚至有说有笑的…就是手撕有点难崩，飞书客户端怎么感觉不全屏就是有bug我点一下面试官那边就弹一次跳出\n场景题还问了好多细节的，有的也没怎么答上来，每道最后追问不会为止\n挂了也认了，算是秋招以来第一场压力面，面试官也笑呵呵的没冷场，体验好很多"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_detail/68d4edc60000000012021d0a.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "2d476ca3bfc7bc78717af2fc3920f1523dd9ae77",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 388546,
+        "content_sha256": "33aa4658c86af6ac0d4c31567b6d7b81d08ec2d14fc1ed83626da6935f984f4c",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "字节二面 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-181;blob:2d476ca3bfc7bc78717af2fc3920f1523dd9ae77",
+          "semantic_excerpt": "字节二面\n1.对一个项目进行提问，是一个数据库项目，夹杂问了索引的八股\n剩下全是场景\n2.一堆数字 要你找第k大的数 快排？分区快排复杂度？\n3.一个日志10G 4G内存要找出现次数最多的整数？N分片数怎么确定啊？数据分布肯定是有问题的，怎么解决？\n4.mysql里写个查询次数最多的数字sql，为啥要加索引？加不加索引有区别吗？\n5.hive用过吗\n6.抖音的历史观看记录，说一下设计思路 从内存数据库到应用层，写qps高还是读qps高？\n7.为啥要用Redis，你怎么控制redis里面数据不是一直增长？\n8.为啥要用脚本？\n9.手撕一个子序列，没撕出来 换了个打劫的，写的时候把写成dp［0］=0了，我真服了自己了😇，后面又问要输出具体房间号该怎么做？\n整体和面试官聊的很欢乐，甚至有说有笑的…就是手撕有点难崩，飞书客户端怎么感觉不全屏就是有bug我点一下面试官那边就弹一次跳出\n场景题还问了好多细节的，有的也没怎么答上来，每道最后追问不会为止\n挂了也认了，算是秋招以来第一场压力面，面试官也笑呵呵的没冷场，体验好很多"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68d4edc60000000012021d0a.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "7ad5aa6ef72f2f7224ef49f8bfb2380bebb46bac",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 21420,
+        "content_sha256": "4608b3c70052b51d3766fe6799823aabe75058670c01f8664d411a16eef6a3bb",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "字节二面\",",
+          "line": 516,
+          "locator": "artifact-line:516#offset:30-36;blob:7ad5aa6ef72f2f7224ef49f8bfb2380bebb46bac",
+          "semantic_excerpt": "字节二面\n1.对一个项目进行提问，是一个数据库项目，夹杂问了索引的八股\n剩下全是场景\n2.一堆数字 要你找第k大的数 快排？分区快排复杂度？\n3.一个日志10G 4G内存要找出现次数最多的整数？N分片数怎么确定啊？数据分布肯定是有问题的，怎么解决？\n4.mysql里写个查询次数最多的数字sql，为啥要加索引？加不加索引有区别吗？\n5.hive用过吗\n6.抖音的历史观看记录，说一下设计思路 从内存数据库到应用层，写qps高还是读qps高？\n7.为啥要用Redis，你怎么控制redis里面数据不是一直增长？\n8.为啥要用脚本？\n9.手撕一个子序列，没撕出来 换了个打劫的，写的时候把写成dp［0］=0了，我真服了自己了😇，后面又问要输出具体房间号该怎么做？\n整体和面试官聊的很欢乐，甚至有说有笑的…就是手撕有点难崩，飞书客户端怎么感觉不全屏就是有bug我点一下面试官那边就弹一次跳出\n场景题还问了好多细节的，有的也没怎么答上来，每道最后追问不会为止\n挂了也认了，算是秋招以来第一场压力面，面试官也笑呵呵的没冷场，体验好很多"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/68d4edc60000000012021d0a.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "2d476ca3bfc7bc78717af2fc3920f1523dd9ae77",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 388546,
+      "content_sha256": "33aa4658c86af6ac0d4c31567b6d7b81d08ec2d14fc1ed83626da6935f984f4c",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "字节二面 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-181;blob:2d476ca3bfc7bc78717af2fc3920f1523dd9ae77",
+        "semantic_excerpt": "字节二面\n1.对一个项目进行提问，是一个数据库项目，夹杂问了索引的八股\n剩下全是场景\n2.一堆数字 要你找第k大的数 快排？分区快排复杂度？\n3.一个日志10G 4G内存要找出现次数最多的整数？N分片数怎么确定啊？数据分布肯定是有问题的，怎么解决？\n4.mysql里写个查询次数最多的数字sql，为啥要加索引？加不加索引有区别吗？\n5.hive用过吗\n6.抖音的历史观看记录，说一下设计思路 从内存数据库到应用层，写qps高还是读qps高？\n7.为啥要用Redis，你怎么控制redis里面数据不是一直增长？\n8.为啥要用脚本？\n9.手撕一个子序列，没撕出来 换了个打劫的，写的时候把写成dp［0］=0了，我真服了自己了😇，后面又问要输出具体房间号该怎么做？\n整体和面试官聊的很欢乐，甚至有说有笑的…就是手撕有点难崩，飞书客户端怎么感觉不全屏就是有bug我点一下面试官那边就弹一次跳出\n场景题还问了好多细节的，有的也没怎么答上来，每道最后追问不会为止\n挂了也认了，算是秋招以来第一场压力面，面试官也笑呵呵的没冷场，体验好很多"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68d4edc60000000012021d0a.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "7ad5aa6ef72f2f7224ef49f8bfb2380bebb46bac",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 21420,
+      "content_sha256": "4608b3c70052b51d3766fe6799823aabe75058670c01f8664d411a16eef6a3bb",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "字节二面\",",
+        "line": 516,
+        "locator": "artifact-line:516#offset:30-36;blob:7ad5aa6ef72f2f7224ef49f8bfb2380bebb46bac",
+        "semantic_excerpt": "字节二面\n1.对一个项目进行提问，是一个数据库项目，夹杂问了索引的八股\n剩下全是场景\n2.一堆数字 要你找第k大的数 快排？分区快排复杂度？\n3.一个日志10G 4G内存要找出现次数最多的整数？N分片数怎么确定啊？数据分布肯定是有问题的，怎么解决？\n4.mysql里写个查询次数最多的数字sql，为啥要加索引？加不加索引有区别吗？\n5.hive用过吗\n6.抖音的历史观看记录，说一下设计思路 从内存数据库到应用层，写qps高还是读qps高？\n7.为啥要用Redis，你怎么控制redis里面数据不是一直增长？\n8.为啥要用脚本？\n9.手撕一个子序列，没撕出来 换了个打劫的，写的时候把写成dp［0］=0了，我真服了自己了😇，后面又问要输出具体房间号该怎么做？\n整体和面试官聊的很欢乐，甚至有说有笑的…就是手撕有点难崩，飞书客户端怎么感觉不全屏就是有bug我点一下面试官那边就弹一次跳出\n场景题还问了好多细节的，有的也没怎么答上来，每道最后追问不会为止\n挂了也认了，算是秋招以来第一场压力面，面试官也笑呵呵的没冷场，体验好很多"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -68,8 +143,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -83,11 +158,12 @@
     }
   ],
   "limitations": [
-    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "18c3ca1728ca8d65c94836fa67f46683803fdb12a7dab515f0a0c71d499ace27"
+  "evidence_sha256": "d0411e6f67478cf81c7a203609824688a08bad0df8e808cda40c722695f86df0"
 }

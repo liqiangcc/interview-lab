@@ -7,15 +7,12 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "7ffaa93ddbb847d8b1931a38c1991ee51eee9cb266f6d2cb9a5df4489aec9a5b",
-  "disposition": "blocked",
-  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "disposition": "single-interview",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
-      "question-list-only",
-      "no-first-person-event",
-      "question-only",
-      "no-candidate-event-evidence"
+      "no-first-person-event"
     ],
     "questions": 11,
     "has_first_person_event": false,
@@ -23,19 +20,33 @@
     "has_bounded_event": true,
     "has_detailed_event": true,
     "has_completed_event_evidence": true,
-    "has_structured_candidate_event": false,
+    "has_structured_candidate_event": true,
     "generic_advice_or_aggregated": false,
     "scheduled_only": false,
-    "question_only": true,
+    "question_only": false,
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
-    "only_question_list": true,
+    "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "tencent-process",
+        "anchor": "腾讯",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-165;blob:debfc419ab4c5fdb228224d6380dd3344ac040e7",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:腾讯",
+        "source_ref": "liqiangcc/xhs:note_detail/68e7d470000000000700d609.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 2,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68e7d470000000000700d609.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -44,13 +55,78 @@
     "provenance": "source_projection",
     "byte_size": 22142,
     "content_sha256": "73c6c0f8025bfcf742b17292f4e8adaf4246db6db5929d69ff1bedc4a778d786",
+    "cache_status": "not-applicable",
     "excerpt": {
-      "excerpt": "\"global\": {",
-      "line": 2,
-      "locator": "artifact-line:2",
-      "semantic_excerpt": "1、自我介绍\n2、实习经历\n3、redis的淘汰策略\n4、怎么处理redis中的大key\n5、http和https的区别\n6、浏览器输入网址的全过程\n7、TCP协议的连接和断开过程\n8、分布式锁的使用场景，怎么实现分布式锁？\n9、MySQL的锁机制\n10、询问base地意向\n11、反问"
-    }
+      "excerpt": "腾讯云智java二面面经\"",
+      "line": 584,
+      "locator": "artifact-line:584#offset:30-43;blob:7888f1ce7ffc46852d69ddc3955f81cab39fd201",
+      "semantic_excerpt": "腾讯云智java二面面经\n1、自我介绍\n2、实习经历\n3、redis的淘汰策略\n4、怎么处理redis中的大key\n5、http和https的区别\n6、浏览器输入网址的全过程\n7、TCP协议的连接和断开过程\n8、分布式锁的使用场景，怎么实现分布式锁？\n9、MySQL的锁机制\n10、询问base地意向\n11、反问"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_detail/68e7d470000000000700d609.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "debfc419ab4c5fdb228224d6380dd3344ac040e7",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 388331,
+        "content_sha256": "278eb842ecf1e9e9be07085e98beea79133ef15f9494adda6580dfc96aa31f50",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "腾讯云智java二面面经 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-189;blob:debfc419ab4c5fdb228224d6380dd3344ac040e7",
+          "semantic_excerpt": "腾讯云智java二面面经\n1、自我介绍\n2、实习经历\n3、redis的淘汰策略\n4、怎么处理redis中的大key\n5、http和https的区别\n6、浏览器输入网址的全过程\n7、TCP协议的连接和断开过程\n8、分布式锁的使用场景，怎么实现分布式锁？\n9、MySQL的锁机制\n10、询问base地意向\n11、反问"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68e7d470000000000700d609.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "7888f1ce7ffc46852d69ddc3955f81cab39fd201",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 22142,
+        "content_sha256": "73c6c0f8025bfcf742b17292f4e8adaf4246db6db5929d69ff1bedc4a778d786",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "腾讯云智java二面面经\"",
+          "line": 584,
+          "locator": "artifact-line:584#offset:30-43;blob:7888f1ce7ffc46852d69ddc3955f81cab39fd201",
+          "semantic_excerpt": "腾讯云智java二面面经\n1、自我介绍\n2、实习经历\n3、redis的淘汰策略\n4、怎么处理redis中的大key\n5、http和https的区别\n6、浏览器输入网址的全过程\n7、TCP协议的连接和断开过程\n8、分布式锁的使用场景，怎么实现分布式锁？\n9、MySQL的锁机制\n10、询问base地意向\n11、反问"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/68e7d470000000000700d609.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "debfc419ab4c5fdb228224d6380dd3344ac040e7",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 388331,
+      "content_sha256": "278eb842ecf1e9e9be07085e98beea79133ef15f9494adda6580dfc96aa31f50",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "腾讯云智java二面面经 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-189;blob:debfc419ab4c5fdb228224d6380dd3344ac040e7",
+        "semantic_excerpt": "腾讯云智java二面面经\n1、自我介绍\n2、实习经历\n3、redis的淘汰策略\n4、怎么处理redis中的大key\n5、http和https的区别\n6、浏览器输入网址的全过程\n7、TCP协议的连接和断开过程\n8、分布式锁的使用场景，怎么实现分布式锁？\n9、MySQL的锁机制\n10、询问base地意向\n11、反问"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68e7d470000000000700d609.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "7888f1ce7ffc46852d69ddc3955f81cab39fd201",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 22142,
+      "content_sha256": "73c6c0f8025bfcf742b17292f4e8adaf4246db6db5929d69ff1bedc4a778d786",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "腾讯云智java二面面经\"",
+        "line": 584,
+        "locator": "artifact-line:584#offset:30-43;blob:7888f1ce7ffc46852d69ddc3955f81cab39fd201",
+        "semantic_excerpt": "腾讯云智java二面面经\n1、自我介绍\n2、实习经历\n3、redis的淘汰策略\n4、怎么处理redis中的大key\n5、http和https的区别\n6、浏览器输入网址的全过程\n7、TCP协议的连接和断开过程\n8、分布式锁的使用场景，怎么实现分布式锁？\n9、MySQL的锁机制\n10、询问base地意向\n11、反问"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -69,8 +145,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -84,11 +160,12 @@
     }
   ],
   "limitations": [
-    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "a4408e11c917dac7c9856199bef8101acda588d641104d472d2534fb1f3f174e"
+  "evidence_sha256": "eec9ccfd5f8fcef41160459d211e0d9ba013d5520a5754f1e00c48cd8d7e10cb"
 }

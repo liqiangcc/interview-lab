@@ -7,15 +7,12 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "78ffff7a4034e75421ca86303607b5ab843492020e94b4e63271f75f4bb6b60d",
-  "disposition": "blocked",
-  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "disposition": "single-interview",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
-      "question-list-only",
-      "no-first-person-event",
-      "question-only",
-      "no-candidate-event-evidence"
+      "no-first-person-event"
     ],
     "questions": 25,
     "has_first_person_event": false,
@@ -23,19 +20,33 @@
     "has_bounded_event": true,
     "has_detailed_event": true,
     "has_completed_event_evidence": true,
-    "has_structured_candidate_event": false,
+    "has_structured_candidate_event": true,
     "generic_advice_or_aggregated": false,
     "scheduled_only": false,
-    "question_only": true,
+    "question_only": false,
     "outcome_signal": true,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
-    "only_question_list": true,
+    "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "bytedance-process",
+        "anchor": "字节",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-165;blob:2c1bc4def726e90389f83e903377d06c887cdabc",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:字节",
+        "source_ref": "liqiangcc/xhs:note_detail/68d17677000000001300e848.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 2,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68d17677000000001300e848.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -44,13 +55,78 @@
     "provenance": "source_projection",
     "byte_size": 21550,
     "content_sha256": "2663570eb77e4cdf65d36c69addab4a2809a078d5c8fdb32c0f6183d087aa216",
+    "cache_status": "not-applicable",
     "excerpt": {
-      "excerpt": "\"desc\": \"整理整理自己最近秋招的面经，攒攒人品好运[举手R]祝大家（还有我）offer拿到手软\\n1. 自我介绍\\n2. 你实习过程中有遇到感觉困难的事吗？\\n3. 你觉得你实习过程中遇到最有挑战的事是什么？\\n4. 那你讲讲你实习中的redis队列是怎么用的吧\\n5. 为什么要用redis队列，解决了什么问题？\\n6. 队列是怎么建立的？一个离线任务就对应一个队列吗？\\n7. 什么时候同步任务的状态？如何同步的？\\n8. 为什么要用分布式锁，分布式锁的key是什么？\\n9. 那你这样说意思就是redis不是原子性的吗？\\n10. 既然是原子性，那你取任务的时候我理解不会有并发安全，那你为什么还要这样用？\\n11. redis队列中子任务实例的状态是如何同步的？\\n12. 数据什么时候落库？\\n13. 按你的说法，我执行任务的时候，查数据库不就可以看是否过期了，为什么还要单起一个线程去更新状态？\\n14. 发送事件和消费事件的生产者和消费者分别是谁？怎么消费的？\\n15. redis队列底层的数据结构是什么？\\n16. 双向链表和压缩链表是怎么实现的，他们有哪些字段\\n17. 为什么要用双向链表和压缩链表，他们查询的时间复杂度是多少？\\n18. 那么redis队列是怎么把双向链表和压缩链表结合起来实现的？\\n19. 虚拟内存有什么作用？\\n20. 答了给用户感知的内存更大，追问还有呢？\\n21. 那换个方式，进程切换会发生什么？\\n22. 为什么进程切换消耗的资源更少\\n23. 进程切换和线程切换有什么区别？\\n24. 系统是如何创建一个进程的，比如你windos点一个exe文件，发生了什么\\n25. 手撕一个正数乘法计算器，输入两个字符串，输出一个字符串\",",
-      "line": 498,
-      "locator": "artifact-line:498",
-      "semantic_excerpt": "整理整理自己最近秋招的面经，攒攒人品好运[举手R]祝大家（还有我）offer拿到手软\n1. 自我介绍\n2. 你实习过程中有遇到感觉困难的事吗？\n3. 你觉得你实习过程中遇到最有挑战的事是什么？\n4. 那你讲讲你实习中的redis队列是怎么用的吧\n5. 为什么要用redis队列，解决了什么问题？\n6. 队列是怎么建立的？一个离线任务就对应一个队列吗？\n7. 什么时候同步任务的状态？如何同步的？\n8. 为什么要用分布式锁，分布式锁的key是什么？\n9. 那你这样说意思就是redis不是原子性的吗？\n10. 既然是原子性，那你取任务的时候我理解不会有并发安全，那你为什么还要这样用？\n11. redis队列中子任务实例的状态是如何同步的？\n12. 数据什么时候落库？\n13. 按你的说法，我执行任务的时候，查数据库不就可以看是否过期了，为什么还要单起一个线程去更新状态？\n14. 发送事件和消费事件的生产者和消费者分别是谁？怎么消费的？\n15. redis队列底层的数据结构是什么？\n16. 双向链表和压缩链表是怎么实现的，他们有哪些字段\n17. 为什么要用双向链表和压缩链表，他们查询的时间复杂度是多少？\n18. 那么redis队列是怎么把双向链表和压缩链表结合起来实现的？\n19. 虚拟内存有什么作用？\n20. 答了给用户感知的内存更大，追问还有呢？\n21. 那换个方式，进程切换会发生什么？\n22. 为什么进程切换消耗的资源更少\n23. 进程切换和线程切换有什么区别？\n24. 系统是如何创建一个进程的，比如你windos点一个exe文件，发生了什么\n25. 手撕一个正数乘法计算器，输入两个字符串，输出一个字符串"
-    }
+      "excerpt": "字节-后端开发一面凉经\",",
+      "line": 519,
+      "locator": "artifact-line:519#offset:30-43;blob:7065fc221061c1960e7dae69d075a82ba106e911",
+      "semantic_excerpt": "字节-后端开发一面凉经\n整理整理自己最近秋招的面经，攒攒人品好运[举手R]祝大家（还有我）offer拿到手软\n1. 自我介绍\n2. 你实习过程中有遇到感觉困难的事吗？\n3. 你觉得你实习过程中遇到最有挑战的事是什么？\n4. 那你讲讲你实习中的redis队列是怎么用的吧\n5. 为什么要用redis队列，解决了什么问题？\n6. 队列是怎么建立的？一个离线任务就对应一个队列吗？\n7. 什么时候同步任务的状态？如何同步的？\n8. 为什么要用分布式锁，分布式锁的key是什么？\n9. 那你这样说意思就是redis不是原子性的吗？\n10. 既然是原子性，那你取任务的时候我理解不会有并发安全，那你为什么还要这样用？\n11. redis队列中子任务实例的状态是如何同步的？\n12. 数据什么时候落库？\n13. 按你的说法，我执行任务的时候，查数据库不就可以看是否过期了，为什么还要单起一个线程去更新状态？\n14. 发送事件和消费事件的生产者和消费者分别是谁？怎么消费的？\n15. redis队列底层的数据结构是什么？\n16. 双向链表和压缩链表是怎么实现的，他们有哪些字段\n17. 为什么要用双向链表和压缩链表，他们查询的时间复杂度是多少？\n18. 那么redis队列是怎么把双向链表和压缩链表结合起来实现的？\n19. 虚拟内存有什么作用？\n20. 答了给用户感知的内存更大，追问还有呢？\n21. 那换个方式，进程切换会发生什么？\n22. 为什么进程切换消耗的资源更少\n23. 进程切换和线程切换有什么区别？\n24. 系统是如何创建一个进程的，比如你windos点一个exe文件，发生了什么\n25. 手撕一个正数乘法计算器，输入两个字符串，输出一个字符串"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_detail/68d17677000000001300e848.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "2c1bc4def726e90389f83e903377d06c887cdabc",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 389683,
+        "content_sha256": "acdd97df829a3324593be5c6af1b2523a20437f5b27c32731fd9a1fc1145a445",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "字节-后端开发一面凉经 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-188;blob:2c1bc4def726e90389f83e903377d06c887cdabc",
+          "semantic_excerpt": "字节-后端开发一面凉经\n整理整理自己最近秋招的面经，攒攒人品好运[举手R]祝大家（还有我）offer拿到手软\n1. 自我介绍\n2. 你实习过程中有遇到感觉困难的事吗？\n3. 你觉得你实习过程中遇到最有挑战的事是什么？\n4. 那你讲讲你实习中的redis队列是怎么用的吧\n5. 为什么要用redis队列，解决了什么问题？\n6. 队列是怎么建立的？一个离线任务就对应一个队列吗？\n7. 什么时候同步任务的状态？如何同步的？\n8. 为什么要用分布式锁，分布式锁的key是什么？\n9. 那你这样说意思就是redis不是原子性的吗？\n10. 既然是原子性，那你取任务的时候我理解不会有并发安全，那你为什么还要这样用？\n11. redis队列中子任务实例的状态是如何同步的？\n12. 数据什么时候落库？\n13. 按你的说法，我执行任务的时候，查数据库不就可以看是否过期了，为什么还要单起一个线程去更新状态？\n14. 发送事件和消费事件的生产者和消费者分别是谁？怎么消费的？\n15. redis队列底层的数据结构是什么？\n16. 双向链表和压缩链表是怎么实现的，他们有哪些字段\n17. 为什么要用双向链表和压缩链表，他们查询的时间复杂度是多少？\n18. 那么redis队列是怎么把双向链表和压缩链表结合起来实现的？\n19. 虚拟内存有什么作用？\n20. 答了给用户感知的内存更大，追问还有呢？\n21. 那换个方式，进程切换会发生什么？\n22. 为什么进程切换消耗的资源更少\n23. 进程切换和线程切换有什么区别？\n24. 系统是如何创建一个进程的，比如你windos点一个exe文件，发生了什么\n25. 手撕一个正数乘法计算器，输入两个字符串，输出一个字符串"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68d17677000000001300e848.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "7065fc221061c1960e7dae69d075a82ba106e911",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 21550,
+        "content_sha256": "2663570eb77e4cdf65d36c69addab4a2809a078d5c8fdb32c0f6183d087aa216",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "字节-后端开发一面凉经\",",
+          "line": 519,
+          "locator": "artifact-line:519#offset:30-43;blob:7065fc221061c1960e7dae69d075a82ba106e911",
+          "semantic_excerpt": "字节-后端开发一面凉经\n整理整理自己最近秋招的面经，攒攒人品好运[举手R]祝大家（还有我）offer拿到手软\n1. 自我介绍\n2. 你实习过程中有遇到感觉困难的事吗？\n3. 你觉得你实习过程中遇到最有挑战的事是什么？\n4. 那你讲讲你实习中的redis队列是怎么用的吧\n5. 为什么要用redis队列，解决了什么问题？\n6. 队列是怎么建立的？一个离线任务就对应一个队列吗？\n7. 什么时候同步任务的状态？如何同步的？\n8. 为什么要用分布式锁，分布式锁的key是什么？\n9. 那你这样说意思就是redis不是原子性的吗？\n10. 既然是原子性，那你取任务的时候我理解不会有并发安全，那你为什么还要这样用？\n11. redis队列中子任务实例的状态是如何同步的？\n12. 数据什么时候落库？\n13. 按你的说法，我执行任务的时候，查数据库不就可以看是否过期了，为什么还要单起一个线程去更新状态？\n14. 发送事件和消费事件的生产者和消费者分别是谁？怎么消费的？\n15. redis队列底层的数据结构是什么？\n16. 双向链表和压缩链表是怎么实现的，他们有哪些字段\n17. 为什么要用双向链表和压缩链表，他们查询的时间复杂度是多少？\n18. 那么redis队列是怎么把双向链表和压缩链表结合起来实现的？\n19. 虚拟内存有什么作用？\n20. 答了给用户感知的内存更大，追问还有呢？\n21. 那换个方式，进程切换会发生什么？\n22. 为什么进程切换消耗的资源更少\n23. 进程切换和线程切换有什么区别？\n24. 系统是如何创建一个进程的，比如你windos点一个exe文件，发生了什么\n25. 手撕一个正数乘法计算器，输入两个字符串，输出一个字符串"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/68d17677000000001300e848.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "2c1bc4def726e90389f83e903377d06c887cdabc",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 389683,
+      "content_sha256": "acdd97df829a3324593be5c6af1b2523a20437f5b27c32731fd9a1fc1145a445",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "字节-后端开发一面凉经 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-188;blob:2c1bc4def726e90389f83e903377d06c887cdabc",
+        "semantic_excerpt": "字节-后端开发一面凉经\n整理整理自己最近秋招的面经，攒攒人品好运[举手R]祝大家（还有我）offer拿到手软\n1. 自我介绍\n2. 你实习过程中有遇到感觉困难的事吗？\n3. 你觉得你实习过程中遇到最有挑战的事是什么？\n4. 那你讲讲你实习中的redis队列是怎么用的吧\n5. 为什么要用redis队列，解决了什么问题？\n6. 队列是怎么建立的？一个离线任务就对应一个队列吗？\n7. 什么时候同步任务的状态？如何同步的？\n8. 为什么要用分布式锁，分布式锁的key是什么？\n9. 那你这样说意思就是redis不是原子性的吗？\n10. 既然是原子性，那你取任务的时候我理解不会有并发安全，那你为什么还要这样用？\n11. redis队列中子任务实例的状态是如何同步的？\n12. 数据什么时候落库？\n13. 按你的说法，我执行任务的时候，查数据库不就可以看是否过期了，为什么还要单起一个线程去更新状态？\n14. 发送事件和消费事件的生产者和消费者分别是谁？怎么消费的？\n15. redis队列底层的数据结构是什么？\n16. 双向链表和压缩链表是怎么实现的，他们有哪些字段\n17. 为什么要用双向链表和压缩链表，他们查询的时间复杂度是多少？\n18. 那么redis队列是怎么把双向链表和压缩链表结合起来实现的？\n19. 虚拟内存有什么作用？\n20. 答了给用户感知的内存更大，追问还有呢？\n21. 那换个方式，进程切换会发生什么？\n22. 为什么进程切换消耗的资源更少\n23. 进程切换和线程切换有什么区别？\n24. 系统是如何创建一个进程的，比如你windos点一个exe文件，发生了什么\n25. 手撕一个正数乘法计算器，输入两个字符串，输出一个字符串"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68d17677000000001300e848.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "7065fc221061c1960e7dae69d075a82ba106e911",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 21550,
+      "content_sha256": "2663570eb77e4cdf65d36c69addab4a2809a078d5c8fdb32c0f6183d087aa216",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "字节-后端开发一面凉经\",",
+        "line": 519,
+        "locator": "artifact-line:519#offset:30-43;blob:7065fc221061c1960e7dae69d075a82ba106e911",
+        "semantic_excerpt": "字节-后端开发一面凉经\n整理整理自己最近秋招的面经，攒攒人品好运[举手R]祝大家（还有我）offer拿到手软\n1. 自我介绍\n2. 你实习过程中有遇到感觉困难的事吗？\n3. 你觉得你实习过程中遇到最有挑战的事是什么？\n4. 那你讲讲你实习中的redis队列是怎么用的吧\n5. 为什么要用redis队列，解决了什么问题？\n6. 队列是怎么建立的？一个离线任务就对应一个队列吗？\n7. 什么时候同步任务的状态？如何同步的？\n8. 为什么要用分布式锁，分布式锁的key是什么？\n9. 那你这样说意思就是redis不是原子性的吗？\n10. 既然是原子性，那你取任务的时候我理解不会有并发安全，那你为什么还要这样用？\n11. redis队列中子任务实例的状态是如何同步的？\n12. 数据什么时候落库？\n13. 按你的说法，我执行任务的时候，查数据库不就可以看是否过期了，为什么还要单起一个线程去更新状态？\n14. 发送事件和消费事件的生产者和消费者分别是谁？怎么消费的？\n15. redis队列底层的数据结构是什么？\n16. 双向链表和压缩链表是怎么实现的，他们有哪些字段\n17. 为什么要用双向链表和压缩链表，他们查询的时间复杂度是多少？\n18. 那么redis队列是怎么把双向链表和压缩链表结合起来实现的？\n19. 虚拟内存有什么作用？\n20. 答了给用户感知的内存更大，追问还有呢？\n21. 那换个方式，进程切换会发生什么？\n22. 为什么进程切换消耗的资源更少\n23. 进程切换和线程切换有什么区别？\n24. 系统是如何创建一个进程的，比如你windos点一个exe文件，发生了什么\n25. 手撕一个正数乘法计算器，输入两个字符串，输出一个字符串"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -69,8 +145,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -84,11 +160,12 @@
     }
   ],
   "limitations": [
-    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "355284e149d1464331aa9dd6e8ea2c9901730e8f17a8c2533cbb7cf4abae496a"
+  "evidence_sha256": "12dfc387d1476e3144483304c3c95ab7a21fea8be9cf2f6d51bc162475962ff8"
 }

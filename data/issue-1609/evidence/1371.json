@@ -8,7 +8,7 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "d9131d1a933aa6535973ccaa711b2fefdbd23e34430fa854a1d9204f2099abf0",
   "disposition": "blocked",
-  "rationale": "No non-empty readable Source/Source projection is available; title and hashtags cannot authorize a boundary.",
+  "rationale": "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
@@ -28,12 +28,16 @@
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [],
+    "reviewed_artifact_count": 2,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68d133bd000000001303436f.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -42,13 +46,78 @@
     "provenance": "source_projection",
     "byte_size": 23151,
     "content_sha256": "fe70a8ae82e0ae37ed36066fcd47c2ba54cd6ae2c0ec367fdd2a9a244c31ae7d",
+    "cache_status": "not-applicable",
     "excerpt": {
-      "excerpt": "\"global\": {",
-      "line": 2,
-      "locator": "artifact-line:2",
-      "semantic_excerpt": ""
-    }
+      "excerpt": "网易java面经\",",
+      "line": 584,
+      "locator": "artifact-line:584#offset:30-40;blob:af57474d916a5c9d8dc364b73833dee333a25a3b",
+      "semantic_excerpt": "网易java面经"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_detail/68d133bd000000001303436f.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "dbff0efd2a3408e10c3c93b8373d28ba48a5777b",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 388396,
+        "content_sha256": "e5555185c976f63aafafebbca4611db6fbc577a67f5a2689dd0ad6c43d4f29ef",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "网易java面经 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-185;blob:dbff0efd2a3408e10c3c93b8373d28ba48a5777b",
+          "semantic_excerpt": "网易java面经"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68d133bd000000001303436f.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "af57474d916a5c9d8dc364b73833dee333a25a3b",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 23151,
+        "content_sha256": "fe70a8ae82e0ae37ed36066fcd47c2ba54cd6ae2c0ec367fdd2a9a244c31ae7d",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "网易java面经\",",
+          "line": 584,
+          "locator": "artifact-line:584#offset:30-40;blob:af57474d916a5c9d8dc364b73833dee333a25a3b",
+          "semantic_excerpt": "网易java面经"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/68d133bd000000001303436f.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "dbff0efd2a3408e10c3c93b8373d28ba48a5777b",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 388396,
+      "content_sha256": "e5555185c976f63aafafebbca4611db6fbc577a67f5a2689dd0ad6c43d4f29ef",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "网易java面经 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-185;blob:dbff0efd2a3408e10c3c93b8373d28ba48a5777b",
+        "semantic_excerpt": "网易java面经"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68d133bd000000001303436f.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "af57474d916a5c9d8dc364b73833dee333a25a3b",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 23151,
+      "content_sha256": "fe70a8ae82e0ae37ed36066fcd47c2ba54cd6ae2c0ec367fdd2a9a244c31ae7d",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "网易java面经\",",
+        "line": 584,
+        "locator": "artifact-line:584#offset:30-40;blob:af57474d916a5c9d8dc364b73833dee333a25a3b",
+        "semantic_excerpt": "网易java面经"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -68,7 +137,7 @@
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. No non-empty readable Source/Source projection is available; title and hashtags cannot authorize a boundary."
+      "note": "The disposition is supported by the cited source evidence. Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -82,11 +151,12 @@
     }
   ],
   "limitations": [
-    "No non-empty readable Source/Source projection is available; title and hashtags cannot authorize a boundary.",
+    "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "df7b9f605a5a9f488aa608509c02312fe47c835c751c6d7f7f34ccdeb27f7d3d"
+  "evidence_sha256": "689c80b8b56149ed889eb4e1b3ec89ec0bb7bb1e27f8542f0f44220433c87ee6"
 }

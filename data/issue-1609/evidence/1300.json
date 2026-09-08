@@ -7,15 +7,12 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "fa461a7ee225c50d5190a12b524361da5c0ced9c1071bc1e38b7c7b618f672b0",
-  "disposition": "blocked",
-  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "disposition": "single-interview",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
-      "question-list-only",
-      "no-first-person-event",
-      "question-only",
-      "no-candidate-event-evidence"
+      "no-first-person-event"
     ],
     "questions": 9,
     "has_first_person_event": false,
@@ -23,19 +20,33 @@
     "has_bounded_event": true,
     "has_detailed_event": true,
     "has_completed_event_evidence": true,
-    "has_structured_candidate_event": false,
+    "has_structured_candidate_event": true,
     "generic_advice_or_aggregated": false,
     "scheduled_only": false,
-    "question_only": true,
+    "question_only": false,
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
-    "only_question_list": true,
+    "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "tencent-process",
+        "anchor": "腾讯",
+        "line": 1,
+        "locator": "artifact-line:13#offset:61-63;blob:44a8cbea4a4e0c4fb31cd5c99e141a776fa76a96",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:腾讯",
+        "source_ref": "liqiangcc/xhs:note_desc/68c2f9a8000000001d02803d.txt@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68c2f9a8000000001d02803d.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -44,13 +55,108 @@
     "provenance": "source_projection",
     "byte_size": 990,
     "content_sha256": "2f4d0e83b6c457bf92332f85066b68aa1efd7755358547ea4c94398df33dca8e",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "csig，一个小时后已过，大概率聊了二十几分钟，主要围绕做过的东西",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "csig，一个小时后已过，大概率聊了二十几分钟，主要围绕做过的东西\n \n1.介绍项目\n2.echarts和three.js的实现原理是什么？实现echarts之类的数据可视化功能，除了canvas还有什么？\n3.项目中大模型相关的SSE是怎么做的？\n4.Websocket中1xx相关的状态码代表什么意思\n5.tailwind和其他样式方案的区别\n6.缓存和懒加载是怎么实现的？不使用lazy这个属性来实现懒加载，怎么做？控制缓存的http头有哪些\n7.事件循环机制，nodejs和浏览器环境的有什么区别\n8.路由的实现有什么方案，react router是如何实现的？history方案是基于哪些api，hash方案的监听是基于哪个api\n9.手撕：节流，分割银行卡号；判断是否为对称二叉树"
-    }
+      "locator": "artifact-line:1#offset:0-33;blob:44a8cbea4a4e0c4fb31cd5c99e141a776fa76a96",
+      "semantic_excerpt": "腾讯秋招前端一面面经\ncsig，一个小时后已过，大概率聊了二十几分钟，主要围绕做过的东西\n \n1.介绍项目\n2.echarts和three.js的实现原理是什么？实现echarts之类的数据可视化功能，除了canvas还有什么？\n3.项目中大模型相关的SSE是怎么做的？\n4.Websocket中1xx相关的状态码代表什么意思\n5.tailwind和其他样式方案的区别\n6.缓存和懒加载是怎么实现的？不使用lazy这个属性来实现懒加载，怎么做？控制缓存的http头有哪些\n7.事件循环机制，nodejs和浏览器环境的有什么区别\n8.路由的实现有什么方案，react router是如何实现的？history方案是基于哪些api，hash方案的监听是基于哪个api\n9.手撕：节流，分割银行卡号；判断是否为对称二叉树"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68c2f9a8000000001d02803d.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "44a8cbea4a4e0c4fb31cd5c99e141a776fa76a96",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 990,
+        "content_sha256": "2f4d0e83b6c457bf92332f85066b68aa1efd7755358547ea4c94398df33dca8e",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "csig，一个小时后已过，大概率聊了二十几分钟，主要围绕做过的东西",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-33;blob:44a8cbea4a4e0c4fb31cd5c99e141a776fa76a96",
+          "semantic_excerpt": "腾讯秋招前端一面面经\ncsig，一个小时后已过，大概率聊了二十几分钟，主要围绕做过的东西\n \n1.介绍项目\n2.echarts和three.js的实现原理是什么？实现echarts之类的数据可视化功能，除了canvas还有什么？\n3.项目中大模型相关的SSE是怎么做的？\n4.Websocket中1xx相关的状态码代表什么意思\n5.tailwind和其他样式方案的区别\n6.缓存和懒加载是怎么实现的？不使用lazy这个属性来实现懒加载，怎么做？控制缓存的http头有哪些\n7.事件循环机制，nodejs和浏览器环境的有什么区别\n8.路由的实现有什么方案，react router是如何实现的？history方案是基于哪些api，hash方案的监听是基于哪个api\n9.手撕：节流，分割银行卡号；判断是否为对称二叉树"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68c2f9a8000000001d02803d.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "d13209fd83449b0efcc4886b1d6eef22b65a07d7",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 390278,
+        "content_sha256": "ca984014915e94a4cc49aa1cc122e87756cb081d5a45c9bd2014a473e7b6f83a",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "腾讯秋招前端一面面经 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-187;blob:d13209fd83449b0efcc4886b1d6eef22b65a07d7",
+          "semantic_excerpt": "腾讯秋招前端一面面经\ncsig，一个小时后已过，大概率聊了二十几分钟，主要围绕做过的东西\n \n1.介绍项目\n2.echarts和three.js的实现原理是什么？实现echarts之类的数据可视化功能，除了canvas还有什么？\n3.项目中大模型相关的SSE是怎么做的？\n4.Websocket中1xx相关的状态码代表什么意思\n5.tailwind和其他样式方案的区别\n6.缓存和懒加载是怎么实现的？不使用lazy这个属性来实现懒加载，怎么做？控制缓存的http头有哪些\n7.事件循环机制，nodejs和浏览器环境的有什么区别\n8.路由的实现有什么方案，react router是如何实现的？history方案是基于哪些api，hash方案的监听是基于哪个api\n9.手撕：节流，分割银行卡号；判断是否为对称二叉树"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68c2f9a8000000001d02803d.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "0eb7bc89e8e8551c6c2569d0b83399ff01660fae",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 22750,
+        "content_sha256": "d705f8e22f89012b0d140a64171dc450b387cb2466cdb507004ce2e7a7dd8f0a",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "腾讯秋招前端一面面经\",",
+          "line": 594,
+          "locator": "artifact-line:594#offset:30-42;blob:0eb7bc89e8e8551c6c2569d0b83399ff01660fae",
+          "semantic_excerpt": "腾讯秋招前端一面面经\ncsig，一个小时后已过，大概率聊了二十几分钟，主要围绕做过的东西\n \n1.介绍项目\n2.echarts和three.js的实现原理是什么？实现echarts之类的数据可视化功能，除了canvas还有什么？\n3.项目中大模型相关的SSE是怎么做的？\n4.Websocket中1xx相关的状态码代表什么意思\n5.tailwind和其他样式方案的区别\n6.缓存和懒加载是怎么实现的？不使用lazy这个属性来实现懒加载，怎么做？控制缓存的http头有哪些\n7.事件循环机制，nodejs和浏览器环境的有什么区别\n8.路由的实现有什么方案，react router是如何实现的？history方案是基于哪些api，hash方案的监听是基于哪个api\n9.手撕：节流，分割银行卡号；判断是否为对称二叉树"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68c2f9a8000000001d02803d.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "44a8cbea4a4e0c4fb31cd5c99e141a776fa76a96",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 990,
+      "content_sha256": "2f4d0e83b6c457bf92332f85066b68aa1efd7755358547ea4c94398df33dca8e",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "csig，一个小时后已过，大概率聊了二十几分钟，主要围绕做过的东西",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-33;blob:44a8cbea4a4e0c4fb31cd5c99e141a776fa76a96",
+        "semantic_excerpt": "腾讯秋招前端一面面经\ncsig，一个小时后已过，大概率聊了二十几分钟，主要围绕做过的东西\n \n1.介绍项目\n2.echarts和three.js的实现原理是什么？实现echarts之类的数据可视化功能，除了canvas还有什么？\n3.项目中大模型相关的SSE是怎么做的？\n4.Websocket中1xx相关的状态码代表什么意思\n5.tailwind和其他样式方案的区别\n6.缓存和懒加载是怎么实现的？不使用lazy这个属性来实现懒加载，怎么做？控制缓存的http头有哪些\n7.事件循环机制，nodejs和浏览器环境的有什么区别\n8.路由的实现有什么方案，react router是如何实现的？history方案是基于哪些api，hash方案的监听是基于哪个api\n9.手撕：节流，分割银行卡号；判断是否为对称二叉树"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68c2f9a8000000001d02803d.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "d13209fd83449b0efcc4886b1d6eef22b65a07d7",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 390278,
+      "content_sha256": "ca984014915e94a4cc49aa1cc122e87756cb081d5a45c9bd2014a473e7b6f83a",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "腾讯秋招前端一面面经 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-187;blob:d13209fd83449b0efcc4886b1d6eef22b65a07d7",
+        "semantic_excerpt": "腾讯秋招前端一面面经\ncsig，一个小时后已过，大概率聊了二十几分钟，主要围绕做过的东西\n \n1.介绍项目\n2.echarts和three.js的实现原理是什么？实现echarts之类的数据可视化功能，除了canvas还有什么？\n3.项目中大模型相关的SSE是怎么做的？\n4.Websocket中1xx相关的状态码代表什么意思\n5.tailwind和其他样式方案的区别\n6.缓存和懒加载是怎么实现的？不使用lazy这个属性来实现懒加载，怎么做？控制缓存的http头有哪些\n7.事件循环机制，nodejs和浏览器环境的有什么区别\n8.路由的实现有什么方案，react router是如何实现的？history方案是基于哪些api，hash方案的监听是基于哪个api\n9.手撕：节流，分割银行卡号；判断是否为对称二叉树"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68c2f9a8000000001d02803d.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "0eb7bc89e8e8551c6c2569d0b83399ff01660fae",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 22750,
+      "content_sha256": "d705f8e22f89012b0d140a64171dc450b387cb2466cdb507004ce2e7a7dd8f0a",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "腾讯秋招前端一面面经\",",
+        "line": 594,
+        "locator": "artifact-line:594#offset:30-42;blob:0eb7bc89e8e8551c6c2569d0b83399ff01660fae",
+        "semantic_excerpt": "腾讯秋招前端一面面经\ncsig，一个小时后已过，大概率聊了二十几分钟，主要围绕做过的东西\n \n1.介绍项目\n2.echarts和three.js的实现原理是什么？实现echarts之类的数据可视化功能，除了canvas还有什么？\n3.项目中大模型相关的SSE是怎么做的？\n4.Websocket中1xx相关的状态码代表什么意思\n5.tailwind和其他样式方案的区别\n6.缓存和懒加载是怎么实现的？不使用lazy这个属性来实现懒加载，怎么做？控制缓存的http头有哪些\n7.事件循环机制，nodejs和浏览器环境的有什么区别\n8.路由的实现有什么方案，react router是如何实现的？history方案是基于哪些api，hash方案的监听是基于哪个api\n9.手撕：节流，分割银行卡号；判断是否为对称二叉树"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -69,8 +175,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -84,11 +190,12 @@
     }
   ],
   "limitations": [
-    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "86409fbe1b01081c7ea69c784f0d3fbfa97e141784c0fb8a2be7fe78b58522e2"
+  "evidence_sha256": "ccbda46c25edd6fb7d4ef59c038ecb8f58d5fad84fd77fffc27a7889e7fb4cce"
 }

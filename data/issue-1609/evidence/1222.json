@@ -7,15 +7,12 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "f1b0fa86445e8610c98a94f3d3274aa17297c44bd3620d1fc0e210d3097dd1ec",
-  "disposition": "blocked",
-  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "disposition": "single-interview",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
-      "question-list-only",
-      "no-first-person-event",
-      "question-only",
-      "no-candidate-event-evidence"
+      "no-first-person-event"
     ],
     "questions": 11,
     "has_first_person_event": false,
@@ -23,19 +20,33 @@
     "has_bounded_event": true,
     "has_detailed_event": true,
     "has_completed_event_evidence": true,
-    "has_structured_candidate_event": false,
+    "has_structured_candidate_event": true,
     "generic_advice_or_aggregated": false,
     "scheduled_only": false,
-    "question_only": true,
+    "question_only": false,
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
-    "only_question_list": true,
+    "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "jd-process",
+        "anchor": "京东",
+        "line": 1,
+        "locator": "artifact-line:15#offset:10-12;blob:e1e2e37da480e25a1101de9acf37dd4a7e95ef72",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:京东",
+        "source_ref": "liqiangcc/xhs:note_desc/68b2c9d0000000001d03b977.txt@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b2c9d0000000001d03b977.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -44,13 +55,108 @@
     "provenance": "source_projection",
     "byte_size": 844,
     "content_sha256": "756225f8376048e8476f4103199244ac53a0048b42afb3c4b661ffce5d6f67ae",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "1.深挖项目，秒杀场景、存储一致性、异常处理。",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "1.深挖项目，秒杀场景、存储一致性、异常处理。\n2.线程池种类和参数。\n3.什么场景下会创建非核心线程。\n4.使用过什么集合。\n5.ArrayList初始容量、扩容条件、扩容倍数。\n6.MySQL的锁。\n7.RocketMQ和Kafka选型，底层原理：容错和高可用机制、推拉模式、零拷贝等。\n8.redis缓存键值设置。\n9.红黑树和AVL树区别、优缺点。\n10.MySQL的ACID如何实现、日志都有什么作用、如果insert语句执行时宕机了会有几种可能发生的情况。\n11.Zset设计一个销量排行榜、延伸排行榜大key问题、延伸大数据量下top100如何实现。\n \n总计50分钟，无手撕，大部分问项目八股较少。"
-    }
+      "locator": "artifact-line:1#offset:0-23;blob:e1e2e37da480e25a1101de9acf37dd4a7e95ef72",
+      "semantic_excerpt": "京东后端开发一面面经\n1.深挖项目，秒杀场景、存储一致性、异常处理。\n2.线程池种类和参数。\n3.什么场景下会创建非核心线程。\n4.使用过什么集合。\n5.ArrayList初始容量、扩容条件、扩容倍数。\n6.MySQL的锁。\n7.RocketMQ和Kafka选型，底层原理：容错和高可用机制、推拉模式、零拷贝等。\n8.redis缓存键值设置。\n9.红黑树和AVL树区别、优缺点。\n10.MySQL的ACID如何实现、日志都有什么作用、如果insert语句执行时宕机了会有几种可能发生的情况。\n11.Zset设计一个销量排行榜、延伸排行榜大key问题、延伸大数据量下top100如何实现。\n \n总计50分钟，无手撕，大部分问项目八股较少。"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68b2c9d0000000001d03b977.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "e1e2e37da480e25a1101de9acf37dd4a7e95ef72",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 844,
+        "content_sha256": "756225f8376048e8476f4103199244ac53a0048b42afb3c4b661ffce5d6f67ae",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "1.深挖项目，秒杀场景、存储一致性、异常处理。",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-23;blob:e1e2e37da480e25a1101de9acf37dd4a7e95ef72",
+          "semantic_excerpt": "京东后端开发一面面经\n1.深挖项目，秒杀场景、存储一致性、异常处理。\n2.线程池种类和参数。\n3.什么场景下会创建非核心线程。\n4.使用过什么集合。\n5.ArrayList初始容量、扩容条件、扩容倍数。\n6.MySQL的锁。\n7.RocketMQ和Kafka选型，底层原理：容错和高可用机制、推拉模式、零拷贝等。\n8.redis缓存键值设置。\n9.红黑树和AVL树区别、优缺点。\n10.MySQL的ACID如何实现、日志都有什么作用、如果insert语句执行时宕机了会有几种可能发生的情况。\n11.Zset设计一个销量排行榜、延伸排行榜大key问题、延伸大数据量下top100如何实现。\n \n总计50分钟，无手撕，大部分问项目八股较少。"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68b2c9d0000000001d03b977.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "a095cb1f67ae3d74aaec8df54e1548d39a43ba62",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 388740,
+        "content_sha256": "0e9ac115ef5c67e091aa50de9696808ab58a3278549796a008a01864953d2358",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "京东后端开发一面面经 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-187;blob:a095cb1f67ae3d74aaec8df54e1548d39a43ba62",
+          "semantic_excerpt": "京东后端开发一面面经\n1.深挖项目，秒杀场景、存储一致性、异常处理。\n2.线程池种类和参数。\n3.什么场景下会创建非核心线程。\n4.使用过什么集合。\n5.ArrayList初始容量、扩容条件、扩容倍数。\n6.MySQL的锁。\n7.RocketMQ和Kafka选型，底层原理：容错和高可用机制、推拉模式、零拷贝等。\n8.redis缓存键值设置。\n9.红黑树和AVL树区别、优缺点。\n10.MySQL的ACID如何实现、日志都有什么作用、如果insert语句执行时宕机了会有几种可能发生的情况。\n11.Zset设计一个销量排行榜、延伸排行榜大key问题、延伸大数据量下top100如何实现。\n \n总计50分钟，无手撕，大部分问项目八股较少。"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68b2c9d0000000001d03b977.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "61fdece0e12f1b30a98c3ff0bf2e7c5ce91636f2",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 21963,
+        "content_sha256": "95caeacca5617c168661ec3271a9c082d3d61c48ec0c5ad987d66973b6a54833",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "京东后端开发一面面经\",",
+          "line": 537,
+          "locator": "artifact-line:537#offset:30-42;blob:61fdece0e12f1b30a98c3ff0bf2e7c5ce91636f2",
+          "semantic_excerpt": "京东后端开发一面面经\n1.深挖项目，秒杀场景、存储一致性、异常处理。\n2.线程池种类和参数。\n3.什么场景下会创建非核心线程。\n4.使用过什么集合。\n5.ArrayList初始容量、扩容条件、扩容倍数。\n6.MySQL的锁。\n7.RocketMQ和Kafka选型，底层原理：容错和高可用机制、推拉模式、零拷贝等。\n8.redis缓存键值设置。\n9.红黑树和AVL树区别、优缺点。\n10.MySQL的ACID如何实现、日志都有什么作用、如果insert语句执行时宕机了会有几种可能发生的情况。\n11.Zset设计一个销量排行榜、延伸排行榜大key问题、延伸大数据量下top100如何实现。\n \n总计50分钟，无手撕，大部分问项目八股较少。"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68b2c9d0000000001d03b977.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "e1e2e37da480e25a1101de9acf37dd4a7e95ef72",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 844,
+      "content_sha256": "756225f8376048e8476f4103199244ac53a0048b42afb3c4b661ffce5d6f67ae",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "1.深挖项目，秒杀场景、存储一致性、异常处理。",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-23;blob:e1e2e37da480e25a1101de9acf37dd4a7e95ef72",
+        "semantic_excerpt": "京东后端开发一面面经\n1.深挖项目，秒杀场景、存储一致性、异常处理。\n2.线程池种类和参数。\n3.什么场景下会创建非核心线程。\n4.使用过什么集合。\n5.ArrayList初始容量、扩容条件、扩容倍数。\n6.MySQL的锁。\n7.RocketMQ和Kafka选型，底层原理：容错和高可用机制、推拉模式、零拷贝等。\n8.redis缓存键值设置。\n9.红黑树和AVL树区别、优缺点。\n10.MySQL的ACID如何实现、日志都有什么作用、如果insert语句执行时宕机了会有几种可能发生的情况。\n11.Zset设计一个销量排行榜、延伸排行榜大key问题、延伸大数据量下top100如何实现。\n \n总计50分钟，无手撕，大部分问项目八股较少。"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68b2c9d0000000001d03b977.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "a095cb1f67ae3d74aaec8df54e1548d39a43ba62",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 388740,
+      "content_sha256": "0e9ac115ef5c67e091aa50de9696808ab58a3278549796a008a01864953d2358",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "京东后端开发一面面经 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-187;blob:a095cb1f67ae3d74aaec8df54e1548d39a43ba62",
+        "semantic_excerpt": "京东后端开发一面面经\n1.深挖项目，秒杀场景、存储一致性、异常处理。\n2.线程池种类和参数。\n3.什么场景下会创建非核心线程。\n4.使用过什么集合。\n5.ArrayList初始容量、扩容条件、扩容倍数。\n6.MySQL的锁。\n7.RocketMQ和Kafka选型，底层原理：容错和高可用机制、推拉模式、零拷贝等。\n8.redis缓存键值设置。\n9.红黑树和AVL树区别、优缺点。\n10.MySQL的ACID如何实现、日志都有什么作用、如果insert语句执行时宕机了会有几种可能发生的情况。\n11.Zset设计一个销量排行榜、延伸排行榜大key问题、延伸大数据量下top100如何实现。\n \n总计50分钟，无手撕，大部分问项目八股较少。"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68b2c9d0000000001d03b977.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "61fdece0e12f1b30a98c3ff0bf2e7c5ce91636f2",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 21963,
+      "content_sha256": "95caeacca5617c168661ec3271a9c082d3d61c48ec0c5ad987d66973b6a54833",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "京东后端开发一面面经\",",
+        "line": 537,
+        "locator": "artifact-line:537#offset:30-42;blob:61fdece0e12f1b30a98c3ff0bf2e7c5ce91636f2",
+        "semantic_excerpt": "京东后端开发一面面经\n1.深挖项目，秒杀场景、存储一致性、异常处理。\n2.线程池种类和参数。\n3.什么场景下会创建非核心线程。\n4.使用过什么集合。\n5.ArrayList初始容量、扩容条件、扩容倍数。\n6.MySQL的锁。\n7.RocketMQ和Kafka选型，底层原理：容错和高可用机制、推拉模式、零拷贝等。\n8.redis缓存键值设置。\n9.红黑树和AVL树区别、优缺点。\n10.MySQL的ACID如何实现、日志都有什么作用、如果insert语句执行时宕机了会有几种可能发生的情况。\n11.Zset设计一个销量排行榜、延伸排行榜大key问题、延伸大数据量下top100如何实现。\n \n总计50分钟，无手撕，大部分问项目八股较少。"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -69,8 +175,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -84,11 +190,12 @@
     }
   ],
   "limitations": [
-    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "4d5895451cd89afe1ebb704451d4526adfededd71b6d66cf1630d19134a9c94e"
+  "evidence_sha256": "22a760eaebc17a26ace1702540806c349f95481835791e29a5256312a637cd46"
 }

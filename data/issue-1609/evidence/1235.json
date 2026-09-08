@@ -29,21 +29,16 @@
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": [
-      {
-        "case_key": "meituan-process",
-        "anchor": "美团",
-        "line": 1,
-        "locator": "artifact-line:1#offset:0-2",
-        "local_detail": true,
-        "semantic_locator": "semantic-anchor:美团"
-      }
-    ]
+    "case_segments": [],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b55dcc000000001d02760e.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -52,13 +47,108 @@
     "provenance": "source_projection",
     "byte_size": 940,
     "content_sha256": "5d46a3c293190f705c652e9dc9b0387ac4ea4ecae76862a3c88985250042afcc",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "美团后端一面",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "美团后端一面\n1.为什么会出现缓存穿透的问题？\n2.缓存和数据库的一致性\n3.修改数据库后，为什么不直接update缓存，而是删除缓存\n4.拷打强一致性和最终一致性\n5.缓存击穿\n6.你的意思是重建业务不复杂的key是没有缓存击穿的风险是吗？\n7.热点key的含义\n8.雪花算法\n9.雪花算法生成ID的逻辑\n10.倒排索引\n11.全文索引\n12.和聚簇索引有什么区别\n13.算法：爬楼梯\n14.算法：编辑距离\n15.算法：两个有序链表合并\n16.简单SQL\n17.MVCC\n18.JVM内存模型\n19.Integer a = new Integer(100); a在哪\n20.Integer b = new Integer(100); a==b？\n21.integer c = 100; a==c?\n22.线程池核心线程数和最大线程数的区别"
-    }
+      "locator": "artifact-line:1#offset:0-6;blob:10f5d3099bacfd7b10961596496eaa0dd3d81fae",
+      "semantic_excerpt": "美团java面试分享\n美团后端一面\n1.为什么会出现缓存穿透的问题？\n2.缓存和数据库的一致性\n3.修改数据库后，为什么不直接update缓存，而是删除缓存\n4.拷打强一致性和最终一致性\n5.缓存击穿\n6.你的意思是重建业务不复杂的key是没有缓存击穿的风险是吗？\n7.热点key的含义\n8.雪花算法\n9.雪花算法生成ID的逻辑\n10.倒排索引\n11.全文索引\n12.和聚簇索引有什么区别\n13.算法：爬楼梯\n14.算法：编辑距离\n15.算法：两个有序链表合并\n16.简单SQL\n17.MVCC\n18.JVM内存模型\n19.Integer a = new Integer(100); a在哪\n20.Integer b = new Integer(100); a==b？\n21.integer c = 100; a==c?\n22.线程池核心线程数和最大线程数的区别"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68b55dcc000000001d02760e.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "10f5d3099bacfd7b10961596496eaa0dd3d81fae",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 940,
+        "content_sha256": "5d46a3c293190f705c652e9dc9b0387ac4ea4ecae76862a3c88985250042afcc",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "美团后端一面",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-6;blob:10f5d3099bacfd7b10961596496eaa0dd3d81fae",
+          "semantic_excerpt": "美团java面试分享\n美团后端一面\n1.为什么会出现缓存穿透的问题？\n2.缓存和数据库的一致性\n3.修改数据库后，为什么不直接update缓存，而是删除缓存\n4.拷打强一致性和最终一致性\n5.缓存击穿\n6.你的意思是重建业务不复杂的key是没有缓存击穿的风险是吗？\n7.热点key的含义\n8.雪花算法\n9.雪花算法生成ID的逻辑\n10.倒排索引\n11.全文索引\n12.和聚簇索引有什么区别\n13.算法：爬楼梯\n14.算法：编辑距离\n15.算法：两个有序链表合并\n16.简单SQL\n17.MVCC\n18.JVM内存模型\n19.Integer a = new Integer(100); a在哪\n20.Integer b = new Integer(100); a==b？\n21.integer c = 100; a==c?\n22.线程池核心线程数和最大线程数的区别"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68b55dcc000000001d02760e.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "7f53271d28dee5942b9a48fa0ab0bdca2a913521",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 392524,
+        "content_sha256": "64f88e44c133ea3c3f5fffbd10f2d7a6878e769b963daa50b7b99af9c7a40b3e",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "美团java面试分享 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-187;blob:7f53271d28dee5942b9a48fa0ab0bdca2a913521",
+          "semantic_excerpt": "美团java面试分享\n美团后端一面\n1.为什么会出现缓存穿透的问题？\n2.缓存和数据库的一致性\n3.修改数据库后，为什么不直接update缓存，而是删除缓存\n4.拷打强一致性和最终一致性\n5.缓存击穿\n6.你的意思是重建业务不复杂的key是没有缓存击穿的风险是吗？\n7.热点key的含义\n8.雪花算法\n9.雪花算法生成ID的逻辑\n10.倒排索引\n11.全文索引\n12.和聚簇索引有什么区别\n13.算法：爬楼梯\n14.算法：编辑距离\n15.算法：两个有序链表合并\n16.简单SQL\n17.MVCC\n18.JVM内存模型\n19.Integer a = new Integer(100); a在哪\n20.Integer b = new Integer(100); a==b？\n21.integer c = 100; a==c?\n22.线程池核心线程数和最大线程数的区别"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68b55dcc000000001d02760e.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "f5759aae0491b77513569fe33ffbc08748c737e9",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 24245,
+        "content_sha256": "6a16f490ad7ba39cb3688e94f8c21b3e097a97dad34acd2d2cc9cec6100905f5",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "美团java面试分享\",",
+          "line": 498,
+          "locator": "artifact-line:498#offset:30-42;blob:f5759aae0491b77513569fe33ffbc08748c737e9",
+          "semantic_excerpt": "美团java面试分享\n美团后端一面\n1.为什么会出现缓存穿透的问题？\n2.缓存和数据库的一致性\n3.修改数据库后，为什么不直接update缓存，而是删除缓存\n4.拷打强一致性和最终一致性\n5.缓存击穿\n6.你的意思是重建业务不复杂的key是没有缓存击穿的风险是吗？\n7.热点key的含义\n8.雪花算法\n9.雪花算法生成ID的逻辑\n10.倒排索引\n11.全文索引\n12.和聚簇索引有什么区别\n13.算法：爬楼梯\n14.算法：编辑距离\n15.算法：两个有序链表合并\n16.简单SQL\n17.MVCC\n18.JVM内存模型\n19.Integer a = new Integer(100); a在哪\n20.Integer b = new Integer(100); a==b？\n21.integer c = 100; a==c?\n22.线程池核心线程数和最大线程数的区别"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68b55dcc000000001d02760e.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "10f5d3099bacfd7b10961596496eaa0dd3d81fae",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 940,
+      "content_sha256": "5d46a3c293190f705c652e9dc9b0387ac4ea4ecae76862a3c88985250042afcc",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "美团后端一面",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-6;blob:10f5d3099bacfd7b10961596496eaa0dd3d81fae",
+        "semantic_excerpt": "美团java面试分享\n美团后端一面\n1.为什么会出现缓存穿透的问题？\n2.缓存和数据库的一致性\n3.修改数据库后，为什么不直接update缓存，而是删除缓存\n4.拷打强一致性和最终一致性\n5.缓存击穿\n6.你的意思是重建业务不复杂的key是没有缓存击穿的风险是吗？\n7.热点key的含义\n8.雪花算法\n9.雪花算法生成ID的逻辑\n10.倒排索引\n11.全文索引\n12.和聚簇索引有什么区别\n13.算法：爬楼梯\n14.算法：编辑距离\n15.算法：两个有序链表合并\n16.简单SQL\n17.MVCC\n18.JVM内存模型\n19.Integer a = new Integer(100); a在哪\n20.Integer b = new Integer(100); a==b？\n21.integer c = 100; a==c?\n22.线程池核心线程数和最大线程数的区别"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68b55dcc000000001d02760e.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "7f53271d28dee5942b9a48fa0ab0bdca2a913521",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 392524,
+      "content_sha256": "64f88e44c133ea3c3f5fffbd10f2d7a6878e769b963daa50b7b99af9c7a40b3e",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "美团java面试分享 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-187;blob:7f53271d28dee5942b9a48fa0ab0bdca2a913521",
+        "semantic_excerpt": "美团java面试分享\n美团后端一面\n1.为什么会出现缓存穿透的问题？\n2.缓存和数据库的一致性\n3.修改数据库后，为什么不直接update缓存，而是删除缓存\n4.拷打强一致性和最终一致性\n5.缓存击穿\n6.你的意思是重建业务不复杂的key是没有缓存击穿的风险是吗？\n7.热点key的含义\n8.雪花算法\n9.雪花算法生成ID的逻辑\n10.倒排索引\n11.全文索引\n12.和聚簇索引有什么区别\n13.算法：爬楼梯\n14.算法：编辑距离\n15.算法：两个有序链表合并\n16.简单SQL\n17.MVCC\n18.JVM内存模型\n19.Integer a = new Integer(100); a在哪\n20.Integer b = new Integer(100); a==b？\n21.integer c = 100; a==c?\n22.线程池核心线程数和最大线程数的区别"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68b55dcc000000001d02760e.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "f5759aae0491b77513569fe33ffbc08748c737e9",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 24245,
+      "content_sha256": "6a16f490ad7ba39cb3688e94f8c21b3e097a97dad34acd2d2cc9cec6100905f5",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "美团java面试分享\",",
+        "line": 498,
+        "locator": "artifact-line:498#offset:30-42;blob:f5759aae0491b77513569fe33ffbc08748c737e9",
+        "semantic_excerpt": "美团java面试分享\n美团后端一面\n1.为什么会出现缓存穿透的问题？\n2.缓存和数据库的一致性\n3.修改数据库后，为什么不直接update缓存，而是删除缓存\n4.拷打强一致性和最终一致性\n5.缓存击穿\n6.你的意思是重建业务不复杂的key是没有缓存击穿的风险是吗？\n7.热点key的含义\n8.雪花算法\n9.雪花算法生成ID的逻辑\n10.倒排索引\n11.全文索引\n12.和聚簇索引有什么区别\n13.算法：爬楼梯\n14.算法：编辑距离\n15.算法：两个有序链表合并\n16.简单SQL\n17.MVCC\n18.JVM内存模型\n19.Integer a = new Integer(100); a在哪\n20.Integer b = new Integer(100); a==b？\n21.integer c = 100; a==c?\n22.线程池核心线程数和最大线程数的区别"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -93,10 +183,11 @@
   ],
   "limitations": [
     "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "d3dbd9cb6fe1704c718d8b337e5a9b957c04924261bfa7abe462cbf725c91a20"
+  "evidence_sha256": "699f0c42ed9e03e082eaf0ca7f34705ed71e6ab3f8575613a10c71da966dc5d5"
 }

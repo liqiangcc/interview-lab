@@ -17,7 +17,7 @@
       "question-only",
       "no-candidate-event-evidence"
     ],
-    "questions": 21,
+    "questions": 22,
     "has_first_person_event": false,
     "has_explicit_candidate_event": false,
     "has_bounded_event": true,
@@ -30,12 +30,26 @@
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": true,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "tencent-process",
+        "anchor": "腾讯",
+        "line": 1,
+        "locator": "artifact-line:490#offset:168-170;blob:5dbea88efda1164fd1995ce7fb952384808bfc80",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:腾讯",
+        "source_ref": "liqiangcc/xhs:note_detail/68ced1a80000000011015ae0.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 2,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68ced1a80000000011015ae0.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -44,13 +58,78 @@
     "provenance": "source_projection",
     "byte_size": 23665,
     "content_sha256": "9eaed5d3919aa72ae5b1078a238e009fe542c46739a0b6615194f3e433d11e6c",
+    "cache_status": "not-applicable",
     "excerpt": {
-      "excerpt": "\"global\": {",
-      "line": 2,
-      "locator": "artifact-line:2",
-      "semantic_excerpt": "1.图文上传流程\n2.如何解决图片上传的负载\n3.不同文件预览的挑战\n4.讲一下自定义hook\n5.讲一下Vue2 和vue3 的差异\n6.vue3解决了vue2的什么问题\n7.react对比vue的差异\n8.了解性能优化，在网络层面讲一下优化\n9.301 和 302区别\n10.浏览器缓存的策略\n11.具体是怎么触发缓存\n12.css的动画中，给一个元素写一个动画，又给它绑定了js点击事件，会生效吗\n13.反过来，js的代码会不会影响css\n14.盒子模型，width:100 padding:100 宽度是多少\n手撕：\n对于一个数组（长度>=3）进行乱序排序，要求每个元素不会落到原来位置，且落到其他位置的概率相同：\nfunction derangementShuffle(arr) {\nconst n = arr.length;\n// 复制数组，防止修改原数组\nconst shuffledArr = [...arr];\n// 1. 使用 Fisher-Yates 洗牌算法进行初步打乱\nfor (let i = n - 1; i > 0; i--) {\nconst j = Math.floor(Math.random() * (i + 1));\n[shuffledArr[i], shuffledArr[j]] = [shuffledArr[j], shuffledArr[i]];\n}\n// 2. 检查并纠正还在原位的元素\nfor (let i = 0; i < n; i++) {\n// 如果当前元素还在原位，需要进行交换\nif (shuffledArr[i] === arr[i]) {\nlet j = (i + 1) % n; // 从下一个位置开始找\n// 找到一个可以交换的元素\nwhile (shuffledArr[j] === arr[j] && j !== i) {\nj = (j + 1) % n;\n}\n// 进行交换\n[shuffledArr[i], shuffledArr[j]] = [shuffledArr[j], shuffledArr[i]];\n}\n}\nreturn shuffledArr;\n}\n// 示例\nconst originalArr = [1, 2, 3, 4, 5];\nconst derangedArr = derangementShuff"
-    }
+      "excerpt": "9.11 腾讯csig一面\",",
+      "line": 504,
+      "locator": "artifact-line:504#offset:30-45;blob:1b51cccecac108687ac47dcca3d437d638c15897",
+      "semantic_excerpt": "9.11 腾讯csig一面\n1.图文上传流程\n2.如何解决图片上传的负载\n3.不同文件预览的挑战\n4.讲一下自定义hook\n5.讲一下Vue2 和vue3 的差异\n6.vue3解决了vue2的什么问题\n7.react对比vue的差异\n8.了解性能优化，在网络层面讲一下优化\n9.301 和 302区别\n10.浏览器缓存的策略\n11.具体是怎么触发缓存\n12.css的动画中，给一个元素写一个动画，又给它绑定了js点击事件，会生效吗\n13.反过来，js的代码会不会影响css\n14.盒子模型，width:100 padding:100 宽度是多少\n手撕：\n对于一个数组（长度>=3）进行乱序排序，要求每个元素不会落到原来位置，且落到其他位置的概率相同：\nfunction derangementShuffle(arr) {\nconst n = arr.length;\n// 复制数组，防止修改原数组\nconst shuffledArr = [...arr];\n// 1. 使用 Fisher-Yates 洗牌算法进行初步打乱\nfor (let i = n - 1; i > 0; i--) {\nconst j = Math.floor(Math.random() * (i + 1));\n[shuffledArr[i], shuffledArr[j]] = [shuffledArr[j], shuffledArr[i]];\n}\n// 2. 检查并纠正还在原位的元素\nfor (let i = 0; i < n; i++) {\n// 如果当前元素还在原位，需要进行交换\nif (shuffledArr[i] === arr[i]) {\nlet j = (i + 1) % n; // 从下一个位置开始找\n// 找到一个可以交换的元素\nwhile (shuffledArr[j] === arr[j] && j !== i) {\nj = (j + 1) % n;\n}\n// 进行交换\n[shuffledArr[i], shuffledArr[j]] = [shuffledArr[j], shuffledArr[i]];\n}\n}\nreturn shuffledArr;\n}\n// 示例\nconst originalArr = [1, 2, 3, 4, 5];\nconst derangedArr = de"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_detail/68ced1a80000000011015ae0.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "5dbea88efda1164fd1995ce7fb952384808bfc80",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 394069,
+        "content_sha256": "ffbd82b1e3ad332a855639093544c64af3138dfe2a25b0230546892a8b3c5e60",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "9.11 腾讯csig一面 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-190;blob:5dbea88efda1164fd1995ce7fb952384808bfc80",
+          "semantic_excerpt": "9.11 腾讯csig一面\n1.图文上传流程\n2.如何解决图片上传的负载\n3.不同文件预览的挑战\n4.讲一下自定义hook\n5.讲一下Vue2 和vue3 的差异\n6.vue3解决了vue2的什么问题\n7.react对比vue的差异\n8.了解性能优化，在网络层面讲一下优化\n9.301 和 302区别\n10.浏览器缓存的策略\n11.具体是怎么触发缓存\n12.css的动画中，给一个元素写一个动画，又给它绑定了js点击事件，会生效吗\n13.反过来，js的代码会不会影响css\n14.盒子模型，width:100 padding:100 宽度是多少\n手撕：\n对于一个数组（长度>=3）进行乱序排序，要求每个元素不会落到原来位置，且落到其他位置的概率相同：\nfunction derangementShuffle(arr) {\nconst n = arr.length;\n// 复制数组，防止修改原数组\nconst shuffledArr = [...arr];\n// 1. 使用 Fisher-Yates 洗牌算法进行初步打乱\nfor (let i = n - 1; i > 0; i--) {\nconst j = Math.floor(Math.random() * (i + 1));\n[shuffledArr[i], shuffledArr[j]] = [shuffledArr[j], shuffledArr[i]];\n}\n// 2. 检查并纠正还在原位的元素\nfor (let i = 0; i < n; i++) {\n// 如果当前元素还在原位，需要进行交换\nif (shuffledArr[i] === arr[i]) {\nlet j = (i + 1) % n; // 从下一个位置开始找\n// 找到一个可以交换的元素\nwhile (shuffledArr[j] === arr[j] && j !== i) {\nj = (j + 1) % n;\n}\n// 进行交换\n[shuffledArr[i], shuffledArr[j]] = [shuffledArr[j], shuffledArr[i]];\n}\n}\nreturn shuffledArr;\n}\n// 示例\nconst originalArr = [1, 2, 3, 4, 5];\nconst derangedArr = de"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68ced1a80000000011015ae0.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "1b51cccecac108687ac47dcca3d437d638c15897",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 23665,
+        "content_sha256": "9eaed5d3919aa72ae5b1078a238e009fe542c46739a0b6615194f3e433d11e6c",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "9.11 腾讯csig一面\",",
+          "line": 504,
+          "locator": "artifact-line:504#offset:30-45;blob:1b51cccecac108687ac47dcca3d437d638c15897",
+          "semantic_excerpt": "9.11 腾讯csig一面\n1.图文上传流程\n2.如何解决图片上传的负载\n3.不同文件预览的挑战\n4.讲一下自定义hook\n5.讲一下Vue2 和vue3 的差异\n6.vue3解决了vue2的什么问题\n7.react对比vue的差异\n8.了解性能优化，在网络层面讲一下优化\n9.301 和 302区别\n10.浏览器缓存的策略\n11.具体是怎么触发缓存\n12.css的动画中，给一个元素写一个动画，又给它绑定了js点击事件，会生效吗\n13.反过来，js的代码会不会影响css\n14.盒子模型，width:100 padding:100 宽度是多少\n手撕：\n对于一个数组（长度>=3）进行乱序排序，要求每个元素不会落到原来位置，且落到其他位置的概率相同：\nfunction derangementShuffle(arr) {\nconst n = arr.length;\n// 复制数组，防止修改原数组\nconst shuffledArr = [...arr];\n// 1. 使用 Fisher-Yates 洗牌算法进行初步打乱\nfor (let i = n - 1; i > 0; i--) {\nconst j = Math.floor(Math.random() * (i + 1));\n[shuffledArr[i], shuffledArr[j]] = [shuffledArr[j], shuffledArr[i]];\n}\n// 2. 检查并纠正还在原位的元素\nfor (let i = 0; i < n; i++) {\n// 如果当前元素还在原位，需要进行交换\nif (shuffledArr[i] === arr[i]) {\nlet j = (i + 1) % n; // 从下一个位置开始找\n// 找到一个可以交换的元素\nwhile (shuffledArr[j] === arr[j] && j !== i) {\nj = (j + 1) % n;\n}\n// 进行交换\n[shuffledArr[i], shuffledArr[j]] = [shuffledArr[j], shuffledArr[i]];\n}\n}\nreturn shuffledArr;\n}\n// 示例\nconst originalArr = [1, 2, 3, 4, 5];\nconst derangedArr = de"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/68ced1a80000000011015ae0.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "5dbea88efda1164fd1995ce7fb952384808bfc80",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 394069,
+      "content_sha256": "ffbd82b1e3ad332a855639093544c64af3138dfe2a25b0230546892a8b3c5e60",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "9.11 腾讯csig一面 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-190;blob:5dbea88efda1164fd1995ce7fb952384808bfc80",
+        "semantic_excerpt": "9.11 腾讯csig一面\n1.图文上传流程\n2.如何解决图片上传的负载\n3.不同文件预览的挑战\n4.讲一下自定义hook\n5.讲一下Vue2 和vue3 的差异\n6.vue3解决了vue2的什么问题\n7.react对比vue的差异\n8.了解性能优化，在网络层面讲一下优化\n9.301 和 302区别\n10.浏览器缓存的策略\n11.具体是怎么触发缓存\n12.css的动画中，给一个元素写一个动画，又给它绑定了js点击事件，会生效吗\n13.反过来，js的代码会不会影响css\n14.盒子模型，width:100 padding:100 宽度是多少\n手撕：\n对于一个数组（长度>=3）进行乱序排序，要求每个元素不会落到原来位置，且落到其他位置的概率相同：\nfunction derangementShuffle(arr) {\nconst n = arr.length;\n// 复制数组，防止修改原数组\nconst shuffledArr = [...arr];\n// 1. 使用 Fisher-Yates 洗牌算法进行初步打乱\nfor (let i = n - 1; i > 0; i--) {\nconst j = Math.floor(Math.random() * (i + 1));\n[shuffledArr[i], shuffledArr[j]] = [shuffledArr[j], shuffledArr[i]];\n}\n// 2. 检查并纠正还在原位的元素\nfor (let i = 0; i < n; i++) {\n// 如果当前元素还在原位，需要进行交换\nif (shuffledArr[i] === arr[i]) {\nlet j = (i + 1) % n; // 从下一个位置开始找\n// 找到一个可以交换的元素\nwhile (shuffledArr[j] === arr[j] && j !== i) {\nj = (j + 1) % n;\n}\n// 进行交换\n[shuffledArr[i], shuffledArr[j]] = [shuffledArr[j], shuffledArr[i]];\n}\n}\nreturn shuffledArr;\n}\n// 示例\nconst originalArr = [1, 2, 3, 4, 5];\nconst derangedArr = de"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68ced1a80000000011015ae0.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "1b51cccecac108687ac47dcca3d437d638c15897",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 23665,
+      "content_sha256": "9eaed5d3919aa72ae5b1078a238e009fe542c46739a0b6615194f3e433d11e6c",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "9.11 腾讯csig一面\",",
+        "line": 504,
+        "locator": "artifact-line:504#offset:30-45;blob:1b51cccecac108687ac47dcca3d437d638c15897",
+        "semantic_excerpt": "9.11 腾讯csig一面\n1.图文上传流程\n2.如何解决图片上传的负载\n3.不同文件预览的挑战\n4.讲一下自定义hook\n5.讲一下Vue2 和vue3 的差异\n6.vue3解决了vue2的什么问题\n7.react对比vue的差异\n8.了解性能优化，在网络层面讲一下优化\n9.301 和 302区别\n10.浏览器缓存的策略\n11.具体是怎么触发缓存\n12.css的动画中，给一个元素写一个动画，又给它绑定了js点击事件，会生效吗\n13.反过来，js的代码会不会影响css\n14.盒子模型，width:100 padding:100 宽度是多少\n手撕：\n对于一个数组（长度>=3）进行乱序排序，要求每个元素不会落到原来位置，且落到其他位置的概率相同：\nfunction derangementShuffle(arr) {\nconst n = arr.length;\n// 复制数组，防止修改原数组\nconst shuffledArr = [...arr];\n// 1. 使用 Fisher-Yates 洗牌算法进行初步打乱\nfor (let i = n - 1; i > 0; i--) {\nconst j = Math.floor(Math.random() * (i + 1));\n[shuffledArr[i], shuffledArr[j]] = [shuffledArr[j], shuffledArr[i]];\n}\n// 2. 检查并纠正还在原位的元素\nfor (let i = 0; i < n; i++) {\n// 如果当前元素还在原位，需要进行交换\nif (shuffledArr[i] === arr[i]) {\nlet j = (i + 1) % n; // 从下一个位置开始找\n// 找到一个可以交换的元素\nwhile (shuffledArr[j] === arr[j] && j !== i) {\nj = (j + 1) % n;\n}\n// 进行交换\n[shuffledArr[i], shuffledArr[j]] = [shuffledArr[j], shuffledArr[i]];\n}\n}\nreturn shuffledArr;\n}\n// 示例\nconst originalArr = [1, 2, 3, 4, 5];\nconst derangedArr = de"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -85,10 +164,11 @@
   ],
   "limitations": [
     "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "67251d5e0e0a8ddb62ad4c7e44c60c02e3144371d5af55fd730d4e874008ee3f"
+  "evidence_sha256": "42f1c931f5b2a89b38b0a40467918faa6da4b8eb322acc66cb58feefe364d01a"
 }

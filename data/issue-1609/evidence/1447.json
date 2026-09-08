@@ -27,12 +27,26 @@
     "outcome_signal": true,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": false,
     "only_outcome": false,
     "multi_signal": true,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "baidu-process",
+        "anchor": "百度",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-165;blob:05e92108a73a662c98dc1b5da62798569ddb7500",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:百度",
+        "source_ref": "liqiangcc/xhs:note_detail/68e7a288000000000301b7aa.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 2,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68e7a288000000000301b7aa.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -41,13 +55,78 @@
     "provenance": "source_projection",
     "byte_size": 21891,
     "content_sha256": "32a740b0a5b4d27e35263b2fbe68f85851b6a95b340b4d004d2a36c0d2b9a5a0",
+    "cache_status": "not-applicable",
     "excerpt": {
-      "excerpt": "\"desc\": \"面试官迟到七八分钟，实习和项目经历一点没问，八股拷打十几分钟，让我写算法题的时候他人就离开了，半小时后才回来，面完十几分钟官网就显示共享中。\\n1、ThreadLocal 的实现原理？\\n2、ThreadLocalMap中的key和value是什么类型的引用？\\n3、为什么key 能被 GC 自动回收，但 value不能被 GC 自动回收？\\n4、value主要是什么？\\n5、垃圾回收器有哪些？\\n6、可达性分析法的GC Roost有哪些？\\n7、为什么选这些对象作为GC Root?\\n8、平时使用MySQL是怎么用的？（其实没太get到这个问题的点）\\n9、MySQL的存储引擎？\\n10、为什么用InnoDB做默认存储引擎？\\n11、事务隔离级别有哪些？\\n12、update b = b + 1 where b = 5 在可重复读隔离级别下，5个线程并发执行，最后b的值是多少？\\n13、OSI网络模型？\\n14、数据链路层有哪些协议？（我直接问号脸，不是哥们，面了这么多家第一次问数据链路层的协议的， 面完翻了翻小林codiing和面渣逆袭都没提，之前一直感觉不是重点来着，这玩意本科学计网的时候还能看看，现在真是想不起来了，还是太菜了）\\n算法题：二叉树的最近公共祖先，写的时候我看到上面导入了TreeNode类的，结果编译不通过，问面试官没人回应，最后50分钟左右面试官回来了，说要把二叉树的定义作为静态内部类写到solution里面。\\n#后端开发[话题]# #秋招面试[话题]# #面经[话题]#\",",
-      "line": 526,
-      "locator": "artifact-line:526",
-      "semantic_excerpt": "面试官迟到七八分钟，实习和项目经历一点没问，八股拷打十几分钟，让我写算法题的时候他人就离开了，半小时后才回来，面完十几分钟官网就显示共享中。\n1、ThreadLocal 的实现原理？\n2、ThreadLocalMap中的key和value是什么类型的引用？\n3、为什么key 能被 GC 自动回收，但 value不能被 GC 自动回收？\n4、value主要是什么？\n5、垃圾回收器有哪些？\n6、可达性分析法的GC Roost有哪些？\n7、为什么选这些对象作为GC Root?\n8、平时使用MySQL是怎么用的？（其实没太get到这个问题的点）\n9、MySQL的存储引擎？\n10、为什么用InnoDB做默认存储引擎？\n11、事务隔离级别有哪些？\n12、update b = b + 1 where b = 5 在可重复读隔离级别下，5个线程并发执行，最后b的值是多少？\n13、OSI网络模型？\n14、数据链路层有哪些协议？（我直接问号脸，不是哥们，面了这么多家第一次问数据链路层的协议的， 面完翻了翻小林codiing和面渣逆袭都没提，之前一直感觉不是重点来着，这玩意本科学计网的时候还能看看，现在真是想不起来了，还是太菜了）\n算法题：二叉树的最近公共祖先，写的时候我看到上面导入了TreeNode类的，结果编译不通过，问面试官没人回应，最后50分钟左右面试官回来了，说要把二叉树的定义作为静态内部类写到solution里面。"
-    }
+      "excerpt": "百度Java开发一面面经\",",
+      "line": 500,
+      "locator": "artifact-line:500#offset:30-44;blob:b904952826f07d44b6c32077fff3b389e54fb6db",
+      "semantic_excerpt": "百度Java开发一面面经\n面试官迟到七八分钟，实习和项目经历一点没问，八股拷打十几分钟，让我写算法题的时候他人就离开了，半小时后才回来，面完十几分钟官网就显示共享中。\n1、ThreadLocal 的实现原理？\n2、ThreadLocalMap中的key和value是什么类型的引用？\n3、为什么key 能被 GC 自动回收，但 value不能被 GC 自动回收？\n4、value主要是什么？\n5、垃圾回收器有哪些？\n6、可达性分析法的GC Roost有哪些？\n7、为什么选这些对象作为GC Root?\n8、平时使用MySQL是怎么用的？（其实没太get到这个问题的点）\n9、MySQL的存储引擎？\n10、为什么用InnoDB做默认存储引擎？\n11、事务隔离级别有哪些？\n12、update b = b + 1 where b = 5 在可重复读隔离级别下，5个线程并发执行，最后b的值是多少？\n13、OSI网络模型？\n14、数据链路层有哪些协议？（我直接问号脸，不是哥们，面了这么多家第一次问数据链路层的协议的， 面完翻了翻小林codiing和面渣逆袭都没提，之前一直感觉不是重点来着，这玩意本科学计网的时候还能看看，现在真是想不起来了，还是太菜了）\n算法题：二叉树的最近公共祖先，写的时候我看到上面导入了TreeNode类的，结果编译不通过，问面试官没人回应，最后50分钟左右面试官回来了，说要把二叉树的定义作为静态内部类写到solution里面。"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_detail/68e7a288000000000301b7aa.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "05e92108a73a662c98dc1b5da62798569ddb7500",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 389665,
+        "content_sha256": "2b3c569b49f18b7ddd0d06e01f571eaaca8802c11c4fc77db9ffa672299b61f5",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "百度Java开发一面面经 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-189;blob:05e92108a73a662c98dc1b5da62798569ddb7500",
+          "semantic_excerpt": "百度Java开发一面面经\n面试官迟到七八分钟，实习和项目经历一点没问，八股拷打十几分钟，让我写算法题的时候他人就离开了，半小时后才回来，面完十几分钟官网就显示共享中。\n1、ThreadLocal 的实现原理？\n2、ThreadLocalMap中的key和value是什么类型的引用？\n3、为什么key 能被 GC 自动回收，但 value不能被 GC 自动回收？\n4、value主要是什么？\n5、垃圾回收器有哪些？\n6、可达性分析法的GC Roost有哪些？\n7、为什么选这些对象作为GC Root?\n8、平时使用MySQL是怎么用的？（其实没太get到这个问题的点）\n9、MySQL的存储引擎？\n10、为什么用InnoDB做默认存储引擎？\n11、事务隔离级别有哪些？\n12、update b = b + 1 where b = 5 在可重复读隔离级别下，5个线程并发执行，最后b的值是多少？\n13、OSI网络模型？\n14、数据链路层有哪些协议？（我直接问号脸，不是哥们，面了这么多家第一次问数据链路层的协议的， 面完翻了翻小林codiing和面渣逆袭都没提，之前一直感觉不是重点来着，这玩意本科学计网的时候还能看看，现在真是想不起来了，还是太菜了）\n算法题：二叉树的最近公共祖先，写的时候我看到上面导入了TreeNode类的，结果编译不通过，问面试官没人回应，最后50分钟左右面试官回来了，说要把二叉树的定义作为静态内部类写到solution里面。"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68e7a288000000000301b7aa.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "b904952826f07d44b6c32077fff3b389e54fb6db",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 21891,
+        "content_sha256": "32a740b0a5b4d27e35263b2fbe68f85851b6a95b340b4d004d2a36c0d2b9a5a0",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "百度Java开发一面面经\",",
+          "line": 500,
+          "locator": "artifact-line:500#offset:30-44;blob:b904952826f07d44b6c32077fff3b389e54fb6db",
+          "semantic_excerpt": "百度Java开发一面面经\n面试官迟到七八分钟，实习和项目经历一点没问，八股拷打十几分钟，让我写算法题的时候他人就离开了，半小时后才回来，面完十几分钟官网就显示共享中。\n1、ThreadLocal 的实现原理？\n2、ThreadLocalMap中的key和value是什么类型的引用？\n3、为什么key 能被 GC 自动回收，但 value不能被 GC 自动回收？\n4、value主要是什么？\n5、垃圾回收器有哪些？\n6、可达性分析法的GC Roost有哪些？\n7、为什么选这些对象作为GC Root?\n8、平时使用MySQL是怎么用的？（其实没太get到这个问题的点）\n9、MySQL的存储引擎？\n10、为什么用InnoDB做默认存储引擎？\n11、事务隔离级别有哪些？\n12、update b = b + 1 where b = 5 在可重复读隔离级别下，5个线程并发执行，最后b的值是多少？\n13、OSI网络模型？\n14、数据链路层有哪些协议？（我直接问号脸，不是哥们，面了这么多家第一次问数据链路层的协议的， 面完翻了翻小林codiing和面渣逆袭都没提，之前一直感觉不是重点来着，这玩意本科学计网的时候还能看看，现在真是想不起来了，还是太菜了）\n算法题：二叉树的最近公共祖先，写的时候我看到上面导入了TreeNode类的，结果编译不通过，问面试官没人回应，最后50分钟左右面试官回来了，说要把二叉树的定义作为静态内部类写到solution里面。"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/68e7a288000000000301b7aa.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "05e92108a73a662c98dc1b5da62798569ddb7500",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 389665,
+      "content_sha256": "2b3c569b49f18b7ddd0d06e01f571eaaca8802c11c4fc77db9ffa672299b61f5",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "百度Java开发一面面经 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-189;blob:05e92108a73a662c98dc1b5da62798569ddb7500",
+        "semantic_excerpt": "百度Java开发一面面经\n面试官迟到七八分钟，实习和项目经历一点没问，八股拷打十几分钟，让我写算法题的时候他人就离开了，半小时后才回来，面完十几分钟官网就显示共享中。\n1、ThreadLocal 的实现原理？\n2、ThreadLocalMap中的key和value是什么类型的引用？\n3、为什么key 能被 GC 自动回收，但 value不能被 GC 自动回收？\n4、value主要是什么？\n5、垃圾回收器有哪些？\n6、可达性分析法的GC Roost有哪些？\n7、为什么选这些对象作为GC Root?\n8、平时使用MySQL是怎么用的？（其实没太get到这个问题的点）\n9、MySQL的存储引擎？\n10、为什么用InnoDB做默认存储引擎？\n11、事务隔离级别有哪些？\n12、update b = b + 1 where b = 5 在可重复读隔离级别下，5个线程并发执行，最后b的值是多少？\n13、OSI网络模型？\n14、数据链路层有哪些协议？（我直接问号脸，不是哥们，面了这么多家第一次问数据链路层的协议的， 面完翻了翻小林codiing和面渣逆袭都没提，之前一直感觉不是重点来着，这玩意本科学计网的时候还能看看，现在真是想不起来了，还是太菜了）\n算法题：二叉树的最近公共祖先，写的时候我看到上面导入了TreeNode类的，结果编译不通过，问面试官没人回应，最后50分钟左右面试官回来了，说要把二叉树的定义作为静态内部类写到solution里面。"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68e7a288000000000301b7aa.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "b904952826f07d44b6c32077fff3b389e54fb6db",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 21891,
+      "content_sha256": "32a740b0a5b4d27e35263b2fbe68f85851b6a95b340b4d004d2a36c0d2b9a5a0",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "百度Java开发一面面经\",",
+        "line": 500,
+        "locator": "artifact-line:500#offset:30-44;blob:b904952826f07d44b6c32077fff3b389e54fb6db",
+        "semantic_excerpt": "百度Java开发一面面经\n面试官迟到七八分钟，实习和项目经历一点没问，八股拷打十几分钟，让我写算法题的时候他人就离开了，半小时后才回来，面完十几分钟官网就显示共享中。\n1、ThreadLocal 的实现原理？\n2、ThreadLocalMap中的key和value是什么类型的引用？\n3、为什么key 能被 GC 自动回收，但 value不能被 GC 自动回收？\n4、value主要是什么？\n5、垃圾回收器有哪些？\n6、可达性分析法的GC Roost有哪些？\n7、为什么选这些对象作为GC Root?\n8、平时使用MySQL是怎么用的？（其实没太get到这个问题的点）\n9、MySQL的存储引擎？\n10、为什么用InnoDB做默认存储引擎？\n11、事务隔离级别有哪些？\n12、update b = b + 1 where b = 5 在可重复读隔离级别下，5个线程并发执行，最后b的值是多少？\n13、OSI网络模型？\n14、数据链路层有哪些协议？（我直接问号脸，不是哥们，面了这么多家第一次问数据链路层的协议的， 面完翻了翻小林codiing和面渣逆袭都没提，之前一直感觉不是重点来着，这玩意本科学计网的时候还能看看，现在真是想不起来了，还是太菜了）\n算法题：二叉树的最近公共祖先，写的时候我看到上面导入了TreeNode类的，结果编译不通过，问面试官没人回应，最后50分钟左右面试官回来了，说要把二叉树的定义作为静态内部类写到solution里面。"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -82,10 +161,11 @@
   ],
   "limitations": [
     "Exact Source indicates multiple independent processes, but does not provide separately reviewable bounded event evidence for every process; retain pending.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "291e00c7388ca8695d400eaa2b57b278d3b5dec30b55de871c85e254f56d3f68"
+  "evidence_sha256": "840be537fde71f145f9397ddcc945e445ef493a2c7c33e628a279731fc0fc516"
 }

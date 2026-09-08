@@ -7,34 +7,44 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "61a0f89e2cb8d3dd5284a64e9e5cdb1302e528fc671f1499ae9b623bfe42d1d0",
-  "disposition": "blocked",
-  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "disposition": "single-interview",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
   "interview_cases": [],
   "ambiguity_audit": {
-    "flags": [
-      "question-list-only",
-      "question-only",
-      "no-candidate-event-evidence"
-    ],
+    "flags": [],
     "questions": 16,
     "has_first_person_event": true,
     "has_explicit_candidate_event": true,
     "has_bounded_event": true,
     "has_detailed_event": true,
     "has_completed_event_evidence": true,
-    "has_structured_candidate_event": false,
+    "has_structured_candidate_event": true,
     "generic_advice_or_aggregated": false,
     "scheduled_only": false,
-    "question_only": true,
+    "question_only": false,
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
-    "only_question_list": true,
+    "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "meituan-process",
+        "anchor": "美团",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-165;blob:04b363863130252adbc05aedd3693e7328bc264c",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:美团",
+        "source_ref": "liqiangcc/xhs:note_detail/68a6da14000000001d028405.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68a6da14000000001d028405.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -43,13 +53,108 @@
     "provenance": "source_projection",
     "byte_size": 970,
     "content_sha256": "8ee6ba80c5da700ddbd6a170a7d845b95eeaf4f281736551fc59ad0e5ad29055",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "0.ai-coding(两个小时时间 面试前一个半小时发给我 面试前一个小时截止进入 无敌）",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "0.ai-coding(两个小时时间 面试前一个半小时发给我 面试前一个小时截止进入 无敌）\n1.挑一个项目介绍一下\n2.mcp是什么 有什么作用 在哪里作用\n3.hashmap线程安全否 为什么\n4.stringbuffer和stringbuilder\n5.tcp/udp 特点 应用场景\n6.rand5()实现rand7() （讲了大体思路没讲具体思路 估计死了)\n6.做过全栈吗\n7.mysql索引介绍一下 为什么是b+树 每个节点存什么 聚簇索引一张表里有几个（把我问死了）\n8.一台手机 1000个额度 晚上八点开抢 设计秒杀系统\n9.看我的ai-coding过程（p2是ai- coding平台的logo 有点糊凑合看）\n10.知道在ai-coding里怎么设置mcp吗\n11.一个好的prompt都要有什么内容\n12.agent和ask是什么区别\n13.手撕 特定区间反转链表 给反转区间头和尾索引 链表头 反转特定区间的节点\n14.反问 是不是都是在推动全栈（是） 是不是都是在推动aicoding（是） 建议意见"
-    }
+      "locator": "artifact-line:1#offset:0-46;blob:9a8b411227251bdb89c740b6d697761a16681fe0",
+      "semantic_excerpt": "美团一面 后端 直播业务 面经 已约二面\n0.ai-coding(两个小时时间 面试前一个半小时发给我 面试前一个小时截止进入 无敌）\n1.挑一个项目介绍一下\n2.mcp是什么 有什么作用 在哪里作用\n3.hashmap线程安全否 为什么\n4.stringbuffer和stringbuilder\n5.tcp/udp 特点 应用场景\n6.rand5()实现rand7() （讲了大体思路没讲具体思路 估计死了)\n6.做过全栈吗\n7.mysql索引介绍一下 为什么是b+树 每个节点存什么 聚簇索引一张表里有几个（把我问死了）\n8.一台手机 1000个额度 晚上八点开抢 设计秒杀系统\n9.看我的ai-coding过程（p2是ai- coding平台的logo 有点糊凑合看）\n10.知道在ai-coding里怎么设置mcp吗\n11.一个好的prompt都要有什么内容\n12.agent和ask是什么区别\n13.手撕 特定区间反转链表 给反转区间头和尾索引 链表头 反转特定区间的节点\n14.反问 是不是都是在推动全栈（是） 是不是都是在推动aicoding（是） 建议意见"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68a6da14000000001d028405.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "9a8b411227251bdb89c740b6d697761a16681fe0",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 970,
+        "content_sha256": "8ee6ba80c5da700ddbd6a170a7d845b95eeaf4f281736551fc59ad0e5ad29055",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "0.ai-coding(两个小时时间 面试前一个半小时发给我 面试前一个小时截止进入 无敌）",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-46;blob:9a8b411227251bdb89c740b6d697761a16681fe0",
+          "semantic_excerpt": "美团一面 后端 直播业务 面经 已约二面\n0.ai-coding(两个小时时间 面试前一个半小时发给我 面试前一个小时截止进入 无敌）\n1.挑一个项目介绍一下\n2.mcp是什么 有什么作用 在哪里作用\n3.hashmap线程安全否 为什么\n4.stringbuffer和stringbuilder\n5.tcp/udp 特点 应用场景\n6.rand5()实现rand7() （讲了大体思路没讲具体思路 估计死了)\n6.做过全栈吗\n7.mysql索引介绍一下 为什么是b+树 每个节点存什么 聚簇索引一张表里有几个（把我问死了）\n8.一台手机 1000个额度 晚上八点开抢 设计秒杀系统\n9.看我的ai-coding过程（p2是ai- coding平台的logo 有点糊凑合看）\n10.知道在ai-coding里怎么设置mcp吗\n11.一个好的prompt都要有什么内容\n12.agent和ask是什么区别\n13.手撕 特定区间反转链表 给反转区间头和尾索引 链表头 反转特定区间的节点\n14.反问 是不是都是在推动全栈（是） 是不是都是在推动aicoding（是） 建议意见"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68a6da14000000001d028405.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "04b363863130252adbc05aedd3693e7328bc264c",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 389404,
+        "content_sha256": "1a48819a5d4fee67415d3a1ba520f0112f2efed65fa87fa0cb9c8c257e23c99f",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "美团一面 后端 直播业务 面经 已约二面 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-197;blob:04b363863130252adbc05aedd3693e7328bc264c",
+          "semantic_excerpt": "美团一面 后端 直播业务 面经 已约二面\n0.ai-coding(两个小时时间 面试前一个半小时发给我 面试前一个小时截止进入 无敌）\n1.挑一个项目介绍一下\n2.mcp是什么 有什么作用 在哪里作用\n3.hashmap线程安全否 为什么\n4.stringbuffer和stringbuilder\n5.tcp/udp 特点 应用场景\n6.rand5()实现rand7() （讲了大体思路没讲具体思路 估计死了)\n6.做过全栈吗\n7.mysql索引介绍一下 为什么是b+树 每个节点存什么 聚簇索引一张表里有几个（把我问死了）\n8.一台手机 1000个额度 晚上八点开抢 设计秒杀系统\n9.看我的ai-coding过程（p2是ai- coding平台的logo 有点糊凑合看）\n10.知道在ai-coding里怎么设置mcp吗\n11.一个好的prompt都要有什么内容\n12.agent和ask是什么区别\n13.手撕 特定区间反转链表 给反转区间头和尾索引 链表头 反转特定区间的节点\n14.反问 是不是都是在推动全栈（是） 是不是都是在推动aicoding（是） 建议意见"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68a6da14000000001d028405.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "8615dd4f8e571e201750c586b7198a6c164130f7",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 22079,
+        "content_sha256": "5fb08405d7c0c37280ef10f22bd44e1baf98ec31f3f71d60a8dc3aa4263ca261",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "美团一面 后端 直播业务 面经 已约二面\",",
+          "line": 565,
+          "locator": "artifact-line:565#offset:30-52;blob:8615dd4f8e571e201750c586b7198a6c164130f7",
+          "semantic_excerpt": "美团一面 后端 直播业务 面经 已约二面\n0.ai-coding(两个小时时间 面试前一个半小时发给我 面试前一个小时截止进入 无敌）\n1.挑一个项目介绍一下\n2.mcp是什么 有什么作用 在哪里作用\n3.hashmap线程安全否 为什么\n4.stringbuffer和stringbuilder\n5.tcp/udp 特点 应用场景\n6.rand5()实现rand7() （讲了大体思路没讲具体思路 估计死了)\n6.做过全栈吗\n7.mysql索引介绍一下 为什么是b+树 每个节点存什么 聚簇索引一张表里有几个（把我问死了）\n8.一台手机 1000个额度 晚上八点开抢 设计秒杀系统\n9.看我的ai-coding过程（p2是ai- coding平台的logo 有点糊凑合看）\n10.知道在ai-coding里怎么设置mcp吗\n11.一个好的prompt都要有什么内容\n12.agent和ask是什么区别\n13.手撕 特定区间反转链表 给反转区间头和尾索引 链表头 反转特定区间的节点\n14.反问 是不是都是在推动全栈（是） 是不是都是在推动aicoding（是） 建议意见"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68a6da14000000001d028405.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "9a8b411227251bdb89c740b6d697761a16681fe0",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 970,
+      "content_sha256": "8ee6ba80c5da700ddbd6a170a7d845b95eeaf4f281736551fc59ad0e5ad29055",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "0.ai-coding(两个小时时间 面试前一个半小时发给我 面试前一个小时截止进入 无敌）",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-46;blob:9a8b411227251bdb89c740b6d697761a16681fe0",
+        "semantic_excerpt": "美团一面 后端 直播业务 面经 已约二面\n0.ai-coding(两个小时时间 面试前一个半小时发给我 面试前一个小时截止进入 无敌）\n1.挑一个项目介绍一下\n2.mcp是什么 有什么作用 在哪里作用\n3.hashmap线程安全否 为什么\n4.stringbuffer和stringbuilder\n5.tcp/udp 特点 应用场景\n6.rand5()实现rand7() （讲了大体思路没讲具体思路 估计死了)\n6.做过全栈吗\n7.mysql索引介绍一下 为什么是b+树 每个节点存什么 聚簇索引一张表里有几个（把我问死了）\n8.一台手机 1000个额度 晚上八点开抢 设计秒杀系统\n9.看我的ai-coding过程（p2是ai- coding平台的logo 有点糊凑合看）\n10.知道在ai-coding里怎么设置mcp吗\n11.一个好的prompt都要有什么内容\n12.agent和ask是什么区别\n13.手撕 特定区间反转链表 给反转区间头和尾索引 链表头 反转特定区间的节点\n14.反问 是不是都是在推动全栈（是） 是不是都是在推动aicoding（是） 建议意见"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68a6da14000000001d028405.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "04b363863130252adbc05aedd3693e7328bc264c",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 389404,
+      "content_sha256": "1a48819a5d4fee67415d3a1ba520f0112f2efed65fa87fa0cb9c8c257e23c99f",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "美团一面 后端 直播业务 面经 已约二面 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-197;blob:04b363863130252adbc05aedd3693e7328bc264c",
+        "semantic_excerpt": "美团一面 后端 直播业务 面经 已约二面\n0.ai-coding(两个小时时间 面试前一个半小时发给我 面试前一个小时截止进入 无敌）\n1.挑一个项目介绍一下\n2.mcp是什么 有什么作用 在哪里作用\n3.hashmap线程安全否 为什么\n4.stringbuffer和stringbuilder\n5.tcp/udp 特点 应用场景\n6.rand5()实现rand7() （讲了大体思路没讲具体思路 估计死了)\n6.做过全栈吗\n7.mysql索引介绍一下 为什么是b+树 每个节点存什么 聚簇索引一张表里有几个（把我问死了）\n8.一台手机 1000个额度 晚上八点开抢 设计秒杀系统\n9.看我的ai-coding过程（p2是ai- coding平台的logo 有点糊凑合看）\n10.知道在ai-coding里怎么设置mcp吗\n11.一个好的prompt都要有什么内容\n12.agent和ask是什么区别\n13.手撕 特定区间反转链表 给反转区间头和尾索引 链表头 反转特定区间的节点\n14.反问 是不是都是在推动全栈（是） 是不是都是在推动aicoding（是） 建议意见"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68a6da14000000001d028405.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "8615dd4f8e571e201750c586b7198a6c164130f7",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 22079,
+      "content_sha256": "5fb08405d7c0c37280ef10f22bd44e1baf98ec31f3f71d60a8dc3aa4263ca261",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "美团一面 后端 直播业务 面经 已约二面\",",
+        "line": 565,
+        "locator": "artifact-line:565#offset:30-52;blob:8615dd4f8e571e201750c586b7198a6c164130f7",
+        "semantic_excerpt": "美团一面 后端 直播业务 面经 已约二面\n0.ai-coding(两个小时时间 面试前一个半小时发给我 面试前一个小时截止进入 无敌）\n1.挑一个项目介绍一下\n2.mcp是什么 有什么作用 在哪里作用\n3.hashmap线程安全否 为什么\n4.stringbuffer和stringbuilder\n5.tcp/udp 特点 应用场景\n6.rand5()实现rand7() （讲了大体思路没讲具体思路 估计死了)\n6.做过全栈吗\n7.mysql索引介绍一下 为什么是b+树 每个节点存什么 聚簇索引一张表里有几个（把我问死了）\n8.一台手机 1000个额度 晚上八点开抢 设计秒杀系统\n9.看我的ai-coding过程（p2是ai- coding平台的logo 有点糊凑合看）\n10.知道在ai-coding里怎么设置mcp吗\n11.一个好的prompt都要有什么内容\n12.agent和ask是什么区别\n13.手撕 特定区间反转链表 给反转区间头和尾索引 链表头 反转特定区间的节点\n14.反问 是不是都是在推动全栈（是） 是不是都是在推动aicoding（是） 建议意见"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -68,8 +173,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -83,11 +188,12 @@
     }
   ],
   "limitations": [
-    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "05e6a262657139d45efb4f16a2c83e63224fcbd6e6900955b635297cc14863f4"
+  "evidence_sha256": "e94a6d37148a2eb4e442ca271b554cd7707d65e9891c58f7e13edcc9d4fb8af0"
 }

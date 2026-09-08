@@ -29,12 +29,26 @@
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "didi-process",
+        "anchor": "滴滴",
+        "line": 1,
+        "locator": "artifact-line:1#offset:5-7;blob:772fcb6ba9d8dabb66189a81e843672e096e4167",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:滴滴",
+        "source_ref": "liqiangcc/xhs:note_desc/68add8c5000000001d03a343.txt@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68add8c5000000001d03a343.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -43,13 +57,108 @@
     "provenance": "source_projection",
     "byte_size": 1866,
     "content_sha256": "4e81d19f8daa29357b4d5c57a2ca811c25da17c8bb49f2c00e00999cba5d8c12",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "最近结束了滴滴的面试，三轮技术面问得超细致❗️",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "最近结束了滴滴的面试，三轮技术面问得超细致❗️\n \n整理了完整面经和思路分享给大家👇\n \n——————\n \n🧩一面 60min\n \n•RocketMQ vs Kafka 区别（设计理念/吞吐/延迟）\n \n•Redis性能核心：内存+I/O多路复用原理\n \n•Redis数据结构选型场景实战\n \n•MySQL与Redis一致性方案（旁路缓存策略）\n \n•协程原理剖析：Goroutine底层调度模型\n \n•Lua脚本实现原子库存扣减\n \n•MySQL索引优化与B+树优势\n \n•防超卖方案：分布式锁+库存校验\n \n•算法：搜索旋转排序数组（二分变形）\n \n——————\n \n🧩二面 60min\n \n•List遍历删除的坑（迭代器失效问题）\n \n•MySQL索引弊端：写放大与空间代价\n \n•最左前缀原则与索引失效场景解析\n \n•联合索引底层树结构\n \n•SQL实战：SELECT orderid FROM order WHERE userid=1 ORDER BY amount DESC LIMIT 1\n \n•MQ堆积对用户体验的影响（延迟/超时）\n \n•Redis过期策略：定期+惰性删除组合拳\n \n•算法：最长回文子串（中心扩散/DP）\n \n——————\n \n🧩三面 60min\n \n•职业规划与项目深度拷问\n \n•数据不一致带来的业务风险（脏读/资损）\n \n•模板方法模式在业务系统中的落地\n \n•Java对象创建流程：类加载→分配内存→初始化\n \n•手写HashMap with TTL（数组+链表+过期清理）\n \n——————\n \n💡准备建议：\n \n1.深度复习Redis/MySQL/MQ核心机制\n \n2.算法重点：二分/字符串/数据结构设计\n \n3.项目难点准备+技术选型对比思考\n \n4.底层原理结合代码实现（如协程调度）"
-    }
+      "locator": "artifact-line:1#offset:0-23;blob:772fcb6ba9d8dabb66189a81e843672e096e4167",
+      "semantic_excerpt": "🔥滴滴一二三面 技术面 面经\n最近结束了滴滴的面试，三轮技术面问得超细致❗️\n \n整理了完整面经和思路分享给大家👇\n \n——————\n \n🧩一面 60min\n \n•RocketMQ vs Kafka 区别（设计理念/吞吐/延迟）\n \n•Redis性能核心：内存+I/O多路复用原理\n \n•Redis数据结构选型场景实战\n \n•MySQL与Redis一致性方案（旁路缓存策略）\n \n•协程原理剖析：Goroutine底层调度模型\n \n•Lua脚本实现原子库存扣减\n \n•MySQL索引优化与B+树优势\n \n•防超卖方案：分布式锁+库存校验\n \n•算法：搜索旋转排序数组（二分变形）\n \n——————\n \n🧩二面 60min\n \n•List遍历删除的坑（迭代器失效问题）\n \n•MySQL索引弊端：写放大与空间代价\n \n•最左前缀原则与索引失效场景解析\n \n•联合索引底层树结构\n \n•SQL实战：SELECT orderid FROM order WHERE userid=1 ORDER BY amount DESC LIMIT 1\n \n•MQ堆积对用户体验的影响（延迟/超时）\n \n•Redis过期策略：定期+惰性删除组合拳\n \n•算法：最长回文子串（中心扩散/DP）\n \n——————\n \n🧩三面 60min\n \n•职业规划与项目深度拷问\n \n•数据不一致带来的业务风险（脏读/资损）\n \n•模板方法模式在业务系统中的落地\n \n•Java对象创建流程：类加载→分配内存→初始化\n \n•手写HashMap with TTL（数组+链表+过期清理）\n \n——————\n \n💡准备建议：\n \n1.深度复习Redis/MySQL/MQ核心机制\n \n2.算法重点：二分/字符串/数据结构设计\n \n3.项目难点准备+技术选型对比思考\n \n4.底层原理结合代码实现（如协程调度）"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68add8c5000000001d03a343.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "772fcb6ba9d8dabb66189a81e843672e096e4167",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 1866,
+        "content_sha256": "4e81d19f8daa29357b4d5c57a2ca811c25da17c8bb49f2c00e00999cba5d8c12",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "最近结束了滴滴的面试，三轮技术面问得超细致❗️",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-23;blob:772fcb6ba9d8dabb66189a81e843672e096e4167",
+          "semantic_excerpt": "🔥滴滴一二三面 技术面 面经\n最近结束了滴滴的面试，三轮技术面问得超细致❗️\n \n整理了完整面经和思路分享给大家👇\n \n——————\n \n🧩一面 60min\n \n•RocketMQ vs Kafka 区别（设计理念/吞吐/延迟）\n \n•Redis性能核心：内存+I/O多路复用原理\n \n•Redis数据结构选型场景实战\n \n•MySQL与Redis一致性方案（旁路缓存策略）\n \n•协程原理剖析：Goroutine底层调度模型\n \n•Lua脚本实现原子库存扣减\n \n•MySQL索引优化与B+树优势\n \n•防超卖方案：分布式锁+库存校验\n \n•算法：搜索旋转排序数组（二分变形）\n \n——————\n \n🧩二面 60min\n \n•List遍历删除的坑（迭代器失效问题）\n \n•MySQL索引弊端：写放大与空间代价\n \n•最左前缀原则与索引失效场景解析\n \n•联合索引底层树结构\n \n•SQL实战：SELECT orderid FROM order WHERE userid=1 ORDER BY amount DESC LIMIT 1\n \n•MQ堆积对用户体验的影响（延迟/超时）\n \n•Redis过期策略：定期+惰性删除组合拳\n \n•算法：最长回文子串（中心扩散/DP）\n \n——————\n \n🧩三面 60min\n \n•职业规划与项目深度拷问\n \n•数据不一致带来的业务风险（脏读/资损）\n \n•模板方法模式在业务系统中的落地\n \n•Java对象创建流程：类加载→分配内存→初始化\n \n•手写HashMap with TTL（数组+链表+过期清理）\n \n——————\n \n💡准备建议：\n \n1.深度复习Redis/MySQL/MQ核心机制\n \n2.算法重点：二分/字符串/数据结构设计\n \n3.项目难点准备+技术选型对比思考\n \n4.底层原理结合代码实现（如协程调度）"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68add8c5000000001d03a343.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "79b9f139e98c9a1effdf2d26c39ad8e920fb78f3",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 395516,
+        "content_sha256": "fbb2e107d16dd96fd199fb6b3f22bc9438258c56e604fa5e5c1dc39ad685485a",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "🔥滴滴一二三面 技术面 面经 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-192;blob:79b9f139e98c9a1effdf2d26c39ad8e920fb78f3",
+          "semantic_excerpt": "🔥滴滴一二三面 技术面 面经\n最近结束了滴滴的面试，三轮技术面问得超细致❗️\n \n整理了完整面经和思路分享给大家👇\n \n——————\n \n🧩一面 60min\n \n•RocketMQ vs Kafka 区别（设计理念/吞吐/延迟）\n \n•Redis性能核心：内存+I/O多路复用原理\n \n•Redis数据结构选型场景实战\n \n•MySQL与Redis一致性方案（旁路缓存策略）\n \n•协程原理剖析：Goroutine底层调度模型\n \n•Lua脚本实现原子库存扣减\n \n•MySQL索引优化与B+树优势\n \n•防超卖方案：分布式锁+库存校验\n \n•算法：搜索旋转排序数组（二分变形）\n \n——————\n \n🧩二面 60min\n \n•List遍历删除的坑（迭代器失效问题）\n \n•MySQL索引弊端：写放大与空间代价\n \n•最左前缀原则与索引失效场景解析\n \n•联合索引底层树结构\n \n•SQL实战：SELECT orderid FROM order WHERE userid=1 ORDER BY amount DESC LIMIT 1\n \n•MQ堆积对用户体验的影响（延迟/超时）\n \n•Redis过期策略：定期+惰性删除组合拳\n \n•算法：最长回文子串（中心扩散/DP）\n \n——————\n \n🧩三面 60min\n \n•职业规划与项目深度拷问\n \n•数据不一致带来的业务风险（脏读/资损）\n \n•模板方法模式在业务系统中的落地\n \n•Java对象创建流程：类加载→分配内存→初始化\n \n•手写HashMap with TTL（数组+链表+过期清理）\n \n——————\n \n💡准备建议：\n \n1.深度复习Redis/MySQL/MQ核心机制\n \n2.算法重点：二分/字符串/数据结构设计\n \n3.项目难点准备+技术选型对比思考\n \n4.底层原理结合代码实现（如协程调度）"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68add8c5000000001d03a343.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "4919e9edb97f92c691a905a6b7df14d83dbcc179",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 25263,
+        "content_sha256": "1fc18d4c4b652067307c5344f322513f4a4bf5b746473ded586a2deb8db66fd2",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "🔥滴滴一二三面 技术面 面经\",",
+          "line": 561,
+          "locator": "artifact-line:561#offset:30-47;blob:4919e9edb97f92c691a905a6b7df14d83dbcc179",
+          "semantic_excerpt": "🔥滴滴一二三面 技术面 面经\n最近结束了滴滴的面试，三轮技术面问得超细致❗️\n \n整理了完整面经和思路分享给大家👇\n \n——————\n \n🧩一面 60min\n \n•RocketMQ vs Kafka 区别（设计理念/吞吐/延迟）\n \n•Redis性能核心：内存+I/O多路复用原理\n \n•Redis数据结构选型场景实战\n \n•MySQL与Redis一致性方案（旁路缓存策略）\n \n•协程原理剖析：Goroutine底层调度模型\n \n•Lua脚本实现原子库存扣减\n \n•MySQL索引优化与B+树优势\n \n•防超卖方案：分布式锁+库存校验\n \n•算法：搜索旋转排序数组（二分变形）\n \n——————\n \n🧩二面 60min\n \n•List遍历删除的坑（迭代器失效问题）\n \n•MySQL索引弊端：写放大与空间代价\n \n•最左前缀原则与索引失效场景解析\n \n•联合索引底层树结构\n \n•SQL实战：SELECT orderid FROM order WHERE userid=1 ORDER BY amount DESC LIMIT 1\n \n•MQ堆积对用户体验的影响（延迟/超时）\n \n•Redis过期策略：定期+惰性删除组合拳\n \n•算法：最长回文子串（中心扩散/DP）\n \n——————\n \n🧩三面 60min\n \n•职业规划与项目深度拷问\n \n•数据不一致带来的业务风险（脏读/资损）\n \n•模板方法模式在业务系统中的落地\n \n•Java对象创建流程：类加载→分配内存→初始化\n \n•手写HashMap with TTL（数组+链表+过期清理）\n \n——————\n \n💡准备建议：\n \n1.深度复习Redis/MySQL/MQ核心机制\n \n2.算法重点：二分/字符串/数据结构设计\n \n3.项目难点准备+技术选型对比思考\n \n4.底层原理结合代码实现（如协程调度）"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68add8c5000000001d03a343.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "772fcb6ba9d8dabb66189a81e843672e096e4167",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 1866,
+      "content_sha256": "4e81d19f8daa29357b4d5c57a2ca811c25da17c8bb49f2c00e00999cba5d8c12",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "最近结束了滴滴的面试，三轮技术面问得超细致❗️",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-23;blob:772fcb6ba9d8dabb66189a81e843672e096e4167",
+        "semantic_excerpt": "🔥滴滴一二三面 技术面 面经\n最近结束了滴滴的面试，三轮技术面问得超细致❗️\n \n整理了完整面经和思路分享给大家👇\n \n——————\n \n🧩一面 60min\n \n•RocketMQ vs Kafka 区别（设计理念/吞吐/延迟）\n \n•Redis性能核心：内存+I/O多路复用原理\n \n•Redis数据结构选型场景实战\n \n•MySQL与Redis一致性方案（旁路缓存策略）\n \n•协程原理剖析：Goroutine底层调度模型\n \n•Lua脚本实现原子库存扣减\n \n•MySQL索引优化与B+树优势\n \n•防超卖方案：分布式锁+库存校验\n \n•算法：搜索旋转排序数组（二分变形）\n \n——————\n \n🧩二面 60min\n \n•List遍历删除的坑（迭代器失效问题）\n \n•MySQL索引弊端：写放大与空间代价\n \n•最左前缀原则与索引失效场景解析\n \n•联合索引底层树结构\n \n•SQL实战：SELECT orderid FROM order WHERE userid=1 ORDER BY amount DESC LIMIT 1\n \n•MQ堆积对用户体验的影响（延迟/超时）\n \n•Redis过期策略：定期+惰性删除组合拳\n \n•算法：最长回文子串（中心扩散/DP）\n \n——————\n \n🧩三面 60min\n \n•职业规划与项目深度拷问\n \n•数据不一致带来的业务风险（脏读/资损）\n \n•模板方法模式在业务系统中的落地\n \n•Java对象创建流程：类加载→分配内存→初始化\n \n•手写HashMap with TTL（数组+链表+过期清理）\n \n——————\n \n💡准备建议：\n \n1.深度复习Redis/MySQL/MQ核心机制\n \n2.算法重点：二分/字符串/数据结构设计\n \n3.项目难点准备+技术选型对比思考\n \n4.底层原理结合代码实现（如协程调度）"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68add8c5000000001d03a343.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "79b9f139e98c9a1effdf2d26c39ad8e920fb78f3",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 395516,
+      "content_sha256": "fbb2e107d16dd96fd199fb6b3f22bc9438258c56e604fa5e5c1dc39ad685485a",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "🔥滴滴一二三面 技术面 面经 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-192;blob:79b9f139e98c9a1effdf2d26c39ad8e920fb78f3",
+        "semantic_excerpt": "🔥滴滴一二三面 技术面 面经\n最近结束了滴滴的面试，三轮技术面问得超细致❗️\n \n整理了完整面经和思路分享给大家👇\n \n——————\n \n🧩一面 60min\n \n•RocketMQ vs Kafka 区别（设计理念/吞吐/延迟）\n \n•Redis性能核心：内存+I/O多路复用原理\n \n•Redis数据结构选型场景实战\n \n•MySQL与Redis一致性方案（旁路缓存策略）\n \n•协程原理剖析：Goroutine底层调度模型\n \n•Lua脚本实现原子库存扣减\n \n•MySQL索引优化与B+树优势\n \n•防超卖方案：分布式锁+库存校验\n \n•算法：搜索旋转排序数组（二分变形）\n \n——————\n \n🧩二面 60min\n \n•List遍历删除的坑（迭代器失效问题）\n \n•MySQL索引弊端：写放大与空间代价\n \n•最左前缀原则与索引失效场景解析\n \n•联合索引底层树结构\n \n•SQL实战：SELECT orderid FROM order WHERE userid=1 ORDER BY amount DESC LIMIT 1\n \n•MQ堆积对用户体验的影响（延迟/超时）\n \n•Redis过期策略：定期+惰性删除组合拳\n \n•算法：最长回文子串（中心扩散/DP）\n \n——————\n \n🧩三面 60min\n \n•职业规划与项目深度拷问\n \n•数据不一致带来的业务风险（脏读/资损）\n \n•模板方法模式在业务系统中的落地\n \n•Java对象创建流程：类加载→分配内存→初始化\n \n•手写HashMap with TTL（数组+链表+过期清理）\n \n——————\n \n💡准备建议：\n \n1.深度复习Redis/MySQL/MQ核心机制\n \n2.算法重点：二分/字符串/数据结构设计\n \n3.项目难点准备+技术选型对比思考\n \n4.底层原理结合代码实现（如协程调度）"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68add8c5000000001d03a343.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "4919e9edb97f92c691a905a6b7df14d83dbcc179",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 25263,
+      "content_sha256": "1fc18d4c4b652067307c5344f322513f4a4bf5b746473ded586a2deb8db66fd2",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "🔥滴滴一二三面 技术面 面经\",",
+        "line": 561,
+        "locator": "artifact-line:561#offset:30-47;blob:4919e9edb97f92c691a905a6b7df14d83dbcc179",
+        "semantic_excerpt": "🔥滴滴一二三面 技术面 面经\n最近结束了滴滴的面试，三轮技术面问得超细致❗️\n \n整理了完整面经和思路分享给大家👇\n \n——————\n \n🧩一面 60min\n \n•RocketMQ vs Kafka 区别（设计理念/吞吐/延迟）\n \n•Redis性能核心：内存+I/O多路复用原理\n \n•Redis数据结构选型场景实战\n \n•MySQL与Redis一致性方案（旁路缓存策略）\n \n•协程原理剖析：Goroutine底层调度模型\n \n•Lua脚本实现原子库存扣减\n \n•MySQL索引优化与B+树优势\n \n•防超卖方案：分布式锁+库存校验\n \n•算法：搜索旋转排序数组（二分变形）\n \n——————\n \n🧩二面 60min\n \n•List遍历删除的坑（迭代器失效问题）\n \n•MySQL索引弊端：写放大与空间代价\n \n•最左前缀原则与索引失效场景解析\n \n•联合索引底层树结构\n \n•SQL实战：SELECT orderid FROM order WHERE userid=1 ORDER BY amount DESC LIMIT 1\n \n•MQ堆积对用户体验的影响（延迟/超时）\n \n•Redis过期策略：定期+惰性删除组合拳\n \n•算法：最长回文子串（中心扩散/DP）\n \n——————\n \n🧩三面 60min\n \n•职业规划与项目深度拷问\n \n•数据不一致带来的业务风险（脏读/资损）\n \n•模板方法模式在业务系统中的落地\n \n•Java对象创建流程：类加载→分配内存→初始化\n \n•手写HashMap with TTL（数组+链表+过期清理）\n \n——————\n \n💡准备建议：\n \n1.深度复习Redis/MySQL/MQ核心机制\n \n2.算法重点：二分/字符串/数据结构设计\n \n3.项目难点准备+技术选型对比思考\n \n4.底层原理结合代码实现（如协程调度）"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -84,10 +193,11 @@
   ],
   "limitations": [
     "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "7c24b393163ac74f4fd1063250b1aa4f50d52dea8b7fb53e6fce008f27ad2b56"
+  "evidence_sha256": "b5ab99b6dfc7ee4a299c5cfb52e8104ba18ce90bef61c03b88f89b5d19614314"
 }

@@ -8,10 +8,11 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "c811e1270fa2a1c4f461d4ee33ea8e989cd657c961a48cd2a7c53081c44b65fc",
   "disposition": "blocked",
-  "rationale": "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+  "rationale": "Exact Source provides only an interview outcome, offer, rejection, or result without a bounded candidate event; retain pending.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
+      "outcome-or-offer-only",
       "no-candidate-event-evidence"
     ],
     "questions": 0,
@@ -24,15 +25,19 @@
     "generic_advice_or_aggregated": false,
     "scheduled_only": false,
     "question_only": false,
-    "outcome_signal": false,
+    "outcome_signal": true,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": false,
-    "only_outcome": false,
+    "only_outcome": true,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68c38179000000001b037cca.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -41,13 +46,108 @@
     "provenance": "source_projection",
     "byte_size": 247,
     "content_sha256": "a6060ecdd1fa6613882e4820c6c4bedd3c90a5397ef99d1f23c72e38117c47fd",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "贝壳社招软件开发",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "贝壳社招软件开发\n二面挂\n \n我猜测应该是涨幅20%触碰上限了，本来聊的也挺好的，醉了。"
-    }
+      "locator": "artifact-line:1#offset:0-8;blob:4f10ac8430ff59329453433642fdb89ae06c8c73",
+      "semantic_excerpt": "二面聊的挺好的，不知道为啥挂了\n贝壳社招软件开发\n二面挂\n \n我猜测应该是涨幅20%触碰上限了，本来聊的也挺好的，醉了。"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68c38179000000001b037cca.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "4f10ac8430ff59329453433642fdb89ae06c8c73",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 247,
+        "content_sha256": "a6060ecdd1fa6613882e4820c6c4bedd3c90a5397ef99d1f23c72e38117c47fd",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "贝壳社招软件开发",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-8;blob:4f10ac8430ff59329453433642fdb89ae06c8c73",
+          "semantic_excerpt": "二面聊的挺好的，不知道为啥挂了\n贝壳社招软件开发\n二面挂\n \n我猜测应该是涨幅20%触碰上限了，本来聊的也挺好的，醉了。"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68c38179000000001b037cca.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "39c842e88673332214382f66d326e5425bc1bafd",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 386887,
+        "content_sha256": "f16e69b8b2c3f0e4360de2e6fc39ec9c6182b144630ed483ba3ef3c7ff6c2934",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "二面聊的挺好的，不知道为啥挂了 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-192;blob:39c842e88673332214382f66d326e5425bc1bafd",
+          "semantic_excerpt": "二面聊的挺好的，不知道为啥挂了\n贝壳社招软件开发\n二面挂\n \n我猜测应该是涨幅20%触碰上限了，本来聊的也挺好的，醉了。"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68c38179000000001b037cca.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "f6362496a8d3093b2c3a73351c3ab907193e00db",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 21195,
+        "content_sha256": "aea33686f947d1fd16ea920d46fb12f3f1ee8f80982a687a76bd6e8a5c60dc8c",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "二面聊的挺好的，不知道为啥挂了\",",
+          "line": 529,
+          "locator": "artifact-line:529#offset:30-47;blob:f6362496a8d3093b2c3a73351c3ab907193e00db",
+          "semantic_excerpt": "二面聊的挺好的，不知道为啥挂了\n贝壳社招软件开发\n二面挂\n \n我猜测应该是涨幅20%触碰上限了，本来聊的也挺好的，醉了。"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68c38179000000001b037cca.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "4f10ac8430ff59329453433642fdb89ae06c8c73",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 247,
+      "content_sha256": "a6060ecdd1fa6613882e4820c6c4bedd3c90a5397ef99d1f23c72e38117c47fd",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "贝壳社招软件开发",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-8;blob:4f10ac8430ff59329453433642fdb89ae06c8c73",
+        "semantic_excerpt": "二面聊的挺好的，不知道为啥挂了\n贝壳社招软件开发\n二面挂\n \n我猜测应该是涨幅20%触碰上限了，本来聊的也挺好的，醉了。"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68c38179000000001b037cca.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "39c842e88673332214382f66d326e5425bc1bafd",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 386887,
+      "content_sha256": "f16e69b8b2c3f0e4360de2e6fc39ec9c6182b144630ed483ba3ef3c7ff6c2934",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "二面聊的挺好的，不知道为啥挂了 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-192;blob:39c842e88673332214382f66d326e5425bc1bafd",
+        "semantic_excerpt": "二面聊的挺好的，不知道为啥挂了\n贝壳社招软件开发\n二面挂\n \n我猜测应该是涨幅20%触碰上限了，本来聊的也挺好的，醉了。"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68c38179000000001b037cca.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "f6362496a8d3093b2c3a73351c3ab907193e00db",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 21195,
+      "content_sha256": "aea33686f947d1fd16ea920d46fb12f3f1ee8f80982a687a76bd6e8a5c60dc8c",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "二面聊的挺好的，不知道为啥挂了\",",
+        "line": 529,
+        "locator": "artifact-line:529#offset:30-47;blob:f6362496a8d3093b2c3a73351c3ab907193e00db",
+        "semantic_excerpt": "二面聊的挺好的，不知道为啥挂了\n贝壳社招软件开发\n二面挂\n \n我猜测应该是涨幅20%触碰上限了，本来聊的也挺好的，醉了。"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -67,7 +167,7 @@
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending."
+      "note": "The disposition is supported by the cited source evidence. Exact Source provides only an interview outcome, offer, rejection, or result without a bounded candidate event; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -81,11 +181,12 @@
     }
   ],
   "limitations": [
-    "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+    "Exact Source provides only an interview outcome, offer, rejection, or result without a bounded candidate event; retain pending.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "8c7c956023624f06f45755dd8a988f41cebfb6ea00fc741a4491c6659f3e5b49"
+  "evidence_sha256": "81fe9e94fab1c062e3ae094f0a726c3e91626b149cb227f564bc8c7a7ad30d7c"
 }

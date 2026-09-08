@@ -16,7 +16,7 @@ test('Issue #1609 disposition is conservative and does not treat tags as evidenc
   assert.equal(disposition('').disposition, 'blocked');
   assert.equal(disposition('#面经[话题]# #后端[话题]#').disposition, 'blocked');
   assert.equal(disposition('一面：自我介绍；面试官询问项目；手撕算法题').disposition, 'single-interview');
-  assert.equal(disposition('Java 面试题库，整理常见知识点供刷题').disposition, 'blocked');
+  assert.equal(disposition('Java 面试题库，整理常见知识点供刷题').disposition, 'not-interview');
   assert.equal(disposition('三场面试：公司甲、公司乙、公司丙').disposition, 'blocked');
   assert.equal(disposition('从第一个面试到现在一个月，面完懂车帝挂了之后也不敢面字节了，面着面着感觉好累').disposition, 'blocked');
   assert.equal(disposition('oppo 模型加速\n代码题：合并有序链表\n\n得物\n聊项目\n代码题：合并有序链表\n\n贝壳找房\n场景题：介绍一个树模型').disposition, 'multi-interview');
@@ -28,18 +28,21 @@ test('Issue #1609 adversarial boundary audit recognizes CJK compatibility but st
   const jobOnly = disposition('2026届字节跳动客户端-抖音岗位，开发工程师⼀⾯（60min，base北京）');
   assert.equal(jobOnly.disposition, 'blocked');
   assert.ok(jobOnly.audit.flags.includes('job-or-title-only'));
-  assert.equal(disposition('岗位名称：Java开发；岗位职责：负责后端研发；欢迎投递').disposition, 'blocked');
+  assert.equal(disposition('岗位名称：Java开发；岗位职责：负责后端研发；欢迎投递').disposition, 'not-interview');
   assert.equal(disposition('Q1：被问为什么加入百度。避免只说大公司，试试这样回答：技术创新与市场结合。个人经验分享：面试前练习问题和答案。').disposition, 'blocked');
   assert.equal(disposition('收到面试邀请，预约明天一面').disposition, 'blocked');
   assert.equal(disposition('1. Redis 2. JVM 3. MySQL').disposition, 'blocked');
   assert.equal(disposition('字节面试经验总结：综合粉丝投稿和市场环境，建议准备八股与项目。').disposition, 'blocked');
   assert.equal(disposition('仅记录岗位、面试轮次、60min 和 base 北京。').disposition, 'blocked');
+  assert.equal(disposition('我是面试官，分享一下候选人常见问题与评价标准。').disposition, 'not-interview');
+  assert.equal(disposition('求职建议：简历怎么写、面试前如何准备八股。').disposition, 'blocked');
   const structured = disposition('二面：面试官追问项目一致性，我回答了领域事件；随后手撕合并有序链表。');
   assert.equal(structured.disposition, 'single-interview');
   assert.equal(structured.audit.has_structured_candidate_event, true);
   const multiRoundup = disposition('秋招进度：1.字节三面挂；2.快手2+1到HR面；3.小红书2+1+1到主管面；4.美团一面挂');
   assert.equal(multiRoundup.disposition, 'blocked');
   assert.ok(multiRoundup.audit.flags.includes('multi-company-or-process'));
+  assert.equal(disposition('2025秋招多家公司总结：字节三面、快手二面，具体过程未记录。').disposition, 'blocked');
 });
 
 test('pinned note_desc cache is accepted only after independent SHA/length validation', () => {
@@ -79,14 +82,14 @@ test('Issue #1609 committed artifacts cover exactly the current pending subset o
   assert.deepEqual(selection.read_audit.exact_issue_numbers, Array.from({ length: 370 }, (_, i) => 1139 + i));
   assert.equal(plan.total, 238);
   assert.deepEqual(plan.range, { min_issue: 1139, max_issue: 1508, expected_count: 366, pending_expected_count: 238 });
-  assert.deepEqual(plan.counts, { 'single-interview': 0, 'multi-interview': 0, 'not-interview': 0, blocked: 238 });
+  assert.deepEqual(plan.counts, { 'single-interview': 54, 'multi-interview': 0, 'not-interview': 13, blocked: 171 });
   assert.equal(plan.mutation_count, 0);
   assert.equal(journal.entries.length, 238);
   assert.equal(journal.mutation_count, 0);
   assert.equal(audit.audit_status, 'not-run');
   assert.equal(audit.mutation_count, 0);
   assert.equal(files('evidence').length, 238);
-  assert.equal(files('requests').length, 0);
+  assert.equal(files('requests').length, 67);
   assert.equal(files('receipts').length, 238);
   const ambiguity = load('ambiguity-audit.json');
   assert.equal(ambiguity.total, 238);
@@ -112,8 +115,9 @@ test('Issue #1609 committed artifacts cover exactly the current pending subset o
   assert.deepEqual(ambiguity.flag_issue_numbers['generic-question-bank-or-job-ad'].filter((number) => number === 1176 || number === 1297), [1176, 1297]);
   assert.deepEqual(ambiguity.flag_issue_numbers['job-or-title-only'], [1200]);
   assert.equal(digest.evidence_count, 238);
-  assert.equal(digest.request_count, 0);
+  assert.equal(digest.request_count, 67);
   assert.equal(digest.receipt_count, 238);
+  assert.equal(digest.mutation_count, 0);
 });
 
 test('staged terminal requests are exactly validator-compatible and blocked items have no transition request', () => {
@@ -185,6 +189,27 @@ test('each evidence record is bound to its frozen body and exact artifact', () =
     assert.equal(evidence.body_sha256, item.body_sha256, file);
     assert.equal(evidence.source_repository_ref, selection.source_repository_ref, file);
     assert.ok(item.artifacts.some((artifact) => artifact.ref === evidence.source_evidence.ref && artifact.git_blob_sha === evidence.source_evidence.git_blob_sha), file);
+    const expectedArtifacts = item.artifacts
+      .filter((artifact) => ['html', 'json', 'text_projection'].includes(artifact.kind)
+        && ['raw_capture', 'source_projection'].includes(artifact.provenance)
+        && artifact.git_blob_sha && Number.isInteger(artifact.byte_size))
+      .sort((left, right) => left.ref.localeCompare(right.ref));
+    assert.deepEqual(
+      evidence.artifact_evidence.map((artifact) => artifact.ref).sort(),
+      expectedArtifacts.map((artifact) => artifact.ref),
+      `${file}: complete artifact coverage`,
+    );
+    assert.equal(evidence.ambiguity_audit.reviewed_artifact_count, expectedArtifacts.length, file);
+    for (const expectedArtifact of expectedArtifacts) {
+      const actualArtifact = evidence.artifact_evidence.find((artifact) => artifact.ref === expectedArtifact.ref);
+      assert.equal(actualArtifact.git_blob_sha, expectedArtifact.git_blob_sha, file);
+      assert.equal(actualArtifact.byte_size, expectedArtifact.byte_size, file);
+      assert.match(actualArtifact.content_sha256, /^[0-9a-f]{64}$/, file);
+      assert.match(actualArtifact.excerpt.locator, /^artifact-line:/, file);
+      if (evidence.disposition !== 'blocked' || actualArtifact.kind !== 'text_projection' || actualArtifact.byte_size > 1) {
+        assert.ok(actualArtifact.excerpt.excerpt.length > 0, file);
+      }
+    }
     const { evidence_sha256: ignored, ...withoutDigest } = evidence;
     assert.equal(evidence.evidence_sha256, sha256(canonicalJson(withoutDigest)), file);
     assert.ok(evidence.source_evidence.excerpt.locator.startsWith('artifact-line:'), file);

@@ -7,15 +7,12 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "bc51965d3b21473a351ccf1aceeee8afb359f506410fbdf8fc8189cf046b966e",
-  "disposition": "blocked",
-  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "disposition": "single-interview",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
-      "question-list-only",
-      "no-first-person-event",
-      "question-only",
-      "no-candidate-event-evidence"
+      "no-first-person-event"
     ],
     "questions": 10,
     "has_first_person_event": false,
@@ -23,19 +20,33 @@
     "has_bounded_event": true,
     "has_detailed_event": true,
     "has_completed_event_evidence": true,
-    "has_structured_candidate_event": false,
+    "has_structured_candidate_event": true,
     "generic_advice_or_aggregated": false,
     "scheduled_only": false,
-    "question_only": true,
+    "question_only": false,
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
-    "only_question_list": true,
+    "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "xiaomi-process",
+        "anchor": "小米",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-165;blob:229071bf384eacddae18a97c6d7bb9f170cfedb9",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:小米",
+        "source_ref": "liqiangcc/xhs:note_detail/68c8f26a000000000e027051.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68c8f26a000000000e027051.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -44,13 +55,108 @@
     "provenance": "source_projection",
     "byte_size": 718,
     "content_sha256": "5d416402f731aefcadd1c2f662a4bb40e82ab86af42385397a4363304d302988",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "1.自我介绍 4min",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "1.自我介绍 4min\n八股15min\n2.redis缓存击穿，缓存穿透，缓存雪崩\n3.mysql索引的结构是什么\n4.使用索引查询的时候什么时候会发生回表\n5.了解sql注入吗，什么原理怎么放防范\n6.什么是死锁，怎么解决\n7.说一下jvm内存分布\n8.说一下类的加载机制，类加载器，类加载流程\n9.手撕：有序数组合并，要求额外空间o1（从后向前） 17min\n10.手撕：力扣198打家劫舍，简单dp 10min\n反问：略\n八股答的不太好，感觉有点凉"
-    }
+      "locator": "artifact-line:1#offset:0-11;blob:df712cbe5d695be5640d97b3187f91e14bebeff0",
+      "semantic_excerpt": "小米java日常实习后端二面面经\n1.自我介绍 4min\n八股15min\n2.redis缓存击穿，缓存穿透，缓存雪崩\n3.mysql索引的结构是什么\n4.使用索引查询的时候什么时候会发生回表\n5.了解sql注入吗，什么原理怎么放防范\n6.什么是死锁，怎么解决\n7.说一下jvm内存分布\n8.说一下类的加载机制，类加载器，类加载流程\n9.手撕：有序数组合并，要求额外空间o1（从后向前） 17min\n10.手撕：力扣198打家劫舍，简单dp 10min\n反问：略\n八股答的不太好，感觉有点凉"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68c8f26a000000000e027051.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "df712cbe5d695be5640d97b3187f91e14bebeff0",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 718,
+        "content_sha256": "5d416402f731aefcadd1c2f662a4bb40e82ab86af42385397a4363304d302988",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "1.自我介绍 4min",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-11;blob:df712cbe5d695be5640d97b3187f91e14bebeff0",
+          "semantic_excerpt": "小米java日常实习后端二面面经\n1.自我介绍 4min\n八股15min\n2.redis缓存击穿，缓存穿透，缓存雪崩\n3.mysql索引的结构是什么\n4.使用索引查询的时候什么时候会发生回表\n5.了解sql注入吗，什么原理怎么放防范\n6.什么是死锁，怎么解决\n7.说一下jvm内存分布\n8.说一下类的加载机制，类加载器，类加载流程\n9.手撕：有序数组合并，要求额外空间o1（从后向前） 17min\n10.手撕：力扣198打家劫舍，简单dp 10min\n反问：略\n八股答的不太好，感觉有点凉"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68c8f26a000000000e027051.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "229071bf384eacddae18a97c6d7bb9f170cfedb9",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 389218,
+        "content_sha256": "bc2ad52d2089675bc0e00fe64288c8f23f09b59b8564fcc4c30dcd81539f69ec",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "小米java日常实习后端二面面经 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-193;blob:229071bf384eacddae18a97c6d7bb9f170cfedb9",
+          "semantic_excerpt": "小米java日常实习后端二面面经\n1.自我介绍 4min\n八股15min\n2.redis缓存击穿，缓存穿透，缓存雪崩\n3.mysql索引的结构是什么\n4.使用索引查询的时候什么时候会发生回表\n5.了解sql注入吗，什么原理怎么放防范\n6.什么是死锁，怎么解决\n7.说一下jvm内存分布\n8.说一下类的加载机制，类加载器，类加载流程\n9.手撕：有序数组合并，要求额外空间o1（从后向前） 17min\n10.手撕：力扣198打家劫舍，简单dp 10min\n反问：略\n八股答的不太好，感觉有点凉"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68c8f26a000000000e027051.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "da0664cee0db8ede8c6101523104efc4a68ee843",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 22285,
+        "content_sha256": "94b3e910d56cad506f2d7aaa9146d168a50a41eff8ff542f840b4c2b1855af03",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "小米java日常实习后端二面面经\",",
+          "line": 555,
+          "locator": "artifact-line:555#offset:30-48;blob:da0664cee0db8ede8c6101523104efc4a68ee843",
+          "semantic_excerpt": "小米java日常实习后端二面面经\n1.自我介绍 4min\n八股15min\n2.redis缓存击穿，缓存穿透，缓存雪崩\n3.mysql索引的结构是什么\n4.使用索引查询的时候什么时候会发生回表\n5.了解sql注入吗，什么原理怎么放防范\n6.什么是死锁，怎么解决\n7.说一下jvm内存分布\n8.说一下类的加载机制，类加载器，类加载流程\n9.手撕：有序数组合并，要求额外空间o1（从后向前） 17min\n10.手撕：力扣198打家劫舍，简单dp 10min\n反问：略\n八股答的不太好，感觉有点凉"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68c8f26a000000000e027051.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "df712cbe5d695be5640d97b3187f91e14bebeff0",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 718,
+      "content_sha256": "5d416402f731aefcadd1c2f662a4bb40e82ab86af42385397a4363304d302988",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "1.自我介绍 4min",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-11;blob:df712cbe5d695be5640d97b3187f91e14bebeff0",
+        "semantic_excerpt": "小米java日常实习后端二面面经\n1.自我介绍 4min\n八股15min\n2.redis缓存击穿，缓存穿透，缓存雪崩\n3.mysql索引的结构是什么\n4.使用索引查询的时候什么时候会发生回表\n5.了解sql注入吗，什么原理怎么放防范\n6.什么是死锁，怎么解决\n7.说一下jvm内存分布\n8.说一下类的加载机制，类加载器，类加载流程\n9.手撕：有序数组合并，要求额外空间o1（从后向前） 17min\n10.手撕：力扣198打家劫舍，简单dp 10min\n反问：略\n八股答的不太好，感觉有点凉"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68c8f26a000000000e027051.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "229071bf384eacddae18a97c6d7bb9f170cfedb9",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 389218,
+      "content_sha256": "bc2ad52d2089675bc0e00fe64288c8f23f09b59b8564fcc4c30dcd81539f69ec",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "小米java日常实习后端二面面经 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-193;blob:229071bf384eacddae18a97c6d7bb9f170cfedb9",
+        "semantic_excerpt": "小米java日常实习后端二面面经\n1.自我介绍 4min\n八股15min\n2.redis缓存击穿，缓存穿透，缓存雪崩\n3.mysql索引的结构是什么\n4.使用索引查询的时候什么时候会发生回表\n5.了解sql注入吗，什么原理怎么放防范\n6.什么是死锁，怎么解决\n7.说一下jvm内存分布\n8.说一下类的加载机制，类加载器，类加载流程\n9.手撕：有序数组合并，要求额外空间o1（从后向前） 17min\n10.手撕：力扣198打家劫舍，简单dp 10min\n反问：略\n八股答的不太好，感觉有点凉"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68c8f26a000000000e027051.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "da0664cee0db8ede8c6101523104efc4a68ee843",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 22285,
+      "content_sha256": "94b3e910d56cad506f2d7aaa9146d168a50a41eff8ff542f840b4c2b1855af03",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "小米java日常实习后端二面面经\",",
+        "line": 555,
+        "locator": "artifact-line:555#offset:30-48;blob:da0664cee0db8ede8c6101523104efc4a68ee843",
+        "semantic_excerpt": "小米java日常实习后端二面面经\n1.自我介绍 4min\n八股15min\n2.redis缓存击穿，缓存穿透，缓存雪崩\n3.mysql索引的结构是什么\n4.使用索引查询的时候什么时候会发生回表\n5.了解sql注入吗，什么原理怎么放防范\n6.什么是死锁，怎么解决\n7.说一下jvm内存分布\n8.说一下类的加载机制，类加载器，类加载流程\n9.手撕：有序数组合并，要求额外空间o1（从后向前） 17min\n10.手撕：力扣198打家劫舍，简单dp 10min\n反问：略\n八股答的不太好，感觉有点凉"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -69,8 +175,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -84,11 +190,12 @@
     }
   ],
   "limitations": [
-    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "cfbe120d839f294d3789160f26ba9a7445b7d3918131325c3eedcceec0519711"
+  "evidence_sha256": "cde06c6cd64400dc6b0cd2d4a9b7d6758eb9aa09fc48501e7afc7799ec706eaf"
 }

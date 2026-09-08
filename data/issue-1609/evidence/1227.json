@@ -18,7 +18,7 @@
     "questions": 0,
     "has_first_person_event": false,
     "has_explicit_candidate_event": false,
-    "has_bounded_event": false,
+    "has_bounded_event": true,
     "has_detailed_event": false,
     "has_completed_event_evidence": false,
     "has_structured_candidate_event": false,
@@ -28,12 +28,26 @@
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "didi-process",
+        "anchor": "滴滴",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-165;blob:bdebc6be96666692821df12064f23bab32a7630e",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:滴滴",
+        "source_ref": "liqiangcc/xhs:note_detail/68b43b4e000000001d0244e0.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b43b4e000000001d0244e0.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -42,13 +56,108 @@
     "provenance": "source_projection",
     "byte_size": 140,
     "content_sha256": "b59c097c8c788e6d47c2cda56f1a355aaf62fe4bb7773e2069d91011443cbd7f",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "通知发放得下周一吗，有面网约车技术部的uu吗#java[话题]# #面试技巧[话题]# #面经[话题]# #后端开发[话题]#",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "通知发放得下周一吗，有面网约车技术部的uu吗"
-    }
+      "locator": "artifact-line:1#offset:0-63;blob:6c8af17b760d7934fb42aaac19b00c3c0fe4d3b3",
+      "semantic_excerpt": "滴滴网约车技术部一面面经(日常实习)\n通知发放得下周一吗，有面网约车技术部的uu吗"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68b43b4e000000001d0244e0.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "6c8af17b760d7934fb42aaac19b00c3c0fe4d3b3",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 140,
+        "content_sha256": "b59c097c8c788e6d47c2cda56f1a355aaf62fe4bb7773e2069d91011443cbd7f",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "通知发放得下周一吗，有面网约车技术部的uu吗#java[话题]# #面试技巧[话题]# #面经[话题]# #后端开发[话题]#",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-63;blob:6c8af17b760d7934fb42aaac19b00c3c0fe4d3b3",
+          "semantic_excerpt": "滴滴网约车技术部一面面经(日常实习)\n通知发放得下周一吗，有面网约车技术部的uu吗"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68b43b4e000000001d0244e0.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "bdebc6be96666692821df12064f23bab32a7630e",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 389360,
+        "content_sha256": "6cf5e43397d8322f9263d805dc74136ae02e7addf2735c79c998f51bd76cfe16",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "滴滴网约车技术部一面面经(日常实习) - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-195;blob:bdebc6be96666692821df12064f23bab32a7630e",
+          "semantic_excerpt": "滴滴网约车技术部一面面经(日常实习)\n通知发放得下周一吗，有面网约车技术部的uu吗"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68b43b4e000000001d0244e0.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "3307dbb79ebd8de0114b0e02d49dc8ed26494664",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 23517,
+        "content_sha256": "4b233aa9c323c0f22fa8abd85542870e7bf3c4fe715b99a9e235d6e62e98446a",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "滴滴网约车技术部一面面经(日常实习)\",",
+          "line": 581,
+          "locator": "artifact-line:581#offset:30-50;blob:3307dbb79ebd8de0114b0e02d49dc8ed26494664",
+          "semantic_excerpt": "滴滴网约车技术部一面面经(日常实习)\n通知发放得下周一吗，有面网约车技术部的uu吗"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68b43b4e000000001d0244e0.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "6c8af17b760d7934fb42aaac19b00c3c0fe4d3b3",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 140,
+      "content_sha256": "b59c097c8c788e6d47c2cda56f1a355aaf62fe4bb7773e2069d91011443cbd7f",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "通知发放得下周一吗，有面网约车技术部的uu吗#java[话题]# #面试技巧[话题]# #面经[话题]# #后端开发[话题]#",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-63;blob:6c8af17b760d7934fb42aaac19b00c3c0fe4d3b3",
+        "semantic_excerpt": "滴滴网约车技术部一面面经(日常实习)\n通知发放得下周一吗，有面网约车技术部的uu吗"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68b43b4e000000001d0244e0.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "bdebc6be96666692821df12064f23bab32a7630e",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 389360,
+      "content_sha256": "6cf5e43397d8322f9263d805dc74136ae02e7addf2735c79c998f51bd76cfe16",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "滴滴网约车技术部一面面经(日常实习) - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-195;blob:bdebc6be96666692821df12064f23bab32a7630e",
+        "semantic_excerpt": "滴滴网约车技术部一面面经(日常实习)\n通知发放得下周一吗，有面网约车技术部的uu吗"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68b43b4e000000001d0244e0.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "3307dbb79ebd8de0114b0e02d49dc8ed26494664",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 23517,
+      "content_sha256": "4b233aa9c323c0f22fa8abd85542870e7bf3c4fe715b99a9e235d6e62e98446a",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "滴滴网约车技术部一面面经(日常实习)\",",
+        "line": 581,
+        "locator": "artifact-line:581#offset:30-50;blob:3307dbb79ebd8de0114b0e02d49dc8ed26494664",
+        "semantic_excerpt": "滴滴网约车技术部一面面经(日常实习)\n通知发放得下周一吗，有面网约车技术部的uu吗"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -83,10 +192,11 @@
   ],
   "limitations": [
     "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "8f5179f21240c552e65a72f19b565c858dfe2ccf1fba568c14e691c63a3ffec5"
+  "evidence_sha256": "832752ca96564feb81f3d077bb6ab5eb57106c6b2db37f68952813ab5c7ea6a6"
 }

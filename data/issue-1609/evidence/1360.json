@@ -7,35 +7,46 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "240d663e35938674b2ec2a616fb320f2ad52285e3181b37efb8c0343863d3682",
-  "disposition": "blocked",
-  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "disposition": "single-interview",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
-      "question-list-only",
-      "no-first-person-event",
-      "question-only",
-      "no-candidate-event-evidence"
+      "no-first-person-event"
     ],
-    "questions": 9,
+    "questions": 10,
     "has_first_person_event": false,
     "has_explicit_candidate_event": false,
     "has_bounded_event": true,
     "has_detailed_event": true,
     "has_completed_event_evidence": true,
-    "has_structured_candidate_event": false,
+    "has_structured_candidate_event": true,
     "generic_advice_or_aggregated": false,
     "scheduled_only": false,
-    "question_only": true,
+    "question_only": false,
     "outcome_signal": true,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
-    "only_question_list": true,
+    "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "xiaomi-process",
+        "anchor": "小米",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-165;blob:5abe8d83f497c6467ca9246c884e20c39dcf1ab6",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:小米",
+        "source_ref": "liqiangcc/xhs:note_detail/68cd5e57000000000702b76d.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 2,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68cd5e57000000000702b76d.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -44,13 +55,78 @@
     "provenance": "source_projection",
     "byte_size": 21622,
     "content_sha256": "0aa33167d8121e5b29a17ae79f3ac1aa6fcf5f97cdd6a58d42832e2c847bdb84",
+    "cache_status": "not-applicable",
     "excerpt": {
-      "excerpt": "\"global\": {",
-      "line": 2,
-      "locator": "artifact-line:2",
-      "semantic_excerpt": "总时长70分钟\n1、自我介绍\n2、实习项目相关提问\nhystrix底层的实现方式，状态转移\n多级缓存怎么做的\n查的信息数据库里没有怎么办\n限流算法有哪些，利用已有的基本的中间件和原理实现一个分布式限流你怎么实现\n介绍一下项目微服务拆了多少个，怎么分布的，不同服务的定位调用关系\n3、值类型和包装类型区别\n4、我有一个类A 两个字段是int long，有一个类B,两个字段是Integer，Long，分别初始化这两个对象，各个字段赋值然后这个时候这两个分别都生成几个对象\n5、泛型了解吗，一个list存的integer，另一个list存的string，他们的底层有区别吗，编译的代码有区别吗\n6、反射在哪些场景使用过\n7、aop底层怎么实现的\n8、有一个复杂的对象，比如说嵌套的一个结构可能有map，list这些，我们用这个对象的时候用他们其中的很多字段拼出想要的结果，整个对象的操作要保证原子性，在这个场景下，我们有多线程高并发的情况下去读，单线程更新，有哪几种方法可以做到线程安全\n9、算法：\n二叉搜索树转小顶堆；\n给一个生成随机布尔值的生成器，以此实现一个函数可以返回int范围内的随机数，要求足够均匀；\n扩展：在此基础上要求函数返回int值不超过max；max很小的情况下怎么优化"
-    }
+      "excerpt": "总时长70分钟\\n1、自我介绍\\n2、实习项目相关提问\\nhystrix底层的实现方式，状态转移\\n多级缓存怎么做的\\n查的信息数据库里没有怎么办\\n限流算法有哪些，利用已有的基本的中间件和原理实现一个分布式限流你怎么实现\\n介绍一下项目微服务拆了多少个，怎么分布的，不同服务的定位调用关系\\n3、值类型和包装类型区别\\n4、我有一个类A 两个字段是int long，有一个类B,两个字段是Integer，Long，分别初始化这两个对象，各个字段赋值然后这个时候这两个分别都生成几个对象\\n5、泛型了解吗，一个list存的integer，另一个list存的string，他们的底层有区别吗，编译的代码有区别吗\\n6、反射在哪些场景使用过\\n7、aop底层怎么实现的\\n8、有一个复杂的对象，比如说嵌套的一个结构可能有map，list这些，我们用这个对象的时候用他们其中的很多字段拼出想要的结果，整个对象的操作要保证原子性，在这个场景下，我们有多线程高并发的情况下去读，单线程更新，有哪几种方法可以做到线程安全\\n9、算法：\\n二叉搜索树转小顶堆；\\n给一个生成随机布尔值的生成器，以此实现一个函数可以返回int范围内的随机数，要求足够均匀；\\n扩展：在此基础上要求函数返回int值不超过max；max很小的情况下怎么优化\\n#面经[话题]# #后端开发[话题]#\",",
+      "line": 502,
+      "locator": "artifact-line:502#offset:29-612;blob:b674471149e3f7f8f7dea2b46b39e026364f136c",
+      "semantic_excerpt": "小米一面 9.17\n总时长70分钟\n1、自我介绍\n2、实习项目相关提问\nhystrix底层的实现方式，状态转移\n多级缓存怎么做的\n查的信息数据库里没有怎么办\n限流算法有哪些，利用已有的基本的中间件和原理实现一个分布式限流你怎么实现\n介绍一下项目微服务拆了多少个，怎么分布的，不同服务的定位调用关系\n3、值类型和包装类型区别\n4、我有一个类A 两个字段是int long，有一个类B,两个字段是Integer，Long，分别初始化这两个对象，各个字段赋值然后这个时候这两个分别都生成几个对象\n5、泛型了解吗，一个list存的integer，另一个list存的string，他们的底层有区别吗，编译的代码有区别吗\n6、反射在哪些场景使用过\n7、aop底层怎么实现的\n8、有一个复杂的对象，比如说嵌套的一个结构可能有map，list这些，我们用这个对象的时候用他们其中的很多字段拼出想要的结果，整个对象的操作要保证原子性，在这个场景下，我们有多线程高并发的情况下去读，单线程更新，有哪几种方法可以做到线程安全\n9、算法：\n二叉搜索树转小顶堆；\n给一个生成随机布尔值的生成器，以此实现一个函数可以返回int范围内的随机数，要求足够均匀；\n扩展：在此基础上要求函数返回int值不超过max；max很小的情况下怎么优化"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_detail/68cd5e57000000000702b76d.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "5abe8d83f497c6467ca9246c884e20c39dcf1ab6",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 389114,
+        "content_sha256": "73f4b37a07fa6f960a52d02283eca43c436bd210a721facfdc96cf2dfebb5ff3",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "总时长70分钟 1、自我介绍 2、实习项目相关提问 hystrix底层的实现方式，状态转移 多级缓存怎么做的 查的信息数据库里没有怎么办 限流算法有哪些，利用已有的基本的中间件和原理实现一个分布式限流你怎么实现 介绍一下项目微服务拆了多少个，怎么分布的，不同服务的定位调用关系 3、值类型和包装类型区别 4、我有一个类A 两个字段是int long，有一个类B,两个字段是Integer，Long，分别初始化这两个对象，各个字段赋值然后这个时候这两个分别都生成几个对象 5、泛型了解吗，一个list存的integer，另一个list存的string，他们的底层有区别吗，编译的代码有区别吗 6、反射在哪些场景使用过 7、aop底层怎么实现的 8、有一个复杂的对象，比如说嵌套的一个结构可能有map，list这些，我们用这个对象的时候用他们其中的很多字段拼出想要的结果，整个对象的操作要保证原子性，在这个场景下，我们有多线程高并发的情况下去读，单线程更新，有哪几种方法可以做到线程安全 9、算法： 二叉搜索树转小顶堆； 给一个生成随机布尔值的生成器，以此实现一个函数可以返回int范围内的随机数，要求足够均匀； 扩展：在此基础上要求函数返回int值不超过max；max很小的情况下怎么优化 #面经 #后端开发\">",
+          "line": 511,
+          "locator": "artifact-line:511#offset:34-589;blob:5abe8d83f497c6467ca9246c884e20c39dcf1ab6",
+          "semantic_excerpt": "小米一面 9.17\n总时长70分钟\n1、自我介绍\n2、实习项目相关提问\nhystrix底层的实现方式，状态转移\n多级缓存怎么做的\n查的信息数据库里没有怎么办\n限流算法有哪些，利用已有的基本的中间件和原理实现一个分布式限流你怎么实现\n介绍一下项目微服务拆了多少个，怎么分布的，不同服务的定位调用关系\n3、值类型和包装类型区别\n4、我有一个类A 两个字段是int long，有一个类B,两个字段是Integer，Long，分别初始化这两个对象，各个字段赋值然后这个时候这两个分别都生成几个对象\n5、泛型了解吗，一个list存的integer，另一个list存的string，他们的底层有区别吗，编译的代码有区别吗\n6、反射在哪些场景使用过\n7、aop底层怎么实现的\n8、有一个复杂的对象，比如说嵌套的一个结构可能有map，list这些，我们用这个对象的时候用他们其中的很多字段拼出想要的结果，整个对象的操作要保证原子性，在这个场景下，我们有多线程高并发的情况下去读，单线程更新，有哪几种方法可以做到线程安全\n9、算法：\n二叉搜索树转小顶堆；\n给一个生成随机布尔值的生成器，以此实现一个函数可以返回int范围内的随机数，要求足够均匀；\n扩展：在此基础上要求函数返回int值不超过max；max很小的情况下怎么优化"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68cd5e57000000000702b76d.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "b674471149e3f7f8f7dea2b46b39e026364f136c",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 21622,
+        "content_sha256": "0aa33167d8121e5b29a17ae79f3ac1aa6fcf5f97cdd6a58d42832e2c847bdb84",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "总时长70分钟\\n1、自我介绍\\n2、实习项目相关提问\\nhystrix底层的实现方式，状态转移\\n多级缓存怎么做的\\n查的信息数据库里没有怎么办\\n限流算法有哪些，利用已有的基本的中间件和原理实现一个分布式限流你怎么实现\\n介绍一下项目微服务拆了多少个，怎么分布的，不同服务的定位调用关系\\n3、值类型和包装类型区别\\n4、我有一个类A 两个字段是int long，有一个类B,两个字段是Integer，Long，分别初始化这两个对象，各个字段赋值然后这个时候这两个分别都生成几个对象\\n5、泛型了解吗，一个list存的integer，另一个list存的string，他们的底层有区别吗，编译的代码有区别吗\\n6、反射在哪些场景使用过\\n7、aop底层怎么实现的\\n8、有一个复杂的对象，比如说嵌套的一个结构可能有map，list这些，我们用这个对象的时候用他们其中的很多字段拼出想要的结果，整个对象的操作要保证原子性，在这个场景下，我们有多线程高并发的情况下去读，单线程更新，有哪几种方法可以做到线程安全\\n9、算法：\\n二叉搜索树转小顶堆；\\n给一个生成随机布尔值的生成器，以此实现一个函数可以返回int范围内的随机数，要求足够均匀；\\n扩展：在此基础上要求函数返回int值不超过max；max很小的情况下怎么优化\\n#面经[话题]# #后端开发[话题]#\",",
+          "line": 502,
+          "locator": "artifact-line:502#offset:29-612;blob:b674471149e3f7f8f7dea2b46b39e026364f136c",
+          "semantic_excerpt": "小米一面 9.17\n总时长70分钟\n1、自我介绍\n2、实习项目相关提问\nhystrix底层的实现方式，状态转移\n多级缓存怎么做的\n查的信息数据库里没有怎么办\n限流算法有哪些，利用已有的基本的中间件和原理实现一个分布式限流你怎么实现\n介绍一下项目微服务拆了多少个，怎么分布的，不同服务的定位调用关系\n3、值类型和包装类型区别\n4、我有一个类A 两个字段是int long，有一个类B,两个字段是Integer，Long，分别初始化这两个对象，各个字段赋值然后这个时候这两个分别都生成几个对象\n5、泛型了解吗，一个list存的integer，另一个list存的string，他们的底层有区别吗，编译的代码有区别吗\n6、反射在哪些场景使用过\n7、aop底层怎么实现的\n8、有一个复杂的对象，比如说嵌套的一个结构可能有map，list这些，我们用这个对象的时候用他们其中的很多字段拼出想要的结果，整个对象的操作要保证原子性，在这个场景下，我们有多线程高并发的情况下去读，单线程更新，有哪几种方法可以做到线程安全\n9、算法：\n二叉搜索树转小顶堆；\n给一个生成随机布尔值的生成器，以此实现一个函数可以返回int范围内的随机数，要求足够均匀；\n扩展：在此基础上要求函数返回int值不超过max；max很小的情况下怎么优化"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/68cd5e57000000000702b76d.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "5abe8d83f497c6467ca9246c884e20c39dcf1ab6",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 389114,
+      "content_sha256": "73f4b37a07fa6f960a52d02283eca43c436bd210a721facfdc96cf2dfebb5ff3",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "总时长70分钟 1、自我介绍 2、实习项目相关提问 hystrix底层的实现方式，状态转移 多级缓存怎么做的 查的信息数据库里没有怎么办 限流算法有哪些，利用已有的基本的中间件和原理实现一个分布式限流你怎么实现 介绍一下项目微服务拆了多少个，怎么分布的，不同服务的定位调用关系 3、值类型和包装类型区别 4、我有一个类A 两个字段是int long，有一个类B,两个字段是Integer，Long，分别初始化这两个对象，各个字段赋值然后这个时候这两个分别都生成几个对象 5、泛型了解吗，一个list存的integer，另一个list存的string，他们的底层有区别吗，编译的代码有区别吗 6、反射在哪些场景使用过 7、aop底层怎么实现的 8、有一个复杂的对象，比如说嵌套的一个结构可能有map，list这些，我们用这个对象的时候用他们其中的很多字段拼出想要的结果，整个对象的操作要保证原子性，在这个场景下，我们有多线程高并发的情况下去读，单线程更新，有哪几种方法可以做到线程安全 9、算法： 二叉搜索树转小顶堆； 给一个生成随机布尔值的生成器，以此实现一个函数可以返回int范围内的随机数，要求足够均匀； 扩展：在此基础上要求函数返回int值不超过max；max很小的情况下怎么优化 #面经 #后端开发\">",
+        "line": 511,
+        "locator": "artifact-line:511#offset:34-589;blob:5abe8d83f497c6467ca9246c884e20c39dcf1ab6",
+        "semantic_excerpt": "小米一面 9.17\n总时长70分钟\n1、自我介绍\n2、实习项目相关提问\nhystrix底层的实现方式，状态转移\n多级缓存怎么做的\n查的信息数据库里没有怎么办\n限流算法有哪些，利用已有的基本的中间件和原理实现一个分布式限流你怎么实现\n介绍一下项目微服务拆了多少个，怎么分布的，不同服务的定位调用关系\n3、值类型和包装类型区别\n4、我有一个类A 两个字段是int long，有一个类B,两个字段是Integer，Long，分别初始化这两个对象，各个字段赋值然后这个时候这两个分别都生成几个对象\n5、泛型了解吗，一个list存的integer，另一个list存的string，他们的底层有区别吗，编译的代码有区别吗\n6、反射在哪些场景使用过\n7、aop底层怎么实现的\n8、有一个复杂的对象，比如说嵌套的一个结构可能有map，list这些，我们用这个对象的时候用他们其中的很多字段拼出想要的结果，整个对象的操作要保证原子性，在这个场景下，我们有多线程高并发的情况下去读，单线程更新，有哪几种方法可以做到线程安全\n9、算法：\n二叉搜索树转小顶堆；\n给一个生成随机布尔值的生成器，以此实现一个函数可以返回int范围内的随机数，要求足够均匀；\n扩展：在此基础上要求函数返回int值不超过max；max很小的情况下怎么优化"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68cd5e57000000000702b76d.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "b674471149e3f7f8f7dea2b46b39e026364f136c",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 21622,
+      "content_sha256": "0aa33167d8121e5b29a17ae79f3ac1aa6fcf5f97cdd6a58d42832e2c847bdb84",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "总时长70分钟\\n1、自我介绍\\n2、实习项目相关提问\\nhystrix底层的实现方式，状态转移\\n多级缓存怎么做的\\n查的信息数据库里没有怎么办\\n限流算法有哪些，利用已有的基本的中间件和原理实现一个分布式限流你怎么实现\\n介绍一下项目微服务拆了多少个，怎么分布的，不同服务的定位调用关系\\n3、值类型和包装类型区别\\n4、我有一个类A 两个字段是int long，有一个类B,两个字段是Integer，Long，分别初始化这两个对象，各个字段赋值然后这个时候这两个分别都生成几个对象\\n5、泛型了解吗，一个list存的integer，另一个list存的string，他们的底层有区别吗，编译的代码有区别吗\\n6、反射在哪些场景使用过\\n7、aop底层怎么实现的\\n8、有一个复杂的对象，比如说嵌套的一个结构可能有map，list这些，我们用这个对象的时候用他们其中的很多字段拼出想要的结果，整个对象的操作要保证原子性，在这个场景下，我们有多线程高并发的情况下去读，单线程更新，有哪几种方法可以做到线程安全\\n9、算法：\\n二叉搜索树转小顶堆；\\n给一个生成随机布尔值的生成器，以此实现一个函数可以返回int范围内的随机数，要求足够均匀；\\n扩展：在此基础上要求函数返回int值不超过max；max很小的情况下怎么优化\\n#面经[话题]# #后端开发[话题]#\",",
+        "line": 502,
+        "locator": "artifact-line:502#offset:29-612;blob:b674471149e3f7f8f7dea2b46b39e026364f136c",
+        "semantic_excerpt": "小米一面 9.17\n总时长70分钟\n1、自我介绍\n2、实习项目相关提问\nhystrix底层的实现方式，状态转移\n多级缓存怎么做的\n查的信息数据库里没有怎么办\n限流算法有哪些，利用已有的基本的中间件和原理实现一个分布式限流你怎么实现\n介绍一下项目微服务拆了多少个，怎么分布的，不同服务的定位调用关系\n3、值类型和包装类型区别\n4、我有一个类A 两个字段是int long，有一个类B,两个字段是Integer，Long，分别初始化这两个对象，各个字段赋值然后这个时候这两个分别都生成几个对象\n5、泛型了解吗，一个list存的integer，另一个list存的string，他们的底层有区别吗，编译的代码有区别吗\n6、反射在哪些场景使用过\n7、aop底层怎么实现的\n8、有一个复杂的对象，比如说嵌套的一个结构可能有map，list这些，我们用这个对象的时候用他们其中的很多字段拼出想要的结果，整个对象的操作要保证原子性，在这个场景下，我们有多线程高并发的情况下去读，单线程更新，有哪几种方法可以做到线程安全\n9、算法：\n二叉搜索树转小顶堆；\n给一个生成随机布尔值的生成器，以此实现一个函数可以返回int范围内的随机数，要求足够均匀；\n扩展：在此基础上要求函数返回int值不超过max；max很小的情况下怎么优化"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -69,8 +145,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -84,11 +160,12 @@
     }
   ],
   "limitations": [
-    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "448eaf0565867b199728fb1ea46783acb94f9d03ff0be89737ed6005dc9f538f"
+  "evidence_sha256": "c41926af3c91f77d6710dd58e72c7c001c6d9d1c2953b7b2a487534fe171cd11"
 }

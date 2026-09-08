@@ -8,7 +8,7 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "784731eea6a0b80155294da47774632740ea86663e6a2f610cca79157ea4d717",
   "disposition": "blocked",
-  "rationale": "No non-empty readable Source/Source projection is available; title and hashtags cannot authorize a boundary.",
+  "rationale": "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
@@ -18,7 +18,7 @@
     "questions": 0,
     "has_first_person_event": false,
     "has_explicit_candidate_event": false,
-    "has_bounded_event": false,
+    "has_bounded_event": true,
     "has_detailed_event": false,
     "has_completed_event_evidence": false,
     "has_structured_candidate_event": false,
@@ -28,12 +28,26 @@
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "bytedance-process",
+        "anchor": "字节",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-165;blob:42d3cae922914050e74f77c7cf4d94954ffc5aa7",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:字节",
+        "source_ref": "liqiangcc/xhs:note_detail/68dcfcdb000000000402337a.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 2,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68dcfcdb000000000402337a.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -42,13 +56,78 @@
     "provenance": "source_projection",
     "byte_size": 21914,
     "content_sha256": "932cd229ebf443a051b6c2165e3545bdf352fb71fe4a125ff791a73749218fd7",
+    "cache_status": "not-applicable",
     "excerpt": {
-      "excerpt": "\"global\": {",
-      "line": 2,
-      "locator": "artifact-line:2",
-      "semantic_excerpt": ""
-    }
+      "excerpt": "字节后端岗一面面经\",",
+      "line": 498,
+      "locator": "artifact-line:498#offset:30-41;blob:54e5f8a2e2542ed3e383d8a5a2e270c87cdbaa19",
+      "semantic_excerpt": "字节后端岗一面面经"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_detail/68dcfcdb000000000402337a.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "42d3cae922914050e74f77c7cf4d94954ffc5aa7",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 387567,
+        "content_sha256": "81cf8c1c5ee209c44c5028db803be189e2b6f2fa514c65ec02e5288c0a6bab87",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "字节后端岗一面面经 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-186;blob:42d3cae922914050e74f77c7cf4d94954ffc5aa7",
+          "semantic_excerpt": "字节后端岗一面面经"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68dcfcdb000000000402337a.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "54e5f8a2e2542ed3e383d8a5a2e270c87cdbaa19",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 21914,
+        "content_sha256": "932cd229ebf443a051b6c2165e3545bdf352fb71fe4a125ff791a73749218fd7",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "字节后端岗一面面经\",",
+          "line": 498,
+          "locator": "artifact-line:498#offset:30-41;blob:54e5f8a2e2542ed3e383d8a5a2e270c87cdbaa19",
+          "semantic_excerpt": "字节后端岗一面面经"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/68dcfcdb000000000402337a.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "42d3cae922914050e74f77c7cf4d94954ffc5aa7",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 387567,
+      "content_sha256": "81cf8c1c5ee209c44c5028db803be189e2b6f2fa514c65ec02e5288c0a6bab87",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "字节后端岗一面面经 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-186;blob:42d3cae922914050e74f77c7cf4d94954ffc5aa7",
+        "semantic_excerpt": "字节后端岗一面面经"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68dcfcdb000000000402337a.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "54e5f8a2e2542ed3e383d8a5a2e270c87cdbaa19",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 21914,
+      "content_sha256": "932cd229ebf443a051b6c2165e3545bdf352fb71fe4a125ff791a73749218fd7",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "字节后端岗一面面经\",",
+        "line": 498,
+        "locator": "artifact-line:498#offset:30-41;blob:54e5f8a2e2542ed3e383d8a5a2e270c87cdbaa19",
+        "semantic_excerpt": "字节后端岗一面面经"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -68,7 +147,7 @@
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. No non-empty readable Source/Source projection is available; title and hashtags cannot authorize a boundary."
+      "note": "The disposition is supported by the cited source evidence. Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -82,11 +161,12 @@
     }
   ],
   "limitations": [
-    "No non-empty readable Source/Source projection is available; title and hashtags cannot authorize a boundary.",
+    "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "adc2b109ebdb0b284d2d01dce8d273ef40ea14e69068e26950e3c770d18f6cf8"
+  "evidence_sha256": "23d8e9e070ecac274f0e15d524db73488f8a60408acff813f2bfd74d12da07b8"
 }

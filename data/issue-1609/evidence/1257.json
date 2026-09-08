@@ -7,15 +7,12 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "d99779e54ab15ddfe7f3cbd789212f79843eb1ed3ca2d14207a621baa61c74b7",
-  "disposition": "blocked",
-  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "disposition": "single-interview",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
-      "question-list-only",
-      "no-first-person-event",
-      "question-only",
-      "no-candidate-event-evidence"
+      "no-first-person-event"
     ],
     "questions": 17,
     "has_first_person_event": false,
@@ -23,19 +20,33 @@
     "has_bounded_event": true,
     "has_detailed_event": true,
     "has_completed_event_evidence": true,
-    "has_structured_candidate_event": false,
+    "has_structured_candidate_event": true,
     "generic_advice_or_aggregated": false,
     "scheduled_only": false,
-    "question_only": true,
+    "question_only": false,
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
-    "only_question_list": true,
+    "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "jd-process",
+        "anchor": "京东",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-165;blob:45d2f8c68edb4932aa0e381ea5a86d17fae35513",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:京东",
+        "source_ref": "liqiangcc/xhs:note_detail/68b91ba2000000001c00e8bf.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b91ba2000000001c00e8bf.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -44,13 +55,108 @@
     "provenance": "source_projection",
     "byte_size": 553,
     "content_sha256": "b8ca41a097fd7413207c39ecf2f56915046f9121cbe2d9433cd1761911560c55",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "1.对称二叉树",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "1.对称二叉树\n2.写一个排序算法\n3.项目拷打\n4.kafka和rabbitmq区别，为什么大家都使用kafka（不会rabbitmq）\n5.解释什么是kafka\n6.他的优势是什么？（数据不丢失balabala，副本，offset）打断了说的不对\n7.sql优化\n8.hdfs和Hive的区别\n9.spark和hive的区别\n10.hive中存储格式\n11.Application、job、stage、task区别\n12.宽依赖窄依赖\n13.scala里object和class方法的区别\n14.dateframe和dataset的区别\n15.TCPIp\n16.OSI七层\n17.java垃圾回收机制"
-    }
+      "locator": "artifact-line:1#offset:0-7;blob:22de433ca4e85bd875a364ae74a2ebe3e07b2d5e",
+      "semantic_excerpt": "京东数据开发一面\n1.对称二叉树\n2.写一个排序算法\n3.项目拷打\n4.kafka和rabbitmq区别，为什么大家都使用kafka（不会rabbitmq）\n5.解释什么是kafka\n6.他的优势是什么？（数据不丢失balabala，副本，offset）打断了说的不对\n7.sql优化\n8.hdfs和Hive的区别\n9.spark和hive的区别\n10.hive中存储格式\n11.Application、job、stage、task区别\n12.宽依赖窄依赖\n13.scala里object和class方法的区别\n14.dateframe和dataset的区别\n15.TCPIp\n16.OSI七层\n17.java垃圾回收机制"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68b91ba2000000001c00e8bf.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "22de433ca4e85bd875a364ae74a2ebe3e07b2d5e",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 553,
+        "content_sha256": "b8ca41a097fd7413207c39ecf2f56915046f9121cbe2d9433cd1761911560c55",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "1.对称二叉树",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-7;blob:22de433ca4e85bd875a364ae74a2ebe3e07b2d5e",
+          "semantic_excerpt": "京东数据开发一面\n1.对称二叉树\n2.写一个排序算法\n3.项目拷打\n4.kafka和rabbitmq区别，为什么大家都使用kafka（不会rabbitmq）\n5.解释什么是kafka\n6.他的优势是什么？（数据不丢失balabala，副本，offset）打断了说的不对\n7.sql优化\n8.hdfs和Hive的区别\n9.spark和hive的区别\n10.hive中存储格式\n11.Application、job、stage、task区别\n12.宽依赖窄依赖\n13.scala里object和class方法的区别\n14.dateframe和dataset的区别\n15.TCPIp\n16.OSI七层\n17.java垃圾回收机制"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68b91ba2000000001c00e8bf.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "45d2f8c68edb4932aa0e381ea5a86d17fae35513",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 386321,
+        "content_sha256": "9c48b182d68136b3a653cb649f09601233c4906622d3325100dc04087afe8a87",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "京东数据开发一面 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-185;blob:45d2f8c68edb4932aa0e381ea5a86d17fae35513",
+          "semantic_excerpt": "京东数据开发一面\n1.对称二叉树\n2.写一个排序算法\n3.项目拷打\n4.kafka和rabbitmq区别，为什么大家都使用kafka（不会rabbitmq）\n5.解释什么是kafka\n6.他的优势是什么？（数据不丢失balabala，副本，offset）打断了说的不对\n7.sql优化\n8.hdfs和Hive的区别\n9.spark和hive的区别\n10.hive中存储格式\n11.Application、job、stage、task区别\n12.宽依赖窄依赖\n13.scala里object和class方法的区别\n14.dateframe和dataset的区别\n15.TCPIp\n16.OSI七层\n17.java垃圾回收机制"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68b91ba2000000001c00e8bf.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "d4bb625b5419148078c4b42e084c426f8b177439",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 20642,
+        "content_sha256": "36b247dec9b8dca5ad86d80e1725b75ccadbf8b0f807e3955702db430586db07",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "京东数据开发一面\",",
+          "line": 541,
+          "locator": "artifact-line:541#offset:30-40;blob:d4bb625b5419148078c4b42e084c426f8b177439",
+          "semantic_excerpt": "京东数据开发一面\n1.对称二叉树\n2.写一个排序算法\n3.项目拷打\n4.kafka和rabbitmq区别，为什么大家都使用kafka（不会rabbitmq）\n5.解释什么是kafka\n6.他的优势是什么？（数据不丢失balabala，副本，offset）打断了说的不对\n7.sql优化\n8.hdfs和Hive的区别\n9.spark和hive的区别\n10.hive中存储格式\n11.Application、job、stage、task区别\n12.宽依赖窄依赖\n13.scala里object和class方法的区别\n14.dateframe和dataset的区别\n15.TCPIp\n16.OSI七层\n17.java垃圾回收机制"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68b91ba2000000001c00e8bf.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "22de433ca4e85bd875a364ae74a2ebe3e07b2d5e",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 553,
+      "content_sha256": "b8ca41a097fd7413207c39ecf2f56915046f9121cbe2d9433cd1761911560c55",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "1.对称二叉树",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-7;blob:22de433ca4e85bd875a364ae74a2ebe3e07b2d5e",
+        "semantic_excerpt": "京东数据开发一面\n1.对称二叉树\n2.写一个排序算法\n3.项目拷打\n4.kafka和rabbitmq区别，为什么大家都使用kafka（不会rabbitmq）\n5.解释什么是kafka\n6.他的优势是什么？（数据不丢失balabala，副本，offset）打断了说的不对\n7.sql优化\n8.hdfs和Hive的区别\n9.spark和hive的区别\n10.hive中存储格式\n11.Application、job、stage、task区别\n12.宽依赖窄依赖\n13.scala里object和class方法的区别\n14.dateframe和dataset的区别\n15.TCPIp\n16.OSI七层\n17.java垃圾回收机制"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68b91ba2000000001c00e8bf.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "45d2f8c68edb4932aa0e381ea5a86d17fae35513",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 386321,
+      "content_sha256": "9c48b182d68136b3a653cb649f09601233c4906622d3325100dc04087afe8a87",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "京东数据开发一面 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-185;blob:45d2f8c68edb4932aa0e381ea5a86d17fae35513",
+        "semantic_excerpt": "京东数据开发一面\n1.对称二叉树\n2.写一个排序算法\n3.项目拷打\n4.kafka和rabbitmq区别，为什么大家都使用kafka（不会rabbitmq）\n5.解释什么是kafka\n6.他的优势是什么？（数据不丢失balabala，副本，offset）打断了说的不对\n7.sql优化\n8.hdfs和Hive的区别\n9.spark和hive的区别\n10.hive中存储格式\n11.Application、job、stage、task区别\n12.宽依赖窄依赖\n13.scala里object和class方法的区别\n14.dateframe和dataset的区别\n15.TCPIp\n16.OSI七层\n17.java垃圾回收机制"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68b91ba2000000001c00e8bf.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "d4bb625b5419148078c4b42e084c426f8b177439",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 20642,
+      "content_sha256": "36b247dec9b8dca5ad86d80e1725b75ccadbf8b0f807e3955702db430586db07",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "京东数据开发一面\",",
+        "line": 541,
+        "locator": "artifact-line:541#offset:30-40;blob:d4bb625b5419148078c4b42e084c426f8b177439",
+        "semantic_excerpt": "京东数据开发一面\n1.对称二叉树\n2.写一个排序算法\n3.项目拷打\n4.kafka和rabbitmq区别，为什么大家都使用kafka（不会rabbitmq）\n5.解释什么是kafka\n6.他的优势是什么？（数据不丢失balabala，副本，offset）打断了说的不对\n7.sql优化\n8.hdfs和Hive的区别\n9.spark和hive的区别\n10.hive中存储格式\n11.Application、job、stage、task区别\n12.宽依赖窄依赖\n13.scala里object和class方法的区别\n14.dateframe和dataset的区别\n15.TCPIp\n16.OSI七层\n17.java垃圾回收机制"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -69,8 +175,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -84,11 +190,12 @@
     }
   ],
   "limitations": [
-    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "da5893e43e761a455d040c5897cefbe47146ea6be979360e9506b901e77b3771"
+  "evidence_sha256": "c256ac729a9acf73afea872bdaa95f520e318a59fc5966de976226319254cf81"
 }

@@ -30,12 +30,26 @@
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": true,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "kuaishou-process",
+        "anchor": "快手",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-165;blob:eccb5959d280a603d01e56505409c5fbe0c6d0f4",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:快手",
+        "source_ref": "liqiangcc/xhs:note_detail/68c926620000000013029638.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68c926620000000013029638.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -44,13 +58,108 @@
     "provenance": "source_projection",
     "byte_size": 835,
     "content_sha256": "3b11167af8dca7fcd93a3a8daabf149d4fbaf526dd99c04ec7ed879482193321",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "1. java常见的集合，以及底层实现",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "1. java常见的集合，以及底层实现\n2. HashMap的扩容过程\n3. 讲一下JVM的垃圾回收机制\n4. 介绍TreadLocal类，什么场景需要使用TreadLocal类？\n5. 介绍volatile关键字\n6. 指定重排序的话什么场景会出现问题？\n7. 什么场景需要使用volatile关键字？\n8. 讲一下MySQL的索引\n9. 怎么建索引，是怎么考虑的呢？\n10. 加联合索引的时候有什么需要注意的呢？ 11. 手撕：螺旋矩阵II 20min\n反问： 1. 部门业务 2. 对我的表现有什么建议"
-    }
+      "locator": "artifact-line:1#offset:0-19;blob:4ab4add2ca056736a78c7b2ef44f437ddae80a43",
+      "semantic_excerpt": "快手java技术面经\n1. java常见的集合，以及底层实现\n2. HashMap的扩容过程\n3. 讲一下JVM的垃圾回收机制\n4. 介绍TreadLocal类，什么场景需要使用TreadLocal类？\n5. 介绍volatile关键字\n6. 指定重排序的话什么场景会出现问题？\n7. 什么场景需要使用volatile关键字？\n8. 讲一下MySQL的索引\n9. 怎么建索引，是怎么考虑的呢？\n10. 加联合索引的时候有什么需要注意的呢？ 11. 手撕：螺旋矩阵II 20min\n反问： 1. 部门业务 2. 对我的表现有什么建议"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68c926620000000013029638.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "4ab4add2ca056736a78c7b2ef44f437ddae80a43",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 835,
+        "content_sha256": "3b11167af8dca7fcd93a3a8daabf149d4fbaf526dd99c04ec7ed879482193321",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "1. java常见的集合，以及底层实现",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-19;blob:4ab4add2ca056736a78c7b2ef44f437ddae80a43",
+          "semantic_excerpt": "快手java技术面经\n1. java常见的集合，以及底层实现\n2. HashMap的扩容过程\n3. 讲一下JVM的垃圾回收机制\n4. 介绍TreadLocal类，什么场景需要使用TreadLocal类？\n5. 介绍volatile关键字\n6. 指定重排序的话什么场景会出现问题？\n7. 什么场景需要使用volatile关键字？\n8. 讲一下MySQL的索引\n9. 怎么建索引，是怎么考虑的呢？\n10. 加联合索引的时候有什么需要注意的呢？ 11. 手撕：螺旋矩阵II 20min\n反问： 1. 部门业务 2. 对我的表现有什么建议"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68c926620000000013029638.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "eccb5959d280a603d01e56505409c5fbe0c6d0f4",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 391156,
+        "content_sha256": "6b326d7c2b6b4e2637fd7c1778359de202b82df5545b0151086c308948b6d5f0",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "快手java技术面经 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-187;blob:eccb5959d280a603d01e56505409c5fbe0c6d0f4",
+          "semantic_excerpt": "快手java技术面经\n1. java常见的集合，以及底层实现\n2. HashMap的扩容过程\n3. 讲一下JVM的垃圾回收机制\n4. 介绍TreadLocal类，什么场景需要使用TreadLocal类？\n5. 介绍volatile关键字\n6. 指定重排序的话什么场景会出现问题？\n7. 什么场景需要使用volatile关键字？\n8. 讲一下MySQL的索引\n9. 怎么建索引，是怎么考虑的呢？\n10. 加联合索引的时候有什么需要注意的呢？ 11. 手撕：螺旋矩阵II 20min\n反问： 1. 部门业务 2. 对我的表现有什么建议"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68c926620000000013029638.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "ce24d48849ac32fe4353f48a87e2ff761b8f779a",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 23489,
+        "content_sha256": "8f367692fd0d7d97a03fed4e4c16f16aaecc30b76baae12e4b9ec96a66e7b9b8",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "快手java技术面经\",",
+          "line": 500,
+          "locator": "artifact-line:500#offset:30-42;blob:ce24d48849ac32fe4353f48a87e2ff761b8f779a",
+          "semantic_excerpt": "快手java技术面经\n1. java常见的集合，以及底层实现\n2. HashMap的扩容过程\n3. 讲一下JVM的垃圾回收机制\n4. 介绍TreadLocal类，什么场景需要使用TreadLocal类？\n5. 介绍volatile关键字\n6. 指定重排序的话什么场景会出现问题？\n7. 什么场景需要使用volatile关键字？\n8. 讲一下MySQL的索引\n9. 怎么建索引，是怎么考虑的呢？\n10. 加联合索引的时候有什么需要注意的呢？ 11. 手撕：螺旋矩阵II 20min\n反问： 1. 部门业务 2. 对我的表现有什么建议"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68c926620000000013029638.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "4ab4add2ca056736a78c7b2ef44f437ddae80a43",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 835,
+      "content_sha256": "3b11167af8dca7fcd93a3a8daabf149d4fbaf526dd99c04ec7ed879482193321",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "1. java常见的集合，以及底层实现",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-19;blob:4ab4add2ca056736a78c7b2ef44f437ddae80a43",
+        "semantic_excerpt": "快手java技术面经\n1. java常见的集合，以及底层实现\n2. HashMap的扩容过程\n3. 讲一下JVM的垃圾回收机制\n4. 介绍TreadLocal类，什么场景需要使用TreadLocal类？\n5. 介绍volatile关键字\n6. 指定重排序的话什么场景会出现问题？\n7. 什么场景需要使用volatile关键字？\n8. 讲一下MySQL的索引\n9. 怎么建索引，是怎么考虑的呢？\n10. 加联合索引的时候有什么需要注意的呢？ 11. 手撕：螺旋矩阵II 20min\n反问： 1. 部门业务 2. 对我的表现有什么建议"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68c926620000000013029638.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "eccb5959d280a603d01e56505409c5fbe0c6d0f4",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 391156,
+      "content_sha256": "6b326d7c2b6b4e2637fd7c1778359de202b82df5545b0151086c308948b6d5f0",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "快手java技术面经 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-187;blob:eccb5959d280a603d01e56505409c5fbe0c6d0f4",
+        "semantic_excerpt": "快手java技术面经\n1. java常见的集合，以及底层实现\n2. HashMap的扩容过程\n3. 讲一下JVM的垃圾回收机制\n4. 介绍TreadLocal类，什么场景需要使用TreadLocal类？\n5. 介绍volatile关键字\n6. 指定重排序的话什么场景会出现问题？\n7. 什么场景需要使用volatile关键字？\n8. 讲一下MySQL的索引\n9. 怎么建索引，是怎么考虑的呢？\n10. 加联合索引的时候有什么需要注意的呢？ 11. 手撕：螺旋矩阵II 20min\n反问： 1. 部门业务 2. 对我的表现有什么建议"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68c926620000000013029638.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "ce24d48849ac32fe4353f48a87e2ff761b8f779a",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 23489,
+      "content_sha256": "8f367692fd0d7d97a03fed4e4c16f16aaecc30b76baae12e4b9ec96a66e7b9b8",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "快手java技术面经\",",
+        "line": 500,
+        "locator": "artifact-line:500#offset:30-42;blob:ce24d48849ac32fe4353f48a87e2ff761b8f779a",
+        "semantic_excerpt": "快手java技术面经\n1. java常见的集合，以及底层实现\n2. HashMap的扩容过程\n3. 讲一下JVM的垃圾回收机制\n4. 介绍TreadLocal类，什么场景需要使用TreadLocal类？\n5. 介绍volatile关键字\n6. 指定重排序的话什么场景会出现问题？\n7. 什么场景需要使用volatile关键字？\n8. 讲一下MySQL的索引\n9. 怎么建索引，是怎么考虑的呢？\n10. 加联合索引的时候有什么需要注意的呢？ 11. 手撕：螺旋矩阵II 20min\n反问： 1. 部门业务 2. 对我的表现有什么建议"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -85,10 +194,11 @@
   ],
   "limitations": [
     "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "8f8a69396f19414849fadad25f2cf7d2985bfe50635ae77b8df59f5fca28651c"
+  "evidence_sha256": "b4c2fe9f5ea51e77322bab3761204610ab0d1c7ae46443b67de6a88107dd95fe"
 }

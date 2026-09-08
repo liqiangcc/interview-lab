@@ -7,15 +7,12 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "4c895f9dfab24b463992d878aec13ce63f1067865c38f3605aa0ee8adddf86cd",
-  "disposition": "blocked",
-  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "disposition": "single-interview",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
-      "question-list-only",
-      "no-first-person-event",
-      "question-only",
-      "no-candidate-event-evidence"
+      "no-first-person-event"
     ],
     "questions": 25,
     "has_first_person_event": false,
@@ -23,28 +20,33 @@
     "has_bounded_event": true,
     "has_detailed_event": true,
     "has_completed_event_evidence": true,
-    "has_structured_candidate_event": false,
+    "has_structured_candidate_event": true,
     "generic_advice_or_aggregated": false,
     "scheduled_only": false,
-    "question_only": true,
+    "question_only": false,
     "outcome_signal": true,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
-    "only_question_list": true,
+    "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
     "case_segments": [
       {
-        "case_key": "jd-process",
-        "anchor": "京东",
-        "line": 2,
-        "locator": "artifact-line:506#offset:39-41",
+        "case_key": "alibaba-process",
+        "anchor": "阿里",
+        "line": 1,
+        "locator": "artifact-line:490#offset:169-171;blob:d5c437af8bb7dcacc2a94dca436af59bf34a034b",
         "local_detail": true,
-        "semantic_locator": "semantic-anchor:京东"
+        "semantic_locator": "semantic-anchor:阿里",
+        "source_ref": "liqiangcc/xhs:note_detail/68d15744000000001202cfba.html@95b77bb261048059846273688e4b90a2e108b437"
       }
-    ]
+    ],
+    "reviewed_artifact_count": 2,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68d15744000000001202cfba.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -53,13 +55,78 @@
     "provenance": "source_projection",
     "byte_size": 22320,
     "content_sha256": "56616c252a9fda8174dcc2e609e7eaa21a13dd03501363c1575ea4a97b6d93a8",
+    "cache_status": "not-applicable",
     "excerpt": {
-      "excerpt": "\"global\": {",
-      "line": 2,
-      "locator": "artifact-line:2",
-      "semantic_excerpt": "1.自我介绍\n2.京东实习期间最大的收获？\n3.BIO、NIO的区别？\n4.java反射机制了解吗？\n5.JVM内存结构？\n6.OOM是什么？什么情况下会产生？\n7.对多态的理解？有什么方式可以实现？\n8.抽象类一定要包含抽象方法吗？\n9.项目中用了JUC？都用了什么？应对哪些业务场景的？\n10.分布式环境下怎么实现一个锁？\n11.synchronized、volatile关键字\n12.CAS原理？用在什么场景下？\n13.垃圾回收算法了解哪些？\n14.mysql水平分表要注意哪些问题？\n15.数据库怎么实现乐观锁？那悲观锁呢？\n16.慢sql怎么优化？\n17.你实习和项目中的redis用来应对哪些业务场景的？\n18.缓存穿透是怎么预防的？\n19.分布式环境下，注册中心的原理？rpc调用的过程？\n20.注册中心挂掉之后对系统的影响？\n21.数据库MVCC的原理\n22.spring的事务管理是怎么做的？除了AOP呢？了解更底层的吗？\n23.分布式事务了解哪些？TCC模式主要关注什么？\n24.MQ怎么避免重复消费？\n25.手撕：给一个链接进去做，编程、SQL、思路题都有，是我没见过的形式"
-    }
+      "excerpt": "26届秋招：阿里健康一面\"",
+      "line": 578,
+      "locator": "artifact-line:578#offset:30-43;blob:78eb6e340b5eb6de1f8fe795b2e1944365b8b21e",
+      "semantic_excerpt": "26届秋招：阿里健康一面\n1.自我介绍\n2.京东实习期间最大的收获？\n3.BIO、NIO的区别？\n4.java反射机制了解吗？\n5.JVM内存结构？\n6.OOM是什么？什么情况下会产生？\n7.对多态的理解？有什么方式可以实现？\n8.抽象类一定要包含抽象方法吗？\n9.项目中用了JUC？都用了什么？应对哪些业务场景的？\n10.分布式环境下怎么实现一个锁？\n11.synchronized、volatile关键字\n12.CAS原理？用在什么场景下？\n13.垃圾回收算法了解哪些？\n14.mysql水平分表要注意哪些问题？\n15.数据库怎么实现乐观锁？那悲观锁呢？\n16.慢sql怎么优化？\n17.你实习和项目中的redis用来应对哪些业务场景的？\n18.缓存穿透是怎么预防的？\n19.分布式环境下，注册中心的原理？rpc调用的过程？\n20.注册中心挂掉之后对系统的影响？\n21.数据库MVCC的原理\n22.spring的事务管理是怎么做的？除了AOP呢？了解更底层的吗？\n23.分布式事务了解哪些？TCC模式主要关注什么？\n24.MQ怎么避免重复消费？\n25.手撕：给一个链接进去做，编程、SQL、思路题都有，是我没见过的形式"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_detail/68d15744000000001202cfba.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "d5c437af8bb7dcacc2a94dca436af59bf34a034b",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 390036,
+        "content_sha256": "7a76c402c5202059dd7a561d148858325258609af40f9fa1e79e039d86bca32e",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "26届秋招：阿里健康一面 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-189;blob:d5c437af8bb7dcacc2a94dca436af59bf34a034b",
+          "semantic_excerpt": "26届秋招：阿里健康一面\n1.自我介绍\n2.京东实习期间最大的收获？\n3.BIO、NIO的区别？\n4.java反射机制了解吗？\n5.JVM内存结构？\n6.OOM是什么？什么情况下会产生？\n7.对多态的理解？有什么方式可以实现？\n8.抽象类一定要包含抽象方法吗？\n9.项目中用了JUC？都用了什么？应对哪些业务场景的？\n10.分布式环境下怎么实现一个锁？\n11.synchronized、volatile关键字\n12.CAS原理？用在什么场景下？\n13.垃圾回收算法了解哪些？\n14.mysql水平分表要注意哪些问题？\n15.数据库怎么实现乐观锁？那悲观锁呢？\n16.慢sql怎么优化？\n17.你实习和项目中的redis用来应对哪些业务场景的？\n18.缓存穿透是怎么预防的？\n19.分布式环境下，注册中心的原理？rpc调用的过程？\n20.注册中心挂掉之后对系统的影响？\n21.数据库MVCC的原理\n22.spring的事务管理是怎么做的？除了AOP呢？了解更底层的吗？\n23.分布式事务了解哪些？TCC模式主要关注什么？\n24.MQ怎么避免重复消费？\n25.手撕：给一个链接进去做，编程、SQL、思路题都有，是我没见过的形式"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68d15744000000001202cfba.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "78eb6e340b5eb6de1f8fe795b2e1944365b8b21e",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 22320,
+        "content_sha256": "56616c252a9fda8174dcc2e609e7eaa21a13dd03501363c1575ea4a97b6d93a8",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "26届秋招：阿里健康一面\"",
+          "line": 578,
+          "locator": "artifact-line:578#offset:30-43;blob:78eb6e340b5eb6de1f8fe795b2e1944365b8b21e",
+          "semantic_excerpt": "26届秋招：阿里健康一面\n1.自我介绍\n2.京东实习期间最大的收获？\n3.BIO、NIO的区别？\n4.java反射机制了解吗？\n5.JVM内存结构？\n6.OOM是什么？什么情况下会产生？\n7.对多态的理解？有什么方式可以实现？\n8.抽象类一定要包含抽象方法吗？\n9.项目中用了JUC？都用了什么？应对哪些业务场景的？\n10.分布式环境下怎么实现一个锁？\n11.synchronized、volatile关键字\n12.CAS原理？用在什么场景下？\n13.垃圾回收算法了解哪些？\n14.mysql水平分表要注意哪些问题？\n15.数据库怎么实现乐观锁？那悲观锁呢？\n16.慢sql怎么优化？\n17.你实习和项目中的redis用来应对哪些业务场景的？\n18.缓存穿透是怎么预防的？\n19.分布式环境下，注册中心的原理？rpc调用的过程？\n20.注册中心挂掉之后对系统的影响？\n21.数据库MVCC的原理\n22.spring的事务管理是怎么做的？除了AOP呢？了解更底层的吗？\n23.分布式事务了解哪些？TCC模式主要关注什么？\n24.MQ怎么避免重复消费？\n25.手撕：给一个链接进去做，编程、SQL、思路题都有，是我没见过的形式"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/68d15744000000001202cfba.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "d5c437af8bb7dcacc2a94dca436af59bf34a034b",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 390036,
+      "content_sha256": "7a76c402c5202059dd7a561d148858325258609af40f9fa1e79e039d86bca32e",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "26届秋招：阿里健康一面 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-189;blob:d5c437af8bb7dcacc2a94dca436af59bf34a034b",
+        "semantic_excerpt": "26届秋招：阿里健康一面\n1.自我介绍\n2.京东实习期间最大的收获？\n3.BIO、NIO的区别？\n4.java反射机制了解吗？\n5.JVM内存结构？\n6.OOM是什么？什么情况下会产生？\n7.对多态的理解？有什么方式可以实现？\n8.抽象类一定要包含抽象方法吗？\n9.项目中用了JUC？都用了什么？应对哪些业务场景的？\n10.分布式环境下怎么实现一个锁？\n11.synchronized、volatile关键字\n12.CAS原理？用在什么场景下？\n13.垃圾回收算法了解哪些？\n14.mysql水平分表要注意哪些问题？\n15.数据库怎么实现乐观锁？那悲观锁呢？\n16.慢sql怎么优化？\n17.你实习和项目中的redis用来应对哪些业务场景的？\n18.缓存穿透是怎么预防的？\n19.分布式环境下，注册中心的原理？rpc调用的过程？\n20.注册中心挂掉之后对系统的影响？\n21.数据库MVCC的原理\n22.spring的事务管理是怎么做的？除了AOP呢？了解更底层的吗？\n23.分布式事务了解哪些？TCC模式主要关注什么？\n24.MQ怎么避免重复消费？\n25.手撕：给一个链接进去做，编程、SQL、思路题都有，是我没见过的形式"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68d15744000000001202cfba.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "78eb6e340b5eb6de1f8fe795b2e1944365b8b21e",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 22320,
+      "content_sha256": "56616c252a9fda8174dcc2e609e7eaa21a13dd03501363c1575ea4a97b6d93a8",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "26届秋招：阿里健康一面\"",
+        "line": 578,
+        "locator": "artifact-line:578#offset:30-43;blob:78eb6e340b5eb6de1f8fe795b2e1944365b8b21e",
+        "semantic_excerpt": "26届秋招：阿里健康一面\n1.自我介绍\n2.京东实习期间最大的收获？\n3.BIO、NIO的区别？\n4.java反射机制了解吗？\n5.JVM内存结构？\n6.OOM是什么？什么情况下会产生？\n7.对多态的理解？有什么方式可以实现？\n8.抽象类一定要包含抽象方法吗？\n9.项目中用了JUC？都用了什么？应对哪些业务场景的？\n10.分布式环境下怎么实现一个锁？\n11.synchronized、volatile关键字\n12.CAS原理？用在什么场景下？\n13.垃圾回收算法了解哪些？\n14.mysql水平分表要注意哪些问题？\n15.数据库怎么实现乐观锁？那悲观锁呢？\n16.慢sql怎么优化？\n17.你实习和项目中的redis用来应对哪些业务场景的？\n18.缓存穿透是怎么预防的？\n19.分布式环境下，注册中心的原理？rpc调用的过程？\n20.注册中心挂掉之后对系统的影响？\n21.数据库MVCC的原理\n22.spring的事务管理是怎么做的？除了AOP呢？了解更底层的吗？\n23.分布式事务了解哪些？TCC模式主要关注什么？\n24.MQ怎么避免重复消费？\n25.手撕：给一个链接进去做，编程、SQL、思路题都有，是我没见过的形式"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -78,8 +145,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -93,11 +160,12 @@
     }
   ],
   "limitations": [
-    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "471dce63a80c9681808adef794cc94434dd4648e3326e5eba78afaea08a6014e"
+  "evidence_sha256": "81990e3585471f6492134bbea87c2f4298aac20cb61b561cadde34b9b185a49e"
 }

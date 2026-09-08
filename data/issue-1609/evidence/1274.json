@@ -27,12 +27,26 @@
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "bytedance-process",
+        "anchor": "字节",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-165;blob:cc7f5eac56d3070c53f576e91e5e7f2e5f3c8930",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:字节",
+        "source_ref": "liqiangcc/xhs:note_detail/68bd7051000000001d03439e.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68bd7051000000001d03439e.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -41,13 +55,108 @@
     "provenance": "source_projection",
     "byte_size": 187,
     "content_sha256": "59666671e275915f00d5491c6f2e8e24496850b7126915d454eeaea3d8ff25e1",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "和二面leader聊的还不错，实习经历感觉也挺匹配，结束前跟我说三面是一轮交叉面。明天晚上就三面了，感觉心里好没底[石化R][石化R][石化R]",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "和二面leader聊的还不错，实习经历感觉也挺匹配，结束前跟我说三面是一轮交叉面。明天晚上就三面了，感觉心里好没底[石化R][石化R][石化R]"
-    }
+      "locator": "artifact-line:1#offset:0-72;blob:7473b6149175a703b37a8291f874457366ecf1cf",
+      "semantic_excerpt": "字节后端开发三面\n和二面leader聊的还不错，实习经历感觉也挺匹配，结束前跟我说三面是一轮交叉面。明天晚上就三面了，感觉心里好没底[石化R][石化R][石化R]"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68bd7051000000001d03439e.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "7473b6149175a703b37a8291f874457366ecf1cf",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 187,
+        "content_sha256": "59666671e275915f00d5491c6f2e8e24496850b7126915d454eeaea3d8ff25e1",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "和二面leader聊的还不错，实习经历感觉也挺匹配，结束前跟我说三面是一轮交叉面。明天晚上就三面了，感觉心里好没底[石化R][石化R][石化R]",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-72;blob:7473b6149175a703b37a8291f874457366ecf1cf",
+          "semantic_excerpt": "字节后端开发三面\n和二面leader聊的还不错，实习经历感觉也挺匹配，结束前跟我说三面是一轮交叉面。明天晚上就三面了，感觉心里好没底[石化R][石化R][石化R]"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68bd7051000000001d03439e.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "cc7f5eac56d3070c53f576e91e5e7f2e5f3c8930",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 384736,
+        "content_sha256": "e9571a8689ae6e58fb4a5e142d1913225c8da81fe9e2c7dcae1815ad8b28d1d4",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "字节后端开发三面 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-185;blob:cc7f5eac56d3070c53f576e91e5e7f2e5f3c8930",
+          "semantic_excerpt": "字节后端开发三面\n和二面leader聊的还不错，实习经历感觉也挺匹配，结束前跟我说三面是一轮交叉面。明天晚上就三面了，感觉心里好没底[石化R][石化R][石化R]"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68bd7051000000001d03439e.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "467a2774561d25428d7b28b458b1971d76dc0357",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 19814,
+        "content_sha256": "53f8051fe8c2fc4324ac70f01ea0e8326c27d62c4d98707f1efeb9815ae62005",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "字节后端开发三面\",",
+          "line": 510,
+          "locator": "artifact-line:510#offset:30-40;blob:467a2774561d25428d7b28b458b1971d76dc0357",
+          "semantic_excerpt": "字节后端开发三面\n和二面leader聊的还不错，实习经历感觉也挺匹配，结束前跟我说三面是一轮交叉面。明天晚上就三面了，感觉心里好没底[石化R][石化R][石化R]"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68bd7051000000001d03439e.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "7473b6149175a703b37a8291f874457366ecf1cf",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 187,
+      "content_sha256": "59666671e275915f00d5491c6f2e8e24496850b7126915d454eeaea3d8ff25e1",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "和二面leader聊的还不错，实习经历感觉也挺匹配，结束前跟我说三面是一轮交叉面。明天晚上就三面了，感觉心里好没底[石化R][石化R][石化R]",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-72;blob:7473b6149175a703b37a8291f874457366ecf1cf",
+        "semantic_excerpt": "字节后端开发三面\n和二面leader聊的还不错，实习经历感觉也挺匹配，结束前跟我说三面是一轮交叉面。明天晚上就三面了，感觉心里好没底[石化R][石化R][石化R]"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68bd7051000000001d03439e.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "cc7f5eac56d3070c53f576e91e5e7f2e5f3c8930",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 384736,
+      "content_sha256": "e9571a8689ae6e58fb4a5e142d1913225c8da81fe9e2c7dcae1815ad8b28d1d4",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "字节后端开发三面 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-185;blob:cc7f5eac56d3070c53f576e91e5e7f2e5f3c8930",
+        "semantic_excerpt": "字节后端开发三面\n和二面leader聊的还不错，实习经历感觉也挺匹配，结束前跟我说三面是一轮交叉面。明天晚上就三面了，感觉心里好没底[石化R][石化R][石化R]"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68bd7051000000001d03439e.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "467a2774561d25428d7b28b458b1971d76dc0357",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 19814,
+      "content_sha256": "53f8051fe8c2fc4324ac70f01ea0e8326c27d62c4d98707f1efeb9815ae62005",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "字节后端开发三面\",",
+        "line": 510,
+        "locator": "artifact-line:510#offset:30-40;blob:467a2774561d25428d7b28b458b1971d76dc0357",
+        "semantic_excerpt": "字节后端开发三面\n和二面leader聊的还不错，实习经历感觉也挺匹配，结束前跟我说三面是一轮交叉面。明天晚上就三面了，感觉心里好没底[石化R][石化R][石化R]"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -82,10 +191,11 @@
   ],
   "limitations": [
     "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "69035a01360685a9ac88638a67592542fa5aafec0595e011bbbca50a3f8c41eb"
+  "evidence_sha256": "ebbce4811d16451f4f08182e76ce96a82850e3359ff52f85425fd106d5a234ee"
 }

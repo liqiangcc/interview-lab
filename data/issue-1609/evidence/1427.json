@@ -8,7 +8,7 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "cf9a2bd402de120dd7e442a27138a700e97d36d851d421ecb1bb0258e93c8604",
   "disposition": "blocked",
-  "rationale": "No non-empty readable Source/Source projection is available; title and hashtags cannot authorize a boundary.",
+  "rationale": "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
@@ -28,12 +28,16 @@
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [],
+    "reviewed_artifact_count": 2,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68df4f3100000000050131a1.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -42,13 +46,78 @@
     "provenance": "source_projection",
     "byte_size": 25087,
     "content_sha256": "226157244ad0552e4290e27c355d5d58c4c6c9fee00546f83f1e83033cfdd318",
+    "cache_status": "not-applicable",
     "excerpt": {
-      "excerpt": "\"global\": {",
-      "line": 2,
-      "locator": "artifact-line:2",
-      "semantic_excerpt": ""
-    }
+      "excerpt": "当代java程序员面试现状，送外卖竟要八股文\",",
+      "line": 498,
+      "locator": "artifact-line:498#offset:30-54;blob:c231d92be8803f95fd021688264e7006e0d96597",
+      "semantic_excerpt": "当代java程序员面试现状，送外卖竟要八股文"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_detail/68df4f3100000000050131a1.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "3b33cd318e24511b03a15fbd57fc28d189b741ac",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 388037,
+        "content_sha256": "eaf67ecf045d8227b2ee9b410ab4d5777ed35efd2793b38c6f995c53074f5ce9",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "当代java程序员面试现状，送外卖竟要八股文 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-199;blob:3b33cd318e24511b03a15fbd57fc28d189b741ac",
+          "semantic_excerpt": "当代java程序员面试现状，送外卖竟要八股文"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68df4f3100000000050131a1.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "c231d92be8803f95fd021688264e7006e0d96597",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 25087,
+        "content_sha256": "226157244ad0552e4290e27c355d5d58c4c6c9fee00546f83f1e83033cfdd318",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "当代java程序员面试现状，送外卖竟要八股文\",",
+          "line": 498,
+          "locator": "artifact-line:498#offset:30-54;blob:c231d92be8803f95fd021688264e7006e0d96597",
+          "semantic_excerpt": "当代java程序员面试现状，送外卖竟要八股文"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/68df4f3100000000050131a1.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "3b33cd318e24511b03a15fbd57fc28d189b741ac",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 388037,
+      "content_sha256": "eaf67ecf045d8227b2ee9b410ab4d5777ed35efd2793b38c6f995c53074f5ce9",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "当代java程序员面试现状，送外卖竟要八股文 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-199;blob:3b33cd318e24511b03a15fbd57fc28d189b741ac",
+        "semantic_excerpt": "当代java程序员面试现状，送外卖竟要八股文"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68df4f3100000000050131a1.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "c231d92be8803f95fd021688264e7006e0d96597",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 25087,
+      "content_sha256": "226157244ad0552e4290e27c355d5d58c4c6c9fee00546f83f1e83033cfdd318",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "当代java程序员面试现状，送外卖竟要八股文\",",
+        "line": 498,
+        "locator": "artifact-line:498#offset:30-54;blob:c231d92be8803f95fd021688264e7006e0d96597",
+        "semantic_excerpt": "当代java程序员面试现状，送外卖竟要八股文"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -68,7 +137,7 @@
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. No non-empty readable Source/Source projection is available; title and hashtags cannot authorize a boundary."
+      "note": "The disposition is supported by the cited source evidence. Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -82,11 +151,12 @@
     }
   ],
   "limitations": [
-    "No non-empty readable Source/Source projection is available; title and hashtags cannot authorize a boundary.",
+    "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "c8cde16406caa573c4af2a89cce4ce300d6f69a6211df3a618a1a2df20f0332d"
+  "evidence_sha256": "28b3228f079edb8f71e3ff3415a828a32db976db52cdb917d810b74d1e782f79"
 }

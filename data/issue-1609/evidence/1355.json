@@ -7,8 +7,8 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "280cbd9aa82bd93147abc6ccb0a5299fac9c0b05f8776782828317ff6f98a1f4",
-  "disposition": "blocked",
-  "rationale": "Exact Source is generic advice or aggregated/summarized material without a bounded candidate interview event; retain pending.",
+  "disposition": "not-interview",
+  "rationale": "Exact Source is an explicit question bank or job advertisement rather than a candidate interview event.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
@@ -30,21 +30,16 @@
     "outcome_signal": false,
     "resource_signal": true,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": [
-      {
-        "case_key": "xiaomi-process",
-        "anchor": "小米",
-        "line": 1,
-        "locator": "artifact-line:525#offset:31-33",
-        "local_detail": true,
-        "semantic_locator": "semantic-anchor:小米"
-      }
-    ]
+    "case_segments": [],
+    "reviewed_artifact_count": 2,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68cd062a000000001202e912.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -53,13 +48,78 @@
     "provenance": "source_projection",
     "byte_size": 20656,
     "content_sha256": "0219b66b83dd30616c6a1b298015c6de7efdde812b058d61bd0c122bfec800ec",
+    "cache_status": "not-applicable",
     "excerpt": {
-      "excerpt": "\"global\": {",
-      "line": 2,
-      "locator": "artifact-line:2",
-      "semantic_excerpt": "武汉小米后端开发急招，要求实习六个月\n可以先投 然后发简历看下帮忙推进\n内推码: GGSGZH4\n投递链接https://xiaomi.jobs.f.mioffice.cn/s/4uvEbE1ATkw"
-    }
+      "excerpt": "小爱同学部门急招\",",
+      "line": 557,
+      "locator": "artifact-line:557#offset:30-40;blob:4383f7c5085cb6f0c02c4f0f00325b3eaad6a4c1",
+      "semantic_excerpt": "小爱同学部门急招\n武汉小米后端开发急招，要求实习六个月\n可以先投 然后发简历看下帮忙推进\n内推码: GGSGZH4\n投递链接https://xiaomi.jobs.f.mioffice.cn/s/4uvEbE1ATkw"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_detail/68cd062a000000001202e912.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "c63bf53f3cf43f8d55d4518198b77355e61b9392",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 386040,
+        "content_sha256": "3a1fdd5906fbdc65e9a547a77115ed6d375931236835f1467e553b80c7b17162",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "小爱同学部门急招 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-185;blob:c63bf53f3cf43f8d55d4518198b77355e61b9392",
+          "semantic_excerpt": "小爱同学部门急招\n武汉小米后端开发急招，要求实习六个月\n可以先投 然后发简历看下帮忙推进\n内推码: GGSGZH4\n投递链接https://xiaomi.jobs.f.mioffice.cn/s/4uvEbE1ATkw"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68cd062a000000001202e912.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "4383f7c5085cb6f0c02c4f0f00325b3eaad6a4c1",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 20656,
+        "content_sha256": "0219b66b83dd30616c6a1b298015c6de7efdde812b058d61bd0c122bfec800ec",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "小爱同学部门急招\",",
+          "line": 557,
+          "locator": "artifact-line:557#offset:30-40;blob:4383f7c5085cb6f0c02c4f0f00325b3eaad6a4c1",
+          "semantic_excerpt": "小爱同学部门急招\n武汉小米后端开发急招，要求实习六个月\n可以先投 然后发简历看下帮忙推进\n内推码: GGSGZH4\n投递链接https://xiaomi.jobs.f.mioffice.cn/s/4uvEbE1ATkw"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/68cd062a000000001202e912.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "c63bf53f3cf43f8d55d4518198b77355e61b9392",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 386040,
+      "content_sha256": "3a1fdd5906fbdc65e9a547a77115ed6d375931236835f1467e553b80c7b17162",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "小爱同学部门急招 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-185;blob:c63bf53f3cf43f8d55d4518198b77355e61b9392",
+        "semantic_excerpt": "小爱同学部门急招\n武汉小米后端开发急招，要求实习六个月\n可以先投 然后发简历看下帮忙推进\n内推码: GGSGZH4\n投递链接https://xiaomi.jobs.f.mioffice.cn/s/4uvEbE1ATkw"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68cd062a000000001202e912.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "4383f7c5085cb6f0c02c4f0f00325b3eaad6a4c1",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 20656,
+      "content_sha256": "0219b66b83dd30616c6a1b298015c6de7efdde812b058d61bd0c122bfec800ec",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "小爱同学部门急招\",",
+        "line": 557,
+        "locator": "artifact-line:557#offset:30-40;blob:4383f7c5085cb6f0c02c4f0f00325b3eaad6a4c1",
+        "semantic_excerpt": "小爱同学部门急招\n武汉小米后端开发急招，要求实习六个月\n可以先投 然后发简历看下帮忙推进\n内推码: GGSGZH4\n投递链接https://xiaomi.jobs.f.mioffice.cn/s/4uvEbE1ATkw"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -78,8 +138,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source is generic advice or aggregated/summarized material without a bounded candidate interview event; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source is an explicit question bank or job advertisement rather than a candidate interview event."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -93,11 +153,12 @@
     }
   ],
   "limitations": [
-    "Exact Source is generic advice or aggregated/summarized material without a bounded candidate interview event; retain pending.",
+    "Exact Source is an explicit question bank or job advertisement rather than a candidate interview event.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "244220b74284a8b0ecee161900f6827024c452a20076e6c19e6ce78ec094916e"
+  "evidence_sha256": "75814b659b3e9f93f97321d22f6e6b4162ceb0792d8f8a8a4a9f0a7fb90c2800"
 }

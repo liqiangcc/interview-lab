@@ -7,15 +7,12 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "877c803196a9877aa7aa1fa82a976ea1d287dcdfa10760cad51287d02003638a",
-  "disposition": "blocked",
-  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "disposition": "single-interview",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
-      "question-list-only",
-      "no-first-person-event",
-      "question-only",
-      "no-candidate-event-evidence"
+      "no-first-person-event"
     ],
     "questions": 24,
     "has_first_person_event": false,
@@ -23,19 +20,33 @@
     "has_bounded_event": true,
     "has_detailed_event": true,
     "has_completed_event_evidence": true,
-    "has_structured_candidate_event": false,
+    "has_structured_candidate_event": true,
     "generic_advice_or_aggregated": false,
     "scheduled_only": false,
-    "question_only": true,
+    "question_only": false,
     "outcome_signal": true,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
-    "only_question_list": true,
+    "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "alibaba-process",
+        "anchor": "阿里",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-165;blob:af9e99a2ac3eaffdbf8d202178d2305593f11509",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:阿里",
+        "source_ref": "liqiangcc/xhs:note_detail/68d27ceb0000000013034068.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 2,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68d27ceb0000000013034068.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -44,13 +55,78 @@
     "provenance": "source_projection",
     "byte_size": 29839,
     "content_sha256": "feda17f18a2528be87b8fd69c7746af1b9c3b4071cba9673c1e498a346cbdec2",
+    "cache_status": "not-applicable",
     "excerpt": {
-      "excerpt": "\"global\": {",
-      "line": 2,
-      "locator": "artifact-line:2",
-      "semantic_excerpt": "1.自我介绍\n2.面试官开始介绍部门做的业务\n3.聊一下自己做的项目（我自己挑了一个黑马点评）\n4.UV统计怎么做的?为什么要这么实现呢?\n用HyperLogLog为什么不会占用很大空间\n呢?16KB怎么去存储这个数据呢\n5.好友关注怎么做的\n6.项目的哪个点是有挑战性的（回答了优惠券秒杀）\n7.秒杀为什么要用消息队列\n8.Redis挂了怎么办（回答用集群方案来解决）整个集群挂了就不行了对吧?（面试官\n追问 回答考虑限流）\n9.但你的库存信息都是在 Redis里面，对吧?就是限流，你取不到库存了吗\n10.你怎么保证那个 Redis 里面库存和 DB 里面的库存它是一致的，没有可能出错?\n11.你那个 Redis 你去做扣减库存怎么保障它的原子性呢?\n12.不用lua脚本会带来什么样的问题?\n13.扣减库存的原子性是为了解决什么样的问题\n14.假设这个地方我们不用 lua脚本，对吧?就用最普通的方案会带来什么样的问题?\n15.乐观锁怎么解决超卖的问题\n16.你能那个详细的描述一下lua脚本里面是用了什么样的Redis的命令?\n17.你lua脚本就是怎么写的?就是你肯定是用了Redis的命令，对吧?\n18.比如说你扣了库存，我们肯定是要做支付，对吧?那库存和支付的顺序是怎么样?先支付再扣，或者先扣库存再支付，这个过程你来讲一下吧。\n19.创建订单，然后假设支付失败了呢。\n20.那怎么去把数据写到 Redis 里面呢?你这个时候你 Redis里面库存也得回加，对吧?这里就可以会涉及到一个你DB的库存跟 Redis的库存的一致性的问题，怎么去保障它们一致性?\n21.因为消息丢失导致的这个消息消费失败导致的库存不一致，怎么发现这个问题\n22.重新发消息的时候会不会导致那个库存的操作重复?\n23.通过订单号去做幂等是吗。\n24.那假设那个用户量进一步的变大，就可能你一步的去消费MO的消息的时候，DB的压力还是会比较大，还是会消化不完，这个时候我们应该怎么去优化呢?（考虑集群、分库)"
-    }
+      "excerpt": "阿里中台二面凉经💔\",",
+      "line": 498,
+      "locator": "artifact-line:498#offset:30-42;blob:7e2f4878f7125be4d26d98bd5f756d71e1906c1b",
+      "semantic_excerpt": "阿里中台二面凉经💔\n1.自我介绍\n2.面试官开始介绍部门做的业务\n3.聊一下自己做的项目（我自己挑了一个黑马点评）\n4.UV统计怎么做的?为什么要这么实现呢?\n用HyperLogLog为什么不会占用很大空间\n呢?16KB怎么去存储这个数据呢\n5.好友关注怎么做的\n6.项目的哪个点是有挑战性的（回答了优惠券秒杀）\n7.秒杀为什么要用消息队列\n8.Redis挂了怎么办（回答用集群方案来解决）整个集群挂了就不行了对吧?（面试官\n追问 回答考虑限流）\n9.但你的库存信息都是在 Redis里面，对吧?就是限流，你取不到库存了吗\n10.你怎么保证那个 Redis 里面库存和 DB 里面的库存它是一致的，没有可能出错?\n11.你那个 Redis 你去做扣减库存怎么保障它的原子性呢?\n12.不用lua脚本会带来什么样的问题?\n13.扣减库存的原子性是为了解决什么样的问题\n14.假设这个地方我们不用 lua脚本，对吧?就用最普通的方案会带来什么样的问题?\n15.乐观锁怎么解决超卖的问题\n16.你能那个详细的描述一下lua脚本里面是用了什么样的Redis的命令?\n17.你lua脚本就是怎么写的?就是你肯定是用了Redis的命令，对吧?\n18.比如说你扣了库存，我们肯定是要做支付，对吧?那库存和支付的顺序是怎么样?先支付再扣，或者先扣库存再支付，这个过程你来讲一下吧。\n19.创建订单，然后假设支付失败了呢。\n20.那怎么去把数据写到 Redis 里面呢?你这个时候你 Redis里面库存也得回加，对吧?这里就可以会涉及到一个你DB的库存跟 Redis的库存的一致性的问题，怎么去保障它们一致性?\n21.因为消息丢失导致的这个消息消费失败导致的库存不一致，怎么发现这个问题\n22.重新发消息的时候会不会导致那个库存的操作重复?\n23.通过订单号去做幂等是吗。\n24.那假设那个用户量进一步的变大，就可能你一步的去消费MO的消息的时候，DB的压力还是会比较大，还是会消化不完，这个时候我们应该怎么去优化呢?（考虑集群、分库)"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_detail/68d27ceb0000000013034068.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "af9e99a2ac3eaffdbf8d202178d2305593f11509",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 400270,
+        "content_sha256": "38d41ca351e9995b8ebf4bcdb1e15a9e55216a924eabc8b0a9c89d40674f13cc",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "阿里中台二面凉经💔 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-187;blob:af9e99a2ac3eaffdbf8d202178d2305593f11509",
+          "semantic_excerpt": "阿里中台二面凉经💔\n1.自我介绍\n2.面试官开始介绍部门做的业务\n3.聊一下自己做的项目（我自己挑了一个黑马点评）\n4.UV统计怎么做的?为什么要这么实现呢?\n用HyperLogLog为什么不会占用很大空间\n呢?16KB怎么去存储这个数据呢\n5.好友关注怎么做的\n6.项目的哪个点是有挑战性的（回答了优惠券秒杀）\n7.秒杀为什么要用消息队列\n8.Redis挂了怎么办（回答用集群方案来解决）整个集群挂了就不行了对吧?（面试官\n追问 回答考虑限流）\n9.但你的库存信息都是在 Redis里面，对吧?就是限流，你取不到库存了吗\n10.你怎么保证那个 Redis 里面库存和 DB 里面的库存它是一致的，没有可能出错?\n11.你那个 Redis 你去做扣减库存怎么保障它的原子性呢?\n12.不用lua脚本会带来什么样的问题?\n13.扣减库存的原子性是为了解决什么样的问题\n14.假设这个地方我们不用 lua脚本，对吧?就用最普通的方案会带来什么样的问题?\n15.乐观锁怎么解决超卖的问题\n16.你能那个详细的描述一下lua脚本里面是用了什么样的Redis的命令?\n17.你lua脚本就是怎么写的?就是你肯定是用了Redis的命令，对吧?\n18.比如说你扣了库存，我们肯定是要做支付，对吧?那库存和支付的顺序是怎么样?先支付再扣，或者先扣库存再支付，这个过程你来讲一下吧。\n19.创建订单，然后假设支付失败了呢。\n20.那怎么去把数据写到 Redis 里面呢?你这个时候你 Redis里面库存也得回加，对吧?这里就可以会涉及到一个你DB的库存跟 Redis的库存的一致性的问题，怎么去保障它们一致性?\n21.因为消息丢失导致的这个消息消费失败导致的库存不一致，怎么发现这个问题\n22.重新发消息的时候会不会导致那个库存的操作重复?\n23.通过订单号去做幂等是吗。\n24.那假设那个用户量进一步的变大，就可能你一步的去消费MO的消息的时候，DB的压力还是会比较大，还是会消化不完，这个时候我们应该怎么去优化呢?（考虑集群、分库)"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68d27ceb0000000013034068.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "7e2f4878f7125be4d26d98bd5f756d71e1906c1b",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 29839,
+        "content_sha256": "feda17f18a2528be87b8fd69c7746af1b9c3b4071cba9673c1e498a346cbdec2",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "阿里中台二面凉经💔\",",
+          "line": 498,
+          "locator": "artifact-line:498#offset:30-42;blob:7e2f4878f7125be4d26d98bd5f756d71e1906c1b",
+          "semantic_excerpt": "阿里中台二面凉经💔\n1.自我介绍\n2.面试官开始介绍部门做的业务\n3.聊一下自己做的项目（我自己挑了一个黑马点评）\n4.UV统计怎么做的?为什么要这么实现呢?\n用HyperLogLog为什么不会占用很大空间\n呢?16KB怎么去存储这个数据呢\n5.好友关注怎么做的\n6.项目的哪个点是有挑战性的（回答了优惠券秒杀）\n7.秒杀为什么要用消息队列\n8.Redis挂了怎么办（回答用集群方案来解决）整个集群挂了就不行了对吧?（面试官\n追问 回答考虑限流）\n9.但你的库存信息都是在 Redis里面，对吧?就是限流，你取不到库存了吗\n10.你怎么保证那个 Redis 里面库存和 DB 里面的库存它是一致的，没有可能出错?\n11.你那个 Redis 你去做扣减库存怎么保障它的原子性呢?\n12.不用lua脚本会带来什么样的问题?\n13.扣减库存的原子性是为了解决什么样的问题\n14.假设这个地方我们不用 lua脚本，对吧?就用最普通的方案会带来什么样的问题?\n15.乐观锁怎么解决超卖的问题\n16.你能那个详细的描述一下lua脚本里面是用了什么样的Redis的命令?\n17.你lua脚本就是怎么写的?就是你肯定是用了Redis的命令，对吧?\n18.比如说你扣了库存，我们肯定是要做支付，对吧?那库存和支付的顺序是怎么样?先支付再扣，或者先扣库存再支付，这个过程你来讲一下吧。\n19.创建订单，然后假设支付失败了呢。\n20.那怎么去把数据写到 Redis 里面呢?你这个时候你 Redis里面库存也得回加，对吧?这里就可以会涉及到一个你DB的库存跟 Redis的库存的一致性的问题，怎么去保障它们一致性?\n21.因为消息丢失导致的这个消息消费失败导致的库存不一致，怎么发现这个问题\n22.重新发消息的时候会不会导致那个库存的操作重复?\n23.通过订单号去做幂等是吗。\n24.那假设那个用户量进一步的变大，就可能你一步的去消费MO的消息的时候，DB的压力还是会比较大，还是会消化不完，这个时候我们应该怎么去优化呢?（考虑集群、分库)"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/68d27ceb0000000013034068.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "af9e99a2ac3eaffdbf8d202178d2305593f11509",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 400270,
+      "content_sha256": "38d41ca351e9995b8ebf4bcdb1e15a9e55216a924eabc8b0a9c89d40674f13cc",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "阿里中台二面凉经💔 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-187;blob:af9e99a2ac3eaffdbf8d202178d2305593f11509",
+        "semantic_excerpt": "阿里中台二面凉经💔\n1.自我介绍\n2.面试官开始介绍部门做的业务\n3.聊一下自己做的项目（我自己挑了一个黑马点评）\n4.UV统计怎么做的?为什么要这么实现呢?\n用HyperLogLog为什么不会占用很大空间\n呢?16KB怎么去存储这个数据呢\n5.好友关注怎么做的\n6.项目的哪个点是有挑战性的（回答了优惠券秒杀）\n7.秒杀为什么要用消息队列\n8.Redis挂了怎么办（回答用集群方案来解决）整个集群挂了就不行了对吧?（面试官\n追问 回答考虑限流）\n9.但你的库存信息都是在 Redis里面，对吧?就是限流，你取不到库存了吗\n10.你怎么保证那个 Redis 里面库存和 DB 里面的库存它是一致的，没有可能出错?\n11.你那个 Redis 你去做扣减库存怎么保障它的原子性呢?\n12.不用lua脚本会带来什么样的问题?\n13.扣减库存的原子性是为了解决什么样的问题\n14.假设这个地方我们不用 lua脚本，对吧?就用最普通的方案会带来什么样的问题?\n15.乐观锁怎么解决超卖的问题\n16.你能那个详细的描述一下lua脚本里面是用了什么样的Redis的命令?\n17.你lua脚本就是怎么写的?就是你肯定是用了Redis的命令，对吧?\n18.比如说你扣了库存，我们肯定是要做支付，对吧?那库存和支付的顺序是怎么样?先支付再扣，或者先扣库存再支付，这个过程你来讲一下吧。\n19.创建订单，然后假设支付失败了呢。\n20.那怎么去把数据写到 Redis 里面呢?你这个时候你 Redis里面库存也得回加，对吧?这里就可以会涉及到一个你DB的库存跟 Redis的库存的一致性的问题，怎么去保障它们一致性?\n21.因为消息丢失导致的这个消息消费失败导致的库存不一致，怎么发现这个问题\n22.重新发消息的时候会不会导致那个库存的操作重复?\n23.通过订单号去做幂等是吗。\n24.那假设那个用户量进一步的变大，就可能你一步的去消费MO的消息的时候，DB的压力还是会比较大，还是会消化不完，这个时候我们应该怎么去优化呢?（考虑集群、分库)"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68d27ceb0000000013034068.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "7e2f4878f7125be4d26d98bd5f756d71e1906c1b",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 29839,
+      "content_sha256": "feda17f18a2528be87b8fd69c7746af1b9c3b4071cba9673c1e498a346cbdec2",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "阿里中台二面凉经💔\",",
+        "line": 498,
+        "locator": "artifact-line:498#offset:30-42;blob:7e2f4878f7125be4d26d98bd5f756d71e1906c1b",
+        "semantic_excerpt": "阿里中台二面凉经💔\n1.自我介绍\n2.面试官开始介绍部门做的业务\n3.聊一下自己做的项目（我自己挑了一个黑马点评）\n4.UV统计怎么做的?为什么要这么实现呢?\n用HyperLogLog为什么不会占用很大空间\n呢?16KB怎么去存储这个数据呢\n5.好友关注怎么做的\n6.项目的哪个点是有挑战性的（回答了优惠券秒杀）\n7.秒杀为什么要用消息队列\n8.Redis挂了怎么办（回答用集群方案来解决）整个集群挂了就不行了对吧?（面试官\n追问 回答考虑限流）\n9.但你的库存信息都是在 Redis里面，对吧?就是限流，你取不到库存了吗\n10.你怎么保证那个 Redis 里面库存和 DB 里面的库存它是一致的，没有可能出错?\n11.你那个 Redis 你去做扣减库存怎么保障它的原子性呢?\n12.不用lua脚本会带来什么样的问题?\n13.扣减库存的原子性是为了解决什么样的问题\n14.假设这个地方我们不用 lua脚本，对吧?就用最普通的方案会带来什么样的问题?\n15.乐观锁怎么解决超卖的问题\n16.你能那个详细的描述一下lua脚本里面是用了什么样的Redis的命令?\n17.你lua脚本就是怎么写的?就是你肯定是用了Redis的命令，对吧?\n18.比如说你扣了库存，我们肯定是要做支付，对吧?那库存和支付的顺序是怎么样?先支付再扣，或者先扣库存再支付，这个过程你来讲一下吧。\n19.创建订单，然后假设支付失败了呢。\n20.那怎么去把数据写到 Redis 里面呢?你这个时候你 Redis里面库存也得回加，对吧?这里就可以会涉及到一个你DB的库存跟 Redis的库存的一致性的问题，怎么去保障它们一致性?\n21.因为消息丢失导致的这个消息消费失败导致的库存不一致，怎么发现这个问题\n22.重新发消息的时候会不会导致那个库存的操作重复?\n23.通过订单号去做幂等是吗。\n24.那假设那个用户量进一步的变大，就可能你一步的去消费MO的消息的时候，DB的压力还是会比较大，还是会消化不完，这个时候我们应该怎么去优化呢?（考虑集群、分库)"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -69,8 +145,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -84,11 +160,12 @@
     }
   ],
   "limitations": [
-    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "c10189d6e344c0b927a47ac9cb6ac826dfdf38d35fc91ece17f327b38cd357af"
+  "evidence_sha256": "914a0c4830ed1e0ef3cdc6874e34ebe803f7389d7c890b5446dc7c5d59689376"
 }

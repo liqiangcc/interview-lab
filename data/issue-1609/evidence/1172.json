@@ -7,16 +7,12 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "609c057018f8f8bebc1debe756569e3fbdd0387fb48a6043c7aaeb07b9475611",
-  "disposition": "blocked",
-  "rationale": "Exact Source records only a scheduled, invited, or arranged interview and no completed candidate interview process; retain pending.",
+  "disposition": "single-interview",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
-      "question-list-only",
-      "no-first-person-event",
-      "scheduled-only",
-      "question-only",
-      "no-candidate-event-evidence"
+      "no-first-person-event"
     ],
     "questions": 13,
     "has_first_person_event": false,
@@ -24,19 +20,33 @@
     "has_bounded_event": true,
     "has_detailed_event": true,
     "has_completed_event_evidence": true,
-    "has_structured_candidate_event": false,
+    "has_structured_candidate_event": true,
     "generic_advice_or_aggregated": false,
-    "scheduled_only": true,
-    "question_only": true,
-    "outcome_signal": false,
+    "scheduled_only": false,
+    "question_only": false,
+    "outcome_signal": true,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
-    "only_question_list": true,
+    "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "kuaishou-process",
+        "anchor": "快手",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-165;blob:504147b50162edacda4797c969f8c0ec39be31aa",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:快手",
+        "source_ref": "liqiangcc/xhs:note_detail/68ab42b1000000001d01626e.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68ab42b1000000001d01626e.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -45,13 +55,108 @@
     "provenance": "source_projection",
     "byte_size": 853,
     "content_sha256": "3f76a48b136ca6f104693ce36f5759f42f1b3878290cc6b6ac380e62be4c3898",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "1、redis 的主从复制中，主节点数据同步到从节点的底层原理 2、MQ 消息的可靠性机制（回答了消息确认机制，持久化机制等，面试官说不行） 3、MySQL 一张表最多存储多少行数据（拿出计算器演示） 4、Sentinel的全局限流和局部限流如何实现，底层的限流算法是否了解（项目中有使用，但回答的不好） 5、RPC 调用的底层原理，需要具体到网络协议那里（不会） 6、Linux 中用户态和内核态的切换 7、进程和协程的区别 8、手撕：leetcode005-最长回文子串的变体 找到字符串中第二长的回文子串，第二长的回文子串不能是最长回文子串的子串 9、反问  时间线： 8.10 投递 8.11 约面 - 8.13 一面  8.13 晚约二面-8.19 二面 第二天流程终止",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "1、redis 的主从复制中，主节点数据同步到从节点的底层原理 2、MQ 消息的可靠性机制（回答了消息确认机制，持久化机制等，面试官说不行） 3、MySQL 一张表最多存储多少行数据（拿出计算器演示） 4、Sentinel的全局限流和局部限流如何实现，底层的限流算法是否了解（项目中有使用，但回答的不好） 5、RPC 调用的底层原理，需要具体到网络协议那里（不会） 6、Linux 中用户态和内核态的切换 7、进程和协程的区别 8、手撕：leetcode005-最长回文子串的变体 找到字符串中第二长的回文子串，第二长的回文子串不能是最长回文子串的子串 9、反问  时间线： 8.10 投递 8.11 约面 - 8.13 一面  8.13 晚约二面-8.19 二面 第二天流程终止"
-    }
+      "locator": "artifact-line:1#offset:0-340;blob:04bb8413a8f2f47504c8c3f734588a191475c8cc",
+      "semantic_excerpt": "快手-Java开发工程师（秋招二面凉经）\n1、redis 的主从复制中，主节点数据同步到从节点的底层原理 2、MQ 消息的可靠性机制（回答了消息确认机制，持久化机制等，面试官说不行） 3、MySQL 一张表最多存储多少行数据（拿出计算器演示） 4、Sentinel的全局限流和局部限流如何实现，底层的限流算法是否了解（项目中有使用，但回答的不好） 5、RPC 调用的底层原理，需要具体到网络协议那里（不会） 6、Linux 中用户态和内核态的切换 7、进程和协程的区别 8、手撕：leetcode005-最长回文子串的变体 找到字符串中第二长的回文子串，第二长的回文子串不能是最长回文子串的子串 9、反问  时间线： 8.10 投递 8.11 约面 - 8.13 一面  8.13 晚约二面-8.19 二面 第二天流程终止"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68ab42b1000000001d01626e.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "04bb8413a8f2f47504c8c3f734588a191475c8cc",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 853,
+        "content_sha256": "3f76a48b136ca6f104693ce36f5759f42f1b3878290cc6b6ac380e62be4c3898",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "1、redis 的主从复制中，主节点数据同步到从节点的底层原理 2、MQ 消息的可靠性机制（回答了消息确认机制，持久化机制等，面试官说不行） 3、MySQL 一张表最多存储多少行数据（拿出计算器演示） 4、Sentinel的全局限流和局部限流如何实现，底层的限流算法是否了解（项目中有使用，但回答的不好） 5、RPC 调用的底层原理，需要具体到网络协议那里（不会） 6、Linux 中用户态和内核态的切换 7、进程和协程的区别 8、手撕：leetcode005-最长回文子串的变体 找到字符串中第二长的回文子串，第二长的回文子串不能是最长回文子串的子串 9、反问  时间线： 8.10 投递 8.11 约面 - 8.13 一面  8.13 晚约二面-8.19 二面 第二天流程终止",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-340;blob:04bb8413a8f2f47504c8c3f734588a191475c8cc",
+          "semantic_excerpt": "快手-Java开发工程师（秋招二面凉经）\n1、redis 的主从复制中，主节点数据同步到从节点的底层原理 2、MQ 消息的可靠性机制（回答了消息确认机制，持久化机制等，面试官说不行） 3、MySQL 一张表最多存储多少行数据（拿出计算器演示） 4、Sentinel的全局限流和局部限流如何实现，底层的限流算法是否了解（项目中有使用，但回答的不好） 5、RPC 调用的底层原理，需要具体到网络协议那里（不会） 6、Linux 中用户态和内核态的切换 7、进程和协程的区别 8、手撕：leetcode005-最长回文子串的变体 找到字符串中第二长的回文子串，第二长的回文子串不能是最长回文子串的子串 9、反问  时间线： 8.10 投递 8.11 约面 - 8.13 一面  8.13 晚约二面-8.19 二面 第二天流程终止"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68ab42b1000000001d01626e.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "504147b50162edacda4797c969f8c0ec39be31aa",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 386778,
+        "content_sha256": "d3a2312eed01e10289b870adebff1b121d1efd9d9f0637dc098629425ac45551",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "快手-Java开发工程师（秋招二面凉经） - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-197;blob:504147b50162edacda4797c969f8c0ec39be31aa",
+          "semantic_excerpt": "快手-Java开发工程师（秋招二面凉经）\n1、redis 的主从复制中，主节点数据同步到从节点的底层原理 2、MQ 消息的可靠性机制（回答了消息确认机制，持久化机制等，面试官说不行） 3、MySQL 一张表最多存储多少行数据（拿出计算器演示） 4、Sentinel的全局限流和局部限流如何实现，底层的限流算法是否了解（项目中有使用，但回答的不好） 5、RPC 调用的底层原理，需要具体到网络协议那里（不会） 6、Linux 中用户态和内核态的切换 7、进程和协程的区别 8、手撕：leetcode005-最长回文子串的变体 找到字符串中第二长的回文子串，第二长的回文子串不能是最长回文子串的子串 9、反问  时间线： 8.10 投递 8.11 约面 - 8.13 一面  8.13 晚约二面-8.19 二面 第二天流程终止"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68ab42b1000000001d01626e.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "8d092610563c5eb82604641f8dc454227a68876f",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 20516,
+        "content_sha256": "2242b86fc09af883b5d9ad0d50441d8b4fb265acde69ebc88a4b1fe5bded5dd6",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "快手-Java开发工程师（秋招二面凉经）\",",
+          "line": 496,
+          "locator": "artifact-line:496#offset:30-52;blob:8d092610563c5eb82604641f8dc454227a68876f",
+          "semantic_excerpt": "快手-Java开发工程师（秋招二面凉经）\n1、redis 的主从复制中，主节点数据同步到从节点的底层原理 2、MQ 消息的可靠性机制（回答了消息确认机制，持久化机制等，面试官说不行） 3、MySQL 一张表最多存储多少行数据（拿出计算器演示） 4、Sentinel的全局限流和局部限流如何实现，底层的限流算法是否了解（项目中有使用，但回答的不好） 5、RPC 调用的底层原理，需要具体到网络协议那里（不会） 6、Linux 中用户态和内核态的切换 7、进程和协程的区别 8、手撕：leetcode005-最长回文子串的变体 找到字符串中第二长的回文子串，第二长的回文子串不能是最长回文子串的子串 9、反问  时间线： 8.10 投递 8.11 约面 - 8.13 一面  8.13 晚约二面-8.19 二面 第二天流程终止"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68ab42b1000000001d01626e.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "04bb8413a8f2f47504c8c3f734588a191475c8cc",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 853,
+      "content_sha256": "3f76a48b136ca6f104693ce36f5759f42f1b3878290cc6b6ac380e62be4c3898",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "1、redis 的主从复制中，主节点数据同步到从节点的底层原理 2、MQ 消息的可靠性机制（回答了消息确认机制，持久化机制等，面试官说不行） 3、MySQL 一张表最多存储多少行数据（拿出计算器演示） 4、Sentinel的全局限流和局部限流如何实现，底层的限流算法是否了解（项目中有使用，但回答的不好） 5、RPC 调用的底层原理，需要具体到网络协议那里（不会） 6、Linux 中用户态和内核态的切换 7、进程和协程的区别 8、手撕：leetcode005-最长回文子串的变体 找到字符串中第二长的回文子串，第二长的回文子串不能是最长回文子串的子串 9、反问  时间线： 8.10 投递 8.11 约面 - 8.13 一面  8.13 晚约二面-8.19 二面 第二天流程终止",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-340;blob:04bb8413a8f2f47504c8c3f734588a191475c8cc",
+        "semantic_excerpt": "快手-Java开发工程师（秋招二面凉经）\n1、redis 的主从复制中，主节点数据同步到从节点的底层原理 2、MQ 消息的可靠性机制（回答了消息确认机制，持久化机制等，面试官说不行） 3、MySQL 一张表最多存储多少行数据（拿出计算器演示） 4、Sentinel的全局限流和局部限流如何实现，底层的限流算法是否了解（项目中有使用，但回答的不好） 5、RPC 调用的底层原理，需要具体到网络协议那里（不会） 6、Linux 中用户态和内核态的切换 7、进程和协程的区别 8、手撕：leetcode005-最长回文子串的变体 找到字符串中第二长的回文子串，第二长的回文子串不能是最长回文子串的子串 9、反问  时间线： 8.10 投递 8.11 约面 - 8.13 一面  8.13 晚约二面-8.19 二面 第二天流程终止"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68ab42b1000000001d01626e.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "504147b50162edacda4797c969f8c0ec39be31aa",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 386778,
+      "content_sha256": "d3a2312eed01e10289b870adebff1b121d1efd9d9f0637dc098629425ac45551",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "快手-Java开发工程师（秋招二面凉经） - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-197;blob:504147b50162edacda4797c969f8c0ec39be31aa",
+        "semantic_excerpt": "快手-Java开发工程师（秋招二面凉经）\n1、redis 的主从复制中，主节点数据同步到从节点的底层原理 2、MQ 消息的可靠性机制（回答了消息确认机制，持久化机制等，面试官说不行） 3、MySQL 一张表最多存储多少行数据（拿出计算器演示） 4、Sentinel的全局限流和局部限流如何实现，底层的限流算法是否了解（项目中有使用，但回答的不好） 5、RPC 调用的底层原理，需要具体到网络协议那里（不会） 6、Linux 中用户态和内核态的切换 7、进程和协程的区别 8、手撕：leetcode005-最长回文子串的变体 找到字符串中第二长的回文子串，第二长的回文子串不能是最长回文子串的子串 9、反问  时间线： 8.10 投递 8.11 约面 - 8.13 一面  8.13 晚约二面-8.19 二面 第二天流程终止"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68ab42b1000000001d01626e.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "8d092610563c5eb82604641f8dc454227a68876f",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 20516,
+      "content_sha256": "2242b86fc09af883b5d9ad0d50441d8b4fb265acde69ebc88a4b1fe5bded5dd6",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "快手-Java开发工程师（秋招二面凉经）\",",
+        "line": 496,
+        "locator": "artifact-line:496#offset:30-52;blob:8d092610563c5eb82604641f8dc454227a68876f",
+        "semantic_excerpt": "快手-Java开发工程师（秋招二面凉经）\n1、redis 的主从复制中，主节点数据同步到从节点的底层原理 2、MQ 消息的可靠性机制（回答了消息确认机制，持久化机制等，面试官说不行） 3、MySQL 一张表最多存储多少行数据（拿出计算器演示） 4、Sentinel的全局限流和局部限流如何实现，底层的限流算法是否了解（项目中有使用，但回答的不好） 5、RPC 调用的底层原理，需要具体到网络协议那里（不会） 6、Linux 中用户态和内核态的切换 7、进程和协程的区别 8、手撕：leetcode005-最长回文子串的变体 找到字符串中第二长的回文子串，第二长的回文子串不能是最长回文子串的子串 9、反问  时间线： 8.10 投递 8.11 约面 - 8.13 一面  8.13 晚约二面-8.19 二面 第二天流程终止"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -70,8 +175,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source records only a scheduled, invited, or arranged interview and no completed candidate interview process; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -85,11 +190,12 @@
     }
   ],
   "limitations": [
-    "Exact Source records only a scheduled, invited, or arranged interview and no completed candidate interview process; retain pending.",
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "4c3834e2e24ba5ca2c7b0ce9624287cd64ef1abb59d12172df01b21962156a10"
+  "evidence_sha256": "2b74a1770011902f12fa162ea3539508fe4218c4a806c1d2c37bde97b5bcf620"
 }

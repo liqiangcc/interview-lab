@@ -7,15 +7,12 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "55d0de315c2a2c13e0e1e4d325289c00b7c332afe7e14f26e698846b5ca3147a",
-  "disposition": "blocked",
-  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "disposition": "single-interview",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
-      "question-list-only",
-      "no-first-person-event",
-      "question-only",
-      "no-candidate-event-evidence"
+      "no-first-person-event"
     ],
     "questions": 8,
     "has_first_person_event": false,
@@ -23,19 +20,23 @@
     "has_bounded_event": true,
     "has_detailed_event": true,
     "has_completed_event_evidence": true,
-    "has_structured_candidate_event": false,
+    "has_structured_candidate_event": true,
     "generic_advice_or_aggregated": false,
     "scheduled_only": false,
-    "question_only": true,
+    "question_only": false,
     "outcome_signal": true,
     "resource_signal": true,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
-    "only_question_list": true,
+    "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68a69c46000000001c00fb1f.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -44,13 +45,108 @@
     "provenance": "source_projection",
     "byte_size": 911,
     "content_sha256": "3b20aa9e695b61bd75a152ba4e90b8b2df38477a421748df68ad3c022567512b",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "没开摄像头，但是中午12.的面试就原谅他了",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "没开摄像头，但是中午12.的面试就原谅他了\n1. java线程池的参数，线程池的执行过程\n2. 建立mysql索引的时候需要考虑什么，使用mysql数据库的时候可能要关注哪些数值\n3. redis持久化\n4. 对AI的了解，对 Milvus的了解（这两块我讲了一大堆，但是基本没追问，可能是因为都是理论知识没啥实操）\n5. JVM垃圾回收的算法，CMS和G1的区别\n6. 为什么要用分布式锁，什么场景会用到分布式锁\n7. 项目中解决问题的过程\n8. 学习新东西的方法\n \n手撕：一个很简单的HashMap字符串拆分+数值统计+排序\n \n反问业务：内部的AI工具搭建\n结果要等测评笔试做了才知道（？？？本来想着一面挂了就不做笔试了）\n后续：已挂，不用做笔试了[笑哭R]"
-    }
+      "locator": "artifact-line:1#offset:0-21;blob:b87b36437594580b25af0c6e5d5f1f8e7f22bddf",
+      "semantic_excerpt": "淘天后端一面\n没开摄像头，但是中午12.的面试就原谅他了\n1. java线程池的参数，线程池的执行过程\n2. 建立mysql索引的时候需要考虑什么，使用mysql数据库的时候可能要关注哪些数值\n3. redis持久化\n4. 对AI的了解，对 Milvus的了解（这两块我讲了一大堆，但是基本没追问，可能是因为都是理论知识没啥实操）\n5. JVM垃圾回收的算法，CMS和G1的区别\n6. 为什么要用分布式锁，什么场景会用到分布式锁\n7. 项目中解决问题的过程\n8. 学习新东西的方法\n \n手撕：一个很简单的HashMap字符串拆分+数值统计+排序\n \n反问业务：内部的AI工具搭建\n结果要等测评笔试做了才知道（？？？本来想着一面挂了就不做笔试了）\n后续：已挂，不用做笔试了[笑哭R]"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68a69c46000000001c00fb1f.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "b87b36437594580b25af0c6e5d5f1f8e7f22bddf",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 911,
+        "content_sha256": "3b20aa9e695b61bd75a152ba4e90b8b2df38477a421748df68ad3c022567512b",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "没开摄像头，但是中午12.的面试就原谅他了",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-21;blob:b87b36437594580b25af0c6e5d5f1f8e7f22bddf",
+          "semantic_excerpt": "淘天后端一面\n没开摄像头，但是中午12.的面试就原谅他了\n1. java线程池的参数，线程池的执行过程\n2. 建立mysql索引的时候需要考虑什么，使用mysql数据库的时候可能要关注哪些数值\n3. redis持久化\n4. 对AI的了解，对 Milvus的了解（这两块我讲了一大堆，但是基本没追问，可能是因为都是理论知识没啥实操）\n5. JVM垃圾回收的算法，CMS和G1的区别\n6. 为什么要用分布式锁，什么场景会用到分布式锁\n7. 项目中解决问题的过程\n8. 学习新东西的方法\n \n手撕：一个很简单的HashMap字符串拆分+数值统计+排序\n \n反问业务：内部的AI工具搭建\n结果要等测评笔试做了才知道（？？？本来想着一面挂了就不做笔试了）\n后续：已挂，不用做笔试了[笑哭R]"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68a69c46000000001c00fb1f.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "5871733b974b61dd373ae326e681f07fdaf2c804",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 388463,
+        "content_sha256": "e2573bee58b66f6d5e2b410f6db47aa8f441134bb81ec473405918886ad5c987",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "淘天后端一面 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-183;blob:5871733b974b61dd373ae326e681f07fdaf2c804",
+          "semantic_excerpt": "淘天后端一面\n没开摄像头，但是中午12.的面试就原谅他了\n1. java线程池的参数，线程池的执行过程\n2. 建立mysql索引的时候需要考虑什么，使用mysql数据库的时候可能要关注哪些数值\n3. redis持久化\n4. 对AI的了解，对 Milvus的了解（这两块我讲了一大堆，但是基本没追问，可能是因为都是理论知识没啥实操）\n5. JVM垃圾回收的算法，CMS和G1的区别\n6. 为什么要用分布式锁，什么场景会用到分布式锁\n7. 项目中解决问题的过程\n8. 学习新东西的方法\n \n手撕：一个很简单的HashMap字符串拆分+数值统计+排序\n \n反问业务：内部的AI工具搭建\n结果要等测评笔试做了才知道（？？？本来想着一面挂了就不做笔试了）\n后续：已挂，不用做笔试了[笑哭R]"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68a69c46000000001c00fb1f.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "6edb57da932dfff39862b8f879d652da35d3602e",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 21623,
+        "content_sha256": "1c3c55a6961d76ca1b0f41d91101e1d6c20e74e2fd86ef1fc4a13ab2f029a5c4",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "淘天后端一面\",",
+          "line": 554,
+          "locator": "artifact-line:554#offset:30-38;blob:6edb57da932dfff39862b8f879d652da35d3602e",
+          "semantic_excerpt": "淘天后端一面\n没开摄像头，但是中午12.的面试就原谅他了\n1. java线程池的参数，线程池的执行过程\n2. 建立mysql索引的时候需要考虑什么，使用mysql数据库的时候可能要关注哪些数值\n3. redis持久化\n4. 对AI的了解，对 Milvus的了解（这两块我讲了一大堆，但是基本没追问，可能是因为都是理论知识没啥实操）\n5. JVM垃圾回收的算法，CMS和G1的区别\n6. 为什么要用分布式锁，什么场景会用到分布式锁\n7. 项目中解决问题的过程\n8. 学习新东西的方法\n \n手撕：一个很简单的HashMap字符串拆分+数值统计+排序\n \n反问业务：内部的AI工具搭建\n结果要等测评笔试做了才知道（？？？本来想着一面挂了就不做笔试了）\n后续：已挂，不用做笔试了[笑哭R]"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68a69c46000000001c00fb1f.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "b87b36437594580b25af0c6e5d5f1f8e7f22bddf",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 911,
+      "content_sha256": "3b20aa9e695b61bd75a152ba4e90b8b2df38477a421748df68ad3c022567512b",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "没开摄像头，但是中午12.的面试就原谅他了",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-21;blob:b87b36437594580b25af0c6e5d5f1f8e7f22bddf",
+        "semantic_excerpt": "淘天后端一面\n没开摄像头，但是中午12.的面试就原谅他了\n1. java线程池的参数，线程池的执行过程\n2. 建立mysql索引的时候需要考虑什么，使用mysql数据库的时候可能要关注哪些数值\n3. redis持久化\n4. 对AI的了解，对 Milvus的了解（这两块我讲了一大堆，但是基本没追问，可能是因为都是理论知识没啥实操）\n5. JVM垃圾回收的算法，CMS和G1的区别\n6. 为什么要用分布式锁，什么场景会用到分布式锁\n7. 项目中解决问题的过程\n8. 学习新东西的方法\n \n手撕：一个很简单的HashMap字符串拆分+数值统计+排序\n \n反问业务：内部的AI工具搭建\n结果要等测评笔试做了才知道（？？？本来想着一面挂了就不做笔试了）\n后续：已挂，不用做笔试了[笑哭R]"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68a69c46000000001c00fb1f.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "5871733b974b61dd373ae326e681f07fdaf2c804",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 388463,
+      "content_sha256": "e2573bee58b66f6d5e2b410f6db47aa8f441134bb81ec473405918886ad5c987",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "淘天后端一面 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-183;blob:5871733b974b61dd373ae326e681f07fdaf2c804",
+        "semantic_excerpt": "淘天后端一面\n没开摄像头，但是中午12.的面试就原谅他了\n1. java线程池的参数，线程池的执行过程\n2. 建立mysql索引的时候需要考虑什么，使用mysql数据库的时候可能要关注哪些数值\n3. redis持久化\n4. 对AI的了解，对 Milvus的了解（这两块我讲了一大堆，但是基本没追问，可能是因为都是理论知识没啥实操）\n5. JVM垃圾回收的算法，CMS和G1的区别\n6. 为什么要用分布式锁，什么场景会用到分布式锁\n7. 项目中解决问题的过程\n8. 学习新东西的方法\n \n手撕：一个很简单的HashMap字符串拆分+数值统计+排序\n \n反问业务：内部的AI工具搭建\n结果要等测评笔试做了才知道（？？？本来想着一面挂了就不做笔试了）\n后续：已挂，不用做笔试了[笑哭R]"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68a69c46000000001c00fb1f.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "6edb57da932dfff39862b8f879d652da35d3602e",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 21623,
+      "content_sha256": "1c3c55a6961d76ca1b0f41d91101e1d6c20e74e2fd86ef1fc4a13ab2f029a5c4",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "淘天后端一面\",",
+        "line": 554,
+        "locator": "artifact-line:554#offset:30-38;blob:6edb57da932dfff39862b8f879d652da35d3602e",
+        "semantic_excerpt": "淘天后端一面\n没开摄像头，但是中午12.的面试就原谅他了\n1. java线程池的参数，线程池的执行过程\n2. 建立mysql索引的时候需要考虑什么，使用mysql数据库的时候可能要关注哪些数值\n3. redis持久化\n4. 对AI的了解，对 Milvus的了解（这两块我讲了一大堆，但是基本没追问，可能是因为都是理论知识没啥实操）\n5. JVM垃圾回收的算法，CMS和G1的区别\n6. 为什么要用分布式锁，什么场景会用到分布式锁\n7. 项目中解决问题的过程\n8. 学习新东西的方法\n \n手撕：一个很简单的HashMap字符串拆分+数值统计+排序\n \n反问业务：内部的AI工具搭建\n结果要等测评笔试做了才知道（？？？本来想着一面挂了就不做笔试了）\n后续：已挂，不用做笔试了[笑哭R]"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -69,8 +165,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -84,11 +180,12 @@
     }
   ],
   "limitations": [
-    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "dc23bc7ee78769d6e7c9282e18bfc3ff43b84ce4b57e40b3f5bca3cdd0d7497c"
+  "evidence_sha256": "5035a77c310570559298d2752bc858e3163c66c89f71a68a8dc47b1dea1a6cf2"
 }

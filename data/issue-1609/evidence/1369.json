@@ -7,15 +7,12 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "9e2931ca5e999481f0794ced73637b87a62c06b417a7ee6d1f78029da38ec897",
-  "disposition": "blocked",
-  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "disposition": "single-interview",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
-      "question-list-only",
-      "no-first-person-event",
-      "question-only",
-      "no-candidate-event-evidence"
+      "no-first-person-event"
     ],
     "questions": 10,
     "has_first_person_event": false,
@@ -23,19 +20,33 @@
     "has_bounded_event": true,
     "has_detailed_event": true,
     "has_completed_event_evidence": true,
-    "has_structured_candidate_event": false,
+    "has_structured_candidate_event": true,
     "generic_advice_or_aggregated": false,
     "scheduled_only": false,
-    "question_only": true,
+    "question_only": false,
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
-    "only_question_list": true,
+    "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "kuaishou-process",
+        "anchor": "快手",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-165;blob:2a7c267b745fc20d667f8671dcb3df96aca73a9f",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:快手",
+        "source_ref": "liqiangcc/xhs:note_detail/68cebd3f000000001301510b.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 2,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68cebd3f000000001301510b.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -44,13 +55,78 @@
     "provenance": "source_projection",
     "byte_size": 22305,
     "content_sha256": "cbf8b0a64302d079854f5945b8c1e058b55f8661cc3d326354f0c59305489690",
+    "cache_status": "not-applicable",
     "excerpt": {
-      "excerpt": "\"global\": {",
-      "line": 2,
-      "locator": "artifact-line:2",
-      "semantic_excerpt": "1、自我介绍\n2、介绍实习经历，项目中DDD是怎么落地的？\n3、DDD中聚合根和实体的概念\n4、高并发场景下，给一个人投票怎么维护其高可用\n5、怎么保证缓存一致性\n6、Redis中的槽位为什么是1024？\n7、MySQL中B+树为什么只有2-3层\n8、sql题：找出下单数top5的用户\n9、算法：锯齿形层次遍历树\n10、反问"
-    }
+      "excerpt": "快手本地生活Java一面\",",
+      "line": 583,
+      "locator": "artifact-line:583#offset:30-44;blob:90705e057cbc197d45d2b62f7c1c3fbe66db43a8",
+      "semantic_excerpt": "快手本地生活Java一面\n1、自我介绍\n2、介绍实习经历，项目中DDD是怎么落地的？\n3、DDD中聚合根和实体的概念\n4、高并发场景下，给一个人投票怎么维护其高可用\n5、怎么保证缓存一致性\n6、Redis中的槽位为什么是1024？\n7、MySQL中B+树为什么只有2-3层\n8、sql题：找出下单数top5的用户\n9、算法：锯齿形层次遍历树\n10、反问"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_detail/68cebd3f000000001301510b.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "2a7c267b745fc20d667f8671dcb3df96aca73a9f",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 388812,
+        "content_sha256": "36865b05de845842e2662fb61ce7266511fbff14e73d3b32eacb9e48351f7a6c",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "快手本地生活Java一面 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-189;blob:2a7c267b745fc20d667f8671dcb3df96aca73a9f",
+          "semantic_excerpt": "快手本地生活Java一面\n1、自我介绍\n2、介绍实习经历，项目中DDD是怎么落地的？\n3、DDD中聚合根和实体的概念\n4、高并发场景下，给一个人投票怎么维护其高可用\n5、怎么保证缓存一致性\n6、Redis中的槽位为什么是1024？\n7、MySQL中B+树为什么只有2-3层\n8、sql题：找出下单数top5的用户\n9、算法：锯齿形层次遍历树\n10、反问"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68cebd3f000000001301510b.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "90705e057cbc197d45d2b62f7c1c3fbe66db43a8",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 22305,
+        "content_sha256": "cbf8b0a64302d079854f5945b8c1e058b55f8661cc3d326354f0c59305489690",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "快手本地生活Java一面\",",
+          "line": 583,
+          "locator": "artifact-line:583#offset:30-44;blob:90705e057cbc197d45d2b62f7c1c3fbe66db43a8",
+          "semantic_excerpt": "快手本地生活Java一面\n1、自我介绍\n2、介绍实习经历，项目中DDD是怎么落地的？\n3、DDD中聚合根和实体的概念\n4、高并发场景下，给一个人投票怎么维护其高可用\n5、怎么保证缓存一致性\n6、Redis中的槽位为什么是1024？\n7、MySQL中B+树为什么只有2-3层\n8、sql题：找出下单数top5的用户\n9、算法：锯齿形层次遍历树\n10、反问"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/68cebd3f000000001301510b.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "2a7c267b745fc20d667f8671dcb3df96aca73a9f",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 388812,
+      "content_sha256": "36865b05de845842e2662fb61ce7266511fbff14e73d3b32eacb9e48351f7a6c",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "快手本地生活Java一面 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-189;blob:2a7c267b745fc20d667f8671dcb3df96aca73a9f",
+        "semantic_excerpt": "快手本地生活Java一面\n1、自我介绍\n2、介绍实习经历，项目中DDD是怎么落地的？\n3、DDD中聚合根和实体的概念\n4、高并发场景下，给一个人投票怎么维护其高可用\n5、怎么保证缓存一致性\n6、Redis中的槽位为什么是1024？\n7、MySQL中B+树为什么只有2-3层\n8、sql题：找出下单数top5的用户\n9、算法：锯齿形层次遍历树\n10、反问"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68cebd3f000000001301510b.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "90705e057cbc197d45d2b62f7c1c3fbe66db43a8",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 22305,
+      "content_sha256": "cbf8b0a64302d079854f5945b8c1e058b55f8661cc3d326354f0c59305489690",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "快手本地生活Java一面\",",
+        "line": 583,
+        "locator": "artifact-line:583#offset:30-44;blob:90705e057cbc197d45d2b62f7c1c3fbe66db43a8",
+        "semantic_excerpt": "快手本地生活Java一面\n1、自我介绍\n2、介绍实习经历，项目中DDD是怎么落地的？\n3、DDD中聚合根和实体的概念\n4、高并发场景下，给一个人投票怎么维护其高可用\n5、怎么保证缓存一致性\n6、Redis中的槽位为什么是1024？\n7、MySQL中B+树为什么只有2-3层\n8、sql题：找出下单数top5的用户\n9、算法：锯齿形层次遍历树\n10、反问"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -69,8 +145,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -84,11 +160,12 @@
     }
   ],
   "limitations": [
-    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "2e8bb88b90664d7d72d264172be7ea8adb85fca03b5677e972bba5bb362f64bf"
+  "evidence_sha256": "7144dfed70a29f2c18c32ef88a2ce3c34d7a610faa23415e9a77835fb29a8a33"
 }

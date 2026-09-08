@@ -29,12 +29,26 @@
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "meituan-process",
+        "anchor": "美团",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-165;blob:67cc0b4fd128d0a24450fd0621edd3d4e1916000",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:美团",
+        "source_ref": "liqiangcc/xhs:note_detail/68b505a7000000001c008f8b.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b505a7000000001c008f8b.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -43,13 +57,108 @@
     "provenance": "source_projection",
     "byte_size": 899,
     "content_sha256": "623d1b966817e03c843012a781186a4b20134b052cb166e11aeb12de744495fb",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "一面",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "一面\n1. AI Agent项目的主要目的是什么？\n2. 这个项目最大的挑战是什么？\n3. DDD是什么？\n4. DDD的使用场景和解决的问题是什么？\n5. AI Agent项目中DDD实现的大致步骤？\n6. 领域识别和划分部分的思路是什么？\n7. 外卖项目中支付和营销拼团服务是如何拆分的，和DDD的异同？\n8. 索引优化具体是怎么做的？\n9. 实现商品名称模糊搜索的方案思路有哪些？\n10. MySQL慢查询的优化方法有哪些？\n11. 如何用锁和幂等解决超卖问题？\n12. 外卖项目中责任链、工厂、状态模式的选择思路是什么？\n13. 如何设计一个用户邀请系统（库表和API）？\n14. 对比Redis和Caffeine的优劣势及使用场景？\n15. JVM的内存模型和划分是怎样的？\n16. 对比MyBatis和MyBatis-Plus的优缺点？"
-    }
+      "locator": "artifact-line:1#offset:0-2;blob:48b61238454d733fdab33b89135cd6d095b5925e",
+      "semantic_excerpt": "美团一二面面经\n一面\n1. AI Agent项目的主要目的是什么？\n2. 这个项目最大的挑战是什么？\n3. DDD是什么？\n4. DDD的使用场景和解决的问题是什么？\n5. AI Agent项目中DDD实现的大致步骤？\n6. 领域识别和划分部分的思路是什么？\n7. 外卖项目中支付和营销拼团服务是如何拆分的，和DDD的异同？\n8. 索引优化具体是怎么做的？\n9. 实现商品名称模糊搜索的方案思路有哪些？\n10. MySQL慢查询的优化方法有哪些？\n11. 如何用锁和幂等解决超卖问题？\n12. 外卖项目中责任链、工厂、状态模式的选择思路是什么？\n13. 如何设计一个用户邀请系统（库表和API）？\n14. 对比Redis和Caffeine的优劣势及使用场景？\n15. JVM的内存模型和划分是怎样的？\n16. 对比MyBatis和MyBatis-Plus的优缺点？"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68b505a7000000001c008f8b.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "48b61238454d733fdab33b89135cd6d095b5925e",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 899,
+        "content_sha256": "623d1b966817e03c843012a781186a4b20134b052cb166e11aeb12de744495fb",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "一面",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-2;blob:48b61238454d733fdab33b89135cd6d095b5925e",
+          "semantic_excerpt": "美团一二面面经\n一面\n1. AI Agent项目的主要目的是什么？\n2. 这个项目最大的挑战是什么？\n3. DDD是什么？\n4. DDD的使用场景和解决的问题是什么？\n5. AI Agent项目中DDD实现的大致步骤？\n6. 领域识别和划分部分的思路是什么？\n7. 外卖项目中支付和营销拼团服务是如何拆分的，和DDD的异同？\n8. 索引优化具体是怎么做的？\n9. 实现商品名称模糊搜索的方案思路有哪些？\n10. MySQL慢查询的优化方法有哪些？\n11. 如何用锁和幂等解决超卖问题？\n12. 外卖项目中责任链、工厂、状态模式的选择思路是什么？\n13. 如何设计一个用户邀请系统（库表和API）？\n14. 对比Redis和Caffeine的优劣势及使用场景？\n15. JVM的内存模型和划分是怎样的？\n16. 对比MyBatis和MyBatis-Plus的优缺点？"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68b505a7000000001c008f8b.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "67cc0b4fd128d0a24450fd0621edd3d4e1916000",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 391162,
+        "content_sha256": "f34601b033231947f2cde20cc4bc2aba6bb38ccaac7c5072814fdc9a7118da14",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "美团一二面面经 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-184;blob:67cc0b4fd128d0a24450fd0621edd3d4e1916000",
+          "semantic_excerpt": "美团一二面面经\n一面\n1. AI Agent项目的主要目的是什么？\n2. 这个项目最大的挑战是什么？\n3. DDD是什么？\n4. DDD的使用场景和解决的问题是什么？\n5. AI Agent项目中DDD实现的大致步骤？\n6. 领域识别和划分部分的思路是什么？\n7. 外卖项目中支付和营销拼团服务是如何拆分的，和DDD的异同？\n8. 索引优化具体是怎么做的？\n9. 实现商品名称模糊搜索的方案思路有哪些？\n10. MySQL慢查询的优化方法有哪些？\n11. 如何用锁和幂等解决超卖问题？\n12. 外卖项目中责任链、工厂、状态模式的选择思路是什么？\n13. 如何设计一个用户邀请系统（库表和API）？\n14. 对比Redis和Caffeine的优劣势及使用场景？\n15. JVM的内存模型和划分是怎样的？\n16. 对比MyBatis和MyBatis-Plus的优缺点？"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68b505a7000000001c008f8b.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "70b5dd87c10f30dbdfc2c1321a104dea641e01c5",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 24032,
+        "content_sha256": "80cce00573eb3da0b1c316a8ed0d933675cd2816b5ac380ceb38e3aa944f659c",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "美团一二面面经\",",
+          "line": 496,
+          "locator": "artifact-line:496#offset:30-39;blob:70b5dd87c10f30dbdfc2c1321a104dea641e01c5",
+          "semantic_excerpt": "美团一二面面经\n一面\n1. AI Agent项目的主要目的是什么？\n2. 这个项目最大的挑战是什么？\n3. DDD是什么？\n4. DDD的使用场景和解决的问题是什么？\n5. AI Agent项目中DDD实现的大致步骤？\n6. 领域识别和划分部分的思路是什么？\n7. 外卖项目中支付和营销拼团服务是如何拆分的，和DDD的异同？\n8. 索引优化具体是怎么做的？\n9. 实现商品名称模糊搜索的方案思路有哪些？\n10. MySQL慢查询的优化方法有哪些？\n11. 如何用锁和幂等解决超卖问题？\n12. 外卖项目中责任链、工厂、状态模式的选择思路是什么？\n13. 如何设计一个用户邀请系统（库表和API）？\n14. 对比Redis和Caffeine的优劣势及使用场景？\n15. JVM的内存模型和划分是怎样的？\n16. 对比MyBatis和MyBatis-Plus的优缺点？"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68b505a7000000001c008f8b.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "48b61238454d733fdab33b89135cd6d095b5925e",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 899,
+      "content_sha256": "623d1b966817e03c843012a781186a4b20134b052cb166e11aeb12de744495fb",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "一面",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-2;blob:48b61238454d733fdab33b89135cd6d095b5925e",
+        "semantic_excerpt": "美团一二面面经\n一面\n1. AI Agent项目的主要目的是什么？\n2. 这个项目最大的挑战是什么？\n3. DDD是什么？\n4. DDD的使用场景和解决的问题是什么？\n5. AI Agent项目中DDD实现的大致步骤？\n6. 领域识别和划分部分的思路是什么？\n7. 外卖项目中支付和营销拼团服务是如何拆分的，和DDD的异同？\n8. 索引优化具体是怎么做的？\n9. 实现商品名称模糊搜索的方案思路有哪些？\n10. MySQL慢查询的优化方法有哪些？\n11. 如何用锁和幂等解决超卖问题？\n12. 外卖项目中责任链、工厂、状态模式的选择思路是什么？\n13. 如何设计一个用户邀请系统（库表和API）？\n14. 对比Redis和Caffeine的优劣势及使用场景？\n15. JVM的内存模型和划分是怎样的？\n16. 对比MyBatis和MyBatis-Plus的优缺点？"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68b505a7000000001c008f8b.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "67cc0b4fd128d0a24450fd0621edd3d4e1916000",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 391162,
+      "content_sha256": "f34601b033231947f2cde20cc4bc2aba6bb38ccaac7c5072814fdc9a7118da14",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "美团一二面面经 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-184;blob:67cc0b4fd128d0a24450fd0621edd3d4e1916000",
+        "semantic_excerpt": "美团一二面面经\n一面\n1. AI Agent项目的主要目的是什么？\n2. 这个项目最大的挑战是什么？\n3. DDD是什么？\n4. DDD的使用场景和解决的问题是什么？\n5. AI Agent项目中DDD实现的大致步骤？\n6. 领域识别和划分部分的思路是什么？\n7. 外卖项目中支付和营销拼团服务是如何拆分的，和DDD的异同？\n8. 索引优化具体是怎么做的？\n9. 实现商品名称模糊搜索的方案思路有哪些？\n10. MySQL慢查询的优化方法有哪些？\n11. 如何用锁和幂等解决超卖问题？\n12. 外卖项目中责任链、工厂、状态模式的选择思路是什么？\n13. 如何设计一个用户邀请系统（库表和API）？\n14. 对比Redis和Caffeine的优劣势及使用场景？\n15. JVM的内存模型和划分是怎样的？\n16. 对比MyBatis和MyBatis-Plus的优缺点？"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68b505a7000000001c008f8b.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "70b5dd87c10f30dbdfc2c1321a104dea641e01c5",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 24032,
+      "content_sha256": "80cce00573eb3da0b1c316a8ed0d933675cd2816b5ac380ceb38e3aa944f659c",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "美团一二面面经\",",
+        "line": 496,
+        "locator": "artifact-line:496#offset:30-39;blob:70b5dd87c10f30dbdfc2c1321a104dea641e01c5",
+        "semantic_excerpt": "美团一二面面经\n一面\n1. AI Agent项目的主要目的是什么？\n2. 这个项目最大的挑战是什么？\n3. DDD是什么？\n4. DDD的使用场景和解决的问题是什么？\n5. AI Agent项目中DDD实现的大致步骤？\n6. 领域识别和划分部分的思路是什么？\n7. 外卖项目中支付和营销拼团服务是如何拆分的，和DDD的异同？\n8. 索引优化具体是怎么做的？\n9. 实现商品名称模糊搜索的方案思路有哪些？\n10. MySQL慢查询的优化方法有哪些？\n11. 如何用锁和幂等解决超卖问题？\n12. 外卖项目中责任链、工厂、状态模式的选择思路是什么？\n13. 如何设计一个用户邀请系统（库表和API）？\n14. 对比Redis和Caffeine的优劣势及使用场景？\n15. JVM的内存模型和划分是怎样的？\n16. 对比MyBatis和MyBatis-Plus的优缺点？"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -84,10 +193,11 @@
   ],
   "limitations": [
     "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "47091b74dbe36b713d1e65f601bfc06076ad57156af3358e880610c91fe84b6a"
+  "evidence_sha256": "3603558479f892ddb19de41e1d33a157ac553a4c5081407af04c410e6e6c3e28"
 }

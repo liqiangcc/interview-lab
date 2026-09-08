@@ -30,12 +30,26 @@
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": true,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": true,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "alibaba-process",
+        "anchor": "阿里",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-165;blob:63aacf625eeaa8249b625706bfcb7fbe545d3658",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:阿里",
+        "source_ref": "liqiangcc/xhs:note_detail/68c2e9c3000000001d015b0e.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68c2e9c3000000001d015b0e.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -44,13 +58,108 @@
     "provenance": "source_projection",
     "byte_size": 692,
     "content_sha256": "1190492b95503fbd655169a5f829fd4e126a2fb054f3f3887dc7c8791693e503",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "好久没整理了，业务是dataworks开发",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "好久没整理了，业务是dataworks开发\n1、实习项目中怎么处理并发和保障一致性的\n2、有状态机器怎么扩容\n3、智力题：一个水杯5l，一个水杯6l，怎么得到1l，2l，3l，4l的水\n4、多线程的实现方式\n5、如何停止一个线程，优雅停机\n6、synchronized和reentrantlock区别，lock()和trylock()的区别\n7、怎么排查oom，相关的jvm参数有哪些\n8、类冲突怎么排查和解决\n手撕：\n1、给一个shell脚本(遍历目录)，用java实现相关功能\n2、字符串匹配，第一个字符串是abba，第二个字符串如果是abba模式则输出true"
-    }
+      "locator": "artifact-line:1#offset:0-21;blob:50fc69ec450315917e7da2b436847a9b1130000b",
+      "semantic_excerpt": "阿里云java一面\n好久没整理了，业务是dataworks开发\n1、实习项目中怎么处理并发和保障一致性的\n2、有状态机器怎么扩容\n3、智力题：一个水杯5l，一个水杯6l，怎么得到1l，2l，3l，4l的水\n4、多线程的实现方式\n5、如何停止一个线程，优雅停机\n6、synchronized和reentrantlock区别，lock()和trylock()的区别\n7、怎么排查oom，相关的jvm参数有哪些\n8、类冲突怎么排查和解决\n手撕：\n1、给一个shell脚本(遍历目录)，用java实现相关功能\n2、字符串匹配，第一个字符串是abba，第二个字符串如果是abba模式则输出true"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68c2e9c3000000001d015b0e.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "50fc69ec450315917e7da2b436847a9b1130000b",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 692,
+        "content_sha256": "1190492b95503fbd655169a5f829fd4e126a2fb054f3f3887dc7c8791693e503",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "好久没整理了，业务是dataworks开发",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-21;blob:50fc69ec450315917e7da2b436847a9b1130000b",
+          "semantic_excerpt": "阿里云java一面\n好久没整理了，业务是dataworks开发\n1、实习项目中怎么处理并发和保障一致性的\n2、有状态机器怎么扩容\n3、智力题：一个水杯5l，一个水杯6l，怎么得到1l，2l，3l，4l的水\n4、多线程的实现方式\n5、如何停止一个线程，优雅停机\n6、synchronized和reentrantlock区别，lock()和trylock()的区别\n7、怎么排查oom，相关的jvm参数有哪些\n8、类冲突怎么排查和解决\n手撕：\n1、给一个shell脚本(遍历目录)，用java实现相关功能\n2、字符串匹配，第一个字符串是abba，第二个字符串如果是abba模式则输出true"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68c2e9c3000000001d015b0e.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "63aacf625eeaa8249b625706bfcb7fbe545d3658",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 387115,
+        "content_sha256": "472acd8fe0bc3c1c90dec090eb05bf562a0b53d4b9b7793afc18c51b9aea6ac5",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "阿里云java一面 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-186;blob:63aacf625eeaa8249b625706bfcb7fbe545d3658",
+          "semantic_excerpt": "阿里云java一面\n好久没整理了，业务是dataworks开发\n1、实习项目中怎么处理并发和保障一致性的\n2、有状态机器怎么扩容\n3、智力题：一个水杯5l，一个水杯6l，怎么得到1l，2l，3l，4l的水\n4、多线程的实现方式\n5、如何停止一个线程，优雅停机\n6、synchronized和reentrantlock区别，lock()和trylock()的区别\n7、怎么排查oom，相关的jvm参数有哪些\n8、类冲突怎么排查和解决\n手撕：\n1、给一个shell脚本(遍历目录)，用java实现相关功能\n2、字符串匹配，第一个字符串是abba，第二个字符串如果是abba模式则输出true"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68c2e9c3000000001d015b0e.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "75327957e9d16f9dc39d353bf16f857ec6f851db",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 20997,
+        "content_sha256": "ad7707901205727b6c29ae419da5d0b10866ae3c6f2ed67a467c314f98e1d655",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "阿里云java一面\",",
+          "line": 560,
+          "locator": "artifact-line:560#offset:30-41;blob:75327957e9d16f9dc39d353bf16f857ec6f851db",
+          "semantic_excerpt": "阿里云java一面\n好久没整理了，业务是dataworks开发\n1、实习项目中怎么处理并发和保障一致性的\n2、有状态机器怎么扩容\n3、智力题：一个水杯5l，一个水杯6l，怎么得到1l，2l，3l，4l的水\n4、多线程的实现方式\n5、如何停止一个线程，优雅停机\n6、synchronized和reentrantlock区别，lock()和trylock()的区别\n7、怎么排查oom，相关的jvm参数有哪些\n8、类冲突怎么排查和解决\n手撕：\n1、给一个shell脚本(遍历目录)，用java实现相关功能\n2、字符串匹配，第一个字符串是abba，第二个字符串如果是abba模式则输出true"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68c2e9c3000000001d015b0e.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "50fc69ec450315917e7da2b436847a9b1130000b",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 692,
+      "content_sha256": "1190492b95503fbd655169a5f829fd4e126a2fb054f3f3887dc7c8791693e503",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "好久没整理了，业务是dataworks开发",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-21;blob:50fc69ec450315917e7da2b436847a9b1130000b",
+        "semantic_excerpt": "阿里云java一面\n好久没整理了，业务是dataworks开发\n1、实习项目中怎么处理并发和保障一致性的\n2、有状态机器怎么扩容\n3、智力题：一个水杯5l，一个水杯6l，怎么得到1l，2l，3l，4l的水\n4、多线程的实现方式\n5、如何停止一个线程，优雅停机\n6、synchronized和reentrantlock区别，lock()和trylock()的区别\n7、怎么排查oom，相关的jvm参数有哪些\n8、类冲突怎么排查和解决\n手撕：\n1、给一个shell脚本(遍历目录)，用java实现相关功能\n2、字符串匹配，第一个字符串是abba，第二个字符串如果是abba模式则输出true"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68c2e9c3000000001d015b0e.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "63aacf625eeaa8249b625706bfcb7fbe545d3658",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 387115,
+      "content_sha256": "472acd8fe0bc3c1c90dec090eb05bf562a0b53d4b9b7793afc18c51b9aea6ac5",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "阿里云java一面 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-186;blob:63aacf625eeaa8249b625706bfcb7fbe545d3658",
+        "semantic_excerpt": "阿里云java一面\n好久没整理了，业务是dataworks开发\n1、实习项目中怎么处理并发和保障一致性的\n2、有状态机器怎么扩容\n3、智力题：一个水杯5l，一个水杯6l，怎么得到1l，2l，3l，4l的水\n4、多线程的实现方式\n5、如何停止一个线程，优雅停机\n6、synchronized和reentrantlock区别，lock()和trylock()的区别\n7、怎么排查oom，相关的jvm参数有哪些\n8、类冲突怎么排查和解决\n手撕：\n1、给一个shell脚本(遍历目录)，用java实现相关功能\n2、字符串匹配，第一个字符串是abba，第二个字符串如果是abba模式则输出true"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68c2e9c3000000001d015b0e.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "75327957e9d16f9dc39d353bf16f857ec6f851db",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 20997,
+      "content_sha256": "ad7707901205727b6c29ae419da5d0b10866ae3c6f2ed67a467c314f98e1d655",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "阿里云java一面\",",
+        "line": 560,
+        "locator": "artifact-line:560#offset:30-41;blob:75327957e9d16f9dc39d353bf16f857ec6f851db",
+        "semantic_excerpt": "阿里云java一面\n好久没整理了，业务是dataworks开发\n1、实习项目中怎么处理并发和保障一致性的\n2、有状态机器怎么扩容\n3、智力题：一个水杯5l，一个水杯6l，怎么得到1l，2l，3l，4l的水\n4、多线程的实现方式\n5、如何停止一个线程，优雅停机\n6、synchronized和reentrantlock区别，lock()和trylock()的区别\n7、怎么排查oom，相关的jvm参数有哪些\n8、类冲突怎么排查和解决\n手撕：\n1、给一个shell脚本(遍历目录)，用java实现相关功能\n2、字符串匹配，第一个字符串是abba，第二个字符串如果是abba模式则输出true"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -85,10 +194,11 @@
   ],
   "limitations": [
     "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "b591450b87589aa502be9b85020d7a9e11bcdeea031beebbb9e079644f9a5ce7"
+  "evidence_sha256": "597bbf48c2fd4921b1e2b7496e502407d18489725547b9dbe13b53c5913d922c"
 }

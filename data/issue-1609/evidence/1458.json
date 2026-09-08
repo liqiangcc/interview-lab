@@ -12,7 +12,6 @@
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
-      "question-list-only",
       "outcome-or-offer-only",
       "no-first-person-event",
       "question-only",
@@ -21,7 +20,7 @@
     "questions": 13,
     "has_first_person_event": false,
     "has_explicit_candidate_event": false,
-    "has_bounded_event": false,
+    "has_bounded_event": true,
     "has_detailed_event": false,
     "has_completed_event_evidence": false,
     "has_structured_candidate_event": false,
@@ -31,12 +30,26 @@
     "outcome_signal": true,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
-    "only_question_list": true,
+    "only_question_list": false,
     "only_outcome": true,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "pinduoduo-process",
+        "anchor": "拼多多",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-166;blob:83420744f49653a2d893b180f67d3386701a863a",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:拼多多",
+        "source_ref": "liqiangcc/xhs:note_detail/68ea11580000000003038e9b.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 2,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68ea11580000000003038e9b.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -45,13 +58,78 @@
     "provenance": "source_projection",
     "byte_size": 20641,
     "content_sha256": "05b490e56f9aa79045a9123c785b44f06ef03c8644c2b8765c3b6690a293aa73",
+    "cache_status": "not-applicable",
     "excerpt": {
-      "excerpt": "\"global\": {",
-      "line": 2,
-      "locator": "artifact-line:2",
-      "semantic_excerpt": "1.javaweb 挑一个自己能讲的过程讲\n2.在java处理一个http请求的过程当中 spring起到了什么作用 扮演什么角色\n3.像腾讯那样的通过qq去登陆多种软件 怎么实现（sso技术 我不会）\n4.给你一张贴吧表 post（id,uid,title,like_cnt,comment_cnt,create_time(unix时间戳形式）\n4.1.查询三十天内 前五十条 评论超5000 点赞超500的帖子标题 按点赞数降序\n4.2.针对这张表 你会怎么建立索引 为什么\n4.3.这张表你会怎么去优化他\n4.4.你会怎么设计缓存 将这五十条帖子存在缓存当中\n5.讲一讲面向对象编程的三大特征\n6.hashmap的key要满足什么特征\n7.枚举类的特征\n8.算法 a和b两个长度相同的数组 定义 a[i]>b[i]时 a[i]比b[i]优秀 求a的任意排列 使a比b优秀的元素数最多 (想到了排列a没想到连b一起排列 大概率没了)\n9.反问"
-    }
+      "excerpt": "拼多多 交易部门 后端二面\",",
+      "line": 526,
+      "locator": "artifact-line:526#offset:30-45;blob:4360ffa7dd7d62130505cd79e8022057901a6d27",
+      "semantic_excerpt": "拼多多 交易部门 后端二面\n1.javaweb 挑一个自己能讲的过程讲\n2.在java处理一个http请求的过程当中 spring起到了什么作用 扮演什么角色\n3.像腾讯那样的通过qq去登陆多种软件 怎么实现（sso技术 我不会）\n4.给你一张贴吧表 post（id,uid,title,like_cnt,comment_cnt,create_time(unix时间戳形式）\n4.1.查询三十天内 前五十条 评论超5000 点赞超500的帖子标题 按点赞数降序\n4.2.针对这张表 你会怎么建立索引 为什么\n4.3.这张表你会怎么去优化他\n4.4.你会怎么设计缓存 将这五十条帖子存在缓存当中\n5.讲一讲面向对象编程的三大特征\n6.hashmap的key要满足什么特征\n7.枚举类的特征\n8.算法 a和b两个长度相同的数组 定义 a[i]>b[i]时 a[i]比b[i]优秀 求a的任意排列 使a比b优秀的元素数最多 (想到了排列a没想到连b一起排列 大概率没了)\n9.反问"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_detail/68ea11580000000003038e9b.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "83420744f49653a2d893b180f67d3386701a863a",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 387290,
+        "content_sha256": "e1d40c29a14e93854c90b17d69c77fd46c62f6a9015d3c19f54321de2472d68f",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "拼多多 交易部门 后端二面 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-190;blob:83420744f49653a2d893b180f67d3386701a863a",
+          "semantic_excerpt": "拼多多 交易部门 后端二面\n1.javaweb 挑一个自己能讲的过程讲\n2.在java处理一个http请求的过程当中 spring起到了什么作用 扮演什么角色\n3.像腾讯那样的通过qq去登陆多种软件 怎么实现（sso技术 我不会）\n4.给你一张贴吧表 post（id,uid,title,like_cnt,comment_cnt,create_time(unix时间戳形式）\n4.1.查询三十天内 前五十条 评论超5000 点赞超500的帖子标题 按点赞数降序\n4.2.针对这张表 你会怎么建立索引 为什么\n4.3.这张表你会怎么去优化他\n4.4.你会怎么设计缓存 将这五十条帖子存在缓存当中\n5.讲一讲面向对象编程的三大特征\n6.hashmap的key要满足什么特征\n7.枚举类的特征\n8.算法 a和b两个长度相同的数组 定义 a[i]>b[i]时 a[i]比b[i]优秀 求a的任意排列 使a比b优秀的元素数最多 (想到了排列a没想到连b一起排列 大概率没了)\n9.反问"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68ea11580000000003038e9b.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "4360ffa7dd7d62130505cd79e8022057901a6d27",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 20641,
+        "content_sha256": "05b490e56f9aa79045a9123c785b44f06ef03c8644c2b8765c3b6690a293aa73",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "拼多多 交易部门 后端二面\",",
+          "line": 526,
+          "locator": "artifact-line:526#offset:30-45;blob:4360ffa7dd7d62130505cd79e8022057901a6d27",
+          "semantic_excerpt": "拼多多 交易部门 后端二面\n1.javaweb 挑一个自己能讲的过程讲\n2.在java处理一个http请求的过程当中 spring起到了什么作用 扮演什么角色\n3.像腾讯那样的通过qq去登陆多种软件 怎么实现（sso技术 我不会）\n4.给你一张贴吧表 post（id,uid,title,like_cnt,comment_cnt,create_time(unix时间戳形式）\n4.1.查询三十天内 前五十条 评论超5000 点赞超500的帖子标题 按点赞数降序\n4.2.针对这张表 你会怎么建立索引 为什么\n4.3.这张表你会怎么去优化他\n4.4.你会怎么设计缓存 将这五十条帖子存在缓存当中\n5.讲一讲面向对象编程的三大特征\n6.hashmap的key要满足什么特征\n7.枚举类的特征\n8.算法 a和b两个长度相同的数组 定义 a[i]>b[i]时 a[i]比b[i]优秀 求a的任意排列 使a比b优秀的元素数最多 (想到了排列a没想到连b一起排列 大概率没了)\n9.反问"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/68ea11580000000003038e9b.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "83420744f49653a2d893b180f67d3386701a863a",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 387290,
+      "content_sha256": "e1d40c29a14e93854c90b17d69c77fd46c62f6a9015d3c19f54321de2472d68f",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "拼多多 交易部门 后端二面 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-190;blob:83420744f49653a2d893b180f67d3386701a863a",
+        "semantic_excerpt": "拼多多 交易部门 后端二面\n1.javaweb 挑一个自己能讲的过程讲\n2.在java处理一个http请求的过程当中 spring起到了什么作用 扮演什么角色\n3.像腾讯那样的通过qq去登陆多种软件 怎么实现（sso技术 我不会）\n4.给你一张贴吧表 post（id,uid,title,like_cnt,comment_cnt,create_time(unix时间戳形式）\n4.1.查询三十天内 前五十条 评论超5000 点赞超500的帖子标题 按点赞数降序\n4.2.针对这张表 你会怎么建立索引 为什么\n4.3.这张表你会怎么去优化他\n4.4.你会怎么设计缓存 将这五十条帖子存在缓存当中\n5.讲一讲面向对象编程的三大特征\n6.hashmap的key要满足什么特征\n7.枚举类的特征\n8.算法 a和b两个长度相同的数组 定义 a[i]>b[i]时 a[i]比b[i]优秀 求a的任意排列 使a比b优秀的元素数最多 (想到了排列a没想到连b一起排列 大概率没了)\n9.反问"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68ea11580000000003038e9b.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "4360ffa7dd7d62130505cd79e8022057901a6d27",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 20641,
+      "content_sha256": "05b490e56f9aa79045a9123c785b44f06ef03c8644c2b8765c3b6690a293aa73",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "拼多多 交易部门 后端二面\",",
+        "line": 526,
+        "locator": "artifact-line:526#offset:30-45;blob:4360ffa7dd7d62130505cd79e8022057901a6d27",
+        "semantic_excerpt": "拼多多 交易部门 后端二面\n1.javaweb 挑一个自己能讲的过程讲\n2.在java处理一个http请求的过程当中 spring起到了什么作用 扮演什么角色\n3.像腾讯那样的通过qq去登陆多种软件 怎么实现（sso技术 我不会）\n4.给你一张贴吧表 post（id,uid,title,like_cnt,comment_cnt,create_time(unix时间戳形式）\n4.1.查询三十天内 前五十条 评论超5000 点赞超500的帖子标题 按点赞数降序\n4.2.针对这张表 你会怎么建立索引 为什么\n4.3.这张表你会怎么去优化他\n4.4.你会怎么设计缓存 将这五十条帖子存在缓存当中\n5.讲一讲面向对象编程的三大特征\n6.hashmap的key要满足什么特征\n7.枚举类的特征\n8.算法 a和b两个长度相同的数组 定义 a[i]>b[i]时 a[i]比b[i]优秀 求a的任意排列 使a比b优秀的元素数最多 (想到了排列a没想到连b一起排列 大概率没了)\n9.反问"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -86,10 +164,11 @@
   ],
   "limitations": [
     "Exact Source provides only an interview outcome, offer, rejection, or result without a bounded candidate event; retain pending.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "afb5b26e55f9dd738f3ed77c3b2b00ac1ef851bbcbf99e67a799c0cd3fd16086"
+  "evidence_sha256": "cb11b09db9416a45d87de3870fd21340397ae789c422c9a7baacac8024bebc46"
 }

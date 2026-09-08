@@ -29,12 +29,26 @@
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": true,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "jd-process",
+        "anchor": "京东",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-165;blob:d0ca7e1ca2d3f5799e7e0c30fe2245866ea8bdd4",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:京东",
+        "source_ref": "liqiangcc/xhs:note_detail/68d9ef4c000000001300ff92.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 2,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68d9ef4c000000001300ff92.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -43,13 +57,78 @@
     "provenance": "source_projection",
     "byte_size": 23598,
     "content_sha256": "3071efb3cda03b561fd843ed7d0d3f0f6e927af9cb52e766f0213ddf67c8466b",
+    "cache_status": "not-applicable",
     "excerpt": {
-      "excerpt": "\"global\": {",
-      "line": 2,
-      "locator": "artifact-line:2",
-      "semantic_excerpt": "1、自我介绍\n2、讲实习的项目，要求把设计思路和技术调研的步骤都讲清楚\n3、讲本科毕设，然后又聊到ai上了（我每次面java最后都会聊到ai上，可能是因为之前有ai背景？…）聊了聊平时怎么学的ai，看过什么论文，模型训练的一些内容\n4、聊了聊之前做的rocketmq的开源\n5、rocketmq的幂等性如何实现\n6、唯一性id算法（uuid+雪花算法，还聊了一下美团的leaf）\n7、项目的难点（讲了分布式一致性，用的本地消息表+定时任务实现）\n8、反问业务+转正 无手撕"
-    }
+      "excerpt": "京东零售技术面经\"",
+      "line": 618,
+      "locator": "artifact-line:618#offset:30-39;blob:ee27c0e68cf54a2eaf6c6ebea4e3bd75e7ccca13",
+      "semantic_excerpt": "京东零售技术面经\n1、自我介绍\n2、讲实习的项目，要求把设计思路和技术调研的步骤都讲清楚\n3、讲本科毕设，然后又聊到ai上了（我每次面java最后都会聊到ai上，可能是因为之前有ai背景？…）聊了聊平时怎么学的ai，看过什么论文，模型训练的一些内容\n4、聊了聊之前做的rocketmq的开源\n5、rocketmq的幂等性如何实现\n6、唯一性id算法（uuid+雪花算法，还聊了一下美团的leaf）\n7、项目的难点（讲了分布式一致性，用的本地消息表+定时任务实现）\n8、反问业务+转正 无手撕"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_detail/68d9ef4c000000001300ff92.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "d0ca7e1ca2d3f5799e7e0c30fe2245866ea8bdd4",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 391305,
+        "content_sha256": "24f00fcbeecd817e971fce9a4a08ae91b12d65ef0294898a60112d99f30ce9c9",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "京东零售技术面经 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-185;blob:d0ca7e1ca2d3f5799e7e0c30fe2245866ea8bdd4",
+          "semantic_excerpt": "京东零售技术面经\n1、自我介绍\n2、讲实习的项目，要求把设计思路和技术调研的步骤都讲清楚\n3、讲本科毕设，然后又聊到ai上了（我每次面java最后都会聊到ai上，可能是因为之前有ai背景？…）聊了聊平时怎么学的ai，看过什么论文，模型训练的一些内容\n4、聊了聊之前做的rocketmq的开源\n5、rocketmq的幂等性如何实现\n6、唯一性id算法（uuid+雪花算法，还聊了一下美团的leaf）\n7、项目的难点（讲了分布式一致性，用的本地消息表+定时任务实现）\n8、反问业务+转正 无手撕"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68d9ef4c000000001300ff92.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "ee27c0e68cf54a2eaf6c6ebea4e3bd75e7ccca13",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 23598,
+        "content_sha256": "3071efb3cda03b561fd843ed7d0d3f0f6e927af9cb52e766f0213ddf67c8466b",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "京东零售技术面经\"",
+          "line": 618,
+          "locator": "artifact-line:618#offset:30-39;blob:ee27c0e68cf54a2eaf6c6ebea4e3bd75e7ccca13",
+          "semantic_excerpt": "京东零售技术面经\n1、自我介绍\n2、讲实习的项目，要求把设计思路和技术调研的步骤都讲清楚\n3、讲本科毕设，然后又聊到ai上了（我每次面java最后都会聊到ai上，可能是因为之前有ai背景？…）聊了聊平时怎么学的ai，看过什么论文，模型训练的一些内容\n4、聊了聊之前做的rocketmq的开源\n5、rocketmq的幂等性如何实现\n6、唯一性id算法（uuid+雪花算法，还聊了一下美团的leaf）\n7、项目的难点（讲了分布式一致性，用的本地消息表+定时任务实现）\n8、反问业务+转正 无手撕"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/68d9ef4c000000001300ff92.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "d0ca7e1ca2d3f5799e7e0c30fe2245866ea8bdd4",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 391305,
+      "content_sha256": "24f00fcbeecd817e971fce9a4a08ae91b12d65ef0294898a60112d99f30ce9c9",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "京东零售技术面经 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-185;blob:d0ca7e1ca2d3f5799e7e0c30fe2245866ea8bdd4",
+        "semantic_excerpt": "京东零售技术面经\n1、自我介绍\n2、讲实习的项目，要求把设计思路和技术调研的步骤都讲清楚\n3、讲本科毕设，然后又聊到ai上了（我每次面java最后都会聊到ai上，可能是因为之前有ai背景？…）聊了聊平时怎么学的ai，看过什么论文，模型训练的一些内容\n4、聊了聊之前做的rocketmq的开源\n5、rocketmq的幂等性如何实现\n6、唯一性id算法（uuid+雪花算法，还聊了一下美团的leaf）\n7、项目的难点（讲了分布式一致性，用的本地消息表+定时任务实现）\n8、反问业务+转正 无手撕"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68d9ef4c000000001300ff92.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "ee27c0e68cf54a2eaf6c6ebea4e3bd75e7ccca13",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 23598,
+      "content_sha256": "3071efb3cda03b561fd843ed7d0d3f0f6e927af9cb52e766f0213ddf67c8466b",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "京东零售技术面经\"",
+        "line": 618,
+        "locator": "artifact-line:618#offset:30-39;blob:ee27c0e68cf54a2eaf6c6ebea4e3bd75e7ccca13",
+        "semantic_excerpt": "京东零售技术面经\n1、自我介绍\n2、讲实习的项目，要求把设计思路和技术调研的步骤都讲清楚\n3、讲本科毕设，然后又聊到ai上了（我每次面java最后都会聊到ai上，可能是因为之前有ai背景？…）聊了聊平时怎么学的ai，看过什么论文，模型训练的一些内容\n4、聊了聊之前做的rocketmq的开源\n5、rocketmq的幂等性如何实现\n6、唯一性id算法（uuid+雪花算法，还聊了一下美团的leaf）\n7、项目的难点（讲了分布式一致性，用的本地消息表+定时任务实现）\n8、反问业务+转正 无手撕"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -84,10 +163,11 @@
   ],
   "limitations": [
     "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "b03dbeba99c44c763bcbdd19d74bc147d25671e536aacb5993cce789a14f1412"
+  "evidence_sha256": "f21642e44159b011a509664e1d58cf3b952782383f86105b28e59a090729f437"
 }

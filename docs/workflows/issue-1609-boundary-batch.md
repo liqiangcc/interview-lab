@@ -47,7 +47,10 @@ snapshot；在线运行默认从固定 commit 的 `raw.githubusercontent.com` �
 冻结 manifest 的文件才算 cache hit。当前本批次为 7 hit、161 miss、70
 not-applicable；miss/不合格缓存会回退已取得的 source snapshot 或固定 ref 网络
 读取，不会因为网络抖动直接改变 disposition。每项状态写入 ambiguity audit，
-便于复现本次读取路径。
+便于复现本次读取路径。full-artifact replay 对每个入选 SourceNote 都读取并独立
+校验了可用的 `note_desc`、`note_detail.html` 和 `note_json`（当前分别为 168、
+238、238 个文件；每个 artifact 记录 ref、blob SHA、byte length、content SHA、
+cache status 及精确 locator/excerpt）。
 
 重算完整 canonical digest：
 
@@ -77,30 +80,35 @@ issue number：`multi-company-or-process`、`question-list-only`、`question-onl
 `generic-question-bank-or-job-ad`、`generic-advice-or-aggregated`、
 `scheduled-only`、`job-or-title-only` 和 `non-interview-format`。规则是：
 
-当前 flag counts 为：multi-company/process 3、question-list-only 104、
-question-only 117、outcome/offer-only 18、no-first-person-event 216、
-no-candidate-event-evidence 232、generic question-bank/job-ad 15、
-generic-advice-or-aggregated 23、scheduled-only 6、job/title-only 1（#1200）、
-non-interview-format 5。完整 issue number
-列表在 audit JSON 的 `flag_issue_numbers` 中。
+当前 flag counts 为：multi-company/process 3、question-list-only 45、
+question-only 65、outcome/offer-only 23、no-first-person-event 216、
+no-candidate-event-evidence 177、generic question-bank/job-ad 16、
+generic-advice-or-aggregated 24、scheduled-only 2、job/title-only 1（#1200）、
+non-interview-format 4。完整 issue number 列表在 audit JSON 的
+`flag_issue_numbers` 中。
 
 - 只有 Source 明确记录一个已完成的 bounded candidate event，并有结构化过程/问答
   证据，才能得到 `single-interview`；单一流程中的一面/二面/三面仍是一个 case。
 - 多个独立流程若各有可定位的详细 Source 段落，才产生稳定 `case_key` 和唯一
   locator 的 `multi-interview`；否则 `blocked`。
-- 通用建议/汇总、预约/邀请、只有题目列表、只有结果/offer、仅职位元数据、缺少
-  事件边界或候选人实际过程证据时统一保持 `blocked`；不能用 round、时长或问题
-  清单单独升级边界。
+- 通用总结/汇总、只有题目列表、只有结果/offer、缺少事件边界或候选人实际过程
+  证据时保持 `blocked`；不能用 round、时长或问题清单单独升级边界。明确的题库、
+  岗位广告、预约/邀约、笔试格式或面试官视角则为 `not-interview`，因为 Source
+  明确指向非候选人面试事件。
 - NFKC 只用于识别兼容字符，不授权事件边界；只有岗位、轮次、时长、base 等
   标题元数据的 #1200 标为 `blocked`，因为没有候选人实际经历、问答或过程。
 
 本轮重点复核结果：#1141（多公司社招总结）、#1267（多公司但仅进度/结果）、
 #1447（多家公司累计内容）均为 `blocked`。#1452 已不再属于当前 pending
 selection，因 live boundary 已不再是 pending 而排除；它不会被本次重新申请。
-题库/岗位广告、建议/汇总、预约、仅题目、仅结果和无事件证据均保持 `blocked`。
+题库/岗位广告、预约/邀约和笔试等明确非面试格式为 `not-interview`；建议/汇总、
+仅题目、仅结果和无事件证据保持 `blocked`。
 
-本次没有确定性 terminal candidate，故 staged request 数为 0；旧计划中的
-blocked 项不生成伪 terminal request。producer 仍以 `validateTransitionRequest`
+本次 full-artifact 复核得到 54 个 `single-interview` candidate、0 个
+`multi-interview`、13 个 `not-interview` 和 171 个 `blocked`；其中 67 条生成了
+schema-valid staged request。没有独立可定位的多公司流程达到 multi gate，故 multi
+数为 0。blocked 项不生成伪 terminal request。producer 仍以
+`validateTransitionRequest`
 校验任何未来可生成的 request，contract 使用
 `source-note-boundary-review-transition.v1/v2`、`transition_id`、固定
 `reviewed_at`、`reviewer_kind`、`review_evidence` placeholder、
@@ -116,23 +124,23 @@ decision，故当前 238 项不生成伪 terminal request，只在逐条 evidenc
 |---|---:|
 | frozen range | 370 issue numbers read |
 | current pending selection | 238 |
-| `single-interview` candidate | 0 |
+| `single-interview` candidate | 54 |
 | `multi-interview` candidate | 0 |
-| `not-interview` candidate | 0 |
-| blocked / pending | 238 |
-| schema-valid staged requests | 0 |
+| `not-interview` candidate | 13 |
+| blocked / pending | 171 |
+| schema-valid staged requests | 67 |
 | mutation attempted | 0 |
 | `possibly_performed` | 0 |
 
 完整 digest 见 `data/issue-1609/canonical-digest.json`：
 
 ```text
-selection_sha256: c7d3f55dc62ec6e2ebef2bdd2715f74f298db83dae7d531dd6ab3390632b76f9
-dry_run_sha256: 8aff930d77a21e356bc15395a5e545df763dca26efbc6d1e4a9730ec3463fb3e
-canonical_digest_sha256: 030f2a010b6cb2125154be26813fc721dd7e373f00258b25c523fc7233b68541
+selection_sha256: 240c3c83c248c83f9cb876298dab35fedabc0cec9165cc28bbdc024a990dbdea
+dry_run_sha256: 2a85d237a282cf211a75bc26a7c71174db163dfcaa6178820b22efbc0fef4dc5
+canonical_digest_sha256: e8efe9b48005a2dc14d21d11baf161b70f108ad816323077ce78d207463a489f
 ```
 
-证据不足的 238 项保持 blocked/pending；尤其是空/`null` readable projection、
+证据不足的 171 项保持 blocked/pending；尤其是空/`null` readable projection、
 只有来源标签或不能证明有界事件的内容，未因标题、hashtag、Issue number 或
 Derived 数据而升级。`source_evidence` 只引用 Raw 或 source projection，未把
 Raw 覆盖为 Derived，也未创建 InterviewNote、source-ready、InterviewContext 或

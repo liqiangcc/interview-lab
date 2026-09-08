@@ -7,13 +7,16 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "f9a8e2599eecb0dc17fedf8386b10f024e33ab2c7c43ae5a02818f592f888310",
-  "disposition": "blocked",
-  "rationale": "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+  "disposition": "not-interview",
+  "rationale": "Exact Source identifies a written-test/non-interview format rather than a candidate interview event.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
       "no-first-person-event",
-      "no-candidate-event-evidence"
+      "generic-question-bank-or-job-ad",
+      "generic-advice-or-aggregated",
+      "no-candidate-event-evidence",
+      "non-interview-format"
     ],
     "questions": 0,
     "has_first_person_event": false,
@@ -22,18 +25,22 @@
     "has_detailed_event": false,
     "has_completed_event_evidence": true,
     "has_structured_candidate_event": false,
-    "generic_advice_or_aggregated": false,
+    "generic_advice_or_aggregated": true,
     "scheduled_only": false,
     "question_only": false,
     "outcome_signal": false,
-    "resource_signal": false,
+    "resource_signal": true,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
-    "non_interview_format": false,
+    "non_interview_format": true,
     "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68ada47a000000001d024ba7.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -42,13 +49,108 @@
     "provenance": "source_projection",
     "byte_size": 149,
     "content_sha256": "fff4e5106fb952cc9887a6a871f8f0841a5994cd027d041ceefe1bab52199aea",
+    "cache_status": "miss",
     "excerpt": {
-      "excerpt": "#互联网大厂实习[话题]# #java[话题]# #秋招[话题]# 算法题比较简单，虽然是海笔，但是给双非硕一个面试机会吧。",
+      "excerpt": "算法题比较简单，虽然是海笔，但是给双非硕一个面试机会吧。",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "算法题比较简单，虽然是海笔，但是给双非硕一个面试机会吧。"
-    }
+      "locator": "artifact-line:1#offset:34-62;blob:24580e990fae23af64c8c55ad9b4868e1a7e2d36",
+      "semantic_excerpt": "滴滴后端笔试\n 算法题比较简单，虽然是海笔，但是给双非硕一个面试机会吧。"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68ada47a000000001d024ba7.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "24580e990fae23af64c8c55ad9b4868e1a7e2d36",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 149,
+        "content_sha256": "fff4e5106fb952cc9887a6a871f8f0841a5994cd027d041ceefe1bab52199aea",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "算法题比较简单，虽然是海笔，但是给双非硕一个面试机会吧。",
+          "line": 1,
+          "locator": "artifact-line:1#offset:34-62;blob:24580e990fae23af64c8c55ad9b4868e1a7e2d36",
+          "semantic_excerpt": "滴滴后端笔试\n 算法题比较简单，虽然是海笔，但是给双非硕一个面试机会吧。"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68ada47a000000001d024ba7.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "f645723aeb91a1e79a21f1e2c2b10b2efea3cbec",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 385409,
+        "content_sha256": "81f10e045800246a3c5d510b2a93b9b2a16d0da16bef94870cc57a8fbd218e0b",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "滴滴后端笔试 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-183;blob:f645723aeb91a1e79a21f1e2c2b10b2efea3cbec",
+          "semantic_excerpt": "滴滴后端笔试\n 算法题比较简单，虽然是海笔，但是给双非硕一个面试机会吧。"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68ada47a000000001d024ba7.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "5fd06698acb9877a57f73facbc3da36bdd877b5a",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 20410,
+        "content_sha256": "8f38e50e93b8bc53863c91cae6200dc0372c3abae36309f6ae6ee87b0d70eaa3",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "滴滴后端笔试\",",
+          "line": 541,
+          "locator": "artifact-line:541#offset:30-38;blob:5fd06698acb9877a57f73facbc3da36bdd877b5a",
+          "semantic_excerpt": "滴滴后端笔试\n 算法题比较简单，虽然是海笔，但是给双非硕一个面试机会吧。"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68ada47a000000001d024ba7.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "24580e990fae23af64c8c55ad9b4868e1a7e2d36",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 149,
+      "content_sha256": "fff4e5106fb952cc9887a6a871f8f0841a5994cd027d041ceefe1bab52199aea",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "算法题比较简单，虽然是海笔，但是给双非硕一个面试机会吧。",
+        "line": 1,
+        "locator": "artifact-line:1#offset:34-62;blob:24580e990fae23af64c8c55ad9b4868e1a7e2d36",
+        "semantic_excerpt": "滴滴后端笔试\n 算法题比较简单，虽然是海笔，但是给双非硕一个面试机会吧。"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68ada47a000000001d024ba7.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "f645723aeb91a1e79a21f1e2c2b10b2efea3cbec",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 385409,
+      "content_sha256": "81f10e045800246a3c5d510b2a93b9b2a16d0da16bef94870cc57a8fbd218e0b",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "滴滴后端笔试 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-183;blob:f645723aeb91a1e79a21f1e2c2b10b2efea3cbec",
+        "semantic_excerpt": "滴滴后端笔试\n 算法题比较简单，虽然是海笔，但是给双非硕一个面试机会吧。"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68ada47a000000001d024ba7.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "5fd06698acb9877a57f73facbc3da36bdd877b5a",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 20410,
+      "content_sha256": "8f38e50e93b8bc53863c91cae6200dc0372c3abae36309f6ae6ee87b0d70eaa3",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "滴滴后端笔试\",",
+        "line": 541,
+        "locator": "artifact-line:541#offset:30-38;blob:5fd06698acb9877a57f73facbc3da36bdd877b5a",
+        "semantic_excerpt": "滴滴后端笔试\n 算法题比较简单，虽然是海笔，但是给双非硕一个面试机会吧。"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -67,8 +169,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source identifies a written-test/non-interview format rather than a candidate interview event."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -82,11 +184,12 @@
     }
   ],
   "limitations": [
-    "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+    "Exact Source identifies a written-test/non-interview format rather than a candidate interview event.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "f2fc637d71ba5cdb22cf2c33bf661a453cf976f798d3228100526fb81fe1e0a3"
+  "evidence_sha256": "739db1e5f7a2d5dd27a969c5318a9b452989ddcc0661cde84b307081a7658356"
 }

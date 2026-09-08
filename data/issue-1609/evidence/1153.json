@@ -12,7 +12,6 @@
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
-      "question-list-only",
       "no-first-person-event",
       "question-only",
       "no-candidate-event-evidence"
@@ -30,12 +29,26 @@
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
-    "only_question_list": true,
+    "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "bytedance-process",
+        "anchor": "字节",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-165;blob:212080acaaf19a60ccfddbe8108013ce64a64ab2",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:字节",
+        "source_ref": "liqiangcc/xhs:note_detail/68a71103000000001d035790.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68a71103000000001d035790.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -44,13 +57,108 @@
     "provenance": "source_projection",
     "byte_size": 168,
     "content_sha256": "62b1c09bad50148a9218bfff806251c1dfd4884fef4661f870ec21d65351272a",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "tl：8.11投递",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "tl：8.11投递\n8.13一面\n8.15约二面\n8.18二面\n当天约三面\n8.21三面\n当天约hr面"
-    }
+      "locator": "artifact-line:1#offset:0-9;blob:08847ce1456b88945f09f2b839d6de6da08102a4",
+      "semantic_excerpt": "字节后端开发一二三面面经\ntl：8.11投递\n8.13一面\n8.15约二面\n8.18二面\n当天约三面\n8.21三面\n当天约hr面"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68a71103000000001d035790.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "08847ce1456b88945f09f2b839d6de6da08102a4",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 168,
+        "content_sha256": "62b1c09bad50148a9218bfff806251c1dfd4884fef4661f870ec21d65351272a",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "tl：8.11投递",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-9;blob:08847ce1456b88945f09f2b839d6de6da08102a4",
+          "semantic_excerpt": "字节后端开发一二三面面经\ntl：8.11投递\n8.13一面\n8.15约二面\n8.18二面\n当天约三面\n8.21三面\n当天约hr面"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68a71103000000001d035790.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "212080acaaf19a60ccfddbe8108013ce64a64ab2",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 389470,
+        "content_sha256": "fa32dc517b0043b6eea2437b9fb5a4248673150f635d9de34dd8ead7211b1f72",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "字节后端开发一二三面面经 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-189;blob:212080acaaf19a60ccfddbe8108013ce64a64ab2",
+          "semantic_excerpt": "字节后端开发一二三面面经\ntl：8.11投递\n8.13一面\n8.15约二面\n8.18二面\n当天约三面\n8.21三面\n当天约hr面"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68a71103000000001d035790.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "c42a5f5bc3a04a3ae8680e9a3b4eae6d26bd6a77",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 23509,
+        "content_sha256": "8d06ca2354076a24bc0a254cd57236882d84d1a7241c8b07a35f56128b7c0385",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "字节后端开发一二三面面经\",",
+          "line": 496,
+          "locator": "artifact-line:496#offset:30-44;blob:c42a5f5bc3a04a3ae8680e9a3b4eae6d26bd6a77",
+          "semantic_excerpt": "字节后端开发一二三面面经\ntl：8.11投递\n8.13一面\n8.15约二面\n8.18二面\n当天约三面\n8.21三面\n当天约hr面"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68a71103000000001d035790.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "08847ce1456b88945f09f2b839d6de6da08102a4",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 168,
+      "content_sha256": "62b1c09bad50148a9218bfff806251c1dfd4884fef4661f870ec21d65351272a",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "tl：8.11投递",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-9;blob:08847ce1456b88945f09f2b839d6de6da08102a4",
+        "semantic_excerpt": "字节后端开发一二三面面经\ntl：8.11投递\n8.13一面\n8.15约二面\n8.18二面\n当天约三面\n8.21三面\n当天约hr面"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68a71103000000001d035790.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "212080acaaf19a60ccfddbe8108013ce64a64ab2",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 389470,
+      "content_sha256": "fa32dc517b0043b6eea2437b9fb5a4248673150f635d9de34dd8ead7211b1f72",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "字节后端开发一二三面面经 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-189;blob:212080acaaf19a60ccfddbe8108013ce64a64ab2",
+        "semantic_excerpt": "字节后端开发一二三面面经\ntl：8.11投递\n8.13一面\n8.15约二面\n8.18二面\n当天约三面\n8.21三面\n当天约hr面"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68a71103000000001d035790.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "c42a5f5bc3a04a3ae8680e9a3b4eae6d26bd6a77",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 23509,
+      "content_sha256": "8d06ca2354076a24bc0a254cd57236882d84d1a7241c8b07a35f56128b7c0385",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "字节后端开发一二三面面经\",",
+        "line": 496,
+        "locator": "artifact-line:496#offset:30-44;blob:c42a5f5bc3a04a3ae8680e9a3b4eae6d26bd6a77",
+        "semantic_excerpt": "字节后端开发一二三面面经\ntl：8.11投递\n8.13一面\n8.15约二面\n8.18二面\n当天约三面\n8.21三面\n当天约hr面"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -85,10 +193,11 @@
   ],
   "limitations": [
     "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "abe3c5cb0af9884bfc2f16887e7974e68dfdc8e178ac8f678aa6e19e7489a635"
+  "evidence_sha256": "4802d82e5cd0b86d990b2b0d6f8a4ea1e9a520f4c5cf4f83853d30e5bf543aa9"
 }

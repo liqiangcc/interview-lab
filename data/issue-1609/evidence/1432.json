@@ -7,15 +7,12 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "a6e85a0434dbb1fe8f11e313daa8c7120e5656e8e754ec12340fa26bc868b50e",
-  "disposition": "blocked",
-  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "disposition": "single-interview",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
-      "question-list-only",
-      "no-first-person-event",
-      "question-only",
-      "no-candidate-event-evidence"
+      "no-first-person-event"
     ],
     "questions": 14,
     "has_first_person_event": false,
@@ -23,19 +20,33 @@
     "has_bounded_event": true,
     "has_detailed_event": true,
     "has_completed_event_evidence": true,
-    "has_structured_candidate_event": false,
+    "has_structured_candidate_event": true,
     "generic_advice_or_aggregated": false,
     "scheduled_only": false,
-    "question_only": true,
+    "question_only": false,
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
-    "only_question_list": true,
+    "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "alibaba-process",
+        "anchor": "阿里",
+        "line": 1,
+        "locator": "artifact-line:490#offset:163-165;blob:dc0333a2dacbdd66d93f800e8a485a44061185c3",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:阿里",
+        "source_ref": "liqiangcc/xhs:note_detail/68e103a70000000003037ab6.html@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 2,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_json/68e103a70000000003037ab6.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -44,13 +55,78 @@
     "provenance": "source_projection",
     "byte_size": 22325,
     "content_sha256": "609e63ff422238f71dd8c4229f194c29467ed04b650a81dadf34e06c11d89eaa",
+    "cache_status": "not-applicable",
     "excerpt": {
-      "excerpt": "\"global\": {",
-      "line": 2,
-      "locator": "artifact-line:2",
-      "semantic_excerpt": "1.java中Object类都有哪些方法？\n2.getClass ()方法一般在什么时候会被使用？\n3.在各种框架里面为什么要用到反射？\n4.介绍一下jvm的内存模型（结构）\n5.本地方法栈怎么快速造成oom？\n6.堆区有一个for循环，然后里面new一个对象，这个for循环次数多，会发生oom吗？\n7.Java 中主流的垃圾收集器的原理介绍一下？\n8.G1如何精确控制 STW的时间？\n9.介绍一下在并发编程中如何保证可见性？\n10.可见性的前提是什么？为什么Java中存在可见性的问题？\n11.volatile 关键字怎么确保可见性？\n12.并发编程的工具类有哪些类？\n13.线程池的核心参数介绍？\n14.ReentrantLock的底层实现原理是什么？\n手撕：忘了[失望R]"
-    }
+      "excerpt": "阿里国际后端开发一面\",",
+      "line": 499,
+      "locator": "artifact-line:499#offset:30-42;blob:4524e6c30cfffb4a40a9fe321fe53ddf28257299",
+      "semantic_excerpt": "阿里国际后端开发一面\n1.java中Object类都有哪些方法？\n2.getClass ()方法一般在什么时候会被使用？\n3.在各种框架里面为什么要用到反射？\n4.介绍一下jvm的内存模型（结构）\n5.本地方法栈怎么快速造成oom？\n6.堆区有一个for循环，然后里面new一个对象，这个for循环次数多，会发生oom吗？\n7.Java 中主流的垃圾收集器的原理介绍一下？\n8.G1如何精确控制 STW的时间？\n9.介绍一下在并发编程中如何保证可见性？\n10.可见性的前提是什么？为什么Java中存在可见性的问题？\n11.volatile 关键字怎么确保可见性？\n12.并发编程的工具类有哪些类？\n13.线程池的核心参数介绍？\n14.ReentrantLock的底层实现原理是什么？\n手撕：忘了[失望R]"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_detail/68e103a70000000003037ab6.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "dc0333a2dacbdd66d93f800e8a485a44061185c3",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 389436,
+        "content_sha256": "1f1a626f285ccb575bd39ab30896bd65932671ce0678095ee466a8dfc536b032",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "阿里国际后端开发一面 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-187;blob:dc0333a2dacbdd66d93f800e8a485a44061185c3",
+          "semantic_excerpt": "阿里国际后端开发一面\n1.java中Object类都有哪些方法？\n2.getClass ()方法一般在什么时候会被使用？\n3.在各种框架里面为什么要用到反射？\n4.介绍一下jvm的内存模型（结构）\n5.本地方法栈怎么快速造成oom？\n6.堆区有一个for循环，然后里面new一个对象，这个for循环次数多，会发生oom吗？\n7.Java 中主流的垃圾收集器的原理介绍一下？\n8.G1如何精确控制 STW的时间？\n9.介绍一下在并发编程中如何保证可见性？\n10.可见性的前提是什么？为什么Java中存在可见性的问题？\n11.volatile 关键字怎么确保可见性？\n12.并发编程的工具类有哪些类？\n13.线程池的核心参数介绍？\n14.ReentrantLock的底层实现原理是什么？\n手撕：忘了[失望R]"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68e103a70000000003037ab6.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "4524e6c30cfffb4a40a9fe321fe53ddf28257299",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 22325,
+        "content_sha256": "609e63ff422238f71dd8c4229f194c29467ed04b650a81dadf34e06c11d89eaa",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "阿里国际后端开发一面\",",
+          "line": 499,
+          "locator": "artifact-line:499#offset:30-42;blob:4524e6c30cfffb4a40a9fe321fe53ddf28257299",
+          "semantic_excerpt": "阿里国际后端开发一面\n1.java中Object类都有哪些方法？\n2.getClass ()方法一般在什么时候会被使用？\n3.在各种框架里面为什么要用到反射？\n4.介绍一下jvm的内存模型（结构）\n5.本地方法栈怎么快速造成oom？\n6.堆区有一个for循环，然后里面new一个对象，这个for循环次数多，会发生oom吗？\n7.Java 中主流的垃圾收集器的原理介绍一下？\n8.G1如何精确控制 STW的时间？\n9.介绍一下在并发编程中如何保证可见性？\n10.可见性的前提是什么？为什么Java中存在可见性的问题？\n11.volatile 关键字怎么确保可见性？\n12.并发编程的工具类有哪些类？\n13.线程池的核心参数介绍？\n14.ReentrantLock的底层实现原理是什么？\n手撕：忘了[失望R]"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_detail/68e103a70000000003037ab6.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "dc0333a2dacbdd66d93f800e8a485a44061185c3",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 389436,
+      "content_sha256": "1f1a626f285ccb575bd39ab30896bd65932671ce0678095ee466a8dfc536b032",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "阿里国际后端开发一面 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-187;blob:dc0333a2dacbdd66d93f800e8a485a44061185c3",
+        "semantic_excerpt": "阿里国际后端开发一面\n1.java中Object类都有哪些方法？\n2.getClass ()方法一般在什么时候会被使用？\n3.在各种框架里面为什么要用到反射？\n4.介绍一下jvm的内存模型（结构）\n5.本地方法栈怎么快速造成oom？\n6.堆区有一个for循环，然后里面new一个对象，这个for循环次数多，会发生oom吗？\n7.Java 中主流的垃圾收集器的原理介绍一下？\n8.G1如何精确控制 STW的时间？\n9.介绍一下在并发编程中如何保证可见性？\n10.可见性的前提是什么？为什么Java中存在可见性的问题？\n11.volatile 关键字怎么确保可见性？\n12.并发编程的工具类有哪些类？\n13.线程池的核心参数介绍？\n14.ReentrantLock的底层实现原理是什么？\n手撕：忘了[失望R]"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68e103a70000000003037ab6.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "4524e6c30cfffb4a40a9fe321fe53ddf28257299",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 22325,
+      "content_sha256": "609e63ff422238f71dd8c4229f194c29467ed04b650a81dadf34e06c11d89eaa",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "阿里国际后端开发一面\",",
+        "line": 499,
+        "locator": "artifact-line:499#offset:30-42;blob:4524e6c30cfffb4a40a9fe321fe53ddf28257299",
+        "semantic_excerpt": "阿里国际后端开发一面\n1.java中Object类都有哪些方法？\n2.getClass ()方法一般在什么时候会被使用？\n3.在各种框架里面为什么要用到反射？\n4.介绍一下jvm的内存模型（结构）\n5.本地方法栈怎么快速造成oom？\n6.堆区有一个for循环，然后里面new一个对象，这个for循环次数多，会发生oom吗？\n7.Java 中主流的垃圾收集器的原理介绍一下？\n8.G1如何精确控制 STW的时间？\n9.介绍一下在并发编程中如何保证可见性？\n10.可见性的前提是什么？为什么Java中存在可见性的问题？\n11.volatile 关键字怎么确保可见性？\n12.并发编程的工具类有哪些类？\n13.线程池的核心参数介绍？\n14.ReentrantLock的底层实现原理是什么？\n手撕：忘了[失望R]"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -69,8 +145,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -84,11 +160,12 @@
     }
   ],
   "limitations": [
-    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "eb61e685a81994b0da87bbef3c991f26f406c73131a10c43d44f858a2dde7755"
+  "evidence_sha256": "dbcc86cf3645d342c382a0824892a760927bf862872bdb60def51d799af7bd0b"
 }

@@ -7,15 +7,12 @@
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "body_sha256": "b66a9a2c8a2c31513d6c942e23a70f89751260ac7682d60d57accd810ce2a4ce",
-  "disposition": "blocked",
-  "rationale": "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+  "disposition": "single-interview",
+  "rationale": "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
   "interview_cases": [],
   "ambiguity_audit": {
     "flags": [
-      "question-list-only",
-      "no-first-person-event",
-      "question-only",
-      "no-candidate-event-evidence"
+      "no-first-person-event"
     ],
     "questions": 15,
     "has_first_person_event": false,
@@ -23,19 +20,33 @@
     "has_bounded_event": true,
     "has_detailed_event": true,
     "has_completed_event_evidence": true,
-    "has_structured_candidate_event": false,
+    "has_structured_candidate_event": true,
     "generic_advice_or_aggregated": false,
     "scheduled_only": false,
-    "question_only": true,
+    "question_only": false,
     "outcome_signal": true,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
-    "only_question_list": true,
+    "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "jd-process",
+        "anchor": "京东",
+        "line": 1,
+        "locator": "artifact-line:17#offset:21-23;blob:78ade932ae3b7629903b824decac0d6554a42511",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:京东",
+        "source_ref": "liqiangcc/xhs:note_desc/68b69d6d000000001c00e844.txt@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68b69d6d000000001c00e844.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -44,13 +55,108 @@
     "provenance": "source_projection",
     "byte_size": 796,
     "content_sha256": "c7d5cbd5383d8d8a829b27b88bc48eeb41e7eec924c2193d216b4aeb4d2eecf4",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "1. 自我介绍",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "1. 自我介绍\n2. 研究生期间的研究方向\n3. 为什么选择应用开发\n4. 介绍项目，与市面竞品的对比优势是什么\n5. 项目数据如何存储等等项目细节\n6. 用户量暴增，处理图片时需要考虑哪些场景，如何控制并发量\n7. 了解的限流的策略有哪些\n8. Mybatis 中和 $的区别\n9. 如何防止重复提交\n10. 数据库如何实现幂等\n11. Redis如何做防重，setnx 和 setex 的区别\n12. 缓存的选型对比\n13. 使用本地缓存，发现JVM 的内存不断的增加，如何优化\n14. 介绍一下缓存击穿场景，如何解决\n15. 怎么看待大模型写代码\n【30min，感觉都回答上了，第二天直接挂了】"
-    }
+      "locator": "artifact-line:1#offset:0-7;blob:78ade932ae3b7629903b824decac0d6554a42511",
+      "semantic_excerpt": "秋招京东后端开发工程师一面\n1. 自我介绍\n2. 研究生期间的研究方向\n3. 为什么选择应用开发\n4. 介绍项目，与市面竞品的对比优势是什么\n5. 项目数据如何存储等等项目细节\n6. 用户量暴增，处理图片时需要考虑哪些场景，如何控制并发量\n7. 了解的限流的策略有哪些\n8. Mybatis 中和 $的区别\n9. 如何防止重复提交\n10. 数据库如何实现幂等\n11. Redis如何做防重，setnx 和 setex 的区别\n12. 缓存的选型对比\n13. 使用本地缓存，发现JVM 的内存不断的增加，如何优化\n14. 介绍一下缓存击穿场景，如何解决\n15. 怎么看待大模型写代码\n【30min，感觉都回答上了，第二天直接挂了】"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68b69d6d000000001c00e844.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "78ade932ae3b7629903b824decac0d6554a42511",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 796,
+        "content_sha256": "c7d5cbd5383d8d8a829b27b88bc48eeb41e7eec924c2193d216b4aeb4d2eecf4",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "1. 自我介绍",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-7;blob:78ade932ae3b7629903b824decac0d6554a42511",
+          "semantic_excerpt": "秋招京东后端开发工程师一面\n1. 自我介绍\n2. 研究生期间的研究方向\n3. 为什么选择应用开发\n4. 介绍项目，与市面竞品的对比优势是什么\n5. 项目数据如何存储等等项目细节\n6. 用户量暴增，处理图片时需要考虑哪些场景，如何控制并发量\n7. 了解的限流的策略有哪些\n8. Mybatis 中和 $的区别\n9. 如何防止重复提交\n10. 数据库如何实现幂等\n11. Redis如何做防重，setnx 和 setex 的区别\n12. 缓存的选型对比\n13. 使用本地缓存，发现JVM 的内存不断的增加，如何优化\n14. 介绍一下缓存击穿场景，如何解决\n15. 怎么看待大模型写代码\n【30min，感觉都回答上了，第二天直接挂了】"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68b69d6d000000001c00e844.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "c6b2e6a8076e00b2173c3a380b17d7a9d945121c",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 388280,
+        "content_sha256": "3e992c401529e029756f7e3469728d1643667b27aa077cc8baf4f1418af546a4",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "秋招京东后端开发工程师一面 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-190;blob:c6b2e6a8076e00b2173c3a380b17d7a9d945121c",
+          "semantic_excerpt": "秋招京东后端开发工程师一面\n1. 自我介绍\n2. 研究生期间的研究方向\n3. 为什么选择应用开发\n4. 介绍项目，与市面竞品的对比优势是什么\n5. 项目数据如何存储等等项目细节\n6. 用户量暴增，处理图片时需要考虑哪些场景，如何控制并发量\n7. 了解的限流的策略有哪些\n8. Mybatis 中和 $的区别\n9. 如何防止重复提交\n10. 数据库如何实现幂等\n11. Redis如何做防重，setnx 和 setex 的区别\n12. 缓存的选型对比\n13. 使用本地缓存，发现JVM 的内存不断的增加，如何优化\n14. 介绍一下缓存击穿场景，如何解决\n15. 怎么看待大模型写代码\n【30min，感觉都回答上了，第二天直接挂了】"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68b69d6d000000001c00e844.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "dca047f44cca4ed3e1f46bbb7c292c33b716f7f6",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 21712,
+        "content_sha256": "b1afa7aa65f886295a1885686061c0ba053b240359624a5ea4f72601ce5ca572",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "秋招京东后端开发工程师一面\",",
+          "line": 520,
+          "locator": "artifact-line:520#offset:30-45;blob:dca047f44cca4ed3e1f46bbb7c292c33b716f7f6",
+          "semantic_excerpt": "秋招京东后端开发工程师一面\n1. 自我介绍\n2. 研究生期间的研究方向\n3. 为什么选择应用开发\n4. 介绍项目，与市面竞品的对比优势是什么\n5. 项目数据如何存储等等项目细节\n6. 用户量暴增，处理图片时需要考虑哪些场景，如何控制并发量\n7. 了解的限流的策略有哪些\n8. Mybatis 中和 $的区别\n9. 如何防止重复提交\n10. 数据库如何实现幂等\n11. Redis如何做防重，setnx 和 setex 的区别\n12. 缓存的选型对比\n13. 使用本地缓存，发现JVM 的内存不断的增加，如何优化\n14. 介绍一下缓存击穿场景，如何解决\n15. 怎么看待大模型写代码\n【30min，感觉都回答上了，第二天直接挂了】"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68b69d6d000000001c00e844.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "78ade932ae3b7629903b824decac0d6554a42511",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 796,
+      "content_sha256": "c7d5cbd5383d8d8a829b27b88bc48eeb41e7eec924c2193d216b4aeb4d2eecf4",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "1. 自我介绍",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-7;blob:78ade932ae3b7629903b824decac0d6554a42511",
+        "semantic_excerpt": "秋招京东后端开发工程师一面\n1. 自我介绍\n2. 研究生期间的研究方向\n3. 为什么选择应用开发\n4. 介绍项目，与市面竞品的对比优势是什么\n5. 项目数据如何存储等等项目细节\n6. 用户量暴增，处理图片时需要考虑哪些场景，如何控制并发量\n7. 了解的限流的策略有哪些\n8. Mybatis 中和 $的区别\n9. 如何防止重复提交\n10. 数据库如何实现幂等\n11. Redis如何做防重，setnx 和 setex 的区别\n12. 缓存的选型对比\n13. 使用本地缓存，发现JVM 的内存不断的增加，如何优化\n14. 介绍一下缓存击穿场景，如何解决\n15. 怎么看待大模型写代码\n【30min，感觉都回答上了，第二天直接挂了】"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68b69d6d000000001c00e844.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "c6b2e6a8076e00b2173c3a380b17d7a9d945121c",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 388280,
+      "content_sha256": "3e992c401529e029756f7e3469728d1643667b27aa077cc8baf4f1418af546a4",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "秋招京东后端开发工程师一面 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-190;blob:c6b2e6a8076e00b2173c3a380b17d7a9d945121c",
+        "semantic_excerpt": "秋招京东后端开发工程师一面\n1. 自我介绍\n2. 研究生期间的研究方向\n3. 为什么选择应用开发\n4. 介绍项目，与市面竞品的对比优势是什么\n5. 项目数据如何存储等等项目细节\n6. 用户量暴增，处理图片时需要考虑哪些场景，如何控制并发量\n7. 了解的限流的策略有哪些\n8. Mybatis 中和 $的区别\n9. 如何防止重复提交\n10. 数据库如何实现幂等\n11. Redis如何做防重，setnx 和 setex 的区别\n12. 缓存的选型对比\n13. 使用本地缓存，发现JVM 的内存不断的增加，如何优化\n14. 介绍一下缓存击穿场景，如何解决\n15. 怎么看待大模型写代码\n【30min，感觉都回答上了，第二天直接挂了】"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68b69d6d000000001c00e844.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "dca047f44cca4ed3e1f46bbb7c292c33b716f7f6",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 21712,
+      "content_sha256": "b1afa7aa65f886295a1885686061c0ba053b240359624a5ea4f72601ce5ca572",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "秋招京东后端开发工程师一面\",",
+        "line": 520,
+        "locator": "artifact-line:520#offset:30-45;blob:dca047f44cca4ed3e1f46bbb7c292c33b716f7f6",
+        "semantic_excerpt": "秋招京东后端开发工程师一面\n1. 自我介绍\n2. 研究生期间的研究方向\n3. 为什么选择应用开发\n4. 介绍项目，与市面竞品的对比优势是什么\n5. 项目数据如何存储等等项目细节\n6. 用户量暴增，处理图片时需要考虑哪些场景，如何控制并发量\n7. 了解的限流的策略有哪些\n8. Mybatis 中和 $的区别\n9. 如何防止重复提交\n10. 数据库如何实现幂等\n11. Redis如何做防重，setnx 和 setex 的区别\n12. 缓存的选型对比\n13. 使用本地缓存，发现JVM 的内存不断的增加，如何优化\n14. 介绍一下缓存击穿场景，如何解决\n15. 怎么看待大模型写代码\n【30min，感觉都回答上了，第二天直接挂了】"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -69,8 +175,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "The disposition is supported by the cited source evidence. Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending."
+      "result": "pass",
+      "note": "The disposition is supported by the cited source evidence. Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -84,11 +190,12 @@
     }
   ],
   "limitations": [
-    "Exact Source is only a question list without a sufficiently explicit completed candidate interview process; retain pending.",
+    "Exact Source records one completed, bounded candidate interview process with structured event/question evidence; rounds within the same process remain one case.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "232539832aeaede50e9a6bb24a5b3992d35f85c3c439faf13fa65b21e1de36a9"
+  "evidence_sha256": "7b3d2d459f41411acfa733d6cbe47b66eb599c3f4a1918d4835e772d4629b9fe"
 }

@@ -18,7 +18,7 @@
     "questions": 0,
     "has_first_person_event": false,
     "has_explicit_candidate_event": false,
-    "has_bounded_event": false,
+    "has_bounded_event": true,
     "has_detailed_event": false,
     "has_completed_event_evidence": false,
     "has_structured_candidate_event": false,
@@ -28,12 +28,26 @@
     "outcome_signal": false,
     "resource_signal": false,
     "aggregated_text": false,
+    "interviewer_perspective": false,
+    "algorithm_question_only": false,
     "job_or_title_only": false,
     "non_interview_format": false,
     "only_question_list": false,
     "only_outcome": false,
     "multi_signal": false,
-    "case_segments": []
+    "case_segments": [
+      {
+        "case_key": "didi-process",
+        "anchor": "滴滴",
+        "line": 1,
+        "locator": "artifact-line:19#offset:1-3;blob:b9d00cc30763c18a091b9a0be36bc4b43ee44748",
+        "local_detail": true,
+        "semantic_locator": "semantic-anchor:滴滴",
+        "source_ref": "liqiangcc/xhs:note_desc/68c0d118000000001c012521.txt@95b77bb261048059846273688e4b90a2e108b437"
+      }
+    ],
+    "reviewed_artifact_count": 3,
+    "semantic_basis": "note_json.title+desc"
   },
   "source_evidence": {
     "ref": "liqiangcc/xhs:note_desc/68c0d118000000001c012521.txt@95b77bb261048059846273688e4b90a2e108b437",
@@ -42,13 +56,108 @@
     "provenance": "source_projection",
     "byte_size": 1046,
     "content_sha256": "fae39a3423f0d010ece059e5a05922e525b82b310975fcb615b16324a8a46a83",
+    "cache_status": "miss",
     "excerpt": {
       "excerpt": "体验很不错，60min，中途设备故障调试了五六分钟",
       "line": 1,
-      "locator": "artifact-line:1",
-      "semantic_excerpt": "体验很不错，60min，中途设备故障调试了五六分钟\n具体是简历深挖，每一个简历部分都有发散以及具体的八股深挖。\n目前有印象的有：\nmapreduce执行流程\nhdfs如何保证数据一致性\nflink和kafka如何保证数据的一致性\nflink的checkpoint里的barrier对齐和非对齐分别如何实现exactly-once；非对齐实现需要怎么做？\nkafka如何保证数据一致性\nspark和mr的shuffle有哪些区别\nspark的内存参数一般怎么调整；一般集群的spark内存参数会在什么样的一个级别？\n数仓分层，每一层有什么作用？具体的全链路流程是什么样的？\n维表应该如何进行设计？\n用户画像如何搭建？\n然后是一些数据结构的考察。\n \n答得蛮顺的，考的很细，然后是两道sparksql题，不难。其中一个是考察数据构造，需要对sparksql有较深的使用了解。\n \n总体来说问题比较多和深入。"
-    }
+      "locator": "artifact-line:1#offset:0-25;blob:b9d00cc30763c18a091b9a0be36bc4b43ee44748",
+      "semantic_excerpt": "滴滴数开一面面经\n体验很不错，60min，中途设备故障调试了五六分钟\n具体是简历深挖，每一个简历部分都有发散以及具体的八股深挖。\n目前有印象的有：\nmapreduce执行流程\nhdfs如何保证数据一致性\nflink和kafka如何保证数据的一致性\nflink的checkpoint里的barrier对齐和非对齐分别如何实现exactly-once；非对齐实现需要怎么做？\nkafka如何保证数据一致性\nspark和mr的shuffle有哪些区别\nspark的内存参数一般怎么调整；一般集群的spark内存参数会在什么样的一个级别？\n数仓分层，每一层有什么作用？具体的全链路流程是什么样的？\n维表应该如何进行设计？\n用户画像如何搭建？\n然后是一些数据结构的考察。\n \n答得蛮顺的，考的很细，然后是两道sparksql题，不难。其中一个是考察数据构造，需要对sparksql有较深的使用了解。\n \n总体来说问题比较多和深入。"
+    },
+    "artifact_evidence": [
+      {
+        "ref": "liqiangcc/xhs:note_desc/68c0d118000000001c012521.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "b9d00cc30763c18a091b9a0be36bc4b43ee44748",
+        "kind": "text_projection",
+        "provenance": "source_projection",
+        "byte_size": 1046,
+        "content_sha256": "fae39a3423f0d010ece059e5a05922e525b82b310975fcb615b16324a8a46a83",
+        "cache_status": "miss",
+        "excerpt": {
+          "excerpt": "体验很不错，60min，中途设备故障调试了五六分钟",
+          "line": 1,
+          "locator": "artifact-line:1#offset:0-25;blob:b9d00cc30763c18a091b9a0be36bc4b43ee44748",
+          "semantic_excerpt": "滴滴数开一面面经\n体验很不错，60min，中途设备故障调试了五六分钟\n具体是简历深挖，每一个简历部分都有发散以及具体的八股深挖。\n目前有印象的有：\nmapreduce执行流程\nhdfs如何保证数据一致性\nflink和kafka如何保证数据的一致性\nflink的checkpoint里的barrier对齐和非对齐分别如何实现exactly-once；非对齐实现需要怎么做？\nkafka如何保证数据一致性\nspark和mr的shuffle有哪些区别\nspark的内存参数一般怎么调整；一般集群的spark内存参数会在什么样的一个级别？\n数仓分层，每一层有什么作用？具体的全链路流程是什么样的？\n维表应该如何进行设计？\n用户画像如何搭建？\n然后是一些数据结构的考察。\n \n答得蛮顺的，考的很细，然后是两道sparksql题，不难。其中一个是考察数据构造，需要对sparksql有较深的使用了解。\n \n总体来说问题比较多和深入。"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_detail/68c0d118000000001c012521.html@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "9d5b385e248f9b642bbe569a6a6cf53fe37c05e3",
+        "kind": "html",
+        "provenance": "raw_capture",
+        "byte_size": 388720,
+        "content_sha256": "0aec79c8177e35e9f4ba8798c9e49e43c49337620bfbde9166bf1b5e5221a74c",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "滴滴数开一面面经 - 小红书</title>",
+          "line": 490,
+          "locator": "artifact-line:490#offset:163-185;blob:9d5b385e248f9b642bbe569a6a6cf53fe37c05e3",
+          "semantic_excerpt": "滴滴数开一面面经\n体验很不错，60min，中途设备故障调试了五六分钟\n具体是简历深挖，每一个简历部分都有发散以及具体的八股深挖。\n目前有印象的有：\nmapreduce执行流程\nhdfs如何保证数据一致性\nflink和kafka如何保证数据的一致性\nflink的checkpoint里的barrier对齐和非对齐分别如何实现exactly-once；非对齐实现需要怎么做？\nkafka如何保证数据一致性\nspark和mr的shuffle有哪些区别\nspark的内存参数一般怎么调整；一般集群的spark内存参数会在什么样的一个级别？\n数仓分层，每一层有什么作用？具体的全链路流程是什么样的？\n维表应该如何进行设计？\n用户画像如何搭建？\n然后是一些数据结构的考察。\n \n答得蛮顺的，考的很细，然后是两道sparksql题，不难。其中一个是考察数据构造，需要对sparksql有较深的使用了解。\n \n总体来说问题比较多和深入。"
+        }
+      },
+      {
+        "ref": "liqiangcc/xhs:note_json/68c0d118000000001c012521.json@95b77bb261048059846273688e4b90a2e108b437",
+        "git_blob_sha": "e6015a7da9fa590231beda3a85c3439b5a199c3e",
+        "kind": "json",
+        "provenance": "source_projection",
+        "byte_size": 21780,
+        "content_sha256": "421e6a8898ba56f7a8129240b7d1638a9482d5702248fa1fd363970c9f8230ca",
+        "cache_status": "not-applicable",
+        "excerpt": {
+          "excerpt": "滴滴数开一面面经\"",
+          "line": 571,
+          "locator": "artifact-line:571#offset:30-39;blob:e6015a7da9fa590231beda3a85c3439b5a199c3e",
+          "semantic_excerpt": "滴滴数开一面面经\n体验很不错，60min，中途设备故障调试了五六分钟\n具体是简历深挖，每一个简历部分都有发散以及具体的八股深挖。\n目前有印象的有：\nmapreduce执行流程\nhdfs如何保证数据一致性\nflink和kafka如何保证数据的一致性\nflink的checkpoint里的barrier对齐和非对齐分别如何实现exactly-once；非对齐实现需要怎么做？\nkafka如何保证数据一致性\nspark和mr的shuffle有哪些区别\nspark的内存参数一般怎么调整；一般集群的spark内存参数会在什么样的一个级别？\n数仓分层，每一层有什么作用？具体的全链路流程是什么样的？\n维表应该如何进行设计？\n用户画像如何搭建？\n然后是一些数据结构的考察。\n \n答得蛮顺的，考的很细，然后是两道sparksql题，不难。其中一个是考察数据构造，需要对sparksql有较深的使用了解。\n \n总体来说问题比较多和深入。"
+        }
+      }
+    ]
   },
+  "artifact_evidence": [
+    {
+      "ref": "liqiangcc/xhs:note_desc/68c0d118000000001c012521.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "b9d00cc30763c18a091b9a0be36bc4b43ee44748",
+      "kind": "text_projection",
+      "provenance": "source_projection",
+      "byte_size": 1046,
+      "content_sha256": "fae39a3423f0d010ece059e5a05922e525b82b310975fcb615b16324a8a46a83",
+      "cache_status": "miss",
+      "excerpt": {
+        "excerpt": "体验很不错，60min，中途设备故障调试了五六分钟",
+        "line": 1,
+        "locator": "artifact-line:1#offset:0-25;blob:b9d00cc30763c18a091b9a0be36bc4b43ee44748",
+        "semantic_excerpt": "滴滴数开一面面经\n体验很不错，60min，中途设备故障调试了五六分钟\n具体是简历深挖，每一个简历部分都有发散以及具体的八股深挖。\n目前有印象的有：\nmapreduce执行流程\nhdfs如何保证数据一致性\nflink和kafka如何保证数据的一致性\nflink的checkpoint里的barrier对齐和非对齐分别如何实现exactly-once；非对齐实现需要怎么做？\nkafka如何保证数据一致性\nspark和mr的shuffle有哪些区别\nspark的内存参数一般怎么调整；一般集群的spark内存参数会在什么样的一个级别？\n数仓分层，每一层有什么作用？具体的全链路流程是什么样的？\n维表应该如何进行设计？\n用户画像如何搭建？\n然后是一些数据结构的考察。\n \n答得蛮顺的，考的很细，然后是两道sparksql题，不难。其中一个是考察数据构造，需要对sparksql有较深的使用了解。\n \n总体来说问题比较多和深入。"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_detail/68c0d118000000001c012521.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "9d5b385e248f9b642bbe569a6a6cf53fe37c05e3",
+      "kind": "html",
+      "provenance": "raw_capture",
+      "byte_size": 388720,
+      "content_sha256": "0aec79c8177e35e9f4ba8798c9e49e43c49337620bfbde9166bf1b5e5221a74c",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "滴滴数开一面面经 - 小红书</title>",
+        "line": 490,
+        "locator": "artifact-line:490#offset:163-185;blob:9d5b385e248f9b642bbe569a6a6cf53fe37c05e3",
+        "semantic_excerpt": "滴滴数开一面面经\n体验很不错，60min，中途设备故障调试了五六分钟\n具体是简历深挖，每一个简历部分都有发散以及具体的八股深挖。\n目前有印象的有：\nmapreduce执行流程\nhdfs如何保证数据一致性\nflink和kafka如何保证数据的一致性\nflink的checkpoint里的barrier对齐和非对齐分别如何实现exactly-once；非对齐实现需要怎么做？\nkafka如何保证数据一致性\nspark和mr的shuffle有哪些区别\nspark的内存参数一般怎么调整；一般集群的spark内存参数会在什么样的一个级别？\n数仓分层，每一层有什么作用？具体的全链路流程是什么样的？\n维表应该如何进行设计？\n用户画像如何搭建？\n然后是一些数据结构的考察。\n \n答得蛮顺的，考的很细，然后是两道sparksql题，不难。其中一个是考察数据构造，需要对sparksql有较深的使用了解。\n \n总体来说问题比较多和深入。"
+      }
+    },
+    {
+      "ref": "liqiangcc/xhs:note_json/68c0d118000000001c012521.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "e6015a7da9fa590231beda3a85c3439b5a199c3e",
+      "kind": "json",
+      "provenance": "source_projection",
+      "byte_size": 21780,
+      "content_sha256": "421e6a8898ba56f7a8129240b7d1638a9482d5702248fa1fd363970c9f8230ca",
+      "cache_status": "not-applicable",
+      "excerpt": {
+        "excerpt": "滴滴数开一面面经\"",
+        "line": 571,
+        "locator": "artifact-line:571#offset:30-39;blob:e6015a7da9fa590231beda3a85c3439b5a199c3e",
+        "semantic_excerpt": "滴滴数开一面面经\n体验很不错，60min，中途设备故障调试了五六分钟\n具体是简历深挖，每一个简历部分都有发散以及具体的八股深挖。\n目前有印象的有：\nmapreduce执行流程\nhdfs如何保证数据一致性\nflink和kafka如何保证数据的一致性\nflink的checkpoint里的barrier对齐和非对齐分别如何实现exactly-once；非对齐实现需要怎么做？\nkafka如何保证数据一致性\nspark和mr的shuffle有哪些区别\nspark的内存参数一般怎么调整；一般集群的spark内存参数会在什么样的一个级别？\n数仓分层，每一层有什么作用？具体的全链路流程是什么样的？\n维表应该如何进行设计？\n用户画像如何搭建？\n然后是一些数据结构的考察。\n \n答得蛮顺的，考的很细，然后是两道sparksql题，不难。其中一个是考察数据构造，需要对sparksql有较深的使用了解。\n \n总体来说问题比较多和深入。"
+      }
+    }
+  ],
   "checks": [
     {
       "check_id": "source_identity",
@@ -83,10 +192,11 @@
   ],
   "limitations": [
     "Exact Source has no explicit candidate interview event, actual interview questions, or process evidence; retain pending.",
+    "Complete note_desc/note_json/note_detail artifacts were read and independently hash-verified; excerpts are bounded views of those immutable artifacts.",
     "Source projection/Raw evidence is kept separate from Derived data; this record authorizes no mutation."
   ],
   "source_ready_claimed": false,
   "live_evidence_comment_created": false,
   "mutation_count": 0,
-  "evidence_sha256": "f36a2ac8bc9f9b9225a6ab6014f4129f773f2f38d47793ab119b7f9e1f3245da"
+  "evidence_sha256": "c02a75c44d1c13d60fe1e6bfa8f326eafc51e8e7c3a1361e91bf707ac783f9a9"
 }
