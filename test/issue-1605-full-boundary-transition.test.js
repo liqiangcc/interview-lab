@@ -107,7 +107,7 @@ test('explicit comments pagination requires a short terminal page', () => {
   assert.throws(() => readCommentsPaged(REPOSITORY, 42, () => Array(100).fill({})), /short terminal page/);
 });
 
-test('read-only issue GET and comments page retry transient EOF/TLS failures at most three times', () => {
+test('read-only issue GET and comments page retry transient EOF/TLS failures within the five-attempt bound', () => {
   const { buildLiveLoader } = require('../scripts/apply-issue-1605-full-boundary-transition');
   const calls = new Map();
   const delays = [];
@@ -126,7 +126,7 @@ test('read-only issue GET and comments page retry transient EOF/TLS failures at 
   assert.deepEqual(delays, [100, 100]);
 });
 
-test('a permanently failing read exhausts three attempts and remains blocked in the plan', () => {
+test('a permanently failing read exhausts five attempts and remains blocked in the plan', () => {
   const value = fixture();
   const { buildLiveLoader } = require('../scripts/apply-issue-1605-full-boundary-transition');
   let attempts = 0;
@@ -139,10 +139,21 @@ test('a permanently failing read exhausts three attempts and remains blocked in 
       throw Object.assign(new Error('unexpected EOF'), { code: 'ECONNRESET' });
     }, { sleep: () => {} }),
   });
-  assert.equal(attempts, 3);
+  assert.equal(attempts, 5);
   assert.equal(plan.ok, false);
   assert.equal(plan.items[0].status, 'blocked');
   assert.match(plan.errors.join('\n'), /live read failed: unexpected EOF/);
+});
+
+test('read retry rejects attempts above five and non-transient failures immediately', () => {
+  const { readGhJson } = require('../scripts/apply-issue-1605-full-boundary-transition');
+  assert.throws(() => readGhJson(['api', 'repos/example'], null, { maxAttempts: 6 }), /from 1 to 5/);
+  let attempts = 0;
+  assert.throws(() => readGhJson(['api', 'repos/example'], null, {
+    read: () => { attempts += 1; throw new Error('HTTP 404 not found'); },
+    sleep: () => { throw new Error('non-transient failure must not sleep'); },
+  }), /HTTP 404 not found/);
+  assert.equal(attempts, 1);
 });
 
 test('default live loader and mutation writers resolve the strict repository endpoints', () => {
