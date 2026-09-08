@@ -50,7 +50,7 @@
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "Source projection contains isolated interview questions or outcome language without explicit completed candidate-interview context; retain boundary:pending."
+      "note": "Source projection contains an outcome/result followed by a help or advice request, but no candidate-interview process, interviewer exchange, or bounded completion evidence is present; retain boundary:pending."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -66,6 +66,6 @@
   "limitations": [
     "Boundary Review only determines whether 0/1/N InterviewNote case identity may be materialized; it does not write source-ready, InterviewContext, learning labels, or InterviewNote Issues.",
     "No live evidence comment or transition mutation is authorized by this artifact; any later apply must create/bind durable per-issue evidence and recheck body/state/source CAS.",
-    "Source projection contains isolated interview questions or outcome language without explicit completed candidate-interview context; retain boundary:pending."
+    "Source projection contains an outcome/result followed by a help or advice request, but no candidate-interview process, interviewer exchange, or bounded completion evidence is present; retain boundary:pending."
   ]
 }

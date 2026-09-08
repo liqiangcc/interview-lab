@@ -50,7 +50,7 @@
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "Source projection does not provide enough direct event-boundary evidence; retain boundary:pending rather than infer from title or hashtags."
+      "note": "Source projection contains an isolated question bank or question list, but no candidate-specific completed interaction, interviewer exchange, or bounded process is evidenced."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -66,6 +66,6 @@
   "limitations": [
     "Boundary Review only determines whether 0/1/N InterviewNote case identity may be materialized; it does not write source-ready, InterviewContext, learning labels, or InterviewNote Issues.",
     "No live evidence comment or transition mutation is authorized by this artifact; any later apply must create/bind durable per-issue evidence and recheck body/state/source CAS.",
-    "Source projection does not provide enough direct event-boundary evidence; retain boundary:pending rather than infer from title or hashtags."
+    "Source projection contains an isolated question bank or question list, but no candidate-specific completed interaction, interviewer exchange, or bounded process is evidenced."
   ]
 }

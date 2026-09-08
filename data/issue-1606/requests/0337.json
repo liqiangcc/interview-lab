@@ -25,9 +25,9 @@
     "byte_size": 2344,
     "excerpts": [
       {
-        "excerpt": "在阿里干java开发三年了，当年进阿里之前还有paypal，58的offer，当时大家也都在骂阿里味儿，pua什么的，但对一个二本院校(安康学院)做java的我来说，阿里就是我的梦想，感谢阿里给了我这个机会#打工人日常[话题]# #工作[话题]# #阿里巴巴[话题]# #互联网[话题]# #大厂[话题]# #java[话题]# #二本[话题]# #阿里[话题]# #北漂[话题]#",
-        "line": 1,
-        "locator": "artifact-line:1"
+        "excerpt": "整体来说还是很感谢阿里给我这个机会，当年我面试了32家拿了28家offer，直到阿里通过了就没再继续了",
+        "line": 28,
+        "locator": "artifact-line:28"
       }
     ]
   },
@@ -35,37 +35,37 @@
     {
       "check_id": "source_identity",
       "result": "pass",
-      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:1"
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:28"
     },
     {
       "check_id": "source_revision_binding",
       "result": "pass",
-      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:1"
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:28"
     },
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:1"
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:28"
     },
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "Source projection contains isolated interview questions or outcome language without explicit completed candidate-interview context; retain boundary:pending."
+      "note": "Source projection describes aggregate or multiple interview activity without separately bounded case evidence; retain boundary:pending."
     },
     {
       "check_id": "no_cross_source_mixing",
       "result": "pass",
-      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:1"
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:28"
     },
     {
       "check_id": "no_fabrication",
       "result": "pass",
-      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:1"
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:28"
     }
   ],
   "limitations": [
     "Boundary Review only determines whether 0/1/N InterviewNote case identity may be materialized; it does not write source-ready, InterviewContext, learning labels, or InterviewNote Issues.",
     "No live evidence comment or transition mutation is authorized by this artifact; any later apply must create/bind durable per-issue evidence and recheck body/state/source CAS.",
-    "Source projection contains isolated interview questions or outcome language without explicit completed candidate-interview context; retain boundary:pending."
+    "Source projection describes aggregate or multiple interview activity without separately bounded case evidence; retain boundary:pending."
   ]
 }
