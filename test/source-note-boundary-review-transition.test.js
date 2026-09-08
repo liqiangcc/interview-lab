@@ -280,6 +280,7 @@ test('multi-interview transition is idempotent with exact case mapping receipt',
   assert.equal(second.ok, true, second.errors.join('\n'));
   assert.equal(second.already_applied, true);
   assert.deepEqual(second.interview_note_ids, first.interview_note_ids);
+  assert.deepEqual(second.interview_note_cases, first.interview_note_cases);
 });
 
 test('review evidence comment must bind transition facts and required checks', () => {
