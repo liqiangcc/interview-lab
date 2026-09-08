@@ -25,9 +25,9 @@
     "byte_size": 1226,
     "excerpts": [
       {
-        "excerpt": "在boss直聘上看见这个什么贝壳销售，首页底薪自己写的6000，我就直接投了，谁boss上不是广撒网呢，加了之后我就问既然实际底薪4000，为啥首页写6000，啥意思，",
-        "line": 1,
-        "locator": "artifact-line:1"
+        "excerpt": "都过了好几天了，问我还找不找工作，我寻思你们这么缺人吗，发了个问号，结果人也不解释， 一上来就是“你在这问号啥呢”“贝壳别联系了”，人连问号都不能发了?你是不是平常自己喜欢问号阴阳怪气别人，就觉得我问号也是阴阳怪气你?那我怎么说?，我直接问“你怎么又找上我了，是招不到别的人了吗?”，哪怕你解释别的也行啊",
+        "line": 4,
+        "locator": "artifact-line:4"
       }
     ]
   },
@@ -35,37 +35,37 @@
     {
       "check_id": "source_identity",
       "result": "pass",
-      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:1"
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:4"
     },
     {
       "check_id": "source_revision_binding",
       "result": "pass",
-      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:1"
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:4"
     },
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:1"
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:4"
     },
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "Source projection does not provide enough direct event-boundary evidence; retain boundary:pending rather than infer from title or hashtags."
+      "note": "Source projection contains isolated interview questions or outcome language without explicit completed candidate-interview context; retain boundary:pending."
     },
     {
       "check_id": "no_cross_source_mixing",
       "result": "pass",
-      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:1"
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:4"
     },
     {
       "check_id": "no_fabrication",
       "result": "pass",
-      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:1"
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:4"
     }
   ],
   "limitations": [
     "Boundary Review only determines whether 0/1/N InterviewNote case identity may be materialized; it does not write source-ready, InterviewContext, learning labels, or InterviewNote Issues.",
     "No live evidence comment or transition mutation is authorized by this artifact; any later apply must create/bind durable per-issue evidence and recheck body/state/source CAS.",
-    "Source projection does not provide enough direct event-boundary evidence; retain boundary:pending rather than infer from title or hashtags."
+    "Source projection contains isolated interview questions or outcome language without explicit completed candidate-interview context; retain boundary:pending."
   ]
 }
