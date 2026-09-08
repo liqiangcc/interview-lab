@@ -2,14 +2,15 @@
 
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
+const os = require('node:os');
 const path = require('node:path');
 const test = require('node:test');
 const sourceFixture = fs.readFileSync(path.join(__dirname, 'fixtures/source-note-issue.valid.md'), 'utf8');
 const frozenSnapshot = require('../data/pilot/issue-1605/pending-inventory.snapshot.json');
 const completedManifest = require('../data/pilot/issue-1605/full-boundary-manifest.json');
 const {
-  REPOSITORY, SOURCE_REF, BATCHES, buildRemainingScope, readGhJson, readCommentsPaged,
-  auditLiveItem, initialJournal, auditRemainingScope, buildManifest, buildBatchArtifacts,
+  REPOSITORY, SOURCE_REF, FROZEN_SNAPSHOT_DIGEST, BATCHES, buildRemainingScope, validateFrozenSnapshot, readGhJson, readCommentsPaged,
+  auditLiveItem, validateAuditedObservation, initialJournal, auditRemainingScope, buildManifest, buildBatchArtifacts, canonicalDigest, acquireReadLock,
 } = require('../scripts/lib/issue-1605-next-boundary-coordinator');
 const { parseSourceNoteIssue } = require('../scripts/lib/source-note-issue');
 
@@ -107,4 +108,43 @@ test('the old completed manifest is validated as an exclusion only and cannot dr
   assert.equal(Object.hasOwn(scope, 'plan_digest'), false);
   assert.equal(scope.items.some((item) => item.issue_number === 28), true);
   assert.equal(scope.items.some((item) => item.issue_number === 42), false);
+});
+
+test('the frozen 1397-row snapshot is pinned to the approved canonical digest', () => {
+  const validation = validateFrozenSnapshot(frozenSnapshot);
+  assert.equal(validation.ok, true, validation.errors.join('; '));
+  assert.equal(frozenSnapshot.canonical_digest, FROZEN_SNAPSHOT_DIGEST);
+  const drifted = { ...frozenSnapshot, source_ref: 'wrong-ref' };
+  assert.equal(validateFrozenSnapshot(drifted).ok, false);
+  assert.match(validateFrozenSnapshot({ ...frozenSnapshot, canonical_digest: '0'.repeat(64) }).errors.join('\n'), /canonical digest/);
+});
+
+test('resume validates audited observation bindings and re-reads tampered state instead of blindly skipping', () => {
+  const item = fixtureItem(28);
+  const scope = { scope_digest: 'c'.repeat(64), items: [item] };
+  const issue = { number: 28, state: 'open', body: sourceFixture, labels: item.frozen_labels };
+  const first = auditRemainingScope({ scope, journal: initialJournal(scope), readIssue: () => issue, readComments: () => [], persist: () => {} });
+  const resumedJournal = JSON.parse(JSON.stringify(first.journal));
+  resumedJournal.items[0].observation.live_source_revision_id = 'tampered';
+  const unsigned = { ...resumedJournal }; delete unsigned.canonical_digest;
+  resumedJournal.canonical_digest = canonicalDigest(unsigned);
+  assert.equal(validateAuditedObservation(item, resumedJournal.items[0].observation).ok, false);
+  let reads = 0;
+  const resumed = auditRemainingScope({ scope, journal: resumedJournal, readIssue: () => { reads += 1; return issue; }, readComments: () => [], persist: () => {} });
+  assert.equal(reads, 1);
+  assert.equal(resumed.observations[0].status, 'review-required');
+  assert.match(resumed.observations[0].observation_digest, /^[0-9a-f]{64}$/);
+});
+
+test('read lock keeps its fd identity and refuses pathname replacement during release', () => {
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'issue-1605-lock-'));
+  const lockPath = path.join(directory, 'read.lock');
+  const lock = acquireReadLock(lockPath);
+  fs.renameSync(lockPath, path.join(directory, 'original.lock'));
+  fs.writeFileSync(lockPath, '{"token":"replacement"}\n');
+  assert.throws(() => lock.release(), /ownership\/inode changed/);
+  assert.equal(fs.existsSync(lockPath), true);
+  fs.unlinkSync(lockPath);
+  fs.unlinkSync(path.join(directory, 'original.lock'));
+  fs.rmdirSync(directory);
 });

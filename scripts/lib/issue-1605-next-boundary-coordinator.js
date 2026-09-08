@@ -15,6 +15,7 @@ const PARENT_ISSUE = 1605;
 const FROZEN_TOTAL = 1397;
 const COMPLETED_TOTAL = 419;
 const REMAINING_TOTAL = 978;
+const FROZEN_SNAPSHOT_DIGEST = '5bbf8de3dc61ed382ee31e0d0286c3e7374efec243f60b245c76ee2e0b553dfd';
 const COMPLETED_PLAN_DIGEST = 'ad3e3974c21415e2371b8fe77a2ae54b65dd7783516ed6a68ef61bb070877781';
 const COMPLETED_MANIFEST_DIGEST = '40fd63cccea624a567778f5c679a9e0e77b0784181de4d54cacad9873ae6c97a';
 const SCOPE_SCHEMA = 'issue-1605-next-boundary-scope.v1';
@@ -41,6 +42,13 @@ function canonical(value) {
 }
 function canonicalDigest(value) { return sha256(canonical(value)); }
 function without(value, key) { const copy = { ...value }; delete copy[key]; return copy; }
+function frozenSnapshotDigestInput(snapshot) {
+  const copy = { ...snapshot };
+  delete copy.canonical_digest;
+  delete copy.validation;
+  delete copy.generated_at;
+  return copy;
+}
 function same(a, b) { return canonical(a) === canonical(b); }
 function labelsOf(issue) {
   return [...new Set((issue && issue.labels || []).map((label) => typeof label === 'string' ? label : label && label.name).filter((label) => typeof label === 'string' && label.trim()))].sort();
@@ -54,6 +62,8 @@ function validateFrozenSnapshot(snapshot) {
   if (snapshot?.repository !== REPOSITORY || snapshot?.parent_issue !== PARENT_ISSUE) errors.push('frozen pending snapshot repository/parent mismatch');
   if (snapshot?.source_repository !== SOURCE_REPOSITORY || snapshot?.source_ref !== SOURCE_REF) errors.push('frozen pending snapshot source ref is not the approved XHS ref');
   if (snapshot?.count !== FROZEN_TOTAL || snapshot?.items?.length !== FROZEN_TOTAL) errors.push(`frozen pending snapshot must contain ${FROZEN_TOTAL} items`);
+  if (snapshot?.canonical_digest !== FROZEN_SNAPSHOT_DIGEST) errors.push('frozen pending snapshot canonical digest is not the approved 1397-row digest');
+  if (snapshot && snapshot.canonical_digest !== canonicalDigest(frozenSnapshotDigestInput(snapshot))) errors.push('frozen pending snapshot canonical digest does not match content');
   const validation = validateInventoryItems(snapshot?.items);
   errors.push(...validation.errors);
   return { ok: errors.length === 0, errors, validation };
@@ -184,7 +194,7 @@ function auditLiveItem(item, issue, comments) {
   errors.push(...receiptResult.errors.map((error) => `#${item.issue_number}: ${error}`));
   const receipts = receiptResult.receipts || [];
   if (receipts.length) errors.push(`#${item.issue_number} has ${receipts.length} pre-existing applied receipt(s); remaining scope cannot reuse completed authorization`);
-  return {
+  return withObservationDigest({
     issue_number: item.issue_number,
     status: errors.length ? 'blocked' : 'review-required',
     errors,
@@ -200,11 +210,11 @@ function auditLiveItem(item, issue, comments) {
     labels_verified: same(liveLabels, item.frozen_labels),
     source_ref_verified: record?.source_revision?.source_repository_ref === SOURCE_REF,
     review: { decision: null, evidence_comment_id: null, status: 'independent boundary review required' },
-  };
+  });
 }
 
 function blockedAuditItem(item, error) {
-  return {
+  const observation = {
     issue_number: item.issue_number,
     status: 'blocked',
     errors: [error],
@@ -214,6 +224,26 @@ function blockedAuditItem(item, error) {
     source_ref_verified: false,
     review: { decision: null, evidence_comment_id: null, status: 'blocked before independent boundary review' },
   };
+  return withObservationDigest(observation);
+}
+
+function withObservationDigest(observation) {
+  return { ...observation, observation_digest: canonicalDigest(observation) };
+}
+
+function validateAuditedObservation(item, observation) {
+  const errors = [];
+  if (!observation || observation.issue_number !== item.issue_number) errors.push(`observation identity mismatch for #${item.issue_number}`);
+  if (observation?.status !== 'review-required') errors.push(`audited observation status is not review-required for #${item.issue_number}`);
+  if (!Array.isArray(observation?.errors) || observation.errors.length) errors.push(`audited observation contains errors for #${item.issue_number}`);
+  if (observation?.live_body_sha256 !== item.expected_body_sha256) errors.push(`audited observation body binding mismatch for #${item.issue_number}`);
+  if (!same(observation?.live_labels, item.frozen_labels) || !observation?.labels_verified) errors.push(`audited observation labels binding mismatch for #${item.issue_number}`);
+  if (observation?.live_source_note_id !== item.source_note_id) errors.push(`audited observation SourceNote binding mismatch for #${item.issue_number}`);
+  if (observation?.live_source_revision_id !== item.expected_source_revision_id) errors.push(`audited observation SourceRevision binding mismatch for #${item.issue_number}`);
+  if (observation?.live_source_repository_ref !== SOURCE_REF || !observation?.source_ref_verified) errors.push(`audited observation source ref binding mismatch for #${item.issue_number}`);
+  if (!Array.isArray(observation?.applied_receipts) || observation.applied_receipts.length) errors.push(`audited observation has receipts for #${item.issue_number}`);
+  if (observation?.observation_digest && observation.observation_digest !== canonicalDigest(without(observation, 'observation_digest'))) errors.push(`audited observation digest mismatch for #${item.issue_number}`);
+  return { ok: errors.length === 0, errors };
 }
 
 function initialJournal(scope) {
@@ -252,7 +282,28 @@ function auditRemainingScope({ scope, readIssue, readComments, journal = initial
   const observations = [];
   for (const item of scope.items) {
     const state = stateByIssue.get(item.issue_number);
-    if (state.status === 'audited' && state.observation) { observations.push(state.observation); continue; }
+    if (state.status === 'audited' && state.observation) {
+      const validation = validateAuditedObservation(item, state.observation);
+      if (validation.ok) {
+        if (!state.observation.observation_digest) {
+          state.observation = withObservationDigest(state.observation);
+          journal.canonical_digest = canonicalDigest(without(journal, 'canonical_digest'));
+          persist(journal);
+        }
+        observations.push(state.observation);
+        continue;
+      }
+      if (state.attempts >= 5) {
+        const observation = blockedAuditItem(item, validation.errors.join('; '));
+        state.status = 'blocked'; state.observation = observation; state.error = observation.errors[0]; observations.push(observation);
+        journal.completed_count = journal.items.filter((entry) => ['audited', 'blocked'].includes(entry.status)).length;
+        journal.blocked_count = journal.items.filter((entry) => entry.status === 'blocked').length;
+        journal.last_issue_number = item.issue_number; journal.canonical_digest = canonicalDigest(without(journal, 'canonical_digest')); persist(journal);
+        continue;
+      }
+      state.status = 'pending'; state.observation = null; state.error = validation.errors.join('; ');
+      journal.canonical_digest = canonicalDigest(without(journal, 'canonical_digest')); persist(journal);
+    }
     if (state.status === 'reading' && state.attempts >= 5) {
       const observation = blockedAuditItem(item, 'read journal was left in reading state at the retry bound; refusing an unbounded resume');
       state.status = 'blocked'; state.observation = observation; state.error = observation.errors[0]; observations.push(observation);
@@ -365,25 +416,39 @@ function acquireReadLock(file) {
   const target = path.resolve(file);
   fs.mkdirSync(path.dirname(target), { recursive: true });
   let fd;
-  try { fd = fs.openSync(target, 'wx', 0o600); } catch (error) { throw new Error(`next-boundary read lock is already held: ${error.message}`); }
+  try { fd = fs.openSync(target, 'wx+', 0o600); } catch (error) { throw new Error(`next-boundary read lock is already held: ${error.message}`); }
   const record = { schema_version: LOCK_SCHEMA, pid: process.pid, token: crypto.randomBytes(16).toString('hex'), acquired_at: new Date().toISOString() };
-  try { fs.writeFileSync(fd, `${JSON.stringify(record)}\n`, 'utf8'); fs.fsyncSync(fd); } finally { fs.closeSync(fd); }
+  try { fs.writeFileSync(fd, `${JSON.stringify(record)}\n`, 'utf8'); fs.fsyncSync(fd); } catch (error) { fs.closeSync(fd); throw error; }
   const parent = path.dirname(target);
   const syncParent = () => { const directory = fs.openSync(parent, 'r'); try { fs.fsyncSync(directory); } finally { fs.closeSync(directory); } };
   syncParent();
-  const inode = fs.lstatSync(target);
-  const assertHeld = () => {
-    const current = JSON.parse(fs.readFileSync(target, 'utf8'));
-    const currentInode = fs.lstatSync(target);
-    if (current.token !== record.token || currentInode.dev !== inode.dev || currentInode.ino !== inode.ino || currentInode.isSymbolicLink()) throw new Error('next-boundary read lock ownership/inode changed');
+  const inode = fs.fstatSync(fd);
+  let released = false;
+  const readRecordFromFd = () => {
+    const buffer = Buffer.alloc(4096);
+    const bytesRead = fs.readSync(fd, buffer, 0, buffer.length, 0);
+    return JSON.parse(buffer.subarray(0, bytesRead).toString('utf8'));
   };
-  return { assertHeld, release() { assertHeld(); fs.unlinkSync(target); syncParent(); } };
+  const assertHeld = () => {
+    if (released) throw new Error('next-boundary read lock is already released');
+    const current = readRecordFromFd();
+    const currentFdInode = fs.fstatSync(fd);
+    const currentInode = fs.lstatSync(target);
+    if (current.token !== record.token || currentFdInode.dev !== inode.dev || currentFdInode.ino !== inode.ino || currentInode.dev !== inode.dev || currentInode.ino !== inode.ino || currentInode.isSymbolicLink()) throw new Error('next-boundary read lock ownership/inode changed');
+  };
+  return {
+    assertHeld,
+    release() {
+      try { assertHeld(); fs.unlinkSync(target); }
+      finally { released = true; fs.closeSync(fd); syncParent(); }
+    },
+  };
 }
 
 module.exports = {
-  REPOSITORY, SOURCE_REPOSITORY, SOURCE_REF, PARENT_ISSUE, FROZEN_TOTAL, COMPLETED_TOTAL, REMAINING_TOTAL,
+  REPOSITORY, SOURCE_REPOSITORY, SOURCE_REF, PARENT_ISSUE, FROZEN_TOTAL, FROZEN_SNAPSHOT_DIGEST, COMPLETED_TOTAL, REMAINING_TOTAL,
   COMPLETED_PLAN_DIGEST, COMPLETED_MANIFEST_DIGEST, SCOPE_SCHEMA, MANIFEST_SCHEMA, EVIDENCE_SCHEMA, REQUEST_SCHEMA, TRANSITION_SCHEMA, JOURNAL_SCHEMA,
   BATCHES, PENDING_LABELS, canonical, canonicalDigest, sha256, bodySha256, labelsOf, validateFrozenSnapshot, validateCompletedManifest,
-  buildRemainingScope, readGhJson, readCommentsPaged, auditLiveItem, blockedAuditItem, initialJournal, validateJournal, auditRemainingScope,
+  buildRemainingScope, readGhJson, readCommentsPaged, auditLiveItem, blockedAuditItem, validateAuditedObservation, initialJournal, validateJournal, auditRemainingScope,
   buildManifest, buildBatchArtifacts, atomicWriteJson, acquireReadLock,
 };

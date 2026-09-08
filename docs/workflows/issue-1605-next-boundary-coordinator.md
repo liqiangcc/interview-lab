@@ -10,6 +10,8 @@ PATCH or POST path.
 The input is the committed frozen pending inventory of 1,397 SourceNote issues at
 the fixed XHS ref
 `95b77bb261048059846273688e4b90a2e108b437`. The coordinator validates the
+snapshot canonical digest
+`5bbf8de3dc61ed382ee31e0d0286c3e7374efec243f60b245c76ee2e0b553dfd` and the
 committed 419-row manifest against its exact approved digests, then excludes its
 issue IDs. The resulting scope must be exactly 978 issues:
 
