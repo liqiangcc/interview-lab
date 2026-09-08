@@ -298,7 +298,7 @@ function buildTransitionPlan({ evidencePlan, evidencePlanPath = null, manifest, 
 }
 
 function initialJournal(plan) {
-  const content = { schema_version: JOURNAL_SCHEMA, repository: REPOSITORY, parent_issue: PARENT_ISSUE, plan_digest: plan.canonical_digest, manifest_digest: plan.remaining_manifest.digest, scope_digest: plan.remaining_manifest.scope_digest, status: 'planned', mutation_count: 0, items: plan.items.map((item) => ({ issue_number: item.issue_number, transition_id: item.transition_id, item_digest: item.item_digest, phase: item.status === 'blocked' ? 'blocked' : 'pending', mutation_count: 0, possibly_performed: false })) };
+  const content = { schema_version: JOURNAL_SCHEMA, repository: REPOSITORY, parent_issue: PARENT_ISSUE, plan_digest: plan.canonical_digest, manifest_digest: plan.remaining_manifest.digest, scope_digest: plan.remaining_manifest.scope_digest, status: 'planned', mutation_count: 0, items: plan.items.map((item) => ({ issue_number: item.issue_number, transition_id: item.transition_id, item_digest: item.item_digest, phase: item.status === 'blocked' ? 'blocked' : 'pending', mutation_count: 0, mutation_started: false, possibly_performed: false })) };
   return { ...content, canonical_digest: digestWithoutCanonical(content) };
 }
 
@@ -319,6 +319,7 @@ function validateJournal(journal, plan, maxMutations = null) {
     if (expected.has(number) && item.item_digest !== expected.get(number).item_digest) errors.push(`journal item digest drifted for #${number}`);
     if (!['blocked', 'pending', 'ready', 'patch-pending', 'receipt-pending', 'complete', 'uncertain'].includes(item.phase)) errors.push(`journal phase invalid for #${number}`);
     if (!safeNonNegative(item.mutation_count)) errors.push(`journal #${number} mutation_count must be a safe non-negative integer`); else sum += item.mutation_count;
+    if (typeof item.mutation_started !== 'boolean') errors.push(`journal #${number} mutation_started must be boolean`);
     if (typeof item.possibly_performed !== 'boolean') errors.push(`journal #${number} possibly_performed must be boolean`);
   }
   if (seen.size !== expected.size) errors.push('journal does not contain exactly one item for every plan row');
@@ -421,56 +422,135 @@ function applyBatch({ plan, records, liveLoader, patchIssue, postReceipt, lock, 
     // caller from accidentally substituting an in-memory no-op.
     writeJournal(state, { plan, journalFile, maxMutations, lock });
   };
+  const accountMutation = (entry, completedCount) => {
+    if (!safeNonNegative(entry.mutation_count) || entry.mutation_count > completedCount) {
+      throw new Error(`#${entry.issue_number}: journal mutation counter cannot reconcile to ${completedCount}`);
+    }
+    count += completedCount - entry.mutation_count;
+    entry.mutation_count = completedCount;
+  };
+  const markUncertain = (entry, message) => {
+    entry.phase = 'uncertain';
+    entry.possibly_performed = true;
+    entry.error = message;
+    persist();
+    throw new Error(`#${entry.issue_number}: ${message}`);
+  };
+  const reconcileInflight = (entry, record, expected, kind, observedError = null) => {
+    if (!entry.mutation_started) return null;
+    try {
+      return reconcileUnknownResponse({ kind, record, liveLoader, expected, planDigestValue: plan.canonical_digest, sleep });
+    } catch (error) {
+      markUncertain(entry, `${observedError ? `${observedError}; ` : ''}${kind} in-flight mutation did not reconcile: ${error.message}`);
+    }
+  };
   for (const item of plan.items) {
     if (item.scope_status !== 'actionable') continue;
     const record = recordByIssue.get(item.issue_number);
     if (!record) throw new Error(`#${item.issue_number}: formal request is missing`);
     const entry = byIssue.get(item.issue_number);
     if (!entry) throw new Error(`#${item.issue_number}: journal item is missing`);
-    if (entry.phase === 'uncertain' || entry.phase === 'patch-pending' || entry.phase === 'receipt-pending') throw new Error(`#${item.issue_number}: journal has an unresolved mutation phase`);
+    if (entry.phase === 'uncertain') throw new Error(`#${item.issue_number}: journal is uncertain; refusing blind retry`);
     let fresh;
+    let receiptOnly = false;
+    if (entry.phase === 'patch-pending') {
+      let observed;
+      try { observed = transitionItem(record, liveLoader(record.request), plan.canonical_digest); }
+      catch (error) { observed = reconcileInflight(entry, record, item, 'patch', `PATCH in-flight read failed: ${error.message}`); }
+      if (!observed || !observed.ok) {
+        if (entry.mutation_started) observed = reconcileInflight(entry, record, item, 'patch', `PATCH in-flight state is not an exact target: ${(observed && observed.errors || []).join('; ') || 'read failed'}`);
+        if (!observed || !observed.ok) markUncertain(entry, `PATCH pre-write state drifted before retry: ${(observed && observed.errors || []).join('; ') || 'read failed'}`);
+      }
+      if (!observed.already_applied && entry.mutation_started) observed = reconcileInflight(entry, record, item, 'patch');
+      if (!observed || !observed.ok || !observed.already_applied) {
+        if (entry.mutation_started) markUncertain(entry, 'PATCH in-flight mutation did not prove the exact target');
+        // The durable pre-write intent is explicit: no writer was started and
+        // the live CAS still proves the original pending state.
+        entry.phase = 'pending'; entry.error = null; persist();
+      } else {
+        accountMutation(entry, 1);
+        entry.mutation_started = false; entry.possibly_performed = false; entry.error = null;
+        if (observed.existing_receipt) {
+          accountMutation(entry, 2); entry.phase = 'complete'; persist(); continue;
+        }
+        entry.phase = 'receipt-pending'; persist();
+        fresh = observed; receiptOnly = true;
+      }
+    }
+    if (entry.phase === 'receipt-pending' && !receiptOnly) {
+      let observed;
+      try { observed = transitionItem(record, liveLoader(record.request), plan.canonical_digest); }
+      catch (error) { observed = reconcileInflight(entry, record, item, 'receipt', `receipt in-flight read failed: ${error.message}`); }
+      if (!observed || !observed.ok) {
+        if (entry.mutation_started) observed = reconcileInflight(entry, record, item, 'receipt', `receipt in-flight state is not verifiable: ${(observed && observed.errors || []).join('; ') || 'read failed'}`);
+        if (!observed || !observed.ok) markUncertain(entry, `receipt in-flight state is not verifiable: ${(observed && observed.errors || []).join('; ') || 'read failed'}`);
+      }
+      if (!observed.already_applied) markUncertain(entry, 'receipt in-flight mutation lost the applied boundary target');
+      if (observed.existing_receipt) {
+        accountMutation(entry, 2); entry.mutation_started = false; entry.possibly_performed = false; entry.error = null; entry.phase = 'complete'; persist(); continue;
+      }
+      if (entry.mutation_started) observed = reconcileInflight(entry, record, item, 'receipt');
+      if (!observed || !observed.ok || !observed.already_applied || !observed.existing_receipt) {
+        if (entry.mutation_started) markUncertain(entry, 'receipt in-flight mutation has no exact applied receipt');
+      }
+      fresh = observed; receiptOnly = true;
+    }
+    if (entry.phase === 'uncertain') throw new Error(`#${item.issue_number}: journal is uncertain; refusing blind retry`);
     if (entry.phase === 'complete') {
       // A complete resume is never trusted from the journal alone.
       fresh = postWriteValidate({ record, liveLoader, expected: item, planDigestValue: plan.canonical_digest, requireReceipt: true });
       continue;
     }
-    fresh = transitionItem(record, liveLoader(record.request), plan.canonical_digest);
-    if (!fresh.ok) throw new Error(`#${item.issue_number}: fresh live CAS failed: ${fresh.errors.join('; ')}`);
-    if (fresh.already_applied) {
-      if (!fresh.existing_receipt) throw new Error(`#${item.issue_number}: target is already applied but receipt is missing`);
-      entry.phase = 'complete'; persist(); continue;
-    }
-    const required = 2;
-    if (count + required > maxMutations) throw new Error(`mutation ceiling would be exceeded at #${item.issue_number}`);
-    entry.phase = 'patch-pending'; persist();
-    count += 1; entry.mutation_count += 1;
-    try { lock.assertHeld(); patchIssue(item.issue_number, { body: fresh.next_body, labels: fresh.next_labels }); }
-    catch (error) {
-      entry.possibly_performed = true; entry.error = `PATCH response unknown: ${error.message}`; persist();
-      try { reconcileUnknownResponse({ kind: 'patch', record, liveLoader, expected: fresh, planDigestValue: plan.canonical_digest, sleep }); }
-      catch (reconcileError) { entry.phase = 'uncertain'; entry.error += `; reconcile failed: ${reconcileError.message}`; persist(); throw reconcileError; }
-      entry.possibly_performed = false; entry.error = null; persist();
-    }
-    let checked;
-    try {
-      checked = postWriteValidate({ record, liveLoader, expected: fresh, planDigestValue: plan.canonical_digest });
-    } catch (error) {
-      entry.possibly_performed = true;
-      entry.error = `PATCH post-write validation unknown: ${error.message}`;
-      persist();
-      try {
-        checked = reconcileUnknownResponse({ kind: 'patch', record, liveLoader, expected: fresh, planDigestValue: plan.canonical_digest, sleep });
-      } catch (reconcileError) {
-        entry.phase = 'uncertain';
-        entry.error += `; reconcile failed: ${reconcileError.message}`;
-        persist();
-        throw reconcileError;
+    if (!receiptOnly) {
+      fresh = transitionItem(record, liveLoader(record.request), plan.canonical_digest);
+      if (!fresh.ok) throw new Error(`#${item.issue_number}: fresh live CAS failed: ${fresh.errors.join('; ')}`);
+      if (fresh.already_applied) {
+        if (count + 2 > maxMutations) throw new Error(`mutation ceiling would be exceeded at #${item.issue_number}`);
+        accountMutation(entry, 1);
+        entry.mutation_started = false; entry.possibly_performed = false; entry.error = null;
+        if (fresh.existing_receipt) {
+          accountMutation(entry, 2); entry.phase = 'complete'; persist(); continue;
+        }
+        entry.phase = 'receipt-pending'; persist();
+        receiptOnly = true;
       }
-      entry.possibly_performed = false; entry.error = null; persist();
     }
-    entry.phase = 'receipt-pending'; persist();
+    const required = receiptOnly ? 1 : 2;
+    if (count + required > maxMutations) throw new Error(`mutation ceiling would be exceeded at #${item.issue_number}`);
+    let checked = receiptOnly ? fresh : null;
+    if (!receiptOnly) {
+      entry.phase = 'patch-pending'; entry.mutation_started = false; entry.error = null; persist();
+      count += 1; entry.mutation_count += 1; entry.mutation_started = true; persist();
+      try { lock.assertHeld(); patchIssue(item.issue_number, { body: fresh.next_body, labels: fresh.next_labels }); }
+      catch (error) {
+        entry.possibly_performed = true; entry.error = `PATCH response unknown: ${error.message}`; persist();
+        try { checked = reconcileUnknownResponse({ kind: 'patch', record, liveLoader, expected: fresh, planDigestValue: plan.canonical_digest, sleep }); }
+        catch (reconcileError) { entry.phase = 'uncertain'; entry.error += `; reconcile failed: ${reconcileError.message}`; persist(); throw reconcileError; }
+        entry.mutation_started = false; entry.possibly_performed = false; entry.error = null; persist();
+      }
+      if (!checked) {
+        try {
+          checked = postWriteValidate({ record, liveLoader, expected: fresh, planDigestValue: plan.canonical_digest });
+        } catch (error) {
+          entry.possibly_performed = true;
+          entry.error = `PATCH post-write validation unknown: ${error.message}`;
+          persist();
+          try {
+            checked = reconcileUnknownResponse({ kind: 'patch', record, liveLoader, expected: fresh, planDigestValue: plan.canonical_digest, sleep });
+          } catch (reconcileError) {
+            entry.phase = 'uncertain';
+            entry.error += `; reconcile failed: ${reconcileError.message}`;
+            persist();
+            throw reconcileError;
+          }
+          entry.mutation_started = false; entry.possibly_performed = false; entry.error = null; persist();
+        }
+      }
+      entry.mutation_started = false; entry.possibly_performed = false; entry.error = null;
+      entry.phase = 'receipt-pending'; persist();
+    }
     const receipt = buildAppliedRemainingReceipt(record.request, checked, plan);
-    count += 1; entry.mutation_count += 1;
+    count += 1; entry.mutation_count += 1; entry.mutation_started = true; persist();
     let response;
     let receiptReconciled = false;
     try { lock.assertHeld(); response = postReceipt(item.issue_number, renderAppliedReceiptComment(receipt)); }
@@ -506,7 +586,7 @@ function applyBatch({ plan, records, liveLoader, patchIssue, postReceipt, lock, 
       }
       entry.possibly_performed = false; entry.error = null; persist();
     }
-    entry.phase = 'complete'; entry.possibly_performed = false; entry.error = null; persist();
+    entry.phase = 'complete'; entry.mutation_started = false; entry.possibly_performed = false; entry.error = null; persist();
   }
   state.status = 'complete'; persist();
   return { ok: true, journal: state, mutation_count: count };

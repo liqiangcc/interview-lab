@@ -29,6 +29,35 @@ function evidencePlan() {
 }
 function tempDir() { return fs.mkdtempSync(path.join(os.tmpdir(), 'issue-1605-remaining-transition-')); }
 
+function makeApplyFixture({ failAfterPatch = false, failAfterPost = false } = {}) {
+  const body = fs.readFileSync(path.join(__dirname, 'fixtures/source-note-issue.valid.md'), 'utf8');
+  const parsed = parseSourceNoteIssue(body);
+  const request = {
+    schema_version: 'source-note-boundary-review-transition.v1', transition_id: 'remaining-apply-fixture', repository: 'liqiangcc/interview-lab', issue_number: 77,
+    source_note_id: parsed.record.source_note_id, expected_body_sha256: sha256Text(body), expected_boundary_status: 'pending', expected_source_revision_id: parsed.record.source_revision.id,
+    expected_manifest_sha256: null, expected_source_repository_ref: '95b77bb261048059846273688e4b90a2e108b437', decision: 'single-interview', reviewed_at: '2026-09-09T00:00:00Z', reviewer_kind: 'ai-assisted',
+    review_evidence: { repository: 'liqiangcc/interview-lab', issue_number: 77, comment_id: 456 },
+    checks: ['source_identity', 'source_revision_binding', 'source_content_coverage', 'event_boundary', 'no_cross_source_mixing', 'no_fabrication'].map((check_id) => ({ check_id, result: 'pass' })), limitations: ['fixture'],
+  };
+  const evidence = { id: 456, body: [request.transition_id, request.source_note_id, request.expected_source_revision_id, request.expected_source_repository_ref, request.decision, ...request.checks.map((item) => item.check_id)].join('\n') };
+  const state = {
+    issue: { number: 77, state: 'open', body, labels: ['type:source-note', 'source:xhs', 'status:captured', 'boundary:pending', 'task:boundary-review', 'migration:xhs-bulk', 'source-year:2022'] },
+    comments: [evidence], calls: { patch: 0, post: 0 }, failNextRead: false,
+  };
+  const record = { request };
+  const plan = { ok: true, ready_for_apply: true, canonical_digest: 'a'.repeat(64), remaining_manifest: { digest: REMAINING_MANIFEST_DIGEST, scope_digest: REMAINING_SCOPE_DIGEST }, items: [{ issue_number: 77, transition_id: request.transition_id, scope_status: 'actionable', item_digest: 'item-digest' }] };
+  const liveLoader = () => {
+    if (state.failNextRead) { state.failNextRead = false; throw new Error('simulated post-write GET failure'); }
+    return { issue: state.issue, comments: state.comments };
+  };
+  const patchIssue = (number, payload) => { state.calls.patch += 1; assert.equal(number, 77); state.issue = { ...state.issue, body: payload.body, labels: payload.labels }; if (failAfterPatch) state.failNextRead = true; };
+  const postReceipt = (number, receiptBody) => { state.calls.post += 1; assert.equal(number, 77); state.comments = [...state.comments, { id: 789, body: receiptBody }]; if (failAfterPost) state.failNextRead = true; return { id: 789 }; };
+  const initialPlan = transitionItem(record, { issue: state.issue, comments: state.comments }, null);
+  plan.items[0].next_body_sha256 = initialPlan.next_body_sha256;
+  plan.items[0].next_labels = initialPlan.next_labels;
+  return { record, plan, state, liveLoader, patchIssue, postReceipt };
+}
+
 test('remaining inputs are pinned to the 1397 snapshot, fixed ref, manifest digest, and exact 978 scope', () => {
   assert.equal(validateFrozenSnapshot(snapshot).ok, true);
   assert.equal(validateFrozenSnapshot(snapshot).digest, FROZEN_SNAPSHOT_DIGEST);
@@ -150,31 +179,8 @@ test('transition planner passes v2 multi-interview cases through the existing va
 });
 
 test('authorized applyBatch simulation calls PATCH and POST once, validates receipt, and persists the journal', () => {
-  const body = fs.readFileSync(path.join(__dirname, 'fixtures/source-note-issue.valid.md'), 'utf8');
-  const parsed = parseSourceNoteIssue(body);
-  const request = {
-    schema_version: 'source-note-boundary-review-transition.v1', transition_id: 'remaining-apply-fixture', repository: 'liqiangcc/interview-lab', issue_number: 77,
-    source_note_id: parsed.record.source_note_id, expected_body_sha256: sha256Text(body), expected_boundary_status: 'pending', expected_source_revision_id: parsed.record.source_revision.id,
-    expected_manifest_sha256: null, expected_source_repository_ref: '95b77bb261048059846273688e4b90a2e108b437', decision: 'single-interview', reviewed_at: '2026-09-09T00:00:00Z', reviewer_kind: 'ai-assisted',
-    review_evidence: { repository: 'liqiangcc/interview-lab', issue_number: 77, comment_id: 456 },
-    checks: ['source_identity', 'source_revision_binding', 'source_content_coverage', 'event_boundary', 'no_cross_source_mixing', 'no_fabrication'].map((check_id) => ({ check_id, result: 'pass' })), limitations: ['fixture'],
-  };
-  const evidence = { id: 456, body: [request.transition_id, request.source_note_id, request.expected_source_revision_id, request.expected_source_repository_ref, request.decision, ...request.checks.map((item) => item.check_id)].join('\n') };
-  let issue = { number: 77, state: 'open', body, labels: ['type:source-note', 'source:xhs', 'status:captured', 'boundary:pending', 'task:boundary-review', 'migration:xhs-bulk', 'source-year:2022'] };
-  let comments = [evidence];
-  const record = { request };
-  const plan = { ok: true, ready_for_apply: true, canonical_digest: 'a'.repeat(64), remaining_manifest: { digest: REMAINING_MANIFEST_DIGEST, scope_digest: REMAINING_SCOPE_DIGEST }, items: [{ issue_number: 77, transition_id: request.transition_id, scope_status: 'actionable', item_digest: 'item-digest' }] };
-  const calls = { patch: 0, post: 0 };
-  let failNextRead = false;
-  const liveLoader = () => {
-    if (failNextRead) { failNextRead = false; throw new Error('simulated post-write GET failure'); }
-    return { issue, comments };
-  };
-  const patchIssue = (number, payload) => { calls.patch += 1; assert.equal(number, 77); issue = { ...issue, body: payload.body, labels: payload.labels }; failNextRead = true; };
-  const postReceipt = (number, receiptBody) => { calls.post += 1; assert.equal(number, 77); comments = [...comments, { id: 789, body: receiptBody }]; failNextRead = true; return { id: 789 }; };
-  const initialPlan = transitionItem(record, { issue, comments }, null);
-  plan.items[0].next_body_sha256 = initialPlan.next_body_sha256;
-  plan.items[0].next_labels = initialPlan.next_labels;
+  const fixture = makeApplyFixture({ failAfterPatch: true, failAfterPost: true });
+  const { record, plan, state, liveLoader, patchIssue, postReceipt } = fixture;
   const directory = tempDir();
   const journalSnapshots = [];
   const lock = acquireExclusiveLock(path.join(directory, 'lock'));
@@ -184,8 +190,8 @@ test('authorized applyBatch simulation calls PATCH and POST once, validates rece
     const result = applyBatch({ plan, records: [record], liveLoader, patchIssue, postReceipt, lock, journalFile, maxMutations: 2, authorization: { max_mutations: 2 }, apply: true, confirmPlan: plan.canonical_digest, writeJournal });
     assert.equal(result.ok, true);
     assert.equal(result.mutation_count, 2);
-    assert.equal(calls.patch, 1);
-    assert.equal(calls.post, 1);
+    assert.equal(state.calls.patch, 1);
+    assert.equal(state.calls.post, 1);
     assert.equal(result.journal.items[0].phase, 'complete');
     assert.equal(result.journal.items[0].mutation_count, 2);
     const persisted = readRegularJson(journalFile);
@@ -197,8 +203,61 @@ test('authorized applyBatch simulation calls PATCH and POST once, validates rece
     const resumed = applyBatch({ plan, records: [record], liveLoader, patchIssue, postReceipt, lock, journal: persisted, journalFile, maxMutations: 2, authorization: { max_mutations: 2 }, apply: true, confirmPlan: plan.canonical_digest, writeJournal });
     assert.equal(resumed.ok, true);
     assert.equal(resumed.mutation_count, 2);
-    assert.equal(calls.patch, 1);
-    assert.equal(calls.post, 1);
+    assert.equal(state.calls.patch, 1);
+    assert.equal(state.calls.post, 1);
+  } finally { lock.release(); }
+});
+
+test('crash after durable patch intent resumes without a duplicate PATCH', () => {
+  const fixture = makeApplyFixture();
+  const { record, plan, state, liveLoader, patchIssue, postReceipt } = fixture;
+  const directory = tempDir();
+  const journalFile = path.join(directory, 'journal.json');
+  const lock = acquireExclusiveLock(path.join(directory, 'lock'));
+  let crash = true;
+  const writeJournal = (journal) => {
+    persistJournal(journalFile, journal, plan, lock, 2);
+    if (crash && journal.items[0].phase === 'patch-pending' && journal.items[0].mutation_started === false) {
+      crash = false;
+      throw new Error('simulated crash after patch intent');
+    }
+  };
+  try {
+    assert.throws(() => applyBatch({ plan, records: [record], liveLoader, patchIssue, postReceipt, lock, journalFile, maxMutations: 2, authorization: { max_mutations: 2 }, apply: true, confirmPlan: plan.canonical_digest, writeJournal }), /simulated crash/);
+    const partial = readRegularJson(journalFile);
+    assert.equal(partial.items[0].phase, 'patch-pending');
+    assert.equal(partial.items[0].mutation_started, false);
+    const result = applyBatch({ plan, records: [record], liveLoader, patchIssue, postReceipt, lock, journal: partial, journalFile, maxMutations: 2, authorization: { max_mutations: 2 }, apply: true, confirmPlan: plan.canonical_digest, writeJournal });
+    assert.equal(result.ok, true);
+    assert.equal(state.calls.patch, 1);
+    assert.equal(state.calls.post, 1);
+  } finally { lock.release(); }
+});
+
+test('crash after PATCH before receipt intent resumes with receipt-only work', () => {
+  const fixture = makeApplyFixture();
+  const { record, plan, state, liveLoader, patchIssue, postReceipt } = fixture;
+  const directory = tempDir();
+  const journalFile = path.join(directory, 'journal.json');
+  const lock = acquireExclusiveLock(path.join(directory, 'lock'));
+  let crash = true;
+  const writeJournal = (journal) => {
+    persistJournal(journalFile, journal, plan, lock, 2);
+    if (crash && journal.items[0].phase === 'receipt-pending' && journal.items[0].mutation_started === false && journal.items[0].mutation_count === 1) {
+      crash = false;
+      throw new Error('simulated crash before receipt');
+    }
+  };
+  try {
+    assert.throws(() => applyBatch({ plan, records: [record], liveLoader, patchIssue, postReceipt, lock, journalFile, maxMutations: 2, authorization: { max_mutations: 2 }, apply: true, confirmPlan: plan.canonical_digest, writeJournal }), /simulated crash/);
+    const partial = readRegularJson(journalFile);
+    assert.equal(partial.items[0].phase, 'receipt-pending');
+    assert.equal(partial.items[0].mutation_count, 1);
+    assert.equal(partial.items[0].mutation_started, false);
+    const result = applyBatch({ plan, records: [record], liveLoader, patchIssue, postReceipt, lock, journal: partial, journalFile, maxMutations: 2, authorization: { max_mutations: 2 }, apply: true, confirmPlan: plan.canonical_digest, writeJournal });
+    assert.equal(result.ok, true);
+    assert.equal(state.calls.patch, 1);
+    assert.equal(state.calls.post, 1);
   } finally { lock.release(); }
 });
 
