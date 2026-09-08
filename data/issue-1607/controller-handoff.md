@@ -1,6 +1,6 @@
 # Boundary B controller handoff
 
-本地只读准备已完成，未执行 live GitHub mutation。
+本地只读准备已完成，未执行任何批次 Issue 的 live mutation/apply；仅按交付要求更新了关联 PR 元数据。
 
 ```text
 repository: liqiangcc/interview-lab
