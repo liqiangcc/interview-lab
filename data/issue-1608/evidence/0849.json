@@ -8,10 +8,48 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "source_retrieval": {
     "method": "frozen-source-snapshot",
-    "path": "/tmp/issue-1608-source-texts.json",
+    "path": "/tmp/issue-1608-source-artifacts-v2.json",
     "byte_size": 1996,
     "git_blob_sha": "6f66ea625ace7d9c4dadefca46eb6ff3a1f4a9fb"
   },
+  "source_artifacts": [
+    {
+      "kind": "html",
+      "ref": "liqiangcc/xhs:note_detail/68269c7b00000000120039e9.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "af15a7b68eef257a5b433814af471595967ef9bc",
+      "byte_size": 391121,
+      "content_sha256": "ec5fa82a21e3b6c31ee488bd97558906267cca18d1c698a5010720036bda9d79",
+      "retrieval": {
+        "method": "fixed-ref-local-partial-clone",
+        "path": "/tmp/xhs-issue-1608-source/note_detail/68269c7b00000000120039e9.html"
+      },
+      "complete_content_read": true
+    },
+    {
+      "kind": "json",
+      "ref": "liqiangcc/xhs:note_json/68269c7b00000000120039e9.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "2d6d85967333a6ca8cb7b816170ff287f914fbb6",
+      "byte_size": 22159,
+      "content_sha256": "d698cf3f6a934dc908236cb3d9a12e321ba130217767b0c059927e32f1bfdfe3",
+      "retrieval": {
+        "method": "fixed-ref-local-partial-clone",
+        "path": "/tmp/xhs-issue-1608-source/note_json/68269c7b00000000120039e9.json"
+      },
+      "complete_content_read": true
+    },
+    {
+      "kind": "text_projection",
+      "ref": "liqiangcc/xhs:note_desc/68269c7b00000000120039e9.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "6f66ea625ace7d9c4dadefca46eb6ff3a1f4a9fb",
+      "byte_size": 1996,
+      "content_sha256": "ee833574a012d5c7d5bbac23fcae122669b9a99e31b7cff19b4f9245b5bbd6be",
+      "retrieval": {
+        "method": "github-git-blob",
+        "path": "repos/liqiangcc/xhs/git/blobs/6f66ea625ace7d9c4dadefca46eb6ff3a1f4a9fb"
+      },
+      "complete_content_read": true
+    }
+  ],
   "evidence_status": "insufficient-blocked",
   "decision": null,
   "rationale": "固定 Source projection 提到多个流程，但每个 case 没有独立、非 hashtag 的 artifact locator 与流程细节；保留 pending，不 materialize。",
@@ -27,7 +65,9 @@
     {
       "line": 2,
       "locator": "source-projection:artifact-line:2",
-      "excerpt": "继上次腾讯面试完后大半个月的一次线上面试，面试完整个人都不好了，在寝室缓了一会，面完问面试官哪些不足，面试官说八股掌握的不是很牢固"
+      "excerpt": "继上次腾讯面试完后大半个月的一次线上面试，面试完整个人都不好了，在寝室缓了一会，面完问面试官哪些不足，面试官说八股掌握的不是很牢固",
+      "artifact_ref": "liqiangcc/xhs:note_desc/68269c7b00000000120039e9.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "artifact_kind": "text_projection"
     }
   ],
   "case_keys": [],

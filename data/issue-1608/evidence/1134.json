@@ -8,13 +8,51 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "source_retrieval": {
     "method": "frozen-source-snapshot",
-    "path": "/tmp/issue-1608-source-texts.json",
+    "path": "/tmp/issue-1608-source-artifacts-v2.json",
     "byte_size": 958,
     "git_blob_sha": "290b18a5764b05c9d640cfdcf15ff8e3ac955546"
   },
-  "evidence_status": "insufficient-blocked",
-  "decision": null,
-  "rationale": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。",
+  "source_artifacts": [
+    {
+      "kind": "html",
+      "ref": "liqiangcc/xhs:note_detail/68a48170000000001d00673e.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "3d434736a5abcf9a3d024c2aec4b50dd779cc474",
+      "byte_size": 395937,
+      "content_sha256": "dfa999e9818dc62b4a84ba6a6d21d25bf53a5c1912ba6da0eddba789a03a7668",
+      "retrieval": {
+        "method": "fixed-ref-local-partial-clone",
+        "path": "/tmp/xhs-issue-1608-source/note_detail/68a48170000000001d00673e.html"
+      },
+      "complete_content_read": true
+    },
+    {
+      "kind": "json",
+      "ref": "liqiangcc/xhs:note_json/68a48170000000001d00673e.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "716ce0a920526120cc13af364983bf70ce36044a",
+      "byte_size": 22246,
+      "content_sha256": "e9be345b34882389a6eea42d0662fae07ba1bd66dde0373eda3ac5556251dd6c",
+      "retrieval": {
+        "method": "fixed-ref-local-partial-clone",
+        "path": "/tmp/xhs-issue-1608-source/note_json/68a48170000000001d00673e.json"
+      },
+      "complete_content_read": true
+    },
+    {
+      "kind": "text_projection",
+      "ref": "liqiangcc/xhs:note_desc/68a48170000000001d00673e.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "290b18a5764b05c9d640cfdcf15ff8e3ac955546",
+      "byte_size": 958,
+      "content_sha256": "72fd599b06bb80fb14f05209015fef4189669aa66268faa156f1854c2dba4db4",
+      "retrieval": {
+        "method": "github-git-blob",
+        "path": "repos/liqiangcc/xhs/git/blobs/290b18a5764b05c9d640cfdcf15ff8e3ac955546"
+      },
+      "complete_content_read": true
+    }
+  ],
+  "evidence_status": "sufficient-for-controller-review",
+  "decision": "single-interview",
+  "rationale": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。",
   "artifact": {
     "ref": "liqiangcc/xhs:note_desc/68a48170000000001d00673e.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -25,9 +63,32 @@
   },
   "excerpts": [
     {
-      "line": 1,
-      "locator": "source-projection:artifact-line:1",
-      "excerpt": "项目和实习问得挺细的，基本上都过了一遍"
+      "line": null,
+      "locator": "json-pointer:/note/noteDetailMap/68a48170000000001d00673e/note/title",
+      "artifact_ref": "liqiangcc/xhs:note_json/68a48170000000001d00673e.json@95b77bb261048059846273688e4b90a2e108b437",
+      "artifact_kind": "json",
+      "excerpt": "二面，感觉不好"
+    },
+    {
+      "line": 7,
+      "locator": "source-projection:artifact-line:7",
+      "excerpt": "手撕，股票交易的升级版，给出一个数组表示股票涨跌情况，只进行一次交易，给出所有的最优交易区间",
+      "artifact_ref": "liqiangcc/xhs:note_desc/68a48170000000001d00673e.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "artifact_kind": "text_projection"
+    },
+    {
+      "line": 3,
+      "locator": "source-projection:artifact-line:3",
+      "excerpt": "八股，concurrenthashmap，说完实现之后，追着问，读多写少的场景，怎么改造，key频繁更新，又怎么办，还有哪些实现，无锁队列，怎么做",
+      "artifact_ref": "liqiangcc/xhs:note_desc/68a48170000000001d00673e.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "artifact_kind": "text_projection"
+    },
+    {
+      "line": 5,
+      "locator": "source-projection:artifact-line:5",
+      "excerpt": "问了一些开放题，如何评估校园内的井盖数量，宿舍间数（me like ：？？？）",
+      "artifact_ref": "liqiangcc/xhs:note_desc/68a48170000000001d00673e.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "artifact_kind": "text_projection"
     }
   ],
   "case_keys": [],
@@ -50,8 +111,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+      "result": "pass",
+      "note": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -65,7 +126,7 @@
     }
   ],
   "limitations": [
-    "Evidence is insufficient for a boundary transition; no body/label mutation is proposed.",
-    "Title, labels, OCR/Derived data, and image existence are not used to fill the missing boundary proof."
+    "This local evidence is not a GitHub review comment; no live evidence comment was created by this run.",
+    "Boundary Review only determines 0/1/N and does not create InterviewNote Issues or source-ready/learning labels."
   ]
 }

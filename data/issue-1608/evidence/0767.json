@@ -8,10 +8,48 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "source_retrieval": {
     "method": "frozen-source-snapshot",
-    "path": "/tmp/issue-1608-source-texts.json",
+    "path": "/tmp/issue-1608-source-artifacts-v2.json",
     "byte_size": 499,
     "git_blob_sha": "74a0d4a08d9de018b5d6bc371e60dc3371e43b53"
   },
+  "source_artifacts": [
+    {
+      "kind": "html",
+      "ref": "liqiangcc/xhs:note_detail/68075d56000000000d017fd3.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "bb3178435894deb390d475f8b3f842207fd0ed98",
+      "byte_size": 391992,
+      "content_sha256": "cc78072927ff10a5faeaa28ec3b361fe7cdeebb33902fd1940ce3b260e8d4659",
+      "retrieval": {
+        "method": "fixed-ref-local-partial-clone",
+        "path": "/tmp/xhs-issue-1608-source/note_detail/68075d56000000000d017fd3.html"
+      },
+      "complete_content_read": true
+    },
+    {
+      "kind": "json",
+      "ref": "liqiangcc/xhs:note_json/68075d56000000000d017fd3.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "06de6ffdc154f8dcbec5d7b26b844bc10f49e90d",
+      "byte_size": 24869,
+      "content_sha256": "3197f89f71c492a79af8660a7e3c3b3d19d463d0d51e560454cc87d61c6532ef",
+      "retrieval": {
+        "method": "fixed-ref-local-partial-clone",
+        "path": "/tmp/xhs-issue-1608-source/note_json/68075d56000000000d017fd3.json"
+      },
+      "complete_content_read": true
+    },
+    {
+      "kind": "text_projection",
+      "ref": "liqiangcc/xhs:note_desc/68075d56000000000d017fd3.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "74a0d4a08d9de018b5d6bc371e60dc3371e43b53",
+      "byte_size": 499,
+      "content_sha256": "a06854c088019676db98a23da76e2a88dcd18d2835d51a749f3e4b008323726e",
+      "retrieval": {
+        "method": "github-git-blob",
+        "path": "repos/liqiangcc/xhs/git/blobs/74a0d4a08d9de018b5d6bc371e60dc3371e43b53"
+      },
+      "complete_content_read": true
+    }
+  ],
   "evidence_status": "insufficient-blocked",
   "decision": null,
   "rationale": "固定 Source projection 的首个可读 artifact 行仅是弱效率描述；拒绝用其他未绑定行包装为 single-interview。",
@@ -27,7 +65,9 @@
     {
       "line": 1,
       "locator": "source-projection:artifact-line:1",
-      "excerpt": "字节的效率真的很高"
+      "excerpt": "字节的效率真的很高",
+      "artifact_ref": "liqiangcc/xhs:note_desc/68075d56000000000d017fd3.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "artifact_kind": "text_projection"
     }
   ],
   "case_keys": [],

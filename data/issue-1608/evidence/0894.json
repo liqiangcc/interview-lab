@@ -8,13 +8,51 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "source_retrieval": {
     "method": "frozen-source-snapshot",
-    "path": "/tmp/issue-1608-source-texts.json",
+    "path": "/tmp/issue-1608-source-artifacts-v2.json",
     "byte_size": 895,
     "git_blob_sha": "3cfa432cb38612533e1c63ad2a9fce7e68638d9d"
   },
-  "evidence_status": "insufficient-blocked",
-  "decision": null,
-  "rationale": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。",
+  "source_artifacts": [
+    {
+      "kind": "html",
+      "ref": "liqiangcc/xhs:note_detail/68403a26000000002202b1f4.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "5ebf5fd9c385459c2f7e8abd16bec658d989d680",
+      "byte_size": 388240,
+      "content_sha256": "d7c78adbd962156f74862a78fc06b0693459eb5a5de6d0cc730e647214450971",
+      "retrieval": {
+        "method": "fixed-ref-local-partial-clone",
+        "path": "/tmp/xhs-issue-1608-source/note_detail/68403a26000000002202b1f4.html"
+      },
+      "complete_content_read": true
+    },
+    {
+      "kind": "json",
+      "ref": "liqiangcc/xhs:note_json/68403a26000000002202b1f4.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "3dc0922263f447076294f4df5be06f3d8814bf94",
+      "byte_size": 21605,
+      "content_sha256": "3f5eadd2976c72cb964aa6c1a1453ac2266302542e27843589f473c62c3cbb4c",
+      "retrieval": {
+        "method": "fixed-ref-local-partial-clone",
+        "path": "/tmp/xhs-issue-1608-source/note_json/68403a26000000002202b1f4.json"
+      },
+      "complete_content_read": true
+    },
+    {
+      "kind": "text_projection",
+      "ref": "liqiangcc/xhs:note_desc/68403a26000000002202b1f4.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "3cfa432cb38612533e1c63ad2a9fce7e68638d9d",
+      "byte_size": 895,
+      "content_sha256": "71ab1f64e9bbd3cf941d09d15d57ecc19a32b976ded837dd6fc25fc2d433acf5",
+      "retrieval": {
+        "method": "github-git-blob",
+        "path": "repos/liqiangcc/xhs/git/blobs/3cfa432cb38612533e1c63ad2a9fce7e68638d9d"
+      },
+      "complete_content_read": true
+    }
+  ],
+  "evidence_status": "sufficient-for-controller-review",
+  "decision": "single-interview",
+  "rationale": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。",
   "artifact": {
     "ref": "liqiangcc/xhs:note_desc/68403a26000000002202b1f4.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -25,9 +63,25 @@
   },
   "excerpts": [
     {
-      "line": 1,
-      "locator": "source-projection:artifact-line:1",
-      "excerpt": "接上个笔记"
+      "line": null,
+      "locator": "json-pointer:/note/noteDetailMap/68403a26000000002202b1f4/note/title",
+      "artifact_ref": "liqiangcc/xhs:note_json/68403a26000000002202b1f4.json@95b77bb261048059846273688e4b90a2e108b437",
+      "artifact_kind": "json",
+      "excerpt": "字节社招一面面经"
+    },
+    {
+      "line": 5,
+      "locator": "source-projection:artifact-line:5",
+      "excerpt": "1.项目拷打20分钟",
+      "artifact_ref": "liqiangcc/xhs:note_desc/68403a26000000002202b1f4.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "artifact_kind": "text_projection"
+    },
+    {
+      "line": 6,
+      "locator": "source-projection:artifact-line:6",
+      "excerpt": "2.校验的时候缓存什么",
+      "artifact_ref": "liqiangcc/xhs:note_desc/68403a26000000002202b1f4.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "artifact_kind": "text_projection"
     }
   ],
   "case_keys": [],
@@ -50,8 +104,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+      "result": "pass",
+      "note": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -65,7 +119,7 @@
     }
   ],
   "limitations": [
-    "Evidence is insufficient for a boundary transition; no body/label mutation is proposed.",
-    "Title, labels, OCR/Derived data, and image existence are not used to fill the missing boundary proof."
+    "This local evidence is not a GitHub review comment; no live evidence comment was created by this run.",
+    "Boundary Review only determines 0/1/N and does not create InterviewNote Issues or source-ready/learning labels."
   ]
 }

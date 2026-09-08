@@ -8,13 +8,51 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "source_retrieval": {
     "method": "frozen-source-snapshot",
-    "path": "/tmp/issue-1608-source-texts.json",
+    "path": "/tmp/issue-1608-source-artifacts-v2.json",
     "byte_size": 2003,
     "git_blob_sha": "03ffd525f066f16b0b4a7590c5ea28951754176c"
   },
-  "evidence_status": "insufficient-blocked",
-  "decision": null,
-  "rationale": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。",
+  "source_artifacts": [
+    {
+      "kind": "html",
+      "ref": "liqiangcc/xhs:note_detail/68427c4d000000001200560a.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "509919dbe5e243be42f7955450a7342bf54704c7",
+      "byte_size": 394983,
+      "content_sha256": "359f4cd9aae376a13e2d3483056ebc1fb17dffcf1dab4f435c239c660d87f220",
+      "retrieval": {
+        "method": "fixed-ref-local-partial-clone",
+        "path": "/tmp/xhs-issue-1608-source/note_detail/68427c4d000000001200560a.html"
+      },
+      "complete_content_read": true
+    },
+    {
+      "kind": "json",
+      "ref": "liqiangcc/xhs:note_json/68427c4d000000001200560a.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "1ae6db084e5997510598afa74906de7c7b8c8c78",
+      "byte_size": 22901,
+      "content_sha256": "75d07aff8c31af693a5e62fc29a6274d287c9469bd384510ff411a3c8d75707f",
+      "retrieval": {
+        "method": "fixed-ref-local-partial-clone",
+        "path": "/tmp/xhs-issue-1608-source/note_json/68427c4d000000001200560a.json"
+      },
+      "complete_content_read": true
+    },
+    {
+      "kind": "text_projection",
+      "ref": "liqiangcc/xhs:note_desc/68427c4d000000001200560a.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "03ffd525f066f16b0b4a7590c5ea28951754176c",
+      "byte_size": 2003,
+      "content_sha256": "c5184034af2dcce7dbf11cad7e36c0cd39020ba393a108acab05f5e3a60685a4",
+      "retrieval": {
+        "method": "github-git-blob",
+        "path": "repos/liqiangcc/xhs/git/blobs/03ffd525f066f16b0b4a7590c5ea28951754176c"
+      },
+      "complete_content_read": true
+    }
+  ],
+  "evidence_status": "sufficient-for-controller-review",
+  "decision": "single-interview",
+  "rationale": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。",
   "artifact": {
     "ref": "liqiangcc/xhs:note_desc/68427c4d000000001200560a.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -27,7 +65,23 @@
     {
       "line": 1,
       "locator": "source-projection:artifact-line:1",
-      "excerpt": "京东物流后端jdy一面凉经："
+      "excerpt": "京东物流后端jdy一面凉经：",
+      "artifact_ref": "liqiangcc/xhs:note_desc/68427c4d000000001200560a.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "artifact_kind": "text_projection"
+    },
+    {
+      "line": 2,
+      "locator": "source-projection:artifact-line:2",
+      "excerpt": "一面拷打五十几分钟，基本追着简历深挖，没有手撕，隔天晚上十点挂，总结还是自己能力不足，回答的不是很好，希望发出来能给自己积点德😂",
+      "artifact_ref": "liqiangcc/xhs:note_desc/68427c4d000000001200560a.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "artifact_kind": "text_projection"
+    },
+    {
+      "line": 3,
+      "locator": "source-projection:artifact-line:3",
+      "excerpt": "1.你说你做了简易数据库，你是整个搭建了一套数据库系统，还是基于一系列的开源项目去实现的",
+      "artifact_ref": "liqiangcc/xhs:note_desc/68427c4d000000001200560a.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "artifact_kind": "text_projection"
     }
   ],
   "case_keys": [],
@@ -50,8 +104,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+      "result": "pass",
+      "note": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -65,7 +119,7 @@
     }
   ],
   "limitations": [
-    "Evidence is insufficient for a boundary transition; no body/label mutation is proposed.",
-    "Title, labels, OCR/Derived data, and image existence are not used to fill the missing boundary proof."
+    "This local evidence is not a GitHub review comment; no live evidence comment was created by this run.",
+    "Boundary Review only determines 0/1/N and does not create InterviewNote Issues or source-ready/learning labels."
   ]
 }

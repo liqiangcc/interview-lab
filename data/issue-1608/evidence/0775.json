@@ -8,13 +8,51 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "source_retrieval": {
     "method": "frozen-source-snapshot",
-    "path": "/tmp/issue-1608-source-texts.json",
+    "path": "/tmp/issue-1608-source-artifacts-v2.json",
     "byte_size": 1071,
     "git_blob_sha": "4cbf11320936c7e0340c3288be2995dfb3f2c3a9"
   },
-  "evidence_status": "insufficient-blocked",
-  "decision": null,
-  "rationale": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。",
+  "source_artifacts": [
+    {
+      "kind": "html",
+      "ref": "liqiangcc/xhs:note_detail/6808a9f6000000001c013713.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "8bcb8434db44d523ce2101108ca3134e28f0d988",
+      "byte_size": 393797,
+      "content_sha256": "011cc8a809493b211ae6096176263d8797d0c4301511df5abf91262cfe5f76dc",
+      "retrieval": {
+        "method": "fixed-ref-local-partial-clone",
+        "path": "/tmp/xhs-issue-1608-source/note_detail/6808a9f6000000001c013713.html"
+      },
+      "complete_content_read": true
+    },
+    {
+      "kind": "json",
+      "ref": "liqiangcc/xhs:note_json/6808a9f6000000001c013713.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "9a07bc8ed40b62d801c4e2f2f78aeb589902846c",
+      "byte_size": 25570,
+      "content_sha256": "a8142e5ed5aebbdd86cf0d1d84ebe7eb94342cdfaa69d5cc4daf7e9381c8c92f",
+      "retrieval": {
+        "method": "fixed-ref-local-partial-clone",
+        "path": "/tmp/xhs-issue-1608-source/note_json/6808a9f6000000001c013713.json"
+      },
+      "complete_content_read": true
+    },
+    {
+      "kind": "text_projection",
+      "ref": "liqiangcc/xhs:note_desc/6808a9f6000000001c013713.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "4cbf11320936c7e0340c3288be2995dfb3f2c3a9",
+      "byte_size": 1071,
+      "content_sha256": "b7ab27521b15b2fa9cdae70030301cd149b9fd18226cd2c726c7b750ee21ffad",
+      "retrieval": {
+        "method": "github-git-blob",
+        "path": "repos/liqiangcc/xhs/git/blobs/4cbf11320936c7e0340c3288be2995dfb3f2c3a9"
+      },
+      "complete_content_read": true
+    }
+  ],
+  "evidence_status": "sufficient-for-controller-review",
+  "decision": "single-interview",
+  "rationale": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。",
   "artifact": {
     "ref": "liqiangcc/xhs:note_desc/6808a9f6000000001c013713.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -25,9 +63,32 @@
   },
   "excerpts": [
     {
+      "line": null,
+      "locator": "json-pointer:/note/noteDetailMap/6808a9f6000000001c013713/note/title",
+      "artifact_ref": "liqiangcc/xhs:note_json/6808a9f6000000001c013713.json@95b77bb261048059846273688e4b90a2e108b437",
+      "artifact_kind": "json",
+      "excerpt": "美团日常实习面经"
+    },
+    {
       "line": 1,
       "locator": "source-projection:artifact-line:1",
-      "excerpt": "java后端开发，4.15号二面"
+      "excerpt": "java后端开发，4.15号二面",
+      "artifact_ref": "liqiangcc/xhs:note_desc/6808a9f6000000001c013713.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "artifact_kind": "text_projection"
+    },
+    {
+      "line": 5,
+      "locator": "source-projection:artifact-line:5",
+      "excerpt": "1.  自我介绍；",
+      "artifact_ref": "liqiangcc/xhs:note_desc/6808a9f6000000001c013713.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "artifact_kind": "text_projection"
+    },
+    {
+      "line": 6,
+      "locator": "source-projection:artifact-line:6",
+      "excerpt": "2.  目前还有课么？一周可以到岗几天？可以实习多久？",
+      "artifact_ref": "liqiangcc/xhs:note_desc/6808a9f6000000001c013713.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "artifact_kind": "text_projection"
     }
   ],
   "case_keys": [],
@@ -50,8 +111,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+      "result": "pass",
+      "note": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -65,7 +126,7 @@
     }
   ],
   "limitations": [
-    "Evidence is insufficient for a boundary transition; no body/label mutation is proposed.",
-    "Title, labels, OCR/Derived data, and image existence are not used to fill the missing boundary proof."
+    "This local evidence is not a GitHub review comment; no live evidence comment was created by this run.",
+    "Boundary Review only determines 0/1/N and does not create InterviewNote Issues or source-ready/learning labels."
   ]
 }

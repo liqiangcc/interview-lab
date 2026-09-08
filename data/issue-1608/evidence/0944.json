@@ -8,13 +8,51 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "source_retrieval": {
     "method": "frozen-source-snapshot",
-    "path": "/tmp/issue-1608-source-texts.json",
+    "path": "/tmp/issue-1608-source-artifacts-v2.json",
     "byte_size": 433,
     "git_blob_sha": "04c408f6181af2dd39326cd6f31ffb0aaf123e7f"
   },
+  "source_artifacts": [
+    {
+      "kind": "html",
+      "ref": "liqiangcc/xhs:note_detail/68468aac0000000023011103.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "8b8d865d13170f9a19e31d4eb20f71c7954c5b49",
+      "byte_size": 389217,
+      "content_sha256": "ac980e71f3b538e5c46048420e6adb5467a93406b1da0553070a48037703d1c1",
+      "retrieval": {
+        "method": "fixed-ref-local-partial-clone",
+        "path": "/tmp/xhs-issue-1608-source/note_detail/68468aac0000000023011103.html"
+      },
+      "complete_content_read": true
+    },
+    {
+      "kind": "json",
+      "ref": "liqiangcc/xhs:note_json/68468aac0000000023011103.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "011e962b64c0d383625ec7dd80381adcf5ed0e1b",
+      "byte_size": 22494,
+      "content_sha256": "f387f81d4e8a3e92525b09d3a21e652bf17e2c117553f6754c486a0552541699",
+      "retrieval": {
+        "method": "fixed-ref-local-partial-clone",
+        "path": "/tmp/xhs-issue-1608-source/note_json/68468aac0000000023011103.json"
+      },
+      "complete_content_read": true
+    },
+    {
+      "kind": "text_projection",
+      "ref": "liqiangcc/xhs:note_desc/68468aac0000000023011103.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "04c408f6181af2dd39326cd6f31ffb0aaf123e7f",
+      "byte_size": 433,
+      "content_sha256": "316f11d1b4eab4d58bad2471ea21cca7cab9558c76377475681b671a89dd1ed6",
+      "retrieval": {
+        "method": "github-git-blob",
+        "path": "repos/liqiangcc/xhs/git/blobs/04c408f6181af2dd39326cd6f31ffb0aaf123e7f"
+      },
+      "complete_content_read": true
+    }
+  ],
   "evidence_status": "insufficient-blocked",
   "decision": null,
-  "rationale": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。",
+  "rationale": "固定 SourceNote 虽有面试标题或事件描述，但未同时提供已完成面试事件与至少两条 substantive Q&A；拒绝用预约、结果、题目列表或营销包装为 single-interview。",
   "artifact": {
     "ref": "liqiangcc/xhs:note_desc/68468aac0000000023011103.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -27,7 +65,9 @@
     {
       "line": 1,
       "locator": "source-projection:artifact-line:1",
-      "excerpt": "昨天下午1点多面试成都快手客服。面试完都快5点了。只有一面，然后5点多通知面试成功开始背调我。今天中午就给我发Offer了。我也不确定，想不想去。主要是离我家太远了，我住在1号线，它在6号线那边骑单车都要20多分钟。也不知道成都快手咋样。#收到offer[话题]# #互联网大厂[话题]# #快手客服外包[话题]# #面试求职[话题]#"
+      "excerpt": "昨天下午1点多面试成都快手客服。面试完都快5点了。只有一面，然后5点多通知面试成功开始背调我。今天中午就给我发Offer了。我也不确定，想不想去。主要是离我家太远了，我住在1号线，它在6号线那边骑单车都要20多分钟。也不知道成都快手咋样。#收到offer[话题]# #互联网大厂[话题]# #快手客服外包[话题]# #面试求职[话题]#",
+      "artifact_ref": "liqiangcc/xhs:note_desc/68468aac0000000023011103.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "artifact_kind": "text_projection"
     }
   ],
   "case_keys": [],
@@ -51,7 +91,7 @@
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+      "note": "固定 SourceNote 虽有面试标题或事件描述，但未同时提供已完成面试事件与至少两条 substantive Q&A；拒绝用预约、结果、题目列表或营销包装为 single-interview。"
     },
     {
       "check_id": "no_cross_source_mixing",

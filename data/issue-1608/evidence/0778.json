@@ -8,13 +8,51 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "source_retrieval": {
     "method": "frozen-source-snapshot",
-    "path": "/tmp/issue-1608-source-texts.json",
+    "path": "/tmp/issue-1608-source-artifacts-v2.json",
     "byte_size": 533,
     "git_blob_sha": "4da828000ab16b676fd8e196c240cba3822794c3"
   },
-  "evidence_status": "insufficient-blocked",
-  "decision": null,
-  "rationale": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。",
+  "source_artifacts": [
+    {
+      "kind": "html",
+      "ref": "liqiangcc/xhs:note_detail/6809e0d6000000001c015fe6.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "3d6969da87bef654f712ecea88adee3e9ab89611",
+      "byte_size": 386780,
+      "content_sha256": "367e8f1af2737dd79baefe5d750bfa71c6cf29f3033f66b3b07d16d73f49dae0",
+      "retrieval": {
+        "method": "fixed-ref-local-partial-clone",
+        "path": "/tmp/xhs-issue-1608-source/note_detail/6809e0d6000000001c015fe6.html"
+      },
+      "complete_content_read": true
+    },
+    {
+      "kind": "json",
+      "ref": "liqiangcc/xhs:note_json/6809e0d6000000001c015fe6.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "50192a315e16adcb612da83228518035d319fb57",
+      "byte_size": 20838,
+      "content_sha256": "1e3bf9c0fa3557a35e66893be3b4f684e51e62ed995ed680b075a0e135d79ca5",
+      "retrieval": {
+        "method": "fixed-ref-local-partial-clone",
+        "path": "/tmp/xhs-issue-1608-source/note_json/6809e0d6000000001c015fe6.json"
+      },
+      "complete_content_read": true
+    },
+    {
+      "kind": "text_projection",
+      "ref": "liqiangcc/xhs:note_desc/6809e0d6000000001c015fe6.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "4da828000ab16b676fd8e196c240cba3822794c3",
+      "byte_size": 533,
+      "content_sha256": "78f8b9ca6f46a962a2f34672e412c8016f03a44aa2a71c091d42813df728fe7d",
+      "retrieval": {
+        "method": "github-git-blob",
+        "path": "repos/liqiangcc/xhs/git/blobs/4da828000ab16b676fd8e196c240cba3822794c3"
+      },
+      "complete_content_read": true
+    }
+  ],
+  "evidence_status": "sufficient-for-controller-review",
+  "decision": "single-interview",
+  "rationale": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。",
   "artifact": {
     "ref": "liqiangcc/xhs:note_desc/6809e0d6000000001c015fe6.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -25,9 +63,32 @@
   },
   "excerpts": [
     {
-      "line": 1,
-      "locator": "source-projection:artifact-line:1",
-      "excerpt": "自我介绍"
+      "line": null,
+      "locator": "json-pointer:/note/noteDetailMap/6809e0d6000000001c015fe6/note/title",
+      "artifact_ref": "liqiangcc/xhs:note_json/6809e0d6000000001c015fe6.json@95b77bb261048059846273688e4b90a2e108b437",
+      "artifact_kind": "json",
+      "excerpt": "腾讯云智26后台开发一面（30min）"
+    },
+    {
+      "line": 3,
+      "locator": "source-projection:artifact-line:3",
+      "excerpt": "拷打项目",
+      "artifact_ref": "liqiangcc/xhs:note_desc/6809e0d6000000001c015fe6.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "artifact_kind": "text_projection"
+    },
+    {
+      "line": 5,
+      "locator": "source-projection:artifact-line:5",
+      "excerpt": "八股",
+      "artifact_ref": "liqiangcc/xhs:note_desc/6809e0d6000000001c015fe6.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "artifact_kind": "text_projection"
+    },
+    {
+      "line": 10,
+      "locator": "source-projection:artifact-line:10",
+      "excerpt": "Hashmap扩容机制",
+      "artifact_ref": "liqiangcc/xhs:note_desc/6809e0d6000000001c015fe6.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "artifact_kind": "text_projection"
     }
   ],
   "case_keys": [],
@@ -50,8 +111,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+      "result": "pass",
+      "note": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -65,7 +126,7 @@
     }
   ],
   "limitations": [
-    "Evidence is insufficient for a boundary transition; no body/label mutation is proposed.",
-    "Title, labels, OCR/Derived data, and image existence are not used to fill the missing boundary proof."
+    "This local evidence is not a GitHub review comment; no live evidence comment was created by this run.",
+    "Boundary Review only determines 0/1/N and does not create InterviewNote Issues or source-ready/learning labels."
   ]
 }

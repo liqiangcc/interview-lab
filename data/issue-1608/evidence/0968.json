@@ -8,13 +8,51 @@
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
   "source_retrieval": {
     "method": "frozen-source-snapshot",
-    "path": "/tmp/issue-1608-source-texts.json",
+    "path": "/tmp/issue-1608-source-artifacts-v2.json",
     "byte_size": 807,
     "git_blob_sha": "3235cb4b6cf1cb623f889f08a8d27ce4c766e258"
   },
-  "evidence_status": "insufficient-blocked",
-  "decision": null,
-  "rationale": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。",
+  "source_artifacts": [
+    {
+      "kind": "html",
+      "ref": "liqiangcc/xhs:note_detail/68523a4a0000000022034deb.html@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "75f0e27bc5461f0940943d4586854634d4062652",
+      "byte_size": 386675,
+      "content_sha256": "54247d3896f16263e14a7285e50aa9701e06c6a7b2e0412cb1e5a9019c79d63b",
+      "retrieval": {
+        "method": "fixed-ref-local-partial-clone",
+        "path": "/tmp/xhs-issue-1608-source/note_detail/68523a4a0000000022034deb.html"
+      },
+      "complete_content_read": true
+    },
+    {
+      "kind": "json",
+      "ref": "liqiangcc/xhs:note_json/68523a4a0000000022034deb.json@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "cafc751dc6af30277702f6ec4940aeda266a414c",
+      "byte_size": 20523,
+      "content_sha256": "c0f96acfb15b401bf38dca1cfa7cf6ccaf4add596dec369d795ab33f8a14bb1c",
+      "retrieval": {
+        "method": "fixed-ref-local-partial-clone",
+        "path": "/tmp/xhs-issue-1608-source/note_json/68523a4a0000000022034deb.json"
+      },
+      "complete_content_read": true
+    },
+    {
+      "kind": "text_projection",
+      "ref": "liqiangcc/xhs:note_desc/68523a4a0000000022034deb.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "git_blob_sha": "3235cb4b6cf1cb623f889f08a8d27ce4c766e258",
+      "byte_size": 807,
+      "content_sha256": "c7ddf151f4edee45703d11944e440f60555ad1e2ca06224ee6f55ae03bcca660",
+      "retrieval": {
+        "method": "github-git-blob",
+        "path": "repos/liqiangcc/xhs/git/blobs/3235cb4b6cf1cb623f889f08a8d27ce4c766e258"
+      },
+      "complete_content_read": true
+    }
+  ],
+  "evidence_status": "sufficient-for-controller-review",
+  "decision": "single-interview",
+  "rationale": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。",
   "artifact": {
     "ref": "liqiangcc/xhs:note_desc/68523a4a0000000022034deb.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -25,9 +63,32 @@
   },
   "excerpts": [
     {
-      "line": 1,
-      "locator": "source-projection:artifact-line:1",
-      "excerpt": "开始面试官进行部门介绍"
+      "line": null,
+      "locator": "json-pointer:/note/noteDetailMap/68523a4a0000000022034deb/note/title",
+      "artifact_ref": "liqiangcc/xhs:note_json/68523a4a0000000022034deb.json@95b77bb261048059846273688e4b90a2e108b437",
+      "artifact_kind": "json",
+      "excerpt": "腾讯金融科技后端一面面经"
+    },
+    {
+      "line": 15,
+      "locator": "source-projection:artifact-line:15",
+      "excerpt": "面试时间总共二十多分钟，很短。无手撕",
+      "artifact_ref": "liqiangcc/xhs:note_desc/68523a4a0000000022034deb.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "artifact_kind": "text_projection"
+    },
+    {
+      "line": 5,
+      "locator": "source-projection:artifact-line:5",
+      "excerpt": "2-tcp和udp差异",
+      "artifact_ref": "liqiangcc/xhs:note_desc/68523a4a0000000022034deb.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "artifact_kind": "text_projection"
+    },
+    {
+      "line": 10,
+      "locator": "source-projection:artifact-line:10",
+      "excerpt": "7-介绍rag（回答部分错误）",
+      "artifact_ref": "liqiangcc/xhs:note_desc/68523a4a0000000022034deb.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "artifact_kind": "text_projection"
     }
   ],
   "case_keys": [],
@@ -50,8 +111,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+      "result": "pass",
+      "note": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -65,7 +126,7 @@
     }
   ],
   "limitations": [
-    "Evidence is insufficient for a boundary transition; no body/label mutation is proposed.",
-    "Title, labels, OCR/Derived data, and image existence are not used to fill the missing boundary proof."
+    "This local evidence is not a GitHub review comment; no live evidence comment was created by this run.",
+    "Boundary Review only determines 0/1/N and does not create InterviewNote Issues or source-ready/learning labels."
   ]
 }

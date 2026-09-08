@@ -22,7 +22,6 @@ const SOURCE_REF = '95b77bb261048059846273688e4b90a2e108b437';
 const ISSUE = 1608;
 const FIRST_ISSUE = 766;
 const LAST_ISSUE = 1138;
-const EXPECTED_PENDING_COUNT = 337;
 const OUTPUT_DIR = path.resolve(__dirname, '..', 'data', 'issue-1608');
 const ALL_LABELS = ['type:source-note', 'status:captured', 'boundary:pending'];
 const CHECKS = [
@@ -53,6 +52,22 @@ const PARENT_DEPENDENCY = Object.freeze({
   union: { count: 1397, pairwise_disjoint: true, equals_parent_inventory: true },
   status: 'read-only-parent-controller-dependency',
 });
+const PARENT_LIVE_PROGRESS = Object.freeze({
+  parent_issue: 1605,
+  progress_comment_id: 5586456436,
+  baseline_pending_count: 1397,
+  completed_boundary_rows: 419,
+  remaining_boundary_pending: 978,
+  authorization: {
+    manifest_digest: '40fd63cccea624a567778f5c679a9e0e77b0784181de4d54cacad9873ae6c97a',
+    plan_digest: '75af8bc59053022d884a845b98f12229705e03daefdcaaaa7793b36a21cf4906',
+    authorization_comment_id: 5584795249,
+    candidate_count: 419,
+    max_mutations: 840,
+    live_github_allowed: true,
+    applies_to_issue_1608_remainder: false,
+  },
+});
 
 const MULTI_CASE_RULES = [
   {
@@ -78,6 +93,10 @@ const MULTI_CASE_RULES = [
   {
     match: (text) => /4 家共计5个 offer/.test(text) && /字节，美团，快手，滴滴/.test(text),
     cases: [{ key: 'didi', anchor: '滴滴' }, { key: 'bytedance', anchor: '字节' }, { key: 'meituan', anchor: '美团' }, { key: 'kuaishou', anchor: '快手' }],
+  },
+  {
+    match: (text) => /上次腾讯面试完/.test(text) && /一次线上面试/.test(text),
+    cases: [{ key: 'tencent', anchor: '腾讯面试完' }, { key: 'bytedance', anchor: '线上面试' }],
   },
 ];
 const CASE_DETAIL_FROM_NEXT = new Set(['jd-software', 'small-company', 'kuaishou-outsourcing']);
@@ -135,7 +154,8 @@ function issueNumbers() {
 }
 
 function labelsOf(issue) {
-  return (issue.labels || []).map((label) => typeof label === 'string' ? label : label && label.name).filter(Boolean);
+  const labels = issue.labels && issue.labels.nodes ? issue.labels.nodes : issue.labels || [];
+  return labels.map((label) => typeof label === 'string' ? label : label && label.name).filter(Boolean);
 }
 
 function sourceProjection(record) {
@@ -193,51 +213,57 @@ function sourceExcerpt(candidate) {
   return { line: candidate.index + 1, locator: `source-projection:artifact-line:${candidate.index + 1}`, excerpt: normalized.slice(0, 360) };
 }
 
-function singleInterviewEvidenceLine(text) {
-  const usable = usableSourceLines(text);
-  const substantiveFact = /(面试官|面试完|面试了|面试过|一次面试|技术面|HR面|面试成功|面试通过|面完|通知\s*oc|(?:^|[\s，。！？])oc(?:$|[\s，。！？#])|发offer)/i;
-  const questionFact = /^\s*(?:[-*]\s*)?\d+[.、:：](?!\d)|[？?]/;
-  const candidate = usable.find(({ line }) => substantiveFact.test(line) && !/^(?:面试结果|面试情况)\s*[:：]?\s*$/u.test(line.trim()))
-    || usable.find(({ line }) => questionFact.test(line));
-  if (!candidate) return null;
-  return sourceExcerpt(candidate);
+function titleHasInterviewExperience(title) {
+  const value = String(title || '');
+  if (!value || /(面试题|面试真题|题解|题型|攻略|技巧|准备|方法|三要素|岗位职责|招聘|求职|学习强度|资料|答案)/i.test(value)) return false;
+  return /(一面|二面|三面|四面|终面|面经|凉经|面试记录|面试全程|面试体验|面试情况|面试结果|面试过|面试！)/i.test(value);
 }
 
-function singleInterviewEvidenceLines(text) {
+function actualEventLine(line) {
+  const value = cleanText(line);
+  const hasEvent = /(面试官.{0,24}(?:问|说|追问|人|好|很好|耐心|当我面)|面试完|面完|面试了|面试过|面试体验|面试过程|面试记录|面试结果|面试成功|面试通过|一面|二面|三面|四面|终面|HR面|技术面|手撕|拷打|反问|挂了|秒挂|offer|oc)/i.test(value);
+  const genericOnly = /(面试官不再|面试官怎么|面试官会|一面问|二面必问|面试还是以|面试用的|面试场景题型|面试题|面试技巧|面试准备|面试方法|面试攻略)/i.test(value);
+  return hasEvent && (!genericOnly || /面试完|面完|面试了|面试官.{0,24}当我面/i.test(value));
+}
+
+function substantiveQuestionLine(line) {
+  const value = cleanText(line).trim();
+  if (!value || /^(?:面试结果|面试情况|总结|面经|面试内容)\s*[:：]?$/u.test(value)) return false;
+  if (/^\s*(?:[-*]\s*)?\d+[.、:：](?!\d)/.test(value)) {
+    return !/(?:自我介绍|薪资|哪里人|期望薪资|离职原因|到岗时间|能实习多久)\s*[？?]?$/i.test(value);
+  }
+  if (/[？?]/.test(value)) return true;
+  return /(手撕|算法题|编程题|项目拷打|项目深挖|八股|HashMap|ConcurrentHashMap|Redis|MySQL|JVM|Spring|线程池|消息队列|分布式|TCP|HTTP|RPC|SQL|Transformer|RAG|协程|限流器|链表|二叉树|滑动窗口)/i.test(value)
+    && !/(整理|分享|建议|准备|复习|答案|题库|真题|教程|资料)/i.test(value);
+}
+
+function titleEvidence(title, item = null) {
+  const jsonArtifact = item && (item.source_artifacts || []).find((artifact) => artifact.kind === 'json');
+  return {
+    line: null,
+    locator: `json-pointer:/note/noteDetailMap/${item ? item.source_external_id : 'source-note'}/note/title`,
+    artifact_ref: jsonArtifact ? jsonArtifact.ref : null,
+    artifact_kind: 'json',
+    excerpt: String(title || '').trim().slice(0, 360),
+  };
+}
+
+function singleInterviewEvidenceLines(text, title = '', item = null) {
   const usable = usableSourceLines(text);
-  const completedEventFact = /(面试官|面试完|面试了|面试过|一次面试|面试流程|线下面试|线上面试|总体感觉|收到.*(?:二面|三面|offer|意向)|发二面|发offer|通知\s*oc|(?:^|[\s，。！？])oc(?:$|[\s，。！？#]))/i;
-  const outcomeEventFact = /(面试结果|结果\s*[:：])/i;
-  const contextFact = /(时间\s*[:：]|日期\s*[:：]|(?<![A-Za-z0-9])[0-9]{1,2}[./月][0-9]{1,2}(?![0-9])|一面|二面|三面|线下面试|线上面试|面试背景|形式\s*[:：]|公司(?:规模)?\s*[:：]|中小厂|大厂)/iu;
-  const numberedQuestion = /^\s*(?:[-*]\s*)?\d+[.、:：](?!\d)/;
-  const questionDetail = /[？?]|手撕|场景\s*[:：]|八股|介绍一下|什么|如何|为什么|区别|原理|项目|算法|线程|缓存|索引|事务|redis|mysql|spring|java|怎么做|怎么解决/i;
-  const notOnlyLabel = ({ line }) => !/^(?:面试结果|面试情况)\s*[:：]?\s*$/u.test(line.trim());
-  const processEvent = usable.find((candidate) => completedEventFact.test(candidate.line)
-    && notOnlyLabel(candidate)
-    && !/^背景\s*[:：]/u.test(candidate.line.trim()));
-  const contextCandidates = usable.filter((candidate) => candidate !== processEvent && contextFact.test(candidate.line) && !/(投递时间|预约|约面|面试安排|简历项目)/i.test(candidate.line));
-  const questionCandidates = usable.filter((candidate) => numberedQuestion.test(candidate.line) || /[？?]/.test(candidate.line) || questionDetail.test(candidate.line));
-  const notWeakQuestion = (candidate) => !/^(?:笔试题|手撕题?)\s*[.。:：]?/i.test(candidate.line.trim())
-    && !/(自我介绍|哪里人|期望薪资|离职原因)/i.test(candidate.line);
-  const question = questionCandidates.find((candidate) => /[？?]/.test(candidate.line) && notWeakQuestion(candidate))
-    || questionCandidates.find((candidate) => questionDetail.test(candidate.line) && notWeakQuestion(candidate))
-    || questionCandidates.find((candidate) => /手撕|八股/i.test(candidate.line))
-    || questionCandidates[0];
-  const event = processEvent || usable.find((candidate) => outcomeEventFact.test(candidate.line) && notOnlyLabel(candidate));
-  const eventHasProcess = Boolean(processEvent);
-  const eventHasOutcomeOnly = Boolean(event && !eventHasProcess && outcomeEventFact.test(event.line));
-  const context = contextCandidates.find((candidate) => /时间\s*[:：]|日期\s*[:：]|(?<![A-Za-z0-9])[0-9]{1,2}[./月][0-9]{1,2}(?![0-9])|一面|二面|三面|线下面试|线上面试|形式\s*[:：]|公司(?:规模)?\s*[:：]|中小厂|大厂/iu.test(candidate.line)) || contextCandidates[0];
-  const contextDetail = contextCandidates.find((candidate) => candidate !== context && /(线下面试|线上面试|形式\s*[:：]|一面|二面|三面|公司(?:规模)?\s*[:：]|中小厂|大厂)/i.test(candidate.line));
+  const eventCandidates = usable.filter((candidate) => actualEventLine(candidate.line));
+  const questionCandidates = usable.filter((candidate) => substantiveQuestionLine(candidate.line));
   const explicitOneInterviewOutcome = usable.find(({ line }) => /一次面试.*(?:通知\s*oc|oc|offer)/i.test(line));
   const candidates = explicitOneInterviewOutcome
     ? [explicitOneInterviewOutcome]
-    : [event, context, contextDetail, question].filter(Boolean);
+    : [titleHasInterviewExperience(title) ? titleEvidence(title, item) : null, eventCandidates[0], ...questionCandidates.slice(0, 2)].filter(Boolean);
   const unique = [];
   for (const candidate of candidates) {
-    const excerpt = sourceExcerpt(candidate);
+    const excerpt = candidate.locator ? candidate : sourceExcerpt(candidate);
     if (!unique.some((item) => item.locator === excerpt.locator)) unique.push(excerpt);
   }
   if (explicitOneInterviewOutcome) return unique;
-  return event && context && question && (eventHasProcess || (eventHasOutcomeOnly && questionDetail.test(question.line))) ? unique : [];
+  const hasEvent = Boolean(eventCandidates.length) || titleHasInterviewExperience(title);
+  return hasEvent && questionCandidates.length >= 2 ? unique : [];
 }
 
 function detectMultiCandidate(text) {
@@ -257,7 +283,7 @@ function hasCompletedInterviewFact(text) {
 }
 
 function hasScheduledOnlySignal(text) {
-  return /(预约面试|预约|约面|面试时间|面试安排|待面试|投递时间|投递.*面试|面试日期|明天|后天)/i.test(String(text || ''));
+  return /(预约面试|预约|约面|面试安排|待面试|投递时间|投递.*面试|明天|后天)/i.test(String(text || ''));
 }
 
 function evidenceDecisionConsistent(decision, excerpt) {
@@ -266,10 +292,9 @@ function evidenceDecisionConsistent(decision, excerpt) {
     .map((item) => String(item || '').replace(/[\uFEFF\u200B-\u200D\u2060]/g, '').replace(/#[^\s#]+\[话题\]#/g, '').trim());
   if (values.length === 1) return /(面试官|面试完|面试了|面试过|一次面试)/i.test(values[0]) && !hasScheduledOnlySignal(values[0]);
   const joined = values.join('\n');
-  const hasEvent = /(面试官|面试完|面试了|面试过|一次面试|线下面试|线上面试|面试流程|总体感觉|面试结果|结果\s*[:：]|收到.*(?:二面|三面|offer|意向)|发二面|发offer|通知\s*oc|(?:^|[\s，。！？])oc(?:$|[\s，。！？#]))/i.test(joined);
-  const hasContext = /(时间\s*[:：]|日期\s*[:：]|(?<![A-Za-z0-9])[0-9]{1,2}[./月][0-9]{1,2}(?![0-9])|一面|二面|三面|线下面试|线上面试|面试背景|形式\s*[:：]|公司(?:规模)?\s*[:：])/iu.test(joined);
+  const hasEvent = /(面试官|面试完|面试了|面试过|一次面试|一面|二面|三面|线下面试|线上面试|面试流程|总体感觉|面试结果|结果\s*[:：]|收到.*(?:二面|三面|offer|意向)|发二面|发offer|通知\s*oc|(?:^|[\s，。！？])oc(?:$|[\s，。！？#]))/i.test(joined);
   const hasQuestion = /[？?]|手撕|场景\s*[:：]|八股|介绍一下|什么|如何|为什么|区别|原理|项目|算法|线程|缓存|索引|事务|redis|mysql|spring|java|怎么做|怎么解决/i.test(joined);
-  return hasEvent && hasContext && hasQuestion;
+  return hasEvent && hasQuestion;
 }
 
 function multiProcessDetail(evidence, detail) {
@@ -298,7 +323,7 @@ function caseEvidence(text, classification) {
   }));
 }
 
-function classify(number, text) {
+function classify(number, text, title = '', item = null) {
   const cleaned = cleanText(text);
   if (!cleaned) return { disposition: 'blocked', decision: null, stratum: 'empty-source-projection', rationale: '固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。' };
   if (/^字节的效率真的很高\s*$/u.test(cleaned)) {
@@ -306,10 +331,6 @@ function classify(number, text) {
   }
   if (/^字节的效率真的很高\s*$/u.test(String(text || '').split('\n').map((line) => line.trim()).find((line) => line && !line.startsWith('#')) || '')) {
     return { disposition: 'blocked', decision: null, stratum: 'evidence-decision-mismatch', rationale: '固定 Source projection 的首个可读 artifact 行仅是弱效率描述；拒绝用其他未绑定行包装为 single-interview。' };
-  }
-  const completedFact = hasCompletedInterviewFact(cleaned);
-  if (hasScheduledOnlySignal(cleaned) && !completedFact) {
-    return { disposition: 'blocked', decision: null, stratum: 'scheduled-only-source-evidence', rationale: '固定 Source projection 只有预约/投递/面试时间或排期信号，没有已完成面试事件事实；保留 pending，不 materialize。' };
   }
   const multi = detectMultiCandidate(text);
   if (multi) {
@@ -321,26 +342,34 @@ function classify(number, text) {
     }
     return { disposition: 'decided', decision: 'multi-interview', stratum: 'multiple-independent-processes', case_keys: multi.case_keys, case_anchors: multi.case_anchors, rationale: '固定 Source projection 明确记录多个相互独立的公司/流程；每个 case 均有独立 artifact locator 与流程细节，未把同一流程多轮机械拆开。' };
   }
-  const explicitEvent = /(面试官|面完|面试了|面试过|收到.*(?:二面|三面|offer|意向)|一次面试|手撕|自我介绍|项目拷打|拷打|反问|面试公司|面试岗位|一轮面试|技术面|HR面|线下面试|线上面试|面试感想|面试成功|面试通过|面经|凉经|凉凉|三面|二面)/i.test(cleaned);
-  const generic = /(题库|真题|教程|整理|分享|建议|复习|准备|资料|面试技巧|内推|招聘|岗位职责|薪资|可分享|完整.*(?:答案|pdf)|统计出了|模拟面试|面试工具)/.test(cleaned);
-  const questionList = /^\s*(?:[-*]\s*)?\d+[.、:：](?:\s|$)/m.test(String(text || ''));
-  if (generic && !completedFact && !questionList) {
+  const titleEvent = titleHasInterviewExperience(title);
+  const bodyEvent = usableSourceLines(text).some((candidate) => actualEventLine(candidate.line));
+  const generic = /(题库|真题|教程|整理|分享|建议|复习|准备|资料|面试技巧|内推|招聘|岗位职责|薪资|可分享|完整.*(?:答案|pdf)|统计出了|模拟面试|面试工具|题解|攻略|学习强度|三要素|方法)/.test(`${cleaned} ${title}`);
+  const questionLines = usableSourceLines(text).filter((candidate) => substantiveQuestionLine(candidate.line));
+  const appointmentOnly = hasScheduledOnlySignal(cleaned);
+  const completedEvent = bodyEvent || (titleEvent && questionLines.length >= 2 && !appointmentOnly)
+    || /(面试完|面完|面试了|问晕|答不上|答的还可以|面试体验|面试官.*(?:问|说|追问)|收到.*(?:offer|oc|二面|三面))/i.test(cleaned);
+  if (hasScheduledOnlySignal(cleaned) && !completedEvent) {
+    return { disposition: 'blocked', decision: null, stratum: 'scheduled-only-source-evidence', rationale: '固定 Source projection 只有预约/投递/面试时间或排期信号，没有候选人已完成面试事件事实；保留 pending，不 materialize。' };
+  }
+  if (generic && !titleEvent && !bodyEvent) {
     return { disposition: 'decided', decision: 'not-interview', stratum: 'generic-or-non-event', rationale: '固定 Source projection 只有通用题目/教程/招聘或建议内容，没有可定位的实际面试事件。' };
   }
-  if (!explicitEvent || !completedFact || cleaned.length < 30) {
+  if (!titleEvent && !bodyEvent) {
     return { disposition: 'blocked', decision: null, stratum: 'insufficient-source-evidence', rationale: '固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。' };
   }
-  const evidenceLines = singleInterviewEvidenceLines(text);
+  const evidenceLines = singleInterviewEvidenceLines(text, title, item);
   const explicitOneInterviewOutcome = /一次面试.*(?:通知\s*oc|oc|offer)/i.test(cleaned);
-  if (!explicitOneInterviewOutcome && (evidenceLines.length < 3 || !evidenceDecisionConsistent('single-interview', evidenceLines))) {
-    return { disposition: 'blocked', decision: null, stratum: 'evidence-decision-mismatch', rationale: '分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。' };
+  if (!explicitOneInterviewOutcome && (questionLines.length < 2 || evidenceLines.length < 3 || !evidenceDecisionConsistent('single-interview', evidenceLines))) {
+    return { disposition: 'blocked', decision: null, stratum: 'evidence-decision-mismatch', rationale: '固定 SourceNote 虽有面试标题或事件描述，但未同时提供已完成面试事件与至少两条 substantive Q&A；拒绝用预约、结果、题目列表或营销包装为 single-interview。' };
   }
   return { disposition: 'decided', decision: 'single-interview', stratum: 'single-bounded-process', rationale: '固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。' };
 }
 
 function makeEvidence(item, classification, text) {
   classification.issue_number = item.issue_number;
-  const lines = classification.decision === 'single-interview' ? singleInterviewEvidenceLines(text) : [];
+  const rawLines = classification.decision === 'single-interview' ? singleInterviewEvidenceLines(text, item.title, item) : [];
+  const lines = rawLines.map((excerpt) => excerpt.artifact_ref ? excerpt : { ...excerpt, artifact_ref: item.artifact.ref, artifact_kind: item.artifact.kind });
   const line = classification.decision === 'single-interview' ? lines[0] : sourceLine(text, null, true, false);
   const cases = caseEvidence(text, classification);
   const caseLocators = cases.map((item) => item.evidence && item.evidence.locator).filter(Boolean);
@@ -362,6 +391,7 @@ function makeEvidence(item, classification, text) {
     source_repository: SOURCE_REPOSITORY,
     source_repository_ref: SOURCE_REF,
     source_retrieval: item.source_retrieval,
+    source_artifacts: item.source_artifacts || [],
     evidence_status: sufficient ? 'sufficient-for-controller-review' : 'insufficient-blocked',
     decision: sufficient ? classification.decision : null,
     rationale: classification.rationale,
@@ -373,7 +403,7 @@ function makeEvidence(item, classification, text) {
       byte_size: item.artifact.byte_size,
       content_sha256: item.artifact.content_sha256,
     },
-    excerpts: classification.decision === 'single-interview' ? lines : (line ? [line] : []),
+    excerpts: classification.decision === 'single-interview' ? lines : (line ? [{ ...line, artifact_ref: item.artifact.ref, artifact_kind: item.artifact.kind }] : []),
     case_keys: sufficient && classification.decision === 'multi-interview' ? classification.case_keys : [],
     case_evidence: sufficient && classification.decision === 'multi-interview' ? cases : [],
     checks: CHECKS.map((check_id) => ({
@@ -401,6 +431,7 @@ function makeIntent(item, classification, evidence) {
     expected_manifest_sha256: null,
     expected_source_repository_ref: SOURCE_REF,
     source_retrieval: item.source_retrieval,
+    source_artifacts: item.source_artifacts || [],
     decision: classification.decision,
     case_keys: classification.decision === 'multi-interview' ? classification.case_keys : [],
     evidence_file: `evidence/${String(item.issue_number).padStart(4, '0')}.json`,
@@ -449,13 +480,15 @@ function parseArgs(argv) {
     throw new Error('reproducibility requires --captured-at YYYY-MM-DDTHH:mm:ss.sssZ');
   }
   if (Number.isNaN(Date.parse(args.capturedAt))) throw new Error(`invalid --captured-at: ${args.capturedAt}`);
-  if (Boolean(args.issuesFile) !== Boolean(args.sourceTextsFile)) throw new Error('--issues-file and --source-texts-file must be supplied together');
   return args;
 }
 
 async function prepare({ capturedAt, issuesFile, sourceTextsFile, cacheDir }) {
   const numbers = issueNumbers();
   const cachedIssues = issuesFile ? readJson(issuesFile) : null;
+  const liveIssueSnapshot = issuesFile
+    ? { path: path.resolve(issuesFile), sha256: sha256Text(fs.readFileSync(issuesFile, 'utf8')) }
+    : null;
   if (cachedIssues) {
     if (cachedIssues.range?.first !== FIRST_ISSUE || cachedIssues.range?.last !== LAST_ISSUE) throw new Error('cached issue snapshot range drifted');
     if (JSON.stringify(cachedIssues.numbers) !== JSON.stringify(numbers)) throw new Error('cached issue snapshot enumeration drifted');
@@ -504,12 +537,14 @@ async function prepare({ capturedAt, issuesFile, sourceTextsFile, cacheDir }) {
       live_updated_at: live.updated_at,
     });
   }
-  if (selected.length !== EXPECTED_PENDING_COUNT) throw new Error(`selection count mismatch: expected ${EXPECTED_PENDING_COUNT}, got ${selected.length}`);
   if (rejected.some((item) => item.issue_number >= FIRST_ISSUE && item.issue_number <= LAST_ISSUE && item.state === 'open' && item.labels.includes('boundary:pending'))) {
     throw new Error('scope selection rejected an in-range pending SourceNote unexpectedly');
   }
 
   const cachedSourceTexts = sourceTextsFile ? readJson(sourceTextsFile) : null;
+  const sourceArtifactSnapshot = sourceTextsFile
+    ? { path: path.resolve(sourceTextsFile), sha256: sha256Text(fs.readFileSync(sourceTextsFile, 'utf8')) }
+    : null;
   if (cachedSourceTexts) {
     if (cachedSourceTexts.source_repository !== SOURCE_REPOSITORY || cachedSourceTexts.source_ref !== SOURCE_REF) throw new Error('cached source snapshot ref drifted');
   }
@@ -527,6 +562,7 @@ async function prepare({ capturedAt, issuesFile, sourceTextsFile, cacheDir }) {
         content_sha256: sha256Text(bytes),
         byte_size: bytes.length,
         text: bytes.toString('utf8').replace(/\r\n/g, '\n'),
+        artifacts: cachedSourceTexts?.items?.[String(item.issue_number)]?.artifacts || [],
         retrieval: { method: 'note-desc-cache', path: cachePath, byte_size: bytes.length, git_blob_sha: verifiedSha },
       };
     }
@@ -535,7 +571,7 @@ async function prepare({ capturedAt, issuesFile, sourceTextsFile, cacheDir }) {
       const bytes = Buffer.from(String(cached.text || ''), 'utf8');
       const verifiedSha = gitBlobSha(bytes);
       if (bytes.length !== item.artifact.byte_size || cached.blob_sha !== item.artifact.git_blob_sha || cached.byte_length !== bytes.length || verifiedSha !== item.artifact.git_blob_sha) throw new Error(`#${item.issue_number} cached source blob verification failed`);
-      return { issue_number: item.issue_number, content_sha256: sha256Text(bytes), byte_size: bytes.length, text: bytes.toString('utf8').replace(/\r\n/g, '\n'), retrieval: { method: 'frozen-source-snapshot', path: sourceTextsFile, byte_size: bytes.length, git_blob_sha: verifiedSha } };
+      return { issue_number: item.issue_number, content_sha256: sha256Text(bytes), byte_size: bytes.length, text: bytes.toString('utf8').replace(/\r\n/g, '\n'), artifacts: cached.artifacts || [], retrieval: { method: 'frozen-source-snapshot', path: sourceTextsFile, byte_size: bytes.length, git_blob_sha: verifiedSha } };
     }
     const blob = await ghJson(['api', `repos/${SOURCE_REPOSITORY}/git/blobs/${item.artifact.git_blob_sha}`]);
     if (blob.sha !== item.artifact.git_blob_sha || blob.encoding !== 'base64' || typeof blob.content !== 'string') throw new Error(`#${item.issue_number} source blob response mismatch`);
@@ -553,7 +589,8 @@ async function prepare({ capturedAt, issuesFile, sourceTextsFile, cacheDir }) {
     item.artifact.content_sha256 = source.content_sha256;
     item.artifact.byte_size_verified = source.byte_size;
     item.source_retrieval = source.retrieval;
-    const classification = classify(item.issue_number, source.text);
+    item.source_artifacts = source.artifacts || [];
+    const classification = classify(item.issue_number, source.text, item.title, item);
     const evidence = makeEvidence(item, classification, source.text);
     const intent = makeIntent(item, classification, evidence);
     const evidenceFile = `evidence/${String(item.issue_number).padStart(4, '0')}.json`;
@@ -576,6 +613,17 @@ async function prepare({ capturedAt, issuesFile, sourceTextsFile, cacheDir }) {
     });
   }
 
+  for (const [relativeDirectory, keepFiles] of [
+    ['evidence', new Set(items.map((item) => item.evidence_file))],
+    ['requests', new Set(items.map((item) => item.request_file))],
+  ]) {
+    const directory = path.join(OUTPUT_DIR, relativeDirectory);
+    if (!fs.existsSync(directory)) continue;
+    for (const file of fs.readdirSync(directory)) {
+      if (/^\d{4}\.json(?:\.md)?$/.test(file) && !keepFiles.has(`${relativeDirectory}/${file}`)) fs.unlinkSync(path.join(directory, file));
+    }
+  }
+
   const counts = items.reduce((out, item) => {
     const key = item.disposition === 'blocked' ? 'blocked' : item.decision;
     out[key] = (out[key] || 0) + 1;
@@ -588,12 +636,15 @@ async function prepare({ capturedAt, issuesFile, sourceTextsFile, cacheDir }) {
     scope: {
       first_issue: FIRST_ISSUE,
       last_issue: LAST_ISSUE,
-      expected_pending_count: EXPECTED_PENDING_COUNT,
+      expected_pending_count: selected.length,
       membership_policy: 'open issues in the exact interval carrying type:source-note + status:captured + boundary:pending',
       no_out_of_scope_reads: true,
     },
     source_snapshot: { repository: SOURCE_REPOSITORY, ref: SOURCE_REF },
+    live_issue_snapshot: liveIssueSnapshot,
+    source_artifact_snapshot: sourceArtifactSnapshot,
     parent_dependency: PARENT_DEPENDENCY,
+    parent_live_progress: PARENT_LIVE_PROGRESS,
     captured_at: capturedAt,
     total: items.length,
     counts,
@@ -608,8 +659,11 @@ async function prepare({ capturedAt, issuesFile, sourceTextsFile, cacheDir }) {
     repository: REPOSITORY,
     issue: ISSUE,
     source_snapshot: { repository: SOURCE_REPOSITORY, ref: SOURCE_REF },
+    live_issue_snapshot: liveIssueSnapshot,
+    source_artifact_snapshot: sourceArtifactSnapshot,
     parent_dependency: PARENT_DEPENDENCY,
-    scope: { first_issue: FIRST_ISSUE, last_issue: LAST_ISSUE, expected_count: EXPECTED_PENDING_COUNT },
+    parent_live_progress: PARENT_LIVE_PROGRESS,
+    scope: { first_issue: FIRST_ISSUE, last_issue: LAST_ISSUE, expected_count: selected.length },
     mutation_allowed: false,
     items: batchItems,
   });
@@ -620,7 +674,10 @@ async function prepare({ capturedAt, issuesFile, sourceTextsFile, cacheDir }) {
     issue: ISSUE,
     selection_sha256: selection.selection_sha256,
     source_snapshot: { repository: SOURCE_REPOSITORY, ref: SOURCE_REF },
+    live_issue_snapshot: liveIssueSnapshot,
+    source_artifact_snapshot: sourceArtifactSnapshot,
     parent_dependency: PARENT_DEPENDENCY,
+    parent_live_progress: PARENT_LIVE_PROGRESS,
     scope: { first_issue: FIRST_ISSUE, last_issue: LAST_ISSUE, total: items.length },
     mode: 'plan-only',
     mutation_allowed: false,
@@ -655,7 +712,10 @@ async function prepare({ capturedAt, issuesFile, sourceTextsFile, cacheDir }) {
     issue: ISSUE,
     selection_sha256: selection.selection_sha256,
     dry_run_sha256: plan.dry_run_sha256,
+    live_issue_snapshot: liveIssueSnapshot,
+    source_artifact_snapshot: sourceArtifactSnapshot,
     parent_dependency: PARENT_DEPENDENCY,
+    parent_live_progress: PARENT_LIVE_PROGRESS,
     mode: 'not-authorized',
     mutation_allowed: false,
     entries: items.map((item) => ({ issue_number: item.issue_number, transition_id: item.disposition === 'decided' ? `issue-1608-boundary-${String(item.issue_number).padStart(4, '0')}-1` : null, status: 'not-started', mutation_performed: false, evidence_comment_id: null })),
@@ -668,11 +728,14 @@ async function prepare({ capturedAt, issuesFile, sourceTextsFile, cacheDir }) {
     issue: ISSUE,
     selection_sha256: selection.selection_sha256,
     source_snapshot: { repository: SOURCE_REPOSITORY, ref: SOURCE_REF },
+    live_issue_snapshot: liveIssueSnapshot,
+    source_artifact_snapshot: sourceArtifactSnapshot,
     parent_dependency: PARENT_DEPENDENCY,
+    parent_live_progress: PARENT_LIVE_PROGRESS,
     scope: { first_issue: FIRST_ISSUE, last_issue: LAST_ISSUE },
     checks: {
       exact_interval_enumerated: numbers.length === 373,
-      pending_selection_count: items.length === EXPECTED_PENDING_COUNT,
+      pending_selection_count: items.length === selected.length,
       all_selected_labels_match: items.every((item) => ALL_LABELS.every((label) => item.labels.includes(label))),
       all_selected_source_refs_match: items.every((item) => item.source_repository_ref === SOURCE_REF),
       source_note_ids_unique: new Set(items.map((item) => item.source_note_id)).size === items.length,
@@ -686,7 +749,7 @@ async function prepare({ capturedAt, issuesFile, sourceTextsFile, cacheDir }) {
     duplicate_ownership_check: 'deferred to controller-owned materialization phase; no InterviewNote identity is created here',
   };
   writeJson(path.join(OUTPUT_DIR, 'audit.json'), { ...auditWithoutDigest, audit_sha256: sha256Text(canonicalJson(auditWithoutDigest)) });
-  console.log(JSON.stringify({ output_dir: OUTPUT_DIR, total: items.length, counts, selection_sha256: selection.selection_sha256, dry_run_sha256: plan.dry_run_sha256, mutation_count: 0 }, null, 2));
+  console.log(JSON.stringify({ output_dir: OUTPUT_DIR, total: items.length, counts, parent_live_pending: PARENT_LIVE_PROGRESS.remaining_boundary_pending, selection_sha256: selection.selection_sha256, dry_run_sha256: plan.dry_run_sha256, mutation_count: 0 }, null, 2));
 }
 
 if (require.main === module) {
@@ -698,4 +761,4 @@ if (require.main === module) {
   }
 }
 
-module.exports = { canonicalJson, classify, evidenceDecisionConsistent, gitBlobSha, issueNumbers, sha256Text, PARENT_DEPENDENCY };
+module.exports = { actualEventLine, canonicalJson, classify, evidenceDecisionConsistent, gitBlobSha, issueNumbers, sha256Text, PARENT_DEPENDENCY, PARENT_LIVE_PROGRESS, substantiveQuestionLine, titleHasInterviewExperience };
