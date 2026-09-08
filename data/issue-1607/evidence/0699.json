@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0699-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 699,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/699",
+  "source_note_id": "xhs-note:67f51ab2000000001d01f89e",
+  "expected_body_sha256": "170eb5307bc0818fc8cc45742dbfdc08c051eee0b9e4d302197bb1cc7950a294",
+  "expected_source_revision_id": "xhs-note:67f51ab2000000001d01f89e:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "blocked",
+  "decision": "pending",
+  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67f51ab2000000001d01f89e.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "3c213120ce5e9d5d87176927127a0252a653839f",
+    "locator": "issue-body-copy:lines-103-138",
+    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 1自我介绍\n> 2介绍一下项目，对一个项目进行了展开，是一个分布式算法的项目\n> 3对商城秒杀系统进行提问，用了redis吗，用了mysql吗\n> 4redis持久化，回答的aof和rdb，\n> 有什么不同？\n> 一个是命令追加一个是做快照\n> 用哪个好？\n> rdb是全照数据但是开销大\n> aof开销少但是可能会丢失数据\n> 5缓存雪崩，击穿，渗透是什么，如何应对。\n> 提到可以用布隆过滤器，那么使用布隆过滤器会带来什么后果。\n> 6提问mysql，了解索引吗，索引类型有哪些。\n> 7索引失效场景，如何知道索引是否生效\n> 8b+树有什么优势\n> 手撕sql。计算收入总额，筛选出收入＞1000的用户和月份\n> 反问\n> 公司业务，什么时候出结果1自我介绍\n> 2介绍一下项目，对一个项目进行了展开，是一个分布式算法的项目\n> 3对商城秒杀系统进行提问，用了redis吗，用了mysql吗\n> 4redis持久化，回答的aof和rdb，\n> 有什么不同？\n> 一个是命令追加一个是做快照\n> 用哪个好？\n> rdb是全照数据#但是开销大\n> aof开销少但是可能会丢失数据\n> 5缓存雪崩，击穿，渗透是什么，如何应对。\n> #golang[话题]#提到可以用布隆过滤器，那么使用布隆过滤器会带来什么后果。\n> 6提问mysql，了解索引吗，索引类型有哪些。\n> 7索引失效场景，如何知道索引是否生效\n> 8b+树有什么优势\n> 手撕sql。计算收入总额，筛选出收入＞1000的用户和月份\n> 反问\n> 公司业务，什么时候出结果\n>",
+    "verification": {
+      "status": "blocked",
+      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "blocked",
+      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "blocked",
+      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

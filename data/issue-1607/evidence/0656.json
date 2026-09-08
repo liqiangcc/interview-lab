@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0656-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 656,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/656",
+  "source_note_id": "xhs-note:67e7d5c3000000000900da5a",
+  "expected_body_sha256": "151fd37e5783589124faa262dc3dc6989938d69db03194a02032f3dab513e644",
+  "expected_source_revision_id": "xhs-note:67e7d5c3000000000900da5a:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "blocked",
+  "decision": "pending",
+  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67e7d5c3000000000900da5a.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "f652d95c120fd62f34bea3a8d9db549cea9ba255",
+    "locator": "issue-body-copy:lines-130-183",
+    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 1. 实习项目难点与解决\n> 问题背景+解决思路+最终效果\n> \t\n> 2. Redis高并发优化\n> 项目中如何使用Redis的？现在如果并发很大，Redis扛不住的话可以怎么优化？\n> \t\n> 3. 多层缓存一致性\n> 多层缓存的数据一致性怎么解决？还有其他方案吗？\n> \t\n> 4. MySQL索引原理\n> 讲讲MySQL的索引的原理，其他引擎或者是其他数据库的索引有没有了解？\n> \t\n> 5. MySQL主从延迟处理\n> MySql主从同步有延迟应该怎么处理？\n> \t\n> 6. MySQL查询压力优化\n> 如果MySQL查询压力大怎么做？\n> \t\n> 7. 慢SQL排查与优化\n> 慢sql是怎么排查和优化的？\n> \t\n> 8. 高效索引创建\n> 如何创建正确高效的索引？\n> \t\n> 9. 大索引数据量问题\n> 索引数据量庞大会造成什么问题？从数据插入和更新的角度来说一下？\n> \t\n> 10. RabbitMQ vs Kafka\n> RabbitMQ跟Kafka的区别是什么？\n> \t\n> 11.  Kafka延迟消息实现\n> Kafka能实现延迟消息吗？怎么实现？\n> \t\n> 12. MQ消息消费保证\n> MQ怎么保证消息消费的？\n> \t\n> 13. MQ宕机处理\n> MQ宕机了怎么办？\n> \t\n> 14. MQ队列满处理\n> MQ队列满了怎么办？\n> \t\n> 15. Golang内存泄漏排查\n> Golang内存泄漏的场景有哪些，怎么排查和优化？\n> \t\n> 16. 文档去重推荐\n> 场景题：我们现在给用户推荐文档，如何保证用户所被推荐的文档不是重复推荐？\n> \t\n> 17. 二叉树右视图\n> \t\n> #互联网大厂实习[话题]# #互联网大厂[话题]##百度[话题]# #百度实习[话题]#  #职场[话题]# #后端开发[话题]# #大厂面试题[话题]# #面经[话题]# #实习日记[话题]# #找实习[话题]# #春招[话题]#\n>",
+    "verification": {
+      "status": "blocked",
+      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "blocked",
+      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "blocked",
+      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

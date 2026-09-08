@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0545-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 545,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/545",
+  "source_note_id": "xhs-note:67c417f20000000029037b85",
+  "expected_body_sha256": "07248afe5ecaaddb2a81b784d8c2eaba2eabcbc8c1c19bc6ca47a162da7fa0f2",
+  "expected_source_revision_id": "xhs-note:67c417f20000000029037b85:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "blocked",
+  "decision": "pending",
+  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67c417f20000000029037b85.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "d37e4d60593fe8b97529fb815a13f844128bfb49",
+    "locator": "issue-body-copy:lines-144-170",
+    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 1.前2家工作时间不长的原因\n> 2.项目介绍\n> 3.设计缓存时，考虑热点key，数据一致性问题。除了用redis，还能用本地缓存，这个分布式缓存应该怎么设计\n> 4.怎么解决缓存穿透、雪崩这些问题的？\n> 5.Dataworks有多少了解，有用过一些复杂的SQL吗，就多张表数据处理，比如左连接，用的时候有什么需要注意的问题，细节？\n> 6.有了解过电商相关的背景知识吗？无\n> 7.现在让你搞电商这块的话，有什么想法能快速转变，快速适应电商的开发吗？说下你的思路\n> 8.八股文问题：\n> 9.常用的MySQL的优化策略，查询（避免索引失效，，，）\n> 10.现在有个场景：Dataworks同步场景，MySQL数据同步到Dataworks，几百万数据，单条数据字段比较多，同步时速度很慢，有什么方法解决？（全量同步+增量同步）\n> 11.分库分表的场景和解决方案说一下，你了解的\n> 12.分库分表的原理有去了解吗，怎么分的，基于哈希的分库分表的方案有什么缺点呢，出现热点，就是数据集中在几张表上，怎么解决呢？\n> 13.哈希分表后，比如256张表，扩容到512张表，扩容的方案说一下，新表和旧表之间切换时怎么保证数据一致性的？\n> 14.分表，有些ID过段时间就不用了，有什么好的解决方案（根据日期分表？）\n> 15.分为热点数据、不常用的数据这样呢？\n> 16.分库之后，如何保证数据一致性的，分页查询时怎么保证性能和数据准确性的\n> 17.写了很多博客，最近有了解什么前沿技术吗？有用大模型来解决工作上的问题吗？\n> 18.没接触过电商行业？\n> 19.之前项目中和各个省公司对接的，说说怎么沟通对接的，遇到过什么问题\n> 20.国企里怎么协调开发进度的？\n> 21.未来的职业发展的目标是什么？\n> 22.反问：做的业务，商品供给的\n> 23.最后说岗位需要有一定的电商经验。。。\n> #学习[话题]# #金融科技岗[话题]# #银行面试真题[话题]# #面试技巧[话题]# #应届生[话题]# #应届生找工作[话题]# #应届生求职[话题]# #银行招聘[话题]# #国企工作[话题]# #国企招聘[话题]# #java学习[话题]# #java[话题]# #java面试[话题]# #java项目[话题]#\n>",
+    "verification": {
+      "status": "blocked",
+      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "blocked",
+      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "blocked",
+      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0477-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 477,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/477",
+  "source_note_id": "xhs-note:6777bcc20000000014025251",
+  "expected_body_sha256": "412aecc291f54a50e7b286af0a1277b91ea7f122b99bef1d0122582225342403",
+  "expected_source_revision_id": "xhs-note:6777bcc20000000014025251:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "blocked",
+  "decision": "pending",
+  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/6777bcc20000000014025251.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "0769f0cb6603352db69adb65d194d703e3c6949a",
+    "locator": "issue-body-copy:lines-108-161",
+    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 百度 凤巢业务 一面 12.12 （通过）\n> 自我介绍 1 min\n> 项目介绍 10 min\n> 项目中提到的大促备战里有 慢SQL优化和 慢接口优化 都是怎么做的\n> 项目中我参与的重构部分以及重构思路\n> 我独立负责的开发的模块，以及我对这些模块中每一版的优化思路\n> SpringBoot的启动原理？自动装配的实现机制\n> 有了Spring为什么还要有SpringBoot\n> 线程池的实现机理？几种线程池的对比？\n> Redis的几种部署方案？我们项目中的用法\n> 集群模式下的衍生的渐进式哈希和一致性哈希？\n> \t\n> 百度 凤巢业务 二面 12.17 （通过）\n> 自我介绍 1 min\n> 项目介绍 5 min\n> 项目中提到了HBase和ES\n> HBase的事务机制，以及幻读的情况\n> ES中的倒排索引\n> 怎么保证HBase和ES中的一致性的\n> SpringBoot的配置文件加载和自动装配\n> Java中Vector和ArrayList的对比，性能差异\n> JVM在1.8版本发生了什么改动\n> G1，CMS，ZGC的实现机制\n> SpringBoot 在 2.x版本和 3.x版本的不同\n> 策略模式的多种实现方式，说出2到3个\n> 死锁的四个特性，围绕每个特性说出处理方案\n> Object.wait()和Thread.sleep()的不同点\n> 数据库的分库分表方案设计，给了几个场景分别设计\n> 数据库数据的灰度迁移方案，要求线上环境零感知\n> 算法题：给定一个数组int[]，比如[3,30,34,9,5]，重新排列使之按顺序组成的数最大->[9,5,34,3,30]\n> \t\n> 百度 凤巢业务 三面 12.18 （通过）\n> 项目深挖了 20 分钟，主要考察我在模块间的设计和改进方案\n> Spring框架都使用了哪些设计模式？\n> Spring AOP是什么，实现机理是什么\n> 设计一个秒杀系统（架构设计、预处理、分流之类的）\n> 这两年工作中的最有压力的部分是什么\n> 个人优缺点\n> 期望薪资\n> \t\n> 百度 凤巢业务 HR面 12.20 （通过）\n> 过往工作中都遭遇了什么问题，都是怎么解决的\n> 什么时候离职的，为什么要离职\n> 描述一下过去工作工程中你的付出，以及你收获的回报\n> 之前的工作薪酬，对于新工作的预期\n> 从中台部分到业务部门的转变，为什么想来业务部门\n> 过去的加班强度\n> 。。。（好多闲聊的部分\n> \t\n> 通过后收集了我的薪资情况，并且第一轮谈薪的时候说可以满足，问我要不要等其他家开了再想业务部门A一下，结果遇上了预算盘点的，我的流程被中止了，真的意难平\n> ﻿#java[话题]#﻿  ﻿#百度面试[话题]#﻿  ﻿#2年经验[",
+    "verification": {
+      "status": "blocked",
+      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "blocked",
+      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "blocked",
+      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0643-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 643,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/643",
+  "source_note_id": "xhs-note:67e4e85c000000001c004198",
+  "expected_body_sha256": "2cb857a6c4687957355229fadfbd8c97b8d67df2e233913a2f2492c3dcc4494a",
+  "expected_source_revision_id": "xhs-note:67e4e85c000000001c004198:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "blocked",
+  "decision": "pending",
+  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67e4e85c000000001c004198.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "8be31f1e8c9f93b20f24b876a9e989abc3d0c2c4",
+    "locator": "issue-body-copy:lines-144-203",
+    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 百度Java岗一面:\n> 1、给一个函数，返回0和1，概率为p和 1-p，请你实现一个函数，使得返回0、1概率一样。\n> 2、10 亿个 url，每个url大小小于56B，要求去重，内存4G。\n> 3、把一个 bst 转化成一个双向链表。\n> 4、http和 https 区别，https 在请求时额外的过程，https是如何保证数据安全的;\n> 5、IP 地址子网划分;\n> 6、POST和 GET 区别;\n> 7、DNS 解析过程;\n> 8、硬链接和软连接区别:\n> 9、kill 用法，某个进程杀不掉的原因(进入内核态，忽略 kill 信号);\n> 10、linux 用过的命令;\n> 11、系统管理命令(如查看内存使用、网络情况)\n> 12、管道的使用;\n> 13、grep 的使用;\n> 14、shell 脚本;\n> 15、find 命令;\n> 16.awk 使用\n> 百度Java岗二面:\n> 对照着简历问了些东西。\n> 1、Linux 下的一些指令，?(上一条命令退出时状态)，怎么查看进程，按照内存大小，CPU占用排序等等。(大写M和大写 P)\n> 2、http 的 get 和 post 方法。\n> 3、介绍下你所了解的 epoll。\n> 4、数据库 sql的了解程度。\n> 5、项目中遇到的问题，自己咋解决的等等。\n> 6、手写一个全排列:\n> 7、B树和 B+树。\n> 8、介绍一下hash，怎么解决冲突。\n> 9、进程间的通信，共享内存方式的优缺点。百度Java岗三面:\n> 1、说下你平时看的一些技术博客，书籍;\n> 2、linux 下的一些指令;\n> 3、工作中你觉得最不爽的事情是什么;\n> 4、说下你的优缺点;\n> 6、有没有想过去创业公司;\n> 7、写个 strcpy 函数;\n> 8、说说你自己的性格\n> 9、给你一个系统(面试官好像是无人车部门的)，后台的逻辑已经实现了，但是前端加载很慢，怎么检测;\n> 10、以后可能要学习很多新技术，你怎么看;\n> 11、项目中遇到的困难(提前想好，并且把实现或者优化方法说清楚);\n> 12、系统的量级、pv、uv等;\n> 13、应对高并发的解决办法(分布式):\n> 14、在项目中主要负责了哪些工作。\n> 15、nginx 的负载均衡;\n> 16、分布式缓存的一致性，服务器如何扩容(哈希环)\n> 百度Java岗四面(HR面):\n> 1、自我介绍\n> 2、最近读了那些书\n> 3、你的职业规划是什么样的\n> 4、你为什会选择这座城市\n> 5、你的优点是什么\n> 6、你的缺点是什么\n> 7、在你过往的项目经历中，你遇到的难点是什么? 怎么解决的?在这个过程中你学到了什么?\n> 8、你的期望薪资是多少?\n> 9、你为什么选择我们公司?1",
+    "verification": {
+      "status": "blocked",
+      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "blocked",
+      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "blocked",
+      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

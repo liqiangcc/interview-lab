@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0646-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 646,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/646",
+  "source_note_id": "xhs-note:67e54e14000000001b0399a0",
+  "expected_body_sha256": "5d2f2653f850539824cdf2700dde018bea287dcc403fb6a2e65d0bcfc2eaf3e4",
+  "expected_source_revision_id": "xhs-note:67e54e14000000001b0399a0:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "blocked",
+  "decision": "pending",
+  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67e54e14000000001b0399a0.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "7ff46ce1d2ad59c9cbca1e4b1c29880e55694fba",
+    "locator": "issue-body-copy:lines-103-149",
+    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 美团一面Java\n> （再次被捞）\n> 面了一个半小时多[笑哭R]八股基本都说了代码sql没问题求进二面[捂脸R]\n> \t\n> 1.面试官自我介绍（介绍部门）\n> 2.我自我介绍\n> 3.项目结合八股文一起问了一个小时\n> 什么是分库分表\n> 了解读写分离吗 读多写少 高并发查询\n> 我们的分表怎么写的\n> 事务能保证跨库的一致性吗\n> 分表写压力会分散吗\n> \t\n> 了解分布式事务吗用来解决什么问题\n> 行锁怎么设计的\n> 了解其它锁吗\n> 项目的核心发钱设计解释\n> 解释rocketmq作用 解释mq发送失败存入本地消息表xxl-job扫表\n> 为什么要设计成异步\n> 虚拟红包的概念\n> mq自身的重试机制 实现原理没答出来\n> 什么业务场景下金额数据会被高频访问\n> redis的八股文：redis为什么比较快，redis的过期机制\n> 缓存异常：解释缓存穿透雪崩击穿\n> 缓存比预期的要慢可能会是什么问题\n> 怎么去确认 怎么查到cpu和io的使用情况命令行\n> 自己的项目做过压测吗 了解系统容量上限吗\n> 怎么判断系统到达上限了\n> 用一个场景说一下后续怎么优化（绕着db语句索引慢查询结构缓存说了一大堆）\n> 微服务化是为了解决什么的\n> \t\n> 项目二ddd设计模式介绍 依赖关系介绍\n> 日志监控统计设计 分钟计数法\n> 对本地缓存了解多少\n> hashmap\n> 了解其他数据结构吗\n> hashmap是怎么实现的 链表为什么换红黑树\n> 你知道内存泄露吗\n> threadlocal为什么会导致内存泄露\n> 内存回收机制 具体讲一下垃圾回收算法\n> \t\n> 手撕：\n> 一个排序后合并区间\n> 一个sql：查询在同一天阅读至少两篇文章的人的id，结果按照id升序排序\n>",
+    "verification": {
+      "status": "blocked",
+      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "blocked",
+      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "blocked",
+      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

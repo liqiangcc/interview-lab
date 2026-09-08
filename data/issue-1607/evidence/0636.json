@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0636-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 636,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/636",
+  "source_note_id": "xhs-note:67e3ed07000000001c006e2a",
+  "expected_body_sha256": "f705674f7502ed9e1a00b9e92080ea4661dfda7224e6ae8341f65e9797136175",
+  "expected_source_revision_id": "xhs-note:67e3ed07000000001c006e2a:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "blocked",
+  "decision": "pending",
+  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67e3ed07000000001c006e2a.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "ac22447728386ef18e66fc5b4e6551381c410f02",
+    "locator": "issue-body-copy:lines-103-141",
+    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 全程被拷打简历[捂脸R]\n> 主要就是问项目上用的中间件底层的原理，和每个中间件可能发生的问题\n> 微服务远程调用原理\n> 具体拆分了哪些微服务，依据是什么\n> nacos服务注册服务发现的一些细节\n> rabbitmq消息队列可能产生的各种问题\n> 分布式事务管理seata为什么用at模式\n> sentinel底层原理了解吗\n> 问了spring aop的一些原理\n> 如果ab是两个方法都有用aop拦截输出日志，外部方法调用a，\n> void a｛this.b（）；｝，请问输出几条日志（这个一条，有学过，aop底层动态代理，this会跳过这个机制）\n> \t\n> 下面这样b能完成依赖注入吗（这个完全不清楚）\n> @service\n> class A｛｝\n> \t\n> class B｛\n> @autowerid\n> private A a；\n> ｝\n> \t\n> 有过数据库表的设计，索引的建立吗\n> 索引过多会有什么问题\n> 联合索引数据什么时候失效，为什么\n> MySQL底层的数据结构\n> 为什么要用b+树\n> acid指什么\n> Redis怎么保证缓存数据库一致性\n> Redis如果删除缓存失败？\n> Redis如果大量key同时过期？\n> 算法题：\n> 判断回文链表\n> 这个用数组我秒杀了，然后和面试官介绍了一下，还能用快慢指针找中点，反转后续链表来做，可以降低空间复杂度到o（1）\n> \t\n> 项目拷打太深了，可以说是我最近几次面试里最难的几次了，前面估计有一部分没答好，后面数据库和Redis倒是重点准备过，很简单，感觉要凉凉[捂脸R][捂脸R][捂脸R]\n> #后端开发[话题]# #java[话题]# #互联网大厂[话题]# #程序员[话题]# #大厂[话题]# #春招分享[话题]# #暑期实习[话题]# #面经[话题]# #校招[话题]#\n>",
+    "verification": {
+      "status": "blocked",
+      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "blocked",
+      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "blocked",
+      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

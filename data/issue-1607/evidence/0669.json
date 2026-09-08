@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0669-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 669,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/669",
+  "source_note_id": "xhs-note:67ebaa93000000000b02f1f5",
+  "expected_body_sha256": "1a0ac3154191e5849d944c4477db8e60bf7589517ae43624d80d6166b885919e",
+  "expected_source_revision_id": "xhs-note:67ebaa93000000000b02f1f5:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "blocked",
+  "decision": "pending",
+  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67ebaa93000000000b02f1f5.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "6032e00498322ecdb4b9fe9c1f2f513c5ca6fec7",
+    "locator": "issue-body-copy:lines-121-128",
+    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 自己选一段实习让面试官拷打，我选最近一段 蕙策掌上先机的。然后面试官对其中一个优化点感兴趣，继续追问，还有一个优化的需求也感兴趣，然后也追问。然后面试官也给了还有更好的方法（protobuf，面试官好强啊）\n> 项目开始拷打到八股 Java基础和并发八股（拷打到我不会为止差不多）\n> 最后两段算法题结尾（非常规算法题），ak了算是（面试官直接关闭算法题面试，面叭好像叫这个）\n> \t\n> 我反问三个问题，结束\n>",
+    "verification": {
+      "status": "blocked",
+      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "blocked",
+      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "blocked",
+      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

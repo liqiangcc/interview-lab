@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0672-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 672,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/672",
+  "source_note_id": "xhs-note:67ecedf5000000000d015887",
+  "expected_body_sha256": "e17dd37b2822f4809e234cac3b696a3c8629d575d65bc31fd2dc6ff23ea4ed2b",
+  "expected_source_revision_id": "xhs-note:67ecedf5000000000d015887:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "blocked",
+  "decision": "pending",
+  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67ecedf5000000000d015887.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "a3c43fb5058d6fbfde5a27e690e188fc18577f8a",
+    "locator": "issue-body-copy:lines-103-127",
+    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 场景题：\n> 1.苍穹外卖为什么选用工厂模式和策略模式？\n> 2.你的外卖项目中提到了可以使用微信支付、支付宝支付、银行卡支付，那么如果接入一个新的支付系统，需要注意些什么？\n> 3.管理模块要加入什么东西？\n> 4.选用工厂模式的话，新加入一个支付平台，解耦怎么保证？\n> 5.Spring mvc的拦截器怎么解决跨域问题？\n> 6.跨域问题原则上怎么处理？安全性怎么保证？\n> 7.跨域有两种解决方案，都是什么？\n> 8.WebSocket 的请求建立过程？\n> 9.连接成功后还是HTTP协议吗 怎么实现的？\n> 10.WebSocket的服务端是单个容器还是多个容器？\n> 11.WebSocket 连接的话，后端有多个服务器，Nginx 连接到指定服务器是怎么做的？\n> 12.后台几个服务之间，你怎么知道发给哪个客户端呢？\n> 13.Java的内存分布知道吗？用什么工具去看内存分布呢？\n> 14.MySQL有几种日志？都有什么用？\n> 15.binlog日志长什么样子？\n> 16.Springboot的机制是什么？为什么大厂都在用Springboot？\n> 17.Springboot是怎么做到自动配置的呢？\n> 手撕：\n> 1.有一个整数的数组，要去找整数数组里面没有包含的正整数。\n> 2.有一个二叉树，需要做一个z字形的打印，奇数排从左往右，偶数排从右往左。\n> #后端开发[话题]# #找实习[话题]# #java[话题]# #oc[话题]# #面经[话题]# #互联网大厂[话题]#\n>",
+    "verification": {
+      "status": "blocked",
+      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "blocked",
+      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "blocked",
+      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

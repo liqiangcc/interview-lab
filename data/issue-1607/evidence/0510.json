@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0510-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 510,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/510",
+  "source_note_id": "xhs-note:67aef7c100000000170382ee",
+  "expected_body_sha256": "cb21386963b21c40628fc5af7a75aaa89937d7988fd812721d02319f809c3b7a",
+  "expected_source_revision_id": "xhs-note:67aef7c100000000170382ee:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "blocked",
+  "decision": "pending",
+  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67aef7c100000000170382ee.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "99982a77d76d438a04261a0d5ca8a764f0e5b66e",
+    "locator": "issue-body-copy:lines-126-161",
+    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 最终结果：二面挂（一面算法未AC）\n> 背景：面试官直接共享桌面，力扣抽题要求现场写未做过的题😱\n> 📝 二面问题回顾\n> 1️⃣ 垃圾回收算法\n> ● 问题：优缺点、使用场景（如标记清除、复制算法、分代回收）\n> ● 考察点：底层原理理解 + 实际应用思考（比如CMS和G1的差异）。\n> 2️⃣ Spring框架\n> ● 问题：核心特性（IOC/AOP）、设计模式（如动态代理）\n> ● 考察点：框架底层逻辑 + 扩展能力（比如Bean生命周期）。\n> 3️⃣ Java锁机制\n> ● 问题：synchronized vs ReentrantLock、CAS、锁升级过程\n> ● 考察点：并发编程基本功 + 源码级理解（如AQS原理）。\n> 4️⃣ MySQL锁机制\n> ● 问题：行锁、间隙锁、意向锁，结合实际场景说明（如高并发下单）\n> ● 考察点：事务隔离级别 + 锁的实战应用能力。\n> 5️⃣ 算法题\n> ● 题目：堆排序实现从大到小（要求独立补全完整代码）\n> ● 雷点：面试官只给main函数，需自实现堆结构！\n> 💥 挂科原因分析\n> ● 一面致命伤：回溯题思路正确但未去重，算法未AC直接导致淘汰。\n> ● 反思：即使八股答得不错，大厂仍会因算法不完美挂人！\n> 📌 血泪建议\n> 1️⃣ 算法优先级MAX！\n> ● 刷题时注意边界条件和去重逻辑，推荐按标签（回溯、动态规划）专项突破。\n> ● 练习白板coding，避免依赖IDE提示！\n> 2️⃣ 八股要“活学”\n> ● 锁机制、MySQL等高频考点，需结合场景（如“秒杀如何选锁？”）回答。\n> ● 推荐用XMind整理知识树，横向对比（如Java锁 vs MySQL锁）。\n> 3️⃣ 心态稳住！\n> ● 遇到陌生题先沟通思路，写注释体现思维过程，避免冷场❄️\n> 总结：大厂面试=50%算法+30%场景八股+20%缘分，继续肝题吧家人们！🔥\n> 需要补充细节可以留言哦～关注我，后续还有小红书、百度、腾讯的面经，祝下次上岸！🚀\n> #大厂[话题]# #后端开发[话题]# #java[话题]# #面经[话题]# #算法题[话题]# #字节面经[话题]#\n>",
+    "verification": {
+      "status": "blocked",
+      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "blocked",
+      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "blocked",
+      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0410-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 410,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/410",
+  "source_note_id": "xhs-note:67344ecd000000003c0186c6",
+  "expected_body_sha256": "0c90d126ad56a868224f796684bb50eb6ede6a9ed08e7104271b34cd9156f76b",
+  "expected_source_revision_id": "xhs-note:67344ecd000000003c0186c6:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "blocked",
+  "decision": "pending",
+  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67344ecd000000003c0186c6.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "ed6555c4f2c2a5e345fb7a45062a2575293e0956",
+    "locator": "issue-body-copy:lines-126-157",
+    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 快手-商业化-一面\n> \t\n> 📅日期：2024 年 8 月 30 日\n> ⏳时长：60min\n> \t\n> 1. 介绍一下项目，负责了什么，有哪些困难，怎么解决的\n> 2. 怎么利用的SPI机制（项目里的）\n> 3. 怎么解决TCP粘包拆包问题\n> 4. 怎么利用动态代理，用的什么方式\n> 5. 描述一下 JVM 垃圾回收机制\n> 6. 之前项目里的JVM参数是多少，怎么查看JVM参数\n> 7. System.gc()一定会触发full GC吗\n> 8. 元空间大小，超出会发生什么\n> 9. 介绍一下索引\n> 10. 介绍一下MVCC，用来做什么的\n> 11. 介绍一下AQS\n> 12. ThreadLocal是哪种引用\n> 13. 介绍一下三级缓存，用来解决什么的\n> 14. 用过AOP吗？常见框架里的AOP是用来做什么的\n> 15. 介绍一下Kafka\n> 16. Mysql事务隔离级别，并发事务可能造成哪些问题\n> 17. 怎么查看JVM参数\n> 18. 介绍一下线程池，有哪些核心参数\n> 19. 项目中用到了哪些设计模式\n> 20. 为什么使用zookeeper，还知道哪些注册中心\n> 21. 算法题：合并k个有序链表\n> \t\n> [飞吻R][飞吻R]关注我主页更多面经分享\n> #校招[话题]# #面试技巧[话题]# #秋招面试[话题]# #面经[话题]# #java[话题]# #java面经[话题]# #快手秋招[话题]# #快手校招[话题]# #快手面经[话题]# #秋招[话题]#\n>",
+    "verification": {
+      "status": "blocked",
+      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "blocked",
+      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "blocked",
+      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

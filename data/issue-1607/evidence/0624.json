@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0624-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 624,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/624",
+  "source_note_id": "xhs-note:67dd34b2000000001d021316",
+  "expected_body_sha256": "e309448c9b56d421e46796f3002b805e3ed687011efbfa3bc0e562331d2af4ca",
+  "expected_source_revision_id": "xhs-note:67dd34b2000000001d021316:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "blocked",
+  "decision": "pending",
+  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67dd34b2000000001d021316.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "7996a901d988f7f61e1930ed838f3f5b841be6dc",
+    "locator": "issue-body-copy:lines-117-145",
+    "excerpt": "### 可读 Source projection — `note_desc`\n\n> ⭕一面 35min：\n> 自我介绍\n> 1. java中的锁，说说synchronized底层原理。\n> 2. 线程池参数，过期时间的意义，超出核心线程数的会被回收吗，非核心线程会被回收吗？怎么判断他要不要回收，怎么知道他过期了的。那我创建十个线程，1~10,核心数8个，9和10还在执行任务，1~8不执行了，这时候会怎么做。\n> 说说线程池的阻塞队列有什么用，为什么用阻塞队列不用普通队列，在并发情况下，往队列中加任务不会有线程安全问题吗。\n> 3. 说说AQS，有什么用。ReentrantLock怎么实现公平和非公平，如果多个线程同时lock怎么处理线程安全问题。\n> 4. 说说CAS，旧值存储在哪里？\n> 5. 对哪个框架比较熟悉。说说MyBatis的xml文件到mapper最后查到内容的过程。\n> 6. redis的过期淘汰策略，内存不足淘汰策略，redis的LRU是怎么做的\n> 7. 说说双亲委派机制，以及为什么。\n> 8. 实习相关\n> 9. 项目相关。\n> 10 算法lc49，用的哈希表，问还有什么其他方法（不会）\n> 11. 反问\n> \t\n> 最后还谢谢我的面试，感觉寄\n> \t\n> 补充：\n> 1.封装和多态\n> 2. linux中如何查找日志中指定字符串在哪一行\n> \t\n> .\n> 内容来自牛友：全都一面挂\n> 来源：牛客\n> \t\n> #网易云音乐[话题]# #java[话题]# #求职[话题]# #实习[话题]# #牛客社区[话题]# #牛客app[话题]# #面试笔试抄作业[话题]# #互联网大厂[话题]#\n>",
+    "verification": {
+      "status": "blocked",
+      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "blocked",
+      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "blocked",
+      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

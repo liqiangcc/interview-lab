@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0660-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 660,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/660",
+  "source_note_id": "xhs-note:67ea2225000000001e004c43",
+  "expected_body_sha256": "a59b87f0b93e684cf405fcbaaa75a7e1378c44fe4c77b26574a617a5f2c38744",
+  "expected_source_revision_id": "xhs-note:67ea2225000000001e004c43:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "blocked",
+  "decision": "pending",
+  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67ea2225000000001e004c43.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "97c7595795c3e66e1db0c73db62a90436885d892",
+    "locator": "issue-body-copy:lines-103-121",
+    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 第一次遇到这种完全不问项目，全部八股的。\n> \t\n> 1.介绍线程池设置的核心参数。\n> 2.追问：任务等待队列都有哪几种类型，cachedThreadPool 和 fixedthreadpool的区别。\n> 3.Java锁系列：讲讲CountDownLatch, Semephone, CyclicBarrier的功能，你知道这些锁是怎么通过AQS实现的吗？\n> 4.Java原子类是什么，怎么实现的，和锁的区别是啥。\n> 5.ThreadLocal是什么，怎么实现的，内存泄露问题是怎么回事。\n> 6.JVM系列：对象创建的过程什么?知道什么垃圾回收器?G1的特性是什么?我能够随意设置最大停顿时间吗？\n> 7.Redis系列：怎么用Redis实现分布式锁；实现的时候需要注意哪些事项；如何防止一个线程拿到锁以后宕机导致锁没被释放；key值的过期时间设置多少合适。\n> 8.杂项：平时都怎么使用ai的，布隆过滤器的原理。\n> \t\n> 算法：给定一系列的区别，合并有重合的区间，返回结果。\n> \t\n> 闲聊时给的建议：项目没亮点，建议跟AI结合。\n> \t\n> 总体评价：八股盛宴，但面试官人比较友善，在背不出来八股时没给太大压力。\n>",
+    "verification": {
+      "status": "blocked",
+      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "blocked",
+      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "blocked",
+      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

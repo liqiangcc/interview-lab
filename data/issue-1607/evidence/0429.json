@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0429-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 429,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/429",
+  "source_note_id": "xhs-note:674a77ce0000000007033aca",
+  "expected_body_sha256": "d8b0e290d615b91d5e4a4c39762427d10a59f0f9578f0549e7a7e24366bf94c1",
+  "expected_source_revision_id": "xhs-note:674a77ce0000000007033aca:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "blocked",
+  "decision": "pending",
+  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/674a77ce0000000007033aca.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "8a49aff9341c4539cdf4132699273553097d829c",
+    "locator": "issue-body-copy:lines-135-157",
+    "excerpt": "### 可读 Source projection — `note_desc`\n\n> .自我介绍\n> 实习经历\n> mysql，influxdb区别\n> spring框架有什么内容（聊了聊ioc，aop）\n> aop和动态代理的区别\n> 项目是怎么学习的？里面的技术栈是怎么学习的\n> list，set，map区别，优缺点，使用场景（我说的ArrayList，LinkedList，HashSet，HashMap，ConcurrentHashMap的一些常见八股）\n> HashMap扩容的阈值是多少，ArrayList呢？\n> ArrayList复制是怎么实现的？如果自己设计会怎么实现？这个实现的时间复杂度是多少？\n> 多线程，提交任务到多线程是怎么运行的？（没答上，多线程看的太少了）\n> 多线程会出现什么问题（我答的并发问题和死锁）\n> 并发问题怎么产生的（数据覆盖问题），Java怎么解决数据覆盖问题的\n> 解决问题的实现原理是什么？（我说的内部有互斥锁）\n> aqs\n> 索引特性，为什么需要索引\n> 索引的数据结构\n> 在查找时，聚簇与非聚簇索引的区别\n> 索引失效，联合索引什么情况会失效\n> 垃圾回收的方式\n> #学习[话题]# #金融科技岗[话题]# #银行面试真题[话题]# #面试技巧[话题]# #应届生[话题]# #应届生找工作[话题]# #应届生求职[话题]# #银行招聘[话题]# #国企工作[话题]# #国企招聘[话题]# #java学习[话题]# #java[话题]# #java面试[话题]# #java项目[话题]#\n>",
+    "verification": {
+      "status": "blocked",
+      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "blocked",
+      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "blocked",
+      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

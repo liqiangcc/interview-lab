@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0754-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 754,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/754",
+  "source_note_id": "xhs-note:6801bb0d000000001a00786e",
+  "expected_body_sha256": "f1ebabced00a0dc9c8918aa510e226cdb9ea8373b2a146c5929e2dd7af453763",
+  "expected_source_revision_id": "xhs-note:6801bb0d000000001a00786e:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "blocked",
+  "decision": "pending",
+  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/6801bb0d000000001a00786e.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "98e0eacce9474dc0429728a46626971facad9fbe",
+    "locator": "issue-body-copy:lines-103-139",
+    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 总体来说是以八股为主，难度比之前面的其他厂要大一些，面试官人很好，虽然比较严肃，但时常会鼓励一下[吧唧R]\n> 1.concurrenthashmap底层原理；\n> 2.链表转为红黑树的条件（>=64、>=8）；\n> 3.红黑树插入元素后维持平衡的操作（要讲一下红黑树的5个规则）；\n> 4.Java8后的hashmap扩容的底层原理（要讲一下元素迁移时在新数组中的定位方式）；\n> 5.threadlocal底层原理；\n> 6.讲一下四种引用方式及其回收时机；\n> 7.synchronized和reentrantlock的区别（说了4个点）；\n> 8.Bean的生命周期；\n> 9.Spring解决循环依赖的方式；\n> 10.原型模式Bean如何解决循环依赖（不会）；\n> 11.构造器注入方式能靠三级缓存解决循环依赖吗；\n> 12.解释一下 切点、连接点、通知、织入 这几个词的含义；\n> 13.AOP的实现原理（静态+动态代理，JDK+CGLIB代理）；\n> 14.JDK和CGLIB代理底层代码的核心方法操作；\n> 15.JVM方法区存储的内容；\n> 16.本地内存和直接内存的区别；\n> 17.ZGC的底层原理（堆分区+染色指针）；\n> 18.用什么方式查看进程的内存使用情况（堆转储文件+第三方工具的细节）；\n> 19.MVCC的底层原理；\n> 20.读已提交和可重复读如何用MVCC来实现（版本号对比细节）；\n> 21.读锁和写锁在SQL命令中的添加方式；\n> 22.一级索引和二级索引；\n> 23.主键索引和唯一索引的区别；\n> 24.用户态和内核态的区别；\n> 25.session和cookie的区别；\n> 26.发送一个HTTP请求到返回响应的全过程；\n> 27.https中对称密钥和非对称密钥的交互和使用过程；\n> 28.密钥和签名的区别；\n> 29.解释一下explain的各个字段；\n> 30.聊了一段时间的纵向；\n> \t\n> 手撕1: LRU\n> 手撕2:最长递增子序列（用的动态规划，时间复杂度o(n^2)，问有没有什么优化办法，没想出来）[哭惹R]\n>",
+    "verification": {
+      "status": "blocked",
+      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "blocked",
+      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "blocked",
+      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0550-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 550,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/550",
+  "source_note_id": "xhs-note:67c5d66700000000290306a5",
+  "expected_body_sha256": "cf3fc8e1dc13bd988d42a8498ab2ec3452960674bfa9f2367cfe11e23350670b",
+  "expected_source_revision_id": "xhs-note:67c5d66700000000290306a5:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "blocked",
+  "decision": "pending",
+  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67c5d66700000000290306a5.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "696a89e3e362dd17ad4b872e329e32ad89dd258c",
+    "locator": "issue-body-copy:lines-108-136",
+    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 记录一次春招被拷打。\n> 书接上回，本人把javaguide看了个大概，觉得自己八股知识面小厂应该差不多了，于是今天就享受了50分钟八股盛宴（一共一小时，50分钟八股+10分钟项目，人已经麻了）\n> java相关：\n> final、finally、finalize用过么（不说以为是考英文 上来就觉得不对劲）\n> jvm疑似有点太难了包括但不限于：\n> -jvm内存结构（这个还好\n> -类加载/类生命周期 类中的各种变量啥时候初始化（已经觉得不对了）\n> -双亲委派的坏处/有没有见过不用双亲委派的框架，为啥这么干\n> -gc狠狠拷打：cms/g1描述回收过程（真不是太清楚）cms已经够好了为啥用g1 如果新生代只有一个survival区还能用么/听说过三色标记么\n> juc篇\n> -hashmap和concurrentHashMap扩容比较，区别在哪\n> -讲讲红黑树\n> - AQS的结构/公平非公平如何实现（这个也还凑合\n> \t\n> Sql篇：\n> -索引失效场景 模糊查询放最后也会失效么\n> -如何构建优化索引\n> -自增id爆了会咋办\n> -隔离级别\n> -追问幻读脏读啥区别->讲讲mysql怎么尽量减少幻读->讲讲mvcc->讲讲除了mvcc还有啥策略减少幻读（这个时候只会呲牙傻乐疯狂看表了\n> 分布式基础：\n> -讲讲cap\n> -讲讲base\n> -讲讲2pc\n> 全程没问中间件没问框架没问os没问计网 仅仅java+sql已经让我绝望😭\n> #春招[话题]# #面经[话题]# #java[话题]# #java学习[话题]# #八股文[话题]# #金融科技[话题]#\n>",
+    "verification": {
+      "status": "blocked",
+      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "blocked",
+      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "blocked",
+      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

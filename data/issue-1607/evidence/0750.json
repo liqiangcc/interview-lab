@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0750-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 750,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/750",
+  "source_note_id": "xhs-note:6800eaac000000001c033334",
+  "expected_body_sha256": "aa6c108fe2ef2cda357e6198ee28b7da843bd7559209f5112f6dd3a6f959500d",
+  "expected_source_revision_id": "xhs-note:6800eaac000000001c033334:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "blocked",
+  "decision": "pending",
+  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/6800eaac000000001c033334.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "26e7eb5c31fdfbd88978411ae55cc7bbce7325c7",
+    "locator": "issue-body-copy:lines-103-118",
+    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 由于快手一面之后事情过多，而且面试完毕之后发现很多知识都还不会，于是进行了学习，就一直拖更到现在，将后续更完吧。\n> 1.自我介绍。\n> 2.项目经历，很快就结束了。\n> 3.spark的广播变量是什么，能够有什么用处？\n> 4.spark的cache、persist和checkpoint阐述一下。\n> 5.hive的相关概念，比如hql有什么函数，我就想起#来了一个爆炸函数。hive的语法还是得记一下。\n> 6.数据仓库的知识会么？我说我只学了hadoop、spark和hive。\n> 7.上述三个组件如何自学的？\n> 8.一个sql题目，给出一个表，有id、日期和当天购买数量，求每天最多购买的top2。\n> 9.问我一般使用什么写程序，我说python，他说让我用python实现两个大数数字相加，而且用java演示了一下，但是不是很懂他的意思，他就直接跳过了。\n> 10.反问。\n> 总结：这是我暑期实习第二次面试，当时数仓不了解而且后面两个题目应该都是没有回答出来的，可能这 也是挂掉的原因之一，而且当时注重于刷leetcode而忽视了sql题目，因此我也迅速开始进行sql的复习和刷题，这个地方的建议是刷sql题目尽量不要进行自测而是追求一次通关，因为面试的时候很多让你写sql不会给你自测的条件，平时刷题应该也要追求简单题目一次通过。果不其然，挂的速度非常快，面完之后可能不到半个小时就挂了，不过好在快手可以无限复活，直接加入打复活赛的行列。\n> #互联网大厂实习[话题]# #面试求职[话题]# #面经[话题]# #大厂[话题]# #面试日常[话题]# #面试问题[话题]# #数据开发[话题]# #春招分享[话题]# #校招[话题]# #面试技巧[话题]#\n>",
+    "verification": {
+      "status": "blocked",
+      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "blocked",
+      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "blocked",
+      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

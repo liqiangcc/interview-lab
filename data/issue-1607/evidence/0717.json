@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0717-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 717,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/717",
+  "source_note_id": "xhs-note:67f92936000000001d00b92e",
+  "expected_body_sha256": "98d225ba819ccba00474ff50da9df39a8fb0453b3f295e0acb93d86853e13c32",
+  "expected_source_revision_id": "xhs-note:67f92936000000001d00b92e:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "blocked",
+  "decision": "pending",
+  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67f92936000000001d00b92e.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "b5a2b91ce8e9ca7afe1546f84cfc636264018816",
+    "locator": "issue-body-copy:lines-103-118",
+    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 1、介绍实习内容\n> 2、mysql，redsi，es区别是什么以及适合什么场景\n> 3、数据库的事务实现原理了解么？（ACID然后做个介绍，原子性undolog，持久性redolog，隔离性MVCC，一致性上面3种）\n> 4、问了实习用redis做什么？（我把项目包装了一下，其实实习项目没用到redis，我简历写了用了，然后就追问我没必要用redis，数据量又不大，让我解释为什么要用，这不是纯加复杂度么，还要保存缓存一致性，没必要啊！！！汗流浃背了，说了下自己想法混过去了）\n> 5、你项目springboot用的版本是什么？你知道springboot3基于jdk什么版本实现的？（有点逆天这问题）问了我常用jdk是多少\n> 6、有看过java的jdk源码么？（hashmap+ConcurrentHashMap+String的源码看过）\n> 7、介绍下hashmap的数据结构？为什么hashmap不直接用红黑树而是先链表后转红黑树？hashmap的初始化长度是多少（16）\n> 8、为什么hashmap的初始化长度是16？（有点逆天这问题，和我之前看的面经一样，为什么负载因子是0.75，这不是经过大量实验验证的最优值么，有啥好解释的）\n> 9、hashmap是线程安全的么（不安全，说了为什么以及出现不安全的场景）\n> 10、从计算机原理上讲下put为什么不是原子性操作？（从没加锁层面说，谈到ConcurrentHashMap）\n> 11、ConcurrentHashMap用什么原理和方案实现锁的机制？（吟唱）\n> 12、你平时从技术上面学习是什么方式？平时有看源码习惯么\n> 反问：表现不好的地方在哪？答：没什么不好，喜欢爱钻研底层和研究源码的同学。#面经[话题]# #找实习[话题]#\n>",
+    "verification": {
+      "status": "blocked",
+      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "blocked",
+      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "blocked",
+      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

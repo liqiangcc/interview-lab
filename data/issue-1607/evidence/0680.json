@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0680-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 680,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/680",
+  "source_note_id": "xhs-note:67ee9898000000000900e85f",
+  "expected_body_sha256": "1f8ce4a301f21194c51b509030a86e69aa235f96e1196976a3b8e3bdc19eda30",
+  "expected_source_revision_id": "xhs-note:67ee9898000000000900e85f:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "blocked",
+  "decision": "pending",
+  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67ee9898000000000900e85f.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "d57cfc09648bc4792568088458de8d7f5ac4e2cc",
+    "locator": "issue-body-copy:lines-103-179",
+    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 1、自我介绍\n> 请简要介绍您的学术背景和研究方向，重点说明与推荐系统和大模型相关的科研经历。\n> 2、研究经历深度探讨\n> 您的研究主线是什么？各研究课题之间的关联性？\n> 您发表的论文主要解决了哪些关键问题？\n> 研究成果的收益如何量化？对比了哪些baseline方法？\n> 3、大模型实习经历\n> 请详细介绍您在大模型相关实习中的：\n> 项目目标与工作内容\n> 技术方案与创新点\n> 取得的量化成果\n> 4、BERT与GPT对比分析\n> 从模型架构角度对比BERT和GPT的核心差异\n> 说明两者的预训练目标和方法\n> 它们在fine-tuning时的典型做法\n> 5、微调策略应用场景\n> SFT和RLHF各自适用的场景\n> 分析两种方法的优缺点\n> 在实际应用中如何选择\n> 6、长上下文处理技术\n> 目前主流的long-context处理方法有哪些？请从以下几个方面说明：\n> 位置编码改进\n> 注意力机制优化\n> 内存管理技术\n> 7、模型架构演进\n> Transformer相比LSTM+Attention的主要改进点：\n> 并行计算能力\n> 长距离依赖建模\n> 特征提取效率\n> 8、推荐系统全链路理解\n> 请说明您对推荐系统以下环节的理解：\n> 召回\n> 粗排\n> 精排\n> 重排\n> 9、样本分布不一致问题\n> 针对粗排和精排样本分布不一致的情况，可能的解决方案：\n> 蒸馏学习\n> 数据增强\n> 模型结构调整\n> 损失函数改进\n> 10、推荐实习工作\n> 详细介绍您在推荐系统相关实习中的：\n> 项目背景\n> 技术方案\n> 个人贡献\n> 成果指标\n> 11、在线学习应用\n> 是否有考虑利用线上用户行为数据进行模型fine-tuning？可能的技术方案包括：\n> 增量学习\n> 在线蒸馏\n> 强化学习\n> 12、算法题\n> LeetCode 115 - 不同的子序列：\n> 给定字符串s和t，计算s的子序列中等于t的个数。\n> 要求：\n> 时间复杂度分析\n> 空间优化方案\n> 示例：\n> 输入：s = \"rabbbit\", t = \"rabbit\"\n> 输出：3\n> 13、反问环节\n> 您可以询问：\n> 部门当前的主要业务方向\n> 团队的技术栈\n> 典型的工作内容\n> 工作强度与作息安排\n> 考察重点说明：\n> 研究深度：对研究课题的系统性思考\n> 工程能力：大模型和推荐系统的实践经验\n> 算法基础：动态规划等编程能力\n> 系统思维：对推荐全链路的理解\n> 创新意识：解决实际问题的思路\n> #互联网大厂[话题]# #大模型面试[话题]# #大模型[话题]# #人工智能就业[话题]# #RAG[话题]# #AI人工智能[话题]# #面试[话题]#\n>",
+    "verification": {
+      "status": "blocked",
+      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "blocked",
+      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "blocked",
+      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

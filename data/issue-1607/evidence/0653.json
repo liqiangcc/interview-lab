@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0653-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 653,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/653",
+  "source_note_id": "xhs-note:67e78d76000000001d025885",
+  "expected_body_sha256": "a42bcb2a82c496f1b9a03f2798ae01d3f2f14b2e2d568e7b66dc663f1fd5d1da",
+  "expected_source_revision_id": "xhs-note:67e78d76000000001d025885:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "blocked",
+  "decision": "pending",
+  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67e78d76000000001d025885.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "9e54f05994f848849ebf66b45f723f5626b60539",
+    "locator": "issue-body-copy:lines-103-129",
+    "excerpt": "### 可读 Source projection — `note_desc`\n\n> （压力好大，我被狠狠的压力了。狠狠的压力面\n> 1.做题，手撕力扣mid。力扣1482\n> 二分（还行，但是一直反问哪里可以优化）\n> \t\n> 2.开始上压力\n> 问计算机组成原理和编译原理（中间说了一句你编译原理是不是没学好。。。学了三四年了真不怎么记得了，而且这个岗位跟编译原理没什么关系吧）\n> \t\n> 3.场景题：\n> 问io的过程以及内核怎么处理，整个过程\n> \t\n> 给一段没见过的代码（类似js），让我分析每一行的用处和底层实现。类比一下c++它会怎么做\n> \t\n> union类型一段代码，适合什么场景。\n> \t\n> 如果你是设计者，怎么设计一个进程下有多个进程共享虚拟地址空间，怎么设计，怎么防止出问题\n> \t\n> 小米手机在微信上用搜狗输入法输入商品信息，用微信转给用华为手机的用户，其中哪个用户在什么时候能知道，先后顺序（小米手机，搜狗，微信，防炸中心，pdd淘宝等app，华为，华为用户）\n> \t\n> （还有很多奇奇怪怪的问题）\n> \t\n> 4.项目（30min左右）\n> \t\n> 总结：整场面试基本上都是在问我如果我是设计者，我会怎么设计。让我猜某个过程怎么实现的。（我说没见过没用过，他说要是见过用过不就没意思了[失望R]）压力太大了，唉\n> #互联网大厂[话题]# #面经[话题]# #面试日常[话题]# #互联网大厂实习[话题]#\n>",
+    "verification": {
+      "status": "blocked",
+      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "blocked",
+      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "blocked",
+      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

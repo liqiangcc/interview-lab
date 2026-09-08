@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0743-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 743,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/743",
+  "source_note_id": "xhs-note:67ffee37000000001d006693",
+  "expected_body_sha256": "9eb7feea6116e89d373444fd77b3968288a930c0a9dc0482e25535e7bcc696be",
+  "expected_source_revision_id": "xhs-note:67ffee37000000001d006693:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "blocked",
+  "decision": "pending",
+  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67ffee37000000001d006693.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "4452597bcbbba25c8ecbaaee83a47ab101d55e38",
+    "locator": "issue-body-copy:lines-103-149",
+    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 感觉要寄了，但还是写一下面经吧，我纯菜鸟一枚。\n> 一面\n> 一个半小时\n> 自我介绍\n> 基本上是围绕项目展开来问的，一定要熟悉项目！讲清楚项目技术难点和重点在哪。\n> 主要问的计网多一点\n> https的加密机制\n> 非对称加密和对称加密\n> 公钥和私钥\n> c++智能指针\n> 智能指针怎么解决内存泄露的问题\n> redis怎么存储数据的\n> hashmap的原理\n> 因为我说我做过计算机视觉的内容还问了我特征提取方面的，比如特征用什么数据结构表示啥的，还问了怎么进行特征提取\n> 然后问了udp和tcp区别\n> udp怎么改造成可靠传输\n> tcp为啥要有第三次握手\n> 好多，我忘了\n> 算法题是找到数组中和为target的的两个数的下标，不难\n> 隔天通知二面，说实话字节这方面效率真高。。\n> \t\n> 二面\n> 一个小时左右\n> 自我介绍\n> 还是深挖项目，要介绍你做的项目工作以及遇到的技术难点。大概有二十分钟左右在讲项目。\n> 然后会问熟悉哪些开发语言，我说的java 和c++结果就一直问这两的基础(深刻体会要完全掌握了再说熟悉，主包太厚脸皮)\n> java中的==和equals的区别\n> java引用有哪几种\n> jvm怎么回收这些引用的\n> Java泛型\n> 双亲委派模型(Java类加载机制)\n> c++堆和栈的区别有哪些(讲的越详细越好，主包一直被问还有呢还有呢)\n> 栈和堆的大小\n> 栈内存的分配时机\n> c++的extern c\n> c++类对象的内存布局\n> 虚函数表指针有多大\n> i++和++i是原子操作吗，如何实现原子操作呢\n> http1和http2有哪些区别\n> 还有一些不记得了，大概就是java和c++的基础\n> 算法  接雨水\n> 主包还是太菜了，感觉药剂了，:-(\n> 最后我问了面试官说应届生主要就问语言基础这些问题，然后加深一下后端项目啥的。\n> #面经[话题]##互联网大厂[话题]# #客户端开发[话题]#\n>",
+    "verification": {
+      "status": "blocked",
+      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "blocked",
+      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "blocked",
+      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

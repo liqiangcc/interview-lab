@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0593-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 593,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/593",
+  "source_note_id": "xhs-note:67d6d9fd000000001d026e12",
+  "expected_body_sha256": "d2763b18a1e4a35f4c35c70e136b70c5dda87e9df7e0c11941170e02c6e8f94e",
+  "expected_source_revision_id": "xhs-note:67d6d9fd000000001d026e12:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "blocked",
+  "decision": "pending",
+  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67d6d9fd000000001d026e12.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "787f75ca534f33f79330f4ec5498dabf1e190e35",
+    "locator": "issue-body-copy:lines-166-190",
+    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 一面凉～～\n> 🌍背景：\n> 几个月前找实习的时候投了字节电商，上周才被HR打电话说要约面试。估计是人不够了才开始海底捞了。因为准备仓促，我是抱着赴死的心态去面的。\n> 📔面试前准备：\n> 没大量刷题，就面试前几个小时慢悠悠地做了一道leetcode中等题练手。\n> 💻面试过程：\n> 先向面试官简单介绍了一下自己和简历上没写上的两端实习经历。这一招之前对上次Deeplang的面试官凑效，但是这回面试官不吃这套，只拷问我第一段初创的实习经历。这段经历里面各种架构都比较简陋，再加上时间长了有点忘了，很不占巧\n> 针对简历问的问题：\n> 1. 用户退出完了怎么返回数据给用户（存到数据库上，每次用户进去从数据库里拉）\n> 2. 问SaaS是什么，消息队列用的是Kafka、RocketMQ还是RabbitMQ，写的消息队列是怎么实现的（他没理解云函数和我们模型推理使用的服务器是分开的，我跟他掰扯了好久；他想象的消息队列应该是自己写个kafka那种的，而我写的是一个有队列（数据结构）功能的服务。当时做这功能的时候我们调研了，kafka太贵了所以没用，所以自己搞了一个这个简单的。然后这又掰扯了好久。），把消息入队的并发处理又是怎么搞的。\n> 他：你把这消息存云函数内存上，服务器崩了不就没办法了？\n> 我：那确实。\n> 3. 问中间件是啥（我当时忘记定义卡住了。正确答案：给后端用的辅助性服务（不是面向用户的））\n> 4. 问如果一个AIGC的结果半天无法返回，而用户又一定想要得到一个结果，那怎么办。我：那可以在数据库上存状态，定时去扫描数据库。如果超过一定时间，可以返回一个默认的结果，或者在这里trick一下返回一个更简易的结果\n> 算法题部分：\n> 题目：把一个只包含1-9（可能不全有）的字符串分割成3个以上的数字，然后判断此字符串是否可以分割成斐波那契数列（如果是，必须是连着的。最后return bool）。时限20min\n> 我硬着头皮想了十分钟，最后决定就从最简单的开始写一点点拓展。最后面试官给的两个case都过了时间就没了。我知道写得不完善，也跟面试官交流了\n> 🎯接下来要做的：\n> 1. 个人经历补充：两端实习经历写上简历，把厉害的放在前面\n> 2. 继续投别的实习\n> 3. 准备开刷leetcode\n> #互联网大厂[话题]# #实习[话题]# #日常实习[话题]# #后端实习[话题]# #后端开发[话题]# #字节跳动[话题]# #面经[话题]#\n>",
+    "verification": {
+      "status": "blocked",
+      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "blocked",
+      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "blocked",
+      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0420-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 420,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/420",
+  "source_note_id": "xhs-note:6746d89b0000000008006ab9",
+  "expected_body_sha256": "e9371c3112564a06e7d1bcbe23353bdc81819f9dfbc057055d63781e6b4e8990",
+  "expected_source_revision_id": "xhs-note:6746d89b0000000008006ab9:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "blocked",
+  "decision": "pending",
+  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/6746d89b0000000008006ab9.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "9c4b65e76377a0d793b8ac95e506eceb61be4337",
+    "locator": "issue-body-copy:lines-126-158",
+    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 一面\n> 八股\n> 计网\n> 键入网址到网页显示，期间发生了什么？\n> tcp三次握手的过程？\n> 为什么是三次握手？不是两次？\n> OS\n> 你对操作系统的理解？\n> 你对锁的理解？\n> 平时是怎么使用锁？比如关键字还是工具？\n> 什么是用户态和内核态？\n> 为什么要有用户态和内核态？只有一个内核态不行么？\n> 内存管理主要做了什么？\n> 算法\n> 反转链表2\n> 二面\n> 自我介绍\n> 把这四个项目都介绍一下大概是干嘛。\n> 选一个项目说一下。\n> 怎么保持数据的一致性？\n> 八股\n> os\n> 内存的管理模型，以及各自的优点缺点。分页，分段，段页式\n> 进程的调度算法。\n> 关闭浏览器点击×时，操作系统期间发生了什么？\n> 算法\n> 一个数组{1，2， 3， 4， 3， 4， 9}，target= 9，求出两个数乘积为target的组合 result= [[1, 9], [3, 3]]；\n> 场景题\n> 场景题目：一个100G大小的文件里面有很多的数字，你的内存只有8G，如何去找到所有的乘积为目标值的组合，说思路；\n> #学习[话题]# #金融科技岗[话题]# #银行面试真题[话题]# #面试技巧[话题]# #应届生[话题]# #应届生找工作[话题]# #应届生求职[话题]# #银行招聘[话题]# #国企工作[话题]# #国企招聘[话题]# #java学习[话题]# #java[话题]# #java面试[话题]# #java项目[话题]#\n>",
+    "verification": {
+      "status": "blocked",
+      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "blocked",
+      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "blocked",
+      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

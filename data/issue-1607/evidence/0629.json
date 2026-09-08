@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0629-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 629,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/629",
+  "source_note_id": "xhs-note:67e23693000000001201cdf8",
+  "expected_body_sha256": "b03bb921770ca3295585ee5b182c7216acc7aca697f8222525a0a5ab3dcf9875",
+  "expected_source_revision_id": "xhs-note:67e23693000000001201cdf8:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "blocked",
+  "decision": "pending",
+  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67e23693000000001201cdf8.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "87abbf36b59c6fa9169e718ce2c53175d9f7618f",
+    "locator": "issue-body-copy:lines-103-125",
+    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 手撕算法：143重排链表  问了两种思路（1.线性表 2.寻找链表中点+链表逆序+合并链表）\n> 1.场景题：你在你的项目中是如何实现前后端的交互的？从前端发送请求到后端产生响应再返回给前端的过程讲一讲\n> 2.调用后端服务，遇到跨域的问题，该如何解决？\n> 3.跨域本质是为了解决什么问题？\n> 4.你应该知道很多的响应码，504代表什么？（在 HTTP 状态码中，504 表示 “网关超时”）\n> 5.如果是504错误，该怎么排查？\n> 6.你的项目中前后端的数据传输是否用到了网关？了解网关吗，介绍一下？\n> 7.HTTP通信的协议特点，结构，跟UDP直接的差别？\n> 8.TCP为了保证安全传输有什么机制？\n> 9.Java里面有哪些数据结构，分别使用在哪些场景？\n> 10.链表和数组的底层数据结构？（这里回答的很乱，他还问了链表和数组两者分别怎么找到某个元素？）\n> 11.new一个arraylist的时候，为什么指定类型？\n> 12.堆的应用场景和特点？\n> 13.你对你的项目中最熟悉的技术栈是什么？（我这里回答的是Mysql和Redis）\n> 14.mysql事务的四大特性？\n> 15.MySQL 中，隔离性所涉及的锁机制讲一下？锁在底层作用在什么位置？\n> 16.InnoDB 存储引擎下，一张表在底层存储时主要涉及以下几种文件？\n> 17.除了mysql和redis，还有什么其他结构的数据库，分别用于什么场景？（这里回答MongoDB）\n> 18.Redis为什么快？\n> 19.Redis对String的改造知道吗？\n>",
+    "verification": {
+      "status": "blocked",
+      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "blocked",
+      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "blocked",
+      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

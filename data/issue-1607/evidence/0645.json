@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0645-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 645,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/645",
+  "source_note_id": "xhs-note:67e54cfa000000000302bd3c",
+  "expected_body_sha256": "b8c3ca03226a998538d0e515bee8c01801b05586a127ebd34b9ba65b87004ae3",
+  "expected_source_revision_id": "xhs-note:67e54cfa000000000302bd3c:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "blocked",
+  "decision": "pending",
+  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67e54cfa000000000302bd3c.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "f6cf57ff588cc46da67ba0bd37f98decd539bd4d",
+    "locator": "issue-body-copy:lines-103-115",
+    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 1.自我介绍\n> 2.哈希表怎么实现以及解决哈希冲突，如何实现一个有序哈希列表\n> 3.操作系统内存分配过程\n> 4.进程间通信\n> 5.死锁的产生，解决，预防，发现\n> 6.http和https的区别，TLS握手流程原理\n> 7.手撕环节：根据数组生成一个二叉树，这个数组包含nil节点，然后再写一个函数层次遍历\n> 8.反问环节\n> ps:我做的是服务端的，投简历投到了客户端。所以面试官上来就说了一下，然后就说提问一些计算机基础知识看看我之前学习的怎么样\n> #面经[话题]# #后端开发[话题]# #大厂[话题]# #实习[话题]##go[话题]#\n>",
+    "verification": {
+      "status": "blocked",
+      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "blocked",
+      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "blocked",
+      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0697-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 697,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/697",
+  "source_note_id": "xhs-note:67f4f7c6000000001202e218",
+  "expected_body_sha256": "242eb2fb637ad9a199b0c3d20ed65bf20b6d443f562fb6d35b1278f5df3a79b7",
+  "expected_source_revision_id": "xhs-note:67f4f7c6000000001202e218:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "blocked",
+  "decision": "pending",
+  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67f4f7c6000000001202e218.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "cba9e95c0c67965a2078939aee8a115cd8b584a2",
+    "locator": "issue-body-copy:lines-139-181",
+    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 📝对我来说，快手的面试体验是所有厂里最好的，是少数的以讨论的形式来面试的，并且快手的面试间也很好用，内置ide联想比其他厂的快一点，面试时长1个半小时，已速通入职，一面面试官是同团队不同小组的，面试中场景题很常见且问的很深入，一面手撕了单例模式和动态规划。\n> \t\n> 💡场景题-秒杀\n> 1️⃣秒杀系统流量太高几十万人抢一个商品，怎么解决服务超载？\n> 2️⃣具体怎么限流？\n> 3️⃣怎么保证商品不超卖？保证库存只有10个，不会被超卖。\n> 4️⃣库存扣减过程中的原子性和有序性\n> 5️⃣分布式锁起到的作用是什么？\n> 6️⃣事务一致性保障\n> 7️⃣秒杀系统中的锁的key怎么设计？用redis设计一个高吞吐的方式。\n> 8️⃣怎么解决秒杀系统的热点key问题？\n> 9️⃣怎么缓存分摊？\n> 1️⃣0️⃣详细介绍多级缓存\n> \t\n> 💡Java基础&并发&JVM\n> 1️⃣介绍hashmap，什么时候扩容？负载因子怎么算？为什么扩容是两倍？\n> 2️⃣hashmap有什么问题吗？JDK1.7，1.8并发场景下hashmap有什么问题？\n> 3️⃣concurrentHashMap底层怎么实现的？\n> 4️⃣CAS是什么，有没有什么问题？\n> 5️⃣怎么解决ABA问题\n> 6️⃣sync锁升级过程，从JVM角度说\n> 7️⃣jvm分配对象是怎么分配的？\n> 8️⃣对int赋值，怎么保证对所有线程都可见？\n> 9️⃣volatile的有序性保证？指令重排是什么？\n> 1️⃣0️⃣什么是单例模式？多种创建单例模式的方法，DCL是什么，手撕5种单例模式写法。\n> 1️⃣1️⃣线程池工作原理？\n> 1️⃣2️⃣Threadlocal是什么，如何实现，有什么问题，如何解决？key是什么引用？线程池和Threadlocal可以共用吗？\n> \t\n> 💡MySql\n> 1️⃣mysql引擎介绍一下\n> 2️⃣b+树相对于b树的优点？为什么适合磁盘存储？\n> 3️⃣慢sql优化思路？\n> 4️⃣一个表1000w行数据，怎能处理慢sql？\n> 5️⃣深度分页问题及解决？\n> \t\n> 💡手撕\n> 有效括号子串长度\n> \t\n> 💡反问\n> 部门业务，推进速度#oc[话题]# #java[话题]# #后端开发[话题]# #计算机[话题]# #互联网大厂[话题]# #转码[话题]#\n>",
+    "verification": {
+      "status": "blocked",
+      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "blocked",
+      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "blocked",
+      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

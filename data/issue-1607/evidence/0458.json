@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0458-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 458,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/458",
+  "source_note_id": "xhs-note:67614c15000000000b021d4b",
+  "expected_body_sha256": "8bcb13dbcae658860dc711dc19ba3f22d51a8789c75e9b0cf12f01872a1eead4",
+  "expected_source_revision_id": "xhs-note:67614c15000000000b021d4b:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "blocked",
+  "decision": "pending",
+  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67614c15000000000b021d4b.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "fd51dda6a101c8b26ffd1314e38bdefc4c8ddfa5",
+    "locator": "issue-body-copy:lines-126-180",
+    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 大家好，接金鱼井的避难所学员投稿。\n> bg：小Mu，211本科大三在读。八月底加入避难所学习，十月底开始投递日常实习。从小厂练手到中厂大厂实战，目前已入职百度，和大家陆续分享一下过程中面试的内容经验。\n> \t\n> 🎯 喜马拉雅java开发 日常实习 面经\n> \t\n> 📚 基础框架\n> 【Spring全家桶】\n> ▪ Spring核心机制\n> ▪ IoC控制反转原理\n> ▪ AOP面向切面编程\n> ▪ Bean生命周期管理\n> \t\n> 💻 并发编程\n> 【线程池专题】\n> ▪ 线程池核心参数与原理\n> ▪ 动态vs非动态线程池\n> ▪ 协程实现并发\n> ▪ 协程vs线程的区别\n> ▪ 性能优势\n> \t\n> 🗄 数据结构与存储\n> 【HashMap理解】\n> ▪ 基本原理\n> ▪ 扩容机制\n> ▪ 线程安全考虑\n> \t\n> 【Redis进阶】\n> ▪ 渐进式哈希扩容\n> ▪ 集群架构\n> ▪ 哈希槽机制\n> ▪ 一致性哈希算法\n> \t\n> 📊 数据处理\n> 【Excel大数据导入方案】\n> ▪ EasyExcel + 线程池组合\n> ▪ 性能优化技巧\n> ▪ 行级状态管理\n> \t\n> 📐 数据库设计\n> ▪ 表结构设计要点\n> ▪ 分表策略\n> ▪ 水平分表\n> ▪ 垂直分表\n> \t\n> 🧮 算法手撕题\n> 【经典股票买卖问题】 dp算法\n> ▪ 基础买卖\n> ▪ 无限次交易\n> ▪ N次交易限制\n> —————————\n> #Java面试[话题]# #后端开发[话题]# #面试经验[话题]# #程序员[话题]# #求职[话题]##实习[话题]# #日常实习[话题]# #26届[话题]# #转码[话题]# #互联网大厂[话题]#\n> Tips：喜马拉雅面试建议重点关注Spring原理、并发编程和分布式系统相关内容💪\n>",
+    "verification": {
+      "status": "blocked",
+      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "blocked",
+      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "blocked",
+      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

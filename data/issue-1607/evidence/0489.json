@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0489-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 489,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/489",
+  "source_note_id": "xhs-note:679303a1000000002901a70f",
+  "expected_body_sha256": "d69c825e7cfd25445dc509fc7c6ec88e1d15095be4781105c4d4ae1f0ec79b87",
+  "expected_source_revision_id": "xhs-note:679303a1000000002901a70f:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "blocked",
+  "decision": "pending",
+  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/679303a1000000002901a70f.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "738dd8cc70f81b140c25db67b2edbef22955039e",
+    "locator": "issue-body-copy:lines-126-167",
+    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 1.比较熟悉的项目，讲一下做了哪些功能\n> 2.ES和MySQL的查询有什么不一样\n> 3.搜索如果要实现热词功能，要怎么设计\n> 4.canal是如何进行数据同步的\n> 5.canal怎么保证数据的一致性问题呢\n> 6.POI和EasyExcel的区别，EasyExcel做了什么改进\n> 7.如果有超过10万条数据要进行导出，如何进行处理\n> 8.父子表如何进行关联\n> 9.一对多如何进行查询\n> 10.删除外键需要注意什么\n> 11.MySQL的索引用过哪些\n> 12.如果一张表没有设置主键，是否还会有主键索引\n> 13.B+树和B树的区别\n> 14.MySQL的索引引擎\n> 15.事务隔离级别\n> 16.可重复读导致的问题\n> 17.如何进行SQL优化\n> 18.Mysql和Oracle有什么区别\n> 19.Oracle有limit关键字吗\n> 20.Spring的事务\n> 21.事务失效场景\n> 22.一个事务方法调用另一个事务方法，事务还会生效吗\n> 23.事务机制使用的什么设计模式\n> 24.spring两个核心\n> 25.是否使用过AOP，使用的什么通知方式\n> 26.Springboot的核心注解，由哪些注解组成\n> 27.自动装配原理\n> 28.怎么初始化一个springboot项目\n> 29.如果要创建一个web项目，需要引用哪些依赖\n> 30.目前springboot3.XX的版本可以使用脚手架搭建，如果是jdk1.8，只能支持2.XX的版本，需要怎么搭建\n> 31.maven用的什么版本，是否出现过不兼容的情况\n> 32.git用的多吗？写代码是切了属于自己的分支吗\n> 33.是否出现过代码冲突，怎么解决\n> 34.怎么进行版本回退？已经push的情况下\n> 35.springcloud微服务架构和单体架构的区别\n> 36.nacos除了做注册与发现，还可以用来干什么\n> 37.#和[话题]#$符号的区别\n> 一家外包公司的面试题，比较简单。面试官人还挺好，有些回答不完整的地方还会给我进行补充。面试通过了，不过谈薪失败，最终也没有去这家公司\n> #Java面试[话题]# #经验分享[话题]# #后端找工作[话题]#\n>",
+    "verification": {
+      "status": "blocked",
+      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "blocked",
+      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "blocked",
+      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

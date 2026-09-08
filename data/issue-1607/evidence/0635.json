@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0635-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 635,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/635",
+  "source_note_id": "xhs-note:67e3d0d3000000001d03a4b7",
+  "expected_body_sha256": "843b963ef599fcdb9de280237a9bbb8fdad6f783cb087ce820743fe7594e1eeb",
+  "expected_source_revision_id": "xhs-note:67e3d0d3000000001d03a4b7:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "blocked",
+  "decision": "pending",
+  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67e3d0d3000000001d03a4b7.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "b8032b8493ce293c32219765122039d08db43d92",
+    "locator": "issue-body-copy:lines-103-127",
+    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 时长1小时20分钟。\n> 1. 自我介绍。\n> 2. 算法题：手撕LRU。\n> 3. 本科有什么有趣的项目经历？\n> 4. 了解多继承吗？哪些语言支持多继承？多继承存在什么问题？如何解决？\n> 5. 讲述面向对象三大要素，谈谈你对面向对象的理解。\n> 6. 多范式有了解过吗？\n> 7. C++和Java在语言层面有什么区别？\n> 8. 了解Go吗？讲讲Go有什么优势。\n> 9. 读写一个已关闭的、无缓冲的channel会发生什么？\n> 10. Go指针底层是怎么实现的？和其他语言的指针有什么区别？\n> 11. Go函数的多返回值是怎么实现的？和Python的多返回值机制有什么区别？\n> 12. MySQL和MongoDB的区别，各自的使用场景是什么？\n> 13. MongoDB的底层存储引擎和MySQL有什么不同？\n> 14. MySQL是否可以保存非结构化数据？\n> 15. 为什么说Redis性能好？\n> 16. 简述TCP流量控制过程。\n> 17. 腾讯实习经历拷打。\n> 18. 反问。\n> \t\n> 总结：被IEG的运营开发部门捞起来了，这次面试总体比较轻松。我发现腾讯真的很喜欢考LRU诶，都连着考两次了。\n> #暑期实习[话题]# #后端开发[话题]# #面经[话题]# #互联网大厂[话题]# #腾讯[话题]#\n>",
+    "verification": {
+      "status": "blocked",
+      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "blocked",
+      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "blocked",
+      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}

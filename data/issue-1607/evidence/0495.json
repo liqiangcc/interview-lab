@@ -1,0 +1,64 @@
+{
+  "schema_version": "issue-1607-boundary-evidence.v1",
+  "transition_id": "issue-1607-boundary-0495-review-1",
+  "repository": "liqiangcc/interview-lab",
+  "child_issue": 1607,
+  "issue_number": 495,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/495",
+  "source_note_id": "xhs-note:67a5caaf000000002903731d",
+  "expected_body_sha256": "1a1cc954afa34c93328adcb4a92ca4e5ac69db3b41ba5540dc0f108532662b73",
+  "expected_source_revision_id": "xhs-note:67a5caaf000000002903731d:snapshot-95b77bb26104",
+  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "evidence_status": "blocked",
+  "decision": "pending",
+  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified in this run.",
+  "source_evidence": {
+    "ref": "liqiangcc/xhs:note_desc/67a5caaf000000002903731d.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "c998170774631e72242cc5e3ebf49592deae0d92",
+    "locator": "issue-body-copy:lines-144-176",
+    "excerpt": "### 可读 Source projection — `note_desc`\n\n> 项目:\n> 简单问了一下项目\n> 八股:\n> 1.简单讲一下线程池\n> 2.线程池的拒绝策略大概有几种?\n> 3.线程池的池化思想还被用在哪里?\n> 4.spring最核心的是什么?\n> 5.简单讲一下你对IOC的理解?\n> 6.spring生成的bean和直接new的对象有什么区别?\n> 7.spring的bean是线程安全的吗?(面试官引导了很久,硬控3min,其实就是看bean是不是有状态的)\n> 8.讲一下springMVC最核心的是什么?\n> 9.是怎么解析url的?\n> 10.实现springMVC最核心的几个类是什么?\n> 11.mysql的在innodb存储引擎下数据是怎么组织的?\n> 12.索引和数据是放在一起的吗?\n> 13.讲一下b+树\n> 14.b+树在非叶子结点不存储数据相比于b树有什么优势?\n> 15.为什么加索引能提升查询速度?\n> 16.b+树o(lg n)是怎么得出来的?底数是多少?\n> 17.b+树的k叉树这个k最大是多少?\n> 18.mysql的数据写经历了哪些过程?\n> 19.mysql中有哪几种log?简单答一下各自的作用?\n> 20.了解mysql的MVCC吗?核心的是什么?\n> 21.jvm的内存结构?\n> 22.哪些是线程私有的?\n> 23.代码文件(.java文件)是放在哪里的?\n> 24.如何理解\"尽量将递归转为迭代\",结合jvm讲一下?\n> 手撕:\n> 写个题吧:力扣56.合并区间\n> .#学习[话题]# #金融科技岗[话题]# #银行面试真题[话题]# #面试技巧[话题]# #应届生[话题]# #应届生找工作[话题]# #应届生求职[话题]# #银行招聘[话题]# #国企工作[话题]# #国企招聘[话题]# #java学习[话题]# #java[话题]# #java面试[话题]# #java项目[话题]#\n>",
+    "verification": {
+      "status": "blocked",
+      "reason": "explicit body-only preparation mode: pinned Source projection bytes were not fetched"
+    }
+  },
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Issue body machine record and SourceNote identity are frozen and internally consistent."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "SourceRevision is bound to 95b77bb261048059846273688e4b90a2e108b437 in the frozen Issue body."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "blocked",
+      "note": "Exact pinned Source projection bytes and Git blob content were not independently verified."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "blocked",
+      "note": "No 0/1/N classification is authorized while source evidence verification is blocked."
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "This ledger item references only its own SourceNote and its canonical note_desc artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "No InterviewNote identity, company, role, round, outcome, or derived content is created."
+    }
+  ],
+  "limitations": [
+    "The excerpt is an Issue-body copy of the cited Source projection, not a substitute for independently verified pinned bytes.",
+    "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
+    "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
+  ]
+}
