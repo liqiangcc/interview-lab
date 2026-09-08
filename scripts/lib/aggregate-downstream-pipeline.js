@@ -186,6 +186,13 @@ function validateBoundaryTransitionReport(report, manifest, expectedCandidateCou
     if (!nonEmpty(sourceId) || !nonEmpty(revision)) errors.push(`Issue #1605 boundary transition SourceNote #${number} has incomplete source identity`);
     if (decision === 'not-interview' && ids.length !== 0) errors.push(`not-interview SourceNote #${number} declares InterviewNote identities`);
     if (decision !== 'not-interview' && ids.length === 0) errors.push(`Interview SourceNote #${number} declares no InterviewNote identity`);
+    const cases = Array.isArray(raw && raw.interview_note_cases) ? raw.interview_note_cases : [];
+    const caseIds = cases.map((entry) => entry && entry.interview_note_id);
+    if (decision === 'multi-interview') {
+      if (cases.length !== ids.length) errors.push(`multi-interview SourceNote #${number} case count does not equal interview_note_ids count`);
+      if (new Set(caseIds).size !== caseIds.length || ids.some((id) => !caseIds.includes(id))) errors.push(`multi-interview SourceNote #${number} case identities do not exactly map to interview_note_ids`);
+      if (cases.some((entry) => !entry || !nonEmpty(entry.case_key))) errors.push(`multi-interview SourceNote #${number} has a missing case_key`);
+    } else if (cases.length !== 0) errors.push(`non-multi SourceNote #${number} must not declare interview_note_cases`);
     for (const id of ids) {
       if (!nonEmpty(id)) errors.push(`Issue #1605 boundary transition SourceNote #${number} has an invalid InterviewNote identity`);
       if (candidateIds.has(id)) errors.push(`Issue #1605 boundary transition report duplicates InterviewNote identity ${id}`);
@@ -221,8 +228,19 @@ function validateIssue1605MaterializationPlan(report, manifest, boundary) {
     if (!['blocked', 'would-materialize', 'would-repair-receipt', 'already-materialized'].includes(action)) errors.push(`Issue #1605 materialization plan candidate ${id} has unsupported action ${action || 'missing'}`);
     const request = result.request || {};
     const bodySha = boundaryItem && boundaryItem.current_body_sha256;
-    if (bodySha && request.expected_source_note_body_sha256 && request.expected_source_note_body_sha256 !== bodySha) errors.push(`Issue #1605 materialization plan candidate ${id} SourceNote body SHA drifted`);
+    if (boundaryItem && !boundaryItem.interview_note_ids.includes(id)) errors.push(`Issue #1605 materialization plan candidate ${id} does not belong to SourceNote #${number}`);
+    if (boundaryItem && result.boundary_decision !== boundaryItem.decision) errors.push(`Issue #1605 materialization plan candidate ${id} boundary decision drifted from SourceNote #${number}`);
+    if (boundaryItem && result.boundary_transition_status !== 'applied') errors.push(`Issue #1605 materialization plan candidate ${id} is not bound to an applied SourceNote #${number} transition`);
     if (boundaryItem && result.source_note_id !== boundaryItem.source_note_id) errors.push(`Issue #1605 materialization plan candidate ${id} SourceNote identity drifted`);
+    if (boundaryItem && (!HEX64.test(request.expected_source_note_body_sha256 || '') || request.expected_source_note_body_sha256 !== bodySha)) errors.push(`Issue #1605 materialization plan candidate ${id} must bind the exact SourceNote body SHA for SourceNote #${number}`);
+    if (boundaryItem && request.expected_source_revision_id !== boundaryItem.source_revision_id) errors.push(`Issue #1605 materialization plan candidate ${id} must bind expected_source_revision_id ${boundaryItem.source_revision_id}`);
+    if (boundaryItem && request.expected_source_repository_ref !== manifest.source_ref) errors.push(`Issue #1605 materialization plan candidate ${id} must bind expected_source_repository_ref ${manifest.source_ref}`);
+    if (boundaryItem) {
+      const cases = Array.isArray(boundaryItem.interview_note_cases) ? boundaryItem.interview_note_cases : [];
+      const expectedCase = cases.find((entry) => entry && entry.interview_note_id === id);
+      if (boundaryItem.decision === 'multi-interview' && (!expectedCase || result.case_key !== expectedCase.case_key)) errors.push(`Issue #1605 materialization plan candidate ${id} case_key does not match SourceNote #${number} interview_note_cases`);
+      if (boundaryItem.decision !== 'multi-interview' && result.case_key != null) errors.push(`Issue #1605 materialization plan candidate ${id} must not carry a case_key for SourceNote #${number}`);
+    }
     const existingIssue = Number(result.materialization && result.materialization.existing_issue_number);
     rows.push({
       kind: action === 'already-materialized' ? 'materialized-from-issue-1605-plan' : 'materialization-pending',
