@@ -6,9 +6,15 @@
   "source_revision_id": "xhs-note:689ec2f1000000001c011504:snapshot-95b77bb26104",
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "source_retrieval": {
+    "method": "frozen-source-snapshot",
+    "path": "/tmp/issue-1608-source-texts.json",
+    "byte_size": 451,
+    "git_blob_sha": "b1ee7d6100fb8d03a5656a8effe33a11ad59bd20"
+  },
   "evidence_status": "sufficient-for-controller-review",
-  "decision": "not-interview",
-  "rationale": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。",
+  "decision": "single-interview",
+  "rationale": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。",
   "artifact": {
     "ref": "liqiangcc/xhs:note_desc/689ec2f1000000001c011504.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -21,7 +27,7 @@
     {
       "line": 1,
       "locator": "source-projection:artifact-line:1",
-      "excerpt": "整理了一下Java面试场景题型，篇幅太多就不一一展示了，完整面经+答案pdf可以分享，祝大家早日拿到心仪的offer ﻿#编程耐心[话题]#﻿  ﻿#java架构面试题[话题]#﻿  ﻿#程序员[话题]#﻿  ﻿#Java面试[话题]#﻿  ﻿#面经[话题]#﻿  ﻿#互联网大厂面试[话题]#﻿  ﻿#干货分享[话题]#﻿  ﻿#java面试题[话题]#﻿  ﻿#技术宅[话题]#﻿  ﻿#后端开发[话题]#"
+      "excerpt": "整理了一下Java面试场景题型，篇幅太多就不一一展示了，完整面经+答案pdf可以分享，祝大家早日拿到心仪的offer #编程耐心[话题]#  #java架构面试题[话题]#  #程序员[话题]#  #Java面试[话题]#  #面经[话题]#  #互联网大厂面试[话题]#  #干货分享[话题]#  #java面试题[话题]#  #技术宅[话题]#  #后端开发[话题]#"
     }
   ],
   "case_keys": [],
@@ -45,7 +51,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "note": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
     },
     {
       "check_id": "no_cross_source_mixing",

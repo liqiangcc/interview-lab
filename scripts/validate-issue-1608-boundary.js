@@ -14,6 +14,7 @@ const REPOSITORY = 'liqiangcc/interview-lab';
 const SOURCE_REPOSITORY = 'liqiangcc/xhs';
 const SOURCE_REF = '95b77bb261048059846273688e4b90a2e108b437';
 const LABELS = ['type:source-note', 'status:captured', 'boundary:pending'];
+const RETRIEVAL_METHODS = ['note-desc-cache', 'frozen-source-snapshot', 'github-git-blob'];
 
 function readJson(file) {
   return JSON.parse(fs.readFileSync(file, 'utf8'));
@@ -87,6 +88,10 @@ function validateDirectory(root = ROOT) {
     assert.strictEqual(item.live_state, 'open');
     for (const label of LABELS) assert(item.labels.includes(label), `missing ${label} on #${item.issue_number}`);
     assert.strictEqual(item.source_repository_ref, SOURCE_REF);
+    assert(item.source_external_id, `missing source external id on #${item.issue_number}`);
+    assert(item.source_retrieval && RETRIEVAL_METHODS.includes(item.source_retrieval.method), `invalid source retrieval on #${item.issue_number}`);
+    assert.match(item.source_retrieval.git_blob_sha, /^[0-9a-f]{40}$/);
+    assert.strictEqual(item.source_retrieval.byte_size, item.artifact.byte_size);
     assert.match(item.body_sha256, /^[0-9a-f]{64}$/);
     assert.strictEqual(item.artifact.provenance, 'source_projection');
     assert.strictEqual(item.artifact.kind, 'text_projection');
@@ -99,12 +104,14 @@ function validateDirectory(root = ROOT) {
     assert.strictEqual(evidence.source_repository_ref, SOURCE_REF);
     assert.strictEqual(evidence.artifact.provenance, 'source_projection');
     assert.strictEqual(evidence.artifact.git_blob_sha, item.artifact.git_blob_sha);
+    assert.deepStrictEqual(evidence.source_retrieval, item.source_retrieval);
     assert.strictEqual(evidence.evidence_comment, undefined);
     const intent = parseIntent(path.join(root, item.request_file));
     assert.strictEqual(intent.issue_number, item.issue_number);
     assert.strictEqual(intent.expected_body_sha256, item.body_sha256);
     assert.strictEqual(intent.expected_boundary_status, 'pending');
     assert.strictEqual(intent.expected_source_repository_ref, SOURCE_REF);
+    assert.deepStrictEqual(intent.source_retrieval, item.source_retrieval);
     assert.deepStrictEqual(intent.evidence_comment, { status: 'not-created', comment_id: null });
     assert.deepStrictEqual(intent.case_evidence, evidence.case_evidence || []);
     assert.match(intent.apply_authorization, /controller-only/);

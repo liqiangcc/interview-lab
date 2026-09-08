@@ -6,9 +6,15 @@
   "source_revision_id": "xhs-note:68a2c9c2000000001c007872:snapshot-95b77bb26104",
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "source_retrieval": {
+    "method": "frozen-source-snapshot",
+    "path": "/tmp/issue-1608-source-texts.json",
+    "byte_size": 2635,
+    "git_blob_sha": "716fbcd99ab1c09f39f3cdcbcec7617edaf09a00"
+  },
   "evidence_status": "sufficient-for-controller-review",
-  "decision": "not-interview",
-  "rationale": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。",
+  "decision": "single-interview",
+  "rationale": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。",
   "artifact": {
     "ref": "liqiangcc/xhs:note_desc/68a2c9c2000000001c007872.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -19,9 +25,9 @@
   },
   "excerpts": [
     {
-      "line": 1,
-      "locator": "source-projection:artifact-line:1",
-      "excerpt": "下面我来分享一下我的秋招经验 希望能够帮助到大家 ~"
+      "line": 11,
+      "locator": "source-projection:artifact-line:11",
+      "excerpt": "项目我看过很多人都直接把外卖 点评这些烂大街的项目写上去 我建议最好不要写这些项目上去 写了这些项目是很掉分的 面试官已经看过太多太多这种项目了 对这种项目完全不感兴趣"
     }
   ],
   "case_keys": [],
@@ -45,7 +51,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "note": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
     },
     {
       "check_id": "no_cross_source_mixing",

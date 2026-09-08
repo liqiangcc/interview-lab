@@ -6,9 +6,15 @@
   "source_revision_id": "xhs-note:6823e34f000000000303d5af:snapshot-95b77bb26104",
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "source_retrieval": {
+    "method": "frozen-source-snapshot",
+    "path": "/tmp/issue-1608-source-texts.json",
+    "byte_size": 348,
+    "git_blob_sha": "280f1e3865524aec4ff738eeac630ffaae0855f0"
+  },
   "evidence_status": "insufficient-blocked",
   "decision": null,
-  "rationale": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。",
+  "rationale": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。",
   "artifact": {
     "ref": "liqiangcc/xhs:note_desc/6823e34f000000000303d5af.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -17,13 +23,7 @@
     "byte_size": 348,
     "content_sha256": "4440dfddba0d75b0c2eefc08655c039e81b4ff72a14f0fe639363f432f585b38"
   },
-  "excerpts": [
-    {
-      "line": 1,
-      "locator": "source-projection:artifact-line:1",
-      "excerpt": "#爱上工作的瞬间[话题]# #程序员[话题]# #后端开发[话题]# #计算机[话题]# #Java[话题]# #Java面试[话题]# #编程[话题]# #互联网大厂[话题]# #算法[话题]# #程序员的出路[话题]# #面试题[话题]# #Java场景题[话题]# #面试技巧[话题]# #求职[话题]# #互联网[话题]# #Java八股文[话题]#"
-    }
-  ],
+  "excerpts": [],
   "case_keys": [],
   "case_evidence": [],
   "checks": [
@@ -45,7 +45,7 @@
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。"
+      "note": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
     },
     {
       "check_id": "no_cross_source_mixing",

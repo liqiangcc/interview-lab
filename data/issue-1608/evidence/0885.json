@@ -6,9 +6,15 @@
   "source_revision_id": "xhs-note:68370ad0000000002101ac18:snapshot-95b77bb26104",
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "source_retrieval": {
+    "method": "frozen-source-snapshot",
+    "path": "/tmp/issue-1608-source-texts.json",
+    "byte_size": 266,
+    "git_blob_sha": "79c37f10b4a20474e3d4dbb4316273ffe11af6a5"
+  },
   "evidence_status": "insufficient-blocked",
   "decision": null,
-  "rationale": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。",
+  "rationale": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。",
   "artifact": {
     "ref": "liqiangcc/xhs:note_desc/68370ad0000000002101ac18.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -17,13 +23,7 @@
     "byte_size": 266,
     "content_sha256": "c882263338795bb5466482712e62efada05d44983e67fc048f566a986a775b4a"
   },
-  "excerpts": [
-    {
-      "line": 1,
-      "locator": "source-projection:artifact-line:1",
-      "excerpt": "#计算机[话题]#﻿ ﻿#编程[话题]#﻿ ﻿#程序员[话题]#﻿ ﻿#java[话题]#﻿ ﻿#Java面试[话题]#﻿ ﻿#面经[话题]#﻿ ﻿#java面试题[话题]#﻿ ﻿#大数据[话题]#﻿ ﻿#干货分享[话题]#﻿ ﻿#字节跳动面试[话题]#"
-    }
-  ],
+  "excerpts": [],
   "case_keys": [],
   "case_evidence": [],
   "checks": [
@@ -45,7 +45,7 @@
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。"
+      "note": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
     },
     {
       "check_id": "no_cross_source_mixing",

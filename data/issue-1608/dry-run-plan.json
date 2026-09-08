@@ -2,7 +2,7 @@
   "schema_version": "issue-1608-boundary-dry-run.v1",
   "repository": "liqiangcc/interview-lab",
   "issue": 1608,
-  "selection_sha256": "78c4c807df82d2e6843986011c53ac3bcc6f7e2754c89ded5df3e4edfa935239",
+  "selection_sha256": "f89d1994eb3ea14f5f7ca37214b351e1c7dbfc444666dbd4489b459215cff3c2",
   "source_snapshot": {
     "repository": "liqiangcc/xhs",
     "ref": "95b77bb261048059846273688e4b90a2e108b437"
@@ -62,10 +62,10 @@
   "mutation_count": 0,
   "counts": {
     "total": 337,
-    "decided": 290,
-    "blocked": 47,
-    "not_interview": 54,
-    "single_interview": 233,
+    "decided": 245,
+    "blocked": 92,
+    "not_interview": 13,
+    "single_interview": 229,
     "multi_interview": 3
   },
   "items": [
@@ -73,11 +73,11 @@
       "issue_number": 766,
       "source_note_id": "xhs-note:68070cf1000000001e004a92",
       "body_sha256": "c410343ca9215c6096d6e6e5b61fbd002c6631e27a68fafbad0efb416444a32e",
-      "decision": null,
-      "status": "blocked",
+      "decision": "not-interview",
+      "status": "awaiting-live-evidence-comment",
       "evidence_file": "evidence/0766.json",
       "mutation": null,
-      "reason": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。"
+      "reason": "固定 Source projection 只有通用题目/教程/招聘或建议内容，没有可定位的实际面试事件。"
     },
     {
       "issue_number": 767,
@@ -87,17 +87,17 @@
       "status": "blocked",
       "evidence_file": "evidence/0767.json",
       "mutation": null,
-      "reason": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。"
+      "reason": "固定 Source projection 的首个可读 artifact 行仅是弱效率描述；拒绝用其他未绑定行包装为 single-interview。"
     },
     {
       "issue_number": 768,
       "source_note_id": "xhs-note:68078670000000001c0344f3",
       "body_sha256": "e51540a8bdacba0f1cbf22d1da503b80fddae93344aba70e6f420d386baa1d48",
-      "decision": "not-interview",
+      "decision": "single-interview",
       "status": "awaiting-live-evidence-comment",
       "evidence_file": "evidence/0768.json",
       "mutation": null,
-      "reason": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "reason": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
     },
     {
       "issue_number": 769,
@@ -123,11 +123,11 @@
       "issue_number": 771,
       "source_note_id": "xhs-note:6807a512000000001d00bf88",
       "body_sha256": "1ba32f88a3e86831557592acea90f8b4255efdba3abe11cf9926f9a8372accdf",
-      "decision": "single-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/0771.json",
       "mutation": null,
-      "reason": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 772,
@@ -207,7 +207,7 @@
       "status": "blocked",
       "evidence_file": "evidence/0779.json",
       "mutation": null,
-      "reason": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。"
+      "reason": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
     },
     {
       "issue_number": 780,
@@ -223,11 +223,11 @@
       "issue_number": 781,
       "source_note_id": "xhs-note:680a3852000000001b0258ea",
       "body_sha256": "570ef74826388a29b1ffc123555758b0e57af3979afc9588547ec1b84c91f3dd",
-      "decision": "not-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/0781.json",
       "mutation": null,
-      "reason": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 782,
@@ -237,7 +237,7 @@
       "status": "blocked",
       "evidence_file": "evidence/0782.json",
       "mutation": null,
-      "reason": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。"
+      "reason": "固定 Source projection 提到多个流程，但每个 case 没有独立、非 hashtag 的 artifact locator 与流程细节；保留 pending，不 materialize。"
     },
     {
       "issue_number": 783,
@@ -253,11 +253,11 @@
       "issue_number": 784,
       "source_note_id": "xhs-note:680a5157000000001d01a78c",
       "body_sha256": "0694927008c51525cb1f2e01b5c903111ff706bb9c05af3975bc9445f441d5d0",
-      "decision": "single-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/0784.json",
       "mutation": null,
-      "reason": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 785,
@@ -313,21 +313,21 @@
       "issue_number": 790,
       "source_note_id": "xhs-note:680cb042000000001d017ac9",
       "body_sha256": "eefde50b758f7db870c77c2ef76b7a94f0d3d4182339876f79571ee736945d8e",
-      "decision": "not-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/0790.json",
       "mutation": null,
-      "reason": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 791,
       "source_note_id": "xhs-note:680de545000000001c01756b",
       "body_sha256": "9d841a5b17b30182521cd1c2454a526261e00fa412ac0a3b8785b7065768aca8",
-      "decision": "single-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/0791.json",
       "mutation": null,
-      "reason": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
+      "reason": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
     },
     {
       "issue_number": 792,
@@ -343,11 +343,11 @@
       "issue_number": 793,
       "source_note_id": "xhs-note:680e26990000000021002a05",
       "body_sha256": "00278aac35403f9a331a4c5975d02e2ea174e43877f4b5e8566584f841a663be",
-      "decision": "not-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/0793.json",
       "mutation": null,
-      "reason": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 794,
@@ -383,11 +383,11 @@
       "issue_number": 797,
       "source_note_id": "xhs-note:680f72ad0000000022029483",
       "body_sha256": "b773bded6ae135986f8b38e198a0a2aa3d32047d7ad8abbe5e23936f1843031c",
-      "decision": "not-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/0797.json",
       "mutation": null,
-      "reason": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 798,
@@ -407,7 +407,7 @@
       "status": "awaiting-live-evidence-comment",
       "evidence_file": "evidence/0799.json",
       "mutation": null,
-      "reason": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "reason": "固定 Source projection 只有通用题目/教程/招聘或建议内容，没有可定位的实际面试事件。"
     },
     {
       "issue_number": 800,
@@ -487,7 +487,7 @@
       "status": "blocked",
       "evidence_file": "evidence/0807.json",
       "mutation": null,
-      "reason": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。"
+      "reason": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
     },
     {
       "issue_number": 808,
@@ -503,11 +503,11 @@
       "issue_number": 809,
       "source_note_id": "xhs-note:68133da60000000009017652",
       "body_sha256": "ccdd09fae56a0e94e101f7abd711eee7991f99dc0f8ec4d7915910de2c684154",
-      "decision": "not-interview",
+      "decision": "single-interview",
       "status": "awaiting-live-evidence-comment",
       "evidence_file": "evidence/0809.json",
       "mutation": null,
-      "reason": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "reason": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
     },
     {
       "issue_number": 810,
@@ -577,7 +577,7 @@
       "status": "awaiting-live-evidence-comment",
       "evidence_file": "evidence/0816.json",
       "mutation": null,
-      "reason": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "reason": "固定 Source projection 只有通用题目/教程/招聘或建议内容，没有可定位的实际面试事件。"
     },
     {
       "issue_number": 817,
@@ -657,7 +657,7 @@
       "status": "awaiting-live-evidence-comment",
       "evidence_file": "evidence/0824.json",
       "mutation": null,
-      "reason": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "reason": "固定 Source projection 只有通用题目/教程/招聘或建议内容，没有可定位的实际面试事件。"
     },
     {
       "issue_number": 825,
@@ -693,11 +693,11 @@
       "issue_number": 828,
       "source_note_id": "xhs-note:6820066900000000120018e0",
       "body_sha256": "f88d27e27b2356dc8078f7319c1323ec8901fcf5cd9873987e688e63283b99d6",
-      "decision": "single-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/0828.json",
       "mutation": null,
-      "reason": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 829,
@@ -707,7 +707,7 @@
       "status": "blocked",
       "evidence_file": "evidence/0829.json",
       "mutation": null,
-      "reason": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。"
+      "reason": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
     },
     {
       "issue_number": 830,
@@ -733,11 +733,11 @@
       "issue_number": 832,
       "source_note_id": "xhs-note:6822b3d1000000002101b14d",
       "body_sha256": "edd691113701bd775c024e33480976e1fc5002a2612152d22c0d7ae7a492c4f8",
-      "decision": "not-interview",
+      "decision": "single-interview",
       "status": "awaiting-live-evidence-comment",
       "evidence_file": "evidence/0832.json",
       "mutation": null,
-      "reason": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "reason": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
     },
     {
       "issue_number": 833,
@@ -747,17 +747,17 @@
       "status": "blocked",
       "evidence_file": "evidence/0833.json",
       "mutation": null,
-      "reason": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。"
+      "reason": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
     },
     {
       "issue_number": 834,
       "source_note_id": "xhs-note:6822ddf900000000230131ea",
       "body_sha256": "2ab6c957116d926bf18997dc1939af3052f1fc8a2aebc37aac11701a905d65e3",
-      "decision": "not-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/0834.json",
       "mutation": null,
-      "reason": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 835,
@@ -773,11 +773,11 @@
       "issue_number": 836,
       "source_note_id": "xhs-note:68231157000000002101a4af",
       "body_sha256": "c0a9e7583b52162a7f86794562de6c7efc9400ddefc20e8407792f41b4d1632d",
-      "decision": "single-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/0836.json",
       "mutation": null,
-      "reason": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 837,
@@ -797,7 +797,7 @@
       "status": "blocked",
       "evidence_file": "evidence/0838.json",
       "mutation": null,
-      "reason": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。"
+      "reason": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
     },
     {
       "issue_number": 839,
@@ -813,11 +813,11 @@
       "issue_number": 840,
       "source_note_id": "xhs-note:68236bb80000000020029597",
       "body_sha256": "f445bb8079c945b723f924a8bbbb665c6757a5cb99685f78c1d9d1f2962ed8ed",
-      "decision": "single-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/0840.json",
       "mutation": null,
-      "reason": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 841,
@@ -827,7 +827,7 @@
       "status": "blocked",
       "evidence_file": "evidence/0841.json",
       "mutation": null,
-      "reason": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。"
+      "reason": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
     },
     {
       "issue_number": 842,
@@ -837,7 +837,7 @@
       "status": "blocked",
       "evidence_file": "evidence/0842.json",
       "mutation": null,
-      "reason": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。"
+      "reason": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
     },
     {
       "issue_number": 844,
@@ -873,11 +873,11 @@
       "issue_number": 847,
       "source_note_id": "xhs-note:6825ec68000000000303b766",
       "body_sha256": "c4d41e86bd96b41a03c0c16038ed3b8bf821ae025df5b04b9a56a21ec6f67d4a",
-      "decision": "single-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/0847.json",
       "mutation": null,
-      "reason": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 848,
@@ -897,17 +897,17 @@
       "status": "blocked",
       "evidence_file": "evidence/0849.json",
       "mutation": null,
-      "reason": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。"
+      "reason": "固定 Source projection 提到多个流程，但每个 case 没有独立、非 hashtag 的 artifact locator 与流程细节；保留 pending，不 materialize。"
     },
     {
       "issue_number": 850,
       "source_note_id": "xhs-note:6826b6e6000000000303adfd",
       "body_sha256": "a9aef43e36a9d187e09987bc95bfe79994ac2d070fa86b093b218fdcef3a00fe",
-      "decision": "not-interview",
+      "decision": "single-interview",
       "status": "awaiting-live-evidence-comment",
       "evidence_file": "evidence/0850.json",
       "mutation": null,
-      "reason": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "reason": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
     },
     {
       "issue_number": 851,
@@ -937,7 +937,7 @@
       "status": "awaiting-live-evidence-comment",
       "evidence_file": "evidence/0853.json",
       "mutation": null,
-      "reason": "固定 Source projection 明确记录多个相互独立的公司/流程；按稳定 case key 分离，未把同一流程的多轮机械拆开。"
+      "reason": "固定 Source projection 明确记录多个相互独立的公司/流程；每个 case 均有独立 artifact locator 与流程细节，未把同一流程多轮机械拆开。"
     },
     {
       "issue_number": 854,
@@ -953,11 +953,11 @@
       "issue_number": 855,
       "source_note_id": "xhs-note:6828514d000000002100c89c",
       "body_sha256": "69f5c1a120235a61406b96d20c10f9876369876f6d60397db653e480afd79f10",
-      "decision": "not-interview",
+      "decision": "single-interview",
       "status": "awaiting-live-evidence-comment",
       "evidence_file": "evidence/0855.json",
       "mutation": null,
-      "reason": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "reason": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
     },
     {
       "issue_number": 857,
@@ -973,11 +973,11 @@
       "issue_number": 858,
       "source_note_id": "xhs-note:6826e4210000000003039d41",
       "body_sha256": "fca42ed13c91c349aad569662e6a2c03ad5bb3fde2d8031d92087cae8af92338",
-      "decision": "single-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/0858.json",
       "mutation": null,
-      "reason": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 859,
@@ -1017,17 +1017,17 @@
       "status": "blocked",
       "evidence_file": "evidence/0862.json",
       "mutation": null,
-      "reason": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。"
+      "reason": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
     },
     {
       "issue_number": 863,
       "source_note_id": "xhs-note:682e9c8e000000002001fe14",
       "body_sha256": "9644fffbd5455a73728cc7dc2fd6bfa051bf557870dae90edef318cc0b6c0ed7",
-      "decision": "single-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/0863.json",
       "mutation": null,
-      "reason": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 864,
@@ -1047,17 +1047,17 @@
       "status": "awaiting-live-evidence-comment",
       "evidence_file": "evidence/0865.json",
       "mutation": null,
-      "reason": "固定 Source projection 明确记录多个相互独立的公司/流程；按稳定 case key 分离，未把同一流程的多轮机械拆开。"
+      "reason": "固定 Source projection 明确记录多个相互独立的公司/流程；每个 case 均有独立 artifact locator 与流程细节，未把同一流程多轮机械拆开。"
     },
     {
       "issue_number": 866,
       "source_note_id": "xhs-note:682f44a0000000002301dd77",
       "body_sha256": "063e26ecd5fca28ef894cf437e8f0e27726898d32f6d8968668e8e3dd571a5a0",
-      "decision": "single-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/0866.json",
       "mutation": null,
-      "reason": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 867,
@@ -1077,7 +1077,7 @@
       "status": "blocked",
       "evidence_file": "evidence/0868.json",
       "mutation": null,
-      "reason": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。"
+      "reason": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
     },
     {
       "issue_number": 869,
@@ -1093,11 +1093,11 @@
       "issue_number": 870,
       "source_note_id": "xhs-note:6830881d00000000120017a8",
       "body_sha256": "69465785a2ccbe848858e3b7e2216f1fb5c4a07f693aed066054f372dae5bb78",
-      "decision": null,
-      "status": "blocked",
+      "decision": "single-interview",
+      "status": "awaiting-live-evidence-comment",
       "evidence_file": "evidence/0870.json",
       "mutation": null,
-      "reason": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。"
+      "reason": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
     },
     {
       "issue_number": 871,
@@ -1113,11 +1113,11 @@
       "issue_number": 872,
       "source_note_id": "xhs-note:68318f0a000000000303afe6",
       "body_sha256": "ff4ba8c54ca478f3bb4b21bf86be96e69d86d7900d09423cdf918fc5291586eb",
-      "decision": "not-interview",
+      "decision": "single-interview",
       "status": "awaiting-live-evidence-comment",
       "evidence_file": "evidence/0872.json",
       "mutation": null,
-      "reason": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "reason": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
     },
     {
       "issue_number": 873,
@@ -1247,17 +1247,17 @@
       "status": "blocked",
       "evidence_file": "evidence/0885.json",
       "mutation": null,
-      "reason": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。"
+      "reason": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
     },
     {
       "issue_number": 886,
       "source_note_id": "xhs-note:683810dc000000000f03223b",
       "body_sha256": "b6022eba85840fdbda891146293061270b894ae53109297ef28dea7727e4919a",
-      "decision": null,
-      "status": "blocked",
+      "decision": "single-interview",
+      "status": "awaiting-live-evidence-comment",
       "evidence_file": "evidence/0886.json",
       "mutation": null,
-      "reason": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。"
+      "reason": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
     },
     {
       "issue_number": 887,
@@ -1273,11 +1273,11 @@
       "issue_number": 888,
       "source_note_id": "xhs-note:68392b25000000002301e6bf",
       "body_sha256": "14f1df1576c01e02866e1a840b876d260cf00375c5df45f2ba9274e9581b8002",
-      "decision": "not-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/0888.json",
       "mutation": null,
-      "reason": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 889,
@@ -1413,11 +1413,11 @@
       "issue_number": 903,
       "source_note_id": "xhs-note:630e2e22000000001103c490",
       "body_sha256": "f93ac831ca3ffb15b158a4f8fe0f2195d17de1b1ae36e5514d56c891ef1355e6",
-      "decision": "single-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/0903.json",
       "mutation": null,
-      "reason": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 904,
@@ -1443,11 +1443,11 @@
       "issue_number": 907,
       "source_note_id": "xhs-note:656861da000000000f024258",
       "body_sha256": "69e0dbfd9b86f0a223aa9427c6cb464177c7de1c99d84c8c55eb87489894167c",
-      "decision": "single-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/0907.json",
       "mutation": null,
-      "reason": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 933,
@@ -1493,11 +1493,11 @@
       "issue_number": 938,
       "source_note_id": "xhs-note:6843f7ed0000000022027398",
       "body_sha256": "c0f40e75f09520d8e928d3636215bbc4a5826aefe4ec6e7661d8f9629f311201",
-      "decision": "not-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/0938.json",
       "mutation": null,
-      "reason": "固定 Source projection 只有通用题目/教程/招聘或建议内容，没有可定位的实际面试事件。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 939,
@@ -1517,7 +1517,7 @@
       "status": "awaiting-live-evidence-comment",
       "evidence_file": "evidence/0940.json",
       "mutation": null,
-      "reason": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "reason": "固定 Source projection 只有通用题目/教程/招聘或建议内容，没有可定位的实际面试事件。"
     },
     {
       "issue_number": 941,
@@ -1563,11 +1563,11 @@
       "issue_number": 948,
       "source_note_id": "xhs-note:6846c2f20000000012007eab",
       "body_sha256": "dced980d6d3b431e52a5d936dd8a71aaf2ea0ec971ff7d00398fa5053e37a925",
-      "decision": "single-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/0948.json",
       "mutation": null,
-      "reason": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 949,
@@ -1637,7 +1637,7 @@
       "status": "blocked",
       "evidence_file": "evidence/0956.json",
       "mutation": null,
-      "reason": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。"
+      "reason": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
     },
     {
       "issue_number": 957,
@@ -1657,17 +1657,17 @@
       "status": "awaiting-live-evidence-comment",
       "evidence_file": "evidence/0958.json",
       "mutation": null,
-      "reason": "固定 Source projection 明确记录多个相互独立的公司/流程；按稳定 case key 分离，未把同一流程的多轮机械拆开。"
+      "reason": "固定 Source projection 明确记录多个相互独立的公司/流程；每个 case 均有独立 artifact locator 与流程细节，未把同一流程多轮机械拆开。"
     },
     {
       "issue_number": 959,
       "source_note_id": "xhs-note:684bddf900000000220367ab",
       "body_sha256": "0abde6ae2e9d2b54ac88e1853aef421f2ddfd57e8d3e7929bb15c9defe0ea8aa",
-      "decision": "single-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/0959.json",
       "mutation": null,
-      "reason": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 960,
@@ -1677,7 +1677,7 @@
       "status": "awaiting-live-evidence-comment",
       "evidence_file": "evidence/0960.json",
       "mutation": null,
-      "reason": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "reason": "固定 Source projection 只有通用题目/教程/招聘或建议内容，没有可定位的实际面试事件。"
     },
     {
       "issue_number": 961,
@@ -1743,11 +1743,11 @@
       "issue_number": 967,
       "source_note_id": "xhs-note:6851421b00000000220279a1",
       "body_sha256": "14968d8a96859148948b17f140c13f6f4eb92421cc680f6604fe8eb029227969",
-      "decision": "not-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/0967.json",
       "mutation": null,
-      "reason": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 968,
@@ -1773,11 +1773,11 @@
       "issue_number": 970,
       "source_note_id": "xhs-note:6853661b0000000022031243",
       "body_sha256": "c7ffa712ba7150a56b194df99c7af3077d655c7f22d567daaebc52a93ff4757d",
-      "decision": "not-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/0970.json",
       "mutation": null,
-      "reason": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 971,
@@ -1797,17 +1797,17 @@
       "status": "blocked",
       "evidence_file": "evidence/0972.json",
       "mutation": null,
-      "reason": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。"
+      "reason": "固定 Source projection 提到多个流程，但每个 case 没有独立、非 hashtag 的 artifact locator 与流程细节；保留 pending，不 materialize。"
     },
     {
       "issue_number": 973,
       "source_note_id": "xhs-note:6853b5ff0000000015023a4a",
       "body_sha256": "5129156d5b493a348639c4b167ee4db0182a7b7db15fb7428e3842f2740dbb91",
-      "decision": "not-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/0973.json",
       "mutation": null,
-      "reason": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 974,
@@ -1843,11 +1843,11 @@
       "issue_number": 977,
       "source_note_id": "xhs-note:685696fe0000000012033bb6",
       "body_sha256": "3f3ea0c5f4fbcfc8de5355802243e0983b2453d1caa26a017c718d0d4c13c736",
-      "decision": "single-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/0977.json",
       "mutation": null,
-      "reason": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 978,
@@ -1867,7 +1867,7 @@
       "status": "awaiting-live-evidence-comment",
       "evidence_file": "evidence/0979.json",
       "mutation": null,
-      "reason": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "reason": "固定 Source projection 只有通用题目/教程/招聘或建议内容，没有可定位的实际面试事件。"
     },
     {
       "issue_number": 980,
@@ -1883,11 +1883,11 @@
       "issue_number": 981,
       "source_note_id": "xhs-note:685a1bde000000000d0196e5",
       "body_sha256": "d2947c9cfc09a2f098ccc3c470a22e5401d931a17b4db8e69910865e434110bd",
-      "decision": "single-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/0981.json",
       "mutation": null,
-      "reason": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 982,
@@ -1897,7 +1897,7 @@
       "status": "awaiting-live-evidence-comment",
       "evidence_file": "evidence/0982.json",
       "mutation": null,
-      "reason": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "reason": "固定 Source projection 只有通用题目/教程/招聘或建议内容，没有可定位的实际面试事件。"
     },
     {
       "issue_number": 983,
@@ -1927,27 +1927,27 @@
       "status": "blocked",
       "evidence_file": "evidence/0985.json",
       "mutation": null,
-      "reason": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。"
+      "reason": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
     },
     {
       "issue_number": 986,
       "source_note_id": "xhs-note:685d16bb00000000170346e4",
       "body_sha256": "eaa8ad3936d109d943b8ce894eff2357d0070596f6609538fb3bce820b7af676",
-      "decision": "not-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/0986.json",
       "mutation": null,
-      "reason": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 988,
       "source_note_id": "xhs-note:685e4a1d000000002400c390",
       "body_sha256": "23e97c2ae69220ae9d6a9b8dfc44ae92115f51ed76683c5e9036b448c5a40239",
-      "decision": "single-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/0988.json",
       "mutation": null,
-      "reason": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 989,
@@ -1963,11 +1963,11 @@
       "issue_number": 990,
       "source_note_id": "xhs-note:685fad4d000000002201dfb4",
       "body_sha256": "150dc1612eabc61b1c4ac3323a14fbd572bc3919b426796ff1691a9c0e35af62",
-      "decision": "not-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/0990.json",
       "mutation": null,
-      "reason": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 991,
@@ -1993,11 +1993,11 @@
       "issue_number": 993,
       "source_note_id": "xhs-note:6864cf8f000000001c031754",
       "body_sha256": "58b16623b6b8011c5d99c531761d1ba8c1a4d1ebf718e7ed6168b656b8a5d11a",
-      "decision": "not-interview",
+      "decision": "single-interview",
       "status": "awaiting-live-evidence-comment",
       "evidence_file": "evidence/0993.json",
       "mutation": null,
-      "reason": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "reason": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
     },
     {
       "issue_number": 994,
@@ -2013,21 +2013,21 @@
       "issue_number": 995,
       "source_note_id": "xhs-note:68652c4a000000000b02d848",
       "body_sha256": "ea7e17b8988be8b4bae9c012615f8963eb638fdff766dc565357a6ce9bb5b60e",
-      "decision": "single-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/0995.json",
       "mutation": null,
-      "reason": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 996,
       "source_note_id": "xhs-note:68653698000000001203ecd7",
       "body_sha256": "0484015bd4458cd3c52d805b8119f01752da1c48af0567ab07d024f1df5d76e4",
-      "decision": "not-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/0996.json",
       "mutation": null,
-      "reason": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 997,
@@ -2047,7 +2047,7 @@
       "status": "blocked",
       "evidence_file": "evidence/0998.json",
       "mutation": null,
-      "reason": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 999,
@@ -2097,7 +2097,7 @@
       "status": "blocked",
       "evidence_file": "evidence/1003.json",
       "mutation": null,
-      "reason": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。"
+      "reason": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
     },
     {
       "issue_number": 1004,
@@ -2107,7 +2107,7 @@
       "status": "blocked",
       "evidence_file": "evidence/1004.json",
       "mutation": null,
-      "reason": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。"
+      "reason": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
     },
     {
       "issue_number": 1005,
@@ -2123,11 +2123,11 @@
       "issue_number": 1006,
       "source_note_id": "xhs-note:686c8a9500000000150213ce",
       "body_sha256": "d388e3a8140f0c3a594804ee682d610ae98c80e27f95b1a173abb2c627e0dd07",
-      "decision": "not-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/1006.json",
       "mutation": null,
-      "reason": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 1007,
@@ -2197,7 +2197,7 @@
       "status": "blocked",
       "evidence_file": "evidence/1013.json",
       "mutation": null,
-      "reason": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。"
+      "reason": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
     },
     {
       "issue_number": 1014,
@@ -2213,11 +2213,11 @@
       "issue_number": 1015,
       "source_note_id": "xhs-note:68710459000000000d01a097",
       "body_sha256": "834a037e7bad32244af3104eb5a88b6f049e15f8bd6f49106106b06ad23fc442",
-      "decision": "single-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/1015.json",
       "mutation": null,
-      "reason": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 1016,
@@ -2243,11 +2243,11 @@
       "issue_number": 1018,
       "source_note_id": "xhs-note:6874f5260000000017033be0",
       "body_sha256": "35d3ba8d63224f75893ddc3bc01e269e3a16f47974763ba1e01cc98d967e4a8c",
-      "decision": "not-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/1018.json",
       "mutation": null,
-      "reason": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 1019,
@@ -2263,11 +2263,11 @@
       "issue_number": 1020,
       "source_note_id": "xhs-note:6876201c000000002400d626",
       "body_sha256": "8aa7e90ba95a28bf05d8ebaf335e7a22ff6eae3e63a56fcf2e9db28d96b1430e",
-      "decision": "not-interview",
+      "decision": "single-interview",
       "status": "awaiting-live-evidence-comment",
       "evidence_file": "evidence/1020.json",
       "mutation": null,
-      "reason": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "reason": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
     },
     {
       "issue_number": 1021,
@@ -2287,7 +2287,7 @@
       "status": "blocked",
       "evidence_file": "evidence/1022.json",
       "mutation": null,
-      "reason": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。"
+      "reason": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
     },
     {
       "issue_number": 1023,
@@ -2303,21 +2303,21 @@
       "issue_number": 1024,
       "source_note_id": "xhs-note:6877bbf6000000000d019452",
       "body_sha256": "d016c13695069038c1800987784e95db429b3dec9177808a1585cb4ede3ecc6a",
-      "decision": "not-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/1024.json",
       "mutation": null,
-      "reason": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 1025,
       "source_note_id": "xhs-note:6877c0390000000015020621",
       "body_sha256": "17e471c726d55f722cbe6f0dd0c2e440bf28b35a63f8e69870b804ebb87f6496",
-      "decision": "not-interview",
+      "decision": "single-interview",
       "status": "awaiting-live-evidence-comment",
       "evidence_file": "evidence/1025.json",
       "mutation": null,
-      "reason": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "reason": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
     },
     {
       "issue_number": 1026,
@@ -2337,7 +2337,7 @@
       "status": "blocked",
       "evidence_file": "evidence/1027.json",
       "mutation": null,
-      "reason": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。"
+      "reason": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
     },
     {
       "issue_number": 1028,
@@ -2377,7 +2377,7 @@
       "status": "awaiting-live-evidence-comment",
       "evidence_file": "evidence/1031.json",
       "mutation": null,
-      "reason": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "reason": "固定 Source projection 只有通用题目/教程/招聘或建议内容，没有可定位的实际面试事件。"
     },
     {
       "issue_number": 1032,
@@ -2417,17 +2417,17 @@
       "status": "blocked",
       "evidence_file": "evidence/1035.json",
       "mutation": null,
-      "reason": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。"
+      "reason": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
     },
     {
       "issue_number": 1036,
       "source_note_id": "xhs-note:6880d796000000001203115a",
       "body_sha256": "258482062fb3f0cef5ae59ae3619662e04c48b147b416da249b267f1c0b0ff62",
-      "decision": null,
-      "status": "blocked",
+      "decision": "single-interview",
+      "status": "awaiting-live-evidence-comment",
       "evidence_file": "evidence/1036.json",
       "mutation": null,
-      "reason": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。"
+      "reason": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
     },
     {
       "issue_number": 1037,
@@ -2443,11 +2443,11 @@
       "issue_number": 1038,
       "source_note_id": "xhs-note:6881d586000000002400a943",
       "body_sha256": "31b823afbae174adf99b51388297b84416627aee572e5542c28c2a8d65ed64f5",
-      "decision": "not-interview",
+      "decision": "single-interview",
       "status": "awaiting-live-evidence-comment",
       "evidence_file": "evidence/1038.json",
       "mutation": null,
-      "reason": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "reason": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
     },
     {
       "issue_number": 1039,
@@ -2457,17 +2457,17 @@
       "status": "blocked",
       "evidence_file": "evidence/1039.json",
       "mutation": null,
-      "reason": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。"
+      "reason": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
     },
     {
       "issue_number": 1040,
       "source_note_id": "xhs-note:68832cb50000000015023303",
       "body_sha256": "68d2036efa47a69cced01c228ffabc45d83c93bf2135905391a2bac8a2fd7312",
-      "decision": "not-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/1040.json",
       "mutation": null,
-      "reason": "固定 Source projection 只有通用题目/教程/招聘或建议内容，没有可定位的实际面试事件。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 1041,
@@ -2483,11 +2483,11 @@
       "issue_number": 1042,
       "source_note_id": "xhs-note:68849abd000000002203c8e6",
       "body_sha256": "7c0ed38990aae288953dc26406b623a8b18c46317630a9c0d1cb2ac475d1ac06",
-      "decision": "not-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/1042.json",
       "mutation": null,
-      "reason": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 1043,
@@ -2497,7 +2497,7 @@
       "status": "blocked",
       "evidence_file": "evidence/1043.json",
       "mutation": null,
-      "reason": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。"
+      "reason": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
     },
     {
       "issue_number": 1044,
@@ -2573,11 +2573,11 @@
       "issue_number": 1051,
       "source_note_id": "xhs-note:68886c010000000022023cdf",
       "body_sha256": "7d501d52535aec11a5930faf94245d13ea9cd7e7419eb05f3f920b24bdd9e6f6",
-      "decision": "not-interview",
+      "decision": "single-interview",
       "status": "awaiting-live-evidence-comment",
       "evidence_file": "evidence/1051.json",
       "mutation": null,
-      "reason": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "reason": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
     },
     {
       "issue_number": 1052,
@@ -2587,7 +2587,7 @@
       "status": "blocked",
       "evidence_file": "evidence/1052.json",
       "mutation": null,
-      "reason": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 1053,
@@ -2597,7 +2597,7 @@
       "status": "awaiting-live-evidence-comment",
       "evidence_file": "evidence/1053.json",
       "mutation": null,
-      "reason": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "reason": "固定 Source projection 只有通用题目/教程/招聘或建议内容，没有可定位的实际面试事件。"
     },
     {
       "issue_number": 1054,
@@ -2627,17 +2627,17 @@
       "status": "awaiting-live-evidence-comment",
       "evidence_file": "evidence/1056.json",
       "mutation": null,
-      "reason": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "reason": "固定 Source projection 只有通用题目/教程/招聘或建议内容，没有可定位的实际面试事件。"
     },
     {
       "issue_number": 1057,
       "source_note_id": "xhs-note:688c7232000000002302fb0e",
       "body_sha256": "35ff12d43d1687d7029b34b6f044f1690519dcb6814d67b4513c957a9ad6bb19",
-      "decision": "single-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/1057.json",
       "mutation": null,
-      "reason": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 1058,
@@ -2657,7 +2657,7 @@
       "status": "awaiting-live-evidence-comment",
       "evidence_file": "evidence/1059.json",
       "mutation": null,
-      "reason": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "reason": "固定 Source projection 只有通用题目/教程/招聘或建议内容，没有可定位的实际面试事件。"
     },
     {
       "issue_number": 1060,
@@ -2673,11 +2673,11 @@
       "issue_number": 1061,
       "source_note_id": "xhs-note:688ddcd900000000040004a8",
       "body_sha256": "545abfd470c6b352e1c8df29df47fd80a7b713015ae6b072a9e539832f40dd69",
-      "decision": "not-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/1061.json",
       "mutation": null,
-      "reason": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 1062,
@@ -2727,7 +2727,7 @@
       "status": "blocked",
       "evidence_file": "evidence/1066.json",
       "mutation": null,
-      "reason": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。"
+      "reason": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
     },
     {
       "issue_number": 1067,
@@ -2803,11 +2803,11 @@
       "issue_number": 1074,
       "source_note_id": "xhs-note:6892d37c0000000023035621",
       "body_sha256": "186fdf8aa4c30484f9e33933e3b57e5d63a0609317c6831b563e0dbd953f212e",
-      "decision": "single-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/1074.json",
       "mutation": null,
-      "reason": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 1075,
@@ -2827,17 +2827,17 @@
       "status": "blocked",
       "evidence_file": "evidence/1076.json",
       "mutation": null,
-      "reason": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。"
+      "reason": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
     },
     {
       "issue_number": 1077,
       "source_note_id": "xhs-note:68932491000000000500b3d7",
       "body_sha256": "5e3053ba5c3dddb62e6b4a86401630a998e4856b09ecef1bb1949a998c9164cb",
-      "decision": "not-interview",
+      "decision": "single-interview",
       "status": "awaiting-live-evidence-comment",
       "evidence_file": "evidence/1077.json",
       "mutation": null,
-      "reason": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "reason": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
     },
     {
       "issue_number": 1078,
@@ -2867,7 +2867,7 @@
       "status": "blocked",
       "evidence_file": "evidence/1080.json",
       "mutation": null,
-      "reason": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 1081,
@@ -2883,11 +2883,11 @@
       "issue_number": 1082,
       "source_note_id": "xhs-note:68944def000000002302a57b",
       "body_sha256": "9880a97151b5c938d3829b37f23832fac9cafed509ed4a6f83e49bd3f7014a74",
-      "decision": "single-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/1082.json",
       "mutation": null,
-      "reason": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 1083,
@@ -2933,11 +2933,11 @@
       "issue_number": 1087,
       "source_note_id": "xhs-note:6895534c0000000023036daa",
       "body_sha256": "571d75ca1f42668c901855bc4a314d60cfcfee1af4e8da5eb1b4547339973898",
-      "decision": "not-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/1087.json",
       "mutation": null,
-      "reason": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 1088,
@@ -2953,11 +2953,11 @@
       "issue_number": 1089,
       "source_note_id": "xhs-note:68956bb80000000023026eab",
       "body_sha256": "c5e2ecfb9698940d300199533654e0daebe797e3de88980f40f67f5b9967b872",
-      "decision": "not-interview",
+      "decision": "single-interview",
       "status": "awaiting-live-evidence-comment",
       "evidence_file": "evidence/1089.json",
       "mutation": null,
-      "reason": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "reason": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
     },
     {
       "issue_number": 1090,
@@ -2987,17 +2987,17 @@
       "status": "blocked",
       "evidence_file": "evidence/1092.json",
       "mutation": null,
-      "reason": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 1093,
       "source_note_id": "xhs-note:6895c5af0000000003027250",
       "body_sha256": "1e1f5191b6ded410fb4f119417f6f3ba895a95ff2f787b9270c8d850e1676ffc",
-      "decision": "not-interview",
+      "decision": "single-interview",
       "status": "awaiting-live-evidence-comment",
       "evidence_file": "evidence/1093.json",
       "mutation": null,
-      "reason": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "reason": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
     },
     {
       "issue_number": 1094,
@@ -3053,11 +3053,11 @@
       "issue_number": 1099,
       "source_note_id": "xhs-note:6898afd70000000005006ea9",
       "body_sha256": "f4b9023183eba7c3f0b77eebcab3dbbb9e49e2848ceaf14bcb6bce4cbc27a044",
-      "decision": "not-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/1099.json",
       "mutation": null,
-      "reason": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 1100,
@@ -3077,7 +3077,7 @@
       "status": "blocked",
       "evidence_file": "evidence/1101.json",
       "mutation": null,
-      "reason": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。"
+      "reason": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
     },
     {
       "issue_number": 1102,
@@ -3183,21 +3183,21 @@
       "issue_number": 1112,
       "source_note_id": "xhs-note:689c44f2000000001b03fe18",
       "body_sha256": "274fcaf69f1f85ae59d698aec52734e655a46c2983f7a83a611050b4c7dc70ef",
-      "decision": "not-interview",
+      "decision": "single-interview",
       "status": "awaiting-live-evidence-comment",
       "evidence_file": "evidence/1112.json",
       "mutation": null,
-      "reason": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "reason": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
     },
     {
       "issue_number": 1113,
       "source_note_id": "xhs-note:689c49d5000000001d003995",
       "body_sha256": "e360b89b6d062746d74ea60f061df207e88da6eefc12c4fa0d817f1b098e6a88",
-      "decision": "not-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/1113.json",
       "mutation": null,
-      "reason": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 1114,
@@ -3213,11 +3213,11 @@
       "issue_number": 1115,
       "source_note_id": "xhs-note:689c80fb000000001d009d5e",
       "body_sha256": "4d9770ce566955a943d96f40719b7eb211ae03db30da711b813de374cfe5e127",
-      "decision": null,
-      "status": "blocked",
+      "decision": "single-interview",
+      "status": "awaiting-live-evidence-comment",
       "evidence_file": "evidence/1115.json",
       "mutation": null,
-      "reason": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。"
+      "reason": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
     },
     {
       "issue_number": 1116,
@@ -3243,31 +3243,31 @@
       "issue_number": 1118,
       "source_note_id": "xhs-note:689daacc000000001d037d87",
       "body_sha256": "80479ab5dc221471dcd9d02bbe38d9a07ed80dca84d859bf08a2bb20a488de87",
-      "decision": "not-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/1118.json",
       "mutation": null,
-      "reason": "固定 Source projection 只有通用题目/教程/招聘或建议内容，没有可定位的实际面试事件。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 1119,
       "source_note_id": "xhs-note:689de959000000001d038139",
       "body_sha256": "bce3d2afc7137ca2455d6f98e895b66412ba5ab48076cbe91f6d3e27abd38bdf",
-      "decision": "single-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/1119.json",
       "mutation": null,
-      "reason": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 1120,
       "source_note_id": "xhs-note:689ec2f1000000001c011504",
       "body_sha256": "984c9ec201da251f8935478733b26fd37c550dd37b8751d57430692464ee9517",
-      "decision": "not-interview",
+      "decision": "single-interview",
       "status": "awaiting-live-evidence-comment",
       "evidence_file": "evidence/1120.json",
       "mutation": null,
-      "reason": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "reason": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
     },
     {
       "issue_number": 1122,
@@ -3277,7 +3277,7 @@
       "status": "blocked",
       "evidence_file": "evidence/1122.json",
       "mutation": null,
-      "reason": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 1123,
@@ -3293,21 +3293,21 @@
       "issue_number": 1124,
       "source_note_id": "xhs-note:68a153ce000000001d02e30a",
       "body_sha256": "dc78d15fe44012df35a2ce85bfdb3eccc95fe1fa7efb1ab4d16700d1f81dbc04",
-      "decision": "single-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/1124.json",
       "mutation": null,
-      "reason": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 1125,
       "source_note_id": "xhs-note:689ed8b2000000001d029f08",
       "body_sha256": "4a8f57c9bdbc05cc615a5f050f0b3a277aea51789037e427ecdc8e72723b354b",
-      "decision": "single-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/1125.json",
       "mutation": null,
-      "reason": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 1126,
@@ -3323,11 +3323,11 @@
       "issue_number": 1127,
       "source_note_id": "xhs-note:68a2c9c2000000001c007872",
       "body_sha256": "886b87b2ebe9cea5773c47c8d67e32d159c2178d3220fe92a013782bf2fffcdd",
-      "decision": "not-interview",
+      "decision": "single-interview",
       "status": "awaiting-live-evidence-comment",
       "evidence_file": "evidence/1127.json",
       "mutation": null,
-      "reason": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "reason": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
     },
     {
       "issue_number": 1128,
@@ -3353,11 +3353,11 @@
       "issue_number": 1130,
       "source_note_id": "xhs-note:68a33745000000001b01f89c",
       "body_sha256": "c69134ab52715ef5a79b2b62e1010cab5df404e5c52684fcb21d1c4439c0e5ba",
-      "decision": "not-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/1130.json",
       "mutation": null,
-      "reason": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "issue_number": 1131,
@@ -3377,7 +3377,7 @@
       "status": "blocked",
       "evidence_file": "evidence/1132.json",
       "mutation": null,
-      "reason": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。"
+      "reason": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
     },
     {
       "issue_number": 1133,
@@ -3407,7 +3407,7 @@
       "status": "blocked",
       "evidence_file": "evidence/1135.json",
       "mutation": null,
-      "reason": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。"
+      "reason": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
     },
     {
       "issue_number": 1136,
@@ -3417,7 +3417,7 @@
       "status": "awaiting-live-evidence-comment",
       "evidence_file": "evidence/1136.json",
       "mutation": null,
-      "reason": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "reason": "固定 Source projection 只有通用题目/教程/招聘或建议内容，没有可定位的实际面试事件。"
     },
     {
       "issue_number": 1137,
@@ -3433,11 +3433,11 @@
       "issue_number": 1138,
       "source_note_id": "xhs-note:68a53e8b000000001d019497",
       "body_sha256": "aeb4adf596d13e49c09ed68941325376df7d0a0757b363b09cab37d4bb6c26f1",
-      "decision": "not-interview",
-      "status": "awaiting-live-evidence-comment",
+      "decision": null,
+      "status": "blocked",
       "evidence_file": "evidence/1138.json",
       "mutation": null,
-      "reason": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "reason": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     }
   ],
   "fail_closed_conditions": [
@@ -3447,5 +3447,5 @@
     "any non-expected GitHub response",
     "controller has not supplied explicit apply authorization"
   ],
-  "dry_run_sha256": "b5a1e5c1abde3bad8425c7fee1773d5025add474281a21610491ccd4b4bd7580"
+  "dry_run_sha256": "cb5e74e8efaaf41a5abc41e2fe30f08e3d4a4a2acc3f9f0947aa9c8e5472bc46"
 }

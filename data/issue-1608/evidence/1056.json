@@ -6,9 +6,15 @@
   "source_revision_id": "xhs-note:688c5fb50000000003030bdd:snapshot-95b77bb26104",
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "source_retrieval": {
+    "method": "frozen-source-snapshot",
+    "path": "/tmp/issue-1608-source-texts.json",
+    "byte_size": 406,
+    "git_blob_sha": "de2f53140e1e8a4f2375282fda2545037ccf360e"
+  },
   "evidence_status": "sufficient-for-controller-review",
   "decision": "not-interview",
-  "rationale": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。",
+  "rationale": "固定 Source projection 只有通用题目/教程/招聘或建议内容，没有可定位的实际面试事件。",
   "artifact": {
     "ref": "liqiangcc/xhs:note_desc/688c5fb50000000003030bdd.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -19,9 +25,9 @@
   },
   "excerpts": [
     {
-      "line": 1,
-      "locator": "source-projection:artifact-line:1",
-      "excerpt": "#后端开发[话题]# #java[话题]# #社招[话题]#"
+      "line": 2,
+      "locator": "source-projection:artifact-line:2",
+      "excerpt": "今天是对之前几次复盘的完结，因为主包已经找到班上了。之前也只坚持写了8天就坚持不下去了，因为每天都在高压的准备+面试中，只想赶紧随便找个班上，也算跳槽成功了。还有之前有很多人问有没有群聊，我现在有空了可以建一个，大家有需求可以一起讨论。"
     }
   ],
   "case_keys": [],
@@ -45,7 +51,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "note": "固定 Source projection 只有通用题目/教程/招聘或建议内容，没有可定位的实际面试事件。"
     },
     {
       "check_id": "no_cross_source_mixing",

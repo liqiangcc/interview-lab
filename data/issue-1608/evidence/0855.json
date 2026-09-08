@@ -6,9 +6,15 @@
   "source_revision_id": "xhs-note:6828514d000000002100c89c:snapshot-95b77bb26104",
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "source_retrieval": {
+    "method": "frozen-source-snapshot",
+    "path": "/tmp/issue-1608-source-texts.json",
+    "byte_size": 354,
+    "git_blob_sha": "112f8989af292099e8806ef379dca435de5cade5"
+  },
   "evidence_status": "sufficient-for-controller-review",
-  "decision": "not-interview",
-  "rationale": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。",
+  "decision": "single-interview",
+  "rationale": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。",
   "artifact": {
     "ref": "liqiangcc/xhs:note_desc/6828514d000000002100c89c.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -19,9 +25,9 @@
   },
   "excerpts": [
     {
-      "line": 1,
-      "locator": "source-projection:artifact-line:1",
-      "excerpt": "整理了一下面试题"
+      "line": 4,
+      "locator": "source-projection:artifact-line:4",
+      "excerpt": "祝大家在5月拿下自己心仪的offer#爱上工作的瞬间[话题]# #后端开发[话题]# #互联网大厂[话题]# #java[话题]# #java面试[话题]# #计算机[话题]# #编程[话题]# #面试[话题]# #java面试题[话题]# #求职[话题]#"
     }
   ],
   "case_keys": [],
@@ -45,7 +51,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "note": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
     },
     {
       "check_id": "no_cross_source_mixing",

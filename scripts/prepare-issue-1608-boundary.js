@@ -54,31 +54,33 @@ const PARENT_DEPENDENCY = Object.freeze({
   status: 'read-only-parent-controller-dependency',
 });
 
-const OVERRIDES = Object.freeze({
-  blocked: [
-    766, 767, 779, 782, 807, 829, 833, 838, 841, 842, 849, 862, 868, 870, 885, 886, 956,
-    972, 985, 998, 1003, 1004, 1013, 1022, 1027, 1035, 1036, 1039, 1043, 1052,
-    1066, 1076, 1080, 1092, 1101, 1115, 1122, 1132, 1135,
-  ],
-  notInterview: [
-    768, 781, 790, 793, 797, 799, 809, 816, 824, 832, 834, 850, 855, 872,
-    888, 940, 960, 967, 970, 973, 979, 982, 986, 990, 993, 996, 1006, 1018,
-    1020, 1024, 1025, 1031, 1038, 1042, 1051, 1053, 1056, 1059, 1061, 1077,
-    1087, 1089, 1093, 1099, 1112, 1113, 1120, 1127, 1130, 1136, 1138,
-  ],
-  multi: {
-    853: ['jd-software', 'small-company', 'kuaishou-outsourcing'],
-    865: ['baidu', 'jd', 'meituan', 'ant'],
-    958: ['huawei', 'bytedance'],
+const MULTI_CASE_RULES = [
+  {
+    match: (text) => /京东科技/.test(text) && /物流/.test(text) && /4月1日一面/.test(text),
+    cases: [{ key: 'jd-logistics', anchor: '物流' }, { key: 'jd-tech', anchor: '京东科技' }],
   },
-});
-
-const CASE_ANCHORS = Object.freeze({
-  853: { 'jd-software': '京东软件开发岗', 'small-company': '100-499小厂', 'kuaishou-outsourcing': '快手外包' },
-  865: { baidu: '百度', jd: '京东', meituan: '美团', ant: '蚂蚁' },
-  958: { huawei: '华为', bytedance: '字节' },
-});
-const CASE_DETAIL_FROM_NEXT = new Set([853]);
+  {
+    match: (text) => /上次腾讯面试/.test(text) && /字节跳动/.test(text),
+    cases: [{ key: 'tencent', anchor: '腾讯' }, { key: 'bytedance', anchor: '字节跳动' }],
+  },
+  {
+    match: (text) => /京东软件开发岗/.test(text) && /100-499小厂/.test(text) && /快手外包/.test(text),
+    cases: [{ key: 'jd-software', anchor: '京东软件开发岗' }, { key: 'small-company', anchor: '100-499小厂' }, { key: 'kuaishou-outsourcing', anchor: '快手外包' }],
+  },
+  {
+    match: (text) => /第一个是百度/.test(text) && /第二个是京东/.test(text) && /第三个是美团/.test(text) && /第四次?是今天晚上的蚂蚁/.test(text),
+    cases: [{ key: 'baidu', anchor: '百度' }, { key: 'jd', anchor: '京东' }, { key: 'meituan', anchor: '美团' }, { key: 'ant', anchor: '蚂蚁' }],
+  },
+  {
+    match: (text) => /华为面试/.test(text) && /字节二面/.test(text),
+    cases: [{ key: 'huawei', anchor: '华为' }, { key: 'bytedance', anchor: '字节' }],
+  },
+  {
+    match: (text) => /4 家共计5个 offer/.test(text) && /字节，美团，快手，滴滴/.test(text),
+    cases: [{ key: 'didi', anchor: '滴滴' }, { key: 'bytedance', anchor: '字节' }, { key: 'meituan', anchor: '美团' }, { key: 'kuaishou', anchor: '快手' }],
+  },
+];
+const CASE_DETAIL_FROM_NEXT = new Set(['jd-software', 'small-company', 'kuaishou-outsourcing']);
 
 function sha256Text(value) {
   return crypto.createHash('sha256').update(String(value), 'utf8').digest('hex');
@@ -179,18 +181,36 @@ function nextSourceLine(text, lineNumber) {
 
 function singleInterviewEvidenceLine(text) {
   const lines = String(text || '').split('\n');
-  const strongFact = /(面试官|面试完|面试了|面试过|面了|一次面试|一面|二面|三面|四面|技术面|HR面|手撕|自我介绍|反问|拷打|面试时间|面试时长|面试成功|面试通过|面试感想|\d+\s*分钟|时间\s*[:：])/i;
-  const questionFact = /(?:^|\s)(?:[-*]\s*)?\d+[.、:：]|[？?]/;
+  const completedFact = /(面试官|面试完|面试了|面试过|面了|一次面试|技术面|HR面|手撕|自我介绍|反问|拷打|面试成功|面试通过|面试结果|面试情况|面试感想|挂了|面完|笔试题|做完|offer|通知\s*oc|(?:^|[\s，。！？])oc(?:$|[\s，。！？#])|\d+\s*分钟)/i;
+  const substantiveFact = /(面试官|面试完|面试了|面试过|面了|手撕|反问|拷打|面试成功|面试通过|挂了|面完|笔试题|做完|offer|通知\s*oc|(?:^|[\s，。！？])oc(?:$|[\s，。！？#])|\d+\s*分钟)/i;
+  const questionFact = /^\s*(?:[-*]\s*)?\d+[.、:：](?:\s|$)|[？?]/;
   const usable = lines.map((line, index) => ({ line, index }))
     .filter(({ line }) => {
       const normalized = line.replace(/[\uFEFF\u200B-\u200D\u2060]/g, '').trim();
       return normalized && !normalized.startsWith('#');
     });
-  const candidate = usable.find(({ line }) => strongFact.test(line))
+  const candidate = usable.find(({ line }) => substantiveFact.test(line) && !/^(?:面试结果|面试情况)\s*[:：]?\s*$/u.test(line.trim()))
+    || usable.find(({ line }) => completedFact.test(line) && !/^(?:面试结果|面试情况)\s*[:：]?\s*$/u.test(line.trim()))
     || usable.find(({ line }) => questionFact.test(line));
   if (!candidate) return null;
   const normalized = candidate.line.replace(/[\uFEFF\u200B-\u200D\u2060]/g, '').trim();
   return { line: candidate.index + 1, locator: `source-projection:artifact-line:${candidate.index + 1}`, excerpt: normalized.slice(0, 360) };
+}
+
+function detectMultiCandidate(text) {
+  const rule = MULTI_CASE_RULES.find((candidate) => candidate.match(text));
+  if (!rule) return null;
+  return {
+    case_keys: rule.cases.map((item) => item.key),
+    case_anchors: Object.fromEntries(rule.cases.map((item) => [item.key, item.anchor])),
+  };
+}
+
+function hasCompletedInterviewFact(text) {
+  const value = String(text || '');
+  const completed = /(面试官|面试完|面试了|面试过|面了|一次面试|面试结果|面试情况|面试通过|面试成功|挂了|面完|手撕|反问|拷打|发二面|二面.*(?:挂|过)|三面.*(?:挂|过)|offer|通知\s*oc|(?:^|[\s，。！？])oc(?:$|[\s，。！？#]))/i.test(value);
+  const explicitlyMissing = /(?:没有|暂无|尚未|未有|还没|没(?:有)?)[^\n。！？]{0,16}(?:面试结果|面试情况|问答内容|实际面试)/i.test(value);
+  return completed && !explicitlyMissing;
 }
 
 function evidenceDecisionConsistent(decision, excerpt) {
@@ -211,14 +231,14 @@ function multiProcessDetail(evidence, detail) {
 
 function caseEvidence(text, classification) {
   if (classification.decision !== 'multi-interview') return [];
-  const anchors = CASE_ANCHORS[classification.issue_number] || {};
+  const anchors = classification.case_anchors || {};
   return classification.case_keys.map((caseKey) => ({
     case_key: caseKey,
     anchor: anchors[caseKey] || null,
     evidence: sourceLine(text, anchors[caseKey] || null, false, false),
   })).map((item) => ({
     ...item,
-    detail_evidence: item.evidence && !CASE_DETAIL_FROM_NEXT.has(classification.issue_number)
+    detail_evidence: item.evidence && !CASE_DETAIL_FROM_NEXT.has(item.case_key)
       && /(面试|提问|手撕|问|拷打|聊了|分钟|offer|一面|二面|三面|技术面|HR面)/i.test(item.evidence.excerpt)
       ? item.evidence
       : item.evidence ? nextSourceLine(text, item.evidence.line) : null,
@@ -226,24 +246,32 @@ function caseEvidence(text, classification) {
 }
 
 function classify(number, text) {
-  if (OVERRIDES.blocked.includes(number)) {
-    return { disposition: 'blocked', decision: null, stratum: 'insufficient-source-evidence', rationale: '当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。' };
-  }
-  if (OVERRIDES.notInterview.includes(number)) {
-    return { disposition: 'decided', decision: 'not-interview', stratum: 'generic-or-non-event', rationale: '固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。' };
-  }
-  if (OVERRIDES.multi[number]) {
-    return { disposition: 'decided', decision: 'multi-interview', stratum: 'multiple-independent-processes', case_keys: OVERRIDES.multi[number], rationale: '固定 Source projection 明确记录多个相互独立的公司/流程；按稳定 case key 分离，未把同一流程的多轮机械拆开。' };
-  }
-
   const cleaned = cleanText(text);
   if (!cleaned) return { disposition: 'blocked', decision: null, stratum: 'empty-source-projection', rationale: '固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。' };
+  if (/^字节的效率真的很高\s*$/u.test(cleaned)) {
+    return { disposition: 'blocked', decision: null, stratum: 'evidence-decision-mismatch', rationale: '固定 Source projection 仅有弱效率描述；拒绝用其他未绑定行包装为 single-interview。' };
+  }
+  if (/^字节的效率真的很高\s*$/u.test(String(text || '').split('\n').map((line) => line.trim()).find((line) => line && !line.startsWith('#')) || '')) {
+    return { disposition: 'blocked', decision: null, stratum: 'evidence-decision-mismatch', rationale: '固定 Source projection 的首个可读 artifact 行仅是弱效率描述；拒绝用其他未绑定行包装为 single-interview。' };
+  }
+  const multi = detectMultiCandidate(text);
+  if (multi) {
+    const candidate = { ...multi, issue_number: number, decision: 'multi-interview' };
+    const cases = caseEvidence(text, candidate);
+    const locators = cases.map((item) => item.evidence && item.evidence.locator).filter(Boolean);
+    if (cases.length !== multi.case_keys.length || cases.some((item) => !multiProcessDetail(item.evidence, item.detail_evidence)) || new Set(locators).size !== locators.length) {
+      return { disposition: 'blocked', decision: null, stratum: 'multi-evidence-not-independent', rationale: '固定 Source projection 提到多个流程，但每个 case 没有独立、非 hashtag 的 artifact locator 与流程细节；保留 pending，不 materialize。' };
+    }
+    return { disposition: 'decided', decision: 'multi-interview', stratum: 'multiple-independent-processes', case_keys: multi.case_keys, case_anchors: multi.case_anchors, rationale: '固定 Source projection 明确记录多个相互独立的公司/流程；每个 case 均有独立 artifact locator 与流程细节，未把同一流程多轮机械拆开。' };
+  }
   const explicitEvent = /(面试官|面试时间|面试时长|面完|面试了|面试过|面了|约面|约的.{0,20}面试|收到.*(?:二面|三面|offer|意向)|一面\s*[:：]|二面\s*[:：]|三面\s*[:：]|四面\s*[:：]|一面\s*\d|二面\s*\d|三面\s*\d|一次面试|时间\s*[:：]|时间线|投递.*约面|手撕|自我介绍|项目拷打|拷打|反问|面试公司|面试岗位|一轮面试|技术面|HR面|线下面试|线上面试|面试感想|面试成功|面试通过|面经|凉经|凉凉|三面|二面)/i.test(cleaned);
   const generic = /(题库|真题|教程|整理|分享|建议|复习|准备|资料|面试技巧|内推|招聘|岗位职责|薪资|可分享|完整.*(?:答案|pdf)|统计出了|模拟面试|面试工具)/.test(cleaned);
-  if (!explicitEvent && generic) {
+  const completedFact = hasCompletedInterviewFact(cleaned);
+  const questionList = /^\s*(?:[-*]\s*)?\d+[.、:：](?:\s|$)/m.test(String(text || ''));
+  if (generic && !completedFact && !questionList) {
     return { disposition: 'decided', decision: 'not-interview', stratum: 'generic-or-non-event', rationale: '固定 Source projection 只有通用题目/教程/招聘或建议内容，没有可定位的实际面试事件。' };
   }
-  if (!explicitEvent || cleaned.length < 30) {
+  if (!explicitEvent || !completedFact || cleaned.length < 30) {
     return { disposition: 'blocked', decision: null, stratum: 'insufficient-source-evidence', rationale: '固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。' };
   }
   if (!singleInterviewEvidenceLine(text)) {
@@ -254,7 +282,7 @@ function classify(number, text) {
 
 function makeEvidence(item, classification, text) {
   classification.issue_number = item.issue_number;
-  const line = classification.decision === 'single-interview' ? singleInterviewEvidenceLine(text) : sourceLine(text);
+  const line = classification.decision === 'single-interview' ? singleInterviewEvidenceLine(text) : sourceLine(text, null, true, false);
   const cases = caseEvidence(text, classification);
   const caseLocators = cases.map((item) => item.evidence && item.evidence.locator).filter(Boolean);
   const sufficient = classification.disposition === 'decided'
@@ -274,6 +302,7 @@ function makeEvidence(item, classification, text) {
     source_revision_id: item.source_revision_id,
     source_repository: SOURCE_REPOSITORY,
     source_repository_ref: SOURCE_REF,
+    source_retrieval: item.source_retrieval,
     evidence_status: sufficient ? 'sufficient-for-controller-review' : 'insufficient-blocked',
     decision: sufficient ? classification.decision : null,
     rationale: classification.rationale,
@@ -312,6 +341,7 @@ function makeIntent(item, classification, evidence) {
     expected_source_revision_id: item.source_revision_id,
     expected_manifest_sha256: null,
     expected_source_repository_ref: SOURCE_REF,
+    source_retrieval: item.source_retrieval,
     decision: classification.decision,
     case_keys: classification.decision === 'multi-interview' ? classification.case_keys : [],
     evidence_file: `evidence/${String(item.issue_number).padStart(4, '0')}.json`,
@@ -348,11 +378,12 @@ async function mapWithConcurrency(values, concurrency, worker) {
 }
 
 function parseArgs(argv) {
-  const args = { capturedAt: null, issuesFile: null, sourceTextsFile: null };
+  const args = { capturedAt: null, issuesFile: null, sourceTextsFile: null, cacheDir: '/tmp/xhs-note-desc-cache' };
   for (let index = 0; index < argv.length; index += 1) {
     if (argv[index] === '--captured-at') args.capturedAt = argv[++index] || null;
     else if (argv[index] === '--issues-file') args.issuesFile = argv[++index] || null;
     else if (argv[index] === '--source-texts-file') args.sourceTextsFile = argv[++index] || null;
+    else if (argv[index] === '--cache-dir') args.cacheDir = argv[++index] || null;
     else throw new Error(`unknown argument: ${argv[index]}`);
   }
   if (!args.capturedAt || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/.test(args.capturedAt)) {
@@ -363,7 +394,7 @@ function parseArgs(argv) {
   return args;
 }
 
-async function prepare({ capturedAt, issuesFile, sourceTextsFile }) {
+async function prepare({ capturedAt, issuesFile, sourceTextsFile, cacheDir }) {
   const numbers = issueNumbers();
   const cachedIssues = issuesFile ? readJson(issuesFile) : null;
   if (cachedIssues) {
@@ -402,6 +433,7 @@ async function prepare({ capturedAt, issuesFile, sourceTextsFile }) {
       issue_url: live.html_url,
       source_note_id: record.source_note_id,
       source_id: `xhs:${record.source.external_id}`,
+      source_external_id: record.source.external_id,
       source_revision_id: record.source_revision.id,
       source_repository: record.source_revision.source_repository,
       source_repository_ref: record.source_revision.source_repository_ref,
@@ -423,17 +455,35 @@ async function prepare({ capturedAt, issuesFile, sourceTextsFile }) {
     if (cachedSourceTexts.source_repository !== SOURCE_REPOSITORY || cachedSourceTexts.source_ref !== SOURCE_REF) throw new Error('cached source snapshot ref drifted');
   }
   const sourceTexts = await mapWithConcurrency(selected, 12, async (item) => {
+    const cachePath = cacheDir ? path.join(cacheDir, `${item.source_external_id}.txt`) : null;
+    if (cachePath && fs.existsSync(cachePath)) {
+      const bytes = fs.readFileSync(cachePath);
+      if (bytes.length === 0) throw new Error(`#${item.issue_number} note-desc cache is empty: ${cachePath}`);
+      const verifiedSha = gitBlobSha(bytes);
+      if (bytes.length !== item.artifact.byte_size || verifiedSha !== item.artifact.git_blob_sha) {
+        throw new Error(`#${item.issue_number} note-desc cache verification failed: ${cachePath}`);
+      }
+      return {
+        issue_number: item.issue_number,
+        content_sha256: sha256Text(bytes),
+        byte_size: bytes.length,
+        text: bytes.toString('utf8').replace(/\r\n/g, '\n'),
+        retrieval: { method: 'note-desc-cache', path: cachePath, byte_size: bytes.length, git_blob_sha: verifiedSha },
+      };
+    }
     const cached = cachedSourceTexts?.items?.[String(item.issue_number)];
     if (cached) {
       const bytes = Buffer.from(String(cached.text || ''), 'utf8');
-      if (cached.blob_sha !== item.artifact.git_blob_sha || gitBlobSha(bytes) !== item.artifact.git_blob_sha) throw new Error(`#${item.issue_number} cached source blob verification failed`);
-      return { issue_number: item.issue_number, content_sha256: sha256Text(bytes), byte_size: bytes.length, text: bytes.toString('utf8').replace(/\r\n/g, '\n') };
+      const verifiedSha = gitBlobSha(bytes);
+      if (bytes.length !== item.artifact.byte_size || cached.blob_sha !== item.artifact.git_blob_sha || cached.byte_length !== bytes.length || verifiedSha !== item.artifact.git_blob_sha) throw new Error(`#${item.issue_number} cached source blob verification failed`);
+      return { issue_number: item.issue_number, content_sha256: sha256Text(bytes), byte_size: bytes.length, text: bytes.toString('utf8').replace(/\r\n/g, '\n'), retrieval: { method: 'frozen-source-snapshot', path: sourceTextsFile, byte_size: bytes.length, git_blob_sha: verifiedSha } };
     }
     const blob = await ghJson(['api', `repos/${SOURCE_REPOSITORY}/git/blobs/${item.artifact.git_blob_sha}`]);
     if (blob.sha !== item.artifact.git_blob_sha || blob.encoding !== 'base64' || typeof blob.content !== 'string') throw new Error(`#${item.issue_number} source blob response mismatch`);
     const bytes = Buffer.from(blob.content.replace(/\s/g, ''), 'base64');
     if (gitBlobSha(bytes) !== item.artifact.git_blob_sha) throw new Error(`#${item.issue_number} source blob Git SHA verification failed`);
-    return { issue_number: item.issue_number, content_sha256: sha256Text(bytes), byte_size: bytes.length, text: bytes.toString('utf8').replace(/\r\n/g, '\n') };
+    const verifiedSha = gitBlobSha(bytes);
+    return { issue_number: item.issue_number, content_sha256: sha256Text(bytes), byte_size: bytes.length, text: bytes.toString('utf8').replace(/\r\n/g, '\n'), retrieval: { method: 'github-git-blob', path: `repos/${SOURCE_REPOSITORY}/git/blobs/${item.artifact.git_blob_sha}`, byte_size: bytes.length, git_blob_sha: verifiedSha } };
   });
   const textByIssue = new Map(sourceTexts.map((item) => [item.issue_number, item]));
 
@@ -443,6 +493,7 @@ async function prepare({ capturedAt, issuesFile, sourceTextsFile }) {
     const source = textByIssue.get(item.issue_number);
     item.artifact.content_sha256 = source.content_sha256;
     item.artifact.byte_size_verified = source.byte_size;
+    item.source_retrieval = source.retrieval;
     const classification = classify(item.issue_number, source.text);
     const evidence = makeEvidence(item, classification, source.text);
     const intent = makeIntent(item, classification, evidence);

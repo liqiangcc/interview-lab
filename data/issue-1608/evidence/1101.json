@@ -6,9 +6,15 @@
   "source_revision_id": "xhs-note:6898ceb4000000000403e713:snapshot-95b77bb26104",
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "source_retrieval": {
+    "method": "frozen-source-snapshot",
+    "path": "/tmp/issue-1608-source-texts.json",
+    "byte_size": 139,
+    "git_blob_sha": "85fd4beacfa28a40dd0b32368f0c251ae6a5b697"
+  },
   "evidence_status": "insufficient-blocked",
   "decision": null,
-  "rationale": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。",
+  "rationale": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。",
   "artifact": {
     "ref": "liqiangcc/xhs:note_desc/6898ceb4000000000403e713.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -17,13 +23,7 @@
     "byte_size": 139,
     "content_sha256": "f0e2b32a4b9017173662a85727372fbb38b08e46947ac38158645eb1a022c42e"
   },
-  "excerpts": [
-    {
-      "line": 1,
-      "locator": "source-projection:artifact-line:1",
-      "excerpt": "#互联网大厂实习[话题]# #后端开发[话题]# #算法[话题]# #大厂[话题]# #java[话题]# #秋招人的精神状态[话题]#"
-    }
-  ],
+  "excerpts": [],
   "case_keys": [],
   "case_evidence": [],
   "checks": [
@@ -45,7 +45,7 @@
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。"
+      "note": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
     },
     {
       "check_id": "no_cross_source_mixing",

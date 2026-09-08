@@ -6,9 +6,15 @@
   "source_revision_id": "xhs-note:683037d2000000002100027f:snapshot-95b77bb26104",
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "source_retrieval": {
+    "method": "frozen-source-snapshot",
+    "path": "/tmp/issue-1608-source-texts.json",
+    "byte_size": 257,
+    "git_blob_sha": "4556cb2d07113c06f7e42688be09d843b4e8d57b"
+  },
   "evidence_status": "insufficient-blocked",
   "decision": null,
-  "rationale": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。",
+  "rationale": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。",
   "artifact": {
     "ref": "liqiangcc/xhs:note_desc/683037d2000000002100027f.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -17,13 +23,7 @@
     "byte_size": 257,
     "content_sha256": "59dd66618ca3804e18570c76f24c144622ff306e6a9e968bac414c724eeff5c8"
   },
-  "excerpts": [
-    {
-      "line": 1,
-      "locator": "source-projection:artifact-line:1",
-      "excerpt": "#编程[话题]#﻿ ﻿#程序员[话题]#﻿ ﻿#计算机[话题]#﻿ ﻿#java[话题]#﻿ ﻿#Java面试[话题]#﻿ ﻿#java面试题[话题]#﻿ ﻿#互联网[话题]#﻿ ﻿#八股文[话题]#﻿ ﻿#干货分享[话题]#﻿ ﻿#知识[话题]#"
-    }
-  ],
+  "excerpts": [],
   "case_keys": [],
   "case_evidence": [],
   "checks": [
@@ -45,7 +45,7 @@
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。"
+      "note": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
     },
     {
       "check_id": "no_cross_source_mixing",

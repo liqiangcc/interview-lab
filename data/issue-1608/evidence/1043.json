@@ -6,9 +6,15 @@
   "source_revision_id": "xhs-note:6884b017000000002400a676:snapshot-95b77bb26104",
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "source_retrieval": {
+    "method": "frozen-source-snapshot",
+    "path": "/tmp/issue-1608-source-texts.json",
+    "byte_size": 256,
+    "git_blob_sha": "a966c0194023c8117cdd3639cf8ccb909c2b795f"
+  },
   "evidence_status": "insufficient-blocked",
   "decision": null,
-  "rationale": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。",
+  "rationale": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。",
   "artifact": {
     "ref": "liqiangcc/xhs:note_desc/6884b017000000002400a676.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -17,13 +23,7 @@
     "byte_size": 256,
     "content_sha256": "f31c1c8f5f9c086f74d3d2c08d02da3ad48173515ecae7f820b95df273fbcd7f"
   },
-  "excerpts": [
-    {
-      "line": 1,
-      "locator": "source-projection:artifact-line:1",
-      "excerpt": "#互联网[话题]#﻿ ﻿#阿里[话题]#﻿ ﻿#百度[话题]#﻿ ﻿#字节跳动[话题]#﻿ ﻿#美团[话题]#﻿ ﻿#Java[话题]#﻿ ﻿#java架构面试题[话题]#﻿ ﻿#模拟面试[话题]#﻿ ﻿#校招[话题]#﻿ ﻿#社招[话题]#"
-    }
-  ],
+  "excerpts": [],
   "case_keys": [],
   "case_evidence": [],
   "checks": [
@@ -45,7 +45,7 @@
     {
       "check_id": "event_boundary",
       "result": "fail",
-      "note": "当前 Source projection 无法独立证明一个可复核的 0/1/N 事件边界；保留 pending，不使用标题或 Derived 材料猜测。"
+      "note": "固定 Source projection 为空；标题、标签和图片存在性都不足以授权边界判定。"
     },
     {
       "check_id": "no_cross_source_mixing",

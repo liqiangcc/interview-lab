@@ -6,9 +6,15 @@
   "source_revision_id": "xhs-note:6877c0390000000015020621:snapshot-95b77bb26104",
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "source_retrieval": {
+    "method": "frozen-source-snapshot",
+    "path": "/tmp/issue-1608-source-texts.json",
+    "byte_size": 524,
+    "git_blob_sha": "37965e297898a911a0ced7763a56700dffed2507"
+  },
   "evidence_status": "sufficient-for-controller-review",
-  "decision": "not-interview",
-  "rationale": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。",
+  "decision": "single-interview",
+  "rationale": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。",
   "artifact": {
     "ref": "liqiangcc/xhs:note_desc/6877c0390000000015020621.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -19,9 +25,9 @@
   },
   "excerpts": [
     {
-      "line": 1,
-      "locator": "source-projection:artifact-line:1",
-      "excerpt": "#后端开发[话题]# #java[话题]# #社招[话题]#"
+      "line": 2,
+      "locator": "source-projection:artifact-line:2",
+      "excerpt": "今天陆续收到了几个面试邀约，总体还是在准备面试相关内容，因为已经很久没有面试过了，所以网上找了两个模拟面试找找感觉，同时对方也反馈了我的一些问题，针对这些问题，我觉得得把我的自我介绍，还有项目相关问题准备再去优化一下。算法今天暂时不考虑了，八股文根据今天面试的问题再去补充一些，面下来感觉主要还是项目导向更重要。"
     }
   ],
   "case_keys": [],
@@ -45,7 +51,7 @@
     {
       "check_id": "event_boundary",
       "result": "pass",
-      "note": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "note": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
     },
     {
       "check_id": "no_cross_source_mixing",

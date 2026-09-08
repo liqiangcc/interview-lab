@@ -6,6 +6,12 @@
   "source_revision_id": "xhs-note:68747dcf000000002201ca0c:snapshot-95b77bb26104",
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "source_retrieval": {
+    "method": "frozen-source-snapshot",
+    "path": "/tmp/issue-1608-source-texts.json",
+    "byte_size": 1134,
+    "git_blob_sha": "f5434ff5a1fa77b1f661055468c4f162fa894695"
+  },
   "evidence_status": "sufficient-for-controller-review",
   "decision": "single-interview",
   "rationale": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。",
@@ -19,9 +25,9 @@
   },
   "excerpts": [
     {
-      "line": 1,
-      "locator": "source-projection:artifact-line:1",
-      "excerpt": "粉丝投稿，一面先问基础，JVM 内存分区和 GC 算法，被追问 G1 的 Region 回收机制。多线程部分考了线程池参数，让结合瑞幸订单场景说核心线程数怎么设。还手写了单例模式，要求兼顾线程安全和懒加载。"
+      "line": 3,
+      "locator": "source-projection:artifact-line:3",
+      "excerpt": "二面侧重框架和业务，Spring 的 AOP 原理，MyBatis 的 #{} 防注入细节。重点聊了订单系统设计，问如何处理高并发下的支付超时，我答用 Redis 过期回调 + 消息队列，面试官追问如果 Redis 挂了怎么办，补了数据库定时任务兜底。"
     }
   ],
   "case_keys": [],

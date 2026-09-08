@@ -6,9 +6,15 @@
   "source_revision_id": "xhs-note:68392b25000000002301e6bf:snapshot-95b77bb26104",
   "source_repository": "liqiangcc/xhs",
   "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "sufficient-for-controller-review",
-  "decision": "not-interview",
-  "rationale": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。",
+  "source_retrieval": {
+    "method": "frozen-source-snapshot",
+    "path": "/tmp/issue-1608-source-texts.json",
+    "byte_size": 121,
+    "git_blob_sha": "e382aee90eea5c546d8edca0a4cc05917bcdb3c4"
+  },
+  "evidence_status": "insufficient-blocked",
+  "decision": null,
+  "rationale": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。",
   "artifact": {
     "ref": "liqiangcc/xhs:note_desc/68392b25000000002301e6bf.txt@95b77bb261048059846273688e4b90a2e108b437",
     "kind": "text_projection",
@@ -44,8 +50,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "pass",
-      "note": "固定 Source projection 是题库、教程、招聘/内推、经验建议或其他非单场面试记录，未证明一个真实且有边界的候选人面试事件。"
+      "result": "fail",
+      "note": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -59,7 +65,7 @@
     }
   ],
   "limitations": [
-    "This local evidence is not a GitHub review comment; no live evidence comment was created by this run.",
-    "Boundary Review only determines 0/1/N and does not create InterviewNote Issues or source-ready/learning labels."
+    "Evidence is insufficient for a boundary transition; no body/label mutation is proposed.",
+    "Title, labels, OCR/Derived data, and image existence are not used to fill the missing boundary proof."
   ]
 }
