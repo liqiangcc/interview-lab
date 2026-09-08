@@ -149,6 +149,7 @@ function validateAuthorization(proof, manifestDigestValue, planDigestValue, comm
   if (proof.allow_live_github !== true) errors.push('authorization must explicitly allow live GitHub transition');
   if (proof.manifest_digest !== manifestDigestValue) errors.push('authorization manifest digest mismatch');
   if (proof.plan_digest !== planDigestValue) errors.push('authorization plan digest mismatch');
+  if (!Number.isSafeInteger(proof.max_mutations) || proof.max_mutations < 1) errors.push('authorization max_mutations must be a positive integer');
   if (!Number.isSafeInteger(proof.comment_id) || proof.comment_id < 1) errors.push('authorization comment_id must be positive');
   if (typeof proof.authorized_by !== 'string' || !proof.authorized_by.trim()) errors.push('authorization authorized_by is required');
   if (!HEX64.test(String(proof.proof_sha256 || '')) || authorizationDigest(proof) !== proof.proof_sha256) errors.push('authorization proof_sha256 is invalid');

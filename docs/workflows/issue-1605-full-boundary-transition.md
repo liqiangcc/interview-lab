@@ -47,8 +47,10 @@ node scripts/apply-issue-1605-full-boundary-transition.js \
 
 authorization proof 必须是 `issue-1605-full-boundary-transition-authorization.v1`，明确绑定
 repository、`parent_issue: 1605`、`action: authorize-full-boundary-transition`、manifest
-digest、plan digest、`allow_live_github: true` 和 parent #1605 上同一个 authorization
-marker。旧的 `authorize-evidence-comments-only` proof 不可升级为 transition 权限。
+digest、plan digest、正整数 `max_mutations`、`allow_live_github: true` 和 parent #1605
+上同一个 authorization marker。CLI 的 `--max-mutations` 不得超过 proof 的
+`max_mutations` ceiling；旧的 `authorize-evidence-comments-only` proof 不可升级为
+transition 权限。
 
 apply 在每个 item 写入前重新 GET + 分页 comments 并再次调用同一 planner。PATCH payload
 只含 `{body, labels}`：body 只允许改变 SourceNote machine `boundary_review` 和可读的

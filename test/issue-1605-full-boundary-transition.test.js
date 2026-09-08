@@ -107,6 +107,29 @@ test('explicit comments pagination requires a short terminal page', () => {
   assert.throws(() => readCommentsPaged(REPOSITORY, 42, () => Array(100).fill({})), /short terminal page/);
 });
 
+test('default live loader and mutation writers resolve the strict repository endpoints', () => {
+  const { buildLiveLoader, buildMutationWriters, assertMutationCeiling } = require('../scripts/apply-issue-1605-full-boundary-transition');
+  const calls = [];
+  const read = (args, input) => {
+    calls.push({ args, input });
+    if (args[1].includes('/comments?')) return [];
+    return { number: 42, state: 'open', body: sourceFixture, labels: [] };
+  };
+  const live = buildLiveLoader(read)({ issue_number: 42 });
+  assert.equal(live.issue.number, 42);
+  assert.equal(live.comments.length, 0);
+  const writers = buildMutationWriters(read);
+  writers.patchIssue(42, { body: 'next', labels: ['boundary:single-interview'] });
+  writers.postReceipt(42, 'receipt');
+  assert.equal(calls[0].args[1], `repos/${REPOSITORY}/issues/42`);
+  assert.match(calls[1].args[1], /repos\/liqiangcc\/interview-lab\/issues\/42\/comments\?per_page=100&page=1/);
+  assert.deepEqual(calls.slice(2).map((call) => call.args.slice(0, 4)), [
+    ['api', '--method', 'PATCH', `repos/${REPOSITORY}/issues/42`],
+    ['api', '--method', 'POST', `repos/${REPOSITORY}/issues/42/comments`],
+  ]);
+  assert.throws(() => assertMutationCeiling(3, { max_mutations: 2 }), /exceeds authorization proof ceiling/);
+});
+
 test('planner calls the formal transition parser/planner path and records a zero-mutation plan', () => {
   const value = planFixture();
   const item = value.plan.items[0];
@@ -235,11 +258,13 @@ test('parent authorization must be a live marker for exact #1605, manifest, and 
     schema_version: 'issue-1605-full-boundary-transition-authorization.v1', repository: REPOSITORY,
     parent_issue: PARENT_ISSUE, action: 'authorize-full-boundary-transition', allow_live_github: true,
     manifest_digest: value.manifest.canonical_digest, plan_digest: value.plan.canonical_digest,
-    comment_id: 1605, authorized_by: 'test-controller',
+    comment_id: 1605, authorized_by: 'test-controller', max_mutations: 2,
   };
   proof.proof_sha256 = sha256Text(canonical(Object.fromEntries(Object.entries(proof).filter(([key]) => key !== 'proof_sha256'))));
   const comments = [{ id: 1605, body: `<!-- ${AUTHORIZATION_MARKER}\n${JSON.stringify(proof)}\n-->` }];
   assert.equal(validateAuthorization(proof, value.manifest.canonical_digest, value.plan.canonical_digest, comments).ok, true);
+  assert.equal(validateAuthorization({ ...proof, max_mutations: 0 }, value.manifest.canonical_digest, value.plan.canonical_digest, comments).ok, false);
+  assert.equal(validateAuthorization({ ...proof, max_mutations: 3, proof_sha256: proof.proof_sha256 }, value.manifest.canonical_digest, value.plan.canonical_digest, comments).ok, false);
   assert.equal(validateAuthorization({ ...proof, action: 'authorize-evidence-comments-only' }, value.manifest.canonical_digest, value.plan.canonical_digest, comments).ok, false);
 });
 

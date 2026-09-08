@@ -5,7 +5,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { execFileSync } = require('node:child_process');
 const {
-  PARENT_ISSUE, PLAN_SCHEMA, SOURCE_REF,
+  REPOSITORY, PARENT_ISSUE, PLAN_SCHEMA, SOURCE_REF,
   validateManifest, requestFiles, validateAuthorization, buildPlan: makePlan, applyBatch, atomicWriteJson,
   readRegularJson,
   acquireExclusiveLock,
@@ -76,8 +76,20 @@ function buildLiveLoader(read = ghJson) {
   });
 }
 
+function buildMutationWriters(read = ghJson) {
+  return {
+    patchIssue: (number, bodyAndLabels) => read(['api', '--method', 'PATCH', issueEndpoint(REPOSITORY, number), '--input', '-'], bodyAndLabels),
+    postReceipt: (number, body) => read(['api', '--method', 'POST', `${issueEndpoint(REPOSITORY, number)}/comments`, '--input', '-'], { body }),
+  };
+}
+
 function loadParentAuthorization(proof, read = ghJson) {
   return readCommentsPaged(REPOSITORY, PARENT_ISSUE, read);
+}
+
+function assertMutationCeiling(maxMutations, proof) {
+  if (!Number.isSafeInteger(proof && proof.max_mutations) || proof.max_mutations < 1) throw new Error('authorization proof max_mutations must be a positive integer');
+  if (maxMutations > proof.max_mutations) throw new Error(`--max-mutations ${maxMutations} exceeds authorization proof ceiling ${proof.max_mutations}`);
 }
 
 function main(argv = process.argv.slice(2), injected = {}) {
@@ -106,6 +118,7 @@ function main(argv = process.argv.slice(2), injected = {}) {
   const parentComments = injected.parentComments || loadParentAuthorization(proof, read);
   const authorization = validateAuthorization(proof, manifest.canonical_digest, plan.canonical_digest, parentComments);
   if (!authorization.ok) throw new Error(`parent #${PARENT_ISSUE} transition authorization failed closed: ${authorization.errors.join('; ')}`);
+  assertMutationCeiling(args.maxMutations, proof);
 
   const lock = (injected.acquireLock || acquireExclusiveLock)(args.lock);
   let result;
@@ -115,10 +128,11 @@ function main(argv = process.argv.slice(2), injected = {}) {
     const journalFile = path.resolve(args.journal);
     const readJournal = () => fs.existsSync(journalFile) ? readJson(journalFile) : null;
     const writeJournal = (value) => atomicWriteJson(journalFile, value);
+    const mutationWriters = buildMutationWriters(read);
     result = applyBatch({
       plan, records, liveLoader,
-      patchIssue: injected.patchIssue || ((number, bodyAndLabels) => ghJson(['api', '--method', 'PATCH', issueEndpoint(REPOSITORY, number), '--input', '-'], bodyAndLabels)),
-      postReceipt: injected.postReceipt || ((number, body) => ghJson(['api', '--method', 'POST', `${issueEndpoint(REPOSITORY, number)}/comments`, '--input', '-'], { body })),
+      patchIssue: injected.patchIssue || mutationWriters.patchIssue,
+      postReceipt: injected.postReceipt || mutationWriters.postReceipt,
       readComments: injected.readComments || ((number) => readCommentsPaged(REPOSITORY, number, read)),
       sleep: injected.sleep || ((milliseconds) => { if (milliseconds > 0) Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, milliseconds); }),
       now: injected.now || (() => new Date().toISOString()),
@@ -144,5 +158,5 @@ if (require.main === module) {
 }
 
 module.exports = {
-  parseArgs, readCommentsPaged, buildLiveLoader, loadParentAuthorization, main,
+  parseArgs, readCommentsPaged, buildLiveLoader, buildMutationWriters, loadParentAuthorization, assertMutationCeiling, main,
 };
