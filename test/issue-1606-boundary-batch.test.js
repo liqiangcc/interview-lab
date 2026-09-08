@@ -8,6 +8,12 @@ const {
   classifyBoundary,
   validateRequest,
 } = require('../scripts/lib/issue-1606-boundary');
+const {
+  recomputeDigest,
+  validateInputs,
+  validateItemAnchors,
+  validateRequestAnchors,
+} = require('../scripts/plan-issue-1606-boundary-batch');
 
 const root = path.join(__dirname, '..');
 const selection = JSON.parse(fs.readFileSync(path.join(root, 'data/issue-1606/selection-manifest.json'), 'utf8'));
@@ -48,6 +54,47 @@ test('source inventory binds all selected items to verified Source projection ev
   assert.equal(inventory.transport_policy.clone, false);
   assert.equal(inventory.transport_policy.http_range_header, false);
   assert.equal(inventory.items.every((item) => item.verification.method === 'local-cache' || item.verification.method === 'controlled-get'), true);
+  assert.equal(inventory.items.every((item) => /^[0-9a-f]{64}$/.test(item.body_sha256)), true);
+});
+
+test('canonical digests and per-item anchors are independently recomputable', () => {
+  assert.equal(selection.selection_sha256, recomputeDigest(selection, 'selection_sha256'));
+  assert.equal(inventory.inventory_sha256, recomputeDigest(inventory, 'inventory_sha256'));
+  assert.equal(plan.plan_sha256, recomputeDigest(plan, 'plan_sha256'));
+  assert.equal(journal.journal_sha256, recomputeDigest(journal, 'journal_sha256'));
+  assert.equal(digest.canonical_sha256, recomputeDigest(digest, 'canonical_sha256'));
+  const inventoryByNumber = new Map(inventory.items.map((item) => [item.issue_number, item]));
+  for (const item of selection.items) assert.deepEqual(validateItemAnchors(item, inventoryByNumber.get(item.issue_number)), []);
+});
+
+test('anchor gate rejects self-reported digest tampering, substitutions, omissions, and request drift', () => {
+  const clone = (value) => JSON.parse(JSON.stringify(value));
+  const tamperedSelection = clone(selection);
+  tamperedSelection.items[0].title = 'substituted title';
+  assert.match(validateInputs(tamperedSelection, inventory).join('\n'), /selection canonical SHA-256 does not recompute/);
+
+  const tamperedInventory = clone(inventory);
+  tamperedInventory.items[0].artifact.git_blob_sha = '0'.repeat(40);
+  tamperedInventory.inventory_sha256 = recomputeDigest(tamperedInventory, 'inventory_sha256');
+  assert.match(validateInputs(selection, tamperedInventory).join('\n'), /selected Source projection artifact/);
+
+  const substitutedSelection = clone(selection);
+  substitutedSelection.items[0].source_note_id = 'xhs-note:substituted';
+  substitutedSelection.selection_sha256 = recomputeDigest(substitutedSelection, 'selection_sha256');
+  assert.match(validateInputs(substitutedSelection, inventory).join('\n'), /source_note_id anchor mismatch/);
+
+  const omittedInventory = clone(inventory);
+  omittedInventory.items.pop();
+  omittedInventory.item_count -= 1;
+  omittedInventory.inventory_sha256 = recomputeDigest(omittedInventory, 'inventory_sha256');
+  assert.match(validateInputs(selection, omittedInventory).join('\n'), /source inventory must contain exactly 327 items|inventory issue sets differ/);
+
+  const request = JSON.parse(fs.readFileSync(path.join(requestDir, '0103.json'), 'utf8'));
+  const driftedRequest = clone(request);
+  driftedRequest.expected_body_sha256 = 'f'.repeat(64);
+  const item = selection.items.find((candidate) => candidate.issue_number === 103);
+  const inventoryItem = inventory.items.find((candidate) => candidate.issue_number === 103);
+  assert.match(validateRequestAnchors(driftedRequest, item, inventoryItem).join('\n'), /expected_body_sha256 anchor mismatch/);
 });
 
 test('same-process rounds are single boundary, aggregate events remain blocked', () => {

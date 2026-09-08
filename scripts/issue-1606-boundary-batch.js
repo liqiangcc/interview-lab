@@ -315,6 +315,7 @@ function cachedProjection(selectionItem, artifact, cachedItem) {
   if (gitBlobSha(content) !== artifact.git_blob_sha || content.length !== artifact.byte_size) return null;
   return {
     ...cachedItem,
+    body_sha256: selectionItem.body_sha256,
     verification: { method: 'local-cache', attempts: 0, transient_retries: 0 },
   };
 }
@@ -351,12 +352,12 @@ async function sourceInventory(selection, outputPath) {
         continue;
       }
       if (!artifact) {
-        items.push({ issue_number: item.issue_number, source_note_id: item.source_note_id, status: 'blocked', block_reason: fetchedArtifact.error });
+        items.push({ issue_number: item.issue_number, source_note_id: item.source_note_id, source_revision_id: item.source_revision_id, source_repository_ref: item.source_repository_ref, body_sha256: item.body_sha256, status: 'blocked', block_reason: fetchedArtifact.error });
         continue;
       }
       if (!fetchedArtifact.ok) {
         transientRetries += Math.max(0, fetchedArtifact.attempts - 1);
-        items.push({ issue_number: item.issue_number, source_note_id: item.source_note_id, status: 'blocked', block_reason: `source artifact fetch failed after ${fetchedArtifact.attempts} controlled GET attempt(s): ${fetchedArtifact.error}`, artifact: { ref: artifact.ref, kind: artifact.kind, provenance: artifact.provenance, git_blob_sha: artifact.git_blob_sha, byte_size: artifact.byte_size }, verification: { method: 'controlled-get', attempts: fetchedArtifact.attempts, transient: fetchedArtifact.transient, transient_retries: Math.max(0, fetchedArtifact.attempts - 1) } });
+        items.push({ issue_number: item.issue_number, source_note_id: item.source_note_id, source_revision_id: item.source_revision_id, source_repository_ref: item.source_repository_ref, body_sha256: item.body_sha256, status: 'blocked', block_reason: `source artifact fetch failed after ${fetchedArtifact.attempts} controlled GET attempt(s): ${fetchedArtifact.error}`, artifact: { ref: artifact.ref, kind: artifact.kind, provenance: artifact.provenance, git_blob_sha: artifact.git_blob_sha, byte_size: artifact.byte_size }, verification: { method: 'controlled-get', attempts: fetchedArtifact.attempts, transient: fetchedArtifact.transient, transient_retries: Math.max(0, fetchedArtifact.attempts - 1) } });
         continue;
       }
       transientRetries += Math.max(0, fetchedArtifact.attempts - 1);
@@ -364,20 +365,20 @@ async function sourceInventory(selection, outputPath) {
       if (gitBlobSha(content) !== artifact.git_blob_sha || content.length !== artifact.byte_size) {
         const remainingAttempts = SOURCE_FETCH_MAX_ATTEMPTS - fetchedArtifact.attempts;
         if (remainingAttempts < 1) {
-          items.push({ issue_number: item.issue_number, source_note_id: item.source_note_id, status: 'blocked', block_reason: 'source artifact integrity mismatch after exhausting controlled GET attempts', artifact: { ref: artifact.ref, kind: artifact.kind, provenance: artifact.provenance, git_blob_sha: artifact.git_blob_sha, byte_size: artifact.byte_size }, verification: { method: 'controlled-get', attempts: fetchedArtifact.attempts, transient: false, transient_retries: Math.max(0, fetchedArtifact.attempts - 1) } });
+          items.push({ issue_number: item.issue_number, source_note_id: item.source_note_id, source_revision_id: item.source_revision_id, source_repository_ref: item.source_repository_ref, body_sha256: item.body_sha256, status: 'blocked', block_reason: 'source artifact integrity mismatch after exhausting controlled GET attempts', artifact: { ref: artifact.ref, kind: artifact.kind, provenance: artifact.provenance, git_blob_sha: artifact.git_blob_sha, byte_size: artifact.byte_size }, verification: { method: 'controlled-get', attempts: fetchedArtifact.attempts, transient: false, transient_retries: Math.max(0, fetchedArtifact.attempts - 1) } });
           continue;
         }
         const retried = await fetchSourceArtifactAsync(artifact.ref, SOURCE_REPOSITORY, SOURCE_REF, artifact.git_blob_sha, remainingAttempts);
         transientRetries += Math.max(0, retried.attempts - 1);
         if (!retried.ok) {
-          items.push({ issue_number: item.issue_number, source_note_id: item.source_note_id, status: 'blocked', block_reason: `source artifact retry failed after integrity mismatch: ${retried.error}`, artifact: { ref: artifact.ref, kind: artifact.kind, provenance: artifact.provenance, git_blob_sha: artifact.git_blob_sha, byte_size: artifact.byte_size }, verification: { method: 'controlled-get', attempts: fetchedArtifact.attempts + retried.attempts, transient: retried.transient, transient_retries: Math.max(0, fetchedArtifact.attempts - 1) + Math.max(0, retried.attempts - 1) } });
+          items.push({ issue_number: item.issue_number, source_note_id: item.source_note_id, source_revision_id: item.source_revision_id, source_repository_ref: item.source_repository_ref, body_sha256: item.body_sha256, status: 'blocked', block_reason: `source artifact retry failed after integrity mismatch: ${retried.error}`, artifact: { ref: artifact.ref, kind: artifact.kind, provenance: artifact.provenance, git_blob_sha: artifact.git_blob_sha, byte_size: artifact.byte_size }, verification: { method: 'controlled-get', attempts: fetchedArtifact.attempts + retried.attempts, transient: retried.transient, transient_retries: Math.max(0, fetchedArtifact.attempts - 1) + Math.max(0, retried.attempts - 1) } });
           continue;
         }
         content = retried.content;
         fetchedArtifact.attempts += retried.attempts;
       }
       if (gitBlobSha(content) !== artifact.git_blob_sha || content.length !== artifact.byte_size) {
-        items.push({ issue_number: item.issue_number, source_note_id: item.source_note_id, status: 'blocked', block_reason: 'source artifact Git blob SHA or byte length mismatch after deterministic retry', artifact: { ref: artifact.ref, kind: artifact.kind, provenance: artifact.provenance, git_blob_sha: artifact.git_blob_sha, byte_size: artifact.byte_size }, verification: { method: 'controlled-get', attempts: fetchedArtifact.attempts, transient: false, transient_retries: Math.max(0, fetchedArtifact.attempts - 1) } });
+        items.push({ issue_number: item.issue_number, source_note_id: item.source_note_id, source_revision_id: item.source_revision_id, source_repository_ref: item.source_repository_ref, body_sha256: item.body_sha256, status: 'blocked', block_reason: 'source artifact Git blob SHA or byte length mismatch after deterministic retry', artifact: { ref: artifact.ref, kind: artifact.kind, provenance: artifact.provenance, git_blob_sha: artifact.git_blob_sha, byte_size: artifact.byte_size }, verification: { method: 'controlled-get', attempts: fetchedArtifact.attempts, transient: false, transient_retries: Math.max(0, fetchedArtifact.attempts - 1) } });
         continue;
       }
       const text = content.toString('utf8');
@@ -387,6 +388,7 @@ async function sourceInventory(selection, outputPath) {
         source_note_id: item.source_note_id,
         source_revision_id: item.source_revision_id,
         source_repository_ref: item.source_repository_ref,
+        body_sha256: item.body_sha256,
         status: 'verified',
         artifact: { ref: artifact.ref, kind: artifact.kind, provenance: artifact.provenance, git_blob_sha: artifact.git_blob_sha, byte_size: artifact.byte_size },
         verification: { method: 'controlled-get', attempts: fetchedArtifact.attempts, transient: false, transient_retries: Math.max(0, fetchedArtifact.attempts - 1) },
