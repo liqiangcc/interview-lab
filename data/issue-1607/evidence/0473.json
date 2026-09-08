@@ -9,23 +9,14 @@
   "expected_body_sha256": "68306e2a04fcc738d175a7825f8a06a7fd232900c027558effe61db0ecbe27ad",
   "expected_source_revision_id": "xhs-note:677632b5000000000b016b05:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
-  "decision": "blocked",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified for this item.",
+  "evidence_status": "reviewed",
+  "decision": "multi-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "blocked",
-    "proposed_decision": "blocked",
-    "basis": "full Source artifacts are present but do not establish whether this is a candidate interview event or a non-event",
-    "basis_lines": [
-      {
-        "line_number": 21,
-        "excerpt": "- 那静态的呢，就没有新数据进来，怎么保证同步的数据一致性，你是觉得一定不会出问题吗？"
-      },
-      {
-        "line_number": 23,
-        "excerpt": "- 说一下 MySQL 隔离级别，默认是哪个？可重复读解决了什么问题？"
-      }
-    ],
+    "status": "reviewed",
+    "proposed_decision": "multi-interview",
+    "basis": "complete candidate interview evidence names multiple distinct interview events/rounds",
+    "basis_lines": [],
     "semantic_evidence": [
       {
         "ref": "liqiangcc/xhs:note_json/677632b5000000000b016b05.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -134,8 +125,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "Full Source material remains semantically insufficient to decide the boundary."
+      "result": "pass",
+      "note": "Semantic boundary result is multi-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -149,7 +140,7 @@
     }
   ],
   "limitations": [
-    "Complete pinned artifacts were read, but their semantics do not establish a 0/1/N boundary decision.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]

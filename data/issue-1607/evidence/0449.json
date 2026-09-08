@@ -9,19 +9,14 @@
   "expected_body_sha256": "9b32d3bf66d72dc5d561496c7fc1576a9a3fe3e98acda3de2ca9cd37b9fb7a5a",
   "expected_source_revision_id": "xhs-note:675a97d6000000000700aa85:snapshot-95b77bb26104",
   "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
-  "evidence_status": "blocked",
-  "decision": "blocked",
-  "decision_basis": "Boundary decision is withheld because the pinned Source projection bytes were not independently fetched and verified for this item.",
+  "evidence_status": "reviewed",
+  "decision": "not-interview",
+  "decision_basis": "Full pinned note_desc, note_json, and note_detail artifacts were independently verified; this semantic boundary result is review-ready but not authorized for live transition.",
   "classification": {
-    "status": "blocked",
-    "proposed_decision": "blocked",
-    "basis": "full Source artifacts are present but do not establish whether this is a candidate interview event or a non-event",
-    "basis_lines": [
-      {
-        "line_number": 1,
-        "excerpt": "【无线通信物理层软件工程师】有uu了解这个岗会问什么问题嘛？（家人们 学术混子不敢面，这可咋整哈哈哈 #小米面试[话题]# #小米无线通信测试[话题]#"
-      }
-    ],
+    "status": "reviewed",
+    "proposed_decision": "not-interview",
+    "basis": "explicit invitation, job/advice, or non-event content lacks a clear candidate event",
+    "basis_lines": [],
     "semantic_evidence": [
       {
         "ref": "liqiangcc/xhs:note_json/675a97d6000000000700aa85.json@95b77bb261048059846273688e4b90a2e108b437",
@@ -130,8 +125,8 @@
     },
     {
       "check_id": "event_boundary",
-      "result": "blocked",
-      "note": "Full Source material remains semantically insufficient to decide the boundary."
+      "result": "pass",
+      "note": "Semantic boundary result is not-interview; no live transition is authorized by this artifact."
     },
     {
       "check_id": "no_cross_source_mixing",
@@ -145,7 +140,7 @@
     }
   ],
   "limitations": [
-    "Complete pinned artifacts were read, but their semantics do not establish a 0/1/N boundary decision.",
+    "The semantic decision is review-ready but is not durable controller authorization.",
     "Boundary remains pending; this item cannot authorize materialization or any GitHub mutation.",
     "Raw Source and Derived interpretations remain separate; no Raw artifact is modified."
   ]
