@@ -105,7 +105,7 @@ function main(argv = process.argv.slice(2), injected = {}) {
   if (files.errors.length) throw new Error(`formal request marker validation failed: ${files.errors.join('; ')}`);
   const read = injected.ghJson || ghJson;
   const liveLoader = injected.liveLoader || buildLiveLoader(read);
-  const records = files.records.map((record) => ({ ...record, manifest_digest: manifest.canonical_digest, plan_digest: manifest.plan_digest }));
+  const records = files.records.map((record) => ({ ...record, manifest_digest: manifest.canonical_digest }));
   const plan = makePlan({ manifest, manifestFile: args.manifest, records, liveLoader });
   atomicWriteJson(args.output, plan);
   if (!args.apply) {

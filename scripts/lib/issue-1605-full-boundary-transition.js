@@ -270,7 +270,11 @@ function buildPlan({ manifest, manifestFile, records, liveLoader }) {
     let live;
     try { live = liveLoader(record.request); }
     catch (error) { items.push({ issue_number: Number(record.issue_number), transition_id: record.transition_id, status: 'blocked', errors: [`live read failed: ${error.message}`] }); continue; }
-    const planned = planItem({ ...record, manifest_digest: manifest.canonical_digest }, live);
+    // A manifest's plan_digest is an upstream evidence-plan digest, not this
+    // transition plan's canonical digest.  Never let it validate an existing
+    // applied receipt during the first planning pass; that check happens once
+    // this function has computed planDigestValue below.
+    const planned = planItem({ ...record, manifest_digest: manifest.canonical_digest, plan_digest: null }, live);
     const item = {
       issue_number: Number(record.issue_number), transition_id: record.transition_id,
       source_note_id: record.request.source_note_id, decision: record.request.decision,
@@ -347,20 +351,28 @@ function initialJournal(plan) {
   return { ...content, canonical_digest: sha256Text(canonical(content)) };
 }
 
-function validateJournal(journal, plan) {
+function validateJournal(journal, plan, maxMutations = null) {
   const errors = [];
   if (!journal || journal.schema_version !== JOURNAL_SCHEMA) errors.push('journal schema mismatch');
   if (journal?.manifest_digest !== plan.manifest.digest || journal?.plan_digest !== plan.canonical_digest) errors.push('journal belongs to another manifest/plan');
   if (!HEX64.test(String(journal?.canonical_digest || '')) || sha256Text(canonical(without(journal, 'canonical_digest'))) !== journal?.canonical_digest) errors.push('journal canonical_digest is invalid');
+  if (!Number.isSafeInteger(journal?.mutation_count) || journal.mutation_count < 0) errors.push('journal mutation_count must be a safe non-negative integer');
+  if (maxMutations != null && (!Number.isSafeInteger(maxMutations) || maxMutations < 1)) errors.push('journal validation requires a positive mutation ceiling');
+  if (maxMutations != null && Number.isSafeInteger(journal?.mutation_count) && journal.mutation_count > maxMutations) errors.push('journal mutation_count exceeds max mutation ceiling');
   const expected = new Map(plan.items.map((item) => [item.issue_number, item]));
   const seen = new Set();
+  let itemMutationTotal = 0;
   for (const item of journal?.items || []) {
     if (!expected.has(Number(item.issue_number))) errors.push(`journal contains unknown Issue #${item.issue_number}`);
     if (seen.has(Number(item.issue_number))) errors.push(`journal duplicates Issue #${item.issue_number}`);
     seen.add(Number(item.issue_number));
     if (expected.has(Number(item.issue_number)) && item.item_digest !== expected.get(Number(item.issue_number)).item_digest) errors.push(`journal item digest drifted for #${item.issue_number}`);
     if (!['pending', 'patch-pending', 'patched', 'receipt-pending', 'complete', 'uncertain'].includes(item.phase)) errors.push(`journal phase invalid for #${item.issue_number}`);
+    if (!Number.isSafeInteger(item.mutation_count) || item.mutation_count < 0) errors.push(`journal mutation_count for #${item.issue_number} must be a safe non-negative integer`);
+    else itemMutationTotal += item.mutation_count;
+    if (typeof item.possibly_performed !== 'boolean') errors.push(`journal possibly_performed for #${item.issue_number} must be boolean`);
   }
+  if (Number.isSafeInteger(journal?.mutation_count) && itemMutationTotal !== journal.mutation_count) errors.push('journal mutation_count must equal the sum of item mutation_count values');
   return { ok: errors.length === 0, errors };
 }
 
@@ -426,14 +438,17 @@ function applyBatch({ plan, records, liveLoader, patchIssue, postReceipt, readCo
   if (typeof writeJournal !== 'function') throw new Error('apply requires a durable journal writer');
   let journal = readJournal ? readJournal() : null;
   if (!journal) journal = initialJournal(plan);
-  const journalValidation = validateJournal(journal, plan);
+  const journalValidation = validateJournal(journal, plan, maxMutations);
   if (!journalValidation.ok) throw new Error(`journal validation failed: ${journalValidation.errors.join('; ')}`);
   const byIssue = new Map(journal.items.map((item) => [Number(item.issue_number), item]));
   const byRecord = new Map(records.map((record) => [Number(record.issue_number), record]));
   let mutationCount = Number(journal.mutation_count || 0);
   const persist = () => {
+    lock.assertHeld();
     journal.mutation_count = mutationCount; journal.items = [...byIssue.values()].sort((a, b) => a.issue_number - b.issue_number);
     journal.canonical_digest = sha256Text(canonical(without(journal, 'canonical_digest')));
+    const validation = validateJournal(journal, plan, maxMutations);
+    if (!validation.ok) throw new Error(`journal validation failed before durable write: ${validation.errors.join('; ')}`);
     writeJournal(journal);
   };
   const reconcileTarget = (record, expected) => {
@@ -468,7 +483,12 @@ function applyBatch({ plan, records, liveLoader, patchIssue, postReceipt, readCo
     const state = byIssue.get(item.issue_number);
     const record = byRecord.get(item.issue_number);
     if (!state || !record) throw new Error(`#${item.issue_number}: journal/request ownership missing`);
-    if (state.phase === 'complete') continue;
+    if (state.phase === 'complete') {
+      lock.assertHeld();
+      const resumed = planItem({ ...record, manifest_digest: plan.manifest.digest, plan_digest: plan.canonical_digest }, liveLoader(record.request));
+      if (!resumed.ok || resumed.status !== 'already-applied' || resumed.current_body_sha256 !== item.next_body_sha256 || !same(resumed.next_labels, item.next_labels)) throw new Error(`#${item.issue_number}: complete journal item failed read-only target/receipt verification`);
+      continue;
+    }
     if (state.phase === 'uncertain') throw new Error(`#${item.issue_number}: journal is uncertain; refusing blind retry`);
     if (state.phase === 'patch-pending' || state.phase === 'receipt-pending') {
       throw new Error(`#${item.issue_number}: journal contains an in-flight mutation phase; refusing blind retry`);

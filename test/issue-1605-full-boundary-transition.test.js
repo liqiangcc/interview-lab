@@ -11,7 +11,7 @@ const {
   REPOSITORY, SOURCE_REF, PARENT_ISSUE, AUTHORIZATION_MARKER,
   canonical, sha256Text, manifestDigest, validateManifest, requestFiles,
   validateAuthorization, assertBoundaryOnly, buildPlan, applyBatch, buildReceipt,
-  validateReceipt, planItem, acquireExclusiveLock,
+  validateReceipt, planItem, acquireExclusiveLock, initialJournal, validateJournal,
 } = require('../scripts/lib/issue-1605-full-boundary-transition');
 const { parseSourceNoteIssue } = require('../scripts/lib/source-note-issue');
 
@@ -178,6 +178,73 @@ test('apply patches only the boundary projection, validates it, then posts one a
   assert.deepEqual(Object.keys(calls[0][2]).sort(), ['body', 'labels']);
   assert.equal(harness.readJournal().status, 'complete');
   assert.equal(parseSourceNoteIssue(value.issue.body).record.boundary_review.status, 'single-interview');
+});
+
+test('rebuilding the plan after the first apply validates the receipt with the transition plan digest', () => {
+  const value = planFixture();
+  const harness = journalHarness(value);
+  applyBatch({
+    plan: value.plan, records: value.records, liveLoader: () => ({ issue: value.issue, comments: value.comments }),
+    patchIssue(_number, payload) { value.issue.body = payload.body; value.issue.labels = payload.labels; return {}; },
+    postReceipt(_number, body) { const comment = { id: 550, body }; value.comments.push(comment); return comment; },
+    readComments: () => value.comments, maxMutations: 2, reconcileAttempts: 1,
+    now: () => '2026-09-08T00:01:00.000Z', ...harness,
+  });
+  const replanned = buildPlan({ manifest: value.manifest, manifestFile: path.join(value.directory, 'full-boundary-manifest.json'), records: value.records, liveLoader: () => ({ issue: value.issue, comments: value.comments }) });
+  assert.equal(replanned.ok, true, replanned.errors.join('; '));
+  assert.equal(replanned.items[0].status, 'already-applied');
+  assert.equal(replanned.canonical_digest, value.plan.canonical_digest);
+});
+
+test('complete resume performs read-only target/receipt verification before skipping', () => {
+  const value = planFixture();
+  const harness = journalHarness(value);
+  let patches = 0; let posts = 0; let reads = 0;
+  applyBatch({
+    plan: value.plan, records: value.records, liveLoader: () => ({ issue: value.issue, comments: value.comments }),
+    patchIssue(_number, payload) { patches += 1; value.issue.body = payload.body; value.issue.labels = payload.labels; return {}; },
+    postReceipt(_number, body) { posts += 1; const comment = { id: 551, body }; value.comments.push(comment); return comment; },
+    readComments: () => value.comments, maxMutations: 2, reconcileAttempts: 1,
+    now: () => '2026-09-08T00:01:00.000Z', ...harness,
+  });
+  const resumed = applyBatch({
+    plan: value.plan, records: value.records,
+    liveLoader: () => { reads += 1; return { issue: value.issue, comments: value.comments }; },
+    patchIssue() { patches += 1; }, postReceipt() { posts += 1; }, readComments: () => value.comments,
+    maxMutations: 2, reconcileAttempts: 1, ...harness,
+  });
+  assert.equal(resumed.ok, true);
+  assert.equal(reads, 1);
+  assert.equal(patches, 1);
+  assert.equal(posts, 1);
+});
+
+test('journal counters, types, sum, and max ceiling are fail-closed before mutation', () => {
+  const value = planFixture();
+  const valid = initialJournal(value.plan);
+  assert.equal(validateJournal(valid, value.plan, 2).ok, true);
+  const seal = (journal) => ({ ...journal, canonical_digest: sha256Text(canonical(Object.fromEntries(Object.entries(journal).filter(([key]) => key !== 'canonical_digest')))) });
+  const cases = [
+    [Object.assign({}, valid, { mutation_count: NaN }), /safe non-negative integer/],
+    [Object.assign({}, valid, { mutation_count: -1 }), /safe non-negative integer/],
+    [Object.assign({}, valid, { mutation_count: 1 }), /sum of item/],
+    [Object.assign({}, valid, { items: [{ ...valid.items[0], mutation_count: '1' }] }), /safe non-negative integer/],
+    [Object.assign({}, valid, { items: [{ ...valid.items[0], possibly_performed: 'false' }] }), /possibly_performed/],
+    [Object.assign({}, valid, { mutation_count: 3, items: [{ ...valid.items[0], mutation_count: 3 }] }), /exceeds max mutation ceiling/],
+  ];
+  for (const [candidate, pattern] of cases) assert.throws(() => {
+    const result = validateJournal(seal(candidate), value.plan, 2);
+    if (result.ok) throw new Error('tampered journal unexpectedly validated');
+    throw new Error(result.errors.join('; '));
+  }, pattern);
+  let patches = 0;
+  const tampered = seal(Object.assign({}, valid, { mutation_count: -1 }));
+  assert.throws(() => applyBatch({
+    plan: value.plan, records: value.records, liveLoader: () => ({ issue: value.issue, comments: value.comments }),
+    patchIssue() { patches += 1; }, postReceipt() {}, readComments: () => value.comments,
+    maxMutations: 2, readJournal: () => tampered, writeJournal() {}, lock: { assertHeld() {} },
+  }), /journal validation failed/);
+  assert.equal(patches, 0);
 });
 
 test('applied receipt binds the exact plan digest and expected SourceRevision/ref', () => {
