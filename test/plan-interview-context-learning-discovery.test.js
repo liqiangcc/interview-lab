@@ -2,7 +2,45 @@
 
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { loadComments, loadAllIssues, loadLabels, fixedInventoryAudit, parseArgs, resumeProgressItem, receiptPendingPatch, validatePatchResponse, parseGhIncludedJson, formatGhMutationError, ghMutationJson, buildPatchArgs, patchSnapshot, assertPatchSnapshotUnchanged, acquireApplyLock } = require('../scripts/plan-interview-context-learning-discovery');
+const { loadComments, loadAllIssues, loadLabels, buildInventoryReport, fixedInventoryAudit, parseArgs, resumeProgressItem, receiptPendingPatch, validatePatchResponse, parseGhIncludedJson, formatGhMutationError, ghMutationJson, buildPatchArgs, patchSnapshot, assertPatchSnapshotUnchanged, acquireApplyLock } = require('../scripts/plan-interview-context-learning-discovery');
+
+function discoveryFixture(number, overrides = {}) {
+  const id = `xhs:discovery-${String(number).padStart(8, '0')}`;
+  const revision = `${id}:r1`;
+  const record = {
+    schema_version: 'interview-note-issue.v2', interview_note_id: id,
+    source: { system: 'xhs', external_id: `discovery-${String(number).padStart(8, '0')}`, url: null },
+    source_revision: { id: revision, captured_at: null },
+    source_published_at: { precision: 'year', value: '2024' },
+    source_edited_at: { precision: 'unknown', value: null },
+    interview_occurred_at: { precision: 'year', value: '2023' },
+    artifacts: [{ kind: 'html', ref: `${id}.html`, sha256: null, provenance: 'raw_capture' }],
+    limitations: ['fixture evidence'],
+  };
+  const body = `<!-- interview-note: id=${id} schema=interview-note-issue.v2 -->\n<!-- interview-note-record\n${JSON.stringify(record, null, 2)}\n-->\n\n## 来源身份\n\n## 原始标题\n\n## 原始正文\n\nRaw source body ${number}\n\n## 原始附件\n\n- raw\n\n## 来源限制\n\n- fixture\n\n## 派生链接\n`;
+  const context = {
+    schema_version: 'interview-context.v1', context_id: `${id}:context-v1`, interview_note_id: id,
+    source_revision_id: revision, review_status: 'reviewed', reviewed_at: '2026-09-08T00:00:00Z',
+    company: { id: 'acme', display_name: 'Acme', basis: 'source-explicit', evidence_refs: ['raw-title:Acme'] },
+    role: { family: 'backend', title: '后端', basis: 'source-explicit', evidence_refs: ['raw-title:后端'] },
+    recruitment_type: { value: 'campus', basis: 'reviewed-inference', evidence_refs: ['raw-title:校招'] },
+    round: { value: '2', basis: 'source-explicit', evidence_refs: ['raw-title:二面'] },
+    interview_occurred_at: { precision: 'year', value: '2023', basis: 'source-explicit', evidence_refs: ['record:interview_occurred_at'] },
+    outcome_visibility: 'sealed-until-source-reveal',
+  };
+  return {
+    issue: { number, state: 'open', title: `Raw title ${number}`, body, labels: [{ name: 'type:interview-note' }, { name: 'status:source-ready' }, { name: 'source:xhs' }] },
+    context, id, ...overrides,
+  };
+}
+
+function writeContext(directory, fixture, name = `${fixture.number || fixture.issue.number}.v1.json`) {
+  const fs = require('fs');
+  const path = require('path');
+  const file = path.join(directory, name);
+  fs.writeFileSync(file, `${JSON.stringify(fixture.context, null, 2)}\n`);
+  return file;
+}
 
 test('CLI comments pagination is explicit, bounded, and complete without --slurp', () => {
   const urls = [];
@@ -38,6 +76,107 @@ test('label inventory pagination is explicit and complete', () => {
   assert.equal(urls.length, 2);
   assert.ok(urls.every((url) => url.includes('/labels?per_page=100&page=')));
   assert.ok(urls.every((url) => !url.includes('--slurp')));
+});
+
+test('pagination handles an empty terminal page and propagates page exceptions', () => {
+  const pages = [];
+  assert.deepEqual(loadAllIssues('liqiangcc/interview-lab', { readPage: (page) => { pages.push(page); return []; } }), []);
+  assert.deepEqual(pages, [1]);
+  assert.throws(() => loadAllIssues('liqiangcc/interview-lab', { readPage: (page) => { throw new Error(`page ${page} unavailable`); } }), /page 1 unavailable/);
+});
+
+test('full source-ready inventory emits stable plan-only discovery digest without changing Raw body', () => {
+  const fs = require('fs');
+  const os = require('os');
+  const path = require('path');
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'learning-discovery-'));
+  const fixtures = Array.from({ length: 100 }, (_, index) => discoveryFixture(index + 1));
+  for (const fixture of fixtures) writeContext(directory, fixture);
+  const issues = fixtures.map((fixture) => fixture.issue);
+  const before = issues.map((issue) => issue.body);
+  const first = buildInventoryReport(issues, directory);
+  const second = buildInventoryReport(issues, directory);
+  assert.equal(first.schema_version, 'interview-context-learning-discovery-plan.v2');
+  assert.equal(first.plan_only, true);
+  assert.equal(first.mutation_authorized, false);
+  assert.deepEqual(first.transport, { method: 'GET', writes: false });
+  assert.equal(first.source_ready_count, 100);
+  assert.equal(first.eligible_count, 100);
+  assert.equal(first.planned_count, 100);
+  assert.equal(first.mutation_count, 0);
+  assert.equal(first.blocked_count, 0);
+  assert.equal(first.digest, second.digest);
+  assert.deepEqual(issues.map((issue) => issue.body), before);
+  assert.deepEqual(first.items[0].proposed_labels.filter((label) => label.startsWith('company:')), ['company:acme']);
+  assert.ok(first.items[0].proposed_labels.includes('source-year:2024'));
+  assert.ok(first.items[0].proposed_labels.includes('interview-year:2023'));
+  assert.equal(first.items[0].raw_body_modified, false);
+  fs.rmSync(directory, { recursive: true, force: true });
+});
+
+test('Unknown context facts stay unknown and do not become invented labels', () => {
+  const fs = require('fs');
+  const os = require('os');
+  const path = require('path');
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'learning-discovery-unknown-'));
+  const fixture = discoveryFixture(201);
+  fixture.context.company = { id: null, display_name: null, basis: 'unknown', evidence_refs: [] };
+  fixture.context.role = { family: 'unknown', title: null, basis: 'unknown', evidence_refs: [] };
+  fixture.context.recruitment_type = { value: 'unknown', basis: 'unknown', evidence_refs: [] };
+  fixture.context.round = { value: 'unknown', basis: 'unknown', evidence_refs: [] };
+  fixture.context.interview_occurred_at = { precision: 'unknown', value: null, basis: 'unknown', evidence_refs: [] };
+  writeContext(directory, fixture);
+  const item = buildInventoryReport([fixture.issue], directory).items[0];
+  assert.deepEqual(item.unknown_facts, ['company', 'role', 'recruitment_type', 'round', 'interview_occurred_at']);
+  assert.equal(item.proposed_labels.some((label) => /^(company|role|recruitment|round|interview-year):/.test(label)), false);
+  assert.ok(item.proposed_labels.includes('source-year:2024'));
+  fs.rmSync(directory, { recursive: true, force: true });
+});
+
+test('missing, malformed, invalid, and mismatched Context evidence are blocked in the ledger', () => {
+  const fs = require('fs');
+  const os = require('os');
+  const path = require('path');
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'learning-discovery-blocked-'));
+  const good = discoveryFixture(301);
+  const missing = discoveryFixture(302);
+  const malformed = discoveryFixture(303);
+  malformed.issue.body = `${malformed.issue.body}\n<!-- interview-note: id=wrong schema=interview-note.v99 -->`;
+  const invalid = discoveryFixture(304);
+  invalid.context.review_status = 'pending';
+  const mismatch = discoveryFixture(305);
+  mismatch.context.source_revision_id = `${mismatch.id}:r2`;
+  writeContext(directory, good);
+  writeContext(directory, invalid);
+  writeContext(directory, mismatch);
+  fs.writeFileSync(path.join(directory, 'broken.json'), '{not json');
+  const report = buildInventoryReport([good.issue, missing.issue, malformed.issue, invalid.issue, mismatch.issue], directory);
+  assert.equal(report.eligible_count, 1);
+  assert.equal(report.items.length, 1);
+  assert.equal(report.source_ready_missing_context_count, 1);
+  assert.ok(report.blocked_count >= 4);
+  assert.ok(report.blocked.some((entry) => entry.issue_number === 302 && /Context artifact is missing/.test(entry.reason)));
+  assert.ok(report.blocked.some((entry) => entry.issue_number === 303));
+  assert.ok(report.blocked.some((entry) => entry.issue_number === 305 && /source_revision_id/.test(entry.reason)));
+  fs.rmSync(directory, { recursive: true, force: true });
+});
+
+test('duplicate reviewed Context identities fail closed instead of selecting an arbitrary artifact', () => {
+  const fs = require('fs');
+  const os = require('os');
+  const path = require('path');
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'learning-discovery-duplicate-context-'));
+  const fixture = discoveryFixture(401);
+  const second = discoveryFixture(402);
+  second.context.interview_note_id = fixture.id;
+  second.context.context_id = `${fixture.id}:context-v2`;
+  writeContext(directory, fixture, 'a.json');
+  writeContext(directory, second, 'b.json');
+  const report = buildInventoryReport([fixture.issue], directory);
+  assert.equal(report.eligible_count, 0);
+  assert.equal(report.items.length, 0);
+  assert.ok(report.blocked.some((entry) => entry.reason === 'duplicate reviewed Context identity'));
+  fs.rmSync(directory, { recursive: true, force: true });
 });
 
 test('fixed inventory audit requires exact source-ready set', () => {
