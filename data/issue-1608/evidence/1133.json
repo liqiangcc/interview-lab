@@ -1,0 +1,71 @@
+{
+  "schema_version": "issue-1608-boundary-evidence.v1",
+  "issue_number": 1133,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/1133",
+  "source_note_id": "xhs-note:68a435b8000000001d02c040",
+  "source_revision_id": "xhs-note:68a435b8000000001d02c040:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "source_retrieval": {
+    "method": "frozen-source-snapshot",
+    "path": "/tmp/issue-1608-source-texts.json",
+    "byte_size": 961,
+    "git_blob_sha": "36992a7799f0c70aafab60fb9e5c62ef36340d1a"
+  },
+  "evidence_status": "insufficient-blocked",
+  "decision": null,
+  "rationale": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。",
+  "artifact": {
+    "ref": "liqiangcc/xhs:note_desc/68a435b8000000001d02c040.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "36992a7799f0c70aafab60fb9e5c62ef36340d1a",
+    "byte_size": 961,
+    "content_sha256": "9671efc5b4579938ab4ae13dffdeef9b775bf16548de269f1c6734ef8e650484"
+  },
+  "excerpts": [
+    {
+      "line": 1,
+      "locator": "source-projection:artifact-line:1",
+      "excerpt": "救命！面完直接脑壳疼😫！四个哥们儿八股文背得飞起，问HashMap红黑树转换倒背如流，结果让写个线程安全的List，清一色Vector糊脸——2025年了兄弟，CopyOnWriteArrayList是烫嘴吗？张口闭口“百万并发秒杀系统”，细问缓存击穿咋防，支吾半天憋出句“设了Redis过期时间”…我当场表演一个心肺骤停❄️！最绝的是Spring事务失效场景，除了“方法要public”其他屁都崩不出，培训班流水线产的“商城项目”连Git分支名都复制粘贴…菜不丢人，菜还硬装真忍不了！"
+    }
+  ],
+  "case_keys": [],
+  "case_evidence": [],
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    }
+  ],
+  "limitations": [
+    "Evidence is insufficient for a boundary transition; no body/label mutation is proposed.",
+    "Title, labels, OCR/Derived data, and image existence are not used to fill the missing boundary proof."
+  ]
+}

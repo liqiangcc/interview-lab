@@ -1,0 +1,71 @@
+{
+  "schema_version": "issue-1608-boundary-evidence.v1",
+  "issue_number": 986,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/986",
+  "source_note_id": "xhs-note:685d16bb00000000170346e4",
+  "source_revision_id": "xhs-note:685d16bb00000000170346e4:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "source_retrieval": {
+    "method": "frozen-source-snapshot",
+    "path": "/tmp/issue-1608-source-texts.json",
+    "byte_size": 474,
+    "git_blob_sha": "f08d7a145f10af7943ecb6a0f9f0fe7eb6a0c29e"
+  },
+  "evidence_status": "insufficient-blocked",
+  "decision": null,
+  "rationale": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。",
+  "artifact": {
+    "ref": "liqiangcc/xhs:note_desc/685d16bb00000000170346e4.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "f08d7a145f10af7943ecb6a0f9f0fe7eb6a0c29e",
+    "byte_size": 474,
+    "content_sha256": "aded35f9c265cad3fed11e36b071766c222b07f76d34c67fab180018c10c35d6"
+  },
+  "excerpts": [
+    {
+      "line": 1,
+      "locator": "source-projection:artifact-line:1",
+      "excerpt": "刷题看力扣，面试看牛客，闲来无事逛逛，发现这篇帖子，拿到了这份Java八股文，拿下阿里字节大厂offer大满贯，确实很不错，懒得我再找了，该刷的都在这了，秋招加油啊！#秋招[话题]# #Java面试[话题]# #java[话题]# #阿里巴巴[话题]# #字节跳动[话题]# #面经[话题]##内推[话题]##Java开发[话题]##Java编程[话题]##程序员[话题]# #自学[话题]##八股文[话题]##编程[话题]#"
+    }
+  ],
+  "case_keys": [],
+  "case_evidence": [],
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "固定 Source projection 内容不足以独立证明一个可复核的面试事件边界；保留 pending，不以标题或标签补足。"
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    }
+  ],
+  "limitations": [
+    "Evidence is insufficient for a boundary transition; no body/label mutation is proposed.",
+    "Title, labels, OCR/Derived data, and image existence are not used to fill the missing boundary proof."
+  ]
+}

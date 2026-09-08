@@ -1,0 +1,71 @@
+{
+  "schema_version": "issue-1608-boundary-evidence.v1",
+  "issue_number": 944,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/944",
+  "source_note_id": "xhs-note:68468aac0000000023011103",
+  "source_revision_id": "xhs-note:68468aac0000000023011103:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "source_retrieval": {
+    "method": "frozen-source-snapshot",
+    "path": "/tmp/issue-1608-source-texts.json",
+    "byte_size": 433,
+    "git_blob_sha": "04c408f6181af2dd39326cd6f31ffb0aaf123e7f"
+  },
+  "evidence_status": "insufficient-blocked",
+  "decision": null,
+  "rationale": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。",
+  "artifact": {
+    "ref": "liqiangcc/xhs:note_desc/68468aac0000000023011103.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "04c408f6181af2dd39326cd6f31ffb0aaf123e7f",
+    "byte_size": 433,
+    "content_sha256": "316f11d1b4eab4d58bad2471ea21cca7cab9558c76377475681b671a89dd1ed6"
+  },
+  "excerpts": [
+    {
+      "line": 1,
+      "locator": "source-projection:artifact-line:1",
+      "excerpt": "昨天下午1点多面试成都快手客服。面试完都快5点了。只有一面，然后5点多通知面试成功开始背调我。今天中午就给我发Offer了。我也不确定，想不想去。主要是离我家太远了，我住在1号线，它在6号线那边骑单车都要20多分钟。也不知道成都快手咋样。#收到offer[话题]# #互联网大厂[话题]# #快手客服外包[话题]# #面试求职[话题]#"
+    }
+  ],
+  "case_keys": [],
+  "case_evidence": [],
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    }
+  ],
+  "limitations": [
+    "Evidence is insufficient for a boundary transition; no body/label mutation is proposed.",
+    "Title, labels, OCR/Derived data, and image existence are not used to fill the missing boundary proof."
+  ]
+}

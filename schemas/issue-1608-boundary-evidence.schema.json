@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/liqiangcc/interview-lab/schemas/issue-1608-boundary-evidence.schema.json",
+  "title": "Issue 1608 boundary evidence",
+  "type": "object",
+  "required": ["schema_version", "issue_number", "source_note_id", "source_revision_id", "source_repository_ref", "source_retrieval", "evidence_status", "artifact", "checks"],
+  "properties": {
+    "schema_version": {"const": "issue-1608-boundary-evidence.v1"},
+    "issue_number": {"type": "integer", "minimum": 766, "maximum": 1138},
+    "source_note_id": {"type": "string", "minLength": 1},
+    "source_revision_id": {"type": "string", "minLength": 1},
+    "source_repository_ref": {"const": "95b77bb261048059846273688e4b90a2e108b437"},
+    "source_retrieval": {
+      "type": "object",
+      "required": ["method", "path", "byte_size", "git_blob_sha"],
+      "properties": {
+        "method": {"enum": ["note-desc-cache", "frozen-source-snapshot", "github-git-blob"]},
+        "path": {"type": "string", "minLength": 1},
+        "byte_size": {"type": "integer", "minimum": 1},
+        "git_blob_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
+      },
+      "additionalProperties": false
+    },
+    "evidence_status": {"enum": ["sufficient-for-controller-review", "insufficient-blocked"]},
+    "decision": {"enum": ["not-interview", "single-interview", "multi-interview", null]},
+    "excerpts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["line", "locator", "excerpt"],
+        "properties": {
+          "line": {"type": "integer", "minimum": 1},
+          "locator": {"type": "string", "pattern": "^source-projection:artifact-line:[0-9]+$"},
+          "excerpt": {"type": "string", "minLength": 1, "maxLength": 360}
+        },
+        "additionalProperties": false
+      }
+    },
+    "artifact": {
+      "type": "object",
+      "required": ["ref", "kind", "provenance", "git_blob_sha", "byte_size", "content_sha256"],
+      "properties": {
+        "kind": {"const": "text_projection"},
+        "provenance": {"const": "source_projection"},
+        "git_blob_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "byte_size": {"type": "integer", "minimum": 0},
+        "content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "case_evidence": {
+      "type": "array",
+      "items": {"type": "object", "required": ["case_key", "anchor", "evidence", "detail_evidence"]}
+    },
+    "checks": {"type": "array", "minItems": 6}
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "evidence_status": {"const": "sufficient-for-controller-review"},
+          "decision": {"const": "single-interview"}
+        },
+        "required": ["evidence_status", "decision"]
+      },
+      "then": {
+        "anyOf": [
+          {"properties": {"excerpts": {"minItems": 3}}},
+          {
+            "properties": {
+              "excerpts": {
+                "minItems": 1,
+                "maxItems": 1,
+                "contains": {
+                  "properties": {
+                    "excerpt": {"pattern": "一次面试.*(oc|offer)"}
+                  },
+                  "required": ["excerpt"]
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

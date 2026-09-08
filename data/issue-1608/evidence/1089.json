@@ -1,0 +1,71 @@
+{
+  "schema_version": "issue-1608-boundary-evidence.v1",
+  "issue_number": 1089,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/1089",
+  "source_note_id": "xhs-note:68956bb80000000023026eab",
+  "source_revision_id": "xhs-note:68956bb80000000023026eab:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "source_retrieval": {
+    "method": "frozen-source-snapshot",
+    "path": "/tmp/issue-1608-source-texts.json",
+    "byte_size": 419,
+    "git_blob_sha": "a2c3c6b8ee26bcc7b171862304b76f91443ced3f"
+  },
+  "evidence_status": "insufficient-blocked",
+  "decision": null,
+  "rationale": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。",
+  "artifact": {
+    "ref": "liqiangcc/xhs:note_desc/68956bb80000000023026eab.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "a2c3c6b8ee26bcc7b171862304b76f91443ced3f",
+    "byte_size": 419,
+    "content_sha256": "1016747cb179a42e296cd1d6717025f34ce26388622477eb403a10964ee041b3"
+  },
+  "excerpts": [
+    {
+      "line": 1,
+      "locator": "source-projection:artifact-line:1",
+      "excerpt": "整理了一下Java面试场景题型，篇幅太多就不一一展示了，完整面经+答案pdf可以分享，祝大家早日拿到心仪的offer ﻿#编程[话题]#﻿  ﻿#java[话题]#﻿  ﻿#程序员[话题]#﻿  ﻿#Java面试[话题]#﻿  ﻿#面经[话题]#﻿  ﻿#java面试题[话题]#﻿  ﻿#后端开发[话题]#﻿  ﻿#八股文[话题]#﻿  ﻿#找工作[话题]#﻿  ﻿#Java场景题[话题]#"
+    }
+  ],
+  "case_keys": [],
+  "case_evidence": [],
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "fail",
+      "note": "分类信号未能生成包含面试时间、流程、问答或面试官事实的独立 Source projection 证据行；拒绝用弱描述包装为 single-interview。"
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    }
+  ],
+  "limitations": [
+    "Evidence is insufficient for a boundary transition; no body/label mutation is proposed.",
+    "Title, labels, OCR/Derived data, and image existence are not used to fill the missing boundary proof."
+  ]
+}

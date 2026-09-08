@@ -1,0 +1,86 @@
+{
+  "schema_version": "issue-1608-boundary-evidence.v1",
+  "issue_number": 1085,
+  "issue_url": "https://github.com/liqiangcc/interview-lab/issues/1085",
+  "source_note_id": "xhs-note:689484ad000000002501e4d2",
+  "source_revision_id": "xhs-note:689484ad000000002501e4d2:snapshot-95b77bb26104",
+  "source_repository": "liqiangcc/xhs",
+  "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "source_retrieval": {
+    "method": "frozen-source-snapshot",
+    "path": "/tmp/issue-1608-source-texts.json",
+    "byte_size": 965,
+    "git_blob_sha": "c687797c552426a25323840017eb2e7d16e01b4b"
+  },
+  "evidence_status": "sufficient-for-controller-review",
+  "decision": "single-interview",
+  "rationale": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。",
+  "artifact": {
+    "ref": "liqiangcc/xhs:note_desc/689484ad000000002501e4d2.txt@95b77bb261048059846273688e4b90a2e108b437",
+    "kind": "text_projection",
+    "provenance": "source_projection",
+    "git_blob_sha": "c687797c552426a25323840017eb2e7d16e01b4b",
+    "byte_size": 965,
+    "content_sha256": "16283e3ff5f520a50ec435aed2e2d598167372848de836be651b7386031662ab"
+  },
+  "excerpts": [
+    {
+      "line": 1,
+      "locator": "source-projection:artifact-line:1",
+      "excerpt": "其实是两面，因为三面面试官人手不够，改时间了"
+    },
+    {
+      "line": 2,
+      "locator": "source-projection:artifact-line:2",
+      "excerpt": "一个大组统一面，具体分到哪个小组不是现在能决定的。我投的比较晚，所以面得也比较晚"
+    },
+    {
+      "line": 3,
+      "locator": "source-projection:artifact-line:3",
+      "excerpt": "一面面试官是做稳定性的，问了很多实习的东西，关注限流，rpc等。一道lc原题，写了一个sql，问了不少数据库，网络知识"
+    },
+    {
+      "line": 4,
+      "locator": "source-projection:artifact-line:4",
+      "excerpt": "二面面试官应该是写c++的，问了一些c++特性封装继承多态，其次都在问实习，一道不难的原创代码题，问了些比较宏观的视角（？）比如两公司的架构区别"
+    }
+  ],
+  "case_keys": [],
+  "case_evidence": [],
+  "checks": [
+    {
+      "check_id": "source_identity",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "source_revision_binding",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "source_content_coverage",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "event_boundary",
+      "result": "pass",
+      "note": "固定 Source projection 含可定位的实际面试时间、流程、问答或面试官证据，且当前记录只支持一个面试流程；同流程多轮保留为一个 case。"
+    },
+    {
+      "check_id": "no_cross_source_mixing",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass",
+      "note": "Checked against the frozen SourceNote identity/revision and one exact Source projection artifact."
+    }
+  ],
+  "limitations": [
+    "This local evidence is not a GitHub review comment; no live evidence comment was created by this run.",
+    "Boundary Review only determines 0/1/N and does not create InterviewNote Issues or source-ready/learning labels."
+  ]
+}
