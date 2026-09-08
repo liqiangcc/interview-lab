@@ -10,6 +10,7 @@ const {
   EXPECTED_COUNT,
   SOURCE_REF,
   bodyProjectionEvidence,
+  graphQlQuery,
   isSelected,
   parseArgs,
 } = require('../scripts/prepare-issue-1607-boundary-batch');
@@ -69,6 +70,18 @@ test('generated evidence and requests cannot authorize a transition', () => {
 test('body-only is an explicit preparation mode', () => {
   assert.equal(parseArgs(['--prepare', '--body-only']).bodyOnly, true);
   assert.equal(parseArgs(['--prepare', '--body-only']).allowUnverifiedSource, true);
+});
+
+test('scope-clean mode generates only the frozen range and records no out-of-scope reads', () => {
+  assert.equal(parseArgs(['--fetch-live', '--scope-clean']).scopeClean, true);
+  const numbers = Array.from({ length: LAST_ISSUE - FIRST_ISSUE + 1 }, (_, index) => FIRST_ISSUE + index);
+  const query = graphQlQuery(numbers);
+  const queried = [...query.matchAll(/issueOrPullRequest\(number:(\d+)\)/g)].map((match) => Number(match[1]));
+  assert.equal(queried.length, LAST_ISSUE - FIRST_ISSUE + 1);
+  assert.equal(Math.min(...queried), FIRST_ISSUE);
+  assert.equal(Math.max(...queried), LAST_ISSUE);
+  assert.equal(queried.includes(392), false);
+  assert.equal(queried.includes(766), false);
 });
 
 test('classification is conservative against #393/#394/#401/#415/#437/#524/#584/#727 and adversaries', () => {
@@ -133,7 +146,10 @@ test('checked-in audit outputs are complete and mutation-free', () => {
   assert.equal(journal.mutation_count, 0);
   assert.equal(journal.status, 'not-started');
   assert.equal(plan.fail_closed, true);
-  assert.equal(plan.scope_compliance.status, 'blocked');
+  assert.equal(selection.scope_compliance.status, 'pass');
+  assert.equal(plan.scope_compliance.status, 'pass');
+  assert.equal(plan.scope_regression.status, 'pass');
+  assert.equal(plan.scope_regression.out_of_scope_reads, 0);
   assert.equal(plan.scope_compliance.out_of_scope_mutations, 0);
   assert.equal(classification.total, EXPECTED_COUNT);
   assert.equal(classification.status, 'proposal-only');
