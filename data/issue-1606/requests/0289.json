@@ -15,8 +15,8 @@
   "transition_id": "issue-1606-289-boundary-review-1",
   "reviewed_at": "2026-09-08T02:05:50Z",
   "reviewer_kind": "ai-assisted",
-  "disposition": "blocked",
-  "decision": null,
+  "disposition": "ready",
+  "decision": "single-interview",
   "evidence": {
     "artifact_ref": "liqiangcc/xhs:note_desc/66baf657000000001e01c4c6.txt@95b77bb261048059846273688e4b90a2e108b437",
     "artifact_provenance": "source_projection",
@@ -25,9 +25,9 @@
     "byte_size": 811,
     "excerpts": [
       {
-        "excerpt": "8月8号上星期四和贝壳某工作人员确认好面试 8月12日和13日又陆续确认了两次 一共三次 然后下午到达后发现前台根本没有我的信息 再问就是确认 甚至让我混上去",
-        "line": 1,
-        "locator": "artifact-line:1"
+        "excerpt": "之后有个自称贝壳的工作人员给我打电话 告诉我这是个意外 只有我一个人是这样 并且当我质疑他们为什么没有跟前台确认的时候 她给的答复是我们昨天把名单交给前台的 也就是说 这件事是正常的工作失误 然后她跟我说他们正在协调 事实上 时间已经是13：37分 可以看到截图上的时间22分钟确认不好让个人上楼我是不信的",
+        "line": 3,
+        "locator": "artifact-line:3"
       }
     ]
   },
@@ -35,37 +35,36 @@
     {
       "check_id": "source_identity",
       "result": "pass",
-      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:1"
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:3"
     },
     {
       "check_id": "source_revision_binding",
       "result": "pass",
-      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:1"
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:3"
     },
     {
       "check_id": "source_content_coverage",
       "result": "pass",
-      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:1"
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:3"
     },
     {
       "check_id": "event_boundary",
-      "result": "fail",
-      "note": "Source projection does not provide enough direct event-boundary evidence; retain boundary:pending rather than infer from title or hashtags."
+      "result": "pass",
+      "note": "Source projection explicitly records a completed candidate interview event; no independent multi-event boundary is evidenced in the reviewed projection. Same-process rounds remain one case."
     },
     {
       "check_id": "no_cross_source_mixing",
       "result": "pass",
-      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:1"
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:3"
     },
     {
       "check_id": "no_fabrication",
       "result": "pass",
-      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:1"
+      "note": "verified against frozen selection and exact Source projection; evidence=artifact-line:3"
     }
   ],
   "limitations": [
     "Boundary Review only determines whether 0/1/N InterviewNote case identity may be materialized; it does not write source-ready, InterviewContext, learning labels, or InterviewNote Issues.",
-    "No live evidence comment or transition mutation is authorized by this artifact; any later apply must create/bind durable per-issue evidence and recheck body/state/source CAS.",
-    "Source projection does not provide enough direct event-boundary evidence; retain boundary:pending rather than infer from title or hashtags."
+    "No live evidence comment or transition mutation is authorized by this artifact; any later apply must create/bind durable per-issue evidence and recheck body/state/source CAS."
   ]
 }

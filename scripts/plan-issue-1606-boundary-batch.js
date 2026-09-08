@@ -137,6 +137,7 @@ function main() {
 
   const inventoryByNumber = new Map(inventory.items.map((item) => [item.issue_number, item]));
   const requestDir = path.resolve(args.requestDir);
+  const reportPath = path.join(path.dirname(path.resolve(args.output)), 'boundary-review-report.json');
   const issueNumbers = selection.items.map((item) => item.issue_number);
   const preexistingRequestErrors = validateRequestDirectory(requestDir, issueNumbers);
   if (preexistingRequestErrors.length) throw new Error(`request directory validation failed closed: ${preexistingRequestErrors.join('; ')}`);
@@ -161,6 +162,7 @@ function main() {
     const persistedAnchorErrors = validateRequestAnchors(persistedRequest, item, inventoryItem);
     if (persistedAnchorErrors.length) throw new Error(`persisted request anchor validation failed closed: ${persistedAnchorErrors.join('; ')}`);
     const requestSha = sha256(Buffer.from(`${JSON.stringify(persistedRequest, null, 2)}\n`, 'utf8'));
+    const evidenceArtifact = inventoryItem.artifact || null;
     if (review.status === 'ready') {
       counts.ready += 1;
       counts.decisions[review.decision] += 1;
@@ -180,6 +182,12 @@ function main() {
       decision: review.decision,
       event_boundary: review.status === 'ready' ? 'pass' : 'fail',
       block_reason: review.block_reason || null,
+      evidence_locator: review.evidence_line ? `artifact-line:${review.evidence_line.line}` : `artifact:${inventoryItem.artifact && inventoryItem.artifact.ref || 'unavailable'}`,
+      evidence_excerpt: review.evidence_line ? review.evidence_line.text : null,
+      artifact_ref: evidenceArtifact && evidenceArtifact.ref || null,
+      artifact_git_blob_sha: evidenceArtifact && evidenceArtifact.git_blob_sha || null,
+      artifact_byte_size: evidenceArtifact && evidenceArtifact.byte_size || null,
+      artifact_provenance: evidenceArtifact && evidenceArtifact.provenance || null,
       interview_note_ids: review.decision === 'single-interview' ? [item.source_id] : [],
     });
     journalItems.push({
@@ -204,12 +212,49 @@ function main() {
     source_repository_ref: SOURCE_REF,
     selection_sha256: selection.selection_sha256,
     source_inventory_sha256: inventory.inventory_sha256,
+    review_report_file: path.relative(process.cwd(), reportPath),
     counts,
     mutation: { planned: 0, applied: 0, pending_authorization: counts.ready },
     items: planItems,
   };
   plan.plan_sha256 = sha256(Buffer.from(canonicalJson(plan), 'utf8'));
   writeJson(args.output, plan);
+
+  const report = {
+    schema_version: 'issue-1606-boundary-review-report.v1',
+    repository: 'liqiangcc/interview-lab',
+    issue: 1606,
+    mode: 'dry-run',
+    live_apply_authorized: false,
+    reviewed_at: args.reviewedAt,
+    source_repository: inventory.source_repository,
+    source_repository_ref: inventory.source_repository_ref,
+    selection_sha256: selection.selection_sha256,
+    source_inventory_sha256: inventory.inventory_sha256,
+    plan_sha256: plan.plan_sha256,
+    counts,
+    transport_policy: inventory.transport_policy,
+    items: planItems.map((item) => ({
+      issue_number: item.issue_number,
+      disposition: item.disposition,
+      decision: item.decision,
+      request_file: item.request_file,
+      request_sha256: item.request_sha256,
+      body_sha256: item.body_sha256,
+      source_note_id: item.source_note_id,
+      source_revision_id: item.source_revision_id,
+      source_repository_ref: item.source_repository_ref,
+      evidence_locator: item.evidence_locator,
+      evidence_excerpt: item.evidence_excerpt,
+      artifact_ref: item.artifact_ref,
+      artifact_git_blob_sha: item.artifact_git_blob_sha,
+      artifact_byte_size: item.artifact_byte_size,
+      artifact_provenance: item.artifact_provenance,
+      block_reason: item.block_reason,
+    })),
+  };
+  report.report_sha256 = sha256(Buffer.from(canonicalJson(report), 'utf8'));
+  writeJson(reportPath, report);
 
   const journal = {
     schema_version: 'issue-1606-apply-journal.v1',
@@ -220,6 +265,7 @@ function main() {
     selection_sha256: selection.selection_sha256,
     source_inventory_sha256: inventory.inventory_sha256,
     plan_sha256: plan.plan_sha256,
+    report_sha256: report.report_sha256,
     mutation_count: 0,
     entries: journalItems,
   };
@@ -234,13 +280,14 @@ function main() {
     source_inventory_sha256: inventory.inventory_sha256,
     plan_sha256: plan.plan_sha256,
     journal_sha256: journal.journal_sha256,
+    report_sha256: report.report_sha256,
     request_count: planItems.length,
     request_sha256_by_issue: Object.fromEntries(planItems.map((item) => [String(item.issue_number), item.request_sha256])),
     live_mutations: 0,
   };
   digest.canonical_sha256 = sha256(Buffer.from(canonicalJson(digest), 'utf8'));
   writeJson(args.digest, digest);
-  process.stdout.write(`${JSON.stringify({ counts, plan_sha256: plan.plan_sha256, journal_sha256: journal.journal_sha256, canonical_sha256: digest.canonical_sha256 }, null, 2)}\n`);
+  process.stdout.write(`${JSON.stringify({ counts, plan_sha256: plan.plan_sha256, report_sha256: report.report_sha256, journal_sha256: journal.journal_sha256, canonical_sha256: digest.canonical_sha256 }, null, 2)}\n`);
 }
 
 if (require.main === module) {
