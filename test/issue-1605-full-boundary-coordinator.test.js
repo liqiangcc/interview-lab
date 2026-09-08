@@ -9,8 +9,10 @@ const completedManifest = require('../data/pilot/issue-1605/full-boundary-manife
 const frozenSnapshot = require('../data/pilot/issue-1605/pending-inventory.snapshot.json');
 const boundaryBEvidence = require('../data/issue-1607/evidence-ledger.json');
 const {
-  buildPlan, deriveBoundaryBCases, pendingInventory, remainingInventory, parseArgs,
+  buildPlan, deriveBoundaryBCases, pendingInventory, remainingInventory, parseArgs, sha256,
+  formalRequest, parseEvidenceComment, runEvidence, isAllowedBlockedAuditError,
 } = require('../scripts/issue-1605-full-boundary-coordinator');
+const { validateTransitionRequest } = require('../scripts/lib/source-note-boundary-review-transition');
 
 test('full boundary coordinator excludes the completed manifest and covers every remaining audit', () => {
   // CI intentionally has no live GitHub cache.  Use the frozen inventory's
@@ -44,7 +46,14 @@ test('full boundary coordinator excludes the completed manifest and covers every
   // #735 says that there were “many” interviews but does not enumerate them;
   // the controller must keep it blocked instead of inventing an N.
   assert.ok(plan.coverage.invalid_decision_issue_numbers.includes(735));
-  assert.ok(plan.errors.some((error) => /#735/.test(error)));
+  assert.equal(plan.errors.length, 0);
+  assert.deepEqual(plan.blocked_errors, ['#735 multi-interview has fewer than two cases']);
+});
+
+test('only the pinned #735 insufficient-case audit error is allowlisted; unexpected errors remain fail-closed', () => {
+  assert.equal(isAllowedBlockedAuditError('#735 multi-interview has fewer than two cases'), true);
+  assert.equal(isAllowedBlockedAuditError('#735 multi-interview has one case'), false);
+  assert.equal(isAllowedBlockedAuditError('#951 comments read failed'), false);
 });
 
 test('remaining and frozen inventory validators reject a digest or scope drift', () => {
@@ -86,4 +95,77 @@ test('remaining coordinator defaults never target the completed 419-row artifact
   assert.match(args.output, /remaining-boundary-evidence-plan\.json$/);
   assert.match(args.journal, /remaining-boundary-evidence-progress\.json$/);
   assert.match(args.requestDir, /remaining-boundary-evidence-requests$/);
+});
+
+test('not-interview remains actionable and multi-interview emits validator-compatible v2 requests', () => {
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'issue-1605-request-fixtures-'));
+  const cacheFile = path.join(directory, 'source-notes.json');
+  fs.writeFileSync(cacheFile, JSON.stringify(frozenSnapshot.items.map((item) => ({
+    number: item.issue_number, body_sha256: item.body_sha256, labels: item.labels,
+  }))));
+  const plan = buildPlan({ cache: cacheFile });
+  const notInterview = plan.items.find((item) => item.decision === 'not-interview');
+  const multi = plan.items.find((item) => item.decision === 'multi-interview');
+  assert.ok(notInterview);
+  assert.ok(multi && multi.cases.length >= 2);
+  const notRequest = formalRequest(notInterview, 1001, '2026-09-09T00:00:00Z');
+  assert.equal(notRequest.schema_version, 'source-note-boundary-review-transition.v1');
+  assert.equal(Object.hasOwn(notRequest, 'interview_cases'), false);
+  assert.equal(validateTransitionRequest(notRequest).ok, true);
+  const multiRequest = formalRequest(multi, 1002, '2026-09-09T00:00:00Z');
+  assert.equal(multiRequest.schema_version, 'source-note-boundary-review-transition.v2');
+  assert.ok(multiRequest.interview_cases.length >= 2);
+  assert.equal(validateTransitionRequest(multiRequest).ok, true);
+});
+
+test('simulated evidence mode persists journal/request, reconciles exact marker, and never PATCHes', () => {
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'issue-1605-evidence-simulation-'));
+  const cacheFile = path.join(directory, 'source-notes.json');
+  fs.writeFileSync(cacheFile, JSON.stringify(frozenSnapshot.items.map((item) => ({
+    number: item.issue_number, body_sha256: item.body_sha256, labels: item.labels,
+  }))));
+  const sourcePlan = buildPlan({ cache: cacheFile });
+  const sourceItem = sourcePlan.items.find((item) => item.decision === 'not-interview');
+  const item = { ...sourceItem, expected_body_sha256: sha256('synthetic pending body') };
+  const plan = { ...sourcePlan, items: [item], canonical_digest: sha256('simulated evidence plan') };
+  const comments = [];
+  const calls = { get: 0, post: 0, patch: 0 };
+  const args = {
+    mode: 'evidence', output: path.join(directory, 'remaining-plan.json'),
+    journal: path.join(directory, 'remaining-journal.json'), lock: path.join(directory, 'remaining.lock'),
+    requestDir: path.join(directory, 'requests'), confirmPlan: plan.canonical_digest,
+    maxMutations: 1, pauseMs: 0, allowUncertainRetry: false,
+  };
+  const fakeFindExact = (candidate) => ({
+    exact: comments.filter((comment) => parseEvidenceComment(comment, candidate).ok).map((comment) => ({
+      ...comment, evidence: JSON.parse(comment.body.match(/<!--\s*source-note-boundary-review-evidence\s*([\s\S]*?)-->/)[1].trim()),
+    })),
+    errors: [],
+  });
+  runEvidence(args, plan, {
+    readLiveIssue(number) {
+      calls.get += 1;
+      assert.equal(number, item.issue_number);
+      return { state: 'open', body: 'synthetic pending body', labels: ['boundary:pending'] };
+    },
+    findExactEvidenceComments: fakeFindExact,
+    postEvidence(candidate, body) {
+      calls.post += 1;
+      assert.equal(candidate.issue_number, item.issue_number);
+      assert.match(body, /source-note-boundary-review-evidence/);
+      comments.push({ id: 7001, body });
+      throw new Error('simulated POST deadline after server accepted comment');
+    },
+    sleep() {},
+  });
+  assert.equal(calls.post, 1);
+  assert.equal(calls.patch, 0);
+  assert.ok(calls.get >= 2);
+  const journal = JSON.parse(fs.readFileSync(args.journal, 'utf8'));
+  assert.equal(journal.status, 'complete');
+  assert.equal(journal.posted, 1);
+  assert.equal(journal.items[0].status, 'posted');
+  assert.equal(journal.items[0].possibly_posted, false);
+  const request = JSON.parse(fs.readFileSync(path.join(args.requestDir, `${String(item.issue_number).padStart(4, '0')}.json`), 'utf8').match(/<!--[^\n]+\n([\s\S]*?)\n-->/)[1]);
+  assert.equal(request.review_evidence.comment_id, 7001);
 });

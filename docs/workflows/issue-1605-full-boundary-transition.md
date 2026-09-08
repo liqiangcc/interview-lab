@@ -85,3 +85,28 @@ canonical plan digest。集合发生变化仍会 fail closed；不能用一个�
 
 本变更不执行 live mutation。取得主控 transition authorization、reviewer 评审和明确 apply
 窗口前，不应提供 `--apply`。
+
+## Remaining evidence stage (557 actionable / 421 blocked)
+
+剩余范围使用独立的 `remaining-boundary.manifest.json`，绑定批准的 1397-row snapshot、固定
+XHS ref 和 978-row scope；它只排除已完成的 419-row manifest，不复用 419 的 authorization 或
+request artifacts。默认路径分别是：
+
+```text
+data/pilot/issue-1605/remaining-boundary-evidence-plan.json
+data/pilot/issue-1605/remaining-boundary-evidence-progress.json
+data/pilot/issue-1605/remaining-boundary-evidence-progress.lock
+data/pilot/issue-1605/remaining-boundary-evidence-requests/
+```
+
+`node scripts/issue-1605-full-boundary-coordinator.js` 默认只生成 plan。计划必须覆盖 978/978，
+其中 557 条为 actionable（含 152 条 `not-interview`），421 条保留为 blocked。#735 的
+“multi-interview 少于两个 case”是唯一允许保留的 blocked audit error，记录在
+`blocked_errors`，不进入 executable `errors`，所以不会阻断其余 557 条；任何其它错误仍使
+plan fail-closed。
+
+evidence 阶段需显式 `--mode evidence --confirm-plan <digest>`。它对每条 actionable item 在
+POST 前重新 GET 并检查 `boundary:pending` 与 body SHA；只 POST review-evidence comment，绝不
+PATCH SourceNote。POST 响应未知时最多做 bounded exact-marker reconcile；不会自动重试 POST。
+每条成功 marker 生成独立 request 文件，journal 与 request 使用带 file/parent-directory fsync
+的 atomic write，并在每次 durable write 前验证独占 lock。完成的 419 artifacts 不会被覆盖。
