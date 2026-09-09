@@ -4,7 +4,7 @@
   "title": "Issue #1657 fail-closed blocker repair evidence and decision plan",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schema_version", "repository", "parent_issue", "mode", "source_snapshot_digest", "ownership_inventory_digest", "materialization_plan_digest", "owner_receipt_snapshot_digest", "live_reaudit_snapshot_digest", "target_count", "blocked_count", "mutation_performed", "write_operations", "results", "errors", "ok", "plan_digest"],
+  "required": ["schema_version", "repository", "parent_issue", "mode", "source_snapshot_digest", "ownership_inventory_digest", "materialization_plan_digest", "boundary_report_digest", "boundary_transition_report_digest", "owner_receipt_snapshot_digest", "live_reaudit_snapshot_digest", "target_count", "blocked_count", "mutation_performed", "write_operations", "results", "errors", "ok", "plan_digest"],
   "properties": {
     "schema_version": {"const": "issue-1657-blocker-repair-plan.v2"},
     "repository": {"const": "liqiangcc/interview-lab"},
@@ -13,6 +13,8 @@
     "source_snapshot_digest": {"type": ["string", "null"]},
     "ownership_inventory_digest": {"type": ["string", "null"]},
     "materialization_plan_digest": {"type": ["string", "null"]},
+    "boundary_report_digest": {"type": ["string", "null"]},
+    "boundary_transition_report_digest": {"type": ["string", "null"]},
     "owner_receipt_snapshot_digest": {"type": ["string", "null"]},
     "live_reaudit_snapshot_digest": {"type": ["string", "null"]},
     "target_count": {"const": 3},

@@ -9,6 +9,8 @@ const DEFAULTS = Object.freeze({
   source: 'data/pilot/issue-1611/source-note-live.snapshot.json',
   ownership: 'data/pilot/issue-1611/interview-note-ownership.inventory.json',
   materialization: 'data/pilot/issue-1611/materialization.live.dry-run.json',
+  boundaryReport: 'data/pilot/issue-1611/live-boundary.materialization-report.json',
+  boundaryTransitionReport: 'data/pilot/issue-1605/boundary-transition-report.json',
   receipts: 'data/pilot/issue-1657/owner-receipt-audit.snapshot.json',
   liveAudit: 'data/pilot/issue-1657/live-reaudit.snapshot.json',
   output: 'data/pilot/issue-1657/blocker-repair.plan.json',
@@ -23,6 +25,8 @@ function parseArgs(argv = process.argv.slice(2)) {
     if (arg === '--source') args.source = argv[++index];
     else if (arg === '--ownership') args.ownership = argv[++index];
     else if (arg === '--materialization') args.materialization = argv[++index];
+    else if (arg === '--boundary-report') args.boundaryReport = argv[++index];
+    else if (arg === '--boundary-transition-report') args.boundaryTransitionReport = argv[++index];
     else if (arg === '--receipts') args.receipts = argv[++index];
     else if (arg === '--live-audit') args.liveAudit = argv[++index];
     else if (arg === '--output') args.output = argv[++index];
@@ -46,6 +50,8 @@ function main(argv = process.argv.slice(2)) {
     sourceSnapshot: readJson(args.source),
     ownershipInventory: readJson(args.ownership),
     materializationPlan: readJson(args.materialization),
+    boundaryReport: readJson(args.boundaryReport),
+    boundaryTransitionReport: readJson(args.boundaryTransitionReport),
     receiptSnapshot: readJson(args.receipts),
     liveAuditSnapshot: readJson(args.liveAudit),
   });

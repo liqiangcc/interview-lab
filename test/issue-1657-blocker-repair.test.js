@@ -6,7 +6,7 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const { canonicalDigest } = require('../scripts/lib/aggregate-downstream-pipeline');
 const { issueSourceRecord } = require('../scripts/lib/interview-note-materialization-batch');
-const { TARGETS, MARKER_EXPECTATIONS, REQUIRED_ZERO_WRITES, receiptSnapshotDigest, planIssue1657BlockerRepair } = require('../scripts/lib/issue-1657-blocker-repair-plan');
+const { TARGETS, MARKER_EXPECTATIONS, REQUIRED_ZERO_WRITES, receiptSnapshotDigest, planIssue1657BlockerRepair: planIssue1657BlockerRepairImpl } = require('../scripts/lib/issue-1657-blocker-repair-plan');
 const { sourceSnapshotDigest } = require('../scripts/plan-issue-1611-live-materialization');
 const { DEFAULTS, parseArgs } = require('../scripts/plan-issue-1657-blocker-repair');
 const { snapshotDigest: liveSnapshotDigest, parseArgs: parseLiveArgs } = require('../scripts/audit-issue-1657-live');
@@ -20,8 +20,14 @@ function schema(name) { return load(`schemas/${name}`); }
 const sourceSnapshot = load('data/pilot/issue-1611/source-note-live.snapshot.json');
 const ownershipInventory = load('data/pilot/issue-1611/interview-note-ownership.inventory.json');
 const materializationPlan = load('data/pilot/issue-1611/materialization.live.dry-run.json');
+const boundaryReport = load('data/pilot/issue-1611/live-boundary.materialization-report.json');
+const boundaryTransitionReport = load('data/pilot/issue-1605/boundary-transition-report.json');
 const receiptSnapshot = load('data/pilot/issue-1657/owner-receipt-audit.snapshot.json');
 const liveAuditSnapshot = load('data/pilot/issue-1657/live-reaudit.snapshot.json');
+
+function planIssue1657BlockerRepair(input) {
+  return planIssue1657BlockerRepairImpl({ sourceSnapshot, ownershipInventory, materializationPlan, receiptSnapshot, liveAuditSnapshot, boundaryReport, boundaryTransitionReport, ...input });
+}
 
 test('Issue #1657 schemas expose the reviewed fail-closed contract', () => {
   const receiptSchema = schema('issue-1657-owner-receipt-audit-snapshot.schema.json');
@@ -31,6 +37,7 @@ test('Issue #1657 schemas expose the reviewed fail-closed contract', () => {
   assert.deepEqual(liveSchema.required, ['schema_version', 'repository', 'captured_at', 'read_policy', 'target_count', 'targets', 'canonical_digest']);
   assert.equal(planSchema.properties.mutation_performed.const, false);
   assert.equal(planSchema.properties.ok.const, false);
+  assert.deepEqual(planSchema.required.slice(0, 9), ['schema_version', 'repository', 'parent_issue', 'mode', 'source_snapshot_digest', 'ownership_inventory_digest', 'materialization_plan_digest', 'boundary_report_digest', 'boundary_transition_report_digest']);
   assert.deepEqual(planSchema.properties.write_operations.required, ['patch', 'post', 'label', 'interview_note', 'create']);
   assert.deepEqual(liveSchema.$defs.source.required, ['issue_number', 'state', 'updated_at', 'body_sha256', 'labels', 'validation', 'source_note_id', 'source_revision', 'boundary_review', 'boundary_evidence', 'boundary_applied_receipt', 'materialization_receipt', 'human_boundary_evidence_comment_ids', 'comments']);
   assert.deepEqual(liveSchema.$defs.owner.required, ['issue_number', 'state', 'updated_at', 'body_sha256', 'labels', 'validation', 'interview_note_id', 'source_revision', 'source', 'source_review_evidence', 'source_review_evidence_comment_ids', 'source_review_applied_receipt', 'materialization_receipt', 'comments']);
@@ -309,12 +316,36 @@ test('marker payload semantic substitution remains blocked after resealing', () 
       mutate: (payload) => { payload.expected_source_revision_id = 'xhs-note:tampered:r1'; }, expected: /live boundary evidence payload expected_source_revision_id mismatch/,
     },
     {
+      name: 'boundary evidence source revision deletion', target: 904, side: 'source', summary: 'boundary_evidence', marker: 'source-note-boundary-review-evidence',
+      mutate: (payload) => { delete payload.expected_source_revision_id; }, expected: /live boundary evidence payload expected_source_revision_id is missing/,
+    },
+    {
       name: 'boundary evidence source ref', target: 904, side: 'source', summary: 'boundary_evidence', marker: 'source-note-boundary-review-evidence',
       mutate: (payload) => { payload.expected_source_repository_ref = null; }, expected: /live boundary evidence payload expected_source_repository_ref mismatch/,
     },
     {
+      name: 'boundary evidence source ref deletion', target: 904, side: 'source', summary: 'boundary_evidence', marker: 'source-note-boundary-review-evidence',
+      mutate: (payload) => { delete payload.expected_source_repository_ref; }, expected: /live boundary evidence payload expected_source_repository_ref is missing/,
+    },
+    {
+      name: 'boundary evidence artifact provenance', target: 904, side: 'source', summary: 'boundary_evidence', marker: 'source-note-boundary-review-evidence',
+      mutate: (payload) => { payload.source_evidence.artifact.provenance = 'derived'; }, expected: /live boundary evidence payload source_evidence artifact provenance\/kind is invalid/,
+    },
+    {
+      name: 'boundary evidence artifact kind', target: 904, side: 'source', summary: 'boundary_evidence', marker: 'source-note-boundary-review-evidence',
+      mutate: (payload) => { payload.source_evidence.artifact.kind = 'json_projection'; }, expected: /live boundary evidence payload source_evidence artifact provenance\/kind is invalid/,
+    },
+    {
+      name: 'boundary evidence artifact ref', target: 904, side: 'source', summary: 'boundary_evidence', marker: 'source-note-boundary-review-evidence',
+      mutate: (payload) => { payload.source_evidence.artifact.ref = 'liqiangcc/xhs:note_desc/other.txt@95b77bb261048059846273688e4b90a2e108b437'; }, expected: /live boundary evidence payload source_evidence artifact ref is not bound/,
+    },
+    {
       name: 'boundary evidence checks', target: 904, side: 'source', summary: 'boundary_evidence', marker: 'source-note-boundary-review-evidence',
       mutate: (payload) => { payload.checks = []; }, expected: /live boundary evidence payload checks do not prove all required checks/,
+    },
+    {
+      name: 'boundary evidence duplicate check', target: 904, side: 'source', summary: 'boundary_evidence', marker: 'source-note-boundary-review-evidence',
+      mutate: (payload) => { payload.checks.push({ ...payload.checks[0] }); }, expected: /live boundary evidence payload checks do not prove all required checks/,
     },
     {
       name: 'boundary applied repository', target: 904, side: 'source', summary: 'boundary_applied_receipt', marker: 'source-note-boundary-review-applied',
@@ -341,8 +372,28 @@ test('marker payload semantic substitution remains blocked after resealing', () 
       mutate: (payload) => { payload.expected_source_revision_id = 'xhs-note:tampered:r1'; }, expected: /live boundary applied receipt payload expected_source_revision_id mismatch/,
     },
     {
+      name: 'boundary applied source revision deletion', target: 904, side: 'source', summary: 'boundary_applied_receipt', marker: 'source-note-boundary-review-applied',
+      mutate: (payload) => { delete payload.expected_source_revision_id; }, expected: /live boundary applied receipt payload expected_source_revision_id is missing/,
+    },
+    {
       name: 'boundary applied source ref', target: 904, side: 'source', summary: 'boundary_applied_receipt', marker: 'source-note-boundary-review-applied',
       mutate: (payload) => { payload.expected_source_repository_ref = null; }, expected: /live boundary applied receipt payload expected_source_repository_ref mismatch/,
+    },
+    {
+      name: 'boundary applied source ref deletion', target: 904, side: 'source', summary: 'boundary_applied_receipt', marker: 'source-note-boundary-review-applied',
+      mutate: (payload) => { delete payload.expected_source_repository_ref; }, expected: /live boundary applied receipt payload expected_source_repository_ref is missing/,
+    },
+    {
+      name: 'boundary applied parent deletion', target: 904, side: 'source', summary: 'boundary_applied_receipt', marker: 'source-note-boundary-review-applied',
+      mutate: (payload) => { delete payload.parent_issue; }, expected: /live boundary applied receipt payload parent_issue is missing/,
+    },
+    {
+      name: 'boundary applied manifest substitution', target: 904, side: 'source', summary: 'boundary_applied_receipt', marker: 'source-note-boundary-review-applied',
+      mutate: (payload) => { payload.manifest_digest = '0'.repeat(64); }, expected: /live boundary applied receipt payload manifest_digest mismatch/,
+    },
+    {
+      name: 'boundary applied plan deletion', target: 904, side: 'source', summary: 'boundary_applied_receipt', marker: 'source-note-boundary-review-applied',
+      mutate: (payload) => { delete payload.plan_digest; }, expected: /live boundary applied receipt payload plan_digest is missing/,
     },
     {
       name: 'boundary applied interview identity', target: 904, side: 'source', summary: 'boundary_applied_receipt', marker: 'source-note-boundary-review-applied',
@@ -448,6 +499,40 @@ test('receipt snapshot schema, repository, entries, and canonical digest are man
   }
 });
 
+test('boundary reports are mandatory, sealed, and target-bound', () => {
+  const missingCases = [
+    ['live boundary materialization report', { boundaryReport: null }, /live boundary materialization report schema is invalid/],
+    ['boundary transition report', { boundaryTransitionReport: null }, /boundary transition report schema is invalid/],
+  ];
+  for (const [label, input, expected] of missingCases) {
+    const plan = planIssue1657BlockerRepair(input);
+    assert.equal(plan.ok, false, `${label} must be mandatory`);
+    assert.match(plan.errors.join('\n'), expected, label);
+    assert.deepEqual(plan.write_operations, REQUIRED_ZERO_WRITES);
+  }
+
+  const reseal = (value, digestField) => {
+    delete value[digestField];
+    value[digestField] = canonicalDigest(value);
+  };
+  const boundaryTampered = JSON.parse(JSON.stringify(boundaryReport));
+  const boundary904 = Object.values(boundaryTampered.items).find((item) => Number(item.issue_number) === 904);
+  boundary904.evidence_body_sha256 = boundary904.live_source_note_body_sha256;
+  reseal(boundaryTampered, 'dry_run_sha256');
+  const boundaryPlan = planIssue1657BlockerRepair({ boundaryReport: boundaryTampered });
+  assert.equal(boundaryPlan.ok, false);
+  assert.match(boundaryPlan.results.find((row) => row.source_note_issue_number === 904).errors.join('\n'), /previous_body_sha256 mismatch|expected_body_sha256 mismatch/);
+  assert.deepEqual(boundaryPlan.write_operations, REQUIRED_ZERO_WRITES);
+
+  const transitionTampered = JSON.parse(JSON.stringify(boundaryTransitionReport));
+  transitionTampered.boundary_manifest_digest = '0'.repeat(64);
+  reseal(transitionTampered, 'report_sha256');
+  const transitionPlan = planIssue1657BlockerRepair({ boundaryTransitionReport: transitionTampered });
+  assert.equal(transitionPlan.ok, false);
+  assert.match(transitionPlan.errors.join('\n'), /manifest digest is not the pinned boundary manifest/);
+  assert.deepEqual(transitionPlan.write_operations, REQUIRED_ZERO_WRITES);
+});
+
 test('malformed SourceNote record remains a row-level blocker even with a recomputed snapshot digest', () => {
   const tampered = JSON.parse(JSON.stringify(sourceSnapshot));
   tampered.issues.find((issue) => Number(issue.number) === 904).body = 'not a SourceNote';
@@ -464,6 +549,8 @@ test('CLI rejects every mutation-shaped argument before planning', () => {
     assert.throws(() => parseArgs([flag]), new RegExp(`${flag.slice(2)}.*forbidden`));
   }
   assert.equal(DEFAULTS.output, 'data/pilot/issue-1657/blocker-repair.plan.json');
+  assert.equal(DEFAULTS.boundaryReport, 'data/pilot/issue-1611/live-boundary.materialization-report.json');
+  assert.equal(DEFAULTS.boundaryTransitionReport, 'data/pilot/issue-1605/boundary-transition-report.json');
   for (const flag of ['--patch', '--post', '--label', '--apply', '--interview-note']) {
     assert.throws(() => parseLiveArgs([flag]), new RegExp(`${flag.slice(2)}.*forbidden`));
   }

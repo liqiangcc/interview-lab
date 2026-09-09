@@ -9,6 +9,8 @@ const LIVE_AUDIT_SCHEMA_VERSION = 'issue-1657-live-reaudit-snapshot.v1';
 const REPOSITORY = 'liqiangcc/interview-lab';
 const SOURCE_REPOSITORY = 'liqiangcc/xhs';
 const SOURCE_REF = '95b77bb261048059846273688e4b90a2e108b437';
+const BOUNDARY_MANIFEST_DIGEST = '40fd63cccea624a567778f5c679a9e0e77b0784181de4d54cacad9873ae6c97a';
+const BOUNDARY_PLAN_DIGEST = '75af8bc59053022d884a845b98f12229705e03daefdcaaaa7793b36a21cf4906';
 const TARGETS = Object.freeze([
   { source_note_issue_number: 904, interview_note_id: 'xhs:63ecd286000000001303fd16', owner_issue_number: 2 },
   { source_note_issue_number: 907, interview_note_id: 'xhs:656861da000000000f024258', owner_issue_number: 4 },
@@ -58,6 +60,16 @@ function receiptSnapshotDigest(snapshot) {
 
 function liveAuditSnapshotDigest(snapshot) {
   return digestWithoutField(snapshot, 'canonical_digest');
+}
+
+function reportDigest(report, field) {
+  return digestWithoutField(report, field);
+}
+
+function reportItems(report) {
+  if (Array.isArray(report && report.items)) return report.items;
+  if (isObject(report && report.items)) return Object.values(report.items);
+  return [];
 }
 
 function findOne(items, predicate, label, errors) {
@@ -172,18 +184,30 @@ function validateEvidencePayload(payload, context, errors) {
   equalPayloadField(payload, 'parent_issue', 1605, label, errors);
   equalPayloadField(payload, 'issue_number', context.target.source_note_issue_number, label, errors);
   equalPayloadField(payload, 'source_note_id', context.sourceParsed && context.sourceParsed.source_note_id, label, errors);
-  equalPayloadField(payload, 'expected_body_sha256', context.boundaryPreviousBodySha, label, errors);
+  equalRequiredPayloadField(payload, 'expected_body_sha256', context.boundaryPreviousBodySha, label, errors);
   equalRequiredPayloadField(payload, 'expected_source_revision_id', context.sourceRevision.id || null, label, errors);
   equalRequiredPayloadField(payload, 'expected_source_repository_ref', context.sourceRevision.source_repository_ref ?? null, label, errors);
   equalPayloadField(payload, 'decision', 'single-interview', label, errors);
-  equalPayloadField(payload, 'transition_id', context.reportItem && context.reportItem.transition_id || null, label, errors);
+  equalPayloadField(payload, 'transition_id', context.boundaryReportItem && context.boundaryReportItem.transition_id || null, label, errors);
   timestampPayloadField(payload, 'reviewed_at', label, errors);
-  if (!isObject(payload.source_evidence) || Object.keys(payload.source_evidence).length === 0) errors.push(`${label} payload source_evidence is missing or empty`);
-  if (!isObject(payload.source_evidence && payload.source_evidence.artifact) || Object.keys(payload.source_evidence.artifact || {}).length === 0 || !Array.isArray(payload.source_evidence && payload.source_evidence.excerpts) || payload.source_evidence.excerpts.length === 0) {
-    errors.push(`${label} payload source_evidence artifact/excerpts are invalid`);
+  const evidence = payload.source_evidence;
+  const artifact = evidence && evidence.artifact;
+  if (!isObject(evidence) || Object.keys(evidence).length === 0) errors.push(`${label} payload source_evidence is missing or empty`);
+  if (!isObject(artifact) || artifact.provenance !== 'source_projection' || artifact.kind !== 'text_projection') {
+    errors.push(`${label} payload source_evidence artifact provenance/kind is invalid`);
   }
-  if (!Array.isArray(payload.checks) || REQUIRED_EVIDENCE_CHECKS.some((checkId) => !payload.checks.some((check) => check && check.check_id === checkId && check.result === 'pass'))) {
-    errors.push(`${label} payload checks do not prove all required checks`);
+  const sourceExternalId = String(context.sourceParsed && context.sourceParsed.source_note_id || '').replace(/^xhs-note:/, '');
+  const expectedArtifactRef = `${SOURCE_REPOSITORY}:note_desc/${sourceExternalId}.txt@${context.sourceRevision.source_repository_ref ?? ''}`;
+  if (!isObject(artifact) || artifact.ref !== expectedArtifactRef) errors.push(`${label} payload source_evidence artifact ref is not bound to the SourceNote identity/ref`);
+  if (!Array.isArray(evidence && evidence.excerpts) || evidence.excerpts.length === 0) errors.push(`${label} payload source_evidence excerpts are missing or empty`);
+  if (!Array.isArray(payload.checks) || payload.checks.length !== REQUIRED_EVIDENCE_CHECKS.length) {
+    errors.push(`${label} payload checks do not prove all required checks: must contain exactly one entry for each required check`);
+  } else {
+    const ids = payload.checks.map((check) => check && check.check_id);
+    if (new Set(ids).size !== ids.length || ids.some((id) => !REQUIRED_EVIDENCE_CHECKS.includes(id)) || REQUIRED_EVIDENCE_CHECKS.some((id) => ids.filter((candidate) => candidate === id).length !== 1)) {
+      errors.push(`${label} payload checks do not prove all required checks: duplicate, unknown, or missing check IDs`);
+    }
+    if (payload.checks.some((check) => !check || check.result !== 'pass')) errors.push(`${label} payload checks do not prove all required checks: every required check must pass`);
   }
 }
 
@@ -201,6 +225,39 @@ function validateBoundaryAppliedPayload(payload, context, errors) {
   equalPayloadField(payload, 'decision', 'single-interview', label, errors);
   equalPayloadField(payload, 'previous_body_sha256', context.boundaryPreviousBodySha, label, errors);
   equalPayloadField(payload, 'new_body_sha256', context.sourceBodySha, label, errors);
+  if (context.boundaryReportItem) {
+    equalRequiredPayloadField(payload, 'previous_body_sha256', context.boundaryReportItem.evidence_body_sha256, label, errors);
+    equalRequiredPayloadField(payload, 'new_body_sha256', context.boundaryReportItem.live_source_note_body_sha256, label, errors);
+    equalRequiredPayloadField(payload, 'transition_id', context.boundaryReportItem.transition_id, label, errors);
+    equalRequiredPayloadField(payload, 'decision', context.boundaryReportItem.decision, label, errors);
+    equalRequiredPayloadField(payload, 'source_note_id', context.boundaryReportItem.source_note_id, label, errors);
+    equalRequiredPayloadField(payload, 'issue_number', Number(context.boundaryReportItem.issue_number ?? context.boundaryReportItem.source_note_issue_number), label, errors);
+    if (context.boundaryReportItem.interview_note_ids != null && canonicalDigest(payload.interview_note_ids || null) !== canonicalDigest(context.boundaryReportItem.interview_note_ids)) {
+      errors.push(`${label} payload interview_note_ids do not match boundary report`);
+    }
+  }
+  if (context.boundaryTransitionReportItem) {
+    for (const [field, expected] of Object.entries({
+      transition_id: context.boundaryTransitionReportItem.transition_id,
+      decision: context.boundaryTransitionReportItem.decision,
+      previous_body_sha256: context.boundaryTransitionReportItem.evidence_body_sha256,
+      new_body_sha256: context.boundaryTransitionReportItem.live_source_note_body_sha256,
+      source_note_id: context.boundaryTransitionReportItem.source_note_id,
+      issue_number: Number(context.boundaryTransitionReportItem.source_note_issue_number),
+    })) equalRequiredPayloadField(payload, field, expected, label, errors);
+    if (context.boundaryTransitionReportItem.interview_note_ids != null && canonicalDigest(payload.interview_note_ids || null) !== canonicalDigest(context.boundaryTransitionReportItem.interview_note_ids)) {
+      errors.push(`${label} payload interview_note_ids do not match transition report`);
+    }
+  }
+  if (context.target.source_note_issue_number !== 910) {
+    equalRequiredPayloadField(payload, 'parent_issue', 1605, label, errors);
+    equalRequiredPayloadField(payload, 'manifest_digest', BOUNDARY_MANIFEST_DIGEST, label, errors);
+    equalRequiredPayloadField(payload, 'plan_digest', BOUNDARY_PLAN_DIGEST, label, errors);
+  } else {
+    equalPresentPayloadField(payload, 'parent_issue', 1605, label, errors);
+    equalPresentPayloadField(payload, 'manifest_digest', BOUNDARY_MANIFEST_DIGEST, label, errors);
+    equalPresentPayloadField(payload, 'plan_digest', BOUNDARY_PLAN_DIGEST, label, errors);
+  }
   const sourceRef = context.sourceRevision.source_repository_ref ?? null;
   if (sourceRef !== null) {
     equalRequiredPayloadField(payload, 'expected_source_revision_id', context.sourceRevision.id || null, label, errors);
@@ -219,11 +276,18 @@ function validateBoundaryAppliedPayload(payload, context, errors) {
   if (canonicalDigest(payload.interview_note_ids || null) !== canonicalDigest(expectedInterviewNoteIds)) errors.push(`${label} payload interview_note_ids mismatch`);
   timestampPayloadField(payload, 'reviewed_at', label, errors);
   timestampPayloadField(payload, 'applied_at', label, errors);
-  if (context.reportItem) {
-    equalPayloadField(payload, 'transition_id', context.reportItem.transition_id, label, errors);
-    equalPayloadField(payload, 'decision', context.reportItem.boundary_decision, label, errors);
-    if (context.reportItem.derived_interview_note_id != null && canonicalDigest(payload.interview_note_ids || null) !== canonicalDigest([context.reportItem.derived_interview_note_id])) {
+  if (context.boundaryReportItem) {
+    equalPayloadField(payload, 'transition_id', context.boundaryReportItem.transition_id, label, errors);
+    equalPayloadField(payload, 'decision', context.boundaryReportItem.decision, label, errors);
+    if (context.boundaryReportItem.interview_note_ids != null && canonicalDigest(payload.interview_note_ids || null) !== canonicalDigest(context.boundaryReportItem.interview_note_ids)) {
       errors.push(`${label} payload interview_note_ids do not match report`);
+    }
+  }
+  if (context.reportItem) {
+    if (context.reportItem.transition_id != null) equalPayloadField(payload, 'transition_id', context.reportItem.transition_id, label, errors);
+    if (context.reportItem.boundary_decision != null) equalPayloadField(payload, 'decision', context.reportItem.boundary_decision, label, errors);
+    if (context.reportItem.derived_interview_note_id != null && canonicalDigest(payload.interview_note_ids || null) !== canonicalDigest([context.reportItem.derived_interview_note_id])) {
+      errors.push(`${label} payload interview_note_ids do not match materialization report`);
     }
   }
 }
@@ -310,6 +374,15 @@ function validateOwnerSourceReviewAppliedPayload(payload, context, errors) {
       errors.push(`${label} report unexpectedly claims a non-null runtime source ref`);
     }
   }
+  const receipt = context.receiptEntry && context.receiptEntry.materialization_receipt;
+  if (receipt) {
+    equalPayloadField(payload, 'source_note_issue_number', Number(receipt.source_note_issue_number), label, errors);
+    if (Object.prototype.hasOwnProperty.call(payload, 'source_note_id')) equalPayloadField(payload, 'source_note_id', receipt.source_note_id, label, errors);
+    equalPayloadField(payload, 'source_note_body_sha256', receipt.source_note_body_sha256, label, errors);
+    equalPayloadField(payload, 'source_revision_id', receipt.source_revision_id, label, errors);
+    equalPayloadField(payload, 'manifest_sha256', receipt.manifest_sha256, label, errors);
+    if (Object.prototype.hasOwnProperty.call(payload, 'source_repository_ref')) equalPayloadField(payload, 'source_repository_ref', receipt.source_repository_ref ?? null, label, errors);
+  }
 }
 
 function validateLiveTargetShape(liveTarget, target, errors) {
@@ -373,13 +446,15 @@ function receiptShape(receipt, target, errors) {
   return receipt;
 }
 
-function validateInputs({ sourceSnapshot, ownershipInventory, materializationPlan, receiptSnapshot, liveAuditSnapshot }) {
+function validateInputs({ sourceSnapshot, ownershipInventory, materializationPlan, receiptSnapshot, liveAuditSnapshot, boundaryReport, boundaryTransitionReport }) {
   const errors = [];
   if (!sourceSnapshot || sourceSnapshot.schema_version !== 'issue-1611-live-source-note-snapshot.v1') errors.push('source snapshot schema is invalid');
   if (!ownershipInventory || ownershipInventory.schema_version !== 'aggregate-interview-note-ownership-inventory.v1') errors.push('ownership inventory schema is invalid');
   if (!materializationPlan || materializationPlan.schema_version !== 'issue-1605-interview-note-materialization-plan.v1') errors.push('materialization plan schema is invalid');
   if (!receiptSnapshot || receiptSnapshot.schema_version !== 'issue-1657-owner-receipt-audit-snapshot.v1') errors.push('owner/receipt snapshot schema is invalid');
   if (!liveAuditSnapshot || liveAuditSnapshot.schema_version !== LIVE_AUDIT_SCHEMA_VERSION) errors.push('live re-audit snapshot schema is invalid');
+  if (!boundaryReport || boundaryReport.schema_version !== 'issue-1605-live-boundary-materialization-report.v1') errors.push('live boundary materialization report schema is invalid');
+  if (!boundaryTransitionReport || boundaryTransitionReport.schema_version !== 'issue-1605-boundary-transition-report.v1') errors.push('boundary transition report schema is invalid');
   if (sourceSnapshot && sourceSnapshot.repository !== REPOSITORY) errors.push('source snapshot repository mismatch');
   if (sourceSnapshot && sourceSnapshot.source_repository !== SOURCE_REPOSITORY) errors.push('source snapshot source repository mismatch');
   if (sourceSnapshot && sourceSnapshot.source_ref !== SOURCE_REF) errors.push('source snapshot source ref mismatch');
@@ -387,6 +462,8 @@ function validateInputs({ sourceSnapshot, ownershipInventory, materializationPla
   if (materializationPlan && materializationPlan.repository !== REPOSITORY) errors.push('materialization plan repository mismatch');
   if (receiptSnapshot && receiptSnapshot.repository !== REPOSITORY) errors.push('owner/receipt snapshot repository mismatch');
   if (liveAuditSnapshot && liveAuditSnapshot.repository !== REPOSITORY) errors.push('live re-audit snapshot repository mismatch');
+  if (boundaryReport && (boundaryReport.repository !== REPOSITORY || boundaryReport.parent_issue !== 1605 || boundaryReport.source_repository !== SOURCE_REPOSITORY || boundaryReport.source_ref !== SOURCE_REF)) errors.push('live boundary materialization report binding mismatch');
+  if (boundaryTransitionReport && (boundaryTransitionReport.repository !== REPOSITORY || boundaryTransitionReport.parent_issue !== 1605)) errors.push('boundary transition report binding mismatch');
   if (sourceSnapshot && HEX64.test(String(sourceSnapshot.canonical_digest || ''))) {
     const actual = sourceSnapshotDigest(sourceSnapshot.issues || []);
     if (actual !== sourceSnapshot.canonical_digest) errors.push(`source snapshot canonical digest drifted: expected ${sourceSnapshot.canonical_digest}, got ${actual}`);
@@ -425,11 +502,62 @@ function validateInputs({ sourceSnapshot, ownershipInventory, materializationPla
   if (liveAuditSnapshot && HEX64.test(String(liveAuditSnapshot.canonical_digest || ''))) {
     if (liveAuditSnapshotDigest(liveAuditSnapshot) !== liveAuditSnapshot.canonical_digest) errors.push('live re-audit snapshot canonical digest drifted');
   } else errors.push('live re-audit snapshot canonical_digest is required');
+  if (boundaryReport) {
+    if (!HEX64.test(String(boundaryReport.dry_run_sha256 || ''))) errors.push('live boundary materialization report dry_run_sha256 is required');
+    else if (reportDigest(boundaryReport, 'dry_run_sha256') !== boundaryReport.dry_run_sha256) errors.push('live boundary materialization report digest drifted');
+    const items = reportItems(boundaryReport);
+    for (const target of TARGETS) {
+      const matches = items.filter((item) => Number(item && (item.issue_number ?? item.source_note_issue_number)) === target.source_note_issue_number);
+      if (matches.length !== 1) errors.push(`#${target.source_note_issue_number} live boundary materialization report must resolve to exactly one row (got ${matches.length})`);
+      else {
+        const item = matches[0];
+        const sourceIssue = (sourceSnapshot && sourceSnapshot.issues || []).find((issue) => Number(issue.number) === target.source_note_issue_number);
+        const parsed = sourceIssue && issueSourceRecord(sourceIssue).parsed;
+        const currentBodySha = sourceIssue && sha256Text(sourceIssue.body || '');
+        for (const field of ['issue_number', 'source_note_id', 'source_note_body_sha256', 'evidence_body_sha256', 'live_source_note_body_sha256', 'source_revision_id', 'decision', 'transition_id', 'transition_status', 'interview_note_ids']) {
+          if (!Object.prototype.hasOwnProperty.call(item, field)) errors.push(`#${target.source_note_issue_number} live boundary materialization report ${field} is missing`);
+        }
+        if (Number(item.issue_number ?? item.source_note_issue_number) !== target.source_note_issue_number) errors.push(`#${target.source_note_issue_number} live boundary materialization report issue binding mismatch`);
+        if (item.source_note_id !== (parsed && parsed.source_note_id)) errors.push(`#${target.source_note_issue_number} live boundary materialization report SourceNote identity mismatch`);
+        if (item.live_source_note_body_sha256 !== currentBodySha || item.source_note_body_sha256 !== currentBodySha) errors.push(`#${target.source_note_issue_number} live boundary materialization report current body mismatch`);
+        if (!HEX64.test(String(item.evidence_body_sha256 || ''))) errors.push(`#${target.source_note_issue_number} live boundary materialization report prior body is not a SHA-256`);
+        if (item.source_revision_id !== (parsed && parsed.source_revision && parsed.source_revision.id)) errors.push(`#${target.source_note_issue_number} live boundary materialization report SourceRevision mismatch`);
+        if (item.decision !== 'single-interview' || item.transition_status !== 'applied') errors.push(`#${target.source_note_issue_number} live boundary materialization report transition is not applied single-interview`);
+        if (canonicalDigest(item.interview_note_ids || null) !== canonicalDigest([target.interview_note_id])) errors.push(`#${target.source_note_issue_number} live boundary materialization report InterviewNote identity mismatch`);
+        const expectedRef = parsed && parsed.source_revision && parsed.source_revision.source_repository_ref || null;
+        if ((item.source_repository_ref ?? null) !== expectedRef) errors.push(`#${target.source_note_issue_number} live boundary materialization report source ref mismatch`);
+      }
+    }
+  }
+  if (boundaryTransitionReport) {
+    if (!HEX64.test(String(boundaryTransitionReport.report_sha256 || ''))) errors.push('boundary transition report report_sha256 is required');
+    else if (reportDigest(boundaryTransitionReport, 'report_sha256') !== boundaryTransitionReport.report_sha256) errors.push('boundary transition report digest drifted');
+    if (boundaryTransitionReport.boundary_manifest_digest !== BOUNDARY_MANIFEST_DIGEST) errors.push('boundary transition report manifest digest is not the pinned boundary manifest');
+    if (boundaryTransitionReport.transition_plan_digest !== BOUNDARY_PLAN_DIGEST) errors.push('boundary transition report plan digest is not the pinned transition plan');
+    const items = reportItems(boundaryTransitionReport);
+    for (const issueNumber of [904, 907]) {
+      const matches = items.filter((item) => Number(item && (item.issue_number ?? item.source_note_issue_number)) === issueNumber);
+      if (matches.length !== 1) errors.push(`#${issueNumber} boundary transition report must contain exactly one row`);
+      else {
+        const liveItem = reportItems(boundaryReport).find((item) => Number(item && (item.issue_number ?? item.source_note_issue_number)) === issueNumber);
+        const item = matches[0];
+        if (liveItem) {
+          for (const field of ['source_note_id', 'evidence_body_sha256', 'live_source_note_body_sha256', 'source_revision_id', 'decision', 'transition_id', 'interview_note_ids']) {
+            const liveField = field === 'decision' ? liveItem.decision : liveItem[field];
+            const differs = field === 'interview_note_ids'
+              ? canonicalDigest(item[field] || null) !== canonicalDigest(liveField || null)
+              : item[field] !== liveField;
+            if (differs) errors.push(`#${issueNumber} boundary transition report ${field} disagrees with live boundary report`);
+          }
+        }
+      }
+    }
+  }
   return errors;
 }
 
-function planIssue1657BlockerRepair({ sourceSnapshot, ownershipInventory, materializationPlan, receiptSnapshot, liveAuditSnapshot }) {
-  const errors = validateInputs({ sourceSnapshot, ownershipInventory, materializationPlan, receiptSnapshot, liveAuditSnapshot });
+function planIssue1657BlockerRepair({ sourceSnapshot, ownershipInventory, materializationPlan, receiptSnapshot, liveAuditSnapshot, boundaryReport, boundaryTransitionReport }) {
+  const errors = validateInputs({ sourceSnapshot, ownershipInventory, materializationPlan, receiptSnapshot, liveAuditSnapshot, boundaryReport, boundaryTransitionReport });
   const sourceIssues = sourceSnapshot && Array.isArray(sourceSnapshot.issues) ? sourceSnapshot.issues : [];
   const owners = ownershipInventory && Array.isArray(ownershipInventory.entries) ? ownershipInventory.entries : [];
   const receipts = receiptSnapshot && Array.isArray(receiptSnapshot.entries) ? receiptSnapshot.entries : [];
@@ -442,6 +570,8 @@ function planIssue1657BlockerRepair({ sourceSnapshot, ownershipInventory, materi
     const receiptEntry = findOne(receipts, (entry) => Number(entry.source_note_issue_number) === target.source_note_issue_number, `#${target.source_note_issue_number} receipt audit entry`, errors);
     const liveTarget = findOne(liveTargets, (entry) => Number(entry.source_note_issue_number) === target.source_note_issue_number, `#${target.source_note_issue_number} live re-audit entry`, errors);
     const reportItem = findOne(materializationPlan && materializationPlan.results, (entry) => Number(entry.source_note_issue_number) === target.source_note_issue_number, `#${target.source_note_issue_number} materialization result`, errors);
+    const boundaryReportItem = findOne(reportItems(boundaryReport), (entry) => Number(entry && (entry.issue_number ?? entry.source_note_issue_number)) === target.source_note_issue_number, `#${target.source_note_issue_number} live boundary materialization report`, errors);
+    const boundaryTransitionReportItem = target.source_note_issue_number === 910 ? null : findOne(reportItems(boundaryTransitionReport), (entry) => Number(entry && (entry.issue_number ?? entry.source_note_issue_number)) === target.source_note_issue_number, `#${target.source_note_issue_number} boundary transition report`, errors);
     const sourceParsedResult = sourceIssue ? issueSourceRecord(sourceIssue) : { parsed: null, validation: { errors: [] } };
     // issueSourceRecord() already unwraps validateSourceNoteIssue().parsed.record.
     // Do not read .record again: that would erase every SourceNote identity.
@@ -503,8 +633,10 @@ function planIssue1657BlockerRepair({ sourceSnapshot, ownershipInventory, materi
       sourceBodySha,
       owner,
       reportItem,
+      boundaryReportItem,
+      boundaryTransitionReportItem,
       receiptEntry,
-      boundaryPreviousBodySha: BOUNDARY_PREVIOUS_BODY_SHA256[target.source_note_issue_number],
+      boundaryPreviousBodySha: boundaryReportItem && boundaryReportItem.evidence_body_sha256 || BOUNDARY_PREVIOUS_BODY_SHA256[target.source_note_issue_number],
     };
     if (boundaryEvidence && boundaryEvidence.count === 1) validateEvidencePayload(boundaryEvidence.payload, payloadContext, targetErrors);
     if (boundaryApplied && boundaryApplied.count === 1) validateBoundaryAppliedPayload(boundaryApplied.payload, payloadContext, targetErrors);
@@ -611,6 +743,8 @@ function planIssue1657BlockerRepair({ sourceSnapshot, ownershipInventory, materi
     source_snapshot_digest: sourceSnapshot && sourceSnapshot.canonical_digest || null,
     ownership_inventory_digest: ownershipInventory && ownershipInventory.canonical_digest || null,
     materialization_plan_digest: materializationPlan && materializationPlan.dry_run_sha256 || null,
+    boundary_report_digest: boundaryReport && boundaryReport.dry_run_sha256 || null,
+    boundary_transition_report_digest: boundaryTransitionReport && boundaryTransitionReport.report_sha256 || null,
     owner_receipt_snapshot_digest: receiptSnapshot && receiptSnapshot.canonical_digest || null,
     live_reaudit_snapshot_digest: liveAuditSnapshot && liveAuditSnapshot.canonical_digest || null,
     target_count: TARGETS.length,
