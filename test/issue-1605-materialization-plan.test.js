@@ -7,17 +7,156 @@ const assert = require('node:assert/strict');
 const { parseSourceNoteIssue, validateSourceNoteIssue } = require('../scripts/lib/source-note-issue');
 const { buildInterviewProjection, findOwnershipMatches } = require('../scripts/lib/source-note-interview-materialization');
 const { childInterviewNoteId } = require('../scripts/lib/interview-note-identity');
+const { canonicalDigest } = require('../scripts/lib/aggregate-downstream-pipeline');
 const {
   canonicalJson,
   sha256Text,
   planIssue1605Materialization,
+  reportDigest,
   validateBoundaryManifest,
   validateLiveBoundaryEvidenceComment,
 } = require('../scripts/lib/issue-1605-materialization-plan');
+const { buildLiveBoundaryReport, buildLiveManifest, materializationReceiptsBySourceIssue, sourceSnapshotDigest } = require('../scripts/plan-issue-1611-live-materialization');
 const { parseArgs } = require('../scripts/plan-issue-1605-interview-note-materialization');
 
 const template = fs.readFileSync(path.join(__dirname, 'fixtures/source-note-issue-v2.valid.md'), 'utf8');
 const templateRecord = parseSourceNoteIssue(template).record;
+
+test('live boundary materialization adapter validates a complete dynamic manifest and digest', () => {
+  const report = {
+    total: 2,
+    source_snapshot_digest: '1'.repeat(64),
+    dry_run_sha256: '2'.repeat(64),
+    items: [
+      { issue_number: 20, transition_id: 'transition-20' },
+      { issue_number: 21, transition_id: null },
+    ],
+  };
+  const manifest = buildLiveManifest(report);
+  const validation = validateBoundaryManifest(manifest);
+  assert.equal(validation.ok, true, validation.errors.join('; '));
+  const tampered = { ...manifest, source_snapshot_digest: '3'.repeat(64) };
+  assert.equal(validateBoundaryManifest(tampered).ok, false);
+  assert.match(validateBoundaryManifest(tampered).errors.join('\n'), /canonical_digest/);
+});
+
+test('live planner binds manifest to the pinned completion proof and actual report/source snapshot digests', () => {
+  const source = makeSourceIssue(920, 'pending', 'runtime-fixture-920');
+  const parsed = parseSourceNoteIssue(source.body).record;
+  const sourceDigest = sourceSnapshotDigest([source]);
+  const generatedReport = buildLiveBoundaryReport([source], new Map(), { comment_id: 5596370635 });
+  assert.equal(reportDigest(generatedReport).actual, generatedReport.dry_run_sha256);
+  const reportInput = {
+    schema_version: 'issue-1605-live-boundary-materialization-report.v1',
+    repository: 'liqiangcc/interview-lab',
+    parent_issue: 1605,
+    source_repository: 'liqiangcc/xhs',
+    source_ref: '95b77bb261048059846273688e4b90a2e108b437',
+    mode: 'live-read-plan-only',
+    total: 1,
+    counts: { 'single-interview': 0, 'multi-interview': 0, 'not-interview': 0, pending: 1 },
+    source_snapshot_digest: sourceDigest,
+    items: [{
+      issue_number: source.number,
+      source_note_id: parsed.source_note_id,
+      source_note_body_sha256: sha256Text(source.body),
+      evidence_body_sha256: null,
+      live_source_note_body_sha256: sha256Text(source.body),
+      source_revision_id: parsed.source_revision.id,
+      source_repository_ref: parsed.source_revision.source_repository_ref,
+      decision: 'blocked',
+      transition_id: null,
+      transition_status: 'pending',
+      evidence_comment_id: null,
+      receipt_comment_id: null,
+      evidence_schema: null,
+      interview_note_ids: [],
+      interview_note_cases: [],
+      labels: source.labels,
+    }],
+    errors: [],
+  };
+  const report = { ...reportInput, dry_run_sha256: canonicalDigest(reportInput) };
+  const manifest = buildLiveManifest(report);
+  const base = {
+    boundaryReports: [report],
+    boundaryManifest: manifest,
+    sourceIssues: [source],
+    sourceSnapshot: { mode: 'test', count: 1, digest: sourceDigest },
+    requireCompleteScope: true,
+  };
+  assert.equal(planIssue1605Materialization(base).ok, true);
+  const withoutCanonicalDigest = ({ canonical_digest: ignored, ...value }) => value;
+
+  const withBoundaryDigest = { ...manifest, boundary_report_digest: '0'.repeat(64) };
+  withBoundaryDigest.canonical_digest = canonicalDigest(withoutCanonicalDigest(withBoundaryDigest));
+  const boundaryDigestPlan = planIssue1605Materialization({ ...base, boundaryManifest: withBoundaryDigest });
+  assert.equal(boundaryDigestPlan.ok, false);
+  assert.match(boundaryDigestPlan.errors.join('\n'), /boundary_report_digest does not equal the actual boundary report digest/);
+
+  const withSourceDigest = { ...manifest, source_snapshot_digest: '1'.repeat(64) };
+  withSourceDigest.canonical_digest = canonicalDigest(withoutCanonicalDigest(withSourceDigest));
+  const sourceDigestPlan = planIssue1605Materialization({ ...base, boundaryManifest: withSourceDigest });
+  assert.equal(sourceDigestPlan.ok, false);
+  assert.match(sourceDigestPlan.errors.join('\n'), /source_snapshot_digest does not equal the actual source snapshot digest/);
+
+  const reportWithWrongCompletion = { ...report, completion_proof: { comment_id: 1 } };
+  const withoutDryRunDigest = ({ dry_run_sha256: ignored, ...value }) => value;
+  reportWithWrongCompletion.dry_run_sha256 = canonicalDigest(withoutDryRunDigest(reportWithWrongCompletion));
+  const completionReportPlan = planIssue1605Materialization({ ...base, boundaryReports: [reportWithWrongCompletion] });
+  assert.equal(completionReportPlan.ok, false);
+  assert.match(completionReportPlan.errors.join('\n'), /report completion_proof.comment_id/);
+
+  const withWrongCompletion = { ...manifest, completion_proof: { ...manifest.completion_proof, comment_id: manifest.completion_proof.comment_id + 1 } };
+  withWrongCompletion.canonical_digest = canonicalDigest(withoutCanonicalDigest(withWrongCompletion));
+  const completionValidation = validateBoundaryManifest(withWrongCompletion);
+  assert.equal(completionValidation.ok, false);
+  assert.match(completionValidation.errors.join('\n'), /pinned online #1605 completion proof/);
+});
+
+test('live boundary materialization adapter accepts only the explicit legacy #921 evidence contract', () => {
+  const source = makeSourceIssue(919, 'single-interview');
+  const parsed = parseSourceNoteIssue(source.body).record;
+  const checks = ['source_identity', 'source_revision_binding', 'source_content_coverage', 'event_boundary', 'no_cross_source_mixing', 'no_fabrication']
+    .map((check_id) => ({ check_id, result: 'pass' }));
+  const payload = { transition_id: 'issue-921-pilot-919-boundary-review-1', issue_number: 919, source_note_id: parsed.source_note_id, checks };
+  const comment = {
+    id: 9190001,
+    issue_url: 'https://api.github.com/repos/interview-lab-placeholder/issues/919',
+    body: `<!-- issue-921-pilot-evidence\n${JSON.stringify(payload)}\n-->\nsource_revision_id: ${parsed.source_revision.id}\nsource_repository_ref: 95b77bb261048059846273688e4b90a2e108b437\nrecommended_decision: single-interview\n`,
+  };
+  const expected = {
+    source_note_issue_number: 919,
+    source_note_id: parsed.source_note_id,
+    source_revision_id: parsed.source_revision.id,
+    decision: 'single-interview',
+    transition_id: payload.transition_id,
+    evidence_comment_id: comment.id,
+    evidence_schema: 'issue-921-pilot-evidence',
+  };
+  comment.issue_url = 'https://api.github.com/repos/liqiangcc/interview-lab/issues/919';
+  assert.equal(validateLiveBoundaryEvidenceComment(comment, expected, source).ok, true);
+  const tampered = { ...comment, body: comment.body.replace('source_repository_ref: 95b77bb261048059846273688e4b90a2e108b437', 'source_repository_ref: wrong/ref') };
+  assert.equal(validateLiveBoundaryEvidenceComment(tampered, expected, source).ok, false);
+});
+
+test('live materialization adapter normalizes the explicit #1556 receipt schema without dropping bindings', () => {
+  const comments = new Map([[158, [{
+    id: 1580001,
+    body: `<!-- source-note-interview-materialized\n${JSON.stringify({
+      schema_version: 'issue-1556-materialization-receipt.v1',
+      materialization_id: 'fixture-materialization',
+      source_note_issue_number: 158,
+      source_note_id: 'xhs-note:fixture',
+      interview_note_id: 'xhs:fixture',
+    })}\n-->`,
+  }]]]);
+  const receipts = materializationReceiptsBySourceIssue(comments).get(158);
+  assert.equal(receipts.length, 1);
+  assert.equal(receipts[0].schema_version, 'source-note-interview-materialized.v1');
+  assert.equal(receipts[0].legacy_schema_version, 'issue-1556-materialization-receipt.v1');
+  assert.equal(receipts[0].source_note_id, 'xhs-note:fixture');
+});
 
 function makeSourceIssue(number, status, externalId = `runtime-fixture-${number}`) {
   const record = JSON.parse(JSON.stringify(templateRecord));
