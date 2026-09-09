@@ -1,0 +1,201 @@
+{
+  "schema_version": "issue-1657-blocker-repair-plan.v1",
+  "repository": "liqiangcc/interview-lab",
+  "parent_issue": 1657,
+  "mode": "read-only-audit-plan",
+  "source_snapshot_digest": "a1804b09a3a293b33dfb59856b723da19b587816705e8659cdf6ee829175acf2",
+  "ownership_inventory_digest": "d49779dbc5e0c94bc3c67c2b6781f99e940c71afb046a9f2d0a0a2f9189484e0",
+  "materialization_plan_digest": "67d848cf88be634d8137cc5ad13798e6d745f87ec19d770e0947be9dd724bb55",
+  "owner_receipt_snapshot_digest": "7786f58aa9c6c6294ade44c992908466d3f9606682cc557465b94ec9535a5016",
+  "target_count": 3,
+  "blocked_count": 3,
+  "mutation_performed": false,
+  "write_operations": {
+    "patch": 0,
+    "post": 0,
+    "label": 0,
+    "interview_note": 0,
+    "create": 0
+  },
+  "results": [
+    {
+      "repository": "liqiangcc/interview-lab",
+      "source_note_issue_number": 904,
+      "source_note_id": "xhs-note:63ecd286000000001303fd16",
+      "interview_note_id": "xhs:63ecd286000000001303fd16",
+      "owner_issue_number": 2,
+      "expected_source_note_body_sha256": "39db5c325988d7d79cb1241b547f5464368facd450ea33e9313b8e6aaa1edb8a",
+      "expected_source_revision_id": "xhs-note:63ecd286000000001303fd16:snapshot-95b77bb26104",
+      "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+      "expected_owner_body_sha256": "4f3efc9abb4c4a945ad36ec578d6279bf024df3a35716d8e5929f56e6c653829",
+      "mutation_performed": false,
+      "action": "blocked-owner-source-revision-cas",
+      "reason_codes": [
+        "materialization-preflight-failed",
+        "existing-owner-source-revision-mismatch"
+      ],
+      "errors": [
+        "existing owner SourceRevision differs from current SourceNote"
+      ],
+      "source_note_body_sha256": "39db5c325988d7d79cb1241b547f5464368facd450ea33e9313b8e6aaa1edb8a",
+      "source_revision_id": "xhs-note:63ecd286000000001303fd16:snapshot-95b77bb26104",
+      "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+      "owner_source_revision_id": "xhs:63ecd286000000001303fd16:legacy-r1",
+      "owner_source_repository_ref": null,
+      "receipt_comment_id": null,
+      "boundary_evidence_comment_id": 5579824204,
+      "materialization_plan_action": "blocked",
+      "request": {
+        "schema_version": "issue-1657-interview-note-owner-reconcile-request.v1",
+        "repository": "liqiangcc/interview-lab",
+        "source_note_issue_number": 904,
+        "source_note_id": "xhs-note:63ecd286000000001303fd16",
+        "interview_note_id": "xhs:63ecd286000000001303fd16",
+        "owner_issue_number": 2,
+        "expected_source_note_body_sha256": "39db5c325988d7d79cb1241b547f5464368facd450ea33e9313b8e6aaa1edb8a",
+        "expected_source_revision_id": "xhs-note:63ecd286000000001303fd16:snapshot-95b77bb26104",
+        "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+        "expected_owner_body_sha256": "4f3efc9abb4c4a945ad36ec578d6279bf024df3a35716d8e5929f56e6c653829",
+        "mutation_performed": false,
+        "expected_owner_source_revision_id": "xhs:63ecd286000000001303fd16:legacy-r1",
+        "expected_owner_source_repository_ref": null,
+        "requested_owner_source_revision_id": "xhs-note:63ecd286000000001303fd16:snapshot-95b77bb26104",
+        "requested_owner_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+        "authorized_operations": [],
+        "preconditions": [
+          "independent owner review",
+          "owner body CAS",
+          "SourceNote body/revision/ref CAS",
+          "exact identity ownership remains unique",
+          "materialization receipt is absent or exactly reconciled"
+        ]
+      },
+      "write_operations": {
+        "patch": 0,
+        "post": 0,
+        "label": 0,
+        "interview_note": 0,
+        "create": 0
+      }
+    },
+    {
+      "repository": "liqiangcc/interview-lab",
+      "source_note_issue_number": 907,
+      "source_note_id": "xhs-note:656861da000000000f024258",
+      "interview_note_id": "xhs:656861da000000000f024258",
+      "owner_issue_number": 4,
+      "expected_source_note_body_sha256": "f548b38833ee4416efa336a0a91020ef3e3ae333f0b64a0e94a4094f2e80cd4e",
+      "expected_source_revision_id": "xhs-note:656861da000000000f024258:snapshot-95b77bb26104",
+      "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+      "expected_owner_body_sha256": "bbdbd6a53c789900bbb33926e98441a67de6d0efbf9e4ac67f05a00e7ce8bf8f",
+      "mutation_performed": false,
+      "action": "blocked-owner-source-revision-cas",
+      "reason_codes": [
+        "materialization-preflight-failed",
+        "existing-owner-source-revision-mismatch"
+      ],
+      "errors": [
+        "existing owner SourceRevision differs from current SourceNote"
+      ],
+      "source_note_body_sha256": "f548b38833ee4416efa336a0a91020ef3e3ae333f0b64a0e94a4094f2e80cd4e",
+      "source_revision_id": "xhs-note:656861da000000000f024258:snapshot-95b77bb26104",
+      "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+      "owner_source_revision_id": "xhs:656861da000000000f024258:recovered-r2",
+      "owner_source_repository_ref": "23a56d5aa1388cfa6fc1fa68bdb6576acad825eb",
+      "receipt_comment_id": null,
+      "boundary_evidence_comment_id": 5579824470,
+      "materialization_plan_action": "blocked",
+      "request": {
+        "schema_version": "issue-1657-interview-note-owner-reconcile-request.v1",
+        "repository": "liqiangcc/interview-lab",
+        "source_note_issue_number": 907,
+        "source_note_id": "xhs-note:656861da000000000f024258",
+        "interview_note_id": "xhs:656861da000000000f024258",
+        "owner_issue_number": 4,
+        "expected_source_note_body_sha256": "f548b38833ee4416efa336a0a91020ef3e3ae333f0b64a0e94a4094f2e80cd4e",
+        "expected_source_revision_id": "xhs-note:656861da000000000f024258:snapshot-95b77bb26104",
+        "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+        "expected_owner_body_sha256": "bbdbd6a53c789900bbb33926e98441a67de6d0efbf9e4ac67f05a00e7ce8bf8f",
+        "mutation_performed": false,
+        "expected_owner_source_revision_id": "xhs:656861da000000000f024258:recovered-r2",
+        "expected_owner_source_repository_ref": "23a56d5aa1388cfa6fc1fa68bdb6576acad825eb",
+        "requested_owner_source_revision_id": "xhs-note:656861da000000000f024258:snapshot-95b77bb26104",
+        "requested_owner_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+        "authorized_operations": [],
+        "preconditions": [
+          "independent owner review",
+          "owner body CAS",
+          "SourceNote body/revision/ref CAS",
+          "exact identity ownership remains unique",
+          "materialization receipt is absent or exactly reconciled"
+        ]
+      },
+      "write_operations": {
+        "patch": 0,
+        "post": 0,
+        "label": 0,
+        "interview_note": 0,
+        "create": 0
+      }
+    },
+    {
+      "repository": "liqiangcc/interview-lab",
+      "source_note_issue_number": 910,
+      "source_note_id": "xhs-note:6a8abe2d000000001602b26e",
+      "interview_note_id": "xhs:6a8abe2d000000001602b26e",
+      "owner_issue_number": 915,
+      "expected_source_note_body_sha256": "663871c4c273ff5cf58b053501b5b04bf2a6313687e64b0c9b1ce6ea9243f041",
+      "expected_source_revision_id": "xhs:6a8abe2d000000001602b26e:r1",
+      "expected_source_repository_ref": null,
+      "expected_owner_body_sha256": "58d80c553d49307eda419bed153090e97c1c409ca1a1306825d57fc634b0513b",
+      "mutation_performed": false,
+      "action": "blocked-boundary-evidence-and-runtime-provenance",
+      "reason_codes": [
+        "boundary-evidence-missing-or-ambiguous",
+        "runtime-source-repository-ref-unavailable"
+      ],
+      "errors": [],
+      "source_note_body_sha256": "663871c4c273ff5cf58b053501b5b04bf2a6313687e64b0c9b1ce6ea9243f041",
+      "source_revision_id": "xhs:6a8abe2d000000001602b26e:r1",
+      "source_repository_ref": null,
+      "owner_source_revision_id": "xhs:6a8abe2d000000001602b26e:r1",
+      "owner_source_repository_ref": null,
+      "receipt_comment_id": 5535863537,
+      "boundary_evidence_comment_id": null,
+      "materialization_plan_action": "blocked",
+      "request": {
+        "schema_version": "issue-1657-boundary-evidence-recovery-request.v1",
+        "repository": "liqiangcc/interview-lab",
+        "source_note_issue_number": 910,
+        "source_note_id": "xhs-note:6a8abe2d000000001602b26e",
+        "interview_note_id": "xhs:6a8abe2d000000001602b26e",
+        "owner_issue_number": 915,
+        "expected_source_note_body_sha256": "663871c4c273ff5cf58b053501b5b04bf2a6313687e64b0c9b1ce6ea9243f041",
+        "expected_source_revision_id": "xhs:6a8abe2d000000001602b26e:r1",
+        "expected_source_repository_ref": null,
+        "expected_owner_body_sha256": "58d80c553d49307eda419bed153090e97c1c409ca1a1306825d57fc634b0513b",
+        "mutation_performed": false,
+        "transition_id": "xhs-note-6a8abe2d-boundary-review-1",
+        "expected_boundary_evidence": {
+          "comment_id": null,
+          "schema_version": "source-note-boundary-review-evidence.v1",
+          "source_revision_id": "xhs:6a8abe2d000000001602b26e:r1",
+          "manifest_sha256": "0e408ad965af6a1a47a968de9916a1c17eec58f436b35b171d8c9729fac6d3e0",
+          "source_repository_ref": null
+        },
+        "runtime_ref_policy": "do-not-invent-a-Git-source-repository-ref; preserve runtime artifact binding or obtain an independently fixed Git snapshot",
+        "authorized_operations": []
+      },
+      "write_operations": {
+        "patch": 0,
+        "post": 0,
+        "label": 0,
+        "interview_note": 0,
+        "create": 0
+      }
+    }
+  ],
+  "errors": [],
+  "ok": false,
+  "plan_digest": "82efd53623139243505ee6feee07a1db586bc6ee96c6152772835bceb6b14b7f"
+}
