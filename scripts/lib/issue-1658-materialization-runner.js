@@ -333,7 +333,18 @@ function acquireExclusiveLock(file, planDigest) {
     const stat = fs.lstatSync(target);
     if (!stat.isFile() || stat.isSymbolicLink() || current.lock_id !== lock.lock_id || current.device !== lock.device || current.inode !== lock.inode || stat.dev !== lock.device || stat.ino !== lock.inode) throw new Error('exclusive materialization lock ownership or inode changed');
   };
-  return { assertHeld, release() { assertHeld(); fs.unlinkSync(target); fsyncParent(path.dirname(target)); } };
+  return {
+    assertHeld,
+    release() {
+      // Node's fs API has no unlinkat(dirfd) primitive. Revalidate the lock
+      // token and device/inode immediately before unlinking so a pathname
+      // replacement is rejected and never removed as the owned lock. The
+      // residual unlink pathname window is documented as a pre-existing P2.
+      assertHeld();
+      fs.unlinkSync(target);
+      fsyncParent(path.dirname(target));
+    },
+  };
 }
 
 function initialIntent(request, plan, phase = 'create-pending', now = new Date().toISOString()) {
@@ -409,6 +420,13 @@ function validateCreatedOwner(owner, projection) {
   return owner;
 }
 
+function validateReceiptOwner(receipt, request, projection, owner) {
+  if (!receipt || receipt.repository !== request.repository) throw new Error('materialization receipt repository does not match the request');
+  if (receipt.interview_issue_body_sha256 !== sha256Text(projection.body)) throw new Error('materialization receipt owner body SHA does not match the projected owner body');
+  validateCreatedOwner(owner, projection);
+  return receipt;
+}
+
 function readAndValidateCreatedOwner({ api, projection, ownerNumber, journalItem, journal, journalFile, lock, maxCreate, maxReceipts, plan, reconcileAttempts }) {
   try {
     const owner = validateCreatedOwner(api.readIssue(ownerNumber), projection);
@@ -435,6 +453,15 @@ function buildCreateProjection(planResult) {
   return planResult.projection;
 }
 
+function assertFreshBoundIdentity(planResult, freshPlan) {
+  const boundIdentity = planResult.derived_interview_note_id || planResult.projection && planResult.projection.interview_note_id;
+  if (!freshPlan.ok) throw new Error(`fresh SourceNote CAS failed before ownership lookup: ${freshPlan.errors.join('; ')}`);
+  if (!boundIdentity || freshPlan.interview_note_id !== boundIdentity || !freshPlan.projection || freshPlan.projection.interview_note_id !== boundIdentity) {
+    throw new Error(`fresh SourceNote identity mismatch: bound=${boundIdentity || 'missing'} fresh=${freshPlan.interview_note_id || 'missing'}`);
+  }
+  return boundIdentity;
+}
+
 function resumeReceiptOnly({ planResult, api, journalItem, journal, journalFile, lock, maxCreate, maxReceipts, reconcileAttempts = 3 }) {
   if (!planResult || planResult.action !== 'would-materialize' || journalItem.phase !== 'receipt-pending') throw new Error('receipt resume requires a receipt-pending would-materialize journal item');
   const request = planResult.request;
@@ -444,17 +471,19 @@ function resumeReceiptOnly({ planResult, api, journalItem, journal, journalFile,
   lock.assertHeld();
   try {
     const source = api.readIssue(request.source_note_issue_number);
-    const owners = api.readOwners(planResult.derived_interview_note_id || planResult.projection.interview_note_id);
+    const freshIdentityPlan = planMaterialization(request, { repository: REPOSITORY, sourceIssue: source, issues: [], receipts: [] });
+    const boundIdentity = assertFreshBoundIdentity(planResult, freshIdentityPlan);
+    const owners = api.readOwners(boundIdentity);
     const comments = api.readComments(request.source_note_issue_number);
     const receipts = parseMaterializationReceipts(comments);
     const checked = planMaterialization(request, { repository: REPOSITORY, sourceIssue: source, issues: owners, receipts });
-    if (!checked.ok || !checked.already_materialized || checked.existing_issue_number !== ownerNumber) throw new Error('receipt resume CAS did not converge to the journaled unique owner');
-    const owner = validateCreatedOwner(api.readIssue(ownerNumber), planResult.projection);
+    if (!checked.ok || checked.interview_note_id !== boundIdentity || !checked.projection || checked.projection.interview_note_id !== boundIdentity || !checked.already_materialized || checked.existing_issue_number !== ownerNumber || owners.length !== 1) throw new Error('receipt resume CAS did not converge to the journaled unique owner');
+    const owner = api.readIssue(ownerNumber);
     const expected = { materialization_id: request.materialization_id, request_sha256: requestSha256(request), interview_note_id: planResult.projection.interview_note_id, interview_issue_number: ownerNumber };
     const observed = matchingReceipts(comments, expected);
     if (observed.receipts.length !== 1 || observed.matching.length !== 1) throw new Error('receipt POST state is unknown; exact SourceNote receipt was not observed');
     const receipt = observed.matching[0];
-    if (receipt.interview_issue_body_sha256 !== sha256Text(planResult.projection.body)) throw new Error('resumed receipt body digest does not match the exact owner body');
+    validateReceiptOwner(receipt, request, planResult.projection, owner);
     journalItem.phase = 'complete'; journalItem.mutation_performed = true; journalItem.possibly_performed = false; journal.possibly_performed = journal.items.some((item) => item.possibly_performed === true); journal.status = 'running';
     updateJournal(journal, journalFile, lock, api.plan, maxCreate, maxReceipts);
     return { materialization_id: request.materialization_id, request_sha256: requestSha256(request), interview_note_id: planResult.projection.interview_note_id, interview_issue_number: owner.number, created: false, resumed: true, receipt_machine_marker: RECEIPT_MARKER, mutation_performed: true };
@@ -462,7 +491,7 @@ function resumeReceiptOnly({ planResult, api, journalItem, journal, journalFile,
     markUncertain({ journalItem, journal, journalFile, lock, plan: api.plan, maxCreate, maxReceipts });
     try {
       const receipt = reconcileReceipt(() => api.readComments(request.source_note_issue_number), request, { materialization_id: request.materialization_id, request_sha256: requestSha256(request), interview_note_id: planResult.projection.interview_note_id, interview_issue_number: ownerNumber }, reconcileAttempts);
-      if (receipt.interview_issue_body_sha256 !== sha256Text(planResult.projection.body)) throw new Error('reconciled receipt body digest differs from the owner projection');
+      validateReceiptOwner(receipt, request, planResult.projection, api.readIssue(ownerNumber));
     } catch (reconcileError) {
       throw new Error(`receipt resume is uncertain; bounded marker reconcile failed: ${reconcileError.message}`);
     }
@@ -484,10 +513,13 @@ function applyOne({ planResult, api, journalItem, journal, journalFile, lock, ma
   if (!journalItem || journalItem.phase !== 'pending' || journalItem.mutation_attempted || journalItem.possibly_performed) throw new Error('durable journal records an attempted incomplete mutation; refusing duplicate create');
   lock.assertHeld();
   const source = api.readIssue(request.source_note_issue_number);
-  const owners = api.readOwners(planResult.derived_interview_note_id || planResult.projection.interview_note_id);
+  const freshIdentityPlan = planMaterialization(request, { repository: REPOSITORY, sourceIssue: source, issues: [], receipts: [] });
+  const boundIdentity = assertFreshBoundIdentity(planResult, freshIdentityPlan);
+  const owners = api.readOwners(boundIdentity);
   const receipts = parseMaterializationReceipts(api.readComments(request.source_note_issue_number));
   const preflight = planMaterialization(request, { repository: REPOSITORY, sourceIssue: source, issues: owners, receipts });
   if (!preflight.ok) throw new Error(`pre-write CAS failed: ${preflight.errors.join('; ')}`);
+  if (preflight.interview_note_id !== boundIdentity || !preflight.projection || preflight.projection.interview_note_id !== boundIdentity) throw new Error('pre-write CAS identity differs from the fresh SourceNote identity');
   if (preflight.action !== 'create' || preflight.ownership_count !== 0) throw new Error('pre-write CAS found an owner; no duplicate create is permitted');
   if (!preflight.projection || typeof preflight.projection.body !== 'string') throw new Error('pre-write CAS did not produce a complete create projection');
   if (planResult.projection && planResult.projection.projected_body_sha256 !== sha256Text(preflight.projection.body)) throw new Error('pre-write projection body digest differs from the fresh plan');
@@ -531,7 +563,8 @@ function applyOne({ planResult, api, journalItem, journal, journalFile, lock, ma
     const finalOwners = api.readOwners(projection.interview_note_id);
     const finalReceipts = parseMaterializationReceipts(api.readComments(request.source_note_issue_number));
     final = planMaterialization(request, { repository: REPOSITORY, sourceIssue: finalSource, issues: finalOwners, receipts: finalReceipts });
-    if (!final.ok || !final.already_materialized || final.existing_issue_number !== ownerNumber) throw new Error('final materialization CAS did not converge');
+    if (!final.ok || !final.already_materialized || final.existing_issue_number !== ownerNumber || finalOwners.length !== 1) throw new Error('final materialization CAS did not converge');
+    validateReceiptOwner(final.receipt, request, projection, finalOwners[0]);
   } catch (error) {
     markUncertain({ journalItem, journal, journalFile, lock, plan: api.plan, maxCreate, maxReceipts });
     throw new Error(`post-mutation final CAS is uncertain: ${error.message}`);
@@ -548,7 +581,7 @@ module.exports = {
   validateFreshArtifacts, buildRunnerPlan, validateRunnerPlan, markerValues, parseAuthorizationComment,
   receiptObject, receiptBody, matchingReceipts, reconcileReceipt, reconcileOwner, atomicWriteJson,
   acquireExclusiveLock, initialIntent, initialJournal, validateJournal, updateJournal, assertNoExistingMutation,
-  buildCreateProjection, resumeReceiptOnly, applyOne,
+  buildCreateProjection, validateCreatedOwner, validateReceiptOwner, resumeReceiptOnly, applyOne,
   reconcileAlreadyMaterialized,
 };
 

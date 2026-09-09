@@ -172,14 +172,34 @@ function validateFreshBoundedRows(inputPlan, freshRows, freshOwnershipIssues) {
       results.push({ action: 'blocked', source_note_issue_number: request.source_note_issue_number, request, request_sha256: requestSha256(request), errors: ['fresh SourceNote GET is missing'] });
       continue;
     }
-    const owners = findOwnershipMatches(freshOwnershipIssues, row.plan.interview_note_id);
+    const boundIdentity = row.plan.interview_note_id;
+    let derived;
+    try {
+      // Derive identity from the fresh SourceNote before consulting the
+      // ownership inventory. The bound plan identity is only a value to
+      // verify; it must never choose which owner search is performed.
+      derived = planMaterialization(request, { repository: REPOSITORY, sourceIssue: fresh.issue, issues: [], receipts: [] });
+    } catch (error) {
+      derived = { ok: false, errors: [error.message] };
+    }
+    const rowErrors = [...(derived.errors || [])];
+    if (derived.interview_note_id !== boundIdentity) rowErrors.push(`fresh SourceNote identity ${derived.interview_note_id || 'missing'} does not match bound row identity ${boundIdentity || 'missing'}`);
+    if (!derived.projection || derived.projection.interview_note_id !== boundIdentity) rowErrors.push('fresh projection identity does not match bound row identity');
+    if (rowErrors.length) {
+      errors.push(...rowErrors.map((error) => `#${request.source_note_issue_number}: ${error}`));
+      results.push({ action: 'blocked', source_note_issue_number: request.source_note_issue_number, request, request_sha256: requestSha256(request), expected_interview_note_id: boundIdentity, errors: rowErrors });
+      continue;
+    }
+    const owners = findOwnershipMatches(freshOwnershipIssues, derived.interview_note_id);
     let checked;
     try {
       checked = planMaterialization(request, { repository: REPOSITORY, sourceIssue: fresh.issue, issues: owners, receipts: parseMaterializationReceipts(fresh.comments || []) });
     } catch (error) {
       checked = { ok: false, errors: [error.message] };
     }
-    const rowErrors = [...(checked.errors || [])];
+    rowErrors.push(...(checked.errors || []));
+    if (checked.interview_note_id !== boundIdentity) rowErrors.push('checked InterviewNote identity does not match bound row identity');
+    if (!checked.projection || checked.projection.interview_note_id !== boundIdentity) rowErrors.push('checked projection identity does not match bound row identity');
     const alreadyMaterialized = checked.action === 'existing' && checked.already_materialized && checked.ownership_count === 1;
     if (!alreadyMaterialized && (checked.action !== 'create' || checked.ownership_count !== 0)) rowErrors.push('fresh CAS is not an unowned create or an exact already-materialized owner');
     const projection = row.plan.projection;
