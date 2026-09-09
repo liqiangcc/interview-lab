@@ -4,7 +4,7 @@
 
 ## 当前证据
 
-原始 owner/receipt snapshot 时间：`2026-09-09T07:03:46Z`；本次 live GET-only re-audit 时间：`2026-09-09T10:19:51.517Z`。来源快照是 `data/pilot/issue-1611/source-note-live.snapshot.json`，owner inventory 是 `data/pilot/issue-1611/interview-note-ownership.inventory.json`，上游 materialization dry-run 是 `data/pilot/issue-1611/materialization.live.dry-run.json`，live re-audit 是 `data/pilot/issue-1657/live-reaudit.snapshot.json`。
+原始 owner/receipt snapshot 时间：`2026-09-09T07:03:46Z`；本次 live GET-only re-audit 时间：`2026-09-09T10:36:39.611Z`。来源快照是 `data/pilot/issue-1611/source-note-live.snapshot.json`，owner inventory 是 `data/pilot/issue-1611/interview-note-ownership.inventory.json`，上游 materialization dry-run 是 `data/pilot/issue-1611/materialization.live.dry-run.json`，live re-audit 是 `data/pilot/issue-1657/live-reaudit.snapshot.json`。
 
 | SourceNote | 当前 SourceRevision / ref | boundary evidence / receipt | 唯一 InterviewNote owner | 结论 |
 | --- | --- | --- | --- | --- |
@@ -21,6 +21,8 @@ Marker count（`0` / `1` / `>1`）全部保存在 live snapshot，并由 planner
 | #910 | 0 | 1 | 1 | 0 | 1 | 0 |
 
 上述期望计数写入 planner 结果的 `live_audit.expected_source_marker_counts` / `expected_owner_marker_counts`，并与 live snapshot 的实际计数逐 target 断言。当前真实三条 target 仅保留原有 blocker：#904/#907 的 owner SourceRevision 冲突，以及 #910 的 runtime boundary evidence/provenance blocker。
+
+count=1 的 payload 还按 marker 类型做语义校验：evidence 的 prior body SHA 绑定同一 transition 的 applied `previous_body_sha256`（#904/#907 为 `7f…`/`69…`，#910 为 `c3…`），applied 的 `new_body_sha256` 绑定当前 SourceNote body；SourceRevision/ref、identity、transition、decision、repository、checks、materialization request/receipt、owner source-review receipt 均逐字段交叉绑定。#910 的 runtime `source_repository_ref` 保持 `null`，不得升级为 Git ref。
 
 三个目标的 SourceNote 当前 body digest 分别为：
 
@@ -50,7 +52,7 @@ npm run plan:issue-1657-blocker-repair
 当前 plan digest（schema v2，含 live re-audit digest）：
 
 ```text
-bccc42cb483defe39fc68bf629b07b79a1c7eb6e0760554305ddde0d953ac072
+cac1b61ae9680c293f9fbb4ec25d4893d66ca38ae349fe24b093e1f1358fe889
 ```
 
 Receipt/owner audit snapshot digest（计算输入明确不含 `canonical_digest` 字段）：
@@ -62,7 +64,7 @@ Receipt/owner audit snapshot digest（计算输入明确不含 `canonical_digest
 Live re-audit snapshot digest（计算输入明确不含 `canonical_digest` 字段）：
 
 ```text
-725844034cd78750a13d016d039cad0ba524713bfa82f9b73da14d75d4b124d9
+66f911cc2343cbd34b33197647bc779bc9130147e152c941dc0fb231aff0a257
 ```
 
 上游输入 digest：
@@ -74,7 +76,7 @@ Boundary report           b91961567526bc1be0a987e275e367e845c89da274fd8f5f74c9d2
 Boundary manifest         6fbff5de05abbed9d239a6a8cf3b981d94ed2e0b711342ea6f84c79ffad1b165
 Materialization dry-run  67d848cf88be634d8137cc5ad13798e6d745f87ec19d770e0947be9dd724bb55
 Receipt/owner audit     7786f58aa9c6c6294ade44c992908466d3f9606682cc557465b94ec9535a5016
-Live re-audit           725844034cd78750a13d016d039cad0ba524713bfa82f9b73da14d75d4b124d9
+Live re-audit           66f911cc2343cbd34b33197647bc779bc9130147e152c941dc0fb231aff0a257
 ```
 
 所有 digest 应以对应 JSON 产物重新计算为准；计划内写入计数固定为：

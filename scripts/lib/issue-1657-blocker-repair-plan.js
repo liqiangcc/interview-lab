@@ -28,6 +28,15 @@ const MARKER_EXPECTATIONS = Object.freeze({
     owner: Object.freeze({ source_review_evidence: 0, source_review_applied_receipt: 1, materialization_receipt: 0 }),
   }),
 });
+const BOUNDARY_PREVIOUS_BODY_SHA256 = Object.freeze({
+  904: '7f01c5bd753c6a3938d8da2a501fcdb9503d9ae767d5966112e28e0c70925755',
+  907: '69e0dbfd9b86f0a223aa9427c6cb464177c7de1c99d84c8c55eb87489894167c',
+  910: 'c3df7ce6bd95de1f23d16bd322d13b5afaa998b4a48f19cdd180053798f6aeb5',
+});
+const REQUIRED_EVIDENCE_CHECKS = Object.freeze([
+  'source_identity', 'source_revision_binding', 'source_content_coverage',
+  'event_boundary', 'no_cross_source_mixing', 'no_fabrication',
+]);
 const REQUIRED_ZERO_WRITES = Object.freeze({ patch: 0, post: 0, label: 0, interview_note: 0, create: 0 });
 const HEX64 = /^[0-9a-f]{64}$/;
 
@@ -131,6 +140,176 @@ function optionalMarker(summary, label, errors, expectedCount = 0, markerName) {
   const result = expectMarker(summary, expectedCount, label, markerName);
   errors.push(...result.errors);
   return result.summary;
+}
+
+function equalPayloadField(payload, field, expected, label, errors) {
+  if (payload[field] !== expected) errors.push(`${label} payload ${field} mismatch`);
+}
+
+function equalPresentPayloadField(payload, field, expected, label, errors) {
+  if (Object.prototype.hasOwnProperty.call(payload, field)) equalPayloadField(payload, field, expected, label, errors);
+}
+
+function equalRequiredPayloadField(payload, field, expected, label, errors) {
+  if (!Object.prototype.hasOwnProperty.call(payload, field)) errors.push(`${label} payload ${field} is missing`);
+  else equalPayloadField(payload, field, expected, label, errors);
+}
+
+function timestampPayloadField(payload, field, label, errors) {
+  if (typeof payload[field] !== 'string' || !payload[field].trim() || Number.isNaN(Date.parse(payload[field]))) {
+    errors.push(`${label} payload ${field} is invalid`);
+  }
+}
+
+function validateEvidencePayload(payload, context, errors) {
+  const label = 'live boundary evidence';
+  if (!isObject(payload)) {
+    errors.push(`${label} payload is missing or invalid`);
+    return;
+  }
+  equalPayloadField(payload, 'schema_version', 'source-note-boundary-review-evidence.v1', label, errors);
+  equalPayloadField(payload, 'repository', REPOSITORY, label, errors);
+  equalPayloadField(payload, 'parent_issue', 1605, label, errors);
+  equalPayloadField(payload, 'issue_number', context.target.source_note_issue_number, label, errors);
+  equalPayloadField(payload, 'source_note_id', context.sourceParsed && context.sourceParsed.source_note_id, label, errors);
+  equalPayloadField(payload, 'expected_body_sha256', context.boundaryPreviousBodySha, label, errors);
+  equalRequiredPayloadField(payload, 'expected_source_revision_id', context.sourceRevision.id || null, label, errors);
+  equalRequiredPayloadField(payload, 'expected_source_repository_ref', context.sourceRevision.source_repository_ref ?? null, label, errors);
+  equalPayloadField(payload, 'decision', 'single-interview', label, errors);
+  equalPayloadField(payload, 'transition_id', context.reportItem && context.reportItem.transition_id || null, label, errors);
+  timestampPayloadField(payload, 'reviewed_at', label, errors);
+  if (!isObject(payload.source_evidence) || Object.keys(payload.source_evidence).length === 0) errors.push(`${label} payload source_evidence is missing or empty`);
+  if (!isObject(payload.source_evidence && payload.source_evidence.artifact) || Object.keys(payload.source_evidence.artifact || {}).length === 0 || !Array.isArray(payload.source_evidence && payload.source_evidence.excerpts) || payload.source_evidence.excerpts.length === 0) {
+    errors.push(`${label} payload source_evidence artifact/excerpts are invalid`);
+  }
+  if (!Array.isArray(payload.checks) || REQUIRED_EVIDENCE_CHECKS.some((checkId) => !payload.checks.some((check) => check && check.check_id === checkId && check.result === 'pass'))) {
+    errors.push(`${label} payload checks do not prove all required checks`);
+  }
+}
+
+function validateBoundaryAppliedPayload(payload, context, errors) {
+  const label = 'live boundary applied receipt';
+  if (!isObject(payload)) {
+    errors.push(`${label} payload is missing or invalid`);
+    return;
+  }
+  equalPayloadField(payload, 'schema_version', 'source-note-boundary-review-applied.v1', label, errors);
+  equalPayloadField(payload, 'repository', REPOSITORY, label, errors);
+  equalPayloadField(payload, 'issue_number', context.target.source_note_issue_number, label, errors);
+  equalPayloadField(payload, 'source_note_id', context.sourceParsed && context.sourceParsed.source_note_id, label, errors);
+  equalPayloadField(payload, 'transition_id', context.reportItem && context.reportItem.transition_id || null, label, errors);
+  equalPayloadField(payload, 'decision', 'single-interview', label, errors);
+  equalPayloadField(payload, 'previous_body_sha256', context.boundaryPreviousBodySha, label, errors);
+  equalPayloadField(payload, 'new_body_sha256', context.sourceBodySha, label, errors);
+  const sourceRef = context.sourceRevision.source_repository_ref ?? null;
+  if (sourceRef !== null) {
+    equalRequiredPayloadField(payload, 'expected_source_revision_id', context.sourceRevision.id || null, label, errors);
+    equalRequiredPayloadField(payload, 'expected_source_repository_ref', sourceRef, label, errors);
+  } else {
+    equalPresentPayloadField(payload, 'expected_source_revision_id', context.sourceRevision.id || null, label, errors);
+    equalPresentPayloadField(payload, 'expected_source_repository_ref', null, label, errors);
+  }
+  for (const [field, expected] of Object.entries({
+    previous_source_revision_id: context.sourceRevision.id || null,
+    new_source_revision_id: context.sourceRevision.id || null,
+    previous_source_repository_ref: sourceRef,
+    new_source_repository_ref: sourceRef,
+  })) equalPresentPayloadField(payload, field, expected, label, errors);
+  const expectedInterviewNoteIds = context.sourceParsed && context.sourceParsed.boundary_review && context.sourceParsed.boundary_review.interview_note_ids || [context.target.interview_note_id];
+  if (canonicalDigest(payload.interview_note_ids || null) !== canonicalDigest(expectedInterviewNoteIds)) errors.push(`${label} payload interview_note_ids mismatch`);
+  timestampPayloadField(payload, 'reviewed_at', label, errors);
+  timestampPayloadField(payload, 'applied_at', label, errors);
+  if (context.reportItem) {
+    equalPayloadField(payload, 'transition_id', context.reportItem.transition_id, label, errors);
+    equalPayloadField(payload, 'decision', context.reportItem.boundary_decision, label, errors);
+    if (context.reportItem.derived_interview_note_id != null && canonicalDigest(payload.interview_note_ids || null) !== canonicalDigest([context.reportItem.derived_interview_note_id])) {
+      errors.push(`${label} payload interview_note_ids do not match report`);
+    }
+  }
+}
+
+function validateSourceMaterializationPayload(payload, context, errors) {
+  const label = 'live materialization receipt';
+  const receipt = context.receiptEntry && context.receiptEntry.materialization_receipt;
+  if (!isObject(payload)) {
+    errors.push(`${label} payload is missing or invalid`);
+    return;
+  }
+  if (!isObject(receipt)) {
+    errors.push(`${label} cannot bind without materialization receipt`);
+    return;
+  }
+  equalPayloadField(payload, 'schema_version', 'source-note-interview-materialized.v1', label, errors);
+  equalPayloadField(payload, 'repository', REPOSITORY, label, errors);
+  equalPayloadField(payload, 'materialization_id', receipt.materialization_id, label, errors);
+  equalPayloadField(payload, 'request_sha256', receipt.request_sha256, label, errors);
+  equalPayloadField(payload, 'source_note_issue_number', context.target.source_note_issue_number, label, errors);
+  equalPayloadField(payload, 'source_note_id', context.sourceParsed && context.sourceParsed.source_note_id, label, errors);
+  equalPayloadField(payload, 'source_note_body_sha256', context.sourceBodySha, label, errors);
+  equalPayloadField(payload, 'source_revision_id', context.sourceRevision.id || null, label, errors);
+  equalPayloadField(payload, 'source_repository_ref', context.sourceRevision.source_repository_ref ?? null, label, errors);
+  equalPayloadField(payload, 'interview_note_id', context.target.interview_note_id, label, errors);
+  equalPayloadField(payload, 'interview_issue_number', context.target.owner_issue_number, label, errors);
+  equalPayloadField(payload, 'interview_issue_body_sha256', context.owner && context.owner.body_sha256 || null, label, errors);
+  equalPayloadField(payload, 'manifest_sha256', context.sourceRevision.manifest_sha256 || null, label, errors);
+  equalPayloadField(payload, 'materialization_id', receipt.materialization_id, label, errors);
+  equalPayloadField(payload, 'request_sha256', receipt.request_sha256, label, errors);
+  if (receipt.source_note_issue_number != null) equalPayloadField(payload, 'source_note_issue_number', Number(receipt.source_note_issue_number), label, errors);
+  if (receipt.source_note_id != null) equalPayloadField(payload, 'source_note_id', receipt.source_note_id, label, errors);
+  if (receipt.source_note_body_sha256 != null) equalPayloadField(payload, 'source_note_body_sha256', receipt.source_note_body_sha256, label, errors);
+  if (receipt.source_revision_id != null) equalPayloadField(payload, 'source_revision_id', receipt.source_revision_id, label, errors);
+  if (receipt.source_repository_ref != null) equalPayloadField(payload, 'source_repository_ref', receipt.source_repository_ref, label, errors);
+  if (receipt.interview_note_id != null) equalPayloadField(payload, 'interview_note_id', receipt.interview_note_id, label, errors);
+  if (receipt.interview_issue_number != null) equalPayloadField(payload, 'interview_issue_number', Number(receipt.interview_issue_number), label, errors);
+  if (receipt.interview_note_body_sha256 != null) equalPayloadField(payload, 'interview_issue_body_sha256', receipt.interview_note_body_sha256, label, errors);
+  if (receipt.manifest_sha256 != null) equalPayloadField(payload, 'manifest_sha256', receipt.manifest_sha256, label, errors);
+  if (context.reportItem) {
+    equalPayloadField(payload, 'source_note_issue_number', Number(context.reportItem.source_note_issue_number), label, errors);
+    equalPayloadField(payload, 'source_note_id', context.reportItem.source_note_id, label, errors);
+    if (context.reportItem.request) {
+      const request = context.reportItem.request;
+      equalPayloadField(payload, 'source_note_body_sha256', request.expected_source_note_body_sha256, label, errors);
+      equalPayloadField(payload, 'source_revision_id', request.expected_source_revision_id, label, errors);
+      equalPayloadField(payload, 'source_repository_ref', request.expected_source_repository_ref ?? null, label, errors);
+      if (request.expected_manifest_sha256 != null) equalPayloadField(payload, 'manifest_sha256', request.expected_manifest_sha256, label, errors);
+      if (request.materialization_id != null) equalPayloadField(payload, 'materialization_id', request.materialization_id, label, errors);
+      if (request.request_sha256 != null) equalPayloadField(payload, 'request_sha256', request.request_sha256, label, errors);
+    }
+  }
+  if (context.sourceRevision.source_repository_ref == null && payload.source_repository_ref !== null) errors.push(`${label} payload runtime source_repository_ref must be null`);
+}
+
+function validateOwnerSourceReviewAppliedPayload(payload, context, errors) {
+  const label = 'live owner source-review applied receipt';
+  if (!isObject(payload)) {
+    errors.push(`${label} payload is missing or invalid`);
+    return;
+  }
+  equalPayloadField(payload, 'schema_version', 'interview-note-source-review-applied.v1', label, errors);
+  equalPayloadField(payload, 'repository', REPOSITORY, label, errors);
+  equalPayloadField(payload, 'issue_number', context.target.owner_issue_number, label, errors);
+  equalPayloadField(payload, 'interview_note_id', context.target.interview_note_id, label, errors);
+  equalPayloadField(payload, 'source_note_issue_number', context.target.source_note_issue_number, label, errors);
+  equalPayloadField(payload, 'source_note_body_sha256', context.sourceBodySha, label, errors);
+  equalPayloadField(payload, 'source_revision_id', context.sourceRevision.id || null, label, errors);
+  equalPayloadField(payload, 'manifest_sha256', context.sourceRevision.manifest_sha256 || null, label, errors);
+  equalPayloadField(payload, 'decision', 'source-ready', label, errors);
+  equalPayloadField(payload, 'final_status', 'source-ready', label, errors);
+  timestampPayloadField(payload, 'reviewed_at', label, errors);
+  timestampPayloadField(payload, 'applied_at', label, errors);
+  if (!HEX64.test(String(payload.request_sha256 || ''))) errors.push(`${label} payload request_sha256 is invalid`);
+  const reportRequestSha = context.reportItem && (context.reportItem.request_sha256 || context.reportItem.source_review_request_sha256 || context.reportItem.source_review_request && context.reportItem.source_review_request.request_sha256 || context.reportItem.request && context.reportItem.request.source_review_request_sha256);
+  if (reportRequestSha != null) equalPayloadField(payload, 'request_sha256', reportRequestSha, label, errors);
+  if ((context.sourceRevision.source_repository_ref ?? null) !== null) errors.push(`${label} runtime/source ref contract mismatch`);
+  if (context.reportItem) {
+    equalPayloadField(payload, 'source_note_issue_number', Number(context.reportItem.source_note_issue_number), label, errors);
+    equalPayloadField(payload, 'source_note_body_sha256', context.reportItem.request && context.reportItem.request.expected_source_note_body_sha256 || context.sourceBodySha, label, errors);
+    equalPayloadField(payload, 'source_revision_id', context.reportItem.request && context.reportItem.request.expected_source_revision_id || context.sourceRevision.id, label, errors);
+    if (context.reportItem.request && context.reportItem.request.expected_manifest_sha256 != null) equalPayloadField(payload, 'manifest_sha256', context.reportItem.request.expected_manifest_sha256, label, errors);
+    if (context.reportItem.request && context.reportItem.request.expected_source_repository_ref !== undefined && context.reportItem.request.expected_source_repository_ref !== null) {
+      errors.push(`${label} report unexpectedly claims a non-null runtime source ref`);
+    }
+  }
 }
 
 function validateLiveTargetShape(liveTarget, target, errors) {
@@ -317,6 +496,20 @@ function planIssue1657BlockerRepair({ sourceSnapshot, ownershipInventory, materi
     const ownerSourceEvidence = liveOwner && requiredMarker(liveOwner.source_review_evidence, 'live owner source-review evidence', targetErrors, markerExpectations.owner.source_review_evidence, 'interview-note-source-review-evidence');
     const ownerSourceApplied = liveOwner && requiredMarker(liveOwner.source_review_applied_receipt, 'live owner source-review applied receipt', targetErrors, markerExpectations.owner.source_review_applied_receipt, 'interview-note-source-review-applied');
     const ownerMaterialization = liveOwner && optionalMarker(liveOwner.materialization_receipt, 'live owner materialization receipt', targetErrors, markerExpectations.owner.materialization_receipt, 'source-note-interview-materialized');
+    const payloadContext = {
+      target,
+      sourceParsed,
+      sourceRevision,
+      sourceBodySha,
+      owner,
+      reportItem,
+      receiptEntry,
+      boundaryPreviousBodySha: BOUNDARY_PREVIOUS_BODY_SHA256[target.source_note_issue_number],
+    };
+    if (boundaryEvidence && boundaryEvidence.count === 1) validateEvidencePayload(boundaryEvidence.payload, payloadContext, targetErrors);
+    if (boundaryApplied && boundaryApplied.count === 1) validateBoundaryAppliedPayload(boundaryApplied.payload, payloadContext, targetErrors);
+    if (materializationReceipt && materializationReceipt.count === 1) validateSourceMaterializationPayload(materializationReceipt.payload, payloadContext, targetErrors);
+    if (ownerSourceApplied && ownerSourceApplied.count === 1) validateOwnerSourceReviewAppliedPayload(ownerSourceApplied.payload, payloadContext, targetErrors);
     if (boundaryEvidence && boundaryEvidence.comment_id !== (reportItem && reportItem.evidence_comment_id)) targetErrors.push('live boundary evidence comment mismatch');
     if (boundaryApplied && boundaryApplied.payload && boundaryApplied.payload.new_body_sha256 !== sourceBodySha) targetErrors.push('live boundary applied receipt body digest mismatch');
     if (materializationReceipt && receiptEntry && materializationReceipt.comment_id !== receiptEntry.materialization_receipt_comment_id) targetErrors.push('live materialization receipt comment mismatch');

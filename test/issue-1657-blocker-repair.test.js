@@ -286,6 +286,138 @@ test('marker summary field substitution remains blocked after resealing', () => 
   }
 });
 
+test('marker payload semantic substitution remains blocked after resealing', () => {
+  const cases = [
+    {
+      name: 'boundary evidence repository', target: 904, side: 'source', summary: 'boundary_evidence', marker: 'source-note-boundary-review-evidence',
+      mutate: (payload) => { payload.repository = 'attacker/repo'; }, expected: /live boundary evidence payload repository mismatch/,
+    },
+    {
+      name: 'boundary evidence identity', target: 904, side: 'source', summary: 'boundary_evidence', marker: 'source-note-boundary-review-evidence',
+      mutate: (payload) => { payload.source_note_id = 'xhs-note:tampered'; }, expected: /live boundary evidence payload source_note_id mismatch/,
+    },
+    {
+      name: 'boundary evidence prior body', target: 904, side: 'source', summary: 'boundary_evidence', marker: 'source-note-boundary-review-evidence',
+      mutate: (payload, source) => { payload.expected_body_sha256 = source.body_sha256; }, expected: /live boundary evidence payload expected_body_sha256 mismatch/,
+    },
+    {
+      name: 'boundary evidence transition', target: 904, side: 'source', summary: 'boundary_evidence', marker: 'source-note-boundary-review-evidence',
+      mutate: (payload) => { payload.transition_id = 'tampered-transition'; }, expected: /live boundary evidence payload transition_id mismatch/,
+    },
+    {
+      name: 'boundary evidence source revision', target: 904, side: 'source', summary: 'boundary_evidence', marker: 'source-note-boundary-review-evidence',
+      mutate: (payload) => { payload.expected_source_revision_id = 'xhs-note:tampered:r1'; }, expected: /live boundary evidence payload expected_source_revision_id mismatch/,
+    },
+    {
+      name: 'boundary evidence source ref', target: 904, side: 'source', summary: 'boundary_evidence', marker: 'source-note-boundary-review-evidence',
+      mutate: (payload) => { payload.expected_source_repository_ref = null; }, expected: /live boundary evidence payload expected_source_repository_ref mismatch/,
+    },
+    {
+      name: 'boundary evidence checks', target: 904, side: 'source', summary: 'boundary_evidence', marker: 'source-note-boundary-review-evidence',
+      mutate: (payload) => { payload.checks = []; }, expected: /live boundary evidence payload checks do not prove all required checks/,
+    },
+    {
+      name: 'boundary applied repository', target: 904, side: 'source', summary: 'boundary_applied_receipt', marker: 'source-note-boundary-review-applied',
+      mutate: (payload) => { payload.repository = 'attacker/repo'; }, expected: /live boundary applied receipt payload repository mismatch/,
+    },
+    {
+      name: 'boundary applied identity', target: 904, side: 'source', summary: 'boundary_applied_receipt', marker: 'source-note-boundary-review-applied',
+      mutate: (payload) => { payload.source_note_id = 'xhs-note:tampered'; }, expected: /live boundary applied receipt payload source_note_id mismatch/,
+    },
+    {
+      name: 'boundary applied transition', target: 904, side: 'source', summary: 'boundary_applied_receipt', marker: 'source-note-boundary-review-applied',
+      mutate: (payload) => { payload.transition_id = 'tampered-transition'; }, expected: /live boundary applied receipt payload transition_id mismatch/,
+    },
+    {
+      name: 'boundary applied prior body', target: 904, side: 'source', summary: 'boundary_applied_receipt', marker: 'source-note-boundary-review-applied',
+      mutate: (payload, source) => { payload.previous_body_sha256 = source.body_sha256; }, expected: /live boundary applied receipt payload previous_body_sha256 mismatch/,
+    },
+    {
+      name: 'boundary applied new body', target: 904, side: 'source', summary: 'boundary_applied_receipt', marker: 'source-note-boundary-review-applied',
+      mutate: (payload) => { payload.new_body_sha256 = '0'.repeat(64); }, expected: /live boundary applied receipt payload new_body_sha256 mismatch/,
+    },
+    {
+      name: 'boundary applied source revision', target: 904, side: 'source', summary: 'boundary_applied_receipt', marker: 'source-note-boundary-review-applied',
+      mutate: (payload) => { payload.expected_source_revision_id = 'xhs-note:tampered:r1'; }, expected: /live boundary applied receipt payload expected_source_revision_id mismatch/,
+    },
+    {
+      name: 'boundary applied source ref', target: 904, side: 'source', summary: 'boundary_applied_receipt', marker: 'source-note-boundary-review-applied',
+      mutate: (payload) => { payload.expected_source_repository_ref = null; }, expected: /live boundary applied receipt payload expected_source_repository_ref mismatch/,
+    },
+    {
+      name: 'boundary applied interview identity', target: 904, side: 'source', summary: 'boundary_applied_receipt', marker: 'source-note-boundary-review-applied',
+      mutate: (payload) => { payload.interview_note_ids = ['xhs:tampered']; }, expected: /live boundary applied receipt payload interview_note_ids mismatch/,
+    },
+    {
+      name: 'materialization repository', target: 910, side: 'source', summary: 'materialization_receipt', marker: 'source-note-interview-materialized',
+      mutate: (payload) => { payload.repository = 'attacker/repo'; }, expected: /live materialization receipt payload repository mismatch/,
+    },
+    {
+      name: 'materialization identity', target: 910, side: 'source', summary: 'materialization_receipt', marker: 'source-note-interview-materialized',
+      mutate: (payload) => { payload.source_note_id = 'xhs-note:tampered'; }, expected: /live materialization receipt payload source_note_id mismatch/,
+    },
+    {
+      name: 'materialization body', target: 910, side: 'source', summary: 'materialization_receipt', marker: 'source-note-interview-materialized',
+      mutate: (payload) => { payload.source_note_body_sha256 = '0'.repeat(64); }, expected: /live materialization receipt payload source_note_body_sha256 mismatch/,
+    },
+    {
+      name: 'materialization revision', target: 910, side: 'source', summary: 'materialization_receipt', marker: 'source-note-interview-materialized',
+      mutate: (payload) => { payload.source_revision_id = 'xhs:tampered:r1'; }, expected: /live materialization receipt payload source_revision_id mismatch/,
+    },
+    {
+      name: 'materialization runtime ref', target: 910, side: 'source', summary: 'materialization_receipt', marker: 'source-note-interview-materialized',
+      mutate: (payload) => { payload.source_repository_ref = '95b77bb261048059846273688e4b90a2e108b437'; }, expected: /live materialization receipt payload source_repository_ref mismatch/,
+    },
+    {
+      name: 'materialization request', target: 910, side: 'source', summary: 'materialization_receipt', marker: 'source-note-interview-materialized',
+      mutate: (payload) => { payload.request_sha256 = '0'.repeat(64); }, expected: /live materialization receipt payload request_sha256 mismatch/,
+    },
+    {
+      name: 'materialization id', target: 910, side: 'source', summary: 'materialization_receipt', marker: 'source-note-interview-materialized',
+      mutate: (payload) => { payload.materialization_id = 'tampered-materialization'; }, expected: /live materialization receipt payload materialization_id mismatch/,
+    },
+    {
+      name: 'owner review repository', target: 910, side: 'owner', summary: 'source_review_applied_receipt', marker: 'interview-note-source-review-applied',
+      mutate: (payload) => { payload.repository = 'attacker/repo'; }, expected: /live owner source-review applied receipt payload repository mismatch/,
+    },
+    {
+      name: 'owner review identity', target: 910, side: 'owner', summary: 'source_review_applied_receipt', marker: 'interview-note-source-review-applied',
+      mutate: (payload) => { payload.interview_note_id = 'xhs:tampered'; }, expected: /live owner source-review applied receipt payload interview_note_id mismatch/,
+    },
+    {
+      name: 'owner review issue', target: 910, side: 'owner', summary: 'source_review_applied_receipt', marker: 'interview-note-source-review-applied',
+      mutate: (payload) => { payload.issue_number = 2; }, expected: /live owner source-review applied receipt payload issue_number mismatch/,
+    },
+    {
+      name: 'owner review source body', target: 910, side: 'owner', summary: 'source_review_applied_receipt', marker: 'interview-note-source-review-applied',
+      mutate: (payload) => { payload.source_note_body_sha256 = '0'.repeat(64); }, expected: /live owner source-review applied receipt payload source_note_body_sha256 mismatch/,
+    },
+    {
+      name: 'owner review source revision', target: 910, side: 'owner', summary: 'source_review_applied_receipt', marker: 'interview-note-source-review-applied',
+      mutate: (payload) => { payload.source_revision_id = 'xhs:tampered:r1'; }, expected: /live owner source-review applied receipt payload source_revision_id mismatch/,
+    },
+    {
+      name: 'owner review manifest', target: 910, side: 'owner', summary: 'source_review_applied_receipt', marker: 'interview-note-source-review-applied',
+      mutate: (payload) => { payload.manifest_sha256 = '0'.repeat(64); }, expected: /live owner source-review applied receipt payload manifest_sha256 mismatch/,
+    },
+  ];
+  for (const { name, target, side, summary: summaryName, marker, mutate, expected } of cases) {
+    const tampered = JSON.parse(JSON.stringify(liveAuditSnapshot));
+    const audited = tampered.targets.find((item) => item.source_note_issue_number === target)[side];
+    const summary = audited[summaryName];
+    const payload = JSON.parse(JSON.stringify(summary.payload));
+    mutate(payload, audited);
+    summary.payload = payload;
+    summary.comments[0].markers[marker] = payload;
+    tampered.canonical_digest = liveSnapshotDigest(tampered);
+    const plan = planIssue1657BlockerRepair({ sourceSnapshot, ownershipInventory, materializationPlan, receiptSnapshot, liveAuditSnapshot: tampered });
+    const row = plan.results.find((result) => result.source_note_issue_number === target);
+    assert.equal(plan.ok, false, `${name} must fail closed`);
+    assert.match(row.errors.join('\n'), expected, name);
+    assert.deepEqual(plan.write_operations, REQUIRED_ZERO_WRITES);
+  }
+});
+
 test('missing live source or owner object remains a target blocker after resealing', () => {
   for (const field of ['source', 'owner']) {
     const tampered = JSON.parse(JSON.stringify(liveAuditSnapshot));
