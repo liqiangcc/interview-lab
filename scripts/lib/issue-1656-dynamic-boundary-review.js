@@ -77,6 +77,31 @@ function sourceExternalId(item) {
   return String(item && (item.source_external_id || item.source_note_id || '')).replace(/^xhs-note:/, '');
 }
 
+function validateSourceProjectionArtifact(artifact, expectedExternalId = null) {
+  if (!artifact || typeof artifact !== 'object') throw new Error('source projection artifact is missing');
+  if (artifact.provenance !== 'source_projection') throw new Error('source projection provenance must be source_projection');
+  if (artifact.kind !== 'text_projection' && artifact.kind !== 'json') throw new Error('source projection kind is invalid');
+  if (artifact.repository != null && artifact.repository !== SOURCE_REPOSITORY) throw new Error('source projection repository drifted');
+  if (typeof artifact.ref !== 'string') throw new Error('source projection artifact.ref is missing');
+  const externalId = expectedExternalId == null ? null : String(expectedExternalId).replace(/^xhs-note:/, '');
+  if (externalId === '') throw new Error('source projection external id is missing');
+  const id = externalId || artifact.ref.match(/^liqiangcc\/xhs:note_(?:desc|json)\/([^/]+)\.(?:txt|json)@[0-9a-f]{40}$/)?.[1];
+  if (!id) throw new Error('source projection artifact.ref path is invalid');
+  const expectedPath = artifact.kind === 'text_projection' ? `liqiangcc/xhs:note_desc/${id}.txt@${SOURCE_REF}` : `liqiangcc/xhs:note_json/${id}.json@${SOURCE_REF}`;
+  if (artifact.ref !== expectedPath) throw new Error(`source projection artifact.ref must be exactly ${expectedPath}`);
+  return true;
+}
+
+function validateSourceProjectionArtifacts(record) {
+  const artifacts = Array.isArray(record && record.artifacts) ? record.artifacts : [];
+  const candidates = artifacts.filter((artifact) => artifact.provenance === 'source_projection'
+    || (typeof artifact.ref === 'string' && /:note_(?:desc|json)\//.test(artifact.ref)));
+  if (!candidates.length) throw new Error('no source_projection artifact');
+  const externalId = record.source && record.source.external_id;
+  for (const artifact of candidates) validateSourceProjectionArtifact(artifact, externalId);
+  return candidates;
+}
+
 function jsonProjectionText(bytes, item) {
   let document;
   try {
@@ -187,6 +212,8 @@ function parseSelectedIssue(issue, expected) {
   const validation = validateSourceNoteIssue({ body, labels, state: String(issue.state || '').toLowerCase() });
   if (!validation.ok || !parsed.record) throw new Error(`#${issue.number} SourceNote validation failed: ${validation.errors.join('; ')}`);
   const record = parsed.record;
+  try { validateSourceProjectionArtifacts(record); }
+  catch (error) { throw new Error(`#${issue.number} fail-closed: ${error.message}`); }
   const projection = sourceProjectionArtifact(record);
   const errors = [];
   if (record.boundary_review?.status !== 'pending') errors.push('boundary_review.status is not pending');
@@ -232,6 +259,7 @@ function sourceMap(sourceSnapshot) {
 }
 
 function sourceBytes(entry, artifact) {
+  validateSourceProjectionArtifact(artifact);
   if (!entry) return null;
   let bytes;
   if (typeof entry.content_base64 === 'string') bytes = Buffer.from(entry.content_base64.replace(/\s/g, ''), 'base64');
@@ -628,6 +656,8 @@ function validateReviewPlan(plan, inventory = null) {
     numbers.add(number);
     if (item.source_repository_ref !== SOURCE_REF || item.source_revision?.source_repository_ref !== SOURCE_REF) errors.push(`#${number} source ref drifted`);
     if (!HEX64.test(String(item.body_sha256 || '')) || !item.source_revision_id) errors.push(`#${number} body/SourceRevision binding missing`);
+    try { validateSourceProjectionArtifact(item.source_projection, item.source_note_id); }
+    catch (error) { errors.push(`#${number} source projection artifact binding invalid: ${error.message}`); }
     if (!HEX40.test(String(item.source_projection_blob_sha || ''))) errors.push(`#${number} source projection blob SHA missing`);
     if (!Number.isInteger(item.source_projection?.byte_size_verified) || !HEX64.test(String(item.source_projection?.content_sha256 || ''))) errors.push(`#${number} source projection content is not verified`);
     if (!Array.isArray(item.line_evidence)) errors.push(`#${number} line evidence is not an array`);
@@ -785,7 +815,7 @@ async function fetchSourceSnapshotForPlan(plan, fetcher = fetchSourceBlob, optio
 
 module.exports = {
   REPOSITORY, SOURCE_REPOSITORY, SOURCE_REF, ISSUE, PARENT_ISSUE, EXPECTED_PENDING_COUNT, MODEL, REASONING_EFFORT,
-  ZERO_MUTATIONS, canonicalize, sha256, gitBlobSha, sourceProjectionArtifact, sourceProjectionText, sourceSnapshotCanonicalDigest, validateIssueSnapshot, inventoryIndex,
+  ZERO_MUTATIONS, canonicalize, sha256, gitBlobSha, sourceProjectionArtifact, validateSourceProjectionArtifact, validateSourceProjectionArtifacts, sourceProjectionText, sourceSnapshotCanonicalDigest, validateIssueSnapshot, inventoryIndex,
   selectedPendingIssues, parseSelectedIssue, sourceMap, sourceBytes, linesOf, proposalFromClassification, buildItem,
   heuristicMultiClassification, buildReviewPlan, blockedPlan, fetchSourceBlob, fetchSourceSnapshotForPlan,
   validateReviewPlan,

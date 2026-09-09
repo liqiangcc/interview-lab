@@ -54,12 +54,24 @@
       "maxItems": 421,
       "items": {
         "type": "object",
-        "required": ["issue_number", "source_note_id", "body_sha256", "source_revision_id", "source_projection_blob_sha", "line_evidence", "proposal", "review", "mutation_guard"],
+        "required": ["issue_number", "source_note_id", "body_sha256", "source_revision_id", "source_projection", "source_projection_blob_sha", "line_evidence", "proposal", "review", "mutation_guard"],
         "properties": {
           "issue_number": { "type": "integer", "minimum": 1 },
           "source_note_id": { "type": "string", "pattern": "^xhs-note:" },
           "body_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
           "source_revision_id": { "type": "string" },
+          "source_projection": {
+            "type": "object",
+            "required": ["ref", "kind", "provenance", "blob_sha", "source_projection_blob_sha"],
+            "properties": {
+              "ref": { "type": "string", "pattern": "^liqiangcc/xhs:note_(desc/[^/]+\\.txt|json/[^/]+\\.json)@95b77bb261048059846273688e4b90a2e108b437$" },
+              "kind": { "enum": ["text_projection", "json"] },
+              "provenance": { "const": "source_projection" },
+              "blob_sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+              "source_projection_blob_sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" }
+            },
+            "additionalProperties": true
+          },
           "source_projection_blob_sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
           "line_evidence": { "type": "array" },
           "proposal": {

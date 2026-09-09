@@ -11,6 +11,8 @@ const {
   gitBlobSha,
   validateIssueSnapshot,
   sourceBytes,
+  validateSourceProjectionArtifact,
+  parseSelectedIssue,
   sourceProjectionText,
   sourceSnapshotCanonicalDigest,
   fetchSourceSnapshotForPlan,
@@ -38,11 +40,33 @@ test('the complete live snapshot is pagination-audited, and pagination tampering
 test('source projection content must match both the declared byte size and Git blob SHA', () => {
   const text = '一面：面试官追问项目\n手撕合并有序链表';
   const bytes = Buffer.from(text, 'utf8');
-  const artifact = { git_blob_sha: gitBlobSha(bytes), byte_size: bytes.length };
+  const artifact = { ref: `liqiangcc/xhs:note_desc/test-source.txt@${SOURCE_REF}`, kind: 'text_projection', provenance: 'source_projection', git_blob_sha: gitBlobSha(bytes), byte_size: bytes.length };
   const entry = { git_blob_sha: artifact.git_blob_sha, byte_size: bytes.length, text };
   assert.equal(sourceBytes(entry, artifact).toString('utf8'), text);
   assert.throws(() => sourceBytes({ ...entry, text: `${text}!` }, artifact), /Git blob SHA mismatch/);
   assert.throws(() => sourceBytes({ ...entry, byte_size: bytes.length + 1 }, artifact), /declared byte size mismatch/);
+  assert.throws(() => sourceBytes(entry, { ...artifact, provenance: 'raw_capture' }), /provenance/);
+  assert.throws(() => sourceBytes(entry, { ...artifact, ref: `evil/xhs:note_desc/test-source.txt@${SOURCE_REF}` }), /path is invalid|must be exactly/);
+});
+
+test('source projection ref, repository, provenance, kind, and suffix are fail-closed', () => {
+  const base = { ref: `liqiangcc/xhs:note_desc/abc.txt@${SOURCE_REF}`, kind: 'text_projection', provenance: 'source_projection' };
+  assert.equal(validateSourceProjectionArtifact(base, 'abc'), true);
+  assert.throws(() => validateSourceProjectionArtifact({ ...base, ref: `evil/xhs:note_desc/abc.txt@${SOURCE_REF}` }, 'abc'), /must be exactly/);
+  assert.throws(() => validateSourceProjectionArtifact({ ...base, repository: 'evil/xhs' }, 'abc'), /repository drifted/);
+  assert.throws(() => validateSourceProjectionArtifact({ ...base, provenance: 'raw_capture' }, 'abc'), /provenance/);
+  assert.throws(() => validateSourceProjectionArtifact({ ...base, kind: 'json' }, 'abc'), /must be exactly .*note_json\/abc\.json/);
+  assert.throws(() => validateSourceProjectionArtifact({ ...base, ref: `liqiangcc/xhs:note_desc/abc.json@${SOURCE_REF}` }, 'abc'), /must be exactly/);
+});
+
+test('parseSelectedIssue rejects a source projection repository/ref tamper before proposal generation', () => {
+  const snapshot = JSON.parse(fs.readFileSync(SNAPSHOT_FILE, 'utf8'));
+  const issue = snapshot.issues.find((candidate) => candidate.number === 31);
+  const expected = INVENTORY.items.find((candidate) => candidate.issue_number === 31);
+  const parsed = require('../scripts/lib/source-note-issue').parseSourceNoteIssue(issue.body);
+  const artifact = parsed.record.artifacts.find((candidate) => candidate.provenance === 'source_projection');
+  const tampered = { ...issue, body: issue.body.replace(artifact.ref, artifact.ref.replace('liqiangcc/xhs', 'evil/xhs')) };
+  assert.throws(() => parseSelectedIssue(tampered, expected), /source projection artifact\.ref|fail-closed/);
 });
 
 test('classification requires personal event/Q&A and independent multi case evidence', () => {
@@ -227,6 +251,18 @@ test('generated plan validator rejects canonical digest or durable-state tamperi
   }))));
   assert.equal(plan.source_snapshot.digest, sourceDigest);
   assert.equal(sha256(canonicalize(Object.fromEntries(Object.entries(plan).filter(([key]) => key !== 'canonical_digest')))), plan.canonical_digest);
+  for (const mutate of [
+    (item) => { item.source_projection.ref = item.source_projection.ref.replace('liqiangcc/xhs', 'evil/xhs'); },
+    (item) => { item.source_projection.repository = 'evil/xhs'; },
+    (item) => { item.source_projection.provenance = 'raw_capture'; },
+  ]) {
+    const bindingTamper = JSON.parse(JSON.stringify(plan));
+    mutate(bindingTamper.items[0]);
+    bindingTamper.canonical_digest = sha256(canonicalize(Object.fromEntries(Object.entries(bindingTamper).filter(([key]) => key !== 'canonical_digest'))));
+    const rejectedBinding = validateReviewPlan(bindingTamper, INVENTORY);
+    assert.equal(rejectedBinding.ok, false);
+    assert.ok(rejectedBinding.errors.some((error) => /source projection artifact binding invalid/.test(error)));
+  }
   const tampered = JSON.parse(JSON.stringify(plan));
   tampered.items[0].review.durable_review = true;
   assert.equal(validateReviewPlan(tampered, INVENTORY).ok, false);
