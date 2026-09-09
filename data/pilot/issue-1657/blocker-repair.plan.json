@@ -7,7 +7,7 @@
   "ownership_inventory_digest": "d49779dbc5e0c94bc3c67c2b6781f99e940c71afb046a9f2d0a0a2f9189484e0",
   "materialization_plan_digest": "67d848cf88be634d8137cc5ad13798e6d745f87ec19d770e0947be9dd724bb55",
   "owner_receipt_snapshot_digest": "7786f58aa9c6c6294ade44c992908466d3f9606682cc557465b94ec9535a5016",
-  "live_reaudit_snapshot_digest": "067bdb7ecfe4c1de2e266b2310de6758e6206e2d845193ed61c0fce5a38a3a1e",
+  "live_reaudit_snapshot_digest": "5ab04ea1f3773303081f0b00de84cc6f2fc46636f47ae4966af1b2cf5c75feec",
   "target_count": 3,
   "blocked_count": 3,
   "mutation_performed": false,
@@ -37,10 +37,7 @@
         "existing-owner-source-revision-mismatch"
       ],
       "errors": [
-        "existing owner SourceRevision differs from current SourceNote",
-        "live materialization receipt marker count must be exactly 1 (got 0)",
-        "live owner source-review evidence marker count must be exactly 1 (got 0)",
-        "live owner source-review applied receipt marker count must be exactly 1 (got 0)"
+        "existing owner SourceRevision differs from current SourceNote"
       ],
       "source_note_body_sha256": "39db5c325988d7d79cb1241b547f5464368facd450ea33e9313b8e6aaa1edb8a",
       "source_revision_id": "xhs-note:63ecd286000000001303fd16:snapshot-95b77bb26104",
@@ -48,12 +45,17 @@
       "owner_source_revision_id": "xhs:63ecd286000000001303fd16:legacy-r1",
       "owner_source_repository_ref": null,
       "live_audit": {
-        "captured_at": "2026-09-09T09:56:07.125Z",
+        "captured_at": "2026-09-09T10:10:09.559Z",
         "source_note_comment_ids": [
           5579824204,
           5584606650
         ],
         "source_marker_counts": {
+          "boundary_evidence": 1,
+          "boundary_applied_receipt": 1,
+          "materialization_receipt": 0
+        },
+        "expected_source_marker_counts": {
           "boundary_evidence": 1,
           "boundary_applied_receipt": 1,
           "materialization_receipt": 0
@@ -66,6 +68,11 @@
           5523944544
         ],
         "owner_marker_counts": {
+          "source_review_evidence": 0,
+          "source_review_applied_receipt": 0,
+          "materialization_receipt": 0
+        },
+        "expected_owner_marker_counts": {
           "source_review_evidence": 0,
           "source_review_applied_receipt": 0,
           "materialization_receipt": 0
@@ -127,10 +134,7 @@
         "existing-owner-source-revision-mismatch"
       ],
       "errors": [
-        "existing owner SourceRevision differs from current SourceNote",
-        "live materialization receipt marker count must be exactly 1 (got 0)",
-        "live owner source-review evidence marker count must be exactly 1 (got 0)",
-        "live owner source-review applied receipt marker count must be exactly 1 (got 0)"
+        "existing owner SourceRevision differs from current SourceNote"
       ],
       "source_note_body_sha256": "f548b38833ee4416efa336a0a91020ef3e3ae333f0b64a0e94a4094f2e80cd4e",
       "source_revision_id": "xhs-note:656861da000000000f024258:snapshot-95b77bb26104",
@@ -138,12 +142,17 @@
       "owner_source_revision_id": "xhs:656861da000000000f024258:recovered-r2",
       "owner_source_repository_ref": "23a56d5aa1388cfa6fc1fa68bdb6576acad825eb",
       "live_audit": {
-        "captured_at": "2026-09-09T09:56:07.125Z",
+        "captured_at": "2026-09-09T10:10:09.559Z",
         "source_note_comment_ids": [
           5579824470,
           5584607734
         ],
         "source_marker_counts": {
+          "boundary_evidence": 1,
+          "boundary_applied_receipt": 1,
+          "materialization_receipt": 0
+        },
+        "expected_source_marker_counts": {
           "boundary_evidence": 1,
           "boundary_applied_receipt": 1,
           "materialization_receipt": 0
@@ -165,6 +174,11 @@
           5544994312
         ],
         "owner_marker_counts": {
+          "source_review_evidence": 0,
+          "source_review_applied_receipt": 0,
+          "materialization_receipt": 0
+        },
+        "expected_owner_marker_counts": {
           "source_review_evidence": 0,
           "source_review_applied_receipt": 0,
           "materialization_receipt": 0
@@ -225,23 +239,25 @@
         "boundary-evidence-missing-or-ambiguous",
         "runtime-source-repository-ref-unavailable"
       ],
-      "errors": [
-        "live boundary evidence marker count must be exactly 1 (got 0)",
-        "live owner source-review evidence marker count must be exactly 1 (got 0)"
-      ],
+      "errors": [],
       "source_note_body_sha256": "663871c4c273ff5cf58b053501b5b04bf2a6313687e64b0c9b1ce6ea9243f041",
       "source_revision_id": "xhs:6a8abe2d000000001602b26e:r1",
       "source_repository_ref": null,
       "owner_source_revision_id": "xhs:6a8abe2d000000001602b26e:r1",
       "owner_source_repository_ref": null,
       "live_audit": {
-        "captured_at": "2026-09-09T09:56:07.125Z",
+        "captured_at": "2026-09-09T10:10:09.559Z",
         "source_note_comment_ids": [
           5535513422,
           5535553800,
           5535863537
         ],
         "source_marker_counts": {
+          "boundary_evidence": 0,
+          "boundary_applied_receipt": 1,
+          "materialization_receipt": 1
+        },
+        "expected_source_marker_counts": {
           "boundary_evidence": 0,
           "boundary_applied_receipt": 1,
           "materialization_receipt": 1
@@ -256,6 +272,11 @@
           5544995458
         ],
         "owner_marker_counts": {
+          "source_review_evidence": 0,
+          "source_review_applied_receipt": 1,
+          "materialization_receipt": 0
+        },
+        "expected_owner_marker_counts": {
           "source_review_evidence": 0,
           "source_review_applied_receipt": 1,
           "materialization_receipt": 0
@@ -302,5 +323,5 @@
   ],
   "errors": [],
   "ok": false,
-  "plan_digest": "5b5018776288ca224c0a39adfb1b9df5c3835a43ce9cd1f23110c808e37e867f"
+  "plan_digest": "9f6ae01a4899f4f7b7fd1c4f0dcb8eb76d161916a67575dc3337e70836c26bde"
 }

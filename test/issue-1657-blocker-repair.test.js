@@ -6,7 +6,7 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const { canonicalDigest } = require('../scripts/lib/aggregate-downstream-pipeline');
 const { issueSourceRecord } = require('../scripts/lib/interview-note-materialization-batch');
-const { TARGETS, REQUIRED_ZERO_WRITES, receiptSnapshotDigest, planIssue1657BlockerRepair } = require('../scripts/lib/issue-1657-blocker-repair-plan');
+const { TARGETS, MARKER_EXPECTATIONS, REQUIRED_ZERO_WRITES, receiptSnapshotDigest, planIssue1657BlockerRepair } = require('../scripts/lib/issue-1657-blocker-repair-plan');
 const { sourceSnapshotDigest } = require('../scripts/plan-issue-1611-live-materialization');
 const { DEFAULTS, parseArgs } = require('../scripts/plan-issue-1657-blocker-repair');
 const { snapshotDigest: liveSnapshotDigest, parseArgs: parseLiveArgs } = require('../scripts/audit-issue-1657-live');
@@ -86,6 +86,16 @@ test('real #1657 blocker plan preserves all three target facts and stays fail-cl
     'repairable-after-independent-owner-review-and-CAS',
     'must-manually-confirm-boundary-evidence-and-runtime-provenance',
   ]);
+  assert.deepEqual(plan.results.map((result) => ({
+    source: result.live_audit.expected_source_marker_counts,
+    owner: result.live_audit.expected_owner_marker_counts,
+  })), TARGETS.map((target) => MARKER_EXPECTATIONS[target.source_note_issue_number]));
+  assert.equal(plan.results.some((result) => result.errors.some((error) => /marker count/.test(error))), false, 'expected zero markers must not be reported as errors');
+  assert.deepEqual(plan.results.map((result) => result.errors), [
+    ['existing owner SourceRevision differs from current SourceNote'],
+    ['existing owner SourceRevision differs from current SourceNote'],
+    [],
+  ]);
   assert.match(plan.results[0].errors.join('\n'), /existing owner SourceRevision/);
   assert.match(plan.results[1].errors.join('\n'), /existing owner SourceRevision/);
   assert.deepEqual(plan.results[2].reason_codes, ['boundary-evidence-missing-or-ambiguous', 'runtime-source-repository-ref-unavailable']);
@@ -161,7 +171,7 @@ test('live re-audit owner revision tampering remains blocked even when the audit
   assert.deepEqual(plan.write_operations, REQUIRED_ZERO_WRITES);
 });
 
-test('deleting a required live marker remains a target blocker after resealing', () => {
+test('deleting an expected live marker remains a target blocker after resealing', () => {
   const tampered = JSON.parse(JSON.stringify(liveAuditSnapshot));
   const summary = tampered.targets.find((target) => target.source_note_issue_number === 904).source.boundary_evidence;
   Object.assign(summary, { count: 0, match_count: 0, comment_ids: [], comments: [], comment_id: null, body_sha256: null, payload: null });
@@ -169,7 +179,7 @@ test('deleting a required live marker remains a target blocker after resealing',
   const plan = planIssue1657BlockerRepair({ sourceSnapshot, ownershipInventory, materializationPlan, receiptSnapshot, liveAuditSnapshot: tampered });
   const row = plan.results.find((result) => result.source_note_issue_number === 904);
   assert.equal(plan.ok, false);
-  assert.match(row.errors.join('\n'), /live boundary evidence marker count must be exactly 1 \(got 0\)/);
+  assert.match(row.errors.join('\n'), /live boundary evidence marker count must equal expected 1 \(got 0\)/);
   assert.deepEqual(plan.write_operations, REQUIRED_ZERO_WRITES);
 });
 
@@ -185,7 +195,7 @@ test('duplicating a live marker remains a target blocker after resealing', () =>
   const plan = planIssue1657BlockerRepair({ sourceSnapshot, ownershipInventory, materializationPlan, receiptSnapshot, liveAuditSnapshot: tampered });
   const row = plan.results.find((result) => result.source_note_issue_number === 907);
   assert.equal(plan.ok, false);
-  assert.match(row.errors.join('\n'), /live boundary applied receipt marker count must be exactly 1 \(got >1\)/);
+  assert.match(row.errors.join('\n'), /live boundary applied receipt marker count must equal expected 1 \(got >1\)/);
   assert.equal(row.live_audit.source_marker_counts.boundary_applied_receipt, '>1');
   assert.deepEqual(plan.write_operations, REQUIRED_ZERO_WRITES);
 });
@@ -206,7 +216,7 @@ test('forged marker count and arrays remain blocked after resealing', () => {
         const summary = snapshot.targets.find((target) => target.source_note_issue_number === 904).owner.materialization_receipt;
         summary.count = 1;
       },
-      expected: /live owner materialization receipt marker count 1 requires match_count 1|live owner materialization receipt marker count 1 requires exactly one comment_id\/comment/,
+      expected: /live owner materialization receipt marker count must equal expected 0 (got 1)|live owner materialization receipt marker count 1 requires match_count 1/,
     },
     {
       label: 'single marker arrays',

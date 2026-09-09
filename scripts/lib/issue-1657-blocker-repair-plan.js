@@ -14,6 +14,20 @@ const TARGETS = Object.freeze([
   { source_note_issue_number: 907, interview_note_id: 'xhs:656861da000000000f024258', owner_issue_number: 4 },
   { source_note_issue_number: 910, interview_note_id: 'xhs:6a8abe2d000000001602b26e', owner_issue_number: 915 },
 ]);
+const MARKER_EXPECTATIONS = Object.freeze({
+  904: Object.freeze({
+    source: Object.freeze({ boundary_evidence: 1, boundary_applied_receipt: 1, materialization_receipt: 0 }),
+    owner: Object.freeze({ source_review_evidence: 0, source_review_applied_receipt: 0, materialization_receipt: 0 }),
+  }),
+  907: Object.freeze({
+    source: Object.freeze({ boundary_evidence: 1, boundary_applied_receipt: 1, materialization_receipt: 0 }),
+    owner: Object.freeze({ source_review_evidence: 0, source_review_applied_receipt: 0, materialization_receipt: 0 }),
+  }),
+  910: Object.freeze({
+    source: Object.freeze({ boundary_evidence: 0, boundary_applied_receipt: 1, materialization_receipt: 1 }),
+    owner: Object.freeze({ source_review_evidence: 0, source_review_applied_receipt: 1, materialization_receipt: 0 }),
+  }),
+});
 const REQUIRED_ZERO_WRITES = Object.freeze({ patch: 0, post: 0, label: 0, interview_note: 0, create: 0 });
 const HEX64 = /^[0-9a-f]{64}$/;
 
@@ -82,26 +96,29 @@ function markerSummaryConsistency(summary, label, errors) {
   return true;
 }
 
-function requiredMarker(summary, label, errors) {
+function expectMarker(summary, expectedCount, label) {
+  const errors = [];
   if (!isObject(summary) || !Object.prototype.hasOwnProperty.call(summary, 'count')) {
     errors.push(`${label} marker count is missing`);
-    return null;
+    return { summary: null, errors };
   }
   if (![0, 1, '>1'].includes(summary.count)) errors.push(`${label} marker count must be 0, 1, or >1`);
   markerSummaryConsistency(summary, label, errors);
-  if (summary.count !== 1) errors.push(`${label} marker count must be exactly 1 (got ${summary.count})`);
-  return summary.count === 1 ? summary : null;
+  if (![0, 1].includes(expectedCount)) errors.push(`${label} expected marker count is invalid`);
+  if (summary.count !== expectedCount) errors.push(`${label} marker count must equal expected ${expectedCount} (got ${summary.count})`);
+  return { summary: summary.count === expectedCount ? summary : null, errors };
 }
 
-function optionalMarker(summary, label, errors) {
-  if (!isObject(summary) || !Object.prototype.hasOwnProperty.call(summary, 'count')) {
-    errors.push(`${label} marker count is missing`);
-    return null;
-  }
-  if (![0, 1, '>1'].includes(summary.count)) errors.push(`${label} marker count must be 0, 1, or >1`);
-  markerSummaryConsistency(summary, label, errors);
-  if (summary.count === '>1') errors.push(`${label} marker count must not be >1`);
-  return summary.count === 1 ? summary : null;
+function requiredMarker(summary, label, errors, expectedCount = 1) {
+  const result = expectMarker(summary, expectedCount, label);
+  errors.push(...result.errors);
+  return result.summary;
+}
+
+function optionalMarker(summary, label, errors, expectedCount = 0) {
+  const result = expectMarker(summary, expectedCount, label);
+  errors.push(...result.errors);
+  return result.summary;
 }
 
 function validateLiveTargetShape(liveTarget, target, errors) {
@@ -281,12 +298,13 @@ function planIssue1657BlockerRepair({ sourceSnapshot, ownershipInventory, materi
       if (receipt.interview_note_body_sha256 !== owner.body_sha256) targetErrors.push('materialization receipt owner body digest mismatch');
       if ((receipt.source_repository_ref ?? null) !== (sourceRevision.source_repository_ref ?? null)) targetErrors.push('materialization receipt source repository ref mismatch');
     }
-    const boundaryEvidence = liveSource && requiredMarker(liveSource.boundary_evidence, 'live boundary evidence', targetErrors);
-    const boundaryApplied = liveSource && requiredMarker(liveSource.boundary_applied_receipt, 'live boundary applied receipt', targetErrors);
-    const materializationReceipt = liveSource && requiredMarker(liveSource.materialization_receipt, 'live materialization receipt', targetErrors);
-    const ownerSourceEvidence = liveOwner && requiredMarker(liveOwner.source_review_evidence, 'live owner source-review evidence', targetErrors);
-    const ownerSourceApplied = liveOwner && requiredMarker(liveOwner.source_review_applied_receipt, 'live owner source-review applied receipt', targetErrors);
-    const ownerMaterialization = liveOwner && optionalMarker(liveOwner.materialization_receipt, 'live owner materialization receipt', targetErrors);
+    const markerExpectations = MARKER_EXPECTATIONS[target.source_note_issue_number];
+    const boundaryEvidence = liveSource && requiredMarker(liveSource.boundary_evidence, 'live boundary evidence', targetErrors, markerExpectations.source.boundary_evidence);
+    const boundaryApplied = liveSource && requiredMarker(liveSource.boundary_applied_receipt, 'live boundary applied receipt', targetErrors, markerExpectations.source.boundary_applied_receipt);
+    const materializationReceipt = liveSource && requiredMarker(liveSource.materialization_receipt, 'live materialization receipt', targetErrors, markerExpectations.source.materialization_receipt);
+    const ownerSourceEvidence = liveOwner && requiredMarker(liveOwner.source_review_evidence, 'live owner source-review evidence', targetErrors, markerExpectations.owner.source_review_evidence);
+    const ownerSourceApplied = liveOwner && requiredMarker(liveOwner.source_review_applied_receipt, 'live owner source-review applied receipt', targetErrors, markerExpectations.owner.source_review_applied_receipt);
+    const ownerMaterialization = liveOwner && optionalMarker(liveOwner.materialization_receipt, 'live owner materialization receipt', targetErrors, markerExpectations.owner.materialization_receipt);
     if (boundaryEvidence && boundaryEvidence.comment_id !== (reportItem && reportItem.evidence_comment_id)) targetErrors.push('live boundary evidence comment mismatch');
     if (boundaryApplied && boundaryApplied.payload && boundaryApplied.payload.new_body_sha256 !== sourceBodySha) targetErrors.push('live boundary applied receipt body digest mismatch');
     if (materializationReceipt && receiptEntry && materializationReceipt.comment_id !== receiptEntry.materialization_receipt_comment_id) targetErrors.push('live materialization receipt comment mismatch');
@@ -361,11 +379,13 @@ function planIssue1657BlockerRepair({ sourceSnapshot, ownershipInventory, materi
         captured_at: liveAuditSnapshot && liveAuditSnapshot.captured_at || null,
         source_note_comment_ids: liveSource && Array.isArray(liveSource.comments) ? liveSource.comments.map((comment) => comment.id) : [],
         source_marker_counts: liveSource ? { boundary_evidence: liveSource.boundary_evidence && liveSource.boundary_evidence.count, boundary_applied_receipt: liveSource.boundary_applied_receipt && liveSource.boundary_applied_receipt.count, materialization_receipt: liveSource.materialization_receipt && liveSource.materialization_receipt.count } : null,
+        expected_source_marker_counts: markerExpectations.source,
         boundary_evidence_comment_id: liveSource && liveSource.boundary_evidence ? liveSource.boundary_evidence.comment_id : null,
         boundary_applied_receipt_comment_id: liveSource && liveSource.boundary_applied_receipt ? liveSource.boundary_applied_receipt.comment_id : null,
         materialization_receipt_comment_id: liveSource && liveSource.materialization_receipt ? liveSource.materialization_receipt.comment_id : null,
         owner_comment_ids: liveOwner && Array.isArray(liveOwner.comments) ? liveOwner.comments.map((comment) => comment.id) : [],
         owner_marker_counts: liveOwner ? { source_review_evidence: liveOwner.source_review_evidence && liveOwner.source_review_evidence.count, source_review_applied_receipt: liveOwner.source_review_applied_receipt && liveOwner.source_review_applied_receipt.count, materialization_receipt: liveOwner.materialization_receipt && liveOwner.materialization_receipt.count } : null,
+        expected_owner_marker_counts: markerExpectations.owner,
         owner_source_review_evidence_comment_ids: liveOwner ? liveOwner.source_review_evidence_comment_ids : [],
         owner_source_review_applied_receipt_comment_id: liveOwner && liveOwner.source_review_applied_receipt ? liveOwner.source_review_applied_receipt.comment_id : null,
       },
@@ -408,6 +428,7 @@ module.exports = {
   SOURCE_REF,
   TARGETS,
   REQUIRED_ZERO_WRITES,
+  MARKER_EXPECTATIONS,
   receiptSnapshotDigest,
   liveAuditSnapshotDigest,
   validateInputs,
