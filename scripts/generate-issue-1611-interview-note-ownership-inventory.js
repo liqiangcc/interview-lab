@@ -12,6 +12,13 @@ const PAGE_SIZE = 100;
 const MAX_PAGES = 100;
 const SCHEMA_VERSION = 'aggregate-interview-note-ownership-inventory.v1';
 
+function labelsOf(issue) {
+  return (issue && issue.labels || [])
+    .map((label) => typeof label === 'string' ? label : label && label.name)
+    .filter((label) => typeof label === 'string' && label.trim())
+    .sort();
+}
+
 function parseArgs(argv = process.argv.slice(2)) {
   const args = { repository: REPOSITORY, output: null, maxPages: MAX_PAGES };
   for (let index = 0; index < argv.length; index += 1) {
@@ -61,7 +68,8 @@ function buildInventory(issues, repository = REPOSITORY) {
     const number = Number(issue && issue.number);
     if (!Number.isInteger(number) || number < 1 || byIssue.has(number)) { errors.push(`duplicate or invalid Issue #${issue && issue.number}`); continue; }
     byIssue.add(number);
-    const validation = validateInterviewNoteIssue({ body: issue.body, labels: issue.labels, state: String(issue.state || 'open').toLowerCase() });
+    const labels = labelsOf(issue);
+    const validation = validateInterviewNoteIssue({ body: issue.body, labels, state: String(issue.state || 'open').toLowerCase() });
     if (!validation.ok) { errors.push(`InterviewNote Issue #${number}: ${validation.errors.join('; ')}`); continue; }
     const parsed = parseInterviewNoteIssue(issue.body || '');
     const interviewNoteId = parsed.marker && parsed.marker.interview_note_id;
@@ -73,7 +81,7 @@ function buildInventory(issues, repository = REPOSITORY) {
       body_sha256: sha256Text(issue.body || ''),
       source_note_id: parsed.record && parsed.record.source_note_id || null,
       source_revision_id: parsed.record && parsed.record.source_revision && parsed.record.source_revision.id || null,
-      labels: (issue.labels || []).map((label) => typeof label === 'string' ? label : label && label.name).filter(Boolean).sort(),
+      labels,
     });
   }
   entries.sort((left, right) => left.issue_number - right.issue_number);
@@ -111,4 +119,4 @@ if (require.main === module) {
   catch (error) { process.stderr.write(`ERROR: ${error.message}\n`); process.exitCode = 2; }
 }
 
-module.exports = { SCHEMA_VERSION, PAGE_SIZE, parseArgs, paginateInterviewNotes, buildInventory };
+module.exports = { SCHEMA_VERSION, PAGE_SIZE, parseArgs, paginateInterviewNotes, buildInventory, labelsOf };

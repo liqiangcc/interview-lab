@@ -351,6 +351,17 @@ test('full InterviewNote ownership inventory pagination requires a short termina
   assert.match(inventory.canonical_digest, /^[0-9a-f]{64}$/);
 });
 
+test('full InterviewNote ownership inventory normalizes REST label objects before validation', () => {
+  const inventory = buildInventory([{
+    number: issueNumber,
+    body,
+    state: 'open',
+    labels: [{ name: 'type:interview-note' }, { name: 'source:xhs' }, { name: 'status:captured' }],
+  }]);
+  assert.equal(inventory.count, 1);
+  assert.deepEqual(inventory.entries[0].labels, ['source:xhs', 'status:captured', 'type:interview-note']);
+});
+
 test('real #1609 dry-run report shape validates with recursive canonical JSON', () => {
   const validation = validateUpstreamReport(issue1609Fixture, 'boundary #1609', 'issue-1609-boundary-dry-run.v1');
   assert.equal(validation.ok, true, validation.errors.join('\n'));

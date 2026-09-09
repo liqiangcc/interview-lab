@@ -31,6 +31,14 @@ npm run inventory:issue-1611-interview-note-ownership -- \
 
 该命令只使用 GitHub GET，不包含 apply 参数；输出必须作为 manifest 的 pinned ownership dependency，不能用即时 label 查询结果绕过 digest 或分页完整性。
 
+当 #1605 的在线 completion proof 已确认完整 1460 条边界分区时，可用 live plan-only adapter 生成全库 boundary report、动态 manifest 和 materialization plan：
+
+```bash
+npm run plan:issue-1611-live-materialization
+```
+
+该 adapter 固定绑定在线 #1605 completion comment、`plan_digest` 和 `manifest_digest`，并将动态 manifest 的 `boundary_report_digest` 与实际 report、`source_snapshot_digest` 与全量 SourceNote snapshot 重新计算后逐项比较。SourceNote 和全库 comments 均要求分页短终止页；输出仍是 `{patch:0,post:0,create:0}` 的 plan-only 产物。已知证据缺失或 SourceRevision ref 漂移（例如 #910）会保留 boundary report error 并使 planner fail closed，不会被降级为 materializable。
+
 四个 boundary report 按各批最终契约校验：A/D 仍可使用 `source-note-boundary-review-batch.v1` / `issue-1609-boundary-dry-run.v1`，B 使用实际的 `issue-1607-boundary-dry-run-plan.v1`，C 使用带完整报告 `dry_run_sha256` 的 `issue-1608-boundary-dry-run.v1`。这些 report 的 `dry_run_sha256` 必须按项目 canonical JSON（递归 key sort）对完整报告（去除 digest 字段）可重算，且每条输入已经是 `already_applied`。C 的 `issue-1608-boundary-batch.v1` 只有 selection/request 元数据、没有 report digest，不能作为 aggregate 输入；缺少 digest 的报告 fail closed，不会被当作已验证。若未来要消费该 schema，必须先生成包含完整 report 与 `dry_run_sha256` 的固定 adapter 产物并单独校验。Materialization report 必须是 `source-note-interview-materialization-batch.v1`，其 `dry_run_sha256` 使用同一 canonical 算法；Recovery 则按其 schema 的明确规则校验（例如 `issue-1610-recovery-dry-run.v1` 的 `plan_sha256` 覆盖 `digest_input`）。每个实际 child 必须已经是 `already-materialized`，并绑定：
 
 ```text
