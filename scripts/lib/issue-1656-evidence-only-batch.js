@@ -169,7 +169,7 @@ function readRegularJson(file) {
   let stat;
   try { stat = fs.lstatSync(target); }
   catch (error) {
-    if (error.code === 'ENOENT') return null;
+    if (error.code === 'ENOENT') return undefined;
     throw error;
   }
   if (!stat.isFile() || stat.isSymbolicLink()) throw new Error('journal must be a regular file');
@@ -244,7 +244,7 @@ function persistJournal(file, journal, plan, lock) {
 function loadOrCreateJournal(file, plan, lock, now) {
   lock.assertHeld();
   const existing = readRegularJson(file);
-  if (existing !== null) {
+  if (existing !== undefined) {
     const validation = validateJournal(existing, plan);
     if (!validation.ok) throw new Error(`existing journal validation failed: ${validation.errors.join('; ')}`);
     return existing;

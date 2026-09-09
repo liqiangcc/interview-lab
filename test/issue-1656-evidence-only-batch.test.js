@@ -199,6 +199,19 @@ test('existing journal digest drift fails closed without replacing the journal o
   } finally { fs.rmSync(directory, { recursive: true, force: true }); }
 });
 
+test('an existing non-object journal is rejected rather than treated as absent', () => {
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'issue-1656-evidence-journal-null-'));
+  const journalFile = path.join(directory, 'journal.json');
+  atomicWriteJson(journalFile, null);
+  const before = fs.readFileSync(journalFile, 'utf8');
+  const api = fakeApi();
+  try {
+    assert.throws(() => applyAt(api, directory), /existing journal validation failed/);
+    assert.equal(fs.readFileSync(journalFile, 'utf8'), before);
+    assert.equal(api.posts.length, 0);
+  } finally { fs.rmSync(directory, { recursive: true, force: true }); }
+});
+
 test('per-row fresh CAS/idempotency GET stops the batch before posting after a later row drifts', () => {
   const issueByNumber = new Map([...liveByNumber].map(([number, issue]) => [number, { ...issue }]));
   const base = fakeApi({ issueByNumber });
