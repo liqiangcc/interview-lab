@@ -4,7 +4,7 @@
 
 ## 当前证据
 
-原始 owner/receipt snapshot 时间：`2026-09-09T07:03:46Z`；本次 live GET-only re-audit 时间：`2026-09-09T10:10:09.559Z`。来源快照是 `data/pilot/issue-1611/source-note-live.snapshot.json`，owner inventory 是 `data/pilot/issue-1611/interview-note-ownership.inventory.json`，上游 materialization dry-run 是 `data/pilot/issue-1611/materialization.live.dry-run.json`，live re-audit 是 `data/pilot/issue-1657/live-reaudit.snapshot.json`。
+原始 owner/receipt snapshot 时间：`2026-09-09T07:03:46Z`；本次 live GET-only re-audit 时间：`2026-09-09T10:19:51.517Z`。来源快照是 `data/pilot/issue-1611/source-note-live.snapshot.json`，owner inventory 是 `data/pilot/issue-1611/interview-note-ownership.inventory.json`，上游 materialization dry-run 是 `data/pilot/issue-1611/materialization.live.dry-run.json`，live re-audit 是 `data/pilot/issue-1657/live-reaudit.snapshot.json`。
 
 | SourceNote | 当前 SourceRevision / ref | boundary evidence / receipt | 唯一 InterviewNote owner | 结论 |
 | --- | --- | --- | --- | --- |
@@ -50,7 +50,7 @@ npm run plan:issue-1657-blocker-repair
 当前 plan digest（schema v2，含 live re-audit digest）：
 
 ```text
-9f6ae01a4899f4f7b7fd1c4f0dcb8eb76d161916a67575dc3337e70836c26bde
+bccc42cb483defe39fc68bf629b07b79a1c7eb6e0760554305ddde0d953ac072
 ```
 
 Receipt/owner audit snapshot digest（计算输入明确不含 `canonical_digest` 字段）：
@@ -62,7 +62,7 @@ Receipt/owner audit snapshot digest（计算输入明确不含 `canonical_digest
 Live re-audit snapshot digest（计算输入明确不含 `canonical_digest` 字段）：
 
 ```text
-5ab04ea1f3773303081f0b00de84cc6f2fc46636f47ae4966af1b2cf5c75feec
+725844034cd78750a13d016d039cad0ba524713bfa82f9b73da14d75d4b124d9
 ```
 
 上游输入 digest：
@@ -74,7 +74,7 @@ Boundary report           b91961567526bc1be0a987e275e367e845c89da274fd8f5f74c9d2
 Boundary manifest         6fbff5de05abbed9d239a6a8cf3b981d94ed2e0b711342ea6f84c79ffad1b165
 Materialization dry-run  67d848cf88be634d8137cc5ad13798e6d745f87ec19d770e0947be9dd724bb55
 Receipt/owner audit     7786f58aa9c6c6294ade44c992908466d3f9606682cc557465b94ec9535a5016
-Live re-audit           5ab04ea1f3773303081f0b00de84cc6f2fc46636f47ae4966af1b2cf5c75feec
+Live re-audit           725844034cd78750a13d016d039cad0ba524713bfa82f9b73da14d75d4b124d9
 ```
 
 所有 digest 应以对应 JSON 产物重新计算为准；计划内写入计数固定为：
@@ -85,6 +85,6 @@ Live re-audit           5ab04ea1f3773303081f0b00de84cc6f2fc46636f47ae4966af1b2cf
 
 ## 测试
 
-`test/issue-1657-blocker-repair.test.js` 使用真实 #1611 snapshot 与 live re-audit fixture，而不是人工 mini fixture，断言 #904/#907/#910 的 SourceNote identity、body SHA、SourceRevision、boundary status、owner identity、comments/receipts 逐条绑定，以及 target-specific marker 期望计数和仅保留原有 blocker；同时验证 receipt/owner/live audit 篡改、伪造 count/数组、删除 marker、重复 marker、缺失 source/owner 对象均 fail closed，runtime ref 不能被篡改为 Git ref，CLI 不能接受 mutation-shaped 参数。
+`test/issue-1657-blocker-repair.test.js` 使用真实 #1611 snapshot 与 live re-audit fixture，而不是人工 mini fixture，断言 #904/#907/#910 的 SourceNote identity、body SHA、SourceRevision、boundary status、owner identity、comments/receipts 逐条绑定，以及 target-specific marker 期望计数和 summary 对 comment 的 ID/body SHA/marker payload canonical 绑定；同时验证 receipt/owner/live audit 篡改、伪造 count/数组、comment_id/body_sha256/payload 置换、删除 marker、重复 marker、缺失 source/owner 对象均 fail closed，runtime ref 不能被篡改为 Git ref，CLI 不能接受 mutation-shaped 参数。
 
 Schema review 对应：`schemas/issue-1657-owner-receipt-audit-snapshot.schema.json`、`schemas/issue-1657-live-reaudit-snapshot.schema.json`、`schemas/issue-1657-blocker-repair-plan.schema.json`。JSON digest 均采用“去掉自身 digest 字段后 canonicalize”的输入规则；runtime validator 另外执行 target identity、body SHA、SourceRevision/ref、comment/receipt 交叉绑定。

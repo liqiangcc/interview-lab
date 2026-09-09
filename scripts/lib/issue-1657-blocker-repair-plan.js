@@ -59,7 +59,7 @@ function findOne(items, predicate, label, errors) {
 
 function isObject(value) { return value && typeof value === 'object' && !Array.isArray(value); }
 
-function markerSummaryConsistency(summary, label, errors) {
+function markerSummaryConsistency(summary, markerName, label, errors) {
   if (!Array.isArray(summary.comment_ids) || !Array.isArray(summary.comments)) {
     errors.push(`${label} marker comment_ids/comments must both be arrays`);
     return false;
@@ -68,6 +68,7 @@ function markerSummaryConsistency(summary, label, errors) {
   const comments = summary.comments;
   if (new Set(ids).size !== ids.length) errors.push(`${label} marker comment_ids must be unique`);
   if (comments.some((comment) => !isObject(comment))) errors.push(`${label} marker comments must contain objects`);
+  if (ids.some((id) => !Number.isInteger(id) || id <= 0)) errors.push(`${label} marker comment_ids must contain positive integer IDs`);
   if (comments.length !== ids.length) errors.push(`${label} marker comment_ids/comments length mismatch`);
   if (comments.length === ids.length && comments.some((comment, index) => comment.id !== ids[index])) {
     errors.push(`${label} marker comment_ids do not match comments`);
@@ -84,6 +85,16 @@ function markerSummaryConsistency(summary, label, errors) {
     if (!Number.isInteger(summary.comment_id) || summary.comment_id <= 0) errors.push(`${label} marker count 1 requires a non-empty comment_id`);
     if (!HEX64.test(String(summary.body_sha256 || ''))) errors.push(`${label} marker count 1 requires a non-empty body_sha256`);
     if (!isObject(summary.payload) || Object.keys(summary.payload).length === 0) errors.push(`${label} marker count 1 requires a non-empty payload`);
+    if (comments.length === 1 && ids.length === 1 && isObject(comments[0])) {
+      if (summary.comment_id !== comments[0].id || summary.comment_id !== ids[0]) errors.push(`${label} marker count 1 comment_id must match comments[0].id and comment_ids[0]`);
+      if (summary.body_sha256 !== comments[0].body_sha256) errors.push(`${label} marker count 1 body_sha256 must match comments[0].body_sha256`);
+      const commentPayload = isObject(comments[0].markers) ? comments[0].markers[markerName] : null;
+      if (!isObject(commentPayload) || Object.keys(commentPayload).length === 0) {
+        errors.push(`${label} marker count 1 comment marker payload is missing or empty`);
+      } else if (isObject(summary.payload) && canonicalDigest(summary.payload) !== canonicalDigest(commentPayload)) {
+        errors.push(`${label} marker count 1 payload does not match comment marker ${markerName}`);
+      }
+    }
   } else if (summary.count === '>1') {
     if (!Number.isInteger(summary.match_count) || summary.match_count <= 1) errors.push(`${label} marker count >1 requires match_count >1`);
     if (Number.isInteger(summary.match_count) && summary.match_count > 1 && (ids.length !== summary.match_count || comments.length !== summary.match_count)) {
@@ -96,27 +107,28 @@ function markerSummaryConsistency(summary, label, errors) {
   return true;
 }
 
-function expectMarker(summary, expectedCount, label) {
+function expectMarker(summary, expectedCount, label, markerName) {
   const errors = [];
   if (!isObject(summary) || !Object.prototype.hasOwnProperty.call(summary, 'count')) {
     errors.push(`${label} marker count is missing`);
     return { summary: null, errors };
   }
   if (![0, 1, '>1'].includes(summary.count)) errors.push(`${label} marker count must be 0, 1, or >1`);
-  markerSummaryConsistency(summary, label, errors);
+  if (typeof markerName !== 'string' || !markerName.trim()) errors.push(`${label} marker name is missing`);
+  markerSummaryConsistency(summary, markerName, label, errors);
   if (![0, 1].includes(expectedCount)) errors.push(`${label} expected marker count is invalid`);
   if (summary.count !== expectedCount) errors.push(`${label} marker count must equal expected ${expectedCount} (got ${summary.count})`);
   return { summary: summary.count === expectedCount ? summary : null, errors };
 }
 
-function requiredMarker(summary, label, errors, expectedCount = 1) {
-  const result = expectMarker(summary, expectedCount, label);
+function requiredMarker(summary, label, errors, expectedCount = 1, markerName) {
+  const result = expectMarker(summary, expectedCount, label, markerName);
   errors.push(...result.errors);
   return result.summary;
 }
 
-function optionalMarker(summary, label, errors, expectedCount = 0) {
-  const result = expectMarker(summary, expectedCount, label);
+function optionalMarker(summary, label, errors, expectedCount = 0, markerName) {
+  const result = expectMarker(summary, expectedCount, label, markerName);
   errors.push(...result.errors);
   return result.summary;
 }
@@ -299,12 +311,12 @@ function planIssue1657BlockerRepair({ sourceSnapshot, ownershipInventory, materi
       if ((receipt.source_repository_ref ?? null) !== (sourceRevision.source_repository_ref ?? null)) targetErrors.push('materialization receipt source repository ref mismatch');
     }
     const markerExpectations = MARKER_EXPECTATIONS[target.source_note_issue_number];
-    const boundaryEvidence = liveSource && requiredMarker(liveSource.boundary_evidence, 'live boundary evidence', targetErrors, markerExpectations.source.boundary_evidence);
-    const boundaryApplied = liveSource && requiredMarker(liveSource.boundary_applied_receipt, 'live boundary applied receipt', targetErrors, markerExpectations.source.boundary_applied_receipt);
-    const materializationReceipt = liveSource && requiredMarker(liveSource.materialization_receipt, 'live materialization receipt', targetErrors, markerExpectations.source.materialization_receipt);
-    const ownerSourceEvidence = liveOwner && requiredMarker(liveOwner.source_review_evidence, 'live owner source-review evidence', targetErrors, markerExpectations.owner.source_review_evidence);
-    const ownerSourceApplied = liveOwner && requiredMarker(liveOwner.source_review_applied_receipt, 'live owner source-review applied receipt', targetErrors, markerExpectations.owner.source_review_applied_receipt);
-    const ownerMaterialization = liveOwner && optionalMarker(liveOwner.materialization_receipt, 'live owner materialization receipt', targetErrors, markerExpectations.owner.materialization_receipt);
+    const boundaryEvidence = liveSource && requiredMarker(liveSource.boundary_evidence, 'live boundary evidence', targetErrors, markerExpectations.source.boundary_evidence, 'source-note-boundary-review-evidence');
+    const boundaryApplied = liveSource && requiredMarker(liveSource.boundary_applied_receipt, 'live boundary applied receipt', targetErrors, markerExpectations.source.boundary_applied_receipt, 'source-note-boundary-review-applied');
+    const materializationReceipt = liveSource && requiredMarker(liveSource.materialization_receipt, 'live materialization receipt', targetErrors, markerExpectations.source.materialization_receipt, 'source-note-interview-materialized');
+    const ownerSourceEvidence = liveOwner && requiredMarker(liveOwner.source_review_evidence, 'live owner source-review evidence', targetErrors, markerExpectations.owner.source_review_evidence, 'interview-note-source-review-evidence');
+    const ownerSourceApplied = liveOwner && requiredMarker(liveOwner.source_review_applied_receipt, 'live owner source-review applied receipt', targetErrors, markerExpectations.owner.source_review_applied_receipt, 'interview-note-source-review-applied');
+    const ownerMaterialization = liveOwner && optionalMarker(liveOwner.materialization_receipt, 'live owner materialization receipt', targetErrors, markerExpectations.owner.materialization_receipt, 'source-note-interview-materialized');
     if (boundaryEvidence && boundaryEvidence.comment_id !== (reportItem && reportItem.evidence_comment_id)) targetErrors.push('live boundary evidence comment mismatch');
     if (boundaryApplied && boundaryApplied.payload && boundaryApplied.payload.new_body_sha256 !== sourceBodySha) targetErrors.push('live boundary applied receipt body digest mismatch');
     if (materializationReceipt && receiptEntry && materializationReceipt.comment_id !== receiptEntry.materialization_receipt_comment_id) targetErrors.push('live materialization receipt comment mismatch');

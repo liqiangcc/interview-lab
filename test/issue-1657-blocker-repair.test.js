@@ -267,6 +267,25 @@ test('forged marker count and arrays remain blocked after resealing', () => {
   }
 });
 
+test('marker summary field substitution remains blocked after resealing', () => {
+  const cases = [
+    ['comment_id', (summary, source) => { summary.comment_id = source.boundary_applied_receipt.comment_id; }, /live boundary evidence marker count 1 comment_id must match comments\[0\].id and comment_ids\[0\]/],
+    ['body_sha256', (summary, source) => { summary.body_sha256 = source.boundary_applied_receipt.body_sha256; }, /live boundary evidence marker count 1 body_sha256 must match comments\[0\].body_sha256/],
+    ['payload', (summary, source) => { summary.payload = source.boundary_applied_receipt.payload; }, /live boundary evidence marker count 1 payload does not match comment marker source-note-boundary-review-evidence/],
+  ];
+  for (const [field, mutate, expected] of cases) {
+    const tampered = JSON.parse(JSON.stringify(liveAuditSnapshot));
+    const source = tampered.targets.find((target) => target.source_note_issue_number === 904).source;
+    mutate(source.boundary_evidence, source);
+    tampered.canonical_digest = liveSnapshotDigest(tampered);
+    const plan = planIssue1657BlockerRepair({ sourceSnapshot, ownershipInventory, materializationPlan, receiptSnapshot, liveAuditSnapshot: tampered });
+    const row = plan.results.find((result) => result.source_note_issue_number === 904);
+    assert.equal(plan.ok, false, `${field} substitution must fail closed`);
+    assert.match(row.errors.join('\n'), expected, field);
+    assert.deepEqual(plan.write_operations, REQUIRED_ZERO_WRITES);
+  }
+});
+
 test('missing live source or owner object remains a target blocker after resealing', () => {
   for (const field of ['source', 'owner']) {
     const tampered = JSON.parse(JSON.stringify(liveAuditSnapshot));
