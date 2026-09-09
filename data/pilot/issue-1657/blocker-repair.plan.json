@@ -1,12 +1,15 @@
 {
-  "schema_version": "issue-1657-blocker-repair-plan.v1",
+  "schema_version": "issue-1657-blocker-repair-plan.v2",
   "repository": "liqiangcc/interview-lab",
   "parent_issue": 1657,
   "mode": "read-only-audit-plan",
   "source_snapshot_digest": "a1804b09a3a293b33dfb59856b723da19b587816705e8659cdf6ee829175acf2",
   "ownership_inventory_digest": "d49779dbc5e0c94bc3c67c2b6781f99e940c71afb046a9f2d0a0a2f9189484e0",
   "materialization_plan_digest": "67d848cf88be634d8137cc5ad13798e6d745f87ec19d770e0947be9dd724bb55",
+  "boundary_report_digest": "b91961567526bc1be0a987e275e367e845c89da274fd8f5f74c9d281f963c021",
+  "boundary_transition_report_digest": "5803b219e1955a0af6813f73d676bfa50e6cf2b17a83baff5ea19ed4c3f5ce7f",
   "owner_receipt_snapshot_digest": "7786f58aa9c6c6294ade44c992908466d3f9606682cc557465b94ec9535a5016",
+  "live_reaudit_snapshot_digest": "66f911cc2343cbd34b33197647bc779bc9130147e152c941dc0fb231aff0a257",
   "target_count": 3,
   "blocked_count": 3,
   "mutation_performed": false,
@@ -30,6 +33,7 @@
       "expected_owner_body_sha256": "4f3efc9abb4c4a945ad36ec578d6279bf024df3a35716d8e5929f56e6c653829",
       "mutation_performed": false,
       "action": "blocked-owner-source-revision-cas",
+      "decision_class": "repairable-after-independent-owner-review-and-CAS",
       "reason_codes": [
         "materialization-preflight-failed",
         "existing-owner-source-revision-mismatch"
@@ -42,6 +46,42 @@
       "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
       "owner_source_revision_id": "xhs:63ecd286000000001303fd16:legacy-r1",
       "owner_source_repository_ref": null,
+      "live_audit": {
+        "captured_at": "2026-09-09T10:36:39.611Z",
+        "source_note_comment_ids": [
+          5579824204,
+          5584606650
+        ],
+        "source_marker_counts": {
+          "boundary_evidence": 1,
+          "boundary_applied_receipt": 1,
+          "materialization_receipt": 0
+        },
+        "expected_source_marker_counts": {
+          "boundary_evidence": 1,
+          "boundary_applied_receipt": 1,
+          "materialization_receipt": 0
+        },
+        "boundary_evidence_comment_id": 5579824204,
+        "boundary_applied_receipt_comment_id": 5584606650,
+        "materialization_receipt_comment_id": null,
+        "owner_comment_ids": [
+          5470455261,
+          5523944544
+        ],
+        "owner_marker_counts": {
+          "source_review_evidence": 0,
+          "source_review_applied_receipt": 0,
+          "materialization_receipt": 0
+        },
+        "expected_owner_marker_counts": {
+          "source_review_evidence": 0,
+          "source_review_applied_receipt": 0,
+          "materialization_receipt": 0
+        },
+        "owner_source_review_evidence_comment_ids": [],
+        "owner_source_review_applied_receipt_comment_id": null
+      },
       "receipt_comment_id": null,
       "boundary_evidence_comment_id": 5579824204,
       "materialization_plan_action": "blocked",
@@ -90,6 +130,7 @@
       "expected_owner_body_sha256": "bbdbd6a53c789900bbb33926e98441a67de6d0efbf9e4ac67f05a00e7ce8bf8f",
       "mutation_performed": false,
       "action": "blocked-owner-source-revision-cas",
+      "decision_class": "repairable-after-independent-owner-review-and-CAS",
       "reason_codes": [
         "materialization-preflight-failed",
         "existing-owner-source-revision-mismatch"
@@ -102,6 +143,51 @@
       "source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
       "owner_source_revision_id": "xhs:656861da000000000f024258:recovered-r2",
       "owner_source_repository_ref": "23a56d5aa1388cfa6fc1fa68bdb6576acad825eb",
+      "live_audit": {
+        "captured_at": "2026-09-09T10:36:39.611Z",
+        "source_note_comment_ids": [
+          5579824470,
+          5584607734
+        ],
+        "source_marker_counts": {
+          "boundary_evidence": 1,
+          "boundary_applied_receipt": 1,
+          "materialization_receipt": 0
+        },
+        "expected_source_marker_counts": {
+          "boundary_evidence": 1,
+          "boundary_applied_receipt": 1,
+          "materialization_receipt": 0
+        },
+        "boundary_evidence_comment_id": 5579824470,
+        "boundary_applied_receipt_comment_id": 5584607734,
+        "materialization_receipt_comment_id": null,
+        "owner_comment_ids": [
+          5470512509,
+          5524396205,
+          5524971203,
+          5525056042,
+          5525144309,
+          5525186960,
+          5525190852,
+          5525219253,
+          5525220305,
+          5525247498,
+          5544994312
+        ],
+        "owner_marker_counts": {
+          "source_review_evidence": 0,
+          "source_review_applied_receipt": 0,
+          "materialization_receipt": 0
+        },
+        "expected_owner_marker_counts": {
+          "source_review_evidence": 0,
+          "source_review_applied_receipt": 0,
+          "materialization_receipt": 0
+        },
+        "owner_source_review_evidence_comment_ids": [],
+        "owner_source_review_applied_receipt_comment_id": null
+      },
       "receipt_comment_id": null,
       "boundary_evidence_comment_id": 5579824470,
       "materialization_plan_action": "blocked",
@@ -150,6 +236,7 @@
       "expected_owner_body_sha256": "58d80c553d49307eda419bed153090e97c1c409ca1a1306825d57fc634b0513b",
       "mutation_performed": false,
       "action": "blocked-boundary-evidence-and-runtime-provenance",
+      "decision_class": "must-manually-confirm-boundary-evidence-and-runtime-provenance",
       "reason_codes": [
         "boundary-evidence-missing-or-ambiguous",
         "runtime-source-repository-ref-unavailable"
@@ -160,6 +247,47 @@
       "source_repository_ref": null,
       "owner_source_revision_id": "xhs:6a8abe2d000000001602b26e:r1",
       "owner_source_repository_ref": null,
+      "live_audit": {
+        "captured_at": "2026-09-09T10:36:39.611Z",
+        "source_note_comment_ids": [
+          5535513422,
+          5535553800,
+          5535863537
+        ],
+        "source_marker_counts": {
+          "boundary_evidence": 0,
+          "boundary_applied_receipt": 1,
+          "materialization_receipt": 1
+        },
+        "expected_source_marker_counts": {
+          "boundary_evidence": 0,
+          "boundary_applied_receipt": 1,
+          "materialization_receipt": 1
+        },
+        "boundary_evidence_comment_id": null,
+        "boundary_applied_receipt_comment_id": 5535553800,
+        "materialization_receipt_comment_id": 5535863537,
+        "owner_comment_ids": [
+          5536381793,
+          5539150635,
+          5539423462,
+          5544995458
+        ],
+        "owner_marker_counts": {
+          "source_review_evidence": 0,
+          "source_review_applied_receipt": 1,
+          "materialization_receipt": 0
+        },
+        "expected_owner_marker_counts": {
+          "source_review_evidence": 0,
+          "source_review_applied_receipt": 1,
+          "materialization_receipt": 0
+        },
+        "owner_source_review_evidence_comment_ids": [
+          5536381793
+        ],
+        "owner_source_review_applied_receipt_comment_id": 5539150635
+      },
       "receipt_comment_id": 5535863537,
       "boundary_evidence_comment_id": null,
       "materialization_plan_action": "blocked",
@@ -197,5 +325,5 @@
   ],
   "errors": [],
   "ok": false,
-  "plan_digest": "82efd53623139243505ee6feee07a1db586bc6ee96c6152772835bceb6b14b7f"
+  "plan_digest": "ed846a5e3d193c8ca7d8073eb1e2abecd7d4187cf7ada126668506492b806588"
 }

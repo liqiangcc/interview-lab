@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/liqiangcc/interview-lab/schemas/issue-1657-owner-receipt-audit-snapshot.schema.json",
+  "title": "Issue #1657 owner and materialization receipt audit snapshot",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "repository", "captured_at", "read_policy", "entries", "canonical_digest"],
+  "properties": {
+    "schema_version": {"const": "issue-1657-owner-receipt-audit-snapshot.v1"},
+    "repository": {"const": "liqiangcc/interview-lab"},
+    "captured_at": {"type": "string", "format": "date-time"},
+    "read_policy": {"type": "string", "minLength": 1},
+    "entries": {"type": "array", "minItems": 3, "maxItems": 3, "items": {"type": "object"}},
+    "canonical_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}
