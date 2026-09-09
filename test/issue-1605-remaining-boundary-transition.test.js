@@ -179,9 +179,10 @@ test('transition planner passes v2 multi-interview cases through the existing va
   const binding = validateRequestBinding(request, { ...request }, REMAINING_MANIFEST_DIGEST);
   assert.equal(binding.ok, true, binding.errors.join('; '));
   const nonNullRef = { ...request, expected_source_repository_ref: '95b77bb261048059846273688e4b90a2e108b437' };
-  const rejected = transitionItem({ request: nonNullRef }, { issue: { number: 910, state: 'open', body, labels: ['type:source-note', 'source:xhs', 'status:captured', 'boundary:pending', 'task:boundary-review'] }, comments: [evidence] }, null);
+  const nonNullEvidence = { ...evidence, body: `${evidence.body}\n${nonNullRef.expected_source_repository_ref}` };
+  const rejected = transitionItem({ request: nonNullRef }, { issue: { number: 910, state: 'open', body, labels: ['type:source-note', 'source:xhs', 'status:captured', 'boundary:pending', 'task:boundary-review'] }, comments: [nonNullEvidence] }, null);
   assert.equal(rejected.ok, false);
-  assert.match(rejected.errors.join('\n'), /SourceNote v2 transition must use expected_source_repository_ref=null/);
+  assert.deepEqual(rejected.errors, ['SourceNote v2 transition must use expected_source_repository_ref=null']);
 });
 
 test('authorized applyBatch simulation calls PATCH and POST once, validates receipt, and persists the journal', () => {
