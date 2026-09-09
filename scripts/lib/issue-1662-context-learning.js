@@ -55,7 +55,19 @@ function inputDigest(value) { return canonicalDigest(value); }
 
 function labelsOf(issue) { return normalizeLabels(issue && issue.labels || []); }
 
-function terminalStatus(receipt) { return receipt && (receipt.final_status || receipt.status || receipt.decision); }
+function terminalStatus(receipt, errors = null) {
+  if (!receipt || typeof receipt !== 'object') return null;
+  const values = ['final_status', 'status', 'decision']
+    .map((field) => receipt[field])
+    .filter((value) => nonEmpty(value))
+    .map((value) => String(value));
+  const unique = [...new Set(values)];
+  if (unique.length > 1) {
+    if (Array.isArray(errors)) errors.push(`receipt terminal status fields conflict: ${unique.join(', ')}`);
+    return null;
+  }
+  return unique[0] || null;
+}
 
 function stripDiscoveryLabels(labels) {
   return normalizeLabels(labels).filter((label) => !DISCOVERY_PREFIXES.some((prefix) => label.startsWith(prefix)));
@@ -134,27 +146,69 @@ function validateMaterializationAudit(audit, inventoryValidation, errors) {
   const rows = rowsFrom(audit);
   if (!audit || typeof audit !== 'object') { errors.push('Issue #1658 materialization/post-audit is required'); return new Map(); }
   if (!MATERIALIZATION_AUDIT_SCHEMAS.has(audit.schema_version)) errors.push(`materialization/post-audit schema must be one of ${[...MATERIALIZATION_AUDIT_SCHEMAS].join(', ')}`);
-  if (Number(audit.issue_number || audit.parent_issue) !== 1658 && audit.issue_number !== undefined && audit.parent_issue !== undefined) errors.push('materialization/post-audit must be scoped to #1658');
-  if (audit.post_audit !== true && audit.post_audit_status !== 'pass' && audit.audit_status !== 'pass') errors.push('materialization/post-audit must explicitly pass');
+  const auditScope = Number(audit.issue_number || audit.parent_issue || audit.materialization_issue_number || audit.controller_issue_number);
+  if (auditScope !== 1658) errors.push('materialization/post-audit must be scoped to #1658');
+  if (audit.post_audit !== true && !['pass', 'passed', 'complete', 'completed', 'converged', 'verified'].includes(String(audit.post_audit_status || audit.audit_status || '').toLowerCase())) errors.push('materialization/post-audit must explicitly pass');
+  if (typeof audit.mutation_performed !== 'boolean' && !nonEmpty(audit.mutation_status) && !nonEmpty(audit.mutation_state)) errors.push('materialization/post-audit must declare actual mutation state');
   if (!rows) { errors.push('materialization/post-audit must contain items/results/entries'); return new Map(); }
   const byIssue = new Map();
   for (const row of rows) {
     const number = Number(row && (row.issue_number || row.interview_issue_number || row.owner_issue_number));
     const id = row && (row.interview_note_id || row.derived_interview_note_id);
     if (!Number.isInteger(number) || !nonEmpty(id)) { errors.push('materialization/post-audit row must bind issue_number and interview_note_id'); continue; }
+    const rowScope = Number(row.parent_issue || row.materialization_issue_number || row.audit_issue_number || row.controller_issue_number || row.scope_issue_number || (row.scope && row.scope.issue_number));
+    if (rowScope !== 1658) errors.push(`materialization/post-audit Issue #${number} row must explicitly bind #1658 scope`);
     if (byIssue.has(number)) errors.push(`duplicate materialization/post-audit row for Issue #${number}`);
     byIssue.set(number, row);
     const owner = inventoryValidation.byIssue.get(number);
     if (!owner) errors.push(`materialization/post-audit Issue #${number} is not in the fresh full owner inventory`);
     else {
       if (owner.interview_note_id !== id) errors.push(`materialization/post-audit Issue #${number} identity differs from ownership inventory`);
+      const sourceNoteSha = row.source_note_body_sha256 || row.source_note_body_sha || row.source_body_sha256 || row.source_body_sha;
       const bodySha = row.body_sha256 || row.interview_body_sha256 || row.projected_body_sha256;
-      if (bodySha && bodySha !== owner.body_sha256) errors.push(`materialization/post-audit Issue #${number} body SHA differs from ownership inventory`);
-      if (row.source_revision_id && row.source_revision_id !== owner.source_revision_id) errors.push(`materialization/post-audit Issue #${number} SourceRevision differs from ownership inventory`);
+      if (!HEX64.test(sourceNoteSha || '')) errors.push(`materialization/post-audit Issue #${number} must bind complete source_note_body_sha256/body_sha`);
+      if (!HEX64.test(bodySha || '') || bodySha !== owner.body_sha256) errors.push(`materialization/post-audit Issue #${number} body SHA must be complete and match ownership inventory`);
+      if (!nonEmpty(row.source_revision_id)) errors.push(`materialization/post-audit Issue #${number} source_revision_id is required`);
+      else if (row.source_revision_id !== owner.source_revision_id) errors.push(`materialization/post-audit Issue #${number} SourceRevision differs from ownership inventory`);
+      if (owner.source_note_id && row.source_note_id !== owner.source_note_id) errors.push(`materialization/post-audit Issue #${number} SourceNote identity differs from ownership inventory`);
     }
+    const rowPostAudit = String(row.post_audit_status || row.audit_status || row.post_apply_audit_status || '').toLowerCase();
+    if (!['pass', 'passed', 'complete', 'completed', 'converged', 'verified'].includes(rowPostAudit)) errors.push(`materialization/post-audit Issue #${number} must declare an actual passing post-audit state`);
+    const hasMutationState = typeof row.mutation_performed === 'boolean' || nonEmpty(row.mutation_state) || nonEmpty(row.mutation_status) || nonEmpty(row.materialization_state);
+    if (!hasMutationState) errors.push(`materialization/post-audit Issue #${number} must declare actual mutation/materialization state`);
   }
   for (const owner of inventoryValidation.entries) if (!byIssue.has(Number(owner.issue_number))) errors.push(`materialization/post-audit is missing owner Issue #${owner.issue_number}`);
   return byIssue;
+}
+
+function receiptBindingObject(receipt, wrapped) {
+  if (receipt && receipt.request && typeof receipt.request === 'object') return receipt.request;
+  if (receipt && receipt.marker && typeof receipt.marker === 'object') return receipt.marker;
+  if (wrapped && wrapped.request && typeof wrapped.request === 'object') return wrapped.request;
+  if (wrapped && wrapped.marker && typeof wrapped.marker === 'object') return wrapped.marker;
+  return null;
+}
+
+function validateReceiptBinding(receipt, wrapped, owner, materialized, id, errors) {
+  if (!receipt || receipt.repository !== REPOSITORY) errors.push(`#1661 receipt ${id} must bind repository ${REPOSITORY}`);
+  const sourceNoteId = receipt && receipt.source_note_id;
+  if (!nonEmpty(sourceNoteId)) errors.push(`#1661 receipt ${id} must bind SourceNote identity`);
+  if (owner && owner.source_note_id && sourceNoteId !== owner.source_note_id) errors.push(`#1661 receipt ${id} SourceNote identity differs from ownership inventory`);
+  if (materialized && materialized.source_note_id && sourceNoteId !== materialized.source_note_id) errors.push(`#1661 receipt ${id} SourceNote identity differs from #1658 post-audit`);
+  const binding = receiptBindingObject(receipt, wrapped);
+  if (!binding) {
+    errors.push(`#1661 receipt ${id} must contain a complete marker/request binding`);
+    return;
+  }
+  if (binding.repository !== REPOSITORY) errors.push(`#1661 receipt ${id} marker/request repository binding is invalid`);
+  if (binding.interview_note_id !== id) errors.push(`#1661 receipt ${id} marker/request interview_note_id binding is invalid`);
+  if (binding.source_note_id !== sourceNoteId) errors.push(`#1661 receipt ${id} marker/request SourceNote identity binding is invalid`);
+  if (binding.source_revision_id !== receipt.source_revision_id) errors.push(`#1661 receipt ${id} marker/request SourceRevision binding is invalid`);
+  if (binding.source_note_body_sha256 !== receipt.source_note_body_sha256) errors.push(`#1661 receipt ${id} marker/request SourceNote body SHA binding is invalid`);
+  const bindingIssue = Number(binding.interview_issue_number || binding.owner_issue_number || binding.issue_number);
+  if (!owner || bindingIssue !== Number(owner.issue_number)) errors.push(`#1661 receipt ${id} marker/request owner Issue binding is invalid`);
+  if (binding.source_ref !== SOURCE_REF) errors.push(`#1661 receipt ${id} marker/request source ref binding is invalid`);
+  if (!nonEmpty(binding.request_id) && !nonEmpty(binding.request_sha256) && !nonEmpty(binding.evidence_subject_sha256) && !nonEmpty(binding.marker_id)) errors.push(`#1661 receipt ${id} marker/request identifier is required`);
 }
 
 function receiptIndex(receipts, inventoryValidation, errors, materialization = new Map()) {
@@ -175,14 +229,17 @@ function receiptIndex(receipts, inventoryValidation, errors, materialization = n
     if (!HEX64.test(receipt.source_note_body_sha256 || '')) errors.push(`#1661 receipt ${id} must bind source_note_body_sha256`);
     if (!nonEmpty(receipt.source_revision_id)) errors.push(`#1661 receipt ${id} must bind source_revision_id`);
     const materialized = owner && materialization.get(Number(owner.issue_number));
-    if (materialized && materialized.source_note_body_sha256 && receipt.source_note_body_sha256 !== materialized.source_note_body_sha256) errors.push(`#1661 receipt ${id} SourceNote body SHA differs from #1658 post-audit`);
+    if (materialized && (materialized.source_note_body_sha256 || materialized.source_note_body_sha || materialized.source_body_sha256)
+      && receipt.source_note_body_sha256 !== (materialized.source_note_body_sha256 || materialized.source_note_body_sha || materialized.source_body_sha256)) errors.push(`#1661 receipt ${id} SourceNote body SHA differs from #1658 post-audit`);
     if (owner && (owner.source_note_body_sha256 || owner.source_body_sha256)
       && receipt.source_note_body_sha256 !== owner.source_note_body_sha256
       && receipt.source_note_body_sha256 !== owner.source_body_sha256) errors.push(`#1661 receipt ${id} SourceNote body SHA does not match owner binding`);
     if (owner && receipt.source_revision_id !== owner.source_revision_id) errors.push(`#1661 receipt ${id} SourceRevision does not match owner binding`);
-    if (terminalStatus(receipt) === 'source-ready' && receipt.source_repository_ref !== SOURCE_REF) errors.push(`#1661 receipt ${id} source-ready receipt must bind the frozen source ref`);
+    if (receipt.source_repository_ref !== SOURCE_REF) errors.push(`#1661 receipt ${id} must bind the frozen source ref`);
     if (!HEX64.test(receipt.interview_body_sha256 || '')) errors.push(`#1661 receipt ${id} must bind interview_body_sha256`);
-    if (!['source-ready', 'blocked'].includes(terminalStatus(receipt))) errors.push(`#1661 receipt ${id} has no terminal status`);
+    validateReceiptBinding(receipt, wrapped, owner, materialized, id, errors);
+    const status = terminalStatus(receipt, errors);
+    if (!['source-ready', 'blocked'].includes(status)) errors.push(`#1661 receipt ${id} has no terminal status`);
     byInterview.set(id, receipt);
   }
   for (const owner of inventoryValidation.entries) if (!byInterview.has(owner.interview_note_id)) errors.push(`#1661 Source Review receipt is missing for ${owner.interview_note_id}`);
@@ -420,16 +477,60 @@ function validatePlan(plan) {
   return { ok: errors.length === 0, errors };
 }
 
+function authorizationMarkerFromComment(body) {
+  if (!nonEmpty(body)) return { marker: null, errors: ['fetched authorization comment has no body'] };
+  const matches = [...String(body).matchAll(/<!--\s*issue-1662-authorization\s*([\s\S]*?)-->/g)];
+  if (matches.length !== 1) return { marker: null, errors: ['fetched authorization comment must contain exactly one issue-1662-authorization marker'] };
+  try {
+    const marker = JSON.parse(matches[0][1].trim());
+    return { marker, errors: marker && typeof marker === 'object' && !Array.isArray(marker) ? [] : ['fetched authorization marker must be a JSON object'] };
+  } catch (error) {
+    return { marker: null, errors: [`fetched authorization marker JSON is invalid: ${error.message}`] };
+  }
+}
+
+function fetchedAuthorizationComment(value) {
+  if (Array.isArray(value)) return value.length === 1 ? value[0] : null;
+  if (value && Array.isArray(value.comments)) return value.comments.length === 1 ? value.comments[0] : null;
+  if (value && value.comment && typeof value.comment === 'object') return value.comment;
+  return value && typeof value === 'object' ? value : null;
+}
+
+function validateFetchedAuthorizationComment(auth, fetchedValue, errors) {
+  const fetched = fetchedAuthorizationComment(fetchedValue);
+  if (!fetched) { errors.push('authorization comment fetch must resolve to exactly one comment'); return; }
+  if (fetched.id !== auth.comment_id) errors.push('authorization marker.comment_id does not exactly match fetched comment.id');
+  const issueUrl = `https://api.github.com/repos/${REPOSITORY}/issues/${ISSUE_NUMBER}`;
+  const belongsByUrl = fetched.issue_url === issueUrl;
+  const belongsByNumber = fetched.issue_number !== undefined && Number(fetched.issue_number) === ISSUE_NUMBER;
+  if (!belongsByUrl && !belongsByNumber) errors.push('fetched authorization comment does not uniquely belong to controller Issue #1662');
+  if (fetched.issue_url !== undefined && fetched.issue_url !== issueUrl) errors.push('fetched authorization comment issue_url is not controller Issue #1662');
+  if (fetched.issue_number !== undefined && Number(fetched.issue_number) !== ISSUE_NUMBER) errors.push('fetched authorization comment issue_number is not controller Issue #1662');
+  const parsed = authorizationMarkerFromComment(fetched.body);
+  errors.push(...parsed.errors);
+  if (!parsed.marker) return;
+  for (const field of ['schema_version', 'issue_number', 'comment_id', 'marker', 'allow_live_github', 'plan_digest', 'mutation_ceiling', 'authorized_by']) {
+    if (parsed.marker[field] !== auth[field]) errors.push(`fetched authorization marker ${field} does not match local authorization`);
+  }
+  if (canonicalDigest(parsed.marker) !== canonicalDigest(auth)) errors.push('fetched authorization marker does not exactly match local authorization');
+  if (parsed.marker.comment_id !== fetched.id) errors.push('fetched authorization marker.comment_id does not exactly match fetched comment.id');
+}
+
 function validateAuthorization(auth, planDigest, maxMutations, options = {}) {
   const errors = [];
   if (!auth || auth.schema_version !== AUTH_SCHEMA_VERSION) errors.push(`authorization schema must be ${AUTH_SCHEMA_VERSION}`);
   if (!auth || Number(auth.issue_number) !== ISSUE_NUMBER) errors.push('authorization must target Issue #1662');
-  if (!auth || !Number.isInteger(Number(auth.comment_id)) || Number(auth.comment_id) < 1) errors.push('authorization comment_id is required');
+  if (!auth || !Number.isInteger(auth.comment_id) || auth.comment_id < 1) errors.push('authorization comment_id is required');
   if (!auth || auth.marker !== 'issue-1662-authorization') errors.push('explicit issue-1662-authorization marker is required');
   if (!auth || auth.allow_live_github !== true || options.allowLiveGithub !== true) errors.push('allow_live_github=true must be present in authorization and CLI gate');
   if (!auth || auth.plan_digest !== planDigest) errors.push('authorization plan_digest does not match exact plan digest');
   if (!auth || !Number.isInteger(auth.mutation_ceiling) || auth.mutation_ceiling !== maxMutations) errors.push('authorization mutation ceiling does not match exact CLI ceiling');
   if (!auth || !nonEmpty(auth.authorized_by)) errors.push('authorization authorized_by is required');
+  if (typeof options.fetchAuthorizationComment !== 'function') errors.push('authorization requires a fetched GitHub controller comment adapter');
+  else if (auth && Number.isInteger(auth.comment_id) && auth.comment_id > 0) {
+    try { validateFetchedAuthorizationComment(auth, options.fetchAuthorizationComment(auth.comment_id), errors); }
+    catch (error) { errors.push(`authorization comment fetch failed closed: ${error.message}`); }
+  }
   return { ok: errors.length === 0, errors };
 }
 
@@ -474,7 +575,7 @@ function validatePatchResponse(response, item) {
 
 function applyPlan(plan, options = {}) {
   if (!plan || plan.schema_version !== SCHEMA_VERSION || plan.mode !== 'plan-only' || plan.mutation_performed !== false) throw new Error('malformed or already-mutated #1662 plan cannot be applied');
-  const auth = validateAuthorization(options.authorization, plan.canonical_digest, options.maxMutations, { allowLiveGithub: options.allowLiveGithub === true });
+  const auth = validateAuthorization(options.authorization, plan.canonical_digest, options.maxMutations, { allowLiveGithub: options.allowLiveGithub === true, fetchAuthorizationComment: options.fetchAuthorizationComment });
   if (!auth.ok) throw new Error(auth.errors.join('; '));
   const planValidation = validatePlan(plan);
   if (!planValidation.ok) throw new Error(`plan validation failed: ${planValidation.errors.join('; ')}`);
@@ -498,9 +599,20 @@ function applyPlan(plan, options = {}) {
       }
       appendJournalEvent(options.journalPath, { issue_number: item.issue_number, state: 'patch-intent', body_sha256: item.current_body_sha256, labels: item.proposed_labels });
       let response;
-      try { response = options.patchIssue(item.issue_number, { title: item.proposed_title, labels: item.proposed_labels }); }
-      catch (error) { appendJournalEvent(options.journalPath, { issue_number: item.issue_number, state: 'patch-unknown', error: error.message }); throw new Error(`Issue #${item.issue_number} PATCH outcome is unknown; fail-closed: ${error.message}`); }
-      validatePatchResponse(response, item);
+      try {
+        response = options.patchIssue(item.issue_number, { title: item.proposed_title, labels: item.proposed_labels });
+        validatePatchResponse(response, item);
+      } catch (error) {
+        appendJournalEvent(options.journalPath, {
+          issue_number: item.issue_number,
+          state: 'patch-unknown',
+          phase: response === undefined ? 'patch-call' : 'patch-response-validation',
+          uncertain: true,
+          possibly_performed: true,
+          error: error.message,
+        });
+        throw new Error(`Issue #${item.issue_number} PATCH outcome is unknown; fail-closed: ${error.message}`);
+      }
       appendJournalEvent(options.journalPath, { issue_number: item.issue_number, state: 'patch-converged' });
       const receipt = { schema_version: 'issue-1662-context-learning-receipt.v1', issue_number: item.issue_number, interview_note_id: item.interview_note_id, expected_body_sha256: item.current_body_sha256, source_revision_id: item.source_revision_id, context_sha256: item.context_sha256, context_artifact: item.context_artifact, title: item.proposed_title, labels: item.proposed_labels, raw_body_mutation: false, outcome_visibility: 'sealed-until-source-reveal' };
       appendJournalEvent(options.journalPath, { issue_number: item.issue_number, state: 'receipt-intent', receipt_sha256: sha256Text(JSON.stringify(receipt)) });

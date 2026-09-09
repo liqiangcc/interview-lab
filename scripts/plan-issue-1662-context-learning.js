@@ -124,6 +124,7 @@ function ghJson(args, input = null) {
 function controlledGithubAdapters(repository) {
   return {
     readIssue(issueNumber) { return ghJson(['api', `repos/${repository}/issues/${issueNumber}`]); },
+    fetchAuthorizationComment(commentId) { return ghJson(['api', `repos/${repository}/issues/comments/${commentId}`]); },
     patchIssue(issueNumber, projection) {
       return ghJson(['api', '--method', 'PATCH', `repos/${repository}/issues/${issueNumber}`, '--input', '-'], projection);
     },
@@ -160,7 +161,8 @@ function main(argv = process.argv.slice(2)) {
     return result.ok ? 0 : 1;
   }
   const authorization = readJson(args.authorization);
-  const auth = validateAuthorization(authorization, result.plan.canonical_digest, args.maxMutations, { allowLiveGithub: args.allowLiveGithub });
+  const adapters = controlledGithubAdapters(REPOSITORY);
+  const auth = validateAuthorization(authorization, result.plan.canonical_digest, args.maxMutations, { allowLiveGithub: args.allowLiveGithub, fetchAuthorizationComment: adapters.fetchAuthorizationComment });
   if (!auth.ok) throw new Error(auth.errors.join('; '));
   if (args.confirmPlanDigest !== result.plan.canonical_digest) throw new Error('confirmed plan digest does not match the generated plan; no mutation attempted');
   const applied = applyPlan(result.plan, {
@@ -169,7 +171,8 @@ function main(argv = process.argv.slice(2)) {
     maxMutations: args.maxMutations,
     lockPath: path.resolve(args.lock),
     journalPath: path.resolve(args.journal),
-    ...controlledGithubAdapters(REPOSITORY),
+    ...adapters,
+    fetchAuthorizationComment: adapters.fetchAuthorizationComment,
   });
   process.stdout.write(`${JSON.stringify({ ...summary, mode: 'controlled-apply', apply: applied }, null, 2)}\n`);
   return 0;

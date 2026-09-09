@@ -45,8 +45,8 @@ function body(id, revision, external) {
 
 function fixture() {
   const owners = [
-    { interview_note_id: 'xhs:1662-a', issue_number: 2001, source_revision_id: 'xhs:1662-a:r1', external: '1662-a' },
-    { interview_note_id: 'xhs:1662-b', issue_number: 2002, source_revision_id: 'xhs:1662-b:r1', external: '1662-b' },
+    { interview_note_id: 'xhs:1662-a', issue_number: 2001, source_revision_id: 'xhs:1662-a:r1', external: '1662-a', source_note_issue_number: 3001 },
+    { interview_note_id: 'xhs:1662-b', issue_number: 2002, source_revision_id: 'xhs:1662-b:r1', external: '1662-b', source_note_issue_number: 3002 },
   ];
   const liveItems = owners.map((owner, index) => {
     const text = body(owner.interview_note_id, owner.source_revision_id, owner.external);
@@ -54,11 +54,11 @@ function fixture() {
   });
   const inventory = {
     schema_version: 'aggregate-interview-note-ownership-inventory.v1', repository: 'liqiangcc/interview-lab', coverage: 'all-repository-interview-note-issues', complete: true, fresh: true, captured_at: '2026-09-09T00:00:00Z', count: owners.length,
-    entries: owners.map((owner, index) => ({ interview_note_id: owner.interview_note_id, issue_number: owner.issue_number, body_sha256: sha256Text(liveItems[index].body), source_revision_id: owner.source_revision_id, source_note_id: `xhs-note:${owner.external}` })),
+    entries: owners.map((owner, index) => ({ interview_note_id: owner.interview_note_id, issue_number: owner.issue_number, body_sha256: sha256Text(liveItems[index].body), source_revision_id: owner.source_revision_id, source_note_id: `xhs-note:${owner.external}`, source_note_issue_number: owner.source_note_issue_number })),
   };
   inventory.canonical_digest = canonicalDigest(inventory);
-  const audit = { schema_version: 'issue-1658-materialization-post-audit.v1', issue_number: 1658, post_audit: true, items: owners.map((owner, index) => ({ issue_number: owner.issue_number, interview_note_id: owner.interview_note_id, body_sha256: sha256Text(liveItems[index].body), source_note_body_sha256: 'b'.repeat(64), source_revision_id: owner.source_revision_id })) };
-  const receipts = owners.map((owner, index) => ({ schema_version: 'interview-note-source-review-applied.v1', interview_note_id: owner.interview_note_id, interview_issue_number: owner.issue_number, source_note_body_sha256: 'b'.repeat(64), interview_body_sha256: sha256Text(liveItems[index].body), source_revision_id: owner.source_revision_id, source_repository_ref: '95b77bb261048059846273688e4b90a2e108b437', final_status: 'source-ready', independent: true, boundary_evidence_reuse: false }));
+  const audit = { schema_version: 'issue-1658-materialization-post-audit.v1', issue_number: 1658, post_audit: true, post_audit_status: 'pass', mutation_performed: false, mutation_state: 'no-op', items: owners.map((owner, index) => ({ parent_issue: 1658, issue_number: owner.issue_number, interview_note_id: owner.interview_note_id, source_note_id: `xhs-note:${owner.external}`, body_sha256: sha256Text(liveItems[index].body), source_note_body_sha256: 'b'.repeat(64), source_revision_id: owner.source_revision_id, post_audit_status: 'pass', mutation_performed: false, materialization_state: 'already_materialized' })) };
+  const receipts = owners.map((owner, index) => ({ schema_version: 'interview-note-source-review-applied.v1', repository: 'liqiangcc/interview-lab', interview_note_id: owner.interview_note_id, interview_issue_number: owner.issue_number, source_note_id: `xhs-note:${owner.external}`, source_note_body_sha256: 'b'.repeat(64), interview_body_sha256: sha256Text(liveItems[index].body), source_revision_id: owner.source_revision_id, source_repository_ref: '95b77bb261048059846273688e4b90a2e108b437', final_status: 'source-ready', independent: true, boundary_evidence_reuse: false, request: { request_id: `issue-1661:${owner.interview_note_id}`, repository: 'liqiangcc/interview-lab', interview_note_id: owner.interview_note_id, interview_issue_number: owner.issue_number, source_note_id: `xhs-note:${owner.external}`, source_note_body_sha256: 'b'.repeat(64), source_revision_id: owner.source_revision_id, source_ref: '95b77bb261048059846273688e4b90a2e108b437' } }));
   const contexts = owners.map((owner, index) => { const value = context(owner.interview_note_id, owner.source_revision_id, index === 1); return { issue_number: owner.issue_number, context: value, artifact: { repository: 'liqiangcc/interview-lab', path: `data/interview-contexts/${owner.external}.v1.json`, ref: 'refs/heads/main', commit: 'a'.repeat(40), sha256: canonicalDigest(value) } }; });
   const labelCatalog = ['type:interview-note', 'source:xhs', 'status:source-ready', 'quality:text-truncated', 'company:alibaba', 'role:backend', 'recruitment:campus', 'source-year:2024', 'interview-year:2023'];
   const values = { ownershipInventory: inventory, materializationPostAudit: audit, sourceReviewReceipts: receipts, contextArtifacts: contexts, liveIssueSnapshot: { items: liveItems }, labelCatalog };
@@ -67,6 +67,17 @@ function fixture() {
     ownership_inventory: binding(inventory, 'fresh-inventory.json'), materialization_post_audit: binding(audit, '1658-audit.json'), source_review_receipts: binding(receipts, '1661-receipts.json'), context_artifacts: binding(contexts, 'contexts.json'), live_issue_snapshot: binding(values.liveIssueSnapshot, 'live.json'),
   };
   return values;
+}
+
+function authorizationComment(auth, overrides = {}) {
+  const comment = {
+    id: auth.comment_id,
+    issue_url: 'https://api.github.com/repos/liqiangcc/interview-lab/issues/1662',
+    issue_number: 1662,
+    body: `<!-- issue-1662-authorization\n${JSON.stringify(auth, null, 2)}\n-->`,
+    ...overrides,
+  };
+  return comment;
 }
 
 test('dynamic plan uses every fresh owner, not legacy 350 candidates, and keeps unknowns unlabelled', () => {
@@ -102,9 +113,35 @@ test('authorization requires explicit #1662 marker/comment, live flag, exact dig
   const input = fixture();
   const plan = buildPlan(input).plan;
   const auth = { schema_version: AUTH_SCHEMA_VERSION, issue_number: 1662, comment_id: 991662, marker: 'issue-1662-authorization', allow_live_github: true, plan_digest: plan.canonical_digest, mutation_ceiling: 1, authorized_by: 'fixture' };
-  assert.equal(validateAuthorization(auth, plan.canonical_digest, 1, { allowLiveGithub: true }).ok, true);
-  assert.equal(validateAuthorization({ ...auth, comment_id: null }, plan.canonical_digest, 1, { allowLiveGithub: true }).ok, false);
-  assert.equal(validateAuthorization(auth, plan.canonical_digest, 2, { allowLiveGithub: true }).ok, false);
+  const fetchAuthorizationComment = () => authorizationComment(auth);
+  assert.equal(validateAuthorization(auth, plan.canonical_digest, 1, { allowLiveGithub: true, fetchAuthorizationComment }).ok, true);
+  assert.equal(validateAuthorization({ ...auth, comment_id: null }, plan.canonical_digest, 1, { allowLiveGithub: true, fetchAuthorizationComment }).ok, false);
+  assert.equal(validateAuthorization(auth, plan.canonical_digest, 2, { allowLiveGithub: true, fetchAuthorizationComment }).ok, false);
+  assert.equal(validateAuthorization(auth, plan.canonical_digest, 1, { allowLiveGithub: true }).ok, false);
+  assert.equal(validateAuthorization(auth, plan.canonical_digest, 1, { allowLiveGithub: true, fetchAuthorizationComment: () => authorizationComment(auth, { id: 991663 }) }).ok, false);
+  assert.equal(validateAuthorization(auth, plan.canonical_digest, 1, { allowLiveGithub: true, fetchAuthorizationComment: () => authorizationComment(auth, { issue_url: 'https://api.github.com/repos/liqiangcc/interview-lab/issues/1611', issue_number: 1611 }) }).ok, false);
+});
+
+test('materialization rows cannot bypass #1658 scope, source CAS, revision, or actual state gates', () => {
+  const input = fixture();
+  input.materializationPostAudit.items = input.materializationPostAudit.items.map((row) => ({ issue_number: row.issue_number, interview_note_id: row.interview_note_id }));
+  input.bindings.materialization_post_audit.sha256 = canonicalDigest(input.materializationPostAudit);
+  const result = buildPlan(input);
+  assert.equal(result.ok, false);
+  assert.ok(result.plan.errors.some((error) => /explicitly bind #1658 scope/.test(error)));
+  assert.ok(result.plan.errors.some((error) => /source_note_body_sha256|source_revision_id|actual passing post-audit state|actual mutation/.test(error)));
+});
+
+test('receipt terminal status conflicts and incomplete repository/SourceNote/request binding fail closed', () => {
+  const input = fixture();
+  input.sourceReviewReceipts[0] = { ...input.sourceReviewReceipts[0], status: 'blocked', repository: 'other/repository' };
+  delete input.sourceReviewReceipts[0].source_note_id;
+  delete input.sourceReviewReceipts[0].request;
+  input.bindings.source_review_receipts.sha256 = canonicalDigest(input.sourceReviewReceipts);
+  const result = buildPlan(input);
+  assert.equal(result.ok, false);
+  assert.ok(result.plan.errors.some((error) => /terminal status fields conflict/.test(error)));
+  assert.ok(result.plan.errors.some((error) => /repository|SourceNote identity|complete marker\/request binding/.test(error)));
 });
 
 test('PATCH response must return the complete exact label projection', () => {
@@ -122,9 +159,25 @@ test('controlled apply uses exclusive lock/journal and only injected adapters', 
   const journalPath = path.join(temp, 'apply.journal.jsonl');
   const auth = { schema_version: AUTH_SCHEMA_VERSION, issue_number: 1662, comment_id: 991662, marker: 'issue-1662-authorization', allow_live_github: true, plan_digest: result.plan.canonical_digest, mutation_ceiling: 2, authorized_by: 'fixture' };
   const patched = [];
-  const applied = applyPlan(result.plan, { authorization: auth, allowLiveGithub: true, maxMutations: 2, lockPath, journalPath, readIssue: (number) => input.liveIssueSnapshot.items.find((issue) => issue.number === number), patchIssue: (number, projection) => { patched.push(number); const issue = input.liveIssueSnapshot.items.find((item) => item.number === number); return { number, title: projection.title, labels: projection.labels, body: issue.body }; }, postReceipt: () => ({ id: 1234 }) });
+  const applied = applyPlan(result.plan, { authorization: auth, fetchAuthorizationComment: () => authorizationComment(auth), allowLiveGithub: true, maxMutations: 2, lockPath, journalPath, readIssue: (number) => input.liveIssueSnapshot.items.find((issue) => issue.number === number), patchIssue: (number, projection) => { patched.push(number); const issue = input.liveIssueSnapshot.items.find((item) => item.number === number); return { number, title: projection.title, labels: projection.labels, body: issue.body }; }, postReceipt: () => ({ id: 1234 }) });
   assert.equal(applied.mutation_performed, true);
   assert.deepEqual(patched, [2001, 2002]);
   assert.equal(fs.existsSync(lockPath), false);
   assert.equal(fs.readFileSync(journalPath, 'utf8').includes('patch-converged'), true);
+});
+
+test('controlled apply journals patch-unknown when PATCH returns but response validation fails', () => {
+  const input = fixture();
+  const result = buildPlan(input);
+  const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'issue-1662-unknown-'));
+  const lockPath = path.join(temp, 'apply.lock');
+  const journalPath = path.join(temp, 'apply.journal.jsonl');
+  const auth = { schema_version: AUTH_SCHEMA_VERSION, issue_number: 1662, comment_id: 991662, marker: 'issue-1662-authorization', allow_live_github: true, plan_digest: result.plan.canonical_digest, mutation_ceiling: 2, authorized_by: 'fixture' };
+  assert.throws(() => applyPlan(result.plan, { authorization: auth, fetchAuthorizationComment: () => authorizationComment(auth), allowLiveGithub: true, maxMutations: 2, lockPath, journalPath, readIssue: (number) => input.liveIssueSnapshot.items.find((issue) => issue.number === number), patchIssue: () => ({ number: 2001, title: result.plan.candidates[0].proposed_title }), postReceipt: () => ({ id: 1234 }) }), /PATCH outcome is unknown/);
+  const journal = fs.readFileSync(journalPath, 'utf8');
+  assert.match(journal, /"state":"patch-intent"/);
+  assert.match(journal, /"state":"patch-unknown"/);
+  assert.match(journal, /"uncertain":true/);
+  assert.doesNotMatch(journal, /"state":"patch-converged"/);
+  assert.equal(fs.existsSync(lockPath), false);
 });

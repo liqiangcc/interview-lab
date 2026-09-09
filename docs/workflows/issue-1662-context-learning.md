@@ -18,6 +18,6 @@ npm run plan:issue-1662-context-learning -- \
 
 Unknown 只会保留在 `unknown_facts`；不会猜测，也不会生成对应 Learning label。title 与 Learning labels 由 `buildLearningDiscovery` 可重放地产生，并经过 outcome-spoiler 检查。apply 不会隐式创建 label，taxonomy preflight 必须确认完整 label catalog。
 
-Apply 的代码路径需要同时满足：Issue #1662 的 `issue-1662-authorization` marker 与正整数 `comment_id`、`allow_live_github=true`、精确 plan digest、精确 mutation ceiling、独占 lock/journal。每个 PATCH 先做 body/title/labels CAS；未知 PATCH 或 receipt POST 响应都会写入 uncertain journal 并停止，PATCH 响应必须返回完整且精确匹配的 labels。没有执行授权时，不会调用 GitHub PATCH/POST/label。
+Apply 的代码路径需要同时满足：通过 GitHub GET 或注入 adapter 唯一取回属于 controller Issue #1662 的授权评论，且远端 marker 的 `comment_id` 与 fetched `comment.id` 完全一致；此外还需要 Issue #1662 的 `issue-1662-authorization` marker、`allow_live_github=true`、精确 plan digest、精确 mutation ceiling、独占 lock/journal。每个 PATCH 先做 body/title/labels CAS；PATCH 已返回但响应校验失败也会写入 durable `patch-unknown`/uncertain journal 并停止，receipt POST 未知响应同样如此；PATCH 响应必须返回完整且精确匹配的 labels。没有执行授权时，不会调用 GitHub PATCH/POST/label。
 
 相关机器契约：`scripts/lib/issue-1662-context-learning.js`；CLI：`scripts/plan-issue-1662-context-learning.js`；测试：`test/issue-1662-context-learning.test.js`。
