@@ -374,7 +374,7 @@ function mutationWritersDisabled() {
   return { patchIssue() { throw new Error('live PATCH is disabled in remaining-boundary plan-only runner'); }, postReceipt() { throw new Error('live POST is disabled in remaining-boundary plan-only runner'); } };
 }
 
-function reconcileUnknownResponse({ kind, record, liveLoader, expected, planDigestValue, attempts = 3, sleep = () => {} }) {
+function reconcileUnknownResponse({ kind, record, liveLoader, expected, planDigestValue, attempts = 5, sleep = () => {} }) {
   if (!['patch', 'receipt'].includes(kind)) throw new Error('unknown-response reconciliation kind must be patch or receipt');
   if (typeof liveLoader !== 'function') throw new Error('unknown-response reconciliation requires a read-only live loader');
   if (!Number.isSafeInteger(attempts) || attempts < 1 || attempts > 5) throw new Error('reconcile attempts must be a safe integer from 1 to 5');
