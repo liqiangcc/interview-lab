@@ -1,7 +1,7 @@
 'use strict';
 
 const assert = require('node:assert/strict');
-const crypto = require('node:crypto');
+const { spawnSync } = require('node:child_process');
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
@@ -17,6 +17,7 @@ const {
   initialJournal,
   validateJournal,
   atomicWriteJson,
+  acquireLock,
   applyEvidenceBatch,
   buildPlanOnly,
 } = require('../scripts/lib/issue-1656-evidence-only-batch');
@@ -85,6 +86,17 @@ function runApply(api, auth = authComment(), overrides = {}) {
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'issue-1656-evidence-only-'));
   try { return applyAt(api, directory, auth, overrides); }
   finally { fs.rmSync(directory, { recursive: true, force: true }); }
+}
+
+function writeLockFixture(file, { token = 'stale-token-1656', pid, hostname = os.hostname(), planDigest = plan.canonical_digest, malformed = false } = {}) {
+  if (malformed) { fs.writeFileSync(file, '{not-json\n', 'utf8'); return; }
+  fs.writeFileSync(file, 'lock fixture\n', { encoding: 'utf8', mode: 0o600 });
+  const stat = fs.statSync(file);
+  const device = Number(stat.dev);
+  const inode = Number(stat.ino);
+  const owner = { token, pid, hostname };
+  fs.writeFileSync(file, `${JSON.stringify({ schema_version: 'issue-1656-evidence-only-lock.v2', token, pid, hostname, created_at: '2026-09-09T00:00:00.000Z', device, inode, owner, plan_digest: planDigest })}\n`, 'utf8');
+  return { token, pid, hostname, device, inode, owner };
 }
 
 test('evidence-only apply reads and writes only the 13 released rows, never the four blocked rows', () => {
@@ -210,6 +222,62 @@ test('an existing non-object journal is rejected rather than treated as absent',
     assert.equal(fs.readFileSync(journalFile, 'utf8'), before);
     assert.equal(api.posts.length, 0);
   } finally { fs.rmSync(directory, { recursive: true, force: true }); }
+});
+
+test('acquireLock atomically recovers a dead same-host lock and records the recovery binding', () => {
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'issue-1656-lock-dead-'));
+  const lockFile = path.join(directory, 'lock');
+  const child = spawnSync(process.execPath, ['-e', ''], { stdio: 'ignore' });
+  assert.ok(child.pid > 0);
+  const stale = writeLockFixture(lockFile, { pid: child.pid });
+  try {
+    const lock = acquireLock(lockFile, plan.canonical_digest);
+    const recovered = JSON.parse(fs.readFileSync(lockFile, 'utf8'));
+    assert.notEqual(recovered.token, stale.token);
+    assert.equal(recovered.recovered_from.token, stale.token);
+    assert.equal(recovered.recovered_from.pid, stale.pid);
+    assert.equal(recovered.recovered_from.device, stale.device);
+    assert.equal(recovered.recovered_from.inode, stale.inode);
+    assert.match(recovered.recovered_from.quarantine, /^lock\.recovery-/);
+    assert.equal(recovered.owner.token, recovered.token);
+    assert.equal(recovered.owner.pid, process.pid);
+    assert.equal(recovered.device, Number(fs.statSync(lockFile).dev));
+    assert.equal(recovered.inode, Number(fs.statSync(lockFile).ino));
+    lock.assertHeld();
+    lock.release();
+    assert.equal(fs.existsSync(lockFile), false);
+  } finally { fs.rmSync(directory, { recursive: true, force: true }); }
+});
+
+test('acquireLock rejects a live same-host lock and preserves its payload', () => {
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'issue-1656-lock-live-'));
+  const lockFile = path.join(directory, 'lock');
+  writeLockFixture(lockFile, { pid: process.pid });
+  const before = fs.readFileSync(lockFile, 'utf8');
+  try {
+    assert.throws(() => acquireLock(lockFile, plan.canonical_digest), /live or cannot be proven dead/);
+    assert.equal(fs.readFileSync(lockFile, 'utf8'), before);
+  } finally { fs.rmSync(directory, { recursive: true, force: true }); }
+});
+
+test('acquireLock rejects foreign-host and malformed residual locks without reclaiming either', () => {
+  const foreignDirectory = fs.mkdtempSync(path.join(os.tmpdir(), 'issue-1656-lock-foreign-'));
+  const foreignFile = path.join(foreignDirectory, 'lock');
+  writeLockFixture(foreignFile, { pid: process.pid, hostname: `${os.hostname()}-foreign` });
+  const foreignBefore = fs.readFileSync(foreignFile, 'utf8');
+  try {
+    assert.throws(() => acquireLock(foreignFile, plan.canonical_digest), /foreign-host lock/);
+    assert.equal(fs.readFileSync(foreignFile, 'utf8'), foreignBefore);
+  } finally { fs.rmSync(foreignDirectory, { recursive: true, force: true }); }
+
+  const malformedDirectory = fs.mkdtempSync(path.join(os.tmpdir(), 'issue-1656-lock-malformed-'));
+  const malformedFile = path.join(malformedDirectory, 'lock');
+  writeLockFixture(malformedFile, { malformed: true });
+  const malformedBefore = fs.readFileSync(malformedFile, 'utf8');
+  try {
+    assert.throws(() => acquireLock(malformedFile, plan.canonical_digest), /lock payload is malformed/);
+    assert.equal(fs.readFileSync(malformedFile, 'utf8'), malformedBefore);
+  } finally { fs.rmSync(malformedDirectory, { recursive: true, force: true }); }
 });
 
 test('per-row fresh CAS/idempotency GET stops the batch before posting after a later row drifts', () => {

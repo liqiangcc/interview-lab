@@ -216,19 +216,138 @@ function atomicWriteJson(file, value) {
   try { fs.fsyncSync(directory); } finally { fs.closeSync(directory); }
 }
 
+const LOCK_SCHEMA = 'issue-1656-evidence-only-lock.v2';
+
+function lockPayloadErrors(payload, stat, planDigest) {
+  const errors = [];
+  if (!payload || payload.schema_version !== LOCK_SCHEMA) errors.push('lock schema mismatch');
+  if (typeof payload?.token !== 'string' || payload.token.length < 16) errors.push('lock token missing');
+  if (!Number.isSafeInteger(payload?.pid) || payload.pid <= 0) errors.push('lock pid invalid');
+  if (typeof payload?.hostname !== 'string' || payload.hostname.length === 0) errors.push('lock hostname missing');
+  if (typeof payload?.created_at !== 'string' || Number.isNaN(Date.parse(payload.created_at))) errors.push('lock created_at invalid');
+  if (!Number.isSafeInteger(payload?.device) || payload.device < 0 || (stat && payload.device !== Number(stat.dev))) errors.push('lock device binding invalid');
+  if (!Number.isSafeInteger(payload?.inode) || payload.inode <= 0 || (stat && payload.inode !== Number(stat.ino))) errors.push('lock inode binding invalid');
+  if (!payload?.owner || payload.owner.token !== payload.token || payload.owner.pid !== payload.pid || payload.owner.hostname !== payload.hostname) errors.push('lock owner binding invalid');
+  if (payload?.plan_digest !== planDigest) errors.push('lock plan binding invalid');
+  if (payload?.recovered_from != null) {
+    const recovery = payload.recovered_from;
+    if (typeof recovery.token !== 'string' || !Number.isSafeInteger(recovery.pid) || typeof recovery.hostname !== 'string' || !Number.isSafeInteger(recovery.device) || !Number.isSafeInteger(recovery.inode) || typeof recovery.created_at !== 'string' || typeof recovery.recovered_at !== 'string' || typeof recovery.quarantine !== 'string' || recovery.quarantine.length === 0) errors.push('lock recovery record invalid');
+  }
+  return errors;
+}
+
+function readLockPayload(target, planDigest) {
+  let stat;
+  try { stat = fs.lstatSync(target); }
+  catch (error) { throw new Error(`lock cannot be inspected: ${error.message}`); }
+  if (!stat.isFile() || stat.isSymbolicLink()) throw new Error('lock must be a regular file');
+  let payload;
+  try { payload = JSON.parse(fs.readFileSync(target, 'utf8')); }
+  catch (error) { throw new Error(`lock payload is malformed: ${error.message}`); }
+  const errors = lockPayloadErrors(payload, stat, planDigest);
+  if (errors.length) throw new Error(`lock payload rejected: ${errors.join('; ')}`);
+  return { payload, stat };
+}
+
+function pidIsDefinitelyDead(pid) {
+  try { process.kill(pid, 0); return false; }
+  catch (error) { return error.code === 'ESRCH'; }
+}
+
+function lockIdentityEqual(left, right) {
+  return left?.token === right?.token && left?.pid === right?.pid && left?.hostname === right?.hostname && left?.inode === right?.inode && left?.created_at === right?.created_at && left?.plan_digest === right?.plan_digest;
+}
+
+function createLockFile(target, planDigest, recoveredFrom = null) {
+  let fd;
+  let stat;
+  try {
+    fd = fs.openSync(target, 'wx', 0o600);
+    stat = fs.fstatSync(fd);
+    const token = crypto.randomUUID();
+    const payload = {
+      schema_version: LOCK_SCHEMA,
+      token,
+      pid: process.pid,
+      hostname: os.hostname(),
+      created_at: new Date().toISOString(),
+      device: Number(stat.dev),
+      inode: Number(stat.ino),
+      owner: { token, pid: process.pid, hostname: os.hostname() },
+      plan_digest: planDigest,
+    };
+    if (recoveredFrom) payload.recovered_from = { ...recoveredFrom, recovered_at: new Date().toISOString() };
+    fs.writeFileSync(fd, `${JSON.stringify(payload)}\n`, 'utf8');
+    fs.fsyncSync(fd);
+    return payload;
+  } catch (error) {
+    if (fd != null) {
+      try { fs.closeSync(fd); } catch (_) { /* preserve original error */ }
+      if (stat) {
+        try {
+          const current = fs.statSync(target);
+          if (Number(current.ino) === Number(stat.ino)) fs.unlinkSync(target);
+        } catch (_) { /* preserve original error */ }
+      }
+    }
+    throw error;
+  } finally {
+    if (fd != null) {
+      try { fs.closeSync(fd); } catch (_) { /* already closed or original error */ }
+    }
+  }
+}
+
+function recoverDeadLocalLock(target, planDigest) {
+  const inspected = readLockPayload(target, planDigest);
+  const stale = inspected.payload;
+  if (stale.hostname !== os.hostname()) throw new Error('foreign-host lock cannot be recovered');
+  if (!pidIsDefinitelyDead(stale.pid)) throw new Error('lock owner PID is live or cannot be proven dead');
+
+  const quarantine = `${target}.recovery-${stale.token}-${crypto.randomUUID()}`;
+  try {
+    // rename is the atomic reclaim boundary. The quarantined payload is kept
+    // until the replacement is durable, so a restart can audit the recovery.
+    fs.renameSync(target, quarantine);
+    const moved = readLockPayload(quarantine, planDigest);
+    if (!lockIdentityEqual(moved.payload, stale)) throw new Error('lock changed during stale recovery');
+    const replacement = createLockFile(target, planDigest, {
+      token: stale.token,
+      pid: stale.pid,
+      hostname: stale.hostname,
+      device: stale.device,
+      inode: stale.inode,
+      created_at: stale.created_at,
+      quarantine: path.basename(quarantine),
+    });
+    const directory = fs.openSync(path.dirname(target), 'r');
+    try { fs.fsyncSync(directory); } finally { fs.closeSync(directory); }
+    return replacement;
+  } catch (error) {
+    // If no replacement was acquired, restore the exact old lock only when
+    // the destination is still absent. Never overwrite a concurrently-created lock.
+    try {
+      if (fs.existsSync(quarantine) && !fs.existsSync(target)) fs.renameSync(quarantine, target);
+    } catch (_) { /* preserve the fail-closed recovery error */ }
+    throw error;
+  }
+}
+
 function acquireLock(file, planDigest) {
   const target = path.resolve(file);
   fs.mkdirSync(path.dirname(target), { recursive: true });
-  const record = { schema_version: 'issue-1656-evidence-only-lock.v1', lock_id: crypto.randomUUID(), pid: process.pid, hostname: os.hostname(), plan_digest: planDigest, acquired_at: new Date().toISOString() };
-  let fd;
-  try { fd = fs.openSync(target, 'wx', 0o600); fs.writeFileSync(fd, `${JSON.stringify(record)}\n`, 'utf8'); fs.fsyncSync(fd); }
-  catch (error) { throw new Error(`evidence-only lock is held or unavailable: ${error.message}`); }
-  finally { if (fd != null) fs.closeSync(fd); }
+  let record;
+  try { record = createLockFile(target, planDigest); }
+  catch (error) {
+    if (error.code !== 'EEXIST') throw new Error(`evidence-only lock is held or unavailable: ${error.message}`);
+    try { record = recoverDeadLocalLock(target, planDigest); }
+    catch (recoveryError) { throw new Error(`evidence-only lock recovery failed closed: ${recoveryError.message}`); }
+  }
   const assertHeld = () => {
-    const current = JSON.parse(fs.readFileSync(target, 'utf8'));
-    if (current.lock_id !== record.lock_id || current.plan_digest !== planDigest) throw new Error('evidence-only lock ownership changed');
+    const current = readLockPayload(target, planDigest).payload;
+    if (!lockIdentityEqual(current, record)) throw new Error('evidence-only lock ownership changed');
   };
-  return { assertHeld, release() { assertHeld(); fs.unlinkSync(target); } };
+  return { assertHeld, release() { assertHeld(); fs.unlinkSync(target); const directory = fs.openSync(path.dirname(target), 'r'); try { fs.fsyncSync(directory); } finally { fs.closeSync(directory); } } };
 }
 
 function persistJournal(file, journal, plan, lock) {
