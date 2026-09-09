@@ -9,15 +9,30 @@ const { issueSourceRecord } = require('../scripts/lib/interview-note-materializa
 const { TARGETS, REQUIRED_ZERO_WRITES, receiptSnapshotDigest, planIssue1657BlockerRepair } = require('../scripts/lib/issue-1657-blocker-repair-plan');
 const { sourceSnapshotDigest } = require('../scripts/plan-issue-1611-live-materialization');
 const { DEFAULTS, parseArgs } = require('../scripts/plan-issue-1657-blocker-repair');
+const { snapshotDigest: liveSnapshotDigest, parseArgs: parseLiveArgs } = require('../scripts/audit-issue-1657-live');
 
 function load(name) {
   return JSON.parse(fs.readFileSync(path.join(__dirname, '..', name), 'utf8'));
 }
 
+function schema(name) { return load(`schemas/${name}`); }
+
 const sourceSnapshot = load('data/pilot/issue-1611/source-note-live.snapshot.json');
 const ownershipInventory = load('data/pilot/issue-1611/interview-note-ownership.inventory.json');
 const materializationPlan = load('data/pilot/issue-1611/materialization.live.dry-run.json');
 const receiptSnapshot = load('data/pilot/issue-1657/owner-receipt-audit.snapshot.json');
+const liveAuditSnapshot = load('data/pilot/issue-1657/live-reaudit.snapshot.json');
+
+test('Issue #1657 schemas expose the reviewed fail-closed contract', () => {
+  const receiptSchema = schema('issue-1657-owner-receipt-audit-snapshot.schema.json');
+  const liveSchema = schema('issue-1657-live-reaudit-snapshot.schema.json');
+  const planSchema = schema('issue-1657-blocker-repair-plan.schema.json');
+  assert.deepEqual(receiptSchema.required, ['schema_version', 'repository', 'captured_at', 'read_policy', 'entries', 'canonical_digest']);
+  assert.deepEqual(liveSchema.required, ['schema_version', 'repository', 'captured_at', 'read_policy', 'target_count', 'targets', 'canonical_digest']);
+  assert.equal(planSchema.properties.mutation_performed.const, false);
+  assert.equal(planSchema.properties.ok.const, false);
+  assert.deepEqual(planSchema.properties.write_operations.required, ['patch', 'post', 'label', 'interview_note', 'create']);
+});
 
 test('real #1611 fixture parses all three #1657 SourceNote targets with identity and revision intact', () => {
   for (const target of TARGETS) {
@@ -32,8 +47,17 @@ test('real #1611 fixture parses all three #1657 SourceNote targets with identity
   }
 });
 
+test('real live re-audit fixture binds current comments and receipts', () => {
+  assert.equal(liveSnapshotDigest(liveAuditSnapshot), liveAuditSnapshot.canonical_digest);
+  assert.deepEqual(liveAuditSnapshot.targets.map((target) => target.source_note_issue_number), [904, 907, 910]);
+  assert.deepEqual(liveAuditSnapshot.targets.map((target) => target.source.boundary_evidence && target.source.boundary_evidence.comment_id), [5579824204, 5579824470, null]);
+  assert.deepEqual(liveAuditSnapshot.targets.map((target) => target.source.boundary_applied_receipt && target.source.boundary_applied_receipt.comment_id), [5584606650, 5584607734, 5535553800]);
+  assert.equal(liveAuditSnapshot.targets[2].source.materialization_receipt.comment_id, 5535863537);
+  assert.equal(liveAuditSnapshot.targets[2].owner.source_review_evidence_comment_ids.includes(5536381793), true);
+});
+
 test('real #1657 blocker plan preserves all three target facts and stays fail-closed', () => {
-  const plan = planIssue1657BlockerRepair({ sourceSnapshot, ownershipInventory, materializationPlan, receiptSnapshot });
+  const plan = planIssue1657BlockerRepair({ sourceSnapshot, ownershipInventory, materializationPlan, receiptSnapshot, liveAuditSnapshot });
   assert.equal(plan.ok, false, 'the live blockers must not be reported ready');
   assert.deepEqual(plan.write_operations, REQUIRED_ZERO_WRITES);
   assert.equal(plan.mutation_performed, false);
@@ -51,6 +75,11 @@ test('real #1657 blocker plan preserves all three target facts and stays fail-cl
     'blocked-owner-source-revision-cas',
     'blocked-boundary-evidence-and-runtime-provenance',
   ]);
+  assert.deepEqual(plan.results.map((result) => result.decision_class), [
+    'repairable-after-independent-owner-review-and-CAS',
+    'repairable-after-independent-owner-review-and-CAS',
+    'must-manually-confirm-boundary-evidence-and-runtime-provenance',
+  ]);
   assert.match(plan.results[0].errors.join('\n'), /existing owner SourceRevision/);
   assert.match(plan.results[1].errors.join('\n'), /existing owner SourceRevision/);
   assert.deepEqual(plan.results[2].reason_codes, ['boundary-evidence-missing-or-ambiguous', 'runtime-source-repository-ref-unavailable']);
@@ -63,7 +92,7 @@ test('real #1657 blocker plan preserves all three target facts and stays fail-cl
 test('runtime #910 receipt cannot be upgraded into a Git-ref claim', () => {
   const tampered = JSON.parse(JSON.stringify(receiptSnapshot));
   tampered.entries.find((entry) => entry.source_note_issue_number === 910).materialization_receipt.source_repository_ref = '95b77bb261048059846273688e4b90a2e108b437';
-  const plan = planIssue1657BlockerRepair({ sourceSnapshot, ownershipInventory, materializationPlan, receiptSnapshot: tampered });
+  const plan = planIssue1657BlockerRepair({ sourceSnapshot, ownershipInventory, materializationPlan, receiptSnapshot: tampered, liveAuditSnapshot });
   assert.equal(plan.ok, false);
   assert.match(plan.results.find((result) => result.source_note_issue_number === 910).errors.join('\n'), /source repository ref mismatch/);
   assert.deepEqual(plan.write_operations, REQUIRED_ZERO_WRITES);
@@ -75,7 +104,7 @@ test('receipt snapshot canonical digest is JSON-safe and excludes its own digest
   const tampered = JSON.parse(JSON.stringify(receiptSnapshot));
   tampered.entries[0].owner_issue_number = 9999;
   assert.notEqual(receiptSnapshotDigest(tampered), receiptSnapshot.canonical_digest);
-  const plan = planIssue1657BlockerRepair({ sourceSnapshot, ownershipInventory, materializationPlan, receiptSnapshot: tampered });
+  const plan = planIssue1657BlockerRepair({ sourceSnapshot, ownershipInventory, materializationPlan, receiptSnapshot: tampered, liveAuditSnapshot });
   assert.equal(plan.ok, false);
   assert.match(plan.errors.join('\n'), /canonical_digest drifted/);
   assert.deepEqual(plan.write_operations, REQUIRED_ZERO_WRITES);
@@ -85,7 +114,7 @@ test('receipt field tampering remains blocked even when the audit snapshot is re
   const tampered = JSON.parse(JSON.stringify(receiptSnapshot));
   tampered.entries.find((entry) => entry.source_note_issue_number === 910).materialization_receipt.source_revision_id = 'xhs:tampered:r1';
   tampered.canonical_digest = receiptSnapshotDigest(tampered);
-  const plan = planIssue1657BlockerRepair({ sourceSnapshot, ownershipInventory, materializationPlan, receiptSnapshot: tampered });
+  const plan = planIssue1657BlockerRepair({ sourceSnapshot, ownershipInventory, materializationPlan, receiptSnapshot: tampered, liveAuditSnapshot });
   const row = plan.results.find((result) => result.source_note_issue_number === 910);
   assert.equal(plan.ok, false);
   assert.match(row.errors.join('\n'), /materialization receipt SourceRevision mismatch/);
@@ -97,10 +126,32 @@ test('owner field tampering remains blocked even when the ownership inventory is
   tampered.entries.find((entry) => entry.issue_number === 915).body_sha256 = '0'.repeat(64);
   const { canonical_digest: ignored, ...digestInput } = tampered;
   tampered.canonical_digest = canonicalDigest(digestInput);
-  const plan = planIssue1657BlockerRepair({ sourceSnapshot, ownershipInventory: tampered, materializationPlan, receiptSnapshot });
+  const plan = planIssue1657BlockerRepair({ sourceSnapshot, ownershipInventory: tampered, materializationPlan, receiptSnapshot, liveAuditSnapshot });
   const row = plan.results.find((result) => result.source_note_issue_number === 910);
   assert.equal(plan.ok, false);
   assert.match(row.errors.join('\n'), /owner body digest disagrees with receipt audit|materialization receipt owner body digest mismatch/);
+  assert.deepEqual(plan.write_operations, REQUIRED_ZERO_WRITES);
+});
+
+test('live re-audit SourceNote tampering remains blocked even when the audit snapshot is resealed', () => {
+  const tampered = JSON.parse(JSON.stringify(liveAuditSnapshot));
+  tampered.targets.find((target) => target.source_note_issue_number === 907).source.body_sha256 = '0'.repeat(64);
+  tampered.canonical_digest = liveSnapshotDigest(tampered);
+  const plan = planIssue1657BlockerRepair({ sourceSnapshot, ownershipInventory, materializationPlan, receiptSnapshot, liveAuditSnapshot: tampered });
+  const row = plan.results.find((result) => result.source_note_issue_number === 907);
+  assert.equal(plan.ok, false);
+  assert.match(row.errors.join('\n'), /live audit SourceNote body digest mismatch/);
+  assert.deepEqual(plan.write_operations, REQUIRED_ZERO_WRITES);
+});
+
+test('live re-audit owner revision tampering remains blocked even when the audit snapshot is resealed', () => {
+  const tampered = JSON.parse(JSON.stringify(liveAuditSnapshot));
+  tampered.targets.find((target) => target.source_note_issue_number === 904).owner.source_revision.id = 'xhs:63ecd286000000001303fd16:tampered';
+  tampered.canonical_digest = liveSnapshotDigest(tampered);
+  const plan = planIssue1657BlockerRepair({ sourceSnapshot, ownershipInventory, materializationPlan, receiptSnapshot, liveAuditSnapshot: tampered });
+  const row = plan.results.find((result) => result.source_note_issue_number === 904);
+  assert.equal(plan.ok, false);
+  assert.match(row.errors.join('\n'), /live audit owner SourceRevision mismatch/);
   assert.deepEqual(plan.write_operations, REQUIRED_ZERO_WRITES);
 });
 
@@ -114,7 +165,7 @@ test('receipt snapshot schema, repository, entries, and canonical digest are man
   for (const [label, mutate, expected] of cases) {
     const tampered = JSON.parse(JSON.stringify(receiptSnapshot));
     mutate(tampered);
-    const plan = planIssue1657BlockerRepair({ sourceSnapshot, ownershipInventory, materializationPlan, receiptSnapshot: tampered });
+    const plan = planIssue1657BlockerRepair({ sourceSnapshot, ownershipInventory, materializationPlan, receiptSnapshot: tampered, liveAuditSnapshot });
     assert.equal(plan.ok, false, `${label} must fail closed`);
     assert.match([...plan.errors, ...plan.results.flatMap((result) => result.errors)].join('\n'), expected, label);
     assert.deepEqual(plan.write_operations, REQUIRED_ZERO_WRITES);
@@ -125,7 +176,7 @@ test('malformed SourceNote record remains a row-level blocker even with a recomp
   const tampered = JSON.parse(JSON.stringify(sourceSnapshot));
   tampered.issues.find((issue) => Number(issue.number) === 904).body = 'not a SourceNote';
   tampered.canonical_digest = sourceSnapshotDigest(tampered.issues);
-  const plan = planIssue1657BlockerRepair({ sourceSnapshot: tampered, ownershipInventory, materializationPlan, receiptSnapshot });
+  const plan = planIssue1657BlockerRepair({ sourceSnapshot: tampered, ownershipInventory, materializationPlan, receiptSnapshot, liveAuditSnapshot });
   assert.equal(plan.ok, false);
   const row = plan.results.find((result) => result.source_note_issue_number === 904);
   assert.match(row.errors.join('\n'), /SourceNote invalid|SourceNote record is missing/);
@@ -137,4 +188,7 @@ test('CLI rejects every mutation-shaped argument before planning', () => {
     assert.throws(() => parseArgs([flag]), new RegExp(`${flag.slice(2)}.*forbidden`));
   }
   assert.equal(DEFAULTS.output, 'data/pilot/issue-1657/blocker-repair.plan.json');
+  for (const flag of ['--patch', '--post', '--label', '--apply', '--interview-note']) {
+    assert.throws(() => parseLiveArgs([flag]), new RegExp(`${flag.slice(2)}.*forbidden`));
+  }
 });

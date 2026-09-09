@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/liqiangcc/interview-lab/schemas/issue-1657-live-reaudit-snapshot.schema.json",
+  "title": "Issue #1657 GET-only live re-audit snapshot",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "repository", "captured_at", "read_policy", "target_count", "targets", "canonical_digest"],
+  "properties": {
+    "schema_version": {"const": "issue-1657-live-reaudit-snapshot.v1"},
+    "repository": {"const": "liqiangcc/interview-lab"},
+    "captured_at": {"type": "string", "format": "date-time"},
+    "read_policy": {"const": "GitHub GET-only; no PATCH, POST, label mutation, issue comment, or InterviewNote write"},
+    "target_count": {"const": 3},
+    "targets": {"type": "array", "minItems": 3, "maxItems": 3, "items": {"$ref": "#/$defs/target"}},
+    "canonical_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  },
+  "$defs": {
+    "target": {
+      "type": "object",
+      "required": ["source_note_issue_number", "interview_note_id", "owner_issue_number", "source", "owner"],
+      "properties": {
+        "source_note_issue_number": {"type": "integer", "enum": [904, 907, 910]},
+        "interview_note_id": {"type": "string", "minLength": 1},
+        "owner_issue_number": {"type": "integer", "enum": [2, 4, 915]},
+        "source": {"type": "object"},
+        "owner": {"type": "object"}
+      }
+    }
+  }
+}

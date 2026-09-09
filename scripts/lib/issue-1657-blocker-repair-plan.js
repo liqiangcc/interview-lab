@@ -4,7 +4,8 @@ const { canonicalDigest, sha256Text } = require('./aggregate-downstream-pipeline
 const { issueSourceRecord } = require('./interview-note-materialization-batch');
 const { sourceSnapshotDigest } = require('../plan-issue-1611-live-materialization');
 
-const SCHEMA_VERSION = 'issue-1657-blocker-repair-plan.v1';
+const SCHEMA_VERSION = 'issue-1657-blocker-repair-plan.v2';
+const LIVE_AUDIT_SCHEMA_VERSION = 'issue-1657-live-reaudit-snapshot.v1';
 const REPOSITORY = 'liqiangcc/interview-lab';
 const SOURCE_REPOSITORY = 'liqiangcc/xhs';
 const SOURCE_REF = '95b77bb261048059846273688e4b90a2e108b437';
@@ -29,6 +30,10 @@ function digestWithoutField(value, field) {
 }
 
 function receiptSnapshotDigest(snapshot) {
+  return digestWithoutField(snapshot, 'canonical_digest');
+}
+
+function liveAuditSnapshotDigest(snapshot) {
   return digestWithoutField(snapshot, 'canonical_digest');
 }
 
@@ -62,18 +67,20 @@ function receiptShape(receipt, target, errors) {
   return receipt;
 }
 
-function validateInputs({ sourceSnapshot, ownershipInventory, materializationPlan, receiptSnapshot }) {
+function validateInputs({ sourceSnapshot, ownershipInventory, materializationPlan, receiptSnapshot, liveAuditSnapshot }) {
   const errors = [];
   if (!sourceSnapshot || sourceSnapshot.schema_version !== 'issue-1611-live-source-note-snapshot.v1') errors.push('source snapshot schema is invalid');
   if (!ownershipInventory || ownershipInventory.schema_version !== 'aggregate-interview-note-ownership-inventory.v1') errors.push('ownership inventory schema is invalid');
   if (!materializationPlan || materializationPlan.schema_version !== 'issue-1605-interview-note-materialization-plan.v1') errors.push('materialization plan schema is invalid');
   if (!receiptSnapshot || receiptSnapshot.schema_version !== 'issue-1657-owner-receipt-audit-snapshot.v1') errors.push('owner/receipt snapshot schema is invalid');
+  if (!liveAuditSnapshot || liveAuditSnapshot.schema_version !== LIVE_AUDIT_SCHEMA_VERSION) errors.push('live re-audit snapshot schema is invalid');
   if (sourceSnapshot && sourceSnapshot.repository !== REPOSITORY) errors.push('source snapshot repository mismatch');
   if (sourceSnapshot && sourceSnapshot.source_repository !== SOURCE_REPOSITORY) errors.push('source snapshot source repository mismatch');
   if (sourceSnapshot && sourceSnapshot.source_ref !== SOURCE_REF) errors.push('source snapshot source ref mismatch');
   if (ownershipInventory && (ownershipInventory.repository !== REPOSITORY || ownershipInventory.coverage !== 'all-repository-interview-note-issues' || ownershipInventory.complete !== true)) errors.push('ownership inventory is not complete repository-wide coverage');
   if (materializationPlan && materializationPlan.repository !== REPOSITORY) errors.push('materialization plan repository mismatch');
   if (receiptSnapshot && receiptSnapshot.repository !== REPOSITORY) errors.push('owner/receipt snapshot repository mismatch');
+  if (liveAuditSnapshot && liveAuditSnapshot.repository !== REPOSITORY) errors.push('live re-audit snapshot repository mismatch');
   if (sourceSnapshot && HEX64.test(String(sourceSnapshot.canonical_digest || ''))) {
     const actual = sourceSnapshotDigest(sourceSnapshot.issues || []);
     if (actual !== sourceSnapshot.canonical_digest) errors.push(`source snapshot canonical digest drifted: expected ${sourceSnapshot.canonical_digest}, got ${actual}`);
@@ -86,6 +93,7 @@ function validateInputs({ sourceSnapshot, ownershipInventory, materializationPla
   } else errors.push('materialization plan dry_run_sha256 is required');
   if (!sourceSnapshot || !Array.isArray(sourceSnapshot.issues)) errors.push('source snapshot issues array is required');
   if (!ownershipInventory || !Array.isArray(ownershipInventory.entries)) errors.push('ownership inventory entries array is required');
+  if (!liveAuditSnapshot || !Array.isArray(liveAuditSnapshot.targets) || liveAuditSnapshot.targets.length !== TARGETS.length) errors.push(`live re-audit snapshot must contain exactly ${TARGETS.length} target entries`);
   if (!receiptSnapshot || !Array.isArray(receiptSnapshot.entries) || receiptSnapshot.entries.length !== TARGETS.length) {
     errors.push(`owner/receipt snapshot must contain exactly ${TARGETS.length} target entries`);
   } else {
@@ -108,20 +116,25 @@ function validateInputs({ sourceSnapshot, ownershipInventory, materializationPla
       if (entry.owner_source_repository_ref != null && !/^[0-9a-f]{40}$/.test(String(entry.owner_source_repository_ref))) errors.push(`#${target.source_note_issue_number} receipt audit owner source ref is invalid`);
     }
   }
+  if (liveAuditSnapshot && HEX64.test(String(liveAuditSnapshot.canonical_digest || ''))) {
+    if (liveAuditSnapshotDigest(liveAuditSnapshot) !== liveAuditSnapshot.canonical_digest) errors.push('live re-audit snapshot canonical digest drifted');
+  } else errors.push('live re-audit snapshot canonical_digest is required');
   return errors;
 }
 
-function planIssue1657BlockerRepair({ sourceSnapshot, ownershipInventory, materializationPlan, receiptSnapshot }) {
-  const errors = validateInputs({ sourceSnapshot, ownershipInventory, materializationPlan, receiptSnapshot });
+function planIssue1657BlockerRepair({ sourceSnapshot, ownershipInventory, materializationPlan, receiptSnapshot, liveAuditSnapshot }) {
+  const errors = validateInputs({ sourceSnapshot, ownershipInventory, materializationPlan, receiptSnapshot, liveAuditSnapshot });
   const sourceIssues = sourceSnapshot && Array.isArray(sourceSnapshot.issues) ? sourceSnapshot.issues : [];
   const owners = ownershipInventory && Array.isArray(ownershipInventory.entries) ? ownershipInventory.entries : [];
   const receipts = receiptSnapshot && Array.isArray(receiptSnapshot.entries) ? receiptSnapshot.entries : [];
+  const liveTargets = liveAuditSnapshot && Array.isArray(liveAuditSnapshot.targets) ? liveAuditSnapshot.targets : [];
   const results = [];
 
   for (const target of TARGETS) {
     const sourceIssue = findOne(sourceIssues, (issue) => Number(issue.number) === target.source_note_issue_number, `SourceNote #${target.source_note_issue_number}`, errors);
     const owner = findOne(owners, (entry) => Number(entry.issue_number) === target.owner_issue_number && entry.interview_note_id === target.interview_note_id, `InterviewNote owner #${target.owner_issue_number}`, errors);
     const receiptEntry = findOne(receipts, (entry) => Number(entry.source_note_issue_number) === target.source_note_issue_number, `#${target.source_note_issue_number} receipt audit entry`, errors);
+    const liveTarget = findOne(liveTargets, (entry) => Number(entry.source_note_issue_number) === target.source_note_issue_number, `#${target.source_note_issue_number} live re-audit entry`, errors);
     const reportItem = findOne(materializationPlan && materializationPlan.results, (entry) => Number(entry.source_note_issue_number) === target.source_note_issue_number, `#${target.source_note_issue_number} materialization result`, errors);
     const sourceParsedResult = sourceIssue ? issueSourceRecord(sourceIssue) : { parsed: null, validation: { errors: [] } };
     // issueSourceRecord() already unwraps validateSourceNoteIssue().parsed.record.
@@ -130,13 +143,26 @@ function planIssue1657BlockerRepair({ sourceSnapshot, ownershipInventory, materi
     const sourceBodySha = sourceIssue ? sha256Text(sourceIssue.body || '') : null;
     const sourceRevision = sourceParsed && sourceParsed.source_revision || {};
     const targetErrors = [];
+    const liveSource = liveTarget && liveTarget.source;
+    const liveOwner = liveTarget && liveTarget.owner;
     if (!sourceParsedResult.validation.ok) targetErrors.push(...(sourceParsedResult.validation.errors || []).map((error) => `SourceNote invalid: ${error}`));
     if (!sourceParsed) targetErrors.push('SourceNote record is missing');
     if (sourceParsed && sourceParsed.source_note_id !== `xhs-note:${target.interview_note_id.slice(4)}`) targetErrors.push('SourceNote identity mismatch');
     if (sourceParsed && sourceParsed.boundary_review?.status !== 'single-interview') targetErrors.push('SourceNote is not currently single-interview');
     if (sourceParsed && !(sourceParsed.boundary_review?.interview_note_ids || []).includes(target.interview_note_id)) targetErrors.push('SourceNote does not declare the exact InterviewNote identity');
+    if (liveSource && liveSource.source_note_id !== (sourceParsed && sourceParsed.source_note_id)) targetErrors.push('live audit SourceNote identity mismatch');
+    if (liveSource && liveSource.body_sha256 !== sourceBodySha) targetErrors.push('live audit SourceNote body digest mismatch');
+    if (liveSource && liveSource.source_revision && liveSource.source_revision.id !== (sourceRevision.id || null)) targetErrors.push('live audit SourceRevision mismatch');
+    if (liveSource && liveSource.source_revision && (liveSource.source_revision.source_repository_ref ?? null) !== (sourceRevision.source_repository_ref ?? null)) targetErrors.push('live audit source repository ref mismatch');
+    if (liveSource && liveSource.boundary_review && liveSource.boundary_review.status !== (sourceParsed && sourceParsed.boundary_review?.status)) targetErrors.push('live audit boundary status mismatch');
+    if (liveSource && liveSource.validation && liveSource.validation.ok !== true) targetErrors.push('live audit SourceNote validation is not passing');
     if (sourceIssue && !labelsOf(sourceIssue).includes('boundary:single-interview')) targetErrors.push('SourceNote lacks boundary:single-interview label');
     if (owner && owner.interview_note_id !== target.interview_note_id) targetErrors.push('owner identity mismatch');
+    if (liveOwner && liveOwner.interview_note_id !== (owner && owner.interview_note_id)) targetErrors.push('live audit owner identity mismatch');
+    if (liveOwner && liveOwner.body_sha256 !== (owner && owner.body_sha256)) targetErrors.push('live audit owner body digest mismatch');
+    if (liveOwner && liveOwner.source_revision && liveOwner.source_revision.id !== (owner && owner.source_revision_id)) targetErrors.push('live audit owner SourceRevision mismatch');
+    if (liveOwner && liveOwner.source_revision && (liveOwner.source_revision.source_repository_ref ?? null) !== (receiptEntry && receiptEntry.owner_source_repository_ref || null)) targetErrors.push('live audit owner source repository ref mismatch');
+    if (liveOwner && liveOwner.validation && liveOwner.validation.ok !== true) targetErrors.push('live audit InterviewNote validation is not passing');
     if (owner && receiptEntry && Number(receiptEntry.owner_issue_number) !== Number(owner.issue_number)) targetErrors.push('receipt audit owner mismatch');
     if (owner && receiptEntry && owner.source_revision_id !== receiptEntry.owner_source_revision_id) targetErrors.push('owner SourceRevision disagrees with receipt audit');
     if (owner && receiptEntry && owner.body_sha256 !== receiptEntry.owner_body_sha256) targetErrors.push('owner body digest disagrees with receipt audit');
@@ -152,6 +178,8 @@ function planIssue1657BlockerRepair({ sourceSnapshot, ownershipInventory, materi
       if (receipt.interview_note_body_sha256 !== owner.body_sha256) targetErrors.push('materialization receipt owner body digest mismatch');
       if ((receipt.source_repository_ref ?? null) !== (sourceRevision.source_repository_ref ?? null)) targetErrors.push('materialization receipt source repository ref mismatch');
     }
+    if (liveSource && liveSource.boundary_evidence && liveSource.boundary_evidence.comment_id !== (reportItem && reportItem.evidence_comment_id)) targetErrors.push('live boundary evidence comment mismatch');
+    if (liveSource && liveSource.materialization_receipt && receiptEntry && liveSource.materialization_receipt.comment_id !== receiptEntry.materialization_receipt_comment_id) targetErrors.push('live materialization receipt comment mismatch');
 
     const requestBase = {
       repository: REPOSITORY,
@@ -168,7 +196,9 @@ function planIssue1657BlockerRepair({ sourceSnapshot, ownershipInventory, materi
     let action;
     let reason_codes;
     let request;
+    let decision_class;
     if (target.source_note_issue_number === 910) {
+      decision_class = 'must-manually-confirm-boundary-evidence-and-runtime-provenance';
       const hasMachineEvidence = Number(reportItem && reportItem.evidence_comment_id) > 0 && reportItem.evidence_schema === 'source-note-boundary-review-evidence.v1';
       if (hasMachineEvidence) targetErrors.push('unexpectedly claims exact machine boundary evidence; re-audit required');
       if (sourceRevision.source_repository_ref != null) targetErrors.push('runtime SourceRevision unexpectedly carries a Git source ref');
@@ -190,6 +220,7 @@ function planIssue1657BlockerRepair({ sourceSnapshot, ownershipInventory, materi
         authorized_operations: [],
       };
     } else {
+      decision_class = 'repairable-after-independent-owner-review-and-CAS';
       action = 'blocked-owner-source-revision-cas';
       reason_codes = ['materialization-preflight-failed', 'existing-owner-source-revision-mismatch'];
       request = {
@@ -208,6 +239,7 @@ function planIssue1657BlockerRepair({ sourceSnapshot, ownershipInventory, materi
     results.push({
       ...requestBase,
       action,
+      decision_class,
       reason_codes,
       errors: targetErrors,
       source_note_body_sha256: sourceBodySha,
@@ -215,6 +247,16 @@ function planIssue1657BlockerRepair({ sourceSnapshot, ownershipInventory, materi
       source_repository_ref: sourceRevision.source_repository_ref ?? null,
       owner_source_revision_id: owner && owner.source_revision_id || null,
       owner_source_repository_ref: receiptEntry && receiptEntry.owner_source_repository_ref || null,
+      live_audit: {
+        captured_at: liveAuditSnapshot && liveAuditSnapshot.captured_at || null,
+        source_note_comment_ids: liveSource ? liveSource.comments.map((comment) => comment.id) : [],
+        boundary_evidence_comment_id: liveSource && liveSource.boundary_evidence ? liveSource.boundary_evidence.comment_id : null,
+        boundary_applied_receipt_comment_id: liveSource && liveSource.boundary_applied_receipt ? liveSource.boundary_applied_receipt.comment_id : null,
+        materialization_receipt_comment_id: liveSource && liveSource.materialization_receipt ? liveSource.materialization_receipt.comment_id : null,
+        owner_comment_ids: liveOwner ? liveOwner.comments.map((comment) => comment.id) : [],
+        owner_source_review_evidence_comment_ids: liveOwner ? liveOwner.source_review_evidence_comment_ids : [],
+        owner_source_review_applied_receipt_comment_id: liveOwner && liveOwner.source_review_applied_receipt ? liveOwner.source_review_applied_receipt.comment_id : null,
+      },
       receipt_comment_id: receiptEntry && receiptEntry.materialization_receipt_comment_id || null,
       boundary_evidence_comment_id: reportItem && reportItem.evidence_comment_id || null,
       materialization_plan_action: reportItem && reportItem.action || null,
@@ -233,6 +275,7 @@ function planIssue1657BlockerRepair({ sourceSnapshot, ownershipInventory, materi
     ownership_inventory_digest: ownershipInventory && ownershipInventory.canonical_digest || null,
     materialization_plan_digest: materializationPlan && materializationPlan.dry_run_sha256 || null,
     owner_receipt_snapshot_digest: receiptSnapshot && receiptSnapshot.canonical_digest || null,
+    live_reaudit_snapshot_digest: liveAuditSnapshot && liveAuditSnapshot.canonical_digest || null,
     target_count: TARGETS.length,
     blocked_count: results.length,
     mutation_performed: false,
@@ -247,12 +290,14 @@ function planIssue1657BlockerRepair({ sourceSnapshot, ownershipInventory, materi
 
 module.exports = {
   SCHEMA_VERSION,
+  LIVE_AUDIT_SCHEMA_VERSION,
   REPOSITORY,
   SOURCE_REPOSITORY,
   SOURCE_REF,
   TARGETS,
   REQUIRED_ZERO_WRITES,
   receiptSnapshotDigest,
+  liveAuditSnapshotDigest,
   validateInputs,
   planIssue1657BlockerRepair,
 };
