@@ -10,7 +10,7 @@ const {
   REMAINING_COUNT, ACTIONABLE_COUNT, BLOCKED_COUNT, REMAINING_SCOPE_DIGEST, REMAINING_MANIFEST_DIGEST, FROZEN_SNAPSHOT_DIGEST,
   canonical, sha256Text, readRegularJson, validateFrozenSnapshot, validateRemainingManifest, validateEvidencePlan,
   buildTransitionPlan, stablePlanDigestContent, initialJournal, validateJournal, persistJournal, mutationWritersDisabled,
-  assertApplyGuards, transitionItem, applyBatch, validateRequestBinding,
+  assertApplyGuards, transitionItem, applyBatch, validateRequestBinding, reconcileUnknownResponse,
 } = require('../scripts/lib/issue-1605-remaining-boundary-transition');
 const { atomicWriteJson, acquireExclusiveLock } = require('../scripts/lib/issue-1605-full-boundary-transition');
 const { parseSourceNoteIssue } = require('../scripts/lib/source-note-issue');
@@ -133,6 +133,18 @@ test('plan-only mutation writers are explicit fail-closed stubs', () => {
   const writers = mutationWritersDisabled();
   assert.throws(() => writers.patchIssue(42, {}), /PATCH is disabled/);
   assert.throws(() => writers.postReceipt(42, ''), /POST is disabled/);
+});
+
+test('unknown mutation responses use the full bounded five-read reconcile window by default', () => {
+  const fixture = makeApplyFixture();
+  let reads = 0;
+  let sleeps = 0;
+  assert.throws(() => reconcileUnknownResponse({
+    kind: 'patch', record: fixture.record, liveLoader: () => { reads += 1; return fixture.liveLoader(); },
+    expected: fixture.plan.items[0], planDigestValue: fixture.plan.canonical_digest, sleep: () => { sleeps += 1; },
+  }), /exact target/);
+  assert.equal(reads, 5);
+  assert.equal(sleeps, 4);
 });
 
 test('receipt resume keeps the authorization plan digest stable across ready and already-applied observations', () => {
