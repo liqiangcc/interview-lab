@@ -10,7 +10,7 @@ const {
   REMAINING_COUNT, ACTIONABLE_COUNT, BLOCKED_COUNT, REMAINING_SCOPE_DIGEST, REMAINING_MANIFEST_DIGEST, FROZEN_SNAPSHOT_DIGEST,
   canonical, sha256Text, readRegularJson, validateFrozenSnapshot, validateRemainingManifest, validateEvidencePlan,
   buildTransitionPlan, stablePlanDigestContent, initialJournal, validateJournal, persistJournal, mutationWritersDisabled,
-  assertApplyGuards, transitionItem, applyBatch,
+  assertApplyGuards, transitionItem, applyBatch, validateRequestBinding,
 } = require('../scripts/lib/issue-1605-remaining-boundary-transition');
 const { atomicWriteJson, acquireExclusiveLock } = require('../scripts/lib/issue-1605-full-boundary-transition');
 const { parseSourceNoteIssue } = require('../scripts/lib/source-note-issue');
@@ -176,6 +176,8 @@ test('transition planner passes v2 multi-interview cases through the existing va
   assert.equal(result.ok, true, result.errors.join('; '));
   assert.equal(result.status, 'ready');
   assert.equal(result.interview_note_cases.length, 2);
+  const binding = validateRequestBinding(request, { ...request }, REMAINING_MANIFEST_DIGEST);
+  assert.equal(binding.ok, true, binding.errors.join('; '));
 });
 
 test('authorized applyBatch simulation calls PATCH and POST once, validates receipt, and persists the journal', () => {
