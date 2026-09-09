@@ -62,14 +62,25 @@ function commentFact(comment) {
   };
 }
 
+function markerSummary(comments, markerName) {
+  const matches = comments.filter((comment) => comment.markers[markerName]);
+  const matchCount = matches.length;
+  return {
+    count: matchCount > 1 ? '>1' : matchCount,
+    match_count: matchCount,
+    comment_ids: matches.map((comment) => comment.id),
+    comments: matches,
+    comment_id: matchCount === 1 ? matches[0].id : null,
+    body_sha256: matchCount === 1 ? matches[0].body_sha256 : null,
+    payload: matchCount === 1 ? matches[0].markers[markerName] : null,
+  };
+}
+
 function labelsOf(issue) { return (issue.labels || []).map((label) => label.name).filter(Boolean).sort(); }
 
 function sourceAudit(issue, comments) {
   const parsed = issueSourceRecord(issue);
   const record = parsed.parsed;
-  const evidence = comments.filter((comment) => comment.markers['source-note-boundary-review-evidence']);
-  const applied = comments.filter((comment) => comment.markers['source-note-boundary-review-applied']);
-  const materialized = comments.filter((comment) => comment.markers['source-note-interview-materialized']);
   const humanEvidence = comments.filter((comment) => comment.human_header === 'BOUNDARY REVIEW EVIDENCE');
   return {
     issue_number: issue.number,
@@ -81,9 +92,9 @@ function sourceAudit(issue, comments) {
     source_note_id: record && record.source_note_id || null,
     source_revision: record && record.source_revision || null,
     boundary_review: record && record.boundary_review || null,
-    boundary_evidence: evidence.length === 1 ? { comment_id: evidence[0].id, body_sha256: evidence[0].body_sha256, payload: evidence[0].markers['source-note-boundary-review-evidence'] } : null,
-    boundary_applied_receipt: applied.length === 1 ? { comment_id: applied[0].id, body_sha256: applied[0].body_sha256, payload: applied[0].markers['source-note-boundary-review-applied'] } : null,
-    materialization_receipt: materialized.length === 1 ? { comment_id: materialized[0].id, body_sha256: materialized[0].body_sha256, payload: materialized[0].markers['source-note-interview-materialized'] } : null,
+    boundary_evidence: markerSummary(comments, 'source-note-boundary-review-evidence'),
+    boundary_applied_receipt: markerSummary(comments, 'source-note-boundary-review-applied'),
+    materialization_receipt: markerSummary(comments, 'source-note-interview-materialized'),
     human_boundary_evidence_comment_ids: humanEvidence.map((comment) => comment.id),
     comments: comments,
   };
@@ -92,9 +103,7 @@ function sourceAudit(issue, comments) {
 function ownerAudit(issue, comments) {
   const parsed = validateInterviewNoteIssue({ body: issue.body, labels: labelsOf(issue), state: issue.state });
   const record = parsed.parsed.record;
-  const sourceReviewEvidence = comments.filter((comment) => comment.markers['interview-note-source-review-evidence'] || comment.human_header === 'SOURCE REVIEW EVIDENCE');
-  const sourceReviewApplied = comments.filter((comment) => comment.markers['interview-note-source-review-applied']);
-  const materialized = comments.filter((comment) => comment.markers['source-note-interview-materialized']);
+  const sourceReviewEvidence = comments.filter((comment) => comment.human_header === 'SOURCE REVIEW EVIDENCE');
   return {
     issue_number: issue.number,
     state: issue.state,
@@ -105,9 +114,10 @@ function ownerAudit(issue, comments) {
     interview_note_id: record && record.interview_note_id || null,
     source_revision: record && record.source_revision || null,
     source: record && record.source || null,
+    source_review_evidence: markerSummary(comments, 'interview-note-source-review-evidence'),
     source_review_evidence_comment_ids: sourceReviewEvidence.map((comment) => comment.id),
-    source_review_applied_receipt: sourceReviewApplied.length === 1 ? { comment_id: sourceReviewApplied[0].id, body_sha256: sourceReviewApplied[0].body_sha256, payload: sourceReviewApplied[0].markers['interview-note-source-review-applied'] || null } : null,
-    materialization_receipt: materialized.length === 1 ? { comment_id: materialized[0].id, body_sha256: materialized[0].body_sha256, payload: materialized[0].markers['source-note-interview-materialized'] } : null,
+    source_review_applied_receipt: markerSummary(comments, 'interview-note-source-review-applied'),
+    materialization_receipt: markerSummary(comments, 'source-note-interview-materialized'),
     comments,
   };
 }

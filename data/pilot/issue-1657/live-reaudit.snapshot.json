@@ -1,7 +1,7 @@
 {
   "schema_version": "issue-1657-live-reaudit-snapshot.v1",
   "repository": "liqiangcc/interview-lab",
-  "captured_at": "2026-09-09T09:32:52.568Z",
+  "captured_at": "2026-09-09T09:56:07.125Z",
   "read_policy": "GitHub GET-only; no PATCH, POST, label mutation, issue comment, or InterviewNote write",
   "target_count": 3,
   "targets": [
@@ -42,6 +42,98 @@
           ]
         },
         "boundary_evidence": {
+          "count": 1,
+          "match_count": 1,
+          "comment_ids": [
+            5579824204
+          ],
+          "comments": [
+            {
+              "id": 5579824204,
+              "created_at": "2026-09-08T05:34:41Z",
+              "body_sha256": "75f2fca10ca50c12817c0c04dd37f300b7e949445913f88743195add42aa09a6",
+              "markers": {
+                "source-note-boundary-review-evidence": {
+                  "schema_version": "source-note-boundary-review-evidence.v1",
+                  "transition_id": "issue-1605-boundary-904-c",
+                  "repository": "liqiangcc/interview-lab",
+                  "parent_issue": 1605,
+                  "issue_number": 904,
+                  "source_note_id": "xhs-note:63ecd286000000001303fd16",
+                  "expected_body_sha256": "7f01c5bd753c6a3938d8da2a501fcdb9503d9ae767d5966112e28e0c70925755",
+                  "expected_source_revision_id": "xhs-note:63ecd286000000001303fd16:snapshot-95b77bb26104",
+                  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+                  "decision": "single-interview",
+                  "reviewed_at": "2026-09-08T05:34:40.479Z",
+                  "source_evidence": {
+                    "artifact": {
+                      "ref": "liqiangcc/xhs:note_desc/63ecd286000000001303fd16.txt@95b77bb261048059846273688e4b90a2e108b437",
+                      "kind": "text_projection",
+                      "provenance": "source_projection",
+                      "git_blob_sha": "8235c6127b7c6029357116d78a8a5e620d0f7c1d",
+                      "byte_size": 2429
+                    },
+                    "excerpts": [
+                      {
+                        "locator": "source-projection:artifact-line:27",
+                        "excerpt": "面试官真的人很好～",
+                        "line": 27
+                      },
+                      {
+                        "locator": "source-projection:artifact-line:1",
+                        "excerpt": "2022.08.02提前批面试",
+                        "line": 1
+                      },
+                      {
+                        "locator": "source-projection:artifact-line:11",
+                        "excerpt": "5. hashmap为什么for each遍历不安全？迭代器安全？（自己给自己挖坑）",
+                        "line": 11
+                      }
+                    ]
+                  },
+                  "interview_cases": [],
+                  "checks": [
+                    {
+                      "check_id": "source_identity",
+                      "result": "pass",
+                      "note": "Controller verified against liqiangcc/xhs:note_desc/63ecd286000000001303fd16.txt@95b77bb261048059846273688e4b90a2e108b437."
+                    },
+                    {
+                      "check_id": "source_revision_binding",
+                      "result": "pass",
+                      "note": "Controller verified against liqiangcc/xhs:note_desc/63ecd286000000001303fd16.txt@95b77bb261048059846273688e4b90a2e108b437."
+                    },
+                    {
+                      "check_id": "source_content_coverage",
+                      "result": "pass",
+                      "note": "Controller verified against liqiangcc/xhs:note_desc/63ecd286000000001303fd16.txt@95b77bb261048059846273688e4b90a2e108b437."
+                    },
+                    {
+                      "check_id": "event_boundary",
+                      "result": "pass",
+                      "note": "Controller verified against liqiangcc/xhs:note_desc/63ecd286000000001303fd16.txt@95b77bb261048059846273688e4b90a2e108b437."
+                    },
+                    {
+                      "check_id": "no_cross_source_mixing",
+                      "result": "pass",
+                      "note": "Controller verified against liqiangcc/xhs:note_desc/63ecd286000000001303fd16.txt@95b77bb261048059846273688e4b90a2e108b437."
+                    },
+                    {
+                      "check_id": "no_fabrication",
+                      "result": "pass",
+                      "note": "Controller verified against liqiangcc/xhs:note_desc/63ecd286000000001303fd16.txt@95b77bb261048059846273688e4b90a2e108b437."
+                    }
+                  ],
+                  "limitations": [
+                    "AI-assisted controller review; transition remains guarded by live CAS checks.",
+                    "Raw Source and Derived learning metadata remain separate.",
+                    "No InterviewNote identity is materialized by this boundary stage."
+                  ]
+                }
+              },
+              "human_header": null
+            }
+          ],
           "comment_id": 5579824204,
           "body_sha256": "75f2fca10ca50c12817c0c04dd37f300b7e949445913f88743195add42aa09a6",
           "payload": {
@@ -123,6 +215,42 @@
           }
         },
         "boundary_applied_receipt": {
+          "count": 1,
+          "match_count": 1,
+          "comment_ids": [
+            5584606650
+          ],
+          "comments": [
+            {
+              "id": 5584606650,
+              "created_at": "2026-09-08T11:44:05Z",
+              "body_sha256": "2ba781ad8c3332fdd15c7f9ad3c83bde8f697a257924209b86be90c855c64522",
+              "markers": {
+                "source-note-boundary-review-applied": {
+                  "schema_version": "source-note-boundary-review-applied.v1",
+                  "transition_id": "issue-1605-boundary-904-c",
+                  "repository": "liqiangcc/interview-lab",
+                  "issue_number": 904,
+                  "source_note_id": "xhs-note:63ecd286000000001303fd16",
+                  "decision": "single-interview",
+                  "reviewed_at": "2026-09-08T05:34:40.479Z",
+                  "applied_at": "2026-09-08T11:44:04.316Z",
+                  "previous_body_sha256": "7f01c5bd753c6a3938d8da2a501fcdb9503d9ae767d5966112e28e0c70925755",
+                  "new_body_sha256": "39db5c325988d7d79cb1241b547f5464368facd450ea33e9313b8e6aaa1edb8a",
+                  "interview_note_ids": [
+                    "xhs:63ecd286000000001303fd16"
+                  ],
+                  "interview_note_cases": null,
+                  "parent_issue": 1605,
+                  "manifest_digest": "40fd63cccea624a567778f5c679a9e0e77b0784181de4d54cacad9873ae6c97a",
+                  "plan_digest": "75af8bc59053022d884a845b98f12229705e03daefdcaaaa7793b36a21cf4906",
+                  "expected_source_revision_id": "xhs-note:63ecd286000000001303fd16:snapshot-95b77bb26104",
+                  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437"
+                }
+              },
+              "human_header": null
+            }
+          ],
           "comment_id": 5584606650,
           "body_sha256": "2ba781ad8c3332fdd15c7f9ad3c83bde8f697a257924209b86be90c855c64522",
           "payload": {
@@ -147,7 +275,15 @@
             "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437"
           }
         },
-        "materialization_receipt": null,
+        "materialization_receipt": {
+          "count": 0,
+          "match_count": 0,
+          "comment_ids": [],
+          "comments": [],
+          "comment_id": null,
+          "body_sha256": null,
+          "payload": null
+        },
         "human_boundary_evidence_comment_ids": [],
         "comments": [
           {
@@ -292,9 +428,34 @@
           "external_id": "63ecd286000000001303fd16",
           "url": null
         },
+        "source_review_evidence": {
+          "count": 0,
+          "match_count": 0,
+          "comment_ids": [],
+          "comments": [],
+          "comment_id": null,
+          "body_sha256": null,
+          "payload": null
+        },
         "source_review_evidence_comment_ids": [],
-        "source_review_applied_receipt": null,
-        "materialization_receipt": null,
+        "source_review_applied_receipt": {
+          "count": 0,
+          "match_count": 0,
+          "comment_ids": [],
+          "comments": [],
+          "comment_id": null,
+          "body_sha256": null,
+          "payload": null
+        },
+        "materialization_receipt": {
+          "count": 0,
+          "match_count": 0,
+          "comment_ids": [],
+          "comments": [],
+          "comment_id": null,
+          "body_sha256": null,
+          "payload": null
+        },
         "comments": [
           {
             "id": 5470455261,
@@ -350,6 +511,98 @@
           ]
         },
         "boundary_evidence": {
+          "count": 1,
+          "match_count": 1,
+          "comment_ids": [
+            5579824470
+          ],
+          "comments": [
+            {
+              "id": 5579824470,
+              "created_at": "2026-09-08T05:34:43Z",
+              "body_sha256": "ca5d07d9af45a4210e19e8552ffcfa4cca84d3906dadca67d7edf3823eb5860e",
+              "markers": {
+                "source-note-boundary-review-evidence": {
+                  "schema_version": "source-note-boundary-review-evidence.v1",
+                  "transition_id": "issue-1605-boundary-907-c",
+                  "repository": "liqiangcc/interview-lab",
+                  "parent_issue": 1605,
+                  "issue_number": 907,
+                  "source_note_id": "xhs-note:656861da000000000f024258",
+                  "expected_body_sha256": "69e0dbfd9b86f0a223aa9427c6cb464177c7de1c99d84c8c55eb87489894167c",
+                  "expected_source_revision_id": "xhs-note:656861da000000000f024258:snapshot-95b77bb26104",
+                  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+                  "decision": "single-interview",
+                  "reviewed_at": "2026-09-08T05:34:42.677Z",
+                  "source_evidence": {
+                    "artifact": {
+                      "ref": "liqiangcc/xhs:note_desc/656861da000000000f024258.txt@95b77bb261048059846273688e4b90a2e108b437",
+                      "kind": "text_projection",
+                      "provenance": "source_projection",
+                      "git_blob_sha": "daa46018e6fcf56848ba1c2bf694abcb723a4300",
+                      "byte_size": 1293
+                    },
+                    "excerpts": [
+                      {
+                        "locator": "source-projection:artifact-line:2",
+                        "excerpt": "2. 我在厦门，公司在福州，我还打电话问过能不能，线上面试，或者电话面试",
+                        "line": 2
+                      },
+                      {
+                        "locator": "source-projection:artifact-line:3",
+                        "excerpt": "3. 他说约的是线下面试，面试只有 1 轮，当天就会出结果",
+                        "line": 3
+                      },
+                      {
+                        "locator": "source-projection:artifact-line:5",
+                        "excerpt": "5. 面试那天，确实没有问什么很难的，把你当做应届生看待",
+                        "line": 5
+                      }
+                    ]
+                  },
+                  "interview_cases": [],
+                  "checks": [
+                    {
+                      "check_id": "source_identity",
+                      "result": "pass",
+                      "note": "Controller verified against liqiangcc/xhs:note_desc/656861da000000000f024258.txt@95b77bb261048059846273688e4b90a2e108b437."
+                    },
+                    {
+                      "check_id": "source_revision_binding",
+                      "result": "pass",
+                      "note": "Controller verified against liqiangcc/xhs:note_desc/656861da000000000f024258.txt@95b77bb261048059846273688e4b90a2e108b437."
+                    },
+                    {
+                      "check_id": "source_content_coverage",
+                      "result": "pass",
+                      "note": "Controller verified against liqiangcc/xhs:note_desc/656861da000000000f024258.txt@95b77bb261048059846273688e4b90a2e108b437."
+                    },
+                    {
+                      "check_id": "event_boundary",
+                      "result": "pass",
+                      "note": "Controller verified against liqiangcc/xhs:note_desc/656861da000000000f024258.txt@95b77bb261048059846273688e4b90a2e108b437."
+                    },
+                    {
+                      "check_id": "no_cross_source_mixing",
+                      "result": "pass",
+                      "note": "Controller verified against liqiangcc/xhs:note_desc/656861da000000000f024258.txt@95b77bb261048059846273688e4b90a2e108b437."
+                    },
+                    {
+                      "check_id": "no_fabrication",
+                      "result": "pass",
+                      "note": "Controller verified against liqiangcc/xhs:note_desc/656861da000000000f024258.txt@95b77bb261048059846273688e4b90a2e108b437."
+                    }
+                  ],
+                  "limitations": [
+                    "AI-assisted controller review; transition remains guarded by live CAS checks.",
+                    "Raw Source and Derived learning metadata remain separate.",
+                    "No InterviewNote identity is materialized by this boundary stage."
+                  ]
+                }
+              },
+              "human_header": null
+            }
+          ],
           "comment_id": 5579824470,
           "body_sha256": "ca5d07d9af45a4210e19e8552ffcfa4cca84d3906dadca67d7edf3823eb5860e",
           "payload": {
@@ -431,6 +684,42 @@
           }
         },
         "boundary_applied_receipt": {
+          "count": 1,
+          "match_count": 1,
+          "comment_ids": [
+            5584607734
+          ],
+          "comments": [
+            {
+              "id": 5584607734,
+              "created_at": "2026-09-08T11:44:11Z",
+              "body_sha256": "aadc98952b3ae04e25474ad0cf4178c0ec4c75afcde35c3705c49d8c9ef8dc84",
+              "markers": {
+                "source-note-boundary-review-applied": {
+                  "schema_version": "source-note-boundary-review-applied.v1",
+                  "transition_id": "issue-1605-boundary-907-c",
+                  "repository": "liqiangcc/interview-lab",
+                  "issue_number": 907,
+                  "source_note_id": "xhs-note:656861da000000000f024258",
+                  "decision": "single-interview",
+                  "reviewed_at": "2026-09-08T05:34:42.677Z",
+                  "applied_at": "2026-09-08T11:44:10.449Z",
+                  "previous_body_sha256": "69e0dbfd9b86f0a223aa9427c6cb464177c7de1c99d84c8c55eb87489894167c",
+                  "new_body_sha256": "f548b38833ee4416efa336a0a91020ef3e3ae333f0b64a0e94a4094f2e80cd4e",
+                  "interview_note_ids": [
+                    "xhs:656861da000000000f024258"
+                  ],
+                  "interview_note_cases": null,
+                  "parent_issue": 1605,
+                  "manifest_digest": "40fd63cccea624a567778f5c679a9e0e77b0784181de4d54cacad9873ae6c97a",
+                  "plan_digest": "75af8bc59053022d884a845b98f12229705e03daefdcaaaa7793b36a21cf4906",
+                  "expected_source_revision_id": "xhs-note:656861da000000000f024258:snapshot-95b77bb26104",
+                  "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437"
+                }
+              },
+              "human_header": null
+            }
+          ],
           "comment_id": 5584607734,
           "body_sha256": "aadc98952b3ae04e25474ad0cf4178c0ec4c75afcde35c3705c49d8c9ef8dc84",
           "payload": {
@@ -455,7 +744,15 @@
             "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437"
           }
         },
-        "materialization_receipt": null,
+        "materialization_receipt": {
+          "count": 0,
+          "match_count": 0,
+          "comment_ids": [],
+          "comments": [],
+          "comment_id": null,
+          "body_sha256": null,
+          "payload": null
+        },
         "human_boundary_evidence_comment_ids": [],
         "comments": [
           {
@@ -607,9 +904,34 @@
           "external_id": "656861da000000000f024258",
           "url": null
         },
+        "source_review_evidence": {
+          "count": 0,
+          "match_count": 0,
+          "comment_ids": [],
+          "comments": [],
+          "comment_id": null,
+          "body_sha256": null,
+          "payload": null
+        },
         "source_review_evidence_comment_ids": [],
-        "source_review_applied_receipt": null,
-        "materialization_receipt": null,
+        "source_review_applied_receipt": {
+          "count": 0,
+          "match_count": 0,
+          "comment_ids": [],
+          "comments": [],
+          "comment_id": null,
+          "body_sha256": null,
+          "payload": null
+        },
+        "materialization_receipt": {
+          "count": 0,
+          "match_count": 0,
+          "comment_ids": [],
+          "comments": [],
+          "comment_id": null,
+          "body_sha256": null,
+          "payload": null
+        },
         "comments": [
           {
             "id": 5470512509,
@@ -729,8 +1051,46 @@
             "xhs:6a8abe2d000000001602b26e"
           ]
         },
-        "boundary_evidence": null,
+        "boundary_evidence": {
+          "count": 0,
+          "match_count": 0,
+          "comment_ids": [],
+          "comments": [],
+          "comment_id": null,
+          "body_sha256": null,
+          "payload": null
+        },
         "boundary_applied_receipt": {
+          "count": 1,
+          "match_count": 1,
+          "comment_ids": [
+            5535553800
+          ],
+          "comments": [
+            {
+              "id": 5535553800,
+              "created_at": "2026-09-04T04:14:02Z",
+              "body_sha256": "a1765f80a734fed3cf97bf8f344d7e2215758e407e564286ef050b77da2709e8",
+              "markers": {
+                "source-note-boundary-review-applied": {
+                  "schema_version": "source-note-boundary-review-applied.v1",
+                  "transition_id": "xhs-note-6a8abe2d-boundary-review-1",
+                  "repository": "liqiangcc/interview-lab",
+                  "issue_number": 910,
+                  "source_note_id": "xhs-note:6a8abe2d000000001602b26e",
+                  "decision": "single-interview",
+                  "reviewed_at": "2026-09-04T04:08:51Z",
+                  "applied_at": "2026-09-04T04:14:01.788Z",
+                  "previous_body_sha256": "c3df7ce6bd95de1f23d16bd322d13b5afaa998b4a48f19cdd180053798f6aeb5",
+                  "new_body_sha256": "663871c4c273ff5cf58b053501b5b04bf2a6313687e64b0c9b1ce6ea9243f041",
+                  "interview_note_ids": [
+                    "xhs:6a8abe2d000000001602b26e"
+                  ]
+                }
+              },
+              "human_header": null
+            }
+          ],
           "comment_id": 5535553800,
           "body_sha256": "a1765f80a734fed3cf97bf8f344d7e2215758e407e564286ef050b77da2709e8",
           "payload": {
@@ -750,6 +1110,37 @@
           }
         },
         "materialization_receipt": {
+          "count": 1,
+          "match_count": 1,
+          "comment_ids": [
+            5535863537
+          ],
+          "comments": [
+            {
+              "id": 5535863537,
+              "created_at": "2026-09-04T04:57:01Z",
+              "body_sha256": "bef4a751e88fb6fed3bf65d861a59891f8a77d7f0a27ae887426b7b0d555a885",
+              "markers": {
+                "source-note-interview-materialized": {
+                  "schema_version": "source-note-interview-materialized.v1",
+                  "materialization_id": "xhs-note-6a8abe2d-materialization-1",
+                  "request_sha256": "c23b341c740d62612d9329619f087143c3ea57f1bea9e9ac3a000b2ce6f10bbe",
+                  "repository": "liqiangcc/interview-lab",
+                  "source_note_issue_number": 910,
+                  "source_note_id": "xhs-note:6a8abe2d000000001602b26e",
+                  "source_note_body_sha256": "663871c4c273ff5cf58b053501b5b04bf2a6313687e64b0c9b1ce6ea9243f041",
+                  "source_revision_id": "xhs:6a8abe2d000000001602b26e:r1",
+                  "manifest_sha256": "0e408ad965af6a1a47a968de9916a1c17eec58f436b35b171d8c9729fac6d3e0",
+                  "source_repository_ref": null,
+                  "interview_note_id": "xhs:6a8abe2d000000001602b26e",
+                  "interview_issue_number": 915,
+                  "interview_issue_body_sha256": "58d80c553d49307eda419bed153090e97c1c409ca1a1306825d57fc634b0513b",
+                  "materialized_at": "2026-09-04T04:56:59.001Z"
+                }
+              },
+              "human_header": null
+            }
+          ],
           "comment_id": 5535863537,
           "body_sha256": "bef4a751e88fb6fed3bf65d861a59891f8a77d7f0a27ae887426b7b0d555a885",
           "payload": {
@@ -856,10 +1247,50 @@
           "external_id": "6a8abe2d000000001602b26e",
           "url": "https://www.xiaohongshu.com/explore/6a8abe2d000000001602b26e"
         },
+        "source_review_evidence": {
+          "count": 0,
+          "match_count": 0,
+          "comment_ids": [],
+          "comments": [],
+          "comment_id": null,
+          "body_sha256": null,
+          "payload": null
+        },
         "source_review_evidence_comment_ids": [
           5536381793
         ],
         "source_review_applied_receipt": {
+          "count": 1,
+          "match_count": 1,
+          "comment_ids": [
+            5539150635
+          ],
+          "comments": [
+            {
+              "id": 5539150635,
+              "created_at": "2026-09-04T10:28:29Z",
+              "body_sha256": "5bd6aaa7c18cc7b132ae1f24e01de12c95e9342bbbea95e3e743dc1cee5a99e6",
+              "markers": {
+                "interview-note-source-review-applied": {
+                  "schema_version": "interview-note-source-review-applied.v1",
+                  "transition_id": "xhs-6a8abe2d-source-review-1",
+                  "request_sha256": "4dca889e3f3f1cb19d102ae3829cdff269935f8800467c98577a2ebc3097a2f1",
+                  "repository": "liqiangcc/interview-lab",
+                  "issue_number": 915,
+                  "interview_note_id": "xhs:6a8abe2d000000001602b26e",
+                  "source_note_issue_number": 910,
+                  "source_note_body_sha256": "663871c4c273ff5cf58b053501b5b04bf2a6313687e64b0c9b1ce6ea9243f041",
+                  "source_revision_id": "xhs:6a8abe2d000000001602b26e:r1",
+                  "manifest_sha256": "0e408ad965af6a1a47a968de9916a1c17eec58f436b35b171d8c9729fac6d3e0",
+                  "decision": "source-ready",
+                  "final_status": "source-ready",
+                  "reviewed_at": "2026-09-04T05:59:40Z",
+                  "applied_at": "2026-09-04T10:28:28.511Z"
+                }
+              },
+              "human_header": null
+            }
+          ],
           "comment_id": 5539150635,
           "body_sha256": "5bd6aaa7c18cc7b132ae1f24e01de12c95e9342bbbea95e3e743dc1cee5a99e6",
           "payload": {
@@ -879,7 +1310,15 @@
             "applied_at": "2026-09-04T10:28:28.511Z"
           }
         },
-        "materialization_receipt": null,
+        "materialization_receipt": {
+          "count": 0,
+          "match_count": 0,
+          "comment_ids": [],
+          "comments": [],
+          "comment_id": null,
+          "body_sha256": null,
+          "payload": null
+        },
         "comments": [
           {
             "id": 5536381793,
@@ -930,5 +1369,5 @@
       }
     }
   ],
-  "canonical_digest": "5b1b8bfa8f47721c0fc758988b95bfd09fc467197f9d22d0fe72e2d3aaf3c457"
+  "canonical_digest": "067bdb7ecfe4c1de2e266b2310de6758e6206e2d845193ed61c0fce5a38a3a1e"
 }

@@ -17,13 +17,87 @@
   "$defs": {
     "target": {
       "type": "object",
+      "additionalProperties": false,
       "required": ["source_note_issue_number", "interview_note_id", "owner_issue_number", "source", "owner"],
       "properties": {
         "source_note_issue_number": {"type": "integer", "enum": [904, 907, 910]},
         "interview_note_id": {"type": "string", "minLength": 1},
         "owner_issue_number": {"type": "integer", "enum": [2, 4, 915]},
-        "source": {"type": "object"},
-        "owner": {"type": "object"}
+        "source": {"$ref": "#/$defs/source"},
+        "owner": {"$ref": "#/$defs/owner"}
+      }
+    },
+    "validation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ok", "errors"],
+      "properties": {
+        "ok": {"type": "boolean"},
+        "errors": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "source_revision": {
+      "type": "object",
+      "required": ["id"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "source_repository_ref": {"type": ["string", "null"], "pattern": "^[0-9a-f]{40}$"}
+      }
+    },
+    "marker_summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["count", "match_count", "comment_ids", "comments", "comment_id", "body_sha256", "payload"],
+      "properties": {
+        "count": {"enum": [0, 1, ">1"]},
+        "match_count": {"type": "integer", "minimum": 0},
+        "comment_ids": {"type": "array", "items": {"type": "integer"}},
+        "comments": {"type": "array", "items": {"type": "object"}},
+        "comment_id": {"type": ["integer", "null"]},
+        "body_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+        "payload": {"type": ["object", "null"]}
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["issue_number", "state", "updated_at", "body_sha256", "labels", "validation", "source_note_id", "source_revision", "boundary_review", "boundary_evidence", "boundary_applied_receipt", "materialization_receipt", "human_boundary_evidence_comment_ids", "comments"],
+      "properties": {
+        "issue_number": {"type": "integer"},
+        "state": {"type": "string"},
+        "updated_at": {"type": "string", "format": "date-time"},
+        "body_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "labels": {"type": "array", "items": {"type": "string"}},
+        "validation": {"$ref": "#/$defs/validation"},
+        "source_note_id": {"type": "string", "minLength": 1},
+        "source_revision": {"$ref": "#/$defs/source_revision"},
+        "boundary_review": {"type": "object"},
+        "boundary_evidence": {"$ref": "#/$defs/marker_summary"},
+        "boundary_applied_receipt": {"$ref": "#/$defs/marker_summary"},
+        "materialization_receipt": {"$ref": "#/$defs/marker_summary"},
+        "human_boundary_evidence_comment_ids": {"type": "array", "items": {"type": "integer"}},
+        "comments": {"type": "array", "items": {"type": "object"}}
+      }
+    },
+    "owner": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["issue_number", "state", "updated_at", "body_sha256", "labels", "validation", "interview_note_id", "source_revision", "source", "source_review_evidence", "source_review_evidence_comment_ids", "source_review_applied_receipt", "materialization_receipt", "comments"],
+      "properties": {
+        "issue_number": {"type": "integer"},
+        "state": {"type": "string"},
+        "updated_at": {"type": "string", "format": "date-time"},
+        "body_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "labels": {"type": "array", "items": {"type": "string"}},
+        "validation": {"$ref": "#/$defs/validation"},
+        "interview_note_id": {"type": "string", "minLength": 1},
+        "source_revision": {"$ref": "#/$defs/source_revision"},
+        "source": {"type": ["object", "null"]},
+        "source_review_evidence": {"$ref": "#/$defs/marker_summary"},
+        "source_review_evidence_comment_ids": {"type": "array", "items": {"type": "integer"}},
+        "source_review_applied_receipt": {"$ref": "#/$defs/marker_summary"},
+        "materialization_receipt": {"$ref": "#/$defs/marker_summary"},
+        "comments": {"type": "array", "items": {"type": "object"}}
       }
     }
   }

@@ -43,6 +43,67 @@ function findOne(items, predicate, label, errors) {
   return matches[0] || null;
 }
 
+function isObject(value) { return value && typeof value === 'object' && !Array.isArray(value); }
+
+function requiredMarker(summary, label, errors) {
+  if (!isObject(summary) || !Object.prototype.hasOwnProperty.call(summary, 'count')) {
+    errors.push(`${label} marker count is missing`);
+    return null;
+  }
+  if (![0, 1, '>1'].includes(summary.count)) errors.push(`${label} marker count must be 0, 1, or >1`);
+  if (summary.count !== 1) errors.push(`${label} marker count must be exactly 1 (got ${summary.count})`);
+  if (!Array.isArray(summary.comments) || !Array.isArray(summary.comment_ids)) errors.push(`${label} marker comment evidence is missing`);
+  return summary.count === 1 ? summary : null;
+}
+
+function optionalMarker(summary, label, errors) {
+  if (!isObject(summary) || !Object.prototype.hasOwnProperty.call(summary, 'count')) {
+    errors.push(`${label} marker count is missing`);
+    return null;
+  }
+  if (![0, 1, '>1'].includes(summary.count)) errors.push(`${label} marker count must be 0, 1, or >1`);
+  if (summary.count === '>1') errors.push(`${label} marker count must not be >1`);
+  if (!Array.isArray(summary.comments) || !Array.isArray(summary.comment_ids)) errors.push(`${label} marker comment evidence is missing`);
+  return summary.count === 1 ? summary : null;
+}
+
+function validateLiveTargetShape(liveTarget, target, errors) {
+  if (!isObject(liveTarget)) {
+    errors.push('live re-audit target object is missing');
+    return { source: null, owner: null };
+  }
+  if (Number(liveTarget.source_note_issue_number) !== target.source_note_issue_number) errors.push('live audit target SourceNote Issue mismatch');
+  if (liveTarget.interview_note_id !== target.interview_note_id) errors.push('live audit target InterviewNote identity mismatch');
+  if (Number(liveTarget.owner_issue_number) !== target.owner_issue_number) errors.push('live audit target owner Issue mismatch');
+  const source = liveTarget.source;
+  const owner = liveTarget.owner;
+  if (!isObject(source)) errors.push('live audit SourceNote object is missing');
+  if (!isObject(owner)) errors.push('live audit InterviewNote owner object is missing');
+  if (isObject(source)) {
+    for (const field of ['source_note_id', 'body_sha256', 'source_revision', 'boundary_review', 'validation', 'comments', 'boundary_evidence', 'boundary_applied_receipt', 'materialization_receipt']) {
+      if (!Object.prototype.hasOwnProperty.call(source, field)) errors.push(`live audit SourceNote ${field} is missing`);
+    }
+    if (typeof source.source_note_id !== 'string' || !source.source_note_id.trim()) errors.push('live audit SourceNote source_note_id is invalid');
+    if (!HEX64.test(String(source.body_sha256 || ''))) errors.push('live audit SourceNote body_sha256 is invalid');
+    if (!isObject(source.source_revision) || typeof source.source_revision.id !== 'string' || !source.source_revision.id.trim()) errors.push('live audit SourceNote source_revision is invalid');
+    if (!isObject(source.boundary_review)) errors.push('live audit SourceNote boundary_review is invalid');
+    if (!isObject(source.validation) || typeof source.validation.ok !== 'boolean' || !Array.isArray(source.validation.errors)) errors.push('live audit SourceNote validation is invalid');
+    if (!Array.isArray(source.comments)) errors.push('live audit SourceNote comments are invalid');
+  }
+  if (isObject(owner)) {
+    for (const field of ['issue_number', 'interview_note_id', 'body_sha256', 'source_revision', 'validation', 'comments', 'source_review_evidence', 'source_review_applied_receipt', 'materialization_receipt']) {
+      if (!Object.prototype.hasOwnProperty.call(owner, field)) errors.push(`live audit InterviewNote owner ${field} is missing`);
+    }
+    if (Number(owner.issue_number) !== target.owner_issue_number) errors.push('live audit InterviewNote owner Issue is invalid');
+    if (owner.interview_note_id !== target.interview_note_id) errors.push('live audit InterviewNote owner identity is invalid');
+    if (!HEX64.test(String(owner.body_sha256 || ''))) errors.push('live audit InterviewNote owner body_sha256 is invalid');
+    if (!isObject(owner.source_revision) || typeof owner.source_revision.id !== 'string' || !owner.source_revision.id.trim()) errors.push('live audit InterviewNote owner source_revision is invalid');
+    if (!isObject(owner.validation) || typeof owner.validation.ok !== 'boolean' || !Array.isArray(owner.validation.errors)) errors.push('live audit InterviewNote owner validation is invalid');
+    if (!Array.isArray(owner.comments)) errors.push('live audit InterviewNote owner comments are invalid');
+  }
+  return { source, owner };
+}
+
 function receiptShape(receipt, target, errors) {
   if (!receipt || typeof receipt !== 'object' || Array.isArray(receipt)) {
     errors.push(`InterviewNote #${target.owner_issue_number} materialization receipt is missing`);
@@ -143,26 +204,31 @@ function planIssue1657BlockerRepair({ sourceSnapshot, ownershipInventory, materi
     const sourceBodySha = sourceIssue ? sha256Text(sourceIssue.body || '') : null;
     const sourceRevision = sourceParsed && sourceParsed.source_revision || {};
     const targetErrors = [];
-    const liveSource = liveTarget && liveTarget.source;
-    const liveOwner = liveTarget && liveTarget.owner;
+    const liveShape = validateLiveTargetShape(liveTarget, target, targetErrors);
+    const liveSource = liveShape.source;
+    const liveOwner = liveShape.owner;
     if (!sourceParsedResult.validation.ok) targetErrors.push(...(sourceParsedResult.validation.errors || []).map((error) => `SourceNote invalid: ${error}`));
     if (!sourceParsed) targetErrors.push('SourceNote record is missing');
     if (sourceParsed && sourceParsed.source_note_id !== `xhs-note:${target.interview_note_id.slice(4)}`) targetErrors.push('SourceNote identity mismatch');
     if (sourceParsed && sourceParsed.boundary_review?.status !== 'single-interview') targetErrors.push('SourceNote is not currently single-interview');
     if (sourceParsed && !(sourceParsed.boundary_review?.interview_note_ids || []).includes(target.interview_note_id)) targetErrors.push('SourceNote does not declare the exact InterviewNote identity');
-    if (liveSource && liveSource.source_note_id !== (sourceParsed && sourceParsed.source_note_id)) targetErrors.push('live audit SourceNote identity mismatch');
-    if (liveSource && liveSource.body_sha256 !== sourceBodySha) targetErrors.push('live audit SourceNote body digest mismatch');
-    if (liveSource && liveSource.source_revision && liveSource.source_revision.id !== (sourceRevision.id || null)) targetErrors.push('live audit SourceRevision mismatch');
-    if (liveSource && liveSource.source_revision && (liveSource.source_revision.source_repository_ref ?? null) !== (sourceRevision.source_repository_ref ?? null)) targetErrors.push('live audit source repository ref mismatch');
-    if (liveSource && liveSource.boundary_review && liveSource.boundary_review.status !== (sourceParsed && sourceParsed.boundary_review?.status)) targetErrors.push('live audit boundary status mismatch');
-    if (liveSource && liveSource.validation && liveSource.validation.ok !== true) targetErrors.push('live audit SourceNote validation is not passing');
+    if (liveSource) {
+      if (liveSource.source_note_id !== (sourceParsed && sourceParsed.source_note_id)) targetErrors.push('live audit SourceNote identity mismatch');
+      if (liveSource.body_sha256 !== sourceBodySha) targetErrors.push('live audit SourceNote body digest mismatch');
+      if (liveSource.source_revision.id !== (sourceRevision.id || null)) targetErrors.push('live audit SourceRevision mismatch');
+      if ((liveSource.source_revision.source_repository_ref ?? null) !== (sourceRevision.source_repository_ref ?? null)) targetErrors.push('live audit source repository ref mismatch');
+      if (liveSource.boundary_review.status !== (sourceParsed && sourceParsed.boundary_review?.status)) targetErrors.push('live audit boundary status mismatch');
+      if (liveSource.validation.ok !== true) targetErrors.push('live audit SourceNote validation is not passing');
+    }
     if (sourceIssue && !labelsOf(sourceIssue).includes('boundary:single-interview')) targetErrors.push('SourceNote lacks boundary:single-interview label');
     if (owner && owner.interview_note_id !== target.interview_note_id) targetErrors.push('owner identity mismatch');
-    if (liveOwner && liveOwner.interview_note_id !== (owner && owner.interview_note_id)) targetErrors.push('live audit owner identity mismatch');
-    if (liveOwner && liveOwner.body_sha256 !== (owner && owner.body_sha256)) targetErrors.push('live audit owner body digest mismatch');
-    if (liveOwner && liveOwner.source_revision && liveOwner.source_revision.id !== (owner && owner.source_revision_id)) targetErrors.push('live audit owner SourceRevision mismatch');
-    if (liveOwner && liveOwner.source_revision && (liveOwner.source_revision.source_repository_ref ?? null) !== (receiptEntry && receiptEntry.owner_source_repository_ref || null)) targetErrors.push('live audit owner source repository ref mismatch');
-    if (liveOwner && liveOwner.validation && liveOwner.validation.ok !== true) targetErrors.push('live audit InterviewNote validation is not passing');
+    if (liveOwner) {
+      if (liveOwner.interview_note_id !== (owner && owner.interview_note_id)) targetErrors.push('live audit owner identity mismatch');
+      if (liveOwner.body_sha256 !== (owner && owner.body_sha256)) targetErrors.push('live audit owner body digest mismatch');
+      if (liveOwner.source_revision.id !== (owner && owner.source_revision_id)) targetErrors.push('live audit owner SourceRevision mismatch');
+      if ((liveOwner.source_revision.source_repository_ref ?? null) !== (receiptEntry && receiptEntry.owner_source_repository_ref || null)) targetErrors.push('live audit owner source repository ref mismatch');
+      if (liveOwner.validation.ok !== true) targetErrors.push('live audit InterviewNote validation is not passing');
+    }
     if (owner && receiptEntry && Number(receiptEntry.owner_issue_number) !== Number(owner.issue_number)) targetErrors.push('receipt audit owner mismatch');
     if (owner && receiptEntry && owner.source_revision_id !== receiptEntry.owner_source_revision_id) targetErrors.push('owner SourceRevision disagrees with receipt audit');
     if (owner && receiptEntry && owner.body_sha256 !== receiptEntry.owner_body_sha256) targetErrors.push('owner body digest disagrees with receipt audit');
@@ -178,8 +244,15 @@ function planIssue1657BlockerRepair({ sourceSnapshot, ownershipInventory, materi
       if (receipt.interview_note_body_sha256 !== owner.body_sha256) targetErrors.push('materialization receipt owner body digest mismatch');
       if ((receipt.source_repository_ref ?? null) !== (sourceRevision.source_repository_ref ?? null)) targetErrors.push('materialization receipt source repository ref mismatch');
     }
-    if (liveSource && liveSource.boundary_evidence && liveSource.boundary_evidence.comment_id !== (reportItem && reportItem.evidence_comment_id)) targetErrors.push('live boundary evidence comment mismatch');
-    if (liveSource && liveSource.materialization_receipt && receiptEntry && liveSource.materialization_receipt.comment_id !== receiptEntry.materialization_receipt_comment_id) targetErrors.push('live materialization receipt comment mismatch');
+    const boundaryEvidence = liveSource && requiredMarker(liveSource.boundary_evidence, 'live boundary evidence', targetErrors);
+    const boundaryApplied = liveSource && requiredMarker(liveSource.boundary_applied_receipt, 'live boundary applied receipt', targetErrors);
+    const materializationReceipt = liveSource && requiredMarker(liveSource.materialization_receipt, 'live materialization receipt', targetErrors);
+    const ownerSourceEvidence = liveOwner && requiredMarker(liveOwner.source_review_evidence, 'live owner source-review evidence', targetErrors);
+    const ownerSourceApplied = liveOwner && requiredMarker(liveOwner.source_review_applied_receipt, 'live owner source-review applied receipt', targetErrors);
+    const ownerMaterialization = liveOwner && optionalMarker(liveOwner.materialization_receipt, 'live owner materialization receipt', targetErrors);
+    if (boundaryEvidence && boundaryEvidence.comment_id !== (reportItem && reportItem.evidence_comment_id)) targetErrors.push('live boundary evidence comment mismatch');
+    if (boundaryApplied && boundaryApplied.payload && boundaryApplied.payload.new_body_sha256 !== sourceBodySha) targetErrors.push('live boundary applied receipt body digest mismatch');
+    if (materializationReceipt && receiptEntry && materializationReceipt.comment_id !== receiptEntry.materialization_receipt_comment_id) targetErrors.push('live materialization receipt comment mismatch');
 
     const requestBase = {
       repository: REPOSITORY,
@@ -249,11 +322,13 @@ function planIssue1657BlockerRepair({ sourceSnapshot, ownershipInventory, materi
       owner_source_repository_ref: receiptEntry && receiptEntry.owner_source_repository_ref || null,
       live_audit: {
         captured_at: liveAuditSnapshot && liveAuditSnapshot.captured_at || null,
-        source_note_comment_ids: liveSource ? liveSource.comments.map((comment) => comment.id) : [],
+        source_note_comment_ids: liveSource && Array.isArray(liveSource.comments) ? liveSource.comments.map((comment) => comment.id) : [],
+        source_marker_counts: liveSource ? { boundary_evidence: liveSource.boundary_evidence && liveSource.boundary_evidence.count, boundary_applied_receipt: liveSource.boundary_applied_receipt && liveSource.boundary_applied_receipt.count, materialization_receipt: liveSource.materialization_receipt && liveSource.materialization_receipt.count } : null,
         boundary_evidence_comment_id: liveSource && liveSource.boundary_evidence ? liveSource.boundary_evidence.comment_id : null,
         boundary_applied_receipt_comment_id: liveSource && liveSource.boundary_applied_receipt ? liveSource.boundary_applied_receipt.comment_id : null,
         materialization_receipt_comment_id: liveSource && liveSource.materialization_receipt ? liveSource.materialization_receipt.comment_id : null,
-        owner_comment_ids: liveOwner ? liveOwner.comments.map((comment) => comment.id) : [],
+        owner_comment_ids: liveOwner && Array.isArray(liveOwner.comments) ? liveOwner.comments.map((comment) => comment.id) : [],
+        owner_marker_counts: liveOwner ? { source_review_evidence: liveOwner.source_review_evidence && liveOwner.source_review_evidence.count, source_review_applied_receipt: liveOwner.source_review_applied_receipt && liveOwner.source_review_applied_receipt.count, materialization_receipt: liveOwner.materialization_receipt && liveOwner.materialization_receipt.count } : null,
         owner_source_review_evidence_comment_ids: liveOwner ? liveOwner.source_review_evidence_comment_ids : [],
         owner_source_review_applied_receipt_comment_id: liveOwner && liveOwner.source_review_applied_receipt ? liveOwner.source_review_applied_receipt.comment_id : null,
       },
