@@ -11,6 +11,7 @@ const {
   buildPlan,
   validateAuthorization,
   validatePatchResponse,
+  acquireExclusiveLock,
   applyPlan,
   canonicalDigest,
   sha256Text,
@@ -153,6 +154,22 @@ test('PATCH response must return the complete exact label projection', () => {
   assert.equal(validatePatchResponse({ number: 2001, title: item.proposed_title, labels: [{ name: 'role:backend' }, { name: 'company:alibaba' }] }, item), true);
 });
 
+test('exclusive lock assertHeld rejects deletion, replacement, and symlink drift', () => {
+  const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'issue-1662-assert-lock-'));
+  const lockPath = path.join(temp, 'apply.lock');
+  const replacementPath = path.join(temp, 'replacement');
+  const lock = acquireExclusiveLock(lockPath);
+  lock.assertHeld();
+  fs.unlinkSync(lockPath);
+  fs.writeFileSync(lockPath, JSON.stringify({ token: 'replacement', device: 0, inode: 0 }));
+  assert.throws(() => lock.assertHeld(), /ownership or inode changed/);
+  fs.unlinkSync(lockPath);
+  fs.writeFileSync(replacementPath, 'replacement target');
+  fs.symlinkSync(replacementPath, lockPath);
+  assert.throws(() => lock.assertHeld(), /ownership or inode changed/);
+  fs.unlinkSync(lockPath);
+});
+
 test('controlled apply uses exclusive lock/journal and only injected adapters', () => {
   const input = fixture();
   const result = buildPlan(input);
@@ -161,11 +178,60 @@ test('controlled apply uses exclusive lock/journal and only injected adapters', 
   const journalPath = path.join(temp, 'apply.journal.jsonl');
   const auth = { schema_version: AUTH_SCHEMA_VERSION, issue_number: 1662, comment_id: 991662, marker: 'issue-1662-authorization', allow_live_github: true, plan_digest: result.plan.canonical_digest, mutation_ceiling: 2, authorized_by: 'fixture' };
   const patched = [];
-  const applied = applyPlan(result.plan, { authorization: auth, fetchAuthorizationComment: () => authorizationComment(auth), allowLiveGithub: true, maxMutations: 2, lockPath, journalPath, readIssue: (number) => input.liveIssueSnapshot.items.find((issue) => issue.number === number), patchIssue: (number, projection) => { patched.push(number); const issue = input.liveIssueSnapshot.items.find((item) => item.number === number); return { number, title: projection.title, labels: projection.labels, body: issue.body }; }, postReceipt: () => ({ id: 1234 }) });
+  const applied = applyPlan(result.plan, { authorization: auth, fetchAuthorizationComment: () => authorizationComment(auth), allowLiveGithub: true, maxMutations: 2, lockPath, journalPath, readIssue: (number) => input.liveIssueSnapshot.items.find((issue) => issue.number === number), patchIssue: (number, projection) => { patched.push(number); const issue = input.liveIssueSnapshot.items.find((item) => item.number === number); issue.title = projection.title; issue.labels = projection.labels; return { number, title: projection.title, labels: projection.labels, body: issue.body }; }, postReceipt: () => ({ id: 1234 }) });
   assert.equal(applied.mutation_performed, true);
   assert.deepEqual(patched, [2001, 2002]);
   assert.equal(fs.existsSync(lockPath), false);
   assert.equal(fs.readFileSync(journalPath, 'utf8').includes('patch-converged'), true);
+});
+
+test('apply fails closed immediately when the lock is replaced during a fresh read', () => {
+  const input = fixture();
+  const result = buildPlan(input);
+  const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'issue-1662-lock-drift-'));
+  const lockPath = path.join(temp, 'apply.lock');
+  const journalPath = path.join(temp, 'apply.journal.jsonl');
+  const auth = { schema_version: AUTH_SCHEMA_VERSION, issue_number: 1662, comment_id: 991662, marker: 'issue-1662-authorization', allow_live_github: true, plan_digest: result.plan.canonical_digest, mutation_ceiling: 2, authorized_by: 'fixture' };
+  let reads = 0;
+  assert.throws(() => applyPlan(result.plan, {
+    authorization: auth, fetchAuthorizationComment: () => authorizationComment(auth), allowLiveGithub: true, maxMutations: 2, lockPath, journalPath,
+    readIssue: (number) => {
+      reads += 1;
+      if (reads === 1) { fs.unlinkSync(lockPath); fs.writeFileSync(lockPath, JSON.stringify({ token: 'replacement', device: 0, inode: 0 })); }
+      return input.liveIssueSnapshot.items.find((issue) => issue.number === number);
+    },
+    patchIssue: () => { throw new Error('PATCH must not be reached after lock drift'); }, postReceipt: () => ({ id: 1234 }),
+  }), /exclusive apply lock (ownership or inode changed|disappeared)/);
+  assert.equal(reads, 1);
+});
+
+test('apply journals patch-unknown when post-PATCH GET drifts or throws', () => {
+  for (const mode of ['drift', 'error']) {
+    const input = fixture();
+    const result = buildPlan(input);
+    const temp = fs.mkdtempSync(path.join(os.tmpdir(), `issue-1662-post-get-${mode}-`));
+    const lockPath = path.join(temp, 'apply.lock');
+    const journalPath = path.join(temp, 'apply.journal.jsonl');
+    const auth = { schema_version: AUTH_SCHEMA_VERSION, issue_number: 1662, comment_id: 991662, marker: 'issue-1662-authorization', allow_live_github: true, plan_digest: result.plan.canonical_digest, mutation_ceiling: 2, authorized_by: 'fixture' };
+    let reads = 0;
+    assert.throws(() => applyPlan(result.plan, {
+      authorization: auth, fetchAuthorizationComment: () => authorizationComment(auth), allowLiveGithub: true, maxMutations: 2, lockPath, journalPath,
+      readIssue: (number) => {
+        reads += 1;
+        const issue = input.liveIssueSnapshot.items.find((item) => item.number === number);
+        if (reads === 2 && mode === 'error') throw new Error('simulated post-PATCH GET failure');
+        if (reads === 2) return { ...issue, title: 'concurrent title drift' };
+        return issue;
+      },
+      patchIssue: (number, projection) => { const issue = input.liveIssueSnapshot.items.find((item) => item.number === number); return { number, title: projection.title, labels: projection.labels, body: issue.body }; },
+      postReceipt: () => ({ id: 1234 }),
+    }), /PATCH outcome is unknown/);
+    const journal = fs.readFileSync(journalPath, 'utf8');
+    assert.match(journal, /"state":"patch-unknown"/);
+    assert.match(journal, /"phase":"post-patch-read-validation"|"phase":"patch-response-or-post-read"/);
+    assert.match(journal, /"possibly_performed":true/);
+    assert.doesNotMatch(journal, /"state":"patch-converged"/);
+  }
 });
 
 test('controlled apply journals patch-unknown when PATCH returns but response validation fails', () => {

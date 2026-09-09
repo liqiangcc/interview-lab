@@ -534,13 +534,29 @@ function validateAuthorization(auth, planDigest, maxMutations, options = {}) {
 function acquireExclusiveLock(lockPath, metadata = {}, fsImpl = fs) {
   const token = crypto.randomUUID();
   let fd;
-  try { fd = fsImpl.openSync(lockPath, 'wx', 0o644); }
+  let ownerStat;
+  try { fd = fsImpl.openSync(lockPath, 'wx', 0o644); ownerStat = fsImpl.fstatSync(fd); }
   catch (error) { throw new Error(error && error.code === 'EEXIST' ? `exclusive apply lock already exists at ${lockPath}` : `cannot create apply lock: ${error.message}`); }
-  try { fsImpl.writeFileSync(fd, `${JSON.stringify({ schema_version: `${SCHEMA_VERSION}-lock.v1`, token, ...metadata }, null, 2)}\n`); fsImpl.fsyncSync(fd); }
+  try { fsImpl.writeFileSync(fd, `${JSON.stringify({ schema_version: `${SCHEMA_VERSION}-lock.v1`, ...metadata, token, device: ownerStat.dev, inode: ownerStat.ino }, null, 2)}\n`); fsImpl.fsyncSync(fd); }
   catch (error) { try { fsImpl.closeSync(fd); } finally { try { fsImpl.unlinkSync(lockPath); } catch {} } throw new Error(`cannot persist apply lock: ${error.message}`); }
   fsImpl.closeSync(fd);
+  const assertHeld = () => {
+    let before;
+    try { before = fsImpl.lstatSync(lockPath); }
+    catch (error) { throw new Error(`exclusive apply lock disappeared: ${error.message}`); }
+    if (!before.isFile() || before.isSymbolicLink() || before.dev !== ownerStat.dev || before.ino !== ownerStat.ino) throw new Error('exclusive apply lock ownership or inode changed');
+    let current;
+    try { current = JSON.parse(fsImpl.readFileSync(lockPath, 'utf8')); }
+    catch (error) { throw new Error(`exclusive apply lock is unreadable: ${error.message}`); }
+    let after;
+    try { after = fsImpl.lstatSync(lockPath); }
+    catch (error) { throw new Error(`exclusive apply lock disappeared: ${error.message}`); }
+    if (!after.isFile() || after.isSymbolicLink() || after.dev !== ownerStat.dev || after.ino !== ownerStat.ino
+      || current.token !== token || current.device !== ownerStat.dev || current.inode !== ownerStat.ino) throw new Error('exclusive apply lock ownership or inode changed');
+    return true;
+  };
   let released = false;
-  return { token, release() { if (released) return; const current = JSON.parse(fsImpl.readFileSync(lockPath, 'utf8')); if (current.token !== token) throw new Error('apply lock ownership changed; refusing to remove another lock'); fsImpl.unlinkSync(lockPath); released = true; } };
+  return { token, assertHeld, release() { if (released) return; assertHeld(); fsImpl.unlinkSync(lockPath); released = true; } };
 }
 
 function createExclusiveJournal(journalPath, header, fsImpl = fs) {
@@ -570,6 +586,16 @@ function validatePatchResponse(response, item) {
   return true;
 }
 
+function validateFreshPatchRead(issue, item) {
+  if (!issue || typeof issue !== 'object') throw new Error(`Issue #${item.issue_number} post-PATCH GET response is unknown`);
+  if (Number(issue.number) !== Number(item.issue_number)) throw new Error(`Issue #${item.issue_number} post-PATCH GET identity is unknown`);
+  if (typeof issue.title !== 'string' || issue.title !== item.proposed_title) throw new Error(`Issue #${item.issue_number} post-PATCH GET title did not converge`);
+  if (typeof issue.body !== 'string' || sha256Text(issue.body) !== item.current_body_sha256) throw new Error(`Issue #${item.issue_number} post-PATCH GET body SHA drifted`);
+  if (!Array.isArray(issue.labels)) throw new Error(`Issue #${item.issue_number} post-PATCH GET omitted complete labels`);
+  if (JSON.stringify(normalizeLabels(issue.labels)) !== JSON.stringify(normalizeLabels(item.proposed_labels))) throw new Error(`Issue #${item.issue_number} post-PATCH GET labels did not exactly converge`);
+  return true;
+}
+
 function applyPlan(plan, options = {}) {
   if (!plan || plan.schema_version !== SCHEMA_VERSION || plan.mode !== 'plan-only' || plan.mutation_performed !== false) throw new Error('malformed or already-mutated #1662 plan cannot be applied');
   const auth = validateAuthorization(options.authorization, plan.canonical_digest, options.maxMutations, { allowLiveGithub: options.allowLiveGithub === true, fetchAuthorizationComment: options.fetchAuthorizationComment });
@@ -585,39 +611,54 @@ function applyPlan(plan, options = {}) {
   if (typeof options.readIssue !== 'function' || typeof options.patchIssue !== 'function' || typeof options.postReceipt !== 'function') throw new Error('controlled apply requires readIssue, patchIssue, and postReceipt adapters');
   if (!nonEmpty(options.lockPath) || !nonEmpty(options.journalPath)) throw new Error('controlled apply requires exclusive lockPath and journalPath');
   const lock = acquireExclusiveLock(options.lockPath, { issue_number: ISSUE_NUMBER, plan_digest: plan.canonical_digest, mutation_ceiling: options.maxMutations }, options.fsImpl || fs);
+  const fsImpl = options.fsImpl || fs;
+  const appendHeld = (event) => { lock.assertHeld(); appendJournalEvent(options.journalPath, event, fsImpl); lock.assertHeld(); };
+  const callHeld = (callback) => {
+    lock.assertHeld();
+    try { return callback(); }
+    finally { lock.assertHeld(); }
+  };
   try {
-    createExclusiveJournal(options.journalPath, { issue_number: ISSUE_NUMBER, plan_digest: plan.canonical_digest, mutation_ceiling: options.maxMutations }, options.fsImpl || fs);
+    lock.assertHeld();
+    createExclusiveJournal(options.journalPath, { issue_number: ISSUE_NUMBER, plan_digest: plan.canonical_digest, mutation_ceiling: options.maxMutations }, fsImpl);
+    lock.assertHeld();
     const results = [];
     for (const item of mutations) {
-      const before = options.readIssue(item.issue_number);
+      const before = callHeld(() => options.readIssue(item.issue_number));
+      lock.assertHeld();
       if (!before || Number(before.number) !== Number(item.issue_number) || sha256Text(before.body || '') !== item.current_body_sha256 || JSON.stringify(labelsOf(before)) !== JSON.stringify(item.current_labels) || String(before.title || '') !== item.current_title) {
-        appendJournalEvent(options.journalPath, { issue_number: item.issue_number, state: 'cas-failed' });
+        appendHeld({ issue_number: item.issue_number, state: 'cas-failed' });
         throw new Error(`Issue #${item.issue_number} CAS precondition failed; refusing PATCH`);
       }
-      appendJournalEvent(options.journalPath, { issue_number: item.issue_number, state: 'patch-intent', body_sha256: item.current_body_sha256, labels: item.proposed_labels });
+      lock.assertHeld();
+      appendHeld({ issue_number: item.issue_number, state: 'patch-intent', body_sha256: item.current_body_sha256, labels: item.proposed_labels });
       let response;
+      let after;
       try {
-        response = options.patchIssue(item.issue_number, { title: item.proposed_title, labels: item.proposed_labels });
+        response = callHeld(() => options.patchIssue(item.issue_number, { title: item.proposed_title, labels: item.proposed_labels }));
         validatePatchResponse(response, item);
+        after = callHeld(() => options.readIssue(item.issue_number));
+        validateFreshPatchRead(after, item);
+        lock.assertHeld();
       } catch (error) {
-        appendJournalEvent(options.journalPath, {
+        appendHeld({
           issue_number: item.issue_number,
           state: 'patch-unknown',
-          phase: response === undefined ? 'patch-call' : 'patch-response-validation',
+          phase: response === undefined ? 'patch-call' : (after === undefined ? 'patch-response-or-post-read' : 'post-patch-read-validation'),
           uncertain: true,
           possibly_performed: true,
           error: error.message,
         });
         throw new Error(`Issue #${item.issue_number} PATCH outcome is unknown; fail-closed: ${error.message}`);
       }
-      appendJournalEvent(options.journalPath, { issue_number: item.issue_number, state: 'patch-converged' });
+      appendHeld({ issue_number: item.issue_number, state: 'patch-converged' });
       const receipt = { schema_version: 'issue-1662-context-learning-receipt.v1', issue_number: item.issue_number, interview_note_id: item.interview_note_id, expected_body_sha256: item.current_body_sha256, source_revision_id: item.source_revision_id, context_sha256: item.context_sha256, context_artifact: item.context_artifact, title: item.proposed_title, labels: item.proposed_labels, raw_body_mutation: false, outcome_visibility: 'sealed-until-source-reveal' };
-      appendJournalEvent(options.journalPath, { issue_number: item.issue_number, state: 'receipt-intent', receipt_sha256: sha256Text(JSON.stringify(receipt)) });
+      appendHeld({ issue_number: item.issue_number, state: 'receipt-intent', receipt_sha256: sha256Text(JSON.stringify(receipt)) });
       let receiptResponse;
-      try { receiptResponse = options.postReceipt(item.issue_number, receipt); }
-      catch (error) { appendJournalEvent(options.journalPath, { issue_number: item.issue_number, state: 'receipt-unknown', error: error.message }); throw new Error(`Issue #${item.issue_number} receipt POST outcome is unknown; fail-closed: ${error.message}`); }
-      if (!receiptResponse || !Number.isInteger(Number(receiptResponse.id)) || Number(receiptResponse.id) < 1) { appendJournalEvent(options.journalPath, { issue_number: item.issue_number, state: 'receipt-unknown' }); throw new Error(`Issue #${item.issue_number} receipt response is unknown; fail-closed`); }
-      appendJournalEvent(options.journalPath, { issue_number: item.issue_number, state: 'complete', receipt_comment_id: Number(receiptResponse.id) });
+      try { receiptResponse = callHeld(() => options.postReceipt(item.issue_number, receipt)); }
+      catch (error) { appendHeld({ issue_number: item.issue_number, state: 'receipt-unknown', error: error.message }); throw new Error(`Issue #${item.issue_number} receipt POST outcome is unknown; fail-closed: ${error.message}`); }
+      if (!receiptResponse || !Number.isInteger(Number(receiptResponse.id)) || Number(receiptResponse.id) < 1) { appendHeld({ issue_number: item.issue_number, state: 'receipt-unknown' }); throw new Error(`Issue #${item.issue_number} receipt response is unknown; fail-closed`); }
+      appendHeld({ issue_number: item.issue_number, state: 'complete', receipt_comment_id: Number(receiptResponse.id) });
       results.push({ issue_number: item.issue_number, receipt_comment_id: Number(receiptResponse.id) });
     }
     return { schema_version: 'issue-1662-context-learning-apply-result.v1', mutation_performed: results.length > 0, results };
