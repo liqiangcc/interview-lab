@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/liqiangcc/interview-lab/schemas/issue-1656-evidence-transition-request-plan.schema.json",
+  "title": "Issue 1656 evidence and boundary transition request plan",
+  "type": "object",
+  "required": ["schema_version", "repository", "issue", "parent_issue", "upstream_issue", "input_plan", "source_snapshot", "mode", "authorization", "execution_stages", "mutation_guard", "scope", "summary", "proposal_rows", "blocked_ledger", "canonical_digest"],
+  "properties": {
+    "schema_version": { "const": "issue-1656-evidence-transition-request-plan.v1" },
+    "repository": { "const": "liqiangcc/interview-lab" },
+    "issue": { "const": 1656 },
+    "parent_issue": { "const": 1611 },
+    "upstream_issue": { "const": 1605 },
+    "input_plan": {
+      "type": "object",
+      "required": ["schema_version", "canonical_digest", "source_snapshot_digest", "inventory_digest"],
+      "properties": {
+        "schema_version": { "const": "issue-1656-dynamic-boundary-review-plan.v1" },
+        "canonical_digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "source_snapshot_digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "inventory_digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+      },
+      "additionalProperties": false
+    },
+    "source_snapshot": {
+      "type": "object",
+      "required": ["repository", "ref", "digest", "complete"],
+      "properties": {
+        "repository": { "const": "liqiangcc/xhs" },
+        "ref": { "const": "95b77bb261048059846273688e4b90a2e108b437" },
+        "digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "complete": { "const": true }
+      },
+      "additionalProperties": false
+    },
+    "mode": { "const": "plan-only" },
+    "authorization": {
+      "type": "object",
+      "required": ["independent_issue_1656_authorization_comment_required", "authorization_comment_id", "evidence_post", "boundary_patch", "live_github_mutation"],
+      "properties": {
+        "independent_issue_1656_authorization_comment_required": { "const": true },
+        "authorization_comment_id": { "const": null },
+        "evidence_post": { "const": false },
+        "boundary_patch": { "const": false },
+        "live_github_mutation": { "const": false }
+      },
+      "additionalProperties": false
+    },
+    "execution_stages": {
+      "type": "object",
+      "required": ["evidence_post", "boundary_patch"],
+      "properties": {
+        "evidence_post": { "type": "object", "required": ["method", "separate_from_boundary_patch", "authorized", "status"], "properties": { "method": { "const": "POST" }, "separate_from_boundary_patch": { "const": true }, "authorized": { "const": false }, "status": { "const": "not-executed" } }, "additionalProperties": false },
+        "boundary_patch": { "type": "object", "required": ["method", "depends_on", "authorized", "status"], "properties": { "method": { "const": "PATCH" }, "depends_on": { "const": "evidence_post" }, "authorized": { "const": false }, "status": { "const": "not-executed" } }, "additionalProperties": false }
+      },
+      "additionalProperties": false
+    },
+    "mutation_guard": {
+      "type": "object",
+      "required": ["patch", "post", "label", "create", "mutation", "read_only", "live_mutation"],
+      "properties": { "patch": { "const": 0 }, "post": { "const": 0 }, "label": { "const": 0 }, "create": { "const": 0 }, "mutation": { "const": 0 }, "read_only": { "const": true }, "live_mutation": { "const": false } },
+      "additionalProperties": false
+    },
+    "scope": { "type": "object", "required": ["boundary_label", "total", "complete"], "properties": { "boundary_label": { "const": "boundary:pending" }, "total": { "const": 421 }, "complete": { "const": true } }, "additionalProperties": false },
+    "summary": { "type": "object", "required": ["total", "proposal_rows", "blocked_rows", "durable_reviews"], "properties": { "total": { "const": 421 }, "proposal_rows": { "type": "integer", "minimum": 0 }, "blocked_rows": { "type": "integer", "minimum": 0 }, "durable_reviews": { "const": 0 } }, "additionalProperties": true },
+    "proposal_rows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["issue_number", "source_note_id", "decision", "expected_body_sha256", "expected_source_revision_id", "source_projection", "line_evidence", "transition_request", "live_binding", "review"],
+        "properties": {
+          "issue_number": { "type": "integer", "minimum": 1 },
+          "source_note_id": { "type": "string", "pattern": "^xhs-note:" },
+          "decision": { "enum": ["not-interview", "single-interview", "multi-interview"] },
+          "expected_body_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+          "expected_source_revision_id": { "type": "string", "minLength": 1 },
+          "source_projection": { "$ref": "#/$defs/sourceProjection" },
+          "line_evidence": { "type": "array", "minItems": 1 },
+          "transition_request": { "$ref": "#/$defs/transitionRequest" },
+          "live_binding": { "$ref": "#/$defs/liveBinding" },
+          "review": { "$ref": "#/$defs/noWriteReview" }
+        },
+        "additionalProperties": true
+      }
+    },
+    "blocked_ledger": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["issue_number", "source_note_id", "status", "decision", "reason", "expected_body_sha256", "expected_source_revision_id", "source_projection", "review"],
+        "properties": { "issue_number": { "type": "integer", "minimum": 1 }, "source_note_id": { "type": "string", "pattern": "^xhs-note:" }, "status": { "type": "string", "minLength": 1 }, "decision": { "const": null }, "reason": { "type": "string", "minLength": 1 }, "expected_body_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }, "expected_source_revision_id": { "type": "string", "minLength": 1 }, "source_projection": { "$ref": "#/$defs/sourceProjection" }, "review": { "$ref": "#/$defs/noWriteReview" } },
+        "additionalProperties": true
+      }
+    },
+    "canonical_digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+  },
+  "$defs": {
+    "sourceProjection": {
+      "type": "object",
+      "required": ["ref", "kind", "provenance", "blob_sha", "content_sha256", "byte_size"],
+      "properties": { "ref": { "type": "string", "pattern": "^liqiangcc/xhs:note_(desc/[^/]+\\.txt|json/[^/]+\\.json)@95b77bb261048059846273688e4b90a2e108b437$" }, "kind": { "enum": ["text_projection", "json"] }, "provenance": { "const": "source_projection" }, "blob_sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" }, "content_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }, "byte_size": { "type": "integer", "minimum": 0 } },
+      "additionalProperties": true
+    },
+    "liveBinding": {
+      "type": "object",
+      "required": ["issue_number", "body_sha256", "source_note_id", "source_revision_id", "source_repository", "source_repository_ref", "source_projection_ref", "source_projection_blob_sha", "source_projection_content_sha256"],
+      "properties": { "source_repository": { "const": "liqiangcc/xhs" }, "source_repository_ref": { "const": "95b77bb261048059846273688e4b90a2e108b437" }, "source_projection_ref": { "type": "string" }, "source_projection_blob_sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" }, "source_projection_content_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }, "body_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" } },
+      "additionalProperties": true
+    },
+    "noWriteReview": {
+      "type": "object",
+      "required": ["durable_review", "evidence_post_allowed", "boundary_patch_allowed"],
+      "properties": { "durable_review": { "const": false }, "evidence_post_allowed": { "const": false }, "boundary_patch_allowed": { "const": false } },
+      "additionalProperties": false
+    },
+    "transitionRequest": {
+      "type": "object",
+      "required": ["schema_version", "transition_id", "repository", "issue_number", "source_note_id", "expected_body_sha256", "expected_boundary_status", "expected_source_revision_id", "expected_source_repository_ref", "decision", "review_evidence", "source_projection", "source_evidence", "evidence_post_required_before_boundary_patch", "boundary_patch_separate_stage"],
+      "properties": { "schema_version": { "enum": ["source-note-boundary-review-transition.v1", "source-note-boundary-review-transition.v2"] }, "repository": { "const": "liqiangcc/interview-lab" }, "expected_boundary_status": { "const": "pending" }, "expected_source_repository_ref": { "const": "95b77bb261048059846273688e4b90a2e108b437" }, "review_evidence": { "const": null }, "evidence_post_required_before_boundary_patch": { "const": true }, "boundary_patch_separate_stage": { "const": true } },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}
