@@ -1,6 +1,8 @@
 # Issue #1658：专用 InterviewNote materialization runner
 
-`npm run plan:issue-1658-materialization` 是 #1658 的默认入口。它先通过 GitHub GET-only 重新读取全量 SourceNote、全量 InterviewNote ownership 和 comments，再生成新的 SourceNote snapshot、boundary report/manifest、ownership inventory、上游 materialization plan，以及绑定这些 digest 的 #1658 runner plan。
+`npm run plan:issue-1658-materialization` 是 #1658 的默认入口。它读取固定的 `/tmp/materialization-13-plan.bound.json` bounded adapter，并 GET 指定的授权评论；默认只生成 plan-only 输出，不触发 1460-row fresh replan，也不产生 GitHub POST/PATCH。旧的全量入口保留为 `npm run plan:issue-1658-materialization-full`。
+
+只有显式 `--apply --allow-live-github --max-create 13 --max-receipts 13` 才会进入 mutation gate。apply 在 lock 内重新读取 13 个 SourceNote、每条 comments 与全库 `type:interview-note` ownership，逐条执行 body SHA、SourceRevision、boundary、唯一 owner、projection body/labels 和 receipt CAS；任一漂移都 fail closed。
 
 ## 绑定与选择
 

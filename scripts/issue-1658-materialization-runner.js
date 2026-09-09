@@ -105,13 +105,16 @@ function freshReplan(args) {
   };
 }
 
-function readOrCreateJournal(file, plan, maxCreate, maxReceipts) {
+function readOrCreateJournal(file, plan, maxCreate, maxReceipts, options = {}) {
   if (!fs.existsSync(path.resolve(file))) return initialJournal(plan, maxCreate, maxReceipts);
   const journal = readJson(file);
   const validation = validateJournal(journal, plan, maxCreate, maxReceipts);
   if (!validation.ok) throw new Error(`durable journal is not resumable: ${validation.errors.join('; ')}`);
-  if (journal.status === 'uncertain' || journal.possibly_performed) throw new Error('durable journal is uncertain; refusing blind retry');
-  const interrupted = journal.items.filter((item) => item.phase !== 'pending' && item.phase !== 'complete');
+  const receiptResume = options.allowReceiptPending === true
+    && journal.status !== 'uncertain'
+    && journal.items.every((item) => item.phase === 'pending' || item.phase === 'complete' || item.phase === 'receipt-pending');
+  if (journal.status === 'uncertain' || (journal.possibly_performed && !receiptResume)) throw new Error('durable journal is uncertain; refusing blind retry');
+  const interrupted = journal.items.filter((item) => item.phase !== 'pending' && item.phase !== 'complete' && !(receiptResume && item.phase === 'receipt-pending'));
   if (interrupted.length) throw new Error(`durable journal records attempted incomplete mutation(s): ${interrupted.map((item) => `${item.materialization_id}:${item.phase}`).join(', ')}; refusing duplicate create`);
   return journal;
 }

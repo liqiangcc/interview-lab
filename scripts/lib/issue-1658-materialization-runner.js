@@ -405,7 +405,7 @@ function validateCreatedOwner(owner, projection) {
   const ownerValidation = validateInterviewNoteIssue({ body: owner.body, labels: labelsOf(owner), state: String(owner.state || 'open').toLowerCase() });
   const expectedLabels = labelsOf({ labels: projection.labels });
   const actualLabels = labelsOf(owner);
-  if (!ownerValidation.ok || sha256Text(owner.body || '') !== sha256Text(projection.body) || JSON.stringify(actualLabels) !== JSON.stringify(expectedLabels)) throw new Error('created InterviewNote failed exact body/label validation');
+  if (!ownerValidation.ok || (owner.title != null && owner.title !== projection.title) || sha256Text(owner.body || '') !== sha256Text(projection.body) || JSON.stringify(actualLabels) !== JSON.stringify(expectedLabels)) throw new Error('created InterviewNote failed exact body/label validation');
   return owner;
 }
 
@@ -435,15 +435,51 @@ function buildCreateProjection(planResult) {
   return planResult.projection;
 }
 
+function resumeReceiptOnly({ planResult, api, journalItem, journal, journalFile, lock, maxCreate, maxReceipts, reconcileAttempts = 3 }) {
+  if (!planResult || planResult.action !== 'would-materialize' || journalItem.phase !== 'receipt-pending') throw new Error('receipt resume requires a receipt-pending would-materialize journal item');
+  const request = planResult.request;
+  const intent = journal.intents && journal.intents[request.materialization_id];
+  const ownerNumber = intent && Number(intent.interview_issue_number);
+  if (!Number.isInteger(ownerNumber) || ownerNumber < 1) throw new Error('receipt-pending intent lacks a trusted InterviewNote owner number');
+  lock.assertHeld();
+  try {
+    const source = api.readIssue(request.source_note_issue_number);
+    const owners = api.readOwners(planResult.derived_interview_note_id || planResult.projection.interview_note_id);
+    const comments = api.readComments(request.source_note_issue_number);
+    const receipts = parseMaterializationReceipts(comments);
+    const checked = planMaterialization(request, { repository: REPOSITORY, sourceIssue: source, issues: owners, receipts });
+    if (!checked.ok || !checked.already_materialized || checked.existing_issue_number !== ownerNumber) throw new Error('receipt resume CAS did not converge to the journaled unique owner');
+    const owner = validateCreatedOwner(api.readIssue(ownerNumber), planResult.projection);
+    const expected = { materialization_id: request.materialization_id, request_sha256: requestSha256(request), interview_note_id: planResult.projection.interview_note_id, interview_issue_number: ownerNumber };
+    const observed = matchingReceipts(comments, expected);
+    if (observed.receipts.length !== 1 || observed.matching.length !== 1) throw new Error('receipt POST state is unknown; exact SourceNote receipt was not observed');
+    const receipt = observed.matching[0];
+    if (receipt.interview_issue_body_sha256 !== sha256Text(planResult.projection.body)) throw new Error('resumed receipt body digest does not match the exact owner body');
+    journalItem.phase = 'complete'; journalItem.mutation_performed = true; journalItem.possibly_performed = false; journal.possibly_performed = journal.items.some((item) => item.possibly_performed === true); journal.status = 'running';
+    updateJournal(journal, journalFile, lock, api.plan, maxCreate, maxReceipts);
+    return { materialization_id: request.materialization_id, request_sha256: requestSha256(request), interview_note_id: planResult.projection.interview_note_id, interview_issue_number: owner.number, created: false, resumed: true, receipt_machine_marker: RECEIPT_MARKER, mutation_performed: true };
+  } catch (error) {
+    markUncertain({ journalItem, journal, journalFile, lock, plan: api.plan, maxCreate, maxReceipts });
+    try {
+      const receipt = reconcileReceipt(() => api.readComments(request.source_note_issue_number), request, { materialization_id: request.materialization_id, request_sha256: requestSha256(request), interview_note_id: planResult.projection.interview_note_id, interview_issue_number: ownerNumber }, reconcileAttempts);
+      if (receipt.interview_issue_body_sha256 !== sha256Text(planResult.projection.body)) throw new Error('reconciled receipt body digest differs from the owner projection');
+    } catch (reconcileError) {
+      throw new Error(`receipt resume is uncertain; bounded marker reconcile failed: ${reconcileError.message}`);
+    }
+    throw new Error(`receipt resume requires owner/source audit after exact marker reconcile: ${error.message}`);
+  }
+}
+
 function assertNoExistingMutation(target, before, after) {
   if (before && after && sha256Text(before.body || '') !== sha256Text(after.body || '')) throw new Error(`${target} existing InterviewNote body changed; refusing existing-owner modification`);
   if (before && after && JSON.stringify(labelsOf(before)) !== JSON.stringify(labelsOf(after))) throw new Error(`${target} existing InterviewNote labels changed; refusing existing-owner modification`);
 }
 
-function applyOne({ planResult, api, journalItem, journal, journalFile, lock, maxCreate, maxReceipts, now = () => new Date().toISOString(), reconcileAttempts = 3 }) {
+function applyOne({ planResult, api, journalItem, journal, journalFile, lock, maxCreate, maxReceipts, now = () => new Date().toISOString(), reconcileAttempts = 3, allowReceiptResume = false }) {
   const request = planResult.request;
   const expectedRequestSha = requestSha256(request);
   if (planResult.request_sha256 !== expectedRequestSha) throw new Error('row request SHA does not match request before apply');
+  if (allowReceiptResume && journalItem && journalItem.phase === 'receipt-pending') return resumeReceiptOnly({ planResult, api, journalItem, journal, journalFile, lock, maxCreate, maxReceipts, reconcileAttempts });
   if (planResult.action !== 'would-materialize') throw new Error(`applyOne cannot mutate action ${planResult.action}`);
   if (!journalItem || journalItem.phase !== 'pending' || journalItem.mutation_attempted || journalItem.possibly_performed) throw new Error('durable journal records an attempted incomplete mutation; refusing duplicate create');
   lock.assertHeld();
@@ -512,6 +548,29 @@ module.exports = {
   validateFreshArtifacts, buildRunnerPlan, validateRunnerPlan, markerValues, parseAuthorizationComment,
   receiptObject, receiptBody, matchingReceipts, reconcileReceipt, reconcileOwner, atomicWriteJson,
   acquireExclusiveLock, initialIntent, initialJournal, validateJournal, updateJournal, assertNoExistingMutation,
-  buildCreateProjection, applyOne,
+  buildCreateProjection, resumeReceiptOnly, applyOne,
   reconcileAlreadyMaterialized,
 };
+
+// The controller keeps the historical full-plan constants/API above for
+// compatibility, while exposing the bounded-13 adapter without overwriting
+// those legacy names.
+const boundedRunner = require('./issue-1658-bounded-materialization-runner');
+Object.assign(module.exports, {
+  BOUNDED_PLAN_SCHEMA: boundedRunner.PLAN_SCHEMA,
+  BOUNDED_RUNNER_SCHEMA: boundedRunner.RUNNER_SCHEMA,
+  BOUNDED_AUTH_SCHEMA: boundedRunner.AUTH_SCHEMA,
+  BOUNDED_AUTH_MARKER: boundedRunner.AUTH_MARKER,
+  BOUNDED_ELIGIBLE_ROWS: boundedRunner.ELIGIBLE_ROWS,
+  BOUNDED_BLOCKED_ROWS: boundedRunner.BLOCKED_ROWS,
+  BOUNDED_ZERO_WRITES: boundedRunner.ZERO_WRITES,
+  validateBoundedInputPlan: boundedRunner.validateBoundedInputPlan,
+  validateBoundedAuthorizationComment: boundedRunner.validateBoundedAuthorizationComment,
+  compareOwnershipToBoundedSnapshot: boundedRunner.compareOwnershipToBoundedSnapshot,
+  validateFreshBoundedRows: boundedRunner.validateFreshBoundedRows,
+  buildBoundedRunnerPlan: boundedRunner.buildBoundedRunnerPlan,
+  validateBoundedRunnerPlan: boundedRunner.validateBoundedRunnerPlan,
+  boundedReceiptObject: boundedRunner.receiptObject,
+  boundedReceiptBody: boundedRunner.receiptBody,
+  exactBoundedReceipt: boundedRunner.exactReceipt,
+});
