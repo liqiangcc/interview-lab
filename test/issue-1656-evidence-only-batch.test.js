@@ -16,6 +16,7 @@ const {
   freshGetBatch,
   initialJournal,
   validateJournal,
+  atomicWriteJson,
   applyEvidenceBatch,
   buildPlanOnly,
 } = require('../scripts/lib/issue-1656-evidence-only-batch');
@@ -47,13 +48,13 @@ function authComment(overrides = {}) {
   return { id: value.comment_id, body: `<!-- ${AUTH_MARKER}\n${JSON.stringify(value, null, 2)}\n-->` };
 }
 
-function fakeApi({ responseLoss = false, commentsByIssue = new Map() } = {}) {
+function fakeApi({ responseLoss = false, commentsByIssue = new Map(), issueByNumber = liveByNumber } = {}) {
   const reads = [];
   const posts = [];
   return {
     reads,
     posts,
-    readIssue(number) { reads.push(['issue', number]); return liveByNumber.get(Number(number)); },
+    readIssue(number) { reads.push(['issue', number]); return issueByNumber.get(Number(number)); },
     readComments(number) { reads.push(['comments', number]); return commentsByIssue.get(Number(number)) || []; },
     postEvidenceComment(number, body) {
       posts.push(number);
@@ -66,21 +67,24 @@ function fakeApi({ responseLoss = false, commentsByIssue = new Map() } = {}) {
   };
 }
 
+function applyAt(api, directory, auth = authComment(), overrides = {}) {
+  return applyEvidenceBatch({
+    plan,
+    api,
+    authorizationComment: auth,
+    authorization: { authorization_comment_id: auth.id, plan_digest: plan.canonical_digest, confirm_digest: plan.canonical_digest, max_mutations: 13 },
+    dryRunDigest: plan.canonical_digest,
+    journalFile: path.join(directory, 'journal.json'),
+    lockFile: path.join(directory, 'lock'),
+    now: () => '2026-09-09T00:00:00Z',
+    ...overrides,
+  });
+}
+
 function runApply(api, auth = authComment(), overrides = {}) {
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'issue-1656-evidence-only-'));
-  try {
-    return applyEvidenceBatch({
-      plan,
-      api,
-      authorizationComment: auth,
-      authorization: { authorization_comment_id: auth.id, plan_digest: plan.canonical_digest, confirm_digest: plan.canonical_digest, max_mutations: 13 },
-      dryRunDigest: plan.canonical_digest,
-      journalFile: path.join(directory, 'journal.json'),
-      lockFile: path.join(directory, 'lock'),
-      now: () => '2026-09-09T00:00:00Z',
-      ...overrides,
-    });
-  } finally { fs.rmSync(directory, { recursive: true, force: true }); }
+  try { return applyAt(api, directory, auth, overrides); }
+  finally { fs.rmSync(directory, { recursive: true, force: true }); }
 }
 
 test('evidence-only apply reads and writes only the 13 released rows, never the four blocked rows', () => {
@@ -126,11 +130,90 @@ test('journal has exact 13-row identity, crash-unknown, and idempotency fields',
   assert.equal(validateJournal(journal, plan).ok, true);
   assert.equal(journal.entries.length, 13);
   journal.entries[0].phase = 'unknown';
+  journal.entries[0].mutation_attempted = true;
+  journal.entries[0].mutation_count = 1;
   journal.entries[0].possibly_performed = true;
+  journal.status = 'unknown';
+  journal.mutation_count = 1;
   journal.possibly_performed = true;
-  journal.canonical_digest = sha256(canonicalize({ ...journal, canonical_digest: undefined }));
   delete journal.canonical_digest;
   journal.canonical_digest = sha256(canonicalize(journal));
   assert.equal(validateJournal(journal, plan).ok, true);
   assert.equal(buildPlanOnly(plan).write_operations.mutation, 0);
+});
+
+test('restart loads the existing unknown journal, reconciles once, and never reposts the possibly performed row', () => {
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'issue-1656-evidence-restart-'));
+  const comments = new Map();
+  const base = fakeApi({ commentsByIssue: comments });
+  const firstRow = plan.proposal_rows[0];
+  let hideAcceptedMarker = true;
+  let firstPost = true;
+  const crashedApi = {
+    ...base,
+    readComments(number) {
+      if (hideAcceptedMarker && Number(number) === firstRow.issue_number && comments.get(firstRow.issue_number)?.length) throw new Error('simulated restart visibility outage');
+      return base.readComments(number);
+    },
+    postEvidenceComment(number, body) {
+      const response = base.postEvidenceComment(number, body);
+      if (firstPost) { firstPost = false; throw new Error('simulated process crash after acceptance'); }
+      return response;
+    },
+  };
+  try {
+    assert.throws(() => applyAt(crashedApi, directory), /unknown after 3 bounded reconciliations/);
+    const interrupted = JSON.parse(fs.readFileSync(path.join(directory, 'journal.json'), 'utf8'));
+    const interruptedEntry = interrupted.entries.find((entry) => entry.issue_number === firstRow.issue_number);
+    assert.equal(interruptedEntry.phase, 'unknown');
+    assert.equal(interruptedEntry.possibly_performed, true);
+    assert.equal(interruptedEntry.mutation_count, 1);
+    assert.equal(interrupted.mutation_count, 1);
+
+    hideAcceptedMarker = false;
+    const resumedPosts = [];
+    const resumedApi = {
+      ...base,
+      postEvidenceComment(number, body) { resumedPosts.push(Number(number)); return base.postEvidenceComment(number, body); },
+    };
+    const result = applyAt(resumedApi, directory);
+    assert.equal(result.ok, true);
+    assert.equal(resumedPosts.length, 12);
+    assert.equal(resumedPosts.includes(firstRow.issue_number), false);
+    assert.equal(comments.get(firstRow.issue_number).filter((comment) => comment.body === firstRow.evidence_post.body).length, 1);
+  } finally { fs.rmSync(directory, { recursive: true, force: true }); }
+});
+
+test('existing journal digest drift fails closed without replacing the journal or posting', () => {
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'issue-1656-evidence-journal-drift-'));
+  const journalFile = path.join(directory, 'journal.json');
+  const original = initialJournal(plan, '2026-09-09T00:00:00Z');
+  original.plan_digest = 'f'.repeat(64);
+  atomicWriteJson(journalFile, original);
+  const before = fs.readFileSync(journalFile, 'utf8');
+  const api = fakeApi();
+  try {
+    assert.throws(() => applyAt(api, directory), /existing journal validation failed/);
+    assert.equal(fs.readFileSync(journalFile, 'utf8'), before);
+    assert.equal(api.posts.length, 0);
+  } finally { fs.rmSync(directory, { recursive: true, force: true }); }
+});
+
+test('per-row fresh CAS/idempotency GET stops the batch before posting after a later row drifts', () => {
+  const issueByNumber = new Map([...liveByNumber].map(([number, issue]) => [number, { ...issue }]));
+  const base = fakeApi({ issueByNumber });
+  const firstRow = plan.proposal_rows[0];
+  const secondRow = plan.proposal_rows[1];
+  const api = {
+    ...base,
+    postEvidenceComment(number, body) {
+      const response = base.postEvidenceComment(number, body);
+      if (Number(number) === firstRow.issue_number) {
+        issueByNumber.set(secondRow.issue_number, { ...issueByNumber.get(secondRow.issue_number), body: `${issueByNumber.get(secondRow.issue_number).body}\nDRIFT AFTER FIRST POST` });
+      }
+      return response;
+    },
+  };
+  assert.throws(() => runApply(api), /per-row fresh SourceNote\/CAS validation failed/);
+  assert.deepEqual(api.posts, [firstRow.issue_number]);
 });

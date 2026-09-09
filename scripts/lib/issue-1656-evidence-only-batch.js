@@ -164,11 +164,25 @@ function initialJournal(plan, now = new Date().toISOString()) {
   return { ...content, canonical_digest: digest(content) };
 }
 
+function readRegularJson(file) {
+  const target = path.resolve(file);
+  let stat;
+  try { stat = fs.lstatSync(target); }
+  catch (error) {
+    if (error.code === 'ENOENT') return null;
+    throw error;
+  }
+  if (!stat.isFile() || stat.isSymbolicLink()) throw new Error('journal must be a regular file');
+  try { return JSON.parse(fs.readFileSync(target, 'utf8')); }
+  catch (error) { throw new Error(`journal JSON is unreadable: ${error.message}`); }
+}
+
 function validateJournal(journal, plan) {
   const errors = [];
   if (!journal || journal.schema_version !== JOURNAL_SCHEMA) errors.push('journal schema mismatch');
   if (journal && (journal.plan_digest !== plan.canonical_digest || journal.repository !== REPOSITORY || journal.issue !== ISSUE || journal.parent_issue !== PARENT_ISSUE || journal.upstream_issue !== UPSTREAM_ISSUE)) errors.push('journal binding drifted');
   if (journal && journal.canonical_digest !== digest(without(journal, 'canonical_digest'))) errors.push('journal digest drifted');
+  if (journal && !['planned', 'running', 'unknown', 'complete'].includes(journal.status)) errors.push('journal status invalid');
   const expected = new Map(plan.proposal_rows.map((row) => [row.issue_number, row.transition_request.transition_id]));
   const seen = new Set(); let total = 0;
   for (const entry of journal?.entries || []) {
@@ -178,11 +192,16 @@ function validateJournal(journal, plan) {
     if (!['pending', 'evidence-post-pending', 'unknown', 'complete'].includes(entry.phase)) errors.push(`journal phase invalid for #${entry.issue_number}`);
     if (![0, 1].includes(entry.mutation_count) || typeof entry.possibly_performed !== 'boolean' || typeof entry.mutation_attempted !== 'boolean' || typeof entry.mutation_performed !== 'boolean') errors.push(`journal mutation state invalid for #${entry.issue_number}`);
     total += Number(entry.mutation_count || 0);
-    if (entry.phase === 'unknown' && !entry.possibly_performed) errors.push(`unknown phase must retain possibly_performed for #${entry.issue_number}`);
+    if (entry.phase === 'pending' && (entry.mutation_count !== 0 || entry.mutation_attempted || entry.mutation_performed || entry.possibly_performed)) errors.push(`pending entry has mutation state for #${entry.issue_number}`);
+    if (entry.phase === 'evidence-post-pending' && (entry.mutation_count !== 1 || !entry.mutation_attempted || entry.mutation_performed || !entry.possibly_performed)) errors.push(`pending evidence entry is not fail-closed for #${entry.issue_number}`);
+    if (entry.phase === 'unknown' && (entry.mutation_count !== 1 || !entry.mutation_attempted || entry.mutation_performed || !entry.possibly_performed)) errors.push(`unknown entry is not fail-closed for #${entry.issue_number}`);
+    if (entry.phase === 'complete' && ((entry.mutation_count === 0 && (entry.mutation_attempted || entry.mutation_performed || entry.possibly_performed)) || (entry.mutation_count === 1 && (!entry.mutation_attempted || !entry.mutation_performed || entry.possibly_performed)))) errors.push(`complete entry mutation state is inconsistent for #${entry.issue_number}`);
   }
   if (seen.size !== expected.size) errors.push('journal entry set does not equal the 13-row executable scope');
   if (journal && journal.mutation_count !== total) errors.push('journal mutation total drifted');
-  if (journal && journal.possibly_performed !== journal.entries.some((entry) => entry.possibly_performed)) errors.push('journal unknown aggregate drifted');
+  if (journal && journal.possibly_performed !== (journal.entries || []).some((entry) => entry.possibly_performed)) errors.push('journal unknown aggregate drifted');
+  if (journal?.status === 'complete' && (journal.entries || []).some((entry) => entry.phase !== 'complete')) errors.push('complete journal has unfinished entries');
+  if (journal?.status === 'unknown' && !(journal.entries || []).some((entry) => entry.phase === 'unknown' || entry.possibly_performed)) errors.push('unknown journal has no unresolved entry');
   return { ok: errors.length === 0, errors };
 }
 
@@ -222,9 +241,62 @@ function persistJournal(file, journal, plan, lock) {
   return next;
 }
 
+function loadOrCreateJournal(file, plan, lock, now) {
+  lock.assertHeld();
+  const existing = readRegularJson(file);
+  if (existing !== null) {
+    const validation = validateJournal(existing, plan);
+    if (!validation.ok) throw new Error(`existing journal validation failed: ${validation.errors.join('; ')}`);
+    return existing;
+  }
+  const journal = initialJournal(plan, now());
+  const validation = validateJournal(journal, plan);
+  if (!validation.ok) throw new Error(`new journal validation failed: ${validation.errors.join('; ')}`);
+  atomicWriteJson(file, journal);
+  return journal;
+}
+
+function journalRow(plan, entry) {
+  return plan.proposal_rows.find((row) => row.issue_number === entry.issue_number);
+}
+
+function freshRow(row, api) {
+  return freshGetBatch({ proposal_rows: [row] }, api).rows[0];
+}
+
+function reconcileJournalEntry(row, api, attempts = MAX_RECONCILE_ATTEMPTS) {
+  let last = new Error('journal evidence marker is not visible');
+  for (let attempt = 1; attempt <= attempts; attempt += 1) {
+    const audit = freshRow(row, api);
+    if (audit.ok && audit.idempotency.already_posted) return { ok: true, audit };
+    last = new Error(audit.errors?.join('; ') || 'journal evidence marker is not visible');
+  }
+  return { ok: false, error: new Error(`journal recovery is unknown after ${attempts} bounded reconciliations: ${last.message}`) };
+}
+
+function recoverJournal(journal, plan, api, file, lock) {
+  for (const entry of journal.entries) {
+    if (entry.phase === 'pending') continue;
+    const row = journalRow(plan, entry);
+    const reconciled = reconcileJournalEntry(row, api);
+    if (!reconciled.ok) throw new Error(`journal recovery failed closed for #${entry.issue_number}: ${reconciled.error.message}`);
+    const audit = reconciled.audit;
+    if (!audit.idempotency.already_posted) throw new Error(`journal recovery found no exact evidence marker for #${entry.issue_number}; refusing duplicate POST`);
+    entry.phase = 'complete';
+    entry.mutation_attempted = entry.mutation_attempted || entry.mutation_count === 1;
+    entry.mutation_performed = entry.mutation_count === 1;
+    entry.possibly_performed = false;
+    delete entry.error;
+    journal.status = 'running';
+    journal.possibly_performed = journal.entries.some((candidate) => candidate.possibly_performed);
+    persistJournal(file, journal, plan, lock);
+  }
+  return journal;
+}
+
 function markUnknown(journal, entry, error, file, plan, lock) {
   entry.phase = 'unknown'; entry.possibly_performed = true; entry.error = String(error?.message || error);
-  journal.possibly_performed = true;
+  journal.status = 'unknown'; journal.possibly_performed = true;
   return persistJournal(file, journal, plan, lock);
 }
 
@@ -250,19 +322,23 @@ function applyEvidenceBatch({ plan, api, authorizationComment, authorization, jo
   if (dryRunDigest !== plan.canonical_digest) throw new Error('apply requires a prior dry-run digest equal to the plan digest');
   if (typeof api?.readIssue !== 'function' || typeof api?.readComments !== 'function' || typeof api?.postEvidenceComment !== 'function') throw new Error('apply requires fresh GET and evidence comment adapters; no boundary writer exists');
   const lock = acquireLock(lockFile, plan.canonical_digest);
-  let journal = initialJournal(plan, now());
+  let journal;
   try {
-    atomicWriteJson(journalFile, journal);
+    journal = loadOrCreateJournal(journalFile, plan, lock, now);
+    journal = recoverJournal(journal, plan, api, journalFile, lock);
     const fresh = freshGetBatch(plan, api);
     if (!fresh.ok) throw new Error(`fresh SourceNote/CAS validation failed: ${fresh.rows.flatMap((row) => row.errors.map((error) => `#${row.issue_number}: ${error}`)).join('; ')}`);
-    const freshByIssue = new Map(fresh.rows.map((row) => [row.issue_number, row]));
     for (const row of plan.proposal_rows) {
       lock.assertHeld();
-      const audit = freshByIssue.get(row.issue_number);
       const entry = journal.entries.find((candidate) => candidate.issue_number === row.issue_number);
-      if (audit.idempotency.already_posted) { entry.phase = 'complete'; entry.mutation_performed = false; entry.mutation_attempted = false; persistJournal(journalFile, journal, plan, lock); continue; }
+      if (entry.phase === 'complete') continue;
+      // The batch preflight is advisory. This per-row fresh GET is the last
+      // CAS/idempotency gate immediately before the possible evidence POST.
+      const audit = freshRow(row, api);
+      if (!audit.ok) throw new Error(`#${row.issue_number}: per-row fresh SourceNote/CAS validation failed: ${audit.errors.join('; ')}`);
+      if (audit.idempotency.already_posted) { entry.phase = 'complete'; entry.mutation_performed = false; entry.mutation_attempted = false; entry.possibly_performed = false; persistJournal(journalFile, journal, plan, lock); continue; }
       if (!audit.idempotency.safe_to_post) throw new Error(`#${row.issue_number}: idempotency/CAS gate is not safe`);
-      entry.phase = 'evidence-post-pending'; entry.mutation_attempted = true; entry.mutation_count = 1; journal.mutation_count += 1; persistJournal(journalFile, journal, plan, lock);
+      entry.phase = 'evidence-post-pending'; entry.mutation_attempted = true; entry.possibly_performed = true; entry.mutation_count = 1; journal.mutation_count += 1; journal.status = 'running'; journal.possibly_performed = true; persistJournal(journalFile, journal, plan, lock);
       let response;
       try { lock.assertHeld(); response = api.postEvidenceComment(row.issue_number, row.evidence_post.body); }
       catch (error) {
@@ -279,7 +355,7 @@ function applyEvidenceBatch({ plan, api, authorizationComment, authorization, jo
       }
       const final = reconcileEvidence(row, api);
       if (!final.ok) { markUnknown(journal, entry, final.error, journalFile, plan, lock); throw final.error; }
-      entry.phase = 'complete'; entry.mutation_performed = true; entry.possibly_performed = false; journal.possibly_performed = journal.entries.some((candidate) => candidate.possibly_performed); persistJournal(journalFile, journal, plan, lock);
+      entry.phase = 'complete'; entry.mutation_performed = true; entry.possibly_performed = false; journal.status = 'running'; journal.possibly_performed = journal.entries.some((candidate) => candidate.possibly_performed); persistJournal(journalFile, journal, plan, lock);
     }
     journal.status = 'complete'; persistJournal(journalFile, journal, plan, lock);
     return { ok: true, mode: 'evidence-only-apply', plan_digest: plan.canonical_digest, counts: { total: 421, proposal: 13, blocked: 4, posted_or_already_present: 13 }, write_operations: { ...ZERO_WRITES, post: journal.entries.filter((entry) => entry.mutation_performed).length, mutation: journal.entries.filter((entry) => entry.mutation_performed).length }, journal };
@@ -314,5 +390,5 @@ module.exports = {
   PLAN_SCHEMA, BATCH_SCHEMA, JOURNAL_SCHEMA, AUTH_SCHEMA, AUTH_MARKER, ZERO_WRITES,
   planRows, markerValues, authorizationDigest, validateAuthorization, exactEvidenceMatches,
   validateFreshRow, freshGetBatch, initialJournal, validateJournal, atomicWriteJson, acquireLock,
-  persistJournal, reconcileEvidence, applyEvidenceBatch, buildPlanOnly,
+  persistJournal, loadOrCreateJournal, recoverJournal, reconcileEvidence, applyEvidenceBatch, buildPlanOnly,
 };
