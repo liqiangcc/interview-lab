@@ -85,7 +85,8 @@ function authorizationBody(plan, extra = {}) {
 
 test('authorization requires exact marker/comment, fresh digests, allow flag, and ceilings', () => {
   const plan = authorizationPlan();
-  const valid = parseAuthorizationComment({ id: 123, body: authorizationBody(plan) }, plan, { authorizationCommentId: 123, allowLiveGithub: true, maxCreate: 1, maxReceipts: 1 });
+  const controllerComment = { id: 123, issue_url: 'https://api.github.com/repos/liqiangcc/interview-lab/issues/1658', issue_number: 1658, url: 'https://api.github.com/repos/liqiangcc/interview-lab/issues/comments/123', body: authorizationBody(plan) };
+  const valid = parseAuthorizationComment(controllerComment, plan, { authorizationCommentId: 123, allowLiveGithub: true, maxCreate: 1, maxReceipts: 1 });
   assert.equal(valid.ok, true);
   const missing = parseAuthorizationComment({ id: 123, body: '' }, plan, { authorizationCommentId: 123, allowLiveGithub: true, maxCreate: 1, maxReceipts: 1 });
   assert.equal(missing.ok, false);
@@ -94,6 +95,9 @@ test('authorization requires exact marker/comment, fresh digests, allow flag, an
   assert.equal(badFlag.ok, false);
   const extra = parseAuthorizationComment({ id: 123, body: authorizationBody(plan, { unsafe: true }) }, plan, { authorizationCommentId: 123, allowLiveGithub: true, maxCreate: 1, maxReceipts: 1 });
   assert.equal(extra.ok, false);
+  const wrongIssue = parseAuthorizationComment({ ...controllerComment, issue_url: 'https://api.github.com/repos/liqiangcc/interview-lab/issues/1611', issue_number: 1611 }, plan, { authorizationCommentId: 123, allowLiveGithub: true, maxCreate: 1, maxReceipts: 1 });
+  assert.equal(wrongIssue.ok, false);
+  assert.match(wrongIssue.errors.join('\n'), /controller Issue #1658/);
 });
 
 test('CLI is plan-only by default and its GET helper refuses mutation-shaped arguments', () => {
@@ -138,6 +142,35 @@ test('untrusted create response is reconciled once and never retried', () => {
   assert.equal(result.created, true);
   assert.equal(creates, 1);
   assert.equal(journal.items[0].phase, 'complete');
+});
+
+test('created InterviewNote labels are an exact sorted CAS: missing or extra labels fail closed', () => {
+  const source = singleFixture();
+  const request = buildMaterializationRequest(source, REPOSITORY);
+  const sourceValidation = issueSourceRecord(source);
+  const projection = buildInterviewProjection(source, sourceValidation.validation);
+  for (const labels of [projection.labels.slice(0, -1), [...projection.labels, 'unexpected:label']]) {
+    const planResult = { action: 'would-materialize', request, request_sha256: requestSha256(request), derived_interview_note_id: projection.interview_note_id, projection: { projected_body_sha256: sha256Text(projection.body), projected_title: projection.title, projected_labels: projection.labels } };
+    const plan = { plan_digest: 'e'.repeat(64), results: [planResult] };
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'issue-1658-label-cas-'));
+    const journal = initialJournal(plan, 1, 1);
+    const journalFile = path.join(dir, 'journal.json');
+    let owner = false;
+    let creates = 0;
+    let comments = [];
+    const ownerIssue = () => ({ number: 3002, state: 'open', body: projection.body, labels });
+    const api = {
+      plan,
+      readIssue: (number) => Number(number) === source.number ? source : ownerIssue(),
+      readOwners: () => owner ? [ownerIssue()] : [],
+      readComments: () => comments,
+      createInterviewNote: () => { creates += 1; owner = true; return { number: 3002 }; },
+      addReceipt: (_number, body) => { comments = [{ id: 4002, body }]; return { id: 4002 }; },
+    };
+    assert.throws(() => applyOne({ planResult, api, journalItem: journal.items[0], journal, journalFile, lock: { assertHeld() {} }, maxCreate: 1, maxReceipts: 1 }), /exact body\/label validation/);
+    assert.equal(creates, 1);
+    assert.equal(journal.items[0].mutation_count, 1);
+  }
 });
 
 test('exclusive lock refuses replacement and journal tamper', () => {

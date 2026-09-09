@@ -203,12 +203,23 @@ function parseAuthorizationComment(comment, plan, options = {}) {
   if (values.length !== 1) errors.push(`authorization comment must contain exactly one ${AUTH_MARKER} marker`);
   const marker = values[0];
   if (!marker) return { ok: false, errors, marker: null };
+  const expectedIssueUrl = `https://api.github.com/repos/${REPOSITORY}/issues/${CONTROLLER_ISSUE}`;
+  let fetchedIssueNumber = null;
+  try {
+    const parsedIssueUrl = new URL(String(comment && comment.issue_url || ''));
+    const pathParts = parsedIssueUrl.pathname.split('/').filter(Boolean);
+    if (parsedIssueUrl.origin === 'https://api.github.com' && pathParts.length === 5 && pathParts[0] === 'repos' && pathParts[1] === REPOSITORY.split('/')[0] && pathParts[2] === REPOSITORY.split('/')[1] && pathParts[3] === 'issues') fetchedIssueNumber = Number(pathParts[4]);
+  } catch (error) { fetchedIssueNumber = null; }
+  if (comment && comment.issue_url !== expectedIssueUrl) errors.push('authorization comment issue_url is not the controller Issue #1658');
+  if (fetchedIssueNumber !== CONTROLLER_ISSUE || (comment && comment.issue_number != null && Number(comment.issue_number) !== CONTROLLER_ISSUE)) errors.push('authorization comment issue_number is not the controller Issue #1658');
   const allowed = new Set(['schema_version', 'repository', 'parent_issue', 'controller_issue', 'boundary_parent_issue', 'action', 'allow_live_github', 'comment_id', 'authorized_by', 'authorized_at', 'plan_digest', 'source_snapshot_digest', 'boundary_report_digest', 'boundary_manifest_digest', 'ownership_digest', 'max_create', 'max_receipts']);
   for (const key of Object.keys(marker)) if (!allowed.has(key)) errors.push(`authorization marker has unsupported field ${key}`);
   if (!plan || plan.ok !== true || plan.ready_for_apply !== true || plan.counts?.blocked !== 0 || !Array.isArray(plan.errors) || plan.errors.length > 0) errors.push('authorization requires an apply-ready runner plan with no blocked rows or errors');
   const expectedCommentId = Number(options.authorizationCommentId);
   if (!Number.isSafeInteger(expectedCommentId) || expectedCommentId < 1) errors.push('authorization comment_id must be explicitly supplied');
-  if (Number(comment && comment.id) !== expectedCommentId || marker.comment_id !== expectedCommentId) errors.push('authorization marker/comment_id mismatch');
+  const expectedCommentUrl = `https://api.github.com/repos/${REPOSITORY}/issues/comments/${expectedCommentId}`;
+  if (!Number.isSafeInteger(Number(comment && comment.id)) || Number(comment.id) !== expectedCommentId || marker.comment_id !== expectedCommentId) errors.push('authorization marker/comment_id mismatch');
+  if (!comment || comment.url !== expectedCommentUrl) errors.push('authorization comment url/id binding mismatch');
   if (marker.schema_version !== AUTH_SCHEMA || marker.repository !== REPOSITORY || marker.parent_issue !== PARENT_ISSUE || marker.controller_issue !== CONTROLLER_ISSUE || marker.boundary_parent_issue !== BOUNDARY_PARENT_ISSUE || marker.action !== 'materialize-interview-notes') errors.push('authorization marker binding/schema mismatch');
   if (marker.allow_live_github !== true || options.allowLiveGithub !== true) errors.push('allow_live_github=true must be present in both marker and explicit CLI authorization');
   const digestFields = ['plan_digest', 'source_snapshot_digest', 'boundary_report_digest', 'boundary_manifest_digest', 'ownership_digest'];
@@ -417,7 +428,9 @@ function applyOne({ planResult, api, journalItem, journal, journalFile, lock, ma
   const ownerNumber = Number(created.number);
   const owner = api.readIssue(ownerNumber);
   const ownerValidation = validateInterviewNoteIssue({ body: owner.body, labels: labelsOf(owner), state: String(owner.state || 'open').toLowerCase() });
-  if (!ownerValidation.ok || sha256Text(owner.body || '') !== sha256Text(projection.body)) throw new Error('created InterviewNote failed exact body/label validation');
+  const expectedLabels = labelsOf({ labels: projection.labels });
+  const actualLabels = labelsOf(owner);
+  if (!ownerValidation.ok || sha256Text(owner.body || '') !== sha256Text(projection.body) || JSON.stringify(actualLabels) !== JSON.stringify(expectedLabels)) throw new Error('created InterviewNote failed exact body/label validation');
   const ownerMatches = api.readOwners(projection.interview_note_id);
   if (ownerMatches.length !== 1 || Number(ownerMatches[0].number) !== ownerNumber) throw new Error('created InterviewNote ownership CAS did not converge exactly once');
   const receipt = receiptObject(request, preflight, ownerNumber, now());
