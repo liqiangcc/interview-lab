@@ -120,6 +120,8 @@ test('authorization requires explicit #1662 marker/comment, live flag, exact dig
   assert.equal(validateAuthorization(auth, plan.canonical_digest, 1, { allowLiveGithub: true }).ok, false);
   assert.equal(validateAuthorization(auth, plan.canonical_digest, 1, { allowLiveGithub: true, fetchAuthorizationComment: () => authorizationComment(auth, { id: 991663 }) }).ok, false);
   assert.equal(validateAuthorization(auth, plan.canonical_digest, 1, { allowLiveGithub: true, fetchAuthorizationComment: () => authorizationComment(auth, { issue_url: 'https://api.github.com/repos/liqiangcc/interview-lab/issues/1611', issue_number: 1611 }) }).ok, false);
+  assert.equal(validateAuthorization(auth, plan.canonical_digest, 1, { allowLiveGithub: true, fetchAuthorizationComment: () => authorizationComment(auth, { issue_url: undefined, issue_number: 1662 }) }).ok, false);
+  assert.equal(validateAuthorization(auth, plan.canonical_digest, 1, { allowLiveGithub: true, fetchAuthorizationComment: () => [authorizationComment(auth), authorizationComment(auth)] }).ok, false);
 });
 
 test('materialization rows cannot bypass #1658 scope, source CAS, revision, or actual state gates', () => {

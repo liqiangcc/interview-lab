@@ -501,10 +501,7 @@ function validateFetchedAuthorizationComment(auth, fetchedValue, errors) {
   if (!fetched) { errors.push('authorization comment fetch must resolve to exactly one comment'); return; }
   if (fetched.id !== auth.comment_id) errors.push('authorization marker.comment_id does not exactly match fetched comment.id');
   const issueUrl = `https://api.github.com/repos/${REPOSITORY}/issues/${ISSUE_NUMBER}`;
-  const belongsByUrl = fetched.issue_url === issueUrl;
-  const belongsByNumber = fetched.issue_number !== undefined && Number(fetched.issue_number) === ISSUE_NUMBER;
-  if (!belongsByUrl && !belongsByNumber) errors.push('fetched authorization comment does not uniquely belong to controller Issue #1662');
-  if (fetched.issue_url !== undefined && fetched.issue_url !== issueUrl) errors.push('fetched authorization comment issue_url is not controller Issue #1662');
+  if (fetched.issue_url !== issueUrl) errors.push('fetched authorization comment issue_url is not controller Issue #1662');
   if (fetched.issue_number !== undefined && Number(fetched.issue_number) !== ISSUE_NUMBER) errors.push('fetched authorization comment issue_number is not controller Issue #1662');
   const parsed = authorizationMarkerFromComment(fetched.body);
   errors.push(...parsed.errors);
