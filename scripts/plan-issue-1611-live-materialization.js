@@ -25,6 +25,7 @@ const COMPLETION_COMMENT_ID = LIVE_COMPLETION_PROOF.comment_id;
 const COMPLETION_PLAN_DIGEST = LIVE_COMPLETION_PROOF.plan_digest;
 const COMPLETION_MANIFEST_DIGEST = LIVE_COMPLETION_PROOF.manifest_digest;
 const HEX64 = /^[0-9a-f]{64}$/;
+function sleepMs(ms) { Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms); }
 
 function labelsOf(issue) {
   return [...new Set((issue && issue.labels || [])
@@ -38,7 +39,12 @@ function ghJson(args) {
   if (args.some((arg) => ['--method', '--input', 'POST', 'PATCH', 'PUT', 'DELETE'].includes(String(arg).toUpperCase()))) {
     throw new Error('live materialization planner accepts GET-only GitHub calls');
   }
-  return JSON.parse(execFileSync('gh', args, { encoding: 'utf8', maxBuffer: 128 * 1024 * 1024, timeout: 30_000 }));
+  let lastError;
+  for (let attempt = 1; attempt <= 3; attempt += 1) {
+    try { return JSON.parse(execFileSync('gh', args, { encoding: 'utf8', maxBuffer: 128 * 1024 * 1024, timeout: 30_000 })); }
+    catch (error) { lastError = error; if (attempt < 3) sleepMs(attempt * 1000); }
+  }
+  throw lastError;
 }
 
 function pagedGet(endpoint, maxPages = MAX_PAGES) {
