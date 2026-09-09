@@ -142,9 +142,14 @@ function validateRequestBinding(request, evidenceItem, manifestDigestValue) {
   if (request.source_note_id !== evidenceItem.source_note_id) errors.push('request source_note_id mismatch');
   if (request.expected_body_sha256 !== evidenceItem.expected_body_sha256) errors.push('request expected body CAS mismatch');
   if (request.expected_source_revision_id !== evidenceItem.expected_source_revision_id) errors.push('request SourceRevision CAS mismatch');
-  if (request.schema_version === 'source-note-boundary-review-transition.v2') {
-    if (request.expected_source_repository_ref !== null) errors.push('v2 request source ref must be null');
-  } else if (request.expected_source_repository_ref !== SOURCE_REF) errors.push('request source ref mismatch');
+  // The transition schema version describes the boundary cardinality
+  // (v2 = multi-interview), not the SourceNote storage schema.  A v2 request
+  // can therefore legitimately target a source-note-issue.v1 record whose
+  // Git snapshot is pinned by SOURCE_REF.  The live SourceNote validator
+  // below remains the authority for v1/v2 SourceNote CAS semantics; at this
+  // stage bind the request to the evidence-plan value instead of guessing
+  // from the transition schema.
+  if (request.expected_source_repository_ref !== evidenceItem.expected_source_repository_ref) errors.push('request source ref mismatch');
   if (request.decision !== evidenceItem.decision) errors.push('request decision mismatch');
   if (evidenceItem.expected_manifest_sha256 != null && request.expected_manifest_sha256 !== evidenceItem.expected_manifest_sha256) errors.push('request expected SourceCapture manifest digest mismatch');
   if (request.decision === 'multi-interview' && (!Array.isArray(request.interview_cases) || request.interview_cases.length < 2)) errors.push('v2 multi-interview request needs at least two cases');
