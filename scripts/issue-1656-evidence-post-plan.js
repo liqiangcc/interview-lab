@@ -122,6 +122,44 @@ function blockedRow(row) {
   };
 }
 
+function parseEvidenceBody(body) {
+  const match = String(body || '').match(/^<!-- issue-1608-boundary-evidence\.v1\n([\s\S]*?)\n-->$/);
+  if (!match) throw new Error('evidence body marker is missing or malformed');
+  try { return JSON.parse(match[1]); }
+  catch (error) { throw new Error(`evidence body marker JSON is invalid: ${error.message}`); }
+}
+
+function validateEvidenceBodyBinding(row) {
+  const errors = [];
+  let marker;
+  try { marker = parseEvidenceBody(row.evidence_post.body); }
+  catch (error) { return [error.message]; }
+  const projection = row.cas;
+  if (marker.schema_version !== 'issue-1608-boundary-evidence.v1') errors.push('marker schema mismatch');
+  if (marker.issue_number !== row.issue_number) errors.push('marker issue binding mismatch');
+  if (marker.source_note_id !== row.cas.source_note_id) errors.push('marker SourceNote binding mismatch');
+  if (marker.source_revision_id !== row.cas.expected_source_revision_id) errors.push('marker SourceRevision binding mismatch');
+  if (marker.source_repository !== SOURCE_REPOSITORY || marker.source_repository_ref !== SOURCE_REF) errors.push('marker source repository/ref binding mismatch');
+  if (marker.decision !== row.decision) errors.push('marker decision binding mismatch');
+  const artifact = marker.artifact || {};
+  for (const [field, expected] of [['ref', projection.source_projection_ref], ['kind', row.transition_request.source_projection.kind], ['provenance', row.transition_request.source_projection.provenance], ['git_blob_sha', projection.source_projection_blob_sha], ['content_sha256', projection.source_projection_content_sha256], ['byte_size', row.transition_request.source_projection.byte_size]]) {
+    if (artifact[field] !== expected) errors.push(`marker projection ${field} binding mismatch`);
+  }
+  if (canonicalize(marker.transition_request) !== canonicalize(row.transition_request)) errors.push('marker transition_request binding mismatch');
+  const expectedExcerpts = row.source_evidence.map((evidence) => ({
+    excerpt: evidence.excerpt,
+    locator: evidence.locator,
+    line: evidence.line,
+    artifact_ref: projection.source_projection_ref,
+    artifact_kind: row.transition_request.source_projection.kind,
+  }));
+  if (canonicalize(marker.excerpts || []) !== canonicalize(expectedExcerpts)) errors.push('marker excerpt/locator binding mismatch');
+  const expectedCaseKeys = row.transition_request.interview_cases ? row.transition_request.interview_cases.map((item) => item.case_key) : [];
+  if (canonicalize(marker.case_keys || []) !== canonicalize(expectedCaseKeys)) errors.push('marker case_key binding mismatch');
+  if (canonicalize(marker.case_evidence || []) !== canonicalize(row.transition_request.interview_cases || [])) errors.push('marker case evidence binding mismatch');
+  return errors;
+}
+
 function buildPlan(input) {
   const validation = validateInput(input);
   if (!validation.ok) throw new Error(validation.errors.join('; '));
@@ -166,6 +204,7 @@ function validatePlan(plan, input = null) {
     if (!row.transition_request || !row.evidence_post?.body || row.mutation_count !== 0 || row.evidence_post.mutation_count !== 0) errors.push(`#${row.issue_number} evidence POST row is incomplete or claims mutation`);
     if (row.evidence_post.body_sha256 !== textDigest(row.evidence_post.body)) errors.push(`#${row.issue_number} evidence body digest drifted`);
     if (row.cas?.expected_body_sha256 !== row.transition_request.expected_body_sha256 || row.cas?.expected_source_revision_id !== row.transition_request.expected_source_revision_id) errors.push(`#${row.issue_number} CAS binding drifted`);
+    errors.push(...validateEvidenceBodyBinding(row).map((error) => `#${row.issue_number}: ${error}`));
   }
   for (const row of plan?.blocked_ledger || []) if (row.status !== 'blocked' || row.mutation_count !== 0) errors.push(`#${row.issue_number} blocked ledger row is not blocked and zero-mutation`);
   if (plan && plan.canonical_digest !== digest(without(plan, 'canonical_digest'))) errors.push('evidence POST plan canonical digest drifted');
@@ -197,4 +236,4 @@ function main(argv = process.argv.slice(2)) {
 
 if (require.main === module) { try { process.exitCode = main(); } catch (error) { process.stderr.write(`ERROR: ${error.message}\n`); process.exitCode = 1; } }
 
-module.exports = { SELECTED, REQUIRED_BLOCKED, validateInput, evidenceBody, buildPlan, validatePlan, parseArgs, main };
+module.exports = { SELECTED, REQUIRED_BLOCKED, validateInput, parseEvidenceBody, validateEvidenceBodyBinding, evidenceBody, buildPlan, validatePlan, parseArgs, main };
