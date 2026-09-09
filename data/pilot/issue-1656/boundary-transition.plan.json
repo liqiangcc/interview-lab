@@ -1,0 +1,1378 @@
+{
+  "schema_version": "issue-1656-boundary-transition-plan.v1",
+  "repository": "liqiangcc/interview-lab",
+  "issue": 1656,
+  "parent_issue": 1611,
+  "upstream_issue": 1605,
+  "mode": "get-only",
+  "captured_at": "2026-09-09T12:39:23.685Z",
+  "input_plan_digest": "2340965f32af00f7feea875f57bfb951199e7879e0df5eaf26c2eec0a0e9511d",
+  "scope": {
+    "source_total": 421,
+    "target_rows": 13,
+    "eligible_rows": 13,
+    "blocked_rows": 4
+  },
+  "proposal_rows": [
+    {
+      "issue_number": 1309,
+      "decision": "single-interview",
+      "status": "eligible",
+      "eligible": true,
+      "errors": [],
+      "live_issue_id": 5348869247,
+      "current_body_sha256": "5e44c6f0d92da79bbcf1420630424551f27635b93b17e5d7cdcdc56ee8810ea0",
+      "current_labels": [
+        "source:xhs",
+        "status:captured",
+        "migration:xhs-bulk",
+        "type:source-note",
+        "boundary:pending",
+        "task:boundary-review",
+        "source-year:2025"
+      ],
+      "labels_unchanged": true,
+      "evidence_comment_id": 5601731380,
+      "evidence_comment_body_sha256": "73541528917bb75ce7058038fa03fd15fdf7237adfcb5a357b0ae9385657bbd6",
+      "comments_read": [
+        5601731380
+      ],
+      "next_body": "<!-- source-note: id=xhs-note:68c40288000000001b03ecd6 schema=source-note-issue.v1 -->\n<!-- source-note-record\n{\n  \"schema_version\": \"source-note-issue.v1\",\n  \"source_note_id\": \"xhs-note:68c40288000000001b03ecd6\",\n  \"source\": {\n    \"system\": \"xhs\",\n    \"external_id\": \"68c40288000000001b03ecd6\",\n    \"url\": null\n  },\n  \"source_revision\": {\n    \"id\": \"xhs-note:68c40288000000001b03ecd6:snapshot-95b77bb26104\",\n    \"captured_at\": \"2026-09-04T13:35:33.922Z\",\n    \"source_repository\": \"liqiangcc/xhs\",\n    \"source_repository_ref\": \"95b77bb261048059846273688e4b90a2e108b437\",\n    \"reason\": \"full chronological XHS SourceNote intake migration\"\n  },\n  \"source_published_at\": {\n    \"precision\": \"exact\",\n    \"value\": \"2025-09-12T19:22:48.000+08:00\"\n  },\n  \"source_edited_at\": {\n    \"precision\": \"exact\",\n    \"value\": \"2025-09-16T22:06:30.000+08:00\"\n  },\n  \"artifacts\": [\n    {\n      \"kind\": \"html\",\n      \"ref\": \"liqiangcc/xhs:note_detail/68c40288000000001b03ecd6.html@95b77bb261048059846273688e4b90a2e108b437\",\n      \"git_blob_sha\": \"9b7dfa32c687632faa89ba094d49b89964c435d6\",\n      \"sha256\": null,\n      \"provenance\": \"raw_capture\",\n      \"byte_size\": 389612,\n      \"integrity\": \"present\"\n    },\n    {\n      \"kind\": \"image_reference\",\n      \"ref\": \"liqiangcc/xhs:note_images/68c40288000000001b03ecd6_urls.txt@95b77bb261048059846273688e4b90a2e108b437\",\n      \"git_blob_sha\": \"6635d2a7162e54975984aaac1aeda09f50664831\",\n      \"sha256\": null,\n      \"provenance\": \"raw_capture\",\n      \"byte_size\": 139,\n      \"integrity\": \"present\"\n    },\n    {\n      \"kind\": \"json\",\n      \"ref\": \"liqiangcc/xhs:note_json/68c40288000000001b03ecd6.json@95b77bb261048059846273688e4b90a2e108b437\",\n      \"git_blob_sha\": \"3b0bcb11edd787463a0b1cfd7f3d1435e084d27f\",\n      \"sha256\": null,\n      \"provenance\": \"source_projection\",\n      \"byte_size\": 21490,\n      \"integrity\": \"present\"\n    },\n    {\n      \"kind\": \"text_projection\",\n      \"ref\": \"liqiangcc/xhs:note_desc/68c40288000000001b03ecd6.txt@95b77bb261048059846273688e4b90a2e108b437\",\n      \"git_blob_sha\": \"f74af9f22f6b76cf9c199b564bd8a6f10eb8e66c\",\n      \"sha256\": null,\n      \"provenance\": \"source_projection\",\n      \"byte_size\": 1810,\n      \"integrity\": \"present\"\n    }\n  ],\n  \"anomalies\": [],\n  \"limitations\": [\n    \"SourceNote intake 只证明一条 XHS Source 的采集身份，不判断它是否等于一次真实面试事件。\",\n    \"题库、经验总结、模拟面试、非目标岗位以及一帖多场面试都允许进入 SourceNote；必须经过 boundary review 才能产生 0..N InterviewNote。\",\n    \"note_img_txt / note_structured / note_tagged 等历史数据属于 Derived，不得反向补写 Raw Source。\"\n  ],\n  \"boundary_review\": {\n    \"status\": \"single-interview\",\n    \"reviewed_at\": \"2026-09-09T12:20:41Z\",\n    \"interview_note_ids\": [\n      \"xhs:68c40288000000001b03ecd6\"\n    ]\n  }\n}\n-->\n\n## 来源身份\n\n- 来源系统：XHS\n- External source id：`68c40288000000001b03ecd6`\n- SourceNote id：`xhs-note:68c40288000000001b03ecd6`\n- SourceRevision：`xhs-note:68c40288000000001b03ecd6:snapshot-95b77bb26104`\n- 固定 Source snapshot：`liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437`\n- 来源发布时间：`2025-09-12T19:22:48.000+08:00`\n- 来源更新时间：`2025-09-16T22:06:30.000+08:00`\n\n## 原始标题\n\n2025/9/12快手 Java应用研发\n\n## 原始正文\n\n### 可读 Source projection — `note_desc`\n\n> 快手 9.12一面\n> 1.自我介绍\n> 2.介绍项目，拷打了一下\n> 3.nacos单点扛不住怎么办\n> 4.nacos集群数据一致性让我设计怎么设计\n> 5.rocketmq的工作流程\n> 6.消费者怎么消费消息，一亿条消息他怎么拉取，是每次从头开始拉取吗？\n> 7.偏移值broker怎么存的？怎么根据偏移值定位消息的物理位置？\n> 8. rocketmq的底层源码有去看过吗？\n> 9.redis和数据库的数据一致性怎么做的？说了写后删。\n> 10.有没有别的方法？我说后台线程binlog异步去做。\n> 一个请求过来写了数据并删除了缓存，但是另一条请求读到了旧数据，刷新到了缓存上怎么做？我说删一次后隔个100毫秒再删除一次，面试官问再删一次谁去做？说了用后台线程去做。\n> 11.redis的ha怎么做的，然后问了redis主节点选举，\n> 12.哨兵有主节点吗，哨兵怎么选举？哨兵选举的原理是什么？为什么要设置奇数个节点？\n> 13. Cpu多级缓存的数据一致性是怎么做的？\n> 14.操作系统为什么要设置内核态呢？用户态和内核态怎么切换？\n> 15.什么是多路复用？\n> 16. Select epoll的原理是什么？\n> 17. Tcp挥手的close wait是用来干嘛的？\n> 18. Close wait的状态是客户端和服务端都有吗？\n> 18.1 什么情况会出现大量closewait状态\n> 19. Java有哪些锁\n> 20. Reentrantlock和 sychronized的区别\n> 21.链表k个一组翻转。（10分钟就写好了，但是需要自己初始化链表调试。最后讲了下思路。\n> 22.面试官说有实习和没实习差距还是挺大的\n> 23.反问业务，说是非常偏底层的，我知道肯定挂了，涉及源码的是真一点不会。\n> 让我多学习，多思考，有空多看看源码。\n> 总共面了68分钟。感觉自己答的还可以，两小时后已挂。\n> \n\n## 原始附件\n\n- `html` — `present` — 389612 bytes — `liqiangcc/xhs:note_detail/68c40288000000001b03ecd6.html@95b77bb261048059846273688e4b90a2e108b437` — blob `9b7dfa32c687632faa89ba094d49b89964c435d6`\n- `image_reference` — `present` — 139 bytes — `liqiangcc/xhs:note_images/68c40288000000001b03ecd6_urls.txt@95b77bb261048059846273688e4b90a2e108b437` — blob `6635d2a7162e54975984aaac1aeda09f50664831`\n- `json` — `present` — 21490 bytes — `liqiangcc/xhs:note_json/68c40288000000001b03ecd6.json@95b77bb261048059846273688e4b90a2e108b437` — blob `3b0bcb11edd787463a0b1cfd7f3d1435e084d27f`\n- `text_projection` — `present` — 1810 bytes — `liqiangcc/xhs:note_desc/68c40288000000001b03ecd6.txt@95b77bb261048059846273688e4b90a2e108b437` — blob `f74af9f22f6b76cf9c199b564bd8a6f10eb8e66c`\n\n## Intake 异常\n\n- 无 intake-level anomaly。\n\n## 边界审核\n\n- 状态：`single-interview`\n- reviewed_at：`2026-09-09T12:20:41Z`\n- InterviewNote id：`xhs:68c40288000000001b03ecd6`\n\n## 来源限制\n\n- SourceNote intake 只证明一条 XHS Source 的采集身份，不判断它是否等于一次真实面试事件。\n- 题库、经验总结、模拟面试、非目标岗位以及一帖多场面试都允许进入 SourceNote；必须经过 boundary review 才能产生 0..N InterviewNote。\n- note_img_txt / note_structured / note_tagged 等历史数据属于 Derived，不得反向补写 Raw Source。\n\n## 派生链接\n\n- `liqiangcc/xhs:note_img_txt/68c40288000000001b03ecd6.txt@95b77bb261048059846273688e4b90a2e108b437`（如存在，Derived OCR）\n- `liqiangcc/xhs:note_structured/68c40288000000001b03ecd6.json@95b77bb261048059846273688e4b90a2e108b437`（如存在，Derived）\n- `liqiangcc/xhs:note_tagged/68c40288000000001b03ecd6.json@95b77bb261048059846273688e4b90a2e108b437`（如存在，Derived）\n",
+      "next_body_sha256": "61adfebb5d7a8230cb6d595a260c811df0b467a283fadbf368419b0a5979f5d4",
+      "next_labels": [
+        "source:xhs",
+        "status:captured",
+        "migration:xhs-bulk",
+        "type:source-note",
+        "source-year:2025",
+        "boundary:single-interview"
+      ],
+      "mutation_count": 0,
+      "planned_request": {
+        "schema_version": "source-note-boundary-review-transition.v1",
+        "transition_id": "issue-1656-boundary-1309-20260909000000",
+        "repository": "liqiangcc/interview-lab",
+        "issue_number": 1309,
+        "source_note_id": "xhs-note:68c40288000000001b03ecd6",
+        "expected_body_sha256": "5e44c6f0d92da79bbcf1420630424551f27635b93b17e5d7cdcdc56ee8810ea0",
+        "expected_boundary_status": "pending",
+        "expected_source_revision_id": "xhs-note:68c40288000000001b03ecd6:snapshot-95b77bb26104",
+        "expected_manifest_sha256": null,
+        "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+        "decision": "single-interview",
+        "reviewed_at": "2026-09-09T12:20:41Z",
+        "reviewer_kind": "ai-assisted",
+        "review_evidence": {
+          "repository": "liqiangcc/interview-lab",
+          "issue_number": 1309,
+          "comment_id": 5601731380
+        },
+        "checks": [
+          {
+            "check_id": "source_identity",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "source_revision_binding",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "source_content_coverage",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "event_boundary",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "no_cross_source_mixing",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "no_fabrication",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          }
+        ],
+        "limitations": [
+          "Planned evidence body only; no GitHub comment was created.",
+          "Boundary transition remains a separate later stage and is not authorized by this artifact."
+        ]
+      },
+      "planned_label_change": [
+        "source:xhs",
+        "status:captured",
+        "migration:xhs-bulk",
+        "type:source-note",
+        "source-year:2025",
+        "boundary:single-interview"
+      ]
+    },
+    {
+      "issue_number": 1325,
+      "decision": "single-interview",
+      "status": "eligible",
+      "eligible": true,
+      "errors": [],
+      "live_issue_id": 5348900354,
+      "current_body_sha256": "b90c69fba5cb09edd42d7175669cf587f0017b2e0714c7ea15cad561a3c4ef20",
+      "current_labels": [
+        "source:xhs",
+        "status:captured",
+        "migration:xhs-bulk",
+        "type:source-note",
+        "boundary:pending",
+        "task:boundary-review",
+        "source-year:2025"
+      ],
+      "labels_unchanged": true,
+      "evidence_comment_id": 5601733863,
+      "evidence_comment_body_sha256": "71feb061543b366b1e9238f59603ada69f9aeb0d98a9cf2a7d4fbeaca5316878",
+      "comments_read": [
+        5601733863
+      ],
+      "next_body": "<!-- source-note: id=xhs-note:68c8d776000000001d037905 schema=source-note-issue.v1 -->\n<!-- source-note-record\n{\n  \"schema_version\": \"source-note-issue.v1\",\n  \"source_note_id\": \"xhs-note:68c8d776000000001d037905\",\n  \"source\": {\n    \"system\": \"xhs\",\n    \"external_id\": \"68c8d776000000001d037905\",\n    \"url\": null\n  },\n  \"source_revision\": {\n    \"id\": \"xhs-note:68c8d776000000001d037905:snapshot-95b77bb26104\",\n    \"captured_at\": \"2026-09-04T13:35:33.922Z\",\n    \"source_repository\": \"liqiangcc/xhs\",\n    \"source_repository_ref\": \"95b77bb261048059846273688e4b90a2e108b437\",\n    \"reason\": \"full chronological XHS SourceNote intake migration\"\n  },\n  \"source_published_at\": {\n    \"precision\": \"exact\",\n    \"value\": \"2025-09-16T11:20:22.000+08:00\"\n  },\n  \"source_edited_at\": {\n    \"precision\": \"exact\",\n    \"value\": \"2025-09-16T11:20:23.000+08:00\"\n  },\n  \"artifacts\": [\n    {\n      \"kind\": \"html\",\n      \"ref\": \"liqiangcc/xhs:note_detail/68c8d776000000001d037905.html@95b77bb261048059846273688e4b90a2e108b437\",\n      \"git_blob_sha\": \"ddc9fd66a07103d640bdbda2225628c5dd6df1f9\",\n      \"sha256\": null,\n      \"provenance\": \"raw_capture\",\n      \"byte_size\": 388246,\n      \"integrity\": \"present\"\n    },\n    {\n      \"kind\": \"image_reference\",\n      \"ref\": \"liqiangcc/xhs:note_images/68c8d776000000001d037905_urls.txt@95b77bb261048059846273688e4b90a2e108b437\",\n      \"git_blob_sha\": \"9b632d0f17b124b33af2f9f4f3f38d75b123371b\",\n      \"sha256\": null,\n      \"provenance\": \"raw_capture\",\n      \"byte_size\": 139,\n      \"integrity\": \"present\"\n    },\n    {\n      \"kind\": \"json\",\n      \"ref\": \"liqiangcc/xhs:note_json/68c8d776000000001d037905.json@95b77bb261048059846273688e4b90a2e108b437\",\n      \"git_blob_sha\": \"51302755f0a126cf7b8d9d46374732e232a73d80\",\n      \"sha256\": null,\n      \"provenance\": \"source_projection\",\n      \"byte_size\": 21469,\n      \"integrity\": \"present\"\n    },\n    {\n      \"kind\": \"text_projection\",\n      \"ref\": \"liqiangcc/xhs:note_desc/68c8d776000000001d037905.txt@95b77bb261048059846273688e4b90a2e108b437\",\n      \"git_blob_sha\": \"12b1bc808aeb7df1a97eed3e1261ad44a87b4c3c\",\n      \"sha256\": null,\n      \"provenance\": \"source_projection\",\n      \"byte_size\": 964,\n      \"integrity\": \"present\"\n    }\n  ],\n  \"anomalies\": [],\n  \"limitations\": [\n    \"SourceNote intake 只证明一条 XHS Source 的采集身份，不判断它是否等于一次真实面试事件。\",\n    \"题库、经验总结、模拟面试、非目标岗位以及一帖多场面试都允许进入 SourceNote；必须经过 boundary review 才能产生 0..N InterviewNote。\",\n    \"note_img_txt / note_structured / note_tagged 等历史数据属于 Derived，不得反向补写 Raw Source。\"\n  ],\n  \"boundary_review\": {\n    \"status\": \"single-interview\",\n    \"reviewed_at\": \"2026-09-09T12:20:52Z\",\n    \"interview_note_ids\": [\n      \"xhs:68c8d776000000001d037905\"\n    ]\n  }\n}\n-->\n\n## 来源身份\n\n- 来源系统：XHS\n- External source id：`68c8d776000000001d037905`\n- SourceNote id：`xhs-note:68c8d776000000001d037905`\n- SourceRevision：`xhs-note:68c8d776000000001d037905:snapshot-95b77bb26104`\n- 固定 Source snapshot：`liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437`\n- 来源发布时间：`2025-09-16T11:20:22.000+08:00`\n- 来源更新时间：`2025-09-16T11:20:23.000+08:00`\n\n## 原始标题\n\n字节后端开发一面面经\n\n## 原始正文\n\n### 可读 Source projection — `note_desc`\n\n> 9.15  字节跳动后端开发一面面经\n> 1、拷打短链接项目，聊项目背景意义，具体怎么做的，聊了二十多分钟\n> 2、拷打实习期间做的事情\n> 3、实习公司的数据库是怎么部署的？\n> 4、MySQL一主多从怎么保证数据一致性的？\n> 5、主节点挂了怎么办？\n> 6、从节点之间是怎么保证数据一致性的？\n> 7、为什么项目中的消息队列用kafka？\n> 8、kafka怎么保证消息被可靠的消费？\n> 9、http请求可以拼接几个参数？上限是多少？\n> 10、http的状态码有哪些？504状态码代表什么？\n> 11、Java创建一个对象的过程？\n> 12、分配内存是怎么分配的？\n> 13、Java是怎么知道创建的对象在内存的哪个地方的？\n> 算法题：无重复字符的最长子串（力扣第三题，区别在于力扣中输出长度，字节要求输出最长的子串本身）\n> #互联网大厂[话题]# #后端开发[话题]# #面经[话题]##秋招面试[话题]#\n> \n\n## 原始附件\n\n- `html` — `present` — 388246 bytes — `liqiangcc/xhs:note_detail/68c8d776000000001d037905.html@95b77bb261048059846273688e4b90a2e108b437` — blob `ddc9fd66a07103d640bdbda2225628c5dd6df1f9`\n- `image_reference` — `present` — 139 bytes — `liqiangcc/xhs:note_images/68c8d776000000001d037905_urls.txt@95b77bb261048059846273688e4b90a2e108b437` — blob `9b632d0f17b124b33af2f9f4f3f38d75b123371b`\n- `json` — `present` — 21469 bytes — `liqiangcc/xhs:note_json/68c8d776000000001d037905.json@95b77bb261048059846273688e4b90a2e108b437` — blob `51302755f0a126cf7b8d9d46374732e232a73d80`\n- `text_projection` — `present` — 964 bytes — `liqiangcc/xhs:note_desc/68c8d776000000001d037905.txt@95b77bb261048059846273688e4b90a2e108b437` — blob `12b1bc808aeb7df1a97eed3e1261ad44a87b4c3c`\n\n## Intake 异常\n\n- 无 intake-level anomaly。\n\n## 边界审核\n\n- 状态：`single-interview`\n- reviewed_at：`2026-09-09T12:20:52Z`\n- InterviewNote id：`xhs:68c8d776000000001d037905`\n\n## 来源限制\n\n- SourceNote intake 只证明一条 XHS Source 的采集身份，不判断它是否等于一次真实面试事件。\n- 题库、经验总结、模拟面试、非目标岗位以及一帖多场面试都允许进入 SourceNote；必须经过 boundary review 才能产生 0..N InterviewNote。\n- note_img_txt / note_structured / note_tagged 等历史数据属于 Derived，不得反向补写 Raw Source。\n\n## 派生链接\n\n- `liqiangcc/xhs:note_img_txt/68c8d776000000001d037905.txt@95b77bb261048059846273688e4b90a2e108b437`（如存在，Derived OCR）\n- `liqiangcc/xhs:note_structured/68c8d776000000001d037905.json@95b77bb261048059846273688e4b90a2e108b437`（如存在，Derived）\n- `liqiangcc/xhs:note_tagged/68c8d776000000001d037905.json@95b77bb261048059846273688e4b90a2e108b437`（如存在，Derived）\n",
+      "next_body_sha256": "db2220c4d49be740566ec5ac17a7d4e81d3c8ee6856e672cb13df1a24e6548f6",
+      "next_labels": [
+        "source:xhs",
+        "status:captured",
+        "migration:xhs-bulk",
+        "type:source-note",
+        "source-year:2025",
+        "boundary:single-interview"
+      ],
+      "mutation_count": 0,
+      "planned_request": {
+        "schema_version": "source-note-boundary-review-transition.v1",
+        "transition_id": "issue-1656-boundary-1325-20260909000000",
+        "repository": "liqiangcc/interview-lab",
+        "issue_number": 1325,
+        "source_note_id": "xhs-note:68c8d776000000001d037905",
+        "expected_body_sha256": "b90c69fba5cb09edd42d7175669cf587f0017b2e0714c7ea15cad561a3c4ef20",
+        "expected_boundary_status": "pending",
+        "expected_source_revision_id": "xhs-note:68c8d776000000001d037905:snapshot-95b77bb26104",
+        "expected_manifest_sha256": null,
+        "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+        "decision": "single-interview",
+        "reviewed_at": "2026-09-09T12:20:52Z",
+        "reviewer_kind": "ai-assisted",
+        "review_evidence": {
+          "repository": "liqiangcc/interview-lab",
+          "issue_number": 1325,
+          "comment_id": 5601733863
+        },
+        "checks": [
+          {
+            "check_id": "source_identity",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "source_revision_binding",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "source_content_coverage",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "event_boundary",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "no_cross_source_mixing",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "no_fabrication",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          }
+        ],
+        "limitations": [
+          "Planned evidence body only; no GitHub comment was created.",
+          "Boundary transition remains a separate later stage and is not authorized by this artifact."
+        ]
+      },
+      "planned_label_change": [
+        "source:xhs",
+        "status:captured",
+        "migration:xhs-bulk",
+        "type:source-note",
+        "source-year:2025",
+        "boundary:single-interview"
+      ]
+    },
+    {
+      "issue_number": 1333,
+      "decision": "single-interview",
+      "status": "eligible",
+      "eligible": true,
+      "errors": [],
+      "live_issue_id": 5348915473,
+      "current_body_sha256": "f99732369cd1711eb239bb07ff68665bc088e4ccc803de20ea61d6a26a84bd90",
+      "current_labels": [
+        "source:xhs",
+        "status:captured",
+        "migration:xhs-bulk",
+        "type:source-note",
+        "boundary:pending",
+        "task:boundary-review",
+        "source-year:2025"
+      ],
+      "labels_unchanged": true,
+      "evidence_comment_id": 5601734915,
+      "evidence_comment_body_sha256": "cc41a8d12927561735a8d9054eb71d3064876031c36ba2dfe2684dbf350b9ba2",
+      "comments_read": [
+        5601734915
+      ],
+      "next_body": "<!-- source-note: id=xhs-note:68c93440000000001203319b schema=source-note-issue.v1 -->\n<!-- source-note-record\n{\n  \"schema_version\": \"source-note-issue.v1\",\n  \"source_note_id\": \"xhs-note:68c93440000000001203319b\",\n  \"source\": {\n    \"system\": \"xhs\",\n    \"external_id\": \"68c93440000000001203319b\",\n    \"url\": null\n  },\n  \"source_revision\": {\n    \"id\": \"xhs-note:68c93440000000001203319b:snapshot-95b77bb26104\",\n    \"captured_at\": \"2026-09-04T13:35:33.922Z\",\n    \"source_repository\": \"liqiangcc/xhs\",\n    \"source_repository_ref\": \"95b77bb261048059846273688e4b90a2e108b437\",\n    \"reason\": \"full chronological XHS SourceNote intake migration\"\n  },\n  \"source_published_at\": {\n    \"precision\": \"exact\",\n    \"value\": \"2025-09-16T17:56:16.000+08:00\"\n  },\n  \"source_edited_at\": {\n    \"precision\": \"exact\",\n    \"value\": \"2025-09-16T17:56:54.000+08:00\"\n  },\n  \"artifacts\": [\n    {\n      \"kind\": \"html\",\n      \"ref\": \"liqiangcc/xhs:note_detail/68c93440000000001203319b.html@95b77bb261048059846273688e4b90a2e108b437\",\n      \"git_blob_sha\": \"32f0dd1c1685d586b5c7083128fb12e3eef71f9d\",\n      \"sha256\": null,\n      \"provenance\": \"raw_capture\",\n      \"byte_size\": 387570,\n      \"integrity\": \"present\"\n    },\n    {\n      \"kind\": \"image_reference\",\n      \"ref\": \"liqiangcc/xhs:note_images/68c93440000000001203319b_urls.txt@95b77bb261048059846273688e4b90a2e108b437\",\n      \"git_blob_sha\": \"00c348719c9fbe6527d677b878b065a288ab5bba\",\n      \"sha256\": null,\n      \"provenance\": \"raw_capture\",\n      \"byte_size\": 139,\n      \"integrity\": \"present\"\n    },\n    {\n      \"kind\": \"json\",\n      \"ref\": \"liqiangcc/xhs:note_json/68c93440000000001203319b.json@95b77bb261048059846273688e4b90a2e108b437\",\n      \"git_blob_sha\": \"0cd7b989c328005d4ccaa5fbe53b0937a1a76556\",\n      \"sha256\": null,\n      \"provenance\": \"source_projection\",\n      \"byte_size\": 20344,\n      \"integrity\": \"present\"\n    },\n    {\n      \"kind\": \"text_projection\",\n      \"ref\": \"liqiangcc/xhs:note_desc/68c93440000000001203319b.txt@95b77bb261048059846273688e4b90a2e108b437\",\n      \"git_blob_sha\": \"4d3935db080e42e56d496c72193c8138842604ef\",\n      \"sha256\": null,\n      \"provenance\": \"source_projection\",\n      \"byte_size\": 709,\n      \"integrity\": \"present\"\n    }\n  ],\n  \"anomalies\": [],\n  \"limitations\": [\n    \"SourceNote intake 只证明一条 XHS Source 的采集身份，不判断它是否等于一次真实面试事件。\",\n    \"题库、经验总结、模拟面试、非目标岗位以及一帖多场面试都允许进入 SourceNote；必须经过 boundary review 才能产生 0..N InterviewNote。\",\n    \"note_img_txt / note_structured / note_tagged 等历史数据属于 Derived，不得反向补写 Raw Source。\"\n  ],\n  \"boundary_review\": {\n    \"status\": \"single-interview\",\n    \"reviewed_at\": \"2026-09-09T12:20:56Z\",\n    \"interview_note_ids\": [\n      \"xhs:68c93440000000001203319b\"\n    ]\n  }\n}\n-->\n\n## 来源身份\n\n- 来源系统：XHS\n- External source id：`68c93440000000001203319b`\n- SourceNote id：`xhs-note:68c93440000000001203319b`\n- SourceRevision：`xhs-note:68c93440000000001203319b:snapshot-95b77bb26104`\n- 固定 Source snapshot：`liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437`\n- 来源发布时间：`2025-09-16T17:56:16.000+08:00`\n- 来源更新时间：`2025-09-16T17:56:54.000+08:00`\n\n## 原始标题\n\n（来源标题为空）\n\n## 原始正文\n\n### 可读 Source projection — `note_desc`\n\n> 深蓝汽车-大数据开发岗\n> 1.自我介绍\n> 2.家在哪\n> 3.为什么会选择重庆\n> 4.对大数据在汽车行业应用的看法\n> 5.简述一下研究生阶段项目\n> 6.入职之后职业规划\n> 7.HDFS架构\n> 8.Hive SQL调优\n> 换了个面试官问\n> 1.问会不会JAVA\n> 2.最近看的一本书，感受\n> 3.如果入职，怎么指定岗位学习计划\n> 4.除了技术方面，在毕业前会安排自己其他的生活（论文等）\n> 5.问毕业论文进展情况\n> 反问\n> 1.自己今天表现\n> 2.自己简历如何\n> 全程20多分钟，最后通知我结果会在7-14个工作日出来\n> （在说职业规划的时候我说了一句五年之后考证争取晋升，面试官好像有点破防，估计凉凉[哭惹R]）\n> \n\n## 原始附件\n\n- `html` — `present` — 387570 bytes — `liqiangcc/xhs:note_detail/68c93440000000001203319b.html@95b77bb261048059846273688e4b90a2e108b437` — blob `32f0dd1c1685d586b5c7083128fb12e3eef71f9d`\n- `image_reference` — `present` — 139 bytes — `liqiangcc/xhs:note_images/68c93440000000001203319b_urls.txt@95b77bb261048059846273688e4b90a2e108b437` — blob `00c348719c9fbe6527d677b878b065a288ab5bba`\n- `json` — `present` — 20344 bytes — `liqiangcc/xhs:note_json/68c93440000000001203319b.json@95b77bb261048059846273688e4b90a2e108b437` — blob `0cd7b989c328005d4ccaa5fbe53b0937a1a76556`\n- `text_projection` — `present` — 709 bytes — `liqiangcc/xhs:note_desc/68c93440000000001203319b.txt@95b77bb261048059846273688e4b90a2e108b437` — blob `4d3935db080e42e56d496c72193c8138842604ef`\n\n## Intake 异常\n\n- 无 intake-level anomaly。\n\n## 边界审核\n\n- 状态：`single-interview`\n- reviewed_at：`2026-09-09T12:20:56Z`\n- InterviewNote id：`xhs:68c93440000000001203319b`\n\n## 来源限制\n\n- SourceNote intake 只证明一条 XHS Source 的采集身份，不判断它是否等于一次真实面试事件。\n- 题库、经验总结、模拟面试、非目标岗位以及一帖多场面试都允许进入 SourceNote；必须经过 boundary review 才能产生 0..N InterviewNote。\n- note_img_txt / note_structured / note_tagged 等历史数据属于 Derived，不得反向补写 Raw Source。\n\n## 派生链接\n\n- `liqiangcc/xhs:note_img_txt/68c93440000000001203319b.txt@95b77bb261048059846273688e4b90a2e108b437`（如存在，Derived OCR）\n- `liqiangcc/xhs:note_structured/68c93440000000001203319b.json@95b77bb261048059846273688e4b90a2e108b437`（如存在，Derived）\n- `liqiangcc/xhs:note_tagged/68c93440000000001203319b.json@95b77bb261048059846273688e4b90a2e108b437`（如存在，Derived）\n",
+      "next_body_sha256": "371bfe243d7aca51f1d79ddc018b314da87dcb4d80efdbce004817fb16ca380c",
+      "next_labels": [
+        "source:xhs",
+        "status:captured",
+        "migration:xhs-bulk",
+        "type:source-note",
+        "source-year:2025",
+        "boundary:single-interview"
+      ],
+      "mutation_count": 0,
+      "planned_request": {
+        "schema_version": "source-note-boundary-review-transition.v1",
+        "transition_id": "issue-1656-boundary-1333-20260909000000",
+        "repository": "liqiangcc/interview-lab",
+        "issue_number": 1333,
+        "source_note_id": "xhs-note:68c93440000000001203319b",
+        "expected_body_sha256": "f99732369cd1711eb239bb07ff68665bc088e4ccc803de20ea61d6a26a84bd90",
+        "expected_boundary_status": "pending",
+        "expected_source_revision_id": "xhs-note:68c93440000000001203319b:snapshot-95b77bb26104",
+        "expected_manifest_sha256": null,
+        "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+        "decision": "single-interview",
+        "reviewed_at": "2026-09-09T12:20:56Z",
+        "reviewer_kind": "ai-assisted",
+        "review_evidence": {
+          "repository": "liqiangcc/interview-lab",
+          "issue_number": 1333,
+          "comment_id": 5601734915
+        },
+        "checks": [
+          {
+            "check_id": "source_identity",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "source_revision_binding",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "source_content_coverage",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "event_boundary",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "no_cross_source_mixing",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "no_fabrication",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          }
+        ],
+        "limitations": [
+          "Planned evidence body only; no GitHub comment was created.",
+          "Boundary transition remains a separate later stage and is not authorized by this artifact."
+        ]
+      },
+      "planned_label_change": [
+        "source:xhs",
+        "status:captured",
+        "migration:xhs-bulk",
+        "type:source-note",
+        "source-year:2025",
+        "boundary:single-interview"
+      ]
+    },
+    {
+      "issue_number": 1363,
+      "decision": "single-interview",
+      "status": "eligible",
+      "eligible": true,
+      "errors": [],
+      "live_issue_id": 5348989749,
+      "current_body_sha256": "f99f291c7d00749812fb0dcbb1d4a97af551add3b390228364cc91768862a7f3",
+      "current_labels": [
+        "source:xhs",
+        "status:captured",
+        "migration:xhs-bulk",
+        "type:source-note",
+        "boundary:pending",
+        "task:boundary-review",
+        "source-year:2025"
+      ],
+      "labels_unchanged": true,
+      "evidence_comment_id": 5601736517,
+      "evidence_comment_body_sha256": "880e00f2ea6539599cc520b30b658a4232273016099e53f608befb908c4ccbdc",
+      "comments_read": [
+        5601736517
+      ],
+      "next_body": "<!-- source-note: id=xhs-note:68ced1a80000000011015ae0 schema=source-note-issue.v1 -->\n<!-- source-note-record\n{\n  \"schema_version\": \"source-note-issue.v1\",\n  \"source_note_id\": \"xhs-note:68ced1a80000000011015ae0\",\n  \"source\": {\n    \"system\": \"xhs\",\n    \"external_id\": \"68ced1a80000000011015ae0\",\n    \"url\": null\n  },\n  \"source_revision\": {\n    \"id\": \"xhs-note:68ced1a80000000011015ae0:snapshot-95b77bb26104\",\n    \"captured_at\": \"2026-09-04T13:56:02.215Z\",\n    \"source_repository\": \"liqiangcc/xhs\",\n    \"source_repository_ref\": \"95b77bb261048059846273688e4b90a2e108b437\",\n    \"reason\": \"full chronological XHS SourceNote intake migration\"\n  },\n  \"source_published_at\": {\n    \"precision\": \"exact\",\n    \"value\": \"2025-09-21T00:09:12.000+08:00\"\n  },\n  \"source_edited_at\": {\n    \"precision\": \"exact\",\n    \"value\": \"2025-09-21T00:10:19.000+08:00\"\n  },\n  \"artifacts\": [\n    {\n      \"kind\": \"html\",\n      \"ref\": \"liqiangcc/xhs:note_detail/68ced1a80000000011015ae0.html@95b77bb261048059846273688e4b90a2e108b437\",\n      \"git_blob_sha\": \"5dbea88efda1164fd1995ce7fb952384808bfc80\",\n      \"sha256\": null,\n      \"provenance\": \"raw_capture\",\n      \"byte_size\": 394069,\n      \"integrity\": \"present\"\n    },\n    {\n      \"kind\": \"json\",\n      \"ref\": \"liqiangcc/xhs:note_json/68ced1a80000000011015ae0.json@95b77bb261048059846273688e4b90a2e108b437\",\n      \"git_blob_sha\": \"1b51cccecac108687ac47dcca3d437d638c15897\",\n      \"sha256\": null,\n      \"provenance\": \"source_projection\",\n      \"byte_size\": 23665,\n      \"integrity\": \"present\"\n    }\n  ],\n  \"anomalies\": [],\n  \"limitations\": [\n    \"note_desc readable projection 缺失；SourceNote 只登记现有 Source artifact。\",\n    \"SourceNote intake 只证明一条 XHS Source 的采集身份，不判断它是否等于一次真实面试事件。\",\n    \"题库、经验总结、模拟面试、非目标岗位以及一帖多场面试都允许进入 SourceNote；必须经过 boundary review 才能产生 0..N InterviewNote。\",\n    \"note_img_txt / note_structured / note_tagged 等历史数据属于 Derived，不得反向补写 Raw Source。\"\n  ],\n  \"boundary_review\": {\n    \"status\": \"single-interview\",\n    \"reviewed_at\": \"2026-09-09T12:21:04Z\",\n    \"interview_note_ids\": [\n      \"xhs:68ced1a80000000011015ae0\"\n    ]\n  }\n}\n-->\n\n## 来源身份\n\n- 来源系统：XHS\n- External source id：`68ced1a80000000011015ae0`\n- SourceNote id：`xhs-note:68ced1a80000000011015ae0`\n- SourceRevision：`xhs-note:68ced1a80000000011015ae0:snapshot-95b77bb26104`\n- 固定 Source snapshot：`liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437`\n- 来源发布时间：`2025-09-21T00:09:12.000+08:00`\n- 来源更新时间：`2025-09-21T00:10:19.000+08:00`\n\n## 原始标题\n\n9.11 腾讯csig一面\n\n## 原始正文\n\n### 可读 Source projection — `note_desc`\n\n（当前缺失）\n\n## 原始附件\n\n- `html` — `present` — 394069 bytes — `liqiangcc/xhs:note_detail/68ced1a80000000011015ae0.html@95b77bb261048059846273688e4b90a2e108b437` — blob `5dbea88efda1164fd1995ce7fb952384808bfc80`\n- `json` — `present` — 23665 bytes — `liqiangcc/xhs:note_json/68ced1a80000000011015ae0.json@95b77bb261048059846273688e4b90a2e108b437` — blob `1b51cccecac108687ac47dcca3d437d638c15897`\n\n## Intake 异常\n\n- 无 intake-level anomaly。\n\n## 边界审核\n\n- 状态：`single-interview`\n- reviewed_at：`2026-09-09T12:21:04Z`\n- InterviewNote id：`xhs:68ced1a80000000011015ae0`\n\n## 来源限制\n\n- note_desc readable projection 缺失；SourceNote 只登记现有 Source artifact。\n- SourceNote intake 只证明一条 XHS Source 的采集身份，不判断它是否等于一次真实面试事件。\n- 题库、经验总结、模拟面试、非目标岗位以及一帖多场面试都允许进入 SourceNote；必须经过 boundary review 才能产生 0..N InterviewNote。\n- note_img_txt / note_structured / note_tagged 等历史数据属于 Derived，不得反向补写 Raw Source。\n\n## 派生链接\n\n- `liqiangcc/xhs:note_img_txt/68ced1a80000000011015ae0.txt@95b77bb261048059846273688e4b90a2e108b437`（如存在，Derived OCR）\n- `liqiangcc/xhs:note_structured/68ced1a80000000011015ae0.json@95b77bb261048059846273688e4b90a2e108b437`（如存在，Derived）\n- `liqiangcc/xhs:note_tagged/68ced1a80000000011015ae0.json@95b77bb261048059846273688e4b90a2e108b437`（如存在，Derived）\n",
+      "next_body_sha256": "72c27cb2c7a06391d7e08f5aa42716f2e5be20cf7e0c3b9135d048021b1f9805",
+      "next_labels": [
+        "source:xhs",
+        "status:captured",
+        "migration:xhs-bulk",
+        "type:source-note",
+        "source-year:2025",
+        "boundary:single-interview"
+      ],
+      "mutation_count": 0,
+      "planned_request": {
+        "schema_version": "source-note-boundary-review-transition.v1",
+        "transition_id": "issue-1656-boundary-1363-20260909000000",
+        "repository": "liqiangcc/interview-lab",
+        "issue_number": 1363,
+        "source_note_id": "xhs-note:68ced1a80000000011015ae0",
+        "expected_body_sha256": "f99f291c7d00749812fb0dcbb1d4a97af551add3b390228364cc91768862a7f3",
+        "expected_boundary_status": "pending",
+        "expected_source_revision_id": "xhs-note:68ced1a80000000011015ae0:snapshot-95b77bb26104",
+        "expected_manifest_sha256": null,
+        "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+        "decision": "single-interview",
+        "reviewed_at": "2026-09-09T12:21:04Z",
+        "reviewer_kind": "ai-assisted",
+        "review_evidence": {
+          "repository": "liqiangcc/interview-lab",
+          "issue_number": 1363,
+          "comment_id": 5601736517
+        },
+        "checks": [
+          {
+            "check_id": "source_identity",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "source_revision_binding",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "source_content_coverage",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "event_boundary",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "no_cross_source_mixing",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "no_fabrication",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          }
+        ],
+        "limitations": [
+          "Planned evidence body only; no GitHub comment was created.",
+          "Boundary transition remains a separate later stage and is not authorized by this artifact."
+        ]
+      },
+      "planned_label_change": [
+        "source:xhs",
+        "status:captured",
+        "migration:xhs-bulk",
+        "type:source-note",
+        "source-year:2025",
+        "boundary:single-interview"
+      ]
+    },
+    {
+      "issue_number": 1375,
+      "decision": "single-interview",
+      "status": "eligible",
+      "eligible": true,
+      "errors": [],
+      "live_issue_id": 5349010914,
+      "current_body_sha256": "ad59a483555d3197b63e1440fcb38c5120997396f5ce3b752a529d13335bbd40",
+      "current_labels": [
+        "source:xhs",
+        "status:captured",
+        "migration:xhs-bulk",
+        "type:source-note",
+        "boundary:pending",
+        "task:boundary-review",
+        "source-year:2025"
+      ],
+      "labels_unchanged": true,
+      "evidence_comment_id": 5601737634,
+      "evidence_comment_body_sha256": "f9c732431509ef22d37bfeb2b715e15d5468592ccc4766ffa4374236a92c8815",
+      "comments_read": [
+        5601737634
+      ],
+      "next_body": "<!-- source-note: id=xhs-note:68d16a2d000000001101fea1 schema=source-note-issue.v1 -->\n<!-- source-note-record\n{\n  \"schema_version\": \"source-note-issue.v1\",\n  \"source_note_id\": \"xhs-note:68d16a2d000000001101fea1\",\n  \"source\": {\n    \"system\": \"xhs\",\n    \"external_id\": \"68d16a2d000000001101fea1\",\n    \"url\": null\n  },\n  \"source_revision\": {\n    \"id\": \"xhs-note:68d16a2d000000001101fea1:snapshot-95b77bb26104\",\n    \"captured_at\": \"2026-09-04T13:56:02.215Z\",\n    \"source_repository\": \"liqiangcc/xhs\",\n    \"source_repository_ref\": \"95b77bb261048059846273688e4b90a2e108b437\",\n    \"reason\": \"full chronological XHS SourceNote intake migration\"\n  },\n  \"source_published_at\": {\n    \"precision\": \"exact\",\n    \"value\": \"2025-09-22T23:24:29.000+08:00\"\n  },\n  \"source_edited_at\": {\n    \"precision\": \"exact\",\n    \"value\": \"2025-09-22T23:24:30.000+08:00\"\n  },\n  \"artifacts\": [\n    {\n      \"kind\": \"html\",\n      \"ref\": \"liqiangcc/xhs:note_detail/68d16a2d000000001101fea1.html@95b77bb261048059846273688e4b90a2e108b437\",\n      \"git_blob_sha\": \"e9ec314d50128c398bd4b892959e9c07f432ad95\",\n      \"sha256\": null,\n      \"provenance\": \"raw_capture\",\n      \"byte_size\": 390758,\n      \"integrity\": \"present\"\n    },\n    {\n      \"kind\": \"json\",\n      \"ref\": \"liqiangcc/xhs:note_json/68d16a2d000000001101fea1.json@95b77bb261048059846273688e4b90a2e108b437\",\n      \"git_blob_sha\": \"de93648ef913b612aa887cac98a774642634ba2c\",\n      \"sha256\": null,\n      \"provenance\": \"source_projection\",\n      \"byte_size\": 22897,\n      \"integrity\": \"present\"\n    }\n  ],\n  \"anomalies\": [],\n  \"limitations\": [\n    \"note_desc readable projection 缺失；SourceNote 只登记现有 Source artifact。\",\n    \"SourceNote intake 只证明一条 XHS Source 的采集身份，不判断它是否等于一次真实面试事件。\",\n    \"题库、经验总结、模拟面试、非目标岗位以及一帖多场面试都允许进入 SourceNote；必须经过 boundary review 才能产生 0..N InterviewNote。\",\n    \"note_img_txt / note_structured / note_tagged 等历史数据属于 Derived，不得反向补写 Raw Source。\"\n  ],\n  \"boundary_review\": {\n    \"status\": \"single-interview\",\n    \"reviewed_at\": \"2026-09-09T12:21:09Z\",\n    \"interview_note_ids\": [\n      \"xhs:68d16a2d000000001101fea1\"\n    ]\n  }\n}\n-->\n\n## 来源身份\n\n- 来源系统：XHS\n- External source id：`68d16a2d000000001101fea1`\n- SourceNote id：`xhs-note:68d16a2d000000001101fea1`\n- SourceRevision：`xhs-note:68d16a2d000000001101fea1:snapshot-95b77bb26104`\n- 固定 Source snapshot：`liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437`\n- 来源发布时间：`2025-09-22T23:24:29.000+08:00`\n- 来源更新时间：`2025-09-22T23:24:30.000+08:00`\n\n## 原始标题\n\n9.22 蚂蚁一面\n\n## 原始正文\n\n### 可读 Source projection — `note_desc`\n\n（当前缺失）\n\n## 原始附件\n\n- `html` — `present` — 390758 bytes — `liqiangcc/xhs:note_detail/68d16a2d000000001101fea1.html@95b77bb261048059846273688e4b90a2e108b437` — blob `e9ec314d50128c398bd4b892959e9c07f432ad95`\n- `json` — `present` — 22897 bytes — `liqiangcc/xhs:note_json/68d16a2d000000001101fea1.json@95b77bb261048059846273688e4b90a2e108b437` — blob `de93648ef913b612aa887cac98a774642634ba2c`\n\n## Intake 异常\n\n- 无 intake-level anomaly。\n\n## 边界审核\n\n- 状态：`single-interview`\n- reviewed_at：`2026-09-09T12:21:09Z`\n- InterviewNote id：`xhs:68d16a2d000000001101fea1`\n\n## 来源限制\n\n- note_desc readable projection 缺失；SourceNote 只登记现有 Source artifact。\n- SourceNote intake 只证明一条 XHS Source 的采集身份，不判断它是否等于一次真实面试事件。\n- 题库、经验总结、模拟面试、非目标岗位以及一帖多场面试都允许进入 SourceNote；必须经过 boundary review 才能产生 0..N InterviewNote。\n- note_img_txt / note_structured / note_tagged 等历史数据属于 Derived，不得反向补写 Raw Source。\n\n## 派生链接\n\n- `liqiangcc/xhs:note_img_txt/68d16a2d000000001101fea1.txt@95b77bb261048059846273688e4b90a2e108b437`（如存在，Derived OCR）\n- `liqiangcc/xhs:note_structured/68d16a2d000000001101fea1.json@95b77bb261048059846273688e4b90a2e108b437`（如存在，Derived）\n- `liqiangcc/xhs:note_tagged/68d16a2d000000001101fea1.json@95b77bb261048059846273688e4b90a2e108b437`（如存在，Derived）\n",
+      "next_body_sha256": "e2baa60a29ca31d586523d110e861956ac781fd5856ba33ffb268d8f8a29be49",
+      "next_labels": [
+        "source:xhs",
+        "status:captured",
+        "migration:xhs-bulk",
+        "type:source-note",
+        "source-year:2025",
+        "boundary:single-interview"
+      ],
+      "mutation_count": 0,
+      "planned_request": {
+        "schema_version": "source-note-boundary-review-transition.v1",
+        "transition_id": "issue-1656-boundary-1375-20260909000000",
+        "repository": "liqiangcc/interview-lab",
+        "issue_number": 1375,
+        "source_note_id": "xhs-note:68d16a2d000000001101fea1",
+        "expected_body_sha256": "ad59a483555d3197b63e1440fcb38c5120997396f5ce3b752a529d13335bbd40",
+        "expected_boundary_status": "pending",
+        "expected_source_revision_id": "xhs-note:68d16a2d000000001101fea1:snapshot-95b77bb26104",
+        "expected_manifest_sha256": null,
+        "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+        "decision": "single-interview",
+        "reviewed_at": "2026-09-09T12:21:09Z",
+        "reviewer_kind": "ai-assisted",
+        "review_evidence": {
+          "repository": "liqiangcc/interview-lab",
+          "issue_number": 1375,
+          "comment_id": 5601737634
+        },
+        "checks": [
+          {
+            "check_id": "source_identity",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "source_revision_binding",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "source_content_coverage",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "event_boundary",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "no_cross_source_mixing",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "no_fabrication",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          }
+        ],
+        "limitations": [
+          "Planned evidence body only; no GitHub comment was created.",
+          "Boundary transition remains a separate later stage and is not authorized by this artifact."
+        ]
+      },
+      "planned_label_change": [
+        "source:xhs",
+        "status:captured",
+        "migration:xhs-bulk",
+        "type:source-note",
+        "source-year:2025",
+        "boundary:single-interview"
+      ]
+    },
+    {
+      "issue_number": 1376,
+      "decision": "single-interview",
+      "status": "eligible",
+      "eligible": true,
+      "errors": [],
+      "live_issue_id": 5349012672,
+      "current_body_sha256": "6b4dc2ca5f4b6d51015a2661ca8fd3610331d036eeaf1c9f95fa272d4c41c808",
+      "current_labels": [
+        "source:xhs",
+        "status:captured",
+        "migration:xhs-bulk",
+        "type:source-note",
+        "boundary:pending",
+        "task:boundary-review",
+        "source-year:2025"
+      ],
+      "labels_unchanged": true,
+      "evidence_comment_id": 5601746468,
+      "evidence_comment_body_sha256": "0dd76bdc459b5d8e6c0242b84e029bc394db3f09316c9aa5ea320076495f6f3f",
+      "comments_read": [
+        5601746468
+      ],
+      "next_body": "<!-- source-note: id=xhs-note:68d16a7d000000000e031041 schema=source-note-issue.v1 -->\n<!-- source-note-record\n{\n  \"schema_version\": \"source-note-issue.v1\",\n  \"source_note_id\": \"xhs-note:68d16a7d000000000e031041\",\n  \"source\": {\n    \"system\": \"xhs\",\n    \"external_id\": \"68d16a7d000000000e031041\",\n    \"url\": null\n  },\n  \"source_revision\": {\n    \"id\": \"xhs-note:68d16a7d000000000e031041:snapshot-95b77bb26104\",\n    \"captured_at\": \"2026-09-04T13:56:02.215Z\",\n    \"source_repository\": \"liqiangcc/xhs\",\n    \"source_repository_ref\": \"95b77bb261048059846273688e4b90a2e108b437\",\n    \"reason\": \"full chronological XHS SourceNote intake migration\"\n  },\n  \"source_published_at\": {\n    \"precision\": \"exact\",\n    \"value\": \"2025-09-22T23:25:50.000+08:00\"\n  },\n  \"source_edited_at\": {\n    \"precision\": \"exact\",\n    \"value\": \"2025-09-22T23:25:50.000+08:00\"\n  },\n  \"artifacts\": [\n    {\n      \"kind\": \"html\",\n      \"ref\": \"liqiangcc/xhs:note_detail/68d16a7d000000000e031041.html@95b77bb261048059846273688e4b90a2e108b437\",\n      \"git_blob_sha\": \"d0742703038e011e82640f03df8f1794385675c9\",\n      \"sha256\": null,\n      \"provenance\": \"raw_capture\",\n      \"byte_size\": 391994,\n      \"integrity\": \"present\"\n    },\n    {\n      \"kind\": \"json\",\n      \"ref\": \"liqiangcc/xhs:note_json/68d16a7d000000000e031041.json@95b77bb261048059846273688e4b90a2e108b437\",\n      \"git_blob_sha\": \"bebfff3a3c43a15908059932b46e2e914ad0a3c4\",\n      \"sha256\": null,\n      \"provenance\": \"source_projection\",\n      \"byte_size\": 23365,\n      \"integrity\": \"present\"\n    }\n  ],\n  \"anomalies\": [],\n  \"limitations\": [\n    \"note_desc readable projection 缺失；SourceNote 只登记现有 Source artifact。\",\n    \"SourceNote intake 只证明一条 XHS Source 的采集身份，不判断它是否等于一次真实面试事件。\",\n    \"题库、经验总结、模拟面试、非目标岗位以及一帖多场面试都允许进入 SourceNote；必须经过 boundary review 才能产生 0..N InterviewNote。\",\n    \"note_img_txt / note_structured / note_tagged 等历史数据属于 Derived，不得反向补写 Raw Source。\"\n  ],\n  \"boundary_review\": {\n    \"status\": \"single-interview\",\n    \"reviewed_at\": \"2026-09-09T12:21:52Z\",\n    \"interview_note_ids\": [\n      \"xhs:68d16a7d000000000e031041\"\n    ]\n  }\n}\n-->\n\n## 来源身份\n\n- 来源系统：XHS\n- External source id：`68d16a7d000000000e031041`\n- SourceNote id：`xhs-note:68d16a7d000000000e031041`\n- SourceRevision：`xhs-note:68d16a7d000000000e031041:snapshot-95b77bb26104`\n- 固定 Source snapshot：`liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437`\n- 来源发布时间：`2025-09-22T23:25:50.000+08:00`\n- 来源更新时间：`2025-09-22T23:25:50.000+08:00`\n\n## 原始标题\n\n9.22 阿里智能信息部一面\n\n## 原始正文\n\n### 可读 Source projection — `note_desc`\n\n（当前缺失）\n\n## 原始附件\n\n- `html` — `present` — 391994 bytes — `liqiangcc/xhs:note_detail/68d16a7d000000000e031041.html@95b77bb261048059846273688e4b90a2e108b437` — blob `d0742703038e011e82640f03df8f1794385675c9`\n- `json` — `present` — 23365 bytes — `liqiangcc/xhs:note_json/68d16a7d000000000e031041.json@95b77bb261048059846273688e4b90a2e108b437` — blob `bebfff3a3c43a15908059932b46e2e914ad0a3c4`\n\n## Intake 异常\n\n- 无 intake-level anomaly。\n\n## 边界审核\n\n- 状态：`single-interview`\n- reviewed_at：`2026-09-09T12:21:52Z`\n- InterviewNote id：`xhs:68d16a7d000000000e031041`\n\n## 来源限制\n\n- note_desc readable projection 缺失；SourceNote 只登记现有 Source artifact。\n- SourceNote intake 只证明一条 XHS Source 的采集身份，不判断它是否等于一次真实面试事件。\n- 题库、经验总结、模拟面试、非目标岗位以及一帖多场面试都允许进入 SourceNote；必须经过 boundary review 才能产生 0..N InterviewNote。\n- note_img_txt / note_structured / note_tagged 等历史数据属于 Derived，不得反向补写 Raw Source。\n\n## 派生链接\n\n- `liqiangcc/xhs:note_img_txt/68d16a7d000000000e031041.txt@95b77bb261048059846273688e4b90a2e108b437`（如存在，Derived OCR）\n- `liqiangcc/xhs:note_structured/68d16a7d000000000e031041.json@95b77bb261048059846273688e4b90a2e108b437`（如存在，Derived）\n- `liqiangcc/xhs:note_tagged/68d16a7d000000000e031041.json@95b77bb261048059846273688e4b90a2e108b437`（如存在，Derived）\n",
+      "next_body_sha256": "fddff5b286f0f63b108904daa055f94592dc28449fd76325f5dad47d83040182",
+      "next_labels": [
+        "source:xhs",
+        "status:captured",
+        "migration:xhs-bulk",
+        "type:source-note",
+        "source-year:2025",
+        "boundary:single-interview"
+      ],
+      "mutation_count": 0,
+      "planned_request": {
+        "schema_version": "source-note-boundary-review-transition.v1",
+        "transition_id": "issue-1656-boundary-1376-20260909000000",
+        "repository": "liqiangcc/interview-lab",
+        "issue_number": 1376,
+        "source_note_id": "xhs-note:68d16a7d000000000e031041",
+        "expected_body_sha256": "6b4dc2ca5f4b6d51015a2661ca8fd3610331d036eeaf1c9f95fa272d4c41c808",
+        "expected_boundary_status": "pending",
+        "expected_source_revision_id": "xhs-note:68d16a7d000000000e031041:snapshot-95b77bb26104",
+        "expected_manifest_sha256": null,
+        "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+        "decision": "single-interview",
+        "reviewed_at": "2026-09-09T12:21:52Z",
+        "reviewer_kind": "ai-assisted",
+        "review_evidence": {
+          "repository": "liqiangcc/interview-lab",
+          "issue_number": 1376,
+          "comment_id": 5601746468
+        },
+        "checks": [
+          {
+            "check_id": "source_identity",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "source_revision_binding",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "source_content_coverage",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "event_boundary",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "no_cross_source_mixing",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "no_fabrication",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          }
+        ],
+        "limitations": [
+          "Planned evidence body only; no GitHub comment was created.",
+          "Boundary transition remains a separate later stage and is not authorized by this artifact."
+        ]
+      },
+      "planned_label_change": [
+        "source:xhs",
+        "status:captured",
+        "migration:xhs-bulk",
+        "type:source-note",
+        "source-year:2025",
+        "boundary:single-interview"
+      ]
+    },
+    {
+      "issue_number": 1380,
+      "decision": "single-interview",
+      "status": "eligible",
+      "eligible": true,
+      "errors": [],
+      "live_issue_id": 5349020179,
+      "current_body_sha256": "1f4ea3811ea5df7a340212a14c8e2d0a72a136ada231eeb1474f82b7550fa293",
+      "current_labels": [
+        "source:xhs",
+        "status:captured",
+        "migration:xhs-bulk",
+        "type:source-note",
+        "boundary:pending",
+        "task:boundary-review",
+        "source-year:2025"
+      ],
+      "labels_unchanged": true,
+      "evidence_comment_id": 5601747308,
+      "evidence_comment_body_sha256": "87669e4672e7ee4e1b7cd24d411ace3a29ddc4a0a65c667420a380f59dbbeed1",
+      "comments_read": [
+        5601747308
+      ],
+      "next_body": "<!-- source-note: id=xhs-note:68d25947000000000b03ea1e schema=source-note-issue.v1 -->\n<!-- source-note-record\n{\n  \"schema_version\": \"source-note-issue.v1\",\n  \"source_note_id\": \"xhs-note:68d25947000000000b03ea1e\",\n  \"source\": {\n    \"system\": \"xhs\",\n    \"external_id\": \"68d25947000000000b03ea1e\",\n    \"url\": null\n  },\n  \"source_revision\": {\n    \"id\": \"xhs-note:68d25947000000000b03ea1e:snapshot-95b77bb26104\",\n    \"captured_at\": \"2026-09-04T13:56:02.215Z\",\n    \"source_repository\": \"liqiangcc/xhs\",\n    \"source_repository_ref\": \"95b77bb261048059846273688e4b90a2e108b437\",\n    \"reason\": \"full chronological XHS SourceNote intake migration\"\n  },\n  \"source_published_at\": {\n    \"precision\": \"exact\",\n    \"value\": \"2025-09-23T16:24:39.000+08:00\"\n  },\n  \"source_edited_at\": {\n    \"precision\": \"exact\",\n    \"value\": \"2025-09-23T16:24:40.000+08:00\"\n  },\n  \"artifacts\": [\n    {\n      \"kind\": \"html\",\n      \"ref\": \"liqiangcc/xhs:note_detail/68d25947000000000b03ea1e.html@95b77bb261048059846273688e4b90a2e108b437\",\n      \"git_blob_sha\": \"cda1a55c6d977b5a62144b7dd4d70090cb3c7f6a\",\n      \"sha256\": null,\n      \"provenance\": \"raw_capture\",\n      \"byte_size\": 390172,\n      \"integrity\": \"present\"\n    },\n    {\n      \"kind\": \"json\",\n      \"ref\": \"liqiangcc/xhs:note_json/68d25947000000000b03ea1e.json@95b77bb261048059846273688e4b90a2e108b437\",\n      \"git_blob_sha\": \"e9f39140fd97168c6acf2d35ff4cc6df8917742e\",\n      \"sha256\": null,\n      \"provenance\": \"source_projection\",\n      \"byte_size\": 22629,\n      \"integrity\": \"present\"\n    }\n  ],\n  \"anomalies\": [],\n  \"limitations\": [\n    \"note_desc readable projection 缺失；SourceNote 只登记现有 Source artifact。\",\n    \"SourceNote intake 只证明一条 XHS Source 的采集身份，不判断它是否等于一次真实面试事件。\",\n    \"题库、经验总结、模拟面试、非目标岗位以及一帖多场面试都允许进入 SourceNote；必须经过 boundary review 才能产生 0..N InterviewNote。\",\n    \"note_img_txt / note_structured / note_tagged 等历史数据属于 Derived，不得反向补写 Raw Source。\"\n  ],\n  \"boundary_review\": {\n    \"status\": \"single-interview\",\n    \"reviewed_at\": \"2026-09-09T12:21:56Z\",\n    \"interview_note_ids\": [\n      \"xhs:68d25947000000000b03ea1e\"\n    ]\n  }\n}\n-->\n\n## 来源身份\n\n- 来源系统：XHS\n- External source id：`68d25947000000000b03ea1e`\n- SourceNote id：`xhs-note:68d25947000000000b03ea1e`\n- SourceRevision：`xhs-note:68d25947000000000b03ea1e:snapshot-95b77bb26104`\n- 固定 Source snapshot：`liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437`\n- 来源发布时间：`2025-09-23T16:24:39.000+08:00`\n- 来源更新时间：`2025-09-23T16:24:40.000+08:00`\n\n## 原始标题\n\n9.23 百度c++一面\n\n## 原始正文\n\n### 可读 Source projection — `note_desc`\n\n（当前缺失）\n\n## 原始附件\n\n- `html` — `present` — 390172 bytes — `liqiangcc/xhs:note_detail/68d25947000000000b03ea1e.html@95b77bb261048059846273688e4b90a2e108b437` — blob `cda1a55c6d977b5a62144b7dd4d70090cb3c7f6a`\n- `json` — `present` — 22629 bytes — `liqiangcc/xhs:note_json/68d25947000000000b03ea1e.json@95b77bb261048059846273688e4b90a2e108b437` — blob `e9f39140fd97168c6acf2d35ff4cc6df8917742e`\n\n## Intake 异常\n\n- 无 intake-level anomaly。\n\n## 边界审核\n\n- 状态：`single-interview`\n- reviewed_at：`2026-09-09T12:21:56Z`\n- InterviewNote id：`xhs:68d25947000000000b03ea1e`\n\n## 来源限制\n\n- note_desc readable projection 缺失；SourceNote 只登记现有 Source artifact。\n- SourceNote intake 只证明一条 XHS Source 的采集身份，不判断它是否等于一次真实面试事件。\n- 题库、经验总结、模拟面试、非目标岗位以及一帖多场面试都允许进入 SourceNote；必须经过 boundary review 才能产生 0..N InterviewNote。\n- note_img_txt / note_structured / note_tagged 等历史数据属于 Derived，不得反向补写 Raw Source。\n\n## 派生链接\n\n- `liqiangcc/xhs:note_img_txt/68d25947000000000b03ea1e.txt@95b77bb261048059846273688e4b90a2e108b437`（如存在，Derived OCR）\n- `liqiangcc/xhs:note_structured/68d25947000000000b03ea1e.json@95b77bb261048059846273688e4b90a2e108b437`（如存在，Derived）\n- `liqiangcc/xhs:note_tagged/68d25947000000000b03ea1e.json@95b77bb261048059846273688e4b90a2e108b437`（如存在，Derived）\n",
+      "next_body_sha256": "b7980a9fd21a211c63d095b55421d0133532ee3f87b59ebc44dc5781bf467cd3",
+      "next_labels": [
+        "source:xhs",
+        "status:captured",
+        "migration:xhs-bulk",
+        "type:source-note",
+        "source-year:2025",
+        "boundary:single-interview"
+      ],
+      "mutation_count": 0,
+      "planned_request": {
+        "schema_version": "source-note-boundary-review-transition.v1",
+        "transition_id": "issue-1656-boundary-1380-20260909000000",
+        "repository": "liqiangcc/interview-lab",
+        "issue_number": 1380,
+        "source_note_id": "xhs-note:68d25947000000000b03ea1e",
+        "expected_body_sha256": "1f4ea3811ea5df7a340212a14c8e2d0a72a136ada231eeb1474f82b7550fa293",
+        "expected_boundary_status": "pending",
+        "expected_source_revision_id": "xhs-note:68d25947000000000b03ea1e:snapshot-95b77bb26104",
+        "expected_manifest_sha256": null,
+        "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+        "decision": "single-interview",
+        "reviewed_at": "2026-09-09T12:21:56Z",
+        "reviewer_kind": "ai-assisted",
+        "review_evidence": {
+          "repository": "liqiangcc/interview-lab",
+          "issue_number": 1380,
+          "comment_id": 5601747308
+        },
+        "checks": [
+          {
+            "check_id": "source_identity",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "source_revision_binding",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "source_content_coverage",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "event_boundary",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "no_cross_source_mixing",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "no_fabrication",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          }
+        ],
+        "limitations": [
+          "Planned evidence body only; no GitHub comment was created.",
+          "Boundary transition remains a separate later stage and is not authorized by this artifact."
+        ]
+      },
+      "planned_label_change": [
+        "source:xhs",
+        "status:captured",
+        "migration:xhs-bulk",
+        "type:source-note",
+        "source-year:2025",
+        "boundary:single-interview"
+      ]
+    },
+    {
+      "issue_number": 1401,
+      "decision": "single-interview",
+      "status": "eligible",
+      "eligible": true,
+      "errors": [],
+      "live_issue_id": 5349059902,
+      "current_body_sha256": "c2cac39e5a814ac1669eb073bbad4146bc0084aca2603be65de4a05db3a2f0c2",
+      "current_labels": [
+        "source:xhs",
+        "status:captured",
+        "migration:xhs-bulk",
+        "type:source-note",
+        "boundary:pending",
+        "task:boundary-review",
+        "source-year:2025"
+      ],
+      "labels_unchanged": true,
+      "evidence_comment_id": 5601748374,
+      "evidence_comment_body_sha256": "3425b536f42da793f50354ece078e9ac0aa36dba2140373ef79d3855c25bcf38",
+      "comments_read": [
+        5601748374
+      ],
+      "next_body": "<!-- source-note: id=xhs-note:68d682d00000000011014a18 schema=source-note-issue.v1 -->\n<!-- source-note-record\n{\n  \"schema_version\": \"source-note-issue.v1\",\n  \"source_note_id\": \"xhs-note:68d682d00000000011014a18\",\n  \"source\": {\n    \"system\": \"xhs\",\n    \"external_id\": \"68d682d00000000011014a18\",\n    \"url\": null\n  },\n  \"source_revision\": {\n    \"id\": \"xhs-note:68d682d00000000011014a18:snapshot-95b77bb26104\",\n    \"captured_at\": \"2026-09-04T13:56:02.215Z\",\n    \"source_repository\": \"liqiangcc/xhs\",\n    \"source_repository_ref\": \"95b77bb261048059846273688e4b90a2e108b437\",\n    \"reason\": \"full chronological XHS SourceNote intake migration\"\n  },\n  \"source_published_at\": {\n    \"precision\": \"exact\",\n    \"value\": \"2025-09-26T20:10:56.000+08:00\"\n  },\n  \"source_edited_at\": {\n    \"precision\": \"exact\",\n    \"value\": \"2025-09-26T20:10:57.000+08:00\"\n  },\n  \"artifacts\": [\n    {\n      \"kind\": \"html\",\n      \"ref\": \"liqiangcc/xhs:note_detail/68d682d00000000011014a18.html@95b77bb261048059846273688e4b90a2e108b437\",\n      \"git_blob_sha\": \"20872ab946167c7902977167e4f9faa30a3d46a3\",\n      \"sha256\": null,\n      \"provenance\": \"raw_capture\",\n      \"byte_size\": 391535,\n      \"integrity\": \"present\"\n    },\n    {\n      \"kind\": \"json\",\n      \"ref\": \"liqiangcc/xhs:note_json/68d682d00000000011014a18.json@95b77bb261048059846273688e4b90a2e108b437\",\n      \"git_blob_sha\": \"45d960d888ac16fc506537ad0117a03f408fa78f\",\n      \"sha256\": null,\n      \"provenance\": \"source_projection\",\n      \"byte_size\": 23198,\n      \"integrity\": \"present\"\n    }\n  ],\n  \"anomalies\": [],\n  \"limitations\": [\n    \"note_desc readable projection 缺失；SourceNote 只登记现有 Source artifact。\",\n    \"SourceNote intake 只证明一条 XHS Source 的采集身份，不判断它是否等于一次真实面试事件。\",\n    \"题库、经验总结、模拟面试、非目标岗位以及一帖多场面试都允许进入 SourceNote；必须经过 boundary review 才能产生 0..N InterviewNote。\",\n    \"note_img_txt / note_structured / note_tagged 等历史数据属于 Derived，不得反向补写 Raw Source。\"\n  ],\n  \"boundary_review\": {\n    \"status\": \"single-interview\",\n    \"reviewed_at\": \"2026-09-09T12:22:02Z\",\n    \"interview_note_ids\": [\n      \"xhs:68d682d00000000011014a18\"\n    ]\n  }\n}\n-->\n\n## 来源身份\n\n- 来源系统：XHS\n- External source id：`68d682d00000000011014a18`\n- SourceNote id：`xhs-note:68d682d00000000011014a18`\n- SourceRevision：`xhs-note:68d682d00000000011014a18:snapshot-95b77bb26104`\n- 固定 Source snapshot：`liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437`\n- 来源发布时间：`2025-09-26T20:10:56.000+08:00`\n- 来源更新时间：`2025-09-26T20:10:57.000+08:00`\n\n## 原始标题\n\n9.26 滴滴一面\n\n## 原始正文\n\n### 可读 Source projection — `note_desc`\n\n（当前缺失）\n\n## 原始附件\n\n- `html` — `present` — 391535 bytes — `liqiangcc/xhs:note_detail/68d682d00000000011014a18.html@95b77bb261048059846273688e4b90a2e108b437` — blob `20872ab946167c7902977167e4f9faa30a3d46a3`\n- `json` — `present` — 23198 bytes — `liqiangcc/xhs:note_json/68d682d00000000011014a18.json@95b77bb261048059846273688e4b90a2e108b437` — blob `45d960d888ac16fc506537ad0117a03f408fa78f`\n\n## Intake 异常\n\n- 无 intake-level anomaly。\n\n## 边界审核\n\n- 状态：`single-interview`\n- reviewed_at：`2026-09-09T12:22:02Z`\n- InterviewNote id：`xhs:68d682d00000000011014a18`\n\n## 来源限制\n\n- note_desc readable projection 缺失；SourceNote 只登记现有 Source artifact。\n- SourceNote intake 只证明一条 XHS Source 的采集身份，不判断它是否等于一次真实面试事件。\n- 题库、经验总结、模拟面试、非目标岗位以及一帖多场面试都允许进入 SourceNote；必须经过 boundary review 才能产生 0..N InterviewNote。\n- note_img_txt / note_structured / note_tagged 等历史数据属于 Derived，不得反向补写 Raw Source。\n\n## 派生链接\n\n- `liqiangcc/xhs:note_img_txt/68d682d00000000011014a18.txt@95b77bb261048059846273688e4b90a2e108b437`（如存在，Derived OCR）\n- `liqiangcc/xhs:note_structured/68d682d00000000011014a18.json@95b77bb261048059846273688e4b90a2e108b437`（如存在，Derived）\n- `liqiangcc/xhs:note_tagged/68d682d00000000011014a18.json@95b77bb261048059846273688e4b90a2e108b437`（如存在，Derived）\n",
+      "next_body_sha256": "b38ecf6581c62db0af8b67e6a1496f247174c9612257b992db6416e5aca8be40",
+      "next_labels": [
+        "source:xhs",
+        "status:captured",
+        "migration:xhs-bulk",
+        "type:source-note",
+        "source-year:2025",
+        "boundary:single-interview"
+      ],
+      "mutation_count": 0,
+      "planned_request": {
+        "schema_version": "source-note-boundary-review-transition.v1",
+        "transition_id": "issue-1656-boundary-1401-20260909000000",
+        "repository": "liqiangcc/interview-lab",
+        "issue_number": 1401,
+        "source_note_id": "xhs-note:68d682d00000000011014a18",
+        "expected_body_sha256": "c2cac39e5a814ac1669eb073bbad4146bc0084aca2603be65de4a05db3a2f0c2",
+        "expected_boundary_status": "pending",
+        "expected_source_revision_id": "xhs-note:68d682d00000000011014a18:snapshot-95b77bb26104",
+        "expected_manifest_sha256": null,
+        "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+        "decision": "single-interview",
+        "reviewed_at": "2026-09-09T12:22:02Z",
+        "reviewer_kind": "ai-assisted",
+        "review_evidence": {
+          "repository": "liqiangcc/interview-lab",
+          "issue_number": 1401,
+          "comment_id": 5601748374
+        },
+        "checks": [
+          {
+            "check_id": "source_identity",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "source_revision_binding",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "source_content_coverage",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "event_boundary",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "no_cross_source_mixing",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "no_fabrication",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          }
+        ],
+        "limitations": [
+          "Planned evidence body only; no GitHub comment was created.",
+          "Boundary transition remains a separate later stage and is not authorized by this artifact."
+        ]
+      },
+      "planned_label_change": [
+        "source:xhs",
+        "status:captured",
+        "migration:xhs-bulk",
+        "type:source-note",
+        "source-year:2025",
+        "boundary:single-interview"
+      ]
+    },
+    {
+      "issue_number": 1406,
+      "decision": "single-interview",
+      "status": "eligible",
+      "eligible": true,
+      "errors": [],
+      "live_issue_id": 5349069301,
+      "current_body_sha256": "3900c41dc4096dba8826c3ce71076665073937072f96eb6292e2e46e1153db81",
+      "current_labels": [
+        "source:xhs",
+        "status:captured",
+        "migration:xhs-bulk",
+        "type:source-note",
+        "boundary:pending",
+        "task:boundary-review",
+        "source-year:2025"
+      ],
+      "labels_unchanged": true,
+      "evidence_comment_id": 5601749401,
+      "evidence_comment_body_sha256": "937fd529dbc281f09b544cf3d1464a6047e5750001e5d151ffd65df328faa045",
+      "comments_read": [
+        5601749401
+      ],
+      "next_body": "<!-- source-note: id=xhs-note:68d9021d000000000e032bea schema=source-note-issue.v1 -->\n<!-- source-note-record\n{\n  \"schema_version\": \"source-note-issue.v1\",\n  \"source_note_id\": \"xhs-note:68d9021d000000000e032bea\",\n  \"source\": {\n    \"system\": \"xhs\",\n    \"external_id\": \"68d9021d000000000e032bea\",\n    \"url\": null\n  },\n  \"source_revision\": {\n    \"id\": \"xhs-note:68d9021d000000000e032bea:snapshot-95b77bb26104\",\n    \"captured_at\": \"2026-09-04T13:56:02.215Z\",\n    \"source_repository\": \"liqiangcc/xhs\",\n    \"source_repository_ref\": \"95b77bb261048059846273688e4b90a2e108b437\",\n    \"reason\": \"full chronological XHS SourceNote intake migration\"\n  },\n  \"source_published_at\": {\n    \"precision\": \"exact\",\n    \"value\": \"2025-09-28T17:38:37.000+08:00\"\n  },\n  \"source_edited_at\": {\n    \"precision\": \"exact\",\n    \"value\": \"2025-09-28T17:38:37.000+08:00\"\n  },\n  \"artifacts\": [\n    {\n      \"kind\": \"html\",\n      \"ref\": \"liqiangcc/xhs:note_detail/68d9021d000000000e032bea.html@95b77bb261048059846273688e4b90a2e108b437\",\n      \"git_blob_sha\": \"a38c4553f6774fb8dab8b6b4089897b53cdce643\",\n      \"sha256\": null,\n      \"provenance\": \"raw_capture\",\n      \"byte_size\": 392144,\n      \"integrity\": \"present\"\n    },\n    {\n      \"kind\": \"json\",\n      \"ref\": \"liqiangcc/xhs:note_json/68d9021d000000000e032bea.json@95b77bb261048059846273688e4b90a2e108b437\",\n      \"git_blob_sha\": \"4884f86a9c7094095a3ecd8867d2be3259a22e28\",\n      \"sha256\": null,\n      \"provenance\": \"source_projection\",\n      \"byte_size\": 23426,\n      \"integrity\": \"present\"\n    }\n  ],\n  \"anomalies\": [],\n  \"limitations\": [\n    \"note_desc readable projection 缺失；SourceNote 只登记现有 Source artifact。\",\n    \"SourceNote intake 只证明一条 XHS Source 的采集身份，不判断它是否等于一次真实面试事件。\",\n    \"题库、经验总结、模拟面试、非目标岗位以及一帖多场面试都允许进入 SourceNote；必须经过 boundary review 才能产生 0..N InterviewNote。\",\n    \"note_img_txt / note_structured / note_tagged 等历史数据属于 Derived，不得反向补写 Raw Source。\"\n  ],\n  \"boundary_review\": {\n    \"status\": \"single-interview\",\n    \"reviewed_at\": \"2026-09-09T12:22:06Z\",\n    \"interview_note_ids\": [\n      \"xhs:68d9021d000000000e032bea\"\n    ]\n  }\n}\n-->\n\n## 来源身份\n\n- 来源系统：XHS\n- External source id：`68d9021d000000000e032bea`\n- SourceNote id：`xhs-note:68d9021d000000000e032bea`\n- SourceRevision：`xhs-note:68d9021d000000000e032bea:snapshot-95b77bb26104`\n- 固定 Source snapshot：`liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437`\n- 来源发布时间：`2025-09-28T17:38:37.000+08:00`\n- 来源更新时间：`2025-09-28T17:38:37.000+08:00`\n\n## 原始标题\n\n9.28 百度二面\n\n## 原始正文\n\n### 可读 Source projection — `note_desc`\n\n（当前缺失）\n\n## 原始附件\n\n- `html` — `present` — 392144 bytes — `liqiangcc/xhs:note_detail/68d9021d000000000e032bea.html@95b77bb261048059846273688e4b90a2e108b437` — blob `a38c4553f6774fb8dab8b6b4089897b53cdce643`\n- `json` — `present` — 23426 bytes — `liqiangcc/xhs:note_json/68d9021d000000000e032bea.json@95b77bb261048059846273688e4b90a2e108b437` — blob `4884f86a9c7094095a3ecd8867d2be3259a22e28`\n\n## Intake 异常\n\n- 无 intake-level anomaly。\n\n## 边界审核\n\n- 状态：`single-interview`\n- reviewed_at：`2026-09-09T12:22:06Z`\n- InterviewNote id：`xhs:68d9021d000000000e032bea`\n\n## 来源限制\n\n- note_desc readable projection 缺失；SourceNote 只登记现有 Source artifact。\n- SourceNote intake 只证明一条 XHS Source 的采集身份，不判断它是否等于一次真实面试事件。\n- 题库、经验总结、模拟面试、非目标岗位以及一帖多场面试都允许进入 SourceNote；必须经过 boundary review 才能产生 0..N InterviewNote。\n- note_img_txt / note_structured / note_tagged 等历史数据属于 Derived，不得反向补写 Raw Source。\n\n## 派生链接\n\n- `liqiangcc/xhs:note_img_txt/68d9021d000000000e032bea.txt@95b77bb261048059846273688e4b90a2e108b437`（如存在，Derived OCR）\n- `liqiangcc/xhs:note_structured/68d9021d000000000e032bea.json@95b77bb261048059846273688e4b90a2e108b437`（如存在，Derived）\n- `liqiangcc/xhs:note_tagged/68d9021d000000000e032bea.json@95b77bb261048059846273688e4b90a2e108b437`（如存在，Derived）\n",
+      "next_body_sha256": "0f0f4ff01da6b1ecb588f0ba0ada8d1e00938c737a68fd56760f2bd16b0f3cae",
+      "next_labels": [
+        "source:xhs",
+        "status:captured",
+        "migration:xhs-bulk",
+        "type:source-note",
+        "source-year:2025",
+        "boundary:single-interview"
+      ],
+      "mutation_count": 0,
+      "planned_request": {
+        "schema_version": "source-note-boundary-review-transition.v1",
+        "transition_id": "issue-1656-boundary-1406-20260909000000",
+        "repository": "liqiangcc/interview-lab",
+        "issue_number": 1406,
+        "source_note_id": "xhs-note:68d9021d000000000e032bea",
+        "expected_body_sha256": "3900c41dc4096dba8826c3ce71076665073937072f96eb6292e2e46e1153db81",
+        "expected_boundary_status": "pending",
+        "expected_source_revision_id": "xhs-note:68d9021d000000000e032bea:snapshot-95b77bb26104",
+        "expected_manifest_sha256": null,
+        "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+        "decision": "single-interview",
+        "reviewed_at": "2026-09-09T12:22:06Z",
+        "reviewer_kind": "ai-assisted",
+        "review_evidence": {
+          "repository": "liqiangcc/interview-lab",
+          "issue_number": 1406,
+          "comment_id": 5601749401
+        },
+        "checks": [
+          {
+            "check_id": "source_identity",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "source_revision_binding",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "source_content_coverage",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "event_boundary",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "no_cross_source_mixing",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "no_fabrication",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          }
+        ],
+        "limitations": [
+          "Planned evidence body only; no GitHub comment was created.",
+          "Boundary transition remains a separate later stage and is not authorized by this artifact."
+        ]
+      },
+      "planned_label_change": [
+        "source:xhs",
+        "status:captured",
+        "migration:xhs-bulk",
+        "type:source-note",
+        "source-year:2025",
+        "boundary:single-interview"
+      ]
+    },
+    {
+      "issue_number": 1418,
+      "decision": "single-interview",
+      "status": "eligible",
+      "eligible": true,
+      "errors": [],
+      "live_issue_id": 5349091778,
+      "current_body_sha256": "e1231a6389f9e766a41dcfdb9f18c41028a612fc618e5ba37702d4320eb7d901",
+      "current_labels": [
+        "source:xhs",
+        "status:captured",
+        "migration:xhs-bulk",
+        "type:source-note",
+        "boundary:pending",
+        "task:boundary-review",
+        "source-year:2025"
+      ],
+      "labels_unchanged": true,
+      "evidence_comment_id": 5601750274,
+      "evidence_comment_body_sha256": "59c395b25b86ae3d2abff9b6e694bef620b4e46ca9df8c6d2e66d64fd50686e3",
+      "comments_read": [
+        5601750274
+      ],
+      "next_body": "<!-- source-note: id=xhs-note:68da4876000000001101eebb schema=source-note-issue.v1 -->\n<!-- source-note-record\n{\n  \"schema_version\": \"source-note-issue.v1\",\n  \"source_note_id\": \"xhs-note:68da4876000000001101eebb\",\n  \"source\": {\n    \"system\": \"xhs\",\n    \"external_id\": \"68da4876000000001101eebb\",\n    \"url\": null\n  },\n  \"source_revision\": {\n    \"id\": \"xhs-note:68da4876000000001101eebb:snapshot-95b77bb26104\",\n    \"captured_at\": \"2026-09-04T13:56:02.215Z\",\n    \"source_repository\": \"liqiangcc/xhs\",\n    \"source_repository_ref\": \"95b77bb261048059846273688e4b90a2e108b437\",\n    \"reason\": \"full chronological XHS SourceNote intake migration\"\n  },\n  \"source_published_at\": {\n    \"precision\": \"exact\",\n    \"value\": \"2025-09-29T16:51:02.000+08:00\"\n  },\n  \"source_edited_at\": {\n    \"precision\": \"exact\",\n    \"value\": \"2025-09-29T16:51:02.000+08:00\"\n  },\n  \"artifacts\": [\n    {\n      \"kind\": \"html\",\n      \"ref\": \"liqiangcc/xhs:note_detail/68da4876000000001101eebb.html@95b77bb261048059846273688e4b90a2e108b437\",\n      \"git_blob_sha\": \"cea5ee7cb721b4b137ec2e7513baf3b0ab557d12\",\n      \"sha256\": null,\n      \"provenance\": \"raw_capture\",\n      \"byte_size\": 389867,\n      \"integrity\": \"present\"\n    },\n    {\n      \"kind\": \"json\",\n      \"ref\": \"liqiangcc/xhs:note_json/68da4876000000001101eebb.json@95b77bb261048059846273688e4b90a2e108b437\",\n      \"git_blob_sha\": \"76fe60341e8a3dc4da0bb7e5c55f42ddadf78d88\",\n      \"sha256\": null,\n      \"provenance\": \"source_projection\",\n      \"byte_size\": 22529,\n      \"integrity\": \"present\"\n    }\n  ],\n  \"anomalies\": [],\n  \"limitations\": [\n    \"note_desc readable projection 缺失；SourceNote 只登记现有 Source artifact。\",\n    \"SourceNote intake 只证明一条 XHS Source 的采集身份，不判断它是否等于一次真实面试事件。\",\n    \"题库、经验总结、模拟面试、非目标岗位以及一帖多场面试都允许进入 SourceNote；必须经过 boundary review 才能产生 0..N InterviewNote。\",\n    \"note_img_txt / note_structured / note_tagged 等历史数据属于 Derived，不得反向补写 Raw Source。\"\n  ],\n  \"boundary_review\": {\n    \"status\": \"single-interview\",\n    \"reviewed_at\": \"2026-09-09T12:22:11Z\",\n    \"interview_note_ids\": [\n      \"xhs:68da4876000000001101eebb\"\n    ]\n  }\n}\n-->\n\n## 来源身份\n\n- 来源系统：XHS\n- External source id：`68da4876000000001101eebb`\n- SourceNote id：`xhs-note:68da4876000000001101eebb`\n- SourceRevision：`xhs-note:68da4876000000001101eebb:snapshot-95b77bb26104`\n- 固定 Source snapshot：`liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437`\n- 来源发布时间：`2025-09-29T16:51:02.000+08:00`\n- 来源更新时间：`2025-09-29T16:51:02.000+08:00`\n\n## 原始标题\n\n滴滴后端实习一面\n\n## 原始正文\n\n### 可读 Source projection — `note_desc`\n\n（当前缺失）\n\n## 原始附件\n\n- `html` — `present` — 389867 bytes — `liqiangcc/xhs:note_detail/68da4876000000001101eebb.html@95b77bb261048059846273688e4b90a2e108b437` — blob `cea5ee7cb721b4b137ec2e7513baf3b0ab557d12`\n- `json` — `present` — 22529 bytes — `liqiangcc/xhs:note_json/68da4876000000001101eebb.json@95b77bb261048059846273688e4b90a2e108b437` — blob `76fe60341e8a3dc4da0bb7e5c55f42ddadf78d88`\n\n## Intake 异常\n\n- 无 intake-level anomaly。\n\n## 边界审核\n\n- 状态：`single-interview`\n- reviewed_at：`2026-09-09T12:22:11Z`\n- InterviewNote id：`xhs:68da4876000000001101eebb`\n\n## 来源限制\n\n- note_desc readable projection 缺失；SourceNote 只登记现有 Source artifact。\n- SourceNote intake 只证明一条 XHS Source 的采集身份，不判断它是否等于一次真实面试事件。\n- 题库、经验总结、模拟面试、非目标岗位以及一帖多场面试都允许进入 SourceNote；必须经过 boundary review 才能产生 0..N InterviewNote。\n- note_img_txt / note_structured / note_tagged 等历史数据属于 Derived，不得反向补写 Raw Source。\n\n## 派生链接\n\n- `liqiangcc/xhs:note_img_txt/68da4876000000001101eebb.txt@95b77bb261048059846273688e4b90a2e108b437`（如存在，Derived OCR）\n- `liqiangcc/xhs:note_structured/68da4876000000001101eebb.json@95b77bb261048059846273688e4b90a2e108b437`（如存在，Derived）\n- `liqiangcc/xhs:note_tagged/68da4876000000001101eebb.json@95b77bb261048059846273688e4b90a2e108b437`（如存在，Derived）\n",
+      "next_body_sha256": "29abf9daab5b0925e23f3107b52f93ab9419e183eca6bb6b6fb08288df363222",
+      "next_labels": [
+        "source:xhs",
+        "status:captured",
+        "migration:xhs-bulk",
+        "type:source-note",
+        "source-year:2025",
+        "boundary:single-interview"
+      ],
+      "mutation_count": 0,
+      "planned_request": {
+        "schema_version": "source-note-boundary-review-transition.v1",
+        "transition_id": "issue-1656-boundary-1418-20260909000000",
+        "repository": "liqiangcc/interview-lab",
+        "issue_number": 1418,
+        "source_note_id": "xhs-note:68da4876000000001101eebb",
+        "expected_body_sha256": "e1231a6389f9e766a41dcfdb9f18c41028a612fc618e5ba37702d4320eb7d901",
+        "expected_boundary_status": "pending",
+        "expected_source_revision_id": "xhs-note:68da4876000000001101eebb:snapshot-95b77bb26104",
+        "expected_manifest_sha256": null,
+        "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+        "decision": "single-interview",
+        "reviewed_at": "2026-09-09T12:22:11Z",
+        "reviewer_kind": "ai-assisted",
+        "review_evidence": {
+          "repository": "liqiangcc/interview-lab",
+          "issue_number": 1418,
+          "comment_id": 5601750274
+        },
+        "checks": [
+          {
+            "check_id": "source_identity",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "source_revision_binding",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "source_content_coverage",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "event_boundary",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "no_cross_source_mixing",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "no_fabrication",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          }
+        ],
+        "limitations": [
+          "Planned evidence body only; no GitHub comment was created.",
+          "Boundary transition remains a separate later stage and is not authorized by this artifact."
+        ]
+      },
+      "planned_label_change": [
+        "source:xhs",
+        "status:captured",
+        "migration:xhs-bulk",
+        "type:source-note",
+        "source-year:2025",
+        "boundary:single-interview"
+      ]
+    },
+    {
+      "issue_number": 1428,
+      "decision": "single-interview",
+      "status": "eligible",
+      "eligible": true,
+      "errors": [],
+      "live_issue_id": 5349111501,
+      "current_body_sha256": "054538b6825a9f87d34285bfc631ebdfcecd9d0ac13d3a995bf8576f8764c965",
+      "current_labels": [
+        "source:xhs",
+        "status:captured",
+        "migration:xhs-bulk",
+        "type:source-note",
+        "boundary:pending",
+        "task:boundary-review",
+        "source-year:2025"
+      ],
+      "labels_unchanged": true,
+      "evidence_comment_id": 5601752211,
+      "evidence_comment_body_sha256": "49d82d0244ee143cbf53933568d82ca1227cb5ac2b955de0a56b0ae3a67cb225",
+      "comments_read": [
+        5601752211
+      ],
+      "next_body": "<!-- source-note: id=xhs-note:68dfb89900000000030124a1 schema=source-note-issue.v1 -->\n<!-- source-note-record\n{\n  \"schema_version\": \"source-note-issue.v1\",\n  \"source_note_id\": \"xhs-note:68dfb89900000000030124a1\",\n  \"source\": {\n    \"system\": \"xhs\",\n    \"external_id\": \"68dfb89900000000030124a1\",\n    \"url\": null\n  },\n  \"source_revision\": {\n    \"id\": \"xhs-note:68dfb89900000000030124a1:snapshot-95b77bb26104\",\n    \"captured_at\": \"2026-09-04T13:56:02.215Z\",\n    \"source_repository\": \"liqiangcc/xhs\",\n    \"source_repository_ref\": \"95b77bb261048059846273688e4b90a2e108b437\",\n    \"reason\": \"full chronological XHS SourceNote intake migration\"\n  },\n  \"source_published_at\": {\n    \"precision\": \"exact\",\n    \"value\": \"2025-10-03T19:50:49.000+08:00\"\n  },\n  \"source_edited_at\": {\n    \"precision\": \"exact\",\n    \"value\": \"2025-10-03T19:50:50.000+08:00\"\n  },\n  \"artifacts\": [\n    {\n      \"kind\": \"html\",\n      \"ref\": \"liqiangcc/xhs:note_detail/68dfb89900000000030124a1.html@95b77bb261048059846273688e4b90a2e108b437\",\n      \"git_blob_sha\": \"302b7871c42b5687a4f0167b2ce8da85ba3b9a54\",\n      \"sha256\": null,\n      \"provenance\": \"raw_capture\",\n      \"byte_size\": 391337,\n      \"integrity\": \"present\"\n    },\n    {\n      \"kind\": \"json\",\n      \"ref\": \"liqiangcc/xhs:note_json/68dfb89900000000030124a1.json@95b77bb261048059846273688e4b90a2e108b437\",\n      \"git_blob_sha\": \"9df184ee9a81f09076283fdf458d0d7be2b59f22\",\n      \"sha256\": null,\n      \"provenance\": \"source_projection\",\n      \"byte_size\": 23422,\n      \"integrity\": \"present\"\n    }\n  ],\n  \"anomalies\": [],\n  \"limitations\": [\n    \"note_desc readable projection 缺失；SourceNote 只登记现有 Source artifact。\",\n    \"SourceNote intake 只证明一条 XHS Source 的采集身份，不判断它是否等于一次真实面试事件。\",\n    \"题库、经验总结、模拟面试、非目标岗位以及一帖多场面试都允许进入 SourceNote；必须经过 boundary review 才能产生 0..N InterviewNote。\",\n    \"note_img_txt / note_structured / note_tagged 等历史数据属于 Derived，不得反向补写 Raw Source。\"\n  ],\n  \"boundary_review\": {\n    \"status\": \"single-interview\",\n    \"reviewed_at\": \"2026-09-09T12:22:20Z\",\n    \"interview_note_ids\": [\n      \"xhs:68dfb89900000000030124a1\"\n    ]\n  }\n}\n-->\n\n## 来源身份\n\n- 来源系统：XHS\n- External source id：`68dfb89900000000030124a1`\n- SourceNote id：`xhs-note:68dfb89900000000030124a1`\n- SourceRevision：`xhs-note:68dfb89900000000030124a1:snapshot-95b77bb26104`\n- 固定 Source snapshot：`liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437`\n- 来源发布时间：`2025-10-03T19:50:49.000+08:00`\n- 来源更新时间：`2025-10-03T19:50:50.000+08:00`\n\n## 原始标题\n\n美团后端实习一面\n\n## 原始正文\n\n### 可读 Source projection — `note_desc`\n\n（当前缺失）\n\n## 原始附件\n\n- `html` — `present` — 391337 bytes — `liqiangcc/xhs:note_detail/68dfb89900000000030124a1.html@95b77bb261048059846273688e4b90a2e108b437` — blob `302b7871c42b5687a4f0167b2ce8da85ba3b9a54`\n- `json` — `present` — 23422 bytes — `liqiangcc/xhs:note_json/68dfb89900000000030124a1.json@95b77bb261048059846273688e4b90a2e108b437` — blob `9df184ee9a81f09076283fdf458d0d7be2b59f22`\n\n## Intake 异常\n\n- 无 intake-level anomaly。\n\n## 边界审核\n\n- 状态：`single-interview`\n- reviewed_at：`2026-09-09T12:22:20Z`\n- InterviewNote id：`xhs:68dfb89900000000030124a1`\n\n## 来源限制\n\n- note_desc readable projection 缺失；SourceNote 只登记现有 Source artifact。\n- SourceNote intake 只证明一条 XHS Source 的采集身份，不判断它是否等于一次真实面试事件。\n- 题库、经验总结、模拟面试、非目标岗位以及一帖多场面试都允许进入 SourceNote；必须经过 boundary review 才能产生 0..N InterviewNote。\n- note_img_txt / note_structured / note_tagged 等历史数据属于 Derived，不得反向补写 Raw Source。\n\n## 派生链接\n\n- `liqiangcc/xhs:note_img_txt/68dfb89900000000030124a1.txt@95b77bb261048059846273688e4b90a2e108b437`（如存在，Derived OCR）\n- `liqiangcc/xhs:note_structured/68dfb89900000000030124a1.json@95b77bb261048059846273688e4b90a2e108b437`（如存在，Derived）\n- `liqiangcc/xhs:note_tagged/68dfb89900000000030124a1.json@95b77bb261048059846273688e4b90a2e108b437`（如存在，Derived）\n",
+      "next_body_sha256": "b5d060439baac7793b7d110dcf3af67fe2741f06631ba8279e3345b74e081894",
+      "next_labels": [
+        "source:xhs",
+        "status:captured",
+        "migration:xhs-bulk",
+        "type:source-note",
+        "source-year:2025",
+        "boundary:single-interview"
+      ],
+      "mutation_count": 0,
+      "planned_request": {
+        "schema_version": "source-note-boundary-review-transition.v1",
+        "transition_id": "issue-1656-boundary-1428-20260909000000",
+        "repository": "liqiangcc/interview-lab",
+        "issue_number": 1428,
+        "source_note_id": "xhs-note:68dfb89900000000030124a1",
+        "expected_body_sha256": "054538b6825a9f87d34285bfc631ebdfcecd9d0ac13d3a995bf8576f8764c965",
+        "expected_boundary_status": "pending",
+        "expected_source_revision_id": "xhs-note:68dfb89900000000030124a1:snapshot-95b77bb26104",
+        "expected_manifest_sha256": null,
+        "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+        "decision": "single-interview",
+        "reviewed_at": "2026-09-09T12:22:20Z",
+        "reviewer_kind": "ai-assisted",
+        "review_evidence": {
+          "repository": "liqiangcc/interview-lab",
+          "issue_number": 1428,
+          "comment_id": 5601752211
+        },
+        "checks": [
+          {
+            "check_id": "source_identity",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "source_revision_binding",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "source_content_coverage",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "event_boundary",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "no_cross_source_mixing",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "no_fabrication",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          }
+        ],
+        "limitations": [
+          "Planned evidence body only; no GitHub comment was created.",
+          "Boundary transition remains a separate later stage and is not authorized by this artifact."
+        ]
+      },
+      "planned_label_change": [
+        "source:xhs",
+        "status:captured",
+        "migration:xhs-bulk",
+        "type:source-note",
+        "source-year:2025",
+        "boundary:single-interview"
+      ]
+    },
+    {
+      "issue_number": 1447,
+      "decision": "single-interview",
+      "status": "eligible",
+      "eligible": true,
+      "errors": [],
+      "live_issue_id": 5349149555,
+      "current_body_sha256": "c3a980b2cf9f0944a81fe34f68ef96916ac40604c3ed6189e2845852f6c9f8e5",
+      "current_labels": [
+        "source:xhs",
+        "status:captured",
+        "migration:xhs-bulk",
+        "type:source-note",
+        "boundary:pending",
+        "task:boundary-review",
+        "source-year:2025"
+      ],
+      "labels_unchanged": true,
+      "evidence_comment_id": 5601752917,
+      "evidence_comment_body_sha256": "7f7f1705b4336f51beca05dde0dc617272b01b64ce448ab48f787903fdbf8c89",
+      "comments_read": [
+        5601752917
+      ],
+      "next_body": "<!-- source-note: id=xhs-note:68e7a288000000000301b7aa schema=source-note-issue.v1 -->\n<!-- source-note-record\n{\n  \"schema_version\": \"source-note-issue.v1\",\n  \"source_note_id\": \"xhs-note:68e7a288000000000301b7aa\",\n  \"source\": {\n    \"system\": \"xhs\",\n    \"external_id\": \"68e7a288000000000301b7aa\",\n    \"url\": null\n  },\n  \"source_revision\": {\n    \"id\": \"xhs-note:68e7a288000000000301b7aa:snapshot-95b77bb26104\",\n    \"captured_at\": \"2026-09-04T13:56:02.215Z\",\n    \"source_repository\": \"liqiangcc/xhs\",\n    \"source_repository_ref\": \"95b77bb261048059846273688e4b90a2e108b437\",\n    \"reason\": \"full chronological XHS SourceNote intake migration\"\n  },\n  \"source_published_at\": {\n    \"precision\": \"exact\",\n    \"value\": \"2025-10-09T19:54:48.000+08:00\"\n  },\n  \"source_edited_at\": {\n    \"precision\": \"exact\",\n    \"value\": \"2025-10-09T19:54:48.000+08:00\"\n  },\n  \"artifacts\": [\n    {\n      \"kind\": \"html\",\n      \"ref\": \"liqiangcc/xhs:note_detail/68e7a288000000000301b7aa.html@95b77bb261048059846273688e4b90a2e108b437\",\n      \"git_blob_sha\": \"05e92108a73a662c98dc1b5da62798569ddb7500\",\n      \"sha256\": null,\n      \"provenance\": \"raw_capture\",\n      \"byte_size\": 389665,\n      \"integrity\": \"present\"\n    },\n    {\n      \"kind\": \"json\",\n      \"ref\": \"liqiangcc/xhs:note_json/68e7a288000000000301b7aa.json@95b77bb261048059846273688e4b90a2e108b437\",\n      \"git_blob_sha\": \"b904952826f07d44b6c32077fff3b389e54fb6db\",\n      \"sha256\": null,\n      \"provenance\": \"source_projection\",\n      \"byte_size\": 21891,\n      \"integrity\": \"present\"\n    }\n  ],\n  \"anomalies\": [],\n  \"limitations\": [\n    \"note_desc readable projection 缺失；SourceNote 只登记现有 Source artifact。\",\n    \"SourceNote intake 只证明一条 XHS Source 的采集身份，不判断它是否等于一次真实面试事件。\",\n    \"题库、经验总结、模拟面试、非目标岗位以及一帖多场面试都允许进入 SourceNote；必须经过 boundary review 才能产生 0..N InterviewNote。\",\n    \"note_img_txt / note_structured / note_tagged 等历史数据属于 Derived，不得反向补写 Raw Source。\"\n  ],\n  \"boundary_review\": {\n    \"status\": \"single-interview\",\n    \"reviewed_at\": \"2026-09-09T12:22:24Z\",\n    \"interview_note_ids\": [\n      \"xhs:68e7a288000000000301b7aa\"\n    ]\n  }\n}\n-->\n\n## 来源身份\n\n- 来源系统：XHS\n- External source id：`68e7a288000000000301b7aa`\n- SourceNote id：`xhs-note:68e7a288000000000301b7aa`\n- SourceRevision：`xhs-note:68e7a288000000000301b7aa:snapshot-95b77bb26104`\n- 固定 Source snapshot：`liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437`\n- 来源发布时间：`2025-10-09T19:54:48.000+08:00`\n- 来源更新时间：`2025-10-09T19:54:48.000+08:00`\n\n## 原始标题\n\n百度Java开发一面面经\n\n## 原始正文\n\n### 可读 Source projection — `note_desc`\n\n（当前缺失）\n\n## 原始附件\n\n- `html` — `present` — 389665 bytes — `liqiangcc/xhs:note_detail/68e7a288000000000301b7aa.html@95b77bb261048059846273688e4b90a2e108b437` — blob `05e92108a73a662c98dc1b5da62798569ddb7500`\n- `json` — `present` — 21891 bytes — `liqiangcc/xhs:note_json/68e7a288000000000301b7aa.json@95b77bb261048059846273688e4b90a2e108b437` — blob `b904952826f07d44b6c32077fff3b389e54fb6db`\n\n## Intake 异常\n\n- 无 intake-level anomaly。\n\n## 边界审核\n\n- 状态：`single-interview`\n- reviewed_at：`2026-09-09T12:22:24Z`\n- InterviewNote id：`xhs:68e7a288000000000301b7aa`\n\n## 来源限制\n\n- note_desc readable projection 缺失；SourceNote 只登记现有 Source artifact。\n- SourceNote intake 只证明一条 XHS Source 的采集身份，不判断它是否等于一次真实面试事件。\n- 题库、经验总结、模拟面试、非目标岗位以及一帖多场面试都允许进入 SourceNote；必须经过 boundary review 才能产生 0..N InterviewNote。\n- note_img_txt / note_structured / note_tagged 等历史数据属于 Derived，不得反向补写 Raw Source。\n\n## 派生链接\n\n- `liqiangcc/xhs:note_img_txt/68e7a288000000000301b7aa.txt@95b77bb261048059846273688e4b90a2e108b437`（如存在，Derived OCR）\n- `liqiangcc/xhs:note_structured/68e7a288000000000301b7aa.json@95b77bb261048059846273688e4b90a2e108b437`（如存在，Derived）\n- `liqiangcc/xhs:note_tagged/68e7a288000000000301b7aa.json@95b77bb261048059846273688e4b90a2e108b437`（如存在，Derived）\n",
+      "next_body_sha256": "bf13f36dc8fe030857e4f574e3e616647dbc0b1c387161f839ff6d6bef8c1005",
+      "next_labels": [
+        "source:xhs",
+        "status:captured",
+        "migration:xhs-bulk",
+        "type:source-note",
+        "source-year:2025",
+        "boundary:single-interview"
+      ],
+      "mutation_count": 0,
+      "planned_request": {
+        "schema_version": "source-note-boundary-review-transition.v1",
+        "transition_id": "issue-1656-boundary-1447-20260909000000",
+        "repository": "liqiangcc/interview-lab",
+        "issue_number": 1447,
+        "source_note_id": "xhs-note:68e7a288000000000301b7aa",
+        "expected_body_sha256": "c3a980b2cf9f0944a81fe34f68ef96916ac40604c3ed6189e2845852f6c9f8e5",
+        "expected_boundary_status": "pending",
+        "expected_source_revision_id": "xhs-note:68e7a288000000000301b7aa:snapshot-95b77bb26104",
+        "expected_manifest_sha256": null,
+        "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+        "decision": "single-interview",
+        "reviewed_at": "2026-09-09T12:22:24Z",
+        "reviewer_kind": "ai-assisted",
+        "review_evidence": {
+          "repository": "liqiangcc/interview-lab",
+          "issue_number": 1447,
+          "comment_id": 5601752917
+        },
+        "checks": [
+          {
+            "check_id": "source_identity",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "source_revision_binding",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "source_content_coverage",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "event_boundary",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "no_cross_source_mixing",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "no_fabrication",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          }
+        ],
+        "limitations": [
+          "Planned evidence body only; no GitHub comment was created.",
+          "Boundary transition remains a separate later stage and is not authorized by this artifact."
+        ]
+      },
+      "planned_label_change": [
+        "source:xhs",
+        "status:captured",
+        "migration:xhs-bulk",
+        "type:source-note",
+        "source-year:2025",
+        "boundary:single-interview"
+      ]
+    },
+    {
+      "issue_number": 1458,
+      "decision": "single-interview",
+      "status": "eligible",
+      "eligible": true,
+      "errors": [],
+      "live_issue_id": 5349197490,
+      "current_body_sha256": "9734753e646af604f6498707ef4ae32286dfa4e96ab36c53e756cb064b8b8e4d",
+      "current_labels": [
+        "source:xhs",
+        "status:captured",
+        "migration:xhs-bulk",
+        "type:source-note",
+        "boundary:pending",
+        "task:boundary-review",
+        "source-year:2025"
+      ],
+      "labels_unchanged": true,
+      "evidence_comment_id": 5601753678,
+      "evidence_comment_body_sha256": "2fe38cd4c4cd7aef27a685656ec616414d073a9abf438cacfcbe4745792c2cfb",
+      "comments_read": [
+        5601753678
+      ],
+      "next_body": "<!-- source-note: id=xhs-note:68ea11580000000003038e9b schema=source-note-issue.v1 -->\n<!-- source-note-record\n{\n  \"schema_version\": \"source-note-issue.v1\",\n  \"source_note_id\": \"xhs-note:68ea11580000000003038e9b\",\n  \"source\": {\n    \"system\": \"xhs\",\n    \"external_id\": \"68ea11580000000003038e9b\",\n    \"url\": null\n  },\n  \"source_revision\": {\n    \"id\": \"xhs-note:68ea11580000000003038e9b:snapshot-95b77bb26104\",\n    \"captured_at\": \"2026-09-04T14:16:45.514Z\",\n    \"source_repository\": \"liqiangcc/xhs\",\n    \"source_repository_ref\": \"95b77bb261048059846273688e4b90a2e108b437\",\n    \"reason\": \"full chronological XHS SourceNote intake migration\"\n  },\n  \"source_published_at\": {\n    \"precision\": \"exact\",\n    \"value\": \"2025-10-11T16:12:08.000+08:00\"\n  },\n  \"source_edited_at\": {\n    \"precision\": \"exact\",\n    \"value\": \"2025-10-11T16:12:08.000+08:00\"\n  },\n  \"artifacts\": [\n    {\n      \"kind\": \"html\",\n      \"ref\": \"liqiangcc/xhs:note_detail/68ea11580000000003038e9b.html@95b77bb261048059846273688e4b90a2e108b437\",\n      \"git_blob_sha\": \"83420744f49653a2d893b180f67d3386701a863a\",\n      \"sha256\": null,\n      \"provenance\": \"raw_capture\",\n      \"byte_size\": 387290,\n      \"integrity\": \"present\"\n    },\n    {\n      \"kind\": \"json\",\n      \"ref\": \"liqiangcc/xhs:note_json/68ea11580000000003038e9b.json@95b77bb261048059846273688e4b90a2e108b437\",\n      \"git_blob_sha\": \"4360ffa7dd7d62130505cd79e8022057901a6d27\",\n      \"sha256\": null,\n      \"provenance\": \"source_projection\",\n      \"byte_size\": 20641,\n      \"integrity\": \"present\"\n    }\n  ],\n  \"anomalies\": [],\n  \"limitations\": [\n    \"note_desc readable projection 缺失；SourceNote 只登记现有 Source artifact。\",\n    \"SourceNote intake 只证明一条 XHS Source 的采集身份，不判断它是否等于一次真实面试事件。\",\n    \"题库、经验总结、模拟面试、非目标岗位以及一帖多场面试都允许进入 SourceNote；必须经过 boundary review 才能产生 0..N InterviewNote。\",\n    \"note_img_txt / note_structured / note_tagged 等历史数据属于 Derived，不得反向补写 Raw Source。\"\n  ],\n  \"boundary_review\": {\n    \"status\": \"single-interview\",\n    \"reviewed_at\": \"2026-09-09T12:22:28Z\",\n    \"interview_note_ids\": [\n      \"xhs:68ea11580000000003038e9b\"\n    ]\n  }\n}\n-->\n\n## 来源身份\n\n- 来源系统：XHS\n- External source id：`68ea11580000000003038e9b`\n- SourceNote id：`xhs-note:68ea11580000000003038e9b`\n- SourceRevision：`xhs-note:68ea11580000000003038e9b:snapshot-95b77bb26104`\n- 固定 Source snapshot：`liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437`\n- 来源发布时间：`2025-10-11T16:12:08.000+08:00`\n- 来源更新时间：`2025-10-11T16:12:08.000+08:00`\n\n## 原始标题\n\n拼多多 交易部门 后端二面\n\n## 原始正文\n\n### 可读 Source projection — `note_desc`\n\n（当前缺失）\n\n## 原始附件\n\n- `html` — `present` — 387290 bytes — `liqiangcc/xhs:note_detail/68ea11580000000003038e9b.html@95b77bb261048059846273688e4b90a2e108b437` — blob `83420744f49653a2d893b180f67d3386701a863a`\n- `json` — `present` — 20641 bytes — `liqiangcc/xhs:note_json/68ea11580000000003038e9b.json@95b77bb261048059846273688e4b90a2e108b437` — blob `4360ffa7dd7d62130505cd79e8022057901a6d27`\n\n## Intake 异常\n\n- 无 intake-level anomaly。\n\n## 边界审核\n\n- 状态：`single-interview`\n- reviewed_at：`2026-09-09T12:22:28Z`\n- InterviewNote id：`xhs:68ea11580000000003038e9b`\n\n## 来源限制\n\n- note_desc readable projection 缺失；SourceNote 只登记现有 Source artifact。\n- SourceNote intake 只证明一条 XHS Source 的采集身份，不判断它是否等于一次真实面试事件。\n- 题库、经验总结、模拟面试、非目标岗位以及一帖多场面试都允许进入 SourceNote；必须经过 boundary review 才能产生 0..N InterviewNote。\n- note_img_txt / note_structured / note_tagged 等历史数据属于 Derived，不得反向补写 Raw Source。\n\n## 派生链接\n\n- `liqiangcc/xhs:note_img_txt/68ea11580000000003038e9b.txt@95b77bb261048059846273688e4b90a2e108b437`（如存在，Derived OCR）\n- `liqiangcc/xhs:note_structured/68ea11580000000003038e9b.json@95b77bb261048059846273688e4b90a2e108b437`（如存在，Derived）\n- `liqiangcc/xhs:note_tagged/68ea11580000000003038e9b.json@95b77bb261048059846273688e4b90a2e108b437`（如存在，Derived）\n",
+      "next_body_sha256": "da87e7bcdafd6dd881c3a97e6f095a38925aa13c0e55cbd4228fd33777e7884a",
+      "next_labels": [
+        "source:xhs",
+        "status:captured",
+        "migration:xhs-bulk",
+        "type:source-note",
+        "source-year:2025",
+        "boundary:single-interview"
+      ],
+      "mutation_count": 0,
+      "planned_request": {
+        "schema_version": "source-note-boundary-review-transition.v1",
+        "transition_id": "issue-1656-boundary-1458-20260909000000",
+        "repository": "liqiangcc/interview-lab",
+        "issue_number": 1458,
+        "source_note_id": "xhs-note:68ea11580000000003038e9b",
+        "expected_body_sha256": "9734753e646af604f6498707ef4ae32286dfa4e96ab36c53e756cb064b8b8e4d",
+        "expected_boundary_status": "pending",
+        "expected_source_revision_id": "xhs-note:68ea11580000000003038e9b:snapshot-95b77bb26104",
+        "expected_manifest_sha256": null,
+        "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+        "decision": "single-interview",
+        "reviewed_at": "2026-09-09T12:22:28Z",
+        "reviewer_kind": "ai-assisted",
+        "review_evidence": {
+          "repository": "liqiangcc/interview-lab",
+          "issue_number": 1458,
+          "comment_id": 5601753678
+        },
+        "checks": [
+          {
+            "check_id": "source_identity",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "source_revision_binding",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "source_content_coverage",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "event_boundary",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "no_cross_source_mixing",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          },
+          {
+            "check_id": "no_fabrication",
+            "result": "pass",
+            "note": "Bound to the frozen request row and exact source projection evidence."
+          }
+        ],
+        "limitations": [
+          "Planned evidence body only; no GitHub comment was created.",
+          "Boundary transition remains a separate later stage and is not authorized by this artifact."
+        ]
+      },
+      "planned_label_change": [
+        "source:xhs",
+        "status:captured",
+        "migration:xhs-bulk",
+        "type:source-note",
+        "source-year:2025",
+        "boundary:single-interview"
+      ]
+    }
+  ],
+  "blocked_ledger": [
+    {
+      "issue_number": 972,
+      "status": "blocked",
+      "eligible": false,
+      "reason_code": "independent-review-blocked",
+      "reason": "Independent review did not release this proposal for evidence POST planning; it remains blocked and cannot enter the evidence batch.",
+      "evidence_comment_id": null,
+      "next_body": null,
+      "next_body_sha256": null,
+      "next_labels": null,
+      "mutation_count": 0
+    },
+    {
+      "issue_number": 1266,
+      "status": "blocked",
+      "eligible": false,
+      "reason_code": "independent-review-blocked",
+      "reason": "Independent review did not release this proposal for evidence POST planning; it remains blocked and cannot enter the evidence batch.",
+      "evidence_comment_id": null,
+      "next_body": null,
+      "next_body_sha256": null,
+      "next_labels": null,
+      "mutation_count": 0
+    },
+    {
+      "issue_number": 1326,
+      "status": "blocked",
+      "eligible": false,
+      "reason_code": "independent-review-blocked",
+      "reason": "Independent review did not release this proposal for evidence POST planning; it remains blocked and cannot enter the evidence batch.",
+      "evidence_comment_id": null,
+      "next_body": null,
+      "next_body_sha256": null,
+      "next_labels": null,
+      "mutation_count": 0
+    },
+    {
+      "issue_number": 1349,
+      "status": "blocked",
+      "eligible": false,
+      "reason_code": "independent-review-blocked",
+      "reason": "Independent review did not release this proposal for evidence POST planning; it remains blocked and cannot enter the evidence batch.",
+      "evidence_comment_id": null,
+      "next_body": null,
+      "next_body_sha256": null,
+      "next_labels": null,
+      "mutation_count": 0
+    }
+  ],
+  "summary": {
+    "eligible": 13,
+    "blocked": 4,
+    "target_errors": 0
+  },
+  "mutation_guard": {
+    "post": 0,
+    "patch": 0,
+    "label": 0,
+    "create": 0,
+    "materialization": 0,
+    "mutation": 0,
+    "read_only": true,
+    "live_mutation": false
+  },
+  "labels_unchanged": true,
+  "limitations": [
+    "All live data was read with GitHub GET requests only.",
+    "This artifact proposes SourceNote body/label changes but does not apply them.",
+    "No issue comment, label, materialization, or other mutation was performed."
+  ],
+  "ok": true,
+  "canonical_digest": "5489776618546396f23a158fdcef99d9be35c7bb63a48ca3b80e33c5a79637ad"
+}
