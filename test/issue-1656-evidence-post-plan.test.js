@@ -51,3 +51,17 @@ test('scope drift or selected-row tampering fails closed', () => {
   missing.summary.proposal_rows = 16;
   assert.throws(() => buildPlan(missing), /complete 421\/17\/404 scope/);
 });
+
+test('swapping complete evidence bodies and recomputing the plan digest still fails marker cross-binding', () => {
+  const plan = buildPlan(input);
+  const changed = JSON.parse(JSON.stringify(plan));
+  const first = changed.proposal_rows[0].evidence_post;
+  const second = changed.proposal_rows[1].evidence_post;
+  [first.body, second.body] = [second.body, first.body];
+  [first.body_sha256, second.body_sha256] = [second.body_sha256, first.body_sha256];
+  const { canonical_digest: ignored, ...withoutDigest } = changed;
+  changed.canonical_digest = sha256(canonicalize(withoutDigest));
+  const validation = validatePlan(changed, input);
+  assert.equal(validation.ok, false);
+  assert.match(validation.errors.join('\n'), /marker issue binding mismatch/);
+});
