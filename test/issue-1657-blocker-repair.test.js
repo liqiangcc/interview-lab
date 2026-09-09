@@ -190,6 +190,73 @@ test('duplicating a live marker remains a target blocker after resealing', () =>
   assert.deepEqual(plan.write_operations, REQUIRED_ZERO_WRITES);
 });
 
+test('forged marker count and arrays remain blocked after resealing', () => {
+  const cases = [
+    {
+      label: 'zero marker fields',
+      mutate(snapshot) {
+        const summary = snapshot.targets.find((target) => target.source_note_issue_number === 904).owner.materialization_receipt;
+        Object.assign(summary, { match_count: 1, comment_ids: [123456789], comments: [{ id: 123456789 }], comment_id: 123456789, body_sha256: 'a'.repeat(64), payload: { forged: true } });
+      },
+      expected: /live owner materialization receipt marker count 0 requires match_count 0|live owner materialization receipt marker count 0 requires empty comment_ids\/comments|live owner materialization receipt marker count 0 requires null comment_id\/body_sha256\/payload/,
+    },
+    {
+      label: 'optional zero-to-one count',
+      mutate(snapshot) {
+        const summary = snapshot.targets.find((target) => target.source_note_issue_number === 904).owner.materialization_receipt;
+        summary.count = 1;
+      },
+      expected: /live owner materialization receipt marker count 1 requires match_count 1|live owner materialization receipt marker count 1 requires exactly one comment_id\/comment/,
+    },
+    {
+      label: 'single marker arrays',
+      mutate(snapshot) {
+        const summary = snapshot.targets.find((target) => target.source_note_issue_number === 904).source.boundary_evidence;
+        Object.assign(summary, { match_count: 0, comment_ids: [], comments: [], comment_id: null, body_sha256: null, payload: null });
+      },
+      expected: /live boundary evidence marker count 1 requires match_count 1|live boundary evidence marker count 1 requires exactly one comment_id\/comment/,
+    },
+    {
+      label: 'duplicate comment ids',
+      mutate(snapshot) {
+        const summary = snapshot.targets.find((target) => target.source_note_issue_number === 907).source.boundary_applied_receipt;
+        summary.count = '>1';
+        summary.match_count = 2;
+        summary.comment_ids = [summary.comment_id, summary.comment_id];
+        summary.comments = [summary.comments[0], summary.comments[0]];
+        summary.comment_id = null;
+        summary.body_sha256 = null;
+        summary.payload = null;
+      },
+      expected: /live boundary applied receipt marker comment_ids must be unique/,
+    },
+    {
+      label: 'multiple marker array length',
+      mutate(snapshot) {
+        const summary = snapshot.targets.find((target) => target.source_note_issue_number === 907).source.boundary_applied_receipt;
+        summary.count = '>1';
+        summary.match_count = 2;
+        summary.comment_ids = [summary.comment_id];
+        summary.comments = [summary.comments[0]];
+        summary.comment_id = null;
+        summary.body_sha256 = null;
+        summary.payload = null;
+      },
+      expected: /live boundary applied receipt marker count >1 requires arrays matching match_count/,
+    },
+  ];
+  for (const { label, mutate, expected } of cases) {
+    const tampered = JSON.parse(JSON.stringify(liveAuditSnapshot));
+    mutate(tampered);
+    tampered.canonical_digest = liveSnapshotDigest(tampered);
+    const plan = planIssue1657BlockerRepair({ sourceSnapshot, ownershipInventory, materializationPlan, receiptSnapshot, liveAuditSnapshot: tampered });
+    const row = plan.results.find((result) => result.source_note_issue_number === (label === 'duplicate comment ids' || label === 'multiple marker array length' ? 907 : 904));
+    assert.equal(plan.ok, false, `${label} must fail closed`);
+    assert.match(row.errors.join('\n'), expected, label);
+    assert.deepEqual(plan.write_operations, REQUIRED_ZERO_WRITES);
+  }
+});
+
 test('missing live source or owner object remains a target blocker after resealing', () => {
   for (const field of ['source', 'owner']) {
     const tampered = JSON.parse(JSON.stringify(liveAuditSnapshot));

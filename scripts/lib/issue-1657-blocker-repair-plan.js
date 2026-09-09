@@ -45,14 +45,51 @@ function findOne(items, predicate, label, errors) {
 
 function isObject(value) { return value && typeof value === 'object' && !Array.isArray(value); }
 
+function markerSummaryConsistency(summary, label, errors) {
+  if (!Array.isArray(summary.comment_ids) || !Array.isArray(summary.comments)) {
+    errors.push(`${label} marker comment_ids/comments must both be arrays`);
+    return false;
+  }
+  const ids = summary.comment_ids;
+  const comments = summary.comments;
+  if (new Set(ids).size !== ids.length) errors.push(`${label} marker comment_ids must be unique`);
+  if (comments.some((comment) => !isObject(comment))) errors.push(`${label} marker comments must contain objects`);
+  if (comments.length !== ids.length) errors.push(`${label} marker comment_ids/comments length mismatch`);
+  if (comments.length === ids.length && comments.some((comment, index) => comment.id !== ids[index])) {
+    errors.push(`${label} marker comment_ids do not match comments`);
+  }
+  if (summary.count === 0) {
+    if (summary.match_count !== 0) errors.push(`${label} marker count 0 requires match_count 0`);
+    if (ids.length !== 0 || comments.length !== 0) errors.push(`${label} marker count 0 requires empty comment_ids/comments`);
+    if (summary.comment_id !== null || summary.body_sha256 !== null || summary.payload !== null) {
+      errors.push(`${label} marker count 0 requires null comment_id/body_sha256/payload`);
+    }
+  } else if (summary.count === 1) {
+    if (summary.match_count !== 1) errors.push(`${label} marker count 1 requires match_count 1`);
+    if (ids.length !== 1 || comments.length !== 1) errors.push(`${label} marker count 1 requires exactly one comment_id/comment`);
+    if (!Number.isInteger(summary.comment_id) || summary.comment_id <= 0) errors.push(`${label} marker count 1 requires a non-empty comment_id`);
+    if (!HEX64.test(String(summary.body_sha256 || ''))) errors.push(`${label} marker count 1 requires a non-empty body_sha256`);
+    if (!isObject(summary.payload) || Object.keys(summary.payload).length === 0) errors.push(`${label} marker count 1 requires a non-empty payload`);
+  } else if (summary.count === '>1') {
+    if (!Number.isInteger(summary.match_count) || summary.match_count <= 1) errors.push(`${label} marker count >1 requires match_count >1`);
+    if (Number.isInteger(summary.match_count) && summary.match_count > 1 && (ids.length !== summary.match_count || comments.length !== summary.match_count)) {
+      errors.push(`${label} marker count >1 requires arrays matching match_count`);
+    }
+    if (summary.comment_id !== null || summary.body_sha256 !== null || summary.payload !== null) {
+      errors.push(`${label} marker count >1 requires null comment_id/body_sha256/payload`);
+    }
+  }
+  return true;
+}
+
 function requiredMarker(summary, label, errors) {
   if (!isObject(summary) || !Object.prototype.hasOwnProperty.call(summary, 'count')) {
     errors.push(`${label} marker count is missing`);
     return null;
   }
   if (![0, 1, '>1'].includes(summary.count)) errors.push(`${label} marker count must be 0, 1, or >1`);
+  markerSummaryConsistency(summary, label, errors);
   if (summary.count !== 1) errors.push(`${label} marker count must be exactly 1 (got ${summary.count})`);
-  if (!Array.isArray(summary.comments) || !Array.isArray(summary.comment_ids)) errors.push(`${label} marker comment evidence is missing`);
   return summary.count === 1 ? summary : null;
 }
 
@@ -62,8 +99,8 @@ function optionalMarker(summary, label, errors) {
     return null;
   }
   if (![0, 1, '>1'].includes(summary.count)) errors.push(`${label} marker count must be 0, 1, or >1`);
+  markerSummaryConsistency(summary, label, errors);
   if (summary.count === '>1') errors.push(`${label} marker count must not be >1`);
-  if (!Array.isArray(summary.comments) || !Array.isArray(summary.comment_ids)) errors.push(`${label} marker comment evidence is missing`);
   return summary.count === 1 ? summary : null;
 }
 
