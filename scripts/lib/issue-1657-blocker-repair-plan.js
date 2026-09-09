@@ -28,6 +28,10 @@ function digestWithoutField(value, field) {
   return canonicalDigest(copy);
 }
 
+function receiptSnapshotDigest(snapshot) {
+  return digestWithoutField(snapshot, 'canonical_digest');
+}
+
 function findOne(items, predicate, label, errors) {
   const matches = (items || []).filter(predicate);
   if (matches.length !== 1) errors.push(`${label} must resolve to exactly one row (got ${matches.length})`);
@@ -82,7 +86,28 @@ function validateInputs({ sourceSnapshot, ownershipInventory, materializationPla
   } else errors.push('materialization plan dry_run_sha256 is required');
   if (!sourceSnapshot || !Array.isArray(sourceSnapshot.issues)) errors.push('source snapshot issues array is required');
   if (!ownershipInventory || !Array.isArray(ownershipInventory.entries)) errors.push('ownership inventory entries array is required');
-  if (!receiptSnapshot || !Array.isArray(receiptSnapshot.entries) || receiptSnapshot.entries.length !== TARGETS.length) errors.push(`owner/receipt snapshot must contain exactly ${TARGETS.length} target entries`);
+  if (!receiptSnapshot || !Array.isArray(receiptSnapshot.entries) || receiptSnapshot.entries.length !== TARGETS.length) {
+    errors.push(`owner/receipt snapshot must contain exactly ${TARGETS.length} target entries`);
+  } else {
+    if (!HEX64.test(String(receiptSnapshot.canonical_digest || ''))) {
+      errors.push('owner/receipt snapshot canonical_digest is required');
+    } else if (receiptSnapshotDigest(receiptSnapshot) !== receiptSnapshot.canonical_digest) {
+      errors.push('owner/receipt snapshot canonical_digest drifted');
+    }
+    for (const target of TARGETS) {
+      const matches = receiptSnapshot.entries.filter((entry) => Number(entry && entry.source_note_issue_number) === target.source_note_issue_number);
+      if (matches.length !== 1) {
+        errors.push(`#${target.source_note_issue_number} receipt audit entry must resolve to exactly one row (got ${matches.length})`);
+        continue;
+      }
+      const entry = matches[0];
+      if (entry.interview_note_id !== target.interview_note_id) errors.push(`#${target.source_note_issue_number} receipt audit InterviewNote identity mismatch`);
+      if (Number(entry.owner_issue_number) !== target.owner_issue_number) errors.push(`#${target.source_note_issue_number} receipt audit owner Issue mismatch`);
+      if (!HEX64.test(String(entry.owner_body_sha256 || ''))) errors.push(`#${target.source_note_issue_number} receipt audit owner_body_sha256 is required`);
+      if (typeof entry.owner_source_revision_id !== 'string' || !entry.owner_source_revision_id.trim()) errors.push(`#${target.source_note_issue_number} receipt audit owner SourceRevision is required`);
+      if (entry.owner_source_repository_ref != null && !/^[0-9a-f]{40}$/.test(String(entry.owner_source_repository_ref))) errors.push(`#${target.source_note_issue_number} receipt audit owner source ref is invalid`);
+    }
+  }
   return errors;
 }
 
@@ -113,6 +138,8 @@ function planIssue1657BlockerRepair({ sourceSnapshot, ownershipInventory, materi
     if (sourceIssue && !labelsOf(sourceIssue).includes('boundary:single-interview')) targetErrors.push('SourceNote lacks boundary:single-interview label');
     if (owner && owner.interview_note_id !== target.interview_note_id) targetErrors.push('owner identity mismatch');
     if (owner && receiptEntry && Number(receiptEntry.owner_issue_number) !== Number(owner.issue_number)) targetErrors.push('receipt audit owner mismatch');
+    if (owner && receiptEntry && owner.source_revision_id !== receiptEntry.owner_source_revision_id) targetErrors.push('owner SourceRevision disagrees with receipt audit');
+    if (owner && receiptEntry && owner.body_sha256 !== receiptEntry.owner_body_sha256) targetErrors.push('owner body digest disagrees with receipt audit');
     if (owner && sourceRevision.id !== owner.source_revision_id) targetErrors.push('existing owner SourceRevision differs from current SourceNote');
     if (receiptEntry && receiptEntry.materialization_receipt) receiptShape(receiptEntry.materialization_receipt, target, targetErrors);
     if (receiptEntry && receiptEntry.materialization_receipt) {
@@ -205,6 +232,7 @@ function planIssue1657BlockerRepair({ sourceSnapshot, ownershipInventory, materi
     source_snapshot_digest: sourceSnapshot && sourceSnapshot.canonical_digest || null,
     ownership_inventory_digest: ownershipInventory && ownershipInventory.canonical_digest || null,
     materialization_plan_digest: materializationPlan && materializationPlan.dry_run_sha256 || null,
+    owner_receipt_snapshot_digest: receiptSnapshot && receiptSnapshot.canonical_digest || null,
     target_count: TARGETS.length,
     blocked_count: results.length,
     mutation_performed: false,
@@ -224,6 +252,7 @@ module.exports = {
   SOURCE_REF,
   TARGETS,
   REQUIRED_ZERO_WRITES,
+  receiptSnapshotDigest,
   validateInputs,
   planIssue1657BlockerRepair,
 };

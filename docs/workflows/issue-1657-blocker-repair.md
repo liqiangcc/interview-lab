@@ -40,7 +40,13 @@ npm run plan:issue-1657-blocker-repair
 当前 plan digest：
 
 ```text
-a0e46d458e38e024fe647bdc9f00fa300f0be2264711d0167af69546cc46b052
+82efd53623139243505ee6feee07a1db586bc6ee96c6152772835bceb6b14b7f
+```
+
+Receipt/owner audit snapshot digest（计算输入明确不含 `canonical_digest` 字段）：
+
+```text
+7786f58aa9c6c6294ade44c992908466d3f9606682cc557465b94ec9535a5016
 ```
 
 上游输入 digest：
@@ -51,6 +57,7 @@ InterviewNote inventory   d49779dbc5e0c94bc3c67c2b6781f99e940c71afb046a9f2d0a0a2
 Boundary report           b91961567526bc1be0a987e275e367e845c89da274fd8f5f74c9d281f963c021
 Boundary manifest         6fbff5de05abbed9d239a6a8cf3b981d94ed2e0b711342ea6f84c79ffad1b165
 Materialization dry-run  67d848cf88be634d8137cc5ad13798e6d745f87ec19d770e0947be9dd724bb55
+Receipt/owner audit     7786f58aa9c6c6294ade44c992908466d3f9606682cc557465b94ec9535a5016
 ```
 
 所有 digest 应以对应 JSON 产物重新计算为准；计划内写入计数固定为：
