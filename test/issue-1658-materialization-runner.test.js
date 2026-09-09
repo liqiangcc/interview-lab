@@ -9,12 +9,12 @@ const { parseSourceNoteIssue } = require('../scripts/lib/source-note-issue');
 const { buildInterviewProjection, sha256Text, requestSha256 } = require('../scripts/lib/source-note-interview-materialization');
 const { buildMaterializationRequest, issueSourceRecord } = require('../scripts/lib/interview-note-materialization-batch');
 const { canonicalDigest } = require('../scripts/lib/aggregate-downstream-pipeline');
-const { parseArgs, ghGet } = require('../scripts/issue-1658-materialization-runner');
+const { parseArgs, ghGet, readOrCreateJournal } = require('../scripts/issue-1658-materialization-runner');
 const {
   AUTH_MARKER, ZERO_WRITES, RUNNER_SCHEMA, REPOSITORY,
   buildRunnerPlan, validateFreshArtifacts, validateRunnerPlan, parseAuthorizationComment,
-  receiptBody, receiptObject, reconcileReceipt, reconcileOwner, initialJournal, validateJournal,
-  applyOne, acquireExclusiveLock, assertNoExistingMutation,
+  receiptBody, receiptObject, reconcileReceipt, reconcileOwner, initialJournal, validateJournal, digestWithout,
+  applyOne, acquireExclusiveLock, assertNoExistingMutation, atomicWriteJson,
 } = require('../scripts/lib/issue-1658-materialization-runner');
 
 function load(file) { return JSON.parse(fs.readFileSync(path.join(__dirname, '..', file), 'utf8')); }
@@ -142,6 +142,100 @@ test('untrusted create response is reconciled once and never retried', () => {
   assert.equal(result.created, true);
   assert.equal(creates, 1);
   assert.equal(journal.items[0].phase, 'complete');
+});
+
+test('post-create owner GET exception persists uncertain, then bounded unique reconcile clears it', () => {
+  const source = singleFixture();
+  const request = buildMaterializationRequest(source, REPOSITORY);
+  const sourceValidation = issueSourceRecord(source);
+  const projection = buildInterviewProjection(source, sourceValidation.validation);
+  const planResult = { action: 'would-materialize', request, request_sha256: requestSha256(request), derived_interview_note_id: projection.interview_note_id, projection: { projected_body_sha256: sha256Text(projection.body), projected_title: projection.title, projected_labels: projection.labels } };
+  const plan = { plan_digest: 'g'.repeat(64), results: [planResult] };
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'issue-1658-owner-window-'));
+  const journal = initialJournal(plan, 1, 1);
+  const journalFile = path.join(dir, 'journal.json');
+  const ownerIssue = () => ({ number: 3003, state: 'open', body: projection.body, labels: projection.labels });
+  let owner = false;
+  let ownerGetFailures = 1;
+  let creates = 0;
+  let comments = [];
+  const api = {
+    plan,
+    readIssue: (number) => {
+      if (Number(number) === source.number) return source;
+      if (ownerGetFailures > 0) { ownerGetFailures -= 1; throw new Error('simulated post-create owner GET crash'); }
+      return ownerIssue();
+    },
+    readOwners: () => owner ? [ownerIssue()] : [],
+    readComments: () => comments,
+    createInterviewNote: () => { creates += 1; owner = true; return { number: 3003 }; },
+    addReceipt: (_number, body) => { comments = [{ id: 4003, body }]; return { id: 4003 }; },
+  };
+  const result = applyOne({ planResult, api, journalItem: journal.items[0], journal, journalFile, lock: { assertHeld() {} }, maxCreate: 1, maxReceipts: 1, reconcileAttempts: 2, now: () => '2026-09-09T00:00:00Z' });
+  assert.equal(result.created, true);
+  assert.equal(creates, 1);
+  assert.equal(journal.items[0].phase, 'complete');
+  assert.equal(journal.items[0].possibly_performed, false);
+  assert.equal(JSON.parse(fs.readFileSync(journalFile, 'utf8')).possibly_performed, false);
+});
+
+test('post-create owner exception with no unique reconcile remains permanently uncertain', () => {
+  const source = singleFixture();
+  const request = buildMaterializationRequest(source, REPOSITORY);
+  const sourceValidation = issueSourceRecord(source);
+  const projection = buildInterviewProjection(source, sourceValidation.validation);
+  const planResult = { action: 'would-materialize', request, request_sha256: requestSha256(request), derived_interview_note_id: projection.interview_note_id, projection: { projected_body_sha256: sha256Text(projection.body), projected_title: projection.title, projected_labels: projection.labels } };
+  const plan = { plan_digest: 'j'.repeat(64), results: [planResult] };
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'issue-1658-owner-uncertain-'));
+  const journal = initialJournal(plan, 1, 1);
+  const journalFile = path.join(dir, 'journal.json');
+  let creates = 0;
+  let ownerReads = 0;
+  const api = {
+    plan,
+    readIssue: (number) => Number(number) === source.number ? source : (() => { throw new Error('simulated owner GET failure'); })(),
+    readOwners: () => { ownerReads += 1; return []; },
+    readComments: () => [],
+    createInterviewNote: () => { creates += 1; return { number: 3004 }; },
+    addReceipt: () => ({ id: 4004 }),
+  };
+  assert.throws(() => applyOne({ planResult, api, journalItem: journal.items[0], journal, journalFile, lock: { assertHeld() {} }, maxCreate: 1, maxReceipts: 1, reconcileAttempts: 2 }), /uncertain/);
+  assert.equal(creates, 1);
+  assert.equal(ownerReads, 3, 'one preflight ownership read plus two bounded reconcile reads');
+  const persisted = JSON.parse(fs.readFileSync(journalFile, 'utf8'));
+  assert.equal(persisted.items[0].phase, 'uncertain');
+  assert.equal(persisted.items[0].possibly_performed, true);
+  assert.equal(persisted.possibly_performed, true);
+  assert.throws(() => readOrCreateJournal(journalFile, plan, 1, 1), /uncertain|attempted incomplete/);
+});
+
+test('interrupted attempted mutations fail closed on resume and cannot create again', () => {
+  const source = singleFixture();
+  const request = buildMaterializationRequest(source, REPOSITORY);
+  const sourceValidation = issueSourceRecord(source);
+  const projection = buildInterviewProjection(source, sourceValidation.validation);
+  const planResult = { action: 'would-materialize', request, request_sha256: requestSha256(request), derived_interview_note_id: projection.interview_note_id, projection: { projected_body_sha256: sha256Text(projection.body), projected_title: projection.title, projected_labels: projection.labels } };
+  const plan = { plan_digest: 'h'.repeat(64), results: [planResult] };
+  for (const [phase, mutationCount, receiptCount, possibly] of [['create-pending', 1, 0, false], ['create-unknown', 1, 0, true], ['receipt-pending', 2, 1, true]]) {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'issue-1658-resume-'));
+    const journal = initialJournal(plan, 1, 1);
+    const item = journal.items[0];
+    item.phase = phase;
+    item.mutation_attempted = true;
+    item.mutation_count = mutationCount;
+    item.possibly_performed = possibly;
+    journal.create_count = 1;
+    journal.receipt_count = receiptCount;
+    journal.mutation_count = mutationCount;
+    journal.possibly_performed = possibly;
+    journal.canonical_digest = digestWithout(journal, 'canonical_digest');
+    const journalFile = path.join(dir, 'journal.json');
+    atomicWriteJson(journalFile, journal);
+    assert.throws(() => readOrCreateJournal(journalFile, plan, 1, 1), /attempted incomplete|uncertain/);
+    let creates = 0;
+    assert.throws(() => applyOne({ planResult, api: { plan, readIssue: () => source, readOwners: () => [], readComments: () => [], createInterviewNote: () => { creates += 1; return { number: 1 }; } }, journalItem: item, journal, journalFile, lock: { assertHeld() {} }, maxCreate: 1, maxReceipts: 1 }), /attempted incomplete/);
+    assert.equal(creates, 0, `${phase} must never retry create`);
+  }
 });
 
 test('created InterviewNote labels are an exact sorted CAS: missing or extra labels fail closed', () => {

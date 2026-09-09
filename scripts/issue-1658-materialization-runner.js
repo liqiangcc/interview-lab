@@ -111,6 +111,8 @@ function readOrCreateJournal(file, plan, maxCreate, maxReceipts) {
   const validation = validateJournal(journal, plan, maxCreate, maxReceipts);
   if (!validation.ok) throw new Error(`durable journal is not resumable: ${validation.errors.join('; ')}`);
   if (journal.status === 'uncertain' || journal.possibly_performed) throw new Error('durable journal is uncertain; refusing blind retry');
+  const interrupted = journal.items.filter((item) => item.phase !== 'pending' && item.phase !== 'complete');
+  if (interrupted.length) throw new Error(`durable journal records attempted incomplete mutation(s): ${interrupted.map((item) => `${item.materialization_id}:${item.phase}`).join(', ')}; refusing duplicate create`);
   return journal;
 }
 

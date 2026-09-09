@@ -31,6 +31,6 @@ node scripts/issue-1658-materialization-runner.js \
 
 controller issue #1658 的指定 comment 必须包含且只包含一个 `issue-1658-interview-note-materialization-authorization` marker；fetched comment 自身的 `issue_url`（以及存在时的 `issue_number`）必须实际指向 #1658，`url` 必须与指定 `comment_id` 精确对应。marker 的 `comment_id`、五个 fresh digest、`allow_live_github=true` 以及 create/receipt ceiling 必须全部和本次 plan/CLI 参数精确相等。plan 必须顶层无 error、无 blocked row、全量 CAS-ready；否则在获取 lock 前拒绝，任何目标写入均不会发生。
 
-可达的 apply writer 具有 atomic exclusive lock、inode/token ownership check、fsync durable journal 和 per-row intent。每条 create/receipt 之前都会 fresh GET SourceNote、owner、comments 并执行 body/revision/identity/label CAS；不提供 label PATCH 路径。未知 POST response 只允许有限次 GET：create 只 reconcile exact owner，receipt 只 reconcile exact machine marker；不确定、重复、冲突或超时都记录 `possibly_performed=true` 并永久 fail closed，禁止盲重试。
+可达的 apply writer 具有 atomic exclusive lock、inode/token ownership check、fsync durable journal 和 per-row intent。`mutation_attempted=true` 在每个 POST 前先持久化；恢复时任何未 `complete` 的 in-flight phase（包括 `create-pending`、`create-unknown`、`receipt-pending`、`uncertain`）都拒绝重试。每条 create/receipt 之前都会 fresh GET SourceNote、owner、comments 并执行 body/revision/identity/label CAS；不提供 label PATCH 路径。create POST 后 owner GET/validate 的异常先持久化 `uncertain`/`possibly_performed=true`，再只允许有限次 exact-owner reconcile；receipt POST 只允许有限次 exact machine marker reconcile。不确定、重复、冲突或超时都永久 fail closed，禁止盲重试；只有唯一且完整验证的收敛结果才清除 uncertain。
 
 本任务不执行目标 PATCH/POST、InterviewNote create、label 写入或 Issue closure。允许的远端写操作仅限本任务完成后的 branch push、PR 创建和 #1658 机器证据评论。

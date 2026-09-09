@@ -264,7 +264,9 @@ function matchingReceipts(comments, expected) {
 function reconcileReceipt(readComments, request, expected, attempts = 3) {
   let last = [];
   for (let attempt = 1; attempt <= attempts; attempt += 1) {
-    const result = matchingReceipts(readComments(), expected);
+    let result;
+    try { result = matchingReceipts(readComments(), expected); }
+    catch (error) { if (attempt === attempts) throw new Error(`receipt reconcile read failed after ${attempts} bounded GET attempts: ${error.message}`); continue; }
     last = result.receipts;
     if (result.receipts.length > 1) throw new Error(`receipt reconcile found duplicate ${RECEIPT_MARKER} markers`);
     if (result.matching.length === 1) return result.matching[0];
@@ -276,8 +278,9 @@ function reconcileReceipt(readComments, request, expected, attempts = 3) {
 function reconcileOwner(readOwners, interviewNoteId, attempts = 3) {
   let last = [];
   for (let attempt = 1; attempt <= attempts; attempt += 1) {
-    last = readOwners(interviewNoteId);
-    if (!Array.isArray(last)) throw new Error('owner reconcile response was not an array');
+    try { last = readOwners(interviewNoteId); }
+    catch (error) { if (attempt === attempts) throw new Error(`owner reconcile read failed after ${attempts} bounded GET attempts: ${error.message}`); continue; }
+    if (!Array.isArray(last)) { if (attempt === attempts) throw new Error(`owner reconcile response was not an array after ${attempts} bounded GET attempts`); continue; }
     if (last.length > 1) throw new Error(`owner reconcile found duplicate InterviewNote owners: ${last.map((issue) => issue.number).join(',')}`);
     if (last.length === 1) return last[0];
   }
@@ -362,6 +365,9 @@ function validateJournal(journal, plan, maxCreate, maxReceipts) {
     if (!['pending', 'create-pending', 'create-unknown', 'receipt-pending', 'complete', 'uncertain'].includes(item.phase)) errors.push(`journal phase invalid for ${item.materialization_id}`);
     if (!Number.isSafeInteger(item.mutation_count) || item.mutation_count < 0) errors.push(`journal mutation count invalid for ${item.materialization_id}`); else sum += item.mutation_count;
     if (typeof item.mutation_attempted !== 'boolean' || typeof item.mutation_performed !== 'boolean' || typeof item.possibly_performed !== 'boolean') errors.push(`journal mutation flags invalid for ${item.materialization_id}`);
+    if (item.phase === 'pending' && (item.mutation_attempted || item.mutation_performed || item.possibly_performed || item.mutation_count !== 0)) errors.push(`pending journal item has mutation state for ${item.materialization_id}`);
+    if (item.phase === 'complete' && (!item.mutation_attempted || !item.mutation_performed || item.possibly_performed || item.mutation_count !== 2)) errors.push(`complete journal item is not fully settled for ${item.materialization_id}`);
+    if (!['pending', 'complete'].includes(item.phase) && !item.mutation_attempted) errors.push(`in-flight journal item lacks persisted mutation_attempted for ${item.materialization_id}`);
   }
   if (seen.size !== expected.size) errors.push('journal does not contain exactly one item for every would-materialize row');
   if (journal && sum !== journal.mutation_count) errors.push('journal mutation_count does not equal item total');
@@ -380,6 +386,49 @@ function updateJournal(journal, file, lock, plan, maxCreate, maxReceipts) {
   return next;
 }
 
+function markUncertain({ journalItem, journal, journalFile, lock, plan, maxCreate, maxReceipts }) {
+  journalItem.phase = 'uncertain';
+  journalItem.possibly_performed = true;
+  journal.possibly_performed = true;
+  return updateJournal(journal, journalFile, lock, plan, maxCreate, maxReceipts);
+}
+
+function clearUncertain({ journalItem, journal, journalFile, lock, plan, maxCreate, maxReceipts, phase }) {
+  journalItem.phase = phase;
+  journalItem.possibly_performed = false;
+  journal.possibly_performed = journal.items.some((item) => item.possibly_performed === true);
+  return updateJournal(journal, journalFile, lock, plan, maxCreate, maxReceipts);
+}
+
+function validateCreatedOwner(owner, projection) {
+  if (!owner || !Number.isInteger(Number(owner.number))) throw new Error('owner GET did not return a valid Issue object');
+  const ownerValidation = validateInterviewNoteIssue({ body: owner.body, labels: labelsOf(owner), state: String(owner.state || 'open').toLowerCase() });
+  const expectedLabels = labelsOf({ labels: projection.labels });
+  const actualLabels = labelsOf(owner);
+  if (!ownerValidation.ok || sha256Text(owner.body || '') !== sha256Text(projection.body) || JSON.stringify(actualLabels) !== JSON.stringify(expectedLabels)) throw new Error('created InterviewNote failed exact body/label validation');
+  return owner;
+}
+
+function readAndValidateCreatedOwner({ api, projection, ownerNumber, journalItem, journal, journalFile, lock, maxCreate, maxReceipts, plan, reconcileAttempts }) {
+  try {
+    const owner = validateCreatedOwner(api.readIssue(ownerNumber), projection);
+    const ownerMatches = api.readOwners(projection.interview_note_id);
+    if (!Array.isArray(ownerMatches) || ownerMatches.length !== 1 || Number(ownerMatches[0].number) !== Number(ownerNumber)) throw new Error('created InterviewNote ownership CAS did not converge exactly once');
+    if (journalItem.possibly_performed || journalItem.phase === 'create-unknown' || journalItem.phase === 'uncertain') clearUncertain({ journalItem, journal, journalFile, lock, plan, maxCreate, maxReceipts, phase: 'create-pending' });
+    return owner;
+  } catch (error) {
+    markUncertain({ journalItem, journal, journalFile, lock, plan, maxCreate, maxReceipts });
+    let reconciled;
+    try { reconciled = reconcileOwner(api.readOwners, projection.interview_note_id, reconcileAttempts); }
+    catch (reconcileError) { throw new Error(`post-create owner validation is uncertain; bounded reconcile failed: ${reconcileError.message}`); }
+    if (Number(reconciled.number) !== Number(ownerNumber)) throw new Error(`post-create owner validation is uncertain; reconcile found Issue #${reconciled.number} instead of #${ownerNumber}`);
+    try { validateCreatedOwner(reconciled, projection); }
+    catch (reconcileError) { throw new Error(`post-create owner validation is uncertain; reconciled owner is invalid: ${reconcileError.message}`); }
+    clearUncertain({ journalItem, journal, journalFile, lock, plan, maxCreate, maxReceipts, phase: 'create-pending' });
+    return reconciled;
+  }
+}
+
 function buildCreateProjection(planResult) {
   if (!planResult || planResult.action !== 'would-materialize' || !planResult.request || !planResult.projection) throw new Error('only a would-materialize row can reach InterviewNote create');
   if (typeof planResult.projection.body !== 'string') throw new Error('create projection body is not available from a public plan row');
@@ -396,6 +445,7 @@ function applyOne({ planResult, api, journalItem, journal, journalFile, lock, ma
   const expectedRequestSha = requestSha256(request);
   if (planResult.request_sha256 !== expectedRequestSha) throw new Error('row request SHA does not match request before apply');
   if (planResult.action !== 'would-materialize') throw new Error(`applyOne cannot mutate action ${planResult.action}`);
+  if (!journalItem || journalItem.phase !== 'pending' || journalItem.mutation_attempted || journalItem.possibly_performed) throw new Error('durable journal records an attempted incomplete mutation; refusing duplicate create');
   lock.assertHeld();
   const source = api.readIssue(request.source_note_issue_number);
   const owners = api.readOwners(planResult.derived_interview_note_id || planResult.projection.interview_note_id);
@@ -426,13 +476,7 @@ function applyOne({ planResult, api, journalItem, journal, journalFile, lock, ma
   }
   if (!created || !Number.isInteger(Number(created.number))) throw new Error('create response/reconcile lacked a valid InterviewNote Issue number');
   const ownerNumber = Number(created.number);
-  const owner = api.readIssue(ownerNumber);
-  const ownerValidation = validateInterviewNoteIssue({ body: owner.body, labels: labelsOf(owner), state: String(owner.state || 'open').toLowerCase() });
-  const expectedLabels = labelsOf({ labels: projection.labels });
-  const actualLabels = labelsOf(owner);
-  if (!ownerValidation.ok || sha256Text(owner.body || '') !== sha256Text(projection.body) || JSON.stringify(actualLabels) !== JSON.stringify(expectedLabels)) throw new Error('created InterviewNote failed exact body/label validation');
-  const ownerMatches = api.readOwners(projection.interview_note_id);
-  if (ownerMatches.length !== 1 || Number(ownerMatches[0].number) !== ownerNumber) throw new Error('created InterviewNote ownership CAS did not converge exactly once');
+  readAndValidateCreatedOwner({ api, projection, ownerNumber, journalItem, journal, journalFile, lock, maxCreate, maxReceipts, plan: api.plan, reconcileAttempts });
   const receipt = receiptObject(request, preflight, ownerNumber, now());
   journalItem.phase = 'receipt-pending'; journal.intents[request.materialization_id] = { ...intent, phase: 'receipt-pending', interview_issue_number: ownerNumber, receipt_sha256: sha256Text(receiptBody(receipt)), updated_at: now() };
   if (journal.receipt_count >= maxReceipts) throw new Error('receipt mutation ceiling is exhausted');
@@ -441,15 +485,21 @@ function applyOne({ planResult, api, journalItem, journal, journalFile, lock, ma
   updateJournal(journal, journalFile, lock, api.plan, maxCreate, maxReceipts);
   try { lock.assertHeld(); const posted = api.addReceipt(request.source_note_issue_number, receiptBody(receipt)); if (!posted || !Number.isInteger(Number(posted.id))) throw new Error('receipt POST response was not a trusted comment object'); }
   catch (error) {
-    journalItem.possibly_performed = true; journal.possibly_performed = true;
-    updateJournal(journal, journalFile, lock, api.plan, maxCreate, maxReceipts);
+    markUncertain({ journalItem, journal, journalFile, lock, plan: api.plan, maxCreate, maxReceipts });
     reconcileReceipt(() => api.readComments(request.source_note_issue_number), request, { ...receipt, request_sha256: expectedRequestSha }, reconcileAttempts);
+    clearUncertain({ journalItem, journal, journalFile, lock, plan: api.plan, maxCreate, maxReceipts, phase: 'receipt-pending' });
   }
-  const finalSource = api.readIssue(request.source_note_issue_number);
-  const finalOwners = api.readOwners(projection.interview_note_id);
-  const finalReceipts = parseMaterializationReceipts(api.readComments(request.source_note_issue_number));
-  const final = planMaterialization(request, { repository: REPOSITORY, sourceIssue: finalSource, issues: finalOwners, receipts: finalReceipts });
-  if (!final.ok || !final.already_materialized || final.existing_issue_number !== ownerNumber) throw new Error('final materialization CAS did not converge');
+  let final;
+  try {
+    const finalSource = api.readIssue(request.source_note_issue_number);
+    const finalOwners = api.readOwners(projection.interview_note_id);
+    const finalReceipts = parseMaterializationReceipts(api.readComments(request.source_note_issue_number));
+    final = planMaterialization(request, { repository: REPOSITORY, sourceIssue: finalSource, issues: finalOwners, receipts: finalReceipts });
+    if (!final.ok || !final.already_materialized || final.existing_issue_number !== ownerNumber) throw new Error('final materialization CAS did not converge');
+  } catch (error) {
+    markUncertain({ journalItem, journal, journalFile, lock, plan: api.plan, maxCreate, maxReceipts });
+    throw new Error(`post-mutation final CAS is uncertain: ${error.message}`);
+  }
   journalItem.phase = 'complete'; journalItem.mutation_performed = true; journalItem.possibly_performed = false; journal.possibly_performed = false; journal.status = 'running';
   updateJournal(journal, journalFile, lock, api.plan, maxCreate, maxReceipts);
   return { materialization_id: request.materialization_id, request_sha256: expectedRequestSha, interview_note_id: projection.interview_note_id, interview_issue_number: ownerNumber, created: true, receipt_machine_marker: RECEIPT_MARKER, mutation_performed: true };
