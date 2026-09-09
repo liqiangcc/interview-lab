@@ -11,6 +11,7 @@ const REPOSITORY = 'liqiangcc/interview-lab';
 const PAGE_SIZE = 100;
 const MAX_PAGES = 100;
 const SCHEMA_VERSION = 'aggregate-interview-note-ownership-inventory.v1';
+function sleepMs(ms) { Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms); }
 
 function labelsOf(issue) {
   return (issue && issue.labels || [])
@@ -36,11 +37,13 @@ function parseArgs(argv = process.argv.slice(2)) {
 }
 
 function readPage(repository, page) {
-  return JSON.parse(execFileSync('gh', ['api', `repos/${repository}/issues?state=all&labels=type%3Ainterview-note&per_page=${PAGE_SIZE}&page=${page}`], {
-    encoding: 'utf8',
-    maxBuffer: 128 * 1024 * 1024,
-    timeout: 30_000,
-  }));
+  const args = ['api', `repos/${repository}/issues?state=all&labels=type%3Ainterview-note&per_page=${PAGE_SIZE}&page=${page}`];
+  let lastError;
+  for (let attempt = 1; attempt <= 3; attempt += 1) {
+    try { return JSON.parse(execFileSync('gh', args, { encoding: 'utf8', maxBuffer: 128 * 1024 * 1024, timeout: 30_000 })); }
+    catch (error) { lastError = error; if (attempt < 3) sleepMs(attempt * 1000); }
+  }
+  throw lastError;
 }
 
 function paginateInterviewNotes(repository, read = (page) => readPage(repository, page), maxPages = MAX_PAGES) {
