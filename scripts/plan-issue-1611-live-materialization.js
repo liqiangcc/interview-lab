@@ -135,6 +135,7 @@ function exactAppliedBoundaryEvidence(issue, comments) {
         source_revision_id: revision,
         evidence_body_sha256: receipt && receipt.previous_body_sha256,
         source_note_body_sha256: receipt && receipt.previous_body_sha256,
+        live_source_note_body_sha256: bodySha,
         decision: status,
         transition_id: receipt && receipt.transition_id,
       });

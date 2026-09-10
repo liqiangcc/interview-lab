@@ -213,7 +213,7 @@ function issue1608EvidenceValue(body) {
   catch (error) { return { value: null, errors: [`issue-1608 evidence JSON is invalid: ${error.message}`] }; }
 }
 
-function validateIssue1608BoundaryEvidenceValue(value, expected) {
+function validateIssue1608BoundaryEvidenceValue(value, expected, sourceIssue = null) {
   // issue-1608 evidence was posted before the separate boundary transition.
   // Accept only its complete nested transition request and live binding; this
   // adapter does not infer or repair the later applied receipt.
@@ -230,6 +230,15 @@ function validateIssue1608BoundaryEvidenceValue(value, expected) {
   equal('source_repository_ref', value.source_repository_ref, SOURCE_REF);
   equal('evidence_status', value.evidence_status, 'sufficient-for-controller-review');
   equal('decision', value.decision, expected.decision);
+  const liveResult = sourceIssue ? issueSourceRecord(sourceIssue) : null;
+  if (sourceIssue && !liveResult.parsed) errors.push(`SourceNote #${issueNumber} live source snapshot is invalid: ${(liveResult.validation.errors || []).join('; ')}`);
+  const live = liveResult && liveResult.parsed;
+  if (live) {
+    equal('live_source_note_id', live.source_note_id, expected.source_note_id);
+    equal('live_source_revision_id', live.source_revision && live.source_revision.id, expected.source_revision_id);
+    equal('live_source_repository_ref', live.source_revision && live.source_revision.source_repository_ref, SOURCE_REF);
+    if (expected.live_source_note_body_sha256 != null) equal('live_source_note_body_sha256', sha256Text(sourceIssue.body || ''), expected.live_source_note_body_sha256);
+  }
   const request = value.transition_request;
   if (!request || typeof request !== 'object' || Array.isArray(request)) {
     errors.push(`SourceNote #${issueNumber} issue-1608 evidence transition_request is missing`);
@@ -286,7 +295,7 @@ function validateLiveBoundaryEvidenceComment(comment, expected, sourceIssue) {
   if (comment && comment.issue_url !== expectedApiUrl) errors.push(`SourceNote #${issueNumber} evidence comment issue_url is not bound to the exact repository/issue`);
   if (expected && expected.evidence_schema === 'issue-1608-boundary-evidence.v1') {
     const parsed = issue1608EvidenceValue(comment && comment.body);
-    const validation = validateIssue1608BoundaryEvidenceValue(parsed.value, expected);
+    const validation = validateIssue1608BoundaryEvidenceValue(parsed.value, expected, sourceIssue);
     return { ok: errors.length === 0 && validation.ok, errors: [...errors, ...parsed.errors, ...validation.errors], value: parsed.value };
   }
   if (expected && expected.evidence_schema === 'issue-921-pilot-evidence') {

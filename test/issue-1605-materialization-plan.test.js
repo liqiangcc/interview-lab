@@ -209,6 +209,7 @@ function item(source, decision, status = 'already_applied', ids = []) {
     source_note_issue_number: source.number,
     source_note_id: parsed.source_note_id,
     source_note_body_sha256: sha256Text(source.body),
+    live_source_note_body_sha256: sha256Text(source.body),
     source_revision_id: parsed.source_revision.id,
     decision,
     transition_id: `fixture-transition-${source.number}`,
@@ -404,6 +405,10 @@ test('transition-applied candidates require an exact, live-bound evidence commen
 
 test('strictly adapts the issue-1608 evidence schema without accepting drift or duplicate matches', () => {
   const source = makeSourceIssue(919, 'single-interview');
+  const sourceRecordMarker = source.body.match(/<!-- source-note-record\s*\n([\s\S]*?)\n-->/);
+  const sourceRecord = JSON.parse(sourceRecordMarker[1]);
+  sourceRecord.source_revision.source_repository_ref = '95b77bb261048059846273688e4b90a2e108b437';
+  source.body = source.body.replace(sourceRecordMarker[0], `<!-- source-note-record\n${JSON.stringify(sourceRecord, null, 2)}\n-->`);
   const parsed = parseSourceNoteIssue(source.body).record;
   const transitionId = 'fixture-transition-919-issue-1608';
   const evidenceBodySha = 'a'.repeat(64);
@@ -462,6 +467,7 @@ test('strictly adapts the issue-1608 evidence schema without accepting drift or 
     source_note_id: parsed.source_note_id,
     source_note_body_sha256: sha256Text(source.body),
     evidence_body_sha256: evidenceBodySha,
+    live_source_note_body_sha256: sha256Text(source.body),
     source_revision_id: parsed.source_revision.id,
     decision: 'single-interview',
     transition_id: transitionId,
@@ -469,6 +475,21 @@ test('strictly adapts the issue-1608 evidence schema without accepting drift or 
     evidence_schema: 'issue-1608-boundary-evidence.v1',
   };
   assert.equal(validateLiveBoundaryEvidenceComment(comment, expected, source).ok, true);
+  const withSourceRecord = (mutate) => {
+    const copy = JSON.parse(JSON.stringify(source));
+    const recordMarker = copy.body.match(/<!-- source-note-record\s*\n([\s\S]*?)\n-->/);
+    const record = JSON.parse(recordMarker[1]);
+    mutate(record);
+    copy.body = copy.body
+      .replace(/<!-- source-note:\s*id=[^\s]+\s+schema=[^\s]+\s*-->/, `<!-- source-note: id=${record.source_note_id} schema=${record.schema_version} -->`)
+      .replace(recordMarker[0], `<!-- source-note-record\n${JSON.stringify(record, null, 2)}\n-->`);
+    return copy;
+  };
+  assert.equal(validateLiveBoundaryEvidenceComment({ ...comment }, expected, { ...source, body: `${source.body}\nsource body drift` }).ok, false);
+  const refDrift = withSourceRecord((record) => { record.source_revision.source_repository_ref = 'wrong/ref'; });
+  assert.equal(validateLiveBoundaryEvidenceComment(comment, { ...expected, live_source_note_body_sha256: sha256Text(refDrift.body) }, refDrift).ok, false);
+  const identityDrift = withSourceRecord((record) => { record.source_note_id = 'xhs-note:drifted-source'; });
+  assert.equal(validateLiveBoundaryEvidenceComment(comment, { ...expected, live_source_note_body_sha256: sha256Text(identityDrift.body) }, identityDrift).ok, false);
   for (const mutate of [
     (value) => ({ ...value, transition_request: { ...value.transition_request, expected_body_sha256: 'd'.repeat(64) } }),
     (value) => ({ ...value, source_repository_ref: 'wrong/ref' }),
