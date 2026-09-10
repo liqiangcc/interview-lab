@@ -1,8 +1,10 @@
 {
-  "audit_type": "issue-1658-read-only-reconciliation-v2",
+  "audit_type": "issue-1658-read-only-reconciliation-v3",
   "generated_at": "2026-09-10T08:58:54.224Z",
   "source_tree_sha": "e443f7d5303da500981e24c65c7a6e1ba417a7d1",
   "input_snapshot_sha256": "58f6c7c1836d159a5b7d371ca93221ef0802c59159881e1e3315e2c4a8e36f8e",
+  "owner_inventory_snapshot_sha256": "0b4e865505ace8668b05ac294e866b38ffe797d2c9dc97c6a2514cf803c52e29",
+  "full_plan_summary_sha256": "2a73ab891c93e4abad74ccfe19763243b6b5fed9364c0d9ffb119d2d7d4a3ee5",
   "scope": [
     1309,
     1325,
@@ -18,6 +20,15 @@
     1447,
     1458
   ],
+  "owner_inventory": {
+    "coverage": "all-repository-interview-note-issues",
+    "complete": true,
+    "count": 65,
+    "identity_count": 65,
+    "issue_count": 65,
+    "uniqueness": "PASS",
+    "errors": []
+  },
   "dimensions": {
     "owner_fact": {
       "PASS": 13,
@@ -32,6 +43,7 @@
     },
     "consumer_compatibility": {
       "full_live_planner": {
+        "PASS": 0,
         "FAIL": 13
       },
       "generic_runner": {
@@ -41,6 +53,14 @@
         "NOT_VERIFIED": 13
       }
     }
+  },
+  "full_planner_global": {
+    "plan_ok": false,
+    "global_errors": [
+      "boundary report: #910 must have exactly one matching boundary evidence comment (got 0)",
+      "boundary report: #910 live SourceRevision ref drifted"
+    ],
+    "global_error_count": 2
   },
   "targets": [
     {
@@ -92,11 +112,18 @@
         "expected_request_sha256": "53089e1ec792d762f6904e1f51ba2ce7a05d8a46e8e76e6a03bd24e80f526fb9",
         "result": "MISMATCH"
       },
+      "planner_diagnostics": {
+        "full_live_planner_errors": [
+          "boundary report: #1309 must have exactly one matching boundary evidence comment (got 0)",
+          "boundary report: #1309 receipt interview_note_ids mismatch"
+        ],
+        "full_live_planner": "FAIL"
+      },
       "dimensions": {
         "owner_fact": "PASS",
         "receipt_fact": "PASS",
         "historical_execution": "UNKNOWN",
-        "historical_execution_reason": "本次查找范围内未找到原授权 input plan 或 durable journal",
+        "historical_execution_reason": "在本次查找范围内未找到原授权 input plan 或 durable journal",
         "consumer_compatibility": {
           "full_live_planner": "FAIL",
           "generic_runner": "NOT_VERIFIED",
@@ -153,11 +180,18 @@
         "expected_request_sha256": "1a1c1c652d55afda584b15412794dcd6b2663dbe7629288b1da6ad1a2010e794",
         "result": "MISMATCH"
       },
+      "planner_diagnostics": {
+        "full_live_planner_errors": [
+          "boundary report: #1325 must have exactly one matching boundary evidence comment (got 0)",
+          "boundary report: #1325 receipt interview_note_ids mismatch"
+        ],
+        "full_live_planner": "FAIL"
+      },
       "dimensions": {
         "owner_fact": "PASS",
         "receipt_fact": "PASS",
         "historical_execution": "UNKNOWN",
-        "historical_execution_reason": "本次查找范围内未找到原授权 input plan 或 durable journal",
+        "historical_execution_reason": "在本次查找范围内未找到原授权 input plan 或 durable journal",
         "consumer_compatibility": {
           "full_live_planner": "FAIL",
           "generic_runner": "NOT_VERIFIED",
@@ -214,11 +248,18 @@
         "expected_request_sha256": "0e279e69473acadc2c9566cd8c545de73e71f44c54696983876407f937626da7",
         "result": "MISMATCH"
       },
+      "planner_diagnostics": {
+        "full_live_planner_errors": [
+          "boundary report: #1333 must have exactly one matching boundary evidence comment (got 0)",
+          "boundary report: #1333 receipt interview_note_ids mismatch"
+        ],
+        "full_live_planner": "FAIL"
+      },
       "dimensions": {
         "owner_fact": "PASS",
         "receipt_fact": "PASS",
         "historical_execution": "UNKNOWN",
-        "historical_execution_reason": "本次查找范围内未找到原授权 input plan 或 durable journal",
+        "historical_execution_reason": "在本次查找范围内未找到原授权 input plan 或 durable journal",
         "consumer_compatibility": {
           "full_live_planner": "FAIL",
           "generic_runner": "NOT_VERIFIED",
@@ -275,11 +316,18 @@
         "expected_request_sha256": "7cb2dac06563d2870341286adb564eed3c1cfd3095c03f1771ba5e871472fb92",
         "result": "MISMATCH"
       },
+      "planner_diagnostics": {
+        "full_live_planner_errors": [
+          "boundary report: #1363 must have exactly one matching boundary evidence comment (got 0)",
+          "boundary report: #1363 receipt interview_note_ids mismatch"
+        ],
+        "full_live_planner": "FAIL"
+      },
       "dimensions": {
         "owner_fact": "PASS",
         "receipt_fact": "PASS",
         "historical_execution": "UNKNOWN",
-        "historical_execution_reason": "本次查找范围内未找到原授权 input plan 或 durable journal",
+        "historical_execution_reason": "在本次查找范围内未找到原授权 input plan 或 durable journal",
         "consumer_compatibility": {
           "full_live_planner": "FAIL",
           "generic_runner": "NOT_VERIFIED",
@@ -336,11 +384,18 @@
         "expected_request_sha256": "3e792ae41fd1555088294e1f4914752f116409a465a167f6a55fcc7795847e86",
         "result": "MISMATCH"
       },
+      "planner_diagnostics": {
+        "full_live_planner_errors": [
+          "boundary report: #1375 must have exactly one matching boundary evidence comment (got 0)",
+          "boundary report: #1375 receipt interview_note_ids mismatch"
+        ],
+        "full_live_planner": "FAIL"
+      },
       "dimensions": {
         "owner_fact": "PASS",
         "receipt_fact": "PASS",
         "historical_execution": "UNKNOWN",
-        "historical_execution_reason": "本次查找范围内未找到原授权 input plan 或 durable journal",
+        "historical_execution_reason": "在本次查找范围内未找到原授权 input plan 或 durable journal",
         "consumer_compatibility": {
           "full_live_planner": "FAIL",
           "generic_runner": "NOT_VERIFIED",
@@ -397,11 +452,18 @@
         "expected_request_sha256": "228b773109a964a4e3883fb2c35b2f1797bacdae00e651f2a356ebddaf0bda61",
         "result": "MISMATCH"
       },
+      "planner_diagnostics": {
+        "full_live_planner_errors": [
+          "boundary report: #1376 must have exactly one matching boundary evidence comment (got 0)",
+          "boundary report: #1376 receipt interview_note_ids mismatch"
+        ],
+        "full_live_planner": "FAIL"
+      },
       "dimensions": {
         "owner_fact": "PASS",
         "receipt_fact": "PASS",
         "historical_execution": "UNKNOWN",
-        "historical_execution_reason": "本次查找范围内未找到原授权 input plan 或 durable journal",
+        "historical_execution_reason": "在本次查找范围内未找到原授权 input plan 或 durable journal",
         "consumer_compatibility": {
           "full_live_planner": "FAIL",
           "generic_runner": "NOT_VERIFIED",
@@ -458,11 +520,18 @@
         "expected_request_sha256": "443489c83095c46ddba0d93c7ff970819c74f4e7c8cc3e7b96de8a73b4e088fd",
         "result": "MISMATCH"
       },
+      "planner_diagnostics": {
+        "full_live_planner_errors": [
+          "boundary report: #1380 must have exactly one matching boundary evidence comment (got 0)",
+          "boundary report: #1380 receipt interview_note_ids mismatch"
+        ],
+        "full_live_planner": "FAIL"
+      },
       "dimensions": {
         "owner_fact": "PASS",
         "receipt_fact": "PASS",
         "historical_execution": "UNKNOWN",
-        "historical_execution_reason": "本次查找范围内未找到原授权 input plan 或 durable journal",
+        "historical_execution_reason": "在本次查找范围内未找到原授权 input plan 或 durable journal",
         "consumer_compatibility": {
           "full_live_planner": "FAIL",
           "generic_runner": "NOT_VERIFIED",
@@ -519,11 +588,18 @@
         "expected_request_sha256": "5e2282263a56bb976eb767d424b3b43eb0380441770d3c87fb50decc6a4cf5ee",
         "result": "MISMATCH"
       },
+      "planner_diagnostics": {
+        "full_live_planner_errors": [
+          "boundary report: #1401 must have exactly one matching boundary evidence comment (got 0)",
+          "boundary report: #1401 receipt interview_note_ids mismatch"
+        ],
+        "full_live_planner": "FAIL"
+      },
       "dimensions": {
         "owner_fact": "PASS",
         "receipt_fact": "PASS",
         "historical_execution": "UNKNOWN",
-        "historical_execution_reason": "本次查找范围内未找到原授权 input plan 或 durable journal",
+        "historical_execution_reason": "在本次查找范围内未找到原授权 input plan 或 durable journal",
         "consumer_compatibility": {
           "full_live_planner": "FAIL",
           "generic_runner": "NOT_VERIFIED",
@@ -580,11 +656,18 @@
         "expected_request_sha256": "c27baf3f64a4b238b3d3c6ffbb512ef78da65f719f283fea82a94c638130d212",
         "result": "MISMATCH"
       },
+      "planner_diagnostics": {
+        "full_live_planner_errors": [
+          "boundary report: #1406 must have exactly one matching boundary evidence comment (got 0)",
+          "boundary report: #1406 receipt interview_note_ids mismatch"
+        ],
+        "full_live_planner": "FAIL"
+      },
       "dimensions": {
         "owner_fact": "PASS",
         "receipt_fact": "PASS",
         "historical_execution": "UNKNOWN",
-        "historical_execution_reason": "本次查找范围内未找到原授权 input plan 或 durable journal",
+        "historical_execution_reason": "在本次查找范围内未找到原授权 input plan 或 durable journal",
         "consumer_compatibility": {
           "full_live_planner": "FAIL",
           "generic_runner": "NOT_VERIFIED",
@@ -641,11 +724,18 @@
         "expected_request_sha256": "61916fc17fe27ca2d1071f62963a7701f335b910d7ee34f2acc295478598ec26",
         "result": "MISMATCH"
       },
+      "planner_diagnostics": {
+        "full_live_planner_errors": [
+          "boundary report: #1418 must have exactly one matching boundary evidence comment (got 0)",
+          "boundary report: #1418 receipt interview_note_ids mismatch"
+        ],
+        "full_live_planner": "FAIL"
+      },
       "dimensions": {
         "owner_fact": "PASS",
         "receipt_fact": "PASS",
         "historical_execution": "UNKNOWN",
-        "historical_execution_reason": "本次查找范围内未找到原授权 input plan 或 durable journal",
+        "historical_execution_reason": "在本次查找范围内未找到原授权 input plan 或 durable journal",
         "consumer_compatibility": {
           "full_live_planner": "FAIL",
           "generic_runner": "NOT_VERIFIED",
@@ -702,11 +792,18 @@
         "expected_request_sha256": "884b84376735893e433ca848e26b17b980e6f2410ea6e5aaf9d835d04355841a",
         "result": "MISMATCH"
       },
+      "planner_diagnostics": {
+        "full_live_planner_errors": [
+          "boundary report: #1428 must have exactly one matching boundary evidence comment (got 0)",
+          "boundary report: #1428 receipt interview_note_ids mismatch"
+        ],
+        "full_live_planner": "FAIL"
+      },
       "dimensions": {
         "owner_fact": "PASS",
         "receipt_fact": "PASS",
         "historical_execution": "UNKNOWN",
-        "historical_execution_reason": "本次查找范围内未找到原授权 input plan 或 durable journal",
+        "historical_execution_reason": "在本次查找范围内未找到原授权 input plan 或 durable journal",
         "consumer_compatibility": {
           "full_live_planner": "FAIL",
           "generic_runner": "NOT_VERIFIED",
@@ -763,11 +860,18 @@
         "expected_request_sha256": "ae47dd1cbac2edcae8e5f0a0a7af1477d26f017358a5f28cebd8b6229df654a7",
         "result": "MISMATCH"
       },
+      "planner_diagnostics": {
+        "full_live_planner_errors": [
+          "boundary report: #1447 must have exactly one matching boundary evidence comment (got 0)",
+          "boundary report: #1447 receipt interview_note_ids mismatch"
+        ],
+        "full_live_planner": "FAIL"
+      },
       "dimensions": {
         "owner_fact": "PASS",
         "receipt_fact": "PASS",
         "historical_execution": "UNKNOWN",
-        "historical_execution_reason": "本次查找范围内未找到原授权 input plan 或 durable journal",
+        "historical_execution_reason": "在本次查找范围内未找到原授权 input plan 或 durable journal",
         "consumer_compatibility": {
           "full_live_planner": "FAIL",
           "generic_runner": "NOT_VERIFIED",
@@ -824,11 +928,18 @@
         "expected_request_sha256": "83404f1b13e97e3dd9dac34178bba78cccd3ca7f1be8bd47e33ffd9101f1fab4",
         "result": "MISMATCH"
       },
+      "planner_diagnostics": {
+        "full_live_planner_errors": [
+          "boundary report: #1458 must have exactly one matching boundary evidence comment (got 0)",
+          "boundary report: #1458 receipt interview_note_ids mismatch"
+        ],
+        "full_live_planner": "FAIL"
+      },
       "dimensions": {
         "owner_fact": "PASS",
         "receipt_fact": "PASS",
         "historical_execution": "UNKNOWN",
-        "historical_execution_reason": "本次查找范围内未找到原授权 input plan 或 durable journal",
+        "historical_execution_reason": "在本次查找范围内未找到原授权 input plan 或 durable journal",
         "consumer_compatibility": {
           "full_live_planner": "FAIL",
           "generic_runner": "NOT_VERIFIED",
@@ -838,7 +949,8 @@
     }
   ],
   "notes": [
-    "materialization_id/request SHA MISMATCH is scoped to the named full-live-planner current request binding; it is not a historical validity judgment.",
-    "The bounded runner uses inputPlan.rows[].request and was not executed because the original bounded input plan is absent."
+    "materialization_id/request SHA mismatch is scoped to the named full-live-planner current request binding; it is not a historical validity judgment.",
+    "The bounded runner consumes inputPlan.rows[].request, supports exact already-materialized, and was not executed because the original bounded input plan is absent.",
+    "Historical UNKNOWN and NOT_VERIFIED statuses are evidence states, not verifier errors."
   ]
 }
