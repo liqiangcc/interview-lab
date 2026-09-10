@@ -357,16 +357,17 @@ function initialJournal(plan, maxCreate, maxReceipts, now = new Date().toISOStri
   return { ...journal, canonical_digest: digestWithout(journal, 'canonical_digest') };
 }
 
-function validateJournal(journal, plan, maxCreate, maxReceipts) {
+function validateJournal(journal, plan, maxCreate, maxReceipts, options = {}) {
   const errors = [];
   if (!journal || journal.schema_version !== JOURNAL_SCHEMA) errors.push('journal schema mismatch');
-  if (journal && (journal.plan_digest !== plan.plan_digest || journal.parent_issue !== PARENT_ISSUE || journal.controller_issue !== CONTROLLER_ISSUE || journal.boundary_parent_issue !== BOUNDARY_PARENT_ISSUE)) errors.push('journal plan/controller binding mismatch');
+  if (journal && ((!options.allowPlanDigestChange && journal.plan_digest !== plan.plan_digest) || journal.parent_issue !== PARENT_ISSUE || journal.controller_issue !== CONTROLLER_ISSUE || journal.boundary_parent_issue !== BOUNDARY_PARENT_ISSUE)) errors.push('journal plan/controller binding mismatch');
   if (journal && (!HEX64.test(String(journal.canonical_digest || '')) || digestWithout(journal, 'canonical_digest') !== journal.canonical_digest)) errors.push('journal canonical digest drifted');
   if (journal && (journal.max_create !== maxCreate || journal.max_receipts !== maxReceipts)) errors.push('journal mutation ceilings drifted');
   if (journal && (!Number.isSafeInteger(journal.create_count) || journal.create_count < 0 || !Number.isSafeInteger(journal.receipt_count) || journal.receipt_count < 0)) errors.push('journal create/receipt counters are invalid');
   if (journal && (journal.create_count > maxCreate || journal.receipt_count > maxReceipts)) errors.push('journal create/receipt counters exceed their ceilings');
   if (journal && (!Number.isSafeInteger(journal.mutation_count) || journal.mutation_count < 0)) errors.push('journal mutation_count is invalid');
-  const expected = new Map((plan.results || []).filter((item) => item.action === 'would-materialize').map((item) => [item.request.materialization_id, item.request_sha256]));
+  const journalItemIds = new Set((journal && journal.items || []).map((item) => item.materialization_id));
+  const expected = new Map((plan.results || []).filter((item) => item.action === 'would-materialize' || (item.action === 'already-materialized' && journalItemIds.has(item.request.materialization_id))).map((item) => [item.request.materialization_id, item.request_sha256]));
   const seen = new Set(); let sum = 0;
   for (const item of journal && journal.items || []) {
     if (!expected.has(item.materialization_id)) errors.push(`journal contains unknown materialization ${item.materialization_id}`);

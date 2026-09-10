@@ -31,6 +31,15 @@ const DEFAULTS = Object.freeze({
 
 function readJson(file) { return JSON.parse(fs.readFileSync(path.resolve(file), 'utf8')); }
 
+function readExistingJournal(file) {
+  return fs.existsSync(path.resolve(file)) ? readJson(file) : null;
+}
+
+function resumeBoundedResults(plan, journal) {
+  const completed = new Set((journal && journal.items || []).filter((item) => item.phase === 'complete').map((item) => item.materialization_id));
+  return (plan && plan.results || []).filter((result) => !completed.has(result.request.materialization_id));
+}
+
 function parseArgs(argv = process.argv.slice(2)) {
   const args = { ...DEFAULTS, apply: false, allowLiveGithub: false, maxCreate: null, maxReceipts: null };
   for (let index = 0; index < argv.length; index += 1) {
@@ -97,13 +106,14 @@ function applyBounded(plan, inputPlan, args) {
   if (!validation.ok) throw new Error(`bounded apply is fail-closed: ${validation.errors.join('; ')}`);
   const lock = acquireExclusiveLock(args.lock, plan.plan_digest);
   try {
+    const existingJournal = readExistingJournal(args.journal);
     const fresh = freshBoundedReplan(args, inputPlan);
-    const freshPlan = buildBoundedRunnerPlan({ inputPlan, freshRows: fresh.sourceRows, freshOwnershipIssues: fresh.ownershipIssues });
+    const freshPlan = buildBoundedRunnerPlan({ inputPlan, freshRows: fresh.sourceRows, freshOwnershipIssues: fresh.ownershipIssues, journal: existingJournal });
     atomicWriteJson(args.output, freshPlan);
     if (freshPlan.plan_digest !== plan.plan_digest) throw new Error(`lock-held fresh bounded plan digest changed: ${plan.plan_digest} != ${freshPlan.plan_digest}`);
     const auth = readAuthorization(args, inputPlan);
     if (!auth.ok) throw new Error(`authorization is fail-closed: ${auth.errors.join('; ')}`);
-    const journal = readOrCreateJournal(args.journal, freshPlan, 13, 13, { allowReceiptPending: true });
+    const journal = readOrCreateJournal(args.journal, freshPlan, 13, 13, { allowReceiptPending: true, allowBoundedResume: existingJournal != null });
     atomicWriteJson(args.journal, journal);
     const api = {
       plan: freshPlan,
@@ -122,14 +132,14 @@ function applyBounded(plan, inputPlan, args) {
       addReceipt: (number, body) => JSON.parse(execFileSync('gh', ['api', '--method', 'POST', `repos/${REPOSITORY}/issues/${number}/comments`, '--input', '-'], { input: JSON.stringify({ body }), encoding: 'utf8', maxBuffer: 128 * 1024 * 1024, timeout: 30_000 })),
     };
     const results = [];
-    for (const planResult of freshPlan.results) {
+    for (const planResult of resumeBoundedResults(freshPlan, journal)) {
+      const item = journal.items.find((candidate) => candidate.materialization_id === planResult.request.materialization_id);
+      if (item && item.phase === 'complete') continue;
       if (planResult.action === 'already-materialized') {
         results.push({ materialization_id: planResult.request.materialization_id, request_sha256: planResult.request_sha256, interview_note_id: planResult.derived_interview_note_id, interview_issue_number: planResult.existing_issue_number, action: 'already-materialized', mutation_performed: false });
         continue;
       }
-      const item = journal.items.find((candidate) => candidate.materialization_id === planResult.request.materialization_id);
       if (!item) throw new Error(`journal item is missing for ${planResult.request.materialization_id}`);
-      if (item.phase === 'complete') continue;
       results.push(applyOne({ planResult, api, journalItem: item, journal, journalFile: args.journal, lock, maxCreate: 13, maxReceipts: 13, allowReceiptResume: true }));
     }
     journal.status = 'complete';
@@ -157,8 +167,9 @@ function main(argv = process.argv.slice(2)) {
     process.stdout.write(`${JSON.stringify({ output: path.resolve(args.output), schema_version: RUNNER_SCHEMA, input_plan_schema: PLAN_SCHEMA, ok: outputPlan.ok, ready_for_apply: outputPlan.ready_for_apply, plan_digest: outputPlan.plan_digest, input_plan_digest: inputPlan.plan_digest, counts: outputPlan.counts, mutation_performed: false, write_operations: ZERO_WRITES, errors: outputPlan.errors }, null, 2)}\n`);
     return outputPlan.ok ? 0 : 1;
   }
+  const existingJournal = readExistingJournal(args.journal);
   const fresh = freshBoundedReplan(args, inputPlan);
-  const plan = buildBoundedRunnerPlan({ inputPlan, freshRows: fresh.sourceRows, freshOwnershipIssues: fresh.ownershipIssues });
+  const plan = buildBoundedRunnerPlan({ inputPlan, freshRows: fresh.sourceRows, freshOwnershipIssues: fresh.ownershipIssues, journal: existingJournal });
   const auth = readAuthorization(args, inputPlan);
   const outputPlan = auth.ok ? plan : { ...plan, authorization: { ok: false, errors: auth.errors }, errors: [...plan.errors, ...auth.errors.map((error) => `authorization: ${error}`)], ok: false, ready_for_apply: false };
   outputPlan.plan_digest = require('./lib/aggregate-downstream-pipeline').canonicalDigest(runnerDigestInput(outputPlan));
@@ -172,4 +183,4 @@ if (require.main === module) {
   catch (error) { process.stderr.write(`ERROR: ${error.stack || error.message}\n`); process.exitCode = 1; }
 }
 
-module.exports = { DEFAULTS, parseArgs, freshBoundedReplan, readAuthorization, applyBounded, main };
+module.exports = { DEFAULTS, parseArgs, freshBoundedReplan, readAuthorization, applyBounded, readExistingJournal, resumeBoundedResults, main };

@@ -8,12 +8,13 @@ const { canonicalDigest } = require('../scripts/lib/aggregate-downstream-pipelin
 const { parseSourceNoteIssue } = require('../scripts/lib/source-note-issue');
 const { buildInterviewProjection, requestSha256, sha256Text } = require('../scripts/lib/source-note-interview-materialization');
 const { buildMaterializationRequest, issueSourceRecord } = require('../scripts/lib/interview-note-materialization-batch');
-const { parseArgs } = require('../scripts/issue-1658-bounded-materialization-runner');
-const { initialJournal, initialIntent, applyOne, receiptObject, receiptBody, updateJournal, validateReceiptOwner } = require('../scripts/lib/issue-1658-materialization-runner');
+const { parseArgs, resumeBoundedResults } = require('../scripts/issue-1658-bounded-materialization-runner');
+const { initialJournal, initialIntent, applyOne, receiptObject, receiptBody, updateJournal, validateReceiptOwner, digestWithout, atomicWriteJson } = require('../scripts/lib/issue-1658-materialization-runner');
+const { readOrCreateJournal } = require('../scripts/issue-1658-materialization-runner');
 const {
   AUTH_MARKER, ELIGIBLE_ROWS, BLOCKED_ROWS, AUTH_REQUIREMENTS, RUNNER_SCHEMA,
   validateBoundedInputPlan, validateBoundedAuthorizationComment,
-  buildBoundedRunnerPlan, validateBoundedRunnerPlan,
+  buildBoundedRunnerPlan, validateBoundedRunnerPlan, resumeOwnershipAllowance,
 } = require('../scripts/lib/issue-1658-bounded-materialization-runner');
 
 const boundedFixture = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures/issue-1658-materialization-13-plan.fixture.json'), 'utf8'));
@@ -78,6 +79,30 @@ function freshInputs() {
     body: `<!-- interview-note: id=${owner.interview_note_id} schema=interview-note-issue.v2 -->`,
   }));
   return { freshRows, freshOwnershipIssues };
+}
+
+function completedResumeInputs() {
+  const baseline = freshInputs();
+  const baselinePlan = buildBoundedRunnerPlan({ inputPlan, ...baseline });
+  const journal = initialJournal(baselinePlan, 13, 13);
+  for (let index = 0; index < 11; index += 1) {
+    const row = inputPlan.rows[index];
+    const projection = row.plan.projection;
+    const owner = { number: 4001 + index, state: 'open', title: projection.title, body: projection.body, labels: projection.labels };
+    const receipt = receiptObject(row.request, { interview_note_id: projection.interview_note_id, projection }, owner.number, '2026-09-09T00:00:00Z');
+    baseline.freshOwnershipIssues.push(owner);
+    baseline.freshRows.set(row.request.source_note_issue_number, { issue: fixtureSources[index], comments: [{ id: 5001 + index, body: receiptBody(receipt) }] });
+    const item = journal.items[index];
+    item.phase = 'complete';
+    item.mutation_attempted = true;
+    item.mutation_performed = true;
+    item.mutation_count = 2;
+    journal.intents[row.request.materialization_id] = { ...initialIntent(row.request, { interview_note_id: projection.interview_note_id, projection }), phase: 'receipt-pending', interview_issue_number: owner.number };
+  }
+  journal.create_count = 11;
+  journal.receipt_count = 11;
+  journal.mutation_count = 22;
+  return { ...baseline, journal };
 }
 
 function authorizationBody(extra = {}) {
@@ -167,6 +192,37 @@ test('bounded fresh CAS derives identity before owner lookup and rejects a misma
   const result = plan.results.find((item) => item.source_note_issue_number === row.request.source_note_issue_number);
   assert.equal(result.action, 'blocked');
   assert.match(result.errors.join('\n'), /fresh SourceNote identity .* does not match bound row identity/);
+});
+
+test('bounded resume allows exactly completed batch owners and resumes only #1447/#1458', () => {
+  const { freshRows, freshOwnershipIssues, journal } = completedResumeInputs();
+  const allowance = resumeOwnershipAllowance(inputPlan, journal);
+  assert.equal(allowance.ok, true, allowance.errors.join('; '));
+  assert.equal(allowance.owners.length, 11);
+  const plan = buildBoundedRunnerPlan({ inputPlan, freshRows, freshOwnershipIssues, journal });
+  assert.equal(plan.ok, true, plan.errors.join('; '));
+  assert.deepEqual(plan.counts, { total: 13, create: 2, already: 11, blocked: 0 });
+  assert.deepEqual(resumeBoundedResults(plan, journal).map((result) => result.source_note_issue_number), [1447, 1458]);
+  journal.canonical_digest = digestWithout(journal, 'canonical_digest');
+  const journalFile = path.join(require('node:os').tmpdir(), `issue-1658-bounded-resume-${process.pid}.json`);
+  atomicWriteJson(journalFile, journal);
+  const rebound = readOrCreateJournal(journalFile, plan, 13, 13, { allowReceiptPending: true, allowBoundedResume: true });
+  assert.equal(rebound.plan_digest, plan.plan_digest);
+  assert.equal(rebound.items.filter((item) => item.phase === 'complete').length, 11);
+});
+
+test('bounded resume rejects unrelated or duplicate ownership beyond completed journal allowance', () => {
+  const { freshRows, freshOwnershipIssues, journal } = completedResumeInputs();
+  freshOwnershipIssues.push({ number: 4999, body: '<!-- interview-note: id=unrelated-owner schema=interview-note-issue.v2 -->' });
+  let plan = buildBoundedRunnerPlan({ inputPlan, freshRows, freshOwnershipIssues, journal });
+  assert.equal(plan.ok, false);
+  assert.match(plan.errors.join('\n'), /ownership inventory differs/);
+
+  const duplicateInputs = completedResumeInputs();
+  duplicateInputs.freshOwnershipIssues.push({ ...duplicateInputs.freshOwnershipIssues[52], number: 4998 });
+  plan = buildBoundedRunnerPlan({ inputPlan, freshRows: duplicateInputs.freshRows, freshOwnershipIssues: duplicateInputs.freshOwnershipIssues, journal: duplicateInputs.journal });
+  assert.equal(plan.ok, false);
+  assert.match(plan.errors.join('\n'), /duplicates InterviewNote identity/);
 });
 
 test('authorization comment is bound to parent #1611, the bounded plan, exact scope, and 13 ceilings', () => {
