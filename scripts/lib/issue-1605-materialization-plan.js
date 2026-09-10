@@ -204,6 +204,78 @@ function evidenceMarkerValues(body) {
   catch (error) { return { values: [], errors: [`${BOUNDARY_EVIDENCE_MARKER} marker must contain valid JSON: ${error.message}`] }; }
 }
 
+const REQUIRED_BOUNDARY_CHECKS = ['source_identity', 'source_revision_binding', 'source_content_coverage', 'event_boundary', 'no_cross_source_mixing', 'no_fabrication'];
+
+function issue1608EvidenceValue(body) {
+  const matches = [...String(body || '').matchAll(/<!--\s*issue-1608-boundary-evidence\.v1\n([\s\S]*?)\n-->/g)];
+  if (matches.length !== 1) return { value: null, errors: ['issue-1608 evidence marker must occur exactly once'] };
+  try { return { value: JSON.parse(matches[0][1].trim()), errors: [] }; }
+  catch (error) { return { value: null, errors: [`issue-1608 evidence JSON is invalid: ${error.message}`] }; }
+}
+
+function validateIssue1608BoundaryEvidenceValue(value, expected) {
+  // issue-1608 evidence was posted before the separate boundary transition.
+  // Accept only its complete nested transition request and live binding; this
+  // adapter does not infer or repair the later applied receipt.
+  const errors = [];
+  const issueNumber = Number(expected && expected.source_note_issue_number);
+  const evidenceBodySha = expected && (expected.evidence_body_sha256 || expected.source_note_body_sha256);
+  const equal = (field, actual, wanted) => { if (actual !== wanted) errors.push(`SourceNote #${issueNumber} issue-1608 evidence ${field} binding mismatch`); };
+  if (!value || typeof value !== 'object') return { ok: false, errors: [`SourceNote #${issueNumber} issue-1608 evidence payload is missing`] };
+  equal('schema_version', value.schema_version, 'issue-1608-boundary-evidence.v1');
+  equal('issue_number', value.issue_number, issueNumber);
+  equal('source_note_id', value.source_note_id, expected.source_note_id);
+  equal('source_revision_id', value.source_revision_id, expected.source_revision_id);
+  equal('source_repository', value.source_repository, 'liqiangcc/xhs');
+  equal('source_repository_ref', value.source_repository_ref, SOURCE_REF);
+  equal('evidence_status', value.evidence_status, 'sufficient-for-controller-review');
+  equal('decision', value.decision, expected.decision);
+  const request = value.transition_request;
+  if (!request || typeof request !== 'object' || Array.isArray(request)) {
+    errors.push(`SourceNote #${issueNumber} issue-1608 evidence transition_request is missing`);
+  } else {
+    equal('transition_request.schema_version', request.schema_version, 'source-note-boundary-review-transition.v1');
+    equal('transition_request.transition_id', request.transition_id, expected.transition_id);
+    equal('transition_request.repository', request.repository, 'liqiangcc/interview-lab');
+    equal('transition_request.issue_number', request.issue_number, issueNumber);
+    equal('transition_request.source_note_id', request.source_note_id, expected.source_note_id);
+    equal('transition_request.expected_body_sha256', request.expected_body_sha256, evidenceBodySha);
+    equal('transition_request.expected_boundary_status', request.expected_boundary_status, 'pending');
+    equal('transition_request.expected_source_revision_id', request.expected_source_revision_id, expected.source_revision_id);
+    equal('transition_request.expected_source_repository_ref', request.expected_source_repository_ref, SOURCE_REF);
+    equal('transition_request.decision', request.decision, expected.decision);
+    const binding = request.live_binding;
+    if (!binding || typeof binding !== 'object') errors.push(`SourceNote #${issueNumber} issue-1608 evidence live_binding is missing`);
+    else {
+      equal('live_binding.issue_number', binding.issue_number, issueNumber);
+      equal('live_binding.body_sha256', binding.body_sha256, evidenceBodySha);
+      equal('live_binding.source_note_id', binding.source_note_id, expected.source_note_id);
+      equal('live_binding.source_revision_id', binding.source_revision_id, expected.source_revision_id);
+      equal('live_binding.source_repository', binding.source_repository, 'liqiangcc/xhs');
+      equal('live_binding.source_repository_ref', binding.source_repository_ref, SOURCE_REF);
+      const projection = request.source_projection;
+      const artifact = value.artifact;
+      if (!projection || typeof projection !== 'object' || !artifact || typeof artifact !== 'object') {
+        errors.push(`SourceNote #${issueNumber} issue-1608 evidence source projection/artifact is missing`);
+      } else {
+        for (const field of ['ref', 'kind', 'provenance', 'byte_size']) equal(`artifact.${field}`, artifact[field], projection[field]);
+        equal('artifact.git_blob_sha', artifact.git_blob_sha, projection.blob_sha);
+        equal('artifact.content_sha256', artifact.content_sha256, projection.content_sha256);
+        equal('live_binding.source_projection_ref', binding.source_projection_ref, projection.ref);
+        equal('live_binding.source_projection_blob_sha', binding.source_projection_blob_sha, projection.blob_sha);
+        equal('live_binding.source_projection_content_sha256', binding.source_projection_content_sha256, projection.content_sha256);
+      }
+    }
+  }
+  if (!Array.isArray(value.checks)) errors.push(`SourceNote #${issueNumber} issue-1608 evidence checks are missing`);
+  else for (const checkId of REQUIRED_BOUNDARY_CHECKS) {
+    const check = value.checks.find((candidate) => candidate && candidate.check_id === checkId);
+    if (!check || check.result !== 'pass') errors.push(`SourceNote #${issueNumber} issue-1608 evidence check ${checkId} is not pass`);
+  }
+  if (!Array.isArray(value.excerpts) || value.excerpts.length === 0) errors.push(`SourceNote #${issueNumber} issue-1608 evidence excerpts are missing`);
+  return { ok: errors.length === 0, errors, value };
+}
+
 function validateLiveBoundaryEvidenceComment(comment, expected, sourceIssue) {
   const errors = [];
   const issueNumber = Number(expected && expected.source_note_issue_number);
@@ -212,6 +284,11 @@ function validateLiveBoundaryEvidenceComment(comment, expected, sourceIssue) {
   if (Number(comment && (comment.id || comment.comment_id)) !== expectedCommentId) errors.push(`SourceNote #${issueNumber} live evidence comment id is not ${expectedCommentId}`);
   const expectedApiUrl = `https://api.github.com/repos/liqiangcc/interview-lab/issues/${issueNumber}`;
   if (comment && comment.issue_url !== expectedApiUrl) errors.push(`SourceNote #${issueNumber} evidence comment issue_url is not bound to the exact repository/issue`);
+  if (expected && expected.evidence_schema === 'issue-1608-boundary-evidence.v1') {
+    const parsed = issue1608EvidenceValue(comment && comment.body);
+    const validation = validateIssue1608BoundaryEvidenceValue(parsed.value, expected);
+    return { ok: errors.length === 0 && validation.ok, errors: [...errors, ...parsed.errors, ...validation.errors], value: parsed.value };
+  }
   if (expected && expected.evidence_schema === 'issue-921-pilot-evidence') {
     const matches = [...String(comment && comment.body || '').matchAll(/<!-- issue-921-pilot-evidence\n([\s\S]*?)\n-->/g)];
     if (matches.length !== 1) return { ok: false, errors: [...errors, `SourceNote #${issueNumber} legacy evidence marker must occur exactly once`] };
@@ -226,7 +303,7 @@ function validateLiveBoundaryEvidenceComment(comment, expected, sourceIssue) {
     equal('source_revision_id', sourceRevision && sourceRevision[1].trim(), expected.source_revision_id);
     equal('source_repository_ref', sourceRef && sourceRef[1].trim(), SOURCE_REF);
     equal('decision', String(comment && comment.body || '').match(/(?:^|\n)recommended_decision:\s*([^\n]+)/)?.[1]?.trim(), expected.decision);
-    for (const checkId of ['source_identity', 'source_revision_binding', 'source_content_coverage', 'event_boundary', 'no_cross_source_mixing', 'no_fabrication']) {
+    for (const checkId of REQUIRED_BOUNDARY_CHECKS) {
       const check = (value.checks || []).find((candidate) => candidate && candidate.check_id === checkId);
       if (!check || check.result !== 'pass') errors.push(`SourceNote #${issueNumber} legacy evidence check ${checkId} is not pass`);
     }
@@ -248,7 +325,7 @@ function validateLiveBoundaryEvidenceComment(comment, expected, sourceIssue) {
     equal('expected_source_revision_id', value.expected_source_revision_id, expected.source_revision_id);
     equal('expected_source_repository_ref', value.expected_source_repository_ref, SOURCE_REF);
     equal('decision', value.decision, expected.decision);
-    for (const checkId of ['source_identity', 'source_revision_binding', 'source_content_coverage', 'event_boundary', 'no_cross_source_mixing', 'no_fabrication']) {
+    for (const checkId of REQUIRED_BOUNDARY_CHECKS) {
       const check = (value.checks || []).find((candidate) => candidate && candidate.check_id === checkId);
       if (!check || check.result !== 'pass') errors.push(`SourceNote #${issueNumber} historical evidence check ${checkId} is not pass`);
     }
@@ -274,7 +351,7 @@ function validateLiveBoundaryEvidenceComment(comment, expected, sourceIssue) {
   equal('decision', value.decision, expected.decision);
   if (liveParsed && liveParsed.boundary_review) equal('decision/live', value.decision, liveParsed.boundary_review.status);
   if (!Array.isArray(value.checks) || value.checks.length === 0) errors.push(`SourceNote #${issueNumber} evidence checks are missing`);
-  else for (const checkId of ['source_identity', 'source_revision_binding', 'source_content_coverage', 'event_boundary', 'no_cross_source_mixing', 'no_fabrication']) {
+  else for (const checkId of REQUIRED_BOUNDARY_CHECKS) {
     const check = value.checks.find((candidate) => candidate && candidate.check_id === checkId);
     if (!check || check.result !== 'pass') errors.push(`SourceNote #${issueNumber} evidence check ${checkId} is not pass`);
   }
@@ -675,6 +752,8 @@ module.exports = {
   validateBoundaryManifest,
   validateCompleteReportScope,
   evidenceMarkerValues,
+  issue1608EvidenceValue,
+  validateIssue1608BoundaryEvidenceValue,
   validateLiveBoundaryEvidenceComment,
   normalizeBoundaryReport,
   sourceIssueMap,
