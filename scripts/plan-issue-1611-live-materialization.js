@@ -138,7 +138,7 @@ function exactAppliedBoundaryEvidence(issue, comments) {
         live_source_note_body_sha256: bodySha,
         decision: status,
         transition_id: receipt && receipt.transition_id,
-      });
+      }, issue);
       errors.push(...validation.errors);
     }
     if (evidenceSchema === 'source-note-boundary-review-evidence.v1') equal('evidence schema', review.schema_version, 'source-note-boundary-review-evidence.v1');
