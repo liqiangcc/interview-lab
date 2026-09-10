@@ -4,6 +4,8 @@
 
 CI 回归使用仓库内的 `test/fixtures/issue-1658-materialization-13-plan.fixture.json` 和 source-note fixture；不会读取 `/tmp` 或依赖 live 计划文件。该 fixture 只固定授权 13-row scope 与完整 52-owner inventory，测试中仍从 fresh SourceNote 构造并校验 request/projection digest。
 
+resume 会在 durable lock 内重读 journal 与完整 ownership：baseline 52 之外只允许 journal 中已完整结算、且与本批次 request/identity/owner Issue 精确绑定的 owner。已完成 row 跳过所有 reconcile/apply；例如 11/13 complete 时，剩余 fresh CAS/create/receipt 仅限 `#1447` 与 `#1458`。任何无关 owner、重复 identity/Issue、journal identity 或 request SHA 漂移都会 fail closed。
+
 只有显式 `--apply --allow-live-github --max-create 13 --max-receipts 13` 才会进入 mutation gate。apply 在 lock 内重新读取 13 个 SourceNote、每条 comments 与全库 `type:interview-note` ownership，逐条执行 body SHA、SourceRevision、boundary、唯一 owner、projection body/labels 和 receipt CAS；任一漂移都 fail closed。
 
 ## 绑定与选择

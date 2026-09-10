@@ -145,23 +145,64 @@ function ownershipSummary(issues) {
   }).sort((a, b) => a.interview_note_id.localeCompare(b.interview_note_id));
 }
 
-function compareOwnershipToBoundedSnapshot(inputPlan, freshIssues) {
-  const expected = new Set((inputPlan.ownership_inventory.owners || []).map(ownerKey));
+function resumeOwnershipAllowance(inputPlan, journal) {
+  const errors = [];
+  const rows = new Map((inputPlan && inputPlan.rows || []).map((row) => [row.request && row.request.materialization_id, row]));
+  const owners = [];
+  const identities = new Set((inputPlan && inputPlan.ownership_inventory && inputPlan.ownership_inventory.owners || []).map((owner) => owner.interview_note_id));
+  const issueNumbers = new Set((inputPlan && inputPlan.ownership_inventory && inputPlan.ownership_inventory.owners || []).map((owner) => Number(owner.issue_number)));
+  for (const item of journal && journal.items || []) {
+    if (item.phase !== 'complete') continue;
+    const beforeErrors = errors.length;
+    const row = rows.get(item.materialization_id);
+    const intent = journal.intents && journal.intents[item.materialization_id];
+    if (!row || !intent) {
+      errors.push(`completed journal item ${item.materialization_id} lacks a bounded row or intent`);
+      continue;
+    }
+    if (item.request_sha256 !== requestSha256(row.request)) errors.push(`completed journal request SHA drifted for ${item.materialization_id}`);
+    if (intent.request_sha256 !== requestSha256(row.request)) errors.push(`completed journal intent request SHA drifted for ${item.materialization_id}`);
+    if (intent.interview_note_id !== row.plan.interview_note_id) errors.push(`completed journal identity drifted for ${item.materialization_id}`);
+    const issueNumber = Number(intent.interview_issue_number);
+    if (!Number.isInteger(issueNumber) || issueNumber < 1) errors.push(`completed journal owner number is invalid for ${item.materialization_id}`);
+    if (identities.has(intent.interview_note_id)) errors.push(`completed journal owner identity duplicates the baseline for ${item.materialization_id}`);
+    if (issueNumbers.has(issueNumber)) errors.push(`completed journal owner Issue duplicates the baseline for ${item.materialization_id}`);
+    if (owners.some((owner) => owner.interview_note_id === intent.interview_note_id || Number(owner.issue_number) === issueNumber)) errors.push(`completed journal owner duplicates another resumed row for ${item.materialization_id}`);
+    if (errors.length === beforeErrors && Number.isInteger(issueNumber) && issueNumber > 0) {
+      owners.push({ interview_note_id: intent.interview_note_id, issue_number: issueNumber });
+    }
+  }
+  return { ok: errors.length === 0, errors, owners };
+}
+
+function compareOwnershipToBoundedSnapshot(inputPlan, freshIssues, options = {}) {
+  const allowance = options.journal ? resumeOwnershipAllowance(inputPlan, options.journal) : { ok: true, errors: [], owners: [] };
+  const expectedOwners = [...(inputPlan.ownership_inventory.owners || []), ...allowance.owners];
+  const expected = new Set(expectedOwners.map(ownerKey));
   const actual = ownershipSummary(freshIssues);
   const seen = new Set();
+  const expectedIdentities = new Set();
   const errors = [];
+  errors.push(...allowance.errors);
+  for (const owner of expectedOwners) {
+    if (expectedIdentities.has(owner.interview_note_id)) errors.push(`bounded ownership allowance duplicates InterviewNote identity ${owner.interview_note_id}`);
+    expectedIdentities.add(owner.interview_note_id);
+  }
+  const actualIdentities = new Set();
   for (const owner of actual) {
     if (!owner.interview_note_id || !Number.isInteger(owner.issue_number)) errors.push('fresh ownership inventory contains an invalid owner');
     if (seen.has(ownerKey(owner))) errors.push(`fresh ownership inventory duplicates ${owner.interview_note_id}`);
+    if (actualIdentities.has(owner.interview_note_id)) errors.push(`fresh ownership inventory duplicates InterviewNote identity ${owner.interview_note_id}`);
     seen.add(ownerKey(owner));
+    actualIdentities.add(owner.interview_note_id);
   }
-  if (expected.size !== actual.length || expected.size !== seen.size || [...expected].some((key) => !seen.has(key)) || [...seen].some((key) => !expected.has(key))) errors.push('fresh full ownership inventory differs from the authorized 52-owner snapshot');
-  return { ok: errors.length === 0, errors, owners: actual };
+  if (expected.size !== actual.length || expected.size !== seen.size || [...expected].some((key) => !seen.has(key)) || [...seen].some((key) => !expected.has(key))) errors.push(`fresh full ownership inventory differs from the authorized baseline plus ${allowance.owners.length} completed bounded owner(s)`);
+  return { ok: errors.length === 0, errors, owners: actual, resumed_owners: allowance.owners };
 }
 
-function validateFreshBoundedRows(inputPlan, freshRows, freshOwnershipIssues) {
+function validateFreshBoundedRows(inputPlan, freshRows, freshOwnershipIssues, options = {}) {
   const errors = [];
-  const ownershipCheck = compareOwnershipToBoundedSnapshot(inputPlan, freshOwnershipIssues);
+  const ownershipCheck = compareOwnershipToBoundedSnapshot(inputPlan, freshOwnershipIssues, options);
   errors.push(...ownershipCheck.errors);
   const results = [];
   for (const row of inputPlan.rows || []) {
@@ -214,10 +255,10 @@ function validateFreshBoundedRows(inputPlan, freshRows, freshOwnershipIssues) {
   return { ok: errors.length === 0, errors, results, ownership: ownershipCheck.owners };
 }
 
-function buildBoundedRunnerPlan({ inputPlan, freshRows, freshOwnershipIssues, generatedAt = new Date().toISOString() }) {
+function buildBoundedRunnerPlan({ inputPlan, freshRows, freshOwnershipIssues, journal = null, generatedAt = new Date().toISOString() }) {
   const inputValidation = validateBoundedInputPlan(inputPlan);
   const rowValidation = inputValidation.ok && freshRows instanceof Map && Array.isArray(freshOwnershipIssues)
-    ? validateFreshBoundedRows(inputPlan, freshRows, freshOwnershipIssues)
+    ? validateFreshBoundedRows(inputPlan, freshRows, freshOwnershipIssues, { journal })
     : {
       ok: inputValidation.ok,
       errors: [],
@@ -307,6 +348,6 @@ function exactReceipt(receipts, expected) {
 module.exports = {
   REPOSITORY, PARENT_ISSUE, CONTROLLER_ISSUE, PLAN_SCHEMA, RUNNER_SCHEMA, AUTH_SCHEMA, AUTH_MARKER, RECEIPT_MARKER,
   ELIGIBLE_ROWS, BLOCKED_ROWS, AUTH_REQUIREMENTS, ZERO_WRITES, labelsOf, markerValues, runnerDigestInput, validateBoundedInputPlan,
-  validateBoundedAuthorizationComment, normalizeFreshSource, compareOwnershipToBoundedSnapshot,
+  validateBoundedAuthorizationComment, normalizeFreshSource, resumeOwnershipAllowance, compareOwnershipToBoundedSnapshot,
   validateFreshBoundedRows, buildBoundedRunnerPlan, validateBoundedRunnerPlan, receiptObject, receiptBody, exactReceipt,
 };
