@@ -1,0 +1,100 @@
+{
+  "audit_generated_at": "2026-09-10T08:47:04.110Z",
+  "source_artifact": "/tmp/interview-lab-audit-full-20260910/materialization.plan.json",
+  "source_artifact_sha256": "a6f0db217775f0df91eb54369e6b4ff91247bed875e59b73f5bc831206a94375",
+  "schema_version": "issue-1605-interview-note-materialization-plan.v1",
+  "mode": "plan-only",
+  "mutation_performed": false,
+  "write_operations": {
+    "patch": 0,
+    "post": 0,
+    "create": 0
+  },
+  "source_snapshot": {
+    "mode": "github-live-read",
+    "count": 1460,
+    "digest": "e0d5e869009a284feeaf4216c17eb21440166b8c0c4f396bed1070c765165cb2",
+    "pages": 15,
+    "terminal_page_short": true
+  },
+  "boundary_evidence": {
+    "mode": "github-live-read-global-paginated",
+    "candidate_issue_count": 1052,
+    "comments_loaded": 2669,
+    "pages": 27,
+    "terminal_page_short": true
+  },
+  "ownership": {
+    "identity_count": 1099,
+    "ownership_search_errors": [],
+    "mode": "github-live-owner-issue-reconcile",
+    "inventory_digest": "1dd140f82a7656b47ca09cde7cb2e96538cbf3397b77a6fc7cec3dcb7be49f95",
+    "count": 65
+  },
+  "boundary_manifest": {
+    "canonical_digest": "6dd605a26803ff336ffad153ffebeb4cd3b5c13b14d5b5fd3b86ffbf0bfad3fa",
+    "boundary_report_digest": "d45f6369d0b712b483559de6ab79693e1936d04b6cf5f668be31cc64da4b7fd0",
+    "source_snapshot_digest": "e0d5e869009a284feeaf4216c17eb21440166b8c0c4f396bed1070c765165cb2",
+    "candidate_count": 1460,
+    "complete": true
+  },
+  "boundary_report_digest": {
+    "ok": true,
+    "field": "dry_run_sha256",
+    "expected": "d45f6369d0b712b483559de6ab79693e1936d04b6cf5f668be31cc64da4b7fd0",
+    "actual": "d45f6369d0b712b483559de6ab79693e1936d04b6cf5f668be31cc64da4b7fd0"
+  },
+  "counts": {
+    "skip-not-interview": 247,
+    "already-materialized": 47,
+    "would-materialize": 789,
+    "blocked": 424
+  },
+  "blocked_reasons": {
+    "boundary-transition-not-live-applied": 408,
+    "materialization-preflight-failed": 2,
+    "boundary-evidence-missing-or-ambiguous": 14
+  },
+  "error_count": 28,
+  "errors": [
+    "boundary report: #910 must have exactly one matching boundary evidence comment (got 0)",
+    "boundary report: #910 live SourceRevision ref drifted",
+    "boundary report: #1309 must have exactly one matching boundary evidence comment (got 0)",
+    "boundary report: #1309 receipt interview_note_ids mismatch",
+    "boundary report: #1325 must have exactly one matching boundary evidence comment (got 0)",
+    "boundary report: #1325 receipt interview_note_ids mismatch",
+    "boundary report: #1333 must have exactly one matching boundary evidence comment (got 0)",
+    "boundary report: #1333 receipt interview_note_ids mismatch",
+    "boundary report: #1363 must have exactly one matching boundary evidence comment (got 0)",
+    "boundary report: #1363 receipt interview_note_ids mismatch",
+    "boundary report: #1375 must have exactly one matching boundary evidence comment (got 0)",
+    "boundary report: #1375 receipt interview_note_ids mismatch",
+    "boundary report: #1376 must have exactly one matching boundary evidence comment (got 0)",
+    "boundary report: #1376 receipt interview_note_ids mismatch",
+    "boundary report: #1380 must have exactly one matching boundary evidence comment (got 0)",
+    "boundary report: #1380 receipt interview_note_ids mismatch",
+    "boundary report: #1401 must have exactly one matching boundary evidence comment (got 0)",
+    "boundary report: #1401 receipt interview_note_ids mismatch",
+    "boundary report: #1406 must have exactly one matching boundary evidence comment (got 0)",
+    "boundary report: #1406 receipt interview_note_ids mismatch",
+    "boundary report: #1418 must have exactly one matching boundary evidence comment (got 0)",
+    "boundary report: #1418 receipt interview_note_ids mismatch",
+    "boundary report: #1428 must have exactly one matching boundary evidence comment (got 0)",
+    "boundary report: #1428 receipt interview_note_ids mismatch",
+    "boundary report: #1447 must have exactly one matching boundary evidence comment (got 0)",
+    "boundary report: #1447 receipt interview_note_ids mismatch",
+    "boundary report: #1458 must have exactly one matching boundary evidence comment (got 0)",
+    "boundary report: #1458 receipt interview_note_ids mismatch"
+  ],
+  "ok": false,
+  "dry_run_sha256": "96bd8d719baf970cad498ce095c2212867753e60dc52a190af3e2b4d5de0d73a",
+  "pagination_recovery": {
+    "page14_eof": "transient; command retried and completed",
+    "boundary_evidence_pages": 27,
+    "boundary_evidence_terminal_page_short": true,
+    "source_snapshot_pages": 15,
+    "source_snapshot_terminal_page_short": true,
+    "ownership_search_errors": [],
+    "conclusion": "PASS: final artifacts reached short terminal pages and ownership search errors are empty; plan acceptance remains governed by ok/errors."
+  }
+}
