@@ -88,6 +88,8 @@ function compute(args) {
   const inventory = readJson(args.owners);
   const fullPlan = readJson(args.fullPlan);
   const errors = [];
+  const sourceTreeSha = fullPlan.source_tree_sha;
+  if (!/^[0-9a-f]{40}$/.test(String(sourceTreeSha || ''))) addError(errors, 'full plan source_tree_sha is missing or invalid');
   if (!Array.isArray(input.scope) || JSON.stringify(input.scope) !== JSON.stringify(SCOPE)) addError(errors, 'snapshot scope is not exactly the authorized 13 rows');
   if (!Array.isArray(input.rows) || input.rows.length !== SCOPE.length) addError(errors, 'snapshot row count is not 13');
   const sourceNumbers = (input.rows || []).map((row) => Number(row?.source?.number));
@@ -212,8 +214,8 @@ function compute(args) {
   const globalPlannerErrors = (fullPlan.errors || []).filter((error) => !SCOPE.some((number) => new RegExp(`#${number}\\b`).test(String(error))));
   const output = {
     audit_type: 'issue-1658-read-only-reconciliation-v3',
-    generated_at: input.captured_at,
-    source_tree_sha: 'e443f7d5303da500981e24c65c7a6e1ba417a7d1',
+    generated_at: fullPlan.audit_generated_at || input.captured_at,
+    source_tree_sha: sourceTreeSha || null,
     input_snapshot_sha256: digestFile(args.input),
     owner_inventory_snapshot_sha256: digestFile(args.owners),
     full_plan_summary_sha256: digestFile(args.fullPlan),

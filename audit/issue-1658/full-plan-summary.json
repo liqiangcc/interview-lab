@@ -1,7 +1,9 @@
 {
-  "audit_generated_at": "2026-09-10T08:47:04.110Z",
-  "source_artifact": "/tmp/interview-lab-audit-full-20260910/materialization.plan.json",
-  "source_artifact_sha256": "a6f0db217775f0df91eb54369e6b4ff91247bed875e59b73f5bc831206a94375",
+  "audit_generated_at": "2026-09-11T02:46:51.276Z",
+  "source_tree_sha": "92b76907a2edaa86ee8459aff20ed768a4b4b352",
+  "source_tree_ref": "main after PR #1689 merge",
+  "source_artifact": "GET-only planner output from saved full SourceNote snapshot and live paginated comments (raw full plan not committed)",
+  "source_artifact_sha256": "f51002c56589cdf3c6ab006464827f6f7d986339c92c14edb19aee9bd55fe311",
   "schema_version": "issue-1605-interview-note-materialization-plan.v1",
   "mode": "plan-only",
   "mutation_performed": false,
@@ -32,8 +34,8 @@
     "count": 65
   },
   "boundary_manifest": {
-    "canonical_digest": "6dd605a26803ff336ffad153ffebeb4cd3b5c13b14d5b5fd3b86ffbf0bfad3fa",
-    "boundary_report_digest": "d45f6369d0b712b483559de6ab79693e1936d04b6cf5f668be31cc64da4b7fd0",
+    "canonical_digest": "421c734767ef0725271a9f0ec28e102f543b53fcde389366c176f7b356375b43",
+    "boundary_report_digest": "b621d078550a6f5785087acd2f1455dd816672e06a0310a6935fbe6813b4d9d8",
     "source_snapshot_digest": "e0d5e869009a284feeaf4216c17eb21440166b8c0c4f396bed1070c765165cb2",
     "candidate_count": 1460,
     "complete": true
@@ -41,61 +43,49 @@
   "boundary_report_digest": {
     "ok": true,
     "field": "dry_run_sha256",
-    "expected": "d45f6369d0b712b483559de6ab79693e1936d04b6cf5f668be31cc64da4b7fd0",
-    "actual": "d45f6369d0b712b483559de6ab79693e1936d04b6cf5f668be31cc64da4b7fd0"
+    "expected": "b621d078550a6f5785087acd2f1455dd816672e06a0310a6935fbe6813b4d9d8",
+    "actual": "b621d078550a6f5785087acd2f1455dd816672e06a0310a6935fbe6813b4d9d8"
   },
   "counts": {
     "skip-not-interview": 247,
     "already-materialized": 47,
     "would-materialize": 789,
-    "blocked": 424
+    "blocked": 411,
+    "would-repair-receipt": 13
   },
   "blocked_reasons": {
     "boundary-transition-not-live-applied": 408,
     "materialization-preflight-failed": 2,
-    "boundary-evidence-missing-or-ambiguous": 14
+    "boundary-evidence-missing-or-ambiguous": 1
   },
-  "error_count": 28,
+  "error_count": 15,
   "errors": [
     "boundary report: #910 must have exactly one matching boundary evidence comment (got 0)",
     "boundary report: #910 live SourceRevision ref drifted",
-    "boundary report: #1309 must have exactly one matching boundary evidence comment (got 0)",
     "boundary report: #1309 receipt interview_note_ids mismatch",
-    "boundary report: #1325 must have exactly one matching boundary evidence comment (got 0)",
     "boundary report: #1325 receipt interview_note_ids mismatch",
-    "boundary report: #1333 must have exactly one matching boundary evidence comment (got 0)",
     "boundary report: #1333 receipt interview_note_ids mismatch",
-    "boundary report: #1363 must have exactly one matching boundary evidence comment (got 0)",
     "boundary report: #1363 receipt interview_note_ids mismatch",
-    "boundary report: #1375 must have exactly one matching boundary evidence comment (got 0)",
     "boundary report: #1375 receipt interview_note_ids mismatch",
-    "boundary report: #1376 must have exactly one matching boundary evidence comment (got 0)",
     "boundary report: #1376 receipt interview_note_ids mismatch",
-    "boundary report: #1380 must have exactly one matching boundary evidence comment (got 0)",
     "boundary report: #1380 receipt interview_note_ids mismatch",
-    "boundary report: #1401 must have exactly one matching boundary evidence comment (got 0)",
     "boundary report: #1401 receipt interview_note_ids mismatch",
-    "boundary report: #1406 must have exactly one matching boundary evidence comment (got 0)",
     "boundary report: #1406 receipt interview_note_ids mismatch",
-    "boundary report: #1418 must have exactly one matching boundary evidence comment (got 0)",
     "boundary report: #1418 receipt interview_note_ids mismatch",
-    "boundary report: #1428 must have exactly one matching boundary evidence comment (got 0)",
     "boundary report: #1428 receipt interview_note_ids mismatch",
-    "boundary report: #1447 must have exactly one matching boundary evidence comment (got 0)",
     "boundary report: #1447 receipt interview_note_ids mismatch",
-    "boundary report: #1458 must have exactly one matching boundary evidence comment (got 0)",
     "boundary report: #1458 receipt interview_note_ids mismatch"
   ],
   "ok": false,
-  "dry_run_sha256": "96bd8d719baf970cad498ce095c2212867753e60dc52a190af3e2b4d5de0d73a",
+  "dry_run_sha256": "7d011546be2053481d099490dbc6b6e4b5a6166b1e1ce79cccbf7900873ffc86",
   "pagination_recovery": {
-    "page14_eof": "transient; command retried and completed",
+    "page14_eof": "not observed in this rerun",
     "boundary_evidence_pages": 27,
     "boundary_evidence_terminal_page_short": true,
     "source_snapshot_pages": 15,
     "source_snapshot_terminal_page_short": true,
     "ownership_search_errors": [],
-    "conclusion": "PASS: final artifacts reached short terminal pages and ownership search errors are empty; plan acceptance remains governed by ok/errors."
+    "conclusion": "PASS: current GET-only run reached short terminal pages; planner acceptance remains governed by ok/errors."
   },
   "count_units": {
     "source_count": {
@@ -112,6 +102,13 @@
       "multi-interview": 76,
       "blocked": 408
     },
+    "action_breakdown": {
+      "skip-not-interview": 247,
+      "already-materialized": 47,
+      "would-materialize": 789,
+      "blocked": 411,
+      "would-repair-receipt": 13
+    },
     "identity_count": {
       "value": 1099,
       "unit": "distinct planned InterviewNote identity claims"
@@ -120,6 +117,6 @@
       "value": 65,
       "unit": "live InterviewNote owner issues"
     },
-    "difference_explanation": "1460 SourceNote issues expand to 1507 planner rows because 29 multi-interview SourceNotes produce 76 case claims; 247 not-interview rows and 408 blocked rows are also planner results. The 1099 identity count is planned identity claims (247 not-interview + 776 single + 76 multi), while 65 is the separately inventoried live owner Issue count."
+    "difference_explanation": "1460 SourceNote issues expand to 1507 planner rows because 29 multi-interview SourceNotes produce 76 case claims; current action counts additionally distinguish 13 would-repair-receipt rows from 411 blocked rows. The 1099 identity count is planned identity claims (247 not-interview + 776 single + 76 multi), while 65 is the separately inventoried live owner Issue count."
   }
 }
