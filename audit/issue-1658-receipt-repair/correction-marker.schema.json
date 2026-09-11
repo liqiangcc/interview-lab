@@ -23,7 +23,7 @@
   ],
   "properties": {
     "schema_version": { "const": "source-note-boundary-review-applied-correction.v1" },
-    "correction_id": { "type": "string", "pattern": "^issue-1658-receipt-repair-[0-9]+-v1$" },
+    "correction_id": { "type": "string", "pattern": "^issue-1658-receipt-repair-(1309|1325|1333|1363|1375|1376|1380|1401|1406|1418|1428|1447|1458)-v1$" },
     "reason": { "const": "historical-empty-interview-note-ids-reconciled" },
     "repository": { "const": "liqiangcc/interview-lab" },
     "source_note_issue_number": { "type": "integer", "minimum": 1 },
@@ -51,7 +51,7 @@
       "required": ["interview_note_ids", "interview_note_cases"],
       "properties": {
         "interview_note_ids": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "pattern": "^xhs:.+$" } },
-        "interview_note_cases": { "type": ["array", "null"] }
+        "interview_note_cases": { "const": null }
       }
     },
     "owner_binding": {

@@ -7,6 +7,7 @@ const {
   MAIN_SHA,
   SCOPE,
   buildRow,
+  buildProposal,
   validateCorrectionMarker,
 } = require('../audit/issue-1658-receipt-repair/plan-receipt-repair');
 
@@ -30,6 +31,42 @@ test('receipt repair proposal is fixed to main, scope, and read-only result', ()
 test('strict correction marker accepts the exact first-row proposal', () => {
   const result = validateCorrectionMarker(validCorrection(), plan.rows[0]);
   assert.equal(result.ok, true, result.errors.join('; '));
+});
+
+test('owner body and complete labels are included in owner and plan digests', () => {
+  const baseRows = JSON.parse(JSON.stringify(plan.rows));
+  const base = buildProposal({ audit: { source_tree_sha: MAIN_SHA }, rows: baseRows, pagination: plan.pagination.current_live_comments });
+  const bodyChangedRows = JSON.parse(JSON.stringify(baseRows));
+  bodyChangedRows[0].owner_body_sha256 = '0'.repeat(64);
+  const bodyChanged = buildProposal({ audit: { source_tree_sha: MAIN_SHA }, rows: bodyChangedRows, pagination: plan.pagination.current_live_comments });
+  assert.notEqual(bodyChanged.authorization_binding.owner_bindings_digest, base.authorization_binding.owner_bindings_digest);
+  assert.notEqual(bodyChanged.plan_digest, base.plan_digest);
+  const labelsChangedRows = JSON.parse(JSON.stringify(baseRows));
+  labelsChangedRows[0].owner_labels = [...labelsChangedRows[0].owner_labels, 'status:unexpected'];
+  const labelsChanged = buildProposal({ audit: { source_tree_sha: MAIN_SHA }, rows: labelsChangedRows, pagination: plan.pagination.current_live_comments });
+  assert.notEqual(labelsChanged.authorization_binding.owner_bindings_digest, base.authorization_binding.owner_bindings_digest);
+  assert.notEqual(labelsChanged.plan_digest, base.plan_digest);
+});
+
+test('correction id is bound to the exact SourceNote row', () => {
+  const value = validCorrection();
+  value.correction_id = 'issue-1658-receipt-repair-1458-v1';
+  assert.equal(validateCorrectionMarker(value, plan.rows[0]).ok, false);
+});
+
+test('correction runtime validator rejects top-level and nested unknown fields', () => {
+  const topLevel = validCorrection();
+  topLevel.unknown = true;
+  assert.equal(validateCorrectionMarker(topLevel, plan.rows[0]).ok, false);
+  const nested = validCorrection();
+  nested.owner_binding.unknown = true;
+  assert.equal(validateCorrectionMarker(nested, plan.rows[0]).ok, false);
+});
+
+test('single-interview correction rejects an interview case array', () => {
+  const value = validCorrection();
+  value.corrected_receipt.interview_note_cases = [];
+  assert.equal(validateCorrectionMarker(value, plan.rows[0]).ok, false);
 });
 
 for (const [label, mutate] of [

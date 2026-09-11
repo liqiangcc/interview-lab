@@ -119,10 +119,15 @@ function validateCorrectionMarker(value, row) {
     if (!Number.isSafeInteger(actual) || actual < 1) errors.push(`${field} must be a positive integer`);
     if (expected !== null && actual !== expected) errors.push(`${field} binding mismatch`);
   };
+  const exactKeys = (field, candidate, allowed) => {
+    if (!candidate || typeof candidate !== 'object' || Array.isArray(candidate)) return;
+    for (const key of Object.keys(candidate)) if (!allowed.has(key)) errors.push(`${field} has unsupported field: ${key}`);
+  };
   object('correction', value);
   if (!value || typeof value !== 'object' || Array.isArray(value)) return { ok: false, errors };
+  exactKeys('correction', value, new Set(['schema_version', 'correction_id', 'reason', 'repository', 'source_note_issue_number', 'source_note_id', 'source_note_body_sha256', 'source_revision_id', 'source_repository_ref', 'transition_id', 'original_receipt', 'corrected_receipt', 'owner_binding', 'materialization_binding', 'evidence_binding']));
   requiredString('schema_version', value.schema_version, CORRECTION_SCHEMA_VERSION);
-  requiredString('correction_id', value.correction_id);
+  requiredString('correction_id', value.correction_id, `issue-1658-receipt-repair-${row.source_issue}-v1`);
   requiredString('reason', value.reason, 'historical-empty-interview-note-ids-reconciled');
   requiredString('repository', value.repository, REPOSITORY);
   requiredInt('source_note_issue_number', value.source_note_issue_number, row.source_issue);
@@ -135,6 +140,7 @@ function validateCorrectionMarker(value, row) {
   if (!HEX64.test(String(value.source_note_body_sha256 || ''))) errors.push('source_note_body_sha256 must be a lowercase SHA-256');
   const original = value.original_receipt;
   if (object('original_receipt', original)) {
+    exactKeys('original_receipt', original, new Set(['comment_id', 'issue_url', 'schema_version', 'body_sha256', 'marker_sha256', 'interview_note_ids']));
     requiredInt('original_receipt.comment_id', original.comment_id, row.applied_comment_id);
     requiredString('original_receipt.issue_url', original.issue_url, issueApiUrl);
     requiredString('original_receipt.schema_version', original.schema_version, 'source-note-boundary-review-applied.v1');
@@ -146,11 +152,13 @@ function validateCorrectionMarker(value, row) {
   }
   const corrected = value.corrected_receipt;
   if (object('corrected_receipt', corrected)) {
+    exactKeys('corrected_receipt', corrected, new Set(['interview_note_ids', 'interview_note_cases']));
     if (!Array.isArray(corrected.interview_note_ids) || corrected.interview_note_ids.length !== 1 || corrected.interview_note_ids[0] !== row.identity) errors.push('corrected_receipt.interview_note_ids must contain exactly the bound identity');
     if (corrected.interview_note_cases !== null) errors.push('corrected_receipt.interview_note_cases must be null for this single-interview scope');
   }
   const owner = value.owner_binding;
   if (object('owner_binding', owner)) {
+    exactKeys('owner_binding', owner, new Set(['issue_number', 'interview_note_id', 'body_sha256', 'labels']));
     requiredInt('owner_binding.issue_number', owner.issue_number, row.owner_issue);
     requiredString('owner_binding.interview_note_id', owner.interview_note_id, row.identity);
     requiredString('owner_binding.body_sha256', owner.body_sha256);
@@ -160,6 +168,7 @@ function validateCorrectionMarker(value, row) {
   }
   const materialization = value.materialization_binding;
   if (object('materialization_binding', materialization)) {
+    exactKeys('materialization_binding', materialization, new Set(['comment_id', 'issue_url', 'body_sha256', 'marker_sha256', 'source_note_id', 'source_note_body_sha256', 'source_revision_id', 'source_repository_ref', 'interview_note_id', 'interview_issue_number', 'interview_issue_body_sha256']));
     requiredInt('materialization_binding.comment_id', materialization.comment_id, row.materialization_comment_id);
     requiredString('materialization_binding.issue_url', materialization.issue_url, issueApiUrl);
     requiredString('materialization_binding.body_sha256', materialization.body_sha256);
@@ -176,6 +185,7 @@ function validateCorrectionMarker(value, row) {
   }
   const evidence = value.evidence_binding;
   if (object('evidence_binding', evidence)) {
+    exactKeys('evidence_binding', evidence, new Set(['comment_id', 'issue_url', 'body_sha256', 'marker_sha256', 'schema_version', 'transition_id']));
     requiredInt('evidence_binding.comment_id', evidence.comment_id, row.evidence_comment_id);
     requiredString('evidence_binding.issue_url', evidence.issue_url, issueApiUrl);
     requiredString('evidence_binding.body_sha256', evidence.body_sha256);
@@ -324,6 +334,7 @@ function buildProposal({ audit, rows, pagination }) {
   const immutableRows = rows.map((row) => ({
     source_issue: row.source_issue, owner_issue: row.owner_issue, source_note_id: row.source_note_id,
     identity: row.identity, source_body_sha256: row.source_body_sha256, source_revision_id: row.source_revision_id,
+    owner_body_sha256: row.owner_body_sha256, owner_labels: row.owner_labels,
     source_repository_ref: row.source_repository_ref, evidence_comment_id: row.evidence_comment_id,
     evidence_comment_issue_url: row.evidence_comment_issue_url, evidence_body_sha256: row.evidence_body_sha256, evidence_marker_sha256: row.evidence_marker_sha256,
     applied_comment_id: row.applied_comment_id, applied_comment_issue_url: row.applied_comment_issue_url, applied_receipt_body_sha256: row.applied_receipt_body_sha256,

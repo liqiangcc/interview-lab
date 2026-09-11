@@ -44,7 +44,7 @@ future correction 必须发布在对应 SourceNote Issue 的新 comment 中，�
 | #1447 | #1686 | 5601752917 | 5602412434 | 5614172867 | `REPAIR_ELIGIBLE` |
 | #1458 | #1687 | 5601753678 | 5602413639 | 5614208444 | `REPAIR_ELIGIBLE` |
 
-proposal plan digest：`af9a4fee3a9fc657fcf8bb764799adba8d9b0d3cb326fc6b717e608af432eba4`；`scope_digest=d8695be13f4b947c534ac4756db45519fd510b656ab74223b948b0ec8ec91e87`；`source_bindings_digest=89cdcb3628ae1b8c7620b3efe7cd5eda9cc44fe1413e8869122a92e10e8c4827`；`owner_bindings_digest=0589e1ccff6fb3a8c7110761fce2f2f6d3d33b3731bdda9f1fad3208b9a26d32`；`receipt_bindings_digest=64580939774b9a63a872bdb94936bd61d9137304a57760d20b61f36eae0a8f80`。这些 digest 和每行 body/marker digest 只锁定 proposal facts，不是授权凭证。
+proposal plan digest：`1966615b17237b52978059ca3db0a65554fef8c9840ce18118994140e2e54592`；`scope_digest=d8695be13f4b947c534ac4756db45519fd510b656ab74223b948b0ec8ec91e87`；`source_bindings_digest=89cdcb3628ae1b8c7620b3efe7cd5eda9cc44fe1413e8869122a92e10e8c4827`；`owner_bindings_digest=2bfdf420794021487e4fb3efd3c5c2357c8ac21de32873dac772130bcd527e72`；`receipt_bindings_digest=64580939774b9a63a872bdb94936bd61d9137304a57760d20b61f36eae0a8f80`。这些 digest 和每行 body/marker digest 只锁定 proposal facts，不是授权凭证。
 
 ## 验收边界
 
