@@ -16,7 +16,7 @@ const {
   validateBoundaryManifest,
   validateLiveBoundaryEvidenceComment,
 } = require('../scripts/lib/issue-1605-materialization-plan');
-const { buildLiveBoundaryReport, buildLiveManifest, materializationReceiptsBySourceIssue, sourceSnapshotDigest } = require('../scripts/plan-issue-1611-live-materialization');
+const { buildLiveBoundaryReport, buildLiveManifest, exactAppliedBoundaryEvidence, materializationReceiptsBySourceIssue, sourceSnapshotDigest } = require('../scripts/plan-issue-1611-live-materialization');
 const { parseArgs } = require('../scripts/plan-issue-1605-interview-note-materialization');
 
 const template = fs.readFileSync(path.join(__dirname, 'fixtures/source-note-issue-v2.valid.md'), 'utf8');
@@ -209,6 +209,7 @@ function item(source, decision, status = 'already_applied', ids = []) {
     source_note_issue_number: source.number,
     source_note_id: parsed.source_note_id,
     source_note_body_sha256: sha256Text(source.body),
+    live_source_note_body_sha256: sha256Text(source.body),
     source_revision_id: parsed.source_revision.id,
     decision,
     transition_id: `fixture-transition-${source.number}`,
@@ -400,4 +401,201 @@ test('transition-applied candidates require an exact, live-bound evidence commen
   const wrongPayload = { ...payload, decision: 'not-interview' };
   const wrongComment = { ...comment, body: `<!-- source-note-boundary-review-evidence\n${JSON.stringify(wrongPayload)}\n-->` };
   assert.equal(validateLiveBoundaryEvidenceComment(wrongComment, expected, source).ok, false);
+});
+
+test('strictly adapts the issue-1608 evidence schema without accepting drift or duplicate matches', () => {
+  const source = makeSourceIssue(919, 'single-interview');
+  const sourceRecordMarker = source.body.match(/<!-- source-note-record\s*\n([\s\S]*?)\n-->/);
+  const sourceRecord = JSON.parse(sourceRecordMarker[1]);
+  sourceRecord.schema_version = 'source-note-issue.v1';
+  sourceRecord.source_revision.source_repository = 'liqiangcc/xhs';
+  sourceRecord.source_revision.source_repository_ref = '95b77bb261048059846273688e4b90a2e108b437';
+  sourceRecord.artifacts[2] = {
+    ...sourceRecord.artifacts[2],
+    ref: 'liqiangcc/xhs:note_desc/runtime-fixture-919.txt@95b77bb261048059846273688e4b90a2e108b437',
+    kind: 'text_projection',
+    provenance: 'source_projection',
+    git_blob_sha: 'b'.repeat(40),
+    sha256: 'c'.repeat(64),
+    byte_size: 10,
+  };
+  source.body = source.body
+    .replace(/<!-- source-note:\s*id=[^\s]+\s+schema=[^\s]+\s*-->/, `<!-- source-note: id=${sourceRecord.source_note_id} schema=${sourceRecord.schema_version} -->`)
+    .replace(sourceRecordMarker[0], `<!-- source-note-record\n${JSON.stringify(sourceRecord, null, 2)}\n-->`);
+  const parsed = parseSourceNoteIssue(source.body).record;
+  const transitionId = 'fixture-transition-919-issue-1608';
+  const evidenceBodySha = 'a'.repeat(64);
+  const projection = {
+    ref: 'liqiangcc/xhs:note_desc/runtime-fixture-919.txt@95b77bb261048059846273688e4b90a2e108b437',
+    kind: 'text_projection',
+    provenance: 'source_projection',
+    blob_sha: 'b'.repeat(40),
+    content_sha256: 'c'.repeat(64),
+    byte_size: 10,
+  };
+  const oldPayload = {
+    schema_version: 'issue-1608-boundary-evidence.v1',
+    issue_number: source.number,
+    source_note_id: parsed.source_note_id,
+    source_revision_id: parsed.source_revision.id,
+    source_repository: 'liqiangcc/xhs',
+    source_repository_ref: '95b77bb261048059846273688e4b90a2e108b437',
+    evidence_status: 'sufficient-for-controller-review',
+    decision: 'single-interview',
+    artifact: { ref: projection.ref, kind: projection.kind, provenance: projection.provenance, git_blob_sha: projection.blob_sha, byte_size: projection.byte_size, content_sha256: projection.content_sha256 },
+    excerpts: [{ excerpt: 'fixture', locator: 'fixture:line-1', line: 1 }],
+    checks: ['source_identity', 'source_revision_binding', 'source_content_coverage', 'event_boundary', 'no_cross_source_mixing', 'no_fabrication'].map((check_id) => ({ check_id, result: 'pass' })),
+    transition_request: {
+      schema_version: 'source-note-boundary-review-transition.v1',
+      transition_id: transitionId,
+      repository: 'liqiangcc/interview-lab',
+      issue_number: source.number,
+      source_note_id: parsed.source_note_id,
+      expected_body_sha256: evidenceBodySha,
+      expected_boundary_status: 'pending',
+      expected_source_revision_id: parsed.source_revision.id,
+      expected_source_repository_ref: '95b77bb261048059846273688e4b90a2e108b437',
+      decision: 'single-interview',
+      source_projection: projection,
+      live_binding: {
+        issue_number: source.number,
+        body_sha256: evidenceBodySha,
+        source_note_id: parsed.source_note_id,
+        source_revision_id: parsed.source_revision.id,
+        source_repository: 'liqiangcc/xhs',
+        source_repository_ref: '95b77bb261048059846273688e4b90a2e108b437',
+        source_projection_ref: projection.ref,
+        source_projection_blob_sha: projection.blob_sha,
+        source_projection_content_sha256: projection.content_sha256,
+      },
+    },
+  };
+  const comment = {
+    id: 9191608,
+    issue_url: 'https://api.github.com/repos/liqiangcc/interview-lab/issues/919',
+    body: `<!-- issue-1608-boundary-evidence.v1\n${JSON.stringify(oldPayload)}\n-->`,
+  };
+  const expected = {
+    source_note_issue_number: source.number,
+    source_note_id: parsed.source_note_id,
+    source_note_body_sha256: sha256Text(source.body),
+    evidence_body_sha256: evidenceBodySha,
+    live_source_note_body_sha256: sha256Text(source.body),
+    source_revision_id: parsed.source_revision.id,
+    decision: 'single-interview',
+    transition_id: transitionId,
+    evidence_comment_id: comment.id,
+    evidence_schema: 'issue-1608-boundary-evidence.v1',
+  };
+  assert.equal(validateLiveBoundaryEvidenceComment(comment, expected, source).ok, true);
+  const clonePayload = () => JSON.parse(JSON.stringify(oldPayload));
+  const commentFor = (payload) => ({ ...comment, body: `<!-- issue-1608-boundary-evidence.v1\n${JSON.stringify(payload)}\n-->` });
+  const missingFields = clonePayload();
+  delete missingFields.artifact.ref;
+  delete missingFields.artifact.kind;
+  delete missingFields.artifact.provenance;
+  delete missingFields.artifact.git_blob_sha;
+  delete missingFields.artifact.content_sha256;
+  delete missingFields.artifact.byte_size;
+  delete missingFields.transition_request.source_projection.ref;
+  delete missingFields.transition_request.source_projection.kind;
+  delete missingFields.transition_request.source_projection.provenance;
+  delete missingFields.transition_request.source_projection.blob_sha;
+  delete missingFields.transition_request.source_projection.content_sha256;
+  delete missingFields.transition_request.source_projection.byte_size;
+  delete missingFields.transition_request.live_binding.source_projection_ref;
+  delete missingFields.transition_request.live_binding.source_projection_blob_sha;
+  delete missingFields.transition_request.live_binding.source_projection_content_sha256;
+  assert.equal(validateLiveBoundaryEvidenceComment(commentFor(missingFields), expected, source).ok, false);
+  for (const replaceObject of [
+    (payload) => { payload.artifact = []; },
+    (payload) => { payload.transition_request.source_projection = []; },
+    (payload) => { payload.transition_request.live_binding = []; },
+  ]) {
+    const arrayObject = clonePayload();
+    replaceObject(arrayObject);
+    assert.equal(validateLiveBoundaryEvidenceComment(commentFor(arrayObject), expected, source).ok, false);
+  }
+  const otherSource = clonePayload();
+  const otherRef = 'other/repository:note_json/other-source.json@95b77bb261048059846273688e4b90a2e108b437';
+  otherSource.artifact.ref = otherRef;
+  otherSource.transition_request.source_projection.ref = otherRef;
+  otherSource.transition_request.live_binding.source_projection_ref = otherRef;
+  assert.equal(validateLiveBoundaryEvidenceComment(commentFor(otherSource), expected, source).ok, false);
+  for (const mutate of [
+    (payload) => { payload.artifact.byte_size = -1; payload.transition_request.source_projection.byte_size = -1; },
+    (payload) => { payload.artifact.git_blob_sha = 'bad'; payload.transition_request.source_projection.blob_sha = 'bad'; payload.transition_request.live_binding.source_projection_blob_sha = 'bad'; },
+    (payload) => { payload.artifact.content_sha256 = 'bad'; payload.transition_request.source_projection.content_sha256 = 'bad'; payload.transition_request.live_binding.source_projection_content_sha256 = 'bad'; },
+  ]) {
+    const malformed = clonePayload();
+    mutate(malformed);
+    assert.equal(validateLiveBoundaryEvidenceComment(commentFor(malformed), expected, source).ok, false);
+  }
+  const duplicateChecks = clonePayload();
+  duplicateChecks.checks.push({ check_id: 'source_identity', result: 'fail' });
+  assert.equal(validateLiveBoundaryEvidenceComment(commentFor(duplicateChecks), expected, source).ok, false);
+  const invalidSource = { ...source, labels: [] };
+  assert.equal(validateLiveBoundaryEvidenceComment(comment, expected, invalidSource).ok, false);
+  const withSourceRecord = (mutate) => {
+    const copy = JSON.parse(JSON.stringify(source));
+    const recordMarker = copy.body.match(/<!-- source-note-record\s*\n([\s\S]*?)\n-->/);
+    const record = JSON.parse(recordMarker[1]);
+    mutate(record);
+    copy.body = copy.body
+      .replace(/<!-- source-note:\s*id=[^\s]+\s+schema=[^\s]+\s*-->/, `<!-- source-note: id=${record.source_note_id} schema=${record.schema_version} -->`)
+      .replace(recordMarker[0], `<!-- source-note-record\n${JSON.stringify(record, null, 2)}\n-->`);
+    return copy;
+  };
+  assert.equal(validateLiveBoundaryEvidenceComment({ ...comment }, expected, { ...source, body: `${source.body}\nsource body drift` }).ok, false);
+  const refDrift = withSourceRecord((record) => { record.source_revision.source_repository_ref = 'wrong/ref'; });
+  assert.equal(validateLiveBoundaryEvidenceComment(comment, { ...expected, live_source_note_body_sha256: sha256Text(refDrift.body) }, refDrift).ok, false);
+  const identityDrift = withSourceRecord((record) => { record.source_note_id = 'xhs-note:drifted-source'; });
+  assert.equal(validateLiveBoundaryEvidenceComment(comment, { ...expected, live_source_note_body_sha256: sha256Text(identityDrift.body) }, identityDrift).ok, false);
+  for (const mutate of [
+    (value) => ({ ...value, transition_request: { ...value.transition_request, expected_body_sha256: 'd'.repeat(64) } }),
+    (value) => ({ ...value, source_repository_ref: 'wrong/ref' }),
+    (value) => ({ ...value, transition_request: { ...value.transition_request, source_note_id: 'xhs-note:drift' } }),
+  ]) {
+    const tampered = { ...comment, body: `<!-- issue-1608-boundary-evidence.v1\n${JSON.stringify(mutate(oldPayload))}\n-->` };
+    assert.equal(validateLiveBoundaryEvidenceComment(tampered, expected, source).ok, false);
+  }
+  const applied = {
+    id: 9191609,
+    issue_url: comment.issue_url,
+    body: `<!-- source-note-boundary-review-applied\n${JSON.stringify({
+      schema_version: 'source-note-boundary-review-applied.v1',
+      transition_id: transitionId,
+      repository: 'liqiangcc/interview-lab',
+      issue_number: source.number,
+      source_note_id: parsed.source_note_id,
+      decision: 'single-interview',
+      new_body_sha256: sha256Text(source.body),
+      previous_body_sha256: evidenceBodySha,
+      interview_note_ids: [`xhs:${parsed.source.external_id}`],
+      interview_note_cases: null,
+    })}\n-->`,
+  };
+  const duplicateSameSchema = exactAppliedBoundaryEvidence(source, [applied, comment, { ...comment, id: 9191610 }]);
+  assert.match(duplicateSameSchema.errors.join('\n'), /matching boundary evidence comment \(got 2\)/);
+  const emptyApplied = { ...applied, body: applied.body.replace(`"interview_note_ids":["xhs:${parsed.source.external_id}"]`, '"interview_note_ids":[]') };
+  assert.match(exactAppliedBoundaryEvidence(source, [emptyApplied, comment]).errors.join('\n'), /receipt interview_note_ids mismatch/);
+  const currentPayload = {
+    schema_version: 'source-note-boundary-review-evidence.v1',
+    transition_id: transitionId,
+    repository: 'liqiangcc/interview-lab',
+    parent_issue: 1605,
+    issue_number: source.number,
+    source_note_id: parsed.source_note_id,
+    expected_body_sha256: evidenceBodySha,
+    expected_source_revision_id: parsed.source_revision.id,
+    expected_source_repository_ref: '95b77bb261048059846273688e4b90a2e108b437',
+    decision: 'single-interview',
+    checks: oldPayload.checks,
+  };
+  const duplicateCrossSchema = exactAppliedBoundaryEvidence(source, [applied, comment, {
+    id: 9191611,
+    issue_url: comment.issue_url,
+    body: `<!-- source-note-boundary-review-evidence\n${JSON.stringify(currentPayload)}\n-->`,
+  }]);
+  assert.match(duplicateCrossSchema.errors.join('\n'), /matching boundary evidence comment \(got 2\)/);
 });

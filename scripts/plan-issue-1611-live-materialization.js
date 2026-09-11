@@ -14,6 +14,7 @@ const {
   liveSourceSnapshotDigest,
   SOURCE_REF,
   planIssue1605Materialization,
+  validateIssue1608BoundaryEvidenceValue,
 } = require('./lib/issue-1605-materialization-plan');
 
 const REPOSITORY = 'liqiangcc/interview-lab';
@@ -86,12 +87,14 @@ function exactAppliedBoundaryEvidence(issue, comments) {
   const evidence = [];
   const legacyEvidence = [];
   const historicalEvidence = [];
+  const issue1608Evidence = [];
   for (const comment of comments || []) {
     try {
       for (const value of markerValues(comment.body, 'source-note-boundary-review-applied')) applied.push({ comment, value });
       for (const value of markerValues(comment.body, 'source-note-boundary-review-evidence')) evidence.push({ comment, value });
       for (const value of markerValues(comment.body, 'issue-921-pilot-evidence')) legacyEvidence.push({ comment, value });
       for (const value of markerValues(comment.body, 'boundary-review-evidence.v1')) historicalEvidence.push({ comment, value });
+      for (const value of markerValues(comment.body, 'issue-1608-boundary-evidence.v1')) issue1608Evidence.push({ comment, value });
     } catch (error) { errors.push(`#${issue.number} comment ${comment && comment.id}: ${error.message}`); }
   }
   const matchingApplied = applied.filter(({ value }) => value.issue_number === Number(issue.number));
@@ -103,9 +106,12 @@ function exactAppliedBoundaryEvidence(issue, comments) {
     && receipt && value.transition_id === receipt.transition_id);
   const matchingHistoricalEvidence = historicalEvidence.filter(({ value }) => value.issue_number === Number(issue.number)
     && receipt && value.transition_id === receipt.transition_id);
-  const selectedEvidence = matchingEvidence.length === 1 ? matchingEvidence[0] : matchingHistoricalEvidence.length === 1 ? matchingHistoricalEvidence[0] : matchingLegacyEvidence.length === 1 ? matchingLegacyEvidence[0] : null;
-  const evidenceSchema = matchingEvidence.length === 1 ? 'source-note-boundary-review-evidence.v1' : matchingHistoricalEvidence.length === 1 ? 'boundary-review-evidence.v1' : matchingLegacyEvidence.length === 1 ? 'issue-921-pilot-evidence' : null;
-  if (matchingEvidence.length + matchingHistoricalEvidence.length + matchingLegacyEvidence.length !== 1) errors.push(`#${issue.number} must have exactly one matching boundary evidence comment (got ${matchingEvidence.length + matchingHistoricalEvidence.length + matchingLegacyEvidence.length})`);
+  const matchingIssue1608Evidence = issue1608Evidence.filter(({ value }) => value.issue_number === Number(issue.number)
+    && receipt && value.transition_request && value.transition_request.transition_id === receipt.transition_id);
+  const selectedEvidence = matchingEvidence.length === 1 ? matchingEvidence[0] : matchingHistoricalEvidence.length === 1 ? matchingHistoricalEvidence[0] : matchingLegacyEvidence.length === 1 ? matchingLegacyEvidence[0] : matchingIssue1608Evidence.length === 1 ? matchingIssue1608Evidence[0] : null;
+  const evidenceSchema = matchingEvidence.length === 1 ? 'source-note-boundary-review-evidence.v1' : matchingHistoricalEvidence.length === 1 ? 'boundary-review-evidence.v1' : matchingLegacyEvidence.length === 1 ? 'issue-921-pilot-evidence' : matchingIssue1608Evidence.length === 1 ? 'issue-1608-boundary-evidence.v1' : null;
+  const matchingEvidenceCount = matchingEvidence.length + matchingHistoricalEvidence.length + matchingLegacyEvidence.length + matchingIssue1608Evidence.length;
+  if (matchingEvidenceCount !== 1) errors.push(`#${issue.number} must have exactly one matching boundary evidence comment (got ${matchingEvidenceCount})`);
   const review = selectedEvidence && selectedEvidence.value;
   const equal = (label, actual, expected) => { if (actual !== expected) errors.push(`#${issue.number} boundary ${label} mismatch`); };
   if (receipt) {
@@ -122,6 +128,19 @@ function exactAppliedBoundaryEvidence(issue, comments) {
     if (JSON.stringify(receipt.interview_note_cases || []) !== JSON.stringify(parsedCases)) errors.push(`#${issue.number} receipt interview_note_cases mismatch`);
   }
   if (review) {
+    if (evidenceSchema === 'issue-1608-boundary-evidence.v1') {
+      const validation = validateIssue1608BoundaryEvidenceValue(review, {
+        source_note_issue_number: Number(issue.number),
+        source_note_id: sourceNoteId,
+        source_revision_id: revision,
+        evidence_body_sha256: receipt && receipt.previous_body_sha256,
+        source_note_body_sha256: receipt && receipt.previous_body_sha256,
+        live_source_note_body_sha256: bodySha,
+        decision: status,
+        transition_id: receipt && receipt.transition_id,
+      }, issue);
+      errors.push(...validation.errors);
+    }
     if (evidenceSchema === 'source-note-boundary-review-evidence.v1') equal('evidence schema', review.schema_version, 'source-note-boundary-review-evidence.v1');
     if (evidenceSchema === 'source-note-boundary-review-evidence.v1' || evidenceSchema === 'boundary-review-evidence.v1') {
       equal('evidence repository', review.repository, REPOSITORY);
@@ -132,7 +151,7 @@ function exactAppliedBoundaryEvidence(issue, comments) {
       equal('evidence expected_source_revision_id', review.expected_source_revision_id, revision);
       equal('evidence expected_source_repository_ref', review.expected_source_repository_ref, SOURCE_REF);
       equal('evidence decision', review.decision, status);
-    } else {
+    } else if (evidenceSchema === 'issue-921-pilot-evidence') {
       const sourceRevision = String(selectedEvidence.comment.body || '').match(/(?:^|\n)source_revision_id:\s*([^\n]+)/);
       const sourceRef = String(selectedEvidence.comment.body || '').match(/(?:^|\n)source_repository_ref:\s*([^\n]+)/);
       const decision = String(selectedEvidence.comment.body || '').match(/(?:^|\n)recommended_decision:\s*([^\n]+)/);
