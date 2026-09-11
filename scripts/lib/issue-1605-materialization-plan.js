@@ -221,7 +221,38 @@ function validateIssue1608BoundaryEvidenceValue(value, expected, sourceIssue = n
   const issueNumber = Number(expected && expected.source_note_issue_number);
   const evidenceBodySha = expected && (expected.evidence_body_sha256 || expected.source_note_body_sha256);
   const equal = (field, actual, wanted) => { if (actual !== wanted) errors.push(`SourceNote #${issueNumber} issue-1608 evidence ${field} binding mismatch`); };
-  if (!value || typeof value !== 'object') return { ok: false, errors: [`SourceNote #${issueNumber} issue-1608 evidence payload is missing`] };
+  const object = (field, candidate) => {
+    if (!candidate || typeof candidate !== 'object' || Array.isArray(candidate)) {
+      errors.push(`SourceNote #${issueNumber} issue-1608 evidence ${field} must be an object`);
+      return false;
+    }
+    return true;
+  };
+  const string = (field, candidate, pattern = null) => {
+    if (typeof candidate !== 'string' || !candidate.trim() || (pattern && !pattern.test(candidate))) {
+      errors.push(`SourceNote #${issueNumber} issue-1608 evidence ${field} has invalid format`);
+      return false;
+    }
+    return true;
+  };
+  const byteSize = (field, candidate) => {
+    if (!Number.isSafeInteger(candidate) || candidate < 0) {
+      errors.push(`SourceNote #${issueNumber} issue-1608 evidence ${field} must be a non-negative safe integer`);
+      return false;
+    }
+    return true;
+  };
+  const sha40 = /^[0-9a-f]{40}$/;
+  const sha64 = /^[0-9a-f]{64}$/;
+  const projectionRef = /^liqiangcc\/xhs:[^\s@]+@95b77bb261048059846273688e4b90a2e108b437$/;
+  const artifactKind = /^[a-z][a-z0-9_-]*$/;
+  const artifactProvenance = new Set(['raw_capture', 'raw_dom_snapshot', 'raw_context_capture', 'source_projection', 'derived_projection']);
+  if (!object('payload', value)) return { ok: false, errors };
+  string('expected.source_note_id', expected && expected.source_note_id);
+  string('expected.source_revision_id', expected && expected.source_revision_id);
+  string('expected.evidence_body_sha256', evidenceBodySha, sha64);
+  string('expected.transition_id', expected && expected.transition_id);
+  string('expected.decision', expected && expected.decision);
   equal('schema_version', value.schema_version, 'issue-1608-boundary-evidence.v1');
   equal('issue_number', value.issue_number, issueNumber);
   equal('source_note_id', value.source_note_id, expected.source_note_id);
@@ -231,7 +262,7 @@ function validateIssue1608BoundaryEvidenceValue(value, expected, sourceIssue = n
   equal('evidence_status', value.evidence_status, 'sufficient-for-controller-review');
   equal('decision', value.decision, expected.decision);
   const liveResult = sourceIssue ? issueSourceRecord(sourceIssue) : null;
-  if (sourceIssue && !liveResult.parsed) errors.push(`SourceNote #${issueNumber} live source snapshot is invalid: ${(liveResult.validation.errors || []).join('; ')}`);
+  if (sourceIssue && !liveResult.validation.ok) errors.push(`SourceNote #${issueNumber} live source snapshot is invalid: ${(liveResult.validation.errors || []).join('; ')}`);
   const live = liveResult && liveResult.parsed;
   if (live) {
     equal('live_source_note_id', live.source_note_id, expected.source_note_id);
@@ -240,7 +271,7 @@ function validateIssue1608BoundaryEvidenceValue(value, expected, sourceIssue = n
     if (expected.live_source_note_body_sha256 != null) equal('live_source_note_body_sha256', sha256Text(sourceIssue.body || ''), expected.live_source_note_body_sha256);
   }
   const request = value.transition_request;
-  if (!request || typeof request !== 'object' || Array.isArray(request)) {
+  if (!object('transition_request', request)) {
     errors.push(`SourceNote #${issueNumber} issue-1608 evidence transition_request is missing`);
   } else {
     equal('transition_request.schema_version', request.schema_version, 'source-note-boundary-review-transition.v1');
@@ -254,9 +285,10 @@ function validateIssue1608BoundaryEvidenceValue(value, expected, sourceIssue = n
     equal('transition_request.expected_source_repository_ref', request.expected_source_repository_ref, SOURCE_REF);
     equal('transition_request.decision', request.decision, expected.decision);
     const binding = request.live_binding;
-    if (!binding || typeof binding !== 'object') errors.push(`SourceNote #${issueNumber} issue-1608 evidence live_binding is missing`);
+    if (!object('live_binding', binding)) errors.push(`SourceNote #${issueNumber} issue-1608 evidence live_binding is missing`);
     else {
       equal('live_binding.issue_number', binding.issue_number, issueNumber);
+      string('live_binding.body_sha256', binding.body_sha256, sha64);
       equal('live_binding.body_sha256', binding.body_sha256, evidenceBodySha);
       equal('live_binding.source_note_id', binding.source_note_id, expected.source_note_id);
       equal('live_binding.source_revision_id', binding.source_revision_id, expected.source_revision_id);
@@ -264,22 +296,54 @@ function validateIssue1608BoundaryEvidenceValue(value, expected, sourceIssue = n
       equal('live_binding.source_repository_ref', binding.source_repository_ref, SOURCE_REF);
       const projection = request.source_projection;
       const artifact = value.artifact;
-      if (!projection || typeof projection !== 'object' || !artifact || typeof artifact !== 'object') {
-        errors.push(`SourceNote #${issueNumber} issue-1608 evidence source projection/artifact is missing`);
-      } else {
-        for (const field of ['ref', 'kind', 'provenance', 'byte_size']) equal(`artifact.${field}`, artifact[field], projection[field]);
-        equal('artifact.git_blob_sha', artifact.git_blob_sha, projection.blob_sha);
-        equal('artifact.content_sha256', artifact.content_sha256, projection.content_sha256);
+      const projectionOk = object('source_projection', projection);
+      const artifactOk = object('artifact', artifact);
+      if (projectionOk) {
+        string('source_projection.ref', projection.ref, projectionRef);
+        string('source_projection.kind', projection.kind, artifactKind);
+        if (!artifactProvenance.has(projection.provenance)) errors.push(`SourceNote #${issueNumber} issue-1608 evidence source_projection.provenance has invalid format`);
+        string('source_projection.blob_sha', projection.blob_sha, sha40);
+        string('source_projection.content_sha256', projection.content_sha256, sha64);
+        byteSize('source_projection.byte_size', projection.byte_size);
+        string('live_binding.source_projection_ref', binding.source_projection_ref, projectionRef);
+        string('live_binding.source_projection_blob_sha', binding.source_projection_blob_sha, sha40);
+        string('live_binding.source_projection_content_sha256', binding.source_projection_content_sha256, sha64);
         equal('live_binding.source_projection_ref', binding.source_projection_ref, projection.ref);
         equal('live_binding.source_projection_blob_sha', binding.source_projection_blob_sha, projection.blob_sha);
         equal('live_binding.source_projection_content_sha256', binding.source_projection_content_sha256, projection.content_sha256);
+      }
+      if (artifactOk) {
+        string('artifact.ref', artifact.ref, projectionRef);
+        string('artifact.kind', artifact.kind, artifactKind);
+        if (!artifactProvenance.has(artifact.provenance)) errors.push(`SourceNote #${issueNumber} issue-1608 evidence artifact.provenance has invalid format`);
+        string('artifact.git_blob_sha', artifact.git_blob_sha, sha40);
+        string('artifact.content_sha256', artifact.content_sha256, sha64);
+        byteSize('artifact.byte_size', artifact.byte_size);
+      }
+      if (projectionOk && artifactOk) {
+        for (const field of ['ref', 'kind', 'provenance', 'byte_size']) equal(`artifact.${field}`, artifact[field], projection[field]);
+        equal('artifact.git_blob_sha', artifact.git_blob_sha, projection.blob_sha);
+        equal('artifact.content_sha256', artifact.content_sha256, projection.content_sha256);
+        if (live && Array.isArray(live.artifacts)) {
+          const matches = live.artifacts.filter((candidate) => candidate && candidate.ref === projection.ref);
+          if (matches.length !== 1) errors.push(`SourceNote #${issueNumber} issue-1608 evidence source_projection.ref must identify exactly one live source artifact (got ${matches.length})`);
+          else {
+            const liveArtifact = matches[0];
+            equal('source_artifact.kind', projection.kind, liveArtifact.kind);
+            equal('source_artifact.provenance', projection.provenance, liveArtifact.provenance);
+            equal('source_artifact.git_blob_sha', projection.blob_sha, liveArtifact.git_blob_sha);
+            equal('source_artifact.byte_size', projection.byte_size, liveArtifact.byte_size);
+            if (liveArtifact.sha256 != null) equal('source_artifact.content_sha256', projection.content_sha256, liveArtifact.sha256);
+          }
+        } else if (live) errors.push(`SourceNote #${issueNumber} live source snapshot has no artifacts to bind source_projection.ref`);
       }
     }
   }
   if (!Array.isArray(value.checks)) errors.push(`SourceNote #${issueNumber} issue-1608 evidence checks are missing`);
   else for (const checkId of REQUIRED_BOUNDARY_CHECKS) {
-    const check = value.checks.find((candidate) => candidate && candidate.check_id === checkId);
-    if (!check || check.result !== 'pass') errors.push(`SourceNote #${issueNumber} issue-1608 evidence check ${checkId} is not pass`);
+    const checks = value.checks.filter((candidate) => candidate && candidate.check_id === checkId);
+    if (checks.length !== 1) errors.push(`SourceNote #${issueNumber} issue-1608 evidence check ${checkId} must occur exactly once (got ${checks.length})`);
+    else if (checks[0].result !== 'pass') errors.push(`SourceNote #${issueNumber} issue-1608 evidence check ${checkId} is not pass`);
   }
   if (!Array.isArray(value.excerpts) || value.excerpts.length === 0) errors.push(`SourceNote #${issueNumber} issue-1608 evidence excerpts are missing`);
   return { ok: errors.length === 0, errors, value };

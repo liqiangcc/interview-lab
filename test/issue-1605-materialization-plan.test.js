@@ -407,13 +407,26 @@ test('strictly adapts the issue-1608 evidence schema without accepting drift or 
   const source = makeSourceIssue(919, 'single-interview');
   const sourceRecordMarker = source.body.match(/<!-- source-note-record\s*\n([\s\S]*?)\n-->/);
   const sourceRecord = JSON.parse(sourceRecordMarker[1]);
+  sourceRecord.schema_version = 'source-note-issue.v1';
+  sourceRecord.source_revision.source_repository = 'liqiangcc/xhs';
   sourceRecord.source_revision.source_repository_ref = '95b77bb261048059846273688e4b90a2e108b437';
-  source.body = source.body.replace(sourceRecordMarker[0], `<!-- source-note-record\n${JSON.stringify(sourceRecord, null, 2)}\n-->`);
+  sourceRecord.artifacts[2] = {
+    ...sourceRecord.artifacts[2],
+    ref: 'liqiangcc/xhs:note_desc/runtime-fixture-919.txt@95b77bb261048059846273688e4b90a2e108b437',
+    kind: 'text_projection',
+    provenance: 'source_projection',
+    git_blob_sha: 'b'.repeat(40),
+    sha256: 'c'.repeat(64),
+    byte_size: 10,
+  };
+  source.body = source.body
+    .replace(/<!-- source-note:\s*id=[^\s]+\s+schema=[^\s]+\s*-->/, `<!-- source-note: id=${sourceRecord.source_note_id} schema=${sourceRecord.schema_version} -->`)
+    .replace(sourceRecordMarker[0], `<!-- source-note-record\n${JSON.stringify(sourceRecord, null, 2)}\n-->`);
   const parsed = parseSourceNoteIssue(source.body).record;
   const transitionId = 'fixture-transition-919-issue-1608';
   const evidenceBodySha = 'a'.repeat(64);
   const projection = {
-    ref: 'liqiangcc/xhs:note_desc/runtime-fixture-919.txt@95bd',
+    ref: 'liqiangcc/xhs:note_desc/runtime-fixture-919.txt@95b77bb261048059846273688e4b90a2e108b437',
     kind: 'text_projection',
     provenance: 'source_projection',
     blob_sha: 'b'.repeat(40),
@@ -475,6 +488,54 @@ test('strictly adapts the issue-1608 evidence schema without accepting drift or 
     evidence_schema: 'issue-1608-boundary-evidence.v1',
   };
   assert.equal(validateLiveBoundaryEvidenceComment(comment, expected, source).ok, true);
+  const clonePayload = () => JSON.parse(JSON.stringify(oldPayload));
+  const commentFor = (payload) => ({ ...comment, body: `<!-- issue-1608-boundary-evidence.v1\n${JSON.stringify(payload)}\n-->` });
+  const missingFields = clonePayload();
+  delete missingFields.artifact.ref;
+  delete missingFields.artifact.kind;
+  delete missingFields.artifact.provenance;
+  delete missingFields.artifact.git_blob_sha;
+  delete missingFields.artifact.content_sha256;
+  delete missingFields.artifact.byte_size;
+  delete missingFields.transition_request.source_projection.ref;
+  delete missingFields.transition_request.source_projection.kind;
+  delete missingFields.transition_request.source_projection.provenance;
+  delete missingFields.transition_request.source_projection.blob_sha;
+  delete missingFields.transition_request.source_projection.content_sha256;
+  delete missingFields.transition_request.source_projection.byte_size;
+  delete missingFields.transition_request.live_binding.source_projection_ref;
+  delete missingFields.transition_request.live_binding.source_projection_blob_sha;
+  delete missingFields.transition_request.live_binding.source_projection_content_sha256;
+  assert.equal(validateLiveBoundaryEvidenceComment(commentFor(missingFields), expected, source).ok, false);
+  for (const replaceObject of [
+    (payload) => { payload.artifact = []; },
+    (payload) => { payload.transition_request.source_projection = []; },
+    (payload) => { payload.transition_request.live_binding = []; },
+  ]) {
+    const arrayObject = clonePayload();
+    replaceObject(arrayObject);
+    assert.equal(validateLiveBoundaryEvidenceComment(commentFor(arrayObject), expected, source).ok, false);
+  }
+  const otherSource = clonePayload();
+  const otherRef = 'other/repository:note_json/other-source.json@95b77bb261048059846273688e4b90a2e108b437';
+  otherSource.artifact.ref = otherRef;
+  otherSource.transition_request.source_projection.ref = otherRef;
+  otherSource.transition_request.live_binding.source_projection_ref = otherRef;
+  assert.equal(validateLiveBoundaryEvidenceComment(commentFor(otherSource), expected, source).ok, false);
+  for (const mutate of [
+    (payload) => { payload.artifact.byte_size = -1; payload.transition_request.source_projection.byte_size = -1; },
+    (payload) => { payload.artifact.git_blob_sha = 'bad'; payload.transition_request.source_projection.blob_sha = 'bad'; payload.transition_request.live_binding.source_projection_blob_sha = 'bad'; },
+    (payload) => { payload.artifact.content_sha256 = 'bad'; payload.transition_request.source_projection.content_sha256 = 'bad'; payload.transition_request.live_binding.source_projection_content_sha256 = 'bad'; },
+  ]) {
+    const malformed = clonePayload();
+    mutate(malformed);
+    assert.equal(validateLiveBoundaryEvidenceComment(commentFor(malformed), expected, source).ok, false);
+  }
+  const duplicateChecks = clonePayload();
+  duplicateChecks.checks.push({ check_id: 'source_identity', result: 'fail' });
+  assert.equal(validateLiveBoundaryEvidenceComment(commentFor(duplicateChecks), expected, source).ok, false);
+  const invalidSource = { ...source, labels: [] };
+  assert.equal(validateLiveBoundaryEvidenceComment(comment, expected, invalidSource).ok, false);
   const withSourceRecord = (mutate) => {
     const copy = JSON.parse(JSON.stringify(source));
     const recordMarker = copy.body.match(/<!-- source-note-record\s*\n([\s\S]*?)\n-->/);
