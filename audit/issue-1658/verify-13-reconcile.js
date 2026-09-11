@@ -21,6 +21,7 @@ const { parseInterviewNoteIssue, validateInterviewNoteIssue } = require('../../s
 const { canonicalDigest } = require('../../scripts/lib/aggregate-downstream-pipeline');
 
 const SCOPE = [1309, 1325, 1333, 1363, 1375, 1376, 1380, 1401, 1406, 1418, 1428, 1447, 1458];
+const POST_1689_SOURCE_TREE_SHA = '92b76907a2edaa86ee8459aff20ed768a4b4b352';
 const DEFAULTS = Object.freeze({
   input: path.join(__dirname, 'repro-input.json'),
   owners: path.join(__dirname, 'owner-inventory.json'),
@@ -89,7 +90,9 @@ function compute(args) {
   const fullPlan = readJson(args.fullPlan);
   const errors = [];
   const sourceTreeSha = fullPlan.source_tree_sha;
-  if (!/^[0-9a-f]{40}$/.test(String(sourceTreeSha || ''))) addError(errors, 'full plan source_tree_sha is missing or invalid');
+  if (sourceTreeSha !== POST_1689_SOURCE_TREE_SHA) {
+    addError(errors, `full plan source_tree_sha must equal post-#1689 main ${POST_1689_SOURCE_TREE_SHA}`);
+  }
   if (!Array.isArray(input.scope) || JSON.stringify(input.scope) !== JSON.stringify(SCOPE)) addError(errors, 'snapshot scope is not exactly the authorized 13 rows');
   if (!Array.isArray(input.rows) || input.rows.length !== SCOPE.length) addError(errors, 'snapshot row count is not 13');
   const sourceNumbers = (input.rows || []).map((row) => Number(row?.source?.number));

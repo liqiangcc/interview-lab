@@ -2,7 +2,7 @@
   "audit_generated_at": "2026-09-11T02:46:51.276Z",
   "source_tree_sha": "92b76907a2edaa86ee8459aff20ed768a4b4b352",
   "source_tree_ref": "main after PR #1689 merge",
-  "source_artifact": "GET-only planner output from saved full SourceNote snapshot and live paginated comments (raw full plan not committed)",
+  "source_artifact": "GET-only planner output: saved/reused SourceNote snapshot and owner inventory inputs; only boundary/comments were read live in this run",
   "source_artifact_sha256": "f51002c56589cdf3c6ab006464827f6f7d986339c92c14edb19aee9bd55fe311",
   "schema_version": "issue-1605-interview-note-materialization-plan.v1",
   "mode": "plan-only",
@@ -13,23 +13,28 @@
     "create": 0
   },
   "source_snapshot": {
-    "mode": "github-live-read",
+    "mode": "saved-reused-input",
+    "provenance": "inherited saved SourceNote snapshot supplied via --source-notes-file",
     "count": 1460,
     "digest": "e0d5e869009a284feeaf4216c17eb21440166b8c0c4f396bed1070c765165cb2",
-    "pages": 15,
-    "terminal_page_short": true
+    "capture_pages": 15,
+    "capture_terminal_page_short": true,
+    "current_fetch": false
   },
   "boundary_evidence": {
-    "mode": "github-live-read-global-paginated",
+    "mode": "current-live-get-global-paginated",
+    "provenance": "current run live GET of paginated comments",
     "candidate_issue_count": 1052,
     "comments_loaded": 2669,
     "pages": 27,
     "terminal_page_short": true
   },
   "ownership": {
+    "mode": "saved-reused-input",
+    "provenance": "inherited saved 65-owner inventory supplied via --ownership-file",
     "identity_count": 1099,
-    "ownership_search_errors": [],
-    "mode": "github-live-owner-issue-reconcile",
+    "inherited_search_errors": [],
+    "current_search": false,
     "inventory_digest": "1dd140f82a7656b47ca09cde7cb2e96538cbf3397b77a6fc7cec3dcb7be49f95",
     "count": 65
   },
@@ -79,13 +84,25 @@
   "ok": false,
   "dry_run_sha256": "7d011546be2053481d099490dbc6b6e4b5a6166b1e1ce79cccbf7900873ffc86",
   "pagination_recovery": {
-    "page14_eof": "not observed in this rerun",
-    "boundary_evidence_pages": 27,
-    "boundary_evidence_terminal_page_short": true,
-    "source_snapshot_pages": 15,
-    "source_snapshot_terminal_page_short": true,
-    "ownership_search_errors": [],
-    "conclusion": "PASS: current GET-only run reached short terminal pages; planner acceptance remains governed by ok/errors."
+    "current_boundary_comments_pagination": {
+      "mode": "current-live-get",
+      "pages": 27,
+      "terminal_page_short": true,
+      "page14_eof": "not assessed; this run read boundary/comments pages only"
+    },
+    "inherited_source_snapshot_metadata": {
+      "mode": "saved-reused-input",
+      "capture_pages": 15,
+      "capture_terminal_page_short": true,
+      "current_fetch": false
+    },
+    "inherited_owner_inventory_metadata": {
+      "mode": "saved-reused-input",
+      "count": 65,
+      "inherited_search_errors": [],
+      "current_search": false
+    },
+    "conclusion": "Current boundary/comments live GET reached a short terminal page. Source snapshot and owner inventory pagination/search metadata are inherited from saved inputs; planner acceptance remains governed by ok/errors."
   },
   "count_units": {
     "source_count": {

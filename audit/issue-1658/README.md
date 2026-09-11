@@ -4,6 +4,8 @@
 
 本次范围仍是 [#1611 评论 5602915668](https://github.com/liqiangcc/interview-lab/issues/1611#issuecomment-5602915668) 授权的 13 条：`1309, 1325, 1333, 1363, 1375, 1376, 1380, 1401, 1406, 1418, 1428, 1447, 1458`。`max_create=13`、`max_receipts=13`。原授权 input plan、bounded input plan 和 durable journal 在本次查找范围内仍未找到，因此历史执行统一为 `UNKNOWN`，不能用当前产物替代。
 
+授权与输入边界摘要：`plan_digest=294349d6dd0575ba4e78e82607f509b067ee0476def5ff1ea9adcd70d41e99ab`；`input_plan_digest=458311b1571a959fa0b83083cdfeb093608ee35c165a41b0d3ab26a363716dd4`；`ownership_inventory_digest=64c7a7028b7f307ccecd1d4e3011b8fcdcd7c688d792e2a44ac4fe2220e91387`。这些 digest 只记录授权和缺失原 bounded plan 的边界，不代表相应原文件存在，也不替代原 plan/journal。
+
 ## 当前四维判定
 
 - `owner_fact`：13/13 `PASS`。使用已保存的完整 65-owner inventory，核对 identity、owner body SHA、title、完整 label set 和 owner validator。
@@ -30,7 +32,7 @@
 
 ## post-#1689 full planner
 
-使用新 main 的 GET-only planner 实际重跑：复用已保存的 1460 条 SourceNote snapshot 和 65-owner inventory，重新读取全量 comments；没有执行任何 mutation。当前 planner 结果见 [full-plan-summary.json](./full-plan-summary.json)。
+使用新 main 的 GET-only planner 实际重跑：通过 `--source-notes-file /tmp/interview-lab-audit-full-20260910/source.snapshot.json` 和 `--ownership-file /tmp/interview-lab-audit-full-20260910/ownership.inventory.json` 复用已保存的 1460 条 SourceNote snapshot 和 65-owner inventory；本轮只重新读取全量 comments，没有执行任何 mutation。当前 planner 结果见 [full-plan-summary.json](./full-plan-summary.json)。
 
 精确结果：
 
@@ -41,7 +43,7 @@
 - `plan_ok=false`，`mutation_performed=false`，写入计数 `patch=0/post=0/create=0`。
 - #910 单列为 `matching evidence got 0` 和 SourceRevision ref drift，不传播到其他 13 行。
 
-分页结果：本次 GET-only 重跑最终 boundary comments 为 27 页、SourceNote snapshot 为 15 页，均有短终页，ownership search errors 为空；本次重跑未观察到 page14 EOF。分页完整性为 `PASS`，不改变 planner 因 errors 导致的 `ok=false`。
+分页 provenance 分开记录：本轮 live GET 只涉及 boundary/comments，共 27 页并到达短终页。SourceNote snapshot 的 15 页短终页和 owner inventory 的既有 search errors 为空均是复用输入的继承 metadata，本轮没有重新分页 SourceNote 或重新搜索 owner，因此 page14 EOF 不在本轮评估范围内。当前 boundary/comments 分页记录为 `PASS`；planner 仍因 15 条 errors 为 `ok=false`。
 
 1460、1507、1099、65 的单位不同：1460 是 SourceNote issues；1507 是展开后的 planner rows；1099 是规划出的 distinct InterviewNote identity claims；65 是 live InterviewNote owner issues。29 个 multi-interview SourceNote 展开为 76 个 case rows，因此不能直接比较这些数值。
 
@@ -50,7 +52,7 @@
 ## 产物与核验
 
 - [13-reconcile.json](./13-reconcile.json)：post-#1689 的 13 行四维结果；`source_tree_sha=92b76907a2edaa86ee8459aff20ed768a4b4b352`。
-- [full-plan-summary.json](./full-plan-summary.json)：post-#1689 full planner 实际 counts、errors、分页和 digest。
+- [full-plan-summary.json](./full-plan-summary.json)：post-#1689 full planner 实际 counts、errors、复用输入 provenance、当前 comments 分页和 digest。
 - [repro-input.json](./repro-input.json)：13 条 source、owner、applied boundary 和 materialization marker 快照。
 - [owner-inventory.json](./owner-inventory.json)：65-owner identity/Issue 最小快照。
 - [verify-13-reconcile.js](./verify-13-reconcile.js)：默认 `check-only`；只有显式 `--write` 才刷新 13 行结果。
@@ -62,6 +64,6 @@ node --check audit/issue-1658/verify-13-reconcile.js
 node audit/issue-1658/verify-13-reconcile.js
 ```
 
-两条命令均通过，默认 check 未改写文件。定向负例保持原预期：owner body、receipt owner number、duplicate owner 均非零失败；仅保留 #910 全局错误时退出码 0，13 行不继承 #910 错误。
+两条命令均通过，默认 check 未改写文件。核验器要求 `full-plan-summary.json.source_tree_sha` 精确等于 post-#1689 main `92b76907a2edaa86ee8459aff20ed768a4b4b352`；任意其他 40 位十六进制值均非零失败。定向负例保持原预期：owner body、receipt owner number、duplicate owner 均非零失败；仅保留 #910 全局错误时退出码 0，13 行不继承 #910 错误。
 
 本审计不宣称 #1658、boundary review、Source Review 或整个 materialization 已完成；PR 保持 Draft，等待主控独立审查。
