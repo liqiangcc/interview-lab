@@ -1,0 +1,770 @@
+{
+  "recorded_at": "2026-09-12T05:40:03.951Z",
+  "planner_execution_sha": "2462c18a72f8f118aaa02c4c818d241e30361d2b",
+  "source_code_sha256": {
+    "scripts/plan-issue-1611-live-materialization.js": "66c2515ce1b979cb959ef5416ff0ab11437b2ec3d3bef5dea6bc524aa6012bf4",
+    "scripts/lib/issue-1605-materialization-plan.js": "62c81cf916bb344b8bc199a9873f8dc312ebc8f88d25b6dcbe059ed5511fa99e",
+    "scripts/lib/source-note-interview-materialization.js": "fbed464a76aea0fe57205f2c920989d17fda43357d1a93d289d72c287a3fddb2"
+  },
+  "mode": "fresh-live-GET-only",
+  "source_snapshot": {
+    "mode": "github-live-read",
+    "count": 1460,
+    "digest": "e0d5e869009a284feeaf4216c17eb21440166b8c0c4f396bed1070c765165cb2",
+    "pages": 15,
+    "terminal_page_short": true
+  },
+  "ownership": {
+    "identity_count": 1099,
+    "ownership_search_errors": [],
+    "mode": "github-live-owner-issue-reconcile",
+    "inventory_digest": "1dd140f82a7656b47ca09cde7cb2e96538cbf3397b77a6fc7cec3dcb7be49f95",
+    "count": 65
+  },
+  "comments": {
+    "mode": "github-live-read-global-paginated",
+    "candidate_issue_count": 1052,
+    "comments_loaded": 2682,
+    "pages": 27,
+    "terminal_page_short": true
+  },
+  "boundary_counts": {
+    "single-interview": 776,
+    "multi-interview": 29,
+    "not-interview": 247,
+    "pending": 408
+  },
+  "result_rows": 1507,
+  "counts": {
+    "skip-not-interview": 247,
+    "already-materialized": 60,
+    "would-materialize": 789,
+    "blocked": 411
+  },
+  "receipt_repair_count": 0,
+  "blocked_reasons": {
+    "boundary-transition-not-live-applied": 408,
+    "materialization-preflight-failed": 2,
+    "boundary-evidence-missing-or-ambiguous": 1
+  },
+  "errors": [
+    "boundary report: #910 must have exactly one matching boundary evidence comment (got 0)",
+    "boundary report: #910 live SourceRevision ref drifted"
+  ],
+  "planner_ok": false,
+  "planner_exit_code": 1,
+  "plan_digest": "36abfce700b2838ef9a5a433d71191e8f3780279ce7c2aab995220abf27f1b5d",
+  "boundary_report_digest": "b9b2095f5ee015ae856df2bc54c1cfc4628f48beb4d74f1e0d837831d6a463b5",
+  "mutation_performed": false,
+  "write_operations": {
+    "patch": 0,
+    "post": 0,
+    "create": 0
+  },
+  "scope": [
+    1309,
+    1325,
+    1333,
+    1363,
+    1375,
+    1376,
+    1380,
+    1401,
+    1406,
+    1418,
+    1428,
+    1447,
+    1458
+  ],
+  "rows": [
+    {
+      "source_note_issue_number": 1309,
+      "source_note_id": "xhs-note:68c40288000000001b03ecd6",
+      "transition_id": "issue-1656-boundary-1309-20260909000000",
+      "evidence_comment_id": 5601731380,
+      "boundary_decision": "single-interview",
+      "boundary_transition_status": "applied",
+      "case_key": null,
+      "derived_interview_note_id": "xhs:68c40288000000001b03ecd6",
+      "action": "already-materialized",
+      "reason_code": null,
+      "errors": [],
+      "request": {
+        "schema_version": "source-note-interview-materialization.v1",
+        "materialization_id": "issue-1656-materialization-1309",
+        "repository": "liqiangcc/interview-lab",
+        "source_note_issue_number": 1309,
+        "source_note_id": "xhs-note:68c40288000000001b03ecd6",
+        "expected_source_note_body_sha256": "61adfebb5d7a8230cb6d595a260c811df0b467a283fadbf368419b0a5979f5d4",
+        "expected_boundary_status": "single-interview",
+        "expected_source_revision_id": "xhs-note:68c40288000000001b03ecd6:snapshot-95b77bb26104",
+        "expected_manifest_sha256": null,
+        "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437"
+      },
+      "request_sha256": "c81f290cf68603fc7bff0b2883e97d36670853d78b6c08743e5297dd6de3b159",
+      "request_provenance": {
+        "mode": "existing-receipt-request-digest-match",
+        "receipt_comment_id": 5613888065,
+        "default_materialization_id": "xhs-note-68c40288-materialization-1",
+        "request_sha256": "c81f290cf68603fc7bff0b2883e97d36670853d78b6c08743e5297dd6de3b159",
+        "historical_authorization_plan_journal": "UNKNOWN"
+      },
+      "ownership": {
+        "count": 1,
+        "issue_numbers": [
+          1674
+        ]
+      },
+      "projection": {
+        "interview_note_id": "xhs:68c40288000000001b03ecd6",
+        "projected_body_sha256": "06c835ae9453b14d7bb300664484321d0a3264c7bb2c34de6bdbbf3578562bd8",
+        "projected_title": "[XHS] 68c40288",
+        "projected_labels": [
+          "type:interview-note",
+          "source:xhs",
+          "status:captured"
+        ]
+      },
+      "mutation_performed": false,
+      "correction_comment_id": 5643694061
+    },
+    {
+      "source_note_issue_number": 1325,
+      "source_note_id": "xhs-note:68c8d776000000001d037905",
+      "transition_id": "issue-1656-boundary-1325-20260909000000",
+      "evidence_comment_id": 5601733863,
+      "boundary_decision": "single-interview",
+      "boundary_transition_status": "applied",
+      "case_key": null,
+      "derived_interview_note_id": "xhs:68c8d776000000001d037905",
+      "action": "already-materialized",
+      "reason_code": null,
+      "errors": [],
+      "request": {
+        "schema_version": "source-note-interview-materialization.v1",
+        "materialization_id": "issue-1656-materialization-1325",
+        "repository": "liqiangcc/interview-lab",
+        "source_note_issue_number": 1325,
+        "source_note_id": "xhs-note:68c8d776000000001d037905",
+        "expected_source_note_body_sha256": "db2220c4d49be740566ec5ac17a7d4e81d3c8ee6856e672cb13df1a24e6548f6",
+        "expected_boundary_status": "single-interview",
+        "expected_source_revision_id": "xhs-note:68c8d776000000001d037905:snapshot-95b77bb26104",
+        "expected_manifest_sha256": null,
+        "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437"
+      },
+      "request_sha256": "b4e87ee3f1ac3cf53c74b8b931fd125249fca49898b19480d7c623d58ca8c09b",
+      "request_provenance": {
+        "mode": "existing-receipt-request-digest-match",
+        "receipt_comment_id": 5613892926,
+        "default_materialization_id": "xhs-note-68c8d776-materialization-1",
+        "request_sha256": "b4e87ee3f1ac3cf53c74b8b931fd125249fca49898b19480d7c623d58ca8c09b",
+        "historical_authorization_plan_journal": "UNKNOWN"
+      },
+      "ownership": {
+        "count": 1,
+        "issue_numbers": [
+          1675
+        ]
+      },
+      "projection": {
+        "interview_note_id": "xhs:68c8d776000000001d037905",
+        "projected_body_sha256": "26d5fa70f7aea12062986f2ad9a2f2f2881062945de4f6651f4eadf71ae43766",
+        "projected_title": "[XHS] 68c8d776",
+        "projected_labels": [
+          "type:interview-note",
+          "source:xhs",
+          "status:captured"
+        ]
+      },
+      "mutation_performed": false,
+      "correction_comment_id": 5643694995
+    },
+    {
+      "source_note_issue_number": 1333,
+      "source_note_id": "xhs-note:68c93440000000001203319b",
+      "transition_id": "issue-1656-boundary-1333-20260909000000",
+      "evidence_comment_id": 5601734915,
+      "boundary_decision": "single-interview",
+      "boundary_transition_status": "applied",
+      "case_key": null,
+      "derived_interview_note_id": "xhs:68c93440000000001203319b",
+      "action": "already-materialized",
+      "reason_code": null,
+      "errors": [],
+      "request": {
+        "schema_version": "source-note-interview-materialization.v1",
+        "materialization_id": "issue-1656-materialization-1333",
+        "repository": "liqiangcc/interview-lab",
+        "source_note_issue_number": 1333,
+        "source_note_id": "xhs-note:68c93440000000001203319b",
+        "expected_source_note_body_sha256": "371bfe243d7aca51f1d79ddc018b314da87dcb4d80efdbce004817fb16ca380c",
+        "expected_boundary_status": "single-interview",
+        "expected_source_revision_id": "xhs-note:68c93440000000001203319b:snapshot-95b77bb26104",
+        "expected_manifest_sha256": null,
+        "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437"
+      },
+      "request_sha256": "77b0994f7111f5926411e1fe08597183ee2a6b6ef212bfe41ff0aac2533cf406",
+      "request_provenance": {
+        "mode": "existing-receipt-request-digest-match",
+        "receipt_comment_id": 5613896228,
+        "default_materialization_id": "xhs-note-68c93440-materialization-1",
+        "request_sha256": "77b0994f7111f5926411e1fe08597183ee2a6b6ef212bfe41ff0aac2533cf406",
+        "historical_authorization_plan_journal": "UNKNOWN"
+      },
+      "ownership": {
+        "count": 1,
+        "issue_numbers": [
+          1676
+        ]
+      },
+      "projection": {
+        "interview_note_id": "xhs:68c93440000000001203319b",
+        "projected_body_sha256": "b2ee2133fd2eb916f2ea07cca45635087b81809021dca0341ab98f6e7fba4c5a",
+        "projected_title": "[XHS] 68c93440",
+        "projected_labels": [
+          "type:interview-note",
+          "source:xhs",
+          "status:captured"
+        ]
+      },
+      "mutation_performed": false,
+      "correction_comment_id": 5643700992
+    },
+    {
+      "source_note_issue_number": 1363,
+      "source_note_id": "xhs-note:68ced1a80000000011015ae0",
+      "transition_id": "issue-1656-boundary-1363-20260909000000",
+      "evidence_comment_id": 5601736517,
+      "boundary_decision": "single-interview",
+      "boundary_transition_status": "applied",
+      "case_key": null,
+      "derived_interview_note_id": "xhs:68ced1a80000000011015ae0",
+      "action": "already-materialized",
+      "reason_code": null,
+      "errors": [],
+      "request": {
+        "schema_version": "source-note-interview-materialization.v1",
+        "materialization_id": "issue-1656-materialization-1363",
+        "repository": "liqiangcc/interview-lab",
+        "source_note_issue_number": 1363,
+        "source_note_id": "xhs-note:68ced1a80000000011015ae0",
+        "expected_source_note_body_sha256": "72c27cb2c7a06391d7e08f5aa42716f2e5be20cf7e0c3b9135d048021b1f9805",
+        "expected_boundary_status": "single-interview",
+        "expected_source_revision_id": "xhs-note:68ced1a80000000011015ae0:snapshot-95b77bb26104",
+        "expected_manifest_sha256": null,
+        "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437"
+      },
+      "request_sha256": "8a23ab0e6807972bc982567101bb3adcc2b4170da4cecf4bdfd9f2c965c623ab",
+      "request_provenance": {
+        "mode": "existing-receipt-request-digest-match",
+        "receipt_comment_id": 5613898735,
+        "default_materialization_id": "xhs-note-68ced1a8-materialization-1",
+        "request_sha256": "8a23ab0e6807972bc982567101bb3adcc2b4170da4cecf4bdfd9f2c965c623ab",
+        "historical_authorization_plan_journal": "UNKNOWN"
+      },
+      "ownership": {
+        "count": 1,
+        "issue_numbers": [
+          1677
+        ]
+      },
+      "projection": {
+        "interview_note_id": "xhs:68ced1a80000000011015ae0",
+        "projected_body_sha256": "8fc810a06cbf1f11d27605d6029575c2506f005661277922cad9a090cc7718b2",
+        "projected_title": "[XHS] 68ced1a8",
+        "projected_labels": [
+          "type:interview-note",
+          "source:xhs",
+          "status:captured"
+        ]
+      },
+      "mutation_performed": false,
+      "correction_comment_id": 5643702800
+    },
+    {
+      "source_note_issue_number": 1375,
+      "source_note_id": "xhs-note:68d16a2d000000001101fea1",
+      "transition_id": "issue-1656-boundary-1375-20260909000000",
+      "evidence_comment_id": 5601737634,
+      "boundary_decision": "single-interview",
+      "boundary_transition_status": "applied",
+      "case_key": null,
+      "derived_interview_note_id": "xhs:68d16a2d000000001101fea1",
+      "action": "already-materialized",
+      "reason_code": null,
+      "errors": [],
+      "request": {
+        "schema_version": "source-note-interview-materialization.v1",
+        "materialization_id": "issue-1656-materialization-1375",
+        "repository": "liqiangcc/interview-lab",
+        "source_note_issue_number": 1375,
+        "source_note_id": "xhs-note:68d16a2d000000001101fea1",
+        "expected_source_note_body_sha256": "e2baa60a29ca31d586523d110e861956ac781fd5856ba33ffb268d8f8a29be49",
+        "expected_boundary_status": "single-interview",
+        "expected_source_revision_id": "xhs-note:68d16a2d000000001101fea1:snapshot-95b77bb26104",
+        "expected_manifest_sha256": null,
+        "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437"
+      },
+      "request_sha256": "b69a052773c65d4375e38467c0e117ba1918181588e92544a9b1eac00251eebc",
+      "request_provenance": {
+        "mode": "existing-receipt-request-digest-match",
+        "receipt_comment_id": 5613903360,
+        "default_materialization_id": "xhs-note-68d16a2d-materialization-1",
+        "request_sha256": "b69a052773c65d4375e38467c0e117ba1918181588e92544a9b1eac00251eebc",
+        "historical_authorization_plan_journal": "UNKNOWN"
+      },
+      "ownership": {
+        "count": 1,
+        "issue_numbers": [
+          1678
+        ]
+      },
+      "projection": {
+        "interview_note_id": "xhs:68d16a2d000000001101fea1",
+        "projected_body_sha256": "1fc449270f66675ac7f946bdeb9efda676faa589aa7b77f614efdf430e35f9f1",
+        "projected_title": "[XHS] 68d16a2d",
+        "projected_labels": [
+          "type:interview-note",
+          "source:xhs",
+          "status:captured"
+        ]
+      },
+      "mutation_performed": false,
+      "correction_comment_id": 5643703518
+    },
+    {
+      "source_note_issue_number": 1376,
+      "source_note_id": "xhs-note:68d16a7d000000000e031041",
+      "transition_id": "issue-1656-boundary-1376-20260909000000",
+      "evidence_comment_id": 5601746468,
+      "boundary_decision": "single-interview",
+      "boundary_transition_status": "applied",
+      "case_key": null,
+      "derived_interview_note_id": "xhs:68d16a7d000000000e031041",
+      "action": "already-materialized",
+      "reason_code": null,
+      "errors": [],
+      "request": {
+        "schema_version": "source-note-interview-materialization.v1",
+        "materialization_id": "issue-1656-materialization-1376",
+        "repository": "liqiangcc/interview-lab",
+        "source_note_issue_number": 1376,
+        "source_note_id": "xhs-note:68d16a7d000000000e031041",
+        "expected_source_note_body_sha256": "fddff5b286f0f63b108904daa055f94592dc28449fd76325f5dad47d83040182",
+        "expected_boundary_status": "single-interview",
+        "expected_source_revision_id": "xhs-note:68d16a7d000000000e031041:snapshot-95b77bb26104",
+        "expected_manifest_sha256": null,
+        "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437"
+      },
+      "request_sha256": "8a1e1ec172bd9018607bd68c18752876f9a780c87408c1b1ea24955cb2074218",
+      "request_provenance": {
+        "mode": "existing-receipt-request-digest-match",
+        "receipt_comment_id": 5613905233,
+        "default_materialization_id": "xhs-note-68d16a7d-materialization-1",
+        "request_sha256": "8a1e1ec172bd9018607bd68c18752876f9a780c87408c1b1ea24955cb2074218",
+        "historical_authorization_plan_journal": "UNKNOWN"
+      },
+      "ownership": {
+        "count": 1,
+        "issue_numbers": [
+          1679
+        ]
+      },
+      "projection": {
+        "interview_note_id": "xhs:68d16a7d000000000e031041",
+        "projected_body_sha256": "dfb4d11f43944f60430eef987c9169e8720971c3552e43924dc4d3011466e161",
+        "projected_title": "[XHS] 68d16a7d",
+        "projected_labels": [
+          "type:interview-note",
+          "source:xhs",
+          "status:captured"
+        ]
+      },
+      "mutation_performed": false,
+      "correction_comment_id": 5643704149
+    },
+    {
+      "source_note_issue_number": 1380,
+      "source_note_id": "xhs-note:68d25947000000000b03ea1e",
+      "transition_id": "issue-1656-boundary-1380-20260909000000",
+      "evidence_comment_id": 5601747308,
+      "boundary_decision": "single-interview",
+      "boundary_transition_status": "applied",
+      "case_key": null,
+      "derived_interview_note_id": "xhs:68d25947000000000b03ea1e",
+      "action": "already-materialized",
+      "reason_code": null,
+      "errors": [],
+      "request": {
+        "schema_version": "source-note-interview-materialization.v1",
+        "materialization_id": "issue-1656-materialization-1380",
+        "repository": "liqiangcc/interview-lab",
+        "source_note_issue_number": 1380,
+        "source_note_id": "xhs-note:68d25947000000000b03ea1e",
+        "expected_source_note_body_sha256": "b7980a9fd21a211c63d095b55421d0133532ee3f87b59ebc44dc5781bf467cd3",
+        "expected_boundary_status": "single-interview",
+        "expected_source_revision_id": "xhs-note:68d25947000000000b03ea1e:snapshot-95b77bb26104",
+        "expected_manifest_sha256": null,
+        "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437"
+      },
+      "request_sha256": "c975d50bc890f558fb7f8d6e8bab8ffa7b407685eabefb1bd3f169cdece26ba9",
+      "request_provenance": {
+        "mode": "existing-receipt-request-digest-match",
+        "receipt_comment_id": 5613908279,
+        "default_materialization_id": "xhs-note-68d25947-materialization-1",
+        "request_sha256": "c975d50bc890f558fb7f8d6e8bab8ffa7b407685eabefb1bd3f169cdece26ba9",
+        "historical_authorization_plan_journal": "UNKNOWN"
+      },
+      "ownership": {
+        "count": 1,
+        "issue_numbers": [
+          1680
+        ]
+      },
+      "projection": {
+        "interview_note_id": "xhs:68d25947000000000b03ea1e",
+        "projected_body_sha256": "4d8fbd08429ee2fdfb8adba6c5fc173f603da1a89739f2feedfcb628643b6286",
+        "projected_title": "[XHS] 68d25947",
+        "projected_labels": [
+          "type:interview-note",
+          "source:xhs",
+          "status:captured"
+        ]
+      },
+      "mutation_performed": false,
+      "correction_comment_id": 5643705168
+    },
+    {
+      "source_note_issue_number": 1401,
+      "source_note_id": "xhs-note:68d682d00000000011014a18",
+      "transition_id": "issue-1656-boundary-1401-20260909000000",
+      "evidence_comment_id": 5601748374,
+      "boundary_decision": "single-interview",
+      "boundary_transition_status": "applied",
+      "case_key": null,
+      "derived_interview_note_id": "xhs:68d682d00000000011014a18",
+      "action": "already-materialized",
+      "reason_code": null,
+      "errors": [],
+      "request": {
+        "schema_version": "source-note-interview-materialization.v1",
+        "materialization_id": "issue-1656-materialization-1401",
+        "repository": "liqiangcc/interview-lab",
+        "source_note_issue_number": 1401,
+        "source_note_id": "xhs-note:68d682d00000000011014a18",
+        "expected_source_note_body_sha256": "b38ecf6581c62db0af8b67e6a1496f247174c9612257b992db6416e5aca8be40",
+        "expected_boundary_status": "single-interview",
+        "expected_source_revision_id": "xhs-note:68d682d00000000011014a18:snapshot-95b77bb26104",
+        "expected_manifest_sha256": null,
+        "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437"
+      },
+      "request_sha256": "3406baa43c58757a37d15e270fb34a80c365fe1d422d618ae39c1d9d5ce52780",
+      "request_provenance": {
+        "mode": "existing-receipt-request-digest-match",
+        "receipt_comment_id": 5613911802,
+        "default_materialization_id": "xhs-note-68d682d0-materialization-1",
+        "request_sha256": "3406baa43c58757a37d15e270fb34a80c365fe1d422d618ae39c1d9d5ce52780",
+        "historical_authorization_plan_journal": "UNKNOWN"
+      },
+      "ownership": {
+        "count": 1,
+        "issue_numbers": [
+          1681
+        ]
+      },
+      "projection": {
+        "interview_note_id": "xhs:68d682d00000000011014a18",
+        "projected_body_sha256": "5326f79e9d39fde125d8f1291433d84b7b63ff5541b5a0469cc002998eb1db99",
+        "projected_title": "[XHS] 68d682d0",
+        "projected_labels": [
+          "type:interview-note",
+          "source:xhs",
+          "status:captured"
+        ]
+      },
+      "mutation_performed": false,
+      "correction_comment_id": 5643706287
+    },
+    {
+      "source_note_issue_number": 1406,
+      "source_note_id": "xhs-note:68d9021d000000000e032bea",
+      "transition_id": "issue-1656-boundary-1406-20260909000000",
+      "evidence_comment_id": 5601749401,
+      "boundary_decision": "single-interview",
+      "boundary_transition_status": "applied",
+      "case_key": null,
+      "derived_interview_note_id": "xhs:68d9021d000000000e032bea",
+      "action": "already-materialized",
+      "reason_code": null,
+      "errors": [],
+      "request": {
+        "schema_version": "source-note-interview-materialization.v1",
+        "materialization_id": "issue-1656-materialization-1406",
+        "repository": "liqiangcc/interview-lab",
+        "source_note_issue_number": 1406,
+        "source_note_id": "xhs-note:68d9021d000000000e032bea",
+        "expected_source_note_body_sha256": "0f0f4ff01da6b1ecb588f0ba0ada8d1e00938c737a68fd56760f2bd16b0f3cae",
+        "expected_boundary_status": "single-interview",
+        "expected_source_revision_id": "xhs-note:68d9021d000000000e032bea:snapshot-95b77bb26104",
+        "expected_manifest_sha256": null,
+        "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437"
+      },
+      "request_sha256": "3c88ae360821cbcedf7619a6ea3b53a54914f6d3066df9db31d82391e5b7eee3",
+      "request_provenance": {
+        "mode": "existing-receipt-request-digest-match",
+        "receipt_comment_id": 5613915850,
+        "default_materialization_id": "xhs-note-68d9021d-materialization-1",
+        "request_sha256": "3c88ae360821cbcedf7619a6ea3b53a54914f6d3066df9db31d82391e5b7eee3",
+        "historical_authorization_plan_journal": "UNKNOWN"
+      },
+      "ownership": {
+        "count": 1,
+        "issue_numbers": [
+          1682
+        ]
+      },
+      "projection": {
+        "interview_note_id": "xhs:68d9021d000000000e032bea",
+        "projected_body_sha256": "106a1838b7a81a038a98f7c9a1e5d0bd2a8846692c34260471a6aaa57f06ef9e",
+        "projected_title": "[XHS] 68d9021d",
+        "projected_labels": [
+          "type:interview-note",
+          "source:xhs",
+          "status:captured"
+        ]
+      },
+      "mutation_performed": false,
+      "correction_comment_id": 5643709211
+    },
+    {
+      "source_note_issue_number": 1418,
+      "source_note_id": "xhs-note:68da4876000000001101eebb",
+      "transition_id": "issue-1656-boundary-1418-20260909000000",
+      "evidence_comment_id": 5601750274,
+      "boundary_decision": "single-interview",
+      "boundary_transition_status": "applied",
+      "case_key": null,
+      "derived_interview_note_id": "xhs:68da4876000000001101eebb",
+      "action": "already-materialized",
+      "reason_code": null,
+      "errors": [],
+      "request": {
+        "schema_version": "source-note-interview-materialization.v1",
+        "materialization_id": "issue-1656-materialization-1418",
+        "repository": "liqiangcc/interview-lab",
+        "source_note_issue_number": 1418,
+        "source_note_id": "xhs-note:68da4876000000001101eebb",
+        "expected_source_note_body_sha256": "29abf9daab5b0925e23f3107b52f93ab9419e183eca6bb6b6fb08288df363222",
+        "expected_boundary_status": "single-interview",
+        "expected_source_revision_id": "xhs-note:68da4876000000001101eebb:snapshot-95b77bb26104",
+        "expected_manifest_sha256": null,
+        "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437"
+      },
+      "request_sha256": "74b674c38fb730bb24b40e198dd08b0267649eda87d915bc11e27256f1fa05c8",
+      "request_provenance": {
+        "mode": "existing-receipt-request-digest-match",
+        "receipt_comment_id": 5613920895,
+        "default_materialization_id": "xhs-note-68da4876-materialization-1",
+        "request_sha256": "74b674c38fb730bb24b40e198dd08b0267649eda87d915bc11e27256f1fa05c8",
+        "historical_authorization_plan_journal": "UNKNOWN"
+      },
+      "ownership": {
+        "count": 1,
+        "issue_numbers": [
+          1683
+        ]
+      },
+      "projection": {
+        "interview_note_id": "xhs:68da4876000000001101eebb",
+        "projected_body_sha256": "cd200b11428e57dfadfb0d17af9e2eff7f3068c7edf63aac740988778d182c6a",
+        "projected_title": "[XHS] 68da4876",
+        "projected_labels": [
+          "type:interview-note",
+          "source:xhs",
+          "status:captured"
+        ]
+      },
+      "mutation_performed": false,
+      "correction_comment_id": 5643711383
+    },
+    {
+      "source_note_issue_number": 1428,
+      "source_note_id": "xhs-note:68dfb89900000000030124a1",
+      "transition_id": "issue-1656-boundary-1428-20260909000000",
+      "evidence_comment_id": 5601752211,
+      "boundary_decision": "single-interview",
+      "boundary_transition_status": "applied",
+      "case_key": null,
+      "derived_interview_note_id": "xhs:68dfb89900000000030124a1",
+      "action": "already-materialized",
+      "reason_code": null,
+      "errors": [],
+      "request": {
+        "schema_version": "source-note-interview-materialization.v1",
+        "materialization_id": "issue-1656-materialization-1428",
+        "repository": "liqiangcc/interview-lab",
+        "source_note_issue_number": 1428,
+        "source_note_id": "xhs-note:68dfb89900000000030124a1",
+        "expected_source_note_body_sha256": "b5d060439baac7793b7d110dcf3af67fe2741f06631ba8279e3345b74e081894",
+        "expected_boundary_status": "single-interview",
+        "expected_source_revision_id": "xhs-note:68dfb89900000000030124a1:snapshot-95b77bb26104",
+        "expected_manifest_sha256": null,
+        "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437"
+      },
+      "request_sha256": "45c70c30181a8f613554169adb6440c4c8e0b4d9ad40003f5310671d92bdf3b2",
+      "request_provenance": {
+        "mode": "existing-receipt-request-digest-match",
+        "receipt_comment_id": 5613923886,
+        "default_materialization_id": "xhs-note-68dfb899-materialization-1",
+        "request_sha256": "45c70c30181a8f613554169adb6440c4c8e0b4d9ad40003f5310671d92bdf3b2",
+        "historical_authorization_plan_journal": "UNKNOWN"
+      },
+      "ownership": {
+        "count": 1,
+        "issue_numbers": [
+          1684
+        ]
+      },
+      "projection": {
+        "interview_note_id": "xhs:68dfb89900000000030124a1",
+        "projected_body_sha256": "582f8985cc32cf7e79bb4d163f54c185b2827bea8205c5f9cf92f1ebb1e38968",
+        "projected_title": "[XHS] 68dfb899",
+        "projected_labels": [
+          "type:interview-note",
+          "source:xhs",
+          "status:captured"
+        ]
+      },
+      "mutation_performed": false,
+      "correction_comment_id": 5643713058
+    },
+    {
+      "source_note_issue_number": 1447,
+      "source_note_id": "xhs-note:68e7a288000000000301b7aa",
+      "transition_id": "issue-1656-boundary-1447-20260909000000",
+      "evidence_comment_id": 5601752917,
+      "boundary_decision": "single-interview",
+      "boundary_transition_status": "applied",
+      "case_key": null,
+      "derived_interview_note_id": "xhs:68e7a288000000000301b7aa",
+      "action": "already-materialized",
+      "reason_code": null,
+      "errors": [],
+      "request": {
+        "schema_version": "source-note-interview-materialization.v1",
+        "materialization_id": "issue-1656-materialization-1447",
+        "repository": "liqiangcc/interview-lab",
+        "source_note_issue_number": 1447,
+        "source_note_id": "xhs-note:68e7a288000000000301b7aa",
+        "expected_source_note_body_sha256": "bf13f36dc8fe030857e4f574e3e616647dbc0b1c387161f839ff6d6bef8c1005",
+        "expected_boundary_status": "single-interview",
+        "expected_source_revision_id": "xhs-note:68e7a288000000000301b7aa:snapshot-95b77bb26104",
+        "expected_manifest_sha256": null,
+        "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437"
+      },
+      "request_sha256": "b8b4087c95683229798b01084e7eaa1506b9fcf6af7ce9fe52a298a78998ffcd",
+      "request_provenance": {
+        "mode": "existing-receipt-request-digest-match",
+        "receipt_comment_id": 5614172867,
+        "default_materialization_id": "xhs-note-68e7a288-materialization-1",
+        "request_sha256": "b8b4087c95683229798b01084e7eaa1506b9fcf6af7ce9fe52a298a78998ffcd",
+        "historical_authorization_plan_journal": "UNKNOWN"
+      },
+      "ownership": {
+        "count": 1,
+        "issue_numbers": [
+          1686
+        ]
+      },
+      "projection": {
+        "interview_note_id": "xhs:68e7a288000000000301b7aa",
+        "projected_body_sha256": "5b4b8dc8dcefc036064b4d6768402cfce8cfd617273702d6c61f59332439c933",
+        "projected_title": "[XHS] 68e7a288",
+        "projected_labels": [
+          "type:interview-note",
+          "source:xhs",
+          "status:captured"
+        ]
+      },
+      "mutation_performed": false,
+      "correction_comment_id": 5643714536
+    },
+    {
+      "source_note_issue_number": 1458,
+      "source_note_id": "xhs-note:68ea11580000000003038e9b",
+      "transition_id": "issue-1656-boundary-1458-20260909000000",
+      "evidence_comment_id": 5601753678,
+      "boundary_decision": "single-interview",
+      "boundary_transition_status": "applied",
+      "case_key": null,
+      "derived_interview_note_id": "xhs:68ea11580000000003038e9b",
+      "action": "already-materialized",
+      "reason_code": null,
+      "errors": [],
+      "request": {
+        "schema_version": "source-note-interview-materialization.v1",
+        "materialization_id": "issue-1656-materialization-1458",
+        "repository": "liqiangcc/interview-lab",
+        "source_note_issue_number": 1458,
+        "source_note_id": "xhs-note:68ea11580000000003038e9b",
+        "expected_source_note_body_sha256": "da87e7bcdafd6dd881c3a97e6f095a38925aa13c0e55cbd4228fd33777e7884a",
+        "expected_boundary_status": "single-interview",
+        "expected_source_revision_id": "xhs-note:68ea11580000000003038e9b:snapshot-95b77bb26104",
+        "expected_manifest_sha256": null,
+        "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437"
+      },
+      "request_sha256": "6253192ccd478bd014dab87f9c1f5e5b064bc30e5404fa8b5fbf9fc7c5421362",
+      "request_provenance": {
+        "mode": "existing-receipt-request-digest-match",
+        "receipt_comment_id": 5614208444,
+        "default_materialization_id": "xhs-note-68ea1158-materialization-1",
+        "request_sha256": "6253192ccd478bd014dab87f9c1f5e5b064bc30e5404fa8b5fbf9fc7c5421362",
+        "historical_authorization_plan_journal": "UNKNOWN"
+      },
+      "ownership": {
+        "count": 1,
+        "issue_numbers": [
+          1687
+        ]
+      },
+      "projection": {
+        "interview_note_id": "xhs:68ea11580000000003038e9b",
+        "projected_body_sha256": "a80a5dd1fb87407f63c0bed72f382152728334cf414965952fa501b3643338d9",
+        "projected_title": "[XHS] 68ea1158",
+        "projected_labels": [
+          "type:interview-note",
+          "source:xhs",
+          "status:captured"
+        ]
+      },
+      "mutation_performed": false,
+      "correction_comment_id": 5643715018
+    }
+  ],
+  "other_non_pending_blockers": [
+    {
+      "source_issue": 904,
+      "identity": "xhs:63ecd286000000001303fd16",
+      "reason": "materialization-preflight-failed",
+      "errors": [
+        "existing InterviewNote SourceRevision mismatch"
+      ]
+    },
+    {
+      "source_issue": 907,
+      "identity": "xhs:656861da000000000f024258",
+      "reason": "materialization-preflight-failed",
+      "errors": [
+        "existing InterviewNote SourceRevision mismatch"
+      ]
+    },
+    {
+      "source_issue": 910,
+      "identity": null,
+      "reason": "boundary-evidence-missing-or-ambiguous",
+      "errors": [
+        "live boundary evidence must contain exactly one comment with id missing"
+      ]
+    }
+  ]
+}

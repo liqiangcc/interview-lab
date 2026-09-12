@@ -33,7 +33,7 @@ git diff --check
 
 回放结果保存在 `data/pilot/issue-1658/receipt-correction/counterfactual-replay.json`，输入是完整的 13 条三评论原始快照。新增 correction comment 使用显式模拟 ID，仅在进程内创建；它不是 live comment，也未伪造原 bounded request/plan/journal。
 
-实际离线结果：before errors=13；追加模拟 correction 后 errors=0、13/13 boundary check 通过。但 generic materialization request ID 与旧 receipt ID 仍有 13 条差异，`needs_receipt_repair=13`。历史执行仍 UNKNOWN。#910 不属于本 consumer 的修复 scope，其错误继续保留。
+实际离线结果：before errors=13；追加模拟 correction 后 errors=0、13/13 boundary check 通过。但该对照实验只使用默认生成 ID，不调用后续新增的 existing-receipt request selector；其 `needs_receipt_repair=13` 不是当前全量 planner 最终状态。参见 `materialization-existing-request-replay.md`。历史执行仍 UNKNOWN。#910 不属于本 consumer 的修复 scope，其错误继续保留。
 
 ## 后续执行边界
 
