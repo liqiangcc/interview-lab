@@ -8,6 +8,7 @@ const {
 const {
   findOwnershipMatches,
   planMaterialization,
+  selectExistingMaterializationRequest,
   sha256Text,
   canonicalJson,
 } = require('./source-note-interview-materialization');
@@ -731,7 +732,13 @@ function planIssue1605Materialization({
       }
       const receipts = receiptsBySourceIssue instanceof Map ? receiptsBySourceIssue.get(item.source_note_issue_number) || [] : receiptsBySourceIssue[item.source_note_issue_number] || [];
       let request;
-      try { request = buildMaterializationRequest(sourceIssue, repository, { caseKey: claim.case_key }); }
+      let requestProvenance;
+      try {
+        request = buildMaterializationRequest(sourceIssue, repository, { caseKey: claim.case_key });
+        const selected = selectExistingMaterializationRequest(request, { repository, sourceIssue, issues: ownershipByIdentity.get(identity) || [], receipts });
+        request = selected.request;
+        requestProvenance = selected.provenance;
+      }
       catch (error) {
         results.push(blockedResult(item, 'materialization-request-invalid', [error.message], extra));
         continue;
@@ -750,6 +757,7 @@ function planIssue1605Materialization({
         errors: [],
         request,
         request_sha256: materialization.request_sha256,
+        ...(requestProvenance ? { request_provenance: requestProvenance } : {}),
         ownership: {
           count: materialization.ownership_count,
           issue_numbers: (ownershipByIdentity.get(identity) || []).map((owner) => Number(owner.number)).sort((a, b) => a - b),

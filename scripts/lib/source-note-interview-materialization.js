@@ -319,6 +319,36 @@ function planMaterialization(request, options = {}) {
   };
 }
 
+
+// Reuse an existing operation ID only when every freshly derived request field
+// has the exact digest recorded by its receipt. This reconstructs a verifiable
+// request candidate, not a historical authorization, plan, or journal.
+function selectExistingMaterializationRequest(request, options = {}) {
+  const receipts = options.receipts || [];
+  if (receipts.some(receipt => receipt.materialization_id === request.materialization_id)) return { request };
+  const baseline = planMaterialization(request, { ...options, receipts: [] });
+  const candidates = receipts.filter(receipt => receipt.interview_note_id === baseline.interview_note_id
+    || (request.schema_version === SCHEMA_VERSION && receipt.source_note_issue_number === request.source_note_issue_number));
+  if (candidates.length === 0) return { request };
+  if (candidates.length !== 1) throw new Error('ambiguous existing materialization receipt identities');
+  if (!baseline.ok || baseline.ownership_count !== 1) throw new Error(`existing receipt requires one valid owner: ${(baseline.errors || []).join('; ')}`);
+  const receipt = candidates[0];
+  if (typeof receipt.materialization_id !== 'string' || !receipt.materialization_id.trim()) throw new Error('existing receipt materialization_id is invalid');
+  const candidate = { ...request, materialization_id: receipt.materialization_id };
+  if (!/^[0-9a-f]{64}$/.test(String(receipt.request_sha256 || '')) || requestSha256(candidate) !== receipt.request_sha256) throw new Error('existing receipt does not match the complete current request digest');
+  const validated = planMaterialization(candidate, options);
+  if (!validated.ok || !validated.already_materialized) throw new Error(`existing receipt request validation failed: ${(validated.errors || []).join('; ')}`);
+  const owner = (options.issues || []).find(issue => Number(issue.number) === validated.existing_issue_number);
+  if (receipt.repository !== request.repository || receipt.source_note_issue_number !== request.source_note_issue_number
+    || receipt.interview_issue_body_sha256 !== sha256Text(owner.body || '')) throw new Error('existing receipt repository/source Issue/owner body binding mismatch');
+  return {
+    request: candidate,
+    provenance: { mode: 'existing-receipt-request-digest-match', receipt_comment_id: receipt.comment_id || null,
+      default_materialization_id: request.materialization_id, request_sha256: receipt.request_sha256,
+      historical_authorization_plan_journal: 'UNKNOWN' },
+  };
+}
+
 module.exports = {
   SCHEMA_VERSION,
   MULTI_SCHEMA_VERSION,
@@ -332,4 +362,5 @@ module.exports = {
   findOwnershipMatches,
   validateExistingOwnership,
   planMaterialization,
+  selectExistingMaterializationRequest,
 };
