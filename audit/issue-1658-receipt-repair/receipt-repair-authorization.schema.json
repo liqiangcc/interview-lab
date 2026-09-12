@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/liqiangcc/interview-lab/blob/main/audit/issue-1658-receipt-repair/receipt-repair-authorization.schema.json",
+  "title": "Issue #1658 receipt-repair-only authorization contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "authorization_kind",
+    "repository",
+    "source_repository",
+    "source_ref",
+    "source_tree_sha",
+    "parent_issue",
+    "scope",
+    "plan_digest",
+    "scope_digest",
+    "source_bindings_digest",
+    "owner_bindings_digest",
+    "receipt_bindings_digest",
+    "max_mutations",
+    "max_receipts",
+    "allowed_operations",
+    "forbidden_operations"
+  ],
+  "properties": {
+    "schema_version": { "const": "issue-1658-boundary-receipt-repair-authorization.v1" },
+    "authorization_kind": { "const": "receipt-repair-only" },
+    "repository": { "const": "liqiangcc/interview-lab" },
+    "source_repository": { "const": "liqiangcc/xhs" },
+    "source_ref": { "const": "95b77bb261048059846273688e4b90a2e108b437" },
+    "source_tree_sha": { "const": "f01716f6b531e7338ca4c59bdb4e0229df2b3375" },
+    "parent_issue": { "const": 1611 },
+    "scope": {
+      "const": [1309, 1325, 1333, 1363, 1375, 1376, 1380, 1401, 1406, 1418, 1428, 1447, 1458]
+    },
+    "plan_digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "scope_digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "source_bindings_digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "owner_bindings_digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "receipt_bindings_digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "max_mutations": { "const": 13 },
+    "max_receipts": { "const": 13 },
+    "allowed_operations": { "const": ["post-correction-marker"] },
+    "forbidden_operations": {
+      "const": [
+        "patch-boundary-body",
+        "patch-boundary-labels",
+        "post-boundary-evidence",
+        "create-owner",
+        "materialize-interview-note",
+        "post-materialization-receipt",
+        "source-review",
+        "learning"
+      ]
+    }
+  }
+}
