@@ -24,3 +24,51 @@ node scripts/issue-1658-receipt-correction.js \
 22 个定向测试覆盖 dry-run 零写入、授权范围/摘要/操作/上限错误、全批次预检、body/labels 漂移、重复 owner、锁冲突、intent 落盘、响应丢失、延迟可见、歧义、journal 损坏、已完成 correction 消失和最终 audit 漂移。
 
 本文件是操作范围和命令，不是成功回执；实际执行结果和当前评论 ID 由 apply 输出、durable journal 和 GET-only post-audit 证明。generic request ID 差异与历史执行 UNKNOWN 仍需单列处理。
+
+## 实际执行结果
+
+执行 SHA：`af8813997c9733280f6e461d08923a758f34ab62`，执行时工作树干净。实际 POST=13，确认响应=13，final post-audit=13/13；journal=complete，锁已释放。完成时间：2026-09-12T05:18:16.578Z。owner inventory digest 保持 `1dd140f82a7656b47ca09cde7cb2e96538cbf3397b77a6fc7cec3dcb7be49f95`。
+
+| SourceNote | correction comment | 状态 |
+|---:|---|---|
+| #1309 | [5643694061](https://github.com/liqiangcc/interview-lab/issues/1309#issuecomment-5643694061) | 已 GET 核验 |
+| #1325 | [5643694995](https://github.com/liqiangcc/interview-lab/issues/1325#issuecomment-5643694995) | 已 GET 核验 |
+| #1333 | [5643700992](https://github.com/liqiangcc/interview-lab/issues/1333#issuecomment-5643700992) | 已 GET 核验 |
+| #1363 | [5643702800](https://github.com/liqiangcc/interview-lab/issues/1363#issuecomment-5643702800) | 已 GET 核验 |
+| #1375 | [5643703518](https://github.com/liqiangcc/interview-lab/issues/1375#issuecomment-5643703518) | 已 GET 核验 |
+| #1376 | [5643704149](https://github.com/liqiangcc/interview-lab/issues/1376#issuecomment-5643704149) | 已 GET 核验 |
+| #1380 | [5643705168](https://github.com/liqiangcc/interview-lab/issues/1380#issuecomment-5643705168) | 已 GET 核验 |
+| #1401 | [5643706287](https://github.com/liqiangcc/interview-lab/issues/1401#issuecomment-5643706287) | 已 GET 核验 |
+| #1406 | [5643709211](https://github.com/liqiangcc/interview-lab/issues/1406#issuecomment-5643709211) | 已 GET 核验 |
+| #1418 | [5643711383](https://github.com/liqiangcc/interview-lab/issues/1418#issuecomment-5643711383) | 已 GET 核验 |
+| #1428 | [5643713058](https://github.com/liqiangcc/interview-lab/issues/1428#issuecomment-5643713058) | 已 GET 核验 |
+| #1447 | [5643714536](https://github.com/liqiangcc/interview-lab/issues/1447#issuecomment-5643714536) | 已 GET 核验 |
+| #1458 | [5643715018](https://github.com/liqiangcc/interview-lab/issues/1458#issuecomment-5643715018) | 已 GET 核验 |
+
+`apply-result.json` 记录执行代码摘要和所有实际 comment ID；`journal.snapshot.json` 是 durable journal 的完整副本；`live-corrections.json` 是执行后额外 GET 的 13 条评论正文快照。旧 applied/evidence/materialization 评论摘要在每条 preflight、reconcile 和最终 audit 中继续校验，未覆盖旧评论、未创建 owner、未修改正文或 labels。两次 GET TLS 超时由有界重试恢复，POST 响应全部确认，未重发 POST。
+
+`materialization-request-digest-replay.json` 是新构造的当前 request 候选，不是找回的原 bounded plan/journal。将当前 SourceNote 构造出的 request 的 materialization_id 取为对应已有 receipt ID，13/13 request SHA 与 receipt.request_sha256 完全相等。这提供下一步精确幂等兼容的证据；当前 generic planner 尚未使用它，不能据此宣称整个 materialization 完成。历史执行仍 UNKNOWN。
+
+离线核验实际评论快照与 journal（不写 GitHub）：
+
+```bash
+node - <<'NODE'
+const fs=require('fs'), assert=require('node:assert/strict');
+const dir='./data/pilot/issue-1658/receipt-correction/execution-20260912/';
+const read=f=>JSON.parse(fs.readFileSync(dir+f));
+const {correctionBody,SCOPE}=require('./scripts/lib/issue-1658-receipt-correction-apply');
+const {pinnedRow}=require('./scripts/lib/issue-1658-receipt-correction-consumer');
+const {canonicalDigest,sha256Text}=require('./scripts/lib/aggregate-downstream-pipeline');
+const journal=read('journal.snapshot.json'), capture=read('live-corrections.json');
+const {canonical_digest,...input}=journal;
+assert.equal(canonical_digest,canonicalDigest(input));
+assert.equal(journal.status,'complete');
+assert.deepEqual(capture.rows.map(r=>r.source_issue),SCOPE);
+for(const row of capture.rows){
+  assert.equal(row.comment.body,correctionBody(pinnedRow(row.source_issue)));
+  assert.equal(row.body_sha256,sha256Text(row.comment.body));
+  assert.equal(row.comment.id,journal.rows.find(r=>r.source_issue===row.source_issue).comment_id);
+}
+console.log('PASS: 13 exact correction comments and complete journal digest');
+NODE
+```
