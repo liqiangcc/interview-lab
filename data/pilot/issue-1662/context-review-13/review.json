@@ -1,0 +1,1667 @@
+{
+  "reviewed_at": "2026-09-12T04:55:43.398Z",
+  "reviewer_kind": "ai-assisted",
+  "input_code_sha": "f01716f6b531e7338ca4c59bdb4e0229df2b3375",
+  "source_repository": "liqiangcc/xhs",
+  "source_ref": "95b77bb261048059846273688e4b90a2e108b437",
+  "saved_owner_snapshot": {
+    "commit": "4aec350d402f667458282bb36be124e12f978e0a",
+    "path": "audit/issue-1658-receipt-repair/current-live-snapshot.json",
+    "reuse": "owner body matched fresh complete owner inventory; source body matched fresh 1460-source GET"
+  },
+  "fresh_ownership_inventory_digest": "1dd140f82a7656b47ca09cde7cb2e96538cbf3397b77a6fc7cec3dcb7be49f95",
+  "mutation_performed": false,
+  "write_operations": {
+    "post": 0,
+    "patch": 0,
+    "create": 0,
+    "labels": 0
+  },
+  "scope": [
+    1309,
+    1325,
+    1333,
+    1363,
+    1375,
+    1376,
+    1380,
+    1401,
+    1406,
+    1418,
+    1428,
+    1447,
+    1458
+  ],
+  "rows": [
+    {
+      "source_issue": 1309,
+      "owner_issue": 1674,
+      "identity": "xhs:68c40288000000001b03ecd6",
+      "source_revision_id": "xhs-note:68c40288000000001b03ecd6:snapshot-95b77bb26104",
+      "source_body_sha256": "61adfebb5d7a8230cb6d595a260c811df0b467a283fadbf368419b0a5979f5d4",
+      "owner_body_sha256": "06c835ae9453b14d7bb300664484321d0a3264c7bb2c34de6bdbbf3578562bd8",
+      "owner_labels": [
+        "source:xhs",
+        "status:captured",
+        "type:interview-note"
+      ],
+      "context_file": "data/interview-contexts/xhs-68c40288000000001b03ecd6.v1.json",
+      "context_sha256": "07dd2d0e1f33d549310999b875373e32fec3b2aede68ec387b32add6a55ade0b",
+      "reviewed_excerpt": "## 原始标题\n\n2025/9/12快手 Java应用研发\n\n## 原始正文\n\n### 可读 Source projection — `note_desc`\n\n> 快手 9.12一面\n> 1.自我介绍\n> 2.介绍项目，拷打了一下\n> 3.nacos单点扛不住怎么办\n> 4.nacos集群数据一致性让我设计怎么设计\n> 5.rocketmq的工作流程\n> 6.消费者怎么消费消息，一亿条消息他怎么拉取，是每次从头开始拉取吗？\n> 7.偏移值broker怎么存的？怎么根据偏移值定位消息的物理位置？\n> 8. rocketmq的底层源码有去看过吗？\n> 9.redis和数据库的数据一致性怎么做的？说了写后删。\n> 10.有没有别的方法？我说后台线程binlog异步去做。\n> 一个请求过来写了数据并删除了缓存，但是另一条请求读到了旧数据，刷新到了缓存上怎么做？我说删一次后隔个100毫秒再删除一次，面试官问再删一次谁去做？说了用后台线程去做。\n> 11.redis的ha怎么做的，然后问了redis主节点选举，\n> 12.哨兵有主节点吗，哨兵怎么选举？哨兵选举的原理是什么？为什么要设置奇数个节点？\n> 13. Cpu多级缓存的数据一致性是怎么做的？\n> 14.操作系统为什么要设置内核态呢？用户态和内核态怎么切换？\n> 15.什么是多路复用？\n> 16. Select epoll的原理是什么？\n> 17. Tcp挥手的close wait是用来干嘛的？\n> 18. Close wait的状态是客户端和服务端都有吗？\n> 18.1 什么情况会出现大量closewait状态\n> 19. Java有哪些锁\n> 20. Reentrantlock和 sychronized的区别\n> 21.链表k个一组翻转。（10分钟就写好了，但是需要自己初始化链表调试。最后讲了下思路。\n> 22.面试官说有实习和没实习差距还是挺大的\n> 23.反问业务，说是非常偏底层的，我知道肯定挂了，涉及源码的是真一点不会。\n> 让我多学习，多思考，有空多看看源码。\n> 总共面了68分钟。感觉自己答的还可以，两小时后已挂。\n>\n\n",
+      "projection": {
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "context": {
+          "schema_version": "interview-context.v1",
+          "context_id": "xhs:68c40288000000001b03ecd6:context-v1",
+          "interview_note_id": "xhs:68c40288000000001b03ecd6",
+          "source_revision_id": "xhs-note:68c40288000000001b03ecd6:snapshot-95b77bb26104",
+          "review_status": "reviewed",
+          "reviewed_at": "2026-09-12T04:55:43.398Z",
+          "company": {
+            "id": "kuaishou",
+            "display_name": "快手",
+            "basis": "source-explicit",
+            "evidence_refs": [
+              "raw-title:2025/9/12快手 Java应用研发"
+            ]
+          },
+          "role": {
+            "family": "backend",
+            "title": "Java应用研发",
+            "basis": "reviewed-inference",
+            "evidence_refs": [
+              "raw-title:2025/9/12快手 Java应用研发"
+            ]
+          },
+          "recruitment_type": {
+            "value": "unknown",
+            "basis": "unknown",
+            "evidence_refs": []
+          },
+          "round": {
+            "value": "1",
+            "basis": "source-explicit",
+            "evidence_refs": [
+              "note-desc:快手 9.12一面"
+            ]
+          },
+          "interview_occurred_at": {
+            "precision": "exact",
+            "value": "2025-09-12",
+            "basis": "source-explicit",
+            "evidence_refs": [
+              "raw-title:2025/9/12快手 Java应用研发"
+            ]
+          },
+          "outcome_visibility": "sealed-until-source-reveal"
+        },
+        "learning_labels": [
+          "company:kuaishou",
+          "role:backend",
+          "round:1",
+          "interview-year:2025",
+          "source-year:2025"
+        ],
+        "non_spoiler_title": "[快手] 后端 · 一面 · 2025-09-12 · 68c40288",
+        "pre_learning_display": {
+          "company": "快手",
+          "role": "后端",
+          "recruitment_type": null,
+          "round": "一面",
+          "interview_occurred_at": "2025-09-12",
+          "outcome": "sealed"
+        }
+      },
+      "source_review": "NOT_VERIFIED",
+      "learning_apply": "BLOCKED",
+      "notes": [
+        "Java应用研发归为 backend 是 reviewed inference；依据标题和服务端中间件问题。"
+      ],
+      "source_review_preflight": [
+        {
+          "check_id": "source_identity",
+          "result": "pass",
+          "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+        },
+        {
+          "check_id": "source_revision_binding",
+          "result": "pass",
+          "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+        },
+        {
+          "check_id": "artifact_reference_integrity",
+          "result": "pass",
+          "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+        },
+        {
+          "check_id": "raw_projection_traceability",
+          "result": "fail",
+          "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+        },
+        {
+          "check_id": "source_artifact_provenance",
+          "result": "pass",
+          "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+        },
+        {
+          "check_id": "known_limitations_recorded",
+          "result": "pass",
+          "note": "All SourceNote limitations are retained by InterviewNote."
+        },
+        {
+          "check_id": "duplicate_ownership",
+          "result": "pass",
+          "note": "Exactly one InterviewNote owner exists: #1674."
+        },
+        {
+          "check_id": "no_fabrication",
+          "result": "pass",
+          "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+        }
+      ],
+      "source_review_preflight_scope": "saved 13-owner snapshot; not fresh repository-wide source-review validation"
+    },
+    {
+      "source_issue": 1325,
+      "owner_issue": 1675,
+      "identity": "xhs:68c8d776000000001d037905",
+      "source_revision_id": "xhs-note:68c8d776000000001d037905:snapshot-95b77bb26104",
+      "source_body_sha256": "db2220c4d49be740566ec5ac17a7d4e81d3c8ee6856e672cb13df1a24e6548f6",
+      "owner_body_sha256": "26d5fa70f7aea12062986f2ad9a2f2f2881062945de4f6651f4eadf71ae43766",
+      "owner_labels": [
+        "source:xhs",
+        "status:captured",
+        "type:interview-note"
+      ],
+      "context_file": "data/interview-contexts/xhs-68c8d776000000001d037905.v1.json",
+      "context_sha256": "165780fbaa5a285f4570cf221a6604113dbb78eb0a0c632c9d6154e17009a2f7",
+      "reviewed_excerpt": "## 原始标题\n\n字节后端开发一面面经\n\n## 原始正文\n\n### 可读 Source projection — `note_desc`\n\n> 9.15  字节跳动后端开发一面面经\n> 1、拷打短链接项目，聊项目背景意义，具体怎么做的，聊了二十多分钟\n> 2、拷打实习期间做的事情\n> 3、实习公司的数据库是怎么部署的？\n> 4、MySQL一主多从怎么保证数据一致性的？\n> 5、主节点挂了怎么办？\n> 6、从节点之间是怎么保证数据一致性的？\n> 7、为什么项目中的消息队列用kafka？\n> 8、kafka怎么保证消息被可靠的消费？\n> 9、http请求可以拼接几个参数？上限是多少？\n> 10、http的状态码有哪些？504状态码代表什么？\n> 11、Java创建一个对象的过程？\n> 12、分配内存是怎么分配的？\n> 13、Java是怎么知道创建的对象在内存的哪个地方的？\n> 算法题：无重复字符的最长子串（力扣第三题，区别在于力扣中输出长度，字节要求输出最长的子串本身）\n> #互联网大厂[话题]# #后端开发[话题]# #面经[话题]##秋招面试[话题]#\n>\n\n",
+      "projection": {
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "context": {
+          "schema_version": "interview-context.v1",
+          "context_id": "xhs:68c8d776000000001d037905:context-v1",
+          "interview_note_id": "xhs:68c8d776000000001d037905",
+          "source_revision_id": "xhs-note:68c8d776000000001d037905:snapshot-95b77bb26104",
+          "review_status": "reviewed",
+          "reviewed_at": "2026-09-12T04:55:43.398Z",
+          "company": {
+            "id": "bytedance",
+            "display_name": "字节跳动",
+            "basis": "source-explicit",
+            "evidence_refs": [
+              "raw-title:字节后端开发一面面经"
+            ]
+          },
+          "role": {
+            "family": "backend",
+            "title": "后端开发",
+            "basis": "source-explicit",
+            "evidence_refs": [
+              "raw-title:字节后端开发一面面经"
+            ]
+          },
+          "recruitment_type": {
+            "value": "unknown",
+            "basis": "unknown",
+            "evidence_refs": []
+          },
+          "round": {
+            "value": "1",
+            "basis": "source-explicit",
+            "evidence_refs": [
+              "raw-title:字节后端开发一面面经"
+            ]
+          },
+          "interview_occurred_at": {
+            "precision": "month_day",
+            "value": "09-15",
+            "basis": "source-explicit",
+            "evidence_refs": [
+              "note-desc:9.15  字节跳动后端开发一面面经"
+            ]
+          },
+          "outcome_visibility": "sealed-until-source-reveal"
+        },
+        "learning_labels": [
+          "company:bytedance",
+          "role:backend",
+          "round:1",
+          "source-year:2025"
+        ],
+        "non_spoiler_title": "[字节跳动] 后端 · 一面 · 09-15 · 68c8d776",
+        "pre_learning_display": {
+          "company": "字节跳动",
+          "role": "后端",
+          "recruitment_type": null,
+          "round": "一面",
+          "interview_occurred_at": "09-15",
+          "outcome": "sealed"
+        }
+      },
+      "source_review": "NOT_VERIFIED",
+      "learning_apply": "BLOCKED",
+      "notes": [],
+      "source_review_preflight": [
+        {
+          "check_id": "source_identity",
+          "result": "pass",
+          "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+        },
+        {
+          "check_id": "source_revision_binding",
+          "result": "pass",
+          "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+        },
+        {
+          "check_id": "artifact_reference_integrity",
+          "result": "pass",
+          "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+        },
+        {
+          "check_id": "raw_projection_traceability",
+          "result": "fail",
+          "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+        },
+        {
+          "check_id": "source_artifact_provenance",
+          "result": "pass",
+          "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+        },
+        {
+          "check_id": "known_limitations_recorded",
+          "result": "pass",
+          "note": "All SourceNote limitations are retained by InterviewNote."
+        },
+        {
+          "check_id": "duplicate_ownership",
+          "result": "pass",
+          "note": "Exactly one InterviewNote owner exists: #1675."
+        },
+        {
+          "check_id": "no_fabrication",
+          "result": "pass",
+          "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+        }
+      ],
+      "source_review_preflight_scope": "saved 13-owner snapshot; not fresh repository-wide source-review validation"
+    },
+    {
+      "source_issue": 1333,
+      "owner_issue": 1676,
+      "identity": "xhs:68c93440000000001203319b",
+      "source_revision_id": "xhs-note:68c93440000000001203319b:snapshot-95b77bb26104",
+      "source_body_sha256": "371bfe243d7aca51f1d79ddc018b314da87dcb4d80efdbce004817fb16ca380c",
+      "owner_body_sha256": "b2ee2133fd2eb916f2ea07cca45635087b81809021dca0341ab98f6e7fba4c5a",
+      "owner_labels": [
+        "source:xhs",
+        "status:captured",
+        "type:interview-note"
+      ],
+      "context_file": "data/interview-contexts/xhs-68c93440000000001203319b.v1.json",
+      "context_sha256": "8a356ad63ab4d9dadb0b5eafe0e9bb81e88b99e5a256fecf5df6ac9674a75551",
+      "reviewed_excerpt": "## 原始标题\n\n（来源标题为空）\n\n## 原始正文\n\n### 可读 Source projection — `note_desc`\n\n> 深蓝汽车-大数据开发岗\n> 1.自我介绍\n> 2.家在哪\n> 3.为什么会选择重庆\n> 4.对大数据在汽车行业应用的看法\n> 5.简述一下研究生阶段项目\n> 6.入职之后职业规划\n> 7.HDFS架构\n> 8.Hive SQL调优\n> 换了个面试官问\n> 1.问会不会JAVA\n> 2.最近看的一本书，感受\n> 3.如果入职，怎么指定岗位学习计划\n> 4.除了技术方面，在毕业前会安排自己其他的生活（论文等）\n> 5.问毕业论文进展情况\n> 反问\n> 1.自己今天表现\n> 2.自己简历如何\n> 全程20多分钟，最后通知我结果会在7-14个工作日出来\n> （在说职业规划的时候我说了一句五年之后考证争取晋升，面试官好像有点破防，估计凉凉[哭惹R]）\n>\n\n",
+      "projection": {
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "context": {
+          "schema_version": "interview-context.v1",
+          "context_id": "xhs:68c93440000000001203319b:context-v1",
+          "interview_note_id": "xhs:68c93440000000001203319b",
+          "source_revision_id": "xhs-note:68c93440000000001203319b:snapshot-95b77bb26104",
+          "review_status": "reviewed",
+          "reviewed_at": "2026-09-12T04:55:43.398Z",
+          "company": {
+            "id": "deepal",
+            "display_name": "深蓝汽车",
+            "basis": "source-explicit",
+            "evidence_refs": [
+              "note-desc:深蓝汽车-大数据开发岗"
+            ]
+          },
+          "role": {
+            "family": "data",
+            "title": "大数据开发",
+            "basis": "source-explicit",
+            "evidence_refs": [
+              "note-desc:深蓝汽车-大数据开发岗"
+            ]
+          },
+          "recruitment_type": {
+            "value": "unknown",
+            "basis": "unknown",
+            "evidence_refs": []
+          },
+          "round": {
+            "value": "unknown",
+            "basis": "unknown",
+            "evidence_refs": []
+          },
+          "interview_occurred_at": {
+            "precision": "unknown",
+            "value": null,
+            "basis": "unknown",
+            "evidence_refs": []
+          },
+          "outcome_visibility": "sealed-until-source-reveal"
+        },
+        "learning_labels": [
+          "company:deepal",
+          "role:data",
+          "source-year:2025"
+        ],
+        "non_spoiler_title": "[深蓝汽车] 数据 · 68c93440",
+        "pre_learning_display": {
+          "company": "深蓝汽车",
+          "role": "数据",
+          "recruitment_type": null,
+          "round": null,
+          "interview_occurred_at": null,
+          "outcome": "sealed"
+        }
+      },
+      "source_review": "NOT_VERIFIED",
+      "learning_apply": "BLOCKED",
+      "notes": [],
+      "source_review_preflight": [
+        {
+          "check_id": "source_identity",
+          "result": "pass",
+          "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+        },
+        {
+          "check_id": "source_revision_binding",
+          "result": "pass",
+          "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+        },
+        {
+          "check_id": "artifact_reference_integrity",
+          "result": "pass",
+          "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+        },
+        {
+          "check_id": "raw_projection_traceability",
+          "result": "fail",
+          "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+        },
+        {
+          "check_id": "source_artifact_provenance",
+          "result": "pass",
+          "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+        },
+        {
+          "check_id": "known_limitations_recorded",
+          "result": "pass",
+          "note": "All SourceNote limitations are retained by InterviewNote."
+        },
+        {
+          "check_id": "duplicate_ownership",
+          "result": "pass",
+          "note": "Exactly one InterviewNote owner exists: #1676."
+        },
+        {
+          "check_id": "no_fabrication",
+          "result": "pass",
+          "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+        }
+      ],
+      "source_review_preflight_scope": "saved 13-owner snapshot; not fresh repository-wide source-review validation"
+    },
+    {
+      "source_issue": 1363,
+      "owner_issue": 1677,
+      "identity": "xhs:68ced1a80000000011015ae0",
+      "source_revision_id": "xhs-note:68ced1a80000000011015ae0:snapshot-95b77bb26104",
+      "source_body_sha256": "72c27cb2c7a06391d7e08f5aa42716f2e5be20cf7e0c3b9135d048021b1f9805",
+      "owner_body_sha256": "8fc810a06cbf1f11d27605d6029575c2506f005661277922cad9a090cc7718b2",
+      "owner_labels": [
+        "source:xhs",
+        "status:captured",
+        "type:interview-note"
+      ],
+      "context_file": "data/interview-contexts/xhs-68ced1a80000000011015ae0.v1.json",
+      "context_sha256": "66371a11e79c3c05e9981e5929502ee559b995a9116feab4b6d6db10937b2c16",
+      "reviewed_excerpt": "## 原始标题\n\n9.11 腾讯csig一面\n\n## 原始正文\n\n### 可读 Source projection — `note_desc`\n\n（当前缺失）\n\n",
+      "projection": {
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "context": {
+          "schema_version": "interview-context.v1",
+          "context_id": "xhs:68ced1a80000000011015ae0:context-v1",
+          "interview_note_id": "xhs:68ced1a80000000011015ae0",
+          "source_revision_id": "xhs-note:68ced1a80000000011015ae0:snapshot-95b77bb26104",
+          "review_status": "reviewed",
+          "reviewed_at": "2026-09-12T04:55:43.398Z",
+          "company": {
+            "id": "tencent",
+            "display_name": "腾讯",
+            "basis": "source-explicit",
+            "evidence_refs": [
+              "raw-title:9.11 腾讯csig一面"
+            ]
+          },
+          "role": {
+            "family": "unknown",
+            "title": null,
+            "basis": "unknown",
+            "evidence_refs": []
+          },
+          "recruitment_type": {
+            "value": "unknown",
+            "basis": "unknown",
+            "evidence_refs": []
+          },
+          "round": {
+            "value": "1",
+            "basis": "source-explicit",
+            "evidence_refs": [
+              "raw-title:9.11 腾讯csig一面"
+            ]
+          },
+          "interview_occurred_at": {
+            "precision": "month_day",
+            "value": "09-11",
+            "basis": "source-explicit",
+            "evidence_refs": [
+              "raw-title:9.11 腾讯csig一面"
+            ]
+          },
+          "outcome_visibility": "sealed-until-source-reveal"
+        },
+        "learning_labels": [
+          "company:tencent",
+          "round:1",
+          "source-year:2025"
+        ],
+        "non_spoiler_title": "[腾讯] 一面 · 09-11 · 68ced1a8",
+        "pre_learning_display": {
+          "company": "腾讯",
+          "role": null,
+          "recruitment_type": null,
+          "round": "一面",
+          "interview_occurred_at": "09-11",
+          "outcome": "sealed"
+        }
+      },
+      "source_review": "NOT_VERIFIED",
+      "learning_apply": "BLOCKED",
+      "notes": [],
+      "source_review_preflight": [
+        {
+          "check_id": "source_identity",
+          "result": "pass",
+          "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+        },
+        {
+          "check_id": "source_revision_binding",
+          "result": "pass",
+          "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+        },
+        {
+          "check_id": "artifact_reference_integrity",
+          "result": "pass",
+          "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+        },
+        {
+          "check_id": "raw_projection_traceability",
+          "result": "fail",
+          "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+        },
+        {
+          "check_id": "source_artifact_provenance",
+          "result": "pass",
+          "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+        },
+        {
+          "check_id": "known_limitations_recorded",
+          "result": "pass",
+          "note": "All SourceNote limitations are retained by InterviewNote."
+        },
+        {
+          "check_id": "duplicate_ownership",
+          "result": "pass",
+          "note": "Exactly one InterviewNote owner exists: #1677."
+        },
+        {
+          "check_id": "no_fabrication",
+          "result": "pass",
+          "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+        }
+      ],
+      "source_review_preflight_scope": "saved 13-owner snapshot; not fresh repository-wide source-review validation"
+    },
+    {
+      "source_issue": 1375,
+      "owner_issue": 1678,
+      "identity": "xhs:68d16a2d000000001101fea1",
+      "source_revision_id": "xhs-note:68d16a2d000000001101fea1:snapshot-95b77bb26104",
+      "source_body_sha256": "e2baa60a29ca31d586523d110e861956ac781fd5856ba33ffb268d8f8a29be49",
+      "owner_body_sha256": "1fc449270f66675ac7f946bdeb9efda676faa589aa7b77f614efdf430e35f9f1",
+      "owner_labels": [
+        "source:xhs",
+        "status:captured",
+        "type:interview-note"
+      ],
+      "context_file": "data/interview-contexts/xhs-68d16a2d000000001101fea1.v1.json",
+      "context_sha256": "24f05a2e4ca4da224d1f0082963d1416edb6ff6d9941194018b6ef23d8771e57",
+      "reviewed_excerpt": "## 原始标题\n\n9.22 蚂蚁一面\n\n## 原始正文\n\n### 可读 Source projection — `note_desc`\n\n（当前缺失）\n\n",
+      "projection": {
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "context": {
+          "schema_version": "interview-context.v1",
+          "context_id": "xhs:68d16a2d000000001101fea1:context-v1",
+          "interview_note_id": "xhs:68d16a2d000000001101fea1",
+          "source_revision_id": "xhs-note:68d16a2d000000001101fea1:snapshot-95b77bb26104",
+          "review_status": "reviewed",
+          "reviewed_at": "2026-09-12T04:55:43.398Z",
+          "company": {
+            "id": "ant-group",
+            "display_name": "蚂蚁",
+            "basis": "source-explicit",
+            "evidence_refs": [
+              "raw-title:9.22 蚂蚁一面"
+            ]
+          },
+          "role": {
+            "family": "unknown",
+            "title": null,
+            "basis": "unknown",
+            "evidence_refs": []
+          },
+          "recruitment_type": {
+            "value": "unknown",
+            "basis": "unknown",
+            "evidence_refs": []
+          },
+          "round": {
+            "value": "1",
+            "basis": "source-explicit",
+            "evidence_refs": [
+              "raw-title:9.22 蚂蚁一面"
+            ]
+          },
+          "interview_occurred_at": {
+            "precision": "month_day",
+            "value": "09-22",
+            "basis": "source-explicit",
+            "evidence_refs": [
+              "raw-title:9.22 蚂蚁一面"
+            ]
+          },
+          "outcome_visibility": "sealed-until-source-reveal"
+        },
+        "learning_labels": [
+          "company:ant-group",
+          "round:1",
+          "source-year:2025"
+        ],
+        "non_spoiler_title": "[蚂蚁] 一面 · 09-22 · 68d16a2d",
+        "pre_learning_display": {
+          "company": "蚂蚁",
+          "role": null,
+          "recruitment_type": null,
+          "round": "一面",
+          "interview_occurred_at": "09-22",
+          "outcome": "sealed"
+        }
+      },
+      "source_review": "NOT_VERIFIED",
+      "learning_apply": "BLOCKED",
+      "notes": [],
+      "source_review_preflight": [
+        {
+          "check_id": "source_identity",
+          "result": "pass",
+          "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+        },
+        {
+          "check_id": "source_revision_binding",
+          "result": "pass",
+          "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+        },
+        {
+          "check_id": "artifact_reference_integrity",
+          "result": "pass",
+          "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+        },
+        {
+          "check_id": "raw_projection_traceability",
+          "result": "fail",
+          "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+        },
+        {
+          "check_id": "source_artifact_provenance",
+          "result": "pass",
+          "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+        },
+        {
+          "check_id": "known_limitations_recorded",
+          "result": "pass",
+          "note": "All SourceNote limitations are retained by InterviewNote."
+        },
+        {
+          "check_id": "duplicate_ownership",
+          "result": "pass",
+          "note": "Exactly one InterviewNote owner exists: #1678."
+        },
+        {
+          "check_id": "no_fabrication",
+          "result": "pass",
+          "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+        }
+      ],
+      "source_review_preflight_scope": "saved 13-owner snapshot; not fresh repository-wide source-review validation"
+    },
+    {
+      "source_issue": 1376,
+      "owner_issue": 1679,
+      "identity": "xhs:68d16a7d000000000e031041",
+      "source_revision_id": "xhs-note:68d16a7d000000000e031041:snapshot-95b77bb26104",
+      "source_body_sha256": "fddff5b286f0f63b108904daa055f94592dc28449fd76325f5dad47d83040182",
+      "owner_body_sha256": "dfb4d11f43944f60430eef987c9169e8720971c3552e43924dc4d3011466e161",
+      "owner_labels": [
+        "source:xhs",
+        "status:captured",
+        "type:interview-note"
+      ],
+      "context_file": "data/interview-contexts/xhs-68d16a7d000000000e031041.v1.json",
+      "context_sha256": "a3252739d368ff9292ab041397294031d659040fce14c6c80f7867642385346b",
+      "reviewed_excerpt": "## 原始标题\n\n9.22 阿里智能信息部一面\n\n## 原始正文\n\n### 可读 Source projection — `note_desc`\n\n（当前缺失）\n\n",
+      "projection": {
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "context": {
+          "schema_version": "interview-context.v1",
+          "context_id": "xhs:68d16a7d000000000e031041:context-v1",
+          "interview_note_id": "xhs:68d16a7d000000000e031041",
+          "source_revision_id": "xhs-note:68d16a7d000000000e031041:snapshot-95b77bb26104",
+          "review_status": "reviewed",
+          "reviewed_at": "2026-09-12T04:55:43.398Z",
+          "company": {
+            "id": "alibaba",
+            "display_name": "阿里巴巴",
+            "basis": "source-explicit",
+            "evidence_refs": [
+              "raw-title:9.22 阿里智能信息部一面"
+            ]
+          },
+          "role": {
+            "family": "unknown",
+            "title": null,
+            "basis": "unknown",
+            "evidence_refs": []
+          },
+          "recruitment_type": {
+            "value": "unknown",
+            "basis": "unknown",
+            "evidence_refs": []
+          },
+          "round": {
+            "value": "1",
+            "basis": "source-explicit",
+            "evidence_refs": [
+              "raw-title:9.22 阿里智能信息部一面"
+            ]
+          },
+          "interview_occurred_at": {
+            "precision": "month_day",
+            "value": "09-22",
+            "basis": "source-explicit",
+            "evidence_refs": [
+              "raw-title:9.22 阿里智能信息部一面"
+            ]
+          },
+          "outcome_visibility": "sealed-until-source-reveal"
+        },
+        "learning_labels": [
+          "company:alibaba",
+          "round:1",
+          "source-year:2025"
+        ],
+        "non_spoiler_title": "[阿里巴巴] 一面 · 09-22 · 68d16a7d",
+        "pre_learning_display": {
+          "company": "阿里巴巴",
+          "role": null,
+          "recruitment_type": null,
+          "round": "一面",
+          "interview_occurred_at": "09-22",
+          "outcome": "sealed"
+        }
+      },
+      "source_review": "NOT_VERIFIED",
+      "learning_apply": "BLOCKED",
+      "notes": [],
+      "source_review_preflight": [
+        {
+          "check_id": "source_identity",
+          "result": "pass",
+          "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+        },
+        {
+          "check_id": "source_revision_binding",
+          "result": "pass",
+          "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+        },
+        {
+          "check_id": "artifact_reference_integrity",
+          "result": "pass",
+          "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+        },
+        {
+          "check_id": "raw_projection_traceability",
+          "result": "fail",
+          "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+        },
+        {
+          "check_id": "source_artifact_provenance",
+          "result": "pass",
+          "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+        },
+        {
+          "check_id": "known_limitations_recorded",
+          "result": "pass",
+          "note": "All SourceNote limitations are retained by InterviewNote."
+        },
+        {
+          "check_id": "duplicate_ownership",
+          "result": "pass",
+          "note": "Exactly one InterviewNote owner exists: #1679."
+        },
+        {
+          "check_id": "no_fabrication",
+          "result": "pass",
+          "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+        }
+      ],
+      "source_review_preflight_scope": "saved 13-owner snapshot; not fresh repository-wide source-review validation"
+    },
+    {
+      "source_issue": 1380,
+      "owner_issue": 1680,
+      "identity": "xhs:68d25947000000000b03ea1e",
+      "source_revision_id": "xhs-note:68d25947000000000b03ea1e:snapshot-95b77bb26104",
+      "source_body_sha256": "b7980a9fd21a211c63d095b55421d0133532ee3f87b59ebc44dc5781bf467cd3",
+      "owner_body_sha256": "4d8fbd08429ee2fdfb8adba6c5fc173f603da1a89739f2feedfcb628643b6286",
+      "owner_labels": [
+        "source:xhs",
+        "status:captured",
+        "type:interview-note"
+      ],
+      "context_file": "data/interview-contexts/xhs-68d25947000000000b03ea1e.v1.json",
+      "context_sha256": "c9b4714db9b3101c5779b01fd8c6fa7b03da7f9e954432dcf9bc070f0048ec71",
+      "reviewed_excerpt": "## 原始标题\n\n9.23 百度c++一面\n\n## 原始正文\n\n### 可读 Source projection — `note_desc`\n\n（当前缺失）\n\n",
+      "projection": {
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "context": {
+          "schema_version": "interview-context.v1",
+          "context_id": "xhs:68d25947000000000b03ea1e:context-v1",
+          "interview_note_id": "xhs:68d25947000000000b03ea1e",
+          "source_revision_id": "xhs-note:68d25947000000000b03ea1e:snapshot-95b77bb26104",
+          "review_status": "reviewed",
+          "reviewed_at": "2026-09-12T04:55:43.398Z",
+          "company": {
+            "id": "baidu",
+            "display_name": "百度",
+            "basis": "source-explicit",
+            "evidence_refs": [
+              "raw-title:9.23 百度c++一面"
+            ]
+          },
+          "role": {
+            "family": "unknown",
+            "title": null,
+            "basis": "unknown",
+            "evidence_refs": []
+          },
+          "recruitment_type": {
+            "value": "unknown",
+            "basis": "unknown",
+            "evidence_refs": []
+          },
+          "round": {
+            "value": "1",
+            "basis": "source-explicit",
+            "evidence_refs": [
+              "raw-title:9.23 百度c++一面"
+            ]
+          },
+          "interview_occurred_at": {
+            "precision": "month_day",
+            "value": "09-23",
+            "basis": "source-explicit",
+            "evidence_refs": [
+              "raw-title:9.23 百度c++一面"
+            ]
+          },
+          "outcome_visibility": "sealed-until-source-reveal"
+        },
+        "learning_labels": [
+          "company:baidu",
+          "round:1",
+          "source-year:2025"
+        ],
+        "non_spoiler_title": "[百度] 一面 · 09-23 · 68d25947",
+        "pre_learning_display": {
+          "company": "百度",
+          "role": null,
+          "recruitment_type": null,
+          "round": "一面",
+          "interview_occurred_at": "09-23",
+          "outcome": "sealed"
+        }
+      },
+      "source_review": "NOT_VERIFIED",
+      "learning_apply": "BLOCKED",
+      "notes": [
+        "编程语言不足以证明粗粒度岗位类别；role 保持 unknown。"
+      ],
+      "source_review_preflight": [
+        {
+          "check_id": "source_identity",
+          "result": "pass",
+          "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+        },
+        {
+          "check_id": "source_revision_binding",
+          "result": "pass",
+          "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+        },
+        {
+          "check_id": "artifact_reference_integrity",
+          "result": "pass",
+          "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+        },
+        {
+          "check_id": "raw_projection_traceability",
+          "result": "fail",
+          "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+        },
+        {
+          "check_id": "source_artifact_provenance",
+          "result": "pass",
+          "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+        },
+        {
+          "check_id": "known_limitations_recorded",
+          "result": "pass",
+          "note": "All SourceNote limitations are retained by InterviewNote."
+        },
+        {
+          "check_id": "duplicate_ownership",
+          "result": "pass",
+          "note": "Exactly one InterviewNote owner exists: #1680."
+        },
+        {
+          "check_id": "no_fabrication",
+          "result": "pass",
+          "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+        }
+      ],
+      "source_review_preflight_scope": "saved 13-owner snapshot; not fresh repository-wide source-review validation"
+    },
+    {
+      "source_issue": 1401,
+      "owner_issue": 1681,
+      "identity": "xhs:68d682d00000000011014a18",
+      "source_revision_id": "xhs-note:68d682d00000000011014a18:snapshot-95b77bb26104",
+      "source_body_sha256": "b38ecf6581c62db0af8b67e6a1496f247174c9612257b992db6416e5aca8be40",
+      "owner_body_sha256": "5326f79e9d39fde125d8f1291433d84b7b63ff5541b5a0469cc002998eb1db99",
+      "owner_labels": [
+        "source:xhs",
+        "status:captured",
+        "type:interview-note"
+      ],
+      "context_file": "data/interview-contexts/xhs-68d682d00000000011014a18.v1.json",
+      "context_sha256": "ddc192ecdf1255dd3c0c0de9f9813958a10fd5d7775fe10d41accb92850c60f0",
+      "reviewed_excerpt": "## 原始标题\n\n9.26 滴滴一面\n\n## 原始正文\n\n### 可读 Source projection — `note_desc`\n\n（当前缺失）\n\n",
+      "projection": {
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "context": {
+          "schema_version": "interview-context.v1",
+          "context_id": "xhs:68d682d00000000011014a18:context-v1",
+          "interview_note_id": "xhs:68d682d00000000011014a18",
+          "source_revision_id": "xhs-note:68d682d00000000011014a18:snapshot-95b77bb26104",
+          "review_status": "reviewed",
+          "reviewed_at": "2026-09-12T04:55:43.398Z",
+          "company": {
+            "id": "didi",
+            "display_name": "滴滴",
+            "basis": "source-explicit",
+            "evidence_refs": [
+              "raw-title:9.26 滴滴一面"
+            ]
+          },
+          "role": {
+            "family": "unknown",
+            "title": null,
+            "basis": "unknown",
+            "evidence_refs": []
+          },
+          "recruitment_type": {
+            "value": "unknown",
+            "basis": "unknown",
+            "evidence_refs": []
+          },
+          "round": {
+            "value": "1",
+            "basis": "source-explicit",
+            "evidence_refs": [
+              "raw-title:9.26 滴滴一面"
+            ]
+          },
+          "interview_occurred_at": {
+            "precision": "month_day",
+            "value": "09-26",
+            "basis": "source-explicit",
+            "evidence_refs": [
+              "raw-title:9.26 滴滴一面"
+            ]
+          },
+          "outcome_visibility": "sealed-until-source-reveal"
+        },
+        "learning_labels": [
+          "company:didi",
+          "round:1",
+          "source-year:2025"
+        ],
+        "non_spoiler_title": "[滴滴] 一面 · 09-26 · 68d682d0",
+        "pre_learning_display": {
+          "company": "滴滴",
+          "role": null,
+          "recruitment_type": null,
+          "round": "一面",
+          "interview_occurred_at": "09-26",
+          "outcome": "sealed"
+        }
+      },
+      "source_review": "NOT_VERIFIED",
+      "learning_apply": "BLOCKED",
+      "notes": [],
+      "source_review_preflight": [
+        {
+          "check_id": "source_identity",
+          "result": "pass",
+          "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+        },
+        {
+          "check_id": "source_revision_binding",
+          "result": "pass",
+          "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+        },
+        {
+          "check_id": "artifact_reference_integrity",
+          "result": "pass",
+          "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+        },
+        {
+          "check_id": "raw_projection_traceability",
+          "result": "fail",
+          "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+        },
+        {
+          "check_id": "source_artifact_provenance",
+          "result": "pass",
+          "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+        },
+        {
+          "check_id": "known_limitations_recorded",
+          "result": "pass",
+          "note": "All SourceNote limitations are retained by InterviewNote."
+        },
+        {
+          "check_id": "duplicate_ownership",
+          "result": "pass",
+          "note": "Exactly one InterviewNote owner exists: #1681."
+        },
+        {
+          "check_id": "no_fabrication",
+          "result": "pass",
+          "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+        }
+      ],
+      "source_review_preflight_scope": "saved 13-owner snapshot; not fresh repository-wide source-review validation"
+    },
+    {
+      "source_issue": 1406,
+      "owner_issue": 1682,
+      "identity": "xhs:68d9021d000000000e032bea",
+      "source_revision_id": "xhs-note:68d9021d000000000e032bea:snapshot-95b77bb26104",
+      "source_body_sha256": "0f0f4ff01da6b1ecb588f0ba0ada8d1e00938c737a68fd56760f2bd16b0f3cae",
+      "owner_body_sha256": "106a1838b7a81a038a98f7c9a1e5d0bd2a8846692c34260471a6aaa57f06ef9e",
+      "owner_labels": [
+        "source:xhs",
+        "status:captured",
+        "type:interview-note"
+      ],
+      "context_file": "data/interview-contexts/xhs-68d9021d000000000e032bea.v1.json",
+      "context_sha256": "e07d81f911fd69f9873ed34aa754cb66fc60ad575fc5221b654e4886c3577d1c",
+      "reviewed_excerpt": "## 原始标题\n\n9.28 百度二面\n\n## 原始正文\n\n### 可读 Source projection — `note_desc`\n\n（当前缺失）\n\n",
+      "projection": {
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "context": {
+          "schema_version": "interview-context.v1",
+          "context_id": "xhs:68d9021d000000000e032bea:context-v1",
+          "interview_note_id": "xhs:68d9021d000000000e032bea",
+          "source_revision_id": "xhs-note:68d9021d000000000e032bea:snapshot-95b77bb26104",
+          "review_status": "reviewed",
+          "reviewed_at": "2026-09-12T04:55:43.398Z",
+          "company": {
+            "id": "baidu",
+            "display_name": "百度",
+            "basis": "source-explicit",
+            "evidence_refs": [
+              "raw-title:9.28 百度二面"
+            ]
+          },
+          "role": {
+            "family": "unknown",
+            "title": null,
+            "basis": "unknown",
+            "evidence_refs": []
+          },
+          "recruitment_type": {
+            "value": "unknown",
+            "basis": "unknown",
+            "evidence_refs": []
+          },
+          "round": {
+            "value": "2",
+            "basis": "source-explicit",
+            "evidence_refs": [
+              "raw-title:9.28 百度二面"
+            ]
+          },
+          "interview_occurred_at": {
+            "precision": "month_day",
+            "value": "09-28",
+            "basis": "source-explicit",
+            "evidence_refs": [
+              "raw-title:9.28 百度二面"
+            ]
+          },
+          "outcome_visibility": "sealed-until-source-reveal"
+        },
+        "learning_labels": [
+          "company:baidu",
+          "round:2",
+          "source-year:2025"
+        ],
+        "non_spoiler_title": "[百度] 二面 · 09-28 · 68d9021d",
+        "pre_learning_display": {
+          "company": "百度",
+          "role": null,
+          "recruitment_type": null,
+          "round": "二面",
+          "interview_occurred_at": "09-28",
+          "outcome": "sealed"
+        }
+      },
+      "source_review": "NOT_VERIFIED",
+      "learning_apply": "BLOCKED",
+      "notes": [],
+      "source_review_preflight": [
+        {
+          "check_id": "source_identity",
+          "result": "pass",
+          "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+        },
+        {
+          "check_id": "source_revision_binding",
+          "result": "pass",
+          "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+        },
+        {
+          "check_id": "artifact_reference_integrity",
+          "result": "pass",
+          "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+        },
+        {
+          "check_id": "raw_projection_traceability",
+          "result": "fail",
+          "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+        },
+        {
+          "check_id": "source_artifact_provenance",
+          "result": "pass",
+          "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+        },
+        {
+          "check_id": "known_limitations_recorded",
+          "result": "pass",
+          "note": "All SourceNote limitations are retained by InterviewNote."
+        },
+        {
+          "check_id": "duplicate_ownership",
+          "result": "pass",
+          "note": "Exactly one InterviewNote owner exists: #1682."
+        },
+        {
+          "check_id": "no_fabrication",
+          "result": "pass",
+          "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+        }
+      ],
+      "source_review_preflight_scope": "saved 13-owner snapshot; not fresh repository-wide source-review validation"
+    },
+    {
+      "source_issue": 1418,
+      "owner_issue": 1683,
+      "identity": "xhs:68da4876000000001101eebb",
+      "source_revision_id": "xhs-note:68da4876000000001101eebb:snapshot-95b77bb26104",
+      "source_body_sha256": "29abf9daab5b0925e23f3107b52f93ab9419e183eca6bb6b6fb08288df363222",
+      "owner_body_sha256": "cd200b11428e57dfadfb0d17af9e2eff7f3068c7edf63aac740988778d182c6a",
+      "owner_labels": [
+        "source:xhs",
+        "status:captured",
+        "type:interview-note"
+      ],
+      "context_file": "data/interview-contexts/xhs-68da4876000000001101eebb.v1.json",
+      "context_sha256": "59184c39ceb2bf50c8e9e9646065d3e42d5703abb8f74874a667aa6df3791da2",
+      "reviewed_excerpt": "## 原始标题\n\n滴滴后端实习一面\n\n## 原始正文\n\n### 可读 Source projection — `note_desc`\n\n（当前缺失）\n\n",
+      "projection": {
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "context": {
+          "schema_version": "interview-context.v1",
+          "context_id": "xhs:68da4876000000001101eebb:context-v1",
+          "interview_note_id": "xhs:68da4876000000001101eebb",
+          "source_revision_id": "xhs-note:68da4876000000001101eebb:snapshot-95b77bb26104",
+          "review_status": "reviewed",
+          "reviewed_at": "2026-09-12T04:55:43.398Z",
+          "company": {
+            "id": "didi",
+            "display_name": "滴滴",
+            "basis": "source-explicit",
+            "evidence_refs": [
+              "raw-title:滴滴后端实习一面"
+            ]
+          },
+          "role": {
+            "family": "backend",
+            "title": "后端",
+            "basis": "source-explicit",
+            "evidence_refs": [
+              "raw-title:滴滴后端实习一面"
+            ]
+          },
+          "recruitment_type": {
+            "value": "internship",
+            "basis": "source-explicit",
+            "evidence_refs": [
+              "raw-title:滴滴后端实习一面"
+            ]
+          },
+          "round": {
+            "value": "1",
+            "basis": "source-explicit",
+            "evidence_refs": [
+              "raw-title:滴滴后端实习一面"
+            ]
+          },
+          "interview_occurred_at": {
+            "precision": "unknown",
+            "value": null,
+            "basis": "unknown",
+            "evidence_refs": []
+          },
+          "outcome_visibility": "sealed-until-source-reveal"
+        },
+        "learning_labels": [
+          "company:didi",
+          "role:backend",
+          "recruitment:internship",
+          "round:1",
+          "source-year:2025"
+        ],
+        "non_spoiler_title": "[滴滴] 后端 · 实习 · 一面 · 68da4876",
+        "pre_learning_display": {
+          "company": "滴滴",
+          "role": "后端",
+          "recruitment_type": "实习",
+          "round": "一面",
+          "interview_occurred_at": null,
+          "outcome": "sealed"
+        }
+      },
+      "source_review": "NOT_VERIFIED",
+      "learning_apply": "BLOCKED",
+      "notes": [],
+      "source_review_preflight": [
+        {
+          "check_id": "source_identity",
+          "result": "pass",
+          "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+        },
+        {
+          "check_id": "source_revision_binding",
+          "result": "pass",
+          "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+        },
+        {
+          "check_id": "artifact_reference_integrity",
+          "result": "pass",
+          "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+        },
+        {
+          "check_id": "raw_projection_traceability",
+          "result": "fail",
+          "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+        },
+        {
+          "check_id": "source_artifact_provenance",
+          "result": "pass",
+          "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+        },
+        {
+          "check_id": "known_limitations_recorded",
+          "result": "pass",
+          "note": "All SourceNote limitations are retained by InterviewNote."
+        },
+        {
+          "check_id": "duplicate_ownership",
+          "result": "pass",
+          "note": "Exactly one InterviewNote owner exists: #1683."
+        },
+        {
+          "check_id": "no_fabrication",
+          "result": "pass",
+          "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+        }
+      ],
+      "source_review_preflight_scope": "saved 13-owner snapshot; not fresh repository-wide source-review validation"
+    },
+    {
+      "source_issue": 1428,
+      "owner_issue": 1684,
+      "identity": "xhs:68dfb89900000000030124a1",
+      "source_revision_id": "xhs-note:68dfb89900000000030124a1:snapshot-95b77bb26104",
+      "source_body_sha256": "b5d060439baac7793b7d110dcf3af67fe2741f06631ba8279e3345b74e081894",
+      "owner_body_sha256": "582f8985cc32cf7e79bb4d163f54c185b2827bea8205c5f9cf92f1ebb1e38968",
+      "owner_labels": [
+        "source:xhs",
+        "status:captured",
+        "type:interview-note"
+      ],
+      "context_file": "data/interview-contexts/xhs-68dfb89900000000030124a1.v1.json",
+      "context_sha256": "04ada50cfd4410575e8437b7d59317490d6ed64b66e163fd60e37bcda2a3a51d",
+      "reviewed_excerpt": "## 原始标题\n\n美团后端实习一面\n\n## 原始正文\n\n### 可读 Source projection — `note_desc`\n\n（当前缺失）\n\n",
+      "projection": {
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "context": {
+          "schema_version": "interview-context.v1",
+          "context_id": "xhs:68dfb89900000000030124a1:context-v1",
+          "interview_note_id": "xhs:68dfb89900000000030124a1",
+          "source_revision_id": "xhs-note:68dfb89900000000030124a1:snapshot-95b77bb26104",
+          "review_status": "reviewed",
+          "reviewed_at": "2026-09-12T04:55:43.398Z",
+          "company": {
+            "id": "meituan",
+            "display_name": "美团",
+            "basis": "source-explicit",
+            "evidence_refs": [
+              "raw-title:美团后端实习一面"
+            ]
+          },
+          "role": {
+            "family": "backend",
+            "title": "后端",
+            "basis": "source-explicit",
+            "evidence_refs": [
+              "raw-title:美团后端实习一面"
+            ]
+          },
+          "recruitment_type": {
+            "value": "internship",
+            "basis": "source-explicit",
+            "evidence_refs": [
+              "raw-title:美团后端实习一面"
+            ]
+          },
+          "round": {
+            "value": "1",
+            "basis": "source-explicit",
+            "evidence_refs": [
+              "raw-title:美团后端实习一面"
+            ]
+          },
+          "interview_occurred_at": {
+            "precision": "unknown",
+            "value": null,
+            "basis": "unknown",
+            "evidence_refs": []
+          },
+          "outcome_visibility": "sealed-until-source-reveal"
+        },
+        "learning_labels": [
+          "company:meituan",
+          "role:backend",
+          "recruitment:internship",
+          "round:1",
+          "source-year:2025"
+        ],
+        "non_spoiler_title": "[美团] 后端 · 实习 · 一面 · 68dfb899",
+        "pre_learning_display": {
+          "company": "美团",
+          "role": "后端",
+          "recruitment_type": "实习",
+          "round": "一面",
+          "interview_occurred_at": null,
+          "outcome": "sealed"
+        }
+      },
+      "source_review": "NOT_VERIFIED",
+      "learning_apply": "BLOCKED",
+      "notes": [],
+      "source_review_preflight": [
+        {
+          "check_id": "source_identity",
+          "result": "pass",
+          "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+        },
+        {
+          "check_id": "source_revision_binding",
+          "result": "pass",
+          "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+        },
+        {
+          "check_id": "artifact_reference_integrity",
+          "result": "pass",
+          "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+        },
+        {
+          "check_id": "raw_projection_traceability",
+          "result": "fail",
+          "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+        },
+        {
+          "check_id": "source_artifact_provenance",
+          "result": "pass",
+          "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+        },
+        {
+          "check_id": "known_limitations_recorded",
+          "result": "pass",
+          "note": "All SourceNote limitations are retained by InterviewNote."
+        },
+        {
+          "check_id": "duplicate_ownership",
+          "result": "pass",
+          "note": "Exactly one InterviewNote owner exists: #1684."
+        },
+        {
+          "check_id": "no_fabrication",
+          "result": "pass",
+          "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+        }
+      ],
+      "source_review_preflight_scope": "saved 13-owner snapshot; not fresh repository-wide source-review validation"
+    },
+    {
+      "source_issue": 1447,
+      "owner_issue": 1686,
+      "identity": "xhs:68e7a288000000000301b7aa",
+      "source_revision_id": "xhs-note:68e7a288000000000301b7aa:snapshot-95b77bb26104",
+      "source_body_sha256": "bf13f36dc8fe030857e4f574e3e616647dbc0b1c387161f839ff6d6bef8c1005",
+      "owner_body_sha256": "5b4b8dc8dcefc036064b4d6768402cfce8cfd617273702d6c61f59332439c933",
+      "owner_labels": [
+        "source:xhs",
+        "status:captured",
+        "type:interview-note"
+      ],
+      "context_file": "data/interview-contexts/xhs-68e7a288000000000301b7aa.v1.json",
+      "context_sha256": "a51397a40fbba53afd04e66e242e294df86631811b8a0359243f2dc7ea9ef17c",
+      "reviewed_excerpt": "## 原始标题\n\n百度Java开发一面面经\n\n## 原始正文\n\n### 可读 Source projection — `note_desc`\n\n（当前缺失）\n\n",
+      "projection": {
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "context": {
+          "schema_version": "interview-context.v1",
+          "context_id": "xhs:68e7a288000000000301b7aa:context-v1",
+          "interview_note_id": "xhs:68e7a288000000000301b7aa",
+          "source_revision_id": "xhs-note:68e7a288000000000301b7aa:snapshot-95b77bb26104",
+          "review_status": "reviewed",
+          "reviewed_at": "2026-09-12T04:55:43.398Z",
+          "company": {
+            "id": "baidu",
+            "display_name": "百度",
+            "basis": "source-explicit",
+            "evidence_refs": [
+              "raw-title:百度Java开发一面面经"
+            ]
+          },
+          "role": {
+            "family": "unknown",
+            "title": null,
+            "basis": "unknown",
+            "evidence_refs": []
+          },
+          "recruitment_type": {
+            "value": "unknown",
+            "basis": "unknown",
+            "evidence_refs": []
+          },
+          "round": {
+            "value": "1",
+            "basis": "source-explicit",
+            "evidence_refs": [
+              "raw-title:百度Java开发一面面经"
+            ]
+          },
+          "interview_occurred_at": {
+            "precision": "unknown",
+            "value": null,
+            "basis": "unknown",
+            "evidence_refs": []
+          },
+          "outcome_visibility": "sealed-until-source-reveal"
+        },
+        "learning_labels": [
+          "company:baidu",
+          "round:1",
+          "source-year:2025"
+        ],
+        "non_spoiler_title": "[百度] 一面 · 68e7a288",
+        "pre_learning_display": {
+          "company": "百度",
+          "role": null,
+          "recruitment_type": null,
+          "round": "一面",
+          "interview_occurred_at": null,
+          "outcome": "sealed"
+        }
+      },
+      "source_review": "NOT_VERIFIED",
+      "learning_apply": "BLOCKED",
+      "notes": [
+        "编程语言不足以证明粗粒度岗位类别；role 保持 unknown。"
+      ],
+      "source_review_preflight": [
+        {
+          "check_id": "source_identity",
+          "result": "pass",
+          "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+        },
+        {
+          "check_id": "source_revision_binding",
+          "result": "pass",
+          "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+        },
+        {
+          "check_id": "artifact_reference_integrity",
+          "result": "pass",
+          "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+        },
+        {
+          "check_id": "raw_projection_traceability",
+          "result": "fail",
+          "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+        },
+        {
+          "check_id": "source_artifact_provenance",
+          "result": "pass",
+          "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+        },
+        {
+          "check_id": "known_limitations_recorded",
+          "result": "pass",
+          "note": "All SourceNote limitations are retained by InterviewNote."
+        },
+        {
+          "check_id": "duplicate_ownership",
+          "result": "pass",
+          "note": "Exactly one InterviewNote owner exists: #1686."
+        },
+        {
+          "check_id": "no_fabrication",
+          "result": "pass",
+          "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+        }
+      ],
+      "source_review_preflight_scope": "saved 13-owner snapshot; not fresh repository-wide source-review validation"
+    },
+    {
+      "source_issue": 1458,
+      "owner_issue": 1687,
+      "identity": "xhs:68ea11580000000003038e9b",
+      "source_revision_id": "xhs-note:68ea11580000000003038e9b:snapshot-95b77bb26104",
+      "source_body_sha256": "da87e7bcdafd6dd881c3a97e6f095a38925aa13c0e55cbd4228fd33777e7884a",
+      "owner_body_sha256": "a80a5dd1fb87407f63c0bed72f382152728334cf414965952fa501b3643338d9",
+      "owner_labels": [
+        "source:xhs",
+        "status:captured",
+        "type:interview-note"
+      ],
+      "context_file": "data/interview-contexts/xhs-68ea11580000000003038e9b.v1.json",
+      "context_sha256": "fbebd3efd7f9d7646a67950512244726ac56f24df6e9e9bc8781b8d167adaf95",
+      "reviewed_excerpt": "## 原始标题\n\n拼多多 交易部门 后端二面\n\n## 原始正文\n\n### 可读 Source projection — `note_desc`\n\n（当前缺失）\n\n",
+      "projection": {
+        "ok": true,
+        "errors": [],
+        "warnings": [],
+        "context": {
+          "schema_version": "interview-context.v1",
+          "context_id": "xhs:68ea11580000000003038e9b:context-v1",
+          "interview_note_id": "xhs:68ea11580000000003038e9b",
+          "source_revision_id": "xhs-note:68ea11580000000003038e9b:snapshot-95b77bb26104",
+          "review_status": "reviewed",
+          "reviewed_at": "2026-09-12T04:55:43.398Z",
+          "company": {
+            "id": "pinduoduo",
+            "display_name": "拼多多",
+            "basis": "source-explicit",
+            "evidence_refs": [
+              "raw-title:拼多多 交易部门 后端二面"
+            ]
+          },
+          "role": {
+            "family": "backend",
+            "title": "后端",
+            "basis": "source-explicit",
+            "evidence_refs": [
+              "raw-title:拼多多 交易部门 后端二面"
+            ]
+          },
+          "recruitment_type": {
+            "value": "unknown",
+            "basis": "unknown",
+            "evidence_refs": []
+          },
+          "round": {
+            "value": "2",
+            "basis": "source-explicit",
+            "evidence_refs": [
+              "raw-title:拼多多 交易部门 后端二面"
+            ]
+          },
+          "interview_occurred_at": {
+            "precision": "unknown",
+            "value": null,
+            "basis": "unknown",
+            "evidence_refs": []
+          },
+          "outcome_visibility": "sealed-until-source-reveal"
+        },
+        "learning_labels": [
+          "company:pinduoduo",
+          "role:backend",
+          "round:2",
+          "source-year:2025"
+        ],
+        "non_spoiler_title": "[拼多多] 后端 · 二面 · 68ea1158",
+        "pre_learning_display": {
+          "company": "拼多多",
+          "role": "后端",
+          "recruitment_type": null,
+          "round": "二面",
+          "interview_occurred_at": null,
+          "outcome": "sealed"
+        }
+      },
+      "source_review": "NOT_VERIFIED",
+      "learning_apply": "BLOCKED",
+      "notes": [],
+      "source_review_preflight": [
+        {
+          "check_id": "source_identity",
+          "result": "pass",
+          "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+        },
+        {
+          "check_id": "source_revision_binding",
+          "result": "pass",
+          "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+        },
+        {
+          "check_id": "artifact_reference_integrity",
+          "result": "pass",
+          "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+        },
+        {
+          "check_id": "raw_projection_traceability",
+          "result": "fail",
+          "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+        },
+        {
+          "check_id": "source_artifact_provenance",
+          "result": "pass",
+          "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+        },
+        {
+          "check_id": "known_limitations_recorded",
+          "result": "pass",
+          "note": "All SourceNote limitations are retained by InterviewNote."
+        },
+        {
+          "check_id": "duplicate_ownership",
+          "result": "pass",
+          "note": "Exactly one InterviewNote owner exists: #1687."
+        },
+        {
+          "check_id": "no_fabrication",
+          "result": "pass",
+          "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+        }
+      ],
+      "source_review_preflight_scope": "saved 13-owner snapshot; not fresh repository-wide source-review validation"
+    }
+  ]
+}
