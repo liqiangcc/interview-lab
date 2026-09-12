@@ -2,6 +2,7 @@
 'use strict';
 
 const fs = require('node:fs');
+const { validateAppliedReceiptCorrection } = require('./lib/issue-1658-receipt-correction-consumer');
 const path = require('node:path');
 const { execFileSync } = require('node:child_process');
 const { parseInterviewNoteIssue, validateInterviewNoteIssue } = require('./lib/interview-note-issue');
@@ -74,7 +75,7 @@ function jsonSafe(value) {
   return JSON.parse(JSON.stringify(value));
 }
 
-function exactAppliedBoundaryEvidence(issue, comments) {
+function exactAppliedBoundaryEvidence(issue, comments, options = {}) {
   const errors = [];
   const parsedResult = issueSourceRecord(issue);
   const parsed = parsedResult.parsed;
@@ -166,6 +167,15 @@ function exactAppliedBoundaryEvidence(issue, comments) {
   }
   if (!labels.includes(`boundary:${status}`)) errors.push(`#${issue.number} lacks live boundary:${status} label`);
   if (parsed && parsed.source_revision && parsed.source_revision.source_repository_ref !== SOURCE_REF) errors.push(`#${issue.number} live SourceRevision ref drifted`);
+  const correction = validateAppliedReceiptCorrection(issue, comments || [], options);
+  if (correction.present) {
+    if (!correction.ok) errors.push(...correction.errors.map(error => `#${issue.number} receipt correction: ${error}`));
+    else {
+      const mismatch = errors.indexOf(`#${issue.number} receipt interview_note_ids mismatch`);
+      if (mismatch !== -1) errors.splice(mismatch, 1);
+    }
+  }
+
   return {
     ok: errors.length === 0,
     errors,
@@ -174,6 +184,7 @@ function exactAppliedBoundaryEvidence(issue, comments) {
     receipt_comment_id: matchingApplied[0] && Number(matchingApplied[0].comment.id) || null,
     evidence_body_sha256: review && review.expected_body_sha256 || receipt && receipt.previous_body_sha256 || null,
     evidence_schema: evidenceSchema,
+    ...(correction.ok ? { correction_comment_id: correction.comment_id, correction_comment_body_sha256: correction.comment_body_sha256 } : {}),
   };
 }
 
@@ -206,7 +217,7 @@ function materializationReceiptsBySourceIssue(comments) {
   return result;
 }
 
-function buildLiveBoundaryReport(sourceIssues, commentsByIssue, completion) {
+function buildLiveBoundaryReport(sourceIssues, commentsByIssue, completion, options = {}) {
   const errors = [];
   const counts = { 'single-interview': 0, 'multi-interview': 0, 'not-interview': 0, pending: 0 };
   const items = [];
@@ -230,7 +241,7 @@ function buildLiveBoundaryReport(sourceIssues, commentsByIssue, completion) {
     sourceIds.set(sourceNoteId, number);
   const bodySha = sha256Text(issue.body || '');
     const applied = status === 'pending' ? { ok: false, errors: [], transition_id: null, evidence_comment_id: null, receipt_comment_id: null, evidence_body_sha256: null, evidence_schema: null }
-      : exactAppliedBoundaryEvidence(issue, commentsByIssue.get(number) || []);
+      : exactAppliedBoundaryEvidence(issue, commentsByIssue.get(number) || [], options);
     errors.push(...applied.errors);
     const cases = status === 'multi-interview' ? (parsed.boundary_review.interview_note_cases || []) : [];
     const ids = status === 'not-interview' ? [] : [...(parsed.boundary_review.interview_note_ids || [])];
@@ -248,6 +259,7 @@ function buildLiveBoundaryReport(sourceIssues, commentsByIssue, completion) {
       evidence_comment_id: applied.evidence_comment_id,
       receipt_comment_id: applied.receipt_comment_id,
       evidence_schema: applied.evidence_schema,
+      ...(applied.correction_comment_id ? { correction_comment_id: applied.correction_comment_id, correction_comment_body_sha256: applied.correction_comment_body_sha256 } : {}),
       interview_note_ids: ids,
       interview_note_cases: cases,
       labels: labelsOf(issue),
@@ -401,7 +413,7 @@ function main(argv = process.argv.slice(2)) {
   const appliedNumbers = new Set(source.issues.filter((issue) => labelsOf(issue).some((label) => ['boundary:single-interview', 'boundary:multi-interview', 'boundary:not-interview'].includes(label))).map((issue) => Number(issue.number)));
   const commentsPage = pagedGet(`repos/${args.repository}/issues/comments?per_page=${PAGE_SIZE}&state=all&sort=created&direction=asc`, args.maxPages);
   const commentsByIssueMap = commentsByIssue(commentsPage.items);
-  const report = buildLiveBoundaryReport(source.issues, commentsByIssueMap, completion);
+  const report = buildLiveBoundaryReport(source.issues, commentsByIssueMap, completion, { ownerIssues, ownerInventoryComplete: true });
   const manifest = buildLiveManifest(report);
   const materializationReceipts = materializationReceiptsBySourceIssue(commentsByIssueMap);
   const planned = planIssue1605Materialization({
