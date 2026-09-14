@@ -3,21 +3,39 @@
 const { canonicalJson, sha256Text } = require('./issue-1539-recovery-plan');
 
 const SCHEMA_VERSION = 'issue-1539-pinned-artifact-manifest.v1';
+const SELECTION_SCHEMA_VERSION = 'interview-note-pinned-artifact-manifest.v1';
 const REF_RE = /^([^:]+):(.+)@([0-9a-f]{40})$/;
 
 function validateManifest(manifest) {
   const errors = [];
   if (!manifest || typeof manifest !== 'object' || Array.isArray(manifest)) return { ok: false, errors: ['pinned artifact manifest must be an object'] };
-  if (manifest.schema_version !== SCHEMA_VERSION) errors.push(`schema_version must be ${SCHEMA_VERSION}`);
+  const explicitSelection = manifest.schema_version === SELECTION_SCHEMA_VERSION;
+  if (!explicitSelection && manifest.schema_version !== SCHEMA_VERSION) errors.push(`unsupported pinned artifact manifest schema`);
   if (typeof manifest.repository !== 'string' || !/^[^/]+\/[^/]+$/.test(manifest.repository)) errors.push('repository must use owner/repo');
   if (!manifest.source_snapshot || typeof manifest.source_snapshot.repository !== 'string' || !/^[0-9a-f]{40}$/.test(String(manifest.source_snapshot.ref || ''))) errors.push('source_snapshot must pin a 40-char commit');
-  const expectedItemCount = manifest.scope === 'issue-1577-fixed-17' ? 17 : 30;
-  if (manifest.scope != null && manifest.scope !== 'issue-1577-fixed-17') errors.push('unsupported pinned artifact manifest scope');
+  const expectedItemCount = explicitSelection ? (Array.isArray(manifest.selection) ? manifest.selection.length : 0) : manifest.scope === 'issue-1577-fixed-17' ? 17 : 30;
+  if (explicitSelection) {
+    if (manifest.purpose !== 'interview-note-source-review-pinned-artifact-gate') errors.push('explicit-selection purpose mismatch');
+    if (!/^[^/]+\/[^/]+$/.test(String(manifest.source_snapshot?.repository || ''))) errors.push('explicit-selection source repository must use owner/repo');
+    if (manifest.scope !== 'explicit-selection' || !Array.isArray(manifest.selection) || !manifest.selection.length) errors.push('explicit-selection requires a non-empty selection');
+    const selection = manifest.selection || [];
+    const owners = new Set();
+    for (const item of Array.isArray(selection) ? selection : []) {
+      if (!item || Array.isArray(item) || Object.keys(item).sort().join(',') !== 'interview_issue_number,source_note_issue_number'
+        || !Number.isSafeInteger(item.interview_issue_number) || item.interview_issue_number < 1
+        || !Number.isSafeInteger(item.source_note_issue_number) || item.source_note_issue_number < 1
+        || owners.has(item.interview_issue_number)) errors.push('invalid/duplicate explicit-selection owner/source binding');
+      owners.add(item && item.interview_issue_number);
+    }
+    const pairs = (Array.isArray(manifest.items) ? manifest.items : []).map(item => ({interview_issue_number:item.interview_issue_number,source_note_issue_number:item.source_note_issue_number}));
+    if (canonicalJson(selection) !== canonicalJson(pairs)) errors.push('manifest items must exactly match the ordered explicit selection');
+    if (!/^[0-9a-f]{40}$/.test(String(manifest.verification && manifest.verification.tree_sha || ''))) errors.push('explicit-selection requires the verified commit tree SHA');
+  } else if (manifest.scope != null && manifest.scope !== 'issue-1577-fixed-17') errors.push('unsupported pinned artifact manifest scope');
   if (!Array.isArray(manifest.items) || manifest.items.length !== expectedItemCount) errors.push(`items must contain exactly ${expectedItemCount} items for this pinned artifact manifest scope`);
   if (manifest.verified !== true) errors.push('verified must be true');
   if (!Array.isArray(manifest.errors) || manifest.errors.length !== 0) errors.push('errors must be an empty array on a verified manifest');
   const seen = new Set();
-  for (const [index, item] of (manifest.items || []).entries()) {
+  for (const [index, item] of (Array.isArray(manifest.items) ? manifest.items : []).entries()) {
     const key = `${item && item.interview_issue_number}:${item && item.source_note_issue_number}`;
     if (seen.has(key)) errors.push(`duplicate manifest item ${key}`);
     seen.add(key);
@@ -26,9 +44,13 @@ function validateManifest(manifest) {
     if (typeof (item && item.source_note_id) !== 'string' || !item.source_note_id) errors.push(`items[${index}].source_note_id is required`);
     if (typeof (item && item.source_revision_id) !== 'string' || !item.source_revision_id) errors.push(`items[${index}].source_revision_id is required`);
     if (!Array.isArray(item && item.artifacts) || item.artifacts.length === 0) errors.push(`items[${index}].artifacts must be non-empty`);
-    for (const [artifactIndex, artifact] of (item && item.artifacts || []).entries()) {
+    for (const [artifactIndex, artifact] of (Array.isArray(item && item.artifacts) ? item.artifacts : []).entries()) {
       if (!artifact || typeof artifact !== 'object') { errors.push(`items[${index}].artifacts[${artifactIndex}] must be an object`); continue; }
       if (typeof artifact.ref !== 'string' || !REF_RE.test(artifact.ref)) errors.push(`items[${index}].artifacts[${artifactIndex}].ref must be a recorded repository:path@commit ref`);
+      if (explicitSelection) {
+        const match = typeof artifact.ref === 'string' && artifact.ref.match(REF_RE);
+        if (!match || match[1] !== manifest.source_snapshot?.repository || match[3] !== manifest.source_snapshot?.ref) errors.push('explicit-selection artifact repo/ref differs from pinned snapshot');
+      }
       if (!/^[0-9a-f]{40}$/.test(String(artifact.git_blob_sha || ''))) errors.push(`items[${index}].artifacts[${artifactIndex}].git_blob_sha must be a lowercase Git blob SHA`);
       if (!Number.isInteger(artifact.byte_size) || artifact.byte_size < 0) errors.push(`items[${index}].artifacts[${artifactIndex}].byte_size must be non-negative`);
     }
@@ -61,11 +83,11 @@ function verifyRecordedArtifacts(items, treeEntries, sourceSnapshot) {
 function buildManifest({ repository, sourceSnapshot, entries, treeEntries, treeSha = null, scope = null }) {
   const verification = verifyRecordedArtifacts(entries, treeEntries, sourceSnapshot);
   const manifestWithoutDigest = {
-    schema_version: SCHEMA_VERSION,
+    schema_version: scope === 'explicit-selection' ? SELECTION_SCHEMA_VERSION : SCHEMA_VERSION,
     repository,
     ...(scope == null ? {} : { scope }),
     source_snapshot: sourceSnapshot,
-    purpose: 'issue-1539-source-review-pinned-artifact-gate',
+    purpose: scope === 'explicit-selection' ? 'interview-note-source-review-pinned-artifact-gate' : 'issue-1539-source-review-pinned-artifact-gate',
     items: (entries || []).slice().sort((a, b) => Number(a.interview_issue_number) - Number(b.interview_issue_number) || Number(a.source_note_issue_number) - Number(b.source_note_issue_number)).map((entry) => ({
       interview_issue_number: Number(entry.interview_issue_number),
       source_note_issue_number: Number(entry.source_note_issue_number),
@@ -86,6 +108,7 @@ function buildManifest({ repository, sourceSnapshot, entries, treeEntries, treeS
       errors: verification.errors,
     },
   };
+  if (scope === 'explicit-selection') manifestWithoutDigest.selection = manifestWithoutDigest.items.map(item => ({interview_issue_number:item.interview_issue_number,source_note_issue_number:item.source_note_issue_number}));
   const manifest = { ...manifestWithoutDigest, digest: sha256Text(canonicalJson(manifestWithoutDigest)) };
   return { ...manifest, verified: verification.ok, errors: verification.errors };
 }
@@ -115,10 +138,14 @@ function verifyManifestItem(manifest, request, sourceRecord) {
   if (matches.length !== 1) errors.push(`pinned artifact manifest must have exactly one item for InterviewNote #${request.issue_number}/SourceNote #${request.source_note_issue_number}`);
   const item = matches[0];
   if (item && item.source_revision_id !== request.expected_source_revision_id) errors.push('pinned artifact manifest item SourceRevision mismatch');
+  if (manifest?.schema_version === SELECTION_SCHEMA_VERSION) {
+    if (item?.source_note_id !== sourceRecord?.source_note_id) errors.push('pinned artifact manifest SourceNote identity mismatch');
+    if (manifest.source_snapshot?.repository !== sourceRecord?.source_revision?.source_repository || manifest.source_snapshot?.ref !== sourceRecord?.source_revision?.source_repository_ref) errors.push('pinned artifact manifest snapshot differs from live SourceRevision');
+  }
   const sourceArtifacts = sourceRecord && Array.isArray(sourceRecord.artifacts) ? sourceRecord.artifacts : [];
   const normalize = (artifacts) => (artifacts || []).map((artifact) => ({ kind: artifact.kind, ref: artifact.ref, git_blob_sha: artifact.git_blob_sha, byte_size: artifact.byte_size, provenance: artifact.provenance, integrity: artifact.integrity })).sort((a, b) => a.ref.localeCompare(b.ref));
   if (item && canonicalJson(normalize(item.artifacts)) !== canonicalJson(normalize(sourceArtifacts))) errors.push('pinned artifact manifest item artifacts do not match the live SourceNote record');
   return { ok: errors.length === 0, errors, item: item || null };
 }
 
-module.exports = { SCHEMA_VERSION, REF_RE, validateManifest, verifyRecordedArtifacts, buildManifest, verifyManifestDigest, verifyManifestItem };
+module.exports = { SCHEMA_VERSION, SELECTION_SCHEMA_VERSION, REF_RE, validateManifest, verifyRecordedArtifacts, buildManifest, verifyManifestDigest, verifyManifestItem };
