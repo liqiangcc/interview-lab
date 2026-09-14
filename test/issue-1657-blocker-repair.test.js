@@ -5,7 +5,8 @@ const path = require('node:path');
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const { canonicalDigest } = require('../scripts/lib/aggregate-downstream-pipeline');
-const { issueSourceRecord } = require('../scripts/lib/interview-note-materialization-batch');
+const { issueSourceRecord, buildMaterializationRequest } = require('../scripts/lib/interview-note-materialization-batch');
+const { LEGACY_TEXT_BOUNDARY_EVIDENCE_SCHEMA } = require('../scripts/lib/issue-1605-materialization-plan');
 const { TARGETS, MARKER_EXPECTATIONS, REQUIRED_ZERO_WRITES, receiptSnapshotDigest, planIssue1657BlockerRepair: planIssue1657BlockerRepairImpl } = require('../scripts/lib/issue-1657-blocker-repair-plan');
 const { sourceSnapshotDigest } = require('../scripts/plan-issue-1611-live-materialization');
 const { DEFAULTS, parseArgs } = require('../scripts/plan-issue-1657-blocker-repair');
@@ -553,5 +554,86 @@ test('CLI rejects every mutation-shaped argument before planning', () => {
   assert.equal(DEFAULTS.boundaryTransitionReport, 'data/pilot/issue-1605/boundary-transition-report.json');
   for (const flag of ['--patch', '--post', '--label', '--apply', '--interview-note']) {
     assert.throws(() => parseLiveArgs([flag]), new RegExp(`${flag.slice(2)}.*forbidden`));
+  }
+});
+
+test('#910 legacy evidence recognized by the strict adapter reclassifies the repair plan without weakening CAS', () => {
+  // Once the GET-only planner binds the human-readable [BOUNDARY REVIEW
+  // EVIDENCE] comment to the live runtime manifest provenance, #910 is no
+  // longer a repair blocker: it is already materialized under a null Git ref.
+  const reseal = (value, digestField) => {
+    delete value[digestField];
+    value[digestField] = canonicalDigest(value);
+  };
+  const source910 = sourceSnapshot.issues.find((issue) => Number(issue.number) === 910);
+  const request910 = buildMaterializationRequest(source910, 'liqiangcc/interview-lab');
+  const recognizedPlan = JSON.parse(JSON.stringify(materializationPlan));
+  const row910 = recognizedPlan.results.find((result) => Number(result.source_note_issue_number) === 910);
+  Object.assign(row910, {
+    action: 'already-materialized',
+    reason_code: null,
+    errors: [],
+    transition_id: 'xhs-note-6a8abe2d-boundary-review-1',
+    evidence_comment_id: 5535513422,
+    evidence_schema: LEGACY_TEXT_BOUNDARY_EVIDENCE_SCHEMA,
+    request: request910,
+    request_sha256: 'c23b341c740d62612d9329619f087143c3ea57f1bea9e9ac3a000b2ce6f10bbe',
+    ownership: { count: 1, issue_numbers: [915] },
+  });
+  reseal(recognizedPlan, 'dry_run_sha256');
+  const recognizedReport = JSON.parse(JSON.stringify(boundaryReport));
+  const reportRow910 = Object.values(recognizedReport.items).find((item) => Number(item.issue_number) === 910);
+  reportRow910.evidence_comment_id = 5535513422;
+  reportRow910.evidence_schema = LEGACY_TEXT_BOUNDARY_EVIDENCE_SCHEMA;
+  reseal(recognizedReport, 'dry_run_sha256');
+  const plan = planIssue1657BlockerRepair({ materializationPlan: recognizedPlan, boundaryReport: recognizedReport });
+  assert.equal(plan.ok, false, '#904/#907 owner SourceRevision CAS blockers still keep the plan not-ready');
+  assert.equal(plan.blocked_count, 2);
+  assert.deepEqual(plan.results.map((result) => result.action), [
+    'blocked-owner-source-revision-cas',
+    'blocked-owner-source-revision-cas',
+    'boundary-evidence-recognized',
+  ]);
+  assert.deepEqual(plan.results.map((result) => result.decision_class), [
+    'repairable-after-independent-owner-review-and-CAS',
+    'repairable-after-independent-owner-review-and-CAS',
+    'recognized-legacy-boundary-evidence-runtime-manifest-bound',
+  ]);
+  const row = plan.results.find((result) => result.source_note_issue_number === 910);
+  assert.deepEqual(row.errors, []);
+  assert.deepEqual(row.reason_codes, []);
+  assert.equal(row.materialization_plan_action, 'already-materialized');
+  assert.equal(row.boundary_evidence_comment_id, 5535513422);
+  assert.equal(row.source_repository_ref, null);
+  assert.equal(row.request.schema_version, 'issue-1657-boundary-evidence-recognition.v1');
+  assert.equal(row.request.recognized_boundary_evidence.schema_version, LEGACY_TEXT_BOUNDARY_EVIDENCE_SCHEMA);
+  assert.equal(row.request.recognized_boundary_evidence.comment_id, 5535513422);
+  assert.equal(row.request.recognized_boundary_evidence.source_repository_ref, null);
+  assert.equal(row.request.recognized_boundary_evidence.manifest_sha256, '0e408ad965af6a1a47a968de9916a1c17eec58f436b35b171d8c9729fac6d3e0');
+  assert.deepEqual(row.request.authorized_operations, []);
+  assert.equal(row.mutation_performed, false);
+  assert.deepEqual(plan.write_operations, REQUIRED_ZERO_WRITES);
+});
+
+test('#910 stays blocked when the dry-run claims a non-legacy or inconsistent evidence binding', () => {
+  const reseal = (value, digestField) => {
+    delete value[digestField];
+    value[digestField] = canonicalDigest(value);
+  };
+  for (const mutate of [
+    (row) => { row.evidence_schema = 'source-note-boundary-review-evidence.v1'; },
+    (row) => { row.evidence_comment_id = 1; },
+  ]) {
+    const tampered = JSON.parse(JSON.stringify(materializationPlan));
+    const row910 = tampered.results.find((result) => Number(result.source_note_issue_number) === 910);
+    Object.assign(row910, { action: 'already-materialized', reason_code: null, errors: [] });
+    mutate(row910);
+    reseal(tampered, 'dry_run_sha256');
+    const plan = planIssue1657BlockerRepair({ materializationPlan: tampered });
+    const row = plan.results.find((result) => result.source_note_issue_number === 910);
+    assert.equal(row.action, 'blocked-boundary-evidence-and-runtime-provenance');
+    assert.match(row.errors.join('\n'), /unexpectedly reports action=already-materialized/);
+    assert.equal(plan.ok, false);
+    assert.deepEqual(plan.write_operations, REQUIRED_ZERO_WRITES);
   }
 });

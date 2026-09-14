@@ -3,6 +3,7 @@
 const { canonicalDigest, sha256Text } = require('./aggregate-downstream-pipeline');
 const { issueSourceRecord } = require('./interview-note-materialization-batch');
 const { sourceSnapshotDigest } = require('../plan-issue-1611-live-materialization');
+const { LEGACY_TEXT_BOUNDARY_EVIDENCE_SCHEMA } = require('./issue-1605-materialization-plan');
 
 const SCHEMA_VERSION = 'issue-1657-blocker-repair-plan.v2';
 const LIVE_AUDIT_SCHEMA_VERSION = 'issue-1657-live-reaudit-snapshot.v1';
@@ -362,7 +363,9 @@ function validateOwnerSourceReviewAppliedPayload(payload, context, errors) {
   timestampPayloadField(payload, 'reviewed_at', label, errors);
   timestampPayloadField(payload, 'applied_at', label, errors);
   if (!HEX64.test(String(payload.request_sha256 || ''))) errors.push(`${label} payload request_sha256 is invalid`);
-  const reportRequestSha = context.reportItem && (context.reportItem.request_sha256 || context.reportItem.source_review_request_sha256 || context.reportItem.source_review_request && context.reportItem.source_review_request.request_sha256 || context.reportItem.request && context.reportItem.request.source_review_request_sha256);
+  // request_sha256 on a materialization dry-run row is the materialization
+  // request digest, not the source-review request this receipt binds to.
+  const reportRequestSha = context.reportItem && (context.reportItem.source_review_request_sha256 || context.reportItem.source_review_request && context.reportItem.source_review_request.request_sha256 || context.reportItem.request && context.reportItem.request.source_review_request_sha256);
   if (reportRequestSha != null) equalPayloadField(payload, 'request_sha256', reportRequestSha, label, errors);
   if ((context.sourceRevision.source_repository_ref ?? null) !== null) errors.push(`${label} runtime/source ref contract mismatch`);
   if (context.reportItem) {
@@ -642,7 +645,7 @@ function planIssue1657BlockerRepair({ sourceSnapshot, ownershipInventory, materi
     if (boundaryApplied && boundaryApplied.count === 1) validateBoundaryAppliedPayload(boundaryApplied.payload, payloadContext, targetErrors);
     if (materializationReceipt && materializationReceipt.count === 1) validateSourceMaterializationPayload(materializationReceipt.payload, payloadContext, targetErrors);
     if (ownerSourceApplied && ownerSourceApplied.count === 1) validateOwnerSourceReviewAppliedPayload(ownerSourceApplied.payload, payloadContext, targetErrors);
-    if (boundaryEvidence && boundaryEvidence.comment_id !== (reportItem && reportItem.evidence_comment_id)) targetErrors.push('live boundary evidence comment mismatch');
+    if (boundaryEvidence && boundaryEvidence.count === 1 && boundaryEvidence.comment_id !== (reportItem && reportItem.evidence_comment_id)) targetErrors.push('live boundary evidence comment mismatch');
     if (boundaryApplied && boundaryApplied.payload && boundaryApplied.payload.new_body_sha256 !== sourceBodySha) targetErrors.push('live boundary applied receipt body digest mismatch');
     if (materializationReceipt && receiptEntry && materializationReceipt.comment_id !== receiptEntry.materialization_receipt_comment_id) targetErrors.push('live materialization receipt comment mismatch');
 
@@ -663,27 +666,58 @@ function planIssue1657BlockerRepair({ sourceSnapshot, ownershipInventory, materi
     let request;
     let decision_class;
     if (target.source_note_issue_number === 910) {
-      decision_class = 'must-manually-confirm-boundary-evidence-and-runtime-provenance';
-      const hasMachineEvidence = Number(reportItem && reportItem.evidence_comment_id) > 0 && reportItem.evidence_schema === 'source-note-boundary-review-evidence.v1';
-      if (hasMachineEvidence) targetErrors.push('unexpectedly claims exact machine boundary evidence; re-audit required');
+      // The legacy [BOUNDARY REVIEW EVIDENCE] comment carries no machine marker;
+      // it is only accepted when the strict fail-closed adapter already bound it
+      // to the live runtime manifest provenance (live boundary report + plan).
+      const legacyEvidenceRecognized = reportItem
+        && reportItem.action === 'already-materialized'
+        && Number(reportItem.evidence_comment_id) > 0
+        && reportItem.evidence_schema === LEGACY_TEXT_BOUNDARY_EVIDENCE_SCHEMA
+        && boundaryReportItem
+        && boundaryReportItem.evidence_schema === LEGACY_TEXT_BOUNDARY_EVIDENCE_SCHEMA
+        && Number(boundaryReportItem.evidence_comment_id) === Number(reportItem.evidence_comment_id);
       if (sourceRevision.source_repository_ref != null) targetErrors.push('runtime SourceRevision unexpectedly carries a Git source ref');
       if (!sourceRevision.manifest_sha256 || sourceRevision.storage_kind !== 'runtime-artifact-store') targetErrors.push('runtime SourceRevision lacks its manifest/runtime binding');
-      action = 'blocked-boundary-evidence-and-runtime-provenance';
-      reason_codes = ['boundary-evidence-missing-or-ambiguous', 'runtime-source-repository-ref-unavailable'];
-      request = {
-        schema_version: 'issue-1657-boundary-evidence-recovery-request.v1',
-        ...requestBase,
-        transition_id: reportItem && reportItem.transition_id || null,
-        expected_boundary_evidence: {
-          comment_id: null,
-          schema_version: 'source-note-boundary-review-evidence.v1',
-          source_revision_id: sourceRevision.id || null,
-          manifest_sha256: sourceRevision.manifest_sha256 || null,
-          source_repository_ref: null,
-        },
-        runtime_ref_policy: 'do-not-invent-a-Git-source-repository-ref; preserve runtime artifact binding or obtain an independently fixed Git snapshot',
-        authorized_operations: [],
-      };
+      if (legacyEvidenceRecognized) {
+        decision_class = 'recognized-legacy-boundary-evidence-runtime-manifest-bound';
+        action = 'boundary-evidence-recognized';
+        reason_codes = [];
+        request = {
+          schema_version: 'issue-1657-boundary-evidence-recognition.v1',
+          ...requestBase,
+          transition_id: reportItem.transition_id || null,
+          recognized_boundary_evidence: {
+            comment_id: Number(reportItem.evidence_comment_id),
+            schema_version: LEGACY_TEXT_BOUNDARY_EVIDENCE_SCHEMA,
+            adapted_from: 'human-readable-boundary-review-evidence',
+            source_revision_id: sourceRevision.id || null,
+            manifest_sha256: sourceRevision.manifest_sha256 || null,
+            source_repository_ref: null,
+          },
+          runtime_ref_policy: 'runtime manifest binding verified; no Git source repository ref exists or was synthesized',
+          authorized_operations: [],
+        };
+      } else {
+        decision_class = 'must-manually-confirm-boundary-evidence-and-runtime-provenance';
+        const hasMachineEvidence = Number(reportItem && reportItem.evidence_comment_id) > 0 && reportItem.evidence_schema === 'source-note-boundary-review-evidence.v1';
+        if (hasMachineEvidence) targetErrors.push('unexpectedly claims exact machine boundary evidence; re-audit required');
+        action = 'blocked-boundary-evidence-and-runtime-provenance';
+        reason_codes = ['boundary-evidence-missing-or-ambiguous', 'runtime-source-repository-ref-unavailable'];
+        request = {
+          schema_version: 'issue-1657-boundary-evidence-recovery-request.v1',
+          ...requestBase,
+          transition_id: reportItem && reportItem.transition_id || null,
+          expected_boundary_evidence: {
+            comment_id: null,
+            schema_version: 'source-note-boundary-review-evidence.v1',
+            source_revision_id: sourceRevision.id || null,
+            manifest_sha256: sourceRevision.manifest_sha256 || null,
+            source_repository_ref: null,
+          },
+          runtime_ref_policy: 'do-not-invent-a-Git-source-repository-ref; preserve runtime artifact binding or obtain an independently fixed Git snapshot',
+          authorized_operations: [],
+        };
+      }
     } else {
       decision_class = 'repairable-after-independent-owner-review-and-CAS';
       action = 'blocked-owner-source-revision-cas';
@@ -699,7 +733,7 @@ function planIssue1657BlockerRepair({ sourceSnapshot, ownershipInventory, materi
         preconditions: ['independent owner review', 'owner body CAS', 'SourceNote body/revision/ref CAS', 'exact identity ownership remains unique', 'materialization receipt is absent or exactly reconciled'],
       };
     }
-    if (reportItem && reportItem.action !== 'blocked') targetErrors.push(`materialization dry-run unexpectedly reports action=${reportItem.action}`);
+    if (reportItem && reportItem.action !== 'blocked' && action !== 'boundary-evidence-recognized') targetErrors.push(`materialization dry-run unexpectedly reports action=${reportItem.action}`);
     if (reportItem && reportItem.mutation_performed !== false) targetErrors.push('materialization dry-run claims a mutation');
     results.push({
       ...requestBase,
@@ -748,7 +782,7 @@ function planIssue1657BlockerRepair({ sourceSnapshot, ownershipInventory, materi
     owner_receipt_snapshot_digest: receiptSnapshot && receiptSnapshot.canonical_digest || null,
     live_reaudit_snapshot_digest: liveAuditSnapshot && liveAuditSnapshot.canonical_digest || null,
     target_count: TARGETS.length,
-    blocked_count: results.length,
+    blocked_count: results.filter((result) => result.action.startsWith('blocked-')).length,
     mutation_performed: false,
     write_operations: { ...REQUIRED_ZERO_WRITES },
     results,

@@ -15,6 +15,8 @@ const {
   reportDigest,
   validateBoundaryManifest,
   validateLiveBoundaryEvidenceComment,
+  legacyBoundaryEvidenceValue,
+  LEGACY_TEXT_BOUNDARY_EVIDENCE_SCHEMA,
 } = require('../scripts/lib/issue-1605-materialization-plan');
 const { buildLiveBoundaryReport, buildLiveManifest, exactAppliedBoundaryEvidence, materializationReceiptsBySourceIssue, sourceSnapshotDigest } = require('../scripts/plan-issue-1611-live-materialization');
 const { parseArgs } = require('../scripts/plan-issue-1605-interview-note-materialization');
@@ -115,7 +117,21 @@ test('live planner binds manifest to the pinned completion proof and actual repo
 });
 
 test('live boundary materialization adapter accepts only the explicit legacy #921 evidence contract', () => {
+  // The #921-pilot evidence format asserts Git provenance; it only binds to a
+  // v1 Git SourceRevision, never to a runtime manifest artifact.
   const source = makeSourceIssue(919, 'single-interview');
+  const recordMarker = source.body.match(/<!-- source-note-record\s*\n([\s\S]*?)\n-->/);
+  const sourceRecord = JSON.parse(recordMarker[1]);
+  sourceRecord.schema_version = 'source-note-issue.v1';
+  sourceRecord.source_revision.source_repository = 'liqiangcc/xhs';
+  sourceRecord.source_revision.source_repository_ref = '95b77bb261048059846273688e4b90a2e108b437';
+  delete sourceRecord.source_revision.storage_kind;
+  delete sourceRecord.source_revision.manifest_ref;
+  delete sourceRecord.source_revision.manifest_sha256;
+  delete sourceRecord.source_revision.manifest_byte_size;
+  source.body = source.body
+    .replace(/<!-- source-note:\s*id=[^\s]+\s+schema=[^\s]+\s*-->/, `<!-- source-note: id=${sourceRecord.source_note_id} schema=${sourceRecord.schema_version} -->`)
+    .replace(recordMarker[0], `<!-- source-note-record\n${JSON.stringify(sourceRecord, null, 2)}\n-->`);
   const parsed = parseSourceNoteIssue(source.body).record;
   const checks = ['source_identity', 'source_revision_binding', 'source_content_coverage', 'event_boundary', 'no_cross_source_mixing', 'no_fabrication']
     .map((check_id) => ({ check_id, result: 'pass' }));
@@ -381,7 +397,7 @@ test('transition-applied candidates require an exact, live-bound evidence commen
     source_note_id: expected.source_note_id,
     expected_body_sha256: expected.source_note_body_sha256,
     expected_source_revision_id: expected.source_revision_id,
-    expected_source_repository_ref: '95b77bb261048059846273688e4b90a2e108b437',
+    expected_source_repository_ref: null,
     decision: expected.decision,
     checks: ['source_identity', 'source_revision_binding', 'source_content_coverage', 'event_boundary', 'no_cross_source_mixing', 'no_fabrication'].map((check_id) => ({ check_id, result: 'pass' })),
   };
@@ -391,6 +407,8 @@ test('transition-applied candidates require an exact, live-bound evidence commen
     body: `<!-- source-note-boundary-review-evidence\n${JSON.stringify(payload)}\n-->`,
   };
   assert.equal(validateLiveBoundaryEvidenceComment(comment, expected, source).ok, true);
+  const forgedRef = { ...comment, body: `<!-- source-note-boundary-review-evidence\n${JSON.stringify({ ...payload, expected_source_repository_ref: '95b77bb261048059846273688e4b90a2e108b437' })}\n-->` };
+  assert.equal(validateLiveBoundaryEvidenceComment(forgedRef, expected, source).ok, false);
   for (const mutate of [
     (value) => ({ ...value, id: value.id + 1 }),
     (value) => ({ ...value, issue_url: 'https://api.github.com/repos/other/repo/issues/919' }),
@@ -598,4 +616,150 @@ test('strictly adapts the issue-1608 evidence schema without accepting drift or 
     body: `<!-- source-note-boundary-review-evidence\n${JSON.stringify(currentPayload)}\n-->`,
   }]);
   assert.match(duplicateCrossSchema.errors.join('\n'), /matching boundary evidence comment \(got 2\)/);
+});
+
+// Issue #910: the only runtime-artifact-store SourceRevision. Its boundary
+// evidence predates the machine marker format; the strict adapter must bind
+// the human-readable [BOUNDARY REVIEW EVIDENCE] comment to live facts without
+// ever synthesizing a Git source_repository_ref.
+function makeLegacyEvidenceBody({ transitionId, sourceNoteId, revisionId, manifestSha, decision = 'single-interview', checkResult = 'pass' }) {
+  return [
+    '## [BOUNDARY REVIEW EVIDENCE] Case 1',
+    '',
+    `transition_id: \`${transitionId}\``,
+    '',
+    `- source_note_id: \`${sourceNoteId}\``,
+    `- source_revision_id: \`${revisionId}\``,
+    `- manifest_sha256: \`${manifestSha}\``,
+    `- recommended_decision: \`${decision}\``,
+    '- reviewer_kind: `ai-assisted`',
+    '',
+    '### Required checks',
+    '',
+    ...['source_identity', 'source_revision_binding', 'source_content_coverage', 'event_boundary', 'no_cross_source_mixing', 'no_fabrication']
+      .map((check) => `- \`${check}\`: ${checkResult} — fixture rationale.`),
+  ].join('\n');
+}
+
+function makeLegacyRuntimeFixture(number = 910) {
+  const source = makeSourceIssue(number, 'single-interview', `runtime-fixture-${number}`);
+  const parsed = parseSourceNoteIssue(source.body).record;
+  const transitionId = `fixture-transition-${number}`;
+  const applied = {
+    id: number * 10 + 1,
+    issue_url: `https://api.github.com/repos/liqiangcc/interview-lab/issues/${number}`,
+    body: `<!-- source-note-boundary-review-applied\n${JSON.stringify({
+      schema_version: 'source-note-boundary-review-applied.v1',
+      transition_id: transitionId,
+      repository: 'liqiangcc/interview-lab',
+      issue_number: source.number,
+      source_note_id: parsed.source_note_id,
+      decision: 'single-interview',
+      new_body_sha256: sha256Text(source.body),
+      previous_body_sha256: 'a'.repeat(64),
+      interview_note_ids: [`xhs:${parsed.source.external_id}`],
+      interview_note_cases: null,
+    })}\n-->`,
+  };
+  const legacyBody = makeLegacyEvidenceBody({
+    transitionId,
+    sourceNoteId: parsed.source_note_id,
+    revisionId: parsed.source_revision.id,
+    manifestSha: parsed.source_revision.manifest_sha256,
+  });
+  const legacyComment = { id: number * 10 + 2, issue_url: applied.issue_url, body: legacyBody };
+  const expected = {
+    source_note_issue_number: source.number,
+    source_note_id: parsed.source_note_id,
+    source_note_body_sha256: sha256Text(source.body),
+    live_source_note_body_sha256: sha256Text(source.body),
+    source_revision_id: parsed.source_revision.id,
+    decision: 'single-interview',
+    transition_id: transitionId,
+    evidence_comment_id: legacyComment.id,
+    evidence_schema: LEGACY_TEXT_BOUNDARY_EVIDENCE_SCHEMA,
+  };
+  return { source, parsed, transitionId, applied, legacyComment, legacyBody, expected };
+}
+
+test('legacy human-readable boundary evidence is adapted for a valid runtime SourceRevision', () => {
+  const { source, transitionId, applied, legacyComment, expected } = makeLegacyRuntimeFixture();
+  const result = exactAppliedBoundaryEvidence(source, [applied, legacyComment]);
+  assert.equal(result.ok, true, result.errors.join('\n'));
+  assert.equal(result.transition_id, transitionId);
+  assert.equal(result.evidence_comment_id, legacyComment.id);
+  assert.equal(result.evidence_schema, LEGACY_TEXT_BOUNDARY_EVIDENCE_SCHEMA);
+  assert.doesNotMatch(result.errors.join('\n'), /got 0|ref drifted/);
+  const verified = validateLiveBoundaryEvidenceComment(legacyComment, expected, source);
+  assert.equal(verified.ok, true, verified.errors.join('\n'));
+  assert.equal(verified.value.schema_version, LEGACY_TEXT_BOUNDARY_EVIDENCE_SCHEMA);
+  assert.equal(verified.value.adapted_from, 'human-readable-boundary-review-evidence');
+});
+
+test('legacy boundary evidence fails closed on any drifted fact or runtime provenance violation', () => {
+  const { source, parsed, transitionId, applied, legacyComment, legacyBody, expected } = makeLegacyRuntimeFixture();
+  const withSourceRecord = (mutate) => {
+    const copy = JSON.parse(JSON.stringify(source));
+    const recordMarker = copy.body.match(/<!-- source-note-record\s*\n([\s\S]*?)\n-->/);
+    const record = JSON.parse(recordMarker[1]);
+    mutate(record);
+    copy.body = copy.body
+      .replace(/<!-- source-note:\s*id=[^\s]+\s+schema=[^\s]+\s*-->/, `<!-- source-note: id=${record.source_note_id} schema=${record.schema_version} -->`)
+      .replace(recordMarker[0], `<!-- source-note-record\n${JSON.stringify(record, null, 2)}\n-->`);
+    return copy;
+  };
+  // A runtime SourceRevision must never carry a synthesized Git ref.
+  const forged = withSourceRecord((record) => { record.source_revision.source_repository_ref = '95b77bb261048059846273688e4b90a2e108b437'; });
+  const forgedResult = exactAppliedBoundaryEvidence(forged, [applied, legacyComment]);
+  assert.equal(forgedResult.ok, false);
+  assert.match(forgedResult.errors.join('\n'), /unexpectedly carries a Git source ref/);
+  assert.equal(validateLiveBoundaryEvidenceComment(legacyComment, { ...expected, live_source_note_body_sha256: sha256Text(forged.body) }, forged).ok, false);
+  // A Git-bound SourceRevision cannot claim the legacy runtime adapter.
+  const gitBound = withSourceRecord((record) => {
+    record.schema_version = 'source-note-issue.v1';
+    record.source_revision.source_repository = 'liqiangcc/xhs';
+    record.source_revision.source_repository_ref = '95b77bb261048059846273688e4b90a2e108b437';
+    delete record.source_revision.storage_kind;
+  });
+  const gitResult = exactAppliedBoundaryEvidence(gitBound, [applied, legacyComment]);
+  assert.equal(gitResult.ok, false);
+  assert.match(gitResult.errors.join('\n'), /requires runtime manifest provenance/);
+  // Every bound fact is fail-closed.
+  const tamperCases = [
+    [/manifest_sha256: `[^`]+`/, `manifest_sha256: \`${'f'.repeat(64)}\``, /manifest_sha256 mismatch/],
+    [/- source_revision_id: `[^`]+`/, '- source_revision_id: `xhs:runtime-fixture-910:r2`', /source_revision_id mismatch/],
+    [/- source_note_id: `[^`]+`/, '- source_note_id: `xhs-note:other`', /source_note_id mismatch/],
+    [/- recommended_decision: `[^`]+`/, '- recommended_decision: `not-interview`', /decision mismatch/],
+  ];
+  for (const [pattern, replacement, matcher] of tamperCases) {
+    const tampered = { ...legacyComment, body: legacyBody.replace(pattern, replacement) };
+    const result = exactAppliedBoundaryEvidence(source, [applied, tampered]);
+    assert.equal(result.ok, false);
+    assert.match(result.errors.join('\n'), matcher);
+  }
+  const wrongTransition = { ...legacyComment, body: legacyBody.replace(`transition_id: \`${transitionId}\``, 'transition_id: `other-transition`') };
+  assert.match(exactAppliedBoundaryEvidence(source, [applied, wrongTransition]).errors.join('\n'), /got 0/);
+  for (const mutate of [
+    (body) => body.replace('- `no_fabrication`: pass', '- `no_fabrication`: fail'),
+    (body) => body.replace('\n- `no_fabrication`: pass — fixture rationale.', ''),
+    (body) => `${body}\n- \`source_identity\`: pass — duplicate.`,
+  ]) {
+    const tampered = { ...legacyComment, body: mutate(legacyBody) };
+    assert.equal(legacyBoundaryEvidenceValue(tampered.body).value, null);
+    const result = exactAppliedBoundaryEvidence(source, [applied, tampered]);
+    assert.equal(result.ok, false);
+  }
+  // Arbitrary prose that merely mentions the heading is never evidence.
+  const prose = { ...legacyComment, body: '## [BOUNDARY REVIEW EVIDENCE]\n\nThis comment only discusses the review.' };
+  const proseResult = exactAppliedBoundaryEvidence(source, [applied, prose]);
+  assert.equal(proseResult.ok, false);
+  assert.match(proseResult.errors.join('\n'), /got 0/);
+  // Duplicated matching legacy evidence stays ambiguous.
+  const duplicate = { ...legacyComment, id: legacyComment.id + 1 };
+  const duplicateResult = exactAppliedBoundaryEvidence(source, [applied, legacyComment, duplicate]);
+  assert.equal(duplicateResult.ok, false);
+  assert.match(duplicateResult.errors.join('\n'), /got 2/);
+  // The live-bound check also rejects tampered comment identity.
+  assert.equal(validateLiveBoundaryEvidenceComment({ ...legacyComment, id: legacyComment.id + 1 }, expected, source).ok, false);
+  assert.equal(validateLiveBoundaryEvidenceComment({ ...legacyComment, issue_url: 'https://api.github.com/repos/other/repo/issues/910' }, expected, source).ok, false);
 });
