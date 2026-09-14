@@ -207,6 +207,62 @@ function evidenceMarkerValues(body) {
 
 const REQUIRED_BOUNDARY_CHECKS = ['source_identity', 'source_revision_binding', 'source_content_coverage', 'event_boundary', 'no_cross_source_mixing', 'no_fabrication'];
 
+const LEGACY_TEXT_BOUNDARY_EVIDENCE_SCHEMA = 'boundary-review-evidence.legacy-text.v1';
+const LEGACY_BOUNDARY_EVIDENCE_HEADING = /^##?\s*\[BOUNDARY REVIEW EVIDENCE\]/gm;
+
+// Strict adapter for the human-readable [BOUNDARY REVIEW EVIDENCE] comment
+// format (for example Issue #910 comment 5535513422). The comment carries no
+// machine marker; every extracted field must still bind exactly to the live
+// SourceNote facts before the comment counts as evidence. A comment whose
+// heading is present but whose structure is incomplete or duplicated stays a
+// candidate-with-errors so the failure is explicit rather than a silent miss.
+function legacyBoundaryEvidenceValue(body) {
+  const text = String(body || '');
+  const headings = [...text.matchAll(LEGACY_BOUNDARY_EVIDENCE_HEADING)];
+  if (headings.length === 0) return { candidate: false, value: null, errors: [] };
+  if (headings.length !== 1) {
+    return { candidate: true, value: null, errors: [`legacy [BOUNDARY REVIEW EVIDENCE] heading must occur exactly once (got ${headings.length})`] };
+  }
+  const errors = [];
+  const bulletField = (name) => {
+    const matches = [...text.matchAll(new RegExp(`(?:^|\\n)- ${name}:\\s*\`([^\`\\n]+)\``, 'g'))];
+    if (matches.length !== 1) errors.push(`legacy boundary evidence field ${name} must occur exactly once as a backticked bullet (got ${matches.length})`);
+    return matches.length === 1 ? matches[0][1].trim() : null;
+  };
+  const transitionMatches = [...text.matchAll(/(?:^|\n)transition_id:\s*`([^`\n]+)`/g)];
+  if (transitionMatches.length !== 1) errors.push(`legacy boundary evidence transition_id must occur exactly once (got ${transitionMatches.length})`);
+  const checks = [...text.matchAll(/(?:^|\n)- `([a-z_]+)`:\s*([a-z]+)/g)].map((match) => ({ check_id: match[1], result: match[2] }));
+  for (const checkId of REQUIRED_BOUNDARY_CHECKS) {
+    const found = checks.filter((check) => check.check_id === checkId);
+    if (found.length !== 1) errors.push(`legacy boundary evidence check ${checkId} must occur exactly once (got ${found.length})`);
+    else if (found[0].result !== 'pass') errors.push(`legacy boundary evidence check ${checkId} is not pass`);
+  }
+  const unknown = checks.filter((check) => !REQUIRED_BOUNDARY_CHECKS.includes(check.check_id));
+  if (unknown.length) errors.push(`legacy boundary evidence has unsupported check_id(s): ${unknown.map((check) => check.check_id).join(', ')}`);
+  const value = {
+    schema_version: LEGACY_TEXT_BOUNDARY_EVIDENCE_SCHEMA,
+    adapted_from: 'human-readable-boundary-review-evidence',
+    transition_id: transitionMatches.length === 1 ? transitionMatches[0][1].trim() : null,
+    source_note_id: bulletField('source_note_id'),
+    source_revision_id: bulletField('source_revision_id'),
+    manifest_sha256: bulletField('manifest_sha256'),
+    decision: bulletField('recommended_decision'),
+    checks,
+  };
+  if (errors.length) return { candidate: true, value: null, errors };
+  return { candidate: true, value, errors: [] };
+}
+
+// Git-bound provenance must keep binding the fixed XHS snapshot exactly.
+// Runtime-artifact-store revisions are manifest-bound instead: their Git ref
+// is null by contract and a non-null ref is a forgery, never a fixture to copy.
+function expectedSourceRefFor(sourceIssue) {
+  const parsed = sourceIssue ? issueSourceRecord(sourceIssue).parsed : null;
+  const revision = parsed && parsed.source_revision || {};
+  const runtimeBound = parsed && parsed.schema_version === 'source-note-issue.v2' && revision.storage_kind === 'runtime-artifact-store';
+  return runtimeBound ? null : SOURCE_REF;
+}
+
 function issue1608EvidenceValue(body) {
   const matches = [...String(body || '').matchAll(/<!--\s*issue-1608-boundary-evidence\.v1\n([\s\S]*?)\n-->/g)];
   if (matches.length !== 1) return { value: null, errors: ['issue-1608 evidence marker must occur exactly once'] };
@@ -358,6 +414,34 @@ function validateLiveBoundaryEvidenceComment(comment, expected, sourceIssue) {
   if (Number(comment && (comment.id || comment.comment_id)) !== expectedCommentId) errors.push(`SourceNote #${issueNumber} live evidence comment id is not ${expectedCommentId}`);
   const expectedApiUrl = `https://api.github.com/repos/liqiangcc/interview-lab/issues/${issueNumber}`;
   if (comment && comment.issue_url !== expectedApiUrl) errors.push(`SourceNote #${issueNumber} evidence comment issue_url is not bound to the exact repository/issue`);
+  const liveResult = sourceIssue ? issueSourceRecord(sourceIssue) : null;
+  const liveParsed = liveResult && liveResult.parsed;
+  const liveRevision = liveParsed && liveParsed.source_revision || {};
+  const expectedSourceRef = expectedSourceRefFor(sourceIssue);
+  if (expected && expected.evidence_schema === LEGACY_TEXT_BOUNDARY_EVIDENCE_SCHEMA) {
+    const parsed = legacyBoundaryEvidenceValue(comment && comment.body);
+    for (const error of parsed.errors) errors.push(`SourceNote #${issueNumber} legacy boundary evidence: ${error}`);
+    if (!parsed.value) return { ok: false, errors, value: null };
+    const value = parsed.value;
+    const equal = (field, actual, wanted) => { if (actual !== wanted) errors.push(`SourceNote #${issueNumber} legacy boundary evidence ${field} binding mismatch`); };
+    equal('transition_id', value.transition_id, expected.transition_id);
+    equal('source_note_id', value.source_note_id, expected.source_note_id);
+    equal('source_revision_id', value.source_revision_id, expected.source_revision_id);
+    equal('decision', value.decision, expected.decision);
+    if (sourceIssue && !liveResult.validation.ok) errors.push(`SourceNote #${issueNumber} live source snapshot is invalid: ${(liveResult.validation.errors || []).join('; ')}`);
+    const runtimeBound = liveParsed && liveParsed.schema_version === 'source-note-issue.v2' && liveRevision.storage_kind === 'runtime-artifact-store';
+    if (!runtimeBound) errors.push(`SourceNote #${issueNumber} legacy boundary evidence requires runtime manifest provenance`);
+    if (liveRevision.source_repository_ref != null) errors.push(`SourceNote #${issueNumber} live SourceRevision unexpectedly carries a Git source ref`);
+    if (!HEX64.test(String(liveRevision.manifest_sha256 || ''))) errors.push(`SourceNote #${issueNumber} live SourceRevision lacks a bound manifest SHA-256`);
+    equal('manifest_sha256', value.manifest_sha256, liveRevision.manifest_sha256 || null);
+    if (liveParsed) {
+      equal('live_source_note_id', liveParsed.source_note_id, expected.source_note_id);
+      equal('live_source_revision_id', liveRevision.id || null, expected.source_revision_id);
+      if (expected.live_source_note_body_sha256 != null) equal('live_source_note_body_sha256', sha256Text(sourceIssue.body || ''), expected.live_source_note_body_sha256);
+      if (liveParsed.boundary_review) equal('decision/live', value.decision, liveParsed.boundary_review.status);
+    }
+    return { ok: errors.length === 0, errors, value };
+  }
   if (expected && expected.evidence_schema === 'issue-1608-boundary-evidence.v1') {
     const parsed = issue1608EvidenceValue(comment && comment.body);
     const validation = validateIssue1608BoundaryEvidenceValue(parsed.value, expected, sourceIssue);
@@ -375,7 +459,7 @@ function validateLiveBoundaryEvidenceComment(comment, expected, sourceIssue) {
     const sourceRevision = String(comment && comment.body || '').match(/(?:^|\n)source_revision_id:\s*([^\n]+)/);
     const sourceRef = String(comment && comment.body || '').match(/(?:^|\n)source_repository_ref:\s*([^\n]+)/);
     equal('source_revision_id', sourceRevision && sourceRevision[1].trim(), expected.source_revision_id);
-    equal('source_repository_ref', sourceRef && sourceRef[1].trim(), SOURCE_REF);
+    equal('source_repository_ref', sourceRef && sourceRef[1].trim(), expectedSourceRef);
     equal('decision', String(comment && comment.body || '').match(/(?:^|\n)recommended_decision:\s*([^\n]+)/)?.[1]?.trim(), expected.decision);
     for (const checkId of REQUIRED_BOUNDARY_CHECKS) {
       const check = (value.checks || []).find((candidate) => candidate && candidate.check_id === checkId);
@@ -397,7 +481,7 @@ function validateLiveBoundaryEvidenceComment(comment, expected, sourceIssue) {
     equal('transition_id', value.transition_id, expected.transition_id);
     equal('expected_body_sha256', value.expected_body_sha256, expected.evidence_body_sha256 || expected.source_note_body_sha256);
     equal('expected_source_revision_id', value.expected_source_revision_id, expected.source_revision_id);
-    equal('expected_source_repository_ref', value.expected_source_repository_ref, SOURCE_REF);
+    equal('expected_source_repository_ref', value.expected_source_repository_ref, expectedSourceRef);
     equal('decision', value.decision, expected.decision);
     for (const checkId of REQUIRED_BOUNDARY_CHECKS) {
       const check = (value.checks || []).find((candidate) => candidate && candidate.check_id === checkId);
@@ -416,12 +500,10 @@ function validateLiveBoundaryEvidenceComment(comment, expected, sourceIssue) {
   equal('issue_number', value.issue_number, issueNumber);
   equal('transition_id', value.transition_id, expected.transition_id);
   equal('source_note_id', value.source_note_id, expected.source_note_id);
-  const liveParsed = issueSourceRecord(sourceIssue).parsed;
-  const liveRevision = liveParsed && liveParsed.source_revision && liveParsed.source_revision.id;
   equal('expected_body_sha256', value.expected_body_sha256, expected.evidence_body_sha256 || expected.source_note_body_sha256);
-  equal('expected_source_revision_id', value.expected_source_revision_id, liveRevision);
+  equal('expected_source_revision_id', value.expected_source_revision_id, liveRevision.id || null);
   equal('expected_source_revision_id/report', value.expected_source_revision_id, expected.source_revision_id);
-  equal('expected_source_repository_ref', value.expected_source_repository_ref, SOURCE_REF);
+  equal('expected_source_repository_ref', value.expected_source_repository_ref, expectedSourceRef);
   equal('decision', value.decision, expected.decision);
   if (liveParsed && liveParsed.boundary_review) equal('decision/live', value.decision, liveParsed.boundary_review.status);
   if (!Array.isArray(value.checks) || value.checks.length === 0) errors.push(`SourceNote #${issueNumber} evidence checks are missing`);
@@ -532,6 +614,7 @@ function resultBase(reportItem) {
     source_note_id: reportItem.source_note_id,
     transition_id: reportItem.transition_id,
     evidence_comment_id: reportItem.evidence_comment_id,
+    evidence_schema: reportItem.evidence_schema || null,
     boundary_decision: reportItem.decision,
     boundary_transition_status: reportItem.transition_status,
   };
@@ -822,6 +905,7 @@ module.exports = {
   BOUNDARY_MANIFEST_CANONICAL_DIGEST,
   BOUNDARY_MANIFEST_CANDIDATE_COUNT,
   BOUNDARY_EVIDENCE_MARKER,
+  LEGACY_TEXT_BOUNDARY_EVIDENCE_SCHEMA,
   canonicalJson,
   sha256Text,
   transitionApplied,
@@ -833,6 +917,7 @@ module.exports = {
   validateBoundaryManifest,
   validateCompleteReportScope,
   evidenceMarkerValues,
+  legacyBoundaryEvidenceValue,
   issue1608EvidenceValue,
   validateIssue1608BoundaryEvidenceValue,
   validateLiveBoundaryEvidenceComment,
