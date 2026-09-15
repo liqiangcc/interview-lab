@@ -45,7 +45,7 @@ const RECEIPT_MARKER = 'source-note-interview-materialized';
 const AUTH_MARKER = 'issue-1658-interview-note-materialization-authorization';
 const HEX64 = /^[0-9a-f]{64}$/;
 const ZERO_WRITES = Object.freeze({ patch: 0, post: 0, create: 0, label: 0, interview_note: 0 });
-const ALLOWED_PLAN_ACTIONS = new Set(['skip-not-interview', 'already-materialized', 'would-materialize']);
+const ALLOWED_PLAN_ACTIONS = new Set(['skip-not-interview', 'already-materialized', 'would-materialize', 'would-repair-receipt']);
 const MUTATION_ACTIONS = new Set(['would-materialize']);
 
 function without(value, field) {
@@ -137,15 +137,17 @@ function buildRunnerPlan({ sourceSnapshot, boundaryReport, boundaryManifest, own
     if (!ALLOWED_PLAN_ACTIONS.has(result.action) && result.action !== 'blocked') errors.push(`unsupported materialization action ${result.action || 'missing'} for SourceNote #${result.source_note_issue_number}`);
     if (MUTATION_ACTIONS.has(result.action) && (!result.request || result.request_sha256 !== requestSha256(result.request))) errors.push(`request SHA mismatch for SourceNote #${result.source_note_issue_number}`);
     if (result.action === 'already-materialized' && (!result.request || result.request_sha256 !== requestSha256(result.request))) errors.push(`already-materialized reconciliation lacks a valid request SHA for SourceNote #${result.source_note_issue_number}`);
+    if (result.action === 'would-repair-receipt' && (!result.request || result.request_sha256 !== requestSha256(result.request))) errors.push(`would-repair-receipt row lacks a valid request SHA for SourceNote #${result.source_note_issue_number}`);
     if (result.action === 'blocked' && (!Array.isArray(result.errors) || result.errors.length === 0)) errors.push(`blocked result for SourceNote #${result.source_note_issue_number} lacks an error`);
   }
-  const counts = { 'skip-not-interview': 0, 'already-materialized': 0, 'would-materialize': 0, blocked: 0 };
+  const counts = { 'skip-not-interview': 0, 'already-materialized': 0, 'would-materialize': 0, 'would-repair-receipt': 0, blocked: 0 };
   for (const result of results) counts[result.action] = (counts[result.action] || 0) + 1;
   if (materializationPlan && materializationPlan.errors && materializationPlan.errors.length) errors.push(...materializationPlan.errors.map((error) => `upstream plan: ${error}`));
   if (materializationPlan && canonicalDigest(counts) !== canonicalDigest({
     'skip-not-interview': materializationPlan.counts && materializationPlan.counts['skip-not-interview'] || 0,
     'already-materialized': materializationPlan.counts && materializationPlan.counts['already-materialized'] || 0,
     'would-materialize': materializationPlan.counts && materializationPlan.counts['would-materialize'] || 0,
+    'would-repair-receipt': materializationPlan.counts && materializationPlan.counts['would-repair-receipt'] || 0,
     blocked: materializationPlan.counts && materializationPlan.counts.blocked || 0,
   })) errors.push('runner action counts disagree with upstream plan');
 
@@ -162,7 +164,7 @@ function buildRunnerPlan({ sourceSnapshot, boundaryReport, boundaryManifest, own
     ownership: { schema_version: ownershipInventory && ownershipInventory.schema_version, count: ownershipInventory && ownershipInventory.count, digest: ownershipInventory && ownershipInventory.canonical_digest },
     upstream_materialization_plan_digest: materializationPlan && materializationPlan.dry_run_sha256,
     counts,
-    allowed_actions: ['skip-not-interview', 'already-materialized', 'would-materialize'],
+    allowed_actions: ['skip-not-interview', 'already-materialized', 'would-materialize', 'would-repair-receipt'],
     mutation_performed: false,
     write_operations: { ...ZERO_WRITES },
     results,
