@@ -201,7 +201,16 @@ function validateExistingOwnership(issue, expectedProjection) {
   if (parsed) {
     if (parsed.interview_note_id !== expectedProjection.interview_note_id) errors.push('existing InterviewNote identity mismatch');
     if (parsed.source.system !== expectedProjection.record.source.system || parsed.source.external_id !== expectedProjection.record.source.external_id) errors.push('existing InterviewNote source identity mismatch');
-    if (!parsed.source_revision || parsed.source_revision.id !== expectedProjection.record.source_revision.id) errors.push('existing InterviewNote SourceRevision mismatch');
+    if (!parsed.source_revision || parsed.source_revision.id !== expectedProjection.record.source_revision.id) {
+      // Pilot-era owners were created from runtime captures before the fixed
+      // Source snapshot existed; their revision ids are legacy/ recovered
+      // forms rather than `…:snapshot-<ref>`.  Identity and source binding
+      // above still prove ownership, so a legacy revision is accepted as an
+      // already-materialized owner instead of a mismatch.
+      const legacyRevision = parsed.source_revision
+        && /:(?:legacy|recovered)-r\d+$/.test(String(parsed.source_revision.id || ''));
+      if (!legacyRevision) errors.push('existing InterviewNote SourceRevision mismatch');
+    }
   }
   return { ok: errors.length === 0, errors, validation };
 }

@@ -29,7 +29,7 @@ test('real fresh-boundary inputs build a controller-bound, zero-write runner pla
   const plan = buildRunnerPlan({ sourceSnapshot, boundaryReport, boundaryManifest, ownershipInventory, materializationPlan });
   assert.equal(plan.schema_version, RUNNER_SCHEMA);
   assert.deepEqual({ parent_issue: plan.parent_issue, controller_issue: plan.controller_issue, boundary_parent_issue: plan.boundary_parent_issue }, { parent_issue: 1611, controller_issue: 1658, boundary_parent_issue: 1605 });
-  assert.deepEqual(plan.counts, { 'skip-not-interview': 247, 'already-materialized': 47, 'would-materialize': 789, blocked: 424 });
+  assert.deepEqual(plan.counts, { 'skip-not-interview': 247, 'already-materialized': 47, 'would-materialize': 789, 'would-repair-receipt': 0, blocked: 424 });
   assert.equal(plan.ok, false);
   assert.equal(plan.ready_for_apply, false);
   assert.deepEqual(plan.write_operations, ZERO_WRITES);

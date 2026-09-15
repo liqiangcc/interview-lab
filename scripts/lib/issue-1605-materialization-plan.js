@@ -383,6 +383,25 @@ function validateLiveBoundaryEvidenceComment(comment, expected, sourceIssue) {
     }
     return { ok: errors.length === 0, errors, value };
   }
+  if (expected && expected.evidence_schema === 'legacy-text-boundary-evidence') {
+    // Runtime-capture-era evidence was posted as a dedicated text comment,
+    // before the machine-marker formats existed.  Its transition_id and
+    // source_note_id were already bound by the boundary report; re-check the
+    // revision, decision, and the six required check lines here.
+    const body = String(comment && comment.body || '');
+    if (!/## \[BOUNDARY REVIEW EVIDENCE\]/.test(body)) return { ok: false, errors: [...errors, `SourceNote #${issueNumber} legacy text evidence heading is missing`] };
+    const field = (name) => { const match = body.match(new RegExp(`${name}:\\s*\`([^\\n\`]+)\``)); return match && match[1].trim(); };
+    const equal = (label, actual, wanted) => { if (actual !== wanted) errors.push(`SourceNote #${issueNumber} legacy text evidence ${label} binding mismatch`); };
+    equal('transition_id', field('transition_id'), expected.transition_id);
+    equal('source_note_id', field('source_note_id'), expected.source_note_id);
+    equal('source_revision_id', field('source_revision_id'), expected.source_revision_id);
+    equal('recommended_decision', field('recommended_decision'), expected.decision);
+    for (const checkId of REQUIRED_BOUNDARY_CHECKS) {
+      const match = body.match(new RegExp(`${checkId}\`?:\\s*(pass|fail)`));
+      if (!match || match[1] !== 'pass') errors.push(`SourceNote #${issueNumber} legacy text evidence check ${checkId} is not pass`);
+    }
+    return { ok: errors.length === 0, errors, value: null };
+  }
   if (expected && expected.evidence_schema === 'boundary-review-evidence.v1') {
     const matches = [...String(comment && comment.body || '').matchAll(/<!-- boundary-review-evidence\.v1\n([\s\S]*?)\n-->/g)];
     if (matches.length !== 1) return { ok: false, errors: [...errors, `SourceNote #${issueNumber} historical evidence marker must occur exactly once`] };
