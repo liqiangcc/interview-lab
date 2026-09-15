@@ -1,0 +1,913 @@
+{
+  "mode": "prepared-requests-not-applied",
+  "reviewed_at": "2026-09-15T08:13:50.302Z",
+  "requests": [
+    {
+      "schema_version": "interview-note-source-review-transition.v1",
+      "transition_id": "issue-1661-source-review-1674-20260912",
+      "repository": "liqiangcc/interview-lab",
+      "issue_number": 1674,
+      "interview_note_id": "xhs:68c40288000000001b03ecd6",
+      "expected_interview_body_sha256": "06c835ae9453b14d7bb300664484321d0a3264c7bb2c34de6bdbbf3578562bd8",
+      "expected_initial_status": "captured",
+      "expected_source_revision_id": "xhs-note:68c40288000000001b03ecd6:snapshot-95b77bb26104",
+      "source_note_issue_number": 1309,
+      "expected_source_note_body_sha256": "61adfebb5d7a8230cb6d595a260c811df0b467a283fadbf368419b0a5979f5d4",
+      "expected_manifest_sha256": null,
+      "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+      "decision": "source-ready",
+      "reviewed_at": "2026-09-15T08:13:50.302Z",
+      "reviewer_kind": "ai-assisted",
+      "provenance_mode": "pinned-source-artifact",
+      "provenance_statement": "pinned-source-artifact; raw-lineage-unproven",
+      "pinned_artifact_manifest_sha256": "5ba5a02a29c2bd77bdecf2e8dd7af3e3b25a6a0573609b9543fa479030c244bc",
+      "checks": [
+        {
+          "check_id": "source_identity",
+          "result": "pass",
+          "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+        },
+        {
+          "check_id": "source_revision_binding",
+          "result": "pass",
+          "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+        },
+        {
+          "check_id": "artifact_reference_integrity",
+          "result": "pass",
+          "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+        },
+        {
+          "check_id": "raw_projection_traceability",
+          "result": "fail",
+          "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+        },
+        {
+          "check_id": "source_artifact_provenance",
+          "result": "pass",
+          "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+        },
+        {
+          "check_id": "known_limitations_recorded",
+          "result": "pass",
+          "note": "All SourceNote limitations are retained by InterviewNote."
+        },
+        {
+          "check_id": "duplicate_ownership",
+          "result": "pass",
+          "note": "Exactly one InterviewNote owner exists: #1674."
+        },
+        {
+          "check_id": "no_fabrication",
+          "result": "pass",
+          "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+        }
+      ],
+      "limitations": [
+        "SourceNote intake 只证明一条 XHS Source 的采集身份，不判断它是否等于一次真实面试事件。",
+        "题库、经验总结、模拟面试、非目标岗位以及一帖多场面试都允许进入 SourceNote；必须经过 boundary review 才能产生 0..N InterviewNote。",
+        "note_img_txt / note_structured / note_tagged 等历史数据属于 Derived，不得反向补写 Raw Source。",
+        "Source Review verifies pinned commit/tree/blob bytes; Source projection to Raw lineage is not proven."
+      ],
+      "evidence_subject_sha256": "5ee4a0d1155fd5d920f203bdcf2ed975919926d54aaf301a78603c6b3aa1a7b7"
+    },
+    {
+      "schema_version": "interview-note-source-review-transition.v1",
+      "transition_id": "issue-1661-source-review-1675-20260912",
+      "repository": "liqiangcc/interview-lab",
+      "issue_number": 1675,
+      "interview_note_id": "xhs:68c8d776000000001d037905",
+      "expected_interview_body_sha256": "26d5fa70f7aea12062986f2ad9a2f2f2881062945de4f6651f4eadf71ae43766",
+      "expected_initial_status": "captured",
+      "expected_source_revision_id": "xhs-note:68c8d776000000001d037905:snapshot-95b77bb26104",
+      "source_note_issue_number": 1325,
+      "expected_source_note_body_sha256": "db2220c4d49be740566ec5ac17a7d4e81d3c8ee6856e672cb13df1a24e6548f6",
+      "expected_manifest_sha256": null,
+      "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+      "decision": "source-ready",
+      "reviewed_at": "2026-09-15T08:13:50.302Z",
+      "reviewer_kind": "ai-assisted",
+      "provenance_mode": "pinned-source-artifact",
+      "provenance_statement": "pinned-source-artifact; raw-lineage-unproven",
+      "pinned_artifact_manifest_sha256": "5ba5a02a29c2bd77bdecf2e8dd7af3e3b25a6a0573609b9543fa479030c244bc",
+      "checks": [
+        {
+          "check_id": "source_identity",
+          "result": "pass",
+          "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+        },
+        {
+          "check_id": "source_revision_binding",
+          "result": "pass",
+          "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+        },
+        {
+          "check_id": "artifact_reference_integrity",
+          "result": "pass",
+          "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+        },
+        {
+          "check_id": "raw_projection_traceability",
+          "result": "fail",
+          "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+        },
+        {
+          "check_id": "source_artifact_provenance",
+          "result": "pass",
+          "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+        },
+        {
+          "check_id": "known_limitations_recorded",
+          "result": "pass",
+          "note": "All SourceNote limitations are retained by InterviewNote."
+        },
+        {
+          "check_id": "duplicate_ownership",
+          "result": "pass",
+          "note": "Exactly one InterviewNote owner exists: #1675."
+        },
+        {
+          "check_id": "no_fabrication",
+          "result": "pass",
+          "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+        }
+      ],
+      "limitations": [
+        "SourceNote intake 只证明一条 XHS Source 的采集身份，不判断它是否等于一次真实面试事件。",
+        "题库、经验总结、模拟面试、非目标岗位以及一帖多场面试都允许进入 SourceNote；必须经过 boundary review 才能产生 0..N InterviewNote。",
+        "note_img_txt / note_structured / note_tagged 等历史数据属于 Derived，不得反向补写 Raw Source。",
+        "Source Review verifies pinned commit/tree/blob bytes; Source projection to Raw lineage is not proven."
+      ],
+      "evidence_subject_sha256": "67c9632f5a1b0ac7703ae831b5d7c93ae1e2f90a08515fe669a7dece7e8df0c8"
+    },
+    {
+      "schema_version": "interview-note-source-review-transition.v1",
+      "transition_id": "issue-1661-source-review-1676-20260912",
+      "repository": "liqiangcc/interview-lab",
+      "issue_number": 1676,
+      "interview_note_id": "xhs:68c93440000000001203319b",
+      "expected_interview_body_sha256": "b2ee2133fd2eb916f2ea07cca45635087b81809021dca0341ab98f6e7fba4c5a",
+      "expected_initial_status": "captured",
+      "expected_source_revision_id": "xhs-note:68c93440000000001203319b:snapshot-95b77bb26104",
+      "source_note_issue_number": 1333,
+      "expected_source_note_body_sha256": "371bfe243d7aca51f1d79ddc018b314da87dcb4d80efdbce004817fb16ca380c",
+      "expected_manifest_sha256": null,
+      "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+      "decision": "source-ready",
+      "reviewed_at": "2026-09-15T08:13:50.302Z",
+      "reviewer_kind": "ai-assisted",
+      "provenance_mode": "pinned-source-artifact",
+      "provenance_statement": "pinned-source-artifact; raw-lineage-unproven",
+      "pinned_artifact_manifest_sha256": "5ba5a02a29c2bd77bdecf2e8dd7af3e3b25a6a0573609b9543fa479030c244bc",
+      "checks": [
+        {
+          "check_id": "source_identity",
+          "result": "pass",
+          "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+        },
+        {
+          "check_id": "source_revision_binding",
+          "result": "pass",
+          "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+        },
+        {
+          "check_id": "artifact_reference_integrity",
+          "result": "pass",
+          "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+        },
+        {
+          "check_id": "raw_projection_traceability",
+          "result": "fail",
+          "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+        },
+        {
+          "check_id": "source_artifact_provenance",
+          "result": "pass",
+          "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+        },
+        {
+          "check_id": "known_limitations_recorded",
+          "result": "pass",
+          "note": "All SourceNote limitations are retained by InterviewNote."
+        },
+        {
+          "check_id": "duplicate_ownership",
+          "result": "pass",
+          "note": "Exactly one InterviewNote owner exists: #1676."
+        },
+        {
+          "check_id": "no_fabrication",
+          "result": "pass",
+          "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+        }
+      ],
+      "limitations": [
+        "SourceNote intake 只证明一条 XHS Source 的采集身份，不判断它是否等于一次真实面试事件。",
+        "题库、经验总结、模拟面试、非目标岗位以及一帖多场面试都允许进入 SourceNote；必须经过 boundary review 才能产生 0..N InterviewNote。",
+        "note_img_txt / note_structured / note_tagged 等历史数据属于 Derived，不得反向补写 Raw Source。",
+        "Source Review verifies pinned commit/tree/blob bytes; Source projection to Raw lineage is not proven."
+      ],
+      "evidence_subject_sha256": "7624f1f246818a8c6c6c5695d7133ba87dfe202963e86802595e7e1616e592e8"
+    },
+    {
+      "schema_version": "interview-note-source-review-transition.v1",
+      "transition_id": "issue-1661-source-review-1677-20260912",
+      "repository": "liqiangcc/interview-lab",
+      "issue_number": 1677,
+      "interview_note_id": "xhs:68ced1a80000000011015ae0",
+      "expected_interview_body_sha256": "8fc810a06cbf1f11d27605d6029575c2506f005661277922cad9a090cc7718b2",
+      "expected_initial_status": "captured",
+      "expected_source_revision_id": "xhs-note:68ced1a80000000011015ae0:snapshot-95b77bb26104",
+      "source_note_issue_number": 1363,
+      "expected_source_note_body_sha256": "72c27cb2c7a06391d7e08f5aa42716f2e5be20cf7e0c3b9135d048021b1f9805",
+      "expected_manifest_sha256": null,
+      "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+      "decision": "source-ready",
+      "reviewed_at": "2026-09-15T08:13:50.302Z",
+      "reviewer_kind": "ai-assisted",
+      "provenance_mode": "pinned-source-artifact",
+      "provenance_statement": "pinned-source-artifact; raw-lineage-unproven",
+      "pinned_artifact_manifest_sha256": "5ba5a02a29c2bd77bdecf2e8dd7af3e3b25a6a0573609b9543fa479030c244bc",
+      "checks": [
+        {
+          "check_id": "source_identity",
+          "result": "pass",
+          "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+        },
+        {
+          "check_id": "source_revision_binding",
+          "result": "pass",
+          "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+        },
+        {
+          "check_id": "artifact_reference_integrity",
+          "result": "pass",
+          "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+        },
+        {
+          "check_id": "raw_projection_traceability",
+          "result": "fail",
+          "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+        },
+        {
+          "check_id": "source_artifact_provenance",
+          "result": "pass",
+          "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+        },
+        {
+          "check_id": "known_limitations_recorded",
+          "result": "pass",
+          "note": "All SourceNote limitations are retained by InterviewNote."
+        },
+        {
+          "check_id": "duplicate_ownership",
+          "result": "pass",
+          "note": "Exactly one InterviewNote owner exists: #1677."
+        },
+        {
+          "check_id": "no_fabrication",
+          "result": "pass",
+          "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+        }
+      ],
+      "limitations": [
+        "note_desc readable projection 缺失；SourceNote 只登记现有 Source artifact。",
+        "SourceNote intake 只证明一条 XHS Source 的采集身份，不判断它是否等于一次真实面试事件。",
+        "题库、经验总结、模拟面试、非目标岗位以及一帖多场面试都允许进入 SourceNote；必须经过 boundary review 才能产生 0..N InterviewNote。",
+        "note_img_txt / note_structured / note_tagged 等历史数据属于 Derived，不得反向补写 Raw Source。",
+        "Source Review verifies pinned commit/tree/blob bytes; Source projection to Raw lineage is not proven."
+      ],
+      "evidence_subject_sha256": "9d4122b42a8e1649f8283a3c0593edb10eafc7bf42d10bb40ec89f5201c3a3d7"
+    },
+    {
+      "schema_version": "interview-note-source-review-transition.v1",
+      "transition_id": "issue-1661-source-review-1678-20260912",
+      "repository": "liqiangcc/interview-lab",
+      "issue_number": 1678,
+      "interview_note_id": "xhs:68d16a2d000000001101fea1",
+      "expected_interview_body_sha256": "1fc449270f66675ac7f946bdeb9efda676faa589aa7b77f614efdf430e35f9f1",
+      "expected_initial_status": "captured",
+      "expected_source_revision_id": "xhs-note:68d16a2d000000001101fea1:snapshot-95b77bb26104",
+      "source_note_issue_number": 1375,
+      "expected_source_note_body_sha256": "e2baa60a29ca31d586523d110e861956ac781fd5856ba33ffb268d8f8a29be49",
+      "expected_manifest_sha256": null,
+      "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+      "decision": "source-ready",
+      "reviewed_at": "2026-09-15T08:13:50.302Z",
+      "reviewer_kind": "ai-assisted",
+      "provenance_mode": "pinned-source-artifact",
+      "provenance_statement": "pinned-source-artifact; raw-lineage-unproven",
+      "pinned_artifact_manifest_sha256": "5ba5a02a29c2bd77bdecf2e8dd7af3e3b25a6a0573609b9543fa479030c244bc",
+      "checks": [
+        {
+          "check_id": "source_identity",
+          "result": "pass",
+          "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+        },
+        {
+          "check_id": "source_revision_binding",
+          "result": "pass",
+          "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+        },
+        {
+          "check_id": "artifact_reference_integrity",
+          "result": "pass",
+          "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+        },
+        {
+          "check_id": "raw_projection_traceability",
+          "result": "fail",
+          "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+        },
+        {
+          "check_id": "source_artifact_provenance",
+          "result": "pass",
+          "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+        },
+        {
+          "check_id": "known_limitations_recorded",
+          "result": "pass",
+          "note": "All SourceNote limitations are retained by InterviewNote."
+        },
+        {
+          "check_id": "duplicate_ownership",
+          "result": "pass",
+          "note": "Exactly one InterviewNote owner exists: #1678."
+        },
+        {
+          "check_id": "no_fabrication",
+          "result": "pass",
+          "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+        }
+      ],
+      "limitations": [
+        "note_desc readable projection 缺失；SourceNote 只登记现有 Source artifact。",
+        "SourceNote intake 只证明一条 XHS Source 的采集身份，不判断它是否等于一次真实面试事件。",
+        "题库、经验总结、模拟面试、非目标岗位以及一帖多场面试都允许进入 SourceNote；必须经过 boundary review 才能产生 0..N InterviewNote。",
+        "note_img_txt / note_structured / note_tagged 等历史数据属于 Derived，不得反向补写 Raw Source。",
+        "Source Review verifies pinned commit/tree/blob bytes; Source projection to Raw lineage is not proven."
+      ],
+      "evidence_subject_sha256": "2a8c1cfada3eea1967359cd0ba879a6af38f799525f643da29b6a1d3c1558c73"
+    },
+    {
+      "schema_version": "interview-note-source-review-transition.v1",
+      "transition_id": "issue-1661-source-review-1679-20260912",
+      "repository": "liqiangcc/interview-lab",
+      "issue_number": 1679,
+      "interview_note_id": "xhs:68d16a7d000000000e031041",
+      "expected_interview_body_sha256": "dfb4d11f43944f60430eef987c9169e8720971c3552e43924dc4d3011466e161",
+      "expected_initial_status": "captured",
+      "expected_source_revision_id": "xhs-note:68d16a7d000000000e031041:snapshot-95b77bb26104",
+      "source_note_issue_number": 1376,
+      "expected_source_note_body_sha256": "fddff5b286f0f63b108904daa055f94592dc28449fd76325f5dad47d83040182",
+      "expected_manifest_sha256": null,
+      "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+      "decision": "source-ready",
+      "reviewed_at": "2026-09-15T08:13:50.302Z",
+      "reviewer_kind": "ai-assisted",
+      "provenance_mode": "pinned-source-artifact",
+      "provenance_statement": "pinned-source-artifact; raw-lineage-unproven",
+      "pinned_artifact_manifest_sha256": "5ba5a02a29c2bd77bdecf2e8dd7af3e3b25a6a0573609b9543fa479030c244bc",
+      "checks": [
+        {
+          "check_id": "source_identity",
+          "result": "pass",
+          "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+        },
+        {
+          "check_id": "source_revision_binding",
+          "result": "pass",
+          "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+        },
+        {
+          "check_id": "artifact_reference_integrity",
+          "result": "pass",
+          "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+        },
+        {
+          "check_id": "raw_projection_traceability",
+          "result": "fail",
+          "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+        },
+        {
+          "check_id": "source_artifact_provenance",
+          "result": "pass",
+          "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+        },
+        {
+          "check_id": "known_limitations_recorded",
+          "result": "pass",
+          "note": "All SourceNote limitations are retained by InterviewNote."
+        },
+        {
+          "check_id": "duplicate_ownership",
+          "result": "pass",
+          "note": "Exactly one InterviewNote owner exists: #1679."
+        },
+        {
+          "check_id": "no_fabrication",
+          "result": "pass",
+          "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+        }
+      ],
+      "limitations": [
+        "note_desc readable projection 缺失；SourceNote 只登记现有 Source artifact。",
+        "SourceNote intake 只证明一条 XHS Source 的采集身份，不判断它是否等于一次真实面试事件。",
+        "题库、经验总结、模拟面试、非目标岗位以及一帖多场面试都允许进入 SourceNote；必须经过 boundary review 才能产生 0..N InterviewNote。",
+        "note_img_txt / note_structured / note_tagged 等历史数据属于 Derived，不得反向补写 Raw Source。",
+        "Source Review verifies pinned commit/tree/blob bytes; Source projection to Raw lineage is not proven."
+      ],
+      "evidence_subject_sha256": "8b3cf4de756e3827e3232f252ab252f4b87c5b743cdf628c80d53ab53a6b4cac"
+    },
+    {
+      "schema_version": "interview-note-source-review-transition.v1",
+      "transition_id": "issue-1661-source-review-1680-20260912",
+      "repository": "liqiangcc/interview-lab",
+      "issue_number": 1680,
+      "interview_note_id": "xhs:68d25947000000000b03ea1e",
+      "expected_interview_body_sha256": "4d8fbd08429ee2fdfb8adba6c5fc173f603da1a89739f2feedfcb628643b6286",
+      "expected_initial_status": "captured",
+      "expected_source_revision_id": "xhs-note:68d25947000000000b03ea1e:snapshot-95b77bb26104",
+      "source_note_issue_number": 1380,
+      "expected_source_note_body_sha256": "b7980a9fd21a211c63d095b55421d0133532ee3f87b59ebc44dc5781bf467cd3",
+      "expected_manifest_sha256": null,
+      "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+      "decision": "source-ready",
+      "reviewed_at": "2026-09-15T08:13:50.302Z",
+      "reviewer_kind": "ai-assisted",
+      "provenance_mode": "pinned-source-artifact",
+      "provenance_statement": "pinned-source-artifact; raw-lineage-unproven",
+      "pinned_artifact_manifest_sha256": "5ba5a02a29c2bd77bdecf2e8dd7af3e3b25a6a0573609b9543fa479030c244bc",
+      "checks": [
+        {
+          "check_id": "source_identity",
+          "result": "pass",
+          "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+        },
+        {
+          "check_id": "source_revision_binding",
+          "result": "pass",
+          "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+        },
+        {
+          "check_id": "artifact_reference_integrity",
+          "result": "pass",
+          "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+        },
+        {
+          "check_id": "raw_projection_traceability",
+          "result": "fail",
+          "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+        },
+        {
+          "check_id": "source_artifact_provenance",
+          "result": "pass",
+          "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+        },
+        {
+          "check_id": "known_limitations_recorded",
+          "result": "pass",
+          "note": "All SourceNote limitations are retained by InterviewNote."
+        },
+        {
+          "check_id": "duplicate_ownership",
+          "result": "pass",
+          "note": "Exactly one InterviewNote owner exists: #1680."
+        },
+        {
+          "check_id": "no_fabrication",
+          "result": "pass",
+          "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+        }
+      ],
+      "limitations": [
+        "note_desc readable projection 缺失；SourceNote 只登记现有 Source artifact。",
+        "SourceNote intake 只证明一条 XHS Source 的采集身份，不判断它是否等于一次真实面试事件。",
+        "题库、经验总结、模拟面试、非目标岗位以及一帖多场面试都允许进入 SourceNote；必须经过 boundary review 才能产生 0..N InterviewNote。",
+        "note_img_txt / note_structured / note_tagged 等历史数据属于 Derived，不得反向补写 Raw Source。",
+        "Source Review verifies pinned commit/tree/blob bytes; Source projection to Raw lineage is not proven."
+      ],
+      "evidence_subject_sha256": "c63849217ff78be7f92a32cc0a8c050deaf00361af8e04da1e64b526191c0b36"
+    },
+    {
+      "schema_version": "interview-note-source-review-transition.v1",
+      "transition_id": "issue-1661-source-review-1681-20260912",
+      "repository": "liqiangcc/interview-lab",
+      "issue_number": 1681,
+      "interview_note_id": "xhs:68d682d00000000011014a18",
+      "expected_interview_body_sha256": "5326f79e9d39fde125d8f1291433d84b7b63ff5541b5a0469cc002998eb1db99",
+      "expected_initial_status": "captured",
+      "expected_source_revision_id": "xhs-note:68d682d00000000011014a18:snapshot-95b77bb26104",
+      "source_note_issue_number": 1401,
+      "expected_source_note_body_sha256": "b38ecf6581c62db0af8b67e6a1496f247174c9612257b992db6416e5aca8be40",
+      "expected_manifest_sha256": null,
+      "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+      "decision": "source-ready",
+      "reviewed_at": "2026-09-15T08:13:50.302Z",
+      "reviewer_kind": "ai-assisted",
+      "provenance_mode": "pinned-source-artifact",
+      "provenance_statement": "pinned-source-artifact; raw-lineage-unproven",
+      "pinned_artifact_manifest_sha256": "5ba5a02a29c2bd77bdecf2e8dd7af3e3b25a6a0573609b9543fa479030c244bc",
+      "checks": [
+        {
+          "check_id": "source_identity",
+          "result": "pass",
+          "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+        },
+        {
+          "check_id": "source_revision_binding",
+          "result": "pass",
+          "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+        },
+        {
+          "check_id": "artifact_reference_integrity",
+          "result": "pass",
+          "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+        },
+        {
+          "check_id": "raw_projection_traceability",
+          "result": "fail",
+          "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+        },
+        {
+          "check_id": "source_artifact_provenance",
+          "result": "pass",
+          "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+        },
+        {
+          "check_id": "known_limitations_recorded",
+          "result": "pass",
+          "note": "All SourceNote limitations are retained by InterviewNote."
+        },
+        {
+          "check_id": "duplicate_ownership",
+          "result": "pass",
+          "note": "Exactly one InterviewNote owner exists: #1681."
+        },
+        {
+          "check_id": "no_fabrication",
+          "result": "pass",
+          "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+        }
+      ],
+      "limitations": [
+        "note_desc readable projection 缺失；SourceNote 只登记现有 Source artifact。",
+        "SourceNote intake 只证明一条 XHS Source 的采集身份，不判断它是否等于一次真实面试事件。",
+        "题库、经验总结、模拟面试、非目标岗位以及一帖多场面试都允许进入 SourceNote；必须经过 boundary review 才能产生 0..N InterviewNote。",
+        "note_img_txt / note_structured / note_tagged 等历史数据属于 Derived，不得反向补写 Raw Source。",
+        "Source Review verifies pinned commit/tree/blob bytes; Source projection to Raw lineage is not proven."
+      ],
+      "evidence_subject_sha256": "84586157b0c3a11e3f6a2e4cfe3d5fe855cca6f4b68d2dee36253c51fd28c625"
+    },
+    {
+      "schema_version": "interview-note-source-review-transition.v1",
+      "transition_id": "issue-1661-source-review-1682-20260912",
+      "repository": "liqiangcc/interview-lab",
+      "issue_number": 1682,
+      "interview_note_id": "xhs:68d9021d000000000e032bea",
+      "expected_interview_body_sha256": "106a1838b7a81a038a98f7c9a1e5d0bd2a8846692c34260471a6aaa57f06ef9e",
+      "expected_initial_status": "captured",
+      "expected_source_revision_id": "xhs-note:68d9021d000000000e032bea:snapshot-95b77bb26104",
+      "source_note_issue_number": 1406,
+      "expected_source_note_body_sha256": "0f0f4ff01da6b1ecb588f0ba0ada8d1e00938c737a68fd56760f2bd16b0f3cae",
+      "expected_manifest_sha256": null,
+      "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+      "decision": "source-ready",
+      "reviewed_at": "2026-09-15T08:13:50.302Z",
+      "reviewer_kind": "ai-assisted",
+      "provenance_mode": "pinned-source-artifact",
+      "provenance_statement": "pinned-source-artifact; raw-lineage-unproven",
+      "pinned_artifact_manifest_sha256": "5ba5a02a29c2bd77bdecf2e8dd7af3e3b25a6a0573609b9543fa479030c244bc",
+      "checks": [
+        {
+          "check_id": "source_identity",
+          "result": "pass",
+          "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+        },
+        {
+          "check_id": "source_revision_binding",
+          "result": "pass",
+          "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+        },
+        {
+          "check_id": "artifact_reference_integrity",
+          "result": "pass",
+          "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+        },
+        {
+          "check_id": "raw_projection_traceability",
+          "result": "fail",
+          "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+        },
+        {
+          "check_id": "source_artifact_provenance",
+          "result": "pass",
+          "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+        },
+        {
+          "check_id": "known_limitations_recorded",
+          "result": "pass",
+          "note": "All SourceNote limitations are retained by InterviewNote."
+        },
+        {
+          "check_id": "duplicate_ownership",
+          "result": "pass",
+          "note": "Exactly one InterviewNote owner exists: #1682."
+        },
+        {
+          "check_id": "no_fabrication",
+          "result": "pass",
+          "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+        }
+      ],
+      "limitations": [
+        "note_desc readable projection 缺失；SourceNote 只登记现有 Source artifact。",
+        "SourceNote intake 只证明一条 XHS Source 的采集身份，不判断它是否等于一次真实面试事件。",
+        "题库、经验总结、模拟面试、非目标岗位以及一帖多场面试都允许进入 SourceNote；必须经过 boundary review 才能产生 0..N InterviewNote。",
+        "note_img_txt / note_structured / note_tagged 等历史数据属于 Derived，不得反向补写 Raw Source。",
+        "Source Review verifies pinned commit/tree/blob bytes; Source projection to Raw lineage is not proven."
+      ],
+      "evidence_subject_sha256": "88c1c7eaec535b68818963606a3cf3f94fd9bbca511cf0f6b85bfb789cb6ad15"
+    },
+    {
+      "schema_version": "interview-note-source-review-transition.v1",
+      "transition_id": "issue-1661-source-review-1683-20260912",
+      "repository": "liqiangcc/interview-lab",
+      "issue_number": 1683,
+      "interview_note_id": "xhs:68da4876000000001101eebb",
+      "expected_interview_body_sha256": "cd200b11428e57dfadfb0d17af9e2eff7f3068c7edf63aac740988778d182c6a",
+      "expected_initial_status": "captured",
+      "expected_source_revision_id": "xhs-note:68da4876000000001101eebb:snapshot-95b77bb26104",
+      "source_note_issue_number": 1418,
+      "expected_source_note_body_sha256": "29abf9daab5b0925e23f3107b52f93ab9419e183eca6bb6b6fb08288df363222",
+      "expected_manifest_sha256": null,
+      "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+      "decision": "source-ready",
+      "reviewed_at": "2026-09-15T08:13:50.302Z",
+      "reviewer_kind": "ai-assisted",
+      "provenance_mode": "pinned-source-artifact",
+      "provenance_statement": "pinned-source-artifact; raw-lineage-unproven",
+      "pinned_artifact_manifest_sha256": "5ba5a02a29c2bd77bdecf2e8dd7af3e3b25a6a0573609b9543fa479030c244bc",
+      "checks": [
+        {
+          "check_id": "source_identity",
+          "result": "pass",
+          "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+        },
+        {
+          "check_id": "source_revision_binding",
+          "result": "pass",
+          "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+        },
+        {
+          "check_id": "artifact_reference_integrity",
+          "result": "pass",
+          "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+        },
+        {
+          "check_id": "raw_projection_traceability",
+          "result": "fail",
+          "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+        },
+        {
+          "check_id": "source_artifact_provenance",
+          "result": "pass",
+          "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+        },
+        {
+          "check_id": "known_limitations_recorded",
+          "result": "pass",
+          "note": "All SourceNote limitations are retained by InterviewNote."
+        },
+        {
+          "check_id": "duplicate_ownership",
+          "result": "pass",
+          "note": "Exactly one InterviewNote owner exists: #1683."
+        },
+        {
+          "check_id": "no_fabrication",
+          "result": "pass",
+          "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+        }
+      ],
+      "limitations": [
+        "note_desc readable projection 缺失；SourceNote 只登记现有 Source artifact。",
+        "SourceNote intake 只证明一条 XHS Source 的采集身份，不判断它是否等于一次真实面试事件。",
+        "题库、经验总结、模拟面试、非目标岗位以及一帖多场面试都允许进入 SourceNote；必须经过 boundary review 才能产生 0..N InterviewNote。",
+        "note_img_txt / note_structured / note_tagged 等历史数据属于 Derived，不得反向补写 Raw Source。",
+        "Source Review verifies pinned commit/tree/blob bytes; Source projection to Raw lineage is not proven."
+      ],
+      "evidence_subject_sha256": "84f88866bb586db9b1519ea50e1026ff45dc527364f12fffc98b2356aecf8f51"
+    },
+    {
+      "schema_version": "interview-note-source-review-transition.v1",
+      "transition_id": "issue-1661-source-review-1684-20260912",
+      "repository": "liqiangcc/interview-lab",
+      "issue_number": 1684,
+      "interview_note_id": "xhs:68dfb89900000000030124a1",
+      "expected_interview_body_sha256": "582f8985cc32cf7e79bb4d163f54c185b2827bea8205c5f9cf92f1ebb1e38968",
+      "expected_initial_status": "captured",
+      "expected_source_revision_id": "xhs-note:68dfb89900000000030124a1:snapshot-95b77bb26104",
+      "source_note_issue_number": 1428,
+      "expected_source_note_body_sha256": "b5d060439baac7793b7d110dcf3af67fe2741f06631ba8279e3345b74e081894",
+      "expected_manifest_sha256": null,
+      "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+      "decision": "source-ready",
+      "reviewed_at": "2026-09-15T08:13:50.302Z",
+      "reviewer_kind": "ai-assisted",
+      "provenance_mode": "pinned-source-artifact",
+      "provenance_statement": "pinned-source-artifact; raw-lineage-unproven",
+      "pinned_artifact_manifest_sha256": "5ba5a02a29c2bd77bdecf2e8dd7af3e3b25a6a0573609b9543fa479030c244bc",
+      "checks": [
+        {
+          "check_id": "source_identity",
+          "result": "pass",
+          "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+        },
+        {
+          "check_id": "source_revision_binding",
+          "result": "pass",
+          "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+        },
+        {
+          "check_id": "artifact_reference_integrity",
+          "result": "pass",
+          "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+        },
+        {
+          "check_id": "raw_projection_traceability",
+          "result": "fail",
+          "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+        },
+        {
+          "check_id": "source_artifact_provenance",
+          "result": "pass",
+          "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+        },
+        {
+          "check_id": "known_limitations_recorded",
+          "result": "pass",
+          "note": "All SourceNote limitations are retained by InterviewNote."
+        },
+        {
+          "check_id": "duplicate_ownership",
+          "result": "pass",
+          "note": "Exactly one InterviewNote owner exists: #1684."
+        },
+        {
+          "check_id": "no_fabrication",
+          "result": "pass",
+          "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+        }
+      ],
+      "limitations": [
+        "note_desc readable projection 缺失；SourceNote 只登记现有 Source artifact。",
+        "SourceNote intake 只证明一条 XHS Source 的采集身份，不判断它是否等于一次真实面试事件。",
+        "题库、经验总结、模拟面试、非目标岗位以及一帖多场面试都允许进入 SourceNote；必须经过 boundary review 才能产生 0..N InterviewNote。",
+        "note_img_txt / note_structured / note_tagged 等历史数据属于 Derived，不得反向补写 Raw Source。",
+        "Source Review verifies pinned commit/tree/blob bytes; Source projection to Raw lineage is not proven."
+      ],
+      "evidence_subject_sha256": "75f1025b8cd7bdf6c6529bdbb82c660c51a6b583536f3a8525daafd19eff95da"
+    },
+    {
+      "schema_version": "interview-note-source-review-transition.v1",
+      "transition_id": "issue-1661-source-review-1686-20260912",
+      "repository": "liqiangcc/interview-lab",
+      "issue_number": 1686,
+      "interview_note_id": "xhs:68e7a288000000000301b7aa",
+      "expected_interview_body_sha256": "5b4b8dc8dcefc036064b4d6768402cfce8cfd617273702d6c61f59332439c933",
+      "expected_initial_status": "captured",
+      "expected_source_revision_id": "xhs-note:68e7a288000000000301b7aa:snapshot-95b77bb26104",
+      "source_note_issue_number": 1447,
+      "expected_source_note_body_sha256": "bf13f36dc8fe030857e4f574e3e616647dbc0b1c387161f839ff6d6bef8c1005",
+      "expected_manifest_sha256": null,
+      "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+      "decision": "source-ready",
+      "reviewed_at": "2026-09-15T08:13:50.302Z",
+      "reviewer_kind": "ai-assisted",
+      "provenance_mode": "pinned-source-artifact",
+      "provenance_statement": "pinned-source-artifact; raw-lineage-unproven",
+      "pinned_artifact_manifest_sha256": "5ba5a02a29c2bd77bdecf2e8dd7af3e3b25a6a0573609b9543fa479030c244bc",
+      "checks": [
+        {
+          "check_id": "source_identity",
+          "result": "pass",
+          "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+        },
+        {
+          "check_id": "source_revision_binding",
+          "result": "pass",
+          "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+        },
+        {
+          "check_id": "artifact_reference_integrity",
+          "result": "pass",
+          "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+        },
+        {
+          "check_id": "raw_projection_traceability",
+          "result": "fail",
+          "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+        },
+        {
+          "check_id": "source_artifact_provenance",
+          "result": "pass",
+          "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+        },
+        {
+          "check_id": "known_limitations_recorded",
+          "result": "pass",
+          "note": "All SourceNote limitations are retained by InterviewNote."
+        },
+        {
+          "check_id": "duplicate_ownership",
+          "result": "pass",
+          "note": "Exactly one InterviewNote owner exists: #1686."
+        },
+        {
+          "check_id": "no_fabrication",
+          "result": "pass",
+          "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+        }
+      ],
+      "limitations": [
+        "note_desc readable projection 缺失；SourceNote 只登记现有 Source artifact。",
+        "SourceNote intake 只证明一条 XHS Source 的采集身份，不判断它是否等于一次真实面试事件。",
+        "题库、经验总结、模拟面试、非目标岗位以及一帖多场面试都允许进入 SourceNote；必须经过 boundary review 才能产生 0..N InterviewNote。",
+        "note_img_txt / note_structured / note_tagged 等历史数据属于 Derived，不得反向补写 Raw Source。",
+        "Source Review verifies pinned commit/tree/blob bytes; Source projection to Raw lineage is not proven."
+      ],
+      "evidence_subject_sha256": "5117f8f11b0ee1f00121c57e9577769f6365a2f1ada2110b67ff4b95b5b54dba"
+    },
+    {
+      "schema_version": "interview-note-source-review-transition.v1",
+      "transition_id": "issue-1661-source-review-1687-20260912",
+      "repository": "liqiangcc/interview-lab",
+      "issue_number": 1687,
+      "interview_note_id": "xhs:68ea11580000000003038e9b",
+      "expected_interview_body_sha256": "a80a5dd1fb87407f63c0bed72f382152728334cf414965952fa501b3643338d9",
+      "expected_initial_status": "captured",
+      "expected_source_revision_id": "xhs-note:68ea11580000000003038e9b:snapshot-95b77bb26104",
+      "source_note_issue_number": 1458,
+      "expected_source_note_body_sha256": "da87e7bcdafd6dd881c3a97e6f095a38925aa13c0e55cbd4228fd33777e7884a",
+      "expected_manifest_sha256": null,
+      "expected_source_repository_ref": "95b77bb261048059846273688e4b90a2e108b437",
+      "decision": "source-ready",
+      "reviewed_at": "2026-09-15T08:13:50.302Z",
+      "reviewer_kind": "ai-assisted",
+      "provenance_mode": "pinned-source-artifact",
+      "provenance_statement": "pinned-source-artifact; raw-lineage-unproven",
+      "pinned_artifact_manifest_sha256": "5ba5a02a29c2bd77bdecf2e8dd7af3e3b25a6a0573609b9543fa479030c244bc",
+      "checks": [
+        {
+          "check_id": "source_identity",
+          "result": "pass",
+          "note": "InterviewNote identity matches reviewed SourceNote single-interview identity."
+        },
+        {
+          "check_id": "source_revision_binding",
+          "result": "pass",
+          "note": "InterviewNote and SourceNote bind the exact requested SourceRevision/manifest."
+        },
+        {
+          "check_id": "artifact_reference_integrity",
+          "result": "pass",
+          "note": "Every InterviewNote artifact ref/hash/provenance resolves to SourceNote evidence."
+        },
+        {
+          "check_id": "raw_projection_traceability",
+          "result": "fail",
+          "note": "Raw lineage is absent or not proven; no derived_from claim is made."
+        },
+        {
+          "check_id": "source_artifact_provenance",
+          "result": "pass",
+          "note": "Source projection has a recorded pinned reference at liqiangcc/xhs@95b77bb261048059846273688e4b90a2e108b437; lineage status=pinned-source-artifact."
+        },
+        {
+          "check_id": "known_limitations_recorded",
+          "result": "pass",
+          "note": "All SourceNote limitations are retained by InterviewNote."
+        },
+        {
+          "check_id": "duplicate_ownership",
+          "result": "pass",
+          "note": "Exactly one InterviewNote owner exists: #1687."
+        },
+        {
+          "check_id": "no_fabrication",
+          "result": "pass",
+          "note": "Source time/URL facts are mechanically preserved; interview time remains unknown."
+        }
+      ],
+      "limitations": [
+        "note_desc readable projection 缺失；SourceNote 只登记现有 Source artifact。",
+        "SourceNote intake 只证明一条 XHS Source 的采集身份，不判断它是否等于一次真实面试事件。",
+        "题库、经验总结、模拟面试、非目标岗位以及一帖多场面试都允许进入 SourceNote；必须经过 boundary review 才能产生 0..N InterviewNote。",
+        "note_img_txt / note_structured / note_tagged 等历史数据属于 Derived，不得反向补写 Raw Source。",
+        "Source Review verifies pinned commit/tree/blob bytes; Source projection to Raw lineage is not proven."
+      ],
+      "evidence_subject_sha256": "ba1c366494b92cbebf099d3a45655d698e274a7a723b678683290318bc6acb61"
+    }
+  ]
+}

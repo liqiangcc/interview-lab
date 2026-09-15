@@ -7,9 +7,10 @@ const { managedLabels, buildLabelProvisioningPlan, labelCatalogDigest } = requir
 
 test('the controlled company taxonomy declares the Issue #1598 projection values', () => {
   assert.deepEqual(config.dynamic_dimensions.company.managed_values, [
-    'alibaba', 'aliyun', 'baidu', 'beike', 'bytedance', 'ctrip', 'didi', 'huolala',
-    'jd', 'jd-tech', 'kuaishou', 'meituan', 'pinduoduo', 'shenghui-logistics',
-    'shopee', 'tencent', 'tencent-cloudwise', 'xiaomi',
+    'alibaba', 'aliyun', 'ant-group', 'baidu', 'beike', 'bytedance', 'ctrip',
+    'deepal', 'didi', 'huolala', 'jd', 'jd-tech', 'kuaishou', 'meituan',
+    'pinduoduo', 'shenghui-logistics', 'shopee', 'tencent', 'tencent-cloudwise',
+    'xiaomi',
   ]);
   assert.equal(managedLabels(config).includes('company:ctrip'), true);
 });
