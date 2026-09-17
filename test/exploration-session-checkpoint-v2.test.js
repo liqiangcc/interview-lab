@@ -35,7 +35,7 @@ test('v2 rejects manifest with no effective review', () => {
 
 test('v2 rejects manifest whose effective review is rejected', () => {
   const rejected = new Map(reviews.effectiveByManifestDigest);
-  const key = [...rejected.keys()][0];
+  const key = [...rejected.keys()].find((k) => k.includes('829b246ad8d21610c28b22f5ccb60309806a61fe9f1eb7b14af5d870bc795aad'));
   rejected.set(key, { ...rejected.get(key), review_id: 'rejected-review', decision: 'rejected' });
   const result = validate(validBody, rejected);
   assert.equal(result.ok, false);
