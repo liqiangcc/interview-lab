@@ -1,0 +1,39 @@
+{
+  "schema_version": "source-sequence-manifest.v1",
+  "manifest_id": "xhs:6806423800000000070358de:snapshot-95b77bb26104:note-desc-1:sequence-v1",
+  "interview_note_id": "xhs:6806423800000000070358de",
+  "source_revision_id": "xhs-note:6806423800000000070358de:snapshot-95b77bb26104",
+  "sequence_scope": "source-projection:note_desc/6806423800000000070358de.txt:interview-flow-units-1-1",
+  "evidence_stream": {
+    "stream_id": "pinned-note-desc",
+    "storage_kind": "git",
+    "raw_artifact_ref": "liqiangcc/xhs:note_detail/6806423800000000070358de.html@95b77bb261048059846273688e4b90a2e108b437",
+    "raw_git_blob_sha": "c69ac796ddd98cf9af39e6868f0f650f725709d1",
+    "raw_sha256": "5bec0f51fd7a6bd715ef27bfafd4a5c584e9e71266466d5fa0d8c4d7939b7460",
+    "readable_projection": {
+      "ref": "liqiangcc/xhs:note_desc/6806423800000000070358de.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "storage_kind": "git",
+      "git_blob_sha": "92c1b5780de42c8bba85f403ef59619af5456f1e",
+      "sha256": "053dab0a71b3844cb456c6bac6a48edac913b6c64940c669d8e39434a86adbce",
+      "provenance": "source_projection",
+      "review_status": "unreviewed"
+    }
+  },
+  "units": [
+    {
+      "source_unit_id": "xhs:6806423800000000070358de:snapshot-95b77bb26104:note-desc-1:u1",
+      "position": 1,
+      "source_unit_type": "outcome-reflection-summary",
+      "text_projection": "📍面试公司：阿里国际\n👜面试岗位：研发工程师\n📖面试问题：\n一上来感觉面试官面相非常好，很有礼貌。\n1。双十一的时候，并发量非常高，你如何设计来抗住并发量?\n首先做一些限流操作，比如验证码，防止用户一直点击。同时采取redis进行缓存库存。结合mysql和redis一致性回答。\n2。你的mysql和redis数据表如何设计?\nmysql就商品+库存，redis采用key,value，存储商品+库存。\n3。redis分布式锁了解吗以及实现方式。\nsetnx方法。\n4。又回到刚刚那个问题，再思考一下?\n我说可以结合分布式锁以及消息队列，消息队列保证数据顺序性，分布式锁确保线程安全。\n5。这么高的并发量，数据库抗的住吗？\n我又说可以结合数据库的读写分离操作。\n6。你刚刚说加锁，那每个用户执行完了再执行其他用户，这样用户体验好吗？\n那确实，然后这我就没有好的解决办法了。\n7。看你的项目使用了redis，redis主要有什么作用？\n我就说存储历史数据。\n8。我看其中有个问题，每个用户操作时会做一个校验，判断该用户在哪个区域，这一块如果访问量激增，有没有什么优化的地方?\n可以采用策略模型替换if else语句，同时在用户登录时就把经纬度存入，防止操作时并发数量激增。\n9。对于大模型有没有什么了解?\n了解大模型的解答过程，以及Token。\n10。了解大模型的幻觉问题吗？以及如何解决?\n了解，输入的语句要准确一些，同时尽量使用侧重点不同的大模型。\n11。那我问你一点transform，他的优势在哪？\ngg，这块直接不会了。\n12。了解left join  ，right join 以及inner join吗？\n常规回答。\n13。如果A表有100万数据，B表有1000万数据，如何进行优化来提高查询效率?\n没回答上来。\n14。linux如何查看自己的内存瓶颈?\n没回答上来。\n15。问一个mysql ,如果mysql数据库存储在不同的地方，如何实现这个?\n没回答上来。\n16。看你笔试不错，第三个问题有印象吗？后面有没有尝试去优化?\n我的方法时间复杂度有点高，后面就没有去看了，只过了25%。\n17。你的横向项目的背景，以及遇到了什么问题，和这段时间是如何完成这个项目的?\n巴拉巴拉一大堆。\n18。看你自我介绍写的抗压能力强?可以举个例说明一下吗？\n巴拉巴拉。\n🙌面试体验\n面试体验感非常好，面试官会引导我，同时非常有礼貌，学到了很多东西。",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_desc/6806423800000000070358de.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "053dab0a71b3844cb456c6bac6a48edac913b6c64940c669d8e39434a86adbce",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/6806423800000000070358de.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "5bec0f51fd7a6bd715ef27bfafd4a5c584e9e71266466d5fa0d8c4d7939b7460",
+        "source_projection_item_number": 1
+      },
+      "fragments": []
+    }
+  ],
+  "content_sha256": "ad77df99169ce199813ef522c16cbc37cb007b199063cc87e0952b250b1f4c67"
+}

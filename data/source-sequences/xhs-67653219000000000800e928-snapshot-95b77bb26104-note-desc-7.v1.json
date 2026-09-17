@@ -1,0 +1,123 @@
+{
+  "schema_version": "source-sequence-manifest.v1",
+  "manifest_id": "xhs:67653219000000000800e928:snapshot-95b77bb26104:note-desc-7:sequence-v1",
+  "interview_note_id": "xhs:67653219000000000800e928",
+  "source_revision_id": "xhs-note:67653219000000000800e928:snapshot-95b77bb26104",
+  "sequence_scope": "source-projection:note_desc/67653219000000000800e928.txt:interview-flow-units-1-7",
+  "evidence_stream": {
+    "stream_id": "pinned-note-desc",
+    "storage_kind": "git",
+    "raw_artifact_ref": "liqiangcc/xhs:note_detail/67653219000000000800e928.html@95b77bb261048059846273688e4b90a2e108b437",
+    "raw_git_blob_sha": "483372ee16bbbbae1d197a29ff1a57929e279213",
+    "raw_sha256": "465f1d3e6ed023042549f446b159074aac5bcf2c1b846b3f318629803d89b146",
+    "readable_projection": {
+      "ref": "liqiangcc/xhs:note_desc/67653219000000000800e928.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "storage_kind": "git",
+      "git_blob_sha": "a68a7ca398e2db6a6d1ac4cc366213930365e4a8",
+      "sha256": "f9c760bf3ff54a17ffa5ca7b16ae5779d5d2740111fb7920c0893188a9b9f258",
+      "provenance": "source_projection",
+      "review_status": "unreviewed"
+    }
+  },
+  "units": [
+    {
+      "source_unit_id": "xhs:67653219000000000800e928:snapshot-95b77bb26104:note-desc-7:u1",
+      "position": 1,
+      "source_unit_type": "narrative-summary",
+      "text_projection": "1  Linux 系统管理\n问：请解释一下什么是inode，并说明它的作用。\n答：Inode是Linux文件系统的内部表示，每个文件或目录都有一个对应的inode。它存储了文件的元数据（如权限、所有者、时间戳等），但不包含文件名或其内容。当遇到无法写入文件的问题时，可以检查磁盘空间是否已满（使用`df h`）、文件系统是否有只读挂载（使用`mount`命令查看）或者该文件的inode是否已经被删除但仍被进程占用（使用`lsof`命令查找）。",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_desc/67653219000000000800e928.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "f9c760bf3ff54a17ffa5ca7b16ae5779d5d2740111fb7920c0893188a9b9f258",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/67653219000000000800e928.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "465f1d3e6ed023042549f446b159074aac5bcf2c1b846b3f318629803d89b146",
+        "source_projection_item_number": 1
+      },
+      "fragments": []
+    },
+    {
+      "source_unit_id": "xhs:67653219000000000800e928:snapshot-95b77bb26104:note-desc-7:u2",
+      "position": 2,
+      "source_unit_type": "question-like",
+      "text_projection": "2. 网络基础",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_desc/67653219000000000800e928.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "f9c760bf3ff54a17ffa5ca7b16ae5779d5d2740111fb7920c0893188a9b9f258",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/67653219000000000800e928.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "465f1d3e6ed023042549f446b159074aac5bcf2c1b846b3f318629803d89b146",
+        "source_projection_item_number": 2
+      },
+      "fragments": []
+    },
+    {
+      "source_unit_id": "xhs:67653219000000000800e928:snapshot-95b77bb26104:note-desc-7:u3",
+      "position": 3,
+      "source_unit_type": "outcome-reflection-summary",
+      "text_projection": "问：请描述TCP三次握手的过程，并说明其重要性。\n答：TCP三次握手的过程包括：客户端发送SYN包请求连接，服务器回应ACK+SYN确认收到并请求建立连接，最后客户端再次发送ACK确认连接建立。这确保了双方都准备好接收和发送数据，并同意通信。\n问：当客户报告他们无法访问互联网时，你会采取哪些步骤进行诊断？\n答：对于客户报告的互联网访问问题，首先检查客户的本地网络设置（例如IP配置、DNS设置）。然后通过ping命令测试基本连通性，使用traceroute来定位可能的网络路径上的问题点，同时检查防火墙规则和路由器配置。",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_desc/67653219000000000800e928.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "f9c760bf3ff54a17ffa5ca7b16ae5779d5d2740111fb7920c0893188a9b9f258",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/67653219000000000800e928.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "465f1d3e6ed023042549f446b159074aac5bcf2c1b846b3f318629803d89b146",
+        "source_projection_item_number": 3
+      },
+      "fragments": []
+    },
+    {
+      "source_unit_id": "xhs:67653219000000000800e928:snapshot-95b77bb26104:note-desc-7:u4",
+      "position": 4,
+      "source_unit_type": "question-like",
+      "text_projection": "3. 数据库操作",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_desc/67653219000000000800e928.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "f9c760bf3ff54a17ffa5ca7b16ae5779d5d2740111fb7920c0893188a9b9f258",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/67653219000000000800e928.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "465f1d3e6ed023042549f446b159074aac5bcf2c1b846b3f318629803d89b146",
+        "source_projection_item_number": 4
+      },
+      "fragments": []
+    },
+    {
+      "source_unit_id": "xhs:67653219000000000800e928:snapshot-95b77bb26104:note-desc-7:u5",
+      "position": 5,
+      "source_unit_type": "outcome-reflection-summary",
+      "text_projection": "问：在MySQL中，你如何处理一个非常大的表的数据迁移？\n答：在MySQL中处理大数据表的数据迁移，可以采用分批导出导入的方法，即每次只迁移一部分数据，以减少对生产环境的影响。还可以利用阿里云提供的DTS（Data Transmission Service）服务，实现平滑的数据同步。\n问：解释一下SQL注入攻击是什么，并给出一些防止这种攻击的方法。\n答：SQL注入是一种攻击手段，攻击者通过在SQL查询语句中插入恶意代码来操控数据库。防止措施包括使用预编译语句和参数化查询、严格验证用户输入、限制数据库用户的权限以及应用最新的安全补丁。",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_desc/67653219000000000800e928.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "f9c760bf3ff54a17ffa5ca7b16ae5779d5d2740111fb7920c0893188a9b9f258",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/67653219000000000800e928.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "465f1d3e6ed023042549f446b159074aac5bcf2c1b846b3f318629803d89b146",
+        "source_projection_item_number": 5
+      },
+      "fragments": []
+    },
+    {
+      "source_unit_id": "xhs:67653219000000000800e928:snapshot-95b77bb26104:note-desc-7:u6",
+      "position": 6,
+      "source_unit_type": "question-like",
+      "text_projection": "4. 云计算与虚拟化",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_desc/67653219000000000800e928.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "f9c760bf3ff54a17ffa5ca7b16ae5779d5d2740111fb7920c0893188a9b9f258",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/67653219000000000800e928.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "465f1d3e6ed023042549f446b159074aac5bcf2c1b846b3f318629803d89b146",
+        "source_projection_item_number": 6
+      },
+      "fragments": []
+    },
+    {
+      "source_unit_id": "xhs:67653219000000000800e928:snapshot-95b77bb26104:note-desc-7:u7",
+      "position": 7,
+      "source_unit_type": "outcome-reflection-summary",
+      "text_projection": "问：阿里云的ECS（弹性计算服务）有哪些主要特点？在实际运维中如何使用它们？\n答：ECS提供按需扩展的计算能力，支持多种实例类型，具备快速部署、高可用性和安全性等特点。运维中可以通过创建快照、自动伸缩组、负载均衡等方式保障服务稳定。",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_desc/67653219000000000800e928.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "f9c760bf3ff54a17ffa5ca7b16ae5779d5d2740111fb7920c0893188a9b9f258",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/67653219000000000800e928.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "465f1d3e6ed023042549f446b159074aac5bcf2c1b846b3f318629803d89b146",
+        "source_projection_item_number": 7
+      },
+      "fragments": []
+    }
+  ],
+  "content_sha256": "d47940a0a90aeda9380fd72747addd1ecf312e1745a87d26dfcaffcf46b5d3c2"
+}

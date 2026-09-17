@@ -1,0 +1,165 @@
+{
+  "schema_version": "source-sequence-manifest.v1",
+  "manifest_id": "xhs:67ef221f000000001b03ae6a:snapshot-95b77bb26104:note-desc-10:sequence-v1",
+  "interview_note_id": "xhs:67ef221f000000001b03ae6a",
+  "source_revision_id": "xhs-note:67ef221f000000001b03ae6a:snapshot-95b77bb26104",
+  "sequence_scope": "source-projection:note_desc/67ef221f000000001b03ae6a.txt:interview-flow-units-1-10",
+  "evidence_stream": {
+    "stream_id": "pinned-note-desc",
+    "storage_kind": "git",
+    "raw_artifact_ref": "liqiangcc/xhs:note_detail/67ef221f000000001b03ae6a.html@95b77bb261048059846273688e4b90a2e108b437",
+    "raw_git_blob_sha": "57baa24a24c8e60e599db5bc085171461f2be94d",
+    "raw_sha256": "66a262d897f319dc6be1d54c8bead55563c8c84385fe969eeb8b8a3f1cb58687",
+    "readable_projection": {
+      "ref": "liqiangcc/xhs:note_desc/67ef221f000000001b03ae6a.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "storage_kind": "git",
+      "git_blob_sha": "4cc8c41a52720488784291d0af979bf6d7d004f9",
+      "sha256": "84623a7cfce848d1bef93b80e7ad3651796981451e6edf7a228b58c640757953",
+      "provenance": "source_projection",
+      "review_status": "unreviewed"
+    }
+  },
+  "units": [
+    {
+      "source_unit_id": "xhs:67ef221f000000001b03ae6a:snapshot-95b77bb26104:note-desc-10:u1",
+      "position": 1,
+      "source_unit_type": "question-like",
+      "text_projection": "1. 开头介绍了技术架构：",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_desc/67ef221f000000001b03ae6a.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "84623a7cfce848d1bef93b80e7ad3651796981451e6edf7a228b58c640757953",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/67ef221f000000001b03ae6a.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "66a262d897f319dc6be1d54c8bead55563c8c84385fe969eeb8b8a3f1cb58687",
+        "source_projection_item_number": 1
+      },
+      "fragments": []
+    },
+    {
+      "source_unit_id": "xhs:67ef221f000000001b03ae6a:snapshot-95b77bb26104:note-desc-10:u2",
+      "position": 2,
+      "source_unit_type": "outcome-reflection-summary",
+      "text_projection": "服务层我们按照ddd架构将业务划分为策略`活动、奖品、积分和返利，微服务之间通过dubbo调用，用nacos做注册机。\n因为前后端分离，需要把接口暴露给app使用，引入api网关控制更加细粒度的接口权限，结合nginx做反向代理，lvs负载均衡。因为api网关是集中化管理，因此对所有接入流量在发起调用时，可以增加各种拦截挡板去相应安全日志、限流熔断的控制，保证稳定性。\n服务层往下是基础设施层支撑，用redis缓存热点数据减轻数据库压力，mysql采用dbrouter实现分库分表，根据userid等字段进行路由，mq消息队列做异步处理，es与canal配合，通过binlog实现全文检索和复杂查询。",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_desc/67ef221f000000001b03ae6a.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "84623a7cfce848d1bef93b80e7ad3651796981451e6edf7a228b58c640757953",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/67ef221f000000001b03ae6a.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "66a262d897f319dc6be1d54c8bead55563c8c84385fe969eeb8b8a3f1cb58687",
+        "source_projection_item_number": 2
+      },
+      "fragments": []
+    },
+    {
+      "source_unit_id": "xhs:67ef221f000000001b03ae6a:snapshot-95b77bb26104:note-desc-10:u3",
+      "position": 3,
+      "source_unit_type": "question-like",
+      "text_projection": "2. 为什么要把业务拆成这5个微服务，为什么不拆成4个？那5个和4个之间的差别是什么？基于一个什么样的参考标准去做这样的划分？",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_desc/67ef221f000000001b03ae6a.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "84623a7cfce848d1bef93b80e7ad3651796981451e6edf7a228b58c640757953",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/67ef221f000000001b03ae6a.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "66a262d897f319dc6be1d54c8bead55563c8c84385fe969eeb8b8a3f1cb58687",
+        "source_projection_item_number": 3
+      },
+      "fragments": []
+    },
+    {
+      "source_unit_id": "xhs:67ef221f000000001b03ae6a:snapshot-95b77bb26104:note-desc-10:u4",
+      "position": 4,
+      "source_unit_type": "question-like",
+      "text_projection": "3. 月活用户是多少？分多少库多少表？限流和熔断总接口的qps",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_desc/67ef221f000000001b03ae6a.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "84623a7cfce848d1bef93b80e7ad3651796981451e6edf7a228b58c640757953",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/67ef221f000000001b03ae6a.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "66a262d897f319dc6be1d54c8bead55563c8c84385fe969eeb8b8a3f1cb58687",
+        "source_projection_item_number": 4
+      },
+      "fragments": []
+    },
+    {
+      "source_unit_id": "xhs:67ef221f000000001b03ae6a:snapshot-95b77bb26104:note-desc-10:u5",
+      "position": 5,
+      "source_unit_type": "question-like",
+      "text_projection": "4. 业务的活跃接口是什么",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_desc/67ef221f000000001b03ae6a.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "84623a7cfce848d1bef93b80e7ad3651796981451e6edf7a228b58c640757953",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/67ef221f000000001b03ae6a.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "66a262d897f319dc6be1d54c8bead55563c8c84385fe969eeb8b8a3f1cb58687",
+        "source_projection_item_number": 5
+      },
+      "fragments": []
+    },
+    {
+      "source_unit_id": "xhs:67ef221f000000001b03ae6a:snapshot-95b77bb26104:note-desc-10:u6",
+      "position": 6,
+      "source_unit_type": "question-like",
+      "text_projection": "5.  机房是云服务器还是我们自己的",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_desc/67ef221f000000001b03ae6a.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "84623a7cfce848d1bef93b80e7ad3651796981451e6edf7a228b58c640757953",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/67ef221f000000001b03ae6a.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "66a262d897f319dc6be1d54c8bead55563c8c84385fe969eeb8b8a3f1cb58687",
+        "source_projection_item_number": 6
+      },
+      "fragments": []
+    },
+    {
+      "source_unit_id": "xhs:67ef221f000000001b03ae6a:snapshot-95b77bb26104:note-desc-10:u7",
+      "position": 7,
+      "source_unit_type": "question-like",
+      "text_projection": "6. mysql版本，为啥选用可重复读事务隔离级别",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_desc/67ef221f000000001b03ae6a.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "84623a7cfce848d1bef93b80e7ad3651796981451e6edf7a228b58c640757953",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/67ef221f000000001b03ae6a.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "66a262d897f319dc6be1d54c8bead55563c8c84385fe969eeb8b8a3f1cb58687",
+        "source_projection_item_number": 7
+      },
+      "fragments": []
+    },
+    {
+      "source_unit_id": "xhs:67ef221f000000001b03ae6a:snapshot-95b77bb26104:note-desc-10:u8",
+      "position": 8,
+      "source_unit_type": "question-like",
+      "text_projection": "7. 机器多少",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_desc/67ef221f000000001b03ae6a.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "84623a7cfce848d1bef93b80e7ad3651796981451e6edf7a228b58c640757953",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/67ef221f000000001b03ae6a.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "66a262d897f319dc6be1d54c8bead55563c8c84385fe969eeb8b8a3f1cb58687",
+        "source_projection_item_number": 8
+      },
+      "fragments": []
+    },
+    {
+      "source_unit_id": "xhs:67ef221f000000001b03ae6a:snapshot-95b77bb26104:note-desc-10:u9",
+      "position": 9,
+      "source_unit_type": "question-like",
+      "text_projection": "8. redis几主几从",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_desc/67ef221f000000001b03ae6a.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "84623a7cfce848d1bef93b80e7ad3651796981451e6edf7a228b58c640757953",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/67ef221f000000001b03ae6a.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "66a262d897f319dc6be1d54c8bead55563c8c84385fe969eeb8b8a3f1cb58687",
+        "source_projection_item_number": 9
+      },
+      "fragments": []
+    },
+    {
+      "source_unit_id": "xhs:67ef221f000000001b03ae6a:snapshot-95b77bb26104:note-desc-10:u10",
+      "position": 10,
+      "source_unit_type": "question-like",
+      "text_projection": "9.  输入ab12cd34，输出12。用正则表达式解决的。",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_desc/67ef221f000000001b03ae6a.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "84623a7cfce848d1bef93b80e7ad3651796981451e6edf7a228b58c640757953",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/67ef221f000000001b03ae6a.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "66a262d897f319dc6be1d54c8bead55563c8c84385fe969eeb8b8a3f1cb58687",
+        "source_projection_item_number": 10
+      },
+      "fragments": []
+    }
+  ],
+  "content_sha256": "c23f0d256749936d5548e02087e48ff3ad6de716d9d4cffbcfa48f7f319c91a9"
+}

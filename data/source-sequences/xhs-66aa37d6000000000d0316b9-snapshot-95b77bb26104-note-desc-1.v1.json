@@ -1,0 +1,39 @@
+{
+  "schema_version": "source-sequence-manifest.v1",
+  "manifest_id": "xhs:66aa37d6000000000d0316b9:snapshot-95b77bb26104:note-desc-1:sequence-v1",
+  "interview_note_id": "xhs:66aa37d6000000000d0316b9",
+  "source_revision_id": "xhs-note:66aa37d6000000000d0316b9:snapshot-95b77bb26104",
+  "sequence_scope": "source-projection:note_desc/66aa37d6000000000d0316b9.txt:interview-flow-units-1-1",
+  "evidence_stream": {
+    "stream_id": "pinned-note-desc",
+    "storage_kind": "git",
+    "raw_artifact_ref": "liqiangcc/xhs:note_detail/66aa37d6000000000d0316b9.html@95b77bb261048059846273688e4b90a2e108b437",
+    "raw_git_blob_sha": "3be99438628ee0fc75b3362a2183817c066de437",
+    "raw_sha256": "7ff526fcd74cc526e258f7428b9eaa68c601f88442b20b6907cfc4b1c775f3c8",
+    "readable_projection": {
+      "ref": "liqiangcc/xhs:note_desc/66aa37d6000000000d0316b9.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "storage_kind": "git",
+      "git_blob_sha": "2557242be49c9da912157f8cdeb7b35fb53adab2",
+      "sha256": "7bf4a2b5e94f79f6d1cd15745c35f3d960694cedf37041e132ef7907a9bda726",
+      "provenance": "source_projection",
+      "review_status": "unreviewed"
+    }
+  },
+  "units": [
+    {
+      "source_unit_id": "xhs:66aa37d6000000000d0316b9:snapshot-95b77bb26104:note-desc-1:u1",
+      "position": 1,
+      "source_unit_type": "outcome-reflection-summary",
+      "text_projection": "1，自我介绍\n2，Base地倾向 最好就是回答没有倾向 哪都能去 我当时头铁说不去北京\n3，算法：lc189 轮转数组 要求：空间复杂度O(1)，时间复杂度O(n)\n滴滴算法题特点：\n1，在线写代码比较难用\n2，我这两次面试的面试官都都没要求运行，他们就看代码看看对不对\n4，算法看我用到了取模 就问我负数取模是正数还是负数\n5，展开讲下sql调优\n（1）数据量\n（2）索引 （sql select本身）\n分库有啥要注意的 跨表关联和分页怎么尽可能落到一个表里\n6，引入一个新的中间件（消息队列）\n对一些异常的场景，你如何去监控发现和保证数据的一致性\n面试官给的例子：\n如果这时候 binlog 消费的线程卡住了，或者说我队列的使用MQ，那个 MQ 进行消费的出现了一个耗时比较长的情况，缓存和数据库里面的信息肯定是不对等的。\nMq重试\n函数超时kill\n补齐方式：（这里大家看看还有没啥好的方案）\n对账\n打日志，人工\n7，追问对账细节\n问对账如何做\n如果数据库和缓存有不同以谁为准\n正常情况db为准 当然要参考那一行的version，以version大的为准\n8，分布式锁需求上线后重点观察指标（被问了两次了，简历上有分布式锁的同学可以关注下）\n1，setnx成功率\n2，有没有两线程写冲突一条数据\n反问环节：\n细节就不说了哈哈，深入和面试官探讨了他们业务的发展历程 前景 打法 与竞对的区别等等，还是了解了蛮多的，在面试中进步！\n后续会更新面经和offer情况，欢迎关注~",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_desc/66aa37d6000000000d0316b9.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "7bf4a2b5e94f79f6d1cd15745c35f3d960694cedf37041e132ef7907a9bda726",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/66aa37d6000000000d0316b9.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "7ff526fcd74cc526e258f7428b9eaa68c601f88442b20b6907cfc4b1c775f3c8",
+        "source_projection_item_number": 1
+      },
+      "fragments": []
+    }
+  ],
+  "content_sha256": "2e80d27692de24271ac77d128a53aa3a68cb55af67a62eeab630fe845699640b"
+}

@@ -1,0 +1,81 @@
+{
+  "schema_version": "source-sequence-manifest.v1",
+  "manifest_id": "xhs:68a71089000000001b021798:snapshot-95b77bb26104:note-desc-4:sequence-v1",
+  "interview_note_id": "xhs:68a71089000000001b021798",
+  "source_revision_id": "xhs-note:68a71089000000001b021798:snapshot-95b77bb26104",
+  "sequence_scope": "source-projection:note_desc/68a71089000000001b021798.txt:interview-flow-units-1-4",
+  "evidence_stream": {
+    "stream_id": "pinned-note-desc",
+    "storage_kind": "git",
+    "raw_artifact_ref": "liqiangcc/xhs:note_detail/68a71089000000001b021798.html@95b77bb261048059846273688e4b90a2e108b437",
+    "raw_git_blob_sha": "88db03133d91a27c721ba8063e12562f3f11a626",
+    "raw_sha256": "82a6a80867b8cfbe4558742889ab47b52bb429ba388b5de3b9f5421bbfece1e2",
+    "readable_projection": {
+      "ref": "liqiangcc/xhs:note_desc/68a71089000000001b021798.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "storage_kind": "git",
+      "git_blob_sha": "a5b112660f0764d54bf76f0fc6fa726a230fc3b8",
+      "sha256": "e90d3f2a4c40f02dc3cd3fd88b1a59a4d45b034e1229ab0d925169974cab42b7",
+      "provenance": "source_projection",
+      "review_status": "unreviewed"
+    }
+  },
+  "units": [
+    {
+      "source_unit_id": "xhs:68a71089000000001b021798:snapshot-95b77bb26104:note-desc-4:u1",
+      "position": 1,
+      "source_unit_type": "question-like",
+      "text_projection": "2min\n自我介绍",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_desc/68a71089000000001b021798.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "e90d3f2a4c40f02dc3cd3fd88b1a59a4d45b034e1229ab0d925169974cab42b7",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/68a71089000000001b021798.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "82a6a80867b8cfbe4558742889ab47b52bb429ba388b5de3b9f5421bbfece1e2",
+        "source_projection_item_number": 1
+      },
+      "fragments": []
+    },
+    {
+      "source_unit_id": "xhs:68a71089000000001b021798:snapshot-95b77bb26104:note-desc-4:u2",
+      "position": 2,
+      "source_unit_type": "outcome-reflection-summary",
+      "text_projection": "15min\n[一R] Redis分布式锁和乐观锁概念\n悲观锁和乐观锁，区别于在进入共享资源区之前是否允许其他请求修改共享资源\n[二R]Toc上亿流量的分布式锁相比Tob场景需要额外考虑什么问题\n分段加锁\n[三R]怎么把Redis的热点Key分布到不同节点上承压\n热点key拆分+哈希到不同节点上；只读场景可以直接复制副本到不同节点\n[四R] Redis cluster集群分片+主从复制介绍\n哈希槽+gossip+主从节点读写分离\n[五R]Redis的慢查询可能是由什么原因导致的\n网络波动、Redis大Key\n[六R]怎么判断是网络波动问题还是key设置不合理问题\n通过ping检测，同时看Redis的慢查询日志",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_desc/68a71089000000001b021798.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "e90d3f2a4c40f02dc3cd3fd88b1a59a4d45b034e1229ab0d925169974cab42b7",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/68a71089000000001b021798.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "82a6a80867b8cfbe4558742889ab47b52bb429ba388b5de3b9f5421bbfece1e2",
+        "source_projection_item_number": 2
+      },
+      "fragments": []
+    },
+    {
+      "source_unit_id": "xhs:68a71089000000001b021798:snapshot-95b77bb26104:note-desc-4:u3",
+      "position": 3,
+      "source_unit_type": "outcome-reflection-summary",
+      "text_projection": "15min\n[一R]消息队列容器或者消费者宕机，通过什么机制保证数据的一致性\n容器宕机有持久化机制，消费者宕机考虑消息堆积、消息消费幂等性、消息丢失\n[二R]缓存穿透和布隆过滤器\n请求直接访问数据库，哈希函数+bitmap\n[三R]介绍几个你知道的设计模式和应用场景\n单例模式（全局配置类），责任链模式（用户登录过滤）\n[四R]spring中经典的设计模式介绍一下\n工厂模式，代理模式\n[五R]代理模式怎么工作的\n不修改目标对象基础上新增额外功能\n[六R]浏览器输入url，执行过程是什么\nhttp, dns, tcp, ip, arp, 数据帧传输\n[七R]你的技术学习路径是什么\n视频，博客，源码，实践",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_desc/68a71089000000001b021798.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "e90d3f2a4c40f02dc3cd3fd88b1a59a4d45b034e1229ab0d925169974cab42b7",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/68a71089000000001b021798.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "82a6a80867b8cfbe4558742889ab47b52bb429ba388b5de3b9f5421bbfece1e2",
+        "source_projection_item_number": 3
+      },
+      "fragments": []
+    },
+    {
+      "source_unit_id": "xhs:68a71089000000001b021798:snapshot-95b77bb26104:note-desc-4:u4",
+      "position": 4,
+      "source_unit_type": "narrative-summary",
+      "text_projection": "12min\n已知每个员工的位置和每个食堂的位置，求出每个员工到食堂最近距离之和。\n双指针题\n上一个字节流程已经g了，表现太差了，新开一个岗位面试",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_desc/68a71089000000001b021798.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "e90d3f2a4c40f02dc3cd3fd88b1a59a4d45b034e1229ab0d925169974cab42b7",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/68a71089000000001b021798.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "82a6a80867b8cfbe4558742889ab47b52bb429ba388b5de3b9f5421bbfece1e2",
+        "source_projection_item_number": 4
+      },
+      "fragments": []
+    }
+  ],
+  "content_sha256": "ade11aa009731970184b41e9ea52fb3ee450c8bbb38cddc91293f15393278372"
+}

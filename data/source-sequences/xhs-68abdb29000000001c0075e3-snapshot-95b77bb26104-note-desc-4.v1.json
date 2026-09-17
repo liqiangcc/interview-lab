@@ -1,0 +1,81 @@
+{
+  "schema_version": "source-sequence-manifest.v1",
+  "manifest_id": "xhs:68abdb29000000001c0075e3:snapshot-95b77bb26104:note-desc-4:sequence-v1",
+  "interview_note_id": "xhs:68abdb29000000001c0075e3",
+  "source_revision_id": "xhs-note:68abdb29000000001c0075e3:snapshot-95b77bb26104",
+  "sequence_scope": "source-projection:note_desc/68abdb29000000001c0075e3.txt:interview-flow-units-1-4",
+  "evidence_stream": {
+    "stream_id": "pinned-note-desc",
+    "storage_kind": "git",
+    "raw_artifact_ref": "liqiangcc/xhs:note_detail/68abdb29000000001c0075e3.html@95b77bb261048059846273688e4b90a2e108b437",
+    "raw_git_blob_sha": "d255d5b8aebd7b4fe93b99d0bd5ee8fd43974546",
+    "raw_sha256": "5923c44f6f1d975e3c3c9498256a8112935939a99504e8f12d4f8c0b1a643320",
+    "readable_projection": {
+      "ref": "liqiangcc/xhs:note_desc/68abdb29000000001c0075e3.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "storage_kind": "git",
+      "git_blob_sha": "36baf0733e29328dd177f5637336f400f220feb7",
+      "sha256": "1de14be1f1f1f9bf5ee942fff1cbb2fee283bf67a0f70e7388bf4828dcd78a74",
+      "provenance": "source_projection",
+      "review_status": "unreviewed"
+    }
+  },
+  "units": [
+    {
+      "source_unit_id": "xhs:68abdb29000000001c0075e3:snapshot-95b77bb26104:note-desc-4:u1",
+      "position": 1,
+      "source_unit_type": "question-like",
+      "text_projection": "2min\n[中等肤色R] 自我介绍",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_desc/68abdb29000000001c0075e3.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "1de14be1f1f1f9bf5ee942fff1cbb2fee283bf67a0f70e7388bf4828dcd78a74",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/68abdb29000000001c0075e3.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "5923c44f6f1d975e3c3c9498256a8112935939a99504e8f12d4f8c0b1a643320",
+        "source_projection_item_number": 1
+      },
+      "fragments": []
+    },
+    {
+      "source_unit_id": "xhs:68abdb29000000001c0075e3:snapshot-95b77bb26104:note-desc-4:u2",
+      "position": 2,
+      "source_unit_type": "narrative-summary",
+      "text_projection": "20min\n[中等肤色R] 实习工作讨论",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_desc/68abdb29000000001c0075e3.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "1de14be1f1f1f9bf5ee942fff1cbb2fee283bf67a0f70e7388bf4828dcd78a74",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/68abdb29000000001c0075e3.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "5923c44f6f1d975e3c3c9498256a8112935939a99504e8f12d4f8c0b1a643320",
+        "source_projection_item_number": 2
+      },
+      "fragments": []
+    },
+    {
+      "source_unit_id": "xhs:68abdb29000000001c0075e3:snapshot-95b77bb26104:note-desc-4:u3",
+      "position": 3,
+      "source_unit_type": "outcome-reflection-summary",
+      "text_projection": "15min\n[一R] Redis分布式锁的原理\n[中等肤色R] Set key val NX EX time, 加锁成功返回OK，锁被其他节点持有返回nil。以及过期时间，续期策略，看门狗等。\n[二R] 介绍一下mysql\n[中等肤色R] 数据表 -> 数据页(避免从磁盘读取全部数据) -> 根据页号和索引字段建立B+树索引、热点数据页自适应哈希索引 -> buffer pool 缓存数据页，减少读磁盘次数 -> 执行器(执行计划) -> 优化器(生成执行计划) -> 分析器(拆解语句) -> 连接管理\n[三R] 联合索引原理\n[中等肤色R] a_b_c联合索引，先a排序，a相同再b排序，ab均相同按c排序。\n[四R] 数据库事务性质介绍一下\n[中等肤色R] ACID\n[五R] 业务上两条Update语句在一个事务中会产生冲突或污染吗\n[中等肤色R] 一个事务中两条Update语句要么全部成功，要么全部失败，且同一个事务中多条语句共享一个数据库连接，语句顺序执行，后一条会基于前一条的结果，所以不会冲突\n[六R] @Transaction 注解原理\n[中等肤色R] 基于AOP面向切面编程，方法被标注，会创建一个动态代理对象，先执行代理增强逻辑，再调用目标方法。根据捕获的异常判断是否回滚。\n[七R] 事务的自动提交介绍一下\n[中等肤色R] 数据库连接(如JDBC连接)正常情况下，单条语句默认开启自动提交，多条语句需要关闭自动提交，等多条语句执行完后再手动提交，出现异常则回滚。@Transaction获得连接后也封装了上面的逻辑",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_desc/68abdb29000000001c0075e3.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "1de14be1f1f1f9bf5ee942fff1cbb2fee283bf67a0f70e7388bf4828dcd78a74",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/68abdb29000000001c0075e3.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "5923c44f6f1d975e3c3c9498256a8112935939a99504e8f12d4f8c0b1a643320",
+        "source_projection_item_number": 3
+      },
+      "fragments": []
+    },
+    {
+      "source_unit_id": "xhs:68abdb29000000001c0075e3:snapshot-95b77bb26104:note-desc-4:u4",
+      "position": 4,
+      "source_unit_type": "outcome-reflection-summary",
+      "text_projection": "15min\n[一R] 判断A树是不是B树的子结构\n[中等肤色R] 递归多子树\n[二R] 我定义了一个全局静态变量用来观测结果，会出现什么问题，怎么解决\n[中等肤色R] 多实例时会发现内容冲突，可以用ThreadLocal做变量备份，或者改成实例变量\n上周面的，这周已经凉了，面试的时候我都没搞清楚面试官想问什么，面试官提问题的时候提的很大，梳理之后我觉得可能是想问这些问题。",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_desc/68abdb29000000001c0075e3.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "1de14be1f1f1f9bf5ee942fff1cbb2fee283bf67a0f70e7388bf4828dcd78a74",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/68abdb29000000001c0075e3.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "5923c44f6f1d975e3c3c9498256a8112935939a99504e8f12d4f8c0b1a643320",
+        "source_projection_item_number": 4
+      },
+      "fragments": []
+    }
+  ],
+  "content_sha256": "0b27cf96ddeaeee6eef13d5e731ce212af141aa3d4d2640deb023fc46525fdbc"
+}

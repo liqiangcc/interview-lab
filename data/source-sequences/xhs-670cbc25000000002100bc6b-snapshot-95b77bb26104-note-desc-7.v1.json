@@ -1,0 +1,123 @@
+{
+  "schema_version": "source-sequence-manifest.v1",
+  "manifest_id": "xhs:670cbc25000000002100bc6b:snapshot-95b77bb26104:note-desc-7:sequence-v1",
+  "interview_note_id": "xhs:670cbc25000000002100bc6b",
+  "source_revision_id": "xhs-note:670cbc25000000002100bc6b:snapshot-95b77bb26104",
+  "sequence_scope": "source-projection:note_desc/670cbc25000000002100bc6b.txt:interview-flow-units-1-7",
+  "evidence_stream": {
+    "stream_id": "pinned-note-desc",
+    "storage_kind": "git",
+    "raw_artifact_ref": "liqiangcc/xhs:note_detail/670cbc25000000002100bc6b.html@95b77bb261048059846273688e4b90a2e108b437",
+    "raw_git_blob_sha": "c667917ae1c1ec047da5f06816e24be6b9ddc171",
+    "raw_sha256": "6c23297662075f15e9399b17d7ba84187a94e96973d536497cebb9affa3840f7",
+    "readable_projection": {
+      "ref": "liqiangcc/xhs:note_desc/670cbc25000000002100bc6b.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "storage_kind": "git",
+      "git_blob_sha": "678075a4cde4f580fcd50a5af904697abd25218b",
+      "sha256": "7557ffea0672601113c445e63075ada56194ae6309b4a1c6b77e2ce3fbe204ea",
+      "provenance": "source_projection",
+      "review_status": "unreviewed"
+    }
+  },
+  "units": [
+    {
+      "source_unit_id": "xhs:670cbc25000000002100bc6b:snapshot-95b77bb26104:note-desc-7:u1",
+      "position": 1,
+      "source_unit_type": "outcome-reflection-summary",
+      "text_projection": "1⃣面试体验&结果\n字节提前批广告商业化部门，说是提前批实际上是招暑期实习，但通过后会给直通秋招终面的机会。由于是差不多两个月前的面试，有些内容已经忘了，只保留了能确定的部分。\n一面面试官挺和蔼的，比较会引导候选人。整体大约五十分钟。面试内容涉及代码运行结果判断+八股+现场写Linux命令+手撕代码。\n二面压力面，面试官不给反馈，整体下来面评较好，最后称赞了算法写的简洁高效，但最终还是挂。整体大约四十多分钟。内容主要是八股+手撕算法。\n所有问题大体上回答正确，约一周内二面挂。通过内部渠道得知，共有30+面试安排，只有2人进二面，除我之外另一个拒面等待秋招。截止八月中旬，该部门投递140+，0 offer。\n被拒之后联系HR询问面评，略有争执（我问那个面试官的名字叫什么，HR不肯给，我就说他们面试流程不规范，没有任何自我介绍），然后好像还把我锁到飞书的部门去了，一个多月后才释放。\n另外听说这个部门卡实习转正。这个消息不保真。\n2⃣问题\n只选取了非常规的题目，常规八股就不写了。",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_desc/670cbc25000000002100bc6b.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "7557ffea0672601113c445e63075ada56194ae6309b4a1c6b77e2ce3fbe204ea",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/670cbc25000000002100bc6b.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "6c23297662075f15e9399b17d7ba84187a94e96973d536497cebb9affa3840f7",
+        "source_projection_item_number": 1
+      },
+      "fragments": []
+    },
+    {
+      "source_unit_id": "xhs:670cbc25000000002100bc6b:snapshot-95b77bb26104:note-desc-7:u2",
+      "position": 2,
+      "source_unit_type": "question-like",
+      "text_projection": "1. 代码运行结果判断：",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_desc/670cbc25000000002100bc6b.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "7557ffea0672601113c445e63075ada56194ae6309b4a1c6b77e2ce3fbe204ea",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/670cbc25000000002100bc6b.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "6c23297662075f15e9399b17d7ba84187a94e96973d536497cebb9affa3840f7",
+        "source_projection_item_number": 2
+      },
+      "fragments": []
+    },
+    {
+      "source_unit_id": "xhs:670cbc25000000002100bc6b:snapshot-95b77bb26104:note-desc-7:u3",
+      "position": 3,
+      "source_unit_type": "outcome-reflection-summary",
+      "text_projection": "for (int i = 0; i < 3; i++) {\nThread t = new Thread(() -> {\nSystem.out.println(i);\n});\nt.start();\n}\n面试官认为正确结果应当是输出了三个3，因为在绝大多数情况下，三个线程会在非常接近的时间间隔内启动，此时指向的i的值为3.\n然而实际上编译有可能不通过，因为Lambda表达式内部的变量会被修改。",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_desc/670cbc25000000002100bc6b.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "7557ffea0672601113c445e63075ada56194ae6309b4a1c6b77e2ce3fbe204ea",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/670cbc25000000002100bc6b.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "6c23297662075f15e9399b17d7ba84187a94e96973d536497cebb9affa3840f7",
+        "source_projection_item_number": 3
+      },
+      "fragments": []
+    },
+    {
+      "source_unit_id": "xhs:670cbc25000000002100bc6b:snapshot-95b77bb26104:note-desc-7:u4",
+      "position": 4,
+      "source_unit_type": "question-like",
+      "text_projection": "2. Linux指令：",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_desc/670cbc25000000002100bc6b.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "7557ffea0672601113c445e63075ada56194ae6309b4a1c6b77e2ce3fbe204ea",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/670cbc25000000002100bc6b.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "6c23297662075f15e9399b17d7ba84187a94e96973d536497cebb9affa3840f7",
+        "source_projection_item_number": 4
+      },
+      "fragments": []
+    },
+    {
+      "source_unit_id": "xhs:670cbc25000000002100bc6b:snapshot-95b77bb26104:note-desc-7:u5",
+      "position": 5,
+      "source_unit_type": "narrative-summary",
+      "text_projection": "有一文件为广告曝光日志，提取出其中的有效部分，即ad_id和user_id。利用正则表达式匹配并处理即可。",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_desc/670cbc25000000002100bc6b.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "7557ffea0672601113c445e63075ada56194ae6309b4a1c6b77e2ce3fbe204ea",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/670cbc25000000002100bc6b.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "6c23297662075f15e9399b17d7ba84187a94e96973d536497cebb9affa3840f7",
+        "source_projection_item_number": 5
+      },
+      "fragments": []
+    },
+    {
+      "source_unit_id": "xhs:670cbc25000000002100bc6b:snapshot-95b77bb26104:note-desc-7:u6",
+      "position": 6,
+      "source_unit_type": "question-like",
+      "text_projection": "3. 二面算法：",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_desc/670cbc25000000002100bc6b.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "7557ffea0672601113c445e63075ada56194ae6309b4a1c6b77e2ce3fbe204ea",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/670cbc25000000002100bc6b.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "6c23297662075f15e9399b17d7ba84187a94e96973d536497cebb9affa3840f7",
+        "source_projection_item_number": 6
+      },
+      "fragments": []
+    },
+    {
+      "source_unit_id": "xhs:670cbc25000000002100bc6b:snapshot-95b77bb26104:note-desc-7:u7",
+      "position": 7,
+      "source_unit_type": "narrative-summary",
+      "text_projection": "寻找一棵二叉树中两个节点的最近公共节点。每个节点存储着指向其父节点的指针，要寻找给定两个节点的最近的公共父节点。\n实际上是Leetcode 相交链表的变式，二叉树在这里只起迷惑作用，寻找给定两个节点的最近公共父节点实际上就是找抽象出的两个链表的交点。",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_desc/670cbc25000000002100bc6b.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "7557ffea0672601113c445e63075ada56194ae6309b4a1c6b77e2ce3fbe204ea",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/670cbc25000000002100bc6b.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "6c23297662075f15e9399b17d7ba84187a94e96973d536497cebb9affa3840f7",
+        "source_projection_item_number": 7
+      },
+      "fragments": []
+    }
+  ],
+  "content_sha256": "c4795cf1f5e189731e1ec050af8ecead90630005b563e688bc6e4c8a8e8c9ee9"
+}

@@ -1,0 +1,109 @@
+{
+  "schema_version": "source-sequence-manifest.v1",
+  "manifest_id": "xhs:68a8a709000000001c00744b:snapshot-95b77bb26104:note-desc-6:sequence-v1",
+  "interview_note_id": "xhs:68a8a709000000001c00744b",
+  "source_revision_id": "xhs-note:68a8a709000000001c00744b:snapshot-95b77bb26104",
+  "sequence_scope": "source-projection:note_desc/68a8a709000000001c00744b.txt:interview-flow-units-1-6",
+  "evidence_stream": {
+    "stream_id": "pinned-note-desc",
+    "storage_kind": "git",
+    "raw_artifact_ref": "liqiangcc/xhs:note_detail/68a8a709000000001c00744b.html@95b77bb261048059846273688e4b90a2e108b437",
+    "raw_git_blob_sha": "eacee430a9de24344911e8c50565cbd7b19568e1",
+    "raw_sha256": "7acf39453e25d76d0731a8911e5c27f88deed892d65ca36897b7007638435aaa",
+    "readable_projection": {
+      "ref": "liqiangcc/xhs:note_desc/68a8a709000000001c00744b.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "storage_kind": "git",
+      "git_blob_sha": "e31de34b0952635333ad527c443190f76684eb7d",
+      "sha256": "2a297ea239d9fbd48009b92fd61db70a6f7173c78cb53c5000a412c50406e3df",
+      "provenance": "source_projection",
+      "review_status": "unreviewed"
+    }
+  },
+  "units": [
+    {
+      "source_unit_id": "xhs:68a8a709000000001c00744b:snapshot-95b77bb26104:note-desc-6:u1",
+      "position": 1,
+      "source_unit_type": "question-like",
+      "text_projection": "2min\n自我介绍",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_desc/68a8a709000000001c00744b.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "2a297ea239d9fbd48009b92fd61db70a6f7173c78cb53c5000a412c50406e3df",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/68a8a709000000001c00744b.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "7acf39453e25d76d0731a8911e5c27f88deed892d65ca36897b7007638435aaa",
+        "source_projection_item_number": 1
+      },
+      "fragments": []
+    },
+    {
+      "source_unit_id": "xhs:68a8a709000000001c00744b:snapshot-95b77bb26104:note-desc-6:u2",
+      "position": 2,
+      "source_unit_type": "narrative-summary",
+      "text_projection": "15min\n[一R] 实习业务介绍及问答\n[二R] RAG和embedding了解吗，是什么有什么作用\n[中等肤色R] RAG检索增强生成，可以拓展模型上下文，缓解模型幻觉和时效问题。\n[中等肤色R] embedding可以将非结构化数据（文本图片视频）转化为结构化数值向量，向量每个数值代表某个维度上的特征，以此让机器也能理解分类和检索数据。\n[三R] 你是怎么学习大模型的\n[中等肤色R] 论文、博客\n[四R] 大模型你觉得有哪些可以落地应用的地方\n[中等肤色R] AI coding、豆包形式AI应用、行业定制agent和传统互联网业务赋能。",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_desc/68a8a709000000001c00744b.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "2a297ea239d9fbd48009b92fd61db70a6f7173c78cb53c5000a412c50406e3df",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/68a8a709000000001c00744b.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "7acf39453e25d76d0731a8911e5c27f88deed892d65ca36897b7007638435aaa",
+        "source_projection_item_number": 2
+      },
+      "fragments": []
+    },
+    {
+      "source_unit_id": "xhs:68a8a709000000001c00744b:snapshot-95b77bb26104:note-desc-6:u3",
+      "position": 3,
+      "source_unit_type": "outcome-reflection-summary",
+      "text_projection": "10min\n[一R] 悲观锁和乐观锁概念\n[中等肤色R] 是否强制加锁，区别于在进入共享资源区之前是否允许其他请求修改共享资源。\n[二R] 消息队列的作用\n[中等肤色R] 削峰填谷、异步化、服务解耦。\n[三R] RocketMq跟Kafka区别，底层实现有什么不同\n[中等肤色R] 架构相似，功能RocketMq更丰富，吞吐量KafKa更大，底层零拷贝策略不同。\n[四R] kafka消息消费比RocketMq快吗，为什么\n[中等肤色R] Kafka sendfile零拷贝(没有用户态和内核态之间的拷贝)，RocketMq mmap零拷贝(比sendfile多一次拷贝)。\n[中等肤色R] Kafka 分区消息顺序写磁盘且可以通过分区偏移量直接从日志文件中读到数据，RocketMq队列消息都存在全局CommitLog中，只是同一队列消息有序，但在磁盘上位置可能分散，且定位消息位置需要两次寻址。\n[四R] 顺序消费要注意什么\n[中等肤色R] 生产者生产的消息要发送到同一个队列，指定单个消费者单线程或多线程加锁消费该队列。",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_desc/68a8a709000000001c00744b.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "2a297ea239d9fbd48009b92fd61db70a6f7173c78cb53c5000a412c50406e3df",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/68a8a709000000001c00744b.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "7acf39453e25d76d0731a8911e5c27f88deed892d65ca36897b7007638435aaa",
+        "source_projection_item_number": 3
+      },
+      "fragments": []
+    },
+    {
+      "source_unit_id": "xhs:68a8a709000000001c00744b:snapshot-95b77bb26104:note-desc-6:u4",
+      "position": 4,
+      "source_unit_type": "outcome-reflection-summary",
+      "text_projection": "15min\n[一R] 布隆过滤器使用场景及原理\n[中等肤色R] 缓存穿透+ 哈希函数 + bitMap。\n[二R] mysql的索引原理，作用\n[中等肤色R] 多叉自平衡树B+树，将数据按索引字段顺序编排，查询效率更高。\n[三R] B+树跟B树的区别\n[中等肤色R] B+树仅叶子节点存储数据，树高度更低减少磁盘IO且查询效率稳定，叶子节点双向连接方便范围查询。\n[四R] mysql的隔离性有哪些，怎么实现的\n[中等肤色R] 读未提交、读已提交、可重复读和串行化，其中读已提交和可重复读通过MVCC和undo log配合实现。\n[五R] 用户下单，商家接单，骑手派单中间大致是个什么样的过程，涉及什么数据结构和算法上的考量",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_desc/68a8a709000000001c00744b.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "2a297ea239d9fbd48009b92fd61db70a6f7173c78cb53c5000a412c50406e3df",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/68a8a709000000001c00744b.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "7acf39453e25d76d0731a8911e5c27f88deed892d65ca36897b7007638435aaa",
+        "source_projection_item_number": 4
+      },
+      "fragments": []
+    },
+    {
+      "source_unit_id": "xhs:68a8a709000000001c00744b:snapshot-95b77bb26104:note-desc-6:u5",
+      "position": 5,
+      "source_unit_type": "narrative-summary",
+      "text_projection": "7min\n括号匹配",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_desc/68a8a709000000001c00744b.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "2a297ea239d9fbd48009b92fd61db70a6f7173c78cb53c5000a412c50406e3df",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/68a8a709000000001c00744b.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "7acf39453e25d76d0731a8911e5c27f88deed892d65ca36897b7007638435aaa",
+        "source_projection_item_number": 5
+      },
+      "fragments": []
+    },
+    {
+      "source_unit_id": "xhs:68a8a709000000001c00744b:snapshot-95b77bb26104:note-desc-6:u6",
+      "position": 6,
+      "source_unit_type": "question-like",
+      "text_projection": "8min\n反问\n消息队列没回答好，因为我不了解kafka，但最近被问到好几次，最后一道场景题更是懵逼。",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_desc/68a8a709000000001c00744b.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "2a297ea239d9fbd48009b92fd61db70a6f7173c78cb53c5000a412c50406e3df",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/68a8a709000000001c00744b.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "7acf39453e25d76d0731a8911e5c27f88deed892d65ca36897b7007638435aaa",
+        "source_projection_item_number": 6
+      },
+      "fragments": []
+    }
+  ],
+  "content_sha256": "55542cf62e80dc7d233d55564a4fb292a8fc92fb5176aa6b2e8224779ac28a01"
+}

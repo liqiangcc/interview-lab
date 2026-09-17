@@ -1,0 +1,53 @@
+{
+  "schema_version": "source-sequence-manifest.v1",
+  "manifest_id": "xhs:68917e520000000023039edf:snapshot-95b77bb26104:note-desc-2:sequence-v1",
+  "interview_note_id": "xhs:68917e520000000023039edf",
+  "source_revision_id": "xhs-note:68917e520000000023039edf:snapshot-95b77bb26104",
+  "sequence_scope": "source-projection:note_desc/68917e520000000023039edf.txt:interview-flow-units-1-2",
+  "evidence_stream": {
+    "stream_id": "pinned-note-desc",
+    "storage_kind": "git",
+    "raw_artifact_ref": "liqiangcc/xhs:note_detail/68917e520000000023039edf.html@95b77bb261048059846273688e4b90a2e108b437",
+    "raw_git_blob_sha": "a440870d66a3346a1f25a9c6bd2a95d84199ea17",
+    "raw_sha256": "673cefdc88a025722c8ead3db403243d2e4d3a977ab1ab6c75adaf0754034b32",
+    "readable_projection": {
+      "ref": "liqiangcc/xhs:note_desc/68917e520000000023039edf.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "storage_kind": "git",
+      "git_blob_sha": "c4cc0a8b0da9f735327b49e92890b7110be1361e",
+      "sha256": "52d4aac637ed0710236de338b507458725bb51110c0eb7b624f3f180d8934dba",
+      "provenance": "source_projection",
+      "review_status": "unreviewed"
+    }
+  },
+  "units": [
+    {
+      "source_unit_id": "xhs:68917e520000000023039edf:snapshot-95b77bb26104:note-desc-2:u1",
+      "position": 1,
+      "source_unit_type": "narrative-summary",
+      "text_projection": "一面先深挖项目里的分布式事务实现，追问 TCC 模式在高并发下的资源锁定策略，接着让设计支付宝转账的最终一致性方案，我提到定时补偿后，被追问重试间隔和死锁预防措施，卡了 10 秒才想到设置超时释放。",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_desc/68917e520000000023039edf.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "52d4aac637ed0710236de338b507458725bb51110c0eb7b624f3f180d8934dba",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/68917e520000000023039edf.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "673cefdc88a025722c8ead3db403243d2e4d3a977ab1ab6c75adaf0754034b32",
+        "source_projection_item_number": 1
+      },
+      "fragments": []
+    },
+    {
+      "source_unit_id": "xhs:68917e520000000023039edf:snapshot-95b77bb26104:note-desc-2:u2",
+      "position": 2,
+      "source_unit_type": "narrative-summary",
+      "text_projection": "二面聚焦高并发库存，给了余额宝限购场景：如何防超卖。我答了 Redis 预扣 + DB 确认，面试官立刻追问缓存与 DB 对账频率，以及大促时的流量削峰方案，补充队列异步处理后才过关。",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_desc/68917e520000000023039edf.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "52d4aac637ed0710236de338b507458725bb51110c0eb7b624f3f180d8934dba",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/68917e520000000023039edf.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "673cefdc88a025722c8ead3db403243d2e4d3a977ab1ab6c75adaf0754034b32",
+        "source_projection_item_number": 2
+      },
+      "fragments": []
+    }
+  ],
+  "content_sha256": "48a4a410ef8bcdc4349ebc944993ec19902d898244cd95ccf3cde59b06d63f9c"
+}
