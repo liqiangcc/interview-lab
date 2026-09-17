@@ -512,13 +512,32 @@ function main(argv = process.argv.slice(2)) {
     let result;
     try {
       if (completed.has(item.request.materialization_id)) {
-        recheckCompletedItem(item.request, progressState.successful.get(item.request.materialization_id), args.pauseMs, searchThrottle);
+        let rechecked = false;
+        let lastRecheckError = null;
+        for (let attempt = 0; attempt < 4 && !rechecked; attempt += 1) {
+          try {
+            recheckCompletedItem(item.request, progressState.successful.get(item.request.materialization_id), args.pauseMs, searchThrottle);
+            rechecked = true;
+          } catch (recheckError) {
+            lastRecheckError = recheckError;
+            sleepMs((attempt + 1) * 15000);
+          }
+        }
+        if (!rechecked) throw lastRecheckError;
         continue;
       }
-      result = applyOne(item.request, args.pauseMs, searchThrottle, {
-        intent: progress.intents[item.request.materialization_id] || null,
-        persistIntent,
-      });
+      for (let attempt = 0; attempt < 3; attempt += 1) {
+        try {
+          result = applyOne(item.request, args.pauseMs, searchThrottle, {
+            intent: progress.intents[item.request.materialization_id] || null,
+            persistIntent,
+          });
+          break;
+        } catch (applyError) {
+          if (attempt === 2) throw applyError;
+          sleepMs(30000 * (attempt + 1));
+        }
+      }
     } catch (error) {
       result = { materialization_id: item.request.materialization_id, status: 'failed', error: error.message, failed_at: new Date().toISOString() };
       results.push(result);

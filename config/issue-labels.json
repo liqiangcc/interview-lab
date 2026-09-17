@@ -87,26 +87,63 @@
       "value_pattern": "^[a-z0-9][a-z0-9-]*$",
       "source": "reviewed InterviewContext.company.id",
       "managed_values": [
+        "accenture",
         "alibaba",
+        "alibaba-international",
         "aliyun",
+        "amap",
         "ant-group",
         "baidu",
         "beike",
+        "bilibili",
+        "boe",
+        "bybit",
+        "byd",
         "bytedance",
+        "chaoxing",
+        "chery",
+        "cmbnt",
         "ctrip",
         "deepal",
+        "dewu",
         "didi",
+        "eleme",
+        "fliggy",
+        "hellobike",
+        "huawei",
         "huolala",
+        "icbc",
+        "iflytek",
         "jd",
         "jd-tech",
         "kuaishou",
+        "lingyue-tech",
+        "luckin",
         "meituan",
+        "mercury-insurance",
+        "midea",
+        "momo",
+        "nbcb",
+        "netease",
+        "nio",
+        "oppo",
         "pinduoduo",
         "shenghui-logistics",
         "shopee",
+        "sohu",
+        "soul",
+        "starbucks",
+        "tal",
         "tencent",
         "tencent-cloudwise",
-        "xiaomi"
+        "ths",
+        "xianyu",
+        "xiaomi",
+        "ximalaya",
+        "xpeng",
+        "zhihu",
+        "zhongan",
+        "zte"
       ]
     },
     "source-year": {
@@ -122,15 +159,35 @@
   },
   "constraints": {
     "source_note": {
-      "required": ["type:source-note", "source:xhs"],
-      "at_most_one_from": ["status", "boundary", "source-year"],
-      "pending_requires": ["boundary:pending", "task:boundary-review"],
+      "required": [
+        "type:source-note",
+        "source:xhs"
+      ],
+      "at_most_one_from": [
+        "status",
+        "boundary",
+        "source-year"
+      ],
+      "pending_requires": [
+        "boundary:pending",
+        "task:boundary-review"
+      ],
       "source_year_from_published_at": true,
       "forbid_interview_learning_labels": true
     },
     "interview_note": {
-      "required": ["type:interview-note"],
-      "at_most_one_from": ["status", "company", "role", "recruitment", "round", "source-year", "interview-year"],
+      "required": [
+        "type:interview-note"
+      ],
+      "at_most_one_from": [
+        "status",
+        "company",
+        "role",
+        "recruitment",
+        "round",
+        "source-year",
+        "interview-year"
+      ],
       "learning_discovery_requires_status": "status:source-ready",
       "forbid_prefixes_for_facts": [
         "year:",
