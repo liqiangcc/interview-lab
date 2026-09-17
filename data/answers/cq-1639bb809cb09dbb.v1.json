@@ -1,0 +1,18 @@
+{
+  "schema_version": "answer.v1",
+  "answer_id": "answer:cq:1639bb809cb09dbb",
+  "canonical_question_id": "cq:1639bb809cb09dbb",
+  "canonical_index_sha256": "1c4046937c2c22aa3d57487599cfbf06fd24a3504e5c06f11c1640f5dfd040a6",
+  "question_text": "9. 限流算法",
+  "short_answer": "四种主流：固定窗口（边界突刺）→滑动窗口（平滑）→漏桶（恒速出水禁突发）→令牌桶（攒令牌允许突发，RateLimiter实现）。",
+  "skeleton": [
+    "固定窗口+边界突刺缺陷",
+    "滑动窗口分桶",
+    "漏桶：恒定流出",
+    "令牌桶：恒定流入+桶容量=突发上限",
+    "分布式：Redis+Lua或网关层"
+  ],
+  "explanation": "对比是核心：漏桶是“出”恒定——不管进来多快，出去按固定速率，适合保护脆弱下游；令牌桶是“进”恒定——令牌按固定速率进桶，请求取到令牌才放行，桶有余量就允许突发（突发上限=桶容量）。所以API限流大多令牌桶：平时低流量攒着令牌，偶发突发放行不影响体验。分布式限流用Redis计数+Lua保证原子，或干脆在网关（Sentinel/Nginx limit_req）做。",
+  "example": "Sentinel默认令牌桶思想（匀速排队/预热模式），Nginx limit_req是漏桶，RateLimiter是令牌桶。",
+  "content_sha256": "6658347c4c4c94a1345fea89fd384c98bd5098931e8b69a73ad3caafcfc3b541"
+}

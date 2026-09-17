@@ -1,0 +1,17 @@
+{
+  "schema_version": "answer.v1",
+  "answer_id": "answer:cq:95bbeb6369ee9be0",
+  "canonical_question_id": "cq:95bbeb6369ee9be0",
+  "canonical_index_sha256": "1c4046937c2c22aa3d57487599cfbf06fd24a3504e5c06f11c1640f5dfd040a6",
+  "question_text": "4.http和https的区别",
+  "short_answer": "HTTP是明文传输；HTTPS在HTTP之下加TLS层：握手阶段用非对称加密协商出会话密钥，之后数据用对称加密传输，证书解决公钥归属信任问题。",
+  "skeleton": [
+    "HTTP明文风险：窃听/篡改/冒充",
+    "TLS握手：版本套件协商→证书→密钥交换→会话密钥",
+    "混合加密动机：非对称慢但解决密钥分发，对称快",
+    "证书信任链：CA签名防中间人"
+  ],
+  "explanation": "答题关键在讲清“为什么要混合加密”：纯非对称太慢不适合大数据量，纯对称无法安全分发密钥。TLS握手（1.2）里：ClientHello带随机数+套件列表→ServerHello+证书→客户端验证证书、生成预主密钥用服务器公钥加密发出→双方用三个随机数算会话密钥→Finished验证。证书本质是CA对“域名↔公钥”绑定的签名背书，中间人伪造不了合法证书所以无法解密预主密钥。",
+  "example": "浏览器访问 https 站点时，运营商能看到你访问的域名（SNI）和流量大小，但看不到请求内容。",
+  "content_sha256": "3444ce651e1b4fcb4909a3c15e8ebbe7f8404944975013028666077b303b44ea"
+}

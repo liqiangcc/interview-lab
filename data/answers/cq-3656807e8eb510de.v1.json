@@ -1,0 +1,18 @@
+{
+  "schema_version": "answer.v1",
+  "answer_id": "answer:cq:3656807e8eb510de",
+  "canonical_question_id": "cq:3656807e8eb510de",
+  "canonical_index_sha256": "1c4046937c2c22aa3d57487599cfbf06fd24a3504e5c06f11c1640f5dfd040a6",
+  "question_text": "4. MySQL事务隔离级别?",
+  "short_answer": "四级隔离：RU/RC/RR/串行化，逐级解决脏读→不可重复读→幻读→全串行。InnoDB默认RR，用MVCC做快照读+间隙锁做当前读防幻。",
+  "skeleton": [
+    "问题谱：脏读/不可重复读/幻读",
+    "四级定义与逐级解决",
+    "InnoDB默认RR",
+    "实现：MVCC快照读+next-key lock当前读",
+    "代价：并发度递减"
+  ],
+  "explanation": "逻辑链：每级隔离是用并发度换正确性。RU脏读=读到会回滚的数据；RC不可重复读=同事务两次读结果不同；RR幻读=同事务两次范围查询行数不同。InnoDB的RR实现：每行有隐藏事务版本链，读视图按事务开始时刻生成（快照读），所以同事务内反复读一致；但update是当前读要读最新版本，范围更新时靠next-key lock（记录锁+间隙锁）把区间锁住防插入幻行。",
+  "example": "转账场景不能用RU：读到别人未提交的转出会基于脏数据扣款。RR下`select ... for update`区间会加间隙锁挡住插入。",
+  "content_sha256": "f4df21b0fe5249acd22660e9cc61d31c575e92852124a9fdb1a818b85df31771"
+}

@@ -1,0 +1,26 @@
+{
+  "schema_version": "analysis.v1",
+  "analysis_id": "analysis:cq:24e7213456a6dc61",
+  "canonical_question_id": "cq:24e7213456a6dc61",
+  "canonical_index_sha256": "1c4046937c2c22aa3d57487599cfbf06fd24a3504e5c06f11c1640f5dfd040a6",
+  "question_text": "3.虚拟内存其他的作用",
+  "question_kind": "knowledge",
+  "interviewer_intent": "考察虚拟内存除“扩大地址空间”外的其他作用：隔离、效率、抽象。",
+  "expected_depth": "至少说出地址隔离、按需分页、共享/映射三个作用",
+  "mechanism": "虚拟内存作用：①地址空间隔离——进程间互不可见，安全+崩溃隔离②内存抽象——进程看到连续地址，物理可离散，简化编程③按需分页/懒加载——大程序只加载用到的页④高效共享——共享库/map文件只一份物理页⑤换出到swap——内存超售。",
+  "boundaries": "“扩大内存”是最表层答案（swap还有性能代价）；虚拟内存的真实价值在隔离与抽象，不是让物理内存变大。",
+  "common_mistakes": [
+    "只说“让内存变大”",
+    "说不出隔离作用",
+    "不知道页表/缺页中断",
+    "把swap当主要机制"
+  ],
+  "follow_ups": [
+    "缺页中断流程",
+    "页表是什么/TLB作用",
+    "mmap用途",
+    "写时复制COW"
+  ],
+  "member_count": 2,
+  "content_sha256": "617e3e1f41069ea8c154be6a090aaef502e87cf749f40ed76b530368e5e55de8"
+}

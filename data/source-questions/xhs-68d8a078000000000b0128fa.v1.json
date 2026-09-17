@@ -1,0 +1,102 @@
+{
+  "schema_version": "source-question-set.v1",
+  "set_id": "xhs:68d8a078000000000b0128fa:source-question-set-v1",
+  "interview_note_id": "xhs:68d8a078000000000b0128fa",
+  "source_revision_id": "xhs-note:68d8a078000000000b0128fa:snapshot-95b77bb26104",
+  "source_manifest_id": "xhs:68d8a078000000000b0128fa:snapshot-95b77bb26104:note-json-desc-18:sequence-v1",
+  "source_manifest_sha256": "b624bcd25b48ad0f7252d302c4fd418c8bfa4cba990075527fa11f254e43d6e1",
+  "questions": [
+    {
+      "source_question_id": "xhs:68d8a078000000000b0128fa:snapshot-95b77bb26104:note-json-desc-18:u3:sq1",
+      "source_unit_id": "xhs:68d8a078000000000b0128fa:snapshot-95b77bb26104:note-json-desc-18:u3",
+      "unit_position": 3,
+      "raw_text": "1. 业务与系统设计",
+      "extraction_status": "extracted"
+    },
+    {
+      "source_question_id": "xhs:68d8a078000000000b0128fa:snapshot-95b77bb26104:note-json-desc-18:u4:sq1",
+      "source_unit_id": "xhs:68d8a078000000000b0128fa:snapshot-95b77bb26104:note-json-desc-18:u4",
+      "unit_position": 4,
+      "raw_text": "- 问题：如何设计一个实时数据采集与监控系统？\n- 考点：\n- 实时数据采集：使用Netty处理TCP长连接，解析自定义二进制协议。\n- 故障判断逻辑：配置阈值管理与动态调整。\n- 问题：计量系统如何保证数据准确性？\n- 考点：\n- 数据完整性：通信中断补采、数据校验（CRC16、总和校验）。\n- 高精度计算： BigDecimal处理小数计算，避免浮点精度丢失。\n- 数据一致性：分布式事务或本地事务+对账机制。",
+      "extraction_status": "extracted"
+    },
+    {
+      "source_question_id": "xhs:68d8a078000000000b0128fa:snapshot-95b77bb26104:note-json-desc-18:u5:sq1",
+      "source_unit_id": "xhs:68d8a078000000000b0128fa:snapshot-95b77bb26104:note-json-desc-18:u5",
+      "unit_position": 5,
+      "raw_text": "2. 高可靠与高并发架构",
+      "extraction_status": "extracted"
+    },
+    {
+      "source_question_id": "xhs:68d8a078000000000b0128fa:snapshot-95b77bb26104:note-json-desc-18:u6:sq1",
+      "source_unit_id": "xhs:68d8a078000000000b0128fa:snapshot-95b77bb26104:note-json-desc-18:u6",
+      "unit_position": 6,
+      "raw_text": "- 问题：如何保证监控系统7*24小时高可用？\n- 考点：\n- 冗余设计：应用集群部署（Nginx负载均衡）、数据库主从复制+故障切换。\n- 容灾设计：同城双活或异地灾备架构，数据实时同步。\n- 快速恢复：健康检查、服务熔断降级（Sentinel/Hystrix）、故障自动转移。\n- 问题：如何应对终端大规模并发上线和数据上报？\n- 考点：\n- 异步处理：使用Kafka等消息队列削峰填谷，异步落库。\n- 连接优化：基于Netty设计可靠的长连接管理，心跳保活，断线重连。",
+      "extraction_status": "extracted"
+    },
+    {
+      "source_question_id": "xhs:68d8a078000000000b0128fa:snapshot-95b77bb26104:note-json-desc-18:u7:sq1",
+      "source_unit_id": "xhs:68d8a078000000000b0128fa:snapshot-95b77bb26104:note-json-desc-18:u7",
+      "unit_position": 7,
+      "raw_text": "3. 国产化与安全要求",
+      "extraction_status": "extracted"
+    },
+    {
+      "source_question_id": "xhs:68d8a078000000000b0128fa:snapshot-95b77bb26104:note-json-desc-18:u8:sq1",
+      "source_unit_id": "xhs:68d8a078000000000b0128fa:snapshot-95b77bb26104:note-json-desc-18:u8",
+      "unit_position": 8,
+      "raw_text": "- 问题：系统如何适配国产化环境（如麒麟OS、鲲鹏CPU、达梦数据库）？\n- 考点：\n- 环境兼容：JDK选择（龙芯JDK或OpenJDK龙芯版本）、依赖库的国产化替代。\n- 数据库适配：SQL语法差异处理、达梦JDBC连接配置与性能调优。",
+      "extraction_status": "extracted"
+    },
+    {
+      "source_question_id": "xhs:68d8a078000000000b0128fa:snapshot-95b77bb26104:note-json-desc-18:u10:sq1",
+      "source_unit_id": "xhs:68d8a078000000000b0128fa:snapshot-95b77bb26104:note-json-desc-18:u10",
+      "unit_position": 10,
+      "raw_text": "1. 手撕代码题",
+      "extraction_status": "extracted"
+    },
+    {
+      "source_question_id": "xhs:68d8a078000000000b0128fa:snapshot-95b77bb26104:note-json-desc-18:u12:sq1",
+      "source_unit_id": "xhs:68d8a078000000000b0128fa:snapshot-95b77bb26104:note-json-desc-18:u12",
+      "unit_position": 12,
+      "raw_text": "2. 系统设计题",
+      "extraction_status": "extracted"
+    },
+    {
+      "source_question_id": "xhs:68d8a078000000000b0128fa:snapshot-95b77bb26104:note-json-desc-18:u14:sq1",
+      "source_unit_id": "xhs:68d8a078000000000b0128fa:snapshot-95b77bb26104:note-json-desc-18:u14",
+      "unit_position": 14,
+      "raw_text": "3. 深度拷问与故障排查",
+      "extraction_status": "extracted"
+    },
+    {
+      "source_question_id": "xhs:68d8a078000000000b0128fa:snapshot-95b77bb26104:note-json-desc-18:u15:sq1",
+      "source_unit_id": "xhs:68d8a078000000000b0128fa:snapshot-95b77bb26104:note-json-desc-18:u15",
+      "unit_position": 15,
+      "raw_text": "- 问题：现场某区域所有终端同时掉线，如何快速定位问题？\n- 排查思路：",
+      "extraction_status": "extracted"
+    },
+    {
+      "source_question_id": "xhs:68d8a078000000000b0128fa:snapshot-95b77bb26104:note-json-desc-18:u16:sq1",
+      "source_unit_id": "xhs:68d8a078000000000b0128fa:snapshot-95b77bb26104:note-json-desc-18:u16",
+      "unit_position": 16,
+      "raw_text": "1. 检查网络：核心交换机、汇聚交换机状态。",
+      "extraction_status": "extracted"
+    },
+    {
+      "source_question_id": "xhs:68d8a078000000000b0128fa:snapshot-95b77bb26104:note-json-desc-18:u17:sq1",
+      "source_unit_id": "xhs:68d8a078000000000b0128fa:snapshot-95b77bb26104:note-json-desc-18:u17",
+      "unit_position": 17,
+      "raw_text": "2. 检查服务：采集服务是否假死（查看日志、监控指标）、数据库连接是否耗尽。",
+      "extraction_status": "extracted"
+    },
+    {
+      "source_question_id": "xhs:68d8a078000000000b0128fa:snapshot-95b77bb26104:note-json-desc-18:u18:sq1",
+      "source_unit_id": "xhs:68d8a078000000000b0128fa:snapshot-95b77bb26104:note-json-desc-18:u18",
+      "unit_position": 18,
+      "raw_text": "3. 检查配置：是否误操作发布了错误的配置或升级包。",
+      "extraction_status": "extracted"
+    }
+  ],
+  "content_sha256": "0b7c8ff65958f0bc3a8770ab154996b847e204a71e0d31120201e36cb70e1f16"
+}

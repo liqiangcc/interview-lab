@@ -1,0 +1,17 @@
+{
+  "schema_version": "answer.v1",
+  "answer_id": "answer:cq:030a2fb4d4362eb3",
+  "canonical_question_id": "cq:030a2fb4d4362eb3",
+  "canonical_index_sha256": "1c4046937c2c22aa3d57487599cfbf06fd24a3504e5c06f11c1640f5dfd040a6",
+  "question_text": "6.rank,dense_rank,row_number的区别",
+  "short_answer": "row_number强制唯一序号；rank并列同名次跳过后续（1,2,2,4）；dense_rank并列同名次不跳（1,2,2,3）。",
+  "skeleton": [
+    "row_number：1,2,3,4",
+    "rank：1,2,2,4",
+    "dense_rank：1,2,2,3",
+    "典型场景：组内TopN去重"
+  ],
+  "explanation": "经典应用是每个分组取TopN：`select * from (select *, row_number() over(partition by dept order by salary desc) rn from emp) t where rn<=3`——row_number适合“每部门工资最高3人”；rank/dense_rank适合“成绩排名前3名”（允许并列时选哪个取决于要不要跳名次）。",
+  "example": "并列工资处理：选rank则并列第2后下一个是第4；dense_rank则下一个是第3——报表口径要问清业务要哪种。",
+  "content_sha256": "07ee3593cd6896b085d3d152c8ea8f823de4721c1e305e6767959425751ec335"
+}

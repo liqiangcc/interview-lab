@@ -1,0 +1,24 @@
+{
+  "schema_version": "analysis.v1",
+  "analysis_id": "analysis:cq:d7ef13d879ff1591",
+  "canonical_question_id": "cq:d7ef13d879ff1591",
+  "canonical_index_sha256": "1c4046937c2c22aa3d57487599cfbf06fd24a3504e5c06f11c1640f5dfd040a6",
+  "question_text": "14.进程间通信",
+  "question_kind": "knowledge",
+  "interviewer_intent": "考察进程间通信方式的完整版图及各方式的性能/适用场景差异。",
+  "expected_depth": "能列5+种并说清各自原理和适用场景",
+  "mechanism": "管道（父子进程，半双工）/命名管道（任意进程）/消息队列（内核链表，可类型化）/共享内存（最快，零拷贝但要自己同步）/信号量（同步原语非传输）/信号（异步通知）/socket（跨机器，最通用）。选型看两点：要不要跨机、数据量多大——大数据量本机用共享内存+信号量同步，跨机只有socket/RPC。",
+  "boundaries": "共享内存最快但只是“快在内核不拷贝”，同步还是要自己做；socket是唯一跨机方案但不是最快。",
+  "common_mistakes": [
+    "只会管道和socket",
+    "说共享内存快但说不出为什么（无内核拷贝）",
+    "把信号量当传输方式"
+  ],
+  "follow_ups": [
+    "共享内存为什么快",
+    "匿名管道和命名管道区别",
+    "socket和上面那些本质区别"
+  ],
+  "member_count": 4,
+  "content_sha256": "08facc03c98e76f489e6d943c1a1cdc27bd9a0e87feb5ec77d4d2ff7969a68dd"
+}

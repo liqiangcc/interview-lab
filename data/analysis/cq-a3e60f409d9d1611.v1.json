@@ -1,0 +1,26 @@
+{
+  "schema_version": "analysis.v1",
+  "analysis_id": "analysis:cq:a3e60f409d9d1611",
+  "canonical_question_id": "cq:a3e60f409d9d1611",
+  "canonical_index_sha256": "1c4046937c2c22aa3d57487599cfbf06fd24a3504e5c06f11c1640f5dfd040a6",
+  "question_text": "31. cap理论？",
+  "question_kind": "knowledge",
+  "interviewer_intent": "考察分布式系统基础理论：CAP三性质的含义、不可能三角的现实约束、实际系统的取舍。",
+  "expected_depth": "CAP定义+为什么三者不可兼得（网络分区下只能二选一）+实际系统选型例子",
+  "mechanism": "C一致性（读总能读到最新写）/A可用性（每次请求都有非错响应）/P分区容忍（网络分区下系统仍运行）。网络分区必然发生（P必选），所以真实选择是CP（分区时拒绝服务保一致，如ZK/etcd/Raft族）或AP（分区时继续服务可能读到旧值，如Eureka/最终一致缓存）。",
+  "boundaries": "CAP不是“三选二”的菜单——P不可放弃；无分区时CA可以同时成立；BASE是AP的工程化表述（基本可用+软状态+最终一致）。",
+  "common_mistakes": [
+    "说成“三选二”不提P的必然性",
+    "举不出CP/AP系统实例",
+    "不知道BASE",
+    "把一致性和可用性理解反"
+  ],
+  "follow_ups": [
+    "CP和AP各举系统例子",
+    "BASE是什么",
+    "实际业务怎么选",
+    "ZAB/Raft为什么CP"
+  ],
+  "member_count": 3,
+  "content_sha256": "f3b25133a99d57a6dc6b3a32e21cf35fdb34e1513236083b11046f10f2a55374"
+}

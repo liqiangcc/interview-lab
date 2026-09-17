@@ -1,0 +1,116 @@
+{
+  "schema_version": "source-question-set.v1",
+  "set_id": "xhs:68c8ae76000000001c010c54:source-question-set-v1",
+  "interview_note_id": "xhs:68c8ae76000000001c010c54",
+  "source_revision_id": "xhs-note:68c8ae76000000001c010c54:snapshot-95b77bb26104",
+  "source_manifest_id": "xhs:68c8ae76000000001c010c54:snapshot-95b77bb26104:note-desc-21:sequence-v1",
+  "source_manifest_sha256": "b15240a7cb271bafb00b687f5f340473e822eaf34826f8e5ae19bbdfe86e014c",
+  "questions": [
+    {
+      "source_question_id": "xhs:68c8ae76000000001c010c54:snapshot-95b77bb26104:note-desc-21:u1:sq1",
+      "source_unit_id": "xhs:68c8ae76000000001c010c54:snapshot-95b77bb26104:note-desc-21:u1",
+      "unit_position": 1,
+      "raw_text": "🔥 字节跳动Java外包面经｜支付+高并发+微服务真题揭秘\n📍背景：学员刚面完字节跳动Java外包岗，两轮技术面聚焦支付系统设计、高并发处理及微服务架构，面试官疯狂追问底层原理和实战细节！整理高频真题+避坑指南，助你冲刺大厂Offer！💻",
+      "extraction_status": "extracted"
+    },
+    {
+      "source_question_id": "xhs:68c8ae76000000001c010c54:snapshot-95b77bb26104:note-desc-21:u3:sq1",
+      "source_unit_id": "xhs:68c8ae76000000001c010c54:snapshot-95b77bb26104:note-desc-21:u3",
+      "unit_position": 3,
+      "raw_text": "1. 支付系统设计",
+      "extraction_status": "extracted"
+    },
+    {
+      "source_question_id": "xhs:68c8ae76000000001c010c54:snapshot-95b77bb26104:note-desc-21:u5:sq1",
+      "source_unit_id": "xhs:68c8ae76000000001c010c54:snapshot-95b77bb26104:note-desc-21:u5",
+      "unit_position": 5,
+      "raw_text": "2. 高并发场景",
+      "extraction_status": "extracted"
+    },
+    {
+      "source_question_id": "xhs:68c8ae76000000001c010c54:snapshot-95b77bb26104:note-desc-21:u6:sq1",
+      "source_unit_id": "xhs:68c8ae76000000001c010c54:snapshot-95b77bb26104:note-desc-21:u6",
+      "unit_position": 6,
+      "raw_text": "- 问题：秒杀场景下如何防止超卖？\n- 方案：\n- Redis原子操作：Lua脚本扣减库存（DECR+判断库存≥0）。\n- 异步落库：MQ异步处理订单，DB层唯一索引防重复。\n- 优化：本地缓存+Redis分层缓存（热点商品预加载）。",
+      "extraction_status": "extracted"
+    },
+    {
+      "source_question_id": "xhs:68c8ae76000000001c010c54:snapshot-95b77bb26104:note-desc-21:u7:sq1",
+      "source_unit_id": "xhs:68c8ae76000000001c010c54:snapshot-95b77bb26104:note-desc-21:u7",
+      "unit_position": 7,
+      "raw_text": "3. 微服务治理",
+      "extraction_status": "extracted"
+    },
+    {
+      "source_question_id": "xhs:68c8ae76000000001c010c54:snapshot-95b77bb26104:note-desc-21:u8:sq1",
+      "source_unit_id": "xhs:68c8ae76000000001c010c54:snapshot-95b77bb26104:note-desc-21:u8",
+      "unit_position": 8,
+      "raw_text": "- 问题：如何保证微服务间数据一致性？\n- 答案：\n- Saga模式：长事务拆分子事务+补偿机制（如订单失败触发退款）。\n- 分布式事务：Seata AT模式（二阶段提交+回滚日志）。",
+      "extraction_status": "extracted"
+    },
+    {
+      "source_question_id": "xhs:68c8ae76000000001c010c54:snapshot-95b77bb26104:note-desc-21:u10:sq1",
+      "source_unit_id": "xhs:68c8ae76000000001c010c54:snapshot-95b77bb26104:note-desc-21:u10",
+      "unit_position": 10,
+      "raw_text": "1. 手撕算法题",
+      "extraction_status": "extracted"
+    },
+    {
+      "source_question_id": "xhs:68c8ae76000000001c010c54:snapshot-95b77bb26104:note-desc-21:u11:sq1",
+      "source_unit_id": "xhs:68c8ae76000000001c010c54:snapshot-95b77bb26104:note-desc-21:u11",
+      "unit_position": 11,
+      "raw_text": "- 题目：实现LRU缓存（LeetCode 146）\n- 要求：哈希表+双向链表，O(1)时间复杂度。\nclass LRUCache {\nprivate Map<Integer, Node> map;\nprivate DoubleList list;\nprivate int cap;\n// 实现get/put方法，维护链表顺序\n}\n- 扩展：如何设计一个支持过期时间的LRU？→ 增加时间轮+异步清理线程。",
+      "extraction_status": "extracted"
+    },
+    {
+      "source_question_id": "xhs:68c8ae76000000001c010c54:snapshot-95b77bb26104:note-desc-21:u12:sq1",
+      "source_unit_id": "xhs:68c8ae76000000001c010c54:snapshot-95b77bb26104:note-desc-21:u12",
+      "unit_position": 12,
+      "raw_text": "2. JVM与性能调优",
+      "extraction_status": "extracted"
+    },
+    {
+      "source_question_id": "xhs:68c8ae76000000001c010c54:snapshot-95b77bb26104:note-desc-21:u13:sq1",
+      "source_unit_id": "xhs:68c8ae76000000001c010c54:snapshot-95b77bb26104:note-desc-21:u13",
+      "unit_position": 13,
+      "raw_text": "- 问题：线上Full GC频繁，如何排查？\n- 步骤：",
+      "extraction_status": "extracted"
+    },
+    {
+      "source_question_id": "xhs:68c8ae76000000001c010c54:snapshot-95b77bb26104:note-desc-21:u16:sq1",
+      "source_unit_id": "xhs:68c8ae76000000001c010c54:snapshot-95b77bb26104:note-desc-21:u16",
+      "unit_position": 16,
+      "raw_text": "3. 系统设计",
+      "extraction_status": "extracted"
+    },
+    {
+      "source_question_id": "xhs:68c8ae76000000001c010c54:snapshot-95b77bb26104:note-desc-21:u18:sq1",
+      "source_unit_id": "xhs:68c8ae76000000001c010c54:snapshot-95b77bb26104:note-desc-21:u18",
+      "unit_position": 18,
+      "raw_text": "1. 支付安全：",
+      "extraction_status": "extracted"
+    },
+    {
+      "source_question_id": "xhs:68c8ae76000000001c010c54:snapshot-95b77bb26104:note-desc-21:u19:sq1",
+      "source_unit_id": "xhs:68c8ae76000000001c010c54:snapshot-95b77bb26104:note-desc-21:u19",
+      "unit_position": 19,
+      "raw_text": "- “如何防篡改请求？”→ 参数签名（MD5+RSA非对称加密）",
+      "extraction_status": "extracted"
+    },
+    {
+      "source_question_id": "xhs:68c8ae76000000001c010c54:snapshot-95b77bb26104:note-desc-21:u20:sq1",
+      "source_unit_id": "xhs:68c8ae76000000001c010c54:snapshot-95b77bb26104:note-desc-21:u20",
+      "unit_position": 20,
+      "raw_text": "2. 性能陷阱：",
+      "extraction_status": "extracted"
+    },
+    {
+      "source_question_id": "xhs:68c8ae76000000001c010c54:snapshot-95b77bb26104:note-desc-21:u21:sq1",
+      "source_unit_id": "xhs:68c8ae76000000001c010c54:snapshot-95b77bb26104:note-desc-21:u21",
+      "unit_position": 21,
+      "raw_text": "- “Redis集群脑裂导致数据不一致？”→ 最小主节点数（quorum机制）+哨兵监控。",
+      "extraction_status": "extracted"
+    }
+  ],
+  "content_sha256": "60860381d6ba1ac5686a13404c2fac1e89cec8eba05a3e46570a7fa27c24ef50"
+}

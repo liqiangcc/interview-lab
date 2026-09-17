@@ -1,0 +1,17 @@
+{
+  "schema_version": "answer.v1",
+  "answer_id": "answer:cq:23c5fe6cb788a16f",
+  "canonical_question_id": "cq:23c5fe6cb788a16f",
+  "canonical_index_sha256": "1c4046937c2c22aa3d57487599cfbf06fd24a3504e5c06f11c1640f5dfd040a6",
+  "question_text": "1.Mysql事务的特性，如何保证这些特性？",
+  "short_answer": "ACID：原子性靠undo回滚、隔离性靠锁+MVCC、持久性靠redo WAL、一致性是前三者+业务约束共同实现的目标。",
+  "skeleton": [
+    "A：定义+undo log",
+    "I：定义+锁/MVCC",
+    "D：定义+redo WAL先日志后数据",
+    "C：目标特性=AID+约束合力"
+  ],
+  "explanation": "机制对照是答法核心。undo log记录修改前镜像，回滚时反向应用实现A；锁处理写写冲突、MVCC处理读写并发实现I；redo log顺序写（WAL）让事务提交只需保证日志落盘、数据页异步刷，崩溃后重放redo恢复D。一致性C是最终目标：AID保证数据库层不破坏约束，业务层约束（如唯一索引、余额非负）也要配合。",
+  "example": "转账崩溃恢复：已提交事务靠redo重做保证不丢（D），未提交事务靠undo回滚保证不留下半笔（A），两阶段提交协调redo+binlog一致。",
+  "content_sha256": "fb5ddae513c932028271d2e9eaac5ee59efd33f1d271580ac6921306f025a2b6"
+}

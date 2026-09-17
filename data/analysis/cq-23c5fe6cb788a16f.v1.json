@@ -1,0 +1,26 @@
+{
+  "schema_version": "analysis.v1",
+  "analysis_id": "analysis:cq:23c5fe6cb788a16f",
+  "canonical_question_id": "cq:23c5fe6cb788a16f",
+  "canonical_index_sha256": "1c4046937c2c22aa3d57487599cfbf06fd24a3504e5c06f11c1640f5dfd040a6",
+  "question_text": "1.Mysql事务的特性，如何保证这些特性？",
+  "question_kind": "knowledge",
+  "interviewer_intent": "考察事务ACID四特性定义及InnoDB如何用日志+锁+MVCC落地每个特性。",
+  "expected_depth": "四特性定义+各自的实现机制对应",
+  "mechanism": "A原子性：undo log回滚；C一致性：由A+I+D+业务约束共同保证（AID手段C是目标）；I隔离性：锁+MVCC；D持久性：redo log（WAL，先写日志再落盘）。回答用“定义+实现”对照最清楚。",
+  "boundaries": "一致性不是靠数据库单独保证的——AID是数据库提供的手段，C是业务层最终目标（如转账总额不变要自己保证）；持久性靠redo但binlog也参与分布式一致性（两阶段提交）。",
+  "common_mistakes": [
+    "只会背四个单词",
+    "说不出哪个特性靠哪个机制",
+    "把一致性和隔离性混为一谈",
+    "不知道WAL"
+  ],
+  "follow_ups": [
+    "redo和undo区别",
+    "两阶段提交",
+    "MVCC怎么实现I",
+    "崩溃恢复流程"
+  ],
+  "member_count": 2,
+  "content_sha256": "0c9caede98458e7833496885866d1fbdda697d95f182f1a88ed2f4fbca762ed0"
+}

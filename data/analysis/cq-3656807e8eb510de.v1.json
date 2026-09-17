@@ -1,0 +1,26 @@
+{
+  "schema_version": "analysis.v1",
+  "analysis_id": "analysis:cq:3656807e8eb510de",
+  "canonical_question_id": "cq:3656807e8eb510de",
+  "canonical_index_sha256": "1c4046937c2c22aa3d57487599cfbf06fd24a3504e5c06f11c1640f5dfd040a6",
+  "question_text": "4. MySQL事务隔离级别?",
+  "question_kind": "knowledge",
+  "interviewer_intent": "考察事务隔离级别的定义、各级别解决的并发问题（脏读/不可重复读/幻读）及InnoDB实现机制（MVCC+锁）。",
+  "expected_depth": "四级别+对应问题+InnoDB RR级如何实现+幻读处理",
+  "mechanism": "读未提交RU（能读别人未提交的→脏读）→读已提交RC（只读已提交，同事务内两次读可不同→不可重复读）→可重复读RR（事务内快照读一致，InnoDB默认）→串行化（加锁全串行）。InnoDB的RR用MVCC快照读解决幻读的大部分场景，当前读用间隙锁/next-key lock防幻写。",
+  "boundaries": "RR不是完全防幻读：快照读防了“看到新行”，但当前读（update/select for update）仍可能遇到幻行需要间隙锁；RC和RR的binlog格式要求不同（RR下statement格式可能主从不一致）。",
+  "common_mistakes": [
+    "背级别但对应不上解决的问题",
+    "不知道InnoDB默认RR",
+    "说不出MVCC和锁分别解决什么",
+    "以为串行化是默认"
+  ],
+  "follow_ups": [
+    "MVCC怎么实现快照读",
+    "幻读和不可重复读区别",
+    "间隙锁是什么",
+    "为什么不用串行化"
+  ],
+  "member_count": 3,
+  "content_sha256": "40bbfd925ce4eda5e7b9e3c3380339b337227e6cef0f26696913638199062297"
+}

@@ -1,0 +1,19 @@
+{
+  "schema_version": "answer.v1",
+  "answer_id": "answer:cq:3013b414c554e422",
+  "canonical_question_id": "cq:3013b414c554e422",
+  "canonical_index_sha256": "1c4046937c2c22aa3d57487599cfbf06fd24a3504e5c06f11c1640f5dfd040a6",
+  "question_text": "3.redis数据类型",
+  "short_answer": "五类型：String(缓存/计数/锁)、Hash(对象)、List(队列/时间线)、Set(去重/交并集)、ZSet(排行/延迟队列)；底层有ziplist等压缩编码随规模自动切换。",
+  "skeleton": [
+    "String：SDS，缓存/计数/锁",
+    "Hash：对象字段存储",
+    "List：quicklist，LPUSH+BRPOP队列",
+    "Set：去重+集合运算",
+    "ZSet：skiplist+dict，排行/延时任务",
+    "编码切换：小数据ziplist省内存"
+  ],
+  "explanation": "加分点是底层编码：所有类型都是“小数据压缩编码、超阈值转常规结构”——如hash默认listpack(旧版ziplist)，field数>128或value>64B转hashtable。zset的skiplist+dict组合：dict给O(1)按member查分，skiplist给O(logN)范围排。Stream是5.0后真消息队列（消费组+ack+pending）。",
+  "example": "延迟队列用zset：score=到期时间戳，ZRANGEBYSCORE 0 now取到期任务；排行榜：ZINCRBY刷分+ZREVRANGE取TopN。",
+  "content_sha256": "ec00fc801da1d00af87f78ceaa9a0edfc008800b10736a3a35c47e9ef40278bf"
+}

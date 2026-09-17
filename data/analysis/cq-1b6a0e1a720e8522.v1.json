@@ -1,0 +1,26 @@
+{
+  "schema_version": "analysis.v1",
+  "analysis_id": "analysis:cq:1b6a0e1a720e8522",
+  "canonical_question_id": "cq:1b6a0e1a720e8522",
+  "canonical_index_sha256": "1c4046937c2c22aa3d57487599cfbf06fd24a3504e5c06f11c1640f5dfd040a6",
+  "question_text": "8.xxljob这边都用来做什么？",
+  "question_kind": "knowledge",
+  "interviewer_intent": "考察对XXL-JOB分布式任务调度的实际使用场景与架构理解。",
+  "expected_depth": "用途清单+核心机制（调度中心/执行器）+使用边界",
+  "mechanism": "典型用途：定时批处理（对账/结算/数据同步）、超时关单、缓存刷新、报表生成、分布式分片任务。架构：调度中心（Web管理+触发）+执行器（嵌在业务服务里，接收触发跑JobHandler）。特性：分片广播（大任务切片多机并行）、失败重试、路由策略、GLUE在线编辑。",
+  "boundaries": "xxl-job管“什么时候触发”不管“数据怎么传”——大任务要自己分片；调度中心单点要部署高可用；cron触发不是强实时（秒级以下场景用消息）。",
+  "common_mistakes": [
+    "只会说“定时任务”",
+    "不知道分片广播",
+    "把调度和数据处理混为一谈",
+    "说不出和quartz/elastic-job区别"
+  ],
+  "follow_ups": [
+    "分片广播怎么用",
+    "任务失败怎么处理",
+    "和quartz区别",
+    "调度中心挂了任务还跑吗"
+  ],
+  "member_count": 2,
+  "content_sha256": "2f67c938132d07396a3513a3b506a196c3899c052e6a34fca0246e2b8904cedb"
+}

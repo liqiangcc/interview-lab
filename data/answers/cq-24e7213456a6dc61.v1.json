@@ -1,0 +1,18 @@
+{
+  "schema_version": "answer.v1",
+  "answer_id": "answer:cq:24e7213456a6dc61",
+  "canonical_question_id": "cq:24e7213456a6dc61",
+  "canonical_index_sha256": "1c4046937c2c22aa3d57487599cfbf06fd24a3504e5c06f11c1640f5dfd040a6",
+  "question_text": "3.虚拟内存其他的作用",
+  "short_answer": "虚拟内存作用：进程地址空间隔离（安全）、连续抽象（编程简单）、按需分页（省内存）、页级共享（共享库/mmap）、swap超售。",
+  "skeleton": [
+    "隔离：进程地址空间互相不可见",
+    "抽象：连续虚拟地址映射离散物理页",
+    "按需：缺页才分配/换入",
+    "共享：同一物理页映射多进程",
+    "超售：swap换出冷页"
+  ],
+  "explanation": "答这题要跳出“扩大内存”的刻板答案。隔离价值最大：每个进程独占4G(32位)虚拟空间，A写0x400000影响不到B的0x400000——这就是进程崩溃不拖垮系统的根因。共享价值常被忽略：libc只加载一份物理页，所有进程页表指向它；fork的写时复制也是页级共享。",
+  "example": "fork()靠COW：父子页表共享同一批物理页标只读，谁写谁触发缺页复制——Redis bgsave利用这个做快照。",
+  "content_sha256": "ef4abc57663567a51718c05c83c093c1a1a2485d6449945df5e73fb93a58db6c"
+}

@@ -1,0 +1,26 @@
+{
+  "schema_version": "analysis.v1",
+  "analysis_id": "analysis:cq:3013b414c554e422",
+  "canonical_question_id": "cq:3013b414c554e422",
+  "canonical_index_sha256": "1c4046937c2c22aa3d57487599cfbf06fd24a3504e5c06f11c1640f5dfd040a6",
+  "question_text": "3.redis数据类型",
+  "question_kind": "knowledge",
+  "interviewer_intent": "考察Redis五种基础数据结构及底层编码、适用场景——是Redis题族的入门必答题。",
+  "expected_depth": "五类型+各自底层编码+场景各一例",
+  "mechanism": "String（SDS实现，缓存/计数器/分布式锁）、Hash（ziplist→hashtable，对象存储）、List（quicklist=linkedlist+ziplist，消息队列/时间线）、Set（intset→hashtable，去重/交并集）、ZSet（ziplist→skiplist+dict，排行榜/延迟队列）。要说出“底层编码随数据规模切换”这个优化点。",
+  "boundaries": "大value别硬塞String（bigkey问题）；List当队列没有ack语义（要可靠用Stream）；ziplist等压缩编码在小数据省内存但超限自动转。",
+  "common_mistakes": [
+    "只会五种名字说不出场景",
+    "不知道底层编码切换",
+    "把zset底层说成红黑树（是skiplist）",
+    "list当可靠队列用"
+  ],
+  "follow_ups": [
+    "zset底层为什么用skiplist",
+    "hash什么时候ziplist转hashtable",
+    "bigkey怎么拆",
+    "Stream消息队列"
+  ],
+  "member_count": 2,
+  "content_sha256": "d7b575bd84c07ce9df66d2b9965c333fa0362ef3b3852e1466b0c109bf96009e"
+}

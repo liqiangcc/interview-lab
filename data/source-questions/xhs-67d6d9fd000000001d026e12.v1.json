@@ -1,0 +1,60 @@
+{
+  "schema_version": "source-question-set.v1",
+  "set_id": "xhs:67d6d9fd000000001d026e12:source-question-set-v1",
+  "interview_note_id": "xhs:67d6d9fd000000001d026e12",
+  "source_revision_id": "xhs-note:67d6d9fd000000001d026e12:snapshot-95b77bb26104",
+  "source_manifest_id": "xhs:67d6d9fd000000001d026e12:snapshot-95b77bb26104:note-desc-10:sequence-v1",
+  "source_manifest_sha256": "65d8d4aad90dd6ea4f1f47514eb17a19cc840f8589e3d731f054dbc00629f187",
+  "questions": [
+    {
+      "source_question_id": "xhs:67d6d9fd000000001d026e12:snapshot-95b77bb26104:note-desc-10:u2:sq1",
+      "source_unit_id": "xhs:67d6d9fd000000001d026e12:snapshot-95b77bb26104:note-desc-10:u2",
+      "unit_position": 2,
+      "raw_text": "1. 用户退出完了怎么返回数据给用户（存到数据库上，每次用户进去从数据库里拉）",
+      "extraction_status": "extracted"
+    },
+    {
+      "source_question_id": "xhs:67d6d9fd000000001d026e12:snapshot-95b77bb26104:note-desc-10:u3:sq1",
+      "source_unit_id": "xhs:67d6d9fd000000001d026e12:snapshot-95b77bb26104:note-desc-10:u3",
+      "unit_position": 3,
+      "raw_text": "2. 问SaaS是什么，消息队列用的是Kafka、RocketMQ还是RabbitMQ，写的消息队列是怎么实现的（他没理解云函数和我们模型推理使用的服务器是分开的，我跟他掰扯了好久；他想象的消息队列应该是自己写个kafka那种的，而我写的是一个有队列（数据结构）功能的服务。当时做这功能的时候我们调研了，kafka太贵了所以没用，所以自己搞了一个这个简单的。然后这又掰扯了好久。），把消息入队的并发处理又是怎么搞的。",
+      "extraction_status": "extracted"
+    },
+    {
+      "source_question_id": "xhs:67d6d9fd000000001d026e12:snapshot-95b77bb26104:note-desc-10:u5:sq1",
+      "source_unit_id": "xhs:67d6d9fd000000001d026e12:snapshot-95b77bb26104:note-desc-10:u5",
+      "unit_position": 5,
+      "raw_text": "3. 问中间件是啥（我当时忘记定义卡住了。正确答案：给后端用的辅助性服务（不是面向用户的））",
+      "extraction_status": "extracted"
+    },
+    {
+      "source_question_id": "xhs:67d6d9fd000000001d026e12:snapshot-95b77bb26104:note-desc-10:u6:sq1",
+      "source_unit_id": "xhs:67d6d9fd000000001d026e12:snapshot-95b77bb26104:note-desc-10:u6",
+      "unit_position": 6,
+      "raw_text": "4. 问如果一个AIGC的结果半天无法返回，而用户又一定想要得到一个结果，那怎么办。我：那可以在数据库上存状态，定时去扫描数据库。如果超过一定时间，可以返回一个默认的结果，或者在这里trick一下返回一个更简易的结果",
+      "extraction_status": "extracted"
+    },
+    {
+      "source_question_id": "xhs:67d6d9fd000000001d026e12:snapshot-95b77bb26104:note-desc-10:u8:sq1",
+      "source_unit_id": "xhs:67d6d9fd000000001d026e12:snapshot-95b77bb26104:note-desc-10:u8",
+      "unit_position": 8,
+      "raw_text": "1. 个人经历补充：两端实习经历写上简历，把厉害的放在前面",
+      "extraction_status": "extracted"
+    },
+    {
+      "source_question_id": "xhs:67d6d9fd000000001d026e12:snapshot-95b77bb26104:note-desc-10:u9:sq1",
+      "source_unit_id": "xhs:67d6d9fd000000001d026e12:snapshot-95b77bb26104:note-desc-10:u9",
+      "unit_position": 9,
+      "raw_text": "2. 继续投别的实习",
+      "extraction_status": "extracted"
+    },
+    {
+      "source_question_id": "xhs:67d6d9fd000000001d026e12:snapshot-95b77bb26104:note-desc-10:u10:sq1",
+      "source_unit_id": "xhs:67d6d9fd000000001d026e12:snapshot-95b77bb26104:note-desc-10:u10",
+      "unit_position": 10,
+      "raw_text": "3. 准备开刷leetcode",
+      "extraction_status": "extracted"
+    }
+  ],
+  "content_sha256": "b530ff74165147eac7e9c6d9692ed0ff23a56c5cd7534b39414f81ce2640bd4e"
+}

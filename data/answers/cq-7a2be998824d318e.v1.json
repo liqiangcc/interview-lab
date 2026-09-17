@@ -1,0 +1,18 @@
+{
+  "schema_version": "answer.v1",
+  "answer_id": "answer:cq:7a2be998824d318e",
+  "canonical_question_id": "cq:7a2be998824d318e",
+  "canonical_index_sha256": "1c4046937c2c22aa3d57487599cfbf06fd24a3504e5c06f11c1640f5dfd040a6",
+  "question_text": "3.项目难点",
+  "short_answer": "讲一个技术难点完整故事：问题现象→定位路径→方案取舍→量化结果→方法论沉淀。",
+  "skeleton": [
+    "问题现象与影响",
+    "定位过程（工具+假设链）",
+    "方案对比与取舍",
+    "结果量化",
+    "沉淀的通用方法"
+  ],
+  "explanation": "最好的难点故事有“侦探感”：接口P99突刺→监控发现GC停顿→dump发现某缓存无界→换成Caffeine+容量上限→P99回落。定位链条每一步要有工具名（Arthas/MAT/perf/pprof）显得真干过。准备一个主难点+一个备用，覆盖深技术类和系统设计类两种口味。",
+  "example": "“延迟毛刺排查：P99偶发2s尖峰，先怀疑GC但GC日志干净；用Arthas trace发现是下游ES慢查询，原因是bool查询没走filter缓存；改查询结构+加索引后P99从2s降到80ms。”",
+  "content_sha256": "3aa784238bb97c31c877d70ec6ecf5928fdd8d81ca1fc5c2448dc411d434911c"
+}

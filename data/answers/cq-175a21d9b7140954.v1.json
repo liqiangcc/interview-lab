@@ -1,0 +1,14 @@
+{
+  "schema_version": "answer.v1",
+  "answer_id": "answer:cq:175a21d9b7140954",
+  "canonical_question_id": "cq:175a21d9b7140954",
+  "canonical_index_sha256": "1c4046937c2c22aa3d57487599cfbf06fd24a3504e5c06f11c1640f5dfd040a6",
+  "question_text": "（下来后经同门提点发现只要先翻转整个链表就能按原题做，结束后再翻转回去就好，不知道是不是这样？）",
+  "short_answer": "复盘心得：链表从尾开始的K个一组翻转可等价为先整链翻转、按原题处理、再翻回。",
+  "skeleton": [
+    "等价变换技巧"
+  ],
+  "explanation": "面经作者的赛后复盘。作为技术点：链表题先做等价变换往往能复用原题解法——从尾K个一组翻转=reverse(整体)+KGroup翻转+reverse(整体)。",
+  "example": "原题lc25的从尾版：reverse(head)→kGroup翻转→reverse(结果)。",
+  "content_sha256": "7115c8f05adecdec866f84661881262ccd08fdbeeb19872371242fe8d99292e0"
+}

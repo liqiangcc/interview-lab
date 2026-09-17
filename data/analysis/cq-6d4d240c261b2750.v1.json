@@ -1,0 +1,27 @@
+{
+  "schema_version": "analysis.v1",
+  "analysis_id": "analysis:cq:6d4d240c261b2750",
+  "canonical_question_id": "cq:6d4d240c261b2750",
+  "canonical_index_sha256": "1c4046937c2c22aa3d57487599cfbf06fd24a3504e5c06f11c1640f5dfd040a6",
+  "question_text": "8.  concurrentHashMap底层",
+  "question_kind": "knowledge",
+  "interviewer_intent": "考察对ConcurrentHashMap在JDK7/8两版实现的理解：分段锁→CAS+synchronized+红黑树的演进逻辑。",
+  "expected_depth": "JDK7 Segment分段锁和JDK8 CAS+synchronized两套都讲清+并发度/扩容差异",
+  "mechanism": "JDK7：Segment数组（继承ReentrantLock）+HashEntry，段级锁，并发度=段数(默认16)，size()要锁全表。JDK8：Node数组+链表/红黑树；put时桶空CAS、桶非空锁头节点（synchronized）；锁粒度细化到桶，并发度=桶数；链表≥8且容量≥64转树，≤6退化；size()用baseCount+CounterCell分段计数；扩容多线程协作transfer。",
+  "boundaries": "ConcurrentHashMap不允许null键值（避免并发下get返回null无法区分“不存在”和“存的null”）；它是弱一致迭代（不保证看到最新值）。",
+  "common_mistakes": [
+    "只会JDK8不会JDK7（或反之）",
+    "说不出为什么锁粒度细化",
+    "不知道树化阈值",
+    "以为size()是精确的"
+  ],
+  "follow_ups": [
+    "为什么JDK8放弃分段锁",
+    "put流程逐步",
+    "扩容机制",
+    "为什么不允许null",
+    "和HashTable区别"
+  ],
+  "member_count": 4,
+  "content_sha256": "fea2f875d74aecbfeba1a458f0aef29635fd0eaf903ec617d4275858e30318e0"
+}

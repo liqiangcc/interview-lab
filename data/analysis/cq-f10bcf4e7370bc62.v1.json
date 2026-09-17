@@ -1,0 +1,26 @@
+{
+  "schema_version": "analysis.v1",
+  "analysis_id": "analysis:cq:f10bcf4e7370bc62",
+  "canonical_question_id": "cq:f10bcf4e7370bc62",
+  "canonical_index_sha256": "1c4046937c2c22aa3d57487599cfbf06fd24a3504e5c06f11c1640f5dfd040a6",
+  "question_text": "3. Java内存模型",
+  "question_kind": "knowledge",
+  "interviewer_intent": "考察Java内存模型JMM——与JVM内存结构完全不同的概念：多线程下可见性/有序性/原子性的规范。",
+  "expected_depth": "JMM定义+三大特性+happens-before+volatile语义",
+  "mechanism": "JMM定义线程与主内存的抽象交互：每线程有工作内存（缓存），变量操作要经主内存。三特性：可见性（写后其他线程何时可见）、有序性（指令重排规则）、原子性（基本读写原子，复合操作不保证）。happens-before规则给出可见性保证（程序次序/锁/volatile/传递性等）。volatile保证可见性+禁重排但不保证原子性（i++仍不安全）。",
+  "boundaries": "JMM≠JVM内存区域（堆栈）——混淆是最常见错误；volatile不保证原子性只保证可见性/有序性；DCL单例必须volatile防重排。",
+  "common_mistakes": [
+    "把JMM说成堆栈分区",
+    "说volatile保证原子性",
+    "不知道happens-before",
+    "DCL说不出为什么要volatile"
+  ],
+  "follow_ups": [
+    "volatile底层（内存屏障）",
+    "DCL单例为什么要volatile",
+    "happens-before具体规则",
+    "JMM和CPU缓存关系"
+  ],
+  "member_count": 3,
+  "content_sha256": "398f54da705ae456a999a817d7c1a0fef02b4457dd41027aaf3df67dc69daf1a"
+}

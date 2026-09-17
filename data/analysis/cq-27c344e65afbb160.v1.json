@@ -1,0 +1,25 @@
+{
+  "schema_version": "analysis.v1",
+  "analysis_id": "analysis:cq:27c344e65afbb160",
+  "canonical_question_id": "cq:27c344e65afbb160",
+  "canonical_index_sha256": "1c4046937c2c22aa3d57487599cfbf06fd24a3504e5c06f11c1640f5dfd040a6",
+  "question_text": "4.spring最核心的是什么?",
+  "question_kind": "knowledge",
+  "interviewer_intent": "Spring开放性考察题：看候选人对框架本质的理解层次——IOC/AOP是公认核心，但答案要能展开机制而非背名词。",
+  "expected_depth": "核心定位（IoC/AOP）+各自解决的问题+关键机制",
+  "mechanism": "IoC/DI是地基：对象创建与依赖装配权交给容器（BeanFactory），解耦类间依赖、便于替换和测试；AOP在其上解决横切关注点（日志/事务/安全）复用——动态代理织入，不改业务代码。延伸核心：Bean生命周期管理、事件机制、资源抽象、约定大于配置的Boot。",
+  "boundaries": "“最核心”没有标准答案——说IoC+AOP并展开机制就是稳的；也可以说核心是Bean生命周期管理或生态抽象，但要自圆其说。",
+  "common_mistakes": [
+    "只说IOC说不出解决什么问题",
+    "AOP说不清代理由谁生成",
+    "答成“springboot/springmvc”偏题"
+  ],
+  "follow_ups": [
+    "IoC怎么实现（容器+DI注入方式）",
+    "AOP代理JDK vs CGLIB",
+    "Bean生命周期",
+    "spring和springboot关系"
+  ],
+  "member_count": 2,
+  "content_sha256": "fbc0d5d4f204f3f56e25248c50985aa8638cac0df5cf034c5a66ab77d7406c50"
+}

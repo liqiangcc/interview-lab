@@ -1,0 +1,26 @@
+{
+  "schema_version": "analysis.v1",
+  "analysis_id": "analysis:cq:0bfefa25e7cdde88",
+  "canonical_question_id": "cq:0bfefa25e7cdde88",
+  "canonical_index_sha256": "1c4046937c2c22aa3d57487599cfbf06fd24a3504e5c06f11c1640f5dfd040a6",
+  "question_text": "4.Redis可以做加锁吗？如果加了锁之后服务挂了，别的实例拿不到锁了，怎么办",
+  "question_kind": "knowledge",
+  "interviewer_intent": "Redis分布式锁的边界场景题：锁持有者宕机导致锁无法释放的容错处理。",
+  "expected_depth": "能给出过期时间+续期+误删防护三层方案，知道Redisson看门狗",
+  "mechanism": "问题：加锁后服务挂→锁永远不释放→死锁。解法：①SET NX PX原子加锁带过期时间兜底②业务未完但锁快到期→Redisson看门狗自动续期（默认30s锁/10s续期）③释放时校验value是唯一标识（UUID）+Lua原子删，防误删别人的锁④更严用RedLock多节点（争议大，Martin Kleppmann vs antirez）。",
+  "boundaries": "过期时间是兜底不是精确控制——设太短业务没完锁就没了（所以要续期），太长宕机后等待久； fencing token才能解决“锁过期后旧持有者继续写”的问题。",
+  "common_mistakes": [
+    "只说加过期时间不知道续期",
+    "del没用原子校验误删别人锁",
+    "认为过期时间精确够（业务超时怎么办）",
+    "不知道RedLock"
+  ],
+  "follow_ups": [
+    "看门狗实现原理",
+    "误删锁场景",
+    "RedLock可靠吗",
+    "fencing token"
+  ],
+  "member_count": 2,
+  "content_sha256": "54f2f60dea11ae28d5d1482d8570cfeff4d95c297273c0887770d508ff07e9db"
+}

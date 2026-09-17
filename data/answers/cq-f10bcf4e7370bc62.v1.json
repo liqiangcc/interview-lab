@@ -1,0 +1,18 @@
+{
+  "schema_version": "answer.v1",
+  "answer_id": "answer:cq:f10bcf4e7370bc62",
+  "canonical_question_id": "cq:f10bcf4e7370bc62",
+  "canonical_index_sha256": "1c4046937c2c22aa3d57487599cfbf06fd24a3504e5c06f11c1640f5dfd040a6",
+  "question_text": "3. Java内存模型",
+  "short_answer": "JMM是Java多线程内存规范：主内存+线程工作内存抽象，保证可见性/有序性/原子性三特性，规则载体是happens-before；volatile可见性+禁重排但不原子。",
+  "skeleton": [
+    "抽象：主内存+工作内存",
+    "三特性：可见/有序/原子",
+    "happens-before规则集",
+    "volatile语义与边界",
+    "和JVM内存结构的区分"
+  ],
+  "explanation": "先声明“JMM不是堆栈那个内存模型”就赢一半。模型动机：CPU缓存和指令重排让多线程读写顺序不可预期，JMM用happens-before给程序员一个可推理的契约——A happens-before B则A的结果对B可见。volatile写时刷主存+读时失效本地缓存（可见性），加内存屏障防重排（有序性）；但它不原子因为读-改-写是三步。经典考点DCL：instance=new Singleton()是“分配内存→初始化→赋值引用”三步可重排，先赋值后初始化会让别的线程读到半初始化对象，所以引用要volatile。",
+  "example": "双检锁单例：if(instance==null) sync{ if(instance==null) instance=new Singleton() }——引用必须volatile，否则线程可能拿到未初始化完成的对象引用。",
+  "content_sha256": "53d8fa3b06b6cbb922a01a60a417ed981e336194dfbef7b5192eabfa884287df"
+}

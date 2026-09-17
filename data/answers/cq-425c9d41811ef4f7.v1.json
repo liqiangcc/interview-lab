@@ -1,0 +1,18 @@
+{
+  "schema_version": "answer.v1",
+  "answer_id": "answer:cq:425c9d41811ef4f7",
+  "canonical_question_id": "cq:425c9d41811ef4f7",
+  "canonical_index_sha256": "1c4046937c2c22aa3d57487599cfbf06fd24a3504e5c06f11c1640f5dfd040a6",
+  "question_text": "22.TCP和UDP的区别",
+  "short_answer": "TCP面向连接、可靠有序、字节流，靠序号/ACK/重传/流控实现，开销大；UDP无连接、不保可靠、报文边界、头部小延迟低。可靠优先选TCP，实时优先或需自建可靠性选UDP。",
+  "skeleton": [
+    "连接性：三次握手 vs 无连接",
+    "可靠性：序号ACK重传窗口 vs 尽力而为",
+    "数据形态：字节流 vs 报文",
+    "开销：头20B+/状态 vs 8B/无状态",
+    "场景选型：HTTP/RPC vs 音视频/QUIC/DNS"
+  ],
+  "explanation": "答这题要落到“机制怎么实现差异”而不是背表。TCP的可靠来自：每个字节有序号、接收方ACK确认、超时重传、滑动窗口控制发送速率、拥塞控制防打爆网络；这些都要求维护连接状态，所以有握手挥手。UDP把这些全省了，换来低延迟和简单。追问常考：三次握手本质是让双方都确认对方初始序号同步（两次不够，因为服务端也要确认客户端能收到自己的SYN-ACK）；UDP自建可靠性的例子是QUIC——把重传/流控/拥塞挪到用户态还解决了TCP队头阻塞。",
+  "example": "视频通话用UDP：晚到100ms的画面数据重传没有意义，直接丢帧跳过去体验更好；文件传输必须TCP，错一个字节文件就坏。",
+  "content_sha256": "a2981a3a399c8ce0a7fca4a427590efce930479640d20bc37e5f91f65ea6d116"
+}

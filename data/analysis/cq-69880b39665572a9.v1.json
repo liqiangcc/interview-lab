@@ -1,0 +1,26 @@
+{
+  "schema_version": "analysis.v1",
+  "analysis_id": "analysis:cq:69880b39665572a9",
+  "canonical_question_id": "cq:69880b39665572a9",
+  "canonical_index_sha256": "1c4046937c2c22aa3d57487599cfbf06fd24a3504e5c06f11c1640f5dfd040a6",
+  "question_text": "8.synchronized和ReentrantLock的区别是什么？",
+  "question_kind": "knowledge",
+  "interviewer_intent": "考察Java两种主流锁机制的实现层级差异（JVM关键字 vs JUC类库）和功能边界，顺带看对AQS的理解。",
+  "expected_depth": "差异表+底层实现（monitor/AQS）+新特性各举两例+选型场景",
+  "mechanism": "synchronized是JVM级关键字：靠对象头MarkWord+monitor（JDK6后有偏向锁→轻量级→重量级锁升级路径），自动加解锁。ReentrantLock是JUC API锁：基于AQS（state+CAS+CLH队列），功能更多：可中断lockInterruptibly、超时tryLock、公平锁、多Condition、可查看状态。synchronized锁升级后性能差距已不大。",
+  "boundaries": "synchronized简单场景够用且不易漏放锁；需要超时/可中断/公平/多条件队列才上ReentrantLock。ReentrantLock必须手动unlock（finally），漏写就是死锁。",
+  "common_mistakes": [
+    "说synchronized一定慢（JDK6优化后未必）",
+    "不知道AQS是什么",
+    "ReentrantLock不写finally unlock",
+    "分不清公平/非公平锁"
+  ],
+  "follow_ups": [
+    "AQS原理",
+    "synchronized锁升级过程",
+    "什么是公平锁",
+    "volatile和synchronized区别"
+  ],
+  "member_count": 4,
+  "content_sha256": "db48317e2026b8b36d8c317c0cb38442e6976ea444c6349963b813277ceec0b6"
+}

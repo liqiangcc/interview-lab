@@ -1,0 +1,18 @@
+{
+  "schema_version": "answer.v1",
+  "answer_id": "answer:cq:17e3091cdd63efba",
+  "canonical_question_id": "cq:17e3091cdd63efba",
+  "canonical_index_sha256": "1c4046937c2c22aa3d57487599cfbf06fd24a3504e5c06f11c1640f5dfd040a6",
+  "question_text": "3.openfegin底层原理是什么，他是如何拿到请求路径的？",
+  "short_answer": "OpenFeign用JDK动态代理把接口方法变成HTTP请求：Contract解析注解生成RequestTemplate（含路径）→Encoder编码→Client发出→Decoder解码。",
+  "skeleton": [
+    "扫描@FeignClient→代理bean",
+    "调用→InvocationHandler",
+    "Contract注解解析→RequestTemplate（路径在这拼）",
+    "Encoder→Client(可换)→Decoder",
+    "与LoadBalancer整合点"
+  ],
+  "explanation": "“如何拿到请求路径”专考点：启动时Contract把类上的@RequestMapping prefix+方法上的路径注解合并成RequestTemplate存在MethodHandler里；运行时填入@PathVariable参数。负载均衡整合点：url写服务名时，LoadBalancerClient把服务名解析成实例地址再交给Client。",
+  "example": "@FeignClient(name='order',path='/v1')接口方法@GetMapping('/orders/{id}')→RequestTemplate先拼'/v1/orders/{id}'，LoadBalancer把order解析成host:port后发出GET。",
+  "content_sha256": "e8845755134bfab82e0f73d9698b1375d73ef5effefb1361957c063a8c282ea6"
+}

@@ -1,0 +1,18 @@
+{
+  "schema_version": "answer.v1",
+  "answer_id": "answer:cq:1b6a0e1a720e8522",
+  "canonical_question_id": "cq:1b6a0e1a720e8522",
+  "canonical_index_sha256": "1c4046937c2c22aa3d57487599cfbf06fd24a3504e5c06f11c1640f5dfd040a6",
+  "question_text": "8.xxljob这边都用来做什么？",
+  "short_answer": "xxl-job用于分布式定时任务：对账批处理/超时关单/数据同步等，调度中心触发+执行器执行，支持分片广播、重试、路由策略。",
+  "skeleton": [
+    "用途：批处理/超时/同步/报表",
+    "架构：调度中心+执行器",
+    "关键特性：分片广播/重试/路由",
+    "边界：管触发不管数据",
+    "对比quartz：分布式vs单机"
+  ],
+  "explanation": "回答先给真实使用场景再给架构显得有实践：“我们用它做每日对账（分片广播到8个执行器）和30分钟超时关单”。分片广播考点：index/total两个参数让每台机器只处理自己那部分数据。和quartz核心区别：quartz是进程内调度器靠DB表抢锁做集群，xxl-job是独立调度中心+执行器回调模式。",
+  "example": "每日对账任务：分片广播，每个执行器拿shardIndex/shardTotal切商户ID段，各自跑完回写结果。",
+  "content_sha256": "6183642cd6e94629b284ed75c5c6f7d60713cada0b0ea6922fa72ec8e0f63e57"
+}

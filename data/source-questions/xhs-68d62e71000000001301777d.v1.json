@@ -1,0 +1,18 @@
+{
+  "schema_version": "source-question-set.v1",
+  "set_id": "xhs:68d62e71000000001301777d:source-question-set-v1",
+  "interview_note_id": "xhs:68d62e71000000001301777d",
+  "source_revision_id": "xhs-note:68d62e71000000001301777d:snapshot-95b77bb26104",
+  "source_manifest_id": "xhs:68d62e71000000001301777d:snapshot-95b77bb26104:note-json-desc-9:sequence-v1",
+  "source_manifest_sha256": "5a38338149ed480caf282c01ead26cc2b07844736f1102748cb4b93033855625",
+  "questions": [
+    {
+      "source_question_id": "xhs:68d62e71000000001301777d:snapshot-95b77bb26104:note-json-desc-9:u6:sq1",
+      "source_unit_id": "xhs:68d62e71000000001301777d:snapshot-95b77bb26104:note-json-desc-9:u6",
+      "unit_position": 6,
+      "raw_text": "总时长：30分种\n1⃣️MySQL假如有一个用户表，有一个字段是name，并且为其创建了非唯一索引，并且当前表中有三条记录都是name=xxx，那么开启一个事务后，并且执行select * from 这个表 where name = 'XXX' for update，加的什么锁？\n如果此时又来一个insert into 这个表 values(....)，其中name也是'XXX'，能插入的了嘛\n如果自己设计mysql的锁会怎么设计\n2⃣️一个BS架构的系统，怎么从前端后端的角度来设计，使得不要那么阻塞\n3⃣️如果有一个后端的接口，接口内需要访问其他四个服务，这四个服务都是100ms，如果顺序访问要400ms，如果只用一个线程，不用多线程，怎么降到100ms多（IO多路复用那一套，具体到Java是NIO）\n4⃣️喜欢业务开发还是基架开发\n5⃣️喜欢C端还是B端",
+      "extraction_status": "extracted"
+    }
+  ],
+  "content_sha256": "f1098826c1901184924a09310d32a63ed953643b2aef51a9548b294c86832de5"
+}

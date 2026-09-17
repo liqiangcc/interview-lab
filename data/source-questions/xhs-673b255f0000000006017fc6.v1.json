@@ -1,0 +1,74 @@
+{
+  "schema_version": "source-question-set.v1",
+  "set_id": "xhs:673b255f0000000006017fc6:source-question-set-v1",
+  "interview_note_id": "xhs:673b255f0000000006017fc6",
+  "source_revision_id": "xhs-note:673b255f0000000006017fc6:snapshot-95b77bb26104",
+  "source_manifest_id": "xhs:673b255f0000000006017fc6:snapshot-95b77bb26104:note-desc-10:sequence-v1",
+  "source_manifest_sha256": "265bcd0d9e34b2051f579714f4e584b7c68eb387102aa7e6334db807a67807b7",
+  "questions": [
+    {
+      "source_question_id": "xhs:673b255f0000000006017fc6:snapshot-95b77bb26104:note-desc-10:u1:sq1",
+      "source_unit_id": "xhs:673b255f0000000006017fc6:snapshot-95b77bb26104:note-desc-10:u1",
+      "unit_position": 1,
+      "raw_text": "1.介绍一下TCP，(回答了握手挥手拥塞控制)，追问:还有什么机制，TCP故障后有什么机制?(听都没听说过)",
+      "extraction_status": "extracted"
+    },
+    {
+      "source_question_id": "xhs:673b255f0000000006017fc6:snapshot-95b77bb26104:note-desc-10:u2:sq1",
+      "source_unit_id": "xhs:673b255f0000000006017fc6:snapshot-95b77bb26104:note-desc-10:u2",
+      "unit_position": 2,
+      "raw_text": "2.介绍-下IO模型(回答了NIO，AIO，BIO，io多路复用)",
+      "extraction_status": "extracted"
+    },
+    {
+      "source_question_id": "xhs:673b255f0000000006017fc6:snapshot-95b77bb26104:note-desc-10:u3:sq1",
+      "source_unit_id": "xhs:673b255f0000000006017fc6:snapshot-95b77bb26104:note-desc-10:u3",
+      "unit_position": 3,
+      "raw_text": "3.ArrayList怎么删除中间的连续元素?讲了subList，stream流，然后他问底层原理是什么?(没看过)",
+      "extraction_status": "extracted"
+    },
+    {
+      "source_question_id": "xhs:673b255f0000000006017fc6:snapshot-95b77bb26104:note-desc-10:u4:sq1",
+      "source_unit_id": "xhs:673b255f0000000006017fc6:snapshot-95b77bb26104:note-desc-10:u4",
+      "unit_position": 4,
+      "raw_text": "4.五个线程对一个变量进行100次+1操作，问预计这个值最后是多少?(分析了会产生并发问题，小于500。)为什么会产生这个问题，哪个硬件设备?(答了cpu里面栈在这个过程的执行，基本乱说了)，什么场景下不用任务保护措施下，他一定等于五百。(不太清楚，面试官引导说单cpu，单cpu一定等于五百(感觉也有并发问题))",
+      "extraction_status": "extracted"
+    },
+    {
+      "source_question_id": "xhs:673b255f0000000006017fc6:snapshot-95b77bb26104:note-desc-10:u5:sq1",
+      "source_unit_id": "xhs:673b255f0000000006017fc6:snapshot-95b77bb26104:note-desc-10:u5",
+      "unit_position": 5,
+      "raw_text": "5.spring的ioc和AOP，springboot对所有请求打日志和鉴权(答了AOP和拦截器)，前后端不分离，前端静态资源拦截器还起效嘛?(不起效，要通过mvc才起效)，那要拦截请求怎么办(不会)",
+      "extraction_status": "extracted"
+    },
+    {
+      "source_question_id": "xhs:673b255f0000000006017fc6:snapshot-95b77bb26104:note-desc-10:u6:sq1",
+      "source_unit_id": "xhs:673b255f0000000006017fc6:snapshot-95b77bb26104:note-desc-10:u6",
+      "unit_position": 6,
+      "raw_text": "6.高并发数据库根据name查id，怎么优化。(答了sql优化，索引覆盖。redis缓存，spring本地缓存)，如果redis没有这个数据怎么办?(说了些什么预热机制，就一些缓存三件套的解决方案)，如果redis崩了呢(多级缓存)怎么设置多级缓存?(答了mybatis缓存，面试官不满意，引导下用本地内存通过spring配置类在启动时就往concurrentHashMap<>()注入值)",
+      "extraction_status": "extracted"
+    },
+    {
+      "source_question_id": "xhs:673b255f0000000006017fc6:snapshot-95b77bb26104:note-desc-10:u7:sq1",
+      "source_unit_id": "xhs:673b255f0000000006017fc6:snapshot-95b77bb26104:note-desc-10:u7",
+      "unit_position": 7,
+      "raw_text": "7.springCloud，客户端怎么获取nacos注册中心的信息(拉取存在本地)，本地缓存更新的时机(答了通过配置多少秒拉去一次)，更新时机不敢太了解。",
+      "extraction_status": "extracted"
+    },
+    {
+      "source_question_id": "xhs:673b255f0000000006017fc6:snapshot-95b77bb26104:note-desc-10:u8:sq1",
+      "source_unit_id": "xhs:673b255f0000000006017fc6:snapshot-95b77bb26104:note-desc-10:u8",
+      "unit_position": 8,
+      "raw_text": "8.redis为什么性能好(内存，内部实现多线程，io多路复用，事务派发，存储的数据结构)",
+      "extraction_status": "extracted"
+    },
+    {
+      "source_question_id": "xhs:673b255f0000000006017fc6:snapshot-95b77bb26104:note-desc-10:u9:sq1",
+      "source_unit_id": "xhs:673b255f0000000006017fc6:snapshot-95b77bb26104:note-desc-10:u9",
+      "unit_position": 9,
+      "raw_text": "9.springboot处理请求是单线程还是多线程?(多线程)",
+      "extraction_status": "extracted"
+    }
+  ],
+  "content_sha256": "5d00c7cf4db8c38f5cb4bd398265cee02667060db909d322f11b68baa7e96c95"
+}

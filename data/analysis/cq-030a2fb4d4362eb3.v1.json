@@ -1,0 +1,24 @@
+{
+  "schema_version": "analysis.v1",
+  "analysis_id": "analysis:cq:030a2fb4d4362eb3",
+  "canonical_question_id": "cq:030a2fb4d4362eb3",
+  "canonical_index_sha256": "1c4046937c2c22aa3d57487599cfbf06fd24a3504e5c06f11c1640f5dfd040a6",
+  "question_text": "6.rank,dense_rank,row_number的区别",
+  "question_kind": "knowledge",
+  "interviewer_intent": "SQL窗口函数细节题，考察三个排名函数在并列场景下的语义差异。",
+  "expected_depth": "三个函数定义+并列时行为+典型使用场景",
+  "mechanism": "row_number：严格序号1,2,3,4（并列也强制区分，顺序由ORDER BY定）；rank：并列同名次且跳过后续名次1,2,2,4；dense_rank：并列同名次不跳名次1,2,2,3。记忆：row_number=物理行号，rank=竞赛排名（跳名次），dense_rank=紧凑排名。",
+  "boundaries": "三者都要求OVER(ORDER BY)；row_number并列顺序不确定要加tiebreaker；区别只在“并列时名次怎么排”。",
+  "common_mistakes": [
+    "混淆rank和dense_rank谁跳名次",
+    "忘记OVER子句",
+    "以为row_number有并列概念"
+  ],
+  "follow_ups": [
+    "窗口函数还有哪些",
+    "组内取TopN怎么写",
+    "partition by作用"
+  ],
+  "member_count": 2,
+  "content_sha256": "7b0bcf072994cb2c8b6cd368311793752836adfe15194c991007e820078b3f26"
+}
