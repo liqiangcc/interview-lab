@@ -1,0 +1,26 @@
+{
+  "schema_version": "analysis.v1",
+  "analysis_id": "analysis:cq:26fe591d0c3f44bc",
+  "canonical_question_id": "cq:26fe591d0c3f44bc",
+  "canonical_index_sha256": "1c4046937c2c22aa3d57487599cfbf06fd24a3504e5c06f11c1640f5dfd040a6",
+  "question_text": "5.介绍一下Redission分布式锁",
+  "question_kind": "knowledge",
+  "interviewer_intent": "考察Redisson分布式锁的具体实现机制，比通用Redis锁更深入一层。",
+  "expected_depth": "加锁Lua脚本+看门狗续期+可重入+读写锁/红锁扩展",
+  "mechanism": "Redisson加锁：Lua脚本原子执行——hash结构存 field=线程标识(UUID:threadId)、value=重入次数；锁不存在则hset+pexpire设过期(默认30s)，存在且是自己的field则hincrby重入+续期。看门狗：加锁成功后后台定时任务每10s检查持有则续期到30s。解锁Lua校验field再删除，重入计数归零才真正删锁。RedLock=多独立节点加锁过半成功。",
+  "boundaries": "看门狗的前提是客户端活着且能续约——客户端真死锁照样到期释放；RedLock解决主从切换丢锁但引入时钟假设争议；可重入的field设计是区别于原生SET NX的关键。",
+  "common_mistakes": [
+    "只说“封装了setnx”",
+    "不知道hash结构和重入设计",
+    "看门狗说成永不过期",
+    "RedLock当成普通锁讲"
+  ],
+  "follow_ups": [
+    "看门狗间隔多少",
+    "可重入怎么实现",
+    "主从切换丢锁怎么办",
+    "红锁原理"
+  ],
+  "member_count": 2,
+  "content_sha256": "36f35d2afdd4d2ff05c2083b8c71563b4cc779c14aff30f6a25a8aaaa73ae244"
+}

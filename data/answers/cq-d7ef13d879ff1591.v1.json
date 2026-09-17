@@ -1,0 +1,18 @@
+{
+  "schema_version": "answer.v1",
+  "answer_id": "answer:cq:d7ef13d879ff1591",
+  "canonical_question_id": "cq:d7ef13d879ff1591",
+  "canonical_index_sha256": "1c4046937c2c22aa3d57487599cfbf06fd24a3504e5c06f11c1640f5dfd040a6",
+  "question_text": "14.进程间通信",
+  "short_answer": "IPC主要方式：管道/命名管道、消息队列、共享内存、信号量、信号、socket。共享内存最快（零拷贝但需自同步），socket唯一能跨机。",
+  "skeleton": [
+    "数据传输类：管道/FIFO/消息队列/共享内存/socket",
+    "同步通知类：信号量/信号",
+    "选型维度：跨机？数据量？",
+    "共享内存=最快+需自同步",
+    "socket=通用跨机"
+  ],
+  "explanation": "答题给“分类+选型”结构：传输类按性能排序共享内存>消息队列>管道>socket，同步类是信号量和信号。共享内存快的原因：内核只建立映射，数据进出不经过内核拷贝，用户态直接读写；所以常配信号量/互斥锁做同步。socket跨机但也因此走协议栈最慢。",
+  "example": "高性能本机数据交换（如Nginx worker间缓存）：共享内存+信号量；跨机服务调用：socket封装的RPC。",
+  "content_sha256": "71fd8981dd0466f01ece36d58c02d2041abe21f2b9669d4fd385e95f8d108dad"
+}

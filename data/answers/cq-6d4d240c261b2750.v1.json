@@ -1,0 +1,18 @@
+{
+  "schema_version": "answer.v1",
+  "answer_id": "answer:cq:6d4d240c261b2750",
+  "canonical_question_id": "cq:6d4d240c261b2750",
+  "canonical_index_sha256": "1c4046937c2c22aa3d57487599cfbf06fd24a3504e5c06f11c1640f5dfd040a6",
+  "question_text": "8.  concurrentHashMap底层",
+  "short_answer": "JDK7用Segment分段锁（默认16并发）；JDK8改成桶级锁：空桶CAS、非空桶synchronized锁头节点，链表过长转红黑树，并发度大幅提升。",
+  "skeleton": [
+    "JDK7：Segment[]+段锁，并发度16",
+    "JDK8：Node[]+CAS/synchronized桶级锁",
+    "树化：链表8→树，6→退化",
+    "size：分段计数非精确",
+    "演进动机：锁粒度从段到桶"
+  ],
+  "explanation": "演进的本质是锁粒度细化：分段锁时代同段内所有桶互斥；JDK8直接锁桶的头节点（synchronized因为锁升级机制在非高竞争下代价已低），空桶插入甚至只用CAS无锁。树化解决的是链表退化O(n)查询。size()用类似LongAdder的分段计数避免全局锁。HashTable是另一极端：全表synchronized。",
+  "example": "putVal流程：key算hash定位桶→桶空CAS插入→非空synchronized锁头节点→链表尾插或树插→计数addCount→链表达到8且tab>=64转红黑树。",
+  "content_sha256": "3e026f7d72f06a764fadb116d60aaa331c4406e6db34b1bd59c2e1b8fc6d4ec8"
+}

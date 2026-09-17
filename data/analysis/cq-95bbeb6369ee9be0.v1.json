@@ -1,0 +1,26 @@
+{
+  "schema_version": "analysis.v1",
+  "analysis_id": "analysis:cq:95bbeb6369ee9be0",
+  "canonical_question_id": "cq:95bbeb6369ee9be0",
+  "canonical_index_sha256": "1c4046937c2c22aa3d57487599cfbf06fd24a3504e5c06f11c1640f5dfd040a6",
+  "question_text": "4.http和https的区别",
+  "question_kind": "knowledge",
+  "interviewer_intent": "考察对HTTPS加密握手链路和HTTP明文传输本质差异的理解，顺带看是否知道证书体系与性能代价。",
+  "expected_depth": "能讲清握手四步、对称/非对称混合加密动机、证书信任链",
+  "mechanism": "HTTP=明文TCP。HTTPS=HTTP+TLS：TCP握手后TLS握手（协商版本/套件 → 服务端证书 → 非对称加密交换会话密钥 → 后续对称加密传输）。非对称只用于密钥交换是因为慢；对称用于数据是因为快。证书由CA签名解决“公钥真的是对方的”这一信任问题。",
+  "boundaries": "HTTPS不是绝对安全：不防主动信任恶意CA、不防端点被控；性能上多1-2个RTT（TLS1.3可0-RTT）且有加解密CPU开销。",
+  "common_mistakes": [
+    "只说“https加密”说不出怎么握手",
+    "认为全程非对称加密",
+    "不知道证书作用",
+    "分不清SSL和TLS关系（TLS是SSL继任者）"
+  ],
+  "follow_ups": [
+    "中间人攻击为什么被证书挡住",
+    "TLS1.3相比1.2改进",
+    "HTTPS一定安全吗",
+    "HTTP/2、HTTP/3变化"
+  ],
+  "member_count": 7,
+  "content_sha256": "881011c3700e7cd3d2925930775301270ddc6367667826d18462462076834f3a"
+}

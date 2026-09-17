@@ -1,0 +1,26 @@
+{
+  "schema_version": "analysis.v1",
+  "analysis_id": "analysis:cq:8f709870972aa4cf",
+  "canonical_question_id": "cq:8f709870972aa4cf",
+  "canonical_index_sha256": "1c4046937c2c22aa3d57487599cfbf06fd24a3504e5c06f11c1640f5dfd040a6",
+  "question_text": "16.进程和线程的区别",
+  "question_kind": "knowledge",
+  "interviewer_intent": "操作系统基础概念题，考察对资源分配与调度单位的理解，以及线程共享/私有资源的边界。",
+  "expected_depth": "定义差异+资源归属+为什么线程更轻量+协程对比",
+  "mechanism": "进程是资源分配单位（独立地址空间、文件句柄表），线程是调度单位（共享进程地址空间，私有栈/寄存器/PC/TLS）。线程切换成本低因为不切地址空间和页表。多进程隔离性强、多线程共享数据方便但要同步。协程是用户态调度，切换不进内核更轻。",
+  "boundaries": "“线程一定比进程快”不绝对：线程多了调度开销和同步成本会反噬；进程间通信慢但隔离好（Chrome多进程就是为了崩溃隔离）。",
+  "common_mistakes": [
+    "只说“线程轻量”说不出为什么",
+    "说不清哪些资源线程间共享",
+    "不知道协程是什么",
+    "把进程说成调度单位"
+  ],
+  "follow_ups": [
+    "线程切换到底切什么",
+    "为什么要有线程",
+    "进程间通信方式",
+    "协程和线程区别"
+  ],
+  "member_count": 5,
+  "content_sha256": "0866e9fcd79a40d9996fcb0f35e8b5469c4b8b821adde5dbe1499ac112b9f8af"
+}

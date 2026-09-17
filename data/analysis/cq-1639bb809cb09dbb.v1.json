@@ -1,0 +1,26 @@
+{
+  "schema_version": "analysis.v1",
+  "analysis_id": "analysis:cq:1639bb809cb09dbb",
+  "canonical_question_id": "cq:1639bb809cb09dbb",
+  "canonical_index_sha256": "1c4046937c2c22aa3d57487599cfbf06fd24a3504e5c06f11c1640f5dfd040a6",
+  "question_text": "9. 限流算法",
+  "question_kind": "knowledge",
+  "interviewer_intent": "考察限流算法的版图：计数器/滑动窗口/漏桶/令牌桶各自的原理与突刺处理能力差异。",
+  "expected_depth": "四种算法+突刺差异+工程选型",
+  "mechanism": "固定窗口计数器（简单但窗口边界双倍流量突刺）→滑动窗口计数（切细格子平滑边界）→漏桶（恒定速率出水，削峰填谷但不允许突发）→令牌桶（恒定速率产令牌，攒桶允许突发，Guava RateLimiter）。选型：要绝对平滑用漏桶（网关出口），要允许正常突发用令牌桶（API限流主流）。",
+  "boundaries": "固定窗口的临界突刺是考点：窗口边界1秒内可承受2倍配额；漏桶的“出水恒定”意味着突发流量只能排队或拒绝，适合保护下游不适合用户体验敏感场景。",
+  "common_mistakes": [
+    "只会令牌桶",
+    "说不出漏桶令牌桶差异（出速率恒定vs允许突发）",
+    "不知道窗口边界问题",
+    "分布式限流只提单机"
+  ],
+  "follow_ups": [
+    "令牌桶vs漏桶区别",
+    "分布式限流怎么做（Redis+Lua）",
+    "RateLimiter是哪种",
+    "突发怎么算合理"
+  ],
+  "member_count": 2,
+  "content_sha256": "63444bfa41835186ba997ef9efb1a2f6f3310fbfd44b067b62f2d1eec1294f55"
+}

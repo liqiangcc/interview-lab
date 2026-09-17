@@ -1,0 +1,18 @@
+{
+  "schema_version": "answer.v1",
+  "answer_id": "answer:cq:ced0cd0694079368",
+  "canonical_question_id": "cq:ced0cd0694079368",
+  "canonical_index_sha256": "1c4046937c2c22aa3d57487599cfbf06fd24a3504e5c06f11c1640f5dfd040a6",
+  "question_text": "14. MVCC",
+  "short_answer": "MVCC=隐藏事务id+undo版本链+ReadView：读时判断行版本可见性，不可见就沿undo链找旧版本，实现无锁快照读；RR复用首个ReadView所以可重复读。",
+  "skeleton": [
+    "行结构：trx_id+roll_pointer",
+    "undo链：旧版本串",
+    "ReadView：活跃事务集+边界",
+    "可见性规则",
+    "RC每语句新视图 vs RR复用"
+  ],
+  "explanation": "讲清“可见性判断”这步最关键：ReadView有四个要素——活跃事务id集合、最小活跃id、下一个将分配的id、创建者id。行trx_id<最小活跃id→创建前已提交可见；trx_id在活跃集合中→该事务还没提交不可见，沿roll_pointer回溯；trx_id>=下个分配id→本视图之后的事务改的不可见。RC和RR的差别只在ReadView生成时机：RC每条select都新建（所以能看到期间提交的），RR事务第一次select建一次（所以永远一致）。",
+  "example": "事务A读X=100期间，事务B改X=200提交：RR下A再读仍100（复用ReadView沿undo找到旧版本）；RC下A再读变200（新ReadView看到B已提交）。",
+  "content_sha256": "25909e9f5e5cf6adbd64d8817dfde1794d7d75af802e62f83d32eb85807dda70"
+}

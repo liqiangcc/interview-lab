@@ -1,0 +1,18 @@
+{
+  "schema_version": "answer.v1",
+  "answer_id": "answer:cq:a3e60f409d9d1611",
+  "canonical_question_id": "cq:a3e60f409d9d1611",
+  "canonical_index_sha256": "1c4046937c2c22aa3d57487599cfbf06fd24a3504e5c06f11c1640f5dfd040a6",
+  "question_text": "31. cap理论？",
+  "short_answer": "CAP：一致性、可用性、分区容忍三者，因分区必然发生，实际只在CP（分区时拒写保一致）和AP（分区时可读旧值）之间取舍。",
+  "skeleton": [
+    "三性质定义",
+    "P为何必选（网络不可信）",
+    "分区时的二选一逻辑",
+    "CP实例：ZK/etcd；AP实例：Eureka/缓存",
+    "BASE=AP工程化"
+  ],
+  "explanation": "关键是讲清推导而不是背定义：分区发生时两个副本无法通信，如果此时来写入——接受写则两边数据分叉（丢C），拒绝写则不可用（丢A），所以分区下只能保一个。ZK选CP：分区少数派直接不可用；Eureka选AP：分区时每侧继续各自服务（注册信息可能短暂不一致但可接受，因为服务发现允许软状态）。",
+  "example": "选注册中心时：ZK（CP）适合强一致协调但分区时不可用；Eureka（AP）各节点独立继续服务，短暂读到过期实例列表也能接受。",
+  "content_sha256": "75811f7f320a65c18474f376a64dcd9c07b4412bc1d6dc42d3ecd91bfce18002"
+}

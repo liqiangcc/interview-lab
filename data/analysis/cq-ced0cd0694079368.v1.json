@@ -1,0 +1,26 @@
+{
+  "schema_version": "analysis.v1",
+  "analysis_id": "analysis:cq:ced0cd0694079368",
+  "canonical_question_id": "cq:ced0cd0694079368",
+  "canonical_index_sha256": "1c4046937c2c22aa3d57487599cfbf06fd24a3504e5c06f11c1640f5dfd040a6",
+  "question_text": "14. MVCC",
+  "question_kind": "knowledge",
+  "interviewer_intent": "考察InnoDB多版本并发控制的实现原理：快照读怎么做到不加锁、数据可见性怎么判断。",
+  "expected_depth": "三要素（隐藏字段+undo链+ReadView）+可见性判断规则",
+  "mechanism": "MVCC=每行记录带隐藏字段（trx_id最近修改事务、roll_pointer指向undo log旧版本链），读时生成ReadView（当前活跃事务id列表+最小/最大事务id），判断行版本对当前事务是否可见：trx_id在ReadView创建前已提交→可见；在活跃列表中→不可见沿roll_pointer找旧版本。RC每语句生成新ReadView，RR事务首次读生成复用——这是RC不可重复读而RR可重复读的根因。",
+  "boundaries": "MVCC只解决快照读（普通select）；当前读（update/delete/select for update）读最新已提交版本+加锁；RR的MVCC防不住“当前读下的幻写”需要间隙锁配合。",
+  "common_mistakes": [
+    "以为MVCC靠加锁",
+    "说不清ReadView内容",
+    "分不清RC/RR的ReadView生成时机",
+    "以为MVCC解决所有幻读"
+  ],
+  "follow_ups": [
+    "ReadView具体字段",
+    "undo log链结构",
+    "当前读和快照读区别",
+    "为什么RR还会幻读（当前读）"
+  ],
+  "member_count": 3,
+  "content_sha256": "dcda7eb55ca3fdf76aa42a54ee4a2b9d0c8d6b2a955dcfec3f82f8ba0b55dd64"
+}

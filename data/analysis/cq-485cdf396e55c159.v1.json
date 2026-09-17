@@ -1,0 +1,25 @@
+{
+  "schema_version": "analysis.v1",
+  "analysis_id": "analysis:cq:485cdf396e55c159",
+  "canonical_question_id": "cq:485cdf396e55c159",
+  "canonical_index_sha256": "1c4046937c2c22aa3d57487599cfbf06fd24a3504e5c06f11c1640f5dfd040a6",
+  "question_text": "3.场景题：",
+  "question_kind": "scenario",
+  "interviewer_intent": "场景题考察把知识点组装成方案的能力：需求拆解、方案选型、权衡取舍、风险兜底。面试官看的是思维路径而不是标准答案。",
+  "expected_depth": "能给出分层方案+说清每层的取舍和瓶颈",
+  "mechanism": "通用解法框架：1)澄清需求（量级/一致性要求/延迟要求）2)拆成核心子问题 3)每个子问题给候选方案+选型理由 4)指出瓶颈与兜底 5)问面试官要不要展开某层。高频场景：秒杀/库存扣减、短链、排行榜、海量数据找TopK/去重、消息不丢不重、分布式ID。",
+  "boundaries": "不要上来就背答案；量级没问清楚前不要展开；方案必须和量级匹配（10 QPS不需要kafka）。",
+  "common_mistakes": [
+    "不澄清需求直接堆组件",
+    "方案与量级不匹配",
+    "说不出方案的瓶颈",
+    "被追问变形就崩"
+  ],
+  "follow_ups": [
+    "如果并发再高10倍呢",
+    "数据不一致怎么兜底",
+    "某个组件挂了怎么办"
+  ],
+  "member_count": 5,
+  "content_sha256": "b3eb83b6f0a4361fa83dca61ec994ea6cc201e8fe4b16780ee0daf7e41faf794"
+}

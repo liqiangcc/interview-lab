@@ -1,0 +1,18 @@
+{
+  "schema_version": "answer.v1",
+  "answer_id": "answer:cq:69880b39665572a9",
+  "canonical_question_id": "cq:69880b39665572a9",
+  "canonical_index_sha256": "1c4046937c2c22aa3d57487599cfbf06fd24a3504e5c06f11c1640f5dfd040a6",
+  "question_text": "8.synchronized和ReentrantLock的区别是什么？",
+  "short_answer": "synchronized是JVM关键字锁（monitor实现，自动释放，JDK6后有锁升级优化）；ReentrantLock是JUC API锁（AQS实现），多可中断/超时/公平/多Condition能力但要手动unlock。",
+  "skeleton": [
+    "层级：JVM关键字 vs JUC类",
+    "实现：monitor+MarkWord锁升级 vs AQS(CAS+CLH队列)",
+    "功能差：中断/超时/公平/Condition",
+    "异常安全：自动释放 vs finally unlock",
+    "选型：简单用syn，要灵活用Lock"
+  ],
+  "explanation": "底层各一句话讲透：synchronized进monitor，对象头MarkWord记录锁状态，无竞争用偏向/轻量级（CAS MarkWord），竞争升级重量级（OS mutex，线程park）。ReentrantLock底层AQS：一个volatile state表示锁占用，抢锁是CAS state，抢不到进CLH同步队列park，unlock唤醒队头。功能差异的本质是API给了控制柄：tryLock超时、lockInterruptibly响应中断、newCondition建多个等待队列（生产者消费者可以分开等notEmpty/notFull）、公平锁按队列顺序不插队。",
+  "example": "秒杀扣减用synchronized足够；但“等锁最多100ms否则放弃下单”必须tryLock(100,ms)——synchronized做不到超时放弃。",
+  "content_sha256": "d6baf5cf45247750b4b8b7cc0775c0045a4bde675df821fc97577a540a490e2d"
+}

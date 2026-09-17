@@ -1,0 +1,26 @@
+{
+  "schema_version": "analysis.v1",
+  "analysis_id": "analysis:cq:0792f8c07162583a",
+  "canonical_question_id": "cq:0792f8c07162583a",
+  "canonical_index_sha256": "1c4046937c2c22aa3d57487599cfbf06fd24a3504e5c06f11c1640f5dfd040a6",
+  "question_text": "18.Redis为什么快？",
+  "question_kind": "knowledge",
+  "interviewer_intent": "Redis高频题，考察是否理解“快”是多因素叠加而非单一原因。",
+  "expected_depth": "至少4个因素，能说清每个因素贡献什么",
+  "mechanism": "快的来源：①内存读写（主因，纳秒级vs磁盘微秒）②单线程模型避免锁竞争和上下文切换（命令执行部分）③IO多路复用（epoll，单线程处理万级连接）④数据结构针对场景优化（SDS/ziplist/skiplist）⑤简单协议解析开销小。补充：6.0后有IO线程处理读写，但命令执行仍单线程。",
+  "boundaries": "“单线程所以快”是常见误解——单线程快是因为避免了锁和切换，但CPU密集命令（keys/bigkey操作）照样阻塞；多路复用解决的是连接并发不是计算并发。",
+  "common_mistakes": [
+    "只说“因为是内存数据库”",
+    "把单线程说成绝对无并发处理",
+    "不知道6.0引入了IO线程",
+    "认为单线程=慢所以困惑"
+  ],
+  "follow_ups": [
+    "单线程为什么不怕并发（多路复用展开）",
+    "什么命令会阻塞",
+    "Redis6的IO线程做什么",
+    "和Memcached比呢"
+  ],
+  "member_count": 3,
+  "content_sha256": "dd32cce206d51207432435a83e4b58776bd55a9f79ac1e2de97d6af7f915a0b6"
+}

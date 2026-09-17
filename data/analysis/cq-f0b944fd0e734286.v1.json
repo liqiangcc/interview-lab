@@ -1,0 +1,26 @@
+{
+  "schema_version": "analysis.v1",
+  "analysis_id": "analysis:cq:f0b944fd0e734286",
+  "canonical_question_id": "cq:f0b944fd0e734286",
+  "canonical_index_sha256": "1c4046937c2c22aa3d57487599cfbf06fd24a3504e5c06f11c1640f5dfd040a6",
+  "question_text": "9. bean的生命周期",
+  "question_kind": "knowledge",
+  "interviewer_intent": "考察Spring Bean从实例化到销毁的完整生命周期及扩展点位置（BeanPostProcessor/Aware/InitializingBean等）。",
+  "expected_depth": "生命周期主流程+关键扩展点+各自适合干什么",
+  "mechanism": "流程：实例化（构造）→属性填充（依赖注入）→Aware回调（BeanNameAware等）→BeanPostProcessor.postProcessBeforeInitialization→@PostConstruct/InitializingBean.afterPropertiesSet/init-method→BPP.postProcessAfterInitialization（AOP代理在这步织入）→就绪→销毁时@PreDestroy/DisposableBean/destroy-method。",
+  "boundaries": "BeanPostProcessor的before/after包的是初始化（init方法）不是构造；AOP代理在afterInitialization生成，所以构造器里调this的方法不会被代理增强；构造器注入的依赖在实例化阶段就要就绪。",
+  "common_mistakes": [
+    "顺序背错（属性填充在初始化前）",
+    "不知道AOP织入时机",
+    "BeanFactoryPostProcessor和BeanPostProcessor混淆（前者处理BeanDefinition）",
+    "说不清每个扩展点能干什么"
+  ],
+  "follow_ups": [
+    "BPP两个方法分别在什么时候",
+    "AOP代理在哪一步生成",
+    "循环依赖怎么解决（三级缓存）",
+    "Aware接口作用"
+  ],
+  "member_count": 3,
+  "content_sha256": "872e3bf3ebc2d6a7b33bcd2ecc645205bf295307a78f6d20f1bf18dad54ad8bb"
+}

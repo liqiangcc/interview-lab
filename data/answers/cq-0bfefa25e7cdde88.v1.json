@@ -1,0 +1,17 @@
+{
+  "schema_version": "answer.v1",
+  "answer_id": "answer:cq:0bfefa25e7cdde88",
+  "canonical_question_id": "cq:0bfefa25e7cdde88",
+  "canonical_index_sha256": "1c4046937c2c22aa3d57487599cfbf06fd24a3504e5c06f11c1640f5dfd040a6",
+  "question_text": "4.Redis可以做加锁吗？如果加了锁之后服务挂了，别的实例拿不到锁了，怎么办",
+  "short_answer": "SET NX PX原子加锁带过期兜底+看门狗续期防业务超时+唯一value+Lua原子释放防误删；更高要求用RedLock或fencing token。",
+  "skeleton": [
+    "原子加锁+过期时间",
+    "看门狗续期（Redisson）",
+    "唯一标识+Lua释放",
+    "RedLock/fencing取舍"
+  ],
+  "explanation": "按“崩溃→超时→误删→时钟”四层递进讲：挂了→过期时间兜底；业务没完→看门狗续期；锁已过期被他人重拿后旧持有者苏醒del→value校验+原子删；锁过期后旧持有者继续写数据→fencing token（每次写带单调递增号，存储拒旧号）。RedLock在多主节点上加锁过半成功才算拿到，代价是复杂度和时钟假设。",
+  "example": "Redisson.lock()默认：30s锁+后台线程每10s续期一次到任务完成；解锁时Lua判断value==自己的UUID才del。",
+  "content_sha256": "e04b7916e4964eeafecf6b3a8bc150809c7a7ca2d0974c1d9d8dd2c717b71a9f"
+}

@@ -1,0 +1,18 @@
+{
+  "schema_version": "answer.v1",
+  "answer_id": "answer:cq:f6e9bcfdc1197f28",
+  "canonical_question_id": "cq:f6e9bcfdc1197f28",
+  "canonical_index_sha256": "1c4046937c2c22aa3d57487599cfbf06fd24a3504e5c06f11c1640f5dfd040a6",
+  "question_text": "13.B+树和B树的区别",
+  "short_answer": "B+树内节点只存key不存data→扇出大树矮IO少；数据全在叶子+叶子链表相连→范围扫描顺序走链表，比B树中序回溯高效。",
+  "skeleton": [
+    "结构差异：内节点有无data/叶子链表",
+    "矮：同页更多key→扇出~800→3层~5亿行",
+    "范围查询：叶子链表顺序扫",
+    "稳定性：所有查询路径等长",
+    "对照：哈希不能范围、跳表内存用"
+  ],
+  "explanation": "答这题一定要给量级估算展示工程感：InnoDB页16KB，主键8B+指针6B→一页约存1170个key指针，2层约136万行，3层约16亿行——这就是为什么大表索引只要3-4次IO。叶子链表的价值在面试里常被低估：B树范围查要中序遍历来回上下层，B+树找到起点后顺序扫链表即可，这正是“范围友好”的来源。",
+  "example": "为什么范围查用B+不用哈希：哈希O(1)等值但无序，范围只能全扫；B+定位起点后沿叶子链表顺序读，磁盘顺序IO。",
+  "content_sha256": "9875069df3903ba2739390d1c4e2ea2ffbe10cc91b42b2a744a9140b20b6b548"
+}

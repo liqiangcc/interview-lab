@@ -1,0 +1,26 @@
+{
+  "schema_version": "analysis.v1",
+  "analysis_id": "analysis:cq:425c9d41811ef4f7",
+  "canonical_question_id": "cq:425c9d41811ef4f7",
+  "canonical_index_sha256": "1c4046937c2c22aa3d57487599cfbf06fd24a3504e5c06f11c1640f5dfd040a6",
+  "question_text": "22.TCP和UDP的区别",
+  "question_kind": "knowledge",
+  "interviewer_intent": "考察对传输层两个基本协议的可靠性机制差异理解，以及按场景选型的工程判断力。",
+  "expected_depth": "差异表+可靠性机制原理+适用场景各举一例",
+  "mechanism": "TCP：面向连接（三次握手）、字节流、可靠有序（序号+ACK+重传+滑动窗口+拥塞控制），头部20B+。UDP：无连接、报文边界、不保证可靠/顺序，头部8B，延迟低、可一对多。选型：可靠性优先选TCP（HTTP/RPC/数据库）；延迟/实时性优先或应用层自己管可靠性选UDP（音视频/游戏/QUIC/DNS）。",
+  "boundaries": "UDP不是“不可靠所以没用”——实时场景里过期数据比延迟数据更没用；QUIC(HTTP/3)证明可在UDP上自建可靠层。",
+  "common_mistakes": [
+    "背差异表但说不出为什么",
+    "不知道TCP为什么握手三次（两次无法同步双方初始序号）",
+    "说不出任何用UDP的场景",
+    "把“快”说成UDP的本质优点而不解释原因"
+  ],
+  "follow_ups": [
+    "TCP为什么三次握手四次挥手",
+    "TCP怎么保证可靠",
+    "UDP怎么做成可靠的（QUIC）",
+    "滑动窗口/拥塞控制"
+  ],
+  "member_count": 5,
+  "content_sha256": "9a32d3b726d4e9d6b78d147e5728feaa1ba3318872c2065aa30ebe471e383393"
+}

@@ -1,0 +1,18 @@
+{
+  "schema_version": "answer.v1",
+  "answer_id": "answer:cq:26fe591d0c3f44bc",
+  "canonical_question_id": "cq:26fe591d0c3f44bc",
+  "canonical_index_sha256": "1c4046937c2c22aa3d57487599cfbf06fd24a3504e5c06f11c1640f5dfd040a6",
+  "question_text": "5.介绍一下Redission分布式锁",
+  "short_answer": "Redisson锁=hash结构（field=UUID:threadId,value=重入数）Lua原子加锁+看门狗每10s续期30s+Lua校验field原子解锁；红锁=多节点过半成功。",
+  "skeleton": [
+    "数据结构：hash field=线程标识 value=重入计数",
+    "加锁：Lua原子hset+pexpire",
+    "续期：watchdog 10s/30s",
+    "解锁：Lua校验+计数递减",
+    "红锁：多节点过半"
+  ],
+  "explanation": "比SET NX PX先进在两点：一是field=UUID:threadId使锁可重入且只能被自己解；二是watchdog自动续期解决“业务没跑完锁先没了”。边界要讲：主从架构下master加锁后未同步就宕机，新master无锁→另一客户端也能拿到——RedLock为这场景向多个独立master加锁过半才算成功，但Martin Kleppmann批评其时钟假设。",
+  "example": "lock.lock()后：hset lockName field=uuid:tid val=1 + pexpire 30000；后台schedule每10s续到30s；业务里再次lock同key则val+1。",
+  "content_sha256": "126765d0f115711feee18b581094f893a0569900a30b5b7f5fbf2bf7ec588f24"
+}

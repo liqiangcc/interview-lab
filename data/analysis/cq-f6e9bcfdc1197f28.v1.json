@@ -1,0 +1,26 @@
+{
+  "schema_version": "analysis.v1",
+  "analysis_id": "analysis:cq:f6e9bcfdc1197f28",
+  "canonical_question_id": "cq:f6e9bcfdc1197f28",
+  "canonical_index_sha256": "1c4046937c2c22aa3d57487599cfbf06fd24a3504e5c06f11c1640f5dfd040a6",
+  "question_text": "13.B+树和B树的区别",
+  "question_kind": "knowledge",
+  "interviewer_intent": "考察B+树相对B树的结构差异及其为何成为数据库/文件系统索引的标准选择。",
+  "expected_depth": "结构差异+为什么B+适合磁盘索引+具体量级估算",
+  "mechanism": "B树：每个节点都存key+data，内节点也带数据。B+树：内节点只存key（索引），data全在叶子节点，叶子间链表相连。由此B+三个优势：①内节点只存key所以同页存更多key→树更矮→IO更少（扇出大）②范围查询走叶子链表不用回溯中序遍历③查询稳定（任何key都要走到叶子，路径等长）。",
+  "boundaries": "等值单点查询B树可能更快（内节点命中直接返回data）；B+的叶子链表是把范围查询从O(树高回溯)变成顺序扫描。量级：一页16K、key+指针约20B→扇出约800，3层B+可索引约5亿行。",
+  "common_mistakes": [
+    "说不出叶子链表的作用",
+    "不知道B+为什么矮（内节点不带data）",
+    "不会算扇出和行数量级",
+    "说B树没有优势"
+  ],
+  "follow_ups": [
+    "为什么不用二叉树/跳表/哈希",
+    "聚簇索引是什么",
+    "一页多大、扇出多少",
+    "回表是什么"
+  ],
+  "member_count": 3,
+  "content_sha256": "9853e32ac207d9f1d57b17fc875adbf6ce532a7314b14980bb2b1983850edbfd"
+}

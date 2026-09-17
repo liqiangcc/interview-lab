@@ -1,0 +1,18 @@
+{
+  "schema_version": "answer.v1",
+  "answer_id": "answer:cq:0792f8c07162583a",
+  "canonical_question_id": "cq:0792f8c07162583a",
+  "canonical_index_sha256": "1c4046937c2c22aa3d57487599cfbf06fd24a3504e5c06f11c1640f5dfd040a6",
+  "question_text": "18.Redis为什么快？",
+  "short_answer": "内存读写是主因；辅以单线程免锁免切换、epoll多路复用承载万连接、数据结构按场景优化。注意6.0后IO读写有多线程，命令执行仍单线程。",
+  "skeleton": [
+    "主因：内存操作纳秒级",
+    "单线程：无锁竞争无切换开销",
+    "IO多路复用：epoll单线程管万级连接",
+    "数据结构：SDS/ziplist/skiplist按需优化",
+    "版本变化：6.0+IO线程，命令仍单线程"
+  ],
+  "explanation": "这题的层次感：第一层“内存”谁都会，马上补第二三四层才区分度。关键点要把“单线程处理命令”和“多路复用处理连接”说清——单线程一次只跑一个命令，但epoll让它在一个循环里处理所有就绪连接，连接维度的并发不缺。还要主动给反例：O(N)命令（keys *）会卡住所有请求，说明单线程模型靠“命令都快”这个假设成立，bigkey、hgetall大哈希是线上事故源。",
+  "example": "生产实践对应：禁用keys、bigkey做拆分、慢查询用slowlog定位——都源于“单线程执行命令”这个模型。",
+  "content_sha256": "cbe03dce4291e8d9545dc276e6ed0f94da484d8cd4996fe598b78824204701db"
+}

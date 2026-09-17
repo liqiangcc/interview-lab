@@ -1,0 +1,26 @@
+{
+  "schema_version": "analysis.v1",
+  "analysis_id": "analysis:cq:17e3091cdd63efba",
+  "canonical_question_id": "cq:17e3091cdd63efba",
+  "canonical_index_sha256": "1c4046937c2c22aa3d57487599cfbf06fd24a3504e5c06f11c1640f5dfd040a6",
+  "question_text": "3.openfegin底层原理是什么，他是如何拿到请求路径的？",
+  "question_kind": "knowledge",
+  "interviewer_intent": "考察Spring Cloud OpenFeign声明式HTTP客户端的代理实现机制与请求路径拼装。",
+  "expected_depth": "动态代理+Contract解析+Encoder/InvocationHandler链路",
+  "mechanism": "@EnableFeignClients扫描@FeignClient接口→FeignClientFactoryBean生成JDK动态代理→方法调用进InvocationHandler(FeignInvocationHandler/SynchronousMethodHandler)→Contract（SpringMvcContract）解析注解成RequestTemplate（URL/method/headers）→Encoder序列化body→Client（可换成OkHttp/HttpClient）发请求→Decoder反序列化响应。路径来自@FeignClient的url/path+方法级@RequestMapping拼接。",
+  "boundaries": "Feign只是代理封装，底层仍是HTTP客户端（默认JDK HttpURLConnection性能差，生产换OkHttp）；“拿到请求路径”靠注解解析在启动期生成的MethodHandler缓存，不是每次反射。",
+  "common_mistakes": [
+    "说不出是动态代理",
+    "以为Feign自己实现HTTP",
+    "不知道路径从注解解析来",
+    "没提过可替换的Client/Encoder/Decoder"
+  ],
+  "follow_ups": [
+    "底层HTTP客户端是什么能换吗",
+    "性能怎么优化",
+    "和RestTemplate区别",
+    "Ribbon/LoadBalancer在哪一步"
+  ],
+  "member_count": 2,
+  "content_sha256": "eb098a587ed29692e2271b284ef61126b50089cd1e1b77d1f6426dcbf37563f7"
+}

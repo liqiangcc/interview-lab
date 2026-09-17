@@ -1,0 +1,17 @@
+{
+  "schema_version": "answer.v1",
+  "answer_id": "answer:cq:27c344e65afbb160",
+  "canonical_question_id": "cq:27c344e65afbb160",
+  "canonical_index_sha256": "1c4046937c2c22aa3d57487599cfbf06fd24a3504e5c06f11c1640f5dfd040a6",
+  "question_text": "4.spring最核心的是什么?",
+  "short_answer": "Spring核心是IoC容器（依赖反转解耦装配）+AOP（动态代理织入横切逻辑），在此之上衍生生命周期管理、事件、生态抽象。",
+  "skeleton": [
+    "IoC/DI：装配权移交容器→解耦",
+    "AOP：代理织入横切（事务/日志）",
+    "支撑：Bean生命周期+事件+资源抽象",
+    "生态：Boot约定优于配置"
+  ],
+  "explanation": "展开IoC：XML/注解声明BeanDefinition→容器解析→实例化→注入（构造/setter/@Autowired）→生命周期回调→AOP代理织入。展开AOP：JDK代理需接口，CGLIB生成子类，织入点在BeanPostProcessor后置。事务就是AOP最典型应用——@Transactional本质是代理在方法前后管事务边界，所以同类自调用失效。",
+  "example": "事务自调用失效：A方法内this调用@Transactional的B方法→走的是原始对象不是代理→无事务。这正说明AOP代理是Spring核心的运行形态。",
+  "content_sha256": "1ba4f57baf87e9416a80e569dadc701e7befa49f694bdc8d03c508a2d96ba437"
+}

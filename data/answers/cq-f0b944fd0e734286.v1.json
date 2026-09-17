@@ -1,0 +1,20 @@
+{
+  "schema_version": "answer.v1",
+  "answer_id": "answer:cq:f0b944fd0e734286",
+  "canonical_question_id": "cq:f0b944fd0e734286",
+  "canonical_index_sha256": "1c4046937c2c22aa3d57487599cfbf06fd24a3504e5c06f11c1640f5dfd040a6",
+  "question_text": "9. bean的生命周期",
+  "short_answer": "Bean生命周期：实例化→属性填充→Aware→BPP前置→init(@PostConstruct/afterPropertiesSet/init-method)→BPP后置（AOP织入）→就绪→销毁回调。",
+  "skeleton": [
+    "实例化",
+    "属性注入",
+    "Aware回调",
+    "BPP前置",
+    "初始化回调",
+    "BPP后置(AOP)",
+    "销毁"
+  ],
+  "explanation": "记忆锚点：“先造壳、再填馅、再初始化、织代理”——实例化出裸对象→填依赖→初始化回调→BPP后置里AOP把对象换成代理。这就是为什么this调用不走代理（this是原始对象不是代理），以及为什么循环依赖要靠“实例化后早期引用暴露”解决：singletonFactories三级缓存在属性填充前就把裸对象暴露出去。",
+  "example": "自定义@Log注解用BPP实现：postProcessAfterInitialization里检查方法有无注解，有则生成CGLIB/JDK代理返回——这就是Spring AOP的织入位置。",
+  "content_sha256": "13f6184f474dbe2945b902c22c1b87a9ec19eaa64603310c6bc0f63514e3a01f"
+}

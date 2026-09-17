@@ -1,0 +1,26 @@
+{
+  "schema_version": "analysis.v1",
+  "analysis_id": "analysis:cq:0e883e5a759564a1",
+  "canonical_question_id": "cq:0e883e5a759564a1",
+  "canonical_index_sha256": "1c4046937c2c22aa3d57487599cfbf06fd24a3504e5c06f11c1640f5dfd040a6",
+  "question_text": "11.jvm内存模型",
+  "question_kind": "knowledge",
+  "interviewer_intent": "考察JVM运行时内存布局及各区域职责，是JVM题族的地基（OOM定位、GC、参数调优都建在上面）。",
+  "expected_depth": "能画出内存区域图+说清各区域放什么+哪些区域线程私有+常见OOM场景",
+  "mechanism": "JVM内存模型=运行时数据区划分：堆（对象实例，GC主战场，线程共享）/方法区-元空间（类元数据、运行时常量池，JDK8起用本地内存）/虚拟机栈（线程私有，每方法调用一个栈帧：局部变量表+操作数栈）/本地方法栈（native）/程序计数器（线程私有，记录字节码执行位置，唯一不会OOM的区）/直接内存（堆外，NIO用）。",
+  "boundaries": "注意JDK8变化：永久代→元空间且移到本地内存，字符串常量池在堆里。直接内存不属于JVM运行时数据区但也会OOM。",
+  "common_mistakes": [
+    "把方法区说成堆的一部分",
+    "不知道程序计数器线程私有",
+    "说所有区域都会OOM（PC不会）",
+    "永久代/元空间概念混用"
+  ],
+  "follow_ups": [
+    "各区域OOM场景分别怎么触发",
+    "堆怎么分代",
+    "元空间为什么替代永久代",
+    "栈帧里有什么"
+  ],
+  "member_count": 4,
+  "content_sha256": "2e00eba174280250cddca14ec4fb8cef000a6fa5266f765ccbf0f556a4300d46"
+}
