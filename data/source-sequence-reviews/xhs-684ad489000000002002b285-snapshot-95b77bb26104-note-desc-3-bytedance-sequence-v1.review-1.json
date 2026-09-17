@@ -1,0 +1,55 @@
+{
+  "schema_version": "source-sequence-review.v1",
+  "review_id": "xhs:684ad489000000002002b285:snapshot-95b77bb26104:note-desc-3:bytedance:sequence-v1:review-1",
+  "manifest_id": "xhs:684ad489000000002002b285:snapshot-95b77bb26104:note-desc-3:bytedance:sequence-v1",
+  "manifest_sha256": "3ba7df591e518e736f31f58e5bb53194fad61067798d0fcfce7f4b17190fc093",
+  "decision": "approved",
+  "reviewed_at": "2026-09-17T04:42:31Z",
+  "reviewer_kind": "ai-assisted",
+  "review_evidence": {
+    "repository": "liqiangcc/interview-lab",
+    "issue_number": 2228,
+    "comment_id": 5708682076
+  },
+  "checks": [
+    {
+      "check_id": "evidence_stream_binding",
+      "result": "pass"
+    },
+    {
+      "check_id": "sequence_scope",
+      "result": "pass"
+    },
+    {
+      "check_id": "unit_boundaries",
+      "result": "pass"
+    },
+    {
+      "check_id": "unit_order",
+      "result": "pass"
+    },
+    {
+      "check_id": "unit_types",
+      "result": "pass"
+    },
+    {
+      "check_id": "fragment_boundaries",
+      "result": "pass"
+    },
+    {
+      "check_id": "fragment_order",
+      "result": "pass"
+    },
+    {
+      "check_id": "no_fabrication",
+      "result": "pass"
+    }
+  ],
+  "limitations": [
+    "Approval covers only the exact manifest_id + manifest_sha256 pair.",
+    "text_projection fidelity to the Raw artifact was not re-verified; readable_projection.review_status remains unreviewed.",
+    "source_projection remains Source-derived readable evidence and does not become Raw by inclusion in the Manifest.",
+    "Approval does not authorize SourceQuestion, CanonicalQuestion, Analysis, Answer, outcome, or result mutation."
+  ],
+  "supersedes_review_id": null
+}

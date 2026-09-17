@@ -1,0 +1,81 @@
+{
+  "schema_version": "source-sequence-manifest.v1",
+  "manifest_id": "xhs:669c7a28000000000500605a:snapshot-95b77bb26104:note-desc-4:event-2:sequence-v1",
+  "interview_note_id": "xhs:669c7a28000000000500605a:event:4fe1c3c0ef20af605edf974119a8c6873587bc0b660237ade408f697e298f7cd",
+  "source_revision_id": "xhs-note:669c7a28000000000500605a:snapshot-95b77bb26104",
+  "sequence_scope": "source-projection:note_desc/669c7a28000000000500605a.txt:case-event-2:interview-flow-units-1-4",
+  "evidence_stream": {
+    "stream_id": "pinned-note-desc",
+    "storage_kind": "git",
+    "raw_artifact_ref": "liqiangcc/xhs:note_detail/669c7a28000000000500605a.html@95b77bb261048059846273688e4b90a2e108b437",
+    "raw_git_blob_sha": "40e59655e3002e88636d26fa60913d34feb49890",
+    "raw_sha256": "ef61c1bcb517500471a7824ecb31d3648ff8eb20b2e9768af2c5685b353e4e7d",
+    "readable_projection": {
+      "ref": "liqiangcc/xhs:note_desc/669c7a28000000000500605a.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "storage_kind": "git",
+      "git_blob_sha": "c71214f4c0852aca85f61d9b49f043155b6b7121",
+      "sha256": "151f58882304a22e65df25f299a12977c19ad34239d7aa6cd803fab38953ff60",
+      "provenance": "source_projection",
+      "review_status": "unreviewed"
+    }
+  },
+  "units": [
+    {
+      "source_unit_id": "xhs:669c7a28000000000500605a:snapshot-95b77bb26104:note-desc-4:event-2:u1",
+      "position": 1,
+      "source_unit_type": "narrative-summary",
+      "text_projection": "昆明这边基本都是20-99小公司，实际上才四五个人。最近面试的一些情况:",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_desc/669c7a28000000000500605a.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "151f58882304a22e65df25f299a12977c19ad34239d7aa6cd803fab38953ff60",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/669c7a28000000000500605a.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "ef61c1bcb517500471a7824ecb31d3648ff8eb20b2e9768af2c5685b353e4e7d",
+        "source_projection_item_number": 1
+      },
+      "fragments": []
+    },
+    {
+      "source_unit_id": "xhs:669c7a28000000000500605a:snapshot-95b77bb26104:note-desc-4:event-2:u2",
+      "position": 2,
+      "source_unit_type": "question-like",
+      "text_projection": "某誉朗Java面试，他负责架构层面基础工作，同时维护低代码平台，另外一组负责配置表单快速交付。我心想，低代码平台取代程序员大部分工作，没前途可能随时走人。他们Java开发为主，因为我掌握c++，就说对性能要求极高的情况下，考虑使用c++编写。他表达升级硬件设备解决，简单快速。其中他说采用代理实现动态配置，描述各种支付的例子，让我实现，我直接采用接口适配结合注解，他说没办法动态切换，他的意思是直接初始化好，请求时，根据参数适配初始化列表达到效果。现在想想，不就是若依的国际化语言吗，这是代理吗？各位大佬解释一下。",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_desc/669c7a28000000000500605a.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "151f58882304a22e65df25f299a12977c19ad34239d7aa6cd803fab38953ff60",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/669c7a28000000000500605a.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "ef61c1bcb517500471a7824ecb31d3648ff8eb20b2e9768af2c5685b353e4e7d",
+        "source_projection_item_number": 2
+      },
+      "fragments": []
+    },
+    {
+      "source_unit_id": "xhs:669c7a28000000000500605a:snapshot-95b77bb26104:note-desc-4:event-2:u3",
+      "position": 3,
+      "source_unit_type": "question-like",
+      "text_projection": "他采用springcloud老套组件，据我所知，大多组件都停止更新维护，为何不直接采用阿里巴巴cloud那一套。说鉴权等很多模块自己编写，问其原因，说是出现漏洞自己容易修复。我应该吐槽吗？无论开源代码还是自己编写，一样会有漏洞，而且基本上都是请求导致，一般入口处解决不就行了，你TM自己写有个毛的意义，既然写了，还他妈用开源springcloud一堆组件，你TM自己写有团队写的严谨好用吗？倒不如充分熟悉源码得了。问QPS不知道要解释，说自己政府项目，不会太高。有一次山火，请求升到1500倍(1500万倍，我忘记啦)，静态文件达到上G，按照平均1000计算，前者15万左右，后者不可能。QPS也一般吧，这就是号称性能问题，一律升级硬件的货。中间问es高级操作，采用SQL语法，因为没有涉及，没办法回答，他解释很多，当然，有些优越感，说我太基础，TMD，自己擅长的就这副嘴脸，不是所有公司都用吧，也不一定要用得高级吧。说话又直接，要是觉得啰嗦些，直接终止。",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_desc/669c7a28000000000500605a.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "151f58882304a22e65df25f299a12977c19ad34239d7aa6cd803fab38953ff60",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/669c7a28000000000500605a.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "ef61c1bcb517500471a7824ecb31d3648ff8eb20b2e9768af2c5685b353e4e7d",
+        "source_projection_item_number": 3
+      },
+      "fragments": []
+    },
+    {
+      "source_unit_id": "xhs:669c7a28000000000500605a:snapshot-95b77bb26104:note-desc-4:event-2:u4",
+      "position": 4,
+      "source_unit_type": "outcome-reflection-summary",
+      "text_projection": "总体感觉，面试官就是个jb，普遍越小的公司越自视甚高，越顽固。可问题是我进不去，工资还贼低。空窗期已经很久啦，打算进厂吧，明年再说，反正大部分职业都没有未来，还一堆SB刁钻的框框条条。",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_desc/669c7a28000000000500605a.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "151f58882304a22e65df25f299a12977c19ad34239d7aa6cd803fab38953ff60",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/669c7a28000000000500605a.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "ef61c1bcb517500471a7824ecb31d3648ff8eb20b2e9768af2c5685b353e4e7d",
+        "source_projection_item_number": 4
+      },
+      "fragments": []
+    }
+  ],
+  "content_sha256": "6ecd3fc64a8d077e077249fd5e3fd7e4ff4eb1319d073def2ec79c02c25c99ee"
+}

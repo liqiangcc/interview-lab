@@ -1,0 +1,81 @@
+{
+  "schema_version": "source-sequence-manifest.v1",
+  "manifest_id": "xhs:659e8b8f000000001e008617:snapshot-95b77bb26104:note-desc-4:sequence-v1",
+  "interview_note_id": "xhs:659e8b8f000000001e008617",
+  "source_revision_id": "xhs-note:659e8b8f000000001e008617:snapshot-95b77bb26104",
+  "sequence_scope": "source-projection:note_desc/659e8b8f000000001e008617.txt:interview-flow-units-1-4",
+  "evidence_stream": {
+    "stream_id": "pinned-note-desc",
+    "storage_kind": "git",
+    "raw_artifact_ref": "liqiangcc/xhs:note_detail/659e8b8f000000001e008617.html@95b77bb261048059846273688e4b90a2e108b437",
+    "raw_git_blob_sha": "f4d893ea4c8f2afe38c327a1fc43880541d9903a",
+    "raw_sha256": "a4393e6fac0dc830bfa509f934ac5e329f326a31f33d6feaa742b45aae670a28",
+    "readable_projection": {
+      "ref": "liqiangcc/xhs:note_desc/659e8b8f000000001e008617.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "storage_kind": "git",
+      "git_blob_sha": "a131dcd8f678c9724d5d4009d16e082459955a8b",
+      "sha256": "94714f21deafb5d61a3586d896446e2b0acfc386bd5f64c77ccfc05c2045263b",
+      "provenance": "source_projection",
+      "review_status": "unreviewed"
+    }
+  },
+  "units": [
+    {
+      "source_unit_id": "xhs:659e8b8f000000001e008617:snapshot-95b77bb26104:note-desc-4:u1",
+      "position": 1,
+      "source_unit_type": "question-like",
+      "text_projection": "1.怎么解决超卖问题？",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_desc/659e8b8f000000001e008617.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "94714f21deafb5d61a3586d896446e2b0acfc386bd5f64c77ccfc05c2045263b",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/659e8b8f000000001e008617.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "a4393e6fac0dc830bfa509f934ac5e329f326a31f33d6feaa742b45aae670a28",
+        "source_projection_item_number": 1
+      },
+      "fragments": []
+    },
+    {
+      "source_unit_id": "xhs:659e8b8f000000001e008617:snapshot-95b77bb26104:note-desc-4:u2",
+      "position": 2,
+      "source_unit_type": "outcome-reflection-summary",
+      "text_projection": "答：超卖问题是一个相对来说，比较经典且相对难处理的问题，解决它可以考虑从以下三方面入手：\n前端初步限制：前端先做最基础的限制处理，只允许用户在一定时间内发送一次抢购请求。\n后端限流：前端的限制只能针对部分普通用户，如果有恶意刷单程序，那么依靠前端是解决不了任何问题的，所以此时就需要后端做限流操作了，而后端的限流又分为以下手段：\nIP 限流：限制一个 IP 在一定时间内，只能发送一个请求。此技术实现要点：通过在 Spring Cloud Gateway 中编写自定义全局过滤器来实现 IP 限流。\n接口限流：某个接口每秒只接受一定数量的请求。此技术实现要点：通过 Sentinel 的限流功能来实现。\n排队处理：即时做了以上两步操作，仍然不能防止超卖问题的发生，此时需要使用分布式锁排队处理请求，才能真正的防止超卖问题的发生。此技术实现要点：\n方案一：使用 Lua 脚本 + Redis 实现分布式锁。\n方案二：使用 Redisson 实现分布式锁。",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_desc/659e8b8f000000001e008617.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "94714f21deafb5d61a3586d896446e2b0acfc386bd5f64c77ccfc05c2045263b",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/659e8b8f000000001e008617.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "a4393e6fac0dc830bfa509f934ac5e329f326a31f33d6feaa742b45aae670a28",
+        "source_projection_item_number": 2
+      },
+      "fragments": []
+    },
+    {
+      "source_unit_id": "xhs:659e8b8f000000001e008617:snapshot-95b77bb26104:note-desc-4:u3",
+      "position": 3,
+      "source_unit_type": "question-like",
+      "text_projection": "2.你有什么技术优势？",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_desc/659e8b8f000000001e008617.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "94714f21deafb5d61a3586d896446e2b0acfc386bd5f64c77ccfc05c2045263b",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/659e8b8f000000001e008617.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "a4393e6fac0dc830bfa509f934ac5e329f326a31f33d6feaa742b45aae670a28",
+        "source_projection_item_number": 3
+      },
+      "fragments": []
+    },
+    {
+      "source_unit_id": "xhs:659e8b8f000000001e008617:snapshot-95b77bb26104:note-desc-4:u4",
+      "position": 4,
+      "source_unit_type": "outcome-reflection-summary",
+      "text_projection": "当面试官问你这个问题时，你可以从以下几个方面回答：\n总结你掌握的技术点：首先，从你所应聘的职位和相关领域出发，总结并列出你的技术专长或专业专长。注意，你讲的这些技术点一定要向面试公司要求的技术点靠拢。\n强调你的技术专长：在列举领域后，强调你在这些领域中的技术专长。你可以提及一些主要技术、框架等方面的技术专长。\n举例说明：提供一些具体的项目案例或工作经验，展示你在技术领域上的实际应用能力。说明你如何使用所掌握的技术解决具体问题、优化系统性能或提升用户体验等。这样可以更加具体地说明你的技术优势，并证明你的技能在实践中是有价值的。\n强调自己“软”优势：向面试官展示你的“软”优势，例如：喜欢专研技术（加上具体的例子，例如每天都有写代码提交到 GitHub）、积极学习和持续成长等能力。同时，强调你在团队合作中的贡献和沟通技巧等其他能力，这些也是技术优势的重要补充。",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_desc/659e8b8f000000001e008617.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "94714f21deafb5d61a3586d896446e2b0acfc386bd5f64c77ccfc05c2045263b",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/659e8b8f000000001e008617.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "a4393e6fac0dc830bfa509f934ac5e329f326a31f33d6feaa742b45aae670a28",
+        "source_projection_item_number": 4
+      },
+      "fragments": []
+    }
+  ],
+  "content_sha256": "9206856933ec6a3b4f7bb147d09071dd95d50b438fe252d8c47ead7de7b9e463"
+}

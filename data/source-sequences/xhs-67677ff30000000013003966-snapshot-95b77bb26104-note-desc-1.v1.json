@@ -1,0 +1,39 @@
+{
+  "schema_version": "source-sequence-manifest.v1",
+  "manifest_id": "xhs:67677ff30000000013003966:snapshot-95b77bb26104:note-desc-1:sequence-v1",
+  "interview_note_id": "xhs:67677ff30000000013003966",
+  "source_revision_id": "xhs-note:67677ff30000000013003966:snapshot-95b77bb26104",
+  "sequence_scope": "source-projection:note_desc/67677ff30000000013003966.txt:interview-flow-units-1-1",
+  "evidence_stream": {
+    "stream_id": "pinned-note-desc",
+    "storage_kind": "git",
+    "raw_artifact_ref": "liqiangcc/xhs:note_detail/67677ff30000000013003966.html@95b77bb261048059846273688e4b90a2e108b437",
+    "raw_git_blob_sha": "2ff434d188550437744b68a7928db6fdf1cbf703",
+    "raw_sha256": "de1617b1446d5ee1db14e426b69feb45baf9946d30a9ac0733aa628d8d45e24c",
+    "readable_projection": {
+      "ref": "liqiangcc/xhs:note_desc/67677ff30000000013003966.txt@95b77bb261048059846273688e4b90a2e108b437",
+      "storage_kind": "git",
+      "git_blob_sha": "31981e1160d8fb948cc79de586a001739dad0071",
+      "sha256": "e6d2f6524597969c1b0bba1c7508634c61303550028ccd70894b1b191d97feea",
+      "provenance": "source_projection",
+      "review_status": "unreviewed"
+    }
+  },
+  "units": [
+    {
+      "source_unit_id": "xhs:67677ff30000000013003966:snapshot-95b77bb26104:note-desc-1:u1",
+      "position": 1,
+      "source_unit_type": "outcome-reflection-summary",
+      "text_projection": "自我介绍\n- 请先自我介绍一下。\n- 介绍一下最近做的项目，这个项目是你自己一个人做的吗？\n- 这个项目是在单机去跑的吗？有没有上线过？\n技术难点\n- 做这个项目主要的技术难点在哪？\n- 秒杀逻辑的主要技术挑战是什么？\n- 在集群模式下考虑使用分布式锁吗？\n分布式锁与并发处理\n- 构造的分布式锁具体指的是什么？\n- 如何优化锁误删的问题？\n- 在锁误删中加锁和解锁的操作是如何实现的？\n- 在锁误删场景中，如果线程成功获取到锁，但该线程的业务逻辑执行时间超过锁的超时时间，如何处理？\n- 线程在感知到锁快要超时的时候，怎么进行续期操作？\n消息队列选择\n- 为什么考虑使用 Redis 的 string 结构作为消息队列？\n- 对其他的消息队列（如 RabbitMQ、Kafka）有什么了解？\n缓存相关问题\n- 什么是缓存穿透、缓存雪崩？\n- 如何防止缓存雪崩？\n- 解决缓存击穿的方法有哪些？\n并发控制\n- synchronized 和 lock 的区别是什么？\n- 在单台机器部署的情况下，如何对同一个用户加锁以确保接口的线程安全？（类似于同一用户用不同设备去下单，也就是不同线程同一userId，如何保证这里的线程安全）（除了userId字符串常量池引用，还可以设定synchronized锁的对象是哪些来达到同样的效果）\n- 如何获取用户 ID 对应的常量值以保证其唯一性？（intern方法）\n编程实践\n- 算法题LeetCode原题 复原ip地址，不允许定义全局变量，(因为时间不太够了，面试官就要求写出回溯方法的主体结构即可，然后解释以下函数中的参数什么含义)\n面试反问\n- 部门业务面向B端还是C端？面试环节有几轮？面试评价？）",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_desc/67677ff30000000013003966.txt@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "e6d2f6524597969c1b0bba1c7508634c61303550028ccd70894b1b191d97feea",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/67677ff30000000013003966.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "de1617b1446d5ee1db14e426b69feb45baf9946d30a9ac0733aa628d8d45e24c",
+        "source_projection_item_number": 1
+      },
+      "fragments": []
+    }
+  ],
+  "content_sha256": "6132ca9149b04ce3bce9bf0982af65975baffb8976873708cc76d73d85e09a9c"
+}

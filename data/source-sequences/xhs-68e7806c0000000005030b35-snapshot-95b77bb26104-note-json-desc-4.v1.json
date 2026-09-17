@@ -1,0 +1,81 @@
+{
+  "schema_version": "source-sequence-manifest.v1",
+  "manifest_id": "xhs:68e7806c0000000005030b35:snapshot-95b77bb26104:note-json-desc-4:sequence-v1",
+  "interview_note_id": "xhs:68e7806c0000000005030b35",
+  "source_revision_id": "xhs-note:68e7806c0000000005030b35:snapshot-95b77bb26104",
+  "sequence_scope": "source-projection:note_json/68e7806c0000000005030b35.json:interview-flow-units-1-4",
+  "evidence_stream": {
+    "stream_id": "pinned-note-json-desc",
+    "storage_kind": "git",
+    "raw_artifact_ref": "liqiangcc/xhs:note_detail/68e7806c0000000005030b35.html@95b77bb261048059846273688e4b90a2e108b437",
+    "raw_git_blob_sha": "7f3e6e204ca9eef2b7e40f5a36d71c2a540adb1d",
+    "raw_sha256": "db7805e60a31d55223ef89b4251df1f96c6bbf36ef4ff031e9e4bfeb06d57f78",
+    "readable_projection": {
+      "ref": "liqiangcc/xhs:note_json/68e7806c0000000005030b35.json@95b77bb261048059846273688e4b90a2e108b437",
+      "storage_kind": "git",
+      "git_blob_sha": "c97404464804c887873a31ad5a65575973a7e935",
+      "sha256": "f71f7319d4d4c9c52902c322c654448534bdcee21e4159ddc08b7143f2ade85d",
+      "provenance": "source_projection",
+      "review_status": "unreviewed"
+    }
+  },
+  "units": [
+    {
+      "source_unit_id": "xhs:68e7806c0000000005030b35:snapshot-95b77bb26104:note-json-desc-4:u1",
+      "position": 1,
+      "source_unit_type": "narrative-summary",
+      "text_projection": "一面先深挖项目里的分布式事务实现，追问本地消息表如何处理消息丢失，接着聚焦视频投稿场景，要求设计 “文件存储 + 投稿记录” 的最终一致性方案，我提到定时补偿后，被追问重试次数和失败兜底策略，卡了半分钟才想到人工介入。",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_json/68e7806c0000000005030b35.json@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "f71f7319d4d4c9c52902c322c654448534bdcee21e4159ddc08b7143f2ade85d",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/68e7806c0000000005030b35.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "db7805e60a31d55223ef89b4251df1f96c6bbf36ef4ff031e9e4bfeb06d57f78",
+        "source_projection_item_number": 1
+      },
+      "fragments": []
+    },
+    {
+      "source_unit_id": "xhs:68e7806c0000000005030b35:snapshot-95b77bb26104:note-json-desc-4:u2",
+      "position": 2,
+      "source_unit_type": "narrative-summary",
+      "text_projection": "二面主攻高并发设计，给了拜年祭弹幕突增场景：如何设计限流降级。我答了网关 + 服务端两级限流，面试官立刻追问 Redis 队列的消费速度控制，以及延迟展示时如何保证高赞弹幕优先，不得不补充优先级队列和轮询策略才过关。",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_json/68e7806c0000000005030b35.json@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "f71f7319d4d4c9c52902c322c654448534bdcee21e4159ddc08b7143f2ade85d",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/68e7806c0000000005030b35.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "db7805e60a31d55223ef89b4251df1f96c6bbf36ef4ff031e9e4bfeb06d57f78",
+        "source_projection_item_number": 2
+      },
+      "fragments": []
+    },
+    {
+      "source_unit_id": "xhs:68e7806c0000000005030b35:snapshot-95b77bb26104:note-json-desc-4:u3",
+      "position": 3,
+      "source_unit_type": "outcome-reflection-summary",
+      "text_projection": "三面直接上实际业务题：优化首页推荐接口性能。从多级缓存设计到异步并行加载，每步都被追问细节：缓存失效时如何避免雪崩？用户画像数据怎么实时同步？最后聊到弹幕实时计数，还被要求解释 Redis 分布式计数器的实现原理。",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_json/68e7806c0000000005030b35.json@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "f71f7319d4d4c9c52902c322c654448534bdcee21e4159ddc08b7143f2ade85d",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/68e7806c0000000005030b35.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "db7805e60a31d55223ef89b4251df1f96c6bbf36ef4ff031e9e4bfeb06d57f78",
+        "source_projection_item_number": 3
+      },
+      "fragments": []
+    },
+    {
+      "source_unit_id": "xhs:68e7806c0000000005030b35:snapshot-95b77bb26104:note-json-desc-4:u4",
+      "position": 4,
+      "source_unit_type": "outcome-reflection-summary",
+      "text_projection": "整体感觉 B 站看重技术落地细节，场景题一定要结合业务讲清方案优缺点，光背理论完全扛不住，提前刷场景题真的很重要。\n面试经验和答案可以分享#爱上工作的瞬间[话题]# #java面试[话题]# #后端开发[话题]# #互联网大厂[话题]# #求职[话题]# #java[话题]# #计算机[话题]# #编程[话题]# #面试[话题]# #b站[话题]# #blibli[话题]# #java面试题[话题]#",
+      "source_provenance": {
+        "source_projection_ref": "liqiangcc/xhs:note_json/68e7806c0000000005030b35.json@95b77bb261048059846273688e4b90a2e108b437",
+        "source_projection_sha256": "f71f7319d4d4c9c52902c322c654448534bdcee21e4159ddc08b7143f2ade85d",
+        "raw_artifact_ref": "liqiangcc/xhs:note_detail/68e7806c0000000005030b35.html@95b77bb261048059846273688e4b90a2e108b437",
+        "raw_sha256": "db7805e60a31d55223ef89b4251df1f96c6bbf36ef4ff031e9e4bfeb06d57f78",
+        "source_projection_item_number": 4
+      },
+      "fragments": []
+    }
+  ],
+  "content_sha256": "b5741f94cd6574ab99614bc2a372816bc49ea0fa3993f981ab01bb19a7dd22ad"
+}
